@@ -63,6 +63,10 @@ var PATH = {
       './node_modules/intl/dist/Intl.min.js',
       './node_modules/intl/locale-data/jsonp/en.js'
     ],
+    modules: [
+      './node_modules/tinymce/tinymce.min.js',
+      './node_modules/braintree-web/dist/braintree.js'
+    ],
     loaderConfig: [
       APP_SRC + '/system.config.js'
     ],
@@ -78,7 +82,6 @@ var PATH = {
 PATH.src.lib = PATH.src.loader
     .concat(PATH.src.loaderConfig)
     .concat(PATH.src.angular);
-
 
 var HTMLMinifierOpts = { conditionals: true };
 
@@ -237,7 +240,7 @@ gulp.task('build.scss', ['build.plugins.scss'], function () {
 // Build dev.
 
 gulp.task('build.lib.dev', function () {
-  return gulp.src(PATH.src.lib)
+  return gulp.src(PATH.src.lib.concat(PATH.src.modules))
     .pipe(gulp.dest(PATH.dest.dev.lib));
 });
 

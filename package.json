@@ -4,8 +4,10 @@
   "description": "Front end repository for Minds",
   "dependencies": {
     "angular2": "2.0.0-alpha.44",
+    "braintree-web": "2.15.2",
     "es6-module-loader": "^0.16.2",
     "systemjs": "^0.18.1",
+    "tinymce": "^4.2.6",
     "zone.js": "^0.4.1",
     "reflect-metadata": "0.1.2",
     "es6-shim": "^0.33.6",

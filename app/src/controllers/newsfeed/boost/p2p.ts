@@ -2,6 +2,9 @@ import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angul
 import { RouterLink } from "angular2/router";
 import { Client } from 'src/services/api';
 import { Material } from 'src/directives/material';
+
+import { Checkout } from 'src/controllers/payments/checkout';
+
 import { MindsWalletResponse } from 'src/interfaces/responses';
 import { MindsUserSearchResponse } from 'src/interfaces/responses';
 import { MindsBoostResponse } from 'src/interfaces/responses';
@@ -14,7 +17,7 @@ import { MindsBoostRateResponse } from 'src/interfaces/responses';
 })
 @View({
   templateUrl: 'templates/newsfeed/boost/p2p.html',
-  directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink]
+  directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink, Checkout]
 })
 
 export class BoostP2P{

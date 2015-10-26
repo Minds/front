@@ -8,10 +8,13 @@
   <div class="mdl-color-text--blue-grey-50 minds-login-box minds-boost-wallet-message">
     <div class="mdl-card__supporting-text" [hidden]="!notEnoughPoints">
       Do you want to buy more points?
-      <a class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/wallet']">Buy more points!</a>
+      <a class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Wallet']">Buy more points!</a>
     </div>
   </div>
 </div>
+
+<minds-payments-checkout></minds-payments-checkout>
+
 <!--CONTENT-->
 <div class="mdl-cell mdl-cell--12-col minds-boost-block">
   <div class="mdl-card__supporting-text">
