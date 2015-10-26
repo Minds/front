@@ -6,16 +6,13 @@ describe('testing the login', () => {
   var loginButton = element.all(by.css('.mdl-button')).get(3);
   var forgotPasswordButton = element(by.css('.minds-reset-password-link'));
 
-  browser.get('/login');
-
   beforeEach(function() {
-
+    browser.get('/login');
   });
 
   afterEach(function() {
     expect(subject).toEqual(result);
   });
-
 
   it('should have a title', function(){
     subject = browser.getTitle();

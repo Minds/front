@@ -6,11 +6,11 @@ describe('testing the tests', () => {
 	browser.get('/');
 
   it('should have a title', function(){
-    expect(browser.getTitle()).toEqual("Home | Minds");
+    expect(browser.getTitle()).toEqual("Login | Minds");
   });
 
   it('should have a title', function(){
-    expect(browser.getTitle()).toEqual("Home | Minds");
+    expect(browser.getTitle()).toEqual("Login | Minds");
   });
 
 //  element(by.css('[value="add"]')).click();
