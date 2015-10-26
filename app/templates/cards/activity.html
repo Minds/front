@@ -36,7 +36,7 @@
 	</a>
 </div>
 
-<div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [tags]>{{activity.title}}</div>
+<div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [inner-html]="activity.message | tags"></div>
 <div class="minds-editable-container" *ng-if="(activity.title || activity.custom_type) && editing">
 	<!-- Please not the intentional single way binding for ng-model, we want to be able to cancel our changes -->
 	<textarea class="mdl-card__supporting-text message" [ng-model]="activity.title" #title-edit [auto-grow]></textarea>
