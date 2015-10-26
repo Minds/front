@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Front end repository for Minds",
   "dependencies": {
-    "angular2": "2.0.0-alpha.42",
+    "angular2": "2.0.0-alpha.44",
     "es6-module-loader": "^0.16.2",
     "systemjs": "^0.18.1",
     "zone.js": "^0.4.1",
