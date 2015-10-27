@@ -51,6 +51,7 @@ export class Merchants {
       city:  ['', Validators.required],
       region:  ['', Validators.required],
       postCode:  ['', Validators.required],
+      venmo: [true],
       accountNumber:  [''],
       routingNumber:  ['']
     });
@@ -73,7 +74,7 @@ export class Merchants {
         this.isMerchant = true;
       })
       .catch((e) => {
-
+        self.error = e.message;
       });
   }
 
@@ -105,7 +106,7 @@ export class Merchants {
     var self = this;
     this.client.post('api/v1/merchant/charge/' + sale.id)
       .then((response : any) => {
-        
+
       });
   }
 

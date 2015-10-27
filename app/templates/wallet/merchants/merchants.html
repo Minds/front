@@ -54,54 +54,95 @@
     </div>
   </form>
 </div>
-<div *ng-if="!isMerchant">
-  You're not a merchant
 
-  <form (submit)="onboard($event)" [ng-form-model]="onboarForm" #f="form">
-    <div>
+
+<div *ng-if="!isMerchant">
+
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__supporting-text">
+      Join the Minds Merchant programme.
+    </div>
+  </div>
+
+  <form (submit)="onboard($event)" [ng-form-model]="onboardForm" #f="form" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>First name</label>
       <input ng-control="firstName" type="text" placeholder="First name">
     </div>
-    <div>
+
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Last name</label>
       <input ng-control="lastName" type="text" placeholder="Last name">
     </div>
 
-    <div>
+    <div class="mdl-cell mdl-cell--4-col">
+      <label>Email</label>
       <input ng-control="email" type="email" placeholder="Email">
     </div>
 
-    <div>
-      <input ng-control="dob" type="text" placeholder="Date of Birth">
+    <div class="mdl-cell mdl-cell--3-col">
+      <label>Date of Birth</label>
+      <input ng-control="dob" type="text" placeholder="DD/MM/YYYY">
     </div>
 
-    <div>
-      <input ng-control="ssn" type="number" placeholder="Social Security Number">
+    <div class="mdl-cell mdl-cell--5-col">
+      <label>Social Security Number</label>
+      <input ng-control="ssn" type="number" placeholder="optional">
     </div>
 
-    <div>
-      <input ng-control="street" type="text" placeholder="Street">
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Address</label>
+      <input ng-control="street" type="text" placeholder="House name/number, Street name">
     </div>
 
-    <div>
-      <input ng-control="city" type="text" placeholder="City">
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>City</label>
+      <input ng-control="city" type="text" placeholder="eg. New York City">
     </div>
 
-    <div>
-      <input ng-control="region" type="text" placeholder="State / Region">
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Region / State</label>
+      <input ng-control="region" type="text" placeholder="eg. NY">
     </div>
 
-    <div>
-      <input ng-control="postCode" type="text" placeholder="Post Code / Zip Code">
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Post Code / Zip Code</label>
+      <input ng-control="postCode" type="text" placeholder="eg. 10001">
     </div>
 
-    <div>
-      <input ng-control="accountNumber" type="number" placeholder="Account Number">
+    <div class="mdl-cell"></div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <input type="checkbox" ng-control="venmo"> <span for="#venmo-chekcbox">Payout to email address (using venmo)</span>
     </div>
 
-    <div>
-      <input ng-control="routingNumber" type="number" placeholder="Routing Number">
+    <div class="mdl-cell mdl-cell--6-col" [hidden]="onboardForm.value.venmo">
+      <label>Bank Account number</label>
+      <input ng-control="accountNumber" type="number" placeholder="">
     </div>
 
-    <button type="submit" [disabled]="!f.form.valid">Submit</button>
+    <div class="mdl-cell mdl-cell--6-col" [hidden]="onboardForm.value.venmo">
+      <label>Bank Routing number</label>
+      <input ng-control="routingNumber" type="number" placeholder="">
+    </div>
+
+    <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">
+      <p>Minds, Inc. uses Braintree, a division of PayPal, Inc. (Braintree) for payment processing services.
+        By using the Braintree payment processing services you agree to the Braintree Payment Services Agreement available at
+        <a href="https://www.braintreepayments.com/legal/gateway-agreement" target="_blank">https://www.braintreepayments.com/legal/gateway-agreement</a>,
+        and the applicable bank agreement available at
+        <a href="https://www.braintreepayments.com/legal/cea-wells" target="_blank">https://www.braintreepayments.com/legal/cea-wells</a>
+      </p>
+    </div>
+
+    <div *ng-if="error" class="mdl-color-text--red">
+      {{error}}
+    </div>
+
+    <div style="margin:16px; width:100%; text-align:right;">
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored"[disabled]="!f.form.valid">Accept & Submit</button>
+    </div>
+
   </form>
 
 </div>
