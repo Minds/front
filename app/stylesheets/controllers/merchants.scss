@@ -1,0 +1,17 @@
+@import '../defaults.scss';
+
+.m-merchant-form{
+
+  padding:$minds-padding*2;
+
+  label{
+    display:block;
+    font-weight:bold;
+  }
+  input[type="text"], input[type="number"], input[type="email"]{
+    margin:$minds-margin 0;
+    padding:$minds-padding;
+    font-size:14px;
+    width:100%;
+  }
+}

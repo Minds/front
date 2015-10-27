@@ -1,0 +1,107 @@
+<div *ng-if="isMerchant">
+
+  <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
+    Status: {{status}}
+  </div>
+
+  <div class="mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
+
+    <div class="mdl-card md-shadow--2dp" *ng-for="#sale of sales">
+      {{sale.id}} - {{sale.status}} - {{sale.customerId}}
+      <button class="mdl-button" (click)="charge(sale)">Charge</button>
+      <button class="mdl-button" (click)="void(sale)">Void</button>
+    </div>
+  </div>
+
+
+
+  <form (submit)="update($event)" [ng-form-model]="editForm" #e="form" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>First name</label>
+      <input ng-control="firstName" type="text" placeholder="First name">
+    </div>
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Last name</label>
+      <input ng-control="lastName" type="text" placeholder="Last name">
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Email</label>
+      <input ng-control="email" type="email" placeholder="Email">
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Social Security Number (optional)</label>
+      <input ng-control="ssn" type="number" placeholder="Social Security Number">
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <input type="checkbox" ng-control="venmo"> Payout to email address (using venmo)
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col" [hidden]="editForm.value.venmo">
+      <label>Bank Account number</label>
+      <input ng-control="accountNumber" type="number" placeholder="Account Number">
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col" [hidden]="editForm.value.venmo">
+      <label>Bank Routing number</label>
+      <input ng-control="routingNumber" type="number" placeholder="Routing Number">
+    </div>
+
+    <div style="margin:16px; width:100%; text-align:right;">
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored"[disabled]="!e.form.valid">Update</button>
+    </div>
+  </form>
+</div>
+<div *ng-if="!isMerchant">
+  You're not a merchant
+
+  <form (submit)="onboard($event)" [ng-form-model]="onboarForm" #f="form">
+    <div>
+      <input ng-control="firstName" type="text" placeholder="First name">
+    </div>
+    <div>
+      <input ng-control="lastName" type="text" placeholder="Last name">
+    </div>
+
+    <div>
+      <input ng-control="email" type="email" placeholder="Email">
+    </div>
+
+    <div>
+      <input ng-control="dob" type="text" placeholder="Date of Birth">
+    </div>
+
+    <div>
+      <input ng-control="ssn" type="number" placeholder="Social Security Number">
+    </div>
+
+    <div>
+      <input ng-control="street" type="text" placeholder="Street">
+    </div>
+
+    <div>
+      <input ng-control="city" type="text" placeholder="City">
+    </div>
+
+    <div>
+      <input ng-control="region" type="text" placeholder="State / Region">
+    </div>
+
+    <div>
+      <input ng-control="postCode" type="text" placeholder="Post Code / Zip Code">
+    </div>
+
+    <div>
+      <input ng-control="accountNumber" type="number" placeholder="Account Number">
+    </div>
+
+    <div>
+      <input ng-control="routingNumber" type="number" placeholder="Routing Number">
+    </div>
+
+    <button type="submit" [disabled]="!f.form.valid">Submit</button>
+  </form>
+
+</div>

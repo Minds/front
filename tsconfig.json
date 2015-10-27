@@ -86,6 +86,7 @@
         "app/src/controllers/settings/settings.ts",
         "app/src/controllers/settings/statistics.ts",
         "app/src/controllers/settings/twoFactor.ts",
+        "app/src/controllers/wallet/merchants/merchants.ts",
         "app/src/controllers/wallet/purchase.ts",
         "app/src/controllers/wallet/transactions.ts",
         "app/src/controllers/wallet/wallet.ts",
