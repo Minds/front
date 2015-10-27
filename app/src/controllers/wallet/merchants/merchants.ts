@@ -80,6 +80,7 @@ export class Merchants {
 
   getSettings(){
     var self = this;
+    this.inProgress = true;
     this.client.get('api/v1/merchant/settings')
       .then((response : any) => {
         self.status = response.merchant.status;
@@ -91,6 +92,10 @@ export class Merchants {
         controls.ssn.updateValue(response.merchant.ssn);
         controls.accountNumber.updateValue(response.merchant.accountNumber);
         controls.routingNumber.updateValue(response.merchant.routingNumber);
+        self.inProgress = false;
+      })
+      .catch((e) => {
+        self.inProgress = false;
       });
   }
 
