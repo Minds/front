@@ -1,14 +1,8 @@
 describe('testing newsfeed', () => {
   var subject;
   var result;
-
   
   browser.get('/newsfeed');
-  if (browser.getTitle() == "Login | Minds"){
-    element.all(by.id('username')).get(1).sendKeys('mindstestuser');
-    element.all(by.id('password')).get(1).sendKeys('pass123');
-    element.all(by.css('.mdl-button')).get(3).click();
-  }
 
   beforeEach(function() {
 
