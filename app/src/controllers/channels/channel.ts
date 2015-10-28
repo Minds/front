@@ -15,12 +15,12 @@ import { CARDS } from 'src/controllers/cards/cards';
 import { MindsActivityObject } from 'src/interfaces/entities';
 import { MindsUser } from 'src/interfaces/entities';
 import { MindsChannelResponse } from 'src/interfaces/responses';
-import { Poster } from 'src/controllers/newsfeed/poster';
+import { Poster } from 'src/controllers/newsfeed/poster/poster';
 import { MindsAvatar } from 'src/components/avatar';
 
-import { ChannelSubscribers } from './subscribers';
-import { ChannelSubscriptions } from './subscriptions';
-import { ChannelEdit } from './edit';
+import { ChannelSubscribers } from './subscribers/subscribers';
+import { ChannelSubscriptions } from './subscriptions/subscriptions';
+import { ChannelEdit } from './edit/edit';
 
 @Component({
   selector: 'minds-channel',
@@ -28,7 +28,7 @@ import { ChannelEdit } from './edit';
   bindings: [ MindsTitle ]
 })
 @View({
-  templateUrl: 'templates/channels/channel.html',
+  templateUrl: 'src/controllers/channels/channel.html',
   pipes: [ TagsPipe ],
   directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, Material, InfiniteScroll, CARDS,
     AutoGrow, ChannelSubscribers, ChannelSubscriptions, BUTTON_COMPONENTS, ChannelEdit, MindsCarousel, Poster, MindsAvatar ]
@@ -227,6 +227,6 @@ export class Channel {
 
 }
 
-export { ChannelSubscribers } from './subscribers';
-export { ChannelSubscriptions } from './subscriptions';
-export { ChannelEdit } from './edit';
+export { ChannelSubscribers } from './subscribers/subscribers';
+export { ChannelSubscriptions } from './subscriptions/subscriptions';
+export { ChannelEdit } from './edit/edit';

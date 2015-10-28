@@ -2,7 +2,7 @@ import { Component, View, NgFor, NgIf, FORM_DIRECTIVES, Inject} from 'angular2/a
 import { Router, Location } from 'angular2/router';
 import { Client, Upload } from 'src/services/api';
 import { Material } from 'src/directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { InfiniteScroll } from 'src/directives/infinite-scroll';
 import { MindsActivityObject } from 'src/interfaces/entities';
 
 @Component({

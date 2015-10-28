@@ -19,7 +19,7 @@ import { Client } from 'src/services/api/client';
   }
 })
 @View({
-  templateUrl: 'templates/capture/capture.html',
+  templateUrl: 'src/controllers/capture/capture.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MDL_DIRECTIVES ]
 })
 

@@ -11,7 +11,7 @@ import { BUTTON_COMPONENTS } from 'src/components/buttons';
   properties: ['object']
 })
 @View({
-  templateUrl: 'templates/cards/user.html',
+  templateUrl: 'src/controllers/cards/user/user.html',
   directives: [ CORE_DIRECTIVES, Material, RouterLink, BUTTON_COMPONENTS ]
 })
 

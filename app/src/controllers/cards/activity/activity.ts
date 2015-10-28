@@ -4,10 +4,10 @@ import { Client } from 'src/services/api';
 import { SessionFactory } from 'src/services/session';
 import { Material } from 'src/directives/material';
 import { AutoGrow } from 'src/directives/autogrow';
-import { Remind } from './remind';
+import { Remind } from '../remind/remind';
 import { BUTTON_COMPONENTS } from 'src/components/buttons';
 import { MindsVideo } from 'src/components/video';
-import { Boost } from 'src/controllers/newsfeed/boost';
+import { Boost } from 'src/controllers/newsfeed/boost/boost';
 import { Comments } from 'src/controllers/comments/comments';
 import { TagsPipe } from 'src/pipes/tags';
 import { TagsLinks } from 'src/directives/tags';
@@ -20,7 +20,7 @@ import { ScrollFactory } from 'src/services/ux/scroll';
   outputs: [ '_delete: delete']
 })
 @View({
-  templateUrl: 'templates/cards/activity.html',
+  templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo ],
   pipes: [ TagsPipe ]
 })

@@ -15,7 +15,6 @@ export class Navigation {
 
 		var path = this.location.path();
 		for(var item of items){
-
 			if(path == item.path || (path && path.indexOf(item.path.toLowerCase()) > -1))
 				item.active = true;
 			else

@@ -2,15 +2,15 @@ import {Component, View, provide, bootstrap} from 'angular2/angular2';
 import {RouteConfig, Route, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
-import {Topbar} from './src/components/topbar';
-import {SidebarNavigation} from './src/components/sidebar-navigation';
+import {Topbar} from './src/components/topbar/topbar';
+import {SidebarNavigation} from './src/components/sidebar-navigation/sidebar-navigation';
 
-import { Homepage } from 'src/controllers/homepage';
-import {Login} from './src/controllers/login';
-import {Logout} from './src/controllers/logout';
-import {Register} from './src/controllers/register';
-import {ForgotPassword} from './src/controllers/forgot-password';
-import {ComingSoon} from './src/controllers/comingsoon';
+import { Homepage } from 'src/controllers/home/homepage/homepage';
+import {Login} from './src/controllers/home/login/login';
+import {Logout} from './src/controllers/home/logout/logout';
+import {Register} from './src/controllers/home/register/register';
+import {ForgotPassword} from './src/controllers/home/forgot-password/forgot-password';
+import {ComingSoon} from './src/controllers/home/comingsoon/comingsoon';
 import {Newsfeed, NewsfeedSingle} from './src/controllers/newsfeed/newsfeed';
 import {Capture} from './src/controllers/capture/capture';
 import {Discovery} from './src/controllers/discovery/discovery';
@@ -78,7 +78,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 
 ])
 @View({
-  templateUrl: './templates/index.html',
+  templateUrl: './src/controllers/index.html',
   directives: [Topbar, SidebarNavigation, ROUTER_DIRECTIVES]
 })
 

@@ -3,8 +3,8 @@ import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { Client, Upload } from 'src/services/api';
 import { MindsTitle } from 'src/services/ux/title';
 import { Material } from 'src/directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
-import { Poster } from './poster';
+import { InfiniteScroll } from 'src/directives/infinite-scroll';
+import { Poster } from './poster/poster';
 import { CARDS } from 'src/controllers/cards/cards';
 import { MindsActivityObject } from 'src/interfaces/entities';
 import { SessionFactory } from 'src/services/session';
@@ -17,7 +17,7 @@ import { AnalyticsImpressions } from 'src/components/analytics/impressions';
   bindings: [ MindsTitle ]
 })
 @View({
-  templateUrl: 'templates/newsfeed/list.html',
+  templateUrl: 'src/controllers/newsfeed/list.html',
   directives: [ Poster, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
     InfiniteScroll, AnalyticsImpressions, CARDS ]
 })
@@ -101,4 +101,4 @@ export class Newsfeed {
   }
 }
 
-export { NewsfeedSingle } from './single';
+export { NewsfeedSingle } from './single/single';

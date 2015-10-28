@@ -3,8 +3,8 @@ import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/route
 import { Client, Upload } from 'src/services/api';
 import { Material } from 'src/directives/material';
 
-import { AdminAnalytics } from './analytics';
-import { AdminBoosts } from './boosts';
+import { AdminAnalytics } from './analytics/analytics';
+import { AdminBoosts } from './boosts/boosts';
 
 @Component({
   selector: 'minds-admin',

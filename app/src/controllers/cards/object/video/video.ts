@@ -10,7 +10,7 @@ import { Material } from 'src/directives/material';
   properties: ['object']
 })
 @View({
-  templateUrl: 'templates/cards/object/video.html',
+  templateUrl: 'src/controllers/cards/object/video/video.html',
   directives: [ CORE_DIRECTIVES, NgStyle, Material, RouterLink]
 })
 
