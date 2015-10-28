@@ -19,7 +19,8 @@ interface CreditCard {
 
 @Component({
   selector: 'minds-payments-checkout',
-  viewBindings: [ Client ]
+  providers: [ Client ],
+  inputs: ['amount', 'merchant_guid']
 })
 @View({
   template: `
@@ -40,6 +41,9 @@ export class Checkout {
   confirmation : boolean = false;
   error : string = "";
   card;
+
+  amount : number = 0;
+  merchant_guid;
 
   braintree_client;
   nonce : string = "";
@@ -87,7 +91,8 @@ export class Checkout {
     this.error = "";
     this.client.post('api/v1/payments/braintree/charge', {
         nonce: this.nonce,
-        amount: 10
+        amount: this.amount,
+        merchant_guid: this.merchant_guid
       })
       .then((response : any) => {
         if(response.status != 'success'){

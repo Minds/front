@@ -1,46 +1,89 @@
-<div class="mdl-cell mdl-cell--12-col" [hidden]="!errorMessage">
-  <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box minds-boost-error-message">
-    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50 ">
-      {{errorMessage}}
-    </div>
-  </div>
-
-  <div class="mdl-color-text--blue-grey-50 minds-login-box minds-boost-wallet-message">
-    <div class="mdl-card__supporting-text" [hidden]="!notEnoughPoints">
-      Do you want to buy more points?
-      <a class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Wallet']">Buy more points!</a>
-    </div>
-  </div>
+<div class="mdl-card__supporting-text mdl-color-text--blue-grey-50" [hidden]="!errorMessage">
+  {{errorMessage}}
 </div>
 
-<minds-payments-checkout></minds-payments-checkout>
+<div class="mdl-card__supporting-text" [hidden]="!notEnoughPoints">
+  Do you want to buy more points?
+  <a class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Wallet']">Buy more points!</a>
+</div>
+
+<!--<minds-payments-checkout></minds-payments-checkout>-->
 
 <!--CONTENT-->
-<div class="mdl-cell mdl-cell--12-col minds-boost-block">
-  <div class="mdl-card__supporting-text">
+<div class="mdl-card__supporting-text">
 
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" type="text" id="channel" #channel placeholder="Channel" [(ng-model)] = "data.destination" (keyup)="changeDestination($event)"/>
-      <p>
-         Select a channel above to have your post distributed to their subscribers in exchange for points.
-      </p>
+  <div class="m-search-inline" [hidden]="destination">
+    <input type="text" [(ng-model)]="q" (keyup)="search()" placeholder="Search for a channel"/>
+    <p class="m-helper">
+       Select a channel above to have your post distributed to their subscribers in exchange for points.
+    </p>
 
-      <div class="search-users-list mdl-card" *ng-if="results.length > 0 && searching">
-        <div *ng-for="#user of results" (click)="selectDestination(user);">
-          <img src="{{minds.cdn_url}}/icon/{{user.guid}}/small" />
-            @{{user.username}}
-          </div>
+    <div class="m-search-inline-list mdl-shadow--2dp mdl-color--white" [hidden]="results.length == 0 || !searching">
+      <div *ng-for="#user of results" (click)="selectDestination(user);" class="m-search-inline-item m-block">
+        <div class="m-avatar">
+          <img src="{{minds.cdn_url}}/icon/{{user.guid}}/small" class="mdl-shadow--2dp"/>
+        </div>
+        <div class="m-body">
+          <h3>@{{user.username}}</h3>
+          <span *ng-if="user.merchant" class="m-boost-pro-tag mdl-color--blue-grey-300">pro</span>
+          <p class="m-subtitle">Views: {{user.impressions}} | Subscribers: {{user.subscribers_count}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ng-if="destination">
+
+    <div class="mdl-grid minds-boost-container m-p2p-options" *ng-if="pro && !option">
+      <div class="mdl-cell mdl-cell--6-col">
+          <a class="minds-boost-button-selector mdl-color-text--blue-grey-500" (click)="option = 'points'">
+              <h3>Points</h3>
+              <span>Offer points to @{{destination.username}} in exchange for a remind</span>
+          </a>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col">
+          <a class="minds-boost-button-selector mdl-color-text--blue-grey-500" (click)="option = 'pro'">
+              <h3>Pro</h3>
+              <span>Offer money to @{{destination.username}} in exchange for a remind</span>
+          </a>
       </div>
     </div>
 
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-      <input class="mdl-textfield__input" type="number" id="points" #points placeholder="Enter Points Here" [(ng-model)]= "data.points"/>
+    <div *ng-if="!pro || option == 'points'" class="mdl-grid minds-boost-points-wrapper">
+      <div class="mdl-cell mdl-cell--11-col minds-boost-points-input">
+        <div class="cell">
+          <input
+            type="number"
+            placeholder="Enter here"
+            [(ng-model)]= "points"
+            />
+          </div>
+          <div class="cell">
+    				<label>Points</label>
+    			</div>
+      </div>
+      <div class="mdl-cell mdl-cell--1-col minds-boost-points-input">
+         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="boost()" [hidden]="inProgress">Boost!</button>
+      </div>
     </div>
 
-    <p >
-       You will be noticed if your post is accepted or rejected by the user.
-       Once they accept, this post will not be able to be deleted.
-     </p>
-     <button class="mdl-button mdl-button--raised mdl-button--colored minds-boost-button" (click)="boost()" [disabled]="inProgress">Boost!</button>
-   </div>
-</div>
+    <div *ng-if="option == 'pro'" class="mdl-grid minds-boost-points-wrapper">
+      <div class="mdl-cell mdl-cell--11-col minds-boost-points-input">
+        <div class="cell">
+          <input
+            type="number"
+            placeholder="Enter here"
+            [(ng-model)]= "usd"
+            />
+          </div>
+          <div class="cell">
+    				<label>$ USD</label>
+    			</div>
+      </div>
+      <div class="mdl-cell mdl-cell--1-col minds-boost-points-input">
+         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="boost()" [hidden]="inProgress">Boost!</button>
+      </div>
+    </div>
+  </div>
+
+ </div>

@@ -1,4 +1,4 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
 import { Client } from 'src/services/api';
 import { Material } from 'src/directives/material';
@@ -12,8 +12,9 @@ import { MindsBoostRateResponse } from 'src/interfaces/responses';
 
 @Component({
   selector: 'minds-boost-p2p',
-  viewBindings: [ Client ],
-  properties: ['object']
+  providers: [ Client ],
+  inputs: ['activity: object'],
+  outputs: ['_done: done']
 })
 @View({
   templateUrl: 'templates/newsfeed/boost/p2p.html',
@@ -22,32 +23,37 @@ import { MindsBoostRateResponse } from 'src/interfaces/responses';
 
 export class BoostP2P{
 
+  _done: EventEmitter = new EventEmitter();
+  minds : Minds = window.Minds;
+
   activity : any;
   errorMessage : string = "";
-  data = {
-    destination: '',
-    points: null,
-    impressions: null
-  };
+
+  destination; //the user object
+  points : number = 0;
+  usd : number;
+  pro: boolean = false;
+  option : string;
+
   searching: boolean = false;
+  q : string = '';
   results : Array<any> = [];
-  minds : Minds;
+
   inProgress : boolean = false;
   notEnoughPoints : boolean = false;
   rate : MindsBoostRateResponse;
 
   constructor(public client: Client){
-    this.minds = window.Minds;
-    this.minds.cdn_url = "https://d3ae0shxev0cb7.cloudfront.net";
-    this.client.get('api/v1/boost/rates', {
-      cb: Date.now()
-    }).then((success : MindsBoostRateResponse) => {
-      this.rate = success;
-    });
+    this.getRates();
   }
 
-  set object(value: any) {
-    this.activity = value;
+  getRates(){
+    this.client.get('api/v1/boost/rates', {
+        cb: Date.now()
+      })
+      .then((success : MindsBoostRateResponse) => {
+        this.rate = success;
+      });
   }
 
   boost() {
@@ -56,70 +62,60 @@ export class BoostP2P{
     this.notEnoughPoints = false;
     this.errorMessage = "";
 
-    if (this.data.points % 1 !== 0) {
-      this.data.points = Math.round(this.data.points);
+    if (this.points % 1 !== 0) {
+      this.points = Math.round(this.points);
       this.errorMessage = 'Sorry, you must enter a whole point.';
       this.inProgress = false;
       return false;
     }
 
-    if (this.data.points === 0 || !this.data.points) {
-      this.data.points = 1;
+    if (this.points === 0 || !this.points) {
+      this.points = 1;
       this.errorMessage ='Sorry, you must enter a whole point.';
       this.inProgress = false;
       return false;
     }
 
-    if (this.data.destination === '' && (this.data.impressions === 0 || Math.round(this.data.impressions) === 0)) {
+    if (this.destination === '' && (this.impressions === 0 || Math.round(this.impressions) === 0)) {
       this.errorMessage = 'Sorry, you must have at least 1 impression.';
       this.inProgress = false;
       return false;
     }
 
-    if (this.checkBalance() && this.data.destination){
-      var endpoint = 'api/v1/boost/channel/' + this.activity.guid + '/' + this.activity.owner_guid;
-      //commence the boost
-      this.client.post(endpoint, {
-        impressions: this.data.impressions,
-        destination: this.data.destination.charAt(0) == '@' ? this.data.destination.substr(1) : this.data.destination
-      }).then((success : MindsBoostResponse) => {
-        self.inProgress = false;
-        if (success.status == 'success') {
-          return true;
-        } else {
-          return false;
-        }
+    if (this.checkBalance() && this.destination){
 
-      }).catch((fail) => {
-        self.handleErrorMessage('Sorry, something went wrong.');
-        return false;
-      });
-    }
-    else {
+      this.client.post('api/v1/boost/channel/' + this.activity.guid + '/' + this.activity.owner_guid, {
+          impressions: this.points,
+          destination: this.data.destination.charAt(0) == '@' ? this.data.destination.substr(1) : this.data.destination
+        })
+        .then((success : MindsBoostResponse) => {
+          self.inProgress = false;
+          if (success.status == 'success') {
+            return true;
+          } else {
+            return false;
+          }
+
+        })
+        .catch((e) => {
+          self.handleErrorMessage('Sorry, something went wrong.');
+          return false;
+        });
+
+    } else {
       this.inProgress = false;
     }
   }
 
   checkBalance(){
-    if (this.rate.balance < this.data.points) {
+    if (this.rate.balance < this.points) {
       this.handleErrorMessage('Ooops! You don\'t have enough points');
       this.notEnoughPoints = true;
       return false;
     }
 
-    //over the cap?
-    if (this.data.points > this.rate.cap) {
-      this.handleErrorMessage('Ooops! Sorry, there is a limit on how many points can be spent.');
-      return false;
-    }
-
-    //under the min?
-    if (this.data.points < this.rate.min) {
-        this.handleErrorMessage('Ooops! Sorry, you need to enter at least ' + this.rate.min + ' points');
-      return false;
-    }
     //check if the user has enough points
-    if (this.rate.balance >= this.data.points){
+    if (this.rate.balance >= this.points){
       return true;
     }
   }
@@ -130,44 +126,45 @@ export class BoostP2P{
   }
 
   //for Channel Boost
-  changeDestination($event) {
+  search(q) {
     this.searching = true;
-    if ($event.target.value.charAt(0) != '@') {
-      this.data.destination = '@' + $event.target.value;
-    }
-    else this.data.destination =  $event.target.value;
-
-    if ($event.which === 13) {
-      this.searching = false;
+    if (this.q.charAt(0) != '@') {
+      this.q = '@' + this.q;
     }
 
-    var query = this.data.destination;
+    var query = this.q;
     if (query.charAt(0) == '@') {
       query = query.substr(1);
     }
-    console.log(query);
 
     this.client.get('api/v1/search', {
-      q: query,
-      type: 'user',
-      view: 'json',
-      limit: 5
-    }).then((success : MindsUserSearchResponse)=> {
-      if (success.entities){
-        this.results = success.entities;
-      }
-    })
-    .catch((error)=>{
-      console.log(error);
-    });
+        q: query,
+        type: 'user',
+        view: 'json',
+        limit: 5
+      })
+      .then((success : MindsUserSearchResponse)=> {
+        if (success.entities){
+          this.results = success.entities;
+        }
+      })
+      .catch((error)=>{
+        console.log(error);
+      });
 
-    if (!this.data.destination) {
-      this.searching = false;
-    }
   };
 
   selectDestination(user) {
     this.searching = false;
-    this.data.destination = '@' + user.username;
-  };
+    this.destination = user;
+    this.pro = user.merchant;
+    this.q = '';
+    if(!this.pro)
+      this.option = 'points';
+  }
+
+  close(){
+    this._done.next(true);
+  }
+
 }
