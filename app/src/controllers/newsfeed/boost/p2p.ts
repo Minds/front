@@ -141,7 +141,12 @@ export class BoostP2P{
   }
 
   //for Channel Boost
+
+  timeout;
   search(q) {
+    if(this.timeout)
+      clearTimeout(this.timeout);
+
     this.searching = true;
     if (this.q.charAt(0) != '@') {
       this.q = '@' + this.q;
@@ -152,21 +157,22 @@ export class BoostP2P{
       query = query.substr(1);
     }
 
-    this.client.get('api/v1/search', {
-        q: query,
-        type: 'user',
-        view: 'json',
-        limit: 5
-      })
-      .then((success : MindsUserSearchResponse)=> {
-        if (success.entities){
-          this.results = success.entities;
-        }
-      })
-      .catch((error)=>{
-        console.log(error);
-      });
-
+    this.timeout = setTimeout(() => {
+      this.client.get('api/v1/search', {
+          q: query,
+          type: 'user',
+          view: 'json',
+          limit: 5
+        })
+        .then((success : MindsUserSearchResponse)=> {
+          if (success.entities){
+            this.results = success.entities;
+          }
+        })
+        .catch((error)=>{
+          console.log(error);
+        });
+    }, 600);
   };
 
   selectDestination(user) {
