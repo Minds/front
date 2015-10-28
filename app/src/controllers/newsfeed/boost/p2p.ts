@@ -27,13 +27,15 @@ export class BoostP2P{
   minds : Minds = window.Minds;
 
   activity : any;
-  errorMessage : string = "";
+  error : string = "";
 
   destination; //the user object
   points : number = 0;
   usd : number;
   pro: boolean = false;
   option : string;
+  stage : number = 1;
+  complete : boolean = false;
 
   searching: boolean = false;
   q : string = '';
@@ -60,56 +62,74 @@ export class BoostP2P{
     var self =  this;
     this.inProgress = true;
     this.notEnoughPoints = false;
-    this.errorMessage = "";
+    this.error = "";
 
     if (this.points % 1 !== 0) {
       this.points = Math.round(this.points);
-      this.errorMessage = 'Sorry, you must enter a whole point.';
+      this.error = 'Sorry, you must enter a whole point.';
       this.inProgress = false;
       return false;
     }
 
     if (this.points === 0 || !this.points) {
       this.points = 1;
-      this.errorMessage ='Sorry, you must enter a whole point.';
+      this.error ='Sorry, you must enter a whole point.';
       this.inProgress = false;
       return false;
     }
 
-    if (this.destination === '' && (this.impressions === 0 || Math.round(this.impressions) === 0)) {
-      this.errorMessage = 'Sorry, you must have at least 1 impression.';
+    if (!this.checkBalance() || !this.destination){
       this.inProgress = false;
-      return false;
+      return;
     }
 
-    if (this.checkBalance() && this.destination){
-
-      this.client.post('api/v1/boost/channel/' + this.activity.guid + '/' + this.activity.owner_guid, {
-          impressions: this.points,
-          destination: this.data.destination.charAt(0) == '@' ? this.data.destination.substr(1) : this.data.destination
-        })
-        .then((success : MindsBoostResponse) => {
-          self.inProgress = false;
-          if (success.status == 'success') {
-            return true;
-          } else {
-            return false;
-          }
-
-        })
-        .catch((e) => {
-          self.handleErrorMessage('Sorry, something went wrong.');
+    this.client.post('api/v1/boost/channel/' + this.activity.guid + '/' + this.activity.owner_guid, {
+        impressions: this.points,
+        destination: this.destination.guid
+      })
+      .then((success : MindsBoostResponse) => {
+        this.inProgress = false;
+        if (success.status == 'success') {
+          this._done.next(true);
+          return true;
+        } else {
           return false;
-        });
+        }
 
-    } else {
-      this.inProgress = false;
-    }
+      })
+      .catch((e) => {
+        this.error = 'Sorry, something went wrong.';
+        return false;
+      });
+
+  }
+
+  boostPro(nonce){
+    var self = this;
+    this.stage = 3;
+
+    this.client.post('api/v1/boost/pro/' + this.activity.guid + '/' + this.activity.owner_guid, {
+        points: this.points,
+        destination: this.destination.guid,
+        nonce: nonce
+      })
+      .then((success : any) => {
+        this.inProgress = false;
+        this.stage = 4;
+        setTimeout(() => {
+          self._done.next(true);
+        },1000);
+
+      })
+      .catch((e) => {
+        this.stage = 1;
+        this.error = e.message;
+      });
   }
 
   checkBalance(){
     if (this.rate.balance < this.points) {
-      this.handleErrorMessage('Ooops! You don\'t have enough points');
+      this.error = 'Ooops! You don\'t have enough points';
       this.notEnoughPoints = true;
       return false;
     }
@@ -118,11 +138,6 @@ export class BoostP2P{
     if (this.rate.balance >= this.points){
       return true;
     }
-  }
-
-  handleErrorMessage(message : string){
-    this.errorMessage = message;
-    this.inProgress = false;
   }
 
   //for Channel Boost

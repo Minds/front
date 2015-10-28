@@ -33,7 +33,7 @@ export class CardInput {
 
   validate(){
 
-    if(!this.card.number || !this.card.sec || !this.card.name || !this.card.name2)
+    if(!this.card.number || !this.card.sec || !this.card.name)
       return false;
 
     if(this.card.month == 'mm' || this.card.year == 'yyyy')

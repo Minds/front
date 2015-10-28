@@ -1,13 +1,9 @@
 <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="inProgress || confirmation">
 
-  <div class="mdl-card__supporting-text minds-purchase-vendors">
-    <span (click)="card.type = 'amex'" [ng-class]="{'mdl-color-text--blue-grey-600': card.type == 'amex'}">Amex</span>
-    <span (click)="card.type = 'visa'" [ng-class]="{'mdl-color-text--blue-grey-600': card.type == 'visa'}">Visa</span>
-    <span (click)="card.type = 'mastercard'" [ng-class]="{'mdl-color-text--blue-grey-600': card.type == 'mastercard'}">MasterCard</span>
-  </div>
+
 
   <div class="mdl-card__supporting-text mdl-grid">
-    <div class="mdl-cell mdl-cell--8-col">
+    <div class="mdl-cell mdl-cell--6-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdl-textfield]>
         <input class="mdl-textfield__input"
           type="number"
@@ -16,6 +12,13 @@
           />
         <label class="mdl-textfield__label" for="number">Card number</label>
       </div>
+    </div>
+
+
+    <div class="mdl-cell mdl-cell--6-col mdl-color-text--blue-grey-600 minds-purchase-vendors">
+      <span (click)="card.type = 'amex'" [ng-class]="{'mdl-color-text--green': card.type == 'amex'}">Amex</span>
+      <span (click)="card.type = 'visa'" [ng-class]="{'mdl-color-text--green': card.type == 'visa'}">Visa</span>
+      <span (click)="card.type = 'mastercard'" [ng-class]="{'mdl-color-text--green': card.type == 'mastercard'}">MasterCard</span>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
@@ -61,17 +64,7 @@
           id="firstname"
           [(ng-model)]="card.name"
           />
-        <label class="mdl-textfield__label" for="firstname">First name</label>
-      </div>
-    </div>
-    <div class="mdl-cell mdl-cell--6-col">
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdl]>
-        <input class="mdl-textfield__input"
-          type="text"
-          id="lastname"
-          [(ng-model)]="card.name2"
-          />
-        <label class="mdl-textfield__label" for="lastname">Last name</label>
+        <label class="mdl-textfield__label" for="firstname">Card holders name</label>
       </div>
     </div>
   </div>

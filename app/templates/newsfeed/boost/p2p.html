@@ -1,5 +1,5 @@
-<div class="mdl-card__supporting-text mdl-color-text--blue-grey-50" [hidden]="!errorMessage">
-  {{errorMessage}}
+<div class="mdl-card__supporting-text mdl-color-text--red" [hidden]="!error">
+  {{error}}
 </div>
 
 <div class="mdl-card__supporting-text" [hidden]="!notEnoughPoints">
@@ -32,7 +32,7 @@
     </div>
   </div>
 
-  <div *ng-if="destination">
+  <div *ng-if="destination && !complete">
 
     <div class="mdl-grid minds-boost-container m-p2p-options" *ng-if="pro && !option">
       <div class="mdl-cell mdl-cell--6-col">
@@ -68,7 +68,8 @@
     </div>
 
     <div *ng-if="option == 'pro'" class="mdl-grid minds-boost-points-wrapper">
-      <div class="mdl-cell mdl-cell--11-col minds-boost-points-input">
+
+      <div class="mdl-cell mdl-cell--11-col minds-boost-points-input" [hidden]="stage == 3 || stage == 4">
         <div class="cell">
           <input
             type="number"
@@ -80,10 +81,23 @@
     				<label>$ USD</label>
     			</div>
       </div>
-      <div class="mdl-cell mdl-cell--1-col minds-boost-points-input">
-         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="boost()" [hidden]="inProgress">Boost!</button>
+      <div class="mdl-cell mdl-cell--1-col minds-boost-points-input" [hidden]="stage != 1">
+         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="stage = 2" [hidden]="inProgress">Boost!</button>
       </div>
+
+      <minds-payments-checkout (inputed)="boostPro($event)" [hidden]="stage != 2"></minds-payments-checkout>
+
+      <div [hidden]="stage != 3" style="width:100%; text-align:center;">
+        <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
+        <p>Please wait a moment...</p>
+      </div>
+
+      <div [hidden]="stage != 4">
+        You boost has been submitted to {{destination.username}}
+      </div>
+
     </div>
+
   </div>
 
  </div>

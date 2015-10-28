@@ -26,15 +26,18 @@
   }
 }
 
+
 .minds-purchase-card{
   width:100%;
   min-height:0;
+  padding:$minds-padding*2;
 
   .minds-purchase-vendors{
     span{
-      font-size:16px;
-      padding:16px;
+      font-size:13px;
+      padding:8px;
       cursor:pointer;
+      text-transform:uppercase;
     }
   }
 

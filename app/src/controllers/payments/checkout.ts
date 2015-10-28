@@ -1,4 +1,4 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
 import { Client } from 'src/services/api';
 import { WalletService } from 'src/services/wallet';
@@ -11,7 +11,6 @@ interface CreditCard {
   number?: number,
   type?: string,
   name?: string,
-  name2?: string,
   sec?: number,
   month?: number | string,
   year?: number | string
@@ -20,11 +19,20 @@ interface CreditCard {
 @Component({
   selector: 'minds-payments-checkout',
   providers: [ Client ],
-  inputs: ['amount', 'merchant_guid']
+  inputs: ['amount', 'merchant_guid'],
+  outputs: ['inputed', 'done']
 })
 @View({
   template: `
+
+    <div class="mdl-card mdl-shadow--2dp m-payments-options" style="margin-bottom:8px;">
+      <div class="mdl-card__supporting-text">
+        <div id="paypal-btn"></div>
+      </div>
+    </div>
+
     <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation"></minds-checkout-card-input>
+
     <p [hidden]="!inProgress">
       Please wait a moment...
     </p>
@@ -42,10 +50,14 @@ export class Checkout {
   error : string = "";
   card;
 
+  inputed : EventEmitter = new EventEmitter;
+  done : EventEmitter = new EventEmitter;
+
   amount : number = 0;
   merchant_guid;
 
   braintree_client;
+  bt_checkout;
   nonce : string = "";
 
 	constructor(public client: Client){
@@ -53,15 +65,30 @@ export class Checkout {
 	}
 
   init(){
-
-    System.import('lib/braintree.js')
-     .then((braintree : any) => {
-       var self = this;
+    System.import('lib/braintree.js').then((braintree : any) => {
         this.client.get('api/v1/payments/braintree/token')
-         .then((response : any) => {
-            self.braintree_client = new braintree.api.Client({ clientToken: response.token });
+         .then((response : any) => { this.setupClient(braintree, response.token); });
+      });
+  }
+
+  setupClient(braintree, token){
+    this.braintree_client = new braintree.api.Client({ clientToken: token });
+
+    braintree.setup(token, "custom", {
+      onReady: (integration) => {
+        this.bt_checkout = integration;
+      },
+      onPaymentMethodReceived: (payload) => {
+        this.inputed.next(payload.nonce);
+        this.bt_checkout.teardown(() => {
+          this.bt_checkout = null;
         });
-     });
+      },
+      paypal: {
+        singleUse: true,
+        container: 'paypal-btn'
+      }
+    });
   }
 
   setCard(card){
@@ -71,16 +98,21 @@ export class Checkout {
   }
 
   getCardNonce(){
-    console.log(this.braintree_client);
+
     this.braintree_client.tokenizeCard({
       number: this.card.number,
-      expirationDate: this.card.month + '/' + this.card.year
+      expirationDate: this.card.month + '/' + this.card.year,
+      //cardHolderName: this.card.name,
+      //cardType: this.card.type,
+      //cvv: this.card.sec
     }, (err, nonce) => {
       if(err){
         this.error = err;
       }
+      console.log(err, nonce);
       this.nonce = nonce;
-      this.purchase();
+      this.inputed.next(nonce);
+  //    this.purchase();
     });
   }
 
