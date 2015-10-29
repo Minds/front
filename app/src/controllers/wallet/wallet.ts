@@ -7,8 +7,8 @@ import { MDL_DIRECTIVES } from 'src/directives/material';
 import { InfiniteScroll } from 'src/directives/infinite-scroll';
 
 import { WalletService } from 'src/services/wallet';
-import { WalletTransactions } from './transactions';
-import { WalletPurchase } from './purchase';
+import { WalletTransactions } from './transactions/transactions';
+import { WalletPurchase } from './purchase/purchase';
 
 import { Merchants } from './merchants/merchants';
 
@@ -18,7 +18,7 @@ import { Merchants } from './merchants/merchants';
   bindings: [ MindsTitle ]
 })
 @View({
-  templateUrl: 'templates/wallet/wallet.html',
+  templateUrl: 'src/controllers/wallet/wallet.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, InfiniteScroll,
     WalletTransactions, WalletPurchase, Merchants]
 })

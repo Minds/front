@@ -5,7 +5,7 @@ import { SessionFactory } from 'src/services/session';
 import { Material } from 'src/directives/material';
 import { AutoGrow } from 'src/directives/autogrow';
 import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { CommentCard } from 'src/controllers/cards/comment';
+import { CommentCard } from 'src/controllers/cards/comment/comment';
 import { TagsPipe } from 'src/pipes/tags';
 
 @Component({
@@ -14,7 +14,7 @@ import { TagsPipe } from 'src/pipes/tags';
   inputs: ['_object : object', '_reversed : reversed', 'limit']
 })
 @View({
-  templateUrl: 'templates/comments/list.html',
+  templateUrl: 'src/controllers/comments/list.html',
   directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow ],
   pipes: [ TagsPipe ]
 })

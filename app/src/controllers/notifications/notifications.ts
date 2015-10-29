@@ -2,9 +2,9 @@ import { Component, View, NgFor, NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault, 
 import { Router, RouterLink } from 'angular2/router';
 import { MindsTitle } from 'src/services/ux/title';
 import { Client } from 'src/services/api';
-import { SessionFactory } from '../../services/session';
+import { SessionFactory } from 'src/services/session';
 import { Material } from 'src/directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { InfiniteScroll } from 'src/directives/infinite-scroll';
 
 @Component({
   selector: 'minds-notifications',
@@ -12,7 +12,7 @@ import { InfiniteScroll } from '../../directives/infinite-scroll';
   bindings: [ MindsTitle ]
 })
 @View({
-  templateUrl: 'templates/notifications/list.html',
+  templateUrl: 'src/controllers/notifications/list.html',
   directives: [ NgFor, NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault, NgClass, RouterLink, Material, InfiniteScroll ]
 })
 

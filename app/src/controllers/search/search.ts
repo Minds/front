@@ -3,7 +3,7 @@ import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/route
 import { Client, Upload } from 'src/services/api';
 import { MindsTitle } from 'src/services/ux/title';
 import { Material } from 'src/directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { InfiniteScroll } from 'src/directives/infinite-scroll';
 import { CARDS } from 'src/controllers/cards/cards';
 import { BlogCard } from 'src/plugins/blog/blog-card';
 
@@ -13,7 +13,7 @@ import { BlogCard } from 'src/plugins/blog/blog-card';
   bindings: [ MindsTitle ]
 })
 @View({
-  templateUrl: 'templates/search/list.html',
+  templateUrl: 'src/controllers/search/list.html',
   directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
     CARDS, BlogCard, InfiniteScroll ]
 })

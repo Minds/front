@@ -3,8 +3,8 @@ import { Router, RouteParams, RouterLink } from 'angular2/router';
 import { MindsTitle } from 'src/services/ux/title';
 import { Client } from 'src/services/api';
 import { Material } from 'src/directives/material';
-import { SessionFactory } from '../../services/session';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { SessionFactory } from 'src/services/session';
+import { InfiniteScroll } from 'src/directives/infinite-scroll';
 import { CARDS } from 'src/controllers/cards/cards';
 
 @Component({
@@ -13,7 +13,7 @@ import { CARDS } from 'src/controllers/cards/cards';
   bindings: [ MindsTitle ]
 })
 @View({
-  templateUrl: 'templates/discovery/discovery.html',
+  templateUrl: 'src/controllers/discovery/discovery.html',
   directives: [ RouterLink, NgFor, NgIf, Material, InfiniteScroll, NgClass, CARDS ]
 })
 

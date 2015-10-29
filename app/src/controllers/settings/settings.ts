@@ -5,10 +5,10 @@ import { MindsTitle } from 'src/services/ux/title';
 import { SessionFactory } from 'src/services/session';
 import { Material } from 'src/directives/material';
 
-import { SettingsGeneral } from './general';
-import { SettingsStatistics } from './statistics';
-import { SettingsDisableChannel } from './disable';
-import { SettingsTwoFactor } from './twoFactor';
+import { SettingsGeneral } from './general/general';
+import { SettingsStatistics } from './statistics/statistics';
+import { SettingsDisableChannel } from './disable/disable';
+import { SettingsTwoFactor } from './two-factor/two-factor';
 
 @Component({
   selector: 'minds-settings',
@@ -16,7 +16,7 @@ import { SettingsTwoFactor } from './twoFactor';
   bindings: [ MindsTitle ]
 })
 @View({
-  templateUrl: 'templates/settings/settings.html',
+  templateUrl: 'src/controllers/settings/settings.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink, SettingsGeneral, SettingsStatistics, SettingsDisableChannel, SettingsTwoFactor]
 })
 
