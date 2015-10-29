@@ -31,7 +31,7 @@ export class BoostP2P{
 
   destination; //the user object
   points : number = 0;
-  usd : number;
+  bid: number;
   pro: boolean = false;
   option : string;
   stage : number = 1;
@@ -58,58 +58,13 @@ export class BoostP2P{
       });
   }
 
-  boost() {
-    var self =  this;
-    this.inProgress = true;
-    this.notEnoughPoints = false;
-    this.error = "";
-
-    if (this.points % 1 !== 0) {
-      this.points = Math.round(this.points);
-      this.error = 'Sorry, you must enter a whole point.';
-      this.inProgress = false;
-      return false;
-    }
-
-    if (this.points === 0 || !this.points) {
-      this.points = 1;
-      this.error ='Sorry, you must enter a whole point.';
-      this.inProgress = false;
-      return false;
-    }
-
-    if (!this.checkBalance() || !this.destination){
-      this.inProgress = false;
-      return;
-    }
-
-    this.client.post('api/v1/boost/channel/' + this.activity.guid + '/' + this.activity.owner_guid, {
-        impressions: this.points,
-        destination: this.destination.guid
-      })
-      .then((success : MindsBoostResponse) => {
-        this.inProgress = false;
-        if (success.status == 'success') {
-          this._done.next(true);
-          return true;
-        } else {
-          return false;
-        }
-
-      })
-      .catch((e) => {
-        this.error = 'Sorry, something went wrong.';
-        return false;
-      });
-
-  }
-
-  boostPro(nonce){
+  boost(nonce){
     var self = this;
     this.stage = 3;
 
-    this.client.post('api/v1/boost/pro/' + this.activity.guid + '/' + this.activity.owner_guid, {
-        bid: this.usd,
+    this.client.post('api/v1/boost/peer/' + this.activity.guid + '/' + this.activity.owner_guid, {
+        type: this.option,
+        bid: this.bid,
         destination: this.destination.guid,
         nonce: nonce
       })
@@ -118,6 +73,7 @@ export class BoostP2P{
         this.stage = 4;
         setTimeout(() => {
           self._done.next(true);
+          this.stage = 1;
         },1000);
 
       })

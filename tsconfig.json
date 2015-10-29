@@ -53,6 +53,7 @@
         "app/src/controllers/boosts/boost/boost.ts",
         "app/src/controllers/boosts/boost/full-network/full-network.ts",
         "app/src/controllers/boosts/boost/p2p/p2p.ts",
+        "app/src/controllers/boosts/boosts.ts",
         "app/src/controllers/capture/capture.ts",
         "app/src/controllers/cards/activity/activity.ts",
         "app/src/controllers/cards/cards.ts",

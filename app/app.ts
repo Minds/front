@@ -12,6 +12,7 @@ import {Register} from './src/controllers/home/register/register';
 import {ForgotPassword} from './src/controllers/home/forgot-password/forgot-password';
 import {ComingSoon} from './src/controllers/home/comingsoon/comingsoon';
 import {Newsfeed, NewsfeedSingle} from './src/controllers/newsfeed/newsfeed';
+import {Boosts} from './src/controllers/boosts/boosts';
 import {Capture} from './src/controllers/capture/capture';
 import {Discovery} from './src/controllers/discovery/discovery';
 import {Channel, ChannelSubscribers, ChannelSubscriptions, ChannelEdit} from './src/controllers/channels/channel';
@@ -41,6 +42,8 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
   { path: '/newsfeed', component: Newsfeed, as: 'Newsfeed' },
   { path: '/newsfeed/:guid', component: NewsfeedSingle, as: 'Activity' },
   { path: '/capture', component: Capture, as: 'Capture' },
+
+  { path: '/boosts', component: Boosts, as: 'Boosts' },
 
   { path: '/discovery/:filter', component: Discovery, as: 'Discovery'},
   { path: '/discovery/:filter/:type', component: Discovery, as: 'Discovery'},
