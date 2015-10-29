@@ -39,8 +39,8 @@
         <div class="m-boost-admin-state"><i class="material-icons">access_time</i> {{boost.state}}</div>
 
         <div class="m-boost-admin-buttons">
-          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(entity)" *ng-if="boost.state == 'created'">Accept</button>
-          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(entity)" *ng-if="boost.state == 'created'">Reject</button>
+          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost)" *ng-if="boost.state == 'created'">Accept</button>
+          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost)" *ng-if="boost.state == 'created'">Reject</button>
         </div>
 
         <span class="impressions">

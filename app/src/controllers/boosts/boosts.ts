@@ -57,5 +57,24 @@ export class Boosts{
       })
   }
 
+  accept(boost){
+    this.client.put('api/v1/boost/peer/' + boost.guid)
+      .then(response => {
+
+      })
+      .catch(e => {
+
+      });
+  }
+
+  reject(boost){
+    this.client.delete('api/v1/boost/peer/' + boost.guid)
+      .then(response => {
+
+      })
+      .catch(e => {
+
+      });
+  }
 
 }
