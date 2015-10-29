@@ -17,7 +17,7 @@ import { MindsBoostRateResponse } from 'src/interfaces/responses';
   outputs: ['_done: done']
 })
 @View({
-  templateUrl: 'src/controllers/newsfeed/boost/p2p/p2p.html',
+  templateUrl: 'src/controllers/boosts/boost/p2p/p2p.html',
   directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink, Checkout]
 })
 
@@ -109,7 +109,7 @@ export class BoostP2P{
     this.stage = 3;
 
     this.client.post('api/v1/boost/pro/' + this.activity.guid + '/' + this.activity.owner_guid, {
-        points: this.points,
+        bid: this.usd,
         destination: this.destination.guid,
         nonce: nonce
       })

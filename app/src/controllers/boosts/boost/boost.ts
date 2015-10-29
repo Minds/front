@@ -16,7 +16,7 @@ import { BoostP2P} from './p2p/p2p';
   events: ['_done: done']
 })
 @View({
-  templateUrl: 'src/controllers/newsfeed/boost/boost.html',
+  templateUrl: 'src/controllers/boosts/boost/boost.html',
   directives: [ CORE_DIRECTIVES, Material, RouterLink, BoostFullNetwork, BoostP2P]
 })
 

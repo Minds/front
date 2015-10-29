@@ -7,7 +7,7 @@ import { AutoGrow } from 'src/directives/autogrow';
 import { Remind } from '../remind/remind';
 import { BUTTON_COMPONENTS } from 'src/components/buttons';
 import { MindsVideo } from 'src/components/video';
-import { Boost } from 'src/controllers/newsfeed/boost/boost';
+import { Boost } from 'src/controllers/boosts/boost/boost';
 import { Comments } from 'src/controllers/comments/comments';
 import { TagsPipe } from 'src/pipes/tags';
 import { TagsLinks } from 'src/directives/tags';

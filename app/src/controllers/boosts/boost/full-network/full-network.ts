@@ -14,7 +14,7 @@ import { MindsBoostRateResponse } from 'src/interfaces/responses';
   events: ['_done: done']
 })
 @View({
-  templateUrl: 'src/controllers/newsfeed/boost/full-network/full-network.html',
+  templateUrl: 'src/controllers/boosts/boost/full-network/full-network.html',
   directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink]
 })
 
