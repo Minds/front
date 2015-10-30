@@ -1,4 +1,4 @@
-<div class="mdl-grid" style="max-width:720px">
+<div class="mdl-cell mdl-cell--12-col">
 
     <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box" style="min-height:0;" [hidden]="!errorMessage">
         <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
@@ -47,14 +47,14 @@
               <input class="mdl-textfield__input"
                       type="password"
                       id="password2"
-                      #password
-                      (keydown.enter)="register(username, password, email)"
+                      #password2
+                      (keydown.enter)="register(username, password, password2, email)"
                   />
               <label class="mdl-textfield__label mdl-color-text--blue-grey-50" for="password2">Password (confirm) </label>
         </div>
         <div></div>
 
-        <button class="mdl-button mdl-button--raised mdl-color--blue-grey-200" (click)="register(username, password, email);" [disabled]="inProgress">
+        <button class="mdl-button mdl-button--raised mdl-color--blue-grey-200" (click)="register(username, password, password2, email);" [disabled]="inProgress">
             Signup
         </button>
 
