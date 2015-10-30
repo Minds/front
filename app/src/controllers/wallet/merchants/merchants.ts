@@ -72,6 +72,7 @@ export class Merchants {
     this.client.post('api/v1/merchant/onboard', this.onboardForm.value)
       .then((response : any) => {
         this.isMerchant = true;
+        window.Minds.user.merchant = true;
       })
       .catch((e) => {
         self.error = e.message;
