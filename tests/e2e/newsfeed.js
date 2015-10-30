@@ -1,7 +1,5 @@
 describe('testing newsfeed', () => {
-  var subject;
-  var result;
-  
+
   browser.get('/newsfeed');
 
   beforeEach(function() {
@@ -9,40 +7,34 @@ describe('testing newsfeed', () => {
   });
 
   afterEach(function() {
-    expect(subject).toEqual(result);
   });
 
   it('should have a title', function(){
-    subject = browser.getTitle();
-    result  = 'Newsfeed | Minds';
+    expect(browser.getTitle()).toEqual("Newsfeed | Minds");
   });
 
   it('should have poster', function() {
-    subject = element(by.css('minds-newsfeed-poster')).isPresent();
-    result  = true;
+    expect(element(by.css('minds-newsfeed-poster')).isPresent()).toEqual(true);
   });
 
   it('should have activity list', function(){
-    subject = element(by.css('minds-activity.mdl-card')).isPresent();
-    result  = true;
+    expect(element(by.css('minds-activity.mdl-card')).isPresent()).toEqual(true);
   });
 
   it('should have user card', function(){
-    subject = element(by.css('minds-card-user')).isPresent();
-    result  = true;
+    expect(element(by.css('minds-card-user')).isPresent()).toEqual(true);
   });
 
   it('should have analytics', function(){
-    subject = element(by.css('minds-analytics-impressions')).isPresent();
-    result  = true;
+    expect(element(by.css('minds-analytics-impressions')).isPresent()).toEqual(true);
   });
 
   it('should post', function(){
-    result = 'test post';
-    element(by.id('message')).sendKeys(result);
+    var post = 'test post';
+    element(by.id('message')).sendKeys(post);
     element(by.css('.mdl-card__actions .mdl-button')).click();
     var postContainer = element.all(by.css('minds-activity .mdl-card__supporting-text.message')).get(0);
-    subject = postContainer.getText();
+    expect(postContainer.getText()).toEqual(post);
   });
 
 });

@@ -1,28 +1,24 @@
 describe('testing gatherings', () => {
-  var subject;
-  var result;
 
   beforeEach(function() {
     browser.get('/messenger');
   });
 
   afterEach(function() {
-    expect(subject).toEqual(result);
+
   });
 
   it('should have title', function(){
-    subject = browser.getTitle();
-    result  = 'Messenger | Minds';
+    expect(browser.getTitle()).toEqual("Messenger | Minds");
   });
 
   it('should have conversation search', function() {
-    subject = element(by.id('gathering-search')).isPresent();
-    result  = true;
+    expect(element(by.id('gathering-search')).isPresent()).toEqual(true);
+
   });
 
   it('should have conversation list', function() {
-    subject = element(by.css('.minds-gatherings-conversation-list')).isPresent();
-    result  = true;
+    expect(element(by.css('.minds-gatherings-conversation-list')).isPresent()).toEqual(true);
   });
 
   it('should configure chat', function() {
@@ -37,8 +33,7 @@ describe('testing gatherings', () => {
       }
     });
 
-    subject = password1.isPresent();
-    result  = false;
+    expect(password1.isPresent()).toEqual(false);
   });
 
   it('should unlock chat', function() {
@@ -51,8 +46,7 @@ describe('testing gatherings', () => {
       }
     });
 
-    subject = password.isPresent();
-    result  = false;
+    expect(password.isPresent()).toEqual(false);
   });
 
 });

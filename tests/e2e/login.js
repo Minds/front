@@ -1,6 +1,4 @@
 describe('testing the login', () => {
-  var subject;
-  var result;
   var usernameTextField = element.all(by.id('username')).get(1);
   var passwordTextField = element.all(by.id('password')).get(1);
   var loginButton = element.all(by.css('.mdl-button')).get(3);
@@ -11,40 +9,33 @@ describe('testing the login', () => {
   });
 
   afterEach(function() {
-    expect(subject).toEqual(result);
   });
 
   it('should have a title', function(){
-    subject = browser.getTitle();
-    result  = 'Login | Minds';
+    expect(browser.getTitle()).toEqual("Login | Minds");
   });
 
   it('should have username', function() {
-    subject = usernameTextField.isPresent();
-    result  = true;
+    expect(usernameTextField.isPresent()).toEqual(true);
   });
 
   it('should have password', function(){
-    subject = passwordTextField.isPresent();
-    result  = true;
+    expect(passwordTextField.isPresent()).toEqual(true);
   });
 
   it('should have forgot password', function(){
-    subject = forgotPasswordButton.isPresent();
-    result  = true;
+    expect(forgotPasswordButton.isPresent()).toEqual(true);
   });
 
   it('should have login button', function(){
-    subject = loginButton.isPresent();
-    result  = true;
+    expect(loginButton.isPresent()).toEqual(true);
   });
 
   it('should login', function(){
     usernameTextField.sendKeys('mindstestuser');
     passwordTextField.sendKeys('pass123');
     loginButton.click();
-    subject = browser.getTitle();
-    result  = 'Newsfeed | Minds';
+    expect(browser.getTitle()).toEqual("Newsfeed | Minds");
   });
 
 });

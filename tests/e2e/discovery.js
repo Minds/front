@@ -1,7 +1,4 @@
 describe('testing discovery', () => {
-  var subject;
-  var result;
-
 
   browser.get('/discovery/suggested');
 
@@ -10,37 +7,31 @@ describe('testing discovery', () => {
   });
 
   afterEach(function() {
-    expect(subject).toEqual(result);
   });
 
   it('should have title', function(){
     browser.get('/discovery/suggested');
-    subject = browser.getTitle();
-    result  = 'Discovery | Minds';
+    expect(browser.getTitle()).toEqual("Discovery | Minds");
   });
 
   it('suggested should show channels', function() {
     browser.get('/discovery/suggested');
-    subject = element(by.css('.mdl-tabs__tab.is-active')).getText();
-    result  = 'CHANNELS';
+    expect(element(by.css('.mdl-tabs__tab.is-active')).getText()).toEqual("CHANNELS");
   });
 
   it('trending should show images', function() {
     browser.get('/discovery/trending');
-    subject = element(by.css('.mdl-tabs__tab.is-active')).getText();
-    result  = 'IMAGES';
+    expect(element(by.css('.mdl-tabs__tab.is-active')).getText()).toEqual("IMAGES");
   });
 
   it('featured should show channels', function() {
     browser.get('/discovery/featured');
-    subject = element(by.css('.mdl-tabs__tab.is-active')).getText();
-    result  = 'CHANNELS';
+    expect(element(by.css('.mdl-tabs__tab.is-active')).getText()).toEqual("CHANNELS");
   });
 
   it('owner should show everything', function() {
     browser.get('/discovery/owner');
-    subject = element.all(by.css('.mdl-tabs__tab.is-active')).count();
-    result  = 4;
+    expect(element.all(by.css('.mdl-tabs__tab.is-active')).count()).toEqual(4);
   });
 
 });
