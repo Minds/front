@@ -90,6 +90,7 @@ minds-app{
     position: fixed;
     margin-top: $layout-header-height;
     height: calc(100% - 64px);
+
     width:$layout-sidebar-width;
     transform: translateX(0px);
     box-shadow:0;
@@ -110,8 +111,7 @@ minds-app{
     transition-timing-function: cubic-bezier(.4,0,.2,1);
     transition-property: transform;
     color: #424242;
-    overflow: visible;
-    overflow-y: auto;
+    overflow: hidden;
     z-index: 5;
 
     @media screen and (min-width: $min-tablet){
