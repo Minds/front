@@ -1,4 +1,4 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from 'angular2/angular2';
+import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter, NgZone} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
 import { Client } from 'src/services/api';
 import { Material } from 'src/directives/material';
@@ -45,7 +45,7 @@ export class BoostP2P{
   notEnoughPoints : boolean = false;
   rate : MindsBoostRateResponse;
 
-  constructor(public client: Client){
+  constructor(public client: Client, public nz: NgZone){
     this.getRates();
   }
 
@@ -59,8 +59,11 @@ export class BoostP2P{
   }
 
   boost(nonce){
-    var self = this;
-    this.stage = 3;
+
+    this.nz.run(() => {
+      this.error = '';
+      this.stage = 3;
+    });
 
     this.client.post('api/v1/boost/peer/' + this.activity.guid + '/' + this.activity.owner_guid, {
         type: this.option,
@@ -72,14 +75,19 @@ export class BoostP2P{
         this.inProgress = false;
         this.stage = 4;
         setTimeout(() => {
-          self._done.next(true);
+          this._done.next(true);
           this.stage = 1;
         },1000);
 
       })
       .catch((e) => {
-        this.stage = 1;
-        this.error = e.message;
+        this.nz.run(() => {
+          this.stage = 2;
+          if(e.stage == 'transaction')
+            this.error = "Sorry, your payment failed. Please try again or use another card"
+          else
+            this.error = e.message;
+        });
       });
   }
 

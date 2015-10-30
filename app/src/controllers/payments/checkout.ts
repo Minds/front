@@ -25,20 +25,18 @@ interface CreditCard {
 @View({
   template: `
 
-    <div class="mdl-card mdl-shadow--2dp m-payments-options" style="margin-bottom:8px;">
+    <!--<div class="mdl-card mdl-shadow--2dp m-payments-options" style="margin-bottom:8px;">
       <div class="mdl-card__supporting-text">
         <div id="paypal-btn"></div>
       </div>
-    </div>
+    </div>-->
 
     <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation"></minds-checkout-card-input>
+    <div [hidden]="!inProgress" class="m-checkout-loading">
+      <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
+      <p>Capturing card details...</p>
+    </div>
 
-    <p [hidden]="!inProgress">
-      Please wait a moment...
-    </p>
-    <p [hidden]="!confirmation">
-      Success.
-    </p>
   `,
   directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, CHECKOUT_COMPONENTS, InfiniteScroll ]
 })
@@ -74,7 +72,7 @@ export class Checkout {
   setupClient(braintree, token){
     this.braintree_client = new braintree.api.Client({ clientToken: token });
 
-    braintree.setup(token, "custom", {
+    /*braintree.setup(token, "custom", {
       onReady: (integration) => {
         this.bt_checkout = integration;
       },
@@ -88,7 +86,7 @@ export class Checkout {
         singleUse: true,
         container: 'paypal-btn'
       }
-    });
+    });*/
   }
 
   setCard(card){
@@ -98,20 +96,23 @@ export class Checkout {
   }
 
   getCardNonce(){
-
+    this.inProgress = true;
     this.braintree_client.tokenizeCard({
       number: this.card.number,
       expirationDate: this.card.month + '/' + this.card.year,
       //cardHolderName: this.card.name,
       //cardType: this.card.type,
-      //cvv: this.card.sec
+      cvv: this.card.sec
     }, (err, nonce) => {
       if(err){
         this.error = err;
+        this.inProgress = false;
+        return false;
       }
       console.log(err, nonce);
       this.nonce = nonce;
       this.inputed.next(nonce);
+      this.inProgress = false;
   //    this.purchase();
     });
   }

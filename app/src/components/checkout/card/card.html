@@ -2,7 +2,7 @@
 
 
 
-  <div class="mdl-card__supporting-text mdl-grid">
+  <div class="mdl-card__supporting-text mdl-grid" [hidden]="inProgress">
     <div class="mdl-cell mdl-cell--6-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdl-textfield]>
         <input class="mdl-textfield__input"
@@ -67,33 +67,24 @@
         <label class="mdl-textfield__label" for="firstname">Card holders name</label>
       </div>
     </div>
+
+    <div class="mdl-cell mdl-cell--6-col m-checkout-confirm">
+      <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">
+        {{error}}
+      </div>
+      <button class="mdl-button mdl-button--colored mdl-button--raised"
+        [disabled]="!validate()"
+        (click)="confirm()"
+        >
+        Confirm
+      </button>
+    </div>
   </div>
 
-</div>
-
-<div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!inProgress">
-  <div class="mdl-card__supporting-text">
-    Please wait...
-  </div>
-  <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 </div>
 
 <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!confirmation">
   <div class="mdl-card__supporting-text">
     <h2>Complete</h2>
-  </div>
-</div>
-
-<div class="mdl-card mdl-shadow--2dp minds-purchase-card-confirm" [hidden]="confirmation">
-  <div class="mdl-card__actions">
-    <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">
-      {{error}}
-    </div>
-    <button class="mdl-button mdl-button--colored mdl-button--raised"
-      [disabled]="!validate()"
-      (click)="confirm()"
-      >
-      Confirm
-    </button>
   </div>
 </div>

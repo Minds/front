@@ -85,7 +85,10 @@
          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="stage = 2" [hidden]="inProgress">Boost!</button>
       </div>
 
-      <minds-payments-checkout (inputed)="boost($event)" [hidden]="stage != 2"></minds-payments-checkout>
+      <minds-payments-checkout (inputed)="boost($event);" [hidden]="stage != 2"></minds-payments-checkout>
+      <p class="m-checkout-hint mdl-color-text--blue-grey-300" [hidden]="stage != 2">
+        You won't be charged until your boost is accepted by @{{destination.username}}
+      </p>
 
       <div [hidden]="stage != 3" style="width:100%; text-align:center;">
         <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
@@ -93,7 +96,7 @@
       </div>
 
       <div [hidden]="stage != 4">
-        You boost has been submitted to {{destination.username}}
+        You boost has been submitted to @{{destination.username}}
       </div>
 
     </div>

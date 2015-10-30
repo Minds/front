@@ -9,11 +9,7 @@
     <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [hidden]="boosts.length > 0 || !inProgress"></div>
 
     <div class="mdl-card__supporting-text" [hidden]="inProgress || moreData">
-      There are no more boosts to approve
-    </div>
-
-    <div class="mdl-card__supporting-text" [hidden]="inProgress || moreData">
-      There are no more boosts to approve
+      You have no boosts in your {{filter}}
     </div>
 
     <div class="mdl-card mdl-shadow--4dp m-boost-admin" *ng-for="#boost of boosts; #i = index">
@@ -31,16 +27,23 @@
       <minds-card-user [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.type == 'user'"></minds-card-user>
       <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.type == 'activity'"></minds-activity>
 
-      <div class="mdl-card__supporting-text action-buttons m-boost-admin-tabs" *ng-if="filter == 'inbox'">
+      <div class="mdl-card__supporting-text action-buttons m-boost-admin-tabs">
+
+        <div class="m-boost-admin-destination" *ng-if="filter == 'outbox'">
+          <i class="material-icons">perm_identity</i>
+          <a [router-link]="['/Channel', {username: boost.destination.username}]">@{{boost.destination.username}}</a>
+        </div>
 
         <div class="m-boost-admin-bid mdl-color-text--green" [hidden]="boost.type != 'pro'"><i class="material-icons">attach_money</i> {{boost.bid}} USD</div>
         <div class="m-boost-admin-bid mdl-color-text--green" [hidden]="boost.type != 'points'"><i class="material-icons">account_balance</i> {{boost.bid}} points</div>
 
-        <div class="m-boost-admin-state"><i class="material-icons">access_time</i> {{boost.state}}</div>
+        <div class="m-boost-admin-state"><i class="material-icons">hourglass_empty</i> {{boost.state}}</div>
 
-        <div class="m-boost-admin-buttons">
-          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost)" *ng-if="boost.state == 'created'">Accept</button>
-          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost)" *ng-if="boost.state == 'created'">Reject</button>
+        <div class="m-boost-admin-state"><i class="material-icons">access_time</i> {{boost.time_created * 1000 | date: 'short'}}</div>
+
+        <div class="m-boost-admin-buttons" *ng-if="filter == 'inbox' && boost.state == 'created'">
+          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost, i)">Accept</button>
+          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost, i)">Reject</button>
         </div>
 
         <span class="impressions">

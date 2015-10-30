@@ -27,6 +27,7 @@ export class CardInput {
 
   _confirm : EventEmitter = new EventEmitter;
   card : CreditCard = <CreditCard>{ month: 'mm', year: 'yyyy'};
+  inProgress : boolean = false;
 
   constructor(public client : Client) {
   }

@@ -57,23 +57,19 @@ export class Boosts{
       })
   }
 
-  accept(boost){
+  accept(boost, i){
+    this.boosts[i].state = 'accepted';
     this.client.put('api/v1/boost/peer/' + boost.guid)
-      .then(response => {
-
-      })
       .catch(e => {
-
+        this.boosts[i].state = 'created';
       });
   }
 
-  reject(boost){
+  reject(boost, i){
+    this.boosts[i].state = 'rejected';
     this.client.delete('api/v1/boost/peer/' + boost.guid)
-      .then(response => {
-
-      })
       .catch(e => {
-
+        this.boosts[i].state = 'created';
       });
   }
 

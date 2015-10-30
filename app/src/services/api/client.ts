@@ -43,7 +43,7 @@ export class Client {
 				)
 				.subscribe(res => {
 						if(res.status != 200){
-							return reject(res.json());
+							return reject(res);
 						}
 						var data = res.json();
 						if(data.status != 'success')
