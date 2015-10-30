@@ -84,7 +84,7 @@
               <option *ng-for="#l of licenses" [value]="l.value">{{l.text}}</option>
           </select>
 
-          <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="publish()" [disabled]="!uploads">
+          <button class="mdl-button mdl-button--raised mdl-button--colored m-capture-save-to-album-button" (click)="publish()" [disabled]="!uploads">
             <span>Save to album</span>
           </button>
       </div>
