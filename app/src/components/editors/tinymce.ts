@@ -31,11 +31,11 @@ export class MindsTinymce {
       selector:'minds-tinymce > textarea',
       format: 'raw',
       menubar: false,
-      toolbar: "undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image media",
+      toolbar: "styleselect | bold italic underline textcolor | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | code",
       statusbar: false,
       plugins: [
 	         "advlist autolink link image lists preview hr anchor pagebreak",
-	         "media nonbreaking",
+	         "media nonbreaking code",
 	         "table directionality autoresize"
 	    ],
       setup: (ed) => {
