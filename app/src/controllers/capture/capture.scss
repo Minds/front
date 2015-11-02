@@ -109,12 +109,11 @@ minds-capture{
         border-right: 1px solid #DDD;
         background:rgba(255,255,255,0.2);
         color:#FFF;
-        width: 200px;
       }
 
       button{
         float:left;
-        margin-left: 2px;
+        margin-left: $minds-margin;
       }
     }
   }
