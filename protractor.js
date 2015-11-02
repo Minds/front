@@ -20,7 +20,13 @@ exports.config = {
     browser.manage().addCookie('beta', 'angular2', '/', 'new.minds.com');
 	},
 	specs: [
-		'./tests/e2e/*.js'
+		'./tests/e2e/app.js',
+		'./tests/e2e/login.js',
+		'./tests/e2e/newsfeed.js',
+		'./tests/e2e/discovery.js',
+		'./tests/e2e/blog.js',
+		'./tests/e2e/gatherings.js',
+		'./tests/e2e/groups.js'
 	],
 	exclude: [],
   multiCapabilities: aliases["DESKTOP"].map(function(alias){
