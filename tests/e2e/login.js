@@ -2,12 +2,14 @@ import { Helpers } from './helpers';
 let h = new Helpers();
 
 describe('testing the login', () => {
+
   var usernameTextField = element.all(by.id('username')).get(1);
   var passwordTextField = element.all(by.id('password')).get(1);
   var loginButton = element.all(by.css('.mdl-button')).get(3);
   var forgotPasswordButton = element(by.css('.minds-reset-password-link'));
 
   beforeEach(function() {
+    h.logout();
     browser.get('/login');
   });
 

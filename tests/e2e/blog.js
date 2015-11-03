@@ -1,9 +1,18 @@
+import { Helpers } from './helpers';
+
+let h = new Helpers();
+
 describe('testing blogs', () => {
 
-  beforeEach(function() {
-  });
+  beforeAll(() => {
+    h.login();
+  })
 
-  afterEach(function() {
+  it('should not allow access to blog creator if not loggedin', () => {
+    h.logout();
+    browser.get('/blog/edit/new');
+    expect(browser.getCurrentUrl()).toBe(browser.baseUrl + 'login');
+    h.login();
   });
 
   it('featured should have title', function(){
