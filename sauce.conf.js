@@ -92,8 +92,7 @@ var customLaunchers = {
   'SL_EDGE': {
     base: 'SauceLabs',
     browserName: 'microsoftedge',
-    platform: 'Windows 10',
-    version: '20.10240'
+    platform: 'Windows 10'
   },
   'SL_ANDROID4.1': {
     base: 'SauceLabs',
@@ -129,10 +128,10 @@ var customLaunchers = {
 
 var aliases = {
   'ALL': Object.keys(customLaunchers).filter(function(item) {return customLaunchers[item].base == 'SauceLabs';}),
-  'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_IE9', 'SL_IE10', 'SL_IE11', 'SL_EDGE', 'SL_SAFARI7', 'SL_SAFARI8', 'SL_SAFARI9'],
+  'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_SAFARI7', 'SL_SAFARI8', 'SL_SAFARI9'],
   'MOBILE': ['SL_ANDROID4.1', 'SL_ANDROID4.2', 'SL_ANDROID4.3', 'SL_ANDROID4.4', 'SL_ANDROID5.1', 'SL_IOS7', 'SL_IOS8', 'SL_IOS9'],
   'ANDROID': ['SL_ANDROID4.1', 'SL_ANDROID4.2', 'SL_ANDROID4.3', 'SL_ANDROID4.4', 'SL_ANDROID5.1'],
-  'IE': ['SL_IE9', 'SL_IE10', 'SL_IE11'],
+  'IE': ['SL_EDGE', 'SL_IE11'],
   'CHROME': ['SL_CHROME'],
   'IOS': ['SL_IOS7', 'SL_IOS8', 'SL_IOS9'],
   'SAFARI': ['SL_SAFARI7', 'SL_SAFARI8', 'SL_SAFARI9'],
