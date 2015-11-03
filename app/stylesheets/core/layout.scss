@@ -120,5 +120,9 @@ minds-app{
     &.is-visible{
       transform: translateX(0);
     }
+
+    nav{
+      width:$layout-sidebar-width;
+    }
   }
 }
