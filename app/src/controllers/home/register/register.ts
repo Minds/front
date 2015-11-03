@@ -27,7 +27,20 @@ export class Register {
 
 	register(username, password, passwordConfirm, email){
     this.errorMessage = "";
-    if (password != passwordConfirm){
+
+    if (!username.value || !username.value.trim()){
+      this.errorMessage = "Username cannot be empty.";
+      return;
+    }
+    if (!email.value || !email.value.trim()){
+      this.errorMessage = "Email cannot be empty.";
+      return;
+    }
+    if (!password.value || !password.value.trim()){
+      this.errorMessage = "Password cannot be empty.";
+      return;
+    }
+    if(password.value != passwordConfirm.value){
         this.errorMessage = "Passwords must match.";
         return;
     }
