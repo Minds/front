@@ -225,9 +225,11 @@ gulp.task('build.plugins.scss', function () {
  * Build CSS from SCSS
  */
 gulp.task('build.scss', ['build.plugins.scss'], function () {
-	  var result = gulp.src('./app/**/*scss')
+	  var result = gulp.src('./app/**/*.scss')
       .pipe(cssGlobbing({  extensions: ['.scss'] }))
-	    .pipe(sass().on('error', sass.logError))
+	    .pipe(sass({
+        includePaths:['./app/stylesheets']
+      }).on('error', sass.logError))
       .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))
 	    .pipe(gulp.dest(PATH.dest.dev.all));
 

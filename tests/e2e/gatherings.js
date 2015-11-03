@@ -26,6 +26,9 @@ describe('testing gatherings', () => {
 
   it('should configure chat', function() {
 
+    browser.executeScript("window.localStorage.clear()");
+    browser.get('/messenger?dry-run=true');
+
     //progress is hidden
     expect(element(by.css('.m-messenger-inProgress')).isDisplayed()).toEqual(false);
 

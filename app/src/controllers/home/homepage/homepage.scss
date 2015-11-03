@@ -1,4 +1,4 @@
-@import 'defaults.scss';
+@import "defaults";
 
 .minds-homepage-banner{
   position:relative;
@@ -6,12 +6,14 @@
   overflow:hidden;
 
   .video{
+    height:100%;
+    width:100%;
     video{
       min-height:100%;
-      width:100%;
+      min-width:100%;
       background-image:url('assets/videos/traffic-1/traffic-1.png');
     }
-    @media (min-width: 1600px){
+  /*  @media (min-width: 1600px){
       video{
         height: auto;
         width: 100%;
@@ -20,7 +22,7 @@
     @media (max-height: 800px){
       height:auto;
       width:100%;
-    }
+    }*/
   }
 
   .overlay{
