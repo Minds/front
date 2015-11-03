@@ -87,7 +87,7 @@
       <div class="minds-spacer-2x"></div>
 
       <!-- Media  -->
-      <div class="mdl-card mdl-shadow--2dp">
+      <div class="mdl-card mdl-shadow--2dp" [hidden]="media.length == 0">
 
         <div class="mdl-card__title">
           <h2 class="mdl-card__title-text">Media</h2>
@@ -109,7 +109,7 @@
       <div class="minds-spacer-2x"></div>
 
       <!-- Blogs  -->
-      <div class="mdl-card mdl-shadow--2dp">
+      <div class="mdl-card mdl-shadow--2dp" [hidden]="blogs.length == 0">
 
         <div class="mdl-card__title">
           <h2 class="mdl-card__title-text">Blogs</h2>
