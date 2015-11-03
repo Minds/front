@@ -17,7 +17,8 @@ exports.config = {
 		// See https://github.com/angular/protractor/issues/1983
 		patchProtractorWait(browser);
     browser.driver.get(BASE_URL);
-    browser.manage().addCookie('beta', 'angular2', '/', 'new.minds.com');
+		if(BASE_URL == 'https://new.minds.com/')
+    	browser.manage().addCookie('beta', 'angular2', '/', 'new.minds.com');
 	},
 	specs: [
 		'./tests/e2e/helpers.js',
