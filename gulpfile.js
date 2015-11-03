@@ -169,11 +169,10 @@ function sauceDisconnect(done) {
   sauceInstance ? sauceInstance.close(done) : done();
 }
 
-gulp.task('test.e2e', [], function() {
+gulp.task('test.e2e', ['sauce-connect'], function() {
   var child = cp.spawn('node', ['node_modules/.bin/protractor'].concat(['protractor.js']), {
       stdio: [process.stdin, process.stdout, 'pipe']
     });
-
 });
 
 gulp.task('test', ['karma.start', 'test.e2e'], function() {

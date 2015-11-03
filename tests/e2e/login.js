@@ -1,3 +1,6 @@
+import { Helpers } from './helpers';
+let h = new Helpers();
+
 describe('testing the login', () => {
   var usernameTextField = element.all(by.id('username')).get(1);
   var passwordTextField = element.all(by.id('password')).get(1);
@@ -31,11 +34,11 @@ describe('testing the login', () => {
     expect(loginButton.isPresent()).toEqual(true);
   });
 
-  it('should login', function(){
-    usernameTextField.sendKeys('mindstestuser');
-    passwordTextField.sendKeys('pass123');
+  it('should throw an error on a bad login', function(){
+    usernameTextField.sendKeys('protractor');
+    passwordTextField.sendKeys('wrong pass');
     loginButton.click();
-    expect(browser.getTitle()).toEqual("Newsfeed | Minds");
+    //expect(browser.getTitle()).toEqual("Newsfeed | Minds");
   });
 
 });

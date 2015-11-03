@@ -47,11 +47,11 @@ var customLaunchers = {
     platform: 'OS X 10.10',
     version: '8'
   },
-  'SL_SAFARI8.1': {
+  'SL_SAFARI9': {
     base: 'SauceLabs',
     browserName: 'safari',
     platform: 'OS X 10.11',
-    version: '8.1'
+    version: '9'
   },
   'SL_IOS7': {
     base: 'SauceLabs',

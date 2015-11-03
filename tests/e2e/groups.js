@@ -1,18 +1,12 @@
 describe('testing groups', () => {
 
-  beforeEach(function() {
 
-  });
-
-  afterEach(function() {
-  });
-
-  it('featured should have title', function(){
+  it('fshould have featured title', function(){
     browser.get('/groups/featured');
     expect(browser.getTitle()).toEqual("Groups | Minds");
   });
 
-  it('member should have title', function(){
+  it('should have members title', function(){
     browser.get('/groups/member');
     expect(browser.getTitle()).toEqual("Groups | Minds");
   });
