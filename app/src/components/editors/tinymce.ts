@@ -18,8 +18,10 @@ declare var tinymce;
 export class MindsTinymce {
 
   editor : any;
-  content : string = "";
+  ready : boolean = false;
+  content = "";
   update = new EventEmitter();
+  timeout;
 
   constructor(public client : Client) {
     this.init();
@@ -41,13 +43,11 @@ export class MindsTinymce {
       setup: (ed) => {
 
         this.editor = ed;
-        ed.on('ExecCommand', (e) => {
-          this.update.next(ed.getContent());
-        });
 
-        ed.on('keyup', (e) => {
+        ed.on('change', (e) => {
+          this.content = ed.getContent();
           this.update.next(ed.getContent());
-        });
+        })
 
       }
     });
@@ -56,6 +56,8 @@ export class MindsTinymce {
   onDestroy(){
    if(tinymce)
     tinymce.remove('minds-tinymce > textarea');
+    this.content = "";
+    this.ready = false;
   }
 
   set _content(value : string){
@@ -64,7 +66,10 @@ export class MindsTinymce {
         resolve(value);
     })
     .then((value : string) => {
-      this.editor.setContent(value);
+      if(!this.ready && value){
+        this.ready = true;
+        this.editor.setContent(value);
+      }
     });
   }
 
