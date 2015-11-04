@@ -16,7 +16,9 @@ import { Material } from 'src/directives/material';
 export class AdminAnalytics {
 
   dam;
+  dam_list;
   mam;
+  mam_list;
   boost_newsfeed = {
     review: 0,
     approved: 0,
@@ -37,7 +39,9 @@ export class AdminAnalytics {
     this.client.get('api/v1/admin/analytics/active')
       .then((response : any) => {
         self.dam = response['daily'];
+        self.dam_list = response['daily'].slice(0).reverse();
         self.mam = response['monthly'];
+        self.mam_list = response['monthly'].slice(0).reverse();
       });
   }
 
