@@ -58,6 +58,8 @@ export class Session {
 	 * Emit login event
 	 */
 	login(user : any = null){
+		//clear stale local storage
+		window.localStorage.clear();
 		this.userEmitter.next(user);
 		window.Minds.user = user;
 		window.Minds.LoggedIn = true;
@@ -71,6 +73,7 @@ export class Session {
 		this.userEmitter.next(null);
 		delete window.Minds.user;
 		window.Minds.LoggedIn = false;
+		window.localStorage.clear();
 	}
 
 }

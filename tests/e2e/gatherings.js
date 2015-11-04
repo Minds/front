@@ -87,10 +87,28 @@ describe('testing gatherings', () => {
   });
 
 
-  it('should not all access to messenger if logged out, and redirect to login', () => {
+  it('should not allow access to messenger if logged out, and redirect to login', () => {
     h.logout();
+    browser.get('/messenger');
     browser.driver.sleep(1000);
     expect(browser.getCurrentUrl()).toBe(browser.baseUrl + 'login');
-  })
+  });
+
+  it('should not be already loggedin following a logout', () => {
+    //loginto chat
+    h.login();
+    browser.get('/messenger');
+    element(by.id('password')).sendKeys('password');
+    element(by.css('.mdl-button--raised.mdl-button--colored')).click();
+    //now logout and back in again
+    h.logout();
+
+    //check the localStorage was deleted
+    expect(browser.executeScript("return window.localStorage.getItem('private-key')")).toEqual(null);
+
+    h.login();
+    browser.get('/messenger');
+    expect(element(by.css('.gathering-footer-links > a')).isDisplayed()).toEqual(false);
+  });
 
 });

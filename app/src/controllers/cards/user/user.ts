@@ -19,10 +19,9 @@ export class UserCard {
 
   user : any;
   session = SessionFactory.build();
-  minds: {};
+  minds = window.Minds;
 
 	constructor(public client: Client){
-    this.minds = window.Minds;
 	}
 
   set object(value: any) {
