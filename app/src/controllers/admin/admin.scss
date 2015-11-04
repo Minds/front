@@ -8,8 +8,7 @@ minds-admin-analytics{
     width:auto;
 
     .results{
-      @include flex-display();
-      @include flex-direction(column-reverse);
+      display:table;
 
       .row{
        flex:1;
