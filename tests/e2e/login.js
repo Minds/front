@@ -3,10 +3,10 @@ let h = new Helpers();
 
 describe('testing the login', () => {
 
-  var usernameTextField = element.all(by.id('username')).get(1);
-  var passwordTextField = element.all(by.id('password')).get(1);
-  var loginButton = element.all(by.css('.mdl-button')).get(3);
-  var forgotPasswordButton = element(by.css('.minds-reset-password-link'));
+  var usernameTextField = element.all(by.id('username')).get(0);
+  var passwordTextField = element.all(by.id('password')).get(0);
+  var loginButton = element.all(by.css('.mdl-button')).get(2);
+  var forgotPasswordButton = element(by.css('.m-reset-password-link'));
 
   beforeEach(function() {
     h.logout();

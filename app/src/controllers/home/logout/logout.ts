@@ -8,7 +8,7 @@ import { SessionFactory } from 'src/services/session';
   viewBindings: [Client]
 })
 @View({
-  templateUrl: 'src/controllers/home/login/login.html',
+  template: ``,
   directives: [ Material, ROUTER_DIRECTIVES ]
 })
 

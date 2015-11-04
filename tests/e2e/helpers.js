@@ -14,9 +14,9 @@ export class Helpers {
           browser.driver.sleep(1000);
 
           //check if login button is present & visible
-          var usernameTextField = element.all(by.id('username')).get(1);
-          var passwordTextField = element.all(by.id('password')).get(1);
-          var loginButton = element.all(by.css('.mdl-button')).get(3);
+          var usernameTextField = element.all(by.id('username')).get(0);
+          var passwordTextField = element.all(by.id('password')).get(0);
+          var loginButton = element.all(by.css('.mdl-button')).get(2);
 
           usernameTextField.sendKeys('protractor');
           passwordTextField.sendKeys('password');

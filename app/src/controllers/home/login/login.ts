@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/angular2';
+import { Component, View, Inject, CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/angular2';
 import { Router, RouterLink } from 'angular2/router';
 import { MindsTitle } from 'src/services/ux/title';
 import { Material } from 'src/directives/material';
@@ -13,7 +13,7 @@ import { Register } from '../register/register';
 })
 @View({
   templateUrl: 'src/controllers/home/login/login.html',
-  directives: [ Material, Register, RouterLink]
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, Register, RouterLink]
 })
 
 export class Login {
@@ -24,27 +24,33 @@ export class Login {
   hideLogin : boolean = false;
   inProgress : boolean = false;
 
-	constructor(public client : Client, public router: Router, public title: MindsTitle){
+  form : ControlGroup;
+
+	constructor(public client : Client, public router: Router, public title: MindsTitle, fb: FormBuilder){
 		if(this.session.isLoggedIn())
       router.navigate(['/Newsfeed']);
 
-      this.title.setTitle("Login");
+    this.title.setTitle("Login");
+
+    this.form = fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
 	}
 
-	login(username, password){
+	login(){
     this.errorMessage = "";
     this.inProgress = true;
 		var self = this; //this <=> that for promises
-		this.client.post('api/v1/authenticate', {username: username.value, password: password.value})
+		this.client.post('api/v1/authenticate', {username: this.form.value.username, password: this.form.value.password})
 			.then((data : any) => {
-				username.value = '';
-				password.value = '';
+				this.form.value = null;
         this.inProgress = false;
 				self.session.login(data.user);
 				self.router.navigate(['/Newsfeed', {}]);
 			})
 			.catch((e) => {
-        console.log(e);
+
         this.inProgress = false;
         if(e.status == 'failed'){
           //incorrect login details

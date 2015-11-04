@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/angular2';
+import { Component, View, Inject, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES  } from 'angular2/angular2';
 import { Router } from 'angular2/router';
 import { Material } from 'src/directives/material';
 import { Client } from 'src/services/api';
@@ -10,7 +10,7 @@ import { SessionFactory } from 'src/services/session';
 })
 @View({
   templateUrl: 'src/controllers/home/register/register.html',
-  directives: [ Material ]
+  directives: [ FORM_DIRECTIVES, Material ]
 })
 
 export class Register {
@@ -21,38 +21,30 @@ export class Register {
   hideLogin : boolean = false;
   inProgress : boolean = false;
 
-	constructor(public client : Client, @Inject(Router) public router: Router){
-		window.componentHandler.upgradeDom();
+  form : ControlGroup;
+
+	constructor(public client : Client, public router: Router, fb: FormBuilder){
+    this.form = fb.group({
+      username: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      password2: ['', Validators.required]
+    });
 	}
 
-	register(username, password, passwordConfirm, email){
+	register(){
     this.errorMessage = "";
 
-    if (!username.value || !username.value.trim()){
-      this.errorMessage = "Username cannot be empty.";
-      return;
-    }
-    if (!email.value || !email.value.trim()){
-      this.errorMessage = "Email cannot be empty.";
-      return;
-    }
-    if (!password.value || !password.value.trim()){
-      this.errorMessage = "Password cannot be empty.";
-      return;
-    }
-    if(password.value != passwordConfirm.value){
+    if(this.form.value.password != this.form.value.password2){
         this.errorMessage = "Passwords must match.";
         return;
     }
 
     this.inProgress = true;
 		var self = this; //this <=> that for promises
-		this.client.post('api/v1/register', {username: username.value, password: password.value, email: email.value})
+		this.client.post('api/v1/register', this.form.value)
 			.then((data : any) => {
-				username.value = '';
-				password.value = '';
-        passwordConfirm.value = '';
-        email.value = '';
+			  this.form.value = null;
 
         this.inProgress = false;
 				self.session.login(data.user);
