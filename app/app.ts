@@ -1,5 +1,5 @@
 import {Component, View, provide, bootstrap} from 'angular2/angular2';
-import {RouteConfig, Route, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT} from 'angular2/router';
+import {RouteConfig, Route, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
 import {Topbar} from './src/components/topbar/topbar';
@@ -94,4 +94,4 @@ export class Minds {
 
 }
 
-bootstrap(Minds, [ROUTER_PROVIDERS, provide(ROUTER_PRIMARY_COMPONENT, {useValue:Minds}), HTTP_PROVIDERS]);
+bootstrap(Minds, [ROUTER_PROVIDERS, HTTP_PROVIDERS]);
