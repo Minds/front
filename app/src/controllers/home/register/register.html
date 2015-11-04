@@ -1,5 +1,5 @@
 
-    <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box" style="min-height:0;" [hidden]="!errorMessage">
+    <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
         <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
           {{errorMessage}}
         </div>
@@ -53,7 +53,7 @@
       </div>
 
       <div class="mdl-card__actions">
-        <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="register()" [disabled]="inProgress">
+        <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="register()" [disabled]="inProgress">
           Signup
         </button>
         <span class="m-register-tac">By creating an account you agree to the Terms & Conditions</span>
