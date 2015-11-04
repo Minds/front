@@ -1,5 +1,5 @@
 import { Component, View, NgFor, NgIf, FORM_DIRECTIVES, Inject} from 'angular2/angular2';
-import { Router, Location } from 'angular2/router';
+import { Router, RouteParams, Location } from 'angular2/router';
 import { Client, Upload } from 'src/services/api';
 import { Material } from 'src/directives/material';
 import { InfiniteScroll } from 'src/directives/infinite-scroll';
@@ -7,7 +7,6 @@ import { MindsActivityObject } from 'src/interfaces/entities';
 
 @Component({
   selector: 'minds-search-bar',
-  viewBindings: [ Client ],
   host: {
     '(keyup)': 'keyup($event)'
   }
@@ -32,8 +31,14 @@ export class SearchBar {
 
   listen(){
     this.router.subscribe((route : string) => {
-      if(route.indexOf('search') == -1)
+      if(route.indexOf('search') == -1){
         this.q = "";
+      } else {
+        var r = route.substring(route.indexOf('q=')+2);
+        if(r.indexOf('&type=') > 0)
+          r = r.substring(0, r.indexOf('&type='));
+        this.q = decodeURI(r);
+      }
     });
   }
 
