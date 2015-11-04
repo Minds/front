@@ -6,7 +6,7 @@
 
     <div class="minds-logo">
       <a [router-link]="['/Newsfeed']">
-        <img src="/assets/logos/small.png" class="mdl-shadow--2dp"/>
+        <img src="/assets/logos/small.png"/>
       </a>
     </div>
 
@@ -18,7 +18,7 @@
 
     <div class="minds-account" *ng-if="session.isLoggedIn()">
       <a [router-link]="['/Channel', {username: session.getLoggedInUser().username}]">
-        <img src="/icon/{{session.getLoggedInUser().guid}}/small/{{session.getLoggedInUser().icontime}}" />
+        <img src="/icon/{{session.getLoggedInUser().guid}}/small/{{session.getLoggedInUser().icontime}}" class="mdl-shadow--2dp" />
       </a>
     </div>
 
