@@ -5,14 +5,10 @@
     <a [router-link]="['/Search', {q: q, type: 'blogs'}]" class="mdl-tabs__tab" [ng-class]="{'is-active': type == 'blogs' || type == ''}">Blogs</a>
 </div>
 
-<div class="mdl-grid search-grid" style="max-width:900px">
-
-    <div class="mdl-cell mdl-cell--3-col">
-      This will shows boosts, if its not mobile
-    </div>
+<div class="mdl-grid search-grid" style="max-width:500px">
 
 
-    <div class="search-results mdl-cell mdl-cell--6-col">
+    <div class="search-results mdl-cell mdl-cell--12-col">
       <div class="mdl-card mdl-shadow--2dp" *ng-for="#entity of entities">
 
         <minds-card-video [object]="entity" *ng-if="entity.subtype == 'video'"></minds-card-video>

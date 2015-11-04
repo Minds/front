@@ -40,7 +40,7 @@ describe('testing gatherings', () => {
     password2.sendKeys(pass);
     element(by.css('.mdl-button--raised.mdl-button--colored')).click();
     //progress shows on click
-    expect(element(by.css('.m-messenger-inProgress')).isDisplayed()).toEqual(true);
+    //expect(element(by.css('.m-messenger-inProgress')).isDisplayed()).toEqual(true);
 
     browser.driver.sleep(2000);
 
