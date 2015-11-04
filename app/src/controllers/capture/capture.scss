@@ -113,6 +113,7 @@ minds-capture{
 
       button{
         float:left;
+        margin-left: $minds-margin;
       }
     }
   }
@@ -181,4 +182,7 @@ minds-capture{
     width: auto;
     flex: 1;
   }
+}
+.m-capture-save-to-album-button{
+  margin-left: 8px;
 }

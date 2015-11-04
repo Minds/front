@@ -25,14 +25,33 @@ export class Register {
 		window.componentHandler.upgradeDom();
 	}
 
-	register(username, password, email){
+	register(username, password, passwordConfirm, email){
     this.errorMessage = "";
+
+    if (!username.value || !username.value.trim()){
+      this.errorMessage = "Username cannot be empty.";
+      return;
+    }
+    if (!email.value || !email.value.trim()){
+      this.errorMessage = "Email cannot be empty.";
+      return;
+    }
+    if (!password.value || !password.value.trim()){
+      this.errorMessage = "Password cannot be empty.";
+      return;
+    }
+    if(password.value != passwordConfirm.value){
+        this.errorMessage = "Passwords must match.";
+        return;
+    }
+
     this.inProgress = true;
 		var self = this; //this <=> that for promises
 		this.client.post('api/v1/register', {username: username.value, password: password.value, email: email.value})
 			.then((data : any) => {
 				username.value = '';
 				password.value = '';
+        passwordConfirm.value = '';
         email.value = '';
 
         this.inProgress = false;
