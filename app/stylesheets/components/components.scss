@@ -17,6 +17,9 @@
   }
 
   @media screen and (max-width: $min-tablet){
+    &{
+      max-height: 180px;
+    }
     .minds-banner-img{
       min-width: 100%;
       height: 100%;
