@@ -121,6 +121,7 @@ export class Poster {
         self.postMeta.attachment_guid = response.guid;
         file.files = [];
         self.canPost = true;
+        file.value = null;
       })
       .catch((e) => {
         self.postMeta.attachment_guid = null;
@@ -128,6 +129,7 @@ export class Poster {
         self.canPost = true;
         self.attachment_progress = 0;
         self.attachment_preview = null;
+        file.value = null;
       });
 
   }

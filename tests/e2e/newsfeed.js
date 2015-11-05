@@ -1,19 +1,20 @@
+var path = require('path');
 import { Helpers } from './helpers';
 
 let h = new Helpers();
 
 describe('testing newsfeed', () => {
 
-  beforeAll((done) => {
+  beforeEach((done) => {
     h.login();
     browser.get('/newsfeed').then(() => {
       done();
     });
-  })
-
-  afterAll(() => {
-    h.logout();
   });
+
+  afterEach(() => {
+    h.logout();
+  })
 
   it('should have a title', () => {
     expect(browser.getTitle()).toEqual("Newsfeed | Minds");
@@ -67,6 +68,50 @@ describe('testing newsfeed', () => {
     textarea.getSize().then((size) => {
       expect(size.height).toBeGreaterThan(height);
     });
+  });
+
+  it('should upload a file', () => {
+
+    //try two uploads
+    for(var i = 0; i < 2; i++){
+      var fileToUpload = 'res/logo.png',
+        absolutePath = path.resolve(__dirname, fileToUpload);
+
+      element(by.id('file')).sendKeys(absolutePath);
+
+      //check that we got a preview
+      expect(element(by.css('.attachment-preview')).isDisplayed()).toEqual(true);
+
+      browser.wait(() => {
+        return element(by.css('.mdl-card__actions .mdl-button')).isEnabled();
+      }, 5000); //allow a maximum of 5 seconds for uploading
+
+      element(by.css('.mdl-card__actions .mdl-button')).click();
+
+      browser.driver.sleep(1000); //1 second to post
+
+      expect(element(by.css('minds-activity .item-image img')).isPresent()).toEqual(true);
+    }
+  });
+
+  it('should allow us to remove a preview and upload again', () => {
+
+    //run this flow at least twice..
+    for(var i = 0; i < 2; i++){
+
+      var fileToUpload = 'res/logo.png',
+        absolutePath = path.resolve(__dirname, fileToUpload);
+
+      element(by.id('file')).sendKeys(absolutePath);
+
+      //check that we got a preview
+      expect(element(by.css('.attachment-preview')).isDisplayed()).toEqual(true);
+
+      element(by.css('.post-preview')).click();
+      expect(element(by.css('.post-preview')).isPresent()).toEqual(false);
+      browser.sleep(500);
+    }
+
   });
 
 });

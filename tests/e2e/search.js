@@ -5,11 +5,12 @@ describe('search tests', () => {
   it('should search from topbar', () => {
 		browser.get('/');
 		browser.sleep(1000); //wait for boot
+
 		var search_box = element(by.id('search'));
 		search_box.sendKeys("hello minds");
 		search_box.sendKeys(protractor.Key.ENTER);
 
-		browser.sleep(1000); //wait one second to search
+		browser.sleep(500); //wait one second to search
 		expect(search_box.getAttribute('value')).toEqual('hello minds');
 		expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'search?q=hello%20minds');
   });
