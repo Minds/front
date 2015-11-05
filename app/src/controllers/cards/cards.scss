@@ -105,9 +105,14 @@ minds-card-image, minds-card-video{
     position: absolute;
     bottom: 0;
     width: 100%;
+    height: 35%;
     left: 0;
     box-sizing: border-box;
     background-color: #FFF;
+
+    .body{
+      margin-top: 0;
+    }
   }
 }
 
