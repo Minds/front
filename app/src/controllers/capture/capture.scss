@@ -1,7 +1,7 @@
 @import "defaults";
 
 minds-capture{
-  height:100%;
+  height: calc(100vh - 80px);
   display:block;
 
   .mdl-js-progress{
