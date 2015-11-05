@@ -79,6 +79,9 @@ describe('testing newsfeed', () => {
 
       element(by.id('file')).sendKeys(absolutePath);
 
+      browser.wait(() => {
+        return element(by.css('.attachment-preview')).isPresent();
+      });
       //check that we got a preview
       expect(element(by.css('.attachment-preview')).isDisplayed()).toEqual(true);
 
