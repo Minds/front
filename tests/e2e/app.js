@@ -2,19 +2,8 @@
 
 describe('testing the tests', () => {
 
-	beforeEach(function() {
+  it('should have a title', function(){
 		browser.get('/');
-	});
-
-	afterEach(function() {
-	});
-
-
-  it('should have a title', function(){
-    expect(browser.getTitle()).toEqual("Home | Minds");
-  });
-
-  it('should have a title', function(){
     expect(browser.getTitle()).toEqual("Home | Minds");
   });
 

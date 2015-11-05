@@ -41,13 +41,12 @@ describe('testing gatherings', () => {
     element(by.css('.mdl-button--raised.mdl-button--colored')).click();
     //progress shows on click
     //expect(element(by.css('.m-messenger-inProgress')).isDisplayed()).toEqual(true);
+    browser.wait(() => {
+      return element(by.css('.gathering-footer-links > a')).isDisplayed();
+    });
 
-    browser.driver.sleep(2000);
-
-    expect(password1.isPresent()).toEqual(false);
     expect(element(by.css('.gathering-footer-links > a')).isDisplayed()).toEqual(true);
-
-    //expect(element(by.css('.m-messenger-inProgress')).isPresent()).toEqual(false);
+    expect(element(by.css('.m-messenger-inProgress')).isPresent()).toEqual(false);
   });
 
   it('should unlock chat', function() {
@@ -60,12 +59,14 @@ describe('testing gatherings', () => {
     element(by.css('.mdl-button--raised.mdl-button--colored')).click();
     //expect(element(by.css('.m-messenger-inProgress')).isDisplayed()).toEqual(true);
 
-    browser.driver.sleep(2000);
+    browser.wait(() => {
+      return element(by.css('.gathering-footer-links > a')).isDisplayed();
+    });
 
     expect(element(by.css('.gathering-footer-links > a')).isDisplayed()).toEqual(true);
     //expect(element(by.css('.m-messenger-inProgress')).isPresent()).toEqual(false);
 
-  //  expect(password.isPresent()).toEqual(false);
+    //expect(password.isPresent()).toEqual(false);
   });
 
   it('should not unlock chat on an incorrect password', function() {
@@ -79,19 +80,24 @@ describe('testing gatherings', () => {
     element(by.css('.mdl-button--raised.mdl-button--colored')).click();
     //expect(element(by.css('.m-messenger-inProgress')).isDisplayed()).toEqual(true);
 
-    browser.driver.sleep(2000);
+    browser.wait(() => {
+      return element(by.css('.m-messenger-inProgress')).isDisplayed().then(displayed => { return !displayed });
+    });
 
     expect(element(by.css('.gathering-footer-links > a')).isDisplayed()).toEqual(false);
     expect(element(by.css('.m-messenger-inProgress')).isDisplayed()).toEqual(false);
     expect(password.isDisplayed()).toEqual(true);
+
   });
 
 
   it('should not allow access to messenger if logged out, and redirect to login', () => {
     h.logout();
     browser.get('/messenger');
-    browser.driver.sleep(1000);
-    expect(browser.getCurrentUrl()).toBe(browser.baseUrl + 'login');
+    browser.wait(() => {
+      return browser.getCurrentUrl().then((url) => (url == browser.baseUrl + 'login'));
+    })
+
   });
 
   it('should not be already loggedin following a logout', () => {

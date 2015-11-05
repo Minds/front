@@ -11,7 +11,10 @@ export class Helpers {
           return;
         } else {
           browser.driver.get(browser.baseUrl + 'login');
-          browser.driver.sleep(1000);
+
+          browser.wait(function() {
+      			return browser.isElementPresent(By.css('minds-body'));
+      		});
 
           //check if login button is present & visible
           var usernameTextField = element.all(by.id('username')).get(0);
@@ -22,7 +25,10 @@ export class Helpers {
           passwordTextField.sendKeys('password');
           loginButton.click();
 
-          browser.driver.sleep(1000);
+          browser.wait(() => {
+            return browser.getCurrentUrl().then(url =>  { return (url == browser.baseUrl + 'newsfeed'); } );
+          });
+
         }
       });
 
@@ -30,6 +36,8 @@ export class Helpers {
 
   logout() {
     browser.driver.get(browser.baseUrl + 'logout');
-    browser.driver.sleep(1000);
+    browser.wait(() => {
+      return browser.getCurrentUrl().then(url => { return (url == browser.baseUrl + 'login'); });
+    });
   };
 };

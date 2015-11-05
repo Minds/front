@@ -25,10 +25,16 @@ var config = {
     browser.driver.get(BASE_URL);
 		if(BASE_URL == 'https://new.minds.com/')
     	browser.manage().addCookie('beta', 'angular2', '/', 'new.minds.com');
+		browser.driver.get(BASE_URL);
+		browser.wait(function() {
+			return browser.isElementPresent(By.css('minds-body'));
+		});
 	},
 	specs: [
 		'./tests/e2e/helpers.js',
-		'./tests/e2e/*.js'
+		//'./tests/e2e/actions/subscribe.js',
+		'./tests/e2e/*.js',
+		'./tests/e2e/**/*.js'
 	],
 	exclude: [],
 	capabilities: {

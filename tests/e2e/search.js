@@ -11,8 +11,11 @@ describe('search tests', () => {
 		search_box.sendKeys(protractor.Key.ENTER);
 
 		browser.sleep(500); //wait one second to search
-		expect(search_box.getAttribute('value')).toEqual('hello minds');
-		expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'search?q=hello%20minds');
+		//expect(search_box.getAttribute('value')).toEqual('hello minds');
+		//expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'search?q=hello%20minds');
+    search_box.getAttribute('value').then((val) => {
+      expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'search?q=' + encodeURIComponent(val));
+    })
   });
 
 	it('should include query in search bar on direct link', () => {

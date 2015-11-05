@@ -107,7 +107,9 @@ describe('testing newsfeed', () => {
       //check that we got a preview
       expect(element(by.css('.attachment-preview')).isDisplayed()).toEqual(true);
 
-      element(by.css('.post-preview')).click();
+      browser.actions().mouseMove(element(by.css('.post-preview'))).perform();
+      element(by.css('.attachment-preview-delete')).click();
+
       expect(element(by.css('.post-preview')).isPresent()).toEqual(false);
       browser.sleep(500);
     }
