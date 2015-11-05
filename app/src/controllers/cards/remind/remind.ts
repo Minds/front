@@ -7,6 +7,7 @@ import { Activity } from '../activity/activity';
 import { AutoGrow } from 'src/directives/autogrow';
 import { TagsLinks } from 'src/directives/tags';
 import { TagsPipe } from 'src/pipes/tags';
+import { MindsVideo } from 'src/components/video';
 
 @Component({
   selector: 'minds-remind',
@@ -15,7 +16,7 @@ import { TagsPipe } from 'src/pipes/tags';
 })
 @View({
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink, AutoGrow, TagsLinks],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks],
   pipes: [ TagsPipe ]
 })
 
