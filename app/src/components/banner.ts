@@ -22,7 +22,7 @@ import { Material } from 'src/directives/material';
     </div>
     <div class="save-bar" [hidden]="!file">
       <div class="mdl-layout-spacer"></div>
-      <p>Drag the banner vertically to change it's position</p>
+      <p>Drag the banner vertically to change its position</p>
       <minds-button-edit class="cancel-button" (click)="cancel()">
         <button>Cancel</button>
       </minds-button-edit>
