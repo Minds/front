@@ -1,12 +1,21 @@
 import { Inject, Injector, bind } from 'angular2/angular2';
 import { Client } from 'src/services/api';
+import { SessionFactory } from './session';
 
 export class WalletService {
 
   points : number = 0;
+  session = SessionFactory.build();
 
   constructor(@Inject(Client) public client : Client){
     this.getBalance();
+    this.session.isLoggedIn((is) => {
+      if(!is){
+        window.Minds.wallet.balance = '...';
+        this.sync();
+        window.Minds.wallet = null;
+      }
+    });
   }
 
   /**

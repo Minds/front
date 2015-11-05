@@ -74,6 +74,7 @@ export class Session {
 		delete window.Minds.user;
 		window.Minds.LoggedIn = false;
 		window.localStorage.clear();
+		this.loggedinEmitter.next(false);
 	}
 
 }

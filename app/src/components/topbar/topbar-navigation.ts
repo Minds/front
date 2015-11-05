@@ -15,7 +15,7 @@ import { SessionFactory } from 'src/services/session';
     		[router-link]="[item.path, item.params]"
     		>
     		<i class="mdl-color-text--blue-grey-500 material-icons" [ng-class]="{'mdl-color-text--blue-grey-500' : true}">{{item.icon}}</i>
-        <span id="{{item.name | lowercase}}-counter" class="counter mdl-color-text--green-400" *ng-if="item.extras && item.extras.counter">{{item.extras.counter}}</span>
+        <span id="{{item.name | lowercase}}-counter" class="counter mdl-color-text--green-400" *ng-if="item.extras">{{item.extras?.counter}}</span>
     	</a>
 
     </nav>
