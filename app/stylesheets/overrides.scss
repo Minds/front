@@ -10,6 +10,18 @@
 .mdl-progress{
   width:100%;
 }
+.mdl-js-progress{
+  &.failed{
+    .progressbar{
+      background-color:red !important;
+    }
+  }
+  &.complete{
+    .progressbar{
+      background-color:green !important;
+    }
+  }
+}
 
 .mdl-card:not(.mdl-cell){
   width:auto;

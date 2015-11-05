@@ -55,7 +55,12 @@
 
     <!-- Attachment preview -->
     <div class="post-preview" *ng-if="attachment_preview || attachment_progress > 0"  (click)="removeAttachment()">
-      <div class="mdl-progress mdl-js-progress" [mdl-upload] [progress]="attachment_progress" [hidden]="attachment_progress == 0"></div>
+      <div class="mdl-progress mdl-js-progress"
+        [mdl-upload]
+        [progress]="attachment_progress"
+        [hidden]="attachment_progress == 0"
+        [ng-class]="{'complete': attachment_progress  == 100}"
+        ></div>
       <div *ng-if="attachment_mime == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
           <i class="material-icons">videocam</i>
       </div>

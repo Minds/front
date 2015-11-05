@@ -4,18 +4,7 @@ minds-capture{
   height: calc(100vh - 80px);
   display:block;
 
-  .mdl-js-progress{
-    &.failed{
-      .progressbar{
-        background-color:red !important;
-      }
-    }
-    &.complete{
-      .progressbar{
-        background-color:green !important;
-      }
-    }
-  }
+  
 }
 
 .drag-animation{
