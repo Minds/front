@@ -49,6 +49,11 @@ export class MindsTinymce {
           this.update.next(ed.getContent());
         })
 
+        ed.on('keyup', (e) => {
+          this.content = ed.getContent();
+          this.update.next(ed.getContent());
+        })
+
       }
     });
   }
