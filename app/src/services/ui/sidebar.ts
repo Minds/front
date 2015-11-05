@@ -2,12 +2,16 @@ export class Sidebar{
 	open(){
 		var self = this;
 		var drawer : any = document.getElementsByTagName('minds-sidebar')[0];
-		drawer.classList.toggle("is-visible");
+
+		if(drawer.classList.contains('is-visible')){
+			return this.close();
+		}
+		drawer.classList.add("is-visible");
 
 		//we have a delay so we don't close after click
 		setTimeout(() => {
 			var listener = (e) => {
-				drawer.classList.toggle("is-visible");
+				drawer.classList.remove("is-visible");
 				document.removeEventListener('click', listener);
 			};
 			document.addEventListener("click", listener);
@@ -15,6 +19,6 @@ export class Sidebar{
 	}
 	close(){
 		var drawer : any = document.getElementsByTagName('minds-sidebar')[0];
-		drawer.classList.toggle("is-visible");
+		drawer.classList.remove("is-visible");
 	}
 }
