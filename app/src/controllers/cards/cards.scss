@@ -109,9 +109,13 @@ minds-card-image, minds-card-video{
     left: 0;
     box-sizing: border-box;
     background-color: #FFF;
-
     .body{
       margin-top: 0;
+      a{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis
+      }
     }
   }
 }
