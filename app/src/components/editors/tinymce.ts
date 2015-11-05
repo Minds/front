@@ -59,8 +59,9 @@ export class MindsTinymce {
   }
 
   onDestroy(){
-   if(tinymce)
-    tinymce.remove('minds-tinymce > textarea');
+    this.editor.setContent("");
+    if(tinymce)
+      tinymce.remove('minds-tinymce > textarea');
     this.content = "";
     this.ready = false;
   }
@@ -71,7 +72,7 @@ export class MindsTinymce {
         resolve(value);
     })
     .then((value : string) => {
-      if(!this.ready && value){
+      if(!this.ready && value && value != this.editor.getContent()){
         this.ready = true;
         this.editor.setContent(value);
       }
