@@ -29,10 +29,10 @@
 
               <button
                 type="submit"
-                class="mdl-button"
-                [disabled]="!canPost"
+                class="mdl-button mdl-button--colored"
+                [disabled]="!canPost || inProgress"
                 >
-                Post
+                Post <i class="material-icons">send</i>
               </button>
             </div>
 

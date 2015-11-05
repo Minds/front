@@ -61,12 +61,15 @@ export class Poster {
 	 * Post to the newsfeed
 	 */
 	post(){
+
+    if(!this.postMeta.message && !this.postMeta.attachment_guid)
+      return;
+
 		var self = this;
     this.inProgress = true;
     this.client.post('api/v1/newsfeed', this.postMeta)
-      .then(function(data){
+      .then((data : any) => {
   			self.load.next(data.activity);
-        self.inProgress = false;
         //reset
         self.postMeta = {
           message: "",
@@ -80,6 +83,7 @@ export class Poster {
         }
         self.attachment_preview = null;
         self.attachment_progress = 0;
+        this.inProgress = false;
   		})
   		.catch(function(e){
   			self.inProgress = false;
