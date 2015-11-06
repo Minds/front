@@ -1,6 +1,7 @@
 import { Component, View, CORE_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
 import { Client } from 'src/services/api';
+import { NotificationService } from 'src/services/notification';
 import { Material } from 'src/directives/material';
 import { MindsWalletResponse } from 'src/interfaces/responses';
 import { MindsUserSearchResponse } from 'src/interfaces/responses';
@@ -11,7 +12,7 @@ import { BoostP2P} from './p2p/p2p';
 
 @Component({
   selector: 'minds-boost',
-  viewBindings: [ Client ],
+  viewBindings: [ Client, NotificationService ],
   properties: ['object'],
   events: ['_done: done']
 })
@@ -27,7 +28,7 @@ export class Boost{
   type : string = '';
   _done: EventEmitter = new EventEmitter();
 
-  constructor(public client: Client){
+  constructor(public client: Client, public notificationService : NotificationService){
     this.minds = window.Minds;
   }
 
@@ -38,6 +39,7 @@ export class Boost{
   done(){
     this.type = '';
     this._done.next(true);
+    this.notificationService.increment();
   }
 
 }

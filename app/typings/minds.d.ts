@@ -6,6 +6,7 @@ interface Minds{
  wallet : any;
  navigation: MindsNavigation | any;
  cdn_url: string;
+ notifications: number;
 }
 
 interface MindsNavigation {
