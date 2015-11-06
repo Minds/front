@@ -117,11 +117,21 @@
   }
 }
 
-.m-title-block{
+.m-title-block, .m-title-block-fixed{
   padding: 8px 16px;
   width: 100%;
   box-sizing: border-box;
   background-color: #FFF;
+
+  &.m-title-block-fixed{
+    position:absolute;
+    left:0;
+    bottom:0;
+
+    &.m-title-block-with-actions{
+      bottom:40px;
+    }
+  }
 
   a{
     text-decoration:none;

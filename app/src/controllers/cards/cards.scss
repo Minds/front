@@ -288,6 +288,11 @@ minds-activity.mdl-card, minds-activity{
     }
   }
 
+  &.m-action-tabs-fixed{
+    position:absolute;
+    left:0;
+    bottom:0;
+  }
 
   > * {
     display:flex;
