@@ -22,3 +22,11 @@
 		</div>
 
 </div>
+
+<div class="mdl-card__supporting-text mdl-color--blue-grey-50 m-action-tabs">
+	<minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
+	<minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
+	<minds-button-comment [object]="entity" [router-link]="['/Archive-View', {guid: entity.guid}]"></minds-button-comment>
+	<minds-button-remind [object]="entity"></minds-button-remind>
+	<minds-button-feature [object]="entity" *ng-if="session.isAdmin()"></minds-button-feature>
+</div>

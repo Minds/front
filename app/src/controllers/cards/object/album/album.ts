@@ -3,6 +3,7 @@ import { RouterLink } from "angular2/router";
 import { Client } from 'src/services/api';
 import { SessionFactory } from 'src/services/session';
 import { Material } from 'src/directives/material';
+import { BUTTON_COMPONENTS } from 'src/components/buttons';
 
 @Component({
   selector: 'minds-card-album',
@@ -11,7 +12,7 @@ import { Material } from 'src/directives/material';
 })
 @View({
   templateUrl: 'src/controllers/cards/object/album/album.html',
-  directives: [ CORE_DIRECTIVES, NgStyle, Material, RouterLink]
+  directives: [ CORE_DIRECTIVES, BUTTON_COMPONENTS, Material, RouterLink]
 })
 
 export class AlbumCard {

@@ -39,6 +39,14 @@ minds-button-remind, minds-button-thumbs-up, minds-button-thumbs-down{
   }
 }
 
+.m-action-tabs{
+  minds-button-feature > button{
+    background:none;
+    padding:0;
+    border:0;
+  }
+}
+
 .minds-boost-button{
   background-color: #4690D6 !important;
   font-size: 12px;
