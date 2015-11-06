@@ -68,8 +68,7 @@ ini_set( 'display_errors','1');
         window.Minds = <?= json_encode($minds) ?>;
 
         System.import('app')
-          .catch(function(){console.error(e,
-            'Report this error at https://github.com/mgechev/angular2-seed/issues')});
+          .catch(function(){console.error(e,'Report this error at https://github.com/minds/front')});
 
     </script>
 
