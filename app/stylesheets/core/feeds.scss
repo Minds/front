@@ -5,7 +5,7 @@
  */
  minds-newsfeed, minds-newsfeed-single, minds-channel, minds-groups-profile{
 
-   
+
 
  }
 
@@ -114,6 +114,38 @@
 
   img {
     border-radius:3px;
+  }
+}
+
+.m-title-block{
+  padding: 8px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #FFF;
+
+  a{
+    text-decoration:none;
+  }
+
+  .m-inline-owner-block{
+    padding:$minds-padding/2 0;
+    a{
+      font-weight: bold;
+      text-transform: uppercase;
+      text-decoration:none;
+      padding: 0 $minds-padding 0 0;
+      font-size: 11px;
+
+      img{
+        height:18px;
+        border-radius:50%;
+        margin-right:$minds-padding/2;
+      }
+    }
+    span {
+      color: #888;
+      font-size: 11px;
+    }
   }
 }
 

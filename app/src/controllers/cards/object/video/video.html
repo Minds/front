@@ -1,5 +1,5 @@
 <div class="mdl-card__title minds-video-thumbnail"
-	style="height:200px; background:#333"
+	style="height:168px; background:#333; background-size:cover;"
 	[ng-style]="{background: '#333 url(' + entity.thumbnail_src + ') center center'}"
 	[router-link]="['/Archive-View', {guid: entity.guid}]"
 	>
@@ -7,19 +7,18 @@
 </div>
 
 <!-- Owner block -->
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block" *ng-if="entity.ownerObj && entity.ownerObj.username">
+<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block" *ng-if="entity.ownerObj && entity.ownerObj.username">
 
-	<div class="avatar">
-		<a [router-link]="['/Channel', {username: entity.ownerObj.username}]">
-			<img src="/icon/{{entity.ownerObj.guid}}/small}}" class="mdl-shadow--2dp"/>
-		</a>
-	</div>
-
-	<div class="body">
-		<a [router-link]="['/Archive-View', {guid: entity.guid}]">
+		<a [router-link]="['/Archive-View', {guid: entity.guid}]" class="mdl-color-text--blue-grey-700">
 			<strong>{{ entity.title }}</strong>
 		</a>
-		<span>{{ entity.time_created * 1000 | date:'medium' }}</span>
-	</div>
+
+		<div class="m-inline-owner-block">
+			<a [router-link]="['/Channel', {username: entity.ownerObj.username}]" class="mdl-color-text--blue-grey-300">
+				<img src="/icon/{{entity.ownerObj.guid}}1/small" class="mdl-shadow--2dp"/>
+				{{entity.ownerObj.username}}
+			</a>
+			<span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
+		</div>
 
 </div>
