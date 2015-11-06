@@ -14,7 +14,7 @@ export class NotificationService {
    * Increment the notifications. For boost
    */
   increment(notifications : number = 1){
-    window.Minds.notifications = window.Minds.notifications + notifications;
+    window.Minds.notifications_count = window.Minds.notifications_count + notifications;
     this.sync();
   }
 
@@ -22,7 +22,7 @@ export class NotificationService {
    * Clear the notifications. For notification controller
    */
   clear(){
-    window.Minds.notifications = 0;
+    window.Minds.notifications_count = 0;
     this.sync();
   }
 
@@ -37,17 +37,17 @@ export class NotificationService {
       if (!self.session.isLoggedIn())
         return;
 
-      if(!window.Minds.notifications)
-         window.Minds.notifications = 0;
+      if(!window.Minds.notifications_count)
+         window.Minds.notifications_count = 0;
 
       self.client.get('api/v1/notification/count', {})
        .then((response : any) => {
-         window.Minds.notifications = response.count;
+         window.Minds.notifications_count = response.count;
          self.sync();
        })
        .catch((exception : any) =>
         {});
-    },30000);
+    },60000);
    }
 
   /**
@@ -56,7 +56,7 @@ export class NotificationService {
   sync(){
     for(var i in window.Minds.navigation.topbar){
       if(window.Minds.navigation.topbar[i].name == 'Notifications'){
-        window.Minds.navigation.topbar[i].extras.counter = window.Minds.notifications;
+        window.Minds.navigation.topbar[i].extras.counter = window.Minds.notifications_count;
       }
     }
   }
