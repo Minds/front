@@ -31,8 +31,8 @@
 		<img [src]="activity.thumbnail_src" />
 	</a>
 	<a [href]="activity.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900">
-		<h2 class="mdl-card__title-text" *ng-if="activity.title">{{activity.title}}</h2>
-		<p *ng-if="activity.blurb">{{activity.blurb}}</p>
+		<h2 class="mdl-card__title-text mdl-typography--font-medium" *ng-if="activity.title">{{activity.title}}</h2>
+		<p>{{activity.blurb}}</p>
 	</a>
 </div>
 
