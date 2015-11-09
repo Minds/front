@@ -105,7 +105,7 @@
 	<minds-boost [object]="activity" class="minds-boost-container" (done)="showBoostOptions = false"></minds-boost>
 </div>
 
-<div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle>
+<div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ng-if="!hideTabs">
 	<!-- Right aligned menu below button -->
 	<button class="mdl-button minds-more mdl-button--icon" (click)="toggle.value = !toggle.value">
 		<i class="material-icons">keyboard_arrow_down</i>
