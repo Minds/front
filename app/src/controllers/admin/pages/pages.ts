@@ -64,7 +64,9 @@ export class AdminPages {
   newPage(){
     this.page = {
         title: 'New Page',
-        body: ''
+        body: '',
+        path: 'new',
+        menuContainer: 'footer'
     }
     this.pages.push(this.page);
   }

@@ -67,6 +67,7 @@ export class MindsTinymce {
   }
 
   set _content(value : string){
+    this.content = value;
     new Promise((resolve, reject) => {
       if(this.editor)
         resolve(value);
@@ -81,7 +82,7 @@ export class MindsTinymce {
 
   set reset(value : boolean){
     if(value && this.editor.getContent()){
-      this.editor.setContent("");
+      this.editor.setContent(this.content);
       this.ready = false;
     }
   }
