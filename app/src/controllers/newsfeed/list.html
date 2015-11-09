@@ -29,7 +29,7 @@
         <div class="mdl-card__supporting-text">
           <a [router-link]="['/Boosts']">Boost console</a>
         </div>
- 
+
     	</div>
 
       <div class="minds-spacer minds-spacer-2x"></div>
@@ -47,6 +47,12 @@
     	</div>
 
       <div class="minds-spacer minds-spacer-2x"></div>
+
+      <ul class="m-footer-nav m-footer-nav-inline">
+        <li *ng-for="#page of navigation.getItems('footer')" class="m-footer-nav-item">
+          <a [router-link]="['/P', {page: page.params.page }]">{{page.title}}</a>
+        </li>
+      </ul>
 
     </div>
 

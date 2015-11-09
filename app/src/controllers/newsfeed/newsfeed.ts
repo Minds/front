@@ -2,6 +2,7 @@ import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angul
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { Client, Upload } from 'src/services/api';
 import { MindsTitle } from 'src/services/ux/title';
+import { Navigation as NavigationService } from 'src/services/navigation';
 import { Material } from 'src/directives/material';
 import { InfiniteScroll } from 'src/directives/infinite-scroll';
 import { Poster } from './poster/poster';
@@ -13,7 +14,7 @@ import { AnalyticsImpressions } from 'src/components/analytics/impressions';
 
 @Component({
   selector: 'minds-newsfeed',
-  viewBindings: [ Client, Upload ],
+  viewBindings: [ Client, Upload, NavigationService  ],
   bindings: [ MindsTitle ]
 })
 @View({
@@ -42,7 +43,7 @@ export class Newsfeed {
     attachment_guid: null
   }
 
-	constructor(public client: Client, public upload: Upload, public router: Router, public title: MindsTitle){
+	constructor(public client: Client, public upload: Upload, public navigation : NavigationService, public router: Router, public title: MindsTitle){
     if(!this.session.isLoggedIn()){
       router.navigate(['/Login']);
     } else {

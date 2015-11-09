@@ -11,10 +11,15 @@
   </div>
 </section>
 
-<div class="mdl-grid mdl-grid--no-spacing coming-soon">
+<div class="mdl-grid mdl-grid--no-spacing">
 
-    <section class="mdl-cell mdl-cell--12-col">
-      Coming Soon.
+    <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
+      <ul class="m-footer-nav m-footer-nav-inline">
+        <li *ng-for="#page of navigation.getItems('footer')" class="m-footer-nav-item ">
+          <a [router-link]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+        </li>
+      </ul>
+      <span class="copyright mdl-color-text--blue-grey-700">&copy; Minds, Inc. 2015</span>
     </section>
 
 </div>

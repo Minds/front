@@ -68,3 +68,27 @@ minds-sidebar-navigation{
     }
   }
 }
+
+
+.m-footer-nav{
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-start;
+  flex-wrap:wrap;
+  margin:0;
+  padding:0;
+
+  .m-footer-nav-item{
+
+    list-style:none;
+
+    > a{
+      display:block;
+      text-decoration:none;
+      text-transform:uppercase;
+      cursor:pointer;
+      font-size:11px;
+      padding:$minds-padding;
+    }
+  }
+}

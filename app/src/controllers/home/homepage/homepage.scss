@@ -65,3 +65,36 @@
 
   }
 }
+
+minds-homepage{
+  section {
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-size: 41px;
+  }
+}
+
+
+.m-footer{
+  background:#333;
+  padding:28px;
+  height:150px;
+  position:relative;
+//  justify-content:flex-end;
+
+  .copyright{
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    //right:35px;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    font-weight:bold;
+  }
+
+}
