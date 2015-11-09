@@ -97,8 +97,8 @@
           [(ng-model)]="upload.name"
           (change)="modify(i)"
           />
-          <select [(ng-model)]="upload.license" class="mdl-color-text--blue-grey-300 m-form-select">
-              <option *ng-for="#l of licenses" [value]="l.value" (change)="modify(i)">{{l.text}}</option>
+          <select [(ng-model)]="upload.license" (change)="modify(i)" class="mdl-color-text--blue-grey-300 m-form-select">
+              <option *ng-for="#l of licenses" [value]="l.value" >{{l.text}}</option>
           </select>
       </div>
 
