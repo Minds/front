@@ -47,3 +47,24 @@ minds-sidebar-navigation{
   }
 
 }
+
+.m-content-sidebar-nav{
+
+  .m-content-sidebar-nav-item{
+
+    list-style:none;
+
+    > a{
+      display:block;
+      text-decoration:none;
+      text-transform:uppercase;
+      padding:$minds-padding;
+      cursor:pointer;
+
+      &.is-active{
+        border-left: 3px solid #ffca28;
+      }
+
+    }
+  }
+}

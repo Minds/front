@@ -5,7 +5,7 @@ declare var tinymce;
 
 @Component({
   selector: 'minds-tinymce',
-  properties: [ '_content: content' ],
+  properties: [ '_content: content', 'reset' ],
   events: [ 'update: contentChange' ]
 })
 @View({
@@ -77,6 +77,13 @@ export class MindsTinymce {
         this.editor.setContent(value);
       }
     });
+  }
+
+  set reset(value : boolean){
+    if(value && this.editor.getContent()){
+      this.editor.setContent("");
+      this.ready = false;
+    }
   }
 
 }

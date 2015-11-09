@@ -5,6 +5,7 @@ import { Material } from 'src/directives/material';
 
 import { AdminAnalytics } from './analytics/analytics';
 import { AdminBoosts } from './boosts/boosts';
+import { AdminPages } from './pages/pages';
 
 @Component({
   selector: 'minds-admin',
@@ -14,8 +15,9 @@ import { AdminBoosts } from './boosts/boosts';
   template: `
     <minds-admin-analytics *ng-if="filter == 'analytics'"></minds-admin-analytics>
     <minds-admin-boosts *ng-if="filter == 'boosts'"></minds-admin-boosts>
+    <minds-admin-pages *ng-if="filter == 'pages'"></minds-admin-pages>
   `,
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, AdminAnalytics, AdminBoosts ]
+  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, AdminAnalytics, AdminBoosts, AdminPages ]
 })
 
 export class Admin {

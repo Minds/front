@@ -21,6 +21,7 @@ import {Search} from './src/controllers/search/search';
 import {Wallet} from './src/controllers/wallet/wallet';
 import {Settings} from './src/controllers/settings/settings';
 import {Admin} from './src/controllers/admin/admin';
+import {Pages} from './src/controllers/pages/pages';
 
 /**
  * TODO: Load these automagically from gulp
@@ -76,6 +77,8 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
   { path: '/settings/:filter', component: Settings, as: 'Settings' },
 
   { path: '/admin/:filter', component: Admin, as: 'Admin' },
+
+   { path: '/p/:page', component: Pages, as: 'P' },
 
   { path: '/', component: Homepage, as: 'Homepage' }
 
