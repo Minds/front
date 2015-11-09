@@ -48,7 +48,7 @@ export class Register {
 
         this.inProgress = false;
 				self.session.login(data.user);
-				self.router.navigate(['/Newsfeed', {}]);
+				self.router.navigate(['/Channel', {username: data.user.username}]);
 			})
 			.catch((e) => {
         console.log(e);

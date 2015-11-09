@@ -25,14 +25,15 @@ describe('testing the login', () => {
   });
 
   it('should create a new register', function(){
-    usernameTextField.sendKeys('test_' + Date.now());
+    var username = 'test_' + Date.now();
+    usernameTextField.sendKeys(username);
     emailTextField.sendKeys('test@minds.com');
     passwordTextField.sendKeys('password');
     password2TextField.sendKeys('password');
     element(by.css('.m-register-btn')).click();
 
     browser.sleep(2000);
-    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'newsfeed');
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + username);
 
     browser.get('/settings');
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'settings');
