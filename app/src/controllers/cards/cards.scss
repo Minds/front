@@ -235,6 +235,11 @@ minds-activity.mdl-card, minds-activity{
          white-space: pre-wrap;
          overflow: hidden;
          max-height: 45px;
+         margin:0;
+      }
+      p.m-url{
+        white-space:nowrap;
+        max-width:240px;
       }
     }
   }
