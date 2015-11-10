@@ -32,9 +32,9 @@ var config = {
 	},
 	specs: [
 		'./tests/e2e/helpers.js',
-		//'./tests/e2e/actions/subscribe.js',
-		'./tests/e2e/*.js',
-		'./tests/e2e/**/*.js'
+		//'./tests/e2e/components/*.js',
+		'./tests/e2e/capture.js',
+		//'./tests/e2e/**/*.js'
 	],
 	exclude: [],
 	capabilities: {

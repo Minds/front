@@ -41,7 +41,7 @@
     "karma-jasmine": "~0.3.6",
     "tsd": "^0.6.4",
     "open": "0.0.5",
-    "protractor": "^2.5.x",
+    "protractor": "^2.5.1",
     "run-sequence": "^1.1.0",
     "sauce-connect-launcher": "^0.2.2",
     "semver": "^4.3.6",

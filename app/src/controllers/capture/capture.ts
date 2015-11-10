@@ -58,7 +58,7 @@ export class Capture {
 
   getAlbums(){
     var self = this;
-    this.client.get('api/v1/entities/owner/albums', { limit: 5, offset: this.offset })
+    this.client.get('api/v1/archive/albums/list', { limit: 5, offset: this.offset })
       .then((response : any) => {
         if(!response.entities)
           return;
@@ -155,22 +155,21 @@ export class Capture {
   }
 
   modify(index){
-    var self = this;
     //we don't always have a guid ready, so keep checking for one
     var promise = new Promise((resolve, reject) => {
-      if(self.uploads[index].guid){
-        resolve();
+      if(this.uploads[index].guid){
+        setTimeout(() => { resolve(); }, 300);
         return;
       }
       var interval = setInterval(() => {
-        if(self.uploads[index].guid){
+        if(this.uploads[index].guid){
           resolve();
           clearInterval(interval);
         }
       }, 1000);
     });
     promise.then(() => {
-      self.client.post('api/v1/archive/' + self.uploads[index].guid, self.upload[index])
+      this.client.post('api/v1/archive/' + this.uploads[index].guid, this.uploads[index])
         .then((response : any) => {
           console.log('response from modify', response);
         });
