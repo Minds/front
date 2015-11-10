@@ -18,7 +18,9 @@ import { CARDS } from 'src/controllers/cards/cards';
 })
 
 export class Discovery {
+
   _filter : string = "featured";
+  _owner : string = "";
   _type : string = "all";
   entities : Array<Object> = [];
   moreData : boolean = true;
@@ -38,6 +40,11 @@ export class Discovery {
       case "featured":
         this._type = "channels";
         break;
+      case "owner":
+        break;
+      default:
+        this._owner = this._filter;
+        this._filter =  this._filter;
     }
 
     if(params.params['type'])
@@ -58,7 +65,11 @@ export class Discovery {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/entities/'+this._filter+'/'+this._type, {limit:12, offset:this.offset})
+    var filter = this._filter;
+    if(this._owner)
+      filter = 'owner';
+
+    this.client.get('api/v1/entities/'+filter+'/'+this._type+'/' + this._owner, {limit:12, offset:this.offset})
       .then((data : any) => {
         console.log(1);
         if(!data.entities){
