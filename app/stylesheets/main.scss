@@ -33,33 +33,14 @@ minds-topbar{
     }
   }
 
-  minds-search-bar{
-    width:60%;
-    .mdl-textfield {
-      width:100%;
-      .material-icons{
-        position:absolute;
-        margin:6px;
-      }
-      input{
-        border: 1px solid rgba(0,0,0,.12);
-      }
-      input, label{
-        padding:$minds-padding $minds-padding*4;
-        box-sizing: border-box;
-      }
-    }
-  }
-
   minds-topbar-navigation{
     nav{
-      @include flex-display();
-      @include flex-direction(row);
+      display:flex;
+      flex-direction:row;
 
       a {
-        @include flex-display();
+        display:flex;
         align-items:center;
-        -webkit-align-items: center;
         padding-right: $minds-padding;
 
         .counter{
@@ -78,15 +59,6 @@ minds-topbar{
     }
   }
 
-}
-
-@media screen and (max-width: $min-desktop){
-  minds-topbar {
-
-    minds-search-bar{
-      width:45%;
-    }
-  }
 }
 
 @media screen and (max-width: $max-mobile){

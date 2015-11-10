@@ -12,12 +12,12 @@ import { MindsActivityObject } from 'src/interfaces/entities';
   }
 })
 @View({
-  template: '<div class="mdl-textfield mdl-js-textfield"> \
-        <i class="material-icons">search</i> \
-        <input class="mdl-textfield__input" type="text" id="search" [(ng-model)]="q"/> \
-        <label class="mdl-textfield__label" for="search"> \
-        </label> \
-    </div>',
+  template: `
+    <div class="mdl-textfield mdl-js-textfield">
+        <i class="material-icons" (click)="onClick()">search</i>
+        <input class="mdl-textfield__input" type="text" id="search" [(ng-model)]="q"/>
+        <label class="mdl-textfield__label" for="search"></label>
+    </div>`,
   directives: [ NgFor, NgIf, Material, FORM_DIRECTIVES ]
 })
 
@@ -49,6 +49,10 @@ export class SearchBar {
   keyup(e){
     if(e.keyCode == 13)
       this.search();
+  }
+
+  onClick(){
+    document.getElementById("search").focus();
   }
 
 }

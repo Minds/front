@@ -1,0 +1,36 @@
+@import "defaults";
+
+
+minds-search-bar{
+
+  width:60%;
+  .mdl-textfield {
+    width:100%;
+    .material-icons{
+      position:absolute;
+      margin:6px;
+    }
+    input{
+      border: 1px solid rgba(0,0,0,.12);
+    }
+    input, label{
+      padding:$minds-padding $minds-padding $minds-padding $minds-padding*4;
+      box-sizing: border-box;
+    }
+  }
+
+  @media screen and (max-width: $min-desktop){
+    width:45%;
+  }
+  @media screen and (max-width: $min-tablet){
+    width:auto;
+
+    input{
+      border:0 !important;
+      &:focus{
+        border: 1px solid rgba(0, 0, 0, 0.12) !important;
+        width: 75vw;
+      }
+    }
+  }
+}
