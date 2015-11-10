@@ -6,10 +6,9 @@
 minds-channel{
 
   header{
-    @include flex-display();
+    display:flex;
     align-items: flex-end;
-    -webkit-align-items: -webkit-flex-end;
-    height:330px;
+    height:360px;
     box-sizing:content-box;
     position:relative;
     overflow:visible;
@@ -25,14 +24,13 @@ minds-channel{
     }
 
     .minds-channel-title{
-      @include flex-display();
+      display:flex;
       margin:0;
       width: 320px;
 
       > div{
-        @include flex-display();
+        display:flex;
         align-items: flex-end;
-        -webkit-align-items: flex-end;
         padding:$minds-padding;
 
         .flex-bottom{

@@ -20,6 +20,12 @@ import { Material } from 'src/directives/material';
       <i class="material-icons">camera</i>
       <span>Click here to add a new banner</span>
     </div>
+    <div class="minds-banner-overlay"></div>
+
+    <button class="add-button mdl-button mdl-button--raised mdl-button--colored material-icons" (click)="onClick($event)">
+      <i class="material-icons">file_upload</i>
+    </button>
+
     <div class="save-bar" [hidden]="!file">
       <div class="mdl-layout-spacer"></div>
       <p>Drag the banner vertically to change its position</p>
@@ -30,7 +36,7 @@ import { Material } from 'src/directives/material';
         <button>Save</button>
       </minds-button-edit>
     </div>
-    <input type="file" (change)="add($event)" [hidden]="file" />
+    <input type="file" id="file" (change)="add($event)" [hidden]="file" />
   </div>
   `,
   directives: [ CORE_DIRECTIVES, RouterLink, Material ]
@@ -139,6 +145,10 @@ export class MindsBanner{
   dragend(e){
     this.dragging = false;
     console.log('stopped dragging');
+  }
+
+  onClick(e){
+    e.target.parentNode.parentNode.getElementsByTagName('input')[0].click();
   }
 
 }

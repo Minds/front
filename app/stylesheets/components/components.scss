@@ -71,6 +71,15 @@
         display: block;
       }
     }
+    .minds-banner-overlay{
+      height:60px;
+      bottom:0;
+      top:initial;
+      background:rgba(0,0,0,0.6);
+    }
+    .add-button{
+      display:none;
+    }
     .save-bar{
       position: absolute;
       width: 100%;
@@ -254,8 +263,9 @@ minds-carousel{
   top: 0;
   left: 0;
   width: 100%;
-  height: 330px;
+  height: 360px;
   overflow: hidden;
+  background: #888;
   //z-index:-1;
 
   minds-banner{
@@ -272,6 +282,10 @@ minds-carousel{
 
     &.is-hidden.edit-mode {
       display:none;
+    }
+
+    .overlay{
+      opacity:0;
     }
 
     .minds-banner{
@@ -297,6 +311,17 @@ minds-carousel{
     }
   }
 
+  .add-button{
+    display:block !important;
+    position:absolute;
+    top:8px;
+    right:80px;
+    z-index:9999;
+    i{
+      margin-top:6px;
+    }
+  }
+
   > i{
     top: 50%;
     z-index: 999;
@@ -304,6 +329,7 @@ minds-carousel{
     color: #FFF;
     font-size: 60px !important;
     cursor: pointer;
+    text-shadow: 0 0 3px #888;
 
     &.right{
       right:0;
