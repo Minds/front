@@ -167,8 +167,8 @@ export class Poster {
 
 		if (!url.length) return;
 
-		url = url.replace("http://", '');
-		url = url.replace("https://", '');
+		//url = url.replace("http://", '');
+		//url = url.replace("https://", '');
     console.log('found url was ' + url)
 
     self.postMeta.active = true;
