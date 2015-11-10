@@ -116,4 +116,5 @@
 		<li class="mdl-menu__item" disabled>Share</li>
 		<li class="mdl-menu__item" *ng-if="activity.owner_guid == session.getLoggedInUser().guid" (click)="delete(); toggle.value = !toggle.value">Delete</li>
 	</ul>
+  <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 </div>

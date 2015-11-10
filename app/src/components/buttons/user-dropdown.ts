@@ -8,13 +8,14 @@ import { Client } from "src/services/api";
 })
 @View({
   template: `
-    <button class="material-icons" (click)="toggleMenu()">settings</button>
+    <button class="material-icons" (click)="toggleMenu($event)">settings</button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
       <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()">Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()">Un-Block @{{user.username}}</li>
       <li class="mdl-menu__item">Report</li>
     </ul>
+    <minds-bg-overlay (click)="toggleMenu($event)" [hidden]="!showMenu"></minds-bg-overlay>
   `,
   directives: [ CORE_DIRECTIVES ]
 })
@@ -30,7 +31,6 @@ export class UserDropdownButton{
   constructor(public client : Client) {
   }
 
-
   block(){
     var self = this;
     this.user.blocked = true;
@@ -41,6 +41,7 @@ export class UserDropdownButton{
       .catch((e) => {
         self.user.blocked = false;
       });
+    this.showMenu = false;
   }
 
   unBlock(){
@@ -53,11 +54,14 @@ export class UserDropdownButton{
       .catch((e) => {
         self.user.blocked = true;
       });
+    this.showMenu = false;
   }
 
-  toggleMenu(){
+  toggleMenu(e){
+    e.stopPropagation();
     if(this.showMenu){
       this.showMenu = false;
+
       return;
     }
     this.showMenu = true;
