@@ -31,6 +31,8 @@ export class Discovery {
     this._filter = params.params['filter'];
 
     switch(this._filter){
+      case "all":
+        break;
       case "suggested":
         this._type = "channels";
         break;
