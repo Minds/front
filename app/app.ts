@@ -2,6 +2,9 @@ import {Component, View, provide, bootstrap} from 'angular2/angular2';
 import {RouteConfig, Route, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
+import { NotificationService } from './src/services/notification';
+import { Client } from './src/services/api';
+
 import {Topbar} from './src/components/topbar/topbar';
 import {SidebarNavigation} from './src/components/sidebar-navigation/sidebar-navigation';
 
@@ -33,6 +36,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 
 @Component({
   selector: 'minds-app',
+  bindings: [ Client, NotificationService ]
 })
 @RouteConfig([
   { path: '/login', component: Login, as: 'Login' },
@@ -91,8 +95,10 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 export class Minds {
   name: string;
 
-  constructor() {
+  constructor(public notificationService : NotificationService) {
     this.name = 'Minds';
+
+    this.notificationService.getNotifications();
   }
 
 }

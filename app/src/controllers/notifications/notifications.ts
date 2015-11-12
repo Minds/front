@@ -5,10 +5,11 @@ import { Client } from 'src/services/api';
 import { SessionFactory } from 'src/services/session';
 import { Material } from 'src/directives/material';
 import { InfiniteScroll } from 'src/directives/infinite-scroll';
+import { NotificationService } from 'src/services/notification';
 
 @Component({
   selector: 'minds-notifications',
-  viewBindings: [ Client],
+  viewBindings: [ Client, NotificationService],
   bindings: [ MindsTitle ]
 })
 @View({
@@ -24,13 +25,13 @@ export class Notifications {
   inProgress : boolean = false;
   session = SessionFactory.build();
 
-  constructor(public client: Client, public router: Router, public title : MindsTitle ){
+  constructor(public client: Client, public router: Router, public title : MindsTitle, public notificationService : NotificationService ){
     if(!this.session.isLoggedIn()){
       router.navigate(['/Login']);
     } else {
       this.load(true);
     }
-
+    this.notificationService.clear();
     this.title.setTitle("Notifications");
   }
 
