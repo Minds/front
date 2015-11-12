@@ -11,10 +11,10 @@ import { SessionFactory } from 'src/services/session';
   template: `
     <nav class="" *ng-if="session.isLoggedIn()">
 
-    	<a *ng-for="#item of navigation.getItems('topbar')" class="mdl-color-text--white"
+    	<a *ng-for="#item of navigation.getItems('topbar')" class="mdl-color-text--blue-grey-500"
     		[router-link]="[item.path, item.params]"
     		>
-    		<i class="mdl-color-text--blue-grey-500 material-icons" [ng-class]="{'mdl-color-text--blue-grey-500' : true}">{{item.icon}}</i>
+    		<i class="material-icons" [ng-class]="{'mdl-color-text--amber-300' : item.extras?.counter > 0 && item.name == 'Notifications'}">{{item.icon}}</i>
         <span id="{{item.name | lowercase}}-counter" class="counter mdl-color-text--green-400" *ng-if="item.extras">{{item.extras?.counter}}</span>
     	</a>
 

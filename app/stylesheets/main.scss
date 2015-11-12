@@ -39,6 +39,7 @@ minds-topbar{
       flex-direction:row;
 
       a {
+        text-decoration:none;
         display:flex;
         align-items:center;
         padding-right: $minds-padding;

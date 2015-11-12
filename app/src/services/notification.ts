@@ -7,7 +7,8 @@ export class NotificationService {
   session = SessionFactory.build();
 
   constructor(@Inject(Client) public client : Client){
-
+    if(!window.Minds.notifications_count)
+      window.Minds.notifications_count = 0;
   }
 
   /**
@@ -40,7 +41,7 @@ export class NotificationService {
       if(!window.Minds.notifications_count)
          window.Minds.notifications_count = 0;
 
-      self.client.get('api/v1/notification/count', {})
+      self.client.get('api/v1/notifications/count', {})
        .then((response : any) => {
          window.Minds.notifications_count = response.count;
          self.sync();
