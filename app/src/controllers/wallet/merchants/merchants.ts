@@ -1,11 +1,11 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
-import { WalletService } from 'src/services/wallet';
-import { Storage } from 'src/services/storage';
-import { MDL_DIRECTIVES } from 'src/directives/material';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
+import { Client } from '../../../services/api';
+import { SessionFactory } from '../../../services/session';
+import { WalletService } from '../../../services/wallet';
+import { Storage } from '../../../services/storage';
+import { MDL_DIRECTIVES } from '../../../directives/material';
+import { InfiniteScroll } from '../../../directives/infinite-scroll';
 
 
 @Component({

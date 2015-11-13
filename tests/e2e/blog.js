@@ -17,12 +17,12 @@ describe('testing blogs', () => {
 
   it('featured should have title', function(){
     browser.get('/blog/featured');
-    expect(browser.getTitle()).toEqual("Blogs | Minds");
+    expect(browser.getTitle()).toEqual("Featured Blogs | Minds");
   });
 
   it('trending should have title', function(){
     browser.get('/blog/trending');
-    expect(browser.getTitle()).toEqual("Blogs | Minds");
+    expect(browser.getTitle()).toEqual("Trending Blogs | Minds");
   });
 
   it('owner should have title', function(){

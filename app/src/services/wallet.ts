@@ -1,5 +1,5 @@
 import { Inject, Injector, bind } from 'angular2/angular2';
-import { Client } from 'src/services/api';
+import { Client } from './api';
 import { SessionFactory } from './session';
 
 export class WalletService {

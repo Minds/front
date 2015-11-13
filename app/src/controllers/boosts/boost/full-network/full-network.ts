@@ -1,11 +1,11 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { MindsWalletResponse } from 'src/interfaces/responses';
-import { MindsUserSearchResponse } from 'src/interfaces/responses';
-import { MindsBoostResponse } from 'src/interfaces/responses';
-import { MindsBoostRateResponse } from 'src/interfaces/responses';
+import { Client } from '../../../../services/api';
+import { Material } from '../../../../directives/material';
+import { MindsWalletResponse } from '../../../../interfaces/responses';
+import { MindsUserSearchResponse } from '../../../../interfaces/responses';
+import { MindsBoostResponse } from '../../../../interfaces/responses';
+import { MindsBoostRateResponse } from '../../../../interfaces/responses';
 
 @Component({
   selector: 'minds-boost-full-network',
@@ -20,7 +20,7 @@ import { MindsBoostRateResponse } from 'src/interfaces/responses';
 
 export class BoostFullNetwork{
 
-  _done: EventEmitter = new EventEmitter();
+  _done: EventEmitter<any> = new EventEmitter();
 
   activity : any;
   data = {

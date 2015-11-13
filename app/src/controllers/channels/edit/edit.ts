@@ -1,9 +1,9 @@
 import { Component, View, NgIf, Inject} from 'angular2/angular2';
 import { Router, RouteParams } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { SessionFactory } from 'src/services/session';
-import { MindsUser } from 'src/interfaces/entities';
+import { Client, Upload } from '../../../services/api';
+import { Material } from '../../../directives/material';
+import { SessionFactory } from '../../../services/session';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   selector: 'minds-channel-edit',

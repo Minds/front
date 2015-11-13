@@ -1,16 +1,16 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { MindsTitle } from 'src/services/ux/title';
-import { Navigation as NavigationService } from 'src/services/navigation';
-import { Material } from 'src/directives/material';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
+import { Client, Upload } from '../../services/api';
+import { MindsTitle } from '../../services/ux/title';
+import { Navigation as NavigationService } from '../../services/navigation';
+import { Material } from '../../directives/material';
+import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { Poster } from './poster/poster';
-import { CARDS } from 'src/controllers/cards/cards';
-import { MindsActivityObject } from 'src/interfaces/entities';
-import { SessionFactory } from 'src/services/session';
+import { CARDS } from '../../controllers/cards/cards';
+import { MindsActivityObject } from '../../interfaces/entities';
+import { SessionFactory } from '../../services/session';
 
-import { AnalyticsImpressions } from 'src/components/analytics/impressions';
+import { AnalyticsImpressions } from '../../components/analytics/impressions';
 
 @Component({
   selector: 'minds-newsfeed',

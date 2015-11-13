@@ -1,5 +1,4 @@
-import { MindsUser } from 'src/interfaces/entities';
-import { MindsGroup } from 'src/interfaces/entities';
+import { MindsUser, MindsGroup } from './entities';
 
 /*
 * Minds response object

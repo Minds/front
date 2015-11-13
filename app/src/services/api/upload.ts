@@ -1,6 +1,6 @@
 import {Inject, Injector, bind} from 'angular2/angular2';
 import {Http, Headers} from 'angular2/http';
-import {Cookie} from 'src/services/cookie';
+import {Cookie} from '../cookie';
 
 /**
  * API Class

@@ -4,8 +4,8 @@
 import { EventEmitter, Injector, provide } from 'angular2/angular2';
 
 export class Session {
-	loggedinEmitter = new EventEmitter();
-	userEmitter = new EventEmitter();
+	loggedinEmitter : EventEmitter<any> = new EventEmitter();
+	userEmitter : EventEmitter<any> = new EventEmitter();
 
 	/**
 	 * Return if loggedin, with an optional listener
@@ -13,7 +13,7 @@ export class Session {
 	isLoggedIn(observe: any = null){
 
 		if(observe){
-			this.loggedinEmitter.observer({next: (is) => {
+			this.loggedinEmitter.subscribe({next: (is) => {
 				if(is)
 					observe(true);
 				else
@@ -43,7 +43,7 @@ export class Session {
 	getLoggedInUser(observe: any = null){
 
 		if(observe){
-			this.userEmitter.observer({next: (user) => {
+			this.userEmitter.subscribe({next: (user) => {
 				observe(user);
 			}});
 		}

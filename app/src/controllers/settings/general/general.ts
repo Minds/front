@@ -1,8 +1,8 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { RouterLink, RouteParams } from "angular2/router";
-import { SessionFactory } from 'src/services/session';
-import { Client } from 'src/services/api';
-import { MDL_DIRECTIVES } from 'src/directives/material';
+import { SessionFactory } from '../../../services/session';
+import { Client } from '../../../services/api';
+import { MDL_DIRECTIVES } from '../../../directives/material';
 
 @Component({
   selector: 'minds-settings-general',

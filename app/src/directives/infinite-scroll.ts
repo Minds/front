@@ -1,6 +1,6 @@
 import { Directive, View, EventEmitter, ElementRef, Inject } from 'angular2/angular2';
-import { Material as MaterialService } from "src/services/ui";
-import { ScrollFactory } from 'src/services/ux/scroll';
+import { Material as MaterialService } from "../services/ui";
+import { ScrollFactory } from '../services/ux/scroll';
 
 @Directive({
   selector: 'infinite-scroll',
@@ -17,7 +17,7 @@ export class InfiniteScroll{
   scroll = ScrollFactory.build();
 
   element : any;
-  loadHandler: EventEmitter = new EventEmitter();
+  loadHandler: EventEmitter<any> = new EventEmitter();
   _distance : any;
   _inprogress : boolean = false;
   _content : any;

@@ -1,11 +1,11 @@
 import { Component, View, NgFor, NgIf, Inject, NgClass} from 'angular2/angular2';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
-import { MindsTitle } from 'src/services/ux/title';
-import { Client } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { SessionFactory } from 'src/services/session';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { CARDS } from 'src/controllers/cards/cards';
+import { MindsTitle } from '../../services/ux/title';
+import { Client } from '../../services/api';
+import { Material } from '../../directives/material';
+import { SessionFactory } from '../../services/session';
+import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { CARDS } from '../../controllers/cards/cards';
 
 @Component({
   selector: 'minds-discovery',

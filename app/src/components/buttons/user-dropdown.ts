@@ -1,6 +1,5 @@
 import { Component, View, CORE_DIRECTIVES, EventEmitter } from 'angular2/angular2';
-import { Client } from "src/services/api";
-
+import { Client } from '../../services/api';
 @Component({
   selector: 'minds-button-user-dropdown',
   inputs: ['user'],
@@ -25,7 +24,7 @@ export class UserDropdownButton{
   user : any = {
     blocked: false
   };
-  userChanged: EventEmitter = new EventEmitter;
+  userChanged: EventEmitter<any> = new EventEmitter;
   showMenu : boolean = false;
 
   constructor(public client : Client) {

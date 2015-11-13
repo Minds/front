@@ -1,6 +1,6 @@
 import { Component, View, CORE_DIRECTIVES, ElementRef } from 'angular2/angular2';
-import { Client } from "src/services/api";
-import { Material } from 'src/directives/material';
+import { Client } from '../services/api';
+import { Material } from '../directives/material';
 
 @Component({
   selector: 'minds-video',
@@ -37,7 +37,7 @@ export class MindsVideo{
 
   element : any;
   src : Array<any> = [];
-  time = {
+  time : { minutes: any, seconds: any } = {
     minutes: '00',
     seconds: '00'
   }
@@ -94,11 +94,11 @@ export class MindsVideo{
   calculateTime(){
     var seconds = this.element.duration;
     this.time.minutes = Math.floor(seconds / 60);
-    if(this.time.minutes < 10)
+    if(parseInt(this.time.minutes) < 10)
       this.time.minutes = "0" + this.time.minutes;
 
     this.time.seconds = Math.floor(seconds % 60);
-    if(this.time.seconds < 10)
+    if(parseInt(this.time.seconds) < 10)
       this.time.seconds+= "0";
   }
 

@@ -1,7 +1,7 @@
 import { Component, View, EventEmitter, CORE_DIRECTIVES} from 'angular2/angular2';
-import { Client } from "src/services/api";
 import { RouterLink } from 'angular2/router';
-import { Material } from 'src/directives/material';
+import { Client } from '../services/api';
+import { Material } from '../directives/material';
 
 @Component({
   selector: 'minds-banner',
@@ -56,7 +56,7 @@ export class MindsBanner{
   top : number = 0;
   dragging : boolean = false;
   dragTimeout;
-  added : EventEmitter = new EventEmitter();
+  added : EventEmitter<any> = new EventEmitter();
 
 	constructor(){
 	}

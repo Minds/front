@@ -1,8 +1,8 @@
 import { Component, View, Inject, CORE_DIRECTIVES } from 'angular2/angular2';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
-import { Material } from 'src/directives/material';
-import { Navigation as NavigationService } from 'src/services/navigation';
-import { MindsTitle } from 'src/services/ux/title';
+import { Material } from '../../../directives/material';
+import { Navigation as NavigationService } from '../../../services/navigation';
+import { MindsTitle } from '../../../services/ux/title';
 
 @Component({
   selector: 'minds-homepage',

@@ -1,13 +1,16 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
-import { Material } from 'src/directives/material';
-import { Activity } from '../activity/activity';
-import { AutoGrow } from 'src/directives/autogrow';
-import { TagsLinks } from 'src/directives/tags';
-import { TagsPipe } from 'src/pipes/tags';
-import { MindsVideo } from 'src/components/video';
+import { Client } from '../../../services/api';
+import { SessionFactory } from '../../../services/session';
+import { Material } from '../../../directives/material';
+import { AutoGrow } from '../../../directives/autogrow';
+import { BUTTON_COMPONENTS } from '../../../components/buttons';
+import { MindsVideo } from '../../../components/video';
+import { Boost } from '../../boosts/boost/boost';
+import { Comments } from '../../comments/comments';
+import { TagsPipe } from '../../../pipes/tags';
+import { TagsLinks } from '../../../directives/tags';
+import { ScrollFactory } from '../../../services/ux/scroll';
 
 @Component({
   selector: 'minds-remind',

@@ -1,9 +1,9 @@
 import { Component, View, NgFor, NgIf, FORM_DIRECTIVES, Inject} from 'angular2/angular2';
 import { Router, RouteParams, Location } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { MindsActivityObject } from 'src/interfaces/entities';
+import { Client, Upload } from '../../services/api';
+import { Material } from '../../directives/material';
+import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { MindsActivityObject } from '../../interfaces/entities';
 
 @Component({
   selector: 'minds-search-bar',

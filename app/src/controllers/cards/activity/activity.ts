@@ -1,17 +1,17 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter, ElementRef} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
-import { Material } from 'src/directives/material';
-import { AutoGrow } from 'src/directives/autogrow';
+import { Client } from '../../../services/api';
+import { SessionFactory } from '../../../services/session';
+import { Material } from '../../../directives/material';
+import { AutoGrow } from '../../../directives/autogrow';
 import { Remind } from '../remind/remind';
-import { BUTTON_COMPONENTS } from 'src/components/buttons';
-import { MindsVideo } from 'src/components/video';
-import { Boost } from 'src/controllers/boosts/boost/boost';
-import { Comments } from 'src/controllers/comments/comments';
-import { TagsPipe } from 'src/pipes/tags';
-import { TagsLinks } from 'src/directives/tags';
-import { ScrollFactory } from 'src/services/ux/scroll';
+import { BUTTON_COMPONENTS } from '../../../components/buttons';
+import { MindsVideo } from '../../../components/video';
+import { Boost } from '../../boosts/boost/boost';
+import { Comments } from '../../comments/comments';
+import { TagsPipe } from '../../../pipes/tags';
+import { TagsLinks } from '../../../directives/tags';
+import { ScrollFactory } from '../../../services/ux/scroll';
 
 @Component({
   selector: 'minds-activity',
@@ -39,7 +39,7 @@ export class Activity {
 
   editing : boolean = false;
 
-  _delete: EventEmitter = new EventEmitter();
+  _delete: EventEmitter<any> = new EventEmitter();
   scroll_listener;
 
 	constructor(public client: Client, _element: ElementRef){

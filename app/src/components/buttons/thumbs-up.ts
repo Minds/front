@@ -1,7 +1,7 @@
 import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
-import { SessionFactory } from 'src/services/session';
-import { Client } from "src/services/api";
-import { WalletService } from 'src/services/wallet';
+import { SessionFactory } from '../../services/session';
+import { Client } from '../../services/api';
+import { WalletService } from '../../services/wallet';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -21,6 +21,7 @@ import { WalletService } from 'src/services/wallet';
 export class ThumbsUpButton {
 
   object = {
+    'guid': null,
     'thumbs:up:user_guids': []
   };
   session = SessionFactory.build();

@@ -1,7 +1,6 @@
 import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
-import { SessionFactory } from 'src/services/session';
-import { Client } from "src/services/api";
-
+import { SessionFactory } from '../../services/session';
+import { Client } from '../../services/api';
 
 @Component({
   selector: 'minds-button-remind',

@@ -1,7 +1,7 @@
 import { EventEmitter, Observable, Injector, provide } from 'angular2/angular2';
 
 export class Scroll{
-  scroll = new EventEmitter();
+  scroll : EventEmitter<any> = new EventEmitter();
   view : any;
 
   constructor(){
@@ -17,7 +17,7 @@ export class Scroll{
   }
 
   listen(callback : Function) : any {
-    return this.scroll.observer({next: callback });
+    return this.scroll.subscribe({next: callback });
   }
 
   unListen(subscription : any){

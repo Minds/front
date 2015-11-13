@@ -1,11 +1,11 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { WalletService } from 'src/services/wallet';
-import { Storage } from 'src/services/storage';
-import { MDL_DIRECTIVES } from 'src/directives/material';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { CHECKOUT_COMPONENTS } from 'src/components/checkout';
+import { Client } from '../../services/api';
+import { WalletService } from '../../services/wallet';
+import { Storage } from '../../services/storage';
+import { MDL_DIRECTIVES } from '../../directives/material';
+import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { CHECKOUT_COMPONENTS } from '../../components/checkout';
 
 interface CreditCard {
   number?: number,
@@ -48,8 +48,8 @@ export class Checkout {
   error : string = "";
   card;
 
-  inputed : EventEmitter = new EventEmitter;
-  done : EventEmitter = new EventEmitter;
+  inputed : EventEmitter<any> = new EventEmitter;
+  done : EventEmitter<any> = new EventEmitter;
 
   amount : number = 0;
   merchant_guid;

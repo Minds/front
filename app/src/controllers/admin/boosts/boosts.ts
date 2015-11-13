@@ -1,9 +1,9 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { CARDS } from 'src/controllers/cards/cards';
-import { MINDS_GRAPHS } from 'src/components/graphs';
-import { Material } from 'src/directives/material';
+import { Client, Upload } from '../../../services/api';
+import { CARDS } from '../../../controllers/cards/cards';
+import { MINDS_GRAPHS } from '../../../components/graphs';
+import { Material } from '../../../directives/material';
 
 @Component({
   selector: 'minds-admin-boosts',

@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Inject } from 'angular2/angular2';
-import { Material as MaterialService } from "src/services/ui";
+import { Material as MaterialService } from "../../services/ui";
 
 @Directive({
   selector: '[mdl-textfield]',

@@ -1,22 +1,22 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, Inject } from 'angular2/angular2';
 import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { MindsTitle } from 'src/services/ux/title';
-import { Material } from 'src/directives/material';
-import { SessionFactory } from 'src/services/session';
-import { ScrollFactory } from 'src/services/ux/scroll';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { BUTTON_COMPONENTS } from 'src/components/buttons';
-import { MindsCarousel } from 'src/components/carousel';
-import { TagsPipe } from 'src/pipes/tags';
+import { Client, Upload } from '../../services/api';
+import { MindsTitle } from '../../services/ux/title';
+import { Material } from '../../directives/material';
+import { SessionFactory } from '../../services/session';
+import { ScrollFactory } from '../../services/ux/scroll';
+import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { BUTTON_COMPONENTS } from '../../components/buttons';
+import { MindsCarousel } from '../../components/carousel';
+import { TagsPipe } from '../../pipes/tags';
 
-import { AutoGrow } from 'src/directives/autogrow';
-import { CARDS } from 'src/controllers/cards/cards';
-import { MindsActivityObject } from 'src/interfaces/entities';
-import { MindsUser } from 'src/interfaces/entities';
-import { MindsChannelResponse } from 'src/interfaces/responses';
-import { Poster } from 'src/controllers/newsfeed/poster/poster';
-import { MindsAvatar } from 'src/components/avatar';
+import { AutoGrow } from '../../directives/autogrow';
+import { CARDS } from '../../controllers/cards/cards';
+import { MindsActivityObject } from '../../interfaces/entities';
+import { MindsUser } from '../../interfaces/entities';
+import { MindsChannelResponse } from '../../interfaces/responses';
+import { Poster } from '../../controllers/newsfeed/poster/poster';
+import { MindsAvatar } from '../../components/avatar';
 
 import { ChannelSubscribers } from './subscribers/subscribers';
 import { ChannelSubscriptions } from './subscriptions/subscriptions';

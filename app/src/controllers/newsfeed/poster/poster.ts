@@ -1,11 +1,11 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { MDL_DIRECTIVES } from 'src/directives/material';
-import { AutoGrow } from 'src/directives/autogrow';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { MindsActivityObject } from 'src/interfaces/entities';
-import { SessionFactory } from 'src/services/session';
+import { Client, Upload } from '../../../services/api';
+import { MDL_DIRECTIVES } from '../../../directives/material';
+import { AutoGrow } from '../../../directives/autogrow';
+import { InfiniteScroll } from '../../../directives/infinite-scroll';
+import { MindsActivityObject } from '../../../interfaces/entities';
+import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-newsfeed-poster',
@@ -26,7 +26,7 @@ export class Poster {
     isVideo : false,
     mimeType : ""
   }
-  load: EventEmitter = new EventEmitter();
+  load: EventEmitter<any> = new EventEmitter();
   inProgress : boolean = false;
 
   attachment_preview;

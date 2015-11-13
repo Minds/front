@@ -1,9 +1,9 @@
 import { Component, View, Inject, CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/angular2';
 import { Router, RouterLink } from 'angular2/router';
-import { MindsTitle } from 'src/services/ux/title';
-import { Material } from 'src/directives/material';
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
+import { MindsTitle } from '../../../services/ux/title';
+import { Material } from '../../../directives/material';
+import { Client } from '../../../services/api';
+import { SessionFactory } from '../../../services/session';
 import { Register } from '../register/register';
 
 @Component({

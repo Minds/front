@@ -1,12 +1,12 @@
 import { Component, View, CORE_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { NotificationService } from 'src/services/notification';
-import { Material } from 'src/directives/material';
-import { MindsWalletResponse } from 'src/interfaces/responses';
-import { MindsUserSearchResponse } from 'src/interfaces/responses';
-import { MindsBoostResponse } from 'src/interfaces/responses';
-import { MindsBoostRateResponse } from 'src/interfaces/responses';
+import { Client } from '../../../services/api';
+import { NotificationService } from '../../../services/notification';
+import { Material } from '../../../directives/material';
+import { MindsWalletResponse } from '../../../interfaces/responses';
+import { MindsUserSearchResponse } from '../../../interfaces/responses';
+import { MindsBoostResponse } from '../../../interfaces/responses';
+import { MindsBoostRateResponse } from '../../../interfaces/responses';
 import { BoostFullNetwork } from './full-network/full-network';
 import { BoostP2P} from './p2p/p2p';
 
@@ -26,7 +26,7 @@ export class Boost{
   minds : Minds;
   activity : any;
   type : string = '';
-  _done: EventEmitter = new EventEmitter();
+  _done: EventEmitter<any> = new EventEmitter();
 
   constructor(public client: Client, public notificationService : NotificationService){
     this.minds = window.Minds;

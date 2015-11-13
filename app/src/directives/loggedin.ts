@@ -1,14 +1,14 @@
 import {Component, NgIf} from 'angular2/angular2';
-import {Storage} from 'src/services/storage';
+import {Storage} from '../services/storage';
 
 @Component({
   selector: 'minds-loggedin',
   viewBindings: [Storage]
 })
 
-export class LoggedIn { 
+export class LoggedIn {
 	constructor(public storage: Storage){
-		
+
 	}
 	isLoggedIn(){
 		console.log('checking ng-if');

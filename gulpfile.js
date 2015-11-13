@@ -58,7 +58,7 @@ var PATH = {
     // Order is quite important here for the HTML tag injection.
     loader: [
       './node_modules/es6-shim/es6-shim.min.js',
-      //'./node_modules/systemjs/dist/system-polyfills.src.js',
+      './node_modules/systemjs/dist/system-polyfills.src.js',
       './node_modules/systemjs/dist/system.src.js',
       './node_modules/intl/dist/Intl.min.js',
       './node_modules/intl/locale-data/jsonp/en.js'
@@ -71,7 +71,7 @@ var PATH = {
       APP_SRC + '/system.config.js'
     ],
     angular: [
-      ANGULAR_BUNDLES + '/angular2.js',
+      ANGULAR_BUNDLES + '/angular2.min.js',
       ANGULAR_BUNDLES + '/router.dev.js',
       ANGULAR_BUNDLES + '/http.min.js'
     ],
@@ -100,9 +100,6 @@ var AUTOPREFIXER_BROWSERS = [
 var tsProject = tsc.createProject('tsconfig.json', {
   typescript: require('typescript')
 });
-
-var semverReleases = ['major', 'premajor', 'minor', 'preminor', 'patch',
-                      'prepatch', 'prerelease'];
 
 // --------------
 // Clean.
@@ -240,14 +237,16 @@ gulp.task('build.scss', ['build.plugins.scss'], function () {
 // --------------
 // Build dev.
 
-gulp.task('build.lib.dev', function () {
+gulp.task('build.lib', function () {
   return gulp.src(PATH.src.lib.concat(PATH.src.modules))
     .pipe(gulp.dest(PATH.dest.dev.lib));
 });
 
-gulp.task('build.js.dev', function () {
-  var result = gulp.src([join(PATH.src.all, '**/*ts'),
-                         '!' + join(PATH.src.all, '**/*_spec.ts')])
+gulp.task('build.js', function () {
+  var result = gulp.src([
+      join(PATH.src.all, '**/*ts'),
+      '!' + join(PATH.src.all, '**/*_spec.ts')
+    ])
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(inlineNg2Template({ base: '/app' }))
@@ -262,15 +261,22 @@ gulp.task('build.js.dev', function () {
 /**
  * Build assets (Dev)
  */
-gulp.task('build.assets.dev', ['build.scss', 'build.js.dev'], function () {
-  return gulp.src([join(PATH.src.all, '**/*.html'), join(PATH.src.all, '**/*.css'), join(PATH.src.all, '**/*.png'), join(PATH.src.all, '**/*.*')])
+gulp.task('build.assets', ['build.scss'], function () {
+  return gulp.src([
+    join(PATH.src.all, '**/*.html'),
+    join(PATH.src.all, '**/*.css'),
+    join(PATH.src.all, '**/*.png'),
+    join(PATH.src.all, '**/*.*'),
+    '!' + join(PATH.src.all, '**/*.ts'),
+    '!' + join(PATH.src.all, '**/*.js'),
+    ])
     .pipe(gulp.dest(PATH.dest.dev.all));
 });
 
 /**
  * Compile index page (Dev)
  */
-gulp.task('build.index.dev', function() {
+gulp.task('build.index', function() {
   var assets = injectableAssets();
   var target = gulp.src(assets, { read: false });
   return gulp.src(join(PATH.src.all, 'index.php'))
@@ -279,12 +285,12 @@ gulp.task('build.index.dev', function() {
     .pipe(gulp.dest(PATH.dest.dev.all));
 });
 
-gulp.task('build.app.dev', function (done) {
-  runSequence( 'build.plugins', 'build.assets.dev', 'build.index.dev', done);
+gulp.task('build.app', function (done) {
+  runSequence( 'build.plugins', 'build.assets', 'build.index', done);
 });
 
 gulp.task('build.dev', function (done) {
-  runSequence( 'build.lib.dev', 'build.app.dev', done);
+  runSequence( 'build.lib', 'build.js', 'build.app', done);
 });
 
 gulp.task('build.bundle', ['build.dev'], function (cb){
@@ -322,7 +328,7 @@ gulp.task('build.prod', function(done){
 // Post install
 
 gulp.task('install.typings', ['clean.tsd_typings'], shell.task([
-  'tsd reinstall --overwrite',
+  'tsd reinstall --clean',
   'tsd link',
   'tsd rebundle'
 ]));
@@ -330,11 +336,6 @@ gulp.task('install.typings', ['clean.tsd_typings'], shell.task([
 gulp.task('postinstall', function (done) {
   runSequence('install.typings', done);
 });
-
-// --------------
-// Version.
-
-registerBumpTasks();
 
 gulp.task('bump.reset', function() {
   return gulp.src('package.json')
@@ -373,20 +374,4 @@ function templateLocals() {
     VERSION: getVersion(),
     APP_BASE: APP_BASE
   };
-}
-
-function registerBumpTasks() {
-  semverReleases.forEach(function (release) {
-    var semverTaskName = 'semver.' + release;
-    var bumpTaskName = 'bump.' + release;
-    gulp.task(semverTaskName, function() {
-      var version = semver.inc(getVersion(), release);
-      return gulp.src('package.json')
-        .pipe(bump({ version: version }))
-        .pipe(gulp.dest('./'));
-    });
-    gulp.task(bumpTaskName, function(done) {
-        runSequence(semverTaskName, 'build.app.prod', done);
-    });
-  });
 }

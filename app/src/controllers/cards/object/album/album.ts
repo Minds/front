@@ -1,9 +1,9 @@
 import { Component, View, CORE_DIRECTIVES, NgStyle } from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
-import { Material } from 'src/directives/material';
-import { BUTTON_COMPONENTS } from 'src/components/buttons';
+import { Client } from '../../../../services/api';
+import { SessionFactory } from '../../../../services/session';
+import { Material } from '../../../../directives/material';
+import { BUTTON_COMPONENTS } from '../../../../components/buttons';
 
 @Component({
   selector: 'minds-card-album',

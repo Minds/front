@@ -1,11 +1,11 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { MindsTitle } from 'src/services/ux/title';
-import { Material } from 'src/directives/material';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { CARDS } from 'src/controllers/cards/cards';
-import { BlogCard } from 'src/plugins/blog/blog-card';
+import { Client, Upload } from '../../services/api';
+import { MindsTitle } from '../../services/ux/title';
+import { Material } from '../../directives/material';
+import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { CARDS } from '../../controllers/cards/cards';
+import { BlogCard } from '../../plugins/blog/blog-card';
 
 @Component({
   selector: 'minds-search',

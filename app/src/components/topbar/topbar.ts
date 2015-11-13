@@ -1,10 +1,10 @@
 import { Component, View, NgIf} from 'angular2/angular2';
 import { RouterLink } from 'angular2/router';
-import { Material } from 'src/directives/material';
-import { Storage } from 'src/services/storage';
-import { Sidebar } from 'src/services/ui/sidebar';
-import { SessionFactory } from 'src/services/session';
-import { SearchBar } from 'src/controllers/search/bar';
+import { Material } from '../../directives/material';
+import { Storage } from '../../services/storage';
+import { Sidebar } from '../../services/ui/sidebar';
+import { SessionFactory } from '../../services/session';
+import { SearchBar } from '../../controllers/search/bar';
 import { TopbarNavigation } from './topbar-navigation';
 
 @Component({

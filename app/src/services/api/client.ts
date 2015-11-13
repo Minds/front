@@ -1,6 +1,6 @@
 import {Inject, Injector, bind} from 'angular2/angular2';
 import {Http, Headers} from 'angular2/http';
-import {Cookie} from 'src/services/cookie';
+import {Cookie} from '../cookie';
 
 /**
  * API Class
@@ -41,7 +41,7 @@ export class Client {
 					self.base + endpoint,
 					this.buildOptions(options)
 				)
-				.subscribe(res => {
+				.subscribe((res : any) => {
 						if(res.status != 200){
 							return reject(res);
 						}
@@ -65,7 +65,7 @@ export class Client {
 					JSON.stringify(data),
 					this.buildOptions(options)
 				)
-				.subscribe(res => {
+				.subscribe((res : any) => {
 						if(res.status != 200){
 							return reject(res.json());
 						}
@@ -89,7 +89,7 @@ export class Client {
 					JSON.stringify(data),
 					this.buildOptions(options)
 				)
-				.subscribe(res => {
+				.subscribe((res : any) => {
 						if(res.status != 200){
 							return reject(res.json());
 						}
@@ -112,7 +112,7 @@ export class Client {
 					self.base + endpoint,
 					this.buildOptions(options)
 				)
-				.subscribe(res => {
+				.subscribe((res : any) => {
 						if(res.status != 200){
 							return reject(res.json());
 						}

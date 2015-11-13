@@ -1,5 +1,4 @@
 import { Directive,  EventEmitter, ElementRef } from 'angular2/angular2';
-import { Material as MaterialService } from "src/services/ui";
 
 @Directive({
   selector: '[auto-grow]',
@@ -31,7 +30,7 @@ export class AutoGrow{
   }
 
   set autoGrow(value){
-    
+
   }
 
 }

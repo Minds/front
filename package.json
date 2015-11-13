@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Front end repository for Minds",
   "dependencies": {
-    "angular2": "2.0.0-alpha.45",
+    "angular2": "2.0.0-alpha.46",
     "braintree-web": "2.15.2",
     "es6-module-loader": "^0.16.2",
     "systemjs": "^0.18.1",

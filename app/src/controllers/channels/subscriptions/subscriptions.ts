@@ -1,10 +1,10 @@
 import { Component, View, NgFor, NgIf, Inject, FORM_DIRECTIVES} from 'angular2/angular2';
 import { Router, RouteParams } from 'angular2/router';
-import { Client } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { SessionFactory } from 'src/services/session';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { UserCard } from 'src/controllers/cards/cards';
+import { Client } from '../../../services/api';
+import { Material } from '../../../directives/material';
+import { SessionFactory } from '../../../services/session';
+import { InfiniteScroll } from '../../../directives/infinite-scroll';
+import { UserCard } from '../../../controllers/cards/cards';
 
 
 @Component({

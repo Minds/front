@@ -1,18 +1,8 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter } from 'angular2/angular2';
-import { Client } from "src/services/api";
-import { MDL_DIRECTIVES } from 'src/directives/material';
+import { Client } from '../../../services/api';
+import { MDL_DIRECTIVES } from '../../../directives/material';
 
-
-
-interface CreditCard {
-  number?: number,
-  type?: string,
-  name?: string,
-  name2?: string,
-  sec?: number,
-  month?: number | string,
-  year?: number | string
-}
+import { CreditCard } from '../../../interfaces/card-interface';
 
 @Component({
   selector: 'minds-checkout-card-input',
@@ -25,7 +15,7 @@ interface CreditCard {
 
 export class CardInput {
 
-  _confirm : EventEmitter = new EventEmitter;
+  _confirm : EventEmitter<any> = new EventEmitter();
   card : CreditCard = <CreditCard>{ month: 'mm', year: 'yyyy'};
   inProgress : boolean = false;
 

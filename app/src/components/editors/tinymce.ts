@@ -1,5 +1,4 @@
 import { Component, View, CORE_DIRECTIVES, EventEmitter } from 'angular2/angular2';
-import { Client } from "src/services/api";
 
 declare var tinymce;
 
@@ -23,7 +22,7 @@ export class MindsTinymce {
   update = new EventEmitter();
   timeout;
 
-  constructor(public client : Client) {
+  constructor() {
     this.init();
   }
 

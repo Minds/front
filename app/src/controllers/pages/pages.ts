@@ -1,9 +1,9 @@
 import { Component, View, Inject, CORE_DIRECTIVES } from 'angular2/angular2';
 import { Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
-import { Client } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { MindsTitle } from 'src/services/ux/title';
-import { Navigation as NavigationService } from 'src/services/navigation';
+import { Client } from '../../services/api';
+import { Material } from '../../directives/material';
+import { MindsTitle } from '../../services/ux/title';
+import { Navigation as NavigationService } from '../../services/navigation';
 
 @Component({
   providers: [ MindsTitle, Client, NavigationService ]

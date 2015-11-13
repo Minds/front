@@ -1,20 +1,12 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { WalletService } from 'src/services/wallet';
-import { Storage } from 'src/services/storage';
-import { MDL_DIRECTIVES } from 'src/directives/material';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
+import { Client } from '../../../services/api';
+import { WalletService } from '../../../services/wallet';
+import { Storage } from '../../../services/storage';
+import { MDL_DIRECTIVES } from '../../../directives/material';
+import { InfiniteScroll } from '../../../directives/infinite-scroll';
 
-interface CreditCard {
-  number?: number,
-  type?: string,
-  name?: string,
-  name2?: string,
-  sec?: number,
-  month?: number | string,
-  year?: number | string
-}
+import { CreditCard } from '../../../interfaces/card-interface';
 
 @Component({
   selector: 'minds-wallet-purchase',

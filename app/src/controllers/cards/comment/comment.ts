@@ -1,10 +1,10 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
-import { AutoGrow } from 'src/directives/autogrow';
-import { BUTTON_COMPONENTS } from 'src/components/buttons';
-import { TagsPipe } from 'src/pipes/tags';
+import { Client } from '../../../services/api';
+import { SessionFactory } from '../../../services/session';
+import { AutoGrow } from '../../../directives/autogrow';
+import { BUTTON_COMPONENTS } from '../../../components/buttons';
+import { TagsPipe } from '../../../pipes/tags';
 
 @Component({
   selector: 'minds-card-comment',
@@ -65,7 +65,7 @@ export class CommentCard {
   session = SessionFactory.build();
 
 
-  _delete: EventEmitter = new EventEmitter();
+  _delete: EventEmitter<any> = new EventEmitter();
 
 	constructor(public client: Client){
 	}

@@ -1,6 +1,6 @@
 import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
-import { Client } from "src/services/api";
-import { MINDS_GRAPHS } from 'src/components/graphs';
+import { Client } from '../../services/api';
+import { MINDS_GRAPHS } from '../../components/graphs';
 
 @Component({
   selector: 'minds-analytics-impressions',

@@ -1,7 +1,7 @@
 import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { Material } from 'src/directives/material';
+import { Client, Upload } from '../../services/api';
+import { Material } from '../../directives/material';
 
 import { AdminAnalytics } from './analytics/analytics';
 import { AdminBoosts } from './boosts/boosts';

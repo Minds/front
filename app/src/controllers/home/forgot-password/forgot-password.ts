@@ -1,9 +1,9 @@
 import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
 import { Router, RouteParams } from 'angular2/router';
-import { MindsTitle } from 'src/services/ux/title';
-import { Material } from 'src/directives/material';
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
+import { MindsTitle } from '../../../services/ux/title';
+import { Material } from '../../../directives/material';
+import { Client } from '../../../services/api';
+import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-register',

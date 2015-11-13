@@ -1,7 +1,7 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { Material } from 'src/directives/material';
+import { Client } from '../../../services/api';
+import { Material } from '../../../directives/material';
 
 @Component({
   selector: 'minds-settings-disable-channel',

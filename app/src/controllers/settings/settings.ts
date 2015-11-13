@@ -1,9 +1,9 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { Router, RouterLink, RouteParams } from "angular2/router";
-import { Client } from 'src/services/api';
-import { MindsTitle } from 'src/services/ux/title';
-import { SessionFactory } from 'src/services/session';
-import { Material } from 'src/directives/material';
+import { Client } from '../../services/api';
+import { MindsTitle } from '../../services/ux/title';
+import { SessionFactory } from '../../services/session';
+import { Material } from '../../directives/material';
 
 import { SettingsGeneral } from './general/general';
 import { SettingsStatistics } from './statistics/statistics';

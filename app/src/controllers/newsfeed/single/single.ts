@@ -1,14 +1,14 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
+import { Client, Upload } from '../../../services/api';
+import { Material } from '../../../directives/material';
+import { InfiniteScroll } from '../../../directives/infinite-scroll';
 import { Poster } from '../poster/poster';
-import { CARDS } from 'src/controllers/cards/cards';
-import { MindsActivityObject } from 'src/interfaces/entities';
-import { SessionFactory } from 'src/services/session';
+import { CARDS } from '../../../controllers/cards/cards';
+import { MindsActivityObject } from '../../../interfaces/entities';
+import { SessionFactory } from '../../../services/session';
 
-import { GraphImpressions } from 'src/components/graphs/impressions';
+import { GraphImpressions } from '../../../components/graphs/impressions';
 
 @Component({
   selector: 'minds-newsfeed-single',
@@ -41,7 +41,7 @@ export class NewsfeedSingle {
 	load(guid : string){
 		var self = this;
 		this.client.get('api/v1/newsfeed/single/' + guid, { }, {cache: true})
-				.then((data : MindsActivityObject) => {
+				.then((data : any) => {
 					self.activity = data.activity;
 				})
 				.catch(function(e){

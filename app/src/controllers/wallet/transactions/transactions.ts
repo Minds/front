@@ -1,9 +1,9 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
-import { MDL_DIRECTIVES } from 'src/directives/material';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
+import { Client } from '../../../services/api';
+import { SessionFactory } from '../../../services/session';
+import { MDL_DIRECTIVES } from '../../../directives/material';
+import { InfiniteScroll } from '../../../directives/infinite-scroll';
 
 @Component({
   selector: 'minds-wallet-transactions',

@@ -1,12 +1,12 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, Observable} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { SessionFactory } from 'src/services/session';
-import { Material } from 'src/directives/material';
-import { AutoGrow } from 'src/directives/autogrow';
-import { InfiniteScroll } from 'src/directives/infinite-scroll';
-import { CommentCard } from 'src/controllers/cards/comment/comment';
-import { TagsPipe } from 'src/pipes/tags';
+import { Client } from '../../services/api';
+import { SessionFactory } from '../../services/session';
+import { Material } from '../../directives/material';
+import { AutoGrow } from '../../directives/autogrow';
+import { InfiniteScroll } from '../../directives/infinite-scroll';
+import { CommentCard } from '../../controllers/cards/comment/comment';
+import { TagsPipe } from '../../pipes/tags';
 
 @Component({
   selector: 'minds-comments',

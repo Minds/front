@@ -1,7 +1,7 @@
 import { Component, View, CORE_DIRECTIVES, EventEmitter } from 'angular2/angular2';
 import { RouterLink } from 'angular2/router';
-import { Navigation as NavigationService } from 'src/services/navigation';
-import { SessionFactory } from 'src/services/session';
+import { Navigation as NavigationService } from '../../services/navigation';
+import { SessionFactory } from '../../services/session';
 
 @Component({
   selector: 'minds-topbar-navigation',

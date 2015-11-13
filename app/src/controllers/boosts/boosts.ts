@@ -1,8 +1,8 @@
 import { Component, View, CORE_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { ROUTER_DIRECTIVES, RouteParams } from "angular2/router";
-import { Client } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { CARDS } from 'src/controllers/cards/cards';
+import { Client } from '../../services/api';
+import { Material } from '../../directives/material';
+import { CARDS } from '../../controllers/cards/cards';
 
 @Component({
   selector: 'minds-boosts-console',
@@ -16,7 +16,7 @@ import { CARDS } from 'src/controllers/cards/cards';
 export class Boosts{
 
   minds : Minds = window.Minds;
-  _done: EventEmitter = new EventEmitter();
+  _done: EventEmitter<any> = new EventEmitter();
 
   type : string = "peer";
   filter : string = "inbox"

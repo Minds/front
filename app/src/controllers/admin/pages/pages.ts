@@ -1,8 +1,8 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
-import { Client, Upload } from 'src/services/api';
-import { Material } from 'src/directives/material';
-import { MindsTinymce } from 'src/components/editors/tinymce';
+import { Client, Upload } from '../../../services/api';
+import { Material } from '../../../directives/material';
+import { MindsTinymce } from '../../../components/editors/tinymce';
 
 @Component({
   selector: 'minds-admin-pages',

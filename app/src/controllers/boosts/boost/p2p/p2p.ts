@@ -1,14 +1,14 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter, NgZone} from 'angular2/angular2';
 import { RouterLink } from "angular2/router";
-import { Client } from 'src/services/api';
-import { Material } from 'src/directives/material';
+import { Client } from '../../../../services/api';
+import { Material } from '../../../../directives/material';
 
-import { Checkout } from 'src/controllers/payments/checkout';
+import { Checkout } from '../../../payments/checkout';
 
-import { MindsWalletResponse } from 'src/interfaces/responses';
-import { MindsUserSearchResponse } from 'src/interfaces/responses';
-import { MindsBoostResponse } from 'src/interfaces/responses';
-import { MindsBoostRateResponse } from 'src/interfaces/responses';
+import { MindsWalletResponse } from '../../../../interfaces/responses';
+import { MindsUserSearchResponse } from '../../../../interfaces/responses';
+import { MindsBoostResponse } from '../../../../interfaces/responses';
+import { MindsBoostRateResponse } from '../../../../interfaces/responses';
 
 @Component({
   selector: 'minds-boost-p2p',
@@ -23,7 +23,7 @@ import { MindsBoostRateResponse } from 'src/interfaces/responses';
 
 export class BoostP2P{
 
-  _done: EventEmitter = new EventEmitter();
+  _done: EventEmitter<any> = new EventEmitter();
   minds : Minds = window.Minds;
 
   activity : any;

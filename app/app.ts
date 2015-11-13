@@ -8,7 +8,7 @@ import { Client } from './src/services/api';
 import {Topbar} from './src/components/topbar/topbar';
 import {SidebarNavigation} from './src/components/sidebar-navigation/sidebar-navigation';
 
-import { Homepage } from 'src/controllers/home/homepage/homepage';
+import { Homepage } from './src/controllers/home/homepage/homepage';
 import {Login} from './src/controllers/home/login/login';
 import {Logout} from './src/controllers/home/logout/logout';
 import {Register} from './src/controllers/home/register/register';
