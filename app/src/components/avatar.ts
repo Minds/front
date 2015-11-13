@@ -16,7 +16,7 @@ import { Material } from '../directives/material';
     <div *ng-if="editing" class="overlay">
       <i class="material-icons">camera</i>
       <span>Change avatar</span>
-      <input *ng-if="editing" type="file" #file (change)="add(file)"/>
+      <input *ng-if="editing" type="file" #file (change)="add($event)"/>
     </div>
   </div>
   `,
@@ -54,11 +54,12 @@ export class MindsAvatar{
       this.done();
   }
 
-  add(file){
+  add(e){
     if(!this.editing)
       return;
 
-    this.file = file ? file.files[0] : null;
+    var element : any = e.target ? e.target : e.srcElement;
+    this.file = element ? element.files[0] : null;
 
     /**
      * Set a live preview
@@ -68,6 +69,8 @@ export class MindsAvatar{
       this.src = reader.result;
     }
     reader.readAsDataURL(this.file);
+
+    element.value = "";
   }
   done(){
     this.added.next(this.file);
