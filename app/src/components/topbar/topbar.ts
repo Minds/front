@@ -1,4 +1,4 @@
-import { Component, View, NgIf} from 'angular2/angular2';
+import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
 import { RouterLink } from 'angular2/router';
 import { Material } from '../../directives/material';
 import { Storage } from '../../services/storage';
@@ -13,7 +13,7 @@ import { TopbarNavigation } from './topbar-navigation';
 })
 @View({
   templateUrl: 'src/components/topbar/topbar.html',
-  directives: [ NgIf, RouterLink, Material, SearchBar, TopbarNavigation ]
+  directives: [ CORE_DIRECTIVES, RouterLink, Material, SearchBar, TopbarNavigation ]
 })
 
 export class Topbar{

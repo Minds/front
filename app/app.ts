@@ -1,4 +1,4 @@
-import {Component, View, provide, bootstrap} from 'angular2/angular2';
+import {Component, View, CORE_DIRECTIVES, provide, bootstrap} from 'angular2/angular2';
 import {RouteConfig, Route, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
@@ -7,8 +7,9 @@ import { Client } from './src/services/api';
 
 import {Topbar} from './src/components/topbar/topbar';
 import {SidebarNavigation} from './src/components/sidebar-navigation/sidebar-navigation';
+import {SignupModal} from './src/components/modal/modal';
 
-import { Homepage } from './src/controllers/home/homepage/homepage';
+import {Homepage} from './src/controllers/home/homepage/homepage';
 import {Login} from './src/controllers/home/login/login';
 import {Logout} from './src/controllers/home/logout/logout';
 import {Register} from './src/controllers/home/register/register';
@@ -36,7 +37,9 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 
 @Component({
   selector: 'minds-app',
-  bindings: [ Client, NotificationService ]
+  bindings: [ Client, NotificationService ],
+  templateUrl: './src/controllers/index.html',
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal ]
 })
 @RouteConfig([
   { path: '/login', component: Login, as: 'Login' },
@@ -87,10 +90,6 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
   { path: '/', component: Homepage, as: 'Homepage' }
 
 ])
-@View({
-  templateUrl: './src/controllers/index.html',
-  directives: [Topbar, SidebarNavigation, ROUTER_DIRECTIVES]
-})
 
 export class Minds {
   name: string;
