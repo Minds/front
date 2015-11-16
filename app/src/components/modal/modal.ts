@@ -5,6 +5,7 @@ import {Component} from 'angular2/angular2';
   host: {
     '[hidden]': 'hidden'
   },
+  inputs: [ '_hidden: hidden' ],
   template: `
     <div class="m-modal-bg" (click)="close()"></div>
     <div class="m-modal-container">
@@ -19,6 +20,10 @@ import {Component} from 'angular2/angular2';
 export class Modal {
 
   hidden : boolean = false;
+
+  set _hidden(value : boolean){
+    this.hidden = value;
+  }
 
   close(){
     this.hidden = true;

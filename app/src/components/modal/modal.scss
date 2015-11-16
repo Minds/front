@@ -40,11 +40,20 @@ m-modal{
 m-modal-signup{
   z-index:100;
 
+  .m-modal-container{
+    max-width: 368px;
+    min-width: 0;
+  }
+
   .mdl-card__title{
     h2{
       font-size: 18px;
       margin: 0;
       line-height: 18px;
+    }
+    img{
+      width: 168px;
+      margin: auto;
     }
   }
 
@@ -67,5 +76,9 @@ m-modal-signup{
         width:100%;
       }
     }
+  }
+
+  .m-modal-signup-skip{
+    cursor:pointer;
   }
 }

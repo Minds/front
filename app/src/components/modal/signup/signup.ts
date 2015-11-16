@@ -10,14 +10,14 @@ import { SessionFactory } from '../../../services/session';
   template: `
     <m-modal [hidden]="hidden" *ng-if="!session.isLoggedIn()">
       <div class="mdl-card__title">
-        <h2>Login or Signup</h2>
+        <img src="/assets/logos/small.png" (click)="close()"/>
       </div>
       <div class="mdl-card__supporting-text">
         Sign-up to claim 100 free views on the content of your choice. Earn viral reach and money for your energy online.
       </div>
       <div class="mdl-card__supporting-text">
-        <button class="mdl-button mdl-button--raised mdl-button--colored" >Signup</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored">Login</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Register']">Signup</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Login']">Login</button>
       </div>
 
       <div class="mdl-card__supporting-text m-modal-signup-apps">
@@ -48,6 +48,9 @@ export class SignupModal {
         case 'login':
         case 'forgot-password':
           this.hidden = true;
+          break;
+        default:
+          this.hidden = false;
       }
     });
   }
