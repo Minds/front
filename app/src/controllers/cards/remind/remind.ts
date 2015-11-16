@@ -8,7 +8,7 @@ import { BUTTON_COMPONENTS } from '../../../components/buttons';
 import { MindsVideo } from '../../../components/video';
 import { Boost } from '../../boosts/boost/boost';
 import { Comments } from '../../comments/comments';
-import { TagsPipe } from '../../../pipes/tags';
+import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
 import { ScrollFactory } from '../../../services/ux/scroll';
 
@@ -20,7 +20,7 @@ import { ScrollFactory } from '../../../services/ux/scroll';
 @View({
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks],
-  pipes: [ TagsPipe ]
+  pipes: [ MINDS_PIPES ]
 })
 
 export class Remind {

@@ -33,7 +33,7 @@
 	<a [href]="activity.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900">
 		<h2 class="mdl-card__title-text mdl-typography--font-medium" *ng-if="activity.title">{{activity.title}}</h2>
 		<p *ng-if="activity.blurb">{{activity.blurb}}</p>
-    <p class="m-url mdl-color-text--blue-grey-400">{{activity.perma_url}}</p>
+    <p class="m-url mdl-color-text--blue-grey-400">{{activity.perma_url | domain}}</p>
 	</a>
 </div>
 
