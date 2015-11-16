@@ -38,6 +38,9 @@ ini_set( 'display_errors','1');
     <link rel="stylesheet" href="stylesheets/main.css"/>
     <script src="//storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
     <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <!-- Google Analytics -->
+    <script async src='//www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
 
   </head>
   <body>

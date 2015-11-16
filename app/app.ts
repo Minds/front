@@ -1,8 +1,9 @@
 import {Component, View, CORE_DIRECTIVES, provide, bootstrap} from 'angular2/angular2';
-import {RouteConfig, Route, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
+import {RouteConfig, Route, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
 import { NotificationService } from './src/services/notification';
+import { AnalyticsService} from './src/services/analytics'
 import { Client } from './src/services/api';
 
 import {Topbar} from './src/components/topbar/topbar';
@@ -37,7 +38,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 
 @Component({
   selector: 'minds-app',
-  bindings: [ Client, NotificationService ],
+  bindings: [ Client, NotificationService, AnalyticsService ],
   templateUrl: './src/controllers/index.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal ]
 })
@@ -94,10 +95,19 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 export class Minds {
   name: string;
 
-  constructor(public notificationService : NotificationService) {
+  constructor(public notificationService : NotificationService, public analytics : AnalyticsService, public router: Router) {
     this.name = 'Minds';
 
     this.notificationService.getNotifications();
+    this.router.subscribe(this.onRouteChanged);
+  }
+
+  onRouteChanged(path){
+    //should we send more data?
+    console.log(window.Minds.ga);
+    window.Minds.ga('send', 'pageview', { 'page' : path});
+    console.log("sending");
+
   }
 
 }

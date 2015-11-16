@@ -8,6 +8,7 @@ interface Minds{
  cdn_url: string;
  site_url: string;
  notifications_count: number;
+ ga : any;
 }
 
 interface MindsNavigation {
