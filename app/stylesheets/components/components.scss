@@ -366,9 +366,13 @@ minds-carousel{
    }
 
    a{
-     display:block;
+     display:flex;
      padding:$minds-padding *2;
      text-decoration: none;
+
+     i{
+       margin-right:$minds-margin;
+     }
    }
 
  }

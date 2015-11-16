@@ -12,16 +12,26 @@
 
     <ul class="mdl-card minds-card-navigation mdl-shadow--2dp" style="width:100%; margin-top:8px;">
       <li>
-        <a class="mdl-color-text--blue-grey-500" [router-link]="['/Wallet-Filter', {filter: 'transactions'}]">Points history</a>
+        <a class="mdl-color-text--blue-grey-500" [router-link]="['/Wallet-Filter', {filter: 'transactions'}]">
+          <i class="material-icons">history</i>
+          Points history
+        </a>
       </li>
       <li>
-        <a class="mdl-color-text--blue-grey-500" [router-link]="['/Wallet-Filter', {filter: 'purchase'}]">Buy points</a>
+        <a class="mdl-color-text--blue-grey-500" [router-link]="['/Wallet-Filter', {filter: 'purchase'}]">
+          <i class="material-icons">shopping_cart</i>
+          Buy points
+        </a>
       </li>
       <li>
         <a class="mdl-color-text--blue-grey-500"
           [router-link]="['/Wallet-Filter', {filter: 'merchants'}]"
           [ng-style]="{'mdl-color--blue-grey-300': filter == 'merchants'}"
-          >Merchants</a>
+          >
+          <i class="material-icons">attach_money</i>
+          <span [hidden]="session.getLoggedInUser().merchant">Become a Merchant</span>
+          <span [hidden]="!session.getLoggedInUser().merchant">Merchant Wallet</span>
+        </a>
       </li>
     </ul>
 
