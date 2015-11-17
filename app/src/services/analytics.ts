@@ -2,19 +2,17 @@ import { Inject, Injector, bind } from 'angular2/angular2';
 
 export class AnalyticsService {
 
-  ga : any;
+  //Set the analytics id of the page we want to send data
   id : string = "UA-70134683-1";
 
   constructor(){
-    console.log("constructing AnalyticsService");
-    window.Minds.ga=window.Minds.ga||function(){(ga.q=ga.q||[]).push(arguments)};
-    window.Minds.ga.l=+new Date;
-    window.Minds.ga('create', this.id, 'auto');
-    console.log(window.Minds.ga);
+    //we instantiate the google analytics service
+    window.ga('create', this.id, 'auto');
   }
 
+  //Manual send
   send(type : string){
-    console.log("sending");
-    window.Minds.ga('send', type);
+    if (window.ga)
+      window.ga('send', type);
   }
 }

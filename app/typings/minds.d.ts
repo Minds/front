@@ -8,7 +8,6 @@ interface Minds{
  cdn_url: string;
  site_url: string;
  notifications_count: number;
- ga : any;
 }
 
 interface MindsNavigation {
@@ -19,5 +18,6 @@ interface MindsNavigation {
 interface Window {
 	Minds : Minds;
 	componentHandler : any;
+  ga : any;
 }
 declare var window:Window;

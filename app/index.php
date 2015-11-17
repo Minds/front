@@ -39,7 +39,12 @@ ini_set( 'display_errors','1');
     <script src="//storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
     <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
     <!-- Google Analytics -->
-    <script async src='//www.google-analytics.com/analytics.js'></script>
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    </script>
     <!-- End Google Analytics -->
 
   </head>

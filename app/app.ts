@@ -104,10 +104,7 @@ export class Minds {
 
   onRouteChanged(path){
     //should we send more data?
-    console.log(window.Minds.ga);
-    window.Minds.ga('send', 'pageview', { 'page' : path});
-    console.log("sending");
-
+    window.ga('send', 'pageview', { 'page' : path});
   }
 
 }
