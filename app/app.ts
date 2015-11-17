@@ -95,16 +95,10 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 export class Minds {
   name: string;
 
-  constructor(public notificationService : NotificationService, public analytics : AnalyticsService, public router: Router) {
+  constructor(public notificationService : NotificationService, public analytics : AnalyticsService) {
     this.name = 'Minds';
 
     this.notificationService.getNotifications();
-    this.router.subscribe(this.onRouteChanged);
-  }
-
-  onRouteChanged(path){
-    //should we send more data?
-    window.ga('send', 'pageview', { 'page' : path});
   }
 
 }
