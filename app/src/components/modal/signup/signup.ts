@@ -8,7 +8,7 @@ import { SessionFactory } from '../../../services/session';
   selector: 'm-modal-signup',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal ],
   template: `
-    <m-modal [hidden]="hidden" *ng-if="!session.isLoggedIn()">
+    <m-modal [open]="open" *ng-if="!session.isLoggedIn()">
       <div class="mdl-card__title">
         <img src="/assets/logos/small.png" (click)="close()"/>
       </div>
@@ -38,7 +38,7 @@ import { SessionFactory } from '../../../services/session';
 
 export class SignupModal {
 
-  hidden : boolean = false;
+  open : boolean = false;
   session = SessionFactory.build();
 
   constructor(public router : Router){
@@ -47,16 +47,19 @@ export class SignupModal {
         case 'register':
         case 'login':
         case 'forgot-password':
-          this.hidden = true;
+          this.open = false;
           break;
         default:
-          this.hidden = false;
+          if(window.localStorage.getItem('hideSignupModal'))
+            this.open = false;
+          else
+            this.open = true;
       }
     });
   }
 
   close(){
-    this.hidden = true;
+    this.open = false;
   }
 
 }

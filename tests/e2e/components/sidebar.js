@@ -7,6 +7,11 @@ describe('testing sidebar toggle', () => {
 
   beforeEach(() => {
     browser.driver.manage().window().setSize(320, 600);
+    browser.executeScript("window.localStorage.setItem('hideSignupModal', true);");
+  });
+
+  afterEach(() => {
+    browser.executeScript("window.localStorage.removeItem('hideSignupModal');");
   });
 
   it('should always be visible on a large screen', () => {
