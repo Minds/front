@@ -188,14 +188,8 @@ gulp.task('build.plugins', function (cb) {
 
       // ----------
       // Build plugins to source
-      gulp.src(path + '/app/**/*ts')
+      gulp.src(path + '/app/**/*')
         .pipe(gulp.dest('./app/src/plugins/' + plugin));
-
-      gulp.src(path + '/app/templates/**/*html')
-        .pipe(gulp.dest('./app/templates/plugins/' + plugin));
-
-      gulp.src(path + '/app/stylesheets/**/*scss')
-        .pipe(gulp.dest('./app/stylesheets/plugins/' + plugin));
 
     } catch (error) {
       if(error.code != 'MODULE_NOT_FOUND')
