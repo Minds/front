@@ -23,9 +23,14 @@
   }
 }
 
-.mdl-card:not(.mdl-cell){
-  width:auto;
-  min-height:0;
+.mdl-card{
+
+  z-index:initial;
+
+  &:not(.mdl-cell){
+    width:auto;
+    min-height:0;
+  }
 }
 
 a{

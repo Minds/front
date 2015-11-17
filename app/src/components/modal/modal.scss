@@ -82,3 +82,24 @@ m-modal-signup{
     cursor:pointer;
   }
 }
+
+m-modal-share{
+  z-index:600;
+  position:relative;
+
+  input{
+    font-size:28px;
+    padding:$minds-padding*2;
+    width: calc(100% - 34px);
+  }
+  .m-social-share-buttons{
+    padding:$minds-padding*2;
+
+    .m-social-share-twitter{
+      background:#4099FF;
+    }
+    .m-social-share-fb{
+      background:#335795;
+    }
+  }
+}

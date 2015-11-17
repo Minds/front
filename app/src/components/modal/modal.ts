@@ -1,11 +1,12 @@
-import {Component} from 'angular2/angular2';
+import {Component, EventEmitter} from 'angular2/angular2';
 
 @Component({
   selector: 'm-modal',
   host: {
     '[hidden]': 'hidden'
   },
-  inputs: [ '_hidden: hidden' ],
+  inputs: [ 'open' ],
+  outputs: [ 'closed' ],
   template: `
     <div class="m-modal-bg" (click)="close()"></div>
     <div class="m-modal-container">
@@ -19,16 +20,24 @@ import {Component} from 'angular2/angular2';
 
 export class Modal {
 
-  hidden : boolean = false;
+  hidden : boolean = true;
+  closed : EventEmitter<any> = new EventEmitter();
 
   set _hidden(value : boolean){
     this.hidden = value;
   }
 
+  set open(value : boolean){
+    console.log('modal is ', value);
+      this.hidden = !value;
+  }
+
   close(){
     this.hidden = true;
+    this.closed.next(true);
   }
 
 }
 
 export { SignupModal } from './signup/signup';
+export { ShareModal } from './share/share';

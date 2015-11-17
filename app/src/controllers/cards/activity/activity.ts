@@ -12,6 +12,7 @@ import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
 import { ScrollFactory } from '../../../services/ux/scroll';
+import { ShareModal } from '../../../components/modal/modal';
 
 @Component({
   selector: 'minds-activity',
@@ -21,7 +22,7 @@ import { ScrollFactory } from '../../../services/ux/scroll';
 })
 @View({
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal ],
   pipes: [ MINDS_PIPES ]
 })
 
@@ -30,6 +31,7 @@ export class Activity {
   activity : any;
   menuToggle : boolean = false;
   commentsToggle : boolean = false;
+  shareToggle : boolean = false;
   session = SessionFactory.build();
   scroll = ScrollFactory.build();
   showBoostOptions : boolean = false;
@@ -51,6 +53,7 @@ export class Activity {
     if(!value)
       return;
     this.activity = value;
+    this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
   }
 
   save(){
