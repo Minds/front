@@ -58,8 +58,6 @@ export class LineGraph {
     var y_bounds = this.getBounds();
     var y_divi = (y_bounds + this.y_padding) / this.y;
 
-    console.log(y_bounds, y_divi);
-
     var x_count : number = this.data.length;
     var x_diff : number = this.x / (x_count -1);
     var x_ticker : number = 0;

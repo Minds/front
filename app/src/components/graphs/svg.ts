@@ -14,7 +14,6 @@ export class GraphSVG {
   }
 
   set height(value : any){
-    console.log(this.element, value);
     this.element.setAttribute('height', value);
   }
 

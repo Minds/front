@@ -73,7 +73,6 @@ export class Discovery {
 
     this.client.get('api/v1/entities/'+filter+'/'+this._type+'/' + this._owner, {limit:12, offset:this.offset})
       .then((data : any) => {
-        console.log(1);
         if(!data.entities){
           self.moreData = false;
           self.inProgress = false;

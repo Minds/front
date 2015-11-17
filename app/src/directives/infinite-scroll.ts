@@ -4,7 +4,7 @@ import { ScrollFactory } from '../services/ux/scroll';
 
 @Directive({
   selector: 'infinite-scroll',
-  inputs: ['distance', 'on'],
+  inputs: ['_distance: distance', 'on', '_inProgress: locked'],
   events: ['loadHandler: load']
 })
 @View({
@@ -17,9 +17,9 @@ export class InfiniteScroll{
   scroll = ScrollFactory.build();
 
   element : any;
-  loadHandler: EventEmitter<any> = new EventEmitter();
+  loadHandler: EventEmitter<boolean> = new EventEmitter(true);
   _distance : any;
-  _inprogress : boolean = false;
+  _inProgress : boolean = false;
   _content : any;
   _listener;
 
@@ -28,40 +28,17 @@ export class InfiniteScroll{
     this.init();
   }
 
-  set distance(value : any){
-    this._distance = parseInt(value);
-  }
-
   init(){
     this._listener = this.scroll.listen((view) => {
-      if(this.element.offsetTop - view.height <= view.top){
-        //stop listening
-        //   this.scroll.unListen(this._listener);
+      if(this.element.offsetTop - this.element.clientHeight - view.height <= view.top){
         this.loadHandler.next(true);
       }
     });
   }
 
-  /*scroll(){
-    var self = this;
-    this._listener = (e) => {
-      var height = self._content.scrollHeight,
-          maxHeight = height - self._content.clientHeight,
-          top = self._content.scrollTop,
-          bottom = maxHeight - top,
-          distance = (bottom / maxHeight) * 100;
-
-      //console.log("Height " + height, "Max " + maxHeight, "Top " + top, "Bottom " + bottom, "Distance " + distance);
-
-      if(distance <= self._distance){
-        self.loadHandler.next(true);
-      }
-    };
-    document.addEventListener('scroll', this._listener);
-  }*/
-
   onDestroy(){
-    document.removeEventListener('scroll', this._listener)
+    if(this._listener)
+      this.scroll.unListen(this._listener);
   }
 
 }

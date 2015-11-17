@@ -94,10 +94,10 @@ export class Activity {
         this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
       }
     });
-    this.scroll.fire();
+    //this.scroll.fire();
   }
 
-  onDestruct(){
+  onDestroy(){
     this.scroll.unListen(this.scroll_listener);
   }
 }

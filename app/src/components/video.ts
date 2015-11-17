@@ -75,20 +75,19 @@ export class MindsVideo{
   }
 
   setUp(){
-    this.element.addEventListener('play', (e)=>{
-      console.log('got play event');
-    });
-    this.element.addEventListener('error', (e)=>{
-      console.log('got error event', e);
-    });
+    //this.element.addEventListener('play', (e)=>{
+    //  console.log('got play event');
+    //});
+    //this.element.addEventListener('error', (e)=>{
+    //  console.log('got error event', e);
+    //});
     this.element.addEventListener('loadedmetadata', (e) => {
-      console.log('loaded metadata');
       this.calculateTime();
     });
-    this.element.addEventListener('onprogress', (e) => {
-      console.log('progress', e);
-    });
-    this.getSeeker();
+    //this.element.addEventListener('onprogress', (e) => {
+    //  console.log('progress', e);
+    //});
+    //this.getSeeker();
   }
 
   calculateTime(){
@@ -114,11 +113,13 @@ export class MindsVideo{
   onMouseEnter(){
     if(this.muted)
       this.element.muted = false;
+    this.getSeeker();
   }
 
   onMouseLeave(){
     if(this.muted)
       this.element.muted = true;
+    this.stopSeeker();
   }
 
   seek(e){
@@ -141,7 +142,11 @@ export class MindsVideo{
     }, 100);
   }
 
-  onDestruct(){
+  stopSeeker(){
+    clearInterval(this.seek_interval);
+  }
+
+  onDestroy(){
     clearInterval(this.seek_interval);
   }
 

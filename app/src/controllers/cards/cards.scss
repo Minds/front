@@ -251,6 +251,12 @@ minds-activity.mdl-card, minds-activity{
     }
   }
 
+  .item-image{
+    img{
+      width:100%;
+    }
+  }
+
   .is-boosted{
     color:#888;
     padding:$minds-padding;

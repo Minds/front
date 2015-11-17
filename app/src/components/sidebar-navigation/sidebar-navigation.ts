@@ -27,7 +27,6 @@ export class SidebarNavigation {
 	getUser(){
 		var self = this;
 		this.user = this.session.getLoggedInUser((user) => {
-			console.log(user);
 				self.user = user;
 			});
 	}

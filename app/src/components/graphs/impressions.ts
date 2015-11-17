@@ -65,7 +65,7 @@ export class GraphImpressions {
       var y_stat = this.y - (stat / y_divi);
       this.points += ", " + x_ticker + " " + y_stat;
     }
-    console.log(this.points);
+
   }
 
 

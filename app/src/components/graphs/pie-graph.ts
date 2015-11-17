@@ -60,7 +60,6 @@ export class PieGraph {
     for(var stat of this.data){
 
       var value = stat.total;
-      console.log(value,stat);
 
       var offset = ( (100 - value) / 100 ) * c;
 

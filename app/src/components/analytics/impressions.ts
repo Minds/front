@@ -44,7 +44,6 @@ export class AnalyticsImpressions {
       })
       .then((response : any) => {
         self.data = response.data;
-        console.log(response);
       });
   }
 

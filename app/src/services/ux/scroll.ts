@@ -1,7 +1,7 @@
 import { EventEmitter, Observable, Injector, provide } from 'angular2/angular2';
 
 export class Scroll{
-  scroll : EventEmitter<any> = new EventEmitter();
+  scroll : EventEmitter<boolean> = new EventEmitter(true);
   view : any;
 
   constructor(){

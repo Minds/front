@@ -28,8 +28,7 @@ export class Modal {
   }
 
   set open(value : boolean){
-    console.log('modal is ', value);
-      this.hidden = !value;
+    this.hidden = !value;
   }
 
   close(){
