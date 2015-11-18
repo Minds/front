@@ -12,6 +12,8 @@ export class AnalyticsService {
   constructor(public router: Router){
     //we instantiate the google analytics service
     window.ga('create', this.id, 'auto');
+
+    //We set the router to call onRouteChanged every time we change the page
     this.router.subscribe(this.onRouteChanged);
   }
 
@@ -20,8 +22,8 @@ export class AnalyticsService {
     window.ga('send', 'pageview', { 'page' : path});
   }
 
-  //Manual send
-  send(type : string){
+  //Manual send.
+  static send(type : string){
     if (window.ga)
       window.ga('send', type);
   }
