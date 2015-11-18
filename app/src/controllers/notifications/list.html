@@ -251,6 +251,58 @@
             </a>
           </template>
 
+          <!-- Boost (Peer) Request -->
+          <template ng-switch-when="boost_peer_request">
+            <a [router-link]="['/Boosts']">
+              <p>
+                <b>@{{notification.owner.username}}</b> is offering
+                <b>
+                  {{notification.params.bid}}
+                  <span [hidden]="notification.params.type != 'pro'">USD</span>
+                  <span [hidden]="notification.params.type != 'points'">points</span>
+                </b>
+                for
+                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ng-if="notification.entity.title">{{notification.entity.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entity.title">their post</span>
+              </p>
+            </a>
+          </template>
+
+          <!-- Boost (Peer) Request -->
+          <template ng-switch-when="boost_peer_accepted">
+            <a [router-link]="['/Boosts', {filter: 'outbox'}]">
+              <p>
+                <b>@{{notification.owner.username}}</b> accepted your bid of
+                <b>
+                  {{notification.params.bid}}
+                  <span [hidden]="notification.params.type != 'pro'">USD</span>
+                  <span [hidden]="notification.params.type != 'points'">points</span>
+                </b>
+                for
+                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ng-if="notification.entity.title">{{notification.entity.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entity.title">your post</span>
+              </p>
+            </a>
+          </template>
+
+          <!-- Boost (Peer) Rejeced -->
+          <template ng-switch-when="boost_peer_rejected">
+            <a [router-link]="['/Boosts', {filter: 'outbox'}]">
+              <p>
+                <b>@{{notification.owner.username}}</b> declined your bid of
+                <b>
+                  {{notification.params.bid}}
+                  <span [hidden]="notification.params.type != 'pro'">USD</span>
+                  <span [hidden]="notification.params.type != 'points'">points</span>
+                </b>
+                for
+                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ng-if="notification.entity.title">{{notification.entity.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entity.title">your post</span>.
+                You have not been charged.
+              </p>
+            </a>
+          </template>
+
           <!-- Points prompt -->
           <template ng-switch-when="custom_message">
               <a>
