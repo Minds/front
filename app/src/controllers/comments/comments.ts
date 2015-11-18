@@ -7,6 +7,8 @@ import { AutoGrow } from '../../directives/autogrow';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { CommentCard } from '../../controllers/cards/comment/comment';
 import { TagsPipe } from '../../pipes/tags';
+import { SignupOnActionModal } from '../../components/modal/modal';
+
 
 @Component({
   selector: 'minds-comments',
@@ -15,7 +17,7 @@ import { TagsPipe } from '../../pipes/tags';
 })
 @View({
   templateUrl: 'src/controllers/comments/list.html',
-  directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow ],
+  directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, SignupOnActionModal ],
   pipes: [ TagsPipe ]
 })
 
@@ -31,6 +33,8 @@ export class Comments {
   session = SessionFactory.build();
 
   editing : boolean = false;
+
+  showModal : boolean = false;
 
   limit : number = 5;
   offset : string = "";
@@ -89,6 +93,12 @@ export class Comments {
       .catch((e) => {
 
       });
+  }
+
+  isLoggedIn(){
+    if(!this.session.isLoggedIn()){
+      this.showModal = true;
+    }
   }
 
 
