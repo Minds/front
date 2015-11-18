@@ -2,6 +2,7 @@ import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
 import { WalletService } from '../../services/wallet';
+import { SignupOnActionModal } from '../modal/modal';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -14,8 +15,9 @@ import { WalletService } from '../../services/wallet';
       <i class="material-icons">thumb_up</i>
       <counter *ng-if="object['thumbs:up:count'] > 0">{{object['thumbs:up:count']}}</counter>
     </a>
+    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="vote up"  *ng-if="!session.isLoggedIn()"></m-modal-signup-on-action>
   `,
-  directives: [CORE_DIRECTIVES]
+  directives: [CORE_DIRECTIVES, SignupOnActionModal]
 })
 
 export class ThumbsUpButton {
@@ -25,6 +27,7 @@ export class ThumbsUpButton {
     'thumbs:up:user_guids': []
   };
   session = SessionFactory.build();
+  showModal : boolean = false;
 
   constructor(public client : Client, public wallet : WalletService) {
   }
@@ -39,6 +42,12 @@ export class ThumbsUpButton {
 
   thumb(){
     var self = this;
+
+    if(!this.session.isLoggedIn()){
+      this.showModal = true;
+      return false;
+    }
+
     this.client.put('api/v1/thumbs/' + this.object.guid + '/up', {});
     if(!this.has()){
       this.object['thumbs:up:user_guids'].push(this.session.getLoggedInUser().guid);
