@@ -117,7 +117,14 @@ export class Merchants {
   }
 
   update(){
-    console.log(this.editForm.value);
+    this.client.post('api/v1/merchant/update', this.editForm.value)
+      .then((response : any) => {
+        this.isMerchant = true;
+        window.Minds.user.merchant = true;
+      })
+      .catch((e) => {
+        this.error = e.message;
+      });
   }
 
 }
