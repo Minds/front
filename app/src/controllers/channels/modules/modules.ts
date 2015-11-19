@@ -26,8 +26,8 @@ import { BlogCard } from '../../../plugins/blog/blog-card';
       <a *ng-for="#object of items" [router-link]="['/Archive-View', {guid: object.guid}]" [ng-style]="{'background-image': 'url(' + object.thumbnail_src + ')'}" >
       </a>
     </div>
-    <div *ng-if="type == 'blog'" class="mdl-card__supporting-text"  style="min-height:0;">
-      <minds-card-blog [object]="blog" *ng-for="#blog of items" class="mdl-card mdl-shadow--2dp" style="margin-bottom:8px">
+    <div *ng-if="type == 'blog'" style="min-height:0;">
+      <minds-card-blog [object]="blog" *ng-for="#blog of items" class="mdl-card" style="border-radius:0;">
         {{blog.title}}
       </minds-card-blog>
     </div>
