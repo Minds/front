@@ -22,7 +22,7 @@ import { SessionFactory } from '../../../services/session';
 
       <div class="mdl-card__supporting-text m-modal-signup-apps">
         <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6">
-          <img src="http://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.png">
+          <img src="https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.png">
         </a>
         <a href="https://play.google.com/store/apps/details?id=com.minds.mobile" align="center">
           <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png">

@@ -39,6 +39,12 @@ ini_set( 'display_errors','1');
     <script src="//storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
     <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
 
+    <!--[if IE]>
+    <script type="text/javascript">
+    window.location = "https://legacy.minds.com/";
+    </script>
+    <![endif]-->
+
   </head>
   <body>
 
