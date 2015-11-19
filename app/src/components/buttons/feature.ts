@@ -5,7 +5,6 @@ import { Client } from '../../services/api';
 @Component({
   selector: 'minds-button-feature',
   inputs: ['_object: object'],
-  outputs: ['closed'],
   host: {
     '(click)': 'feature()'
   }
