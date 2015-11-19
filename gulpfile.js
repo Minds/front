@@ -2,22 +2,17 @@
 
 var gulp = require('gulp');
 var autoprefixer = require('gulp-autoprefixer');
-var bump = require('gulp-bump');
 var concat = require('gulp-concat');
 var cp = require('child_process');
 var cssGlobbing = require('gulp-css-globbing');
-var filter = require('gulp-filter');
 var inject = require('gulp-inject');
 var inlineNg2Template = require('gulp-inline-ng2-template');
 var sass = require('gulp-sass');
-var minifyCSS = require('gulp-minify-css');
-var minifyHTML = require('gulp-minify-html');
 var plumber = require('gulp-plumber');
 var shell = require('gulp-shell');
 var sourcemaps = require('gulp-sourcemaps');
 var template = require('gulp-template');
 var tsc = require('gulp-typescript');
-var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
 
 var Builder = require('systemjs-builder');
@@ -27,12 +22,6 @@ var join = require('path').join;
 var karma = require('karma').server;
 var runSequence = require('run-sequence');
 var semver = require('semver');
-var series = require('stream-series');
-
-var http = require('http');
-var connect = require('connect');
-var serveStatic = require('serve-static');
-var openResource = require('open');
 
 // --------------
 // Configuration.
@@ -115,14 +104,6 @@ gulp.task('clean.dev', function (done) {
 gulp.task('clean.app.dev', function (done) {
   del([join(PATH.dest.dev.all, '**/*'), '!' + PATH.dest.dev.lib,
        '!' + join(PATH.dest.dev.lib, '*')], done);
-});
-
-gulp.task('clean.test', function(done) {
-  del('test', done);
-});
-
-gulp.task('clean.tsd_typings', function(done) {
-  del('tsd_typings', done);
 });
 
 // ----
@@ -239,6 +220,7 @@ gulp.task('build.lib', function () {
 gulp.task('build.js', function () {
   var result = gulp.src([
       join(PATH.src.all, '**/*ts'),
+      //'!' + join(PATH.src.all, 'app.ts'), //we compile app.js
       '!' + join(PATH.src.all, '**/*_spec.ts')
     ])
     .pipe(plumber())
@@ -280,14 +262,14 @@ gulp.task('build.index', function() {
 });
 
 gulp.task('build.app', function (done) {
-  runSequence( 'build.plugins', 'build.assets', 'build.index', done);
+  runSequence( 'build.plugins', 'build.assets', done);
 });
 
 gulp.task('build.dev', function (done) {
-  runSequence( 'build.lib', 'build.js', 'build.app', done);
+  runSequence( 'build.lib', 'build.js', 'build.app', 'build.index', done);
 });
 
-gulp.task('build.bundle', ['build.dev'], function (cb){
+gulp.task('build.bundle', function (cb){
 
   var builder = new Builder();
   builder.config({
@@ -302,7 +284,7 @@ gulp.task('build.bundle', ['build.dev'], function (cb){
       'angular2/http': { build: false }
     }
   });
-  builder.build('app', './public/app.js', {minify: true})
+  builder.build('app', './public/app.min.js', {minify: true})
     .then(function(){
         cb();
     })
@@ -315,7 +297,7 @@ gulp.task('build.bundle', ['build.dev'], function (cb){
 gulp.task('build.prod', function(done){
   PATH.src.lib = PATH.src.loader
       .concat(PATH.src.angular);
-  runSequence('build.bundle', done);
+  runSequence( 'build.lib', 'build.js', 'build.app', 'build.bundle', 'build.index', done);
 })
 
 // --------------
@@ -329,12 +311,6 @@ gulp.task('install.typings', ['clean.tsd_typings'], shell.task([
 
 gulp.task('postinstall', function (done) {
   runSequence('install.typings', done);
-});
-
-gulp.task('bump.reset', function() {
-  return gulp.src('package.json')
-    .pipe(bump({ version: '0.0.0' }))
-    .pipe(gulp.dest('./'));
 });
 
 // --------------
@@ -354,7 +330,7 @@ function injectableAssets() {
     return join(PATH.dest.dev.lib, path.split('/').pop());
   });
   src.push(join(PATH.dest.dev.all, '**/*.css'));
-  src.push('./public/app.js');
+  src.push('./public/app.min.js');
   return src;
 }
 
