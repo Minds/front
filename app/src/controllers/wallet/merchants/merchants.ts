@@ -35,7 +35,7 @@ export class Merchants {
   minds = window.Minds;
 
 	constructor(public client: Client, public fb: FormBuilder){
-    if(this.session.getLoggedInUser().merchant){
+    if(this.session.getLoggedInUser().merchant && this.session.getLoggedInUser().merchant != "0"){
       this.isMerchant = true;
       this.getSettings();
       this.getSales();
