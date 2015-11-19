@@ -97,7 +97,7 @@
       <div class="minds-spacer-2x"></div>
 
       <!-- videos  -->
-      <minds-channel-modules [owner]="user" type="video">
+      <minds-channel-modules [owner]="user" type="video" limit="6">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Discovery', {filter:user.username, type:'videos'}]">
           View More
@@ -107,7 +107,7 @@
       <div class="minds-spacer-2x"></div>
 
       <!-- Blogs  -->
-      <minds-channel-modules [owner]="user" type="blog">
+      <minds-channel-modules [owner]="user" type="blog" limit="3">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Blog', {filter:user.username}]">
           View More

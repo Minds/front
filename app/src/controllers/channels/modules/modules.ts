@@ -4,10 +4,11 @@ import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
 import { Client } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
 import { Material } from '../../../directives/material';
+import { BlogCard } from '../../../plugins/blog/blog-card';
 
 @Component({
   selector: 'minds-channel-modules',
-  inputs: ['type', '_owner: owner'],
+  inputs: ['type', '_owner: owner', 'limit'],
   host: {
     'class': 'mdl-card mdl-shadow--2dp',
     '[hidden]': 'items.length == 0'
@@ -25,17 +26,17 @@ import { Material } from '../../../directives/material';
       <a *ng-for="#object of items" [router-link]="['/Archive-View', {guid: object.guid}]" [ng-style]="{'background-image': 'url(' + object.thumbnail_src + ')'}" >
       </a>
     </div>
-    <div *ng-if="type == 'blog'" class="mdl-card__supporting-text minds-channel-blog-sidebar-blogs"  style="min-height:0;">
-      <a *ng-for="#blog of items" class="mdl-color-text--grey-600" [router-link]="['/Blog-View', {guid: blog.guid}]" >
+    <div *ng-if="type == 'blog'" class="mdl-card__supporting-text"  style="min-height:0;">
+      <minds-card-blog [object]="blog" *ng-for="#blog of items" class="mdl-card mdl-shadow--2dp" style="margin-bottom:8px">
         {{blog.title}}
-      </a>
+      </minds-card-blog>
     </div>
     <div class="mdl-spinner mdl-js-spinner is-active minds-channel-sidebar-loader" [mdl] [hidden]="!inProgress"></div>
 
     <ng-content></ng-content>
 
   `,
-  directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, CARDS, Material ]
+  directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, CARDS, BlogCard, Material ]
 })
 
 export class ChannelModules {
@@ -43,6 +44,7 @@ export class ChannelModules {
   items : Array<any> = [];
   type : string = "all";
   owner : any;
+  limit : number = 9;
 
   inProgress : boolean = false;
 
@@ -62,16 +64,18 @@ export class ChannelModules {
     switch(this.type){
       case 'blog':
         endpoint = 'api/v1/blog/owner/'+ this.owner.guid;
+        this.limit = 3;
         break;
       case 'video':
         endpoint = 'api/v1/entities/owner/video/'+ this.owner.guid;
+        this.limit = 6;
         break;
       case 'image':
         endpoint = 'api/v1/entities/owner/image/'+ this.owner.guid;
         break;
     }
 
-    this.client.get(endpoint, {limit:9})
+    this.client.get(endpoint, {limit:this.limit})
       .then((response : any) => {
         if(!(response.entities || response.blogs))
           return false;
