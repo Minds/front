@@ -47,11 +47,14 @@ ini_set( 'display_errors','1');
     </script>
     <!-- End Google Analytics -->
 
-    <!--[if IE]>
-    <script type="text/javascript">
-    window.location = "https://legacy.minds.com/";
+    <script>
+      var ua = window.navigator.userAgent;
+      if(ua.indexOf("MSIE") > 0 || 
+        ua.indexOf("Android 4.3") &&
+        !(ua.indexOf('Chrome') > -1)){
+        window.location.href = "/not-supported";
+      }
     </script>
-    <![endif]-->
 
   </head>
   <body>
