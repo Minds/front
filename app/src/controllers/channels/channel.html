@@ -86,48 +86,33 @@
 
       <div class="minds-spacer-2x"></div>
 
-      <!-- Media  -->
-      <div class="mdl-card mdl-shadow--2dp" [hidden]="media.length == 0">
+      <!-- images  -->
+      <minds-channel-modules [owner]="user" type="image">
 
-        <div class="mdl-card__title">
-          <h2 class="mdl-card__title-text">Media</h2>
-        </div>
-
-        <!-- Avatars of latest users -->
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;">
-          <a *ng-for="#object of media" [router-link]="['/Archive-View', {guid: object.guid}]" [ng-style]="{'background-image': 'url(' + object.thumbnail_src + ')'}" >
-          </a>
-        </div>
-        <div class="mdl-spinner mdl-js-spinner is-active minds-channel-sidebar-loader" [mdl] [hidden]="!loadingMedia"></div>
-
-        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Discovery', {filter:user.username, type:'all'}]">
+        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Discovery', {filter:user.username, type:'images'}]">
           View More
         </a>
+      </minds-channel-modules>
 
-      </div>
+      <div class="minds-spacer-2x"></div>
+
+      <!-- videos  -->
+      <minds-channel-modules [owner]="user" type="video">
+
+        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Discovery', {filter:user.username, type:'videos'}]">
+          View More
+        </a>
+      </minds-channel-modules>
 
       <div class="minds-spacer-2x"></div>
 
       <!-- Blogs  -->
-      <div class="mdl-card mdl-shadow--2dp" [hidden]="blogs.length == 0">
-
-        <div class="mdl-card__title">
-          <h2 class="mdl-card__title-text">Blogs</h2>
-        </div>
-
-        <!-- Blogs -->
-        <div *ng-for="#blog of blogs" class="mdl-card__supporting-text minds-channel-blog-sidebar-blogs"  style="min-height:0;">
-          <a class="mdl-color-text--grey-600" [router-link]="['/Blog-View', {guid: blog.guid}]" >
-            {{blog.title}}
-          </a>
-        </div>
-        <div class="mdl-spinner mdl-js-spinner is-active minds-channel-sidebar-loader" [mdl] [hidden]="!loadingBlogs"></div>
+      <minds-channel-modules [owner]="user" type="blog">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Blog', {filter:user.username}]">
           View More
         </a>
-
-      </div>
+      </minds-channel-modules>
 
       <div class="minds-spacer-2x"></div>
   </section>

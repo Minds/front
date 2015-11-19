@@ -18,6 +18,7 @@ import { MindsChannelResponse } from '../../interfaces/responses';
 import { Poster } from '../../controllers/newsfeed/poster/poster';
 import { MindsAvatar } from '../../components/avatar';
 
+import { ChannelModules } from './modules/modules';
 import { ChannelSubscribers } from './subscribers/subscribers';
 import { ChannelSubscriptions } from './subscriptions/subscriptions';
 import { ChannelEdit } from './edit/edit';
@@ -31,7 +32,8 @@ import { ChannelEdit } from './edit/edit';
   templateUrl: 'src/controllers/channels/channel.html',
   pipes: [ TagsPipe ],
   directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, Material, InfiniteScroll, CARDS,
-    AutoGrow, ChannelSubscribers, ChannelSubscriptions, BUTTON_COMPONENTS, ChannelEdit, MindsCarousel, Poster, MindsAvatar ]
+    AutoGrow, ChannelSubscribers, ChannelSubscriptions, BUTTON_COMPONENTS, ChannelEdit, MindsCarousel,
+    Poster, MindsAvatar, ChannelModules ]
 })
 
 export class Channel {
@@ -49,10 +51,6 @@ export class Channel {
   inProgress : boolean = false;
   editing : boolean = false
   error: string = "";
-  media : Array<Object> = [];
-  blogs : Array<Object> = [];
-  isLoadingMedia : boolean = false;
-  isLoadingBlogs : boolean = false;
 
   constructor(public client: Client, public upload: Upload, params: RouteParams, public title: MindsTitle){
       this.username = params.params['username'];
@@ -79,8 +77,6 @@ export class Channel {
 
       if(self._filter == "feed")
       self.loadFeed(true);
-      self.loadMedia();
-      self.loadBlogs();
     })
     .catch((e) => {
       console.log('couldnt load channel', e);
@@ -99,8 +95,6 @@ export class Channel {
     }
 
     this.inProgress = true;
-    this.isLoadingMedia = true;
-    this.isLoadingBlogs = true;
 
     this.client.get('api/v1/newsfeed/personal/' + this.user.guid, {limit:12, offset: this.offset}, {cache: true})
         .then((data : MindsActivityObject) => {
@@ -121,36 +115,6 @@ export class Channel {
         .catch(function(e){
           self.inProgress = false;
         });
-  }
-
-  loadMedia(){
-    var self = this;
-    this.client.get('api/v1/entities/owner/all/'+ this.user.guid, {limit:9, offset:""})
-    .then((data : any) => {
-      if(!data.entities)
-      return false;
-
-      self.media = data.entities;
-      self.isLoadingMedia = false;
-    })
-    .catch(function(e){
-      self.isLoadingMedia = false;
-    });
-  }
-
-  loadBlogs(){
-    var self = this;
-    this.client.get('api/v1/blog/owner/' + self.user.guid, { limit: 5, offset: ""})
-    .then((data : any) => {
-      if(!data.blogs)
-      return false;
-
-      self.blogs = data.blogs;
-      self.isLoadingBlogs = false;
-    })
-    .catch(function(e){
-      self.isLoadingBlogs = false;
-    });
   }
 
   isOwner(){

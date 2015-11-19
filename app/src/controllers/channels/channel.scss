@@ -176,9 +176,16 @@ minds-channel{
 
     a{
       text-decoration: none;
+      display:block;
     }
     a:hover{
       text-decoration: underline;
+    }
+  }
+
+  minds-channel-modules{
+    a.mdl-card__supporting-text{
+      text-decoration:none;
     }
   }
 
