@@ -50,7 +50,7 @@ ini_set( 'display_errors','1');
     <script>
       var ua = window.navigator.userAgent;
       if(ua.indexOf("MSIE") > 0 ||
-        (ua.indexOf("Android 4.3") && !(ua.indexOf('Chrome') > -1)) //android 4.3, but not chrome browser
+        (ua.indexOf("Android 4.3") > 0 && ua.indexOf('Chrome') > 0) //android 4.3, but not chrome browser
         ){
         window.location.href = "/not-supported";
       }
