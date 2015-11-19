@@ -184,19 +184,10 @@ gulp.task('build.plugins', function (cb) {
 
 });
 
-
-// ----------
-// Builds scss for plugins
-gulp.task('build.plugins.scss', function () {
-    return gulp.src('./app/stylesheets/plugins/**/*scss')
-      .pipe(concat('plugins.scss'))
-      .pipe(gulp.dest('./app/stylesheets/'));
-});
-
 /**
  * Build CSS from SCSS
  */
-gulp.task('build.scss', ['build.plugins.scss'], function () {
+gulp.task('build.scss', function () {
 	  var result = gulp.src('./app/**/*.scss')
       .pipe(cssGlobbing({  extensions: ['.scss'] }))
 	    .pipe(sass({
@@ -239,10 +230,8 @@ gulp.task('build.js', function () {
  */
 gulp.task('build.assets', ['build.scss'], function () {
   return gulp.src([
-    join(PATH.src.all, '**/*.html'),
-    join(PATH.src.all, '**/*.css'),
-    join(PATH.src.all, '**/*.png'),
     join(PATH.src.all, '**/*.*'),
+    '!' + join(PATH.src.all, '**/*.php'),
     '!' + join(PATH.src.all, '**/*.ts'),
     '!' + join(PATH.src.all, '**/*.js'),
     ])
