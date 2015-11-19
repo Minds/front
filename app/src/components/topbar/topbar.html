@@ -33,7 +33,7 @@
         >
       <li class="mdl-menu__item" *ng-if="session.isLoggedIn()" [router-link]="['/Logout']">Logout</li>
       <li class="mdl-menu__item" *ng-if="session.isLoggedIn()" [router-link]="['/Settings', {'filter': 'general'}]">Settings</li>
-      <li class="mdl-menu__item" href="https://legacy.minds.com/">Use the old Minds</li>
+      <a class="mdl-menu__item" href="https://legacy.minds.com/">Use the old Minds</a>
     </ul>
 
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" *ng-if="!session.isLoggedIn()" [router-link]="['/Login']">
