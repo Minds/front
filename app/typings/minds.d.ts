@@ -18,5 +18,6 @@ interface MindsNavigation {
 interface Window {
 	Minds : Minds;
 	componentHandler : any;
+  ga : any;
 }
 declare var window:Window;
