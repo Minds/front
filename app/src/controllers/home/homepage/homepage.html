@@ -13,6 +13,24 @@
 
 <div class="mdl-grid mdl-grid--no-spacing">
 
+    <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
+      <h4 class="mdl-color-text--blue-grey-200">Featured videos</h4>
+      <div class="m-contents mdl-grid">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ng-for="#video of videos">
+          <minds-card-video [object]="video" class="mdl-card mdl-shadow--2dp"></minds-card-video>
+        </div>
+      </div>
+    </section>
+
+    <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
+      <h4 class="mdl-color-text--blue-grey-200">Featured blogs</h4>
+      <div class="m-contents mdl-grid">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ng-for="#blog of blogs">
+          <minds-card-blog [object]="blog" class="mdl-card mdl-shadow--2dp"></minds-card-blog>
+        </div>
+      </div>
+    </section>
+
     <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
       <ul class="m-footer-nav m-footer-nav-inline">
         <li *ng-for="#page of navigation.getItems('footer')" class="m-footer-nav-item ">

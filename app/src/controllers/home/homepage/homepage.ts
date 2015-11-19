@@ -3,19 +3,43 @@ import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { Material } from '../../../directives/material';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { MindsTitle } from '../../../services/ux/title';
+import { Client } from '../../../services/api';
+import { CARDS } from '../../../controllers/cards/cards';
+import { BlogCard } from '../../../plugins/blog/blog-card';
 
 @Component({
   selector: 'minds-homepage',
-  bindings: [ MindsTitle, NavigationService  ]
+  bindings: [ Client, MindsTitle, NavigationService  ]
 })
 @View({
   templateUrl: 'src/controllers/home/homepage/homepage.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, CARDS, BlogCard, Material ]
 })
 
 export class Homepage {
 
-  constructor(public title: MindsTitle, public navigation: NavigationService){
+  videos : Array<any> = [];
+  blogs : Array<any> = [];
+  channels : Array<any> = [];
+
+  constructor(public client: Client, public title: MindsTitle, public navigation: NavigationService){
     this.title.setTitle("Home");
+    this.loadVideos();
+    this.loadBlogs();
   }
+
+  loadVideos(){
+    this.client.get('api/v1/entities/featured/videos', { limit: 4 })
+      .then((response : any) => {
+        this.videos = response.entities;
+      });
+  }
+
+  loadBlogs(){
+    this.client.get('api/v1/blog/featured', { limit: 4 })
+      .then((response : any) => {
+        this.blogs = response.blogs;
+      });
+  }
+
 }
