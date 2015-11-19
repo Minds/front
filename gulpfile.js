@@ -266,7 +266,7 @@ gulp.task('build.app', function (done) {
 });
 
 gulp.task('build.dev', function (done) {
-  runSequence( 'build.lib', 'build.js', 'build.app', 'build.index', done);
+  runSequence( 'build.lib', 'build.app', 'build.js', 'build.index', done);
 });
 
 gulp.task('build.bundle', function (cb){
@@ -297,7 +297,7 @@ gulp.task('build.bundle', function (cb){
 gulp.task('build.prod', function(done){
   PATH.src.lib = PATH.src.loader
       .concat(PATH.src.angular);
-  runSequence( 'build.lib', 'build.js', 'build.app', 'build.bundle', 'build.index', done);
+  runSequence( 'build.lib', 'build.app', 'build.js', 'build.bundle', 'build.index', done);
 })
 
 // --------------
