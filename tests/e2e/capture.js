@@ -67,6 +67,34 @@ describe('testing groups', () => {
     expect(browser.getCurrentUrl()).toContain('archive/view/');
   });
 
+  it('should allow us to change the tit;e', () => {
+    var fileToUpload = 'res/logo.png',
+      absolutePath = path.resolve(__dirname, fileToUpload);
+
+    element(by.id('file')).sendKeys(absolutePath);
+
+    browser.wait(() => {
+      return element(by.css('.m-album')).isPresent();
+    });
+
+    element(by.cssContainingText('.m-album','My Album')).click();
+
+    browser.wait(() => {
+      return element(by.css('.mdl-progress.complete')).isPresent();
+    });
+
+    element(by.css('.m-capture-edit-container input')).clear().sendKeys('Testing saving title');
+
+    element(by.css('.m-capture-save-to-album-button')).click();
+    browser.sleep(1000);
+
+    element.all(by.css('minds-archive-grid > a')).get(0).click();
+    browser.sleep(1000);
+    expect(element(by.css('h1')).getText()).toContain('Testing saving title');
+
+  });
+
+
   it('should allow us to change the license', () => {
     var fileToUpload = 'res/logo.png',
       absolutePath = path.resolve(__dirname, fileToUpload);
