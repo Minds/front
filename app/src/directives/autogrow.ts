@@ -4,7 +4,8 @@ import { Directive,  EventEmitter, ElementRef } from 'angular2/angular2';
   selector: '[auto-grow]',
   inputs: ['autoGrow', 'for'],
   host: {
-    '(keydown)': 'grow()'
+    '(keydown)': 'grow()',
+    '(paste)': 'grow()'
   }
 })
 
