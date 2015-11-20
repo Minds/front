@@ -125,6 +125,7 @@ export class Capture {
       }
 
       data.name = fileInfo.name;
+      data.title = data.name;
 
       var upload_i = this.uploads.push(data) - 1;
       this.uploads[upload_i].index = upload_i;
@@ -155,6 +156,7 @@ export class Capture {
   }
 
   modify(index){
+    this.uploads[index].state = 'uploaded';
     //we don't always have a guid ready, so keep checking for one
     var promise = new Promise((resolve, reject) => {
       if(this.uploads[index].guid){
@@ -172,6 +174,7 @@ export class Capture {
       this.client.post('api/v1/archive/' + this.uploads[index].guid, this.uploads[index])
         .then((response : any) => {
           console.log('response from modify', response);
+          this.uploads[index].state = 'complete';
         });
     });
   }

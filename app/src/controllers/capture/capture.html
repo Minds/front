@@ -73,7 +73,7 @@
               type="file"
               id="file"
               #file
-              (change)="add(file)"
+              (change)="add(file); file.value = '';"
               multiple
               />
           </div>
@@ -94,7 +94,7 @@
       <div class="mdl-card__title m-capture-edit-container">
         <input
           type="text"
-          [(ng-model)]="upload.name"
+          [(ng-model)]="upload.title"
           (change)="modify(i)"
           />
           <select [(ng-model)]="upload.license" (change)="modify(i)" class="mdl-color-text--blue-grey-300 m-form-select">
