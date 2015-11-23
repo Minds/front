@@ -46,7 +46,10 @@ export class Merchants {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required],
-      dob: ['', Validators.required],
+      dob: ['', (control) => {
+        var regex = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+        return !regex.test(control.value) ? {"invalidDate": true} : null;
+      }],
       ssn:  [''],
       street:  ['', Validators.required],
       city:  ['', Validators.required],

@@ -8,11 +8,16 @@
     display:block;
     font-weight:bold;
   }
-  input[type="text"], input[type="number"], input[type="email"]{
+  input[type="text"], input[type="number"], input[type="email"], input[type="date"]{
     margin:$minds-margin 0;
     padding:$minds-padding;
     font-size:14px;
     width:100%;
+    font-family:inherit;
+
+    &.ng-invalid.ng-dirty{
+      border:1px solid red;
+    }
   }
 }
 
