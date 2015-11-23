@@ -154,12 +154,16 @@
 
   .m-inline-owner-block{
     padding:$minds-padding/2 0;
+    overflow: hidden;
+    height: 16px;
     a{
       font-weight: bold;
       text-transform: uppercase;
       text-decoration:none;
       padding: 0 $minds-padding 0 0;
       font-size: 11px;
+      overflow:hidden;
+      max-height:16px;
 
       img{
         height:18px;
