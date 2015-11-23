@@ -29,6 +29,7 @@ export class Merchants {
   sales : Array<any> = [];
 
   inProgress : boolean = false;
+  updating : boolean = false;
   confirmation : boolean = false;
   error : string = "";
 
@@ -117,13 +118,18 @@ export class Merchants {
   }
 
   update(){
+    this.updating = true;
     this.client.post('api/v1/merchant/update', this.editForm.value)
       .then((response : any) => {
         this.isMerchant = true;
+        this.confirmation = true;
+        this.updating = false;
         window.Minds.user.merchant = true;
       })
       .catch((e) => {
         this.error = e.message;
+        this.confirmation = false;
+        this.updating = false;
       });
   }
 
