@@ -48,7 +48,7 @@ export class Search {
 
     this.client.get('api/v1/search', { q: this.q, type: this.type, limit: 12, offset: this.offset })
       .then((response: any) => {
-        this.entities = response.entities;
+        this.entities = this.entities.concat(response.entities);
         this.offset = response['load-next'];
         this.inProgress = false;
       })
