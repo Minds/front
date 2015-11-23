@@ -41,15 +41,19 @@ export class Search {
    * Search
    */
    search(refresh : boolean = true){
-     var self = this;
-     this.inProgress = true;
-     this.client.get('api/v1/search', { q: this.q, type: this.type, limit: 12 })
+     if(this.inProgress)
+      return;
+
+    this.inProgress = true;
+
+    this.client.get('api/v1/search', { q: this.q, type: this.type, limit: 12, offset: this.offset })
       .then((response: any) => {
-          self.entities = response.entities;
-          self.inProgress = false;
+        this.entities = response.entities;
+        this.offset = response['load-next'];
+        this.inProgress = false;
       })
       .catch((e) => {
-
+        this.inProgress = false;
       });
    }
 }
