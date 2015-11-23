@@ -131,10 +131,25 @@
     &.m-title-block-with-actions{
       bottom:40px;
     }
+
+    a{
+      strong{
+        white-space: normal;
+        overflow:visible;
+      }
+    }
   }
 
   a{
     text-decoration:none;
+
+    strong{
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%;
+      display: block;
+    }
   }
 
   .m-inline-owner-block{
