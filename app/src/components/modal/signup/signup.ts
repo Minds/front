@@ -48,6 +48,7 @@ export class SignupModal {
         case 'register':
         case 'login':
         case 'forgot-password':
+        case '':
           this.open = false;
           break;
         default:
