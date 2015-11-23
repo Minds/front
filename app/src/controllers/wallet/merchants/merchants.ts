@@ -119,6 +119,7 @@ export class Merchants {
 
   update(){
     this.updating = true;
+    this.error = "";
     this.client.post('api/v1/merchant/update', this.editForm.value)
       .then((response : any) => {
         this.isMerchant = true;
