@@ -1,6 +1,7 @@
 import { Component, View, CORE_DIRECTIVES, EventEmitter} from 'angular2/angular2';
 import { ROUTER_DIRECTIVES, RouteParams } from "angular2/router";
 import { Client } from '../../services/api';
+import { SessionFactory } from '../../services/session';
 import { Material } from '../../directives/material';
 import { CARDS } from '../../controllers/cards/cards';
 
@@ -16,6 +17,7 @@ import { CARDS } from '../../controllers/cards/cards';
 export class Boosts{
 
   minds : Minds = window.Minds;
+  session  = SessionFactory.build();
   _done: EventEmitter<any> = new EventEmitter();
 
   type : string = "peer";

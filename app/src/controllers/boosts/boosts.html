@@ -8,6 +8,12 @@
   <div class="mdl-cell mdl-cell--12-col">
     <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [hidden]="boosts.length > 0 || !inProgress"></div>
 
+    <a [router-link]="['/Wallet-Filter', {filter: 'merchants'}]" *ng-if="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+      <div class="mdl-card__supporting-text mdl-color-text--white ">
+        Click here to Monetize your channel
+      </div>
+    </a>
+
     <div class="mdl-card__supporting-text" [hidden]="inProgress || moreData">
       You have no boosts in your {{filter}}
     </div>

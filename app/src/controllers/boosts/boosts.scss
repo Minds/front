@@ -145,8 +145,10 @@
 }
 
 .m-boost-console-link{
-  a{
+  &, a{
     text-decoration:none;
     text-transform:uppercase;
   }
+  margin-bottom: $minds-margin;
+  
 }
