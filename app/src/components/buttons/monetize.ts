@@ -1,0 +1,65 @@
+import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { SessionFactory } from '../../services/session';
+import { Client } from '../../services/api';
+
+@Component({
+  selector: 'minds-button-monetize',
+  inputs: ['_object: object'],
+  host: {
+    '(click)': 'monetize()',
+    'class': 'm-button'
+  }
+})
+@View({
+  template: `
+    <button class="material-icons" [ng-class]="{'selected': isMonetized }">
+      <i class="material-icons">attach_money</i>
+    </button>
+  `,
+  directives: [CORE_DIRECTIVES]
+})
+
+export class MonetizeButton {
+
+  object;
+  session = SessionFactory.build();
+  isMonetized = false;
+
+  constructor(public client : Client) {
+  }
+
+  set _object(value : any){
+    if(!value)
+      return;
+    this.object = value;
+    this.isMonetized = value.monetized;
+  }
+
+  monetize(){
+    if (this.isMonetized)
+      return this.unMonetize();
+
+    this.isMonetized = true;
+
+    this.client.put('api/v1/admin/monetize/' + this.object.guid, {})
+      .then((response : any) => {
+
+      })
+      .catch((e) => {
+        this.isMonetized = false;
+      });
+  }
+
+  unMonetize(){
+    this.isMonetized = false;
+    this.object.monetized = false;
+    this.client.delete('api/v1/admin/monetize/' + this.object.guid, {})
+      .then((response : any) => {
+
+      })
+      .catch((e) => {
+        this.isMonetized = true;
+      });
+  }
+
+}
