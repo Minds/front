@@ -6,7 +6,7 @@
     </div>
 
     <!-- START: Register -->
-    <form (submit)="login()" [ng-form-model]="form" #f="form" class="mdl-card mdl-color-text--blue-grey-400 mdl-shadow--2dp m-form m-login-box" [hidden]="hideLogin">
+    <form (submit)="login($event)" [ng-form-model]="form" #f="form" class="mdl-card mdl-color-text--blue-grey-400 mdl-shadow--2dp m-form m-login-box" [hidden]="hideLogin">
 
       <div class="mdl-card__title mdl-color-text--blue-grey-600">
         <h3>Not on Minds? Start a channel</h3>
@@ -47,13 +47,13 @@
             id="password2"
             ng-control="password2"
             placeholder="Confirm your password"
-            (keydown.enter)="register()"
+            (keydown.enter)="register($event)"
             />
         </div>
       </div>
 
       <div class="mdl-card__actions">
-        <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="register()" [disabled]="inProgress">
+        <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="register($event)" [disabled]="inProgress">
           Signup
         </button>
         <span class="m-register-tac">By creating an account you agree to the Terms & Conditions</span>

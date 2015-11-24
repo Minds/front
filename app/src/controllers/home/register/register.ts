@@ -32,7 +32,8 @@ export class Register {
     });
 	}
 
-	register(){
+	register(e){
+    e.preventDefault();
     this.errorMessage = "";
 
     if(this.form.value.password != this.form.value.password2){
@@ -65,6 +66,7 @@ export class Register {
           self.session.logout();
         }
 
+        return;
 			});
 	}
 
