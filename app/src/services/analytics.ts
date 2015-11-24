@@ -7,7 +7,7 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 export class AnalyticsService {
 
   //Set the analytics id of the page we want to send data
-  id : string = "UA-70134683-1";
+  id : string = "UA-35146796-1";
 
   constructor(public router: Router){
     //we instantiate the google analytics service
