@@ -62,7 +62,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 
   { path: '/blog/:filter', component:  Blog, as: 'Blog'},
   { path: '/blog/view/:guid', component:  BlogView, as: 'Blog-View'},
-  { path: '/blog/view/:guid/:title', component:  BlogView, as: 'Blog-View'},
+  { path: '/blog/view/:guid/:title', component:  BlogView, as: 'Blog-View-Title'},
   { path: '/blog/edit/:guid', component:  BlogEdit, as: 'Blog-Edit'},
 
   { path: '/archive/view/:guid', component: ArchiveView, as: 'Archive-View'},
