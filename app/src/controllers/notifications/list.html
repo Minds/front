@@ -255,7 +255,7 @@
           <template ng-switch-when="boost_peer_request">
             <a [router-link]="['/Boosts']">
               <p>
-                <b>@{{notification.owner.username}}</b> is offering
+                <b>@{{notification.from.username}}</b> is offering
                 <b>
                   {{notification.params.bid}}
                   <span [hidden]="notification.params.type != 'pro'">USD</span>
@@ -272,7 +272,7 @@
           <template ng-switch-when="boost_peer_accepted">
             <a [router-link]="['/Boosts', {filter: 'outbox'}]">
               <p>
-                <b>@{{notification.owner.username}}</b> accepted your bid of
+                <b>@{{notification.from.username}}</b> accepted your bid of
                 <b>
                   {{notification.params.bid}}
                   <span [hidden]="notification.params.type != 'pro'">USD</span>
@@ -289,7 +289,7 @@
           <template ng-switch-when="boost_peer_rejected">
             <a [router-link]="['/Boosts', {filter: 'outbox'}]">
               <p>
-                <b>@{{notification.owner.username}}</b> declined your bid of
+                <b>@{{notification.from.username}}</b> declined your bid of
                 <b>
                   {{notification.params.bid}}
                   <span [hidden]="notification.params.type != 'pro'">USD</span>
