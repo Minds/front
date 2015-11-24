@@ -50,10 +50,7 @@ export class ThumbsUpButton {
 
     this.client.put('api/v1/thumbs/' + this.object.guid + '/up', {});
     if(!this.has()){
-      if(!this.object['thumbs:up:user_guids'].isArray())
-        this.object['thumbs:up:user_guids'] = [this.session.getLoggedInUser().guid];
-      else
-        this.object['thumbs:up:user_guids'].push(this.session.getLoggedInUser().guid);
+      this.object['thumbs:up:user_guids'].push(this.session.getLoggedInUser().guid);
       this.object['thumbs:up:count']++;
       self.wallet.increment();
     } else {
