@@ -218,7 +218,11 @@
     -webkit-align-items:center;
     flex-direction: column;
     -webkit-flex-direction:column;
-    background-color:rgba(0,0,0,0.35);
+    background: linear-gradient(
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0)
+    );
     color:#FFF;
 
     &.overlay--0.6{
