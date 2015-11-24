@@ -22,6 +22,7 @@
         <div class="m-merchant-transaction-status"><i class="material-icons">hourglass_empty</i>
           <span [hidden]="sale.status != 'submitted_for_settlement'">Approved (settling)</span>
           <span [hidden]="sale.status != 'settled'">Approved</span>
+          <span [hidden]="sale.status != 'disbursed'">Disbursed</span>
           <span [hidden]="sale.status != 'voided'">Voided</span>
         </div>
 
