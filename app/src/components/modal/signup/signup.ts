@@ -11,7 +11,6 @@ import { SessionFactory } from '../../../services/session';
     <m-modal [open]="open" *ng-if="!session.isLoggedIn()">
       <div class="mdl-card__title">
         <img src="/assets/logos/small.png" (click)="close()"/>
-        <h4 class="mdl-color-text--grey-600">The Open Source Social Network</h4>
       </div>
       <div class="mdl-card__supporting-text">
       Signup to comment, upload, vote and receive 100 free views on your content.
