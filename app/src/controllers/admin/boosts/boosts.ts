@@ -122,12 +122,12 @@ export class AdminBoosts {
   }
 
   onKeyDown(e){
-    e.preventDefault();
+    //e.preventDefault();
     e.stopPropagation()
     if(e.keyCode == 37)
-      this.accept();
+      return this.accept();
     if(e.keyCode == 39)
-      this.reject();
+      return this.reject();
   }
 
   /**
