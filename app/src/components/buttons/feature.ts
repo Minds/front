@@ -22,7 +22,7 @@ export class FeatureButton {
 
   object;
   session = SessionFactory.build();
-  isFeatured = false;
+  isFeatured : boolean = false;
 
   constructor(public client : Client) {
   }
@@ -31,7 +31,7 @@ export class FeatureButton {
     if(!value)
       return;
     this.object = value;
-    this.isFeatured = value.featured_id || value.featured;
+    this.isFeatured = value.featured_id || (value.featured == true);
   }
 
   feature(){
