@@ -1,5 +1,5 @@
 import { Component, View, Inject, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES  } from 'angular2/angular2';
-import { Router } from 'angular2/router';
+import { Router, RouteParams } from 'angular2/router';
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
@@ -20,16 +20,20 @@ export class Register {
   twofactorToken : string = "";
   hideLogin : boolean = false;
   inProgress : boolean = false;
+  referrer : string;
 
   form : ControlGroup;
 
-	constructor(public client : Client, public router: Router, fb: FormBuilder){
+	constructor(public client : Client, public router: Router, public params: RouteParams, fb: FormBuilder){
     this.form = fb.group({
       username: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
       password2: ['', Validators.required]
     });
+
+    if(params.params['referrer'])
+      this.referrer = params.params['referrer'];
 	}
 
 	register(e){
@@ -49,7 +53,11 @@ export class Register {
 
         this.inProgress = false;
 				self.session.login(data.user);
-				self.router.navigate(['/Channel', {username: data.user.username}]);
+
+        if(this.referrer)
+          self.router.navigateByUrl(this.referrer);
+        else
+				  self.router.navigate(['/Channel', {username: data.user.username}]);
 			})
 			.catch((e) => {
         console.log(e);

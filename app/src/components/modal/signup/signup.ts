@@ -16,8 +16,8 @@ import { SessionFactory } from '../../../services/session';
       Signup to comment, upload, vote and receive 100 free views on your content.
       </div>
       <div class="mdl-card__supporting-text">
-        <button class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Register']">Signup</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Login']">Login</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Register', {referrer: route}]">Signup</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Login', {referrer: route}]">Login</button>
       </div>
 
       <div class="mdl-card__supporting-text m-modal-signup-apps">
@@ -40,10 +40,12 @@ export class SignupModal {
 
   open : boolean = false;
   session = SessionFactory.build();
+  route : string = "";
 
   constructor(public router : Router){
     this.router.subscribe((route) => {
-      switch(route){
+      this.route = route;
+      switch(route.split('?')[0]){
         case 'register':
         case 'login':
         case 'forgot-password':

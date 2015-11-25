@@ -42,4 +42,19 @@ describe('testing signup modal', () => {
   //  expect(element(by.css('m-modal-signup .m-modal-container')).isDisplayed()).toEqual(false);
   //});
 
+  it('should login redirect to reffer', () => {
+    browser.get('/discovery/featured');
+
+    element.all(by.css('.mdl-card__supporting-text .mdl-button')).get(1).click();
+
+    element.all(by.id('username')).get(0).sendKeys('protractor');
+    element.all(by.id('password')).get(0).sendKeys('password');
+    element.all(by.css('.mdl-button')).get(2).click();
+
+    var passwordTextField = element.all(by.id('password')).get(0);
+    var loginButton = element.all(by.css('.mdl-button')).get(2);
+
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl +'/discovery/featured');
+  })
+
 });

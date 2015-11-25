@@ -1,5 +1,5 @@
 import { Component, View, Inject, CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/angular2';
-import { Router, RouterLink } from 'angular2/router';
+import { Router, RouteParams, RouterLink } from 'angular2/router';
 import { MindsTitle } from '../../../services/ux/title';
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
@@ -23,10 +23,11 @@ export class Login {
   twofactorToken : string = "";
   hideLogin : boolean = false;
   inProgress : boolean = false;
+  referrer : string;
 
   form : ControlGroup;
 
-	constructor(public client : Client, public router: Router, public title: MindsTitle, fb: FormBuilder){
+	constructor(public client : Client, public router: Router, public params: RouteParams, public title: MindsTitle, fb: FormBuilder){
 		if(this.session.isLoggedIn())
       router.navigate(['/Newsfeed']);
 
@@ -36,6 +37,9 @@ export class Login {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    if(params.params['referrer'])
+      this.referrer = params.params['referrer'];
 	}
 
 	login(){
@@ -47,7 +51,10 @@ export class Login {
 				this.form.value = null;
         this.inProgress = false;
 				self.session.login(data.user);
-				self.router.navigate(['/Newsfeed', {}]);
+        if(this.referrer)
+          self.router.navigateByUrl(this.referrer);
+        else
+				  self.router.navigate(['/Newsfeed', {}]);
 			})
 			.catch((e) => {
 
