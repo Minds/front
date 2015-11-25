@@ -43,6 +43,9 @@ export class Login {
 	}
 
 	login(){
+    if(this.inProgress)
+      return;
+
     this.errorMessage = "";
     this.inProgress = true;
 		var self = this; //this <=> that for promises
