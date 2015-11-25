@@ -17,9 +17,10 @@ Bug reports should be prefixed with `(bug): ` and include as much information as
 You've fixed a bug? Great! Please submit a pull request, prefixed with `(fix): ` and a reference to the ticket that this closes. Spec tests are a bonus.
 
 #### Feature requests
-Please submit feature requests on https://www.minds.com, not this repository.
+Please submit feature requests on https://www.minds.com/groups/profile/474014579341402112/activity
+Please submit bug reports on https://www.minds.com/groups/profile/100000000000000681/activity, not this repository.
 
 
 ### License
 
-This repository is made available under the terms of the GNU Affero General Public License (AGPL).  See individual files for details.
+This repository is made available under the terms of the GNU Affero General Public License (AGPLv3).  See individual files for details.
