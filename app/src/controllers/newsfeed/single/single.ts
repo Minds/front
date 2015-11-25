@@ -8,7 +8,7 @@ import { CARDS } from '../../../controllers/cards/cards';
 import { MindsActivityObject } from '../../../interfaces/entities';
 import { SessionFactory } from '../../../services/session';
 
-import { GraphImpressions } from '../../../components/graphs/impressions';
+import { AnalyticsImpressions } from '../../../components/analytics/impressions';
 
 @Component({
   selector: 'minds-newsfeed-single',
@@ -18,7 +18,7 @@ import { GraphImpressions } from '../../../components/graphs/impressions';
 @View({
   templateUrl: 'src/controllers/newsfeed/single/single.html',
   directives: [ Poster, CARDS, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
-    InfiniteScroll, GraphImpressions ]
+    InfiniteScroll,  AnalyticsImpressions ]
 })
 
 export class NewsfeedSingle {
