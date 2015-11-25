@@ -50,7 +50,7 @@ ini_set( 'display_errors','1');
     <script>
       var ua = window.navigator.userAgent;
       if(ua.indexOf("MSIE") > -1 ||
-        (ua.indexOf("Android 4.3") > -1 && (!ua.indexOf('Chrome') > -1)) //android 4.3, but not chrome browser
+        (ua.indexOf("Android 4.3") > -1 && !(ua.indexOf('Chrome') > -1)) //android 4.3, but not chrome browser
         ){
         window.location.href = "/not-supported";
       }
@@ -73,8 +73,8 @@ ini_set( 'display_errors','1');
             $minds = array(
                 "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
                 "Admin" => Minds\Core\Session::isAdmin() ? true : false,
-                "cdn_url" => Minds\Core\Config::_()->get('cdn_url'),
-                "site_url" => Minds\Core\Config::_()->get('site_url'),
+                "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
+                "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
                 "navigation" => Minds\Core\Navigation\Manager::export()
               );
             if(Minds\Core\Session::isLoggedIn()){
