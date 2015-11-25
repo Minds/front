@@ -13,11 +13,11 @@
     text-align:center;
 
     h1{
-      font-size:100px;
-      font-weight:100;
       margin: 25vh 0 0;
       font-size: 100px;
       font-weight: 200;
+      line-height:100px;
+      padding-bottom:$minds-padding*2;
       width:90%;
     }
     h3{
