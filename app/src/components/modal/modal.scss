@@ -2,6 +2,7 @@
 
 m-modal{
 
+
   .m-modal-bg{
     width: 100%;
     height: 100%;
@@ -39,6 +40,15 @@ m-modal{
 
 m-modal-signup, m-modal-signup-on-action{
   z-index:100;
+
+  m-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:101;
+  }
 
   .m-modal-container{
     max-width: 368px;
