@@ -10,7 +10,9 @@ minds-sidebar-navigation{
   padding-right: 40px;
   width: calc(40px + 100%);
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   nav.minds-navigation{
     padding-top:0 !important;
