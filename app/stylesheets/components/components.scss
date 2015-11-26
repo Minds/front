@@ -183,6 +183,8 @@
 
 .m-video-banner{
   position:relative;
+  width: 100%;
+  overflow-x: hidden;
 
   .video{
     height:100%;
