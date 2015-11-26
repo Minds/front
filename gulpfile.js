@@ -308,7 +308,9 @@ gulp.task('postinstall', function (done) {
 // Utils.
 
 function transformPath(env) {
-  var v = '?v=' + Date.now();
+   var v = '?v=' + Date.now();
+   if(process.argv.slice(3)[0] == "ts")
+     v = '?v=' + process.argv.slice(3)[1];
    return function (filepath) {
      var filename = filepath.replace('/' + PATH.dest[env].all, '') + v;
      if(APP_CDN == '/')
