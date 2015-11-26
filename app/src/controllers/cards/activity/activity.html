@@ -28,7 +28,7 @@
 <!-- Rich content -->
 <div class="minds-rich-embed" *ng-if="activity.perma_url && activity.title">
 	<a [href]="activity.perma_url" target="_blank" *ng-if="activity.thumbnail_src">
-		<img [src]="activity.thumbnail_src" />
+		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null"/>
 	</a>
 	<a [href]="activity.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900">
 		<h2 class="mdl-card__title-text mdl-typography--font-medium" *ng-if="activity.title">{{activity.title}}</h2>
@@ -63,14 +63,14 @@
 <!-- Images -->
 <div class="item item-image allow-select" *ng-if="activity.thumbnail_src && !activity.perma_url">
 	<a [router-link]="['/Archive-View', {guid: activity.entity_guid}]">
-		<img [src]="activity.thumbnail_src">
+		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null">
 	</a>
 </div>
 
 <!-- Custom type:: batch -->
 <div class="item item-image allow-select" *ng-if="activity.custom_type == 'batch'">
 	<a [router-link]="['/Archive-View', {guid: activity.entity_guid}]">
-		<img [src]="activity.custom_data[0].src" style="width:100%">
+		<img [src]="activity.custom_data[0].src" style="width:100%" (error)="activity.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
 	</a>
 </div>
 
