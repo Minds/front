@@ -26,6 +26,7 @@ var semver = require('semver');
 // --------------
 // Configuration.
 var APP_BASE = '/';
+var APP_CDN = '/';
 var APP_SRC = 'app';
 var APP_DEST = 'public';
 var ANGULAR_BUNDLES = './node_modules/angular2/bundles/';
@@ -61,7 +62,7 @@ var PATH = {
     ],
     angular: [
       ANGULAR_BUNDLES + '/angular2.min.js',
-      ANGULAR_BUNDLES + '/router.dev.js',
+      ANGULAR_BUNDLES + '/router.js',
       ANGULAR_BUNDLES + '/http.min.js'
     ],
     plugins: '../plugins'
@@ -284,9 +285,10 @@ gulp.task('build.bundle', function (cb){
 });
 
 gulp.task('build.prod', function(done){
+  APP_CDN = 'https://cdn.minds.com';
   PATH.src.lib = PATH.src.loader
       .concat(PATH.src.angular);
-  runSequence( 'build.lib', 'build.app', 'build.js', 'build.bundle', 'build.index', done);
+  runSequence( 'build.lib', 'build.app', 'build.js', 'build.bundle', done);
 })
 
 // --------------
@@ -309,7 +311,10 @@ function transformPath(env) {
   var v = '?v=' + Date.now();
    return function (filepath) {
      var filename = filepath.replace('/' + PATH.dest[env].all, '') + v;
-     arguments[0] = join(APP_BASE, filename);
+     if(APP_CDN == '/')
+       arguments[0] = join(APP_BASE, filename);
+     else
+       arguments[0] = APP_CDN + filename;
      return inject.transform.apply(inject.transform, arguments);
    };
 }
