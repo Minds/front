@@ -251,6 +251,11 @@ gulp.task('build.index', function() {
     .pipe(gulp.dest(PATH.dest.dev.all));
 });
 
+gulp.task('build.index[cdn]', function(done) {
+    APP_CDN = 'https://cdn.minds.com';
+    runSequence( 'build.index', done);
+});
+
 gulp.task('build.app', function (done) {
   runSequence( 'build.plugins', 'build.assets', done);
 });
@@ -285,7 +290,6 @@ gulp.task('build.bundle', function (cb){
 });
 
 gulp.task('build.prod', function(done){
-  APP_CDN = 'https://cdn.minds.com';
   PATH.src.lib = PATH.src.loader
       .concat(PATH.src.angular);
   runSequence( 'build.lib', 'build.app', 'build.js', 'build.bundle', done);
@@ -309,7 +313,7 @@ gulp.task('postinstall', function (done) {
 
 function transformPath(env) {
    var v = '?v=' + Date.now();
-   if(process.argv.slice(3)[0] == "ts")
+   if(process.argv.slice(3)[0] == "--ts")
      v = '?v=' + process.argv.slice(3)[1];
    return function (filepath) {
      var filename = filepath.replace('/' + PATH.dest[env].all, '') + v;
