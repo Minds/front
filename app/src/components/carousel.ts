@@ -70,7 +70,10 @@ export class MindsCarousel{
    * If the parent set edit mode
    */
   set _editMode(value : boolean){
-    if(this.editing){
+    console.log('[carousel]: edit mode event received');
+    //was in edit more, now settings not in edit more
+    if(this.editing && !value){
+      console.log('[carousel]: edit mode ended');
       this._done();
       return;
     }
@@ -79,7 +82,9 @@ export class MindsCarousel{
     if(!this.editing){
       return;
     }
+    console.log('[carousel]: edit mode enabled');
     this.rotate = false;
+    this.done = false;
     var blank_banner = false;
     for(var i in this.banners){
       if(!this.banners[i].src)
@@ -121,6 +126,9 @@ export class MindsCarousel{
   delete(index){
     this.delete_event.next(this.banners[index]);
     this.banners.splice(index, 1);
+    if(this.banners.length == 0){
+      this.banners.push({ src: null });
+    }
     this.next();
   }
 
@@ -130,6 +138,7 @@ export class MindsCarousel{
   _done(){
     this.editing = false; //this should update each banner (I'd prefer even driven but change detection works..)
     this.done = true;
+    console.log('[carousel]: received done event');
     //after one second?
     setTimeout(() => {
       this.done_event.next(this.modified);
