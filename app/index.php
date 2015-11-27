@@ -33,10 +33,19 @@ ini_set( 'display_errors','1');
     ?>
 
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.blue_grey-amber.min.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'/>
-    <link rel="stylesheet" href="<?= Minds\Core\Config::_()->cdn_url ?>stylesheets/main.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'>
+    <link rel="stylesheet" href="stylesheets/main.css"/>
     <script src="//storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <!-- Google Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    </script>
+    <!-- End Google Analytics -->
 
     <script>
       var ua = window.navigator.userAgent;
@@ -53,11 +62,7 @@ ini_set( 'display_errors','1');
 
     <!-- The app component created in app.ts -->
     <minds-app  class="">
-      <div class="mdl-progress mdl-progress__indeterminate initial-loading is-upgraded">
-        <div class="progressbar bar bar1" style="width: 0%;"></div>
-        <div class="bufferbar bar bar2" style="width: 100%;"></div>
-        <div class="auxbar bar bar3" style="width: 0%;"></div>
-      </div>
+        <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate initial-loading"></div>
     </minds-app>
 
      <!-- inject:js -->
@@ -84,16 +89,6 @@ ini_set( 'display_errors','1');
           .catch(function(){console.error(e,'Report this error at https://github.com/minds/front')});
 
     </script>
-
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    </script>
-    <!-- End Google Analytics -->
-    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
 
   </body>
 </html>
