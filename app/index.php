@@ -37,15 +37,6 @@ ini_set( 'display_errors','1');
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'>
     <link rel="stylesheet" href="stylesheets/main.css"/>
     <script src="//storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
-    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
-    <!-- Google Analytics -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    </script>
-    <!-- End Google Analytics -->
 
     <script>
       var ua = window.navigator.userAgent;
@@ -65,28 +56,38 @@ ini_set( 'display_errors','1');
         <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate initial-loading"></div>
     </minds-app>
 
-     <!-- inject:js -->
-  	 <!-- endinject -->
+    <!-- inject:js -->
+  	<!-- endinject -->
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    </script>
+    <!-- End Google Analytics -->
+    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
 
     <script>
-        <?php
-            $minds = array(
-                "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
-                "Admin" => Minds\Core\Session::isAdmin() ? true : false,
-                "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
-                "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
-                "navigation" => Minds\Core\Navigation\Manager::export()
-              );
-            if(Minds\Core\Session::isLoggedIn()){
-                $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
-                $minds['user']['chat'] = (bool) elgg_get_plugin_user_setting('option', Minds\Core\Session::getLoggedinUser()->guid, 'gatherings') == 1 ? true : false;
-                $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
-            }
-        ?>
-        window.Minds = <?= json_encode($minds) ?>;
+      <?php
+          $minds = array(
+              "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
+              "Admin" => Minds\Core\Session::isAdmin() ? true : false,
+              "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
+              "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
+              "navigation" => Minds\Core\Navigation\Manager::export()
+            );
+          if(Minds\Core\Session::isLoggedIn()){
+              $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
+              $minds['user']['chat'] = (bool) elgg_get_plugin_user_setting('option', Minds\Core\Session::getLoggedinUser()->guid, 'gatherings') == 1 ? true : false;
+              $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
+          }
+      ?>
+      window.Minds = <?= json_encode($minds) ?>;
 
-        System.import('app')
-          .catch(function(){console.error(e,'Report this error at https://github.com/minds/front')});
+      System.import('app')
+        .catch(function(){console.error(e,'Report this error at https://github.com/minds/front')});
 
     </script>
 
