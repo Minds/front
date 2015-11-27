@@ -53,7 +53,11 @@ ini_set( 'display_errors','1');
 
     <!-- The app component created in app.ts -->
     <minds-app  class="">
-        <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate initial-loading"></div>
+      <div class="mdl-progress mdl-progress__indeterminate initial-loading is-upgraded">
+        <div class="progressbar bar bar1" style="width: 0%;"></div>
+        <div class="bufferbar bar bar2" style="width: 100%;"></div>
+        <div class="auxbar bar bar3" style="width: 0%;"></div>
+      </div>
     </minds-app>
 
     <!-- inject:js -->
