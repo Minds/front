@@ -42,6 +42,10 @@ export class Client {
 					this.buildOptions(options)
 				)
 				.subscribe((res : any) => {
+						if(res.status == 401 && res.json().loggedin === false){
+							window.location.href="/login";
+							return reject(res);
+						}
 						if(res.status != 200){
 							return reject(res);
 						}
@@ -66,6 +70,10 @@ export class Client {
 					this.buildOptions(options)
 				)
 				.subscribe((res : any) => {
+						if(res.status == 401 && res.json().loggedin === false){
+							window.location.href="/login";
+							return reject(res);
+						}
 						if(res.status != 200){
 							return reject(res.json());
 						}
@@ -90,6 +98,10 @@ export class Client {
 					this.buildOptions(options)
 				)
 				.subscribe((res : any) => {
+						if(res.status == 401 && res.json().loggedin === false){
+							window.location.href="/login";
+							return reject(res);
+						}
 						if(res.status != 200){
 							return reject(res.json());
 						}
@@ -113,6 +125,10 @@ export class Client {
 					this.buildOptions(options)
 				)
 				.subscribe((res : any) => {
+						if(res.status == 401 && res.json().loggedin === false){
+							window.location.href="/login";
+							return reject(res);
+						}
 						if(res.status != 200){
 							return reject(res.json());
 						}
