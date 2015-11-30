@@ -24,9 +24,10 @@
               #message
               [(ng-model)]="postMeta.comment"
               placeholder="Enter your comment"
-              (keydown.enter)="post()"
+              (keydown.enter)="post($event)"
               [auto-grow]
               (click)="isLoggedIn()"
+              [disabled]="inProgress"
             ></textarea>
 
         </form>

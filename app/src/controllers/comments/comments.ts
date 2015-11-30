@@ -83,15 +83,19 @@ export class Comments {
       });
   }
 
-  post(){
-    var self = this;
+  post(e){
+    e.preventDefault();
+    if(!this.postMeta.comment || this.inProgress)
+      return;
+    this.inProgress = true;
     this.client.post('api/v1/comments/' + this.guid, { comment: this.postMeta.comment })
       .then((response : any) => {
-        self.postMeta.comment = "";
-        self.comments.push(response.comment);
+        this.postMeta.comment = "";
+        this.comments.push(response.comment);
+        this.inProgress = false;
       })
       .catch((e) => {
-
+        this.inProgress = false;
       });
   }
 
