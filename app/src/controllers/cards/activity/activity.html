@@ -11,6 +11,12 @@
 		<a [router-link]="['/Channel', {username: activity.ownerObj.username}]">
 			<strong>{{activity.ownerObj.name}}</strong>
 		</a>
+    <a *ng-if="activity.containerObj && activity.containerObj.type == 'group'"
+      [router-link]="['/Groups-Profile', {guid: activity.containerObj.guid, filter: 'activity'}]"
+      class="mdl-color-text--blue-grey-300"
+      >
+      <strong>({{activity.containerObj.name}})</strong>
+    </a>
 		<span>{{activity.time_created * 1000 | date:'medium'}}</span>
 	</div>
 
