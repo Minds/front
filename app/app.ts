@@ -5,6 +5,7 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import { NotificationService } from './src/services/notification';
 import { AnalyticsService} from './src/services/analytics'
 import { Client } from './src/services/api';
+import { SOCKETS_PROVIDERS, SocketsService } from './src/services/sockets';
 
 import {Topbar} from './src/components/topbar/topbar';
 import {SidebarNavigation} from './src/components/sidebar-navigation/sidebar-navigation';
@@ -96,7 +97,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 export class Minds {
   name: string;
 
-  constructor(public notificationService : NotificationService, public analytics : AnalyticsService) {
+  constructor(public notificationService : NotificationService, public analytics : AnalyticsService, public sockets: SocketsService) {
     this.name = 'Minds';
 
     this.notificationService.getNotifications();
@@ -104,4 +105,4 @@ export class Minds {
 
 }
 
-bootstrap(Minds, [ROUTER_PROVIDERS, HTTP_PROVIDERS]);
+bootstrap(Minds, [ROUTER_PROVIDERS, HTTP_PROVIDERS, SOCKETS_PROVIDERS]);

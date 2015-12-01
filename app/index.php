@@ -80,6 +80,7 @@ ini_set( 'display_errors','1');
               "Admin" => Minds\Core\Session::isAdmin() ? true : false,
               "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
               "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
+              "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
               "navigation" => Minds\Core\Navigation\Manager::export()
             );
           if(Minds\Core\Session::isLoggedIn()){
