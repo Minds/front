@@ -1,4 +1,4 @@
-import { Inject, Injector, provide } from 'angular2/angular2';
+import { Inject, Injector, provide, EventEmitter } from 'angular2/angular2';
 import { SessionFactory } from './session';
 
 export class SocketsService {
@@ -6,6 +6,7 @@ export class SocketsService {
   session = SessionFactory.build();
 
   socket;
+  emitters : {} = {};
 
   constructor(){
     this.setUp();
@@ -47,6 +48,30 @@ export class SocketsService {
   disconnect(){
     console.log('[ws][disconnect]::triggered');
     this.socket.io.disconnect();
+  }
+
+  emit(name : string, data : any){
+    if(this.socket)
+      this.socket.emit(name, data);
+    else
+      console.log('[ws][emit]:: called before socket setup');
+  }
+
+  subscribe(name : string, callback : Function){
+    console.log('[sub]:: ' + name);
+    if(!this.emitters[name] && this.socket){
+      console.log('[sub][registered]:: ' + name);
+      this.emitters[name] = new EventEmitter();
+      this.socket.on(name, (data) => {
+        console.log('[ws][on]:: ' + name);
+        this.emitters[name].next(data);
+      });
+      return this.emitters[name].subscribe({ next: callback });
+    }
+  }
+
+  unSubscribe(subscription){
+    subscription.unSubscribe();
   }
 
 }
