@@ -38,11 +38,7 @@ export class SidebarNavigation {
       if(message.type != "message"){
         return;
       }
-      for(var i in window.Minds.navigation.sidebar){
-        if(window.Minds.navigation.sidebar[i].name == "Messenger"){
-          window.Minds.navigation.sidebar[i].extras.counter = 1;
-        }
-      }
+      this.navigation.setCounter(1);
     });
   }
 }

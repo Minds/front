@@ -40,4 +40,13 @@ export class Navigation {
 		return items;
 	}
 
+  setCounter(name : string, count : number = 1){
+    for(var i in window.Minds.navigation.sidebar){
+      var item = window.Minds.navigation.sidebar[i];
+      if(item.name == "Messenger" && this.location.path().indexOf(item.path.toLowerCase()) == -1){
+        item.extras.counter = count;
+      }
+    }
+  }
+
 }
