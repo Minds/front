@@ -2,6 +2,7 @@ import { Component, View, NgIf, NgFor, NgClass, EventEmitter } from 'angular2/an
 import { RouterLink } from 'angular2/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { SessionFactory } from '../../services/session';
+import { SocketsService } from '../../services/sockets';
 
 @Component({
   selector: 'minds-sidebar-navigation',
@@ -16,12 +17,13 @@ export class SidebarNavigation {
 	user;
 	session = SessionFactory.build();
 	items;
-	constructor(public navigation : NavigationService){
+	constructor(public navigation : NavigationService, public sockets : SocketsService){
 		var self = this;
     this.items = navigation.getItems('sidebar');
 		this.getUser();
 
-		//listen to click events to close nav
+		//listen out for new messages
+    this.messengerListener();
 	}
 
 	getUser(){
@@ -30,4 +32,17 @@ export class SidebarNavigation {
 				self.user = user;
 			});
 	}
+
+  messengerListener(){
+    this.sockets.subscribe('messageReceived', (from_guid, message) => {
+      if(message.type != "message"){
+        return;
+      }
+      for(var i in window.Minds.navigation.sidebar){
+        if(window.Minds.navigation.sidebar[i].name == "Messenger"){
+          window.Minds.navigation.sidebar[i].extras.counter = 1;
+        }
+      }
+    });
+  }
 }

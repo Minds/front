@@ -9,6 +9,7 @@
   		>
 
   		<i class="material-icons" [ng-class]="{'mdl-color-text--blue-grey-100': !item.active, 'mdl-color-text--amber-400' : item.active}">{{item.icon}}</i>
+      <span id="{{item.name | lowercase}}-counter" class="counter mdl-badge mdl-color--amber-600" *ng-if="!item.active && item.extras && item.extras?.counter">{{item.extras?.counter}}</span>
 
   	</a>
 

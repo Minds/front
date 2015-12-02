@@ -37,6 +37,18 @@ minds-sidebar-navigation{
         font-size: 26px;
         color: rgba(255, 255, 255, 0.56);
       }
+
+      .counter{
+        border-radius: 50%;
+        padding: 4px 6px;
+        line-height: 12px;
+        font-size: 12px;
+        font-weight: 600;
+        position: absolute;
+        text-align: center;
+        display: inline-block;
+        margin: -12px 5px;
+      }
     }
 
     .mdl-navigation__link.subitem{

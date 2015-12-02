@@ -72,6 +72,10 @@ export class SocketsService {
       return this.emitters[name].subscribe({
         next: (args) => { callback.apply(this, args); }
       });
+    } else {
+      setTimeout(() => {
+        this.subscribe(name, callback);
+      }, 1000);
     }
   }
 
