@@ -42,6 +42,7 @@ export class SocketsService {
 
   reconnect(){
     console.log('[ws][reconnect]::triggered');
+    this.socket.io.disconnect();
     this.socket.io.connect();
   }
 
