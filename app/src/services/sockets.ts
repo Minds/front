@@ -50,23 +50,28 @@ export class SocketsService {
     this.socket.io.disconnect();
   }
 
-  emit(name : string, data : any){
-    if(this.socket)
-      this.socket.emit(name, data);
-    else
-      console.log('[ws][emit]:: called before socket setup');
+  emit(){
+    if(this.socket) {
+      var _emit = this.socket.emit;
+      _emit.apply(this.socket, arguments);
+    } else {
+      //console.log('[ws][emit]:: called before socket setup');
+    }
   }
 
   subscribe(name : string, callback : Function){
-    console.log('[sub]:: ' + name);
     if(!this.emitters[name] && this.socket){
-      console.log('[sub][registered]:: ' + name);
+      //console.log('[sub][registered]:: ' + name);
       this.emitters[name] = new EventEmitter();
-      this.socket.on(name, (data) => {
-        console.log('[ws][on]:: ' + name);
-        this.emitters[name].next(data);
+      var emitter = this.emitters[name];
+      this.socket.on(name, function() {
+        emitter.next(arguments);
       });
-      return this.emitters[name].subscribe({ next: callback });
+    }
+    if(this.socket){
+      return this.emitters[name].subscribe({
+        next: (args) => { callback.apply(this, args); }
+      });
     }
   }
 
