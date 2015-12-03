@@ -71,14 +71,14 @@
       <input type="checkbox" ng-control="venmo"> Payout to email address (using venmo)
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col" [hidden]="editForm.value.venmo">
+    <div class="mdl-cell mdl-cell--6-col" >
       <label>Bank Account number</label>
-      <input ng-control="accountNumber" type="number" placeholder="Account Number">
+      <input ng-control="accountNumber" type="number" placeholder="Account Number" [disabled]="editForm.value.venmo">
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col" [hidden]="editForm.value.venmo">
+    <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Routing number</label>
-      <input ng-control="routingNumber" type="number" placeholder="Routing Number">
+      <input ng-control="routingNumber" type="number" placeholder="Routing Number" [disabled]="editForm.value.venmo">
     </div>
 
     <div *ng-if="error" class="mdl-color-text--red">
@@ -154,14 +154,14 @@
       <input type="checkbox" ng-control="venmo"> <span for="#venmo-chekcbox">Payout to email address (using venmo)</span>
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col" [hidden]="onboardForm.value.venmo">
+    <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Account number</label>
-      <input ng-control="accountNumber" type="number" placeholder="">
+      <input ng-control="accountNumber" type="number" placeholder="" [disabled]="onboardForm.value.venmo">
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col" [hidden]="onboardForm.value.venmo">
+    <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Routing number</label>
-      <input ng-control="routingNumber" type="number" placeholder="">
+      <input ng-control="routingNumber" type="number" placeholder="" [disabled]="onboardForm.value.venmo">
     </div>
 
     <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">
