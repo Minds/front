@@ -17,7 +17,7 @@ import { ShareModal } from '../../../components/modal/modal';
 @Component({
   selector: 'minds-activity',
   viewProviders: [ Client ],
-  inputs: ['object'],
+  inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle'],
   outputs: [ '_delete: delete']
 })
 @View({

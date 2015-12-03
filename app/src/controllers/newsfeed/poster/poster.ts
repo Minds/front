@@ -69,6 +69,7 @@ export class Poster {
     this.inProgress = true;
     this.client.post('api/v1/newsfeed', this.postMeta)
       .then((data : any) => {
+        data.activity.boostToggle = true;
   			self.load.next(data.activity);
         //reset
         self.postMeta = {

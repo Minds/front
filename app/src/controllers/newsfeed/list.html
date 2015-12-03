@@ -6,7 +6,7 @@
 
         <div class="minds-list">
 
-            <minds-activity *ng-for="#activity of newsfeed" [object]="activity" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+            <minds-activity *ng-for="#activity of newsfeed" [object]="activity" [boost-toggle]="activity.boostToggle"(delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
             <infinite-scroll
                 distance="25%"
                 [locked]="inProgress"
