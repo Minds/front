@@ -25,7 +25,7 @@ import { Material } from '../directives/material';
       <bar class="progress" [ng-style]="{ 'width': seeked + '%'}"></bar>
       <bar class="total"></bar>
     </span>
-    <span class="progress-stamps">00:00/{{time.minutes}}:{{time.seconds}}</span>
+    <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>
     <i class="material-icons" [hidden]="element.muted" (click)="element.muted = true">volume_up</i>
     <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
   </div>
@@ -38,6 +38,10 @@ export class MindsVideo{
   element : any;
   src : Array<any> = [];
   time : { minutes: any, seconds: any } = {
+    minutes: '00',
+    seconds: '00'
+  }
+  elapsed : { minutes: any, seconds: any } = {
     minutes: '00',
     seconds: '00'
   }
@@ -98,7 +102,18 @@ export class MindsVideo{
 
     this.time.seconds = Math.floor(seconds % 60);
     if(parseInt(this.time.seconds) < 10)
-      this.time.seconds+= "0";
+      this.time.seconds = "0" + this.time.seconds;
+  }
+
+  calculateElapsed(){
+    var seconds = this.element.currentTime;
+    this.elapsed.minutes = Math.floor(seconds / 60);
+    if(parseInt(this.elapsed.minutes) < 10)
+      this.elapsed.minutes = "0" + this.elapsed.minutes;
+
+    this.elapsed.seconds = Math.floor(seconds % 60);
+    if(parseInt(this.elapsed.seconds) < 10)
+      this.elapsed.seconds = "0" + this.elapsed.seconds;
   }
 
   onClick(){
@@ -139,6 +154,7 @@ export class MindsVideo{
   getSeeker(){
     this.seek_interval = setInterval(() => {
       this.seeked = (this.element.currentTime / this.element.duration) * 100;
+      this.calculateElapsed();
     }, 100);
   }
 
