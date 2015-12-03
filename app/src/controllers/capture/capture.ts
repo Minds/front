@@ -90,11 +90,13 @@ export class Capture {
   }
 
   deleteAlbum(album){
-    for(var i in this.albums){
-      if(album.guid == this.albums[i].guid)
-        this.albums.splice(i, 1);
+    if(confirm("Are you sure?")){
+      for(var i in this.albums){
+        if(album.guid == this.albums[i].guid)
+          this.albums.splice(i, 1);
+      }
+      this.client.delete('api/v1/archive/albums/' + album.guid);
     }
-    this.client.delete('api/v1/archive/albums/' + album.guid);
   }
 
   /**
