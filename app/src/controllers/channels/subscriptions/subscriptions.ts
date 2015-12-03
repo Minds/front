@@ -1,4 +1,4 @@
-import { Component, View, NgFor, NgIf, Inject, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, CORE_DIRECTIVES, Inject, FORM_DIRECTIVES} from 'angular2/angular2';
 import { Router, RouteParams } from 'angular2/router';
 import { Client } from '../../../services/api';
 import { Material } from '../../../directives/material';
@@ -14,7 +14,7 @@ import { UserCard } from '../../../controllers/cards/cards';
 })
 @View({
   templateUrl: 'src/controllers/channels/subscriptions/subscriptions.html',
-  directives: [ NgFor, NgIf, Material, InfiniteScroll, UserCard ]
+  directives: [ CORE_DIRECTIVES, Material, InfiniteScroll, UserCard ]
 })
 
 export class ChannelSubscriptions {
@@ -30,32 +30,31 @@ export class ChannelSubscriptions {
   constructor(public client: Client){
   }
 
-
   set channel(value: any) {
     this.guid = value.guid;
     this.load();
   }
 
   load(){
-    var self = this;
+    if(this.inProgress)
+      return;
     this.inProgress = true;
-    this.client.get('api/v1/subscribe/subscriptions/' + this.guid, {})
+    this.client.get('api/v1/subscribe/subscriptions/' + this.guid, { offset: this.offset })
       .then((response : any) => {
 
-        if(response.status != "success"){
-          return false;
+        if(!response.users  || response.users.length == 0){
+          this.moreData = false;
+          this.inProgress = false;
+          return;
         }
 
-        if(self.offset){}
-        for(let user of response.users){
-          self.users.push(user);
-        }
+        this.users = this.users.concat(response.users);
 
-        self.offset = response['load-next'];
-        self.inProgress = false;
+        this.offset = response['load-next'];
+        this.inProgress = false;
       })
       .catch((e) => {
-        console.log('couldnt load channel', e);
+        this.inProgress = false;
       });
   }
 
