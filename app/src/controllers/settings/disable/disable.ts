@@ -1,5 +1,5 @@
 import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
-import { RouterLink } from "angular2/router";
+import { Router, RouterLink } from "angular2/router";
 import { Client } from '../../../services/api';
 import { Material } from '../../../directives/material';
 
@@ -19,12 +19,18 @@ export class SettingsDisableChannel{
   user : any;
   settings : string;
 
-  constructor(public client: Client){
+  constructor(public client: Client, public router: Router){
     this.minds = window.Minds;
   }
 
   disable(){
-    console.log("DISABLED");
+    this.client.delete('api/v1/channel')
+      .then((response : any) => {
+        this.router.navigate(['/Logout']);
+      })
+      .catch((e : any) => {
+        alert('Sorry, we could not disable your account');
+      })
   }
 
 }
