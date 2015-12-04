@@ -14,6 +14,30 @@
       </minds-add-card>
     </a>
 
+    <div *ng-if="_filter == 'suggested' && _type == 'channels'" class="m-discovery-suggested-location-bar">
+      <div class="m-discovery-suggested-location-inner">
+        <span *ng-if="!nearby && hasNearby" (click)="setNearby(false)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white">Location off</span>
+        <span *ng-if="!nearby && !hasNearby" (click)="setNearby(true)" class="m-discovery-suggested-location-toggle mdl-color--grey-400 mdl-color-text--white">No results</span>
+        <span *ng-if="nearby" (click)="setNearby(false)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white">Locating</span>
+
+        <!-- only show if locating is on -->
+        <span *ng-if="nearby || (!nearby && !hasNearby)" class="m-discovery-suggested-location-options">
+          within
+          <select (change)="load(true)" (ng-model)="distance" class="mdl-color-text--blue-grey-600">
+            <option value="5"> 5 miles </option>
+            <option value="25"> 25 miles </option>
+            <option value="50"> 50 miles </option>
+            <option value="100"> 100 miles </option>
+          </select>
+          of <input (keyup)="findCity(city)" [(ng-model)]="city" class="mdl-color--blue-grey-300 mdl-color-text--white" placeholder="Enter your city..."/>
+        </span>
+        <div class="m-discovery-cities mdl-card mdl-shadow--4dp" *ng-if="cities.length > 0">
+          <p class="mdl-color-text--blue-grey-300">Select your city:</p>
+          <li (click)="setCity(c)" *ng-for="#c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
+        </div>
+      </div>
+    </div>
+
     <div class="mdl-cell mdl-cell--4-col" *ng-for="#entity of entities; #i = index" [hidden]="i != 0">
 
       <minds-card-video [object]="entity" *ng-if="entity.subtype == 'video'" class="mdl-card mdl-shadow--2dp" [ng-class]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-video>

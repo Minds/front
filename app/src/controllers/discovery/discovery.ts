@@ -21,6 +21,8 @@ import { BUTTON_COMPONENTS } from '../../components/buttons';
 
 export class Discovery {
 
+  session  = SessionFactory.build();
+
   _filter : string = "featured";
   _owner : string = "";
   _type : string = "all";
@@ -28,6 +30,12 @@ export class Discovery {
   moreData : boolean = true;
   offset: string | number = "";
   inProgress : boolean = false;
+
+  city : string = "";
+  cities : Array<any> = [];
+  nearby : boolean = false;
+  hasNearby : boolean = false;
+  distance : number = 5;
 
   constructor(public client: Client, public router: Router, public params: RouteParams, public title: MindsTitle){
     this._filter = params.params['filter'];
@@ -37,6 +45,11 @@ export class Discovery {
         break;
       case "suggested":
         this._type = "channels";
+        if(this.session.getLoggedInUser().city){
+          this.city = this.session.getLoggedInUser().city;
+          this.nearby = true;
+          this.hasNearby = true;
+        }
         break;
       case "trending":
         this._type = "images";
@@ -60,9 +73,9 @@ export class Discovery {
   }
 
   load(refresh : boolean = false){
-    var self = this;
 
-    if(this.inProgress) return false;
+    if(this.inProgress)
+      return false;
 
     if(refresh)
       this.offset = "";
@@ -73,29 +86,36 @@ export class Discovery {
     if(this._owner)
       filter = 'owner';
 
-    this.client.get('api/v1/entities/'+filter+'/'+this._type+'/' + this._owner, {limit:12, offset:this.offset})
+    this.client.get('api/v1/entities/'+filter+'/'+this._type+'/' + this._owner, {
+        limit:12,
+        offset: this.offset,
+        skip: this.offset,
+        nearby : this.nearby,
+        distance : this.distance
+      })
       .then((data : any) => {
         if(!data.entities){
-          self.moreData = false;
-          self.inProgress = false;
+          this.moreData = false;
+          this.inProgress = false;
+          this.nearby = false;
+          this.hasNearby = false;
           return false;
         }
 
         if(refresh){
-          self.entities = data.entities;
+          this.entities = data.entities;
         }else{
-          if(self.offset)
-            data.entities.shift();
-          for(let entity of data.entities)
-            self.entities.push(entity);
+          if(this.offset)
+            this.entities.shift();
+          this.entities = this.entities.concat(data.entities);
         }
 
-        self.offset = data['load-next'];
-        self.inProgress = false;
+        this.offset = data['load-next'];
+        this.inProgress = false;
 
        })
        .catch((e) => {
-         self.inProgress = false;
+         this.inProgress = false;
        });
   }
 
@@ -109,8 +129,40 @@ export class Discovery {
     this.entities.splice(index, 1);
     if(this.entities.length < 3){
       this.offset = 3;
-      this.load();
+      this.load(true);
     }
+  }
+
+  searching : number;
+  findCity(q : string){
+    if(this.searching){
+      clearTimeout(this.searching);
+    }
+    this.searching = setTimeout(() => {
+      this.client.get('api/v1/geolocation/list', {	q: q })
+        .then((response : any) => {
+          this.cities = response.results;
+        });
+    }, 100);
+  }
+
+  setCity(row : any){
+    this.cities = [];
+    if(row.address.city)
+      window.Minds.user.city = row.address.city;
+    if(row.address.town)
+      window.Minds.user.city = row.address.town;
+    this.client.post('api/v1/channel/info', {
+      coordinates : row.lat + ',' + row.lon,
+      city : window.Minds.user.city
+    });
+    this.nearby = true;
+    this.load(true);
+  }
+
+  setNearby(nearby : boolean){
+    this.nearby  = nearby;
+    this.load(true);
   }
 
 }

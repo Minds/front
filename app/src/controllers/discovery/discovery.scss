@@ -1,5 +1,5 @@
 .m-discovery-suggested{
-  margin-top:72px;
+  margin-top:16px;
   max-width:100%;
 
   .mdl-cell{
@@ -48,6 +48,78 @@
         > i {
           vertical-align:middle;
         }
+      }
+
+    }
+
+  }
+
+  .m-discovery-suggested-location-bar{
+    width:100%;
+    margin:0 auto 16px auto;
+    text-align:center;
+
+    .m-discovery-suggested-location-inner{
+      min-width:50%;
+      margin:auto;
+    }
+
+    .m-discovery-suggested-location-toggle{
+      border-radius:3px;
+      padding:8px;
+      cursor:pointer;
+    }
+
+    .m-discovery-suggested-location-options{
+      select{
+        -webkit-appearance: none;
+        font-size:inherit;
+        font-weight:bold;
+        padding:8px;
+        font-family:inherit;
+        border:0;
+      }
+      input{
+        padding: 8px;
+        margin-left: 12px;
+        border: 0;
+        border-radius: 3px;
+        background: transparent;
+        font-size: inherit;
+        font-family: inherit;
+        color: inherit;
+        &::-webkit-input-placeholder{
+          color:#FFF;
+        }
+        &::-moz-placeholder{
+          color:#FFF;
+        }
+        &:-moz-placeholder{
+          color:#FFF;
+        }
+        &:-ms-input-placeholder {
+          color:#FFF;
+        }
+      }
+    }
+
+    .m-discovery-cities{
+      width: 246px;
+      text-align: left;
+      margin: 16px auto;
+      padding: 16px;
+
+      p{
+        margin:0;
+        padding:0;
+        font-size:12px;
+      }
+
+      li{
+        list-style: none;
+        padding: 12px 0;
+        cursor: pointer;
+        border-bottom: 1px solid #EEE;
       }
 
     }
