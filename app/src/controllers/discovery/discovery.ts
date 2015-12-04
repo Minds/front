@@ -121,7 +121,7 @@ export class Discovery {
 
   pass(index : number){
     var entity : any = this.entities[index];
-    this.client.post('api/v1/suggested/pass/' + entity.guid);
+    this.client.post('api/v1/entities/suggested/pass/' + entity.guid);
     this.pop(index);
   }
 
