@@ -6,6 +6,8 @@ import { Material } from '../../directives/material';
 import { SessionFactory } from '../../services/session';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { CARDS } from '../../controllers/cards/cards';
+import { BUTTON_COMPONENTS } from '../../components/buttons';
+
 
 @Component({
   selector: 'minds-discovery',
@@ -14,7 +16,7 @@ import { CARDS } from '../../controllers/cards/cards';
 })
 @View({
   templateUrl: 'src/controllers/discovery/discovery.html',
-  directives: [ RouterLink, NgFor, NgIf, Material, InfiniteScroll, NgClass, CARDS ]
+  directives: [ RouterLink, NgFor, NgIf, Material, InfiniteScroll, NgClass, CARDS, BUTTON_COMPONENTS ]
 })
 
 export class Discovery {
@@ -24,7 +26,7 @@ export class Discovery {
   _type : string = "all";
   entities : Array<Object> = [];
   moreData : boolean = true;
-  offset: string = "";
+  offset: string | number = "";
   inProgress : boolean = false;
 
   constructor(public client: Client, public router: Router, public params: RouteParams, public title: MindsTitle){
@@ -95,6 +97,20 @@ export class Discovery {
        .catch((e) => {
          self.inProgress = false;
        });
+  }
+
+  pass(index : number){
+    var entity : any = this.entities[index];
+    this.client.post('api/v1/suggested/pass/' + entity.guid);
+    this.pop(index);
+  }
+
+  pop(index : number){
+    this.entities.splice(index, 1);
+    if(this.entities.length < 3){
+      this.offset = 3;
+      this.load();
+    }
   }
 
 }

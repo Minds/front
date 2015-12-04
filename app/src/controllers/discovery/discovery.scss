@@ -1,0 +1,57 @@
+.m-discovery-suggested{
+  margin-top:72px;
+  max-width:100%;
+
+  .mdl-cell{
+    min-width: 50%;
+    margin:auto;
+
+    .mdl-card{
+      z-index:1;
+    }
+
+    minds-card-user{
+      .minds-usercard-banner{
+        height:130px;
+      }
+      .minds-tabs{
+          margin: -48px 12px 0 112px;
+      }
+
+      minds-button-subscribe{
+        display:none
+      }
+    }
+
+    .m-action-tabs{
+      display:none;
+    }
+
+  }
+
+  .m-discovery-suggested-actions{
+    display:flex;
+    flex-flow:row nowrap;
+    align-items:center;
+    margin: -8px 12px;
+    padding: 16px 0 8px;
+    z-index: 0 !important;
+
+
+    .m-button {
+      flex:1;
+      text-align:center;
+
+      > * {
+        padding: 12px 32px;
+
+        > i {
+          vertical-align:middle;
+        }
+      }
+
+    }
+
+  }
+
+}
