@@ -4,7 +4,7 @@ import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
 import { Client } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
 import { Material } from '../../../directives/material';
-import { BlogCard } from '../../../plugins/blog/blog-card';
+import { BlogCard } from '../../../plugins/blog/card/card';
 
 @Component({
   selector: 'minds-channel-modules',

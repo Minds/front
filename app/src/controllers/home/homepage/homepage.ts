@@ -5,7 +5,7 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
-import { BlogCard } from '../../../plugins/blog/blog-card';
+import { BlogCard } from '../../../plugins/blog/card/card';
 
 @Component({
   selector: 'minds-homepage',

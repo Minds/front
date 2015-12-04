@@ -5,7 +5,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Material } from '../../directives/material';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { CARDS } from '../../controllers/cards/cards';
-import { BlogCard } from '../../plugins/blog/blog-card';
+import { BlogCard } from '../../plugins/blog/card/card';
 
 @Component({
   selector: 'minds-search',
