@@ -15,8 +15,16 @@
       .minds-usercard-banner{
         height:200px;
       }
-      .avatar img{
-        width:200px;
+      .avatar{
+        width: 200px;
+        height: 150px;
+        text-align: center;
+        vertical-align: middle;
+ 
+        img{
+          max-height:100%;
+          max-width:100%;
+        }
       }
       .minds-tabs{
         //margin: -48px 12px 0 112px;
@@ -24,6 +32,7 @@
       }
       .minds-usercard-block{
         margin-top: -102px;
+        //padding-bottom:16px;
         //margin-bottom:16px;
         width: 100%;
         box-sizing: border-box;
@@ -36,14 +45,37 @@
         }
       }
 
+      @media screen and (max-width:400px){
+        .minds-usercard-block{
+          display: block;
+          margin-top: -150px;
+          color: #222;
+        }
+        .avatar{
+           width: 100%;
+        }
+        .body{
+          margin: 16px 0 0;
+        }
+        .minds-usercard-banner{
+          height: 156px;
+        }
+        .m-usercard-bio{
+          margin-top:0 !important;
+        }
+      }
+
+
       .m-usercard-bio{
         display: flex;
         padding: 8px;
-        margin: -49px 0 0 245px;
-
+        margin-top:16px;
+        color:#222;
+ 
         > div{
           font-size:12px;
-          flex:1;
+          //flex:1;
+          margin-right: 16px;
           display:flex;
           flex-direction:row;
           align-items:center;
@@ -61,6 +93,14 @@
       minds-button-subscribe{
         display:none
       }
+    }
+
+    minds-card-video, minds-card-image{
+        .minds-video-thumbnail{
+            min-height:300px;
+            background-repeat: no-repeat !important;
+            background-size: contain !important;
+        }
     }
 
     .m-action-tabs{
@@ -128,6 +168,10 @@
         font-size: inherit;
         font-family: inherit;
         color: inherit;
+        width: 132px;
+        @media screen and (max-width: 330px){
+          width:80px
+        }
         &::-webkit-input-placeholder{
           color:#FFF;
         }

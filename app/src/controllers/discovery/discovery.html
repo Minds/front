@@ -22,7 +22,6 @@
 
         <!-- only show if locating is on -->
         <span *ng-if="nearby || (!nearby && !hasNearby)" class="m-discovery-suggested-location-options">
-          within
           <select (change)="load(true)" (ng-model)="distance" class="mdl-color-text--blue-grey-600">
             <option value="5"> 5 miles </option>
             <option value="25"> 25 miles </option>
