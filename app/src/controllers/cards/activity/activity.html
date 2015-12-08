@@ -120,7 +120,7 @@
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
 		<li class="mdl-menu__item" *ng-if="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
-		<li class="mdl-menu__item" *ng-if="activity.owner_guid == session.getLoggedInUser().guid" (click)="delete(); toggle.value = !toggle.value">Delete</li>
+		<li class="mdl-menu__item" *ng-if="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="delete(); toggle.value = !toggle.value">Delete</li>
 	</ul>
   <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 
