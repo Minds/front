@@ -3,6 +3,9 @@
 
 minds-card-user{
   min-height: 182px !important;
+  .m-usercard-bio{
+    display:none;
+  }
 }
 
 minds-card-user, .minds-banner-card{

@@ -45,7 +45,7 @@
       <minds-card-album [object]="entity" *ng-if="entity.subtype == 'album'" class="mdl-card mdl-shadow--2dp" [ng-class]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-album>
 
       <!-- START: User Only -->
-      <minds-card-user [object]="entity" *ng-if="entity.type == 'user'" class="mdl-card mdl-shadow--2dp"></minds-card-user>
+      <minds-card-user [object]="entity" [avatar-size]="_filter == 'suggested' ? 'large' : 'medium'" *ng-if="entity.type == 'user'" class="mdl-card mdl-shadow--2dp"></minds-card-user>
       <!-- END: User Only -->
 
       <div class="m-discovery-suggested-actions mdl-card mdl-shadow--6dp mdl-color--blue-grey-900" *ng-if="_filter == 'suggested'">
