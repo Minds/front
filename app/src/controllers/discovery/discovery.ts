@@ -89,7 +89,7 @@ export class Discovery {
     this.client.get('api/v1/entities/'+filter+'/'+this._type+'/' + this._owner, {
         limit:12,
         offset: this.offset,
-        skip: this.offset,
+        skip: 0,
         nearby : this.nearby,
         distance : this.distance
       })
@@ -152,16 +152,22 @@ export class Discovery {
       window.Minds.user.city = row.address.city;
     if(row.address.town)
       window.Minds.user.city = row.address.town;
+    this.city = window.Minds.user.city;
+    this.entities = [];
+    this.inProgress = true;
     this.client.post('api/v1/channel/info', {
-      coordinates : row.lat + ',' + row.lon,
-      city : window.Minds.user.city
-    });
-    this.nearby = true;
-    this.load(true);
+        coordinates : row.lat + ',' + row.lon,
+        city : window.Minds.user.city
+      })
+      .then((response : any) => {
+        this.inProgress = false;
+        this.setNearby(true);
+      });
   }
 
   setNearby(nearby : boolean){
     this.nearby  = nearby;
+    this.entities = [];    
     this.load(true);
   }
 

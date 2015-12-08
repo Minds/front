@@ -16,7 +16,7 @@
 
     <div *ng-if="_filter == 'suggested' && _type == 'channels'" class="m-discovery-suggested-location-bar">
       <div class="m-discovery-suggested-location-inner">
-        <span *ng-if="!nearby && hasNearby" (click)="setNearby(false)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white">Location off</span>
+        <span *ng-if="!nearby && hasNearby" (click)="setNearby(true)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white">Location off</span>
         <span *ng-if="!nearby && !hasNearby" (click)="setNearby(true)" class="m-discovery-suggested-location-toggle mdl-color--grey-400 mdl-color-text--white">No results</span>
         <span *ng-if="nearby" (click)="setNearby(false)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white">Locating</span>
 
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="mdl-cell mdl-cell--4-col" *ng-for="#entity of entities; #i = index" [hidden]="i != 0">
+    <div class="mdl-cell mdl-cell--4-col" *ng-for="#entity of entities; #i = index" [hidden]="i != 0 && _filter == 'suggested'">
 
       <minds-card-video [object]="entity" *ng-if="entity.subtype == 'video'" class="mdl-card mdl-shadow--2dp" [ng-class]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-video>
       <minds-card-image [object]="entity" *ng-if="entity.subtype == 'image'" class="mdl-card mdl-shadow--2dp" [ng-class]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-image>
@@ -66,5 +66,7 @@
         />
         <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
     </infinite-scroll>
+     <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress" *ng-if="_filter == 'suggested'"></div>
+
 
 </div>
