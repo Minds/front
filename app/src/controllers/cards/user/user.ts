@@ -8,7 +8,7 @@ import { BUTTON_COMPONENTS } from '../../../components/buttons';
 @Component({
   selector: 'minds-card-user',
   viewBindings: [ Client ],
-  properties: ['object']
+  properties: ['object', 'avatarSize']
 })
 @View({
   templateUrl: 'src/controllers/cards/user/user.html',
@@ -20,6 +20,7 @@ export class UserCard {
   user : any;
   session = SessionFactory.build();
   minds = window.Minds;
+  avatarSize : string = 'medium';
 
 	constructor(public client: Client){
 	}

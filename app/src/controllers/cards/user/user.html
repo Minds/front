@@ -5,12 +5,23 @@
 
 <a [router-link]="['/Channel', {username: user.username}]" class="mdl-card__supporting-text minds-usercard-block">
 	<div class="avatar">
-			<img src="{{minds.cdn_url}}/icon/{{user.guid}}/medium/{{user.icontime}}" class="mdl-shadow--2dp"/>
+			<img src="{{minds.cdn_url}}/icon/{{user.guid}}/{{avatarSize}}/{{user.icontime}}" class="mdl-shadow--2dp"/>
 	</div>
 	<div class="body">
 		<h3>{{user.name}}</h3>
 		<span>@{{user.username}}</span>
-	</div>
+    
+        <div class="m-usercard-bio">
+          <div class="m-usercard-bio-location" [hidden]="!user.city">
+            <i class="material-icons mdl-color-text--blue-grey-400">location_city</i>
+            {{user.city}}
+          </div>
+          <div class="m-usercard-bio-brief" [hidden]="!user.briefdescription">
+            <i class="material-icons mdl-color-text--blue-grey-400">assignment</i>
+            {{user.briefdescription}}
+          </div>
+        </div>
+    </div>
 </a>
 
 <minds-button-subscribe [user]="user" *ng-if="user.guid != session.getLoggedInUser().guid"></minds-button-subscribe>
