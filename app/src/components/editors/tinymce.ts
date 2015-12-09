@@ -57,7 +57,7 @@ export class MindsTinymce {
     });
   }
 
-  onDestroy(){
+  ngOnDestroy(){
     this.editor.setContent("");
     if(tinymce)
       tinymce.remove('minds-tinymce > textarea');

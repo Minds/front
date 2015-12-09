@@ -71,7 +71,7 @@ export class UserDropdownButton{
       })
   }
 
-  onDestroy(){
+  ngOnDestroy(){
   }
 
 }

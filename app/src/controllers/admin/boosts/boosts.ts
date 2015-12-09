@@ -138,7 +138,7 @@ export class AdminBoosts {
     document.getElementsByTagName('minds-admin-boosts')[0].dispatchEvent(event);
   }
 
-  onDestroy(){
+  ngOnDestroy(){
     document.removeEventListener('keydown', this.onKeypress);
   }
 

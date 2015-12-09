@@ -36,7 +36,7 @@ export class InfiniteScroll{
     });
   }
 
-  onDestroy(){
+  ngOnDestroy(){
     if(this._listener)
       this.scroll.unListen(this._listener);
   }

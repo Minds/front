@@ -1,8 +1,8 @@
 import { Directive, EventEmitter, ViewContainerRef, Inject } from 'angular2/angular2';
 
 @Directive({
-  selector: 'svg',
-  properties: [ 'height', 'width', 'viewbox' ]
+  selector: '[svg-hack]',
+  inputs: [ 'svgHack', 'height', 'width', 'viewBox' ]
 })
 
 export class GraphSVG {
@@ -21,7 +21,7 @@ export class GraphSVG {
     this.element.setAttribute('width', value);
   }
 
-  set viewbox(value : any){
+  set viewBox(value : any){
     this.element.setAttribute('viewBox', value);
   }
 

@@ -53,7 +53,7 @@ export class Login {
 			.then((data : any) => {
 				this.form.value = null;
         this.inProgress = false;
-				self.session.login(data.user);
+				this.session.login(data.user);
         if(this.referrer)
           self.router.navigateByUrl(this.referrer);
         else

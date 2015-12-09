@@ -97,7 +97,7 @@ export class Activity {
     //this.scroll.fire();
   }
 
-  onDestroy(){
+  ngOnDestroy(){
     this.scroll.unListen(this.scroll_listener);
   }
 }

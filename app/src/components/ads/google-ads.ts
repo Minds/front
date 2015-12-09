@@ -30,7 +30,7 @@ export class GoogleAds{
     });
   }
 
-  onDestroy(){
+  ngOnDestroy(){
     GoogleAdsService.unload();
   }
 

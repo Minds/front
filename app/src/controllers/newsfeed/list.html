@@ -11,8 +11,7 @@
                 distance="25%"
                 [locked]="inProgress"
                 (load)="load()"
-                *ng-if="moreData"
-                />
+                *ng-if="moreData">
                 <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
             </infinite-scroll>
 

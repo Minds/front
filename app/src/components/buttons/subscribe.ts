@@ -64,7 +64,7 @@ export class SubscribeButton{
       });
   }
 
-  onDestroy(){
+  ngOnDestroy(){
   }
 
 }

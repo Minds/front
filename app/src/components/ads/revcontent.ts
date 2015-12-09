@@ -23,7 +23,7 @@ export class RevContent{
     });
   }
 
-  onDestroy(){
+  ngOnDestroy(){
     RevContentService.unload(this._element);
   }
 

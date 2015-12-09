@@ -179,7 +179,7 @@ export class MindsCarousel{
     },this.interval);
   }
 
-  onDestroy(){
+  ngOnDestroy(){
     clearTimeout(this.rotate_timeout);
   }
 

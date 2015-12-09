@@ -41,20 +41,21 @@ export class Client {
 					self.base + endpoint,
 					this.buildOptions(options)
 				)
-				.subscribe((res : any) => {
-						if(res.status == 401 && res.json().loggedin === false){
-							window.location.href="/login";
-							return reject(res);
-						}
-						if(res.status != 200){
-							return reject(res);
-						}
-						var data = res.json();
-						if(data.status != 'success')
-							return reject(data);
+				.subscribe(
+          res => {
+  					var data = res.json();
+  					if(data.status != 'success')
+  						return reject(data);
 
-						return resolve(data);
-				});
+  					return resolve(data);
+				  },
+          err => {
+            if(err.status == 401 && err.json().loggedin === false){
+              window.location.href="/login";
+              return reject(err);
+            }
+            return reject(err);
+          });
 		});
 	}
 
@@ -69,20 +70,23 @@ export class Client {
 					JSON.stringify(data),
 					this.buildOptions(options)
 				)
-				.subscribe((res : any) => {
-						if(res.status == 401 && res.json().loggedin === false){
-							window.location.href="/login";
-							return reject(res);
-						}
-						if(res.status != 200){
-							return reject(res.json());
-						}
+				.subscribe(
+          res => {
 						var data = res.json();
 						if(data.status != 'success')
 							return reject(data);
 
 						return resolve(data);
-				});
+				  },
+          err => {
+            if(err.status == 401 && err.json().loggedin === false){
+							window.location.href="/login";
+							return reject(err);
+						}
+						if(err.status != 200){
+							return reject(err.json());
+						}
+          });
 		});
 	}
 
@@ -97,20 +101,23 @@ export class Client {
 					JSON.stringify(data),
 					this.buildOptions(options)
 				)
-				.subscribe((res : any) => {
-						if(res.status == 401 && res.json().loggedin === false){
-							window.location.href="/login";
-							return reject(res);
-						}
-						if(res.status != 200){
-							return reject(res.json());
-						}
+				.subscribe(
+          res => {
 						var data = res.json();
 						if(data.status != 'success')
 							return reject(data);
 
 						return resolve(data);
-				});
+  				},
+          err => {
+            if(err.status == 401 && err.json().loggedin === false){
+              window.location.href="/login";
+              return reject(err);
+            }
+            if(err.status != 200){
+              return reject(err.json());
+            }
+          });
 		});
 	}
 
@@ -124,20 +131,23 @@ export class Client {
 					self.base + endpoint,
 					this.buildOptions(options)
 				)
-				.subscribe((res : any) => {
-						if(res.status == 401 && res.json().loggedin === false){
-							window.location.href="/login";
-							return reject(res);
-						}
-						if(res.status != 200){
-							return reject(res.json());
-						}
+				.subscribe(
+          res => {
 						var data = res.json();
 						if(data.status != 'success')
 							return reject(data);
 
 						return resolve(data);
-				});
+				  },
+          err => {
+            if(err.status == 401 && err.json().loggedin === false){
+              window.location.href="/login";
+              return reject(err);
+            }
+            if(err.status != 200){
+              return reject(err.json());
+            }
+          });
 		});
 	}
 }

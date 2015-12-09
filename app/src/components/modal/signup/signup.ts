@@ -32,7 +32,7 @@ import { SessionFactory } from '../../../services/session';
       <div class="mdl-card__supporting-text">
         <span class="m-modal-signup-skip" (click)="close()">Maybe later</span>
       </div>
-    </div>
+    </m-modal>
   `
 })
 

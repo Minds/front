@@ -61,8 +61,7 @@
     <infinite-scroll
         distance="25%"
         (load)="load()"
-        *ng-if="moreData && _filter != 'suggested'"
-        />
+        *ng-if="moreData && _filter != 'suggested'">
         <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
     </infinite-scroll>
      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress" *ng-if="_filter == 'suggested'"></div>

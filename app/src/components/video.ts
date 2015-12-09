@@ -162,7 +162,7 @@ export class MindsVideo{
     clearInterval(this.seek_interval);
   }
 
-  onDestroy(){
+  ngOnDestroy(){
     clearInterval(this.seek_interval);
   }
 
