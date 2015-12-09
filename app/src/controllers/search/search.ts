@@ -48,6 +48,10 @@ export class Search {
 
     this.client.get('api/v1/search', { q: this.q, type: this.type, limit: 12, offset: this.offset })
       .then((response: any) => {
+        if(!response.entitites || response.entities.length == 0){
+          this.inProgress = false;
+          return;
+        }
         this.entities = this.entities.concat(response.entities);
         this.offset = response['load-next'];
         this.inProgress = false;
