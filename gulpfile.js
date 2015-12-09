@@ -315,6 +315,7 @@ function transformPath(env) {
    var v = '?v=' + Date.now();
    if(process.argv.slice(3)[0] == "--ts")
      v = '?v=' + process.argv.slice(3)[1];
+    console.log("[--ts]:: " + v);
    return function (filepath) {
      var filename = filepath.replace('/' + PATH.dest[env].all, '') + v;
      if(APP_CDN == '/')
@@ -329,7 +330,7 @@ function injectableAssets() {
   var src = PATH.src.lib.map(function(path) {
     return join(PATH.dest.dev.lib, path.split('/').pop());
   });
-  src.push(join(PATH.dest.dev.all, '**/*.css'));
+  src.push('./public/stylesheets/main.css');
   src.push('./public/app.min.js');
   return src;
 }

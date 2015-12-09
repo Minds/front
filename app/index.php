@@ -32,11 +32,13 @@ ini_set( 'display_errors','1');
       }
     ?>
 
+
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.blue_grey-amber.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'>
-    <link rel="stylesheet" href="stylesheets/main.css"/>
     <script src="//storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+    <!-- inject:css -->
+    <!-- endinject -->
 
     <script>
       var ua = window.navigator.userAgent;
