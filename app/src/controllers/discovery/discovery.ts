@@ -44,6 +44,11 @@ export class Discovery {
       case "all":
         break;
       case "suggested":
+        if(!this.session.isLoggedIn()){
+          this.router.navigate(['/Discovery', {'filter': 'featured', 'type': 'channels'}]);
+          return;
+        }
+
         this._type = "channels";
         if(this.session.getLoggedInUser().city){
           this.city = this.session.getLoggedInUser().city;
@@ -167,7 +172,7 @@ export class Discovery {
 
   setNearby(nearby : boolean){
     this.nearby  = nearby;
-    this.entities = [];    
+    this.entities = [];
     this.load(true);
   }
 
