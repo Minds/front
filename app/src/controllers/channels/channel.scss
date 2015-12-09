@@ -26,6 +26,7 @@ minds-channel{
 
     .minds-channel-title{
       display:flex;
+      flex-flow: column wrap;
       margin:0;
       width: 320px;
 
