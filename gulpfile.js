@@ -252,7 +252,7 @@ gulp.task('build.index', function() {
 });
 
 gulp.task('build.index[cdn]', function(done) {
-    APP_CDN = 'https://cdn.minds.com';
+    APP_CDN = 'https://d3ae0shxev0cb7.cloudfront.net';
     runSequence( 'build.index', done);
 });
 
