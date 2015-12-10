@@ -119,7 +119,8 @@ export class MindsBanner{
       file: this.file,
       top: this.top
     });
-    this.editing = false;
+    this.file = null;
+    //this.editing = false;
   }
 
   dragstart(e){

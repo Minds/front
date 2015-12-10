@@ -3,14 +3,15 @@ import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/route
 import { Client, Upload } from '../../../services/api';
 import { Material } from '../../../directives/material';
 import { MindsTinymce } from '../../../components/editors/tinymce';
+import { MindsBanner } from '../../../components/banner';
 
 @Component({
   selector: 'minds-admin-pages',
-  viewBindings: [ Client ]
+  providers: [ Client, Upload ]
 })
 @View({
   templateUrl: 'src/controllers/admin/pages/pages.html',
-  directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES, MindsTinymce ]
+  directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES, MindsBanner, MindsTinymce ]
 })
 
 export class AdminPages {
@@ -20,11 +21,15 @@ export class AdminPages {
       title : 'New Page',
       body: '',
       path: '',
-      menuContainer: 'footer'
+      menuContainer: 'footer',
+      header: false,
+      headerTop: 0
   };
   path : string = "";
+  status : string = "saved";
+  headerFile : File;
 
-  constructor(public client: Client, public params : RouteParams){
+  constructor(public client: Client, public upload : Upload, public params : RouteParams){
     this.path = params.params['path'];
     this.load();
   }
@@ -37,6 +42,7 @@ export class AdminPages {
   }
 
   save(page){
+    this.status = 'saving';
     this.client.post('api/v1/admin/pages', {
         title: page.title,
         body: page.body,
@@ -44,7 +50,8 @@ export class AdminPages {
         menuContainer: page.menuContainer
       })
       .then((response : any) => {
-
+        this.uploadHeader(page);
+        this.status = 'saved';
       });
   }
 
@@ -61,12 +68,27 @@ export class AdminPages {
       this.page = page;
   }
 
+  setHeader(banner : any){
+    this.headerFile = banner.file;
+    this.page.header = true;
+    this.page.headerTop = banner.top;
+  }
+
+  uploadHeader(page){
+    this.upload.post('api/v1/admin/pages/' + page.path + '/header', [this.headerFile], {
+      headerTop: page.headerTop,
+      path: page.path
+    });
+  }
+
   newPage(){
     this.page = {
         title: 'New Page',
         body: '',
         path: 'new',
-        menuContainer: 'footer'
+        menuContainer: 'footer',
+        header: false,
+        headerTop: 0
     }
     this.pages.push(this.page);
   }

@@ -4,13 +4,14 @@ import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
 import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
+import { MindsBanner } from '../../components/banner';
 
 @Component({
   providers: [ MindsTitle, Client, NavigationService ]
 })
 @View({
   templateUrl: 'src/controllers/pages/pages.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material, MindsBanner ]
 })
 
 export class Pages {
@@ -18,6 +19,8 @@ export class Pages {
   title : string = "";
   body : string = "";
   path : string = "";
+  header : boolean = false;
+  headerTop : number = 0;
 
   pages : Array<any> = [];
 
@@ -33,6 +36,8 @@ export class Pages {
           this.title = response.title;
           this.body = response.body;
           this.path = response.path;
+          this.header = response.header;
+          this.headerTop = response.headerTop;
           this.titleService.setTitle(this.title);
       });
   }

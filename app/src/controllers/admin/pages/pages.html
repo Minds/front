@@ -1,3 +1,11 @@
+<header>
+  <minds-banner
+    [src]="'fs/v1/pages/' + page.path"
+    [top]="page.headerTop"
+    [edit-mode]="true"
+    (added)="setHeader($event)">
+  </minds-banner>
+</header>
 
 <div class="mdl-grid m-admin-pages" style="max-width:990px">
 
@@ -23,7 +31,8 @@
       <minds-tinymce [(content)]="page.body" [reset]="page.path"></minds-tinymce>
 
       <div class="m-form-actions">
-        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page)">Save & Publish</button>
+        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page)" [hidden]="status != 'saving'">Save & Publish</button>
+        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page)" [hidden]="status != 'saving'">Saving</button>
 
         <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="delete(page)">Delete</button>
       </div>
