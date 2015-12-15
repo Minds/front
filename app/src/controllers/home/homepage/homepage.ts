@@ -2,6 +2,7 @@ import { Component, View, Inject, CORE_DIRECTIVES } from 'angular2/angular2';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 import { Material } from '../../../directives/material';
 import { Navigation as NavigationService } from '../../../services/navigation';
+import { SessionFactory } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
@@ -22,6 +23,7 @@ export class Homepage {
   videos : Array<any> = [];
   blogs : Array<any> = [];
   channels : Array<any> = [];
+  session = SessionFactory.build();
 
   constructor(public client: Client, public title: MindsTitle, public navigation: NavigationService){
     this.title.setTitle("Home");

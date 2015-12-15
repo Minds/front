@@ -1,4 +1,4 @@
-<section class="minds-homepage-banner m-video-banner">
+<section class="minds-homepage-banner m-video-banner" *ng-if="!session.isLoggedIn()">
   <div class="video">
     <video autoplay muted loop poster="assets/videos/traffic-1/traffic-1.png">
       <source src="assets/videos/traffic-1/traffic-1.webm" type="video/webm">
@@ -10,9 +10,9 @@
     <div class="mdl-grid m-homepage-grid">
       <div class="mdl-cell mdl-cell--12-col m-homepage-titles">
         <h1>Your Social Network</h1>
-        <h3>Start a channel today</h3>
+        <h3 [hidden]="session.isLoggedIn()">Start a channel today</h3>
       </div>
-      <div class="mdl-cell mdl-cell--6-col m-homepage-signup">
+      <div class="mdl-cell mdl-cell--6-col m-homepage-signup" *ng-if="!session.isLoggedIn()">
         <minds-register></minds-register>
       </div>
     </div>
@@ -27,7 +27,7 @@
   </div>
 </section>
 
-<section class="m-homepage-facts">
+<section class="m-homepage-facts" *ng-if="!session.isLoggedIn()">
   <div class="mdl-grid ">
     <div class="mdl-cell mdl-cell--6-col">
       <i class="material-icons mdl-color-text--blue-grey-300">trending_up</i>
@@ -52,7 +52,7 @@
   </div>
 </section>
 
-<section class="m-homepage-features mdl-color--blue-grey-900">
+<section class="m-homepage-features mdl-color--blue-grey-900" *ng-if="!session.isLoggedIn()">
   <div class="mdl-grid mdl-color-text--blue-grey-300">
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">timeline</i>
