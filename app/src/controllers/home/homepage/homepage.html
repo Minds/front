@@ -7,20 +7,98 @@
   </div>
   <div class="overlay">
     <img src="assets/logos/medium-white.png" class="m-logo"/>
-    <h1>Your Social Network</h1>
-    <h3>A platform for transparency, privacy, viral reach & monetization</h3>
-    <div class="m-app-links">
+    <div class="mdl-grid m-homepage-grid">
+      <div class="mdl-cell mdl-cell--12-col m-homepage-titles">
+        <h1>Your Social Network</h1>
+        <h3>Start a channel today</h3>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col m-homepage-signup">
+        <minds-register></minds-register>
+      </div>
+    </div>
+    <!--<div class="m-app-links">
       <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6" target="_blank">
         <img src="assets/ext/appstore.png">
       </a>
       <a href="https://play.google.com/store/apps/details?id=com.minds.mobile">
         <img src="assets/ext/playstore.png">
       </a>
+    </div>-->
+  </div>
+</section>
+
+<section class="m-homepage-facts">
+  <div class="mdl-grid ">
+    <div class="mdl-cell mdl-cell--6-col">
+      <i class="material-icons mdl-color-text--blue-grey-300">trending_up</i>
+      <h3 class="mdl-color-text--blue-grey-700">Viral Reach</h3>
+      <p class="mdl-color-text--blue-grey-300">Be heard. Boost your content with points earned from voting, commenting, uploading & sharing on the app.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col">
+      <i class="material-icons mdl-color-text--blue-grey-300">remove_red_eye</i>
+      <h3 class="mdl-color-text--blue-grey-700">Privacy</h3>
+      <p class="mdl-color-text--blue-grey-300">Be anonymous if you wish. We encrypt all sensitive data and have zero-knowledge of your private messages.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col">
+      <i class="material-icons mdl-color-text--blue-grey-300">code</i>
+      <h3 class="mdl-color-text--blue-grey-700">Transparency</h3>
+      <p class="mdl-color-text--blue-grey-300">This is a free and open source project. Code and policies are available for public comment at Minds.org.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col">
+      <i class="material-icons mdl-color-text--blue-grey-300">attach_money</i>
+      <h3 class="mdl-color-text--blue-grey-700">Earn Money</h3>
+      <p class="mdl-color-text--blue-grey-300">Be rewarded for your energy online. Exchange money for shares with other users. It’s peer-to-peer advertising.</p>
     </div>
   </div>
 </section>
 
-<div class="mdl-grid mdl-grid--no-spacing">
+<section class="m-homepage-features mdl-color--blue-grey-900">
+  <div class="mdl-grid mdl-color-text--blue-grey-300">
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">timeline</i>
+      <h3>Newsfeed</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">person_pin</i>
+      <h3>Channels</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">thumbs_up_down</i>
+      <h3>Vote</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">comment</i>
+      <h3>Comment</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">file_upload</i>
+      <h3>Upload</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">subject</i>
+      <h3>Blog</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">chat_bubble</i>
+      <h3>Chat</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">group_work</i>
+      <h3>Groups</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">search</i>
+      <h3>Search</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">location_on</i>
+      <h3>Find Nearby</h3>
+    </div>
+  </div>
+
+</section>
+
+<div class="mdl-grid mdl-grid--no-spacing m-homepage-featured">
 
     <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
       <h4><a [router-link]="['/Discovery', {filter: 'featured', 'type':'videos'}]" class="mdl-color-text--blue-grey-200">Featured videos <span>More</span></a></h4>
@@ -46,7 +124,7 @@
           <a [router-link]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
         </li>
       </ul>
-      <span class="copyright mdl-color-text--blue-grey-700">&copy; Minds, Inc. 2015</span>
+      <span class="copyright mdl-color-text--blue-grey-700">&#169; Minds, Inc. 2015</span>
     </section>
 
 </div>

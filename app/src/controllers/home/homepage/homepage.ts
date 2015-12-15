@@ -6,6 +6,7 @@ import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
 import { BlogCard } from '../../../plugins/blog/card/card';
+import { Register } from '../register/register';
 
 @Component({
   selector: 'minds-homepage',
@@ -13,7 +14,7 @@ import { BlogCard } from '../../../plugins/blog/card/card';
 })
 @View({
   templateUrl: 'src/controllers/home/homepage/homepage.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, CARDS, BlogCard, Material ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, CARDS, BlogCard, Material, Register ]
 })
 
 export class Homepage {
