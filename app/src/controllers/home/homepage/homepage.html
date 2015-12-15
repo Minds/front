@@ -10,7 +10,7 @@
     <div class="mdl-grid m-homepage-grid">
       <div class="mdl-cell mdl-cell--12-col m-homepage-titles">
         <h1>Your Social Network</h1>
-        <h3 [hidden]="session.isLoggedIn()">Start a channel today</h3>
+        <h3 [hidden]="session.isLoggedIn()">Launch a channel today</h3>
       </div>
       <div class="mdl-cell mdl-cell--6-col m-homepage-signup" *ng-if="!session.isLoggedIn()">
         <minds-register></minds-register>
