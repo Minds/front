@@ -100,6 +100,9 @@ export class Discovery {
       })
       .then((data : any) => {
         if(!data.entities){
+          if(this.nearby){
+            return this.setNearby(false);
+          }
           this.moreData = false;
           this.inProgress = false;
           this.nearby = false;
@@ -121,6 +124,9 @@ export class Discovery {
        })
        .catch((e) => {
          this.inProgress = false;
+         if(this.nearby){
+           this.setNearby(false);
+         }
        });
   }
 

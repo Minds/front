@@ -49,19 +49,22 @@ export class Channel {
   offset : string = "";
   moreData : boolean = true;
   inProgress : boolean = false;
-  editing : boolean = false
+  editing : boolean = false;
+  editForward : boolean = false;
   error: string = "";
 
   //@todo make a re-usable city selection module to avoid duplication here
   cities : Array<any> = [];
 
-  constructor(public client: Client, public upload: Upload, params: RouteParams, public title: MindsTitle){
+  constructor(public client: Client, public upload: Upload, params: RouteParams, public router: Router, public title: MindsTitle){
       this.username = params.params['username'];
       if(params.params['filter'])
         this._filter = params.params['filter'];
 
-      if(params.params['editToggle'])
+      if(params.params['editToggle']){
         this.editing = true;
+        this.editForward = true;
+      }
 
       this.title.setTitle("Channel");
       this.load();
@@ -166,10 +169,12 @@ export class Channel {
   }
 
   update(){
-    var self = this;
     this.client.post('api/v1/channel/info', this.user)
       .then((data : any) => {
-        self.editing = false;
+        this.editing = false;
+        if(this.editForward){
+          this.router.navigate(['/Discovery', {filter: 'suggested', type:'channels'}]);
+        }
       });
   }
 
