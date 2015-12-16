@@ -77,24 +77,6 @@
 
     }
 
-    .m-app-links{
-      margin: auto;
-      max-width: 496px;
-      display: flex;
-      flex-flow: row wrap;
-      align-items:center;
-
-      a{
-        flex:1;
-        padding:8px;
-
-        img{
-          width:100%;
-        }
-      }
-
-    }
-
 
     @media (max-width: $max-mobile){
       .m-logo{
@@ -230,6 +212,25 @@ minds-homepage{
   }
 }
 
+.m-app-links{
+
+  padding:28px;
+  height:auto;
+  display: flex;
+  flex-flow: row wrap;
+  align-items:center;
+
+  a{
+    flex:1;
+    padding:8px;
+    max-width: 172px;
+
+    img{
+      width:100%;
+    }
+  }
+
+}
 
 .m-footer{
   background:#333;
