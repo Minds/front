@@ -57,7 +57,10 @@ export class Register {
         if(this.referrer)
           self.router.navigateByUrl(this.referrer);
         else
-				  self.router.navigate(['/Channel', {username: data.user.username}]);
+				  self.router.navigate(['/Channel', {
+            username: data.user.username,
+            editToggle: true
+          }]);
 			})
 			.catch((e) => {
         console.log(e);

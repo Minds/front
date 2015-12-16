@@ -52,10 +52,16 @@ export class Channel {
   editing : boolean = false
   error: string = "";
 
+  //@todo make a re-usable city selection module to avoid duplication here
+  cities : Array<any> = [];
+
   constructor(public client: Client, public upload: Upload, params: RouteParams, public title: MindsTitle){
       this.username = params.params['username'];
       if(params.params['filter'])
         this._filter = params.params['filter'];
+
+      if(params.params['editToggle'])
+        this.editing = true;
 
       this.title.setTitle("Channel");
       this.load();
@@ -186,6 +192,32 @@ export class Channel {
         window.Minds.user.icontime = Date.now();
       })
       .catch((exception)=>{
+      });
+  }
+
+  searching : number;
+  findCity(q : string){
+    if(this.searching){
+      clearTimeout(this.searching);
+    }
+    this.searching = setTimeout(() => {
+      this.client.get('api/v1/geolocation/list', {	q: q })
+        .then((response : any) => {
+          this.cities = response.results;
+        });
+    }, 100);
+  }
+
+  setCity(row : any){
+    this.cities = [];
+    if(row.address.city)
+      window.Minds.user.city = row.address.city;
+    if(row.address.town)
+      window.Minds.user.city = row.address.town;
+    this.user.city = window.Minds.user.city;
+    this.client.post('api/v1/channel/info', {
+        coordinates : row.lat + ',' + row.lon,
+        city : window.Minds.user.city
       });
   }
 
