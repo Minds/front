@@ -44,11 +44,13 @@ export class MindsTinymce {
         this.editor = ed;
 
         ed.on('change', (e) => {
+          this.ready = true;
           this.content = ed.getContent();
           this.update.next(ed.getContent());
         })
 
         ed.on('keyup', (e) => {
+          this.ready = true;
           this.content = ed.getContent();
           this.update.next(ed.getContent());
         })
