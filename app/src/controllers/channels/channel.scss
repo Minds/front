@@ -22,6 +22,7 @@ minds-channel{
 
     .channel-header-bar{
       z-index:2;
+      pointer-events: none
     }
 
     .minds-channel-title{
@@ -29,6 +30,7 @@ minds-channel{
       flex-flow: row wrap;
       margin:0;
       width: 320px;
+      pointer-events: all;
 
       > div{
         display:flex;
@@ -79,6 +81,7 @@ minds-channel{
     -webkit-align-items: -webkit-flex-start;
     justify-content: flex-start;
     border:0;
+    pointer-events: all;
 
     a {
 
