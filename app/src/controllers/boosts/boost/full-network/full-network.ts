@@ -2,6 +2,7 @@ import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from '
 import { RouterLink } from "angular2/router";
 import { Client } from '../../../../services/api';
 import { Material } from '../../../../directives/material';
+import { WalletService } from '../../../../services/wallet';
 import { MindsWalletResponse } from '../../../../interfaces/responses';
 import { MindsUserSearchResponse } from '../../../../interfaces/responses';
 import { MindsBoostResponse } from '../../../../interfaces/responses';
@@ -38,7 +39,7 @@ export class BoostFullNetwork{
   inProgress : boolean = false;
   error : string = "";
 
-  constructor(public client: Client){
+  constructor(public client: Client, public wallet: WalletService){
     //get the rates and balance
     this.client.get('api/v1/boost/rates', { cb: Date.now() })
       .then((success : MindsBoostRateResponse) => {
@@ -51,7 +52,9 @@ export class BoostFullNetwork{
   }
 
   boost() {
-    var self =  this;
+
+    if(this.inProgress)
+      return;
     this.inProgress = true;
     this.error = "";
 
@@ -85,14 +88,15 @@ export class BoostFullNetwork{
         destination: this.data.destination
       })
       .then((success : MindsBoostResponse) => {
-        self.inProgress = false;
+        this.inProgress = false;
+        this.wallet.decrement(this.data.points);
 
         //?
-        self._done.next(true);
+        this._done.next(true);
       })
       .catch((e) => {
-        self.handleErrorMessage('Sorry, something went wrong.');
-        return false;
+        this.error = 'Sorry, something went wrong.';
+        this.inProgress = false;
       });
 
   }
