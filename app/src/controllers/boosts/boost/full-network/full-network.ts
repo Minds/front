@@ -2,7 +2,6 @@ import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from '
 import { RouterLink } from "angular2/router";
 import { Client } from '../../../../services/api';
 import { Material } from '../../../../directives/material';
-import { WalletService } from '../../../../services/wallet';
 import { MindsWalletResponse } from '../../../../interfaces/responses';
 import { MindsUserSearchResponse } from '../../../../interfaces/responses';
 import { MindsBoostResponse } from '../../../../interfaces/responses';
@@ -39,7 +38,7 @@ export class BoostFullNetwork{
   inProgress : boolean = false;
   error : string = "";
 
-  constructor(public client: Client, public wallet: WalletService){
+  constructor(public client: Client){
     //get the rates and balance
     this.client.get('api/v1/boost/rates', { cb: Date.now() })
       .then((success : MindsBoostRateResponse) => {
@@ -89,7 +88,6 @@ export class BoostFullNetwork{
       })
       .then((success : MindsBoostResponse) => {
         this.inProgress = false;
-        this.wallet.decrement(this.data.points);
 
         //?
         this._done.next(true);
