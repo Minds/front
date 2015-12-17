@@ -60,10 +60,19 @@ export class BoostP2P{
 
   boost(nonce){
 
+    if(this.inProgress)
+      return;
+    this.inProgress = true;
+
     this.nz.run(() => {
       this.error = '';
       this.stage = 3;
     });
+
+    if(this.option == 'points' && !this.checkBalance()){
+      this.inProgress = false;
+      return true;
+    }
 
     this.client.post('api/v1/boost/peer/' + this.activity.guid + '/' + this.activity.owner_guid, {
         type: this.option,
@@ -72,15 +81,17 @@ export class BoostP2P{
         nonce: nonce
       })
       .then((success : any) => {
-        this.inProgress = false;
+
         this.stage = 4;
         setTimeout(() => {
+          this.inProgress = false;
           this._done.next(true);
           this.stage = 1;
         },1000);
 
       })
       .catch((e) => {
+        this.inProgress = false;
         this.nz.run(() => {
           this.stage = 2;
           if(e.stage == 'transaction')
@@ -92,14 +103,14 @@ export class BoostP2P{
   }
 
   checkBalance(){
-    if (this.rate.balance < this.points) {
+    if (this.rate.balance < this.bid) {
       this.error = 'Ooops! You don\'t have enough points';
       this.notEnoughPoints = true;
       return false;
     }
 
     //check if the user has enough points
-    if (this.rate.balance >= this.points){
+    if (this.rate.balance >= this.bid){
       return true;
     }
   }
