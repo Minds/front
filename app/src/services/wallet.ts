@@ -37,14 +37,14 @@ export class WalletService {
   /**
    * Return the balance
    */
-   getBalance(){
-     var self = this;
-     if(!window.Minds.wallet){
+   getBalance(refresh : boolean = false){
+     if(!window.Minds.wallet || refresh){
        window.Minds.wallet = { balance: '...' };
-       this.client.get('api/v1/wallet/count', {})
+       this.client.get('api/v1/wallet/count')
          .then((response : any) => {
+           this.points = response.count;
            window.Minds.wallet.balance = response.count;
-           self.sync();
+           this.sync();
          });
         return;
      }

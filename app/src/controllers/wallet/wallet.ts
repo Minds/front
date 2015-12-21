@@ -42,6 +42,7 @@ export class Wallet {
       this.filter = params.params['filter'];
 
       this.title.setTitle("Wallet | Minds");
+    this.wallet.getBalance(true);
 	}
 
 }
