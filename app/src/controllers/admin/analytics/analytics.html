@@ -43,12 +43,28 @@
       <div class="mdl-card__supporting-text results">
 
         <div class="row">
-          <label>Review</label>
+          <label><b>Review</b></label>
           <b>{{boost_newsfeed.review}}</b>
         </div>
         <div class="row">
-          <label>Approved</label>
+          <label><i>Backlog</i></label>
+          <i>{{boost_newsfeed.review_backlog | number:'1.0-0'}} hours</i>
+        </div>
+        <div class="row">
+          <label><b>Approved</b></label>
           <b>{{boost_newsfeed.approved}}</b>
+        </div>
+        <div class="row">
+          <label><i>Backlog</i></label>
+          <i>{{boost_newsfeed.approved_backlog | number:'1.0-0'}} hours</i>
+        </div>
+        <div class="row">
+          <label><i>Impressions</i></label>
+          <i>{{boost_newsfeed.impressions | number:'1.0-0'}}</i>
+        </div>
+        <div class="row">
+          <label><i>Burn rate</i></label>
+          <i>{{(boost_newsfeed.impressions - boost_newsfeed.impressions_met) / boost_newsfeed.approved_backlog | number:'1.0-3'}} / hour</i>
         </div>
 
       </div>
