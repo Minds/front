@@ -54,6 +54,8 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
   { path: '/capture', component: Capture, as: 'Capture' },
 
   { path: '/boosts', component: Boosts, as: 'Boosts' },
+  { path: '/boosts/:type', component: Boosts, as: 'Boosts' },
+  { path: '/boosts/:type/:filter', component: Boosts, as: 'Boosts' },
 
   { path: '/discovery/:filter', component: Discovery, as: 'Discovery'},
   { path: '/discovery/:filter/:type', component: Discovery, as: 'Discovery'},

@@ -4,6 +4,7 @@ import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
 import { Material } from '../../directives/material';
 import { CARDS } from '../../controllers/cards/cards';
+import { BUTTON_COMPONENTS } from '../../components/buttons';
 
 @Component({
   selector: 'minds-boosts-console',
@@ -11,7 +12,7 @@ import { CARDS } from '../../controllers/cards/cards';
 })
 @View({
   templateUrl: 'src/controllers/boosts/boosts.html',
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS]
+  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS, BUTTON_COMPONENTS]
 })
 
 export class Boosts{
@@ -27,11 +28,18 @@ export class Boosts{
   moreData : boolean = true;
   error : string = "";
 
+  boosterToggle : boolean = false;
+  boosterToggleInProgress : boolean = false;
+  latestPosts = [];
+  latestMedia = [];
+
   boosts : Array<any> = [];
 
   constructor(public client: Client, params: RouteParams){
     if(params.params['filter'])
       this.filter = params.params['filter'];
+    if(params.params['type'])
+      this.type = params.params['type'];
     this.getBoosts();
   }
 
@@ -73,6 +81,40 @@ export class Boosts{
       .catch(e => {
         this.boosts[i].state = 'created';
       });
+  }
+
+  loadLatestPosts(){
+    this.client.get('api/v1/newsfeed/personal')
+      .then((response : any) => {
+        this.latestPosts = response.activity;
+        this.boosterToggleInProgress = false;
+      });
+  }
+
+  loadLatestMedia(){
+    this.client.get('api/v1/entities/owner')
+      .then((response : any) => {
+        this.latestMedia = response.entities;
+        this.boosterToggleInProgress = false;
+      });
+  }
+
+  setBoostToggle(toggle : boolean = true){
+    this.boosterToggle = toggle;
+    this.boosterToggleInProgress = true;
+    if(toggle){
+      this.loadLatestPosts();
+      this.loadLatestMedia();
+    }
+  }
+
+  boostContent(e){
+    if (!e) e = window.event;
+      e.cancelBubble = true;
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(e);
+    return true;
   }
 
 }

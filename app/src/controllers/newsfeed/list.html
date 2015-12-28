@@ -30,7 +30,7 @@
         </div>
       </a>
 
-      <a [router-link]="['/Boosts']" class="mdl-card mdl-color--blue-grey-700 mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+      <a [router-link]="['/Boosts', {type: 'peer', 'filter': 'inbox'}]" class="mdl-card mdl-color--blue-grey-700 mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white ">
           Boost console
         </div>
@@ -50,6 +50,8 @@
     		</div>
     	</div>
 
+      <div class="minds-spacer minds-spacer-2x"></div>
+      <m-ads-boost limit="2"></m-ads-boost>
       <div class="minds-spacer minds-spacer-2x"></div>
 
       <ul class="m-footer-nav m-footer-nav-inline">

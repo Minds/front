@@ -39,7 +39,7 @@ m-modal{
 
 
 m-modal-signup, m-modal-signup-on-action{
-  z-index:100;
+  z-index:1000;
 
   m-modal{
     position: fixed;
@@ -100,7 +100,7 @@ m-modal-signup, m-modal-signup-on-action{
 }
 
 m-modal-share{
-  z-index:600;
+  z-index:1000;
   position:relative;
 
   input{

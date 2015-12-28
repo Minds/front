@@ -7,6 +7,7 @@ import { CommentButton } from './buttons/comment';
 import { RemindButton } from './buttons/remind';
 import { FeatureButton } from './buttons/feature';
 import { MonetizeButton } from './buttons/monetize';
+import { BoostButton } from './buttons/boost';
 
 export const BUTTON_COMPONENTS: Type[] = [SubscribeButton, UserDropdownButton, ThumbsUpButton,
-  ThumbsDownButton, CommentButton, RemindButton, FeatureButton, MonetizeButton];
+  ThumbsDownButton, CommentButton, RemindButton, FeatureButton, MonetizeButton, BoostButton];

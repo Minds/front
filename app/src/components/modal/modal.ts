@@ -41,3 +41,4 @@ export class Modal {
 export { SignupModal } from './signup/signup';
 export { SignupOnActionModal } from './signup/signup-on-action';
 export { ShareModal } from './share/share';
+export { BoostModal } from '../../controllers/boosts/modal/modal';

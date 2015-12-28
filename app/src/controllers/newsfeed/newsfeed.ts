@@ -9,6 +9,7 @@ import { Poster } from './poster/poster';
 import { CARDS } from '../../controllers/cards/cards';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { SessionFactory } from '../../services/session';
+import { BoostAds } from '../../components/ads/boost';
 
 import { AnalyticsImpressions } from '../../components/analytics/impressions';
 
@@ -20,7 +21,7 @@ import { AnalyticsImpressions } from '../../components/analytics/impressions';
 @View({
   templateUrl: 'src/controllers/newsfeed/list.html',
   directives: [ Poster, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
-    InfiniteScroll, AnalyticsImpressions, CARDS ]
+    InfiniteScroll, AnalyticsImpressions, CARDS, BoostAds ]
 })
 
 export class Newsfeed {

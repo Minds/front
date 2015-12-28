@@ -62,6 +62,7 @@ minds-card-user, .minds-banner-card{
   minds-button-subscribe, minds-button-boost{
     position: absolute;
     margin: -38px 130px;
+    z-index:999;
   }
 
   minds-button-feature{

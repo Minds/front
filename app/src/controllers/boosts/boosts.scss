@@ -150,5 +150,36 @@
     text-transform:uppercase;
   }
   margin-bottom: $minds-margin;
-  
+
+}
+
+.m-boost-button-fat{
+  background:$minds-blue !important;
+}
+
+.m-boost-console-booster{
+
+  .m-boost-button-fat{
+    background:$minds-blue;
+    margin-right:$minds-margin*2;
+  }
+
+  .m-boost-console-booster-posts{
+    margin:$minds-margin*2;
+
+    h3{
+      text-transform: uppercase;
+      font-size:12px;
+    }
+  }
+  .m-boost-console-booster-posts-images{
+    minds-button-boost{
+      padding: 8px 0;
+      display: block;
+      width: 100%;
+      text-align: center;
+      z-index: 999;
+      position: relative;
+    }
+  }
 }

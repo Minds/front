@@ -10,7 +10,7 @@
 	<div class="body">
 		<h3>{{user.name}}</h3>
 		<span>@{{user.username}}</span>
-    
+
         <div class="m-usercard-bio">
           <div class="m-usercard-bio-location" [hidden]="!user.city">
             <i class="material-icons mdl-color-text--blue-grey-400">location_city</i>
@@ -26,9 +26,7 @@
 
 <minds-button-subscribe [user]="user" *ng-if="user.guid != session.getLoggedInUser().guid"></minds-button-subscribe>
 <minds-button-feature [object]="user" *ng-if="session.isAdmin()"></minds-button-feature>
-<!--<minds-button-boost *ng-if="user.guid == session.getLoggedInUser().guid">
-	<button class="mdl-button mdl-color-text--white minds-boost-button">Boost</button>
-</minds-button-boost>-->
+<minds-button-boost [object]="user" *ng-if="user.guid == session.getLoggedInUser().guid"></minds-button-boost>
 
 <div class="minds-tabs mdl-tabs__tab-bar">
 		<a class="mdl-tabs__tab mdl-color-text--blue-grey-500 1" [router-link]="['/Channel-Filter', {username: user.username, filter: 'subscribers'}]">

@@ -208,8 +208,8 @@
           <template ng-switch-when="boost_request">
               <a ng-click="loadBoostReview(notification.entityObj.guid)">
                   <p>{{notification.fromObj.name}} is offering you {{notification.params.points}} points to boost
-                      <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj.title" >{{notification.entityObj.title}}</span>
-                      <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entityObj.title">their activity</span>
+                      <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && notification.entityObj.title" >{{notification.entityObj.title}}</span>
+                      <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && !notification.entityObj.title">their activity</span>
                  </p>
               </a>
           </template>
@@ -218,8 +218,8 @@
           <template ng-switch-when="boost_rejected">
             <a [router-link]="['/Activity', {guid: notification.entityObj.guid}]">
               <p>You boost for
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entityObj.title">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && !notification.entityObj.title">your post</span>
                 was rejected. Your points have been credited back to your wallet.
               </p>
             </a>
@@ -229,13 +229,13 @@
           <template ng-switch-when="boost_accepted">
             <a [router-link]="['/Activity', {guid: notification.entityObj.guid}]">
               <p *ng-if="notification.params.impressions">{{notification.params.impressions}} views for
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entityObj.title">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && !notification.entityObj.title">your post</span>
                 were accepted.
               </p>
               <p *ng-if="notification.params.points">{{notification.params.points}} points for
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entityObj.title">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && !notification.entityObj.title">your post</span>
                 were accepted.
               </p>
             </a>
@@ -245,15 +245,15 @@
           <template ng-switch-when="boost_completed">
             <a [router-link]="['/Activity', {guid: notification.entityObj.guid}]">
               <p>{{notification.params.impressions}}/{{notification.params.impressions}} views for
-                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ng-if="notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entityObj.title">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ng-if="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj && !notification.entityObj.title">your post</span>
                 have been met.</p>
             </a>
           </template>
 
           <!-- Boost (Peer) Request -->
           <template ng-switch-when="boost_peer_request">
-            <a [router-link]="['/Boosts']">
+            <a [router-link]="['/Boosts', {type: 'peer', filter: 'inbox'}]">
               <p>
                 <b>@{{notification.from.username}}</b> is offering
                 <b>
@@ -270,7 +270,7 @@
 
           <!-- Boost (Peer) Request -->
           <template ng-switch-when="boost_peer_accepted">
-            <a [router-link]="['/Boosts', {filter: 'outbox'}]">
+            <a [router-link]="['/Boosts', {type: 'peer', filter: 'outbox'}]">
               <p>
                 <b>@{{notification.from.username}}</b> accepted your bid of
                 <b>
@@ -287,7 +287,7 @@
 
           <!-- Boost (Peer) Rejeced -->
           <template ng-switch-when="boost_peer_rejected">
-            <a [router-link]="['/Boosts', {filter: 'outbox'}]">
+            <a [router-link]="['/Boosts', {type: 'peer', filter: 'outbox'}]">
               <p>
                 <b>@{{notification.from.username}}</b> declined your bid of
                 <b>

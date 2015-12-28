@@ -19,7 +19,7 @@ import { Material } from '../../../directives/material';
 
 export class AdminBoosts {
 
-  entities : Array<any> = [];
+  boosts : Array<any> = [];
   type : string = "newsfeed";
   count : number = 0;
   newsfeed_count : number = 0;
@@ -42,25 +42,25 @@ export class AdminBoosts {
     if(this.inProgress)
       return;
     this.inProgress = true;
-    var self = this;
+
     this.client.get('api/v1/admin/boosts/' + this.type, { limit: 24, offset: this.offset })
       .then((response : any) => {
-        if(!response.entities){
-          self.inProgress = false;
-          self.moreData = false;
+        if(!response.boosts){
+          this.inProgress = false;
+          this.moreData = false;
           return;
         }
 
-        self.entities = self.entities.concat(response.entities);
-        self.count = response.count;
-        self.newsfeed_count = response.newsfeed_count;
-        self.suggested_count = response.suggested_count;
+        this.boosts = this.boosts.concat(response.boosts);
+        this.count = response.count;
+        this.newsfeed_count = response.newsfeed_count;
+        this.suggested_count = response.suggested_count;
 
-        self.offset = response['load-next'];
-        self.inProgress = false;
+        this.offset = response['load-next'];
+        this.inProgress = false;
       })
       .catch((e) => {
-        self.inProgress = false;
+        this.inProgress = false;
       });
   }
 
@@ -69,55 +69,47 @@ export class AdminBoosts {
     document.addEventListener('keydown', self.onKeypress);
   }
 
-  accept(entity : any = null){
-    if(!entity)
-      entity = this.entities[0];
+  accept(boost : any = null){
+    if(!boost)
+      boost = this.boosts[0];
 
-    this.client.post('api/v1/admin/boosts/' + entity.boost_id  + '/accept', {
-        guid: entity.guid,
-        impressions: entity.boost_impressions,
-        type: this.type
-      })
+    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid  + '/accept')
       .then((response : any) => {
 
       })
       .catch((e) => {
 
       });
-    this.pop(entity);
+    this.pop(boost);
   }
 
-  reject(entity : any = null){
-    if(!entity)
-      entity = this.entities[0];
+  reject(boost : any = null){
+    if(!boost)
+      boost = this.boosts[0];
 
-    this.client.post('api/v1/admin/boosts/' + entity.boost_id  + '/reject', {
-        guid: entity.guid,
-        impressions: entity.boost_impressions,
-        type: this.type
-      })
+    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid  + '/reject')
       .then((response : any) => {
 
       })
       .catch((e) => {
 
       });
-    this.pop(entity);
+    this.pop(boost);
   }
 
   /**
    * Remove an entity from the list
    */
-  pop(entity){
-    for(var i in this.entities){
-      if(entity == this.entities[i])
-        this.entities.splice(i,1);
+  pop(boost){
+    for(var i in this.boosts){
+      if(boost == this.boosts[i])
+        this.boosts.splice(i,1);
     }
     if(this.type == "newsfeed")
       this.newsfeed_count--;
     else if(this.type == "suggested")
       this.suggested_count--;
-    if(this.entities.length < 5)
+    if(this.boosts.length < 5)
       this.load();
   }
 

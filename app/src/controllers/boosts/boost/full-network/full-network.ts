@@ -10,8 +10,8 @@ import { MindsBoostRateResponse } from '../../../../interfaces/responses';
 @Component({
   selector: 'minds-boost-full-network',
   viewBindings: [ Client ],
-  properties: ['object'],
-  events: ['_done: done']
+  inputs: ['_object: object'],
+  outputs: ['_done: done']
 })
 @View({
   templateUrl: 'src/controllers/boosts/boost/full-network/full-network.html',
@@ -22,7 +22,7 @@ export class BoostFullNetwork{
 
   _done: EventEmitter<any> = new EventEmitter();
 
-  activity : any;
+  object : any;
   data = {
     destination: '',
     points: 0,
@@ -46,8 +46,9 @@ export class BoostFullNetwork{
       });
   }
 
-  set object(value: any) {
-    this.activity = value;
+  set _object(value: any) {
+    this.object = value;
+    console.log(value);
   }
 
   boost() {
@@ -81,7 +82,7 @@ export class BoostFullNetwork{
       return false;
 
     //commence the boost
-    this.client.post( 'api/v1/boost/newsfeed/' + this.activity.guid + '/' + this.activity.owner_guid,
+    this.client.post( 'api/v1/boost/' + this.object.type + '/' + this.object.guid + '/' + this.object.owner_guid,
       {
         impressions: this.data.impressions,
         destination: this.data.destination
