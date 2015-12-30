@@ -56,7 +56,8 @@
                   <p>
                     {{notification.fromObj.name}} commented on
                     <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj.title" >{{notification.entityObj.title}}</span>
-                    <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="!notification.entityObj.title">your {{notification.entityObj.subtype}}</span>
+                    <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title">{{notification.entityObj.ownerObj.name}}'s {{notification.entityObj.subtype}}</span>
+                    <span class="pseudo-link mdl-color-text--blue-grey-400" *ng-if="notification.entityObj.owner_guid != session.getLoggedInUser().guid && !notification.entityObj.title">your {{notification.entityObj.subtype}}</span>
                   </p>
                 </a>
               </template>
