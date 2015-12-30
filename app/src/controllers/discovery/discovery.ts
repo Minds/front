@@ -53,7 +53,7 @@ export class Discovery {
         if(this.session.getLoggedInUser().city){
           this.city = this.session.getLoggedInUser().city;
           this.nearby = true;
-          this.hasNearby = true;
+          this.hasNearby = false;
         }
         break;
       case "trending":
@@ -101,13 +101,16 @@ export class Discovery {
       .then((data : any) => {
         if(!data.entities){
           if(this.nearby){
+            this.hasNearby = false;
             return this.setNearby(false);
           }
           this.moreData = false;
           this.inProgress = false;
-          this.nearby = false;
-          this.hasNearby = false;
           return false;
+        }
+
+        if(this.nearby){
+          this.hasNearby = true;
         }
 
         if(refresh){
