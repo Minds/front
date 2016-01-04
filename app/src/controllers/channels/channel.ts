@@ -173,7 +173,7 @@ export class Channel {
       .then((data : any) => {
         this.editing = false;
         if(this.editForward){
-          this.router.navigate(['/Discovery', {filter: 'suggested', type:'channels'}]);
+        //  this.router.navigate(['/Discovery', {filter: 'suggested', type:'channels'}]);
         }
       });
   }
