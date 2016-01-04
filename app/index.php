@@ -56,8 +56,6 @@
     <!-- shims:js -->
   	<!-- endinject -->
 
-     <script>System.config(<%= JSON.stringify(SYSTEM_CONFIG) %>)</script>
-
     <!-- libs:js -->
   	<!-- endinject -->
 

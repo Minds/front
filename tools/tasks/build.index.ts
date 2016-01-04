@@ -1,9 +1,12 @@
 import {join, sep} from 'path';
-import {APP_SRC, APP_DEST, DEPENDENCIES, ENV} from '../config';
+import {APP_SRC, APP_DEST, DEPENDENCIES, VERSION, ENV} from '../config';
 import {transformPath, templateLocals} from '../utils';
 
 export = function buildIndex(gulp, plugins) {
   return function () {
+    DEPENDENCIES.push({
+      src: 'bundles/app.js', dest: join(APP_DEST, 'bundles'), inject: 'shims',
+    });
     return gulp.src(join(APP_SRC, 'index.php'))
       // NOTE: There might be a way to pipe in loop.
       .pipe(inject('shims'))
@@ -28,7 +31,6 @@ export = function buildIndex(gulp, plugins) {
   }
 
   function mapPath(dep) {
-    let prodPath = join(dep.dest, dep.src.split(sep).pop());
-    return prodPath;
+    return join(dep.dest, dep.src.split(sep).pop());
   }
 };

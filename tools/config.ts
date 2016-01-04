@@ -88,9 +88,9 @@ export const AUTOPREFIXER_BROWSERS = [
 
 export const SYSTEM_CONFIG = {
   defaultJSExtensions: true,
-  bundles: {
-    'bundles/app': ['bootstrap']
-  }
+  //bundles: {
+  //  'bundles/app': ['bootstrap']
+  //}
 };
 
 //export const SYSTEM_CONFIG = ENV === 'dev' ? SYSTEM_CONFIG_DEV : SYSTEM_CONFIG_PROD;
