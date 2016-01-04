@@ -1,4 +1,4 @@
-import { Inject, Injector, provide, EventEmitter } from 'angular2/angular2';
+import { Inject, Injector, provide, EventEmitter } from 'angular2/core';
 import { SessionFactory } from './session';
 
 export class SocketsService {

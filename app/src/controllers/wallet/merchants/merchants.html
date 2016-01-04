@@ -1,4 +1,4 @@
-<div *ng-if="isMerchant">
+<div *ngIf="isMerchant">
 
   <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500" [hidden]="inProgress">
     <div class="mdl-card__supporting-text">
@@ -12,7 +12,7 @@
 
   <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500 m-merchant-transactions">
 
-    <div class="mdl-card md-shadow--2dp m-merchant-transaction" *ng-for="#sale of sales">
+    <div class="mdl-card md-shadow--2dp m-merchant-transaction" *ngFor="#sale of sales">
 
       <div class="mdl-card__supporting-text m-merchant-transaction-tabs">
         <div class="m-merchant-transaction-id"><i class="material-icons">description</i>{{sale.id}}</div>
@@ -43,7 +43,7 @@
 
   <form (submit)="update($event)"
     (change)="confirmation = false"
-    [ng-form-model]="editForm"
+    [ngFormModel]="editForm"
     #e="ngForm"
     class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500"
     [hidden]="inProgress"
@@ -81,7 +81,7 @@
       <input ng-control="routingNumber" type="number" placeholder="Routing Number" [disabled]="editForm.value.venmo">
     </div>
 
-    <div *ng-if="error" class="mdl-color-text--red">
+    <div *ngIf="error" class="mdl-color-text--red">
       {{error}}
     </div>
 
@@ -94,7 +94,7 @@
 </div>
 
 
-<div *ng-if="!isMerchant">
+<div *ngIf="!isMerchant">
 
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__supporting-text">
@@ -102,7 +102,7 @@
     </div>
   </div>
 
-  <form (submit)="onboard($event)" [ng-form-model]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
+  <form (submit)="onboard($event)" [ngFormModel]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
     <div class="mdl-cell mdl-cell--6-col">
       <label>First name</label>
       <input ng-control="firstName" type="text" placeholder="First name">
@@ -173,7 +173,7 @@
       </p>
     </div>
 
-    <div *ng-if="error" class="mdl-color-text--red">
+    <div *ngIf="error" class="mdl-color-text--red">
       {{error}}
     </div>
 

@@ -1,7 +1,8 @@
-import { Directive, EventEmitter, ViewContainerRef, Inject } from 'angular2/angular2';
+import { Directive, EventEmitter, ViewContainerRef, Inject } from 'angular2/core';
+
 
 @Directive({
-  selector: '[svg-hack]',
+  selector: '[svgHack]',
   inputs: [ 'svgHack', 'height', 'width', 'viewBox' ]
 })
 

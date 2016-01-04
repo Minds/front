@@ -4,22 +4,22 @@
   <div class="mdl-cell mdl-cell--4-col">
     <ul class="m-content-sidebar-nav">
       <li class="m-content-sidebar-nav-item">
-        <a [router-link]="['/Boosts', { type: 'newsfeed', 'filter': '' }]" [ng-class]="{'is-active': type == 'newsfeed' }">
+        <a [routerLink]="['/Boosts', { type: 'newsfeed', 'filter': '' }]" [ngClass]="{'is-active': type == 'newsfeed' }">
           Newsfeed
         </a>
       </li>
       <li class="m-content-sidebar-nav-item">
-        <a [router-link]="['/Boosts', { type: 'content', 'filter': 'inbox' }]" [ng-class]="{'is-active': type == 'content' }">
+        <a [routerLink]="['/Boosts', { type: 'content', 'filter': 'inbox' }]" [ngClass]="{'is-active': type == 'content' }">
           Content
         </a>
       </li>
       <li class="m-content-sidebar-nav-item">
-        <a [router-link]="['/Boosts', { type: 'peer', 'filter': 'inbox' }]" [ng-class]="{'is-active': type == 'peer' }">
+        <a [routerLink]="['/Boosts', { type: 'peer', 'filter': 'inbox' }]" [ngClass]="{'is-active': type == 'peer' }">
           P2P
         </a>
       </li>
       <li class="m-content-sidebar-nav-item">
-        <a [router-link]="['/Wallet-Filter', { 'filter': 'purchase' }]">
+        <a [routerLink]="['/Wallet-Filter', { 'filter': 'purchase' }]">
           Buy Points
         </a>
       </li>
@@ -29,12 +29,12 @@
   <!-- START: Contents -->
   <div class="mdl-cell mdl-cell--8-col">
 
-    <div class="mdl-tabs__tab-bar" *ng-if="type == 'peer'" style="padding-bottom:8px">
-      <a [router-link]="['/Boosts', {type: 'peer', filter: 'inbox'}]" class="mdl-tabs__tab" [ng-class]="{'is-active': filter == 'inbox'}">Inbox</a>
-      <a [router-link]="['/Boosts', {type: 'peer', filter: 'outbox'}]" class="mdl-tabs__tab" [ng-class]="{'is-active': filter == 'outbox'}">Outbox</a>
+    <div class="mdl-tabs__tab-bar" *ngIf="type == 'peer'" style="padding-bottom:8px">
+      <a [routerLink]="['/Boosts', {type: 'peer', filter: 'inbox'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': filter == 'inbox'}">Inbox</a>
+      <a [routerLink]="['/Boosts', {type: 'peer', filter: 'outbox'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': filter == 'outbox'}">Outbox</a>
     </div>
 
-    <a [router-link]="['/Wallet-Filter', {filter: 'merchants'}]" *ng-if="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+    <a [routerLink]="['/Wallet-Filter', {filter: 'merchants'}]" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
       <div class="mdl-card__supporting-text mdl-color-text--white ">
         Click here to Monetize your channel
       </div>
@@ -56,20 +56,20 @@
       <!-- END: Closed -->
 
       <!-- OPEN -->
-      <div class="m-boost-console-booster-open mdl-card mdl-shadow--2dp mdl-color--blue-grey-700" *ng-if="boosterToggle">
-        <div class="m-boost-console-booster-posts m-boost-console-booster-posts-newsfeed" *ng-if="type == 'newsfeed' || type == 'peer'">
+      <div class="m-boost-console-booster-open mdl-card mdl-shadow--2dp mdl-color--blue-grey-700" *ngIf="boosterToggle">
+        <div class="m-boost-console-booster-posts m-boost-console-booster-posts-newsfeed" *ngIf="type == 'newsfeed' || type == 'peer'">
           <h3 class="mdl-color-text--blue-grey-300">Recent posts</h3>
           <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl] [hidden]="!boosterToggleInProgress"></div>
-          <minds-activity [object]="post" *ng-for="#post of latestPosts"></minds-activity>
+          <minds-activity [object]="post" *ngFor="#post of latestPosts"></minds-activity>
         </div>
-        <div class="m-boost-console-booster-posts m-boost-console-booster-posts-images"  *ng-if="type == 'content'">
+        <div class="m-boost-console-booster-posts m-boost-console-booster-posts-images"  *ngIf="type == 'content'">
           <h3 class="mdl-color-text--blue-grey-300">Recent videos & images</h3>
           <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl] [hidden]="!boosterToggleInProgress"></div>
           <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--6-col" *ng-for="#object of latestMedia" (click)="boostContent($event)">
-              <minds-card-video [object]="object" *ng-if="object.subtype == 'video'"></minds-card-video>
-              <minds-card-image [object]="object" *ng-if="object.subtype == 'image'"></minds-card-image>
-              <minds-card-album [object]="object" *ng-if="object.subtype == 'album'"></minds-card-album>
+            <div class="mdl-cell mdl-cell--6-col" *ngFor="#object of latestMedia" (click)="boostContent($event)">
+              <minds-card-video [object]="object" *ngIf="object.subtype == 'video'"></minds-card-video>
+              <minds-card-image [object]="object" *ngIf="object.subtype == 'image'"></minds-card-image>
+              <minds-card-album [object]="object" *ngIf="object.subtype == 'album'"></minds-card-album>
               <minds-button-boost [object]="object"></minds-button-boost>
             </div>
           </div>
@@ -85,26 +85,26 @@
       You have no boosts in your {{filter}}
     </div>
 
-    <div class="mdl-card mdl-shadow--4dp m-boost-admin" *ng-for="#boost of boosts; #i = index">
+    <div class="mdl-card mdl-shadow--4dp m-boost-admin" *ngFor="#boost of boosts; #i = index">
 
-      <div class="mdl-card__supporting-text" *ng-if="filter == 'inbox'">
+      <div class="mdl-card__supporting-text" *ngIf="filter == 'inbox'">
       </div>
 
-      <div class="mdl-card__supporting-text" *ng-if="filter == 'outbox'">
+      <div class="mdl-card__supporting-text" *ngIf="filter == 'outbox'">
       </div>
 
       <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
-      <minds-card-video [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.subtype == 'video'"></minds-card-video>
-      <minds-card-image [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.subtype == 'image'"></minds-card-image>
-      <minds-card-blog [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.subtype == 'blog'"></minds-card-blog>
-      <minds-card-user [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.type == 'user'"></minds-card-user>
-      <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.type == 'activity'"></minds-activity>
+      <minds-card-video [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.subtype == 'video'"></minds-card-video>
+      <minds-card-image [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.subtype == 'image'"></minds-card-image>
+      <minds-card-blog [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.subtype == 'blog'"></minds-card-blog>
+      <minds-card-user [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'user'"></minds-card-user>
+      <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'activity'"></minds-activity>
 
       <div class="mdl-card__supporting-text action-buttons m-boost-admin-tabs">
 
-        <div class="m-boost-admin-destination" *ng-if="filter == 'outbox'">
+        <div class="m-boost-admin-destination" *ngIf="filter == 'outbox'">
           <i class="material-icons">perm_identity</i>
-          <a [router-link]="['/Channel', {username: boost.destination.username}]">@{{boost.destination.username}}</a>
+          <a [routerLink]="['/Channel', {username: boost.destination.username}]">@{{boost.destination.username}}</a>
         </div>
 
         <div class="m-boost-admin-bid mdl-color-text--green" [hidden]="boost.bidType != 'pro'"><i class="material-icons">attach_money</i> {{boost.bid}} USD</div>
@@ -114,7 +114,7 @@
 
         <div class="m-boost-admin-state"><i class="material-icons">access_time</i> {{boost.time_created * 1000 | date: 'short'}}</div>
 
-        <div class="m-boost-admin-buttons" *ng-if="type == 'peer' && filter == 'inbox' && boost.state == 'created'">
+        <div class="m-boost-admin-buttons" *ngIf="type == 'peer' && filter == 'inbox' && boost.state == 'created'">
           <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost, i)">Accept</button>
           <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost, i)">Reject</button>
         </div>

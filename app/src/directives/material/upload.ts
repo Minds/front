@@ -1,8 +1,8 @@
-import { Directive, ViewContainerRef, ProtoViewRef, Inject } from 'angular2/angular2';
+import { Directive, ViewContainerRef, ProtoViewRef, Inject } from 'angular2/core';
 import { Material as MaterialService } from "../../services/ui";
 
 @Directive({
-  selector: '[mdl-upload]',
+  selector: '[mdlUpload]',
   inputs: ['mdlUpload', 'progress']
 })
 

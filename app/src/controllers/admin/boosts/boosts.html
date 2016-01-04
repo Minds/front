@@ -1,6 +1,6 @@
 <div class="mdl-tabs__tab-bar">
-    <a [router-link]="['/Admin', {filter: 'boosts', type: 'newsfeed'}]" class="mdl-tabs__tab" [ng-class]="{'is-active': type == 'newsfeed'}">Newsfeed ({{newsfeed_count}})</a>
-    <a [router-link]="['/Admin', {filter: 'boosts', type: 'content'}]" class="mdl-tabs__tab" [ng-class]="{'is-active': type == 'content'}">Content ({{suggested_count}})</a>
+    <a [routerLink]="['/Admin', {filter: 'boosts', type: 'newsfeed'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'newsfeed'}">Newsfeed ({{newsfeed_count}})</a>
+    <a [routerLink]="['/Admin', {filter: 'boosts', type: 'content'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'content'}">Content ({{suggested_count}})</a>
 </div>
 
 <div class="mdl-grid minds-boosts" style="max-width:600px">
@@ -13,14 +13,14 @@
       There are no more boosts to approve
     </div>
 
-    <div class="mdl-card mdl-shadow--4dp boost" *ng-for="#boost of boosts; #i = index">
+    <div class="mdl-card mdl-shadow--4dp boost" *ngFor="#boost of boosts; #i = index">
 
       <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
-      <minds-card-video [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.subtype == 'video'"></minds-card-video>
-      <minds-card-image [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.subtype == 'image'"></minds-card-image>
-      <minds-card-blog [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.subtype == 'blog'"></minds-card-blog>
-      <minds-card-user [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.type == 'user'"></minds-card-user>
-      <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ng-if="boost.entity.type == 'activity'"></minds-activity>
+      <minds-card-video [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.subtype == 'video'"></minds-card-video>
+      <minds-card-image [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.subtype == 'image'"></minds-card-image>
+      <minds-card-blog [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.subtype == 'blog'"></minds-card-blog>
+      <minds-card-user [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'user'"></minds-card-user>
+      <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'activity'"></minds-activity>
 
       <div class="mdl-card__supporting-text action-buttons">
         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost)">Accept</button>

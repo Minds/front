@@ -1,9 +1,12 @@
-import { Component, View, NgFor, NgIf, FORM_DIRECTIVES, Inject} from 'angular2/angular2';
+import { Component, View, Inject} from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, Location } from 'angular2/router';
+
 import { Client, Upload } from '../../services/api';
 import { Material } from '../../directives/material';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { MindsActivityObject } from '../../interfaces/entities';
+
 
 @Component({
   selector: 'minds-search-bar',
@@ -15,10 +18,10 @@ import { MindsActivityObject } from '../../interfaces/entities';
   template: `
     <div class="mdl-textfield mdl-js-textfield">
         <i class="material-icons" (click)="onClick()">search</i>
-        <input class="mdl-textfield__input" type="text" id="search" [(ng-model)]="q"/>
+        <input class="mdl-textfield__input" type="text" id="search" [(ngModel)]="q"/>
         <label class="mdl-textfield__label" for="search"></label>
     </div>`,
-  directives: [ NgFor, NgIf, Material, FORM_DIRECTIVES ]
+  directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES ]
 })
 
 export class SearchBar {

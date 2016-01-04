@@ -1,5 +1,7 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, Inject } from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
+
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Material } from '../../directives/material';
@@ -21,7 +23,6 @@ import { MindsAvatar } from '../../components/avatar';
 import { ChannelModules } from './modules/modules';
 import { ChannelSubscribers } from './subscribers/subscribers';
 import { ChannelSubscriptions } from './subscriptions/subscriptions';
-import { ChannelEdit } from './edit/edit';
 
 @Component({
   selector: 'minds-channel',
@@ -32,7 +33,7 @@ import { ChannelEdit } from './edit/edit';
   templateUrl: 'src/controllers/channels/channel.html',
   pipes: [ TagsPipe ],
   directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, Material, InfiniteScroll, CARDS,
-    AutoGrow, ChannelSubscribers, ChannelSubscriptions, BUTTON_COMPONENTS, ChannelEdit, MindsCarousel,
+    AutoGrow, ChannelSubscribers, ChannelSubscriptions, BUTTON_COMPONENTS, MindsCarousel,
     Poster, MindsAvatar, ChannelModules ]
 })
 
@@ -230,4 +231,3 @@ export class Channel {
 
 export { ChannelSubscribers } from './subscribers/subscribers';
 export { ChannelSubscriptions } from './subscriptions/subscriptions';
-export { ChannelEdit } from './edit/edit';

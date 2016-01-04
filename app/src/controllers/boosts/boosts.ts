@@ -1,10 +1,13 @@
-import { Component, View, CORE_DIRECTIVES, EventEmitter} from 'angular2/angular2';
+import { Component, View, EventEmitter} from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES, RouteParams } from "angular2/router";
+
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
 import { Material } from '../../directives/material';
 import { CARDS } from '../../controllers/cards/cards';
 import { BUTTON_COMPONENTS } from '../../components/buttons';
+
 
 @Component({
   selector: 'minds-boosts-console',

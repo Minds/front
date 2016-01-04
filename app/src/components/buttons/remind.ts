@@ -1,4 +1,6 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
 import { SignupOnActionModal } from '../modal/modal';
@@ -9,11 +11,11 @@ import { SignupOnActionModal } from '../modal/modal';
 })
 @View({
   template: `
-    <a class="mdl-color-text--blue-grey-500" (click)="remind()" [ng-class]="{'selected': object.reminded }">
+    <a class="mdl-color-text--blue-grey-500" (click)="remind()" [ngClass]="{'selected': object.reminded }">
       <i class="material-icons">repeat</i>
-      <counter *ng-if="object.reminds > 0">{{object.reminds}}</counter>
+      <counter *ngIf="object.reminds > 0">{{object.reminds}}</counter>
     </a>
-    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="remind" *ng-if="!session.isLoggedIn()"></m-modal-signup-on-action>
+    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="remind" *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
   `,
   directives: [CORE_DIRECTIVES, SignupOnActionModal]
 })

@@ -1,5 +1,7 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter, NgZone} from 'angular2/angular2';
+import { Component, View, EventEmitter, NgZone} from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
+
 import { Client } from '../../../../services/api';
 import { Material } from '../../../../directives/material';
 
@@ -9,6 +11,7 @@ import { MindsWalletResponse } from '../../../../interfaces/responses';
 import { MindsUserSearchResponse } from '../../../../interfaces/responses';
 import { MindsBoostResponse } from '../../../../interfaces/responses';
 import { MindsBoostRateResponse } from '../../../../interfaces/responses';
+
 
 @Component({
   selector: 'minds-boost-p2p',

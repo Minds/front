@@ -53,7 +53,12 @@
       </div>
     </minds-app>
 
-    <!-- inject:js -->
+    <!-- shims:js -->
+  	<!-- endinject -->
+
+     <script>System.config(<%= JSON.stringify(SYSTEM_CONFIG) %>)</script>
+
+    <!-- libs:js -->
   	<!-- endinject -->
 
     <!-- Google Analytics -->
@@ -84,10 +89,13 @@
       ?>
       window.Minds = <?= json_encode($minds) ?>;
 
-      System.import('app')
+      System.import('<%= BOOTSTRAP_MODULE %>')
         .catch(function(){console.error(e,'Report this error at https://github.com/minds/front')});
 
     </script>
+
+    <!-- inject:js -->
+  	<!-- endinject -->
 
   </body>
 </html>

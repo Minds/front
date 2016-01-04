@@ -1,5 +1,7 @@
-import { Component, View, CORE_DIRECTIVES, EventEmitter } from 'angular2/angular2';
+import { Component, View, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
+
 import { Navigation as NavigationService } from '../../services/navigation';
 import { SessionFactory } from '../../services/session';
 import { MINDS_PIPES } from '../../pipes/pipes';
@@ -11,13 +13,13 @@ import { MINDS_PIPES } from '../../pipes/pipes';
 })
 @View({
   template: `
-    <nav class="" *ng-if="session.isLoggedIn()">
+    <nav class="" *ngIf="session.isLoggedIn()">
 
-    	<a *ng-for="#item of navigation.getItems('topbar')" class="mdl-color-text--blue-grey-500"
-    		[router-link]="[item.path, item.params]"
+    	<a *ngFor="#item of navigation.getItems('topbar')" class="mdl-color-text--blue-grey-500"
+    		[routerLink]="[item.path, item.params]"
     		>
-    		<i class="material-icons" [ng-class]="{'mdl-color-text--amber-300' : item.extras?.counter > 0 && item.name == 'Notifications'}">{{item.icon}}</i>
-        <span id="{{item.name | lowercase}}-counter" class="counter mdl-color-text--green-400" *ng-if="item.extras">{{item.extras?.counter | abbr}}</span>
+    		<i class="material-icons" [ngClass]="{'mdl-color-text--amber-300' : item.extras?.counter > 0 && item.name == 'Notifications'}">{{item.icon}}</i>
+        <span id="{{item.name | lowercase}}-counter" class="counter mdl-color-text--green-400" *ngIf="item.extras">{{item.extras?.counter | abbr}}</span>
     	</a>
 
     </nav>

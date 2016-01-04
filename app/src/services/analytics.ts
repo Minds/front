@@ -1,4 +1,4 @@
-import { Component, Inject, Injector, bind } from 'angular2/angular2';
+import { Component, Inject, Injector, bind } from 'angular2/core';
 import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({

@@ -1,5 +1,7 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter, ElementRef} from 'angular2/angular2';
+import { Component, View, EventEmitter, ElementRef} from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
+
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { Material } from '../../../directives/material';
@@ -13,6 +15,7 @@ import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
 import { ScrollFactory } from '../../../services/ux/scroll';
 import { ShareModal } from '../../../components/modal/modal';
+
 
 @Component({
   selector: 'minds-activity',

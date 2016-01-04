@@ -1,4 +1,4 @@
-import { Directive, View, EventEmitter, ElementRef, Inject } from 'angular2/angular2';
+import { Directive, View, EventEmitter, ElementRef, Inject } from 'angular2/core';
 import { Material as MaterialService } from "../services/ui";
 import { ScrollFactory } from '../services/ux/scroll';
 

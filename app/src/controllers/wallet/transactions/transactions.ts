@@ -1,9 +1,12 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
+
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { MDL_DIRECTIVES } from '../../../directives/material';
 import { InfiniteScroll } from '../../../directives/infinite-scroll';
+
 
 @Component({
   selector: 'minds-wallet-transactions',
@@ -11,7 +14,7 @@ import { InfiniteScroll } from '../../../directives/infinite-scroll';
 })
 @View({
   templateUrl: 'src/controllers/wallet/transactions/transactions.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, InfiniteScroll ]
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, InfiniteScroll ]
 })
 
 export class WalletTransactions {

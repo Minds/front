@@ -1,5 +1,8 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
+
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
+
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
@@ -12,6 +15,7 @@ import { SessionFactory } from '../../services/session';
 import { BoostAds } from '../../components/ads/boost';
 
 import { AnalyticsImpressions } from '../../components/analytics/impressions';
+
 
 @Component({
   selector: 'minds-newsfeed',

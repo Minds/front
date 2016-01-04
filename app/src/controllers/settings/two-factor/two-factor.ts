@@ -1,7 +1,10 @@
-import { Component, View, NgFor, NgIf, NgClass, Observable, Inject, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
+
 import { Client } from '../../../services/api';
 import { Material } from '../../../directives/material';
+
 
 @Component({
   selector: 'minds-settings-two-factor',
@@ -10,7 +13,7 @@ import { Material } from '../../../directives/material';
 })
 @View({
   templateUrl: 'src/controllers/settings/two-factor/two-factor.html',
-  directives: [ NgFor, NgIf, NgClass, Material, RouterLink, FORM_DIRECTIVES]
+  directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES]
 })
 
 export class SettingsTwoFactor{

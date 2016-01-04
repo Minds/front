@@ -4,7 +4,7 @@
 
 <div class="mdl-card__supporting-text" [hidden]="!notEnoughPoints">
   Do you want to buy more points?
-  <a class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Wallet']">Buy more points!</a>
+  <a class="mdl-button mdl-button--raised mdl-button--colored" [routerLink]="['/Wallet']">Buy more points!</a>
 </div>
 
 <!--<minds-payments-checkout></minds-payments-checkout>-->
@@ -13,28 +13,28 @@
 <div class="mdl-card__supporting-text">
 
   <div class="m-search-inline" [hidden]="destination">
-    <input type="text" [(ng-model)]="q" (keyup)="search()" placeholder="Search for a channel"/>
+    <input type="text" [(ngModel)]="q" (keyup)="search()" placeholder="Search for a channel"/>
     <p class="m-helper">
        Select a channel above to have your post distributed to their subscribers in exchange for points.
     </p>
 
     <div class="m-search-inline-list mdl-shadow--2dp mdl-color--white" [hidden]="results.length == 0 || !searching">
-      <div *ng-for="#user of results" (click)="selectDestination(user);" class="m-search-inline-item m-block">
+      <div *ngFor="#user of results" (click)="selectDestination(user);" class="m-search-inline-item m-block">
         <div class="m-avatar">
           <img src="{{minds.cdn_url}}/icon/{{user.guid}}/small" class="mdl-shadow--2dp"/>
         </div>
         <div class="m-body">
           <h3>@{{user.username}}</h3>
-          <span *ng-if="user.merchant" class="m-boost-pro-tag mdl-color--blue-grey-300">pro</span>
+          <span *ngIf="user.merchant" class="m-boost-pro-tag mdl-color--blue-grey-300">pro</span>
           <p class="m-subtitle">Views: {{user.impressions}} | Subscribers: {{user.subscribers_count}}</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div *ng-if="destination && !complete">
+  <div *ngIf="destination && !complete">
 
-    <div class="mdl-grid minds-boost-container m-p2p-options" *ng-if="pro && !option">
+    <div class="mdl-grid minds-boost-container m-p2p-options" *ngIf="pro && !option">
       <div class="mdl-cell mdl-cell--6-col">
           <a class="minds-boost-button-selector mdl-color-text--blue-grey-500" (click)="option = 'points'">
               <h3>Points</h3>
@@ -49,13 +49,13 @@
       </div>
     </div>
 
-    <div *ng-if="!pro || option == 'points'" class="mdl-grid minds-boost-points-wrapper">
+    <div *ngIf="!pro || option == 'points'" class="mdl-grid minds-boost-points-wrapper">
       <div class="mdl-cell mdl-cell--11-col minds-boost-points-input">
         <div class="cell">
           <input
             type="number"
             placeholder="Enter here"
-            [(ng-model)]= "bid"
+            [(ngModel)]= "bid"
             />
           </div>
           <div class="cell">
@@ -67,14 +67,14 @@
       </div>
     </div>
 
-    <div *ng-if="option == 'pro'" class="mdl-grid minds-boost-points-wrapper">
+    <div *ngIf="option == 'pro'" class="mdl-grid minds-boost-points-wrapper">
 
       <div class="mdl-cell mdl-cell--11-col minds-boost-points-input" [hidden]="stage == 3 || stage == 4">
         <div class="cell">
           <input
             type="number"
             placeholder="Enter here"
-            [(ng-model)]= "bid"
+            [(ngModel)]= "bid"
             />
           </div>
           <div class="cell">

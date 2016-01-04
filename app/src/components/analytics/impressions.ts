@@ -1,4 +1,6 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { Client } from '../../services/api';
 import { MINDS_GRAPHS } from '../../components/graphs';
 
@@ -11,7 +13,7 @@ import { MINDS_GRAPHS } from '../../components/graphs';
     <minds-graph-line [data]="data"></minds-graph-line>
 
     <div class="graph-labels">
-      <div class="graph-label mdl-color-text--blue-grey-300" *ng-for="#point of data">
+      <div class="graph-label mdl-color-text--blue-grey-300" *ngFor="#point of data">
         {{point.total}}
         <b>{{point.timestamp  * 1000 | date: 'MMMd'}}</b>
       </div>

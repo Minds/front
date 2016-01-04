@@ -1,10 +1,13 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from 'angular2/angular2';
+import { Component, View, EventEmitter} from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
+
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { AutoGrow } from '../../../directives/autogrow';
 import { BUTTON_COMPONENTS } from '../../../components/buttons';
 import { TagsPipe } from '../../../pipes/tags';
+
 
 @Component({
   selector: 'minds-card-comment',
@@ -19,21 +22,21 @@ import { TagsPipe } from '../../../pipes/tags';
   template: `
   <div class="mdl-card minds-comment minds-block">
     <div class="minds-avatar">
-      <a [router-link]="['/Channel', {username: comment.ownerObj.username}]">
+      <a [routerLink]="['/Channel', {username: comment.ownerObj.username}]">
         <img src="{{minds.cdn_url}}/icon/{{comment.ownerObj.guid}}/small" class="mdl-shadow--2dp"/>
       </a>
     </div>
     <div class="minds-body">
-      <a [router-link]="['/Channel', {username: comment.ownerObj.username}]" class="username mdl-color-text--blue-grey-500">{{comment.ownerObj.name}} @{{comment.ownerObj.username}}</a>
+      <a [routerLink]="['/Channel', {username: comment.ownerObj.username}]" class="username mdl-color-text--blue-grey-500">{{comment.ownerObj.name}} @{{comment.ownerObj.username}}</a>
       <span class="mdl-color-text--blue-grey-300">{{comment.time_created * 1000 | date: 'medium'}}</span>
-      <p [hidden]="editing" [inner-html]="comment.description | tags"></p>
+      <p [hidden]="editing" [innerHtml]="comment.description | tags"></p>
 
-      <div class="minds-editable-container" *ng-if="editing">
-      	<!-- Please not the intentional single way binding for ng-model, we want to be able to cancel our changes -->
+      <div class="minds-editable-container" *ngIf="editing">
+      	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
       	<textarea class="mdl-card__supporting-text message"
-          [ng-model]="comment.description"
+          [ngModel]="comment.description"
           #edit
-          [auto-grow]
+          [autoGrow]
           (keydown.enter)="comment.description = edit.value; save();"
           (keydown.esc)="editing = false; edit.value = comment.description"
           ></textarea>
@@ -42,11 +45,11 @@ import { TagsPipe } from '../../../pipes/tags';
 
       <div class="mdl-card__menu mdl-color-text--blue-grey-300">
       	<button class="mdl-button minds-more mdl-button--icon" (click)="delete(i)"
-          *ng-if="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid">
+          *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid">
       		<i class="material-icons">delete</i>
       	</button>
         <button class="mdl-button minds-more mdl-button--icon" (click)="editing = !editing"
-          *ng-if="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()">
+          *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()">
           <i class="material-icons">edit</i>
         </button>
       </div>

@@ -6,12 +6,12 @@
 
         <div class="minds-list">
 
-            <minds-activity *ng-for="#activity of newsfeed" [object]="activity" [boost-toggle]="activity.boostToggle"(delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+            <minds-activity *ngFor="#activity of newsfeed" [object]="activity" [boost-toggle]="activity.boostToggle"(delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
             <infinite-scroll
                 distance="25%"
                 [locked]="inProgress"
                 (load)="load()"
-                *ng-if="moreData">
+                *ngIf="moreData">
                 <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
             </infinite-scroll>
 
@@ -24,13 +24,13 @@
 
       <minds-card-user [object]="session.getLoggedInUser()" class="mdl-card mdl-shadow--2dp" style="margin-bottom:16px;"></minds-card-user>
 
-      <a [router-link]="['/Wallet-Filter', {filter: 'merchants'}]" *ng-if="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+      <a [routerLink]="['/Wallet-Filter', {filter: 'merchants'}]" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white ">
           Monetize your channel
         </div>
       </a>
 
-      <a [router-link]="['/Boosts', {type: 'peer', 'filter': 'inbox'}]" class="mdl-card mdl-color--blue-grey-700 mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+      <a [routerLink]="['/Boosts', {type: 'peer', 'filter': 'inbox'}]" class="mdl-card mdl-color--blue-grey-700 mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white ">
           Boost console
         </div>
@@ -55,8 +55,8 @@
       <div class="minds-spacer minds-spacer-2x"></div>
 
       <ul class="m-footer-nav m-footer-nav-inline">
-        <li *ng-for="#page of navigation.getItems('footer')" class="m-footer-nav-item">
-          <a [router-link]="['/P', {page: page.params.page }]">{{page.title}}</a>
+        <li *ngFor="#page of navigation.getItems('footer')" class="m-footer-nav-item">
+          <a [routerLink]="['/P', {page: page.params.page }]">{{page.title}}</a>
         </li>
       </ul>
 

@@ -1,4 +1,5 @@
-import { Component, View, CORE_DIRECTIVES, EventEmitter } from 'angular2/angular2';
+import { Component, View, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 
 declare var tinymce;
 

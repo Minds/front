@@ -5,7 +5,7 @@
     <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">{{error}}</div>
 
     <button class="mdl-button mdl-button--colored"
-      [ng-class]="{'mdl-button--raised': changed}"
+      [ngClass]="{'mdl-button--raised': changed}"
       [disabled]="!canSubmit()"
       [hidden]="saved"
       (click)="save()"
@@ -35,7 +35,7 @@
       <input class="m-input"
         type="name"
         id="name"
-        [(ng-model)]="name"
+        [(ngModel)]="name"
         (keyup)="change()"
         />
 
@@ -52,32 +52,32 @@
 
   <div class="mdl-card__supporting-text">
 
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdl-textfield]>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdlTextfield]>
       <input class="mdl-textfield__input"
         type="password"
         id="password"
-        [(ng-model)]="password"
+        [(ngModel)]="password"
         (keyup)="change()"
         />
       <label class="mdl-textfield__label" for="password">Current password</label>
     </div>
 
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdl-textfield]>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdlTextfield]>
       <input class="mdl-textfield__input"
         type="password"
         id="password1"
-        [(ng-model)]="password1"
+        [(ngModel)]="password1"
         [disabled]="!password"
         (keyup)="change()"
         />
       <label class="mdl-textfield__label" for="password1">Your new password</label>
     </div>
 
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdl-textfield]>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdlTextfield]>
       <input class="mdl-textfield__input"
         type="password"
         id="password2"
-        [(ng-model)]="password2"
+        [(ngModel)]="password2"
         [disabled]="!password"
         (keyup)="change()"
         />
@@ -95,11 +95,11 @@
   </div>
   <div class="mdl-card__supporting-text">
 
-    <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl-textfield]>
+    <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdlTextfield]>
       <input class="mdl-textfield__input"
         type="email"
         id="email"
-        [(ng-model)]="email"
+        [(ngModel)]="email"
         (keyup)="change()"
         />
       <label class="mdl-textfield__label" for="email"></label>

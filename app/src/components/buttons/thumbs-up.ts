@@ -1,4 +1,6 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
 import { WalletService } from '../../services/wallet';
@@ -11,11 +13,11 @@ import { SignupOnActionModal } from '../modal/modal';
 })
 @View({
   template: `
-    <a class="mdl-color-text--blue-grey-500" (click)="thumb()" [ng-class]="{'selected': has() }">
+    <a class="mdl-color-text--blue-grey-500" (click)="thumb()" [ngClass]="{'selected': has() }">
       <i class="material-icons">thumb_up</i>
-      <counter *ng-if="object['thumbs:up:count'] > 0">{{object['thumbs:up:count']}}</counter>
+      <counter *ngIf="object['thumbs:up:count'] > 0">{{object['thumbs:up:count']}}</counter>
     </a>
-    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="vote up"  *ng-if="!session.isLoggedIn()"></m-modal-signup-on-action>
+    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="vote up"  *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
   `,
   directives: [CORE_DIRECTIVES, SignupOnActionModal]
 })

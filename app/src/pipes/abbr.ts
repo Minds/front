@@ -1,4 +1,4 @@
-import { Pipe, Inject, Renderer }  from 'angular2/angular2';
+import { Pipe, Inject, Renderer }  from 'angular2/core';
 
 @Pipe({
   name: 'abbr'

@@ -1,4 +1,6 @@
-import { Component, View, NgFor, NgIf, NgClass, Observable, Inject, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { RouterLink } from "angular2/router";
 import { Client } from '../../../services/api';
 import { Material } from '../../../directives/material';
@@ -10,7 +12,7 @@ import { Material } from '../../../directives/material';
 })
 @View({
   templateUrl: 'src/controllers/settings/statistics/statistics.html',
-  directives: [ NgFor, NgIf, NgClass, Material, RouterLink, FORM_DIRECTIVES]
+  directives: [ CORE_DIRECTIVES, Material, RouterLink ]
 })
 
 export class SettingsStatistics{

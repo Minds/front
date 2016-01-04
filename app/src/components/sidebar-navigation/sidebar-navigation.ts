@@ -1,8 +1,11 @@
-import { Component, View, NgIf, NgFor, NgClass, EventEmitter } from 'angular2/angular2';
+import { Component, View, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
+
 import { Navigation as NavigationService } from '../../services/navigation';
 import { SessionFactory } from '../../services/session';
 import { SocketsService } from '../../services/sockets';
+
 
 @Component({
   selector: 'minds-sidebar-navigation',
@@ -10,7 +13,7 @@ import { SocketsService } from '../../services/sockets';
 })
 @View({
   templateUrl: 'src/components/sidebar-navigation/sidebar-navigation.html',
-  directives: [RouterLink, NgIf, NgFor, NgClass]
+  directives: [ RouterLink, CORE_DIRECTIVES ]
 })
 
 export class SidebarNavigation {

@@ -1,18 +1,18 @@
 <!-- Owner block -->
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block" *ng-if="activity.ownerObj && activity.ownerObj.username">
+<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block" *ngIf="activity.ownerObj && activity.ownerObj.username">
 
 	<div class="avatar">
-		<a [router-link]="['/Channel', {username: activity.ownerObj.username}]">
+		<a [routerLink]="['/Channel', {username: activity.ownerObj.username}]">
 			<img src="/icon/{{activity.ownerObj.guid}}/medium/{{activity.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
 		</a>
 	</div>
 
 	<div class="body">
-		<a [router-link]="['/Channel', {username: activity.ownerObj.username}]">
+		<a [routerLink]="['/Channel', {username: activity.ownerObj.username}]">
 			<strong>{{activity.ownerObj.name}}</strong>
 		</a>
-    <a *ng-if="activity.containerObj && activity.containerObj.type == 'group'"
-      [router-link]="['/Groups-Profile', {guid: activity.containerObj.guid, filter: 'activity'}]"
+    <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
+      [routerLink]="['/Groups-Profile', {guid: activity.containerObj.guid, filter: 'activity'}]"
       class="mdl-color-text--blue-grey-300"
       >
       <strong>({{activity.containerObj.name}})</strong>
@@ -23,35 +23,35 @@
 </div>
 
 <!-- Messages -->
-<div class="mdl-card__supporting-text message" [hidden]="!activity.message || editing" [inner-html]="activity.message | tags"></div>
-<div class="minds-editable-container" *ng-if="activity.message && editing">
-	<!-- Please not the intentional single way binding for ng-model, we want to be able to cancel our changes -->
-	<textarea class="mdl-card__supporting-text message" [ng-model]="activity.message" #message-edit [auto-grow]></textarea>
+<div class="mdl-card__supporting-text message" [hidden]="!activity.message || editing" [innerHtml]="activity.message | tags"></div>
+<div class="minds-editable-container" *ngIf="activity.message && editing">
+	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+	<textarea class="mdl-card__supporting-text message" [ngModel]="activity.message" #messageEdit [autoGrow]></textarea>
 	<button class="mdl-button mdl-button--raised mdl-color--blue-grey-100" (click)="messageEdit.value = activity.message; editing=false;">Cancel</button>
 	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.message = messageEdit.value; save();">Save</button>
 </div>
 
 <!-- Rich content -->
-<div class="minds-rich-embed" *ng-if="activity.perma_url && activity.title">
-	<a [href]="activity.perma_url" target="_blank" *ng-if="activity.thumbnail_src">
+<div class="minds-rich-embed" *ngIf="activity.perma_url && activity.title">
+	<a [href]="activity.perma_url" target="_blank" *ngIf="activity.thumbnail_src">
 		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null"/>
 	</a>
 	<a [href]="activity.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900">
-		<h2 class="mdl-card__title-text mdl-typography--font-medium" *ng-if="activity.title">{{activity.title}}</h2>
-		<p *ng-if="activity.blurb">{{activity.blurb}}</p>
+		<h2 class="mdl-card__title-text mdl-typography--font-medium" *ngIf="activity.title">{{activity.title}}</h2>
+		<p *ngIf="activity.blurb">{{activity.blurb}}</p>
     <p class="m-url mdl-color-text--blue-grey-400">{{activity.perma_url | domain}}</p>
 	</a>
 </div>
 
-<div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [inner-html]="activity.title | tags"></div>
-<div class="minds-editable-container" *ng-if="(activity.title || activity.custom_type) && editing">
-	<!-- Please not the intentional single way binding for ng-model, we want to be able to cancel our changes -->
-	<textarea class="mdl-card__supporting-text message" [ng-model]="activity.title" #title-edit [auto-grow]></textarea>
+<div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [innerHtml]="activity.title | tags"></div>
+<div class="minds-editable-container" *ngIf="(activity.title || activity.custom_type) && editing">
+	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+	<textarea class="mdl-card__supporting-text message" [ngModel]="activity.title" #titleEdit [autoGrow]></textarea>
 	<button class="mdl-button mdl-button--raised mdl-color--blue-grey-100" (click)="titleEdit.value = activity.title; editing=false;">Cancel</button>
 	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.title = titleEdit.value; save();">Save</button>
 </div>
 
-<div class="item item-image item-image-video" *ng-if="activity.custom_type == 'video'">
+<div class="item item-image item-image-video" *ngIf="activity.custom_type == 'video'">
 		 <minds-video
 				width="100%"
 				height="300px"
@@ -67,62 +67,62 @@
  </div>
 
 <!-- Images -->
-<div class="item item-image allow-select" *ng-if="activity.thumbnail_src && !activity.perma_url">
-	<a [router-link]="['/Archive-View', {guid: activity.entity_guid}]">
+<div class="item item-image allow-select" *ngIf="activity.thumbnail_src && !activity.perma_url">
+	<a [routerLink]="['/Archive-View', {guid: activity.entity_guid}]">
 		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null">
 	</a>
 </div>
 
 <!-- Custom type:: batch -->
-<div class="item item-image allow-select" *ng-if="activity.custom_type == 'batch'">
-	<a [router-link]="['/Archive-View', {guid: activity.entity_guid}]">
+<div class="item item-image allow-select" *ngIf="activity.custom_type == 'batch'">
+	<a [routerLink]="['/Archive-View', {guid: activity.entity_guid}]">
 		<img [src]="activity.custom_data[0].src" style="width:100%" (error)="activity.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
 	</a>
 </div>
 
 <!-- Reminds -->
-<div *ng-if="activity.remind_object">
+<div *ngIf="activity.remind_object">
 	<minds-remind [object]="activity.remind_object" class="mdl-card mdl-shadow--6dp item"></minds-remind>
 </div>
 
-<div class="mdl-card__supporting-text is-boosted" *ng-if="activity.boosted">
+<div class="mdl-card__supporting-text is-boosted" *ngIf="activity.boosted">
 	<i class="material-icons">trending_up</i>
 	<a>Boosted</a>
 </div>
 
-<div class="mdl-card__supporting-text mdl-color--blue-grey-50 tabs" *ng-if="!hideTabs">
+<div class="mdl-card__supporting-text mdl-color--blue-grey-50 tabs" *ngIf="!hideTabs">
 	<minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
 	<minds-button-comment [object]="activity" (click)="openComments()"></minds-button-comment>
 	<minds-button-remind [object]="activity"></minds-button-remind>
   <a class="mdl-button mdl-color-text--white mdl-button--colored minds-boost-button"
-    *ng-if ="session.getLoggedInUser().guid == activity.owner_guid"
+    *ngIf ="session.getLoggedInUser().guid == activity.owner_guid"
     id="boost-actions"
     (click)="showBoost()">
     Boost
   </a>
 </div>
 
-<span class="impressions-tag" *ng-if="!hideTabs">{{activity.impressions}} views</span>
+<span class="impressions-tag" *ngIf="!hideTabs">{{activity.impressions}} views</span>
 
-<minds-comments  *ng-if="commentsToggle" [object]="activity"></minds-comments>
+<minds-comments  *ngIf="commentsToggle" [object]="activity"></minds-comments>
 
-<div class="mdl-card__supporting-text mdl-color--blue-grey-50" *ng-if="showBoostOptions">
+<div class="mdl-card__supporting-text mdl-color--blue-grey-50" *ngIf="showBoostOptions">
 	<minds-boost [object]="activity" class="minds-boost-container" (done)="showBoostOptions = false"></minds-boost>
 </div>
 
-<div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ng-if="!hideTabs">
+<div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ngIf="!hideTabs">
 	<!-- Right aligned menu below button -->
 	<button class="mdl-button minds-more mdl-button--icon" (click)="toggle.value = !toggle.value">
 		<i class="material-icons">keyboard_arrow_down</i>
 	</button>
 
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
-		<li class="mdl-menu__item" *ng-if="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
-		<li class="mdl-menu__item" *ng-if="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="delete(); toggle.value = !toggle.value">Delete</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="delete(); toggle.value = !toggle.value">Delete</li>
 	</ul>
   <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 
-  <m-modal-share *ng-if="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url"></m-modal-share>
+  <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url"></m-modal-share>
 </div>

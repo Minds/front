@@ -1,4 +1,4 @@
-<section class="minds-homepage-banner m-video-banner" *ng-if="!session.isLoggedIn()">
+<section class="minds-homepage-banner m-video-banner" *ngIf="!session.isLoggedIn()">
   <div class="video">
     <video autoplay muted loop poster="assets/videos/traffic-1/traffic-1.png">
       <source src="assets/videos/traffic-1/traffic-1.webm" type="video/webm">
@@ -12,14 +12,14 @@
         <h1>Your Social Network</h1>
         <h3 [hidden]="session.isLoggedIn()">Launch a channel today</h3>
       </div>
-      <div class="mdl-cell mdl-cell--6-col m-homepage-signup" *ng-if="!session.isLoggedIn()">
+      <div class="mdl-cell mdl-cell--6-col m-homepage-signup" *ngIf="!session.isLoggedIn()">
         <minds-register></minds-register>
       </div>
     </div>
   </div>
 </section>
 
-<section class="m-homepage-facts" *ng-if="!session.isLoggedIn()">
+<section class="m-homepage-facts" *ngIf="!session.isLoggedIn()">
   <div class="mdl-grid ">
     <div class="mdl-cell mdl-cell--6-col">
       <i class="material-icons mdl-color-text--blue-grey-300">trending_up</i>
@@ -44,7 +44,7 @@
   </div>
 </section>
 
-<section class="m-homepage-features mdl-color--blue-grey-900" *ng-if="!session.isLoggedIn()">
+<section class="m-homepage-features mdl-color--blue-grey-900" *ngIf="!session.isLoggedIn()">
   <div class="mdl-grid mdl-color-text--blue-grey-300">
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">timeline</i>
@@ -93,18 +93,18 @@
 <div class="mdl-grid mdl-grid--no-spacing m-homepage-featured">
 
     <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
-      <h4><a [router-link]="['/Discovery', {filter: 'featured', 'type':'videos'}]" class="mdl-color-text--blue-grey-200">Featured videos <span>More</span></a></h4>
+      <h4><a [routerLink]="['/Discovery', {filter: 'featured', 'type':'videos'}]" class="mdl-color-text--blue-grey-200">Featured videos <span>More</span></a></h4>
       <div class="m-contents mdl-grid">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ng-for="#video of videos">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ngFor="#video of videos">
           <minds-card-video [object]="video" class="mdl-card mdl-shadow--2dp"></minds-card-video>
         </div>
       </div>
     </section>
 
     <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
-      <h4><a [router-link]="['/Blog', {filter: 'featured'}]" class="mdl-color-text--blue-grey-200">Featured blogs <span>More</span></a></h4>
+      <h4><a [routerLink]="['/Blog', {filter: 'featured'}]" class="mdl-color-text--blue-grey-200">Featured blogs <span>More</span></a></h4>
       <div class="m-contents mdl-grid">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ng-for="#blog of blogs">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ngFor="#blog of blogs">
           <minds-card-blog [object]="blog" class="mdl-card mdl-shadow--2dp"></minds-card-blog>
         </div>
       </div>
@@ -121,8 +121,8 @@
 
     <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
       <ul class="m-footer-nav m-footer-nav-inline">
-        <li *ng-for="#page of navigation.getItems('footer')" class="m-footer-nav-item ">
-          <a [router-link]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+        <li *ngFor="#page of navigation.getItems('footer')" class="m-footer-nav-item ">
+          <a [routerLink]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
         </li>
       </ul>
       <span class="copyright mdl-color-text--blue-grey-700">&#169; Minds, Inc. 2015</span>

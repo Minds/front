@@ -1,4 +1,4 @@
-<div class="mdl-grid channel-grid" style="max-width:900px" *ng-if="error">
+<div class="mdl-grid channel-grid" style="max-width:900px" *ngIf="error">
   <h1>{{error}}</h1>
 </div>
 
@@ -8,13 +8,13 @@
 
 <header [hidden]="!isLocked"></header>
 
-<header  *ng-if="user" [ng-class]="{'isLocked': isLocked}">
-  <minds-carousel [banners]="user.carousels" [edit-mode]="editing" (done)="updateCarousels($event)" (delete)="removeCarousel($event)"></minds-carousel>
+<header  *ngIf="user" [ngClass]="{'isLocked': isLocked}">
+  <minds-carousel [banners]="user.carousels" [editMode]="editing" (done)="updateCarousels($event)" (delete)="removeCarousel($event)"></minds-carousel>
 
   <div class="mdl-grid channel-grid channel-header-bar" style="max-width:990px">
     <div class="mdl-cell mdl-cell--4-col minds-channel-title">
 
-      <minds-avatar [object]="user" [edit-mode]="editing" (added)="upload_avatar($event)"></minds-avatar>
+      <minds-avatar [object]="user" [editMode]="editing" (added)="upload_avatar($event)"></minds-avatar>
 
       <div class="body">
         <div class="flex-bottom  mdl-color-text--blue-grey-50">
@@ -26,15 +26,15 @@
     </div>
 
     <div class="mdl-cell mdl-cell--8-col minds-tabs mdl-tabs__tab-bar">
-        <a [router-link]="['/Channel-Filter', {username: user.username, filter: 'feed'}]" class="mdl-tabs__tab mdl-color-text--blue-grey-50">
+        <a [routerLink]="['/Channel-Filter', {username: user.username, filter: 'feed'}]" class="mdl-tabs__tab mdl-color-text--blue-grey-50">
           <span>Feed</span>
           <b>{{user.activity_count}}</b>
         </a>
-        <a [router-link]="['/Channel-Filter', {username: user.username, filter: 'subscribers'}]" class="mdl-tabs__tab mdl-color-text--blue-grey-50">
+        <a [routerLink]="['/Channel-Filter', {username: user.username, filter: 'subscribers'}]" class="mdl-tabs__tab mdl-color-text--blue-grey-50">
           <span>Subscribers</span>
           <b>{{user.subscribers_count}}</b>
         </a>
-        <a [router-link]="['/Channel-Filter', {username: user.username, filter: 'subscriptions'}]" class="mdl-tabs__tab  mdl-color-text--blue-grey-50">
+        <a [routerLink]="['/Channel-Filter', {username: user.username, filter: 'subscriptions'}]" class="mdl-tabs__tab  mdl-color-text--blue-grey-50">
           <span>Subscriptions</span>
           <b>{{user.subscriptions_count}}</b>
         </a>
@@ -43,13 +43,13 @@
           <b>{{user.impressions}}</b>
         </a>
         <div class="mdl-tabs__tab mdl-tabs__action-buttons">
-          <minds-button-subscribe [user]="user"  *ng-if="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked"></minds-button-subscribe>
-          <minds-button-user-dropdown [(user)]="user" *ng-if="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
+          <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked"></minds-button-subscribe>
+          <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
 
-          <minds-button-edit (click)="toggleEditing()" [hidden]="editing" *ng-if="session.getLoggedInUser().guid == user.guid">
+          <minds-button-edit (click)="toggleEditing()" [hidden]="editing" *ngIf="session.getLoggedInUser().guid == user.guid">
             <button class="material-icons">edit</button>
           </minds-button-edit>
-          <minds-button-edit (click)="toggleEditing()"  [hidden]="!editing" *ng-if="session.getLoggedInUser().guid == user.guid">
+          <minds-button-edit (click)="toggleEditing()"  [hidden]="!editing" *ngIf="session.getLoggedInUser().guid == user.guid">
             <button class="material-icons">done</button>
           </minds-button-edit>
         </div>
@@ -58,12 +58,12 @@
 </header>
 
 
-<div class="mdl-grid channel-grid channel-blocked" style="max-width:900px" *ng-if="user && user?.blocked">
+<div class="mdl-grid channel-grid channel-blocked" style="max-width:900px" *ngIf="user && user?.blocked">
   <h3 class="mdl-color-text--blue-grey-300">You have blocked @{{user.username}}</h3>
 </div>
 
 
-<div class="mdl-grid channel-grid" style="max-width:900px" *ng-if="user && !user?.blocked">
+<div class="mdl-grid channel-grid" style="max-width:900px" *ngIf="user && !user?.blocked">
 
   <section class="mdl-cell mdl-cell--4-col minds-channel-sidebar">
       <div class="mdl-card mdl-shadow--2dp minds-channel-bio">
@@ -71,19 +71,19 @@
           <h2 class="mdl-card__title-text">Bio</h2>
         </div>
 
-        <div class="mdl-card__supporting-text" id="bio" [hidden]="editing" style="white-space:pre-line" [inner-html]="user.briefdescription | tags"></div>
+        <div class="mdl-card__supporting-text" id="bio" [hidden]="editing" style="white-space:pre-line" [innerHtml]="user.briefdescription | tags"></div>
 
-        <div class="minds-editable-container mdl-card__supporting-text" *ng-if="editing && isOwner()">
+        <div class="minds-editable-container mdl-card__supporting-text" *ngIf="editing && isOwner()">
           <!-- OWNER EDIT FORM -->
             <textarea
-              [auto-grow]
+              [autoGrow]
               class="mdl-textfield__input"
               type="text"
-              [(ng-model)]="user.briefdescription"
+              [(ngModel)]="user.briefdescription"
             ></textarea>
         </div>
 
-        <div class="m-channel-bio-fields" [ng-class]="{'m-channel-bio-fields-flex': !editing}">
+        <div class="m-channel-bio-fields" [ngClass]="{'m-channel-bio-fields-flex': !editing}">
 
           <!-- City / Location -->
           <div class="m-channel-bio-field m-channel-city mdl-color-text--blue-grey-600" [hidden]="editing || !user.city">
@@ -91,14 +91,14 @@
             <span>{{user.city}}</span>
           </div>
 
-          <div class="m-channel-bio-editor m-channel-city-editor" *ng-if="editing && isOwner()">
+          <div class="m-channel-bio-editor m-channel-city-editor" *ngIf="editing && isOwner()">
             <div class="m-channel-bio-input m-channel-city-input">
               <i class="material-icons mdl-color-text--blue-grey-300">location_on</i>
-              <input (keyup)="findCity(user.city)" [(ng-model)]="user.city" class="" placeholder="Enter your city..."/>
+              <input (keyup)="findCity(user.city)" [(ngModel)]="user.city" class="" placeholder="Enter your city..."/>
             </div>
-            <div class="m-discovery-cities mdl-card mdl-shadow--4dp" *ng-if="editing && cities.length > 0">
+            <div class="m-discovery-cities mdl-card mdl-shadow--4dp" *ngIf="editing && cities.length > 0">
               <p class="mdl-color-text--blue-grey-300">Select your city:</p>
-              <li (click)="setCity(c)" *ng-for="#c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
+              <li (click)="setCity(c)" *ngFor="#c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
             </div>
           </div>
           <!-- END City / Location -->
@@ -108,12 +108,12 @@
             <i class="material-icons mdl-color-text--blue-grey-300">wc</i>
             <span>{{user.gender}}</span>
           </div>
-          <div class="m-channel-bio-editor m-channel-gender-editor" *ng-if="editing && isOwner()">
+          <div class="m-channel-bio-editor m-channel-gender-editor" *ngIf="editing && isOwner()">
             <div class="m-channel-bio-input m-channel-gender-input">
               <i class="material-icons mdl-color-text--blue-grey-300">wc</i>
-              <a [ng-class]="{'mdl-color-text--blue-grey-600': user.gender == 'male'}"  (click)="user.gender = 'male'">Male</a>
-              <a [ng-class]="{'mdl-color-text--blue-grey-600': user.gender == 'female'}" (click)="user.gender = 'female'">Female</a>
-              <a [ng-class]="{'mdl-color-text--blue-grey-600': user.gender == null}" (click)="user.gender = null">Private</a>
+              <a [ngClass]="{'mdl-color-text--blue-grey-600': user.gender == 'male'}"  (click)="user.gender = 'male'">Male</a>
+              <a [ngClass]="{'mdl-color-text--blue-grey-600': user.gender == 'female'}" (click)="user.gender = 'female'">Female</a>
+              <a [ngClass]="{'mdl-color-text--blue-grey-600': user.gender == null}" (click)="user.gender = null">Private</a>
             </div>
           </div>
           <!-- END Gender -->
@@ -123,10 +123,10 @@
               <i class="material-icons mdl-color-text--blue-grey-300">date_range</i>
               <span>{{user.dob}}</span>
           </div>
-          <div class="m-channel-bio-editor m-channel-dob-editor" *ng-if="editing && isOwner()">
+          <div class="m-channel-bio-editor m-channel-dob-editor" *ngIf="editing && isOwner()">
             <div class="m-channel-bio-input m-channel-dob-input">
               <i class="material-icons mdl-color-text--blue-grey-300">date_range</i>
-              <input type="month" [(ng-model)]="user.dob" class="" placeholder="Date of Birth"/>
+              <input type="month" [(ngModel)]="user.dob" class="" placeholder="Date of Birth"/>
             </div>
           </div>
           <!-- END DoB -->
@@ -140,7 +140,7 @@
       <!-- images  -->
       <minds-channel-modules [owner]="user" type="image">
 
-        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Discovery', {filter:user.username, type:'images'}]">
+        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/Discovery', {filter:user.username, type:'images'}]">
           View More
         </a>
       </minds-channel-modules>
@@ -150,7 +150,7 @@
       <!-- videos  -->
       <minds-channel-modules [owner]="user" type="video" limit="6">
 
-        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Discovery', {filter:user.username, type:'videos'}]">
+        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/Discovery', {filter:user.username, type:'videos'}]">
           View More
         </a>
       </minds-channel-modules>
@@ -160,7 +160,7 @@
       <!-- Blogs  -->
       <minds-channel-modules [owner]="user" type="blog" limit="3">
 
-        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Blog', {filter:user.username}]">
+        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/Blog', {filter:user.username}]">
           View More
         </a>
       </minds-channel-modules>
@@ -169,17 +169,17 @@
   </section>
 
   <!-- Feed list -->
-  <section class="mdl-cell mdl-cell--8-col" *ng-if="_filter == 'feed'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'feed'">
 
-    <minds-newsfeed-poster (load)="prepend($event)" *ng-if="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"></minds-newsfeed-poster>
+    <minds-newsfeed-poster (load)="prepend($event)" *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"></minds-newsfeed-poster>
 
     <div class="minds-list">
 
-        <minds-activity *ng-for="#activity of feed" [object]="activity" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
+        <minds-activity *ngFor="#activity of feed" [object]="activity" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
         <infinite-scroll
             distance="25%"
             (load)="loadFeed()"
-            *ng-if="moreData">
+            *ngIf="moreData">
             <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
         </infinite-scroll>
 
@@ -188,21 +188,21 @@
   </section>
 
   <!-- Subscriptions list -->
-  <section class="mdl-cell mdl-cell--8-col" *ng-if="_filter == 'subscriptions'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'subscriptions'">
 
     <minds-channel-subscriptions [channel]="user" class="mdl-grid"></minds-channel-subscriptions>
 
   </section>
 
   <!-- Subscriptions list -->
-  <section class="mdl-cell mdl-cell--8-col" *ng-if="_filter == 'subscribers'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'subscribers'">
 
     <minds-channel-subscribers [channel]="user" class="mdl-grid"></minds-channel-subscribers>
 
   </section>
 
   <!-- Edit Channel -->
-  <section class="mdl-cell mdl-cell--8-col" *ng-if="_filter == 'edit'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'edit'">
 
     <minds-channel-edit [channel]="user" class="mdl-grid"></minds-channel-edit>
 

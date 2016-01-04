@@ -1,10 +1,13 @@
-import { Component, View, Inject, CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
+
 import { MindsTitle } from '../../../services/ux/title';
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { Register } from '../register/register';
+
 
 @Component({
   selector: 'minds-login',

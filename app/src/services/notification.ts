@@ -1,4 +1,4 @@
-import { Inject, Injector, bind } from 'angular2/angular2';
+import { Inject, Injector, bind } from 'angular2/core';
 import { Client } from './api';
 import { SessionFactory } from './session';
 

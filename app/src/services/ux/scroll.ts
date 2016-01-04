@@ -1,4 +1,4 @@
-import { EventEmitter, Observable, Injector, provide } from 'angular2/angular2';
+import { EventEmitter, Injector, provide } from 'angular2/core';
 
 export class Scroll{
   scroll : EventEmitter<boolean> = new EventEmitter(true);

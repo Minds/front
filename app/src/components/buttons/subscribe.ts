@@ -1,4 +1,6 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
 import { SignupOnActionModal } from '../modal/modal';
@@ -9,9 +11,9 @@ import { SignupOnActionModal } from '../modal/modal';
 })
 @View({
   template: `
-    <button class="minds-subscribe-button" *ng-if="!_user.subscribed" (click)="subscribe()">Subscribe</button> \
-    <button class="minds-subscribe-button subscribed" *ng-if="_user.subscribed" (click)="unSubscribe()">Subscribed</button>
-    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="subscribe"  *ng-if="!session.isLoggedIn()"></m-modal-signup-on-action>
+    <button class="minds-subscribe-button" *ngIf="!_user.subscribed" (click)="subscribe()">Subscribe</button> \
+    <button class="minds-subscribe-button subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">Subscribed</button>
+    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="subscribe"  *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
   `,
   directives: [ CORE_DIRECTIVES, SignupOnActionModal ]
 })

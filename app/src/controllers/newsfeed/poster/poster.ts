@@ -1,11 +1,14 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter } from 'angular2/angular2';
+import { Component, View, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
+
 import { Client, Upload } from '../../../services/api';
 import { MDL_DIRECTIVES } from '../../../directives/material';
 import { AutoGrow } from '../../../directives/autogrow';
 import { InfiniteScroll } from '../../../directives/infinite-scroll';
 import { MindsActivityObject } from '../../../interfaces/entities';
 import { SessionFactory } from '../../../services/session';
+
 
 @Component({
   selector: 'minds-newsfeed-poster',

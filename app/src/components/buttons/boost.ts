@@ -1,4 +1,6 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
 import { WalletService } from '../../services/wallet';

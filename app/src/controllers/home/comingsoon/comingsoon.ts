@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
 import { Router } from 'angular2/router';
 import { Material } from '../../../directives/material';
 

@@ -1,4 +1,4 @@
-import { Type } from 'angular2/angular2';
+import { Type } from 'angular2/core';
 import { AbbrPipe } from './abbr';
 import { DomainPipe } from './domain';
 import { TagsPipe } from './tags';

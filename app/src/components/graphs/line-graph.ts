@@ -1,6 +1,9 @@
-import { Component, View, Directive, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View, Directive } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { GraphSVG } from './svg';
 import { GraphPoints } from './points';
+
 
 @Component({
   selector: 'minds-graph-line',
@@ -9,7 +12,7 @@ import { GraphPoints } from './points';
 @View({
   template: `
     <div [hidden]="!data"> <!-- Angular has svg problems... -->
-      <svg fill="currentColor" [svg-hack] [view-box]="'0 0 ' + x + ' ' + y" style="stroke:#757575; opacity:0.8; overflow:visible; max-width:100%;" xmlns="http://www.w3.org/2000/svg" >
+      <svg fill="currentColor" [svgHack] [viewBox]="'0 0 ' + x + ' ' + y" style="stroke:#757575; opacity:0.8; overflow:visible; max-width:100%;" xmlns="http://www.w3.org/2000/svg" >
         <!-- X Y, X Y (from top to bottom) -->
         <g class="points">
           <polyline [points]="points"

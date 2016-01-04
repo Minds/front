@@ -1,4 +1,5 @@
-import { Component, View, EventEmitter, CORE_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
 
 import { Client } from '../services/api';
@@ -13,10 +14,10 @@ import { Material } from '../directives/material';
   template: `
   <div class="minds-avatar">
     <img src="{{src}}" class="mdl-shadow--4dp" />
-    <div *ng-if="editing" class="overlay">
+    <div *ngIf="editing" class="overlay">
       <i class="material-icons">camera</i>
       <span>Change avatar</span>
-      <input *ng-if="editing" type="file" #file (change)="add($event)"/>
+      <input *ngIf="editing" type="file" #file (change)="add($event)"/>
     </div>
   </div>
   `,

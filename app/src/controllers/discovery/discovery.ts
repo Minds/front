@@ -1,5 +1,7 @@
-import { Component, View, NgFor, NgIf, Inject, NgClass} from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
+
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
@@ -16,7 +18,7 @@ import { BUTTON_COMPONENTS } from '../../components/buttons';
 })
 @View({
   templateUrl: 'src/controllers/discovery/discovery.html',
-  directives: [ RouterLink, NgFor, NgIf, Material, InfiniteScroll, NgClass, CARDS, BUTTON_COMPONENTS ]
+  directives: [ CORE_DIRECTIVES, RouterLink, Material, InfiniteScroll, CARDS, BUTTON_COMPONENTS ]
 })
 
 export class Discovery {

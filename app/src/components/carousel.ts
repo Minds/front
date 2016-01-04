@@ -1,8 +1,11 @@
-import { Component, View, EventEmitter, CORE_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
+
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
 import { MindsBanner } from './banner';
+
 
 @Component({
   selector: 'minds-carousel',
@@ -12,13 +15,13 @@ import { MindsBanner } from './banner';
 @View({
   template: `
     <i class="material-icons left" (click)="prev()" [hidden]="banners.length <= 1">keyboard_arrow_left</i>
-    <div *ng-for="#banner of banners; #i = index">
+    <div *ngFor="#banner of banners; #i = index">
       <minds-banner
         [src]="banner.src"
         [top]="banner.top_offset"
         [overlay]="true"
-        [ng-class]="{'is-hidden': i != index, 'edit-mode': editing}"
-        [edit-mode]="editing"
+        [ngClass]="{'is-hidden': i != index, 'edit-mode': editing}"
+        [editMode]="editing"
         [done]="done"
         (added)="added($event, i)"
         ></minds-banner>

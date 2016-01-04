@@ -1,4 +1,6 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
 
@@ -12,7 +14,7 @@ import { Client } from '../../services/api';
 })
 @View({
   template: `
-    <button class="material-icons" [ng-class]="{'selected': isMonetized }">
+    <button class="material-icons" [ngClass]="{'selected': isMonetized }">
       <i class="material-icons">attach_money</i>
     </button>
   `,

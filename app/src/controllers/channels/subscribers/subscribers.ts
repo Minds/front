@@ -1,10 +1,13 @@
-import { Component, View, CORE_DIRECTIVES, Inject, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams } from 'angular2/router';
+
 import { Client } from '../../../services/api';
 import { Material } from '../../../directives/material';
 import { SessionFactory } from '../../../services/session';
 import { InfiniteScroll } from '../../../directives/infinite-scroll';
 import { UserCard } from '../../../controllers/cards/cards';
+
 
 @Component({
   selector: 'minds-channel-subscribers',

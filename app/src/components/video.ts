@@ -1,6 +1,9 @@
-import { Component, View, CORE_DIRECTIVES, ElementRef } from 'angular2/angular2';
+import { Component, View, ElementRef } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
+
 
 @Component({
   selector: 'minds-video',
@@ -22,7 +25,7 @@ import { Material } from '../directives/material';
     <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
     <i class="material-icons" [hidden]="element.paused" (click)="onClick()">pause</i>
     <span id="seeker" class="progress-bar" (click)="seek($event)">
-      <bar class="progress" [ng-style]="{ 'width': seeked + '%'}"></bar>
+      <bar class="progress" [ngStyle]="{ 'width': seeked + '%'}"></bar>
       <bar class="total"></bar>
     </span>
     <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>

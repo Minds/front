@@ -12,7 +12,7 @@ import {
   xit
 } from 'angular2/test';
 
-import {Component, View, ViewMetadata, UrlResolver, bind} from 'angular2/angular2';
+import {Component, View, ViewMetadata, UrlResolver, bind} from 'angular2/core';
 import { HTTP_PROVIDERS } from 'angular2/http';
 import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES } from 'angular2/router';
 

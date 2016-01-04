@@ -1,8 +1,10 @@
-import { Component, View, Inject } from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
+
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
+
 
 @Component({
   viewBindings: [Client]

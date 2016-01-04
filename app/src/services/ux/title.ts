@@ -1,4 +1,4 @@
-import {Title} from 'angular2/angular2';
+import {Title} from 'angular2/platform/browser';
 
 export class MindsTitle {
 

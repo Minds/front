@@ -16,7 +16,7 @@
       </div>
 
       <!-- START: LOGIN -->
-      <form (submit)="login()" [ng-form-model]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 mdl-shadow--2dp m-form m-login-box" [hidden]="hideLogin">
+      <form (submit)="login()" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 mdl-shadow--2dp m-form m-login-box" [hidden]="hideLogin">
 
         <div class="mdl-card__title mdl-color-text--blue-grey-600">
           <h3>Login to Minds</h3>
@@ -49,7 +49,7 @@
           <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="login()" [disabled]="inProgress">
             Login
           </button>
-          <a class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link" [router-link]="['/Forgot-Password']">
+          <a class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link" [routerLink]="['/Forgot-Password']">
             Forgot Password?
           </a>
         </div>

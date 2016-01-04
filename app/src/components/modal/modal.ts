@@ -1,4 +1,5 @@
-import {Component, EventEmitter} from 'angular2/angular2';
+import {Component, EventEmitter} from 'angular2/core';
+
 
 @Component({
   selector: 'm-modal',

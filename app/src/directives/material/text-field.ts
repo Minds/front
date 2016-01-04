@@ -1,8 +1,8 @@
-import { Directive, ElementRef, Inject } from 'angular2/angular2';
+import { Directive, ElementRef, Inject } from 'angular2/core';
 import { Material as MaterialService } from "../../services/ui";
 
 @Directive({
-  selector: '[mdl-textfield]',
+  selector: '[mdlTextfield]',
   inputs: ['mdlTextfield'],
   host: {
     "(change)": 'change()'

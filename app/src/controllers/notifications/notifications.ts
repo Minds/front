@@ -1,4 +1,5 @@
-import { Component, View, NgFor, NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault, Inject, NgClass } from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouterLink } from 'angular2/router';
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
@@ -7,6 +8,7 @@ import { Material } from '../../directives/material';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { NotificationService } from '../../services/notification';
 
+
 @Component({
   selector: 'minds-notifications',
   viewBindings: [ Client, NotificationService],
@@ -14,7 +16,7 @@ import { NotificationService } from '../../services/notification';
 })
 @View({
   templateUrl: 'src/controllers/notifications/list.html',
-  directives: [ NgFor, NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault, NgClass, RouterLink, Material, InfiniteScroll ]
+  directives: [ CORE_DIRECTIVES, RouterLink, Material, InfiniteScroll ]
 })
 
 export class Notifications {

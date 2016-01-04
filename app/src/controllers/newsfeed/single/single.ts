@@ -1,5 +1,7 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
+
 import { Client, Upload } from '../../../services/api';
 import { Material } from '../../../directives/material';
 import { InfiniteScroll } from '../../../directives/infinite-scroll';
@@ -9,6 +11,7 @@ import { MindsActivityObject } from '../../../interfaces/entities';
 import { SessionFactory } from '../../../services/session';
 
 import { AnalyticsImpressions } from '../../../components/analytics/impressions';
+
 
 @Component({
   selector: 'minds-newsfeed-single',

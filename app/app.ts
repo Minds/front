@@ -1,4 +1,6 @@
-import {Component, View, CORE_DIRECTIVES, provide, bootstrap} from 'angular2/angular2';
+import {Component, View, provide} from 'angular2/core';
+import {CORE_DIRECTIVES} from 'angular2/common';
+import {bootstrap} from 'angular2/platform/browser';
 import {RouteConfig, Route, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
@@ -21,7 +23,7 @@ import {Newsfeed, NewsfeedSingle} from './src/controllers/newsfeed/newsfeed';
 import {Boosts} from './src/controllers/boosts/boosts';
 import {Capture} from './src/controllers/capture/capture';
 import {Discovery} from './src/controllers/discovery/discovery';
-import {Channel, ChannelSubscribers, ChannelSubscriptions, ChannelEdit} from './src/controllers/channels/channel';
+import {Channel, ChannelSubscribers, ChannelSubscriptions} from './src/controllers/channels/channel';
 import {Notifications} from './src/controllers/notifications/notifications';
 import {Search} from './src/controllers/search/search';
 import {Wallet} from './src/controllers/wallet/wallet';
@@ -106,5 +108,3 @@ export class Minds {
   }
 
 }
-
-bootstrap(Minds, [ROUTER_PROVIDERS, HTTP_PROVIDERS, SOCKETS_PROVIDERS]);

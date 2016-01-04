@@ -3,7 +3,7 @@
   <!-- Not enough point warning -->
   <div class="mdl-card__supporting-text minds-boost-error-message mdl-color--red mdl-color-text--white" [hidden]="!error">
     {{error}}
-    <span *ng-if="rate && (rate.balance < data.points)">Why not <a class="mdl-color-text--blue-grey-50" [router-link]="['/Wallet']">click here to buy some?</a></span>
+    <span *ngIf="rate && (rate.balance < data.points)">Why not <a class="mdl-color-text--blue-grey-50" [routerLink]="['/Wallet']">click here to buy some?</a></span>
   </div>
 
   <div class="mdl-grid minds-boost-points-wrapper">
@@ -13,7 +13,7 @@
             type="number"
             #points
             placeholder="Enter here"
-            [(ng-model)]= "data.points"
+            [(ngModel)]= "data.points"
             (change)="calculateImpressions()"
             (keyup)="calculateImpressions()"
             />
@@ -28,7 +28,7 @@
             type="number"
             #impressions
             placeholder="Views"
-            [(ng-model)] = "data.impressions"
+            [(ngModel)] = "data.impressions"
             (change)="calculatePoints()"
             (keyup)="calculatePoints()"
           />

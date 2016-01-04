@@ -1,26 +1,26 @@
 <nav class="minds-navigation mdl-navigation">
 
-  <div *ng-for="#item of navigation.getItems()">
+  <div *ngFor="#item of navigation.getItems()">
 
   	<a class="mdl-navigation__link mdl-color-text--white"
-  		[ng-class]="{'mdl-color--blue-grey-600' : item.active, 'mdl-color--blue-grey-800': !item.active}"
-  		[router-link]="[item.path, item.params]"
-      *ng-if="!(!session.isLoggedIn() && item.visibility < 2)"
+  		[ngClass]="{'mdl-color--blue-grey-600' : item.active, 'mdl-color--blue-grey-800': !item.active}"
+  		[routerLink]="[item.path, item.params]"
+      *ngIf="!(!session.isLoggedIn() && item.visibility < 2)"
   		>
 
-  		<i class="material-icons" [ng-class]="{'mdl-color-text--blue-grey-100': !item.active, 'mdl-color-text--amber-400' : item.active}">{{item.icon}}</i>
-      <span id="{{item.name | lowercase}}-counter" class="counter mdl-badge mdl-color--amber-600" *ng-if="!item.active && item.extras && item.extras?.counter">{{item.extras?.counter}}</span>
+  		<i class="material-icons" [ngClass]="{'mdl-color-text--blue-grey-100': !item.active, 'mdl-color-text--amber-400' : item.active}">{{item.icon}}</i>
+      <span id="{{item.name | lowercase}}-counter" class="counter mdl-badge mdl-color--amber-600" *ngIf="!item.active && item.extras && item.extras?.counter">{{item.extras?.counter}}</span>
 
   	</a>
 
-    <div *ng-for="#subitem of item.submenus" [hidden]="!item.active">
+    <div *ngFor="#subitem of item.submenus" [hidden]="!item.active">
       <a class="mdl-navigation__link mdl-color-text--white subitem"
-        [ng-class]="{'mdl-color--blue-grey-500' : subitem.active, 'mdl-color--blue-grey-700': !subitem.active}"
-        [router-link]="[subitem.path, subitem.params]"
-        *ng-if="!(!session.isLoggedIn() && subitem.visibility < 2)"
+        [ngClass]="{'mdl-color--blue-grey-500' : subitem.active, 'mdl-color--blue-grey-700': !subitem.active}"
+        [routerLink]="[subitem.path, subitem.params]"
+        *ngIf="!(!session.isLoggedIn() && subitem.visibility < 2)"
         >
 
-        <i class="material-icons" [ng-class]="{'mdl-color-text--blue-grey-100': !subitem.active, 'mdl-color-text--amber-500' : subitem.active}">{{subitem.icon}}</i>
+        <i class="material-icons" [ngClass]="{'mdl-color-text--blue-grey-100': !subitem.active, 'mdl-color-text--amber-500' : subitem.active}">{{subitem.icon}}</i>
         <!--{{subitem.text}}-->
 
       </a>

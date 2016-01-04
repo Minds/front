@@ -1,5 +1,7 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, ROUTER_DIRECTIVES } from "angular2/router";
+
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { SessionFactory } from '../../services/session';
@@ -12,6 +14,7 @@ import { WalletPurchase } from './purchase/purchase';
 
 import { Merchants } from './merchants/merchants';
 
+
 @Component({
   selector: 'minds-wallet',
   viewBindings: [ Client, WalletService ],
@@ -19,7 +22,7 @@ import { Merchants } from './merchants/merchants';
 })
 @View({
   templateUrl: 'src/controllers/wallet/wallet.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, InfiniteScroll,
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, MDL_DIRECTIVES, InfiniteScroll,
     WalletTransactions, WalletPurchase, Merchants]
 })
 

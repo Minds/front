@@ -1,5 +1,7 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
+
 import { Material } from '../../directives/material';
 import { Storage } from '../../services/storage';
 import { Sidebar } from '../../services/ui/sidebar';

@@ -1,5 +1,7 @@
-import { Component, View, EventEmitter, CORE_DIRECTIVES} from 'angular2/angular2';
+import { Component, View, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
+
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
 
@@ -10,12 +12,12 @@ import { Material } from '../directives/material';
 })
 @View({
   template: `
-  <div class="minds-banner" *ng-if="!editing">
-    <div class="minds-banner-img" [ng-style]="{'background-position': '0 ' + top + 'px', 'background-image': 'url(' + src + ')'}"></div>
+  <div class="minds-banner" *ngIf="!editing">
+    <div class="minds-banner-img" [ngStyle]="{'background-position': '0 ' + top + 'px', 'background-image': 'url(' + src + ')'}"></div>
     <div class="minds-banner-overlay"></div>
   </div>
-  <div *ng-if="editing" class="minds-banner minds-banner-editing">
-    <img src="{{src}}" [ng-style]="{'top': top}" (dragstart)="dragstart($event)" (dragover)="drag($event)" (dragend)="dragend($event)"/>
+  <div *ngIf="editing" class="minds-banner minds-banner-editing">
+    <img src="{{src}}" [ngStyle]="{'top': top}" (dragstart)="dragstart($event)" (dragover)="drag($event)" (dragend)="dragend($event)"/>
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
       <span>Click here to add a new banner</span>

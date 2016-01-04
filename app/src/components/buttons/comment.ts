@@ -1,4 +1,6 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { Client } from '../../services/api';
 
 @Component({
@@ -7,9 +9,9 @@ import { Client } from '../../services/api';
 })
 @View({
   template: `
-    <a class="mdl-color-text--blue-grey-500" [ng-class]="{'selected': object['comments:count'] > 0 }">
+    <a class="mdl-color-text--blue-grey-500" [ngClass]="{'selected': object['comments:count'] > 0 }">
       <i class="material-icons">chat_bubble</i>
-      <counter *ng-if="object['comments:count'] > 0">{{object['comments:count']}}</counter>
+      <counter *ngIf="object['comments:count'] > 0">{{object['comments:count']}}</counter>
     </a>
   `,
   directives: [CORE_DIRECTIVES]

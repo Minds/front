@@ -1,5 +1,9 @@
-import { Component, View, CORE_DIRECTIVES, EventEmitter } from 'angular2/angular2';
+import { Component, View, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { Client } from '../../services/api';
+
+
 @Component({
   selector: 'minds-button-user-dropdown',
   inputs: ['user'],

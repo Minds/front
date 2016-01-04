@@ -2,7 +2,7 @@
 
     <div class="mdl-cell mdl-cell--8-col">
       <div class="minds-list">
-        <minds-activity *ng-if="activity" [object]="activity" [comments-toggle]="true" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+        <minds-activity *ngIf="activity" [object]="activity" [comments-toggle]="true" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
       </div>
     </div>
 

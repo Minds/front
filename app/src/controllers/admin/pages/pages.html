@@ -12,21 +12,21 @@
   <div class="mdl-cell mdl-cell--4-col">
       <ul class="m-content-sidebar-nav">
           <li class="m-content-sidebar-nav-item">
-            <a (click)="newPage()" [ng-class]="{'is-active': !page.path}">
+            <a (click)="newPage()" [ngClass]="{'is-active': !page.path}">
               Add a new page
             </a>
           </li>
-          <li class="m-content-sidebar-nav-item" *ng-for="#p of pages">
-            <a (click)="setPage(p)" [ng-class]="{'is-active': p.path == page.path }">{{p.title}}</a>
+          <li class="m-content-sidebar-nav-item" *ngFor="#p of pages">
+            <a (click)="setPage(p)" [ngClass]="{'is-active': p.path == page.path }">{{p.title}}</a>
           </li>
       </ul>
   </div>
 
   <div class="mdl-cell mdl-cell--8-col m-form">
-      <input type="text" class="m-h1-input" [(ng-model)]="page.title"/>
+      <input type="text" class="m-h1-input" [(ngModel)]="page.title"/>
 
       <div class="m-admin-pages-path">
-      /p/<input type="text" class="m-form-input" [(ng-model)]="page.path"/>
+      /p/<input type="text" class="m-form-input" [(ngModel)]="page.path"/>
       </div>
       <minds-tinymce [(content)]="page.body" [reset]="page.path"></minds-tinymce>
 

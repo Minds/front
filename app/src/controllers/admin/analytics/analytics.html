@@ -9,7 +9,7 @@
         <minds-graph-line [data]="dam"></minds-graph-line>
       </div>
       <div class="mdl-card__supporting-text results">
-        <div *ng-for="#stat of dam_list" class="row">
+        <div *ngFor="#stat of dam_list" class="row">
           <label>{{stat.timestamp * 1000 | date: 'dEEEEMM'}}</label>
           <b>{{stat.total}}</b>
         </div>
@@ -25,7 +25,7 @@
         <minds-graph-line [data]="mam"></minds-graph-line>
       </div>
       <div class="mdl-card__supporting-text results">
-        <div *ng-for="#stat of mam_list" class="row">
+        <div *ngFor="#stat of mam_list" class="row">
           <label>{{stat.timestamp * 1000 | date: 'MMMM'}}</label>
           <b>{{stat.total}}</b>
         </div>

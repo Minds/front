@@ -1,7 +1,7 @@
-import { Directive,  EventEmitter, ElementRef } from 'angular2/angular2';
+import { Directive,  EventEmitter, ElementRef } from 'angular2/core';
 
 @Directive({
-  selector: '[auto-grow]',
+  selector: '[autoGrow]',
   inputs: ['autoGrow', 'for'],
   host: {
     '(keydown)': 'grow()',

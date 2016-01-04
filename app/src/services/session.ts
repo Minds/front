@@ -1,7 +1,7 @@
 /**
  * Sesions
  */
-import { EventEmitter, Injector, provide } from 'angular2/angular2';
+import { EventEmitter, Injector, provide } from 'angular2/core';
 
 export class Session {
 	loggedinEmitter : EventEmitter<any> = new EventEmitter();

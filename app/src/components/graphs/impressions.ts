@@ -1,4 +1,6 @@
-import { Component, View, Directive, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View, Directive } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 import { GraphSVG } from './svg';
 import { GraphPoints } from './points';
 

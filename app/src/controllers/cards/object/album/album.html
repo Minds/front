@@ -1,10 +1,10 @@
 <div class="mdl-card__title minds-archive-albums-card"
 	style="height:200px; background:#333" >
 
-	<div *ng-if="entity.images" class="minds-album-tiles tiles-{{entity.images.length}}">
+	<div *ngIf="entity.images" class="minds-album-tiles tiles-{{entity.images.length}}">
 		<a class=""
-			 *ng-for="#image of entity.images"
-			 [router-link]="['/Archive-View', {guid: image}]">
+			 *ngFor="#image of entity.images"
+			 [routerLink]="['/Archive-View', {guid: image}]">
 			<img src="archive/thumbnail/{{image}}/medium" />
 		</a>
 	</div>
@@ -12,14 +12,14 @@
 </div>
 
 <!-- Owner block -->
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block" *ng-if="entity.ownerObj && entity.ownerObj.username">
+<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block" *ngIf="entity.ownerObj && entity.ownerObj.username">
 
-		<a [router-link]="['/Archive-View', {guid: entity.guid}]" class="mdl-color-text--blue-grey-700">
+		<a [routerLink]="['/Archive-View', {guid: entity.guid}]" class="mdl-color-text--blue-grey-700">
 			<strong>{{ entity.title }}</strong>
 		</a>
 
 		<div class="m-inline-owner-block">
-			<a [router-link]="['/Channel', {username: entity.ownerObj.username}]" class="mdl-color-text--blue-grey-300">
+			<a [routerLink]="['/Channel', {username: entity.ownerObj.username}]" class="mdl-color-text--blue-grey-300">
 				<img src="/icon/{{entity.ownerObj.guid}}/small" class="mdl-shadow--2dp"/>
 				{{entity.ownerObj.username}}
 			</a>
@@ -31,7 +31,7 @@
 <div class="mdl-card__supporting-text mdl-color--blue-grey-50 m-action-tabs">
 	<minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
-	<minds-button-comment [object]="entity" [router-link]="['/Archive-View', {guid: entity.guid}]"></minds-button-comment>
+	<minds-button-comment [object]="entity" [routerLink]="['/Archive-View', {guid: entity.guid}]"></minds-button-comment>
 	<minds-button-remind [object]="entity"></minds-button-remind>
-	<minds-button-feature [object]="entity" *ng-if="session.isAdmin()"></minds-button-feature>
+	<minds-button-feature [object]="entity" *ngIf="session.isAdmin()"></minds-button-feature>
 </div>

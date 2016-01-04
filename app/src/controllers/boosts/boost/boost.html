@@ -16,5 +16,5 @@
 
 </div>
 
-<minds-boost-full-network [object]="activity" *ng-if="type == 'full'" (done)="done()"></minds-boost-full-network>
-<minds-boost-p2p [object]="activity" *ng-if="type == 'channel'" (done)="done()"></minds-boost-p2p>
+<minds-boost-full-network [object]="activity" *ngIf="type == 'full'" (done)="done()"></minds-boost-full-network>
+<minds-boost-p2p [object]="activity" *ngIf="type == 'channel'" (done)="done()"></minds-boost-p2p>

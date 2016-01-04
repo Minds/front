@@ -1,8 +1,11 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
+
 import { Client, Upload } from '../../../services/api';
 import { MINDS_GRAPHS } from '../../../components/graphs';
 import { Material } from '../../../directives/material';
+
 
 @Component({
   selector: 'minds-admin-analytics',
@@ -10,7 +13,7 @@ import { Material } from '../../../directives/material';
 })
 @View({
   templateUrl: 'src/controllers/admin/analytics/analytics.html',
-  directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES, MINDS_GRAPHS ]
+  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, MINDS_GRAPHS ]
 })
 
 export class AdminAnalytics {

@@ -1,11 +1,14 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, EventEmitter} from 'angular2/angular2';
+import { Component, View, EventEmitter} from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
+
 import { Client } from '../../services/api';
 import { WalletService } from '../../services/wallet';
 import { Storage } from '../../services/storage';
 import { MDL_DIRECTIVES } from '../../directives/material';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { CHECKOUT_COMPONENTS } from '../../components/checkout';
+
 
 interface CreditCard {
   number?: number,

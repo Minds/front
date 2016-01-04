@@ -1,4 +1,4 @@
-import {Inject} from 'angular2/angular2';
+import {Inject} from 'angular2/core';
 import {Router, Location} from 'angular2/router';
 
 export class Navigation {

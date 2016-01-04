@@ -1,4 +1,6 @@
-import { Component, CORE_DIRECTIVES, EventEmitter, ElementRef } from 'angular2/angular2';
+import { Component, EventEmitter, ElementRef } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
+
 
 @Component({
   selector: 'revcontent',

@@ -1,5 +1,7 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators} from 'angular2/angular2';
+import { Component, View } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from 'angular2/common';
 import { RouterLink } from "angular2/router";
+
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { WalletService } from '../../../services/wallet';

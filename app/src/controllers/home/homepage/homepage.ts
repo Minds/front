@@ -1,5 +1,7 @@
-import { Component, View, Inject, CORE_DIRECTIVES } from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
+
 import { Material } from '../../../directives/material';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { SessionFactory } from '../../../services/session';
@@ -8,6 +10,7 @@ import { Client } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
 import { BlogCard } from '../../../plugins/blog/card/card';
 import { Register } from '../register/register';
+
 
 @Component({
   selector: 'minds-homepage',

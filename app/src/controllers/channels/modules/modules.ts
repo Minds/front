@@ -1,10 +1,12 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES, Inject } from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
 
 import { Client } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
 import { Material } from '../../../directives/material';
 import { BlogCard } from '../../../plugins/blog/card/card';
+
 
 @Component({
   selector: 'minds-channel-modules',
@@ -22,12 +24,12 @@ import { BlogCard } from '../../../plugins/blog/card/card';
       <h2 class="mdl-card__title-text" style="text-transform:capitalize">{{type}}s</h2>
     </div>
 
-    <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;" *ng-if="type != 'blog'">
-      <a *ng-for="#object of items" [router-link]="['/Archive-View', {guid: object.guid}]" [ng-style]="{'background-image': 'url(' + object.thumbnail_src + ')'}" >
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;" *ngIf="type != 'blog'">
+      <a *ngFor="#object of items" [routerLink]="['/Archive-View', {guid: object.guid}]" [ngStyle]="{'background-image': 'url(' + object.thumbnail_src + ')'}" >
       </a>
     </div>
-    <div *ng-if="type == 'blog'" style="min-height:0;">
-      <minds-card-blog [object]="blog" *ng-for="#blog of items" class="mdl-card" style="border-radius:0;">
+    <div *ngIf="type == 'blog'" style="min-height:0;">
+      <minds-card-blog [object]="blog" *ngFor="#blog of items" class="mdl-card" style="border-radius:0;">
         {{blog.title}}
       </minds-card-blog>
     </div>

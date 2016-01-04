@@ -1,8 +1,11 @@
-import { Component, View, Inject, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES  } from 'angular2/angular2';
+import { Component, View, Inject } from 'angular2/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteParams } from 'angular2/router';
+
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
+
 
 @Component({
   selector: 'minds-register',

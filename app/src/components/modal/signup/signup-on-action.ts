@@ -1,5 +1,7 @@
-import { Component, CORE_DIRECTIVES, EventEmitter } from 'angular2/angular2';
+import { Component, EventEmitter } from 'angular2/core';
+import { CORE_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
+
 import { Modal } from '../modal';
 import { SessionFactory } from '../../../services/session';
 
@@ -10,7 +12,7 @@ import { SessionFactory } from '../../../services/session';
   inputs: ['open','action'],
   outputs: ['closed'],
   template: `
-    <m-modal [open]="open" (closed)="close($event)" *ng-if="!session.isLoggedIn()">
+    <m-modal [open]="open" (closed)="close($event)" *ngIf="!session.isLoggedIn()">
       <div class="mdl-card__title">
         <img src="/assets/logos/small.png" (click)="close()"/>
       </div>
@@ -18,8 +20,8 @@ import { SessionFactory } from '../../../services/session';
         You need to have a channel in order to {{action}}
       </div>
       <div class="mdl-card__supporting-text">
-        <button class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Register']">Signup</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored" [router-link]="['/Login']">Login</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored" [routerLink]="['/Register']">Signup</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored" [routerLink]="['/Login']">Login</button>
       </div>
 
       <div class="mdl-card__supporting-text m-modal-signup-apps">

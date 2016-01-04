@@ -1,5 +1,5 @@
-import {Component, NgIf} from 'angular2/angular2';
-import {Storage} from '../services/storage';
+import { Component } from 'angular2/core';
+import { Storage } from '../services/storage';
 
 @Component({
   selector: 'minds-loggedin',
