@@ -9,7 +9,7 @@ export class SocketsService {
   emitters : {} = {};
 
   constructor(){
-    this.setUp();
+  //this.setUp();
   }
 
   setUp(){

@@ -41,12 +41,12 @@ export const VERSION_NODE         = '4.0.0';
 export const NPM_DEPENDENCIES = [
   { src: 'systemjs/dist/system-polyfills.js', dest: LIB_DEST },
 
-  { src: 'intl/dist/Intl.min.js', inject: 'shims', dest: LIB_DEST },
-  { src: 'intl/locale-data/jsonp/en.js', inject: 'shims', dest: LIB_DEST },
   { src: 'es6-shim/es6-shim.min.js', inject: 'shims', dest: LIB_DEST },
   { src: 'reflect-metadata/Reflect.js', inject: 'shims', dest: LIB_DEST },
   { src: 'systemjs/dist/system.src.js', inject: 'shims', dest: LIB_DEST },
   { src: 'angular2/bundles/angular2-polyfills.js', inject: 'shims', dest: LIB_DEST },
+  { src: 'intl/dist/Intl.min.js', inject: 'shims', dest: LIB_DEST },
+  { src: 'intl/locale-data/jsonp/en.js', inject: 'shims', dest: LIB_DEST },
 
   // Faster dev page load
   { src: 'rxjs/bundles/Rx.min.js', inject: 'libs', dest: LIB_DEST },
