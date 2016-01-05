@@ -179,8 +179,8 @@
         <infinite-scroll
             distance="25%"
             (load)="loadFeed()"
-            *ngIf="moreData">
-            <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+            [moreData]="moreData"
+            [inProgress]="inProgress">
         </infinite-scroll>
 
     </div>
