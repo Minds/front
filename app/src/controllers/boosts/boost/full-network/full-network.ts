@@ -110,19 +110,25 @@ export class BoostFullNetwork{
 
   checkBalance(){
     if (this.rate.balance < this.data.points) {
-      this.handleErrorMessage('Ooops! You don\'t have enough points');
+      this.handleErrorMessage('Ooops! You only have ' + this.rate.balance + ' points');
+      this.data.points = this.rate.balance;
+      this.calculateImpressions();
       return false;
     }
 
     //over the cap?
     if (this.data.points > this.rate.cap) {
-      this.handleErrorMessage('Ooops! Sorry, there is a limit on how many points can be spent.');
+      this.handleErrorMessage('Ooops! Sorry, you can only spend ' + this.rate.cap + ' points');
+      this.data.points = this.rate.cap;
+      this.calculateImpressions();
       return false;
     }
 
     //under the min?
     if (this.data.points < this.rate.min) {
       this.handleErrorMessage('Ooops! Sorry, you need to enter at least ' + this.rate.min + ' points');
+      this.data.points = this.rate.min;
+      this.calculateImpressions();
       return false;
     }
     //check if the user has enough points
