@@ -157,6 +157,10 @@
   background:$minds-blue !important;
 }
 
+.m-content-sidebar-ads{
+  padding:0 $minds-padding*2;
+}
+
 .m-boost-console-booster{
 
   .m-boost-button-fat{
@@ -172,7 +176,7 @@
       font-size:12px;
     }
   }
-  .m-boost-console-booster-posts-images{
+  .m-boost-console-booster-content .media {
     minds-button-boost{
       padding: 8px 0;
       display: block;

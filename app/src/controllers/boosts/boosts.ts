@@ -7,6 +7,7 @@ import { SessionFactory } from '../../services/session';
 import { Material } from '../../directives/material';
 import { CARDS } from '../../controllers/cards/cards';
 import { BUTTON_COMPONENTS } from '../../components/buttons';
+import { BoostAds } from '../../components/ads/boost';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { BUTTON_COMPONENTS } from '../../components/buttons';
 })
 @View({
   templateUrl: 'src/controllers/boosts/boosts.html',
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS, BUTTON_COMPONENTS]
+  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS, BUTTON_COMPONENTS, BoostAds ]
 })
 
 export class Boosts{
