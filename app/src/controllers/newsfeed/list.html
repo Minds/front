@@ -53,11 +53,14 @@
       <m-ads-boost limit="2"></m-ads-boost>
       <div class="minds-spacer minds-spacer-2x"></div>
 
-      <ul class="m-footer-nav m-footer-nav-inline">
-        <li *ngFor="#page of navigation.getItems('footer')" class="m-footer-nav-item">
-          <a [routerLink]="['/P', {page: page.params.page }]">{{page.title}}</a>
-        </li>
-      </ul>
+      <div class="m-newsfeed-footer">
+        <ul class="m-footer-nav m-footer-nav-inline">
+          <li *ngFor="#page of navigation.getItems('footer')" class="m-footer-nav-item">
+            <a [routerLink]="['/P', {page: page.params.page }]">{{page.title}}</a>
+          </li>
+        </ul>
+        <span class="copyright mdl-color-text--blue-grey-700">&#169; Minds, Inc. 2016</span>
+      </div>
 
     </div>
 
