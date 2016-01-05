@@ -33,7 +33,7 @@ describe('testing the login', () => {
     element(by.css('.m-register-btn')).click();
 
     browser.sleep(2000);
-    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + username);
+    expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + username + '?editToggle=true');
 
     browser.get('/settings');
     expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + 'settings');
