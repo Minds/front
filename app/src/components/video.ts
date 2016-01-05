@@ -16,7 +16,7 @@ import { Material } from '../directives/material';
 })
 @View({
   template: `
-  <video (click)="onClick()" preload="metadata">
+  <video (click)="onClick()" preload="metadata" allowfullscreen>
   </video>
   <div class="minds-video-bar-min">
     {{time.minutes}}:{{time.seconds}}
@@ -31,6 +31,7 @@ import { Material } from '../directives/material';
     <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>
     <i class="material-icons" [hidden]="element.muted" (click)="element.muted = true">volume_up</i>
     <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
+    <i class="material-icons" (click)="openFullScreen()">tv</i>
   </div>
   `,
   directives: [ CORE_DIRECTIVES, Material ]
@@ -163,6 +164,19 @@ export class MindsVideo{
 
   stopSeeker(){
     clearInterval(this.seek_interval);
+  }
+
+  openFullScreen(){
+    //this._element.nativeElement.requestFullscreen();
+    if (this.element.requestFullscreen) {
+      this.element.requestFullscreen();
+    } else if (this.element.msRequestFullscreen) {
+      this.element.msRequestFullscreen();
+    } else if (this.element.mozRequestFullScreen) {
+      this.element.mozRequestFullScreen();
+    } else if (this.element.webkitRequestFullscreen) {
+      this.element.webkitRequestFullscreen();
+    }
   }
 
   ngOnDestroy(){
