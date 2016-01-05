@@ -4,6 +4,10 @@
     <div class="mdl-card__supporting-text">
       Status: {{status}}
     </div>
+    <div class="mdl-card__supporting-text" *ngIf="status == 'pending'">
+      Thanks for monetizing your channel, we are currently reviewing your application.
+      For now, checkout your <a [routerLink]="['/Boosts', { type:'peer', filter: 'inbox' }]">boost console</a> where you can advertise your content.
+    </div>
   </div>
 
   <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [hidden]="!inProgress"></div>
@@ -62,10 +66,10 @@
       <input ngControl="email" type="email" placeholder="Email">
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col">
+    <!--<div class="mdl-cell mdl-cell--6-col">
       <label>Social Security Number (optional)</label>
       <input ngControl="ssn" type="number" placeholder="Social Security Number">
-    </div>
+    </div>-->
 
     <div class="mdl-cell mdl-cell--12-col">
       <input type="checkbox" ngControl="venmo"> Payout to email address (using venmo)
@@ -118,15 +122,15 @@
       <input ngControl="email" type="email" placeholder="Email">
     </div>
 
-    <div class="mdl-cell mdl-cell--3-col">
+    <div class="mdl-cell mdl-cell--5-col">
       <label>Date of Birth</label>
       <input ngControl="dob" type="date" placeholder="YYYY-MM-DD">
     </div>
 
-    <div class="mdl-cell mdl-cell--5-col">
+    <!--<div class="mdl-cell mdl-cell--5-col">
       <label>Social Security Number</label>
       <input ngControl="ssn" type="number" placeholder="optional">
-    </div>
+    </div>-->
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Address</label>
@@ -148,20 +152,24 @@
       <input ngControl="postCode" type="text" placeholder="eg. 10001">
     </div>
 
-    <div class="mdl-cell"></div>
-
     <div class="mdl-cell mdl-cell--12-col">
-      <input type="checkbox" ngControl="venmo"> <span for="#venmo-chekcbox">Payout to email address (using venmo)</span>
+      <label>Payout method</label>
+      <p class="mdl-color-text--grey-600">Enter your bank account details <b>or</b> select payout out to email. You can change these details later.</p>
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Email</label>
+      <input type="checkbox" ngControl="venmo" id="venmo-checkbox"> <span for="#venmo-checkbox" (click)="onboardForm.controls.venmo.updateValue(true)">Payout via venmo</span>
+      <p class="mdl-color-text--grey-600">You can create a venmo account later, we'll send the funds to
+        <b [hidden]="!onboardForm.value.email">{{onboardForm.value.email}}</b><i [hidden]="onboardForm.value.email">your email address</i>.
+      </p>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Account number</label>
-      <input ngControl="accountNumber" type="number" placeholder="" [disabled]="onboardForm.value.venmo">
-    </div>
-
-    <div class="mdl-cell mdl-cell--6-col">
+      <input ngControl="accountNumber" type="number" placeholder="10-12 digit account number" (click)="onboardForm.controls.venmo.updateValue(false)">
       <label>Bank Routing number</label>
-      <input ngControl="routingNumber" type="number" placeholder="" [disabled]="onboardForm.value.venmo">
+      <input ngControl="routingNumber" type="number" placeholder="9 digit routing number" (click)="onboardForm.controls.venmo.updateValue(false)">
     </div>
 
     <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">

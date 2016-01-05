@@ -27,6 +27,10 @@
 
   z-index:initial;
 
+  .mdl-card__supporting-text{
+    -webkit-font-smoothing: antialiased;
+  }
+
   &:not(.mdl-cell){
     width:auto;
     min-height:0;

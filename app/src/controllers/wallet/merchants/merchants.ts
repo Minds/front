@@ -1,6 +1,6 @@
 import { Component, View } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from 'angular2/common';
-import { RouterLink } from "angular2/router";
+import { ROUTER_DIRECTIVES } from "angular2/router";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
@@ -16,7 +16,7 @@ import { InfiniteScroll } from '../../../directives/infinite-scroll';
 })
 @View({
   templateUrl: 'src/controllers/wallet/merchants/merchants.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, InfiniteScroll ]
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, InfiniteScroll ]
 })
 
 export class Merchants {
