@@ -50,35 +50,35 @@
     >
     <div class="mdl-cell mdl-cell--6-col">
       <label>First name</label>
-      <input ng-control="firstName" type="text" placeholder="First name">
+      <input ngControl="firstName" type="text" placeholder="First name">
     </div>
     <div class="mdl-cell mdl-cell--6-col">
       <label>Last name</label>
-      <input ng-control="lastName" type="text" placeholder="Last name">
+      <input ngControl="lastName" type="text" placeholder="Last name">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Email</label>
-      <input ng-control="email" type="email" placeholder="Email">
+      <input ngControl="email" type="email" placeholder="Email">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Social Security Number (optional)</label>
-      <input ng-control="ssn" type="number" placeholder="Social Security Number">
+      <input ngControl="ssn" type="number" placeholder="Social Security Number">
     </div>
 
     <div class="mdl-cell mdl-cell--12-col">
-      <input type="checkbox" ng-control="venmo"> Payout to email address (using venmo)
+      <input type="checkbox" ngControl="venmo"> Payout to email address (using venmo)
     </div>
 
     <div class="mdl-cell mdl-cell--6-col" >
       <label>Bank Account number</label>
-      <input ng-control="accountNumber" type="number" placeholder="Account Number" [disabled]="editForm.value.venmo">
+      <input ngControl="accountNumber" type="number" placeholder="Account Number" [disabled]="editForm.value.venmo">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Routing number</label>
-      <input ng-control="routingNumber" type="number" placeholder="Routing Number" [disabled]="editForm.value.venmo">
+      <input ngControl="routingNumber" type="number" placeholder="Routing Number" [disabled]="editForm.value.venmo">
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -105,63 +105,63 @@
   <form (submit)="onboard($event)" [ngFormModel]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
     <div class="mdl-cell mdl-cell--6-col">
       <label>First name</label>
-      <input ng-control="firstName" type="text" placeholder="First name">
+      <input ngControl="firstName" type="text" placeholder="First name">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Last name</label>
-      <input ng-control="lastName" type="text" placeholder="Last name">
+      <input ngControl="lastName" type="text" placeholder="Last name">
     </div>
 
     <div class="mdl-cell mdl-cell--4-col">
       <label>Email</label>
-      <input ng-control="email" type="email" placeholder="Email">
+      <input ngControl="email" type="email" placeholder="Email">
     </div>
 
     <div class="mdl-cell mdl-cell--3-col">
       <label>Date of Birth</label>
-      <input ng-control="dob" type="date" placeholder="YYYY-MM-DD">
+      <input ngControl="dob" type="date" placeholder="YYYY-MM-DD">
     </div>
 
     <div class="mdl-cell mdl-cell--5-col">
       <label>Social Security Number</label>
-      <input ng-control="ssn" type="number" placeholder="optional">
+      <input ngControl="ssn" type="number" placeholder="optional">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Address</label>
-      <input ng-control="street" type="text" placeholder="House name/number, Street name">
+      <input ngControl="street" type="text" placeholder="House name/number, Street name">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>City</label>
-      <input ng-control="city" type="text" placeholder="eg. New York City">
+      <input ngControl="city" type="text" placeholder="eg. New York City">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Region / State</label>
-      <input ng-control="region" type="text" placeholder="eg. NY">
+      <input ngControl="region" type="text" placeholder="eg. NY">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Post Code / Zip Code</label>
-      <input ng-control="postCode" type="text" placeholder="eg. 10001">
+      <input ngControl="postCode" type="text" placeholder="eg. 10001">
     </div>
 
     <div class="mdl-cell"></div>
 
     <div class="mdl-cell mdl-cell--12-col">
-      <input type="checkbox" ng-control="venmo"> <span for="#venmo-chekcbox">Payout to email address (using venmo)</span>
+      <input type="checkbox" ngControl="venmo"> <span for="#venmo-chekcbox">Payout to email address (using venmo)</span>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Account number</label>
-      <input ng-control="accountNumber" type="number" placeholder="" [disabled]="onboardForm.value.venmo">
+      <input ngControl="accountNumber" type="number" placeholder="" [disabled]="onboardForm.value.venmo">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Routing number</label>
-      <input ng-control="routingNumber" type="number" placeholder="" [disabled]="onboardForm.value.venmo">
+      <input ngControl="routingNumber" type="number" placeholder="" [disabled]="onboardForm.value.venmo">
     </div>
 
     <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">
