@@ -4,6 +4,7 @@ import { ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
+import { ScrollFactory } from '../services/ux/scroll';
 
 
 @Component({
@@ -30,7 +31,13 @@ import { Material } from '../directives/material';
       <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>
       <i class="material-icons" [hidden]="element.muted" (click)="element.muted = true">volume_up</i>
       <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
-      <a class="material-icons m-video-full-page mdl-color-text--white" *ngIf="guid" [routerLink]="['/Archive-View', {guid: guid}]" target="_blank">lightbulb_outline</a>
+      <a class="material-icons m-video-full-page mdl-color-text--white"
+        *ngIf="guid"
+        [routerLink]="['/Archive-View', {guid: guid}]"
+        target="_blank"
+        (click)="element.pause()">
+        lightbulb_outline
+      </a>
       <i class="material-icons" (click)="openFullScreen()">tv</i>
     </div>
   `,
@@ -40,6 +47,7 @@ import { Material } from '../directives/material';
 export class MindsVideo{
 
   element : any;
+  container : any;
   src : Array<any> = [];
   guid : string | number;
 
@@ -55,12 +63,16 @@ export class MindsVideo{
   seeked : number = 0;
 
   muted : boolean = true;
-  autoplay : boolean = true;
+  autoplay : boolean = false;
   loop : boolean = true;
+  scroll = ScrollFactory.build();
+  scroll_listener;
 
 
   constructor(_element : ElementRef){
+    this.container = _element.nativeElement;
     this.element = _element.nativeElement.getElementsByTagName("video")[0];
+    this.isVisible();
   }
 
   set _src(value : any){
@@ -138,8 +150,8 @@ export class MindsVideo{
   }
 
   onMouseLeave(){
-    if(this.muted)
-      this.element.muted = true;
+    //if(this.muted)
+    //  this.element.muted = true;
     this.stopSeeker();
   }
 
@@ -179,6 +191,27 @@ export class MindsVideo{
     } else if (this.element.webkitRequestFullscreen) {
       this.element.webkitRequestFullscreen();
     }
+  }
+
+  isVisible(){
+    if(this.autoplay)
+      return;
+    this.scroll_listener = this.scroll.listen((view) => {
+      var bounds = this.element.getBoundingClientRect();
+      if(bounds.top + view.height <= view.top && bounds.top + (view.height / 2) >= 0){
+        if(this.element.paused == true){
+          //console.log('[video]:: playing');
+          this.element.play();
+        }
+      } else {
+        if(this.element.paused == false){
+          this.element.muted = true;
+          this.element.pause();
+        //  console.log('[video]:: pausing');
+        }
+      }
+    });
+    //this.scroll.fire();
   }
 
   ngOnDestroy(){
