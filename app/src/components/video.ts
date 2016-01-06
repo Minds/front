@@ -63,7 +63,7 @@ export class MindsVideo{
   seeked : number = 0;
 
   muted : boolean = true;
-  autoplay : boolean = false;
+  autoplay : boolean = true;
   loop : boolean = true;
   scroll = ScrollFactory.build();
   scroll_listener;
@@ -72,7 +72,7 @@ export class MindsVideo{
   constructor(_element : ElementRef){
     this.container = _element.nativeElement;
     this.element = _element.nativeElement.getElementsByTagName("video")[0];
-    this.isVisible();
+  //  this.isVisible();
   }
 
   set _src(value : any){
