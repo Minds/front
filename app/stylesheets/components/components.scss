@@ -267,7 +267,7 @@ minds-video{
     padding:$minds-padding;
     text-align:center;
 
-    > span, i{
+    > span, i, a{
       @include flex(1);
       &.progress-bar{
           @include flex(6);
@@ -293,7 +293,7 @@ minds-video{
         flex: 2;
       }
       cursor:pointer;
-
+      text-decoration:none;
     }
   }
 

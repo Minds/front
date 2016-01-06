@@ -1,5 +1,6 @@
 import { Component, View, ElementRef } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
+import { ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
@@ -7,40 +8,41 @@ import { Material } from '../directives/material';
 
 @Component({
   selector: 'minds-video',
-  inputs: [ '_src: src', '_autoplay: autoplay', '_loop: loop', '_muted: muted', 'controls', 'poster' ],
+  inputs: [ '_src: src', '_autoplay: autoplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid' ],
   host: {
     //'(click)': 'onClick()',
     '(mouseenter)': 'onMouseEnter()',
     '(mouseleave)': 'onMouseLeave()'
-  }
-})
-@View({
+  },
   template: `
-  <video (click)="onClick()" preload="metadata" allowfullscreen>
-  </video>
-  <div class="minds-video-bar-min">
-    {{time.minutes}}:{{time.seconds}}
-  </div>
-  <div class="minds-video-bar-full">
-    <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
-    <i class="material-icons" [hidden]="element.paused" (click)="onClick()">pause</i>
-    <span id="seeker" class="progress-bar" (click)="seek($event)">
-      <bar class="progress" [ngStyle]="{ 'width': seeked + '%'}"></bar>
-      <bar class="total"></bar>
-    </span>
-    <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>
-    <i class="material-icons" [hidden]="element.muted" (click)="element.muted = true">volume_up</i>
-    <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
-    <i class="material-icons" (click)="openFullScreen()">tv</i>
-  </div>
+    <video (click)="onClick()" preload="metadata" allowfullscreen>
+    </video>
+    <div class="minds-video-bar-min">
+      {{time.minutes}}:{{time.seconds}}
+    </div>
+    <div class="minds-video-bar-full">
+      <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
+      <i class="material-icons" [hidden]="element.paused" (click)="onClick()">pause</i>
+      <span id="seeker" class="progress-bar" (click)="seek($event)">
+        <bar class="progress" [ngStyle]="{ 'width': seeked + '%'}"></bar>
+        <bar class="total"></bar>
+      </span>
+      <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>
+      <i class="material-icons" [hidden]="element.muted" (click)="element.muted = true">volume_up</i>
+      <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
+      <a class="material-icons m-video-full-page mdl-color-text--white" *ngIf="guid" [routerLink]="['/Archive-View', {guid: guid}]" target="_blank">lightbulb_outline</a>
+      <i class="material-icons" (click)="openFullScreen()">tv</i>
+    </div>
   `,
-  directives: [ CORE_DIRECTIVES, Material ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material ]
 })
 
 export class MindsVideo{
 
   element : any;
   src : Array<any> = [];
+  guid : string | number;
+
   time : { minutes: any, seconds: any } = {
     minutes: '00',
     seconds: '00'
