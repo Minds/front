@@ -59,9 +59,9 @@
 				[loop]="true"
 				[controls]="true"
 				[muted]="true"
-				[autoplay]="true"
 				[poster]="activity.custom_data.thumbnail_src"
 				[src]="[{ 'res': '720', 'uri': 'api/v1/archive/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
+        [guid]="activity.custom_data.guid"
 			>
 		</minds-video>
  </div>

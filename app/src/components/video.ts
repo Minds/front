@@ -1,45 +1,56 @@
 import { Component, View, ElementRef } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
+import { ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
+import { ScrollFactory } from '../services/ux/scroll';
 
 
 @Component({
   selector: 'minds-video',
-  inputs: [ '_src: src', '_autoplay: autoplay', '_loop: loop', '_muted: muted', 'controls', 'poster' ],
+  inputs: [ '_src: src', '_autoplay: autoplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid' ],
   host: {
     //'(click)': 'onClick()',
     '(mouseenter)': 'onMouseEnter()',
     '(mouseleave)': 'onMouseLeave()'
-  }
-})
-@View({
+  },
   template: `
-  <video (click)="onClick()" preload="metadata">
-  </video>
-  <div class="minds-video-bar-min">
-    {{time.minutes}}:{{time.seconds}}
-  </div>
-  <div class="minds-video-bar-full">
-    <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
-    <i class="material-icons" [hidden]="element.paused" (click)="onClick()">pause</i>
-    <span id="seeker" class="progress-bar" (click)="seek($event)">
-      <bar class="progress" [ngStyle]="{ 'width': seeked + '%'}"></bar>
-      <bar class="total"></bar>
-    </span>
-    <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>
-    <i class="material-icons" [hidden]="element.muted" (click)="element.muted = true">volume_up</i>
-    <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
-  </div>
+    <video (click)="onClick()" preload="metadata" allowfullscreen>
+    </video>
+    <div class="minds-video-bar-min">
+      {{time.minutes}}:{{time.seconds}}
+    </div>
+    <div class="minds-video-bar-full">
+      <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
+      <i class="material-icons" [hidden]="element.paused" (click)="onClick()">pause</i>
+      <span id="seeker" class="progress-bar" (click)="seek($event)">
+        <bar class="progress" [ngStyle]="{ 'width': seeked + '%'}"></bar>
+        <bar class="total"></bar>
+      </span>
+      <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>
+      <i class="material-icons" [hidden]="element.muted" (click)="element.muted = true">volume_up</i>
+      <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
+      <a class="material-icons m-video-full-page mdl-color-text--white"
+        *ngIf="guid"
+        [routerLink]="['/Archive-View', {guid: guid}]"
+        target="_blank"
+        (click)="element.pause()">
+        lightbulb_outline
+      </a>
+      <i class="material-icons" (click)="openFullScreen()">tv</i>
+    </div>
   `,
-  directives: [ CORE_DIRECTIVES, Material ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material ]
 })
 
 export class MindsVideo{
 
   element : any;
+  container : any;
   src : Array<any> = [];
+  guid : string | number;
+
   time : { minutes: any, seconds: any } = {
     minutes: '00',
     seconds: '00'
@@ -52,12 +63,16 @@ export class MindsVideo{
   seeked : number = 0;
 
   muted : boolean = true;
-  autoplay : boolean = true;
+  autoplay : boolean = false;
   loop : boolean = true;
+  scroll = ScrollFactory.build();
+  scroll_listener;
 
 
   constructor(_element : ElementRef){
+    this.container = _element.nativeElement;
     this.element = _element.nativeElement.getElementsByTagName("video")[0];
+    this.isVisible();
   }
 
   set _src(value : any){
@@ -135,8 +150,8 @@ export class MindsVideo{
   }
 
   onMouseLeave(){
-    if(this.muted)
-      this.element.muted = true;
+    //if(this.muted)
+    //  this.element.muted = true;
     this.stopSeeker();
   }
 
@@ -163,6 +178,40 @@ export class MindsVideo{
 
   stopSeeker(){
     clearInterval(this.seek_interval);
+  }
+
+  openFullScreen(){
+    //this._element.nativeElement.requestFullscreen();
+    if (this.element.requestFullscreen) {
+      this.element.requestFullscreen();
+    } else if (this.element.msRequestFullscreen) {
+      this.element.msRequestFullscreen();
+    } else if (this.element.mozRequestFullScreen) {
+      this.element.mozRequestFullScreen();
+    } else if (this.element.webkitRequestFullscreen) {
+      this.element.webkitRequestFullscreen();
+    }
+  }
+
+  isVisible(){
+    if(this.autoplay)
+      return;
+    this.scroll_listener = this.scroll.listen((view) => {
+      var bounds = this.element.getBoundingClientRect();
+      if(bounds.top + view.height <= view.top && bounds.top + (view.height / 2) >= 0){
+        if(this.element.paused == true){
+          //console.log('[video]:: playing');
+          this.element.play();
+        }
+      } else {
+        if(this.element.paused == false){
+          this.element.muted = true;
+          this.element.pause();
+        //  console.log('[video]:: pausing');
+        }
+      }
+    });
+    //this.scroll.fire();
   }
 
   ngOnDestroy(){
