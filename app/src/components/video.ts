@@ -144,8 +144,8 @@ export class MindsVideo{
   }
 
   onMouseEnter(){
-    if(this.muted)
-      this.element.muted = false;
+    //if(this.muted)
+    //  this.element.muted = false;
     this.getSeeker();
   }
 
