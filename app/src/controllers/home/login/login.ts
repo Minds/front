@@ -27,6 +27,7 @@ export class Login {
   hideLogin : boolean = false;
   inProgress : boolean = false;
   referrer : string;
+  minds = window.Minds;
 
   form : ControlGroup;
 

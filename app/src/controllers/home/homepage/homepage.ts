@@ -27,6 +27,7 @@ export class Homepage {
   blogs : Array<any> = [];
   channels : Array<any> = [];
   session = SessionFactory.build();
+  minds = window.Minds;
 
   constructor(public client: Client, public title: MindsTitle, public navigation: NavigationService){
     this.title.setTitle("Home");
