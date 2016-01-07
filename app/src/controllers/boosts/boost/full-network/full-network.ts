@@ -51,7 +51,7 @@ export class BoostFullNetwork{
 
   set _object(value: any) {
     this.object = value;
-    console.log(value);
+    //console.log(value);
   }
 
   boost() {
