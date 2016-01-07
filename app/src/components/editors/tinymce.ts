@@ -31,6 +31,7 @@ export class MindsTinymce {
     var self = this;
     tinymce.init({
       selector:'minds-tinymce > textarea',
+      content_css : "/stylesheets/main.css",
       format: 'raw',
       menubar: false,
       toolbar: "styleselect | bold italic underline textcolor | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | code",
