@@ -119,7 +119,7 @@ export class Discovery {
           this.entities = data.entities;
         }else{
           if(this.offset)
-            this.entities.shift();
+            data.entities.shift();
           this.entities = this.entities.concat(data.entities);
         }
 
