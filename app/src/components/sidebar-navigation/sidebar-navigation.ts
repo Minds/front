@@ -41,7 +41,7 @@ export class SidebarNavigation {
       if(message.type != "message"){
         return;
       }
-      this.navigation.setCounter(1);
+      this.navigation.setCounter("Messenger", 1);
     });
   }
 }

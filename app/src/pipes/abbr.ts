@@ -8,7 +8,7 @@ export class AbbrPipe {
 
   abbrev = ["k", "m", "b", "t"];
 
-  transform(number: number | string, args: any[]){
+  transform(number: number | any, args: any[]){
 		// 2 decimal places => 100, 3 => 1000, etc
     var decimals = 2,
       decimals = Math.pow(10, decimals);

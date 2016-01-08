@@ -149,7 +149,7 @@ export class Discovery {
     }
   }
 
-  searching : number;
+  searching;
   findCity(q : string){
     if(this.searching){
       clearTimeout(this.searching);
