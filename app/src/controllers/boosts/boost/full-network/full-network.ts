@@ -12,11 +12,8 @@ import { MindsBoostRateResponse } from '../../../../interfaces/responses';
 
 @Component({
   selector: 'minds-boost-full-network',
-  viewBindings: [ Client ],
   inputs: ['_object: object'],
-  outputs: ['_done: done']
-})
-@View({
+  outputs: ['_done: done'],
   templateUrl: 'src/controllers/boosts/boost/full-network/full-network.html',
   directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink]
 })

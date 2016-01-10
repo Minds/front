@@ -3,7 +3,7 @@ import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { MDL_DIRECTIVES } from '../../directives/material';
 import { Material as MaterialService } from "../../services/ui";
-import { ScrollFactory } from '../../services/ux/scroll';
+import { ScrollService } from '../../services/ux/scroll';
 
 
 @Component({
@@ -30,8 +30,6 @@ import { ScrollFactory } from '../../services/ux/scroll';
 
 export class InfiniteScroll{
 
-  scroll = ScrollFactory.build();
-
   element : any;
   loadHandler: EventEmitter<boolean> = new EventEmitter(true);
   distance : any;
@@ -41,17 +39,17 @@ export class InfiniteScroll{
   _content : any;
   _listener;
 
-  constructor(_element: ElementRef) {
+  constructor(_element: ElementRef, public scroll : ScrollService) {
     this.element = _element.nativeElement;
     this.init();
   }
 
   init(){
-    this._listener = this.scroll.listen((view) => {
-      if(this.element.offsetTop - this.element.clientHeight - view.height <= view.top && this.moreData){
+    this._listener = this.scroll.listen((e) => {
+      if(this.element.offsetTop - this.element.clientHeight - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && this.moreData){
         this.loadHandler.next(true);
       }
-    });
+    },100);
   }
 
   manualLoad(){

@@ -12,7 +12,7 @@ import { AdminPages } from './pages/pages';
 
 @Component({
   selector: 'minds-admin',
-  viewBindings: [ Client ]
+  viewBindings: [ ]
 })
 @View({
   template: `

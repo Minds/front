@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -12,10 +12,7 @@ import { BlogCard } from '../../plugins/blog/card/card';
 
 @Component({
   selector: 'minds-search',
-  viewBindings: [ Client ],
-  bindings: [ MindsTitle ]
-})
-@View({
+  bindings: [ MindsTitle ],
   templateUrl: 'src/controllers/search/list.html',
   directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
     CARDS, BlogCard, InfiniteScroll ]

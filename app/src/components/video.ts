@@ -4,7 +4,7 @@ import { ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
-import { ScrollFactory } from '../services/ux/scroll';
+import { ScrollService } from '../services/ux/scroll';
 
 
 @Component({
@@ -63,16 +63,15 @@ export class MindsVideo{
   seeked : number = 0;
 
   muted : boolean = true;
-  autoplay : boolean = true;
+  autoplay : boolean = false;
   loop : boolean = true;
-  scroll = ScrollFactory.build();
   scroll_listener;
 
 
-  constructor(_element : ElementRef){
+  constructor(_element : ElementRef, public scroll : ScrollService){
     this.container = _element.nativeElement;
     this.element = _element.nativeElement.getElementsByTagName("video")[0];
-  //  this.isVisible();
+    this.isVisible();
   }
 
   set _src(value : any){
@@ -198,19 +197,19 @@ export class MindsVideo{
       return;
     this.scroll_listener = this.scroll.listen((view) => {
       var bounds = this.element.getBoundingClientRect();
-      if(bounds.top + view.height <= view.top && bounds.top + (view.height / 2) >= 0){
+      if(bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0){
         if(this.element.paused == true){
-          //console.log('[video]:: playing');
+          //console.log('[video]:: playing '  + this.src);
           this.element.play();
         }
       } else {
         if(this.element.paused == false){
           this.element.muted = true;
           this.element.pause();
-        //  console.log('[video]:: pausing');
+          //console.log('[video]:: pausing ' + this.src);
         }
       }
-    });
+    }, 0, 600); //check if in view every 0.6 second
     //this.scroll.fire();
   }
 

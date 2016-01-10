@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -10,9 +10,7 @@ import { MindsBanner } from '../../components/banner';
 
 
 @Component({
-  providers: [ MindsTitle, Client, NavigationService ]
-})
-@View({
+  bindings: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/pages/pages.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material, MindsBanner ]
 })

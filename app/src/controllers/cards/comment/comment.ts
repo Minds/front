@@ -11,14 +11,12 @@ import { TagsPipe } from '../../../pipes/tags';
 
 @Component({
   selector: 'minds-card-comment',
-  viewProviders: [ Client ],
+  viewProviders: [ ],
   inputs: ['object', 'parent'],
   outputs: [ '_delete: delete'],
   host: {
     '(keydown.esc)': 'editing = false'
-  }
-})
-@View({
+  },
   template: `
   <div class="mdl-card minds-comment minds-block">
     <div class="minds-avatar">

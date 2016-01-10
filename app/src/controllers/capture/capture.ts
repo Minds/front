@@ -12,15 +12,13 @@ import { Client } from '../../services/api/client';
 
 @Component({
   selector: 'minds-capture',
-  viewBindings: [ Upload, Client ],
+  viewBindings: [Upload, Client ],
   bindings: [ MindsTitle ],
   host : {
     '(dragover)': 'dragover($event)',
     '(dragleave)': 'dragleave($event)',
     '(drop)': 'drop($event)'
-  }
-})
-@View({
+  },
   templateUrl: 'src/controllers/capture/capture.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MDL_DIRECTIVES ]
 })

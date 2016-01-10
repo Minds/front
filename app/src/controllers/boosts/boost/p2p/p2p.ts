@@ -15,11 +15,9 @@ import { MindsBoostRateResponse } from '../../../../interfaces/responses';
 
 @Component({
   selector: 'minds-boost-p2p',
-  providers: [ Client ],
+  providers: [  ],
   inputs: ['activity: object'],
-  outputs: ['_done: done']
-})
-@View({
+  outputs: ['_done: done'],
   templateUrl: 'src/controllers/boosts/boost/p2p/p2p.html',
   directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink, Checkout]
 })

@@ -5,7 +5,7 @@ import { CARDS } from '../../controllers/cards/cards';
 
 @Component({
   selector: 'm-ads-boost',
-  providers: [ Client ],
+  providers: [  ],
   inputs: ['handler', 'limit'],
   template: `
     <h3 class="m-ad-boost-heading mdl-color-text--blue-grey-300"><i class="material-icons">trending_up</i> Boosted content</h3>

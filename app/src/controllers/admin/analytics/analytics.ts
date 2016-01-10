@@ -9,7 +9,7 @@ import { Material } from '../../../directives/material';
 
 @Component({
   selector: 'minds-admin-analytics',
-  viewBindings: [ Client ]
+  viewBindings: [ ]
 })
 @View({
   templateUrl: 'src/controllers/admin/analytics/analytics.html',

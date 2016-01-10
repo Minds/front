@@ -11,7 +11,7 @@ import { TopbarNavigation } from './topbar-navigation';
 
 @Component({
   selector: 'minds-topbar',
-  viewBindings: [ Storage, Sidebar ]
+  viewBindings: [Storage, Sidebar ]
 })
 @View({
   templateUrl: 'src/components/topbar/topbar.html',

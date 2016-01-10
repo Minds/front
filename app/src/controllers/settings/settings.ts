@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouterLink, RouteParams } from "angular2/router";
 
@@ -15,10 +15,7 @@ import { SettingsTwoFactor } from './two-factor/two-factor';
 
 @Component({
   selector: 'minds-settings',
-  viewBindings: [ Client ],
-  bindings: [ MindsTitle ]
-})
-@View({
+  bindings: [ MindsTitle ],
   templateUrl: 'src/controllers/settings/settings.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink, SettingsGeneral, SettingsStatistics, SettingsDisableChannel, SettingsTwoFactor]
 })

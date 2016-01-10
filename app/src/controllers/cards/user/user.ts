@@ -10,10 +10,7 @@ import { BUTTON_COMPONENTS } from '../../../components/buttons';
 
 @Component({
   selector: 'minds-card-user',
-  viewBindings: [ Client ],
-  properties: ['object', 'avatarSize']
-})
-@View({
+  inputs: ['object', 'avatarSize'],
   templateUrl: 'src/controllers/cards/user/user.html',
   directives: [ CORE_DIRECTIVES, Material, RouterLink, BUTTON_COMPONENTS ]
 })

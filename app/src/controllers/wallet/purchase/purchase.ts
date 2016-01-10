@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 
@@ -13,9 +13,6 @@ import { CreditCard } from '../../../interfaces/card-interface';
 
 @Component({
   selector: 'minds-wallet-purchase',
-  viewBindings: [ Client ]
-})
-@View({
   templateUrl: 'src/controllers/wallet/purchase/purchase.html',
   directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, InfiniteScroll ]
 })

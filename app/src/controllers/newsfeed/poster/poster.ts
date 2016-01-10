@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -12,11 +12,8 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-newsfeed-poster',
-  viewBindings: [ Client, Upload ],
   inputs: [ '_container_guid: containerGuid', 'accessId'],
-  outputs: ['load']
-})
-@View({
+  outputs: ['load'],
   templateUrl: 'src/controllers/newsfeed/poster/poster.html',
   directives: [ MDL_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, AutoGrow, InfiniteScroll ]
 })

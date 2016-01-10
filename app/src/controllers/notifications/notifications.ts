@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouterLink } from 'angular2/router';
 import { MindsTitle } from '../../services/ux/title';
@@ -11,10 +11,7 @@ import { NotificationService } from '../../services/notification';
 
 @Component({
   selector: 'minds-notifications',
-  viewBindings: [ Client, NotificationService],
-  bindings: [ MindsTitle ]
-})
-@View({
+  bindings: [ MindsTitle, NotificationService ],
   templateUrl: 'src/controllers/notifications/list.html',
   directives: [ CORE_DIRECTIVES, RouterLink, Material, InfiniteScroll ]
 })

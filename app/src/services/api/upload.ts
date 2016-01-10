@@ -8,7 +8,7 @@ import {Cookie} from '../cookie';
 export class Upload  {
 	base : string = "/";
 	cookie : Cookie = new Cookie();
-	constructor(@Inject(Http) public http : Http){ }
+	constructor(public http : Http){ }
 
 	/**
 	 * Return a POST request

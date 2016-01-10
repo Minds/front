@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -14,9 +14,7 @@ import { Register } from '../register/register';
 
 @Component({
   selector: 'minds-homepage',
-  bindings: [ Client, MindsTitle, NavigationService  ]
-})
-@View({
+  bindings: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/home/homepage/homepage.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, CARDS, BlogCard, Material, Register ]
 })

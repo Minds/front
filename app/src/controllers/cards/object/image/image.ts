@@ -10,13 +10,10 @@ import { BUTTON_COMPONENTS } from '../../../../components/buttons';
 
 @Component({
   selector: 'minds-card-image',
-  viewBindings: [ Client ],
   host: {
     'class': 'mdl-card mdl-shadow--2dp'
   },
-  properties: ['object']
-})
-@View({
+  inputs: ['object'],
   templateUrl: 'src/controllers/cards/object/image/image.html',
   directives: [ CORE_DIRECTIVES, BUTTON_COMPONENTS, Material, RouterLink]
 })

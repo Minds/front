@@ -1,4 +1,4 @@
-import { Component, View, Inject} from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams } from 'angular2/router';
 
@@ -11,10 +11,7 @@ import { UserCard } from '../../../controllers/cards/cards';
 
 @Component({
   selector: 'minds-channel-subscriptions',
-  viewBindings: [ Client ],
-  properties: ['channel']
-})
-@View({
+  inputs: ['channel'],
   templateUrl: 'src/controllers/channels/subscriptions/subscriptions.html',
   directives: [ CORE_DIRECTIVES, Material, InfiniteScroll, UserCard ]
 })

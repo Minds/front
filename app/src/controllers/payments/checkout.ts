@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter} from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 
@@ -21,11 +21,8 @@ interface CreditCard {
 
 @Component({
   selector: 'minds-payments-checkout',
-  providers: [ Client ],
   inputs: ['amount', 'merchant_guid'],
-  outputs: ['inputed', 'done']
-})
-@View({
+  outputs: ['inputed', 'done'],
   template: `
 
     <!--<div class="mdl-card mdl-shadow--2dp m-payments-options" style="margin-bottom:8px;">

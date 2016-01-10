@@ -9,7 +9,7 @@ import { MINDS_PIPES } from '../../pipes/pipes';
 
 @Component({
   selector: 'minds-topbar-navigation',
-  viewBindings: [ NavigationService ]
+  viewBindings: [NavigationService ]
 })
 @View({
   template: `

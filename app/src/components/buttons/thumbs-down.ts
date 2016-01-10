@@ -8,7 +8,7 @@ import { SignupOnActionModal } from '../modal/modal';
 
 @Component({
   selector: 'minds-button-thumbs-down',
-  viewBindings: [ Client, WalletService ],
+  viewBindings: [WalletService ],
   properties: ['_object: object']
 })
 @View({

@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
 
@@ -11,10 +11,7 @@ import { Register } from '../register/register';
 
 @Component({
   selector: 'minds-login',
-  viewBindings: [ Client ],
-  bindings: [ MindsTitle ]
-})
-@View({
+  bindings: [ MindsTitle ],
   templateUrl: 'src/controllers/home/login/login.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, Register, RouterLink]
 })

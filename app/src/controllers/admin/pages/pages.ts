@@ -10,7 +10,7 @@ import { MindsBanner } from '../../../components/banner';
 
 @Component({
   selector: 'minds-admin-pages',
-  providers: [ Client, Upload ]
+  providers: [ , Upload ]
 })
 @View({
   templateUrl: 'src/controllers/admin/pages/pages.html',

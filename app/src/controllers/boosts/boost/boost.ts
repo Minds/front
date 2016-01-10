@@ -14,11 +14,9 @@ import { BoostP2P} from './p2p/p2p';
 
 @Component({
   selector: 'minds-boost',
-  viewBindings: [ Client, NotificationService ],
-  properties: ['object'],
-  events: ['_done: done']
-})
-@View({
+  viewBindings: [ NotificationService ],
+  inputs: ['object'],
+  outputs: ['_done: done'],
   templateUrl: 'src/controllers/boosts/boost/boost.html',
   directives: [ CORE_DIRECTIVES, Material, RouterLink, BoostFullNetwork, BoostP2P]
 })

@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 
@@ -14,10 +14,7 @@ import { SignupOnActionModal } from '../../components/modal/modal';
 
 @Component({
   selector: 'minds-comments',
-  viewBindings: [ Client ],
-  inputs: ['_object : object', '_reversed : reversed', 'limit']
-})
-@View({
+  inputs: ['_object : object', '_reversed : reversed', 'limit'],
   templateUrl: 'src/controllers/comments/list.html',
   directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, SignupOnActionModal ],
   pipes: [ TagsPipe ]

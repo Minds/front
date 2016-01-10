@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
 
@@ -15,9 +15,6 @@ import { BlogCard } from '../../../plugins/blog/card/card';
     'class': 'mdl-card mdl-shadow--2dp',
     '[hidden]': 'items.length == 0'
   },
-  providers: [ Client ]
-})
-@View({
   template: `
 
     <div class="mdl-card__title">

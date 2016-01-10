@@ -1,4 +1,4 @@
-import {Inject, Injector, bind} from 'angular2/core';
+import {Inject} from 'angular2/core';
 import {Http, Headers} from 'angular2/http';
 import {Cookie} from '../cookie';
 
@@ -8,7 +8,8 @@ import {Cookie} from '../cookie';
 export class Client {
 	base : string = "/";
 	cookie : Cookie = new Cookie();
-	constructor(@Inject(Http) public http : Http){ }
+	constructor(public http : Http){
+	}
 
 	private buildParams(object : Object){
 		return Object.keys(object).map((k) => {

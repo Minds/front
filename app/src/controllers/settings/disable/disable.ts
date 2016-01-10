@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouterLink } from "angular2/router";
 
@@ -8,10 +8,7 @@ import { Material } from '../../../directives/material';
 
 @Component({
   selector: 'minds-settings-disable-channel',
-  viewBindings: [ Client ],
-  properties: ['object']
-})
-@View({
+  inputs: ['object'],
   templateUrl: 'src/controllers/settings/disable/disable.html',
   directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES]
 })

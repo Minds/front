@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -15,10 +15,6 @@ import { AnalyticsImpressions } from '../../../components/analytics/impressions'
 
 @Component({
   selector: 'minds-newsfeed-single',
-  viewBindings: [ Client, Upload ],
-//  inputs: [ "prepend" ]
-})
-@View({
   templateUrl: 'src/controllers/newsfeed/single/single.html',
   directives: [ Poster, CARDS, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
     InfiniteScroll,  AnalyticsImpressions ]

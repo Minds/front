@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, ROUTER_DIRECTIVES } from "angular2/router";
 
@@ -17,10 +17,7 @@ import { Merchants } from './merchants/merchants';
 
 @Component({
   selector: 'minds-wallet',
-  viewBindings: [ Client, WalletService ],
-  bindings: [ MindsTitle ]
-})
-@View({
+  bindings: [ MindsTitle, WalletService ],
   templateUrl: 'src/controllers/wallet/wallet.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, MDL_DIRECTIVES, InfiniteScroll,
     WalletTransactions, WalletPurchase, Merchants]

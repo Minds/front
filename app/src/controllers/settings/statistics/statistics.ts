@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { RouterLink } from "angular2/router";
@@ -7,10 +7,7 @@ import { Material } from '../../../directives/material';
 
 @Component({
   selector: 'minds-settings-statistics',
-  viewBindings: [ Client ],
-  properties: ['object']
-})
-@View({
+  inputs: ['object'],
   templateUrl: 'src/controllers/settings/statistics/statistics.html',
   directives: [ CORE_DIRECTIVES, Material, RouterLink ]
 })

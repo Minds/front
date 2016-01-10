@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
@@ -19,10 +19,7 @@ import { AnalyticsImpressions } from '../../components/analytics/impressions';
 
 @Component({
   selector: 'minds-newsfeed',
-  viewBindings: [ Client, Upload, NavigationService  ],
-  bindings: [ MindsTitle ]
-})
-@View({
+  bindings: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/newsfeed/list.html',
   directives: [ Poster, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
     InfiniteScroll, AnalyticsImpressions, CARDS, BoostAds ]

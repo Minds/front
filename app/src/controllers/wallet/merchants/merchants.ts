@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from 'angular2/common';
 import { ROUTER_DIRECTIVES } from "angular2/router";
 
@@ -12,9 +12,6 @@ import { InfiniteScroll } from '../../../directives/infinite-scroll';
 
 @Component({
   selector: 'minds-wallet-merchants',
-  viewBindings: [ Client ]
-})
-@View({
   templateUrl: 'src/controllers/wallet/merchants/merchants.html',
   directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, InfiniteScroll ]
 })

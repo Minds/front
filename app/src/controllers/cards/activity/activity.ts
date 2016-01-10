@@ -13,13 +13,12 @@ import { Boost } from '../../boosts/boost/boost';
 import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
-import { ScrollFactory } from '../../../services/ux/scroll';
+import { ScrollService } from '../../../services/ux/scroll';
 import { ShareModal } from '../../../components/modal/modal';
 
 
 @Component({
   selector: 'minds-activity',
-  viewProviders: [ Client ],
   host: {
     'class': 'mdl-card mdl-shadow--2dp'
   },
@@ -39,7 +38,6 @@ export class Activity {
   commentsToggle : boolean = false;
   shareToggle : boolean = false;
   session = SessionFactory.build();
-  scroll = ScrollFactory.build();
   showBoostOptions : boolean = false;
   type : string;
   element : any;
@@ -50,7 +48,7 @@ export class Activity {
   _delete: EventEmitter<any> = new EventEmitter();
   scroll_listener;
 
-	constructor(public client: Client, _element: ElementRef){
+	constructor(public client: Client, public scroll : ScrollService, _element: ElementRef){
     this.element = _element.nativeElement;
     this.isVisible();
 	}
@@ -91,7 +89,7 @@ export class Activity {
 
   isVisible(){
     this.scroll_listener = this.scroll.listen((view) => {
-      if(this.element.offsetTop - view.height <= view.top && !this.visible){
+      if(this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible){
         //stop listening
         this.scroll.unListen(this.scroll_listener);
         //make visible
@@ -99,7 +97,7 @@ export class Activity {
         //update the analytics
         this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
       }
-    });
+    }, 1000);
     //this.scroll.fire();
   }
 

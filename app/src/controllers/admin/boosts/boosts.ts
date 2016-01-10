@@ -10,7 +10,7 @@ import { Material } from '../../../directives/material';
 
 @Component({
   selector: 'minds-admin-boosts',
-  viewBindings: [ Client ],
+  
   host: {
     '(keydown)': 'onKeyDown($event)'
   }

@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 
@@ -10,9 +10,6 @@ import { InfiniteScroll } from '../../../directives/infinite-scroll';
 
 @Component({
   selector: 'minds-wallet-transactions',
-  viewBindings: [ Client ]
-})
-@View({
   templateUrl: 'src/controllers/wallet/transactions/transactions.html',
   directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, InfiniteScroll ]
 })

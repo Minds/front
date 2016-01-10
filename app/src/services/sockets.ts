@@ -85,10 +85,3 @@ export class SocketsService {
   }
 
 }
-
-export const SOCKETS_PROVIDERS : any[] = [
-   provide(SocketsService, {
-     useFactory: () => new SocketsService(),
-     deps: []
-   })
-];

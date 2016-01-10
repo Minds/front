@@ -12,15 +12,11 @@ import { Boost } from '../../boosts/boost/boost';
 import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
-import { ScrollFactory } from '../../../services/ux/scroll';
 
 
 @Component({
   selector: 'minds-remind',
-  viewBindings: [ Client ],
-  properties: ['object']
-})
-@View({
+  properties: ['object'],
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks],
   pipes: [ MINDS_PIPES ]

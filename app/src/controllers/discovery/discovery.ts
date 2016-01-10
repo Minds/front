@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
 
@@ -13,10 +13,7 @@ import { BUTTON_COMPONENTS } from '../../components/buttons';
 
 @Component({
   selector: 'minds-discovery',
-  viewBindings: [ Client ],
-  bindings: [ MindsTitle ]
-})
-@View({
+  bindings: [ MindsTitle ],
   templateUrl: 'src/controllers/discovery/discovery.html',
   directives: [ CORE_DIRECTIVES, RouterLink, Material, InfiniteScroll, CARDS, BUTTON_COMPONENTS ]
 })

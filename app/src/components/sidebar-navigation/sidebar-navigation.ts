@@ -9,7 +9,7 @@ import { SocketsService } from '../../services/sockets';
 
 @Component({
   selector: 'minds-sidebar-navigation',
-  viewBindings: [ NavigationService ]
+  viewBindings: [NavigationService ]
 })
 @View({
   templateUrl: 'src/components/sidebar-navigation/sidebar-navigation.html',

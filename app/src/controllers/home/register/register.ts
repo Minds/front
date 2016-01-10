@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteParams } from 'angular2/router';
 
@@ -9,9 +9,6 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-register',
-  viewBindings: [ Client ]
-})
-@View({
   templateUrl: 'src/controllers/home/register/register.html',
   directives: [ FORM_DIRECTIVES, Material ]
 })

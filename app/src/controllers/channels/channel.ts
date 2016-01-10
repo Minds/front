@@ -1,4 +1,4 @@
-import { Component, View, Inject } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
 
@@ -6,7 +6,7 @@ import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Material } from '../../directives/material';
 import { SessionFactory } from '../../services/session';
-import { ScrollFactory } from '../../services/ux/scroll';
+import { ScrollService } from '../../services/ux/scroll';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { BUTTON_COMPONENTS } from '../../components/buttons';
 import { MindsCarousel } from '../../components/carousel';
@@ -24,12 +24,10 @@ import { ChannelModules } from './modules/modules';
 import { ChannelSubscribers } from './subscribers/subscribers';
 import { ChannelSubscriptions } from './subscriptions/subscriptions';
 
+
 @Component({
   selector: 'minds-channel',
-  viewBindings: [ Client, Upload ],
-  bindings: [ MindsTitle ]
-})
-@View({
+  bindings: [ MindsTitle ],
   templateUrl: 'src/controllers/channels/channel.html',
   pipes: [ TagsPipe ],
   directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, Material, InfiniteScroll, CARDS,
@@ -41,7 +39,6 @@ export class Channel {
 
   _filter : string = "feed";
   session = SessionFactory.build();
-  scroll = ScrollFactory.build();
   isLocked : boolean = false;
 
   username : string;
@@ -57,7 +54,8 @@ export class Channel {
   //@todo make a re-usable city selection module to avoid duplication here
   cities : Array<any> = [];
 
-  constructor(public client: Client, public upload: Upload, params: RouteParams, public router: Router, public title: MindsTitle){
+  constructor(public client: Client, public upload: Upload, params: RouteParams,
+    public router: Router, public title: MindsTitle, public scroll : ScrollService){
       this.username = params.params['username'];
       if(params.params['filter'])
         this._filter = params.params['filter'];

@@ -7,7 +7,7 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import { NotificationService } from './src/services/notification';
 import { AnalyticsService} from './src/services/analytics'
 import { Client } from './src/services/api';
-import { SOCKETS_PROVIDERS, SocketsService } from './src/services/sockets';
+import { SocketsService } from './src/services/sockets';
 
 import {Topbar} from './src/components/topbar/topbar';
 import {SidebarNavigation} from './src/components/sidebar-navigation/sidebar-navigation';
@@ -41,7 +41,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
 
 @Component({
   selector: 'minds-app',
-  bindings: [ Client, NotificationService, AnalyticsService ],
+  bindings: [ NotificationService, AnalyticsService ],
   templateUrl: './src/controllers/index.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal ]
 })

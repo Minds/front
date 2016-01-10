@@ -12,9 +12,6 @@ import { BoostAds } from '../../components/ads/boost';
 
 @Component({
   selector: 'minds-boosts-console',
-  providers: [ Client ]
-})
-@View({
   templateUrl: 'src/controllers/boosts/boosts.html',
   directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS, BUTTON_COMPONENTS, BoostAds ]
 })

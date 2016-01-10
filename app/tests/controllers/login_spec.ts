@@ -44,7 +44,7 @@ export function main() {
 
 @Component({
   selector: 'test-app',
-  bindings: [ ]
+  bindings: []
 })
 @View({
   directives: [ LoginComponent, ROUTER_DIRECTIVES ],

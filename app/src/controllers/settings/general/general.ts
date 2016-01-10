@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink, RouteParams } from "angular2/router";
 
@@ -9,10 +9,7 @@ import { MDL_DIRECTIVES } from '../../../directives/material';
 
 @Component({
   selector: 'minds-settings-general',
-  viewBindings: [ Client ],
-  properties: ['object']
-})
-@View({
+  inputs: ['object'],
   templateUrl: 'src/controllers/settings/general/general.html',
   directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES]
 })
