@@ -1,11 +1,12 @@
-import { Component, View } from 'angular2/core';
+import { Component, View, ChangeDetectionStrategy } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { Client } from '../../services/api';
 
 @Component({
   selector: 'minds-button-comment',
-  properties: ['_object: object']
+  properties: ['_object: object'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 @View({
   template: `

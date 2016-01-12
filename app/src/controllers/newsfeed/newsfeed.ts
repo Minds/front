@@ -1,5 +1,6 @@
 import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
+import { Observable } from 'rxjs/Rx';
 
 import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -27,8 +28,8 @@ import { AnalyticsImpressions } from '../../components/analytics/impressions';
 
 export class Newsfeed {
 
-	newsfeed : Array<Object> = [];
-	offset : string = "";
+  newsfeed : Array<Object>;
+  offset : string = "";
   inProgress : boolean = false;
   moreData : boolean = true;
   session = SessionFactory.build();

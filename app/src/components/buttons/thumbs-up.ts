@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component, View, ChangeDetectionStrategy } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
@@ -9,7 +9,8 @@ import { SignupOnActionModal } from '../modal/modal';
 @Component({
   selector: 'minds-button-thumbs-up',
   viewBindings: [WalletService ],
-  properties: ['_object: object']
+  properties: ['_object: object'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 @View({
   template: `

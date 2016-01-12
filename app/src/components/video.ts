@@ -1,4 +1,4 @@
-import { Component, View, ElementRef } from 'angular2/core';
+import { Component, View, ElementRef, ChangeDetectionStrategy } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -14,9 +14,10 @@ import { ScrollService } from '../services/ux/scroll';
     //'(click)': 'onClick()',
     '(mouseenter)': 'onMouseEnter()',
     '(mouseleave)': 'onMouseLeave()'
-  },
+    },
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <video (click)="onClick()" preload="metadata" allowfullscreen>
+    <video (click)="onClick()" preload="auto" allowfullscreen>
     </video>
     <div class="minds-video-bar-min">
       {{time.minutes}}:{{time.seconds}}
@@ -208,7 +209,8 @@ export class MindsVideo{
           this.element.pause();
           //console.log('[video]:: pausing ' + this.src);
         }
-      }
+        }
+        //console.log('[video]: checking visibility');
     }, 0, 600); //check if in view every 0.6 second
     //this.scroll.fire();
   }

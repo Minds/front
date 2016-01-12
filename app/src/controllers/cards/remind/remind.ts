@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component, ChangeDetectionStrategy } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 
@@ -19,7 +19,8 @@ import { TagsLinks } from '../../../directives/tags';
   properties: ['object'],
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks],
-  pipes: [ MINDS_PIPES ]
+  pipes: [ MINDS_PIPES ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class Remind {

@@ -1,5 +1,5 @@
 import { EventEmitter, Injector, provide } from 'angular2/core';
-import {Observable} from 'rxjs/rx';
+import {Observable} from 'rxjs/Rx';
 
 export class ScrollService{
 
