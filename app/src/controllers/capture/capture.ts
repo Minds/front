@@ -12,7 +12,6 @@ import { Client } from '../../services/api/client';
 
 @Component({
   selector: 'minds-capture',
-  viewBindings: [Upload, Client ],
   bindings: [ MindsTitle ],
   host : {
     '(dragover)': 'dragover($event)',
