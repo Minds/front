@@ -4,7 +4,7 @@ import { CORE_DIRECTIVES } from 'angular2/common';
 
 @Component({
   selector: 'm-social-icons',
-  inputs: [ '_url: url' ],
+  inputs: [ '_url: url', '_title: title' ],
   directives: [ CORE_DIRECTIVES ],
   templateUrl: 'src/components/social-icons/social-icons.html',
 })
@@ -12,12 +12,19 @@ import { CORE_DIRECTIVES } from 'angular2/common';
 export class SocialIcons {
 
   url : string = "";
+  title : string = "Shared via Minds.com";
   encodedUrl : string = "";
+  encodedTitle : string = "Shared%20via%20Minds.com";
 
 
   set _url(value : string){
     this.url = value;
     this.encodedUrl = encodeURI(this.url);
+  }
+
+  set _title(value : string){
+    this.title = value;
+    this.encodedTitle = encodeURI(this.title);
   }
 
   copy(e){
