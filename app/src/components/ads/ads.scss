@@ -1,7 +1,7 @@
 .m-ad-block{
   display:block;
   width:100%;
-  margin-left: -16px;
+  //margin-left: -16px;
 
   &.m-ad-block-boosts{
     margin-left:0;
@@ -10,6 +10,33 @@
       padding:8px 0;
     }
   }
+
+  &.responsive{
+    width: 100%;
+    background: #FFF;
+    text-align: center;
+
+    ins{
+      display: block;
+      width: auto;
+      height: 90px;
+      margin: auto;
+    }
+
+    &.m-ad-block-top, &.m-ad-block-bottom{
+      margin: -8px;
+      width: calc(100% + 16px);
+    }
+  }
+  &.m-ad-block-google.square{
+      width: 360px;
+      height: 300px;
+      float: right;
+      display: block;
+      margin-top:8px;
+      margin-left: 16px;
+  }
+
 }
 .m-ad-boost-heading{
   font-size: 12px;
