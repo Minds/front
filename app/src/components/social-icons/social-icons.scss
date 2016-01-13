@@ -6,6 +6,7 @@
   flex-direction: column;
   top:30%;
   right:0;
+  z-index:100;
 
   @media screen and (max-width: $max-mobile){
     flex-direction: row;
