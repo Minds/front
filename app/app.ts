@@ -35,7 +35,7 @@ import {Pages} from './src/controllers/pages/pages';
  * TODO: Load these automagically from gulp
  */
 import {Gatherings} from './src/plugins/gatherings/gatherings';
-import {Blog, BlogView, BlogEdit} from './src/plugins/blog/blog';
+import {Blog, BlogViewInfinite, BlogEdit} from './src/plugins/blog/blog';
 import {ArchiveView, ArchiveEdit} from './src/plugins/archive/archive';
 import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups';
 
@@ -66,8 +66,8 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
   { path: '/messenger/:guid', component:  Gatherings, as: 'Messenger-Conversation'},
 
   { path: '/blog/:filter', component:  Blog, as: 'Blog'},
-  { path: '/blog/view/:guid', component:  BlogView, as: 'Blog-View'},
-  { path: '/blog/view/:guid/:title', component:  BlogView, as: 'Blog-View-Title'},
+  { path: '/blog/view/:guid', component:  BlogViewInfinite, as: 'Blog-View'},
+  { path: '/blog/view/:guid/:title', component:  BlogViewInfinite, as: 'Blog-View-Title'},
   { path: '/blog/edit/:guid', component:  BlogEdit, as: 'Blog-Edit'},
 
   { path: '/archive/view/:guid', component: ArchiveView, as: 'Archive-View'},
