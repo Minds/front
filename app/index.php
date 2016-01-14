@@ -9,7 +9,7 @@
       $meta = Minds\Core\SEO\Manager::get();
       foreach($meta as $name => $content){
         $name = strip_tags($name);
-        $content = strip_tags($content);
+        $content = str_replace(['"'], '\'', $content);
         switch($name){
           case "title":
             echo "<title>$content | Minds</title>\n";
