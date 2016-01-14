@@ -23,8 +23,8 @@ export class AnalyticsService {
   }
 
   //Manual send.
-  static send(type : string){
+  static send(type : string, opts : any = {}){
     if (window.ga)
-      window.ga('send', type);
+      window.ga('send', type, {});
   }
 }
