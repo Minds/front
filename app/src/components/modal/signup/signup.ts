@@ -4,6 +4,7 @@ import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
 
 import { Modal } from '../modal';
 import { SessionFactory } from '../../../services/session';
+import { ScrollService } from '../../../services/ux/scroll';
 
 
 @Component({
@@ -43,8 +44,13 @@ export class SignupModal {
   open : boolean = false;
   session = SessionFactory.build();
   route : string = "";
+  scroll_listener;
 
-  constructor(public router : Router){
+  constructor(public router : Router, public scroll : ScrollService){
+    this.listen();
+  }
+
+  listen(){
     this.router.subscribe((route) => {
       this.route = route;
       switch(route.split('?')[0]){
@@ -55,16 +61,26 @@ export class SignupModal {
           this.open = false;
           break;
         default:
-          if(window.localStorage.getItem('hideSignupModal'))
-            this.open = false;
-          else
-            this.open = true;
+          this.scroll_listener = this.scroll.listen((e) => {
+            if(this.scroll.view.scrollTop > 100){
+              if(window.localStorage.getItem('hideSignupModal'))
+                this.open = false;
+              else
+                this.open = true;
+              this.scroll.unListen(this.scroll_listener);
+            }
+          }, 100);
       }
     });
   }
 
   close(){
     this.open = false;
+  }
+
+  ngOnDestroy(){
+    if(this.scroll_listener)
+      this.scroll.unListen(this.scroll_listener);
   }
 
 }
