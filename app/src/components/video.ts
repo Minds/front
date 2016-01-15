@@ -194,7 +194,7 @@ export class MindsVideo{
   }
 
   isVisible(){
-    if(this.autoplay)
+    if(this.autoplay || !this.guid)
       return;
     this.scroll_listener = this.scroll.listen((view) => {
       var bounds = this.element.getBoundingClientRect();
@@ -217,6 +217,7 @@ export class MindsVideo{
 
   ngOnDestroy(){
     clearInterval(this.seek_interval);
+    this.scroll.unListen(this.scroll_listener);
   }
 
 }
