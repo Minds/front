@@ -194,9 +194,11 @@ export class MindsVideo{
   }
 
   isVisible(){
-    if(this.autoplay || !this.guid)
+    if(this.autoplay)
       return;
     this.scroll_listener = this.scroll.listen((view) => {
+      if(!this.guid)
+        return;
       var bounds = this.element.getBoundingClientRect();
       if(bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0){
         if(this.element.paused == true){
