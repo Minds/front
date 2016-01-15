@@ -6,7 +6,7 @@
 
         <div class="avatar">
           <a [routerLink]="['/Channel', {username: notification.fromObj.username}]">
-            <img src="/icon/{{notification.fromObj.guid}}/small}}" class="mdl-shadow--2dp"/>
+            <img [src]="'/icon/' + notification.fromObj.guid + '/small'" class="mdl-shadow--2dp"/>
           </a>
         </div>
 
