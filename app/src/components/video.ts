@@ -217,7 +217,8 @@ export class MindsVideo{
 
   ngOnDestroy(){
     clearInterval(this.seek_interval);
-    this.scroll.unListen(this.scroll_listener);
+    if(this.scroll_listener)
+      this.scroll.unListen(this.scroll_listener);
   }
 
 }
