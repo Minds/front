@@ -10,6 +10,10 @@ import { CARDS } from '../../cards/cards';
 
 @Component({
   selector: 'minds-newsfeed-boost-rotator',
+  host: {
+    '(window:blur)': 'inActive()',
+    '(window:focus)': 'active()'
+  },
   inputs: ['interval'],
   templateUrl: 'src/controllers/newsfeed/boost-rotator/boost-rotator.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, CARDS ]
@@ -92,6 +96,15 @@ export class NewsfeedBoostRotator {
 
   recordImpression(position : number){
     this.client.put('api/v1/boost/fetch/newsfeed/' + this.boosts[position].boosted_guid);
+  }
+
+  active(){
+    this.isVisible();
+  }
+
+  inActive(){
+    this.running = false;
+    window.clearInterval(this.rotator);
   }
 
   ngOnDestroy(){
