@@ -8,7 +8,7 @@
   [hidden]="i != currentPosition"
   ></minds-activity>
 
-<ul class="m-boost-rotator-tabs">
+<ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0">
   <li *ngFor="#boost of boosts; #i = index"
     [ngClass]="{'m-boost-rotator-tabs-tab': true, 'mdl-color--blue-grey-100': i != currentPosition, 'mdl-color--blue-grey-400': i == currentPosition}"
     (click)="currentPosition = i; recordImpression(i);">

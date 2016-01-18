@@ -17,7 +17,7 @@ import { CARDS } from '../../cards/cards';
 
 export class NewsfeedBoostRotator {
 
-  boosts : Array<any>;
+  boosts : Array<any> = [];
   offset : string = "";
   inProgress : boolean = false;
   moreData : boolean = true;
@@ -45,10 +45,19 @@ export class NewsfeedBoostRotator {
 
 		this.client.get('api/v1/boost/fetch/newsfeed', {limit:6})
 			.then((response : any) => {
-        this.boosts = response.boosts;
+        if(!response.boosts){
+          this.inProgress = false;
+          return false;
+        }
+        if(this.boosts.length >= 12){
+          this.boosts = response.boosts;
+          this.recordImpression(0);
+        } else {
+          this.boosts = this.boosts.concat(response.boosts);
+          this.currentPosition = this.currentPosition+1;
+        }
         this.start();
         this.isVisible();
-        this.recordImpression(0);
 			  this.inProgress = false;
 			})
 			.catch(function(e){
@@ -63,6 +72,7 @@ export class NewsfeedBoostRotator {
     this.rotator = setInterval((e) => {
       if(this.currentPosition + 1 > this.boosts.length -1){
         this.currentPosition = 0;
+        this.load();
       } else {
         this.currentPosition++;
       }
