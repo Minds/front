@@ -43,19 +43,14 @@ export class NewsfeedBoostRotator {
     }
     this.inProgress = true;
 
-		this.client.get('api/v1/boost/fetch/newsfeed', {limit:6})
+		this.client.get('api/v1/boost/fetch/newsfeed', {limit:10})
 			.then((response : any) => {
         if(!response.boosts){
           this.inProgress = false;
           return false;
         }
-        if(this.boosts.length >= 12){
-          this.boosts = response.boosts;
-          this.recordImpression(0);
-        } else {
-          this.boosts = this.boosts.concat(response.boosts);
-          this.currentPosition = this.currentPosition+1;
-        }
+        this.boosts = response.boosts;
+        this.recordImpression(0);
         this.start();
         this.isVisible();
 			  this.inProgress = false;
