@@ -16,6 +16,7 @@ import { SessionFactory } from '../../services/session';
 import { BoostAds } from '../../components/ads/boost';
 
 import { AnalyticsImpressions } from '../../components/analytics/impressions';
+import { NewsfeedBoostRotator } from './boost-rotator/boost-rotator';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { AnalyticsImpressions } from '../../components/analytics/impressions';
   bindings: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/newsfeed/list.html',
   directives: [ Poster, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
-    InfiniteScroll, AnalyticsImpressions, CARDS, BoostAds ]
+    InfiniteScroll, AnalyticsImpressions, CARDS, BoostAds, NewsfeedBoostRotator ]
 })
 
 export class Newsfeed {

@@ -1,0 +1,16 @@
+<minds-activity
+  *ngFor="#boost of boosts; #i = index"
+  [object]="boost"
+  [boost-toggle]="boost.boostToggle"
+  (delete)="delete(boost)"
+  [class]="'mdl-card mdl-shadow--2dp item m-boost-rotator-item m-boost-rotator-item-' + i"
+  visible="true"
+  [hidden]="i != currentPosition"
+  ></minds-activity>
+
+<ul class="m-boost-rotator-tabs">
+  <li *ngFor="#boost of boosts; #i = index"
+    [ngClass]="{'m-boost-rotator-tabs-tab': true, 'mdl-color--blue-grey-100': i != currentPosition, 'mdl-color--blue-grey-400': i == currentPosition}"
+    (click)="currentPosition = i; recordImpression(i);">
+  </li>
+</ul>

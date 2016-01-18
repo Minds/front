@@ -1,0 +1,49 @@
+.m-boost-rotator-item{
+  transition: opacity 0.5s ease;
+  opacity:1;
+
+  &[hidden]{
+    transition: opacity 1s ease-out;
+    opacity: 0;
+    display: block !important;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.m-boost-rotator-tabs{
+  margin:-16px 0 16px;
+  padding:0;
+  list-style: none;
+  display:flex;
+
+  .m-boost-rotator-tabs-tab{
+    margin:0;
+    padding:0;
+    list-style: none;
+    flex:1;
+    height:10px;
+    border-right:1px solid #DDD;
+    cursor:pointer;
+  }
+}
+
+@keyframes boostProgressBar {
+    from {width:0%}
+    to {width:100%}
+}
+
+.m-boost-rotator-progress{
+  display:block;
+  width:100%;
+  height:10px;
+  .m-boost-rotator-progress-inner{
+    display:block;
+    height:100%;
+    animation-name: boostProgressBar;
+    animation-duration: 1s;
+  }
+}

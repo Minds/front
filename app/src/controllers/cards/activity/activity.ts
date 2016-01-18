@@ -22,7 +22,7 @@ import { ShareModal } from '../../../components/modal/modal';
   host: {
     'class': 'mdl-card mdl-shadow--2dp'
   },
-  inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle'],
+  inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible'],
   outputs: [ '_delete: delete']
 })
 @View({
@@ -88,6 +88,9 @@ export class Activity {
   }
 
   isVisible(){
+    if(this.visible){
+      return true;
+    }
     this.scroll_listener = this.scroll.listen((view) => {
       if(this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible){
         //stop listening
