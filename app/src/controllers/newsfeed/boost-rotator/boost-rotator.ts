@@ -12,7 +12,9 @@ import { CARDS } from '../../cards/cards';
   selector: 'minds-newsfeed-boost-rotator',
   host: {
     '(window:blur)': 'inActive()',
-    '(window:focus)': 'active()'
+    '(window:focus)': 'active()',
+    '(mouseover)': 'mouseOver()',
+    '(mouseout)': 'mouseOut()'
   },
   inputs: ['interval'],
   templateUrl: 'src/controllers/newsfeed/boost-rotator/boost-rotator.html',
@@ -105,6 +107,15 @@ export class NewsfeedBoostRotator {
   inActive(){
     this.running = false;
     window.clearInterval(this.rotator);
+  }
+
+  mouseOver(){
+    this.running = false;
+    window.clearInterval(this.rotator);
+  }
+
+  mouseOut(){
+    this.isVisible();
   }
 
   ngOnDestroy(){
