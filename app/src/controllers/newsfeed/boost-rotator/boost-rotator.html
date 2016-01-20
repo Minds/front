@@ -9,8 +9,14 @@
   ></minds-activity>
 
 <ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0">
+  <li (click)="prev()">
+    <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
+  </li>
   <li *ngFor="#boost of boosts; #i = index"
     [ngClass]="{'m-boost-rotator-tabs-tab': true, 'mdl-color--blue-grey-100': i != currentPosition, 'mdl-color--blue-grey-400': i == currentPosition}"
     (click)="currentPosition = i; recordImpression(i);">
+  </li>
+  <li (click)="next()">
+    <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
   </li>
 </ul>

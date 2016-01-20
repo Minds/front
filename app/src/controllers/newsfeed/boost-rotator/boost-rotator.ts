@@ -29,7 +29,7 @@ export class NewsfeedBoostRotator {
   moreData : boolean = true;
   rotator;
   running : boolean = false;
-  interval : number = 10;
+  interval : number = 5;
   currentPosition : number = 0;
   minds;
   scroll_listener;
@@ -44,40 +44,43 @@ export class NewsfeedBoostRotator {
 	 */
 	load(){
 
-    if(this.inProgress){
-      return false;
-    }
-    this.inProgress = true;
+    return new Promise((resolve, reject) => {
+      if(this.inProgress){
+        return reject(false);
+      }
+      this.inProgress = true;
 
-		this.client.get('api/v1/boost/fetch/newsfeed', {limit:10})
-			.then((response : any) => {
-        if(!response.boosts){
-          this.inProgress = false;
-          return false;
-        }
-        this.boosts = response.boosts;
-        this.recordImpression(0);
-        this.start();
-        this.isVisible();
-			  this.inProgress = false;
-			})
-			.catch(function(e){
-				this.inProgress = false;
-			});
+  		this.client.get('api/v1/boost/fetch/newsfeed', {limit:10})
+  			.then((response : any) => {
+          if(!response.boosts){
+            this.inProgress = false;
+            return reject(false);
+          }
+          this.boosts = this.boosts.concat(response.boosts);
+          if(this.boosts.length >= 40){
+            this.boosts.splice(0, 20);
+            this.currentPosition = 0;
+          }
+          this.start();
+          this.isVisible();
+  			  this.inProgress = false;
+          return resolve(true);
+  			})
+  			.catch(function(e){
+  				this.inProgress = false;
+          return reject();
+  			});
+    });
 	}
 
   start(){
     if(this.rotator)
       window.clearInterval(this.rotator);
     this.running = true;
+    this.recordImpression(this.currentPosition);
     this.rotator = setInterval((e) => {
-      if(this.currentPosition + 1 > this.boosts.length -1){
-        this.currentPosition = 0;
-        this.load();
-      } else {
-        this.currentPosition++;
-      }
-      this.recordImpression(this.currentPosition);
+      this.next();
+      //this.recordImpression(this.currentPosition);
     }, this.interval*1000);
   }
 
@@ -116,6 +119,31 @@ export class NewsfeedBoostRotator {
 
   mouseOut(){
     this.isVisible();
+  }
+
+  prev(){
+    if(this.currentPosition <= 0){
+      this.currentPosition = this.boosts.length-1;
+    } else {
+      this.currentPosition--;
+    }
+    this.recordImpression(this.currentPosition);
+  }
+
+  next(){
+    if(this.currentPosition + 1 > this.boosts.length -1){
+      //this.currentPosition = 0;
+      this.load()
+        .then(() => {
+          this.currentPosition++;
+        })
+        .catch(() => {
+          this.currentPosition = 0;
+        })
+    } else {
+      this.currentPosition++;
+    }
+    this.recordImpression(this.currentPosition);
   }
 
   ngOnDestroy(){
