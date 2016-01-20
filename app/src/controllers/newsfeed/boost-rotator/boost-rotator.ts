@@ -50,8 +50,8 @@ export class NewsfeedBoostRotator {
       }
       this.inProgress = true;
 
-  		this.client.get('api/v1/boost/fetch/newsfeed', {limit:10})
-  			.then((response : any) => {
+  	  this.client.get('api/v1/boost/fetch/newsfeed', {limit:10})
+        .then((response : any) => {
           if(!response.boosts){
             this.inProgress = false;
             return reject(false);
@@ -61,23 +61,25 @@ export class NewsfeedBoostRotator {
             this.boosts.splice(0, 20);
             this.currentPosition = 0;
           }
-          this.start();
-          this.isVisible();
-  			  this.inProgress = false;
+          if(!this.running){
+            this.recordImpression(this.currentPosition);
+            this.start();
+            this.isVisible();
+          }
+  	      this.inProgress = false;
           return resolve(true);
-  			})
-  			.catch(function(e){
-  				this.inProgress = false;
+  	    })
+        .catch(function(e){
+          this.inProgress = false;
           return reject();
-  			});
-    });
+        });
+      });
 	}
 
   start(){
     if(this.rotator)
       window.clearInterval(this.rotator);
     this.running = true;
-    this.recordImpression(this.currentPosition);
     this.rotator = setInterval((e) => {
       this.next();
       //this.recordImpression(this.currentPosition);
