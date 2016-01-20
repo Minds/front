@@ -149,6 +149,8 @@ export class NewsfeedBoostRotator {
   }
 
   ngOnDestroy(){
+    if(this.rotator)
+      window.clearInterval(this.rotator);
     this.scroll.unListen(this.scroll_listener);
   }
 
