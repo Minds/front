@@ -6,7 +6,7 @@
 
         <div class="minds-list">
 
-            <minds-newsfeed-boost-rotator interval="5"></minds-newsfeed-boost-rotator>
+            <minds-newsfeed-boost-rotator interval="8"></minds-newsfeed-boost-rotator>
             <minds-activity *ngFor="#activity of newsfeed" [object]="activity" [boost-toggle]="activity.boostToggle" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
             <infinite-scroll
                 distance="25%"
