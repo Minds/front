@@ -30,6 +30,7 @@ import { NewsfeedBoostRotator } from './boost-rotator/boost-rotator';
 export class Newsfeed {
 
   newsfeed : Array<Object>;
+  prepended : Array<any> = [];
   offset : string = "";
   inProgress : boolean = false;
   moreData : boolean = true;
@@ -95,7 +96,7 @@ export class Newsfeed {
 	}
 
   prepend(activity : any){
-    this.newsfeed.unshift(activity);
+    this.prepended.unshift(activity);
   }
 
   delete(activity){
