@@ -36,7 +36,7 @@ export class NewsfeedBoostRotator {
 
 	constructor(public client: Client, public scroll : ScrollService, public element: ElementRef){
     this.load();
-    this.scroll_listener = this.scroll.listen(() => this.isVisible(), 200);
+    this.scroll_listener = this.scroll.listenForView().subscribe(() => this.isVisible());
 	}
 
 	/**

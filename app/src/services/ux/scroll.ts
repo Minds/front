@@ -35,4 +35,13 @@ export class ScrollService{
     subscription.unsubscribe();
   }
 
+  viewListener;
+  viewEmitter : EventEmitter<any> = new EventEmitter();
+  listenForView(){
+    if(!this.viewListener){
+      this.viewListener = this.scroll.debounceTime(500).subscribe((e) => { this.viewEmitter.next(e) });
+    }
+    return this.viewEmitter;
+  }
+
 }

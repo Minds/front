@@ -196,7 +196,7 @@ export class MindsVideo{
   isVisible(){
     if(this.autoplay)
       return;
-    this.scroll_listener = this.scroll.listen((view) => {
+    this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
       if(!this.guid)
         return;
       var bounds = this.element.getBoundingClientRect();
@@ -213,7 +213,7 @@ export class MindsVideo{
         }
         }
         //console.log('[video]: checking visibility');
-    }, 0, 600); //check if in view every 0.6 second
+    });
     //this.scroll.fire();
   }
 

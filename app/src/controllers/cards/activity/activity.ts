@@ -91,7 +91,7 @@ export class Activity {
     if(this.visible){
       return true;
     }
-    this.scroll_listener = this.scroll.listen((view) => {
+    this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
       if(this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible){
         //stop listening
         this.scroll.unListen(this.scroll_listener);
@@ -99,8 +99,8 @@ export class Activity {
         this.visible = true;
         //update the analytics
         this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
-      }
-    }, 1000);
+        }
+    });
     //this.scroll.fire();
   }
 
