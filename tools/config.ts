@@ -54,6 +54,10 @@ export const NPM_DEPENDENCIES = [
   { src: 'angular2/bundles/router.js', inject: 'libs', dest: LIB_DEST }, // use router.min.js with alpha47
   { src: 'angular2/bundles/http.min.js', inject: 'libs', dest: LIB_DEST },
 
+  // async
+  { src: 'tinymce/tinymce.min.js', inject: 'async', dest: LIB_DEST },
+  { src: 'braintree-web/dist/braintree.js', inject: 'async', dest: LIB_DEST }
+
 ];
 
 // Declare local files that needs to be injected

@@ -21,17 +21,17 @@ interface CreditCard {
 
 @Component({
   selector: 'minds-payments-checkout',
-  inputs: ['amount', 'merchant_guid'],
+  inputs: ['amount', 'merchant_guid', 'usePayPal: paypal', 'useCreditCard: creditcard'],
   outputs: ['inputed', 'done'],
   template: `
 
-    <!--<div class="mdl-card mdl-shadow--2dp m-payments-options" style="margin-bottom:8px;">
+    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="usePayPal">
       <div class="mdl-card__supporting-text">
         <div id="paypal-btn"></div>
       </div>
-    </div>-->
+    </div>
 
-    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation"></minds-checkout-card-input>
+    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation" *ngIf="useCreditCard"></minds-checkout-card-input>
     <div [hidden]="!inProgress" class="m-checkout-loading">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
       <p>Capturing card details...</p>
@@ -58,6 +58,9 @@ export class Checkout {
   bt_checkout;
   nonce : string = "";
 
+  useCreditCard : boolean = true;
+  usePayPal : boolean = false;
+
 	constructor(public client: Client){
      this.init();
 	}
@@ -72,21 +75,23 @@ export class Checkout {
   setupClient(braintree, token){
     this.braintree_client = new braintree.api.Client({ clientToken: token });
 
-    /*braintree.setup(token, "custom", {
-      onReady: (integration) => {
-        this.bt_checkout = integration;
-      },
-      onPaymentMethodReceived: (payload) => {
-        this.inputed.next(payload.nonce);
-        this.bt_checkout.teardown(() => {
-          this.bt_checkout = null;
-        });
-      },
-      paypal: {
-        singleUse: true,
-        container: 'paypal-btn'
-      }
-    });*/
+    if(this.usePayPal){
+      braintree.setup(token, "custom", {
+        onReady: (integration) => {
+          this.bt_checkout = integration;
+        },
+        onPaymentMethodReceived: (payload) => {
+          this.inputed.next(payload.nonce);
+          this.bt_checkout.teardown(() => {
+            this.bt_checkout = null;
+          });
+        },
+        paypal: {
+          singleUse: false,
+          container: 'paypal-btn'
+        }
+      });
+    }
   }
 
   setCard(card){
@@ -140,6 +145,11 @@ export class Checkout {
         self.inProgress = false;
         self.error = "there was an error";
       });
+  }
+
+  ngOnDestroy(){
+    if(this.bt_checkout)
+      this.bt_checkout.teardown();
   }
 
 }

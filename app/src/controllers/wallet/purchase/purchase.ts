@@ -8,13 +8,16 @@ import { Storage } from '../../../services/storage';
 import { MDL_DIRECTIVES } from '../../../directives/material';
 import { InfiniteScroll } from '../../../directives/infinite-scroll';
 
+import { Checkout } from '../../payments/checkout';
+
 import { CreditCard } from '../../../interfaces/card-interface';
 
 
 @Component({
   selector: 'minds-wallet-purchase',
   templateUrl: 'src/controllers/wallet/purchase/purchase.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, InfiniteScroll ]
+  inputs: [ 'toggled' ],
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, InfiniteScroll, Checkout ]
 })
 
 export class WalletPurchase {
@@ -24,22 +27,23 @@ export class WalletPurchase {
   points : number = 1000;
   usd : number;
 
+  subscription;
+
   inProgress : boolean = false;
   confirmation : boolean = false;
+  nonce : string | number = "";
+  recurring : boolean = true;
   error : string = "";
+
+  toggled : boolean = false;
 
 	constructor(public client: Client, public wallet: WalletService){
     this.calculateUSD();
+    this.getSubscription();
 	}
 
   validate(){
     if(this.usd < 0.01)
-      return false;
-
-    if(!this.card.number || !this.card.sec || !this.card.name || !this.card.name2)
-      return false;
-
-    if(this.card.month == 'mm' || this.card.year == 'yyyy')
       return false;
 
     return true;
@@ -55,26 +59,75 @@ export class WalletPurchase {
       });
   }
 
+  getSubscription(){
+    this.client.get('api/v1/wallet/subscription')
+      .then((response : any) => {
+        if(response.subscription){
+          this.subscription = response.subscription;
+        }
+      });
+  }
+
+  buy(){
+    if(!this.toggled){
+      this.toggled = true;
+    }
+  }
+
   purchase(){
-    var self = this;
     if(!this.validate()){
       this.error = "Sorry, please check your details and try again";
       return false;
     }
     this.inProgress = true;
     this.error = "";
-    var data : any = this.card;
-    data.points = this.points;
-    this.client.post('api/v1/wallet/charge', data)
-      .then((response : any) => {
-        if(response.status != 'success'){
-          this.error = "Please check your card details and try again.";
-          return false;
-        }
-        self.wallet.increment(data.points);
-        self.confirmation = true;
-        self.inProgress = false;
-      });
+
+    if(this.recurring){
+      this.client.post('api/v1/wallet/subscription', {
+          points: this.points,
+          nonce: this.nonce
+        })
+        .then((response : any) => {
+          if(response.status != 'success'){
+            this.error = "Please check your payment details and try again.";
+            this.inProgress = false;
+            this.nonce = null;
+            return false;
+          }
+          this.wallet.increment(this.points);
+          this.confirmation = true;
+          this.inProgress = false;
+        })
+        .catch((e) => {
+          this.error = "Sorry, there was a problem";
+          this.inProgress = false;
+          this.nonce = null;
+        });
+    } else {
+        this.client.post('api/v1/payments/braintree/charge', {
+          amount: this.usd,
+          nonce: this.nonce
+        })
+        .then((response : any) => {
+          if(response.status != 'success'){
+            this.error = "Please check your payment details and try again.";
+            return false;
+          }
+          this.wallet.increment(this.points);
+          this.confirmation = true;
+          this.inProgress = false;
+        })
+        .catch((e) => {
+          this.error = "Sorry, there was a problem";
+          this.inProgress = false;
+          this.nonce = null;
+        });
+    }
+  }
+
+  setNonce(nonce : string){
+    this.nonce = nonce;
+    this.purchase();
   }
 
 }
