@@ -23,6 +23,7 @@ export class WalletService {
    */
   increment(points : number = 1){
     window.Minds.wallet.balance = window.Minds.wallet.balance + points;
+    this.points = window.Minds.wallet.balance;
     this.sync();
   }
 
@@ -31,6 +32,7 @@ export class WalletService {
    */
   decrement(points : number = 1){
     window.Minds.wallet.balance = window.Minds.wallet.balance - points;
+    this.points = window.Minds.wallet.balance;
     this.sync();
   }
 

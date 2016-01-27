@@ -104,8 +104,9 @@ export class WalletPurchase {
           this.nonce = null;
         });
     } else {
-        this.client.post('api/v1/payments/braintree/charge', {
+        this.client.post('api/v1/wallet/purchase-once', {
           amount: this.usd,
+          points: this.points,
           nonce: this.nonce
         })
         .then((response : any) => {
