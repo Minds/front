@@ -75,16 +75,14 @@ export class Checkout {
   setupClient(braintree, token){
     this.braintree_client = new braintree.api.Client({ clientToken: token });
 
-    if(this.usePayPal){
+    if(this.usePayPal && !window.BraintreeLoaded){
       braintree.setup(token, "custom", {
         onReady: (integration) => {
           this.bt_checkout = integration;
+          window.BraintreeLoaded = true;
         },
         onPaymentMethodReceived: (payload) => {
           this.inputed.next(payload.nonce);
-          this.bt_checkout.teardown(() => {
-            this.bt_checkout = null;
-          });
         },
         paypal: {
           singleUse: false,
@@ -148,8 +146,6 @@ export class Checkout {
   }
 
   ngOnDestroy(){
-    if(this.bt_checkout)
-      this.bt_checkout.teardown();
   }
 
 }

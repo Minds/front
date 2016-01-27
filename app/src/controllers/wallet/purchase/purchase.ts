@@ -126,6 +126,13 @@ export class WalletPurchase {
     }
   }
 
+  cancelSubscription(){
+    this.client.delete('api/v1/wallet/subscription')
+      .then((response : any) => {
+        this.subscription = null;
+      });
+  }
+
   setNonce(nonce : string){
     this.nonce = nonce;
     this.purchase();

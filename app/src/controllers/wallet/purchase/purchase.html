@@ -31,7 +31,7 @@
     </div>
 
     <div class="">
-      <button class="mdl-button mdl-color-text--white" style="display: block; position: relative; margin: 16px 16px 0 0; padding: 0;" (click)="buy()">BUY!</button>
+      <button class="mdl-button mdl-button--raised mdl-color--blue-grey-500 mdl-color-text--white" style="display: block; position: relative; margin: 16px 16px 0 0; padding: 0;" (click)="buy()">BUY!</button>
     </div>
 
   </div>
@@ -45,7 +45,7 @@
         Repeat this transaction every month
       </label>
 
-      <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription">cancel recurring ({{subscription.addOns[0].quantity}} points)</span>
+      <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription" (click)="cancelSubscription()">cancel recurring (<i>$</i>{{subscription.price}})</span>
     </div>
 
     <minds-payments-checkout
