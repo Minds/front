@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <div class="">
+    <div class="" [hidden]="toggled">
       <button class="mdl-button mdl-button--raised mdl-color--blue-grey-500 mdl-color-text--white" style="display: block; position: relative; margin: 16px 16px 0 0; padding: 0;" (click)="buy()">BUY!</button>
     </div>
 
@@ -47,6 +47,8 @@
 
       <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription" (click)="cancelSubscription()">cancel recurring (<i>$</i>{{subscription.price}})</span>
     </div>
+
+    <p *ngIf="error" class="mdl-color-text--red" style="padding-left:16px">{{error}}</p>
 
     <minds-payments-checkout
       (inputed)="setNonce($event)"

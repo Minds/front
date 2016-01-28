@@ -99,7 +99,7 @@ export class WalletPurchase {
           this.inProgress = false;
         })
         .catch((e) => {
-          this.error = "Sorry, there was a problem";
+          this.error = e.message;
           this.inProgress = false;
           this.nonce = null;
         });
@@ -119,7 +119,7 @@ export class WalletPurchase {
           this.inProgress = false;
         })
         .catch((e) => {
-          this.error = "Sorry, there was a problem";
+          this.error = e.message;
           this.inProgress = false;
           this.nonce = null;
         });
