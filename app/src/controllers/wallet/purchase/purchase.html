@@ -37,7 +37,7 @@
   </div>
 
 
-  <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="inProgress || confirmation || !toggled">
+  <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="inProgress || confirmation">
 
     <div class="minds-purchase-recurring-option">
       <input type="checkbox" [(ngModel)]="recurring">
@@ -55,7 +55,7 @@
       paypal="true"
       creditcard="true"
       bitcoin="false"
-      *ngIf="!nonce"
+      *ngIf="!nonce && toggled"
     ></minds-payments-checkout>
 
   </div>
