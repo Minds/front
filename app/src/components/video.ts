@@ -72,16 +72,19 @@ export class MindsVideo{
   constructor(_element : ElementRef, public scroll : ScrollService){
     this.container = _element.nativeElement;
     this.element = _element.nativeElement.getElementsByTagName("video")[0];
-    this.isVisible();
     this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
       this.isVisible();
     });
   }
 
+  ngOnInit(){
+    this.isVisible();
+    this.setUp();
+  }
+
   set _src(value : any){
     this.src = value[0].uri;
     this.element.src = this.src;
-    this.setUp();
   }
 
   set _muted(value : boolean){
@@ -201,7 +204,7 @@ export class MindsVideo{
       return;
     if(!this.guid)
       return;
-    var bounds = this.element.getBoundingClientRect();
+      var bounds = this.element.getBoundingClientRect();
     if(bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0){
       if(this.element.paused == true){
         //console.log('[video]:: playing '  + this.src);
