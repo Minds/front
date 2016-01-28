@@ -52,6 +52,7 @@
       (inputed)="setNonce($event)"
       paypal="true"
       creditcard="true"
+      bitcoin="true"
       *ngIf="!nonce"
     ></minds-payments-checkout>
 
@@ -66,7 +67,8 @@
 
   <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!confirmation">
     <div class="mdl-card__supporting-text">
-      <h2>Great, you now have {{wallet.points}} points!</h2>
+      <b>Great, you now have {{wallet.points}} points! </b>
+      <b (click)="reset()" class="mdl-color-text--blue-grey-400" style="cursor:pointer;">Click here to BUY more.</b>
     </div>
   </div>
 

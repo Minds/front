@@ -1,6 +1,6 @@
 import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { RouterLink } from "angular2/router";
+import { Router, RouterLink } from "angular2/router";
 
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
@@ -37,7 +37,7 @@ export class WalletPurchase {
 
   toggled : boolean = false;
 
-	constructor(public client: Client, public wallet: WalletService){
+	constructor(public client: Client, public wallet: WalletService, public router: Router){
     this.calculateUSD();
     this.getSubscription();
 	}
@@ -127,6 +127,8 @@ export class WalletPurchase {
   }
 
   cancelSubscription(){
+    if(!confirm("Are you sure you wish to cancel your monthly points subscription?"))
+      return false;
     this.client.delete('api/v1/wallet/subscription')
       .then((response : any) => {
         this.subscription = null;
@@ -136,6 +138,12 @@ export class WalletPurchase {
   setNonce(nonce : string){
     this.nonce = nonce;
     this.purchase();
+  }
+
+  reset(){
+    this.getSubscription();
+    this.confirmation = false;
+    this.nonce = null;
   }
 
 }

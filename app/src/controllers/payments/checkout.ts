@@ -21,14 +21,13 @@ interface CreditCard {
 
 @Component({
   selector: 'minds-payments-checkout',
-  inputs: ['amount', 'merchant_guid', 'usePayPal: paypal', 'useCreditCard: creditcard'],
+  inputs: ['amount', 'merchant_guid', 'usePayPal: paypal', 'useCreditCard: creditcard', 'useBitcoin: bitcoin'],
   outputs: ['inputed', 'done'],
   template: `
 
-    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="usePayPal">
-      <div class="mdl-card__supporting-text">
-        <div id="paypal-btn"></div>
-      </div>
+    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="usePayPal || useBitcoin">
+        <div id="paypal-btn" *ngIf="usePayPal"></div>
+        <div id="coinbase-btn" *ngIf="useBitcoin"></div>
     </div>
 
     <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation" *ngIf="useCreditCard"></minds-checkout-card-input>
@@ -60,6 +59,7 @@ export class Checkout {
 
   useCreditCard : boolean = true;
   usePayPal : boolean = false;
+  useBitcoin : boolean = false;
 
 	constructor(public client: Client){
      this.init();
@@ -87,6 +87,10 @@ export class Checkout {
         paypal: {
           singleUse: false,
           container: 'paypal-btn'
+        },
+        coinbase: {
+          container: "coinbase-btn",
+          headless: true
         }
       });
     }
