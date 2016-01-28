@@ -88,10 +88,10 @@ export class Checkout {
           singleUse: false,
           container: 'paypal-btn'
         },
-        coinbase: {
-          container: "coinbase-btn",
-          headless: true
-        }
+        //coinbase: {
+        //  container: "coinbase-btn",
+        //  headless: true
+        //}
       });
     }
   }
