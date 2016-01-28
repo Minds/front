@@ -73,6 +73,9 @@ export class MindsVideo{
     this.container = _element.nativeElement;
     this.element = _element.nativeElement.getElementsByTagName("video")[0];
     this.isVisible();
+    this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
+      this.isVisible();
+    });
   }
 
   set _src(value : any){
@@ -196,25 +199,22 @@ export class MindsVideo{
   isVisible(){
     if(this.autoplay)
       return;
-    this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
-      if(!this.guid)
-        return;
-      var bounds = this.element.getBoundingClientRect();
-      if(bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0){
-        if(this.element.paused == true){
-          //console.log('[video]:: playing '  + this.src);
-          this.element.play();
-        }
-      } else {
-        if(this.element.paused == false){
-          this.element.muted = true;
-          this.element.pause();
-          //console.log('[video]:: pausing ' + this.src);
-        }
-        }
-        //console.log('[video]: checking visibility');
-    });
-    //this.scroll.fire();
+    if(!this.guid)
+      return;
+    var bounds = this.element.getBoundingClientRect();
+    if(bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0){
+      if(this.element.paused == true){
+        //console.log('[video]:: playing '  + this.src);
+        this.element.play();
+      }
+    } else {
+      if(this.element.paused == false){
+        this.element.muted = true;
+        this.element.pause();
+        //console.log('[video]:: pausing ' + this.src);
+      }
+      }
+      //console.log('[video]: checking visibility');
   }
 
   ngOnDestroy(){
