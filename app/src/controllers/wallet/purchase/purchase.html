@@ -42,7 +42,7 @@
     <div class="minds-purchase-recurring-option">
       <input type="checkbox" [(ngModel)]="recurring">
       <label class="mdl-color-text--blue-grey-600" (click)="recurring = !recurring">
-        Repeat this transaction every month
+        Repeat this transaction every month and get <b>10%</b> more points 
       </label>
 
       <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription" (click)="cancelSubscription()">cancel recurring (<i>$</i>{{subscription.price}})</span>
