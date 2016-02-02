@@ -65,6 +65,17 @@
       <div class="mdl-cell mdl-cell--1-col minds-boost-points-input">
          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="boost()" [hidden]="inProgress">Boost!</button>
       </div>
+
+      <!-- Boost pro+ -->
+      <div class="mdl-cell mdl-cell--12-col m-boost-pro-plus" [hidden]="stage == 3 || stage == 4" *ngIf="canPostToFacebook">
+        <svg width="40" height="40" viewBox="-2 -2 32 32" [ngClass]="{'selected': postToFacebook}" (click)="postToFacebook = !postToFacebook">
+          <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
+        </svg>
+        <div class="" *ngIf="postToFacebook">
+          <m-scheduler (ts)="scheduledTs = ($event/1000)"></m-scheduler>
+        </div>
+      </div>
+
     </div>
 
     <div *ngIf="option == 'pro'" class="mdl-grid minds-boost-points-wrapper">
@@ -76,13 +87,24 @@
             placeholder="Enter here"
             [(ngModel)]= "bid"
             />
-          </div>
-          <div class="cell">
-    				<label>$ USD</label>
-    			</div>
+        </div>
+        <div class="cell">
+  				<label>$ USD</label>
+  			</div>
       </div>
+
       <div class="mdl-cell mdl-cell--1-col minds-boost-points-input" [hidden]="stage != 1">
          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="stage = 2" [hidden]="inProgress">Boost!</button>
+      </div>
+
+      <!-- Boost pro+ -->
+      <div class="mdl-cell mdl-cell--12-col m-boost-pro-plus" [hidden]="stage == 3 || stage == 4" *ngIf="canPostToFacebook">
+        <svg width="40" height="40" viewBox="-2 -2 32 32" [ngClass]="{'selected': postToFacebook}" (click)="postToFacebook = !postToFacebook">
+          <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
+        </svg>
+        <div class="" *ngIf="postToFacebook">
+          <m-scheduler (ts)="scheduledTs = ($event/1000)"></m-scheduler>
+        </div>
       </div>
 
       <minds-payments-checkout (inputed)="boost($event);" [hidden]="stage != 2"></minds-payments-checkout>

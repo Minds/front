@@ -88,6 +88,28 @@
   }
 }
 
+.m-boost-pro-plus{
+
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+
+  svg{
+    cursor:pointer;
+    background: #CCC;
+    fill: #888;
+
+    &.selected{
+      background-color: #3067a3;
+      fill:#FFF;
+    }
+    margin-right:$minds-margin*2;
+  }
+
+
+
+}
+
 .minds-boost-error-message{
   margin-bottom:$minds-margin*2;
   border-radius:3px;

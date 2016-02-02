@@ -7,6 +7,8 @@ import { Material } from '../../../../directives/material';
 
 import { Checkout } from '../../../payments/checkout';
 
+import { Scheduler } from '../../../../components/scheduler/scheduler';
+
 import { MindsWalletResponse } from '../../../../interfaces/responses';
 import { MindsUserSearchResponse } from '../../../../interfaces/responses';
 import { MindsBoostResponse } from '../../../../interfaces/responses';
@@ -19,7 +21,7 @@ import { MindsBoostRateResponse } from '../../../../interfaces/responses';
   inputs: ['activity: object'],
   outputs: ['_done: done'],
   templateUrl: 'src/controllers/boosts/boost/p2p/p2p.html',
-  directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink, Checkout]
+  directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink, Checkout, Scheduler]
 })
 
 export class BoostP2P{
@@ -37,6 +39,10 @@ export class BoostP2P{
   option : string;
   stage : number = 1;
   complete : boolean = false;
+
+  canPostToFacebook : boolean = false;
+  postToFacebook : boolean = false;
+  scheduledTs : Number;
 
   searching: boolean = false;
   q : string = '';
@@ -79,6 +85,8 @@ export class BoostP2P{
         type: this.option,
         bid: this.bid,
         destination: this.destination.guid,
+        scheduledTs: this.scheduledTs,
+        postToFacebook: this.postToFacebook,
         nonce: nonce
       })
       .then((success : any) => {
@@ -155,6 +163,7 @@ export class BoostP2P{
     this.searching = false;
     this.destination = user;
     this.pro = user.merchant;
+    this.canPostToFacebook = user.merchant;
     this.q = '';
     if(!this.pro)
       this.option = 'points';
