@@ -163,7 +163,7 @@ export class BoostP2P{
     this.searching = false;
     this.destination = user;
     this.pro = user.merchant;
-    this.canPostToFacebook = user.merchant;
+    this.canPostToFacebook = user.boostProPlus;
     this.q = '';
     if(!this.pro)
       this.option = 'points';

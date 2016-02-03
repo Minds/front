@@ -1,0 +1,30 @@
+.m-third-party-networks-facebook-card{
+  .m-block{
+    padding:8px;
+  }
+  a {
+    text-decoration:none;
+  }
+}
+
+.m-third-party-networks-facebook-button{
+
+  a {
+    text-decoration:none;
+  }
+
+  background-color: #3067a3;
+  padding:8px;
+  color:#FFF;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.m-third-party-networks-facebook-pages-list{
+
+  > div {
+    padding:8px;
+    font-weight:bold;
+    cursor:pointer;
+  }
+}

@@ -35,19 +35,19 @@
       }
     }
 
-    svg.m-facebook-icon{
-      cursor:pointer;
-      background-color: #3067a3;
-      fill:#FFF;
-      margin:auto;
-    }
-
     &.m-boost-admin-tabs-secondary{
       padding:0;
     }
 
   }
 
+}
+
+svg.m-facebook-icon{
+  cursor:pointer;
+  background-color: #3067a3;
+  fill:#FFF;
+  margin:auto;
 }
 
 .minds-boost-container{
