@@ -138,7 +138,7 @@
           <i class="material-icons">access_time</i> {{boost.time_created * 1000 | date: 'short'}}
         </div>
         <div class="m-boost-admin-state mdl-color-text--blue-grey-400" *ngIf="boost.scheduledTs">
-          <i class="material-icons">access_time</i> {{boost.scheduledTs * 1000 | date: 'short'}}
+          <i class="material-icons">access_alarm</i> {{boost.scheduledTs * 1000 | date: 'short'}}
         </div>
 
         <div class="m-boost-admin-buttons" *ngIf="type == 'peer' && filter == 'inbox' && boost.state == 'created'">
