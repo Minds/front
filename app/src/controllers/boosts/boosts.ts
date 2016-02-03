@@ -8,12 +8,12 @@ import { Material } from '../../directives/material';
 import { CARDS } from '../../controllers/cards/cards';
 import { BUTTON_COMPONENTS } from '../../components/buttons';
 import { BoostAds } from '../../components/ads/boost';
-
+import { ThirdPartyNetworksFacebook } from '../../components/third-party-networks/facebook';
 
 @Component({
   selector: 'minds-boosts-console',
   templateUrl: 'src/controllers/boosts/boosts.html',
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS, BUTTON_COMPONENTS, BoostAds ]
+  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS, BUTTON_COMPONENTS, BoostAds, ThirdPartyNetworksFacebook ]
 })
 
 export class Boosts{
@@ -35,6 +35,8 @@ export class Boosts{
   latestMedia = [];
 
   boosts : Array<any> = [];
+
+  now = Date.now();
 
   constructor(public client: Client, params: RouteParams){
     if(params.params['filter'])
