@@ -146,6 +146,11 @@
           <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="reject(boost, i)">Reject</button>
         </div>
 
+        <!-- Revoke a submitted boost -->
+        <div class="m-boost-admin-buttons" *ngIf="type == 'peer' && filter == 'outbox' && boost.state == 'created'">
+          <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="revoke(boost, i)">Revoke</button>
+        </div>
+
         <span class="impressions">
 
         </span>

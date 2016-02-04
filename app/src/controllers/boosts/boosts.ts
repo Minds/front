@@ -86,6 +86,14 @@ export class Boosts{
       });
   }
 
+  revoke(boost, i){
+    this.boosts[i].state = 'revoked';
+    this.client.delete('api/v1/boost/peer/' + boost.guid + '/revoke')
+      .catch(e => {
+        this.boosts[i].state = 'created';
+      });
+  }
+
   loadLatestPosts(){
     this.client.get('api/v1/newsfeed/personal')
       .then((response : any) => {
