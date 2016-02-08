@@ -12,6 +12,7 @@
 .minds-quote-card{
   width:100%;
   min-height:0;
+  border-radius:0;
 
   margin-bottom:$minds-margin*2;
 
@@ -43,7 +44,8 @@
 .minds-purchase-card{
   width:100%;
   min-height:0;
-  padding:$minds-padding*2;
+  padding:0;
+  border-radius:0;
 
   .minds-purchase-vendors{
     span{
@@ -84,6 +86,21 @@
 
   button {
     float:right;
+  }
+}
+
+.minds-purchase-recurring-option{
+  padding:16px;
+  label{
+    font-size:12px;
+  }
+  span{
+    font-style:italic;
+    font-size:12px;
+  }
+  .minds-purchase-recurring-cancel{
+    cursor:pointer;
+    font-weigth:bold;
   }
 }
 

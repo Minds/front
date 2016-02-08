@@ -21,17 +21,16 @@ interface CreditCard {
 
 @Component({
   selector: 'minds-payments-checkout',
-  inputs: ['amount', 'merchant_guid'],
+  inputs: ['amount', 'merchant_guid', 'gateway', 'usePayPal: paypal', 'useCreditCard: creditcard', 'useBitcoin: bitcoin'],
   outputs: ['inputed', 'done'],
   template: `
 
-    <!--<div class="mdl-card mdl-shadow--2dp m-payments-options" style="margin-bottom:8px;">
-      <div class="mdl-card__supporting-text">
-        <div id="paypal-btn"></div>
-      </div>
-    </div>-->
+    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="usePayPal || useBitcoin">
+        <div id="paypal-btn" *ngIf="usePayPal"></div>
+        <div id="coinbase-btn" *ngIf="useBitcoin"></div>
+    </div>
 
-    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation"></minds-checkout-card-input>
+    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation" *ngIf="useCreditCard"></minds-checkout-card-input>
     <div [hidden]="!inProgress" class="m-checkout-loading">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
       <p>Capturing card details...</p>
@@ -53,10 +52,15 @@ export class Checkout {
 
   amount : number = 0;
   merchant_guid;
+  gateway : string = "merchants";
 
   braintree_client;
   bt_checkout;
   nonce : string = "";
+
+  useCreditCard : boolean = true;
+  usePayPal : boolean = false;
+  useBitcoin : boolean = false;
 
 	constructor(public client: Client){
      this.init();
@@ -64,7 +68,7 @@ export class Checkout {
 
   init(){
     System.import('lib/braintree.js').then((braintree : any) => {
-        this.client.get('api/v1/payments/braintree/token')
+        this.client.get('api/v1/payments/braintree/token/' + this.gateway)
          .then((response : any) => { this.setupClient(braintree, response.token); });
       });
   }
@@ -72,21 +76,25 @@ export class Checkout {
   setupClient(braintree, token){
     this.braintree_client = new braintree.api.Client({ clientToken: token });
 
-    /*braintree.setup(token, "custom", {
-      onReady: (integration) => {
-        this.bt_checkout = integration;
-      },
-      onPaymentMethodReceived: (payload) => {
-        this.inputed.next(payload.nonce);
-        this.bt_checkout.teardown(() => {
-          this.bt_checkout = null;
-        });
-      },
-      paypal: {
-        singleUse: true,
-        container: 'paypal-btn'
-      }
-    });*/
+    if(this.usePayPal && !window.BraintreeLoaded){
+      braintree.setup(token, "custom", {
+        onReady: (integration) => {
+          this.bt_checkout = integration;
+          window.BraintreeLoaded = true;
+        },
+        onPaymentMethodReceived: (payload) => {
+          this.inputed.next(payload.nonce);
+        },
+        paypal: {
+          singleUse: false,
+          container: 'paypal-btn'
+        },
+        //coinbase: {
+        //  container: "coinbase-btn",
+        //  headless: true
+        //}
+      });
+    }
   }
 
   setCard(card){
@@ -140,6 +148,9 @@ export class Checkout {
         self.inProgress = false;
         self.error = "there was an error";
       });
+  }
+
+  ngOnDestroy(){
   }
 
 }

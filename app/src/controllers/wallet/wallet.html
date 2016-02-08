@@ -39,8 +39,9 @@
 
   <div class="mdl-cell mdl-cell--8-col">
 
-    <minds-wallet-transactions *ngIf="filter == 'transactions'"></minds-wallet-transactions>
-    <minds-wallet-purchase *ngIf="filter == 'purchase'"></minds-wallet-purchase>
+    <minds-wallet-purchase [toggled]="filter == 'purchase'"></minds-wallet-purchase>
+
+    <minds-wallet-transactions *ngIf="filter == 'transactions' || filter == 'purchase'"></minds-wallet-transactions>
 
     <minds-wallet-merchants *ngIf="filter == 'merchants'"></minds-wallet-merchants>
 

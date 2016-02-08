@@ -7,6 +7,35 @@ minds-payments-checkout{
     padding:16px;
     text-align:center;
   }
+
+  .m-payments-options{
+    padding:16px;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+
+    > div{
+      padding-right:16px;
+    }
+
+    #coinbase-btn{
+      #bt-coinbase-button{
+        text-transform: lowercase;
+        font-size: 19px;
+        border: 0;
+        border-radius: 4px;
+      }
+    }
+
+  }
+
+
+  input[type=number]{
+    -moz-appearance: textfield;
+  }
+  ::-webkit-inner-spin-button { -webkit-appearance: none;}
+  ::-webkit-outer-spin-button { -webkit-appearance: none;}
+
 }
 .m-checkout-hint{
   font-size:11px;
