@@ -24,6 +24,7 @@ export class WalletPurchase {
 
   card : CreditCard = <CreditCard>{ month: 'mm', year: 'yyyy'};
 
+  ex : number = 0.01;
   points : number = 1000;
   usd : number;
 
@@ -38,6 +39,7 @@ export class WalletPurchase {
   toggled : boolean = false;
 
 	constructor(public client: Client, public wallet: WalletService, public router: Router){
+    this.getRate();
     this.calculateUSD();
     this.getSubscription();
 	}
@@ -49,13 +51,22 @@ export class WalletPurchase {
     return true;
   }
 
-  calculatePoints(){}
+  getRate(){
+    this.client.get('api/v1/wallet/count')
+      .then((response : any) => {
+        this.ex = response.ex.usd;
+      });
+  }
+
+  calculatePoints(){
+    this.points = this.usd / this.ex;
+  }
 
   calculateUSD(){
-    var self = this;
+    this.usd = this.points * this.ex;
     this.client.post('api/v1/wallet/quote', { points: this.points })
       .then((response : any) => {
-        self.usd = response.usd;
+        this.usd = response.usd;
       });
   }
 
