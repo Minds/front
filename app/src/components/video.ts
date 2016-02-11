@@ -200,8 +200,10 @@ export class MindsVideo{
   }
 
   isVisible(){
-    if(this.autoplay)
+    if(this.autoplay){
+      this.getSeeker();
       return;
+    }
     if(!this.guid)
       return;
       var bounds = this.element.getBoundingClientRect();
@@ -216,7 +218,7 @@ export class MindsVideo{
         this.element.pause();
         //console.log('[video]:: pausing ' + this.src);
       }
-      }
+    }
       //console.log('[video]: checking visibility');
   }
 
