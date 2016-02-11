@@ -15,7 +15,7 @@ import { ScrollService } from '../services/ux/scroll';
     '(mouseenter)': 'onMouseEnter()',
     '(mouseleave)': 'onMouseLeave()'
     },
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <video (click)="onClick()" preload="auto" allowfullscreen>
     </video>
@@ -176,6 +176,8 @@ export class MindsVideo{
   }
 
   getSeeker(){
+    if(this.seek_interval)
+      clearInterval(this.seek_interval);
     this.seek_interval = setInterval(() => {
       this.seeked = (this.element.currentTime / this.element.duration) * 100;
       this.calculateElapsed();
@@ -200,10 +202,8 @@ export class MindsVideo{
   }
 
   isVisible(){
-    if(this.autoplay){
-      this.getSeeker();
+    if(this.autoplay)
       return;
-    }
     if(!this.guid)
       return;
       var bounds = this.element.getBoundingClientRect();
