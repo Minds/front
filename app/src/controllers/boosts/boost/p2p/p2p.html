@@ -10,7 +10,7 @@
 <!--<minds-payments-checkout></minds-payments-checkout>-->
 
 <!--CONTENT-->
-<div class="mdl-card__supporting-text">
+<div class="mdl-card__supporting-text" style="padding: 0 4px 0 0;">
 
   <div class="m-search-inline" [hidden]="destination">
     <input type="text" [(ngModel)]="q" (keyup)="search()" placeholder="Search for a channel"/>
@@ -75,6 +75,9 @@
           <m-scheduler (ts)="scheduledTs = ($event/1000)"></m-scheduler>
         </div>
       </div>
+      <p class="mdl-color-text--grey-600 m-boost-pro-fb-message" *ngIf="postToFacebook">
+        The message field will not be posted to facebook. Only the attachment will be sent
+      </p>
 
     </div>
 
@@ -106,6 +109,9 @@
           <m-scheduler (ts)="scheduledTs = ($event/1000)"></m-scheduler>
         </div>
       </div>
+      <p class="mdl-color-text--grey-600 m-boost-pro-fb-message" *ngIf="postToFacebook">
+        The message field will not be posted to facebook. Only the attachment will be sent
+      </p>
 
       <minds-payments-checkout (inputed)="boost($event);" [hidden]="stage != 2"></minds-payments-checkout>
       <p class="m-checkout-hint mdl-color-text--blue-grey-300" [hidden]="stage != 2">
