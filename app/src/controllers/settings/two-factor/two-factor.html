@@ -1,24 +1,55 @@
-<div class="mdl-grid" style="max-width:900px">
+<div class="mdl-card mdl-shadow--2dp" style="max-width:900px">
   <div class="mdl-card__title">
     <h2 class="mdl-card__title-text">Two Factor Authentication</h2>
   </div>
 
-  <div class="mdl-card__supporting-text">
+  <!-- OVERVIEW -->
+  <div class="mdl-card__supporting-text" *ngIf="!inProgress && telno && !waitingForCheck">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="cancel()">
+      Remove two factor
+    </button>
+  </div>
+
+  <!-- SETUP -->
+  <div class="mdl-card__supporting-text" *ngIf="!inProgress && !telno">
     <div class="minds-settings-text">
-      Your SMS number
+      Your SMS number. <b>Enter your country code too (eg. +1, +44, etc)</b>
     </div>
     <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
       <input class="mdl-textfield__input"
       type="text"
       #smsNumber
-      id="twoFactorAuthentication"
       />
-      <label class="mdl-textfield__label" for="twoFactorAuthentication">eg. +4407999000909</label>
+      <label class="mdl-textfield__label" for="twoFactorAuthentication">eg. +44 07999 000909</label>
     </div>
-    <div >
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="send(smsNumber)">
-        Send
+    <p class="mdl-color-text--red">{{error}}</p>
+    <div>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="setup(smsNumber.value)">
+        Setup
       </button>
     </div>
   </div>
+
+  <!-- CHECK -->
+  <div class="mdl-card__supporting-text" *ngIf="!inProgress && telno && waitingForCheck">
+    <div class="minds-settings-text">
+      We sent an SMS to <b>{{telbo}}</b>. Enter the code below to complete your two factor setup.
+    </div>
+    <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
+      <input class="mdl-textfield__input"
+      type="text"
+      #code
+      />
+      <label class="mdl-textfield__label" for="twoFactorAuthentication">Enter your code here</label>
+    </div>
+    <div >
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="check(code.value)">
+        Confirm
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--raised " (click)="check(code.value)">
+        Retry
+      </button>
+    </div>
+  </div>
+
 </div>
