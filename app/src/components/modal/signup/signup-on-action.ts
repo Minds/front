@@ -29,7 +29,7 @@ import { SessionFactory } from '../../../services/session';
           <img src="https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.png">
         </a>
         <a href="https://play.google.com/store/apps/details?id=com.minds.mobile" align="center">
-          <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png">
+          <img alt="Android app on Google Play" src="{{minds.cdn_url}}assets/ext/playstore.png">
         </a>
       </div>
 
@@ -46,6 +46,7 @@ export class SignupOnActionModal {
   action : string = "";
   session = SessionFactory.build();
   closed : EventEmitter<any> = new EventEmitter();
+  minds = window.Minds;
 
   constructor(){
 

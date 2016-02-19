@@ -21,7 +21,7 @@ interface CreditCard {
 
 @Component({
   selector: 'minds-payments-checkout',
-  inputs: ['amount', 'merchant_guid', 'usePayPal: paypal', 'useCreditCard: creditcard', 'useBitcoin: bitcoin'],
+  inputs: ['amount', 'merchant_guid', 'gateway', 'usePayPal: paypal', 'useCreditCard: creditcard', 'useBitcoin: bitcoin'],
   outputs: ['inputed', 'done'],
   template: `
 
@@ -52,6 +52,7 @@ export class Checkout {
 
   amount : number = 0;
   merchant_guid;
+  gateway : string = "merchants";
 
   braintree_client;
   bt_checkout;
@@ -67,7 +68,7 @@ export class Checkout {
 
   init(){
     System.import('lib/braintree.js').then((braintree : any) => {
-        this.client.get('api/v1/payments/braintree/token')
+        this.client.get('api/v1/payments/braintree/token/' + this.gateway)
          .then((response : any) => { this.setupClient(braintree, response.token); });
       });
   }

@@ -31,9 +31,8 @@
         for="header-actions"
         [mdl]
         >
-      <li class="mdl-menu__item" *ngIf="session.isLoggedIn()" [routerLink]="['/Logout']">Logout</li>
       <li class="mdl-menu__item" *ngIf="session.isLoggedIn()" [routerLink]="['/Settings', {'filter': 'general'}]">Settings</li>
-      <a class="mdl-menu__item" href="https://legacy.minds.com/">Use the old Minds</a>
+      <li class="mdl-menu__item" *ngIf="session.isLoggedIn()" [routerLink]="['/Logout']">Logout</li>
     </ul>
 
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" *ngIf="!session.isLoggedIn()" [routerLink]="['/Login']">

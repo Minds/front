@@ -6,7 +6,8 @@ Web app for Minds. Please run inside of [the minds repo](https://github.com/mind
 ### Building
 
 - `npm install`
-- `gulp build.prod`
+- `gulp build`
+- `gulp build.index`
 
 ### Contributing
 
