@@ -9,9 +9,7 @@ import { MINDS_PIPES } from '../../pipes/pipes';
 
 @Component({
   selector: 'minds-topbar-navigation',
-  viewBindings: [NavigationService ]
-})
-@View({
+  viewBindings: [NavigationService ],
   template: `
     <nav class="" *ngIf="session.isLoggedIn()">
 
@@ -19,7 +17,7 @@ import { MINDS_PIPES } from '../../pipes/pipes';
     		[routerLink]="[item.path, item.params]"
     		>
     		<i class="material-icons" [ngClass]="{'mdl-color-text--amber-300' : item.extras?.counter > 0 && item.name == 'Notifications'}">{{item.icon}}</i>
-        <span id="{{item.name | lowercase}}-counter" class="counter mdl-color-text--green-400" *ngIf="item.extras">{{item.extras?.counter | abbr}}</span>
+        <!--<span id="{{item.name | lowercase}}-counter" class="counter mdl-color-text--green-400" *ngIf="item.extras">{{item.extras?.counter | abbr}}</span>-->
     	</a>
 
     </nav>
