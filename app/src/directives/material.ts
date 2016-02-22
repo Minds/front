@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, ProtoViewRef, Type, Inject } from 'angular2/core';
+import { Directive, ViewContainerRef, Type, Inject } from 'angular2/core';
 import { Material as MaterialService } from "../services/ui";
 
 import { MaterialTextfield } from './material/text-field';
@@ -10,7 +10,7 @@ import { MaterialUpload } from './material/upload';
 })
 
 export class Material{
-  constructor(@Inject(ViewContainerRef) viewContainer: ViewContainerRef) {
+  constructor(viewContainer: ViewContainerRef) {
     //MaterialService.rebuild();
     MaterialService.updateElement(viewContainer.element.nativeElement);
   }

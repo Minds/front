@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, ProtoViewRef, Inject } from 'angular2/core';
+import { Directive, ViewContainerRef, Inject } from 'angular2/core';
 import { Material as MaterialService } from "../../services/ui";
 
 @Directive({
@@ -10,7 +10,7 @@ export class MaterialUpload{
 
   element : any;
 
-  constructor(@Inject(ViewContainerRef) viewContainer: ViewContainerRef) {
+  constructor(viewContainer: ViewContainerRef) {
     this.element = viewContainer.element.nativeElement;
     MaterialService.updateElement(viewContainer.element.nativeElement);
 
