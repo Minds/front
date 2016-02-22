@@ -50,7 +50,7 @@ export class Scheduler {
       this.dates.push({
         date: date,
         ts: date.getTime(),
-        formatted: date.getDay() + this.getSuffix(date.getDay())  + ' ' + date.toLocaleString('en-us', { month: "long" })
+        formatted: date.getDate() + this.getSuffix(date.getDate())  + ' ' + date.toLocaleString('en-us', { month: "long" })
       });
     }
     this.setUpHours();
