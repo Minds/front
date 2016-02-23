@@ -39,8 +39,8 @@
       </div>
       <div class="mdl-card__supporting-text results" *ngIf="retention">
         <div class="cell" *ngFor="#stat of retention.totals">
-          <label>{{stat.day}}</label>
-          <b>{{stat.total *100}}%</b>
+          <label>{{stat.day }}</label>
+          <b>{{stat.total * 100 | number:'1.0-0'}}%</b>
         </div>
       </div>
     </div>
