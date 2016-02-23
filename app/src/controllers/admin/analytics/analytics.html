@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <!-- Monthly active users -->
+  <!-- Monthly active users & Retention -->
   <div class="mdl-cell mdl-cell--4-col">
     <div class="mdl-card">
       <div class="mdl-card__title">Monthly Active Users</div>
@@ -31,6 +31,20 @@
         </div>
       </div>
     </div>
+
+    <div class="mdl-card">
+      <div class="mdl-card__title">Retention</div>
+      <div class="mdl-card__supporting-text" *ngIf="retention">
+        <minds-graph-line [data]="retention.totals"></minds-graph-line>
+      </div>
+      <div class="mdl-card__supporting-text results" *ngIf="retention">
+        <div class="cell" *ngFor="#stat of retention.totals">
+          <label>{{stat.day}}</label>
+          <b>{{stat.total *100}}%</b>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Boost Stats -->

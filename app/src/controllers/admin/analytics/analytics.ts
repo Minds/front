@@ -22,6 +22,7 @@ export class AdminAnalytics {
   dam_list;
   mam;
   mam_list;
+  retention;
   boost_newsfeed = {
     review: 0,
     approved: 0,
@@ -31,6 +32,7 @@ export class AdminAnalytics {
 
   constructor(public client: Client, public params : RouteParams){
     this.getActives();
+    this.getRetention();
     this.getBoosts();
   }
 
@@ -45,6 +47,17 @@ export class AdminAnalytics {
         self.dam_list = response['daily'].slice(0).reverse();
         self.mam = response['monthly'];
         self.mam_list = response['monthly'].slice(0).reverse();
+      });
+  }
+
+  /**
+   * Return retention rates
+   */
+  getRetention(){
+    this.client.get('api/v1/admin/analytics/retention')
+      .then((response : any) => {
+        this.retention = response.retention[0];
+        console.log(this.retention);
       });
   }
 
