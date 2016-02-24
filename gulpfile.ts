@@ -10,10 +10,18 @@ gulp.task('build', done =>
     'build.plugins',
     'build.sass',
     'build.assets',
-    'build.deps',
     'build.js',
     'build.bundles',
+    'build.bundles.app',
     //'build.index',
+    done));
+
+// --------------
+// Build bundle
+gulp.task('build.bundle', done =>
+  runSequence(
+    'build.bundles',
+    'build.bundles.app',
     done));
 
 // --------------
