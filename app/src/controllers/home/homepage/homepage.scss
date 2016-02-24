@@ -210,6 +210,28 @@ minds-homepage{
       }
     }
   }
+
+  .m-homepage-press {
+    height: 120px;
+
+    ul {
+      display: block;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      max-width: 1280px;
+      text-align: center;
+    }
+    li {
+      display: inline-block;
+
+      img {
+        box-sizing: border-box;
+        max-width: 98px;
+        padding: 0 0.5em;
+      }
+    }
+  }
 }
 
 .m-app-links{
