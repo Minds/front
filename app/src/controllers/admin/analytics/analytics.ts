@@ -22,6 +22,8 @@ export class AdminAnalytics {
   dam_list;
   mam;
   mam_list;
+  signups;
+  signups_list;
   retention;
   boost_newsfeed = {
     review: 0,
@@ -32,6 +34,7 @@ export class AdminAnalytics {
 
   constructor(public client: Client, public params : RouteParams){
     this.getActives();
+    this.getSignups();
     this.getRetention();
     this.getBoosts();
   }
@@ -47,6 +50,17 @@ export class AdminAnalytics {
         self.dam_list = response['daily'].slice(0).reverse();
         self.mam = response['monthly'];
         self.mam_list = response['monthly'].slice(0).reverse();
+      });
+  }
+
+  /**
+   * Return signups
+   */
+  getSignups(){
+    this.client.get('api/v1/admin/analytics/signups')
+      .then((response : any) => {
+        this.signups = response['daily'];
+        this.signups_list = response['daily'].slice(0).reverse();
       });
   }
 
