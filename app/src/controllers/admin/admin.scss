@@ -11,15 +11,28 @@ minds-admin-analytics{
       display:table;
 
       .row{
-       flex:1;
-       padding:$minds-padding;
-       border-bottom:1px solid #EEE;
+        flex:1;
+        padding:$minds-padding;
+        border-bottom:1px solid #EEE;
 
-       > label{
+        > label{
          width:60%;
          float:left;
-       }
+        }
+      }
+      .cell{
+        display:table-cell;
+        flex:1;
+        border-right:1px solid #EEE;
+        &:last-child{
+          border-right:0;
+        }
+        text-align:center;
 
+        label{
+          width:100%;
+          display:block;
+        }
       }
     }
   }
