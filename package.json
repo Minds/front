@@ -47,6 +47,7 @@
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.2.4",
     "jasmine-core": "~2.3.4",
+    "jasmine-spec-reporter": "^2.4.0",
     "karma": "~0.12.37",
     "karma-chrome-launcher": "~0.2.0",
     "karma-jasmine": "~0.3.6",
