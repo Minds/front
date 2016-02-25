@@ -7,7 +7,7 @@ import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2
 import {MINDS_PROVIDERS} from './src/services/providers';
 import {Minds} from './app';
 
-//enableProdMode();
+if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
 bootstrap(Minds, [
   ROUTER_PROVIDERS,
