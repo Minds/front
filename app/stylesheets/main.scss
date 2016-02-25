@@ -67,6 +67,11 @@ minds-topbar{
     .minds-logo{
       display:none;
     }
+    minds-topbar-navigation{
+      nav a .counter{
+        display:none;
+      }
+    }
   }
 }
 
