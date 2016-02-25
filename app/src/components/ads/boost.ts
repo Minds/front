@@ -30,6 +30,9 @@ export class BoostAds{
   boosts : Array<any> = [];
 
   constructor(public client: Client) {
+  }
+
+  ngOnInit(){
     this.fetch();
   }
 
