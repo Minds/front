@@ -24,10 +24,10 @@ import { MindsActivityObject } from '../../interfaces/entities';
 
 export class SearchBar {
 
-  q : string = "hello";
+  q : string;
 
   constructor(public router : Router){
-    //this.listen();
+    this.listen();
   }
 
   listen(){
