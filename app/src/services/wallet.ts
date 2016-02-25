@@ -44,6 +44,10 @@ export class WalletService {
        window.Minds.wallet = { balance: '...' };
        this.client.get('api/v1/wallet/count')
          .then((response : any) => {
+           if(!response.count){
+             window.Minds.wallet = null;
+             return this;
+           }
            this.points = response.count;
            window.Minds.wallet.balance = response.count;
            this.sync();
