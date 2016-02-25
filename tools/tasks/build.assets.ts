@@ -8,6 +8,7 @@ export = function buildAssets(gulp, plugins) {
         '!' + join(APP_SRC, '**', '*.ts'),
         '!' + join(APP_SRC, '**', '*.css'),
         '!' + join(APP_SRC, '**', '*.html'),
+        '!' + join(APP_SRC, '**', '*.php'),
       ])
       .pipe(gulp.dest(APP_DEST));
   };
