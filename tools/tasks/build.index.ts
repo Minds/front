@@ -24,12 +24,7 @@ export = function buildIndex(gulp, plugins) {
       gulp.src(files, {
         read: false
       }), {
-        transform: function (filepath) {
-          console.log(filepath);
-          let path = normalize(filepath).split(sep);
-          arguments[0] = path.slice(2, path.length).join(sep) + `?${Date.now()}`;
-          return plugins.inject.transform.apply(plugins.inject.transform, arguments);
-        }
+        transform: transformPath(plugins, 'dev')
       });
   }
 
