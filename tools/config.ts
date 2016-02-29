@@ -78,6 +78,7 @@ export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependenci
   { src: 'es6-shim/es6-shim.min.js', inject: 'shims' },
   { src: 'systemjs/dist/system.js', inject: 'shims' },
   { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
+  { src: 'angular2/es6/dev/src/testing/shims_for_IE.js', inject: 'shims' },
   { src: 'intl/dist/Intl.min.js', inject: 'shims' },
   { src: 'intl/locale-data/jsonp/en.js', inject: 'shims' },
 ]);
