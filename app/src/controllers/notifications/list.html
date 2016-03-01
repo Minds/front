@@ -22,7 +22,9 @@
 
           <!-- group inivite -->
           <template ngSwitchWhen="group_invite">
-            <a>You've been invited to join {{notification.entityObj.name}}</a>
+            <a [routerLink]="['/Groups-Profile', {guid: notification.params.group.guid, filter: 'activity'}]">
+                <p>{{notification.params.user}} invited you to join <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span></p>
+            </a>
           </template>
 
           <!-- comment -->
