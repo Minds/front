@@ -23,11 +23,8 @@ export class MindsTinymce {
   update = new EventEmitter();
   timeout;
 
-  constructor() {
-    this.init();
-  }
 
-  init(){
+  ngOnInit(){
     var self = this;
     tinymce.init({
       selector:'minds-tinymce > textarea',

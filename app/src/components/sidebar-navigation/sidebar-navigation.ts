@@ -9,9 +9,7 @@ import { SocketsService } from '../../services/sockets';
 
 @Component({
   selector: 'minds-sidebar-navigation',
-  viewBindings: [NavigationService ]
-})
-@View({
+  viewBindings: [NavigationService ],
   templateUrl: 'src/components/sidebar-navigation/sidebar-navigation.html',
   directives: [ RouterLink, CORE_DIRECTIVES ]
 })
@@ -20,13 +18,14 @@ export class SidebarNavigation {
 	user;
 	session = SessionFactory.build();
 	items;
+
 	constructor(public navigation : NavigationService, public sockets : SocketsService){
 		var self = this;
     this.items = navigation.getItems('sidebar');
 		this.getUser();
 
 		//listen out for new messages
-    this.messengerListener();
+    //this.messengerListener();
 	}
 
 	getUser(){
