@@ -12,6 +12,7 @@
     "braintree-web": "2.15.2",
     "es6-module-loader": "^0.17.8",
     "es6-shim": "^0.33.6",
+    "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
     "systemjs": "^0.19.18",
     "tinymce": "^4.2.6",

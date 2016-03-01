@@ -17,7 +17,7 @@ import { ScrollService } from '../../services/ux/scroll';
     },
   //changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <video (click)="onClick()" preload="auto" allowfullscreen [src]="src" [muted]="muted" [loop]="loop" [autoplay]="autoplay">
+    <video (click)="onClick()" preload="none" allowfullscreen [src]="src" [muted]="muted" [loop]="loop" [autoplay]="autoplay">
     </video>
     <div class="minds-video-bar-min">
       {{time.minutes}}:{{time.seconds}}
