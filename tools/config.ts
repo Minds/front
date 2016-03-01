@@ -1,6 +1,6 @@
 import {readFileSync} from 'fs';
 import {argv} from 'yargs';
-import {normalize, join} from 'path';
+import {normalize, join, sep} from 'path';
 
 // --------------
 // Configuration.
