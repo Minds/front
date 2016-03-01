@@ -27,6 +27,13 @@
             </a>
           </template>
 
+          <!-- group kick -->
+          <template ngSwitchWhen="group_kick">
+            <a [routerLink]="['/Groups-Profile', {guid: notification.params.group.guid, filter: 'activity'}]">
+                <p>You were kicked off from <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span></p>
+            </a>
+          </template>
+
           <!-- comment -->
           <template ngSwitchWhen="comment" *ngIf="notification.entityObj">
 
