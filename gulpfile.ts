@@ -25,6 +25,15 @@ gulp.task('build.bundle', done =>
     done));
 
 // --------------
+// Build (SASS only)
+gulp.task('build.sass', done =>
+  runSequence(
+    'build.plugins',
+    'build.sass',
+    'build.assets',
+    done));
+
+// --------------
 // Build Index
 gulp.task('build.index', done =>
   runSequence(
