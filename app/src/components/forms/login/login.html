@@ -1,0 +1,74 @@
+
+<div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box" style="min-height:0;" [hidden]="!errorMessage">
+  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+    {{errorMessage}}
+  </div>
+</div>
+
+<!-- START: LOGIN -->
+<form (submit)="login()" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 mdl-shadow--2dp m-form m-login-box" [hidden]="hideLogin">
+
+  <div class="mdl-card__title mdl-color-text--blue-grey-600">
+    <h3>Login to Minds</h3>
+  </div>
+
+  <div class="mdl-card__supporting-text mdl-grid">
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <input
+        type="text"
+        id="username"
+        ngControl="username"
+        placeholder="Username (eg. @me)"
+        (keydown.enter)="login()"
+        />
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <input
+        type="password"
+        id="password"
+        ngControl="password"
+        placeholder="Password"
+        (keydown.enter)="login()"
+        />
+    </div>
+  </div>
+
+  <div class="mdl-card__actions">
+    <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="login()" [disabled]="inProgress">
+      Login
+    </button>
+    <a class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link" [routerLink]="['/Forgot-Password']">
+      Forgot Password?
+    </a>
+  </div>
+
+</form>
+<!-- END: LOGIN -->
+
+<!-- START: TWOFACTOR -->
+<div class="mdl-card mdl-color--blue-grey-500 mdl-shadow--2dp minds-login-box" [hidden]="!twofactorToken">
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text mdl-color-text--blue-grey-50">Twofactor Login</h2>
+  </div>
+
+  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+    We just sent you a text. Enter the code below to authenticate.
+  </div>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-color-text--blue-grey-50" [mdl]>
+    <input class="mdl-textfield__input"
+    type="text"
+    id="code"
+    #code
+    (keydown.enter)="twofactorAuth(code)"
+    />
+    <label class="mdl-textfield__label mdl-color-text--blue-grey-50" for="code">Enter your code here</label>
+  </div>
+  <div></div>
+
+  <button class="mdl-button mdl-button--raised mdl-color--blue-grey-200" (click)="twofactorAuth(code)">
+    Login
+  </button>
+</div>
