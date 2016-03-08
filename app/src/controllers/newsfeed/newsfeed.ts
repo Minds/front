@@ -48,22 +48,22 @@ export class Newsfeed {
     attachment_guid: null
   }
 
-	constructor(public client: Client, public upload: Upload, public navigation : NavigationService, public router: Router, public title: MindsTitle){
+  constructor(public client: Client, public upload: Upload, public navigation : NavigationService, public router: Router, public title: MindsTitle){
     if(!this.session.isLoggedIn()){
       router.navigate(['/Login']);
     } else {
-  		this.load();
+      this.load();
       this.minds = window.Minds;
     }
 
     this.title.setTitle("Newsfeed");
-	}
+  }
 
-	/**
-	 * Load newsfeed
-	 */
-	load(refresh : boolean = false){
-		var self = this;
+  /**
+   * Load newsfeed
+   */
+  load(refresh : boolean = false){
+    var self = this;
     if(this.inProgress){
       //console.log('already loading more..');
       return false;
@@ -75,25 +75,25 @@ export class Newsfeed {
 
     this.inProgress = true;
 
-		this.client.get('api/v1/newsfeed', {limit:12, offset: this.offset}, {cache: true})
-				.then((data : MindsActivityObject) => {
-					if(!data.activity){
+    this.client.get('api/v1/newsfeed', {limit:12, offset: this.offset}, {cache: true})
+        .then((data : MindsActivityObject) => {
+          if(!data.activity){
             self.moreData = false;
             self.inProgress = false;
-						return false;
-					}
+            return false;
+          }
           if(self.newsfeed && !refresh){
             self.newsfeed = self.newsfeed.concat(data.activity);
           } else {
             self.newsfeed = data.activity;
           }
-					self.offset = data['load-next'];
+          self.offset = data['load-next'];
           self.inProgress = false;
-				})
-				.catch(function(e){
-					self.inProgress = false;
-				});
-	}
+        })
+        .catch(function(e){
+          self.inProgress = false;
+        });
+  }
 
   prepend(activity : any){
     this.prepended.unshift(activity);
