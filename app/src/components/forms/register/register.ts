@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteParams } from 'angular2/router';
 
@@ -8,8 +8,9 @@ import { SessionFactory } from '../../../services/session';
 
 
 @Component({
-  selector: 'minds-register',
-  templateUrl: 'src/components/form/register/register.html',
+  selector: 'minds-form-register',
+  outputs: [ 'done' ],
+  templateUrl: 'src/components/forms/register/register.html',
   directives: [ FORM_DIRECTIVES, Material ]
 })
 
@@ -24,16 +25,15 @@ export class RegisterForm {
 
   form : ControlGroup;
 
-	constructor(public client : Client, public router: Router, public params: RouteParams, fb: FormBuilder){
+  done : EventEmitter<any> = new EventEmitter();
+
+	constructor(public client : Client, public router: Router, fb: FormBuilder){
     this.form = fb.group({
       username: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
       password2: ['', Validators.required]
     });
-
-    if(params.params['referrer'])
-      this.referrer = params.params['referrer'];
 	}
 
 	register(e){
@@ -54,13 +54,7 @@ export class RegisterForm {
         this.inProgress = false;
 				self.session.login(data.user);
 
-        if(this.referrer)
-          self.router.navigateByUrl(this.referrer);
-        else
-				  self.router.navigate(['/Channel', {
-            username: data.user.username,
-            editToggle: true
-          }]);
+        this.done.next(data.user);
 			})
 			.catch((e) => {
         console.log(e);

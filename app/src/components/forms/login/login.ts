@@ -1,8 +1,7 @@
-import { Component } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
@@ -10,7 +9,7 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-form-login',
-  bindings: [ MindsTitle ],
+  outputs: [ 'done' ],
   templateUrl: 'src/components/forms/login/login.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink]
 })
@@ -27,19 +26,15 @@ export class LoginForm {
 
   form : ControlGroup;
 
-	constructor(public client : Client, public router: Router, public params: RouteParams, public title: MindsTitle, fb: FormBuilder){
-		if(this.session.isLoggedIn())
-      router.navigate(['/Newsfeed']);
+  done : EventEmitter<any> = new EventEmitter();
 
-    this.title.setTitle("Login");
+	constructor(public client : Client, public router: Router, fb: FormBuilder){
 
     this.form = fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
 
-    if(params.params['referrer'])
-      this.referrer = params.params['referrer'];
 	}
 
 	login(){
@@ -54,10 +49,7 @@ export class LoginForm {
 				this.form.value = null;
         this.inProgress = false;
 				this.session.login(data.user);
-        if(this.referrer)
-          self.router.navigateByUrl(this.referrer);
-        else
-				  self.router.navigate(['/Newsfeed', {}]);
+        this.done.next(data.user);
 			})
 			.catch((e) => {
 
@@ -82,7 +74,7 @@ export class LoginForm {
     this.client.post('api/v1/authenticate/two-factor', {token: this.twofactorToken, code: code.value})
         .then((data : any) => {
           self.session.login(data.user);
-          self.router.navigate(['/Newsfeed', {}]);
+          this.done.next(data.user);
         })
         .catch((e) => {
           self.errorMessage = "Sorry, we couldn't verify your two factor code. Please try logging again.";
