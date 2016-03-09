@@ -4,7 +4,8 @@ import { CORE_DIRECTIVES } from 'angular2/common';
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
 import { WalletService } from '../../services/wallet';
-import { SignupOnActionModal } from '../modal/modal';
+import { SignupModalService } from '../modal/signup/service';
+
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -18,9 +19,8 @@ import { SignupOnActionModal } from '../modal/modal';
       <i class="material-icons">thumb_up</i>
       <counter *ngIf="object['thumbs:up:count'] > 0">{{object['thumbs:up:count']}}</counter>
     </a>
-    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="vote up"  *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
   `,
-  directives: [CORE_DIRECTIVES, SignupOnActionModal]
+  directives: [CORE_DIRECTIVES]
 })
 
 export class ThumbsUpButton {
@@ -32,7 +32,7 @@ export class ThumbsUpButton {
   session = SessionFactory.build();
   showModal : boolean = false;
 
-  constructor(public client : Client, public wallet : WalletService) {
+  constructor(public client : Client, public wallet : WalletService, private modal : SignupModalService) {
   }
 
   set _object(value : any){
@@ -47,6 +47,7 @@ export class ThumbsUpButton {
     var self = this;
 
     if(!this.session.isLoggedIn()){
+      this.modal.setSubtitle("You need to have a channel to vote").open();
       this.showModal = true;
       return false;
     }

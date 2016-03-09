@@ -3,6 +3,7 @@ import { CORE_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
 
 import { Modal } from '../modal';
+import { SignupModalService } from './service';
 import { FORM_COMPONENTS } from '../../forms/forms';
 import { Tutorial } from '../../tutorial/tutorial';
 import { SessionFactory } from '../../../services/session';
@@ -14,6 +15,7 @@ import { AnalyticsService } from '../../../services/analytics';
   inputs: ['open', 'subtitle'],
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, FORM_COMPONENTS, Tutorial ],
   template: `
+  open?: {{open}}
     <m-modal [open]="open" (closed)="onClose($event)" *ngIf="!session.isLoggedIn() || display != 'initial'">
       <div class="mdl-card__title" [hidden]="display == 'onboarding'">
         <img src="/assets/logos/small.png" (click)="close()"/>
@@ -22,7 +24,7 @@ import { AnalyticsService } from '../../../services/analytics';
       <!-- Initial Display -->
       <div *ngIf="display == 'initial'">
         <div class="mdl-card__supporting-text">
-          {{subtitle}}
+          {{service.subtitle}}
         </div>
         <div class="mdl-card__supporting-text m-signup-buttons">
           <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="do('register')">Signup</button>
@@ -64,8 +66,9 @@ export class SignupModal {
   subtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
   display : string = 'initial';
 
-  constructor(private router : Router, private location : Location){
+  constructor(private router : Router, private location : Location, private service : SignupModalService){
     this.listen();
+    this.service.isOpen.subscribe({next: open => { console.log('[open?]: ', open); this.open = open }});
   }
 
   listen(){
@@ -81,7 +84,7 @@ export class SignupModal {
         this.display = 'initial';
         break;
       default:
-        this.open = false;
+        this.close();
     }
 
   }
@@ -117,7 +120,7 @@ export class SignupModal {
             this.route  + '?referrer=signup-model&ts=' + Date.now());
         }
         this.display = 'initial'; //stop listening for modal now.
-        this.open = false;
+        this.close();
         break;
       case "register":
         if(this.router){
@@ -132,16 +135,16 @@ export class SignupModal {
         break;
       case "tutorial":
         this.display = 'initial';
-        this.open = false;
+        this.close();
         break;
     }
   }
 
   onClose(e : boolean){
+    this.service.close();
     if(this.display != 'initial'){
       this.display = 'initial';
-      this.open = false; //just to reset change detection
-      setTimeout(() => { this.open = true; });
+      setTimeout(() => { this.service.open(); });
       this.router.navigateByUrl(this.route);
     }
   }

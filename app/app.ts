@@ -11,7 +11,7 @@ import { SocketsService } from './src/services/sockets';
 
 import {Topbar} from './src/components/topbar/topbar';
 import {SidebarNavigation} from './src/components/sidebar-navigation/sidebar-navigation';
-import {SignupOnScrollModal} from './src/components/modal/modal';
+import {SignupModal} from './src/components/modal/modal';
 
 import {Homepage} from './src/controllers/home/homepage/homepage';
 import {Login} from './src/controllers/home/login/login';
@@ -43,7 +43,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
   selector: 'minds-app',
   bindings: [ NotificationService, AnalyticsService ],
   templateUrl: './src/controllers/index.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupOnScrollModal ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal ]
 })
 @RouteConfig([
   { path: '/login', component: Login, as: 'Login' },
