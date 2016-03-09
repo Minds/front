@@ -73,11 +73,13 @@ m-modal-signup, m-modal-signup-on-action{
     }
   }
 
-  .mdl-button{
-    padding: 8px;
-    font-size: 22px;
-    height: 48px;
-    width:48%;
+  .m-signup-buttons{
+    .mdl-button{
+      padding: 8px;
+      font-size: 22px;
+      height: 48px;
+      width:48%;
+    }
   }
 
   .m-modal-signup-apps{

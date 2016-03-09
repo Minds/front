@@ -1,30 +1,30 @@
 import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
-import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
+import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
 
 import { Modal } from '../modal';
 import { FORM_COMPONENTS } from '../../forms/forms';
+import { Tutorial } from '../../tutorial/tutorial';
 import { SessionFactory } from '../../../services/session';
-import { ScrollService } from '../../../services/ux/scroll';
 import { AnalyticsService } from '../../../services/analytics';
 
 
 @Component({
   selector: 'm-modal-signup',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, FORM_COMPONENTS ],
+  inputs: ['open', 'subtitle'],
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, FORM_COMPONENTS, Tutorial ],
   template: `
-    {{open}} {{display}}
     <m-modal [open]="open" (closed)="onClose($event)" *ngIf="!session.isLoggedIn() || display != 'initial'">
-      <div class="mdl-card__title">
+      <div class="mdl-card__title" [hidden]="display == 'onboarding'">
         <img src="/assets/logos/small.png" (click)="close()"/>
       </div>
 
       <!-- Initial Display -->
       <div *ngIf="display == 'initial'">
         <div class="mdl-card__supporting-text">
-        Signup to comment, upload, vote and receive 100 free views on your content.
+          {{subtitle}}
         </div>
-        <div class="mdl-card__supporting-text">
+        <div class="mdl-card__supporting-text m-signup-buttons">
           <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="do('register')">Signup</button>
           <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="do('login')">Login</button>
         </div>
@@ -47,7 +47,9 @@ import { AnalyticsService } from '../../../services/analytics';
       <!-- Register Display -->
       <minds-form-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'register'"></minds-form-register>
       <!-- Onboarding Display -->
-      <minds-onboarding (done)="done('onboarding')" *ngIf="display == 'onboarding'"></minds-onboarding>
+      <minds-form-onboarding (done)="done('onboarding')" *ngIf="display == 'onboarding'"></minds-form-onboarding>
+      <!-- Tutorial Display -->
+      <minds-tutorial *ngIf="display == 'tutorial'"></minds-tutorial>
     </m-modal>
   `
 })
@@ -57,37 +59,17 @@ export class SignupModal {
   open : boolean = false;
   session = SessionFactory.build();
   route : string = "";
-  scroll_listener;
   minds = window.Minds;
 
+  subtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
   display : string = 'initial';
 
-  constructor(public router : Router, public scroll : ScrollService){
+  constructor(private router : Router, private location : Location){
     this.listen();
   }
 
   listen(){
-    this.router.subscribe((route) => {
-      this.route = route;
-      switch(route.split('?')[0]){
-        case 'register':
-        case 'login':
-        case 'forgot-password':
-        case '':
-          this.open = false;
-          break;
-        default:
-          this.scroll_listener = this.scroll.listen((e) => {
-            if(this.scroll.view.scrollTop > 100){
-              if(window.localStorage.getItem('hideSignupModal'))
-                this.open = false;
-              else
-                this.open = true;
-              this.scroll.unListen(this.scroll_listener);
-            }
-          }, 100);
-      }
-    });
+    this.route = this.location.path();
   }
 
   close(){
@@ -105,17 +87,22 @@ export class SignupModal {
   }
 
   do(display : string){
+    console.log(this.route);
+    let op = this.route.indexOf('?') > -1 ? '&' : '?';
     switch(display){
       case "login":
         //hack to provide login page in history
-        window.history.pushState(null, 'Login', '/login');
-        AnalyticsService.send('pageview', { 'page' : '/login' });
+        window.history.pushState(null, 'Login', this.route + `${op}modal=login` );
+        AnalyticsService.send('pageview', { 'page' : this.route + `${op}modal=login` });
         this.display = 'login';
         break;
       case "register":
-        window.history.pushState(null, 'Register', '/register');
-        AnalyticsService.send('pageview', { 'page' : '/register' });
+        window.history.pushState(null, 'Register', this.route + `${op}modal=register`);
+        AnalyticsService.send('pageview', { 'page' : this.route + `${op}modal=register` });
         this.display = 'register';
+        break;
+      case "onboarding":
+        this.display = 'onboarding';
         break;
     }
 
@@ -124,15 +111,30 @@ export class SignupModal {
   done(display : string){
     switch(display){
       case "login":
-        this.router.navigateByUrl(this.route.indexOf('?') > -1 ?
-          this.route  + '&referrer=signup-model&ts=' + Date.now() :
-          this.route  + '?referrer=signup-model&ts=' + Date.now());
+        if(this.router){
+          this.router.navigateByUrl(this.route.indexOf('?') > -1 ?
+            this.route  + '&referrer=signup-model&ts=' + Date.now() :
+            this.route  + '?referrer=signup-model&ts=' + Date.now());
+        }
+        this.display = 'initial'; //stop listening for modal now.
+        this.open = false;
         break;
       case "register":
+        if(this.router){
+          this.router.navigateByUrl(this.route.indexOf('?') > -1 ?
+            this.route  + '&referrer=signup-model&ts=' + Date.now() :
+            this.route  + '?referrer=signup-model&ts=' + Date.now());
+        }
+        this.display = 'onboarding';
+        break;
+      case "onboarding":
+        this.display = 'tutorial'
+        break;
+      case "tutorial":
+        this.display = 'initial';
+        this.open = false;
+        break;
     }
-
-    this.display = 'initial'; //stop listening for modal now.
-    this.open = false;
   }
 
   onClose(e : boolean){
@@ -142,11 +144,6 @@ export class SignupModal {
       setTimeout(() => { this.open = true; });
       this.router.navigateByUrl(this.route);
     }
-  }
-
-  ngOnDestroy(){
-    if(this.scroll_listener)
-      this.scroll.unListen(this.scroll_listener);
   }
 
 }
