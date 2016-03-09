@@ -4,7 +4,7 @@ import { ScrollService } from '../../../services/ux/scroll';
 
 export class SignupModalService{
 
-  defaulSubtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
+  defaultSubtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
   subtitle : string = this.defaultSubtitle;
   isOpen : EventEmitter<boolean> = new EventEmitter();
 
