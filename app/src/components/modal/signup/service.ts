@@ -7,6 +7,7 @@ export class SignupModalService{
   defaultSubtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
   subtitle : string = this.defaultSubtitle;
   isOpen : EventEmitter<boolean> = new EventEmitter();
+  display : EventEmitter<string> = new EventEmitter();
 
   route : string;
   scroll_listener;
@@ -24,6 +25,10 @@ export class SignupModalService{
         case 'forgot-password':
         case '':
           this.close();
+          break;
+        case 'discovery/suggested':
+          this.display.next('onboarding');
+          this.open();
           break;
         default:
           this.scroll_listener = this.scroll.listen((e) => {
@@ -46,6 +51,7 @@ export class SignupModalService{
 
   close() : SignupModalService{
     this.isOpen.next(false);
+    this.display.next('initial');
     this.subtitle = this.defaultSubtitle;
     return this;
   }

@@ -15,7 +15,6 @@ import { AnalyticsService } from '../../../services/analytics';
   inputs: ['open', 'subtitle'],
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, FORM_COMPONENTS, Tutorial ],
   template: `
-  open?: {{open}}
     <m-modal [open]="open" (closed)="onClose($event)" *ngIf="!session.isLoggedIn() || display != 'initial'">
       <div class="mdl-card__title" [hidden]="display == 'onboarding'">
         <img src="/assets/logos/small.png" (click)="close()"/>
@@ -68,7 +67,8 @@ export class SignupModal {
 
   constructor(private router : Router, private location : Location, private service : SignupModalService){
     this.listen();
-    this.service.isOpen.subscribe({next: open => { console.log('[open?]: ', open); this.open = open }});
+    this.service.isOpen.subscribe({next: open => this.open = open });
+    this.service.display.subscribe({next: display => this.display = display});
   }
 
   listen(){
