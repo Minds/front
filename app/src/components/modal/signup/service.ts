@@ -26,10 +26,6 @@ export class SignupModalService{
         case '':
           this.close();
           break;
-        case 'discovery/suggested':
-          this.display.next('onboarding');
-          this.open();
-          break;
         default:
           this.scroll_listener = this.scroll.listen((e) => {
             if(this.scroll.view.scrollTop > 100){
@@ -58,6 +54,11 @@ export class SignupModalService{
 
   setSubtitle(text : string) : SignupModalService{
     this.subtitle = text;
+    return this;
+  }
+
+  setDisplay(display : string) : SignupModalService{
+    this.display.next(display);
     return this;
   }
 

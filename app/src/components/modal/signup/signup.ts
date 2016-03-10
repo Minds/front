@@ -142,7 +142,7 @@ export class SignupModal {
 
   onClose(e : boolean){
     this.service.close();
-    if(this.display != 'initial'){
+    if(this.display == 'login' || this.display == 'register'){
       this.display = 'initial';
       setTimeout(() => { this.service.open(); });
       this.router.navigateByUrl(this.route);
