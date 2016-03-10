@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter, ChangeDetectorRef  } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { Client } from '../../services/api';
@@ -66,7 +66,7 @@ export class ThirdPartyNetworksFacebook {
 
   inProgress : boolean = false;
 
-  constructor(public client : Client){
+  constructor(public client : Client, private cd : ChangeDetectorRef ){
     this.getPage();
   }
 
@@ -97,6 +97,7 @@ export class ThirdPartyNetworksFacebook {
       .then((response : any) => {
         this.inProgress = false;
         this.accounts = response.accounts;
+        this.cd.detectChanges();
       });
   }
 
