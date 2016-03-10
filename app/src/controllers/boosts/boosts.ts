@@ -71,6 +71,16 @@ export class Boosts{
   }
 
   accept(boost, i){
+    let agreed = true;
+    if(boost.bidType == 'usd' && boost.postToFacebook){
+      agreed = confirm(`I accept a 5% transaction fee and agree not to delete this content from Facebook`);
+    } else if(boost.bidType == 'usd'){
+      agreed =  confirm(`I accept a 5% transaction fee`);
+    } else if(boost.postToFacebook){
+      agreed =  confirm(`I agree not to delete this content from Facebook`);
+    }
+    if(!agreed)
+      return;
     this.boosts[i].state = 'accepted';
     this.client.put('api/v1/boost/peer/' + boost.guid)
       .catch(e => {

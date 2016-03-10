@@ -98,6 +98,8 @@ export class BoostP2P{
           this.stage = 1;
         },1000);
 
+        alert(`Your offer has been sent to @${this.destination.username}. You may revoke your request by visiting the Outbox of your Boost Console`);
+
       })
       .catch((e) => {
         this.inProgress = false;
