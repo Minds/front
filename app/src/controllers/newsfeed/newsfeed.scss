@@ -6,3 +6,16 @@
     font-weight: 600;
   }
 }
+
+minds-newsfeed {
+  .minds-newsfeed-sidebar-button {
+    padding-bottom: 12px;
+
+    > i.material-icons {
+      vertical-align: middle;
+      position: relative;
+      top: -0.1em;
+      margin-right: 0.2em;
+    }
+  }
+}

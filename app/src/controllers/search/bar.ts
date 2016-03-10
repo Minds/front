@@ -12,13 +12,11 @@ import { MindsActivityObject } from '../../interfaces/entities';
   selector: 'minds-search-bar',
   host: {
     '(keyup)': 'keyup($event)'
-  }
-})
-@View({
+  },
   template: `
     <div class="mdl-textfield mdl-js-textfield">
         <i class="material-icons" (click)="onClick()">search</i>
-        <input class="mdl-textfield__input" type="text" id="search" [(ngModel)]="q"/>
+        <input [(ngModel)]="q" class="mdl-textfield__input" type="text" id="search" />
         <label class="mdl-textfield__label" for="search"></label>
     </div>`,
   directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES ]
@@ -26,7 +24,7 @@ import { MindsActivityObject } from '../../interfaces/entities';
 
 export class SearchBar {
 
-  q : string = "";
+  q : string;
 
   constructor(public router : Router){
     this.listen();

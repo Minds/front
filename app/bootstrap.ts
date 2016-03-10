@@ -1,3 +1,5 @@
+///<reference path="../node_modules/angular2/typings/browser.d.ts"/>
+
 import {provide, enableProdMode} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
 import {HTTP_PROVIDERS} from 'angular2/http';
@@ -5,7 +7,7 @@ import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2
 import {MINDS_PROVIDERS} from './src/services/providers';
 import {Minds} from './app';
 
-enableProdMode();
+if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
 bootstrap(Minds, [
   ROUTER_PROVIDERS,

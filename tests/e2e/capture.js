@@ -3,7 +3,7 @@ import { Helpers } from './helpers';
 
 let h = new Helpers();
 
-describe('testing groups', () => {
+describe('testing uploader', () => {
 
   beforeEach(() => {
     h.login();

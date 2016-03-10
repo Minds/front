@@ -26,13 +26,15 @@
       <minds-card-user [object]="session.getLoggedInUser()" class="mdl-card mdl-shadow--2dp" style="margin-bottom:16px;"></minds-card-user>
 
       <a [routerLink]="['/Wallet-Filter', {filter: 'merchants'}]" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
-        <div class="mdl-card__supporting-text mdl-color-text--white ">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">account_balance</i>
           Monetize your channel
         </div>
       </a>
 
       <a [routerLink]="['/Boosts', {type: 'peer', 'filter': 'inbox'}]" class="mdl-card mdl-color--blue-grey-700 mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
-        <div class="mdl-card__supporting-text mdl-color-text--white ">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">trending_up</i>
           Boost console
         </div>
     	</a>
@@ -52,7 +54,7 @@
     	</div>
 
       <div class="minds-spacer minds-spacer-2x"></div>
-      <m-ads-boost limit="2"></m-ads-boost>
+      <m-ads-boost limit="4"></m-ads-boost>
       <div class="minds-spacer minds-spacer-2x"></div>
 
       <div class="m-newsfeed-footer">

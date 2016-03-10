@@ -9,9 +9,7 @@ import { MINDS_PIPES } from '../../pipes/pipes';
 
 @Component({
   selector: 'minds-topbar-navigation',
-  viewBindings: [NavigationService ]
-})
-@View({
+  viewBindings: [NavigationService ],
   template: `
     <nav class="" *ngIf="session.isLoggedIn()">
 
