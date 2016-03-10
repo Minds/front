@@ -118,7 +118,26 @@ svg.m-facebook-icon{
       background-color: #3067a3;
       fill:#FFF;
     }
+    //margin-right:$minds-margin;
+  }
+
+  .m-boost-pro-plus-fb{
+    padding:8px;
     margin-right:$minds-margin*2;
+    &.not-selected{
+      filter: grayscale(100%);
+    }
+
+    img{
+      width:24px;
+      height:24px;
+    }
+    label{
+      padding-left: 8px;
+      font-weight: bold;
+      display: inline-block;
+      cursor:pointer;
+    }
   }
 
 }
