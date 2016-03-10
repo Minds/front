@@ -74,7 +74,7 @@
         <a target="_blank"
           href="https://www.facebook.com/{{destination.fb.uuid}}"
           class="mdl-color--white m-boost-pro-plus-fb"
-          [ngClass]="{'not-selected': postToFacebook}" >
+          [ngClass]="{'not-selected': !postToFacebook}" >
           <img [src]="'https://graph.facebook.com/' + destination.fb.uuid + '/picture'" />
           <label class="mdl-color-text--blue-grey-300">{{destination.fb.name}}</label>
         </a>
@@ -115,7 +115,7 @@
         <a target="_blank"
           href="https://www.facebook.com/{{destination.fb.uuid}}"
           class="mdl-color--white m-boost-pro-plus-fb"
-          [ngClass]="{'not-selected': postToFacebook}" >
+          [ngClass]="{'not-selected': !postToFacebook}" >
           <img [src]="'https://graph.facebook.com/' + destination.fb.uuid + '/picture'" />
           <label class="mdl-color-text--blue-grey-300">{{destination.fb.name}}</label>
         </a>
