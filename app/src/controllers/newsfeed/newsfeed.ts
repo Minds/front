@@ -2,7 +2,7 @@ import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Observable } from 'rxjs/Rx';
 
-import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -39,6 +39,8 @@ export class Newsfeed {
 
   attachment_preview;
 
+  message : string = "";
+  newUserPromo : boolean = false;
   postMeta : any = {
     title: "",
     description: "",
@@ -48,13 +50,22 @@ export class Newsfeed {
     attachment_guid: null
   }
 
-	constructor(public client: Client, public upload: Upload, public navigation : NavigationService, public router: Router, public title: MindsTitle){
+	constructor(public client: Client, public upload: Upload, public navigation : NavigationService,
+    public router: Router, public params: RouteParams, public title: MindsTitle){
     if(!this.session.isLoggedIn()){
       router.navigate(['/Login']);
     } else {
   		this.load();
       this.minds = window.Minds;
     }
+
+    if(params.params['message']){
+      this.message = params.params['message'];
+    }
+    if(params.params['newUser']){
+      this.newUserPromo = Boolean(params.params['newUser']);
+    }
+
 
     this.title.setTitle("Newsfeed");
 	}
@@ -96,7 +107,22 @@ export class Newsfeed {
 	}
 
   prepend(activity : any){
+    if(this.newUserPromo){
+      this.autoBoost(activity);
+    }
+    activity.boostToggle = false;
+    activity.boosted = true;
     this.prepended.unshift(activity);
+    this.newUserPromo = false;
+  }
+
+  autoBoost(activity : any){
+    this.client.post( 'api/v1/boost/activity/' + activity.guid + '/' + activity.owner_guid,
+      {
+        newUserPromo: true,
+        impressions: 200,
+        destination: 'Newsfeed'
+      });
   }
 
   delete(activity){

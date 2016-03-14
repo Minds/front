@@ -12,7 +12,7 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-newsfeed-poster',
-  inputs: [ '_container_guid: containerGuid', 'accessId'],
+  inputs: [ '_container_guid: containerGuid', 'accessId', 'message'],
   outputs: ['load'],
   templateUrl: 'src/controllers/newsfeed/poster/poster.html',
   directives: [ MDL_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, AutoGrow, InfiniteScroll ]
@@ -55,6 +55,14 @@ export class Poster {
 
   set accessId(value : any){
     this.postMeta.access_id = value;
+  }
+
+  set message(value : any){
+    if(value){
+      value = decodeURIComponent((value).replace(/\+/g, '%20'));
+      this.postMeta.message = value;
+      this.getPostPreview({value: value}); //a little ugly here!
+    }
   }
 
 	/**
