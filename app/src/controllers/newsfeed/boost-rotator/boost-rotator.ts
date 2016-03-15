@@ -102,7 +102,7 @@ export class NewsfeedBoostRotator {
     }
   }
 
-  recordImpression(position : number, force : boolean = false){
+  recordImpression(position : number, force : boolean){
     //ensure was seen for at least 1 second
     if(Date.now() > this.lastTs + 1000 || force){
       this.client.put('api/v1/boost/fetch/newsfeed/' + this.boosts[position].boosted_guid);
@@ -138,7 +138,7 @@ export class NewsfeedBoostRotator {
     } else {
       this.currentPosition--;
     }
-    this.recordImpression(this.currentPosition);
+    this.recordImpression(this.currentPosition, false);
   }
 
   next(){
@@ -154,7 +154,7 @@ export class NewsfeedBoostRotator {
     } else {
       this.currentPosition++;
     }
-    this.recordImpression(this.currentPosition);
+    this.recordImpression(this.currentPosition, false);
   }
 
   ngOnDestroy(){
