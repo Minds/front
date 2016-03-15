@@ -94,7 +94,11 @@ export class MindsVideo{
   }
 
   set _autoplay(value : boolean){
-    this.autoplay = value;
+    if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+      this.autoplay = false;
+    } else {
+      this.autoplay = value;
+    }
     //this.element.autoplay = value;
   }
 
