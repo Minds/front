@@ -31,7 +31,7 @@ export class MindsTinymce {
       content_css : "/stylesheets/main.css",
       format: 'raw',
       menubar: false,
-      toolbar: "styleselect | bold italic underline textcolor | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | code",
+      toolbar: "styleselect | bold italic underline textcolor | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | removeformat | code",
       statusbar: false,
       plugins: [
 	         "advlist autolink link image lists preview hr anchor pagebreak",
