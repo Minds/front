@@ -31,6 +31,7 @@ export class NewsfeedBoostRotator {
   running : boolean = false;
   interval : number = 5;
   currentPosition : number = 0;
+  lastTs : number = Date.now();
   minds;
   scroll_listener;
 
@@ -62,7 +63,7 @@ export class NewsfeedBoostRotator {
             this.currentPosition = 0;
           }
           if(!this.running){
-            this.recordImpression(this.currentPosition);
+            this.recordImpression(this.currentPosition, true);
             this.start();
             this.isVisible();
           }
@@ -101,8 +102,12 @@ export class NewsfeedBoostRotator {
     }
   }
 
-  recordImpression(position : number){
-    this.client.put('api/v1/boost/fetch/newsfeed/' + this.boosts[position].boosted_guid);
+  recordImpression(position : number, force : boolean = false){
+    //ensure was seen for at least 1 second
+    if(Date.now() > this.lastTs + 1000 || force){
+      this.client.put('api/v1/boost/fetch/newsfeed/' + this.boosts[position].boosted_guid);
+    }
+    this.lastTs = Date.now();
   }
 
   active(){
@@ -121,6 +126,10 @@ export class NewsfeedBoostRotator {
 
   mouseOut(){
     this.isVisible();
+  }
+
+  pause(){
+    alert("Hover you mouse over the boost to pause the rotator");
   }
 
   prev(){

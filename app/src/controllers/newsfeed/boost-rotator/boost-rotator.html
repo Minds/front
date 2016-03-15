@@ -9,6 +9,9 @@
   <li (click)="next()">
     <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
   </li>
+  <li class="m-boost-rotator-paused" [hidden]="running" (click)="pause()">
+    <i class="material-icons mdl-color-text--blue-grey-200" title="Hover over the boosted post to pause">pause</i>
+  </li>
 </ul>
 
 <minds-activity

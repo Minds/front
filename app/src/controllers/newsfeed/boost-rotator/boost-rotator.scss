@@ -33,6 +33,26 @@
     margin-top:-10px;
     cursor:pointer;
   }
+  .m-boost-rotator-paused{
+    &.paused{
+      animation:pulse 2s linear infinite;
+    }
+  }
+}
+
+
+@keyframes pulse {
+  0% {
+    -webkit-filter: blur(0px);
+  }
+
+  50% {
+    -webkit-filter: blur(1px);
+  }
+
+  100% {
+    -webkit-filter: blur(0px);
+  }
 }
 
 @keyframes boostProgressBar {
