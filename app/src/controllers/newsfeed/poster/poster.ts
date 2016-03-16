@@ -100,8 +100,10 @@ export class Poster {
 
     var fileInfo = file ? file.files[0] : null;
 
-    if(!fileInfo)
+    if(!fileInfo){
+      this.canPost = true;
       return;
+    }
 
     /**
      * Give a live preview
@@ -117,19 +119,19 @@ export class Poster {
     /**
      * Upload to the archive and return the attachment guid
      */
-    this.upload.post('api/v1/archive', [fileInfo], this.postMeta, (progress) => { console.log(progress); this.attachment_progress = progress; })
+    this.upload.post('api/v1/archive', [fileInfo], this.postMeta, (progress) => { this.attachment_progress = progress; })
       .then((response : any) => {
-        self.postMeta.attachment_guid = response.guid;
+        this.postMeta.attachment_guid = response.guid;
         file.files = [];
-        self.canPost = true;
+        this.canPost = true;
         file.value = null;
       })
       .catch((e) => {
         self.postMeta.attachment_guid = null;
         file.files = [];
-        self.canPost = true;
-        self.attachment_progress = 0;
-        self.attachment_preview = null;
+        this.canPost = true;
+        this.attachment_progress = 0;
+        this.attachment_preview = null;
         file.value = null;
       });
 
