@@ -5,7 +5,7 @@
     <a [routerLink]="['/Discovery', {filter: _filter, type: 'channels'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'channels' || _type == 'all'}" [hidden]="_filter == 'owner' || _owner">Channels</a>
 </div>
 
-<div class="mdl-grid m-discovery-{{_filter}}" style="max-width:900px">
+<div class="mdl-grid m-discovery-{{_filter}} m-discovery-{{_filter}}-{{_type}}" style="max-width:900px">
 
     <a class="mdl-cell mdl-cell--4-col" [routerLink]="['/Capture']" style="text-decoration: none;" [hidden]="_type == 'channels' || _filter == 'suggested'">
       <minds-add-card class="mdl-card mdl-shadow--2dp mdl-color--blue-grey-400 mdl-color-text--blue-grey-100">
@@ -37,14 +37,14 @@
       </div>
     </div>
 
-    <div class="mdl-cell mdl-cell--4-col" *ngFor="#entity of entities; #i = index" [hidden]="i != 0 && _filter == 'suggested'">
+    <div class="mdl-cell mdl-cell--4-col m-discovery-wrapper" *ngFor="#entity of entities; #i = index" [hidden]="i != 0 && _filter == 'suggested'">
 
       <minds-card-video [object]="entity" *ngIf="entity.subtype == 'video'" class="mdl-card mdl-shadow--2dp" [ngClass]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-video>
       <minds-card-image [object]="entity" *ngIf="entity.subtype == 'image'" class="mdl-card mdl-shadow--2dp" [ngClass]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-image>
       <minds-card-album [object]="entity" *ngIf="entity.subtype == 'album'" class="mdl-card mdl-shadow--2dp" [ngClass]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-album>
 
       <!-- START: User Only -->
-      <minds-card-user [object]="entity" [avatar-size]="_filter == 'suggested' ? 'large' : 'medium'" *ngIf="entity.type == 'user'" class="mdl-card mdl-shadow--2dp"></minds-card-user>
+      <minds-card-user [object]="entity" [avatarSize]="_filter == 'suggested' ? 'large' : 'medium'" *ngIf="entity.type == 'user'" class="mdl-card mdl-shadow--2dp"></minds-card-user>
       <!-- END: User Only -->
 
       <div class="m-discovery-suggested-actions mdl-card mdl-shadow--6dp mdl-color--blue-grey-900" *ngIf="_filter == 'suggested'">
