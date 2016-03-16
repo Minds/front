@@ -15,8 +15,8 @@
         <h3 [hidden]="session.isLoggedIn()">Launch a channel today</h3>
         <h3 *ngIf="session.isLoggedIn()">Welcome {{session.getLoggedInUser().name}}</h3>
       </div>
-      <div class="mdl-cell mdl-cell--6-col m-homepage-signup" *ngIf="!session.isLoggedIn()">
-        <minds-register></minds-register>
+      <div class="mdl-cell mdl-cell--6-col m-homepage-signup" [hidden]="session.isLoggedIn()">
+        <minds-form-register (done)="registered()"></minds-form-register>
       </div>
     </div>
   </div>
