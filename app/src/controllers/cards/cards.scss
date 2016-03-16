@@ -96,6 +96,20 @@ minds-card-user, .minds-banner-card{
     }
 
   }
+
+  .minds-usercard-buttons {
+    position: absolute;
+    top: $minds-padding;
+    right: $minds-padding;
+
+    &.has-feature-button {
+      right: $minds-padding + 30px;
+    }
+
+    [buttons] {
+      display: inline-block;
+    }
+  }
 }
 
 minds-card-image, minds-card-video{
