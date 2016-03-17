@@ -26,8 +26,15 @@ import { TagsPipe } from '../../../pipes/tags';
     </div>
     <div class="minds-body">
       <a [routerLink]="['/Channel', {username: comment.ownerObj.username}]" class="username mdl-color-text--blue-grey-500">{{comment.ownerObj.name}} @{{comment.ownerObj.username}}</a>
-      <span class="mdl-color-text--blue-grey-300">{{comment.time_created * 1000 | date: 'medium'}}</span>
-      <p [hidden]="editing" [innerHtml]="comment.description | tags"></p>
+      <span class="mdl-color-text--blue-grey-300 minds-comment-span minds-comment-bullet">{{comment.time_created * 1000 | date: 'medium'}}</span>
+
+      <p [hidden]="editing">
+        <span class="minds-comments-voting">
+            <minds-button-thumbs-up [object]="comment"></minds-button-thumbs-up>
+            <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
+        </span>
+        <span [innerHtml]="comment.description | tags"></span>
+      </p>
 
       <div class="minds-editable-container" *ngIf="editing">
       	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
@@ -38,7 +45,7 @@ import { TagsPipe } from '../../../pipes/tags';
           (keydown.enter)="comment.description = edit.value; save();"
           (keydown.esc)="editing = false; edit.value = comment.description"
           ></textarea>
-        <span>Press ESC to cancel</span>
+        <span class="minds-comment-span">Press ESC to cancel</span>
       </div>
 
       <div class="mdl-card__menu mdl-color-text--blue-grey-300">

@@ -53,8 +53,8 @@ minds-comments{
         text-decoration: none;
         font-weight:bold;
       }
-      span{
-        &:before{
+      span.minds-comment-span{
+        &.minds-comment-bullet:before{
           content:'·';
           font-weight:bold;
           padding: 0 $minds-padding;
@@ -69,6 +69,32 @@ minds-comments{
       }
       a{
         text-decoration:none;
+      }
+    }
+
+    .minds-comments-voting {
+      display: inline-block;
+      padding: 4px 8px 0;
+      box-sizing: border-box;
+      float: right;
+
+      minds-button-thumbs-down {
+        margin-left: 1em;
+      }
+
+      minds-button-thumbs-up,
+      minds-button-thumbs-down {
+        display: inline-block;
+      }
+
+      .material-icons {
+        font-size: 16px;
+      }
+
+      counter {
+        font-size: 10px;
+        line-height: 16px;
+        vertical-align: top;
       }
     }
   }
