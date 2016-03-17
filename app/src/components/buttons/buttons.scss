@@ -29,6 +29,29 @@ minds-button-subscribe, minds-groups-join-button, minds-button-edit, minds-butto
   }
 }
 
+minds-button-subscribe{
+
+  button{
+    padding: 4px 8px;
+    min-width: 128px;
+
+    > i {
+      padding-right: 8px;
+      padding-bottom: 1px;
+      vertical-align:middle;
+    }
+  }
+
+  &.m-button-icon-only button{
+    min-width:0;
+    width: 36px;
+    padding:4px;
+    overflow: hidden;
+    white-space: nowrap;
+
+  }
+}
+
 minds-button-feature > button{
   padding:4px;
 }

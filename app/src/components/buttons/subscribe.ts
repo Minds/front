@@ -11,8 +11,14 @@ import { SignupOnActionModal } from '../modal/modal';
 })
 @View({
   template: `
-    <button class="minds-subscribe-button" *ngIf="!_user.subscribed" (click)="subscribe()">Subscribe</button> \
-    <button class="minds-subscribe-button subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">Subscribed</button>
+    <button class="minds-subscribe-button" *ngIf="!_user.subscribed" (click)="subscribe()">
+      <i class="material-icons">person_add</i>
+      Subscribe
+    </button>
+    <button class="minds-subscribe-button subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">
+      <i class="material-icons">person_add</i>
+      Subscribed
+    </button>
     <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="subscribe"  *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
   `,
   directives: [ CORE_DIRECTIVES, SignupOnActionModal ]
