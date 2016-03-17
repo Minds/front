@@ -24,7 +24,7 @@
               <!-- Attachements -->
               <div class="attachment-button" [ngClass]="{'mdl-color-text--amber-500': attachment_preview}">
                 <i class="material-icons">attachment</i>
-                <input type="file" type="file" id="file" name="attachment" (change)="uploadAttachment()"/>
+                <input type="file" id="file" name="attachment" (change)="uploadAttachment($event)"/>
               </div>
 
               <button

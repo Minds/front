@@ -94,6 +94,7 @@ export class Poster {
   uploadAttachment(){
     var self = this;
     var file : any = document.getElementById("file");
+
     this.canPost = false;
     this.attachment_progress = 0;
     this.attachment_mime = "";
@@ -122,13 +123,13 @@ export class Poster {
     this.upload.post('api/v1/archive', [fileInfo], this.postMeta, (progress) => { this.attachment_progress = progress; })
       .then((response : any) => {
         this.postMeta.attachment_guid = response.guid;
-        file.files = [];
+        //file.files = [];
         this.canPost = true;
         file.value = null;
       })
       .catch((e) => {
         self.postMeta.attachment_guid = null;
-        file.files = [];
+        //file.files = [];
         this.canPost = true;
         this.attachment_progress = 0;
         this.attachment_preview = null;
