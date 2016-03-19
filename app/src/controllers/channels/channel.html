@@ -42,7 +42,7 @@
           <span>Views</span>
           <b>{{user.impressions}}</b>
         </a>
-        <div class="mdl-tabs__tab mdl-tabs__action-buttons">
+        <div class="mdl-tabs__tab mdl-tabs__action-buttons" style="padding: 12px 0;">
           <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked"></minds-button-subscribe>
           <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
 
