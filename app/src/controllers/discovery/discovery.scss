@@ -2,6 +2,10 @@
   margin-top:16px;
   max-width:100%;
 
+  .m-discovery-wrapper {
+    overflow: hidden;
+  }
+
   .mdl-cell{
     min-width: 100%;
     margin:auto;
@@ -12,18 +16,25 @@
     }
 
     minds-card-user{
+      width: 400px;
+      margin: 0 auto;
+
       .minds-usercard-banner{
-        height:200px;
+        display: none !important;
       }
+
       .avatar{
-        width: 200px;
-        height: 150px;
+        margin: 0 auto;
+        width: 100%;
+        height: 368px;
+        box-sizing: border-box;
         text-align: center;
         vertical-align: middle;
- 
+        padding: 8px;
+        background: #EEE;
+
         img{
-          max-height:100%;
-          max-width:100%;
+          height:100%;
         }
       }
       .minds-tabs{
@@ -31,11 +42,20 @@
         margin-bottom:8px;
       }
       .minds-usercard-block{
-        margin-top: -102px;
-        //padding-bottom:16px;
-        //margin-bottom:16px;
+        display: block;
+        margin-top: 0;
         width: 100%;
         box-sizing: border-box;
+
+        .body {
+          h3 {
+            color: #222222;
+          }
+
+          > span {
+            color: #78909c;
+          }
+        }
 
         @media screen and (min-width: 400px){
           h3{
@@ -48,7 +68,6 @@
       @media screen and (max-width:400px){
         .minds-usercard-block{
           display: block;
-          margin-top: -150px;
           color: #222;
         }
         .avatar{
@@ -56,9 +75,6 @@
         }
         .body{
           margin: 16px 0 0;
-        }
-        .minds-usercard-banner{
-          height: 156px;
         }
         .m-usercard-bio{
           margin-top:0 !important;
@@ -71,7 +87,7 @@
         padding: 8px;
         margin-top:16px;
         color:#222;
- 
+
         > div{
           font-size:12px;
           //flex:1;
@@ -81,6 +97,10 @@
           align-items:center;
           max-height: 40px;
           overflow: hidden;
+
+          &.m-usercard-bio-brief{
+            align-items:flex-start;
+          }
 
           > i{
             vertical-align:middle;
@@ -116,7 +136,6 @@
     margin: -8px 12px;
     padding: 16px 0 8px;
     z-index: 0 !important;
-
 
     .m-button {
       flex:1;
@@ -210,4 +229,49 @@
 
   }
 
+}
+
+.m-discovery-suggested-channels {
+  minds-button-feature {
+    background: #ffffff;
+  }
+
+  .m-discovery-suggested-actions {
+    width: 400px !important;
+    padding: 24px 0 16px;
+    margin: -8px auto 0;
+    border-radius: 2px;
+
+    button {
+      > i.material-icons {
+        font-size: 20px;
+      }
+    }
+
+    .m-button-pass {
+      background: #E53935;
+      color: #ffffff;
+      border-color: #ffffff;
+
+      &:hover {
+        background: #C62828;
+      }
+    }
+
+    .minds-subscribe-button {
+      background: #43A047;
+      color: #ffffff;
+      border-color: #ffffff;
+
+      &:hover {
+        background: #2E7D32;
+      }
+    }
+  }
+}
+
+.m-discovery-channels-note {
+  max-width: 400px;
+  margin: 16px auto 0;
+  text-align: center;
 }

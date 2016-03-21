@@ -1,0 +1,70 @@
+
+<!-- START: Onboarding bio input -->
+<form (submit)="submit($event)" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 m-form" [hidden]="hideLogin">
+
+  <div class="mdl-card__supporting-text mdl-grid">
+
+    <div class="mdl-cell mdl-cell--4-col">
+      <label>Avatar</label>
+    </div>
+    <div class="mdl-cell mdl-cell--8-col">
+      <minds-avatar editMode="true" waitForDoneSignal="false" (added)="addAvatar($event)"></minds-avatar>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col">
+      <label>Banner</label>
+    </div>
+    <div class="mdl-cell mdl-cell--8-col m-onboarding-banner">
+      <img *ngIf="banner" [src]="banner">
+      <b [hidden]="banner">Click here to upload a banner</b>
+      <b [hidden]="!banner">Click here to change banner</b>
+      <input type="file" id="file" (change)="addBanner($event)"/>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col">
+      <label>Bio</label>
+    </div>
+    <div class="mdl-cell mdl-cell--8-col">
+      <input
+        type="text"
+        ngControl="briefdescription"
+        placeholder="Optional"
+        />
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col">
+      <label>Gender</label>
+    </div>
+    <div class="mdl-cell mdl-cell--8-col">
+      <span><input type="radio" [ngModel]="{checked: gender == 'male'}" (ngModelChange)="gender='male'" name="gender" value="male"> Male</span>
+      <span><input type="radio" [ngModel]="{checked: gender == 'female'}" (ngModelChange)="gender='female'" name="gender"  value="female"> Female</span>
+      <span><input type="radio" [ngModel]="{checked: gender == 'private'}" (ngModelChange)="gender='private'" name="gender"  value="private"> Private</span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col">
+      <label>Date of Birth</label>
+    </div>
+    <div class="mdl-cell mdl-cell--8-col">
+      <input
+        type="date"
+        ngControl="dob"
+        placeholder="Optional"
+        />
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col">
+      <label>City</label>
+    </div>
+    <div class="mdl-cell mdl-cell--8-col">
+      <minds-form-city-finder></minds-form-city-finder>
+    </div>
+  </div>
+
+  <div class="mdl-card__actions">
+    <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="submit($event)" [disabled]="inProgress">
+      Save
+    </button>
+  </div>
+
+</form>
+<!-- END: Onboarding bio input-->

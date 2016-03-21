@@ -1,63 +1,18 @@
-
-    <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
-        <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-          {{errorMessage}}
-        </div>
-    </div>
-
-    <!-- START: Register -->
-    <form (submit)="login($event)" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 mdl-shadow--2dp m-form m-login-box" [hidden]="hideLogin">
-
-      <div class="mdl-card__title mdl-color-text--blue-grey-600">
+<section class="m-video-banner">
+  <div class="video">
+    <video autoplay muted loop poster="assets/videos/earth-1/earth-1.png">
+      <!--<source src="assets/videos/traffic-1/traffic-1.webm" type="video/webm">
+      <source src="assets/videos/traffic-1/traffic-1.mp4" type="video/mp4">-->
+      <source src="{{minds.cdn_url}}assets/videos/earth-1/earth-1.webm" type="video/webm">
+      <source src="{{minds.cdn_url}}assets/videos/earth-1/earth-1.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="overlay overlay--0.6">
+    <div class="" style="max-width:400px">
+      <div class="mdl-color-text--white">
         <h3>Not on Minds? Start a channel</h3>
       </div>
-
-      <div class="mdl-card__supporting-text mdl-grid">
-
-        <div class="mdl-cell mdl-cell--12-col">
-          <input
-            type="text"
-            id="username"
-            ngControl="username"
-            placeholder="Username (eg. @me)"
-            />
-        </div>
-
-        <div class="mdl-cell mdl-cell--12-col">
-          <input
-            type="email"
-            id="email"
-            ngControl="email"
-            placeholder="Email (eg. me@minds.com)"
-            />
-        </div>
-
-        <div class="mdl-cell mdl-cell--12-col">
-          <input
-            type="password"
-            id="password"
-            ngControl="password"
-            placeholder="Password"
-            />
-        </div>
-
-        <div class="mdl-cell mdl-cell--12-col">
-          <input
-            type="password"
-            id="password2"
-            ngControl="password2"
-            placeholder="Confirm your password"
-            (keydown.enter)="register($event)"
-            />
-        </div>
-      </div>
-
-      <div class="mdl-card__actions">
-        <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="register($event)" [disabled]="inProgress">
-          Signup
-        </button>
-        <span class="m-register-tac">By creating an account you agree to the Terms & Conditions</span>
-      </div>
-
-    </form>
-    <!-- END: Register -->
+      <minds-form-register (done)="registered()"></minds-form-register>
+    </div>
+  </div>
+</section>

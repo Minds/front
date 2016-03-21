@@ -1,0 +1,48 @@
+@import "defaults";
+
+minds-form-onboarding{
+
+  max-height: 100vh;
+  overflow: scroll;
+
+  .mdl-grid{
+    align-items:center;
+  }
+
+  minds-avatar{
+    margin: auto;
+    display: block;
+    width: 200px;
+  }
+
+  .m-onboarding-banner{
+    position:relative;
+    img{
+      width:100%;
+    }
+    input[type=file]{
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+  }
+
+  label{
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  input{
+    padding: 8px;
+    width: 100%;
+  }
+
+  input[type=radio]{
+    width:auto;
+  }
+
+}

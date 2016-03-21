@@ -2,7 +2,10 @@
 
     <div class="mdl-cell mdl-cell--8-col">
 
-        <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
+        <div class="mdl-shadow--4dp mdl-color--green mdl-color-text--white m-newsfeed-boost-promo" *ngIf="newUserPromo">
+          <i class="material-icons">trending_up</i> Have 200 free views on us. Hit post to be boosted.
+        </div>
+        <minds-newsfeed-poster (load)="prepend($event)" [message]="message"></minds-newsfeed-poster>
 
         <div class="minds-list">
 

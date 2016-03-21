@@ -1,0 +1,6 @@
+<input (keyup)="findCity(city)" [(ngModel)]="city" placeholder="Enter your city..."/>
+
+<div class="m-city-finder-list mdl-card mdl-shadow--4dp" *ngIf="cities.length > 0">
+  <p class="mdl-color-text--blue-grey-300">Select your city:</p>
+  <li (click)="setCity(c)" *ngFor="#c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
+</div>
