@@ -24,10 +24,10 @@
     ?>
 
 
-    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.blue_grey-amber.min.css" />
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.1.2/material.blue_grey-amber.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'>
-    <script src="//storage.googleapis.com/code.getmdl.io/1.0.5/material.min.js"></script>
+    <script src="//storage.googleapis.com/code.getmdl.io/1.1.2/material.min.js"></script>
     <!-- inject:css -->
     <!-- endinject -->
 

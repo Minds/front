@@ -9,14 +9,14 @@ import { AutoGrow } from '../../directives/autogrow';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { CommentCard } from '../../controllers/cards/comment/comment';
 import { TagsPipe } from '../../pipes/tags';
-import { SignupOnActionModal } from '../../components/modal/modal';
+import { SignupModalService } from '../../components/modal/signup/service';
 
 
 @Component({
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit'],
   templateUrl: 'src/controllers/comments/list.html',
-  directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, SignupOnActionModal ],
+  directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow ],
   pipes: [ TagsPipe ]
 })
 
@@ -40,7 +40,7 @@ export class Comments {
   inProgress : boolean = false;
   moreData : boolean = true;
 
-	constructor(public client: Client){
+	constructor(public client: Client, private modal : SignupModalService){
     this.minds = window.Minds;
 	}
 
@@ -100,7 +100,7 @@ export class Comments {
 
   isLoggedIn(){
     if(!this.session.isLoggedIn()){
-      this.showModal = true;
+      this.modal.setSubtitle("You need to have channel in order to comment").open();
     }
   }
 

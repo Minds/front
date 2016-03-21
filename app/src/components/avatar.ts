@@ -7,18 +7,20 @@ import { Material } from '../directives/material';
 
 @Component({
   selector: 'minds-avatar',
-  inputs: ['_object: object', '_src: src', '_editMode: editMode'],
+  inputs: ['_object: object', '_src: src', '_editMode: editMode', 'waitForDoneSignal'],
   outputs: ['added']
 })
 @View({
   template: `
   <div class="minds-avatar">
-    <img src="{{src}}" class="mdl-shadow--4dp" />
+    <img *ngIf="src" src="{{src}}" class="mdl-shadow--4dp" />
+    <img *ngIf="!src" src="/assets/avatars/blue/default-large.png" class="mdl-shadow--4dp" />
     <div *ngIf="editing" class="overlay">
       <i class="material-icons">camera</i>
-      <span>Change avatar</span>
-      <input *ngIf="editing" type="file" #file (change)="add($event)"/>
+      <span *ngIf="src">Change avatar</span>
+      <span *ngIf="!src">Add an avatar</span>
     </div>
+    <input *ngIf="editing" type="file" #file (change)="add($event)"/>
   </div>
   `,
   directives: [ CORE_DIRECTIVES, RouterLink, Material ]
@@ -29,6 +31,7 @@ export class MindsAvatar{
   minds : Minds = window.Minds;
   object;
   editing : boolean = false;
+  waitForDoneSignal : boolean = true;
   src : string = "";
   index : number = 0;
 
@@ -74,8 +77,14 @@ export class MindsAvatar{
     reader.readAsDataURL(this.file);
 
     element.value = "";
+
+    console.log(this.waitForDoneSignal);
+    if(this.waitForDoneSignal != true)
+      this.done();
   }
+
   done(){
+    console.log('sending done');
     this.added.next(this.file);
     this.file = null;
   }

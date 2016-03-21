@@ -70,14 +70,17 @@ m-modal-signup, m-modal-signup-on-action{
       margin: 0;
       text-align: center;
       font-weight: 600;
+      letter-spacing: 2px;
     }
   }
 
-  .mdl-button{
-    padding: 8px;
-    font-size: 22px;
-    height: 48px;
-    width:48%;
+  .m-signup-buttons{
+    .mdl-button{
+      padding: 8px;
+      font-size: 22px;
+      height: 48px;
+      width:48%;
+    }
   }
 
   .m-modal-signup-apps{

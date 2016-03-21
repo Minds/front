@@ -3,7 +3,7 @@ import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
-import { SignupOnActionModal } from '../modal/modal';
+import { SignupModalService } from '../modal/signup/service';
 
 @Component({
   selector: 'minds-button-subscribe',
@@ -19,9 +19,8 @@ import { SignupOnActionModal } from '../modal/modal';
       <i class="material-icons">person_add</i>
       Subscribed
     </button>
-    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="subscribe"  *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
   `,
-  directives: [ CORE_DIRECTIVES, SignupOnActionModal ]
+  directives: [ CORE_DIRECTIVES ]
 })
 
 export class SubscribeButton{
@@ -35,7 +34,7 @@ export class SubscribeButton{
   showModal : boolean = false;
   session = SessionFactory.build();
 
-  constructor(public client : Client) {
+  constructor(public client : Client, public modal : SignupModalService) {
   }
 
   set user(value : any){
@@ -46,7 +45,7 @@ export class SubscribeButton{
     var self = this;
 
     if(!this.session.isLoggedIn()){
-      this.showModal = true;
+      this.modal.setSubtitle('You need to have a channel in order to subscribe').open();
       return false;
     }
 

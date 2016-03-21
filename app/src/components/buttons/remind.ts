@@ -3,7 +3,7 @@ import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
-import { SignupOnActionModal } from '../modal/modal';
+import { SignupModalService } from '../modal/signup/service';
 
 @Component({
   selector: 'minds-button-remind',
@@ -16,9 +16,8 @@ import { SignupOnActionModal } from '../modal/modal';
       <i class="material-icons">repeat</i>
       <counter *ngIf="object.reminds > 0">{{object.reminds}}</counter>
     </a>
-    <m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="remind" *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
   `,
-  directives: [CORE_DIRECTIVES, SignupOnActionModal]
+  directives: [ CORE_DIRECTIVES ]
 })
 
 export class RemindButton {
@@ -27,7 +26,7 @@ export class RemindButton {
   showModal : boolean = false;
   session = SessionFactory.build();
 
-  constructor(public client : Client) {
+  constructor(public client : Client, private modal : SignupModalService) {
   }
 
   set _object(value : any){
@@ -41,7 +40,7 @@ export class RemindButton {
       return false;
 
     if(!this.session.isLoggedIn()){
-      this.showModal = true;
+      this.modal.open();
       return false;
     }
 
