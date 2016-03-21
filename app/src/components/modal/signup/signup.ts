@@ -18,6 +18,7 @@ import { AnalyticsService } from '../../../services/analytics';
     <m-modal [open]="open" (closed)="onClose($event)" *ngIf="!session.isLoggedIn() || display != 'initial'">
       <div class="mdl-card__title" [hidden]="display == 'onboarding'">
         <img src="/assets/logos/small.png" (click)="close()"/>
+        <h4 class="mdl-color-text--grey-600">Your Social Network</h4>
       </div>
 
       <!-- Initial Display -->
