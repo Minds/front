@@ -85,7 +85,7 @@ export class SignupModal {
         this.display = 'initial';
         break;
       default:
-        this.close();
+        this.service.close();
     }
 
   }
