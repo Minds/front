@@ -45,7 +45,7 @@ export class Client {
 				.subscribe(
           res => {
   					var data = res.json();
-  					if(data.status != 'success')
+  					if(!data || data.status != 'success')
   						return reject(data);
 
   					return resolve(data);
@@ -74,7 +74,7 @@ export class Client {
 				.subscribe(
           res => {
 						var data = res.json();
-						if(data.status != 'success')
+						if(!data || data.status != 'success')
 							return reject(data);
 
 						return resolve(data);
@@ -105,7 +105,7 @@ export class Client {
 				.subscribe(
           res => {
 						var data = res.json();
-						if(data.status != 'success')
+						if(!data || data.status != 'success')
 							return reject(data);
 
 						return resolve(data);
@@ -135,7 +135,7 @@ export class Client {
 				.subscribe(
           res => {
 						var data = res.json();
-						if(data.status != 'success')
+						if(!data || data.status != 'success')
 							return reject(data);
 
 						return resolve(data);
