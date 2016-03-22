@@ -28,6 +28,7 @@ export class SettingsGeneral{
   guid : string = "";
   name : string;
   email : string;
+  mature: boolean = false;
 
   password : string;
   password1 : string;
@@ -52,6 +53,11 @@ export class SettingsGeneral{
     this.client.get('api/v1/settings/' + this.guid)
       .then((response : any) => {
         self.email = response.channel.email;
+        self.mature = parseInt(response.channel.mature, 10);
+
+        if (window.Minds.user) {
+          window.Minds.user.mature = self.mature;
+        }
       });
   }
 
@@ -93,7 +99,8 @@ export class SettingsGeneral{
         name: this.name,
         email: this.email,
         password: this.password,
-        new_password: this.password2
+        new_password: this.password2,
+        mature: this.mature ? 1 : 0
       })
       .then((response : any) => {
         self.changed = false;
@@ -103,6 +110,10 @@ export class SettingsGeneral{
         self.password = "";
         self.password1 = "";
         self.password2 = "";
+
+        if (window.Minds.user) {
+          window.Minds.user.mature = this.mature ? 1 : 0;
+        }
 
         self.inProgress = false;
       });

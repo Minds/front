@@ -175,6 +175,18 @@ minds-comments{
   .m-editable-attachment-container {
     text-align:right;
 
+    .m-mature-button {
+      display:inline-block;
+      vertical-align:middle;
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+
+      i{
+        cursor:pointer;
+      }
+    }
+
     .attachment-button:before{
       color: #888;
       font-family:'material icons';

@@ -27,6 +27,10 @@
                 <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)"/>
               </div>
 
+              <a class="m-mature-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.isMature() }" (click)="attachment.toggleMature()" *ngIf="attachment.hasFile()">
+                <i class="material-icons">explicit</i>
+              </a>
+
               <button
                 type="submit"
                 class="mdl-button mdl-button--colored"

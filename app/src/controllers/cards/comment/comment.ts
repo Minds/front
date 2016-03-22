@@ -59,6 +59,10 @@ import { AttachmentService } from '../../../services/attachment';
           <input type="file" id="file" #file name="attachment" accept="image/*" (change)="uploadAttachment(file, $event)"/>
         </div>
 
+        <a class="m-mature-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.isMature() }" (click)="attachment.toggleMature()" *ngIf="attachment.hasFile()">
+          <i class="material-icons">explicit</i>
+        </a>
+
        <!-- Attachment preview -->
        <div class="post-preview" *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"  (click)="removeAttachment(file)">
          <div class="mdl-progress mdl-js-progress"
@@ -116,7 +120,10 @@ import { AttachmentService } from '../../../services/attachment';
     </div>
 
     <!-- Custom type:: batch -->
-    <div class="item item-image allow-select" *ngIf="!editing && comment.custom_type == 'batch'">
+    <div class="item item-image allow-select" [ngClass]="{ 'm-mature-content': attachment.hideMature(comment) }" *ngIf="!editing && comment.custom_type == 'batch'">
+      <div class="m-mature-overlay" (click)="comment.force_show = 1">
+        <i class="material-icons">explicit</i>
+      </div>
       <a [routerLink]="['/Archive-View', {guid: comment.attachment_guid}]" *ngIf="comment.attachment_guid">
         <img [src]="comment.custom_data[0].src" style="width:100%" class="mdl-shadow--2dp" (error)="comment.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
       </a>

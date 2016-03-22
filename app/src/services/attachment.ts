@@ -1,5 +1,6 @@
 import { Inject } from 'angular2/core';
 import { Client, Upload } from './api';
+import { SessionFactory } from './session';
 
 export class AttachmentService {
 
@@ -11,6 +12,8 @@ export class AttachmentService {
 
   private previewTimeout: any = null;
 
+  public session = SessionFactory.build();
+
   constructor(@Inject(Client) public clientService: Client, @Inject(Upload) public uploadService: Upload) {
     this.reset();
   }
@@ -19,6 +22,8 @@ export class AttachmentService {
     if (!object) {
       return;
     }
+
+    this.reset();
 
     if (object.perma_url) {
       this.meta.is_rich = true;
@@ -35,6 +40,8 @@ export class AttachmentService {
         this.attachment.preview = object.custom_data[0].src;
       }
     }
+
+    this.meta.mature = this.parseMaturity(object);
   }
 
   setContainer(container: any) {
@@ -59,6 +66,20 @@ export class AttachmentService {
 
   getAccessId() {
     return this.accessId;
+  }
+
+  setMature(mature) {
+    this.meta.mature = !!mature;
+
+    return this;
+  }
+
+  isMature() {
+    return !!this.meta.mature;
+  }
+
+  toggleMature() {
+    return this.setMature(!this.isMature());
   }
 
   upload(fileInput: HTMLInputElement) {
@@ -180,6 +201,7 @@ export class AttachmentService {
       thumbnail: '',
       url: '',
       attachment_guid: null,
+      mature: false,
       container_guid: this.getContainer().guid,
       access_id: this.getAccessId()
     };
@@ -250,5 +272,31 @@ export class AttachmentService {
         this.resetRich();
       });
     }, 600);
+  }
+
+  parseMaturity(object: any) {
+    if (typeof object.custom_data[0] !== 'undefined') {
+      return !!object.custom_data[0].mature;
+    }
+
+    if (typeof object.custom_data !== 'undefined') {
+      return !!object.custom_data.mature;
+    }
+
+    return false;
+  }
+
+  hideMature(object: any) {
+
+    if (object.force_show) {
+      return false;
+    }
+
+    let user = this.session.getLoggedInUser();
+    if (user && user.mature) {
+      return false;
+    }
+
+    return this.parseMaturity(object);
   }
 }
