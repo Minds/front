@@ -41,12 +41,12 @@
     <!-- Rich embed preview -->
     <div class="post-preview" *ngIf="attachment.isRich()">
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="attachment.getMeta().title"></div>
-      <div class="minds-rich-embed" *ngIf="attachment.getMeta().title">
+      <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
 
         <a class="thumbnail" *ngIf="attachment.getMeta().thumbnail">
           <img src="{{attachment.getMeta().thumbnail}}" />
         </a>
-        <a class="meta mdl-color-text--blue-grey-900">
+        <a class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-has-thumbnail': attachment.getMeta().thumbnail }">
           <h2 class="mdl-card__title-text">{{attachment.getMeta().title}}</h2>
           <p>{{attachment.getMeta().description}}</p>
         </a>

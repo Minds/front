@@ -99,12 +99,18 @@ minds-comments{
     }
   }
 
-  .minds-comment-attachment,
-  .minds-comments-composer,
-  .minds-editable-attachment-container {
+  .minds-editable-container {
+    padding: $minds-padding 0;
+  }
 
-    .minds-rich-embed {
+  .m-comment-attachment,
+  .m-comments-composer,
+  .m-editable-attachment-container {
+
+    .m-rich-embed {
       text-align: left;
+      border: 1px solid #ddd;
+      margin: 0 0 $minds-padding;
 
       .thumbnail {
         display: block;
@@ -115,30 +121,37 @@ minds-comments{
       }
 
       .meta {
-        padding: 0;
+        padding: $minds-padding;
+        box-sizing: border-box;
+        width: 100%;
+
+        &.m-has-thumbnail {
+          padding-left: calc(25% + ( $minds-padding ));
+        }
 
         h2 {
-          font-size: 1.4em;
+          margin-bottom: 0.35em;
         }
 
         p {
-          font-size: 0.85em;
+          line-height: 1.2em;
         }
       }
     }
 
   }
 
-  .minds-comment-attachment {
+  .m-comment-attachment {
     box-sizing: border-box;
     padding: 0 ($minds-padding * 2) $minds-padding (36px + $minds-padding * 5);
 
     .item-image {
-      max-width: 65%;
+      max-width: 100%;
     }
   }
 
-  .minds-comments-composer {
+  .m-comments-composer {
+    position: relative;
 
     form{
       display:flex;
@@ -146,19 +159,20 @@ minds-comments{
 
       textarea{
         border:1px solid #DDD;
-        padding:$minds-padding;
+        padding: $minds-padding ($minds-padding + 24px) $minds-padding $minds-padding;
         resize:none;
         background:transparent;
         font-family:inherit;
         font-size:12px;
         outline:none;
         flex:1;
+        margin-bottom: $minds-padding;
       }
     }
   }
 
-  .minds-comments-composer .mdl-card__actions,
-  .minds-editable-attachment-container {
+  .m-comments-composer .mdl-card__actions,
+  .m-editable-attachment-container {
     text-align:right;
 
     .attachment-button:before{
@@ -199,8 +213,42 @@ minds-comments{
 
   }
 
-  .minds-editable-attachment-container .minds-rich-embed,
-  .minds-comment-attachment .minds-rich-embed {
-    margin-bottom: $minds-padding;
+  .attachment-preview-delete {
+    cursor: pointer;
+  }
+
+  .m-comments-composer .mdl-card__actions {
+    position: absolute;
+    top: $minds-padding / 2;
+    right: $minds-padding;
+    z-index: 250;
+    width: auto;
+    display: inline-block;
+    padding: 0;
+  }
+
+  .m-editable-attachment-container {
+    position: relative;
+
+    .attachment-button {
+      position: absolute;
+      top: $minds-padding + 16px;
+      right: $minds-padding;
+      z-index: 250;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 3px;
+      padding: $minds-padding / 2;
+
+      &.m-hasnt-attachment-preview {
+        top: -($minds-padding + 46px);
+        right: $minds-padding;
+        background: none;
+        padding: 0;
+      }
+    }
+  }
+
+  .post-preview {
+    margin-botom: $minds-padding;
   }
 }

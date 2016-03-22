@@ -32,7 +32,7 @@
 </div>
 
 <!-- Rich content -->
-<div class="minds-rich-embed" *ngIf="activity.perma_url && activity.title">
+<div class="m-rich-embed" *ngIf="activity.perma_url && activity.title">
 	<a [href]="activity.perma_url" target="_blank" *ngIf="activity.thumbnail_src">
 		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null"/>
 	</a>

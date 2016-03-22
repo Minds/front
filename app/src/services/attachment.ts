@@ -15,24 +15,24 @@ export class AttachmentService {
     this.reset();
   }
 
-  load(comment: any) {
-    if (!comment) {
+  load(object: any) {
+    if (!object) {
       return;
     }
 
-    if (comment.perma_url) {
+    if (object.perma_url) {
       this.meta.is_rich = true;
-      this.meta.thumbnail = comment.thumbnail_src || '';
-      this.meta.title = comment.title || '';
-      this.meta.url = comment.perma_url || '';
-      this.meta.description = comment.description || '';
+      this.meta.thumbnail = object.thumbnail_src || '';
+      this.meta.title = object.title || '';
+      this.meta.url = object.perma_url || '';
+      this.meta.description = object.description || '';
     }
 
-    if (comment.attachment_guid) {
-      this.meta.attachment_guid = comment.attachment_guid;
+    if (object.attachment_guid) {
+      this.meta.attachment_guid = object.attachment_guid;
 
-      if (comment.custom_data && comment.custom_data[0].src) {
-        this.attachment.preview = comment.custom_data[0].src;
+      if (object.custom_data && object.custom_data[0].src) {
+        this.attachment.preview = object.custom_data[0].src;
       }
     }
   }
@@ -90,7 +90,6 @@ export class AttachmentService {
     })
     .then((response: any) => {
       this.meta.attachment_guid = response.guid ? response.guid : null;
-      fileInput.value = null;
 
       if (!this.meta.attachment_guid) {
         throw 'No GUID';
@@ -102,7 +101,6 @@ export class AttachmentService {
       this.meta.attachment_guid = null;
       this.attachment.progress = 0;
       this.attachment.preview = null;
-      fileInput.value = null;
 
       throw e;
     });
@@ -247,6 +245,9 @@ export class AttachmentService {
             this.meta.thumbnail = link.href;
           }
         }
+      })
+      .catch(e => {
+        this.resetRich();
       });
     }, 600);
   }

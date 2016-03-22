@@ -52,26 +52,11 @@ import { AttachmentService } from '../../../services/attachment';
         <span class="minds-comment-span">Press ESC to cancel</span>
       </div>
 
-      <div class="minds-editable-attachment-container" *ngIf="editing">
+      <div class="m-editable-attachment-container" *ngIf="editing">
         <!-- Attachements -->
-        <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
+        <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile(), 'm-hasnt-attachment-preview': !attachment.hasFile() }">
           <i class="material-icons">attachment</i>
           <input type="file" id="file" #file name="attachment" accept="image/*" (change)="uploadAttachment(file, $event)"/>
-        </div>
-
-        <!-- Rich embed preview -->
-        <div class="post-preview" *ngIf="attachment.isRich()">
-          <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="attachment.getMeta().title"></div>
-          <div class="minds-rich-embed cf" *ngIf="attachment.getMeta().title">
-
-            <a class="thumbnail" *ngIf="attachment.getMeta().thumbnail">
-              <img src="{{ attachment.getMeta().thumbnail }}" />
-            </a>
-            <a class="meta mdl-color-text--blue-grey-900">
-              <h2 class="mdl-card__title-text">{{attachment.getMeta().title}}</h2>
-              <p>{{attachment.getMeta().description}}</p>
-            </a>
-          </div>
         </div>
 
        <!-- Attachment preview -->
@@ -82,9 +67,24 @@ import { AttachmentService } from '../../../services/attachment';
            [hidden]="attachment.getUploadProgress() == 0"
            [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
            ></div>
-         <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview"/>
+         <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview mdl-shadow--2dp"/>
          <div class="attachment-preview-delete">
            <i class="material-icons">delete</i>
+         </div>
+       </div>
+
+       <!-- Rich embed preview -->
+       <div class="post-preview" *ngIf="attachment.isRich()">
+         <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="attachment.getMeta().title"></div>
+         <div class="m-rich-embed mdl-shadow--2dp cf" *ngIf="attachment.getMeta().title">
+
+           <a class="thumbnail" *ngIf="attachment.getMeta().thumbnail">
+             <img src="{{ attachment.getMeta().thumbnail }}" />
+           </a>
+           <a class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-has-thumbnail': attachment.getMeta().thumbnail }">
+             <h2 class="mdl-card__title-text">{{attachment.getMeta().title}}</h2>
+             <p>{{attachment.getMeta().description}}</p>
+           </a>
          </div>
        </div>
       </div>
@@ -102,13 +102,13 @@ import { AttachmentService } from '../../../services/attachment';
     </div>
   </div>
 
-  <div class="mdl-card minds-comment-attachment" [hidden]="editing" *ngIf="(comment.perma_url && comment.title) || comment.custom_type == 'batch'">
+  <div class="mdl-card m-comment-attachment" [hidden]="editing" *ngIf="(comment.perma_url && comment.title) || comment.custom_type == 'batch'">
     <!-- Rich content -->
-    <div class="minds-rich-embed cf" *ngIf="comment.perma_url && comment.title">
+    <div class="m-rich-embed mdl-shadow--2dp cf" *ngIf="comment.perma_url && comment.title">
       <a [href]="comment.perma_url" class="thumbnail" target="_blank" *ngIf="comment.thumbnail_src">
         <img [src]="comment.thumbnail_src" (error)="comment.thumbnail_src = null"/>
       </a>
-      <a [href]="comment.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900">
+      <a [href]="comment.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-has-thumbnail': comment.thumbnail_src }">
         <h2 class="mdl-card__title-text mdl-typography--font-medium" *ngIf="comment.title">{{comment.title}}</h2>
         <p *ngIf="comment.blurb">{{comment.blurb}}</p>
         <p class="m-url mdl-color-text--blue-grey-400">{{comment.perma_url | domain}}</p>
@@ -118,7 +118,7 @@ import { AttachmentService } from '../../../services/attachment';
     <!-- Custom type:: batch -->
     <div class="item item-image allow-select" *ngIf="!editing && comment.custom_type == 'batch'">
       <a [routerLink]="['/Archive-View', {guid: comment.attachment_guid}]" *ngIf="comment.attachment_guid">
-        <img [src]="comment.custom_data[0].src" style="width:100%" (error)="comment.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
+        <img [src]="comment.custom_data[0].src" style="width:100%" class="mdl-shadow--2dp" (error)="comment.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
       </a>
 
       <img *ngIf="!comment.attachment_guid" [src]="comment.custom_data[0].src" style="width:100%" (error)="comment.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
@@ -191,11 +191,13 @@ export class CommentCard {
     .then(guid => {
       this.inProgress = false;
       this.canPost = true;
+      file.value = null;
     })
     .catch(e => {
       console.error(e);
       this.inProgress = false;
       this.canPost = true;
+      file.value = null;
     });
   }
 

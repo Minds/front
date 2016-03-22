@@ -83,11 +83,13 @@ export class Poster {
     .then(guid => {
       this.inProgress = false;
       this.canPost = true;
+      file.value = null;
     })
     .catch(e => {
       console.error(e);
       this.inProgress = false;
       this.canPost = true;
+      file.value = null;
     });
   }
 
