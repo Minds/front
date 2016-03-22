@@ -99,21 +99,108 @@ minds-comments{
     }
   }
 
-  form{
-    display:flex;
-    textarea{
-      border:1px solid #DDD;
-      padding:$minds-padding;
-      resize:none;
-      background:transparent;
-      font-family:inherit;
-      font-size:12px;
-      outline:none;
-      flex:1;
+  .minds-comment-attachment,
+  .minds-comments-composer,
+  .minds-editable-attachment-container {
+
+    .minds-rich-embed {
+      text-align: left;
+
+      .thumbnail {
+        display: block;
+        width: 25%;
+        max-height: 15em;
+        float: left;
+        margin-right: 0.5em;
+      }
+
+      .meta {
+        padding: 0;
+
+        h2 {
+          font-size: 1.4em;
+        }
+
+        p {
+          font-size: 0.85em;
+        }
+      }
     }
 
-    .mdl-button{
+  }
+
+  .minds-comment-attachment {
+    box-sizing: border-box;
+    padding: 0 ($minds-padding * 2) $minds-padding (36px + $minds-padding * 5);
+
+    .item-image {
+      max-width: 65%;
     }
   }
 
+  .minds-comments-composer {
+
+    form{
+      display:flex;
+      margin: 0;
+
+      textarea{
+        border:1px solid #DDD;
+        padding:$minds-padding;
+        resize:none;
+        background:transparent;
+        font-family:inherit;
+        font-size:12px;
+        outline:none;
+        flex:1;
+      }
+    }
+  }
+
+  .minds-comments-composer .mdl-card__actions,
+  .minds-editable-attachment-container {
+    text-align:right;
+
+    .attachment-button:before{
+      color: #888;
+      font-family:'material icons';
+      position: absolute;
+      top: 7px;
+      left: 6px;
+    }
+
+    .attachment-button{
+      display:inline-block;
+      vertical-align:middle;
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+
+      i{
+        cursor:pointer;
+      }
+
+      input{
+        position: absolute;
+         color: #888;
+         position: absolute;
+         height: 100%;
+         width: 100%;
+         top: 0;
+         left: 0;
+         cursor: pointer;
+         opacity: 0;
+      }
+      input::-webkit-file-upload-button{
+        cursor:pointer;
+      }
+
+    }
+
+  }
+
+  .minds-editable-attachment-container .minds-rich-embed,
+  .minds-comment-attachment .minds-rich-embed {
+    margin-bottom: $minds-padding;
+  }
 }
