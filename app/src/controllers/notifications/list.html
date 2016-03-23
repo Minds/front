@@ -5,7 +5,7 @@
       <div *ngFor="#notification of notifications" class="mdl-card mdl-shadow--2dp item">
 
         <div class="avatar">
-          <a [routerLink]="['/Channel', {username: notification.fromObj.username}]">
+          <a [routerLink]="['/Channel', {username: notification.fromObj.username}]" *ngIf="notification.fromObj">
             <img [src]="'/icon/' + notification.fromObj.guid + '/small'" class="mdl-shadow--2dp"/>
           </a>
         </div>
@@ -31,6 +31,16 @@
           <template ngSwitchWhen="group_kick">
             <a [routerLink]="['/Groups-Profile', {guid: notification.params.group.guid, filter: 'activity'}]">
                 <p>You were kicked off from <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span></p>
+            </a>
+          </template>
+
+          <!-- group activity -->
+          <template ngSwitchWhen="group_activity">
+            <a [routerLink]="['/Activity', {guid: notification.entityObj.guid}]">
+              <p>
+                <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.fromObj.name}}</span>
+                posted in  <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span>
+              </p>
             </a>
           </template>
 
