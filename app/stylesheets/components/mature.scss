@@ -18,6 +18,31 @@
   }
 }
 
+.m-mature-blog-thumbnail {
+  filter: blur(15px) grayscale(100%);
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.m-mature-blog-thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 145px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+
+  > i.material-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 4em;
+  }
+}
+
 .m-mature-content {
   position: relative;
 
@@ -46,6 +71,11 @@
       top: 50%;
       transform: translateY(-50%);
       color: #fff;
+
+      m-blog-view & {
+        top: 3em;
+        transform: none;
+      }
 
       > span {
         font-weight: 300;
