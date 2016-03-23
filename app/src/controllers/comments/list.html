@@ -30,7 +30,6 @@
                   [autoGrow]
                   (click)="isLoggedIn()"
                   [disabled]="inProgress"
-                  [ngClass]="{ 'm-has-attachment-preview': attachment.hasFile() }"
                 ></textarea>
 
             </form>
@@ -42,7 +41,11 @@
                 <input type="file" id="file" #file name="attachment" accept="image/*" (change)="uploadAttachment(file, $event)"/>
               </div>
 
-              <a class="m-mature-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.isMature() }" (click)="attachment.toggleMature()" *ngIf="attachment.hasFile()">
+              <a class="m-mature-button"
+              [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+              (click)="attachment.toggleMature()"
+              title="Explicit content"
+              >
                 <i class="material-icons">explicit</i>
               </a>
             </div>

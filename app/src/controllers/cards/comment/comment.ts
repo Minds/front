@@ -36,7 +36,17 @@ import { AttachmentService } from '../../../services/attachment';
             <minds-button-thumbs-up [object]="comment"></minds-button-thumbs-up>
             <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
         </span>
-        <span [innerHtml]="(comment.description || '') | tags "></span>
+        <a class="m-mature-text-toggle"
+      	(click)="comment.mature_visibility = !comment.mature_visibility"
+      	*ngIf="attachment.shouldBeBlurred(comment) || attachment.isForcefullyShown(comment)"
+      	[ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(comment) }"
+      	>
+      		<i class="material-icons m-material-icons-inline">explicit</i>
+      	</a>
+        <span
+        [innerHtml]="(comment.description || '') | tags "
+        [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(comment) }"
+        ></span>
       </p>
 
       <div class="minds-editable-container" *ngIf="editing">
@@ -48,18 +58,21 @@ import { AttachmentService } from '../../../services/attachment';
           (keydown.enter)="comment.description = edit.value; save();"
           (keydown.esc)="editing = false; edit.value = comment.description"
           (keyup)="getPostPreview(edit)"
-          [ngClass]="{ 'm-has-attachment-preview': attachment.hasFile() }"
           ></textarea>
         <span class="minds-comment-span">Press ESC to cancel</span>
 
         <div class="mdl-card__actions">
           <!-- Attachements -->
-          <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile(), 'm-hasnt-attachment-preview': !attachment.hasFile() }">
+          <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
             <i class="material-icons">attachment</i>
             <input type="file" id="file" #file name="attachment" accept="image/*" (change)="uploadAttachment(file, $event)"/>
           </div>
 
-          <a class="m-mature-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.isMature() }" (click)="attachment.toggleMature()" *ngIf="attachment.hasFile()">
+          <a class="m-mature-button"
+          [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+          (click)="attachment.toggleMature()"
+          title="Explicit content"
+          >
             <i class="material-icons">explicit</i>
           </a>
         </div>
@@ -111,7 +124,16 @@ import { AttachmentService } from '../../../services/attachment';
 
   <div class="mdl-card m-comment-attachment" [hidden]="editing" *ngIf="(comment.perma_url && comment.title) || comment.custom_type == 'batch'">
     <!-- Rich content -->
-    <div class="m-rich-embed mdl-shadow--2dp cf" *ngIf="comment.perma_url && comment.title">
+    <div class="m-rich-embed mdl-shadow--2dp cf"
+    *ngIf="comment.perma_url && comment.title"
+    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(comment), 'm-mature-content-shown': attachment.isForcefullyShown(comment) }"
+    >
+      <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
+    		<span class="m-mature-overlay-note m-mature-overlay-note-smaller">
+    			<i class="material-icons" title="Explicit content">explicit</i>
+    			<span>Click to see content</span>
+    		</span>
+    	</div>
       <a [href]="comment.perma_url" class="thumbnail" target="_blank" *ngIf="comment.thumbnail_src">
         <img [src]="comment.thumbnail_src" (error)="comment.thumbnail_src = null"/>
       </a>
@@ -123,9 +145,15 @@ import { AttachmentService } from '../../../services/attachment';
     </div>
 
     <!-- Custom type:: batch -->
-    <div class="item item-image allow-select" [ngClass]="{ 'm-mature-content': attachment.hideMature(comment) }" *ngIf="!editing && comment.custom_type == 'batch'">
-      <div class="m-mature-overlay" (click)="comment.force_show = 1">
-        <i class="material-icons">explicit</i>
+    <div class="item item-image allow-select"
+    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(comment), 'm-mature-content-shown': attachment.isForcefullyShown(comment) }"
+    *ngIf="!editing && comment.custom_type == 'batch'"
+    >
+      <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
+        <span class="m-mature-overlay-note">
+          <i class="material-icons" title="Explicit content">explicit</i>
+          <span>Click to see content</span>
+        </span>
       </div>
       <a [routerLink]="['/Archive-View', {guid: comment.attachment_guid}]" *ngIf="comment.attachment_guid">
         <img [src]="comment.custom_data[0].src" style="width:100%" class="mdl-shadow--2dp" (error)="comment.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">

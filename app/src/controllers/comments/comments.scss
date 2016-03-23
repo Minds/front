@@ -173,11 +173,7 @@ minds-comments{
 
   .m-comments-composer form textarea,
   .minds-editable-container textarea {
-    padding: $minds-padding ($minds-padding + 24px) $minds-padding $minds-padding;
-
-    &.m-has-attachment-preview {
-      padding-right: $minds-padding + 56px;
-    }
+    padding: $minds-padding ($minds-padding + 56px) $minds-padding $minds-padding;
   }
 
 

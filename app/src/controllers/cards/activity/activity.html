@@ -23,7 +23,23 @@
 </div>
 
 <!-- Messages -->
-<div class="mdl-card__supporting-text message" [hidden]="!activity.message || editing" [innerHtml]="activity.message | tags"></div>
+<div class="mdl-card__supporting-text message m-mature-message"
+[hidden]="!activity.message || editing"
+>
+	<a class="m-mature-text-toggle"
+	(click)="activity.mature_visibility = !activity.mature_visibility"
+	*ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
+	[ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }"
+	>
+		<i class="material-icons m-material-icons-inline">explicit</i>
+	</a>
+	<span class="m-mature-message-content"
+	[innerHtml]="activity.message | tags"
+	[ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
+	(click)="activity.mature_visibility = !activity.mature_visibility"
+	></span>
+</div>
+
 <div class="minds-editable-container" *ngIf="activity.message && editing">
 	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
 	<textarea class="mdl-card__supporting-text message" [ngModel]="activity.message" #messageEdit [autoGrow]></textarea>
@@ -32,7 +48,16 @@
 </div>
 
 <!-- Rich content -->
-<div class="m-rich-embed" *ngIf="activity.perma_url && activity.title">
+<div class="m-rich-embed"
+*ngIf="activity.perma_url && activity.title"
+[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+>
+	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+		<span class="m-mature-overlay-note">
+			<i class="material-icons" title="Explicit content">explicit</i>
+			<span>Click to see content</span>
+		</span>
+	</div>
 	<a [href]="activity.perma_url" target="_blank" *ngIf="activity.thumbnail_src">
 		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null"/>
 	</a>
@@ -51,9 +76,15 @@
 	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.title = titleEdit.value; save();">Save</button>
 </div>
 
-<div class="item item-image item-image-video" [ngClass]="{ 'm-mature-content': attachment.hideMature(activity) }" *ngIf="activity.custom_type == 'video'">
-		<div class="m-mature-overlay" (click)="activity.force_show = 1">
-			<i class="material-icons">explicit</i>
+<div class="item item-image item-image-video"
+[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+*ngIf="activity.custom_type == 'video'"
+>
+		<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+			<span class="m-mature-overlay-note">
+				<i class="material-icons" title="Explicit content">explicit</i>
+				<span>Click to see content</span>
+			</span>
 		</div>
 
 		 <minds-video
@@ -71,9 +102,15 @@
  </div>
 
 <!-- Images -->
-<div class="item item-image allow-select" [ngClass]="{ 'm-mature-content': attachment.hideMature(activity) }" *ngIf="activity.thumbnail_src && !activity.perma_url">
-	<div class="m-mature-overlay" (click)="activity.force_show = 1">
-		<i class="material-icons">explicit</i>
+<div class="item item-image allow-select"
+[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+*ngIf="activity.thumbnail_src && !activity.perma_url"
+>
+	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+		<span class="m-mature-overlay-note">
+			<i class="material-icons" title="Explicit content">explicit</i>
+			<span>Click to see content</span>
+		</span>
 	</div>
 
 	<a [routerLink]="['/Archive-View', {guid: activity.entity_guid}]">
@@ -82,11 +119,17 @@
 </div>
 
 <!-- Custom type:: batch -->
-<div class="item item-image allow-select" [ngClass]="{ 'm-mature-content': attachment.hideMature(activity) }" *ngIf="activity.custom_type == 'batch'">
-	<div class="m-mature-overlay" (click)="activity.force_show = 1">
-		<i class="material-icons">explicit</i>
+<div class="item item-image allow-select"
+[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+*ngIf="activity.custom_type == 'batch'"
+>
+	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+		<span class="m-mature-overlay-note">
+			<i class="material-icons" title="Explicit content">explicit</i>
+			<span>Click to see content</span>
+		</span>
 	</div>
-	
+
 	<a [routerLink]="['/Archive-View', {guid: activity.entity_guid}]">
 		<img [src]="activity.custom_data[0].src" style="width:100%" (error)="activity.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
 	</a>

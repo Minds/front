@@ -275,7 +275,20 @@ export class AttachmentService {
   }
 
   parseMaturity(object: any) {
-    if (typeof object.custom_data[0] !== 'undefined') {
+
+    if (typeof object === 'undefined') {
+      return false;
+    }
+
+    if (typeof object.mature !== 'undefined') {
+      return !!object.mature;
+    }
+
+    if (typeof object.flags !== 'undefined') {
+      return !!object.flags.mature;
+    }
+
+    if (typeof object.custom_data !== 'undefined' && typeof object.custom_data[0] !== 'undefined') {
       return !!object.custom_data[0].mature;
     }
 
@@ -286,14 +299,30 @@ export class AttachmentService {
     return false;
   }
 
-  hideMature(object: any) {
+  isForcefullyShown(object: any) {
+    if (!object) {
+      return false;
+    }
 
-    if (object.force_show) {
+    if (object.mature_visibility) {
+      return true;
+    }
+
+    return false;
+  }
+
+  shouldBeBlurred(object: any) {
+
+    if (!object) {
+      return false;
+    }
+
+    if (this.isForcefullyShown(object)) {
       return false;
     }
 
     let user = this.session.getLoggedInUser();
-    if (user && user.mature) {
+    if (user && (user.mature || user.guid == object.owner_guid)) {
       return false;
     }
 
