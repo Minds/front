@@ -30,6 +30,7 @@
                   [autoGrow]
                   (click)="isLoggedIn()"
                   [disabled]="inProgress"
+                  [ngClass]="{ 'm-has-attachment-preview': attachment.hasFile() }"
                 ></textarea>
 
             </form>

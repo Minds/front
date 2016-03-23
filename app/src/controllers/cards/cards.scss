@@ -256,42 +256,6 @@ minds-activity.mdl-card, minds-activity{
   }
 
   .item-image{
-
-    .m-mature-overlay {
-      display: none;
-    }
-
-    &.m-mature-content {
-      position: relative;
-
-      .m-mature-overlay {
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.65);
-        text-align: center;
-        z-index: 250;
-        cursor: pointer;
-
-        > i {
-          color: #fff;
-          font-size: 6em;
-          position: relative;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-      }
-
-      img {
-        filter: blur(15px) grayscale(100%);
-      }
-    }
-
     img{
       width:100%;
     }
@@ -397,5 +361,44 @@ minds-add-card{
 
   button{
     margin: $minds-margin;
+  }
+}
+
+.m-mature-overlay {
+  display: none;
+}
+
+&.m-mature-content {
+  position: relative;
+
+  // Hide blur overflowness
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+
+  .m-mature-overlay {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    text-align: center;
+    z-index: 250;
+    cursor: pointer;
+
+    > i {
+      color: #fff;
+      font-size: 6em;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  img {
+    filter: blur(15px) grayscale(100%);
   }
 }

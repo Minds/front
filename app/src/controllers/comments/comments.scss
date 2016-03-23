@@ -159,7 +159,7 @@ minds-comments{
 
       textarea{
         border:1px solid #DDD;
-        padding: $minds-padding ($minds-padding + 24px) $minds-padding $minds-padding;
+        padding: $minds-padding;
         resize:none;
         background:transparent;
         font-family:inherit;
@@ -171,8 +171,33 @@ minds-comments{
     }
   }
 
+  .m-comments-composer form textarea,
+  .minds-editable-container textarea {
+    padding: $minds-padding ($minds-padding + 24px) $minds-padding $minds-padding;
+
+    &.m-has-attachment-preview {
+      padding-right: $minds-padding + 56px;
+    }
+  }
+
+
+  .m-comments-composer .mdl-card__actions {
+    top: $minds-padding / 2;
+    right: $minds-padding;
+  }
+
+  .minds-editable-container .mdl-card__actions {
+    top: $minds-padding + 34px;
+    right: $minds-padding + 14px;
+  }
+
   .m-comments-composer .mdl-card__actions,
-  .m-editable-attachment-container {
+  .minds-editable-container .mdl-card__actions {
+    position: absolute;
+    z-index: 250;
+    width: auto;
+    display: inline-block;
+    padding: 0;
     text-align:right;
 
     .m-mature-button {
@@ -227,37 +252,6 @@ minds-comments{
 
   .attachment-preview-delete {
     cursor: pointer;
-  }
-
-  .m-comments-composer .mdl-card__actions {
-    position: absolute;
-    top: $minds-padding / 2;
-    right: $minds-padding;
-    z-index: 250;
-    width: auto;
-    display: inline-block;
-    padding: 0;
-  }
-
-  .m-editable-attachment-container {
-    position: relative;
-
-    .attachment-button {
-      position: absolute;
-      top: $minds-padding + 16px;
-      right: $minds-padding;
-      z-index: 250;
-      background: rgba(0, 0, 0, 0.35);
-      border-radius: 3px;
-      padding: $minds-padding / 2;
-
-      &.m-hasnt-attachment-preview {
-        top: -($minds-padding + 46px);
-        right: $minds-padding;
-        background: none;
-        padding: 0;
-      }
-    }
   }
 
   .post-preview {

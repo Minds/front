@@ -48,21 +48,24 @@ import { AttachmentService } from '../../../services/attachment';
           (keydown.enter)="comment.description = edit.value; save();"
           (keydown.esc)="editing = false; edit.value = comment.description"
           (keyup)="getPostPreview(edit)"
+          [ngClass]="{ 'm-has-attachment-preview': attachment.hasFile() }"
           ></textarea>
         <span class="minds-comment-span">Press ESC to cancel</span>
+
+        <div class="mdl-card__actions">
+          <!-- Attachements -->
+          <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile(), 'm-hasnt-attachment-preview': !attachment.hasFile() }">
+            <i class="material-icons">attachment</i>
+            <input type="file" id="file" #file name="attachment" accept="image/*" (change)="uploadAttachment(file, $event)"/>
+          </div>
+
+          <a class="m-mature-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.isMature() }" (click)="attachment.toggleMature()" *ngIf="attachment.hasFile()">
+            <i class="material-icons">explicit</i>
+          </a>
+        </div>
       </div>
 
       <div class="m-editable-attachment-container" *ngIf="editing">
-        <!-- Attachements -->
-        <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile(), 'm-hasnt-attachment-preview': !attachment.hasFile() }">
-          <i class="material-icons">attachment</i>
-          <input type="file" id="file" #file name="attachment" accept="image/*" (change)="uploadAttachment(file, $event)"/>
-        </div>
-
-        <a class="m-mature-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.isMature() }" (click)="attachment.toggleMature()" *ngIf="attachment.hasFile()">
-          <i class="material-icons">explicit</i>
-        </a>
-
        <!-- Attachment preview -->
        <div class="post-preview" *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"  (click)="removeAttachment(file)">
          <div class="mdl-progress mdl-js-progress"
