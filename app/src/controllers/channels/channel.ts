@@ -73,6 +73,7 @@ export class Channel {
 
   load(){
     var self = this;
+    this.error = "";
 
     this.client.get('api/v1/channel/' + this.username, {})
     .then((data : MindsChannelResponse) => {
@@ -87,6 +88,7 @@ export class Channel {
       self.loadFeed(true);
     })
     .catch((e) => {
+      this.error = "Sorry, the channel couldn't be found";
       console.log('couldnt load channel', e);
     });
   }
