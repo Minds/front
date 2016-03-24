@@ -1,0 +1,8 @@
+<div class="m-embed-video" *ngIf="object.subtype == 'video'">
+  <minds-video
+  [autoplay]="false"
+  [muted]="false"
+  [src]="[{ 'uri': object.src['720.mp4'] }]"
+  [guid]="object.guid"
+  ></minds-video>
+</div>

@@ -10,4 +10,5 @@
 /// <reference path="systemjs/systemjs.d.ts" />
 /// <reference path="through2/through2.d.ts" />
 /// <reference path="vinyl/vinyl.d.ts" />
+/// <reference path="../../../node_modules/definition-header/dist/index.d.ts" />
 /// <reference path="../../../node_modules/reflect-metadata/reflect-metadata.d.ts" />
