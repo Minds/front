@@ -53,7 +53,7 @@ export class SettingsGeneral{
     this.client.get('api/v1/settings/' + this.guid)
       .then((response : any) => {
         self.email = response.channel.email;
-        self.mature = parseInt(response.channel.mature, 10);
+        self.mature = !!parseInt(response.channel.mature, 10);
 
         if (window.Minds.user) {
           window.Minds.user.mature = self.mature;
