@@ -179,5 +179,5 @@
 	</ul>
   <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 
-  <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url"></m-modal-share>
+  <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url" [embed]="activity"></m-modal-share>
 </div>
