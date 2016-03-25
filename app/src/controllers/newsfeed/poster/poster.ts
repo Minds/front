@@ -45,7 +45,7 @@ export class Poster {
   set message(value : any){
     if(value){
       value = decodeURIComponent((value).replace(/\+/g, '%20'));
-      this.postMeta.message = value;
+      this.content = value;
       this.getPostPreview({value: value}); //a little ugly here!
     }
   }
