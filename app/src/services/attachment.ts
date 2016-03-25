@@ -317,12 +317,19 @@ export class AttachmentService {
       return false;
     }
 
-    if (this.isForcefullyShown(object)) {
-      return false;
+    if (typeof object.mature_visibility === 'undefined') {
+      let user = this.session.getLoggedInUser();
+
+      if (
+        user &&
+        this.parseMaturity(object) &&
+        (user.mature || user.guid == object.owner_guid)
+      ) {
+        object.mature_visibility = true;
+      }
     }
 
-    let user = this.session.getLoggedInUser();
-    if (user && (user.mature || user.guid == object.owner_guid)) {
+    if (this.isForcefullyShown(object)) {
       return false;
     }
 
