@@ -25,7 +25,8 @@ export class AdminPages {
       path: '',
       menuContainer: 'footer',
       header: false,
-      headerTop: 0
+      headerTop: 0,
+      subtype: 'page'
   };
   path : string = "";
   status : string = "saved";
@@ -43,26 +44,39 @@ export class AdminPages {
       });
   }
 
-  save(page){
+  save(page, allowHeaderUpload = true){
     this.status = 'saving';
     this.client.post('api/v1/admin/pages', {
         title: page.title,
         body: page.body,
         path: page.path,
-        menuContainer: page.menuContainer
+        menuContainer: page.menuContainer,
+        subtype: page.subtype
       })
       .then((response : any) => {
-        this.uploadHeader(page);
+        if (allowHeaderUpload) {
+          this.uploadHeader(page);
+        }
         this.status = 'saved';
       });
   }
 
   delete(page){
-    this.newPage();
-    this.client.delete('api/v1/admin/pages/' + page.path);
+    if (!confirm(`Are you sure you want to delete ${page.path}? This action cannot be undone.`)) {
+      return;
+    }
+
+    if (page.subtype === 'link') {
+      this.newLink();
+    } else {
+      this.newPage();
+    }
+    this.client.delete(`api/v1/admin/pages/?path=${page.path}`);
     for(var i in this.pages){
-      if(page.path == this.pages[i].path)
+      if(page.path == this.pages[i].path) {
         this.pages.splice(i, 1);
+        break;
+      }
     }
   }
 
@@ -90,7 +104,21 @@ export class AdminPages {
         path: 'new',
         menuContainer: 'footer',
         header: false,
-        headerTop: 0
+        headerTop: 0,
+        subtype: 'page'
+    }
+    this.pages.push(this.page);
+  }
+
+  newLink(){
+    this.page = {
+        title: 'New Link',
+        body: '',
+        path: 'http://',
+        menuContainer: 'footer',
+        header: false,
+        headerTop: 0,
+        subtype: 'link'
     }
     this.pages.push(this.page);
   }

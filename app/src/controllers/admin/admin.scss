@@ -55,6 +55,18 @@ minds-admin-boosts{
     padding:$minds-padding;
   }
 
+  .m-admin-pages-link-path{
+    padding:$minds-padding 0;
+
+    .m-form-input {
+      display: block;
+      font-size: 16px;
+      padding: 8px;
+      width: 100%;
+      margin-top: 0.35em;
+    }
+  }
+
   .m-form-actions{
     padding:$minds-padding 0;
   }

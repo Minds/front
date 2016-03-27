@@ -191,7 +191,8 @@
     <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
       <ul class="m-footer-nav m-footer-nav-inline">
         <li *ngFor="#page of navigation.getItems('footer')" class="m-footer-nav-item ">
-          <a [routerLink]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+          <a *ngIf="page.path === '/P'" [routerLink]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+          <a *ngIf="!page.path" [href]="page.params.page" target="_blank" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
         </li>
       </ul>
       <span class="copyright mdl-color-text--blue-grey-700">&#169; Minds, Inc. 2016</span>

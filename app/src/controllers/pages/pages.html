@@ -6,7 +6,7 @@
 
   <div class="mdl-cell mdl-cell--4-col">
     <ul class="m-content-sidebar-nav">
-      <li *ngFor="#page of pages" class="m-content-sidebar-nav-item">
+      <li *ngFor="#page of pages | listable" class="m-content-sidebar-nav-item">
         <a
           [routerLink]="['/P', {page: page.params.page }]"
           [ngClass]="{'is-active': path == page.params.page }">
