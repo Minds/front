@@ -36,7 +36,11 @@ export class AttachmentService {
     if (object.attachment_guid) {
       this.meta.attachment_guid = object.attachment_guid;
 
-      if (object.custom_data && object.custom_data[0].src) {
+      if (object.custom_data && object.custom_data.thumbnail_src) {
+        this.attachment.preview = object.custom_data.thumbnail_src;
+      }
+
+      if (object.custom_data && object.custom_data[0] && object.custom_data[0].src) {
         this.attachment.preview = object.custom_data[0].src;
       }
     }
@@ -153,7 +157,7 @@ export class AttachmentService {
   }
 
   hasFile() {
-    return !!this.attachment.preview;
+    return !!this.attachment.preview || this.getMime() == 'video';
   }
 
   getUploadProgress() {
