@@ -38,7 +38,7 @@
               <!-- Attachements -->
               <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
                 <i class="material-icons">attachment</i>
-                <input type="file" id="file" #file name="attachment" accept="image/*" (change)="uploadAttachment(file, $event)"/>
+                <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)"/>
               </div>
 
               <a class="m-mature-button"
@@ -73,6 +73,9 @@
                 [hidden]="attachment.getUploadProgress() == 0"
                 [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
                 ></div>
+              <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
+                  <i class="material-icons">videocam</i>
+              </div>
               <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview mdl-shadow--2dp"/>
               <div class="attachment-preview-delete">
                 <i class="material-icons">delete</i>

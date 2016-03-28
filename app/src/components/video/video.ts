@@ -9,7 +9,7 @@ import { ScrollService } from '../../services/ux/scroll';
 
 @Component({
   selector: 'minds-video',
-  inputs: [ '_src: src', '_autoplay: autoplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid', 'log', '_playCount: playCount' ],
+  inputs: [ '_src: src', '_autoplay: autoplay', '_visibleplay: visibleplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid', 'log', '_playCount: playCount' ],
   host: {
     //'(click)': 'onClick()',
     '(mouseenter)': 'onMouseEnter()',
@@ -70,6 +70,7 @@ export class MindsVideo{
 
   muted : boolean = true;
   autoplay : boolean = false;
+  visibleplay : boolean = true;
   loop : boolean = true;
   scroll_listener;
 
@@ -128,6 +129,10 @@ export class MindsVideo{
   set _loop(value : boolean){
     this.loop = value;
     //this.element.loop = value;
+  }
+
+  set _visibleplay(value : boolean){
+    this.visibleplay = value;
   }
 
   set _playCount(value: any) {
@@ -257,6 +262,8 @@ export class MindsVideo{
 
   isVisible(){
     if(this.autoplay)
+      return;
+    if(!this.visibleplay)
       return;
     if(!this.guid)
       return;

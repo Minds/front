@@ -12,6 +12,8 @@ import { MINDS_PIPES } from '../../../pipes/pipes';
 import { MDL_DIRECTIVES } from '../../../directives/material';
 import { AttachmentService } from '../../../services/attachment';
 
+import { MindsVideo } from '../../../components/video';
+
 @Component({
   selector: 'minds-card-comment',
   viewProviders: [ ],
@@ -65,7 +67,7 @@ import { AttachmentService } from '../../../services/attachment';
           <!-- Attachements -->
           <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
             <i class="material-icons">attachment</i>
-            <input type="file" id="file" #file name="attachment" accept="image/*" (change)="uploadAttachment(file, $event)"/>
+            <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)"/>
           </div>
 
           <a class="m-mature-button"
@@ -87,6 +89,9 @@ import { AttachmentService } from '../../../services/attachment';
            [hidden]="attachment.getUploadProgress() == 0"
            [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
            ></div>
+         <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
+             <i class="material-icons">videocam</i>
+         </div>
          <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview mdl-shadow--2dp"/>
          <div class="attachment-preview-delete">
            <i class="material-icons">delete</i>
@@ -122,7 +127,7 @@ import { AttachmentService } from '../../../services/attachment';
     </div>
   </div>
 
-  <div class="mdl-card m-comment-attachment" [hidden]="editing" *ngIf="(comment.perma_url && comment.title) || comment.custom_type == 'batch'">
+  <div class="mdl-card m-comment-attachment" [hidden]="editing" *ngIf="(comment.perma_url && comment.title) || comment.custom_type == 'batch' || comment.custom_type == 'video'">
     <!-- Rich content -->
     <div class="m-rich-embed mdl-shadow--2dp cf"
     *ngIf="comment.perma_url && comment.title"
@@ -144,6 +149,35 @@ import { AttachmentService } from '../../../services/attachment';
       </a>
     </div>
 
+    <!-- Custom type ::  video -->
+    <div class="item item-image item-image-video"
+    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(comment), 'm-mature-content-shown': attachment.isForcefullyShown(comment) }"
+    *ngIf="comment.custom_type == 'video'"
+    >
+    		<div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
+    			<span class="m-mature-overlay-note">
+    				<i class="material-icons" title="Explicit content">explicit</i>
+    				<span>Click to see content</span>
+    			</span>
+    		</div>
+
+    		 <minds-video
+    				width="100%"
+    				height="300px"
+    				style="background:#000;"
+    				controls="true"
+    				muted="false"
+    				[poster]="comment.custom_data.thumbnail_src"
+            [loop]="false"
+            [autoplay]="false"
+            [visibleplay]="false"
+    				[src]="[{ 'res': '720', 'uri': 'api/v1/archive/' + comment.custom_data.guid + '/play', 'type': 'video/mp4' }]"
+            [guid]="comment.custom_data.guid"
+    				[playCount]="comment['play:count']"
+    			>
+    		</minds-video>
+     </div>
+
     <!-- Custom type:: batch -->
     <div class="item item-image allow-select"
     [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(comment), 'm-mature-content-shown': attachment.isForcefullyShown(comment) }"
@@ -163,7 +197,7 @@ import { AttachmentService } from '../../../services/attachment';
     </div>
   </div>
   `,
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo ],
   pipes: [ TagsPipe, MINDS_PIPES ],
   bindings: [ AttachmentService ]
 })
