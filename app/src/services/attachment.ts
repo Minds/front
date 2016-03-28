@@ -93,8 +93,10 @@ export class AttachmentService {
     }
 
     // Preview
-    if (fileInput.type.startsWith('video')){
+    if (file.type && file.type.indexOf('video/') === 0){
       this.attachment.mime = 'video';
+    } else if (file.type && file.type.indexOf('image/') === 0) {
+      this.attachment.mime = 'image';
     } else {
       this.attachment.mime = 'unknown';
     }
