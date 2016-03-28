@@ -114,20 +114,13 @@ minds-comments{
 
       .thumbnail {
         display: block;
-        width: 25%;
-        max-height: 15em;
-        float: left;
-        margin-right: 0.5em;
+        width: 100%;
       }
 
       .meta {
-        padding: $minds-padding;
+        padding: $minds-padding * 2;
         box-sizing: border-box;
         width: 100%;
-
-        &.m-has-thumbnail {
-          padding-left: calc(25% + ( $minds-padding ));
-        }
 
         h2 {
           margin-bottom: 0.35em;
