@@ -107,7 +107,10 @@ minds-comments{
   .m-comments-composer,
   .m-editable-attachment-container {
 
+    background: transparent;
+
     .m-rich-embed {
+      background: #fff;
       text-align: left;
       border: 1px solid #ddd;
       margin: 0 0 $minds-padding;
@@ -115,19 +118,33 @@ minds-comments{
       .thumbnail {
         display: block;
         width: 100%;
+
+        >img {
+          width: 100%;
+        }
       }
 
       .meta {
+        display: block;
         padding: $minds-padding * 2;
         box-sizing: border-box;
         width: 100%;
+        text-decoration: none;
 
         h2 {
           margin-bottom: 0.35em;
         }
 
         p {
-          line-height: 1.2em;
+          $lh: 1.2em;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          max-height: ($lh * 2) + 1em;
+          line-height: $lh;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
         }
       }
     }
