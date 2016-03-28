@@ -37,6 +37,7 @@ export class Capture {
 
   control;
 
+  default_maturity : boolean = false;
   default_license : string = "all-rights-reserved";
   licenses = LICENSES;
   access = ACCESS;
@@ -110,7 +111,8 @@ export class Capture {
         guid: null,
         state: 'created',
         progress: 0,
-        license: this.default_license || 'all-rights-reserved'
+        license: this.default_license || 'all-rights-reserved',
+        mature: this.default_maturity || false
       }
 
       var fileInfo = file.files[i];
