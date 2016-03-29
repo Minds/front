@@ -20,14 +20,19 @@ minds-comments{
     //border-bottom:1px solid #DDD;
 
     .minds-more{
-      display:none;
+      display:inline-block;
+      visibility: hidden;
 
       i {
         font-size: 18px;
+        line-height: 18px;
+        width: 32px;
+        transform: initial;
+        position: static;
       }
     }
     &:hover .minds-more{
-      display:inline-block;
+      visibility: visible;
     }
 
     .mdl-card__menu{
@@ -40,6 +45,8 @@ minds-comments{
     }
 
     .minds-avatar{
+      background: transparent;
+
       img{
         width:36px;
       }
@@ -50,20 +57,24 @@ minds-comments{
       font-size: 12px;
 
       .username {
+        font-size: 13px;
         text-decoration: none;
         font-weight:bold;
       }
+
       span.minds-comment-span{
+        font-size: 10px;
+        position: relative;
+        top: -1px;
+
         &.minds-comment-bullet:before{
           content:'·';
           font-weight:bold;
           padding: 0 $minds-padding;
         }
-        font-size: 10px;
-        vertical-align: middle;
       }
       p{
-        margin:0;
+        margin: 0.35em 0 0.5em;
         font-size:12px;
         line-height: 16px;
       }
@@ -74,26 +85,26 @@ minds-comments{
 
     .minds-comments-voting {
       display: inline-block;
-      padding: 4px 8px 0;
-      box-sizing: border-box;
-      float: right;
+      position: relative;
+      top: 6px;
+
+      minds-button-thumbs-up,
+      minds-button-thumbs-down {
+        display: inline-block;
+        margin-left: 0.35em;
+      }
 
       minds-button-thumbs-down {
         margin-left: 1em;
       }
 
-      minds-button-thumbs-up,
-      minds-button-thumbs-down {
-        display: inline-block;
-      }
-
       .material-icons {
-        font-size: 16px;
+        font-size: 18px;
       }
 
       counter {
-        font-size: 10px;
-        line-height: 16px;
+        font-size: 12px;
+        line-height: 18px;
         vertical-align: top;
       }
     }
@@ -153,7 +164,7 @@ minds-comments{
 
   .m-comment-attachment {
     box-sizing: border-box;
-    padding: 0 ($minds-padding * 2) $minds-padding (36px + $minds-padding * 5);
+    padding: 0;
 
     .item-image {
       max-width: 100%;
@@ -183,7 +194,9 @@ minds-comments{
 
   .m-comments-composer form textarea,
   .minds-editable-container textarea {
+    width: 100%;
     padding: $minds-padding ($minds-padding + 56px) $minds-padding $minds-padding;
+    background: #fff;
   }
 
 
