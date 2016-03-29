@@ -43,3 +43,14 @@
     background-color: #767676;
   }
 }
+
+m-social-icons {
+  .m-modal-container {
+    min-height: 0;
+
+    .mdl-card {
+      min-height: 0;
+      padding-bottom: 16px;
+    }
+  }
+}
