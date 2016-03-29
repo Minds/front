@@ -9,7 +9,7 @@ import { ScrollService } from '../../services/ux/scroll';
 
 @Component({
   selector: 'minds-video',
-  inputs: [ '_src: src', '_autoplay: autoplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid' ],
+  inputs: [ 'src', '_autoplay: autoplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid' ],
   host: {
     //'(click)': 'onClick()',
     '(mouseenter)': 'onMouseEnter()',
@@ -17,7 +17,8 @@ import { ScrollService } from '../../services/ux/scroll';
     },
   //changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <video (click)="onClick()" preload="none" allowfullscreen [src]="src" [muted]="muted" [loop]="loop" [autoplay]="autoplay">
+    <video (click)="onClick()" preload="none" allowfullscreen [muted]="muted" [loop]="loop" [autoplay]="autoplay">
+      <source [src]="s.uri" *ngFor="#s of src">
     </video>
     <div class="minds-video-bar-min">
       {{time.minutes}}:{{time.seconds}}
@@ -83,10 +84,10 @@ export class MindsVideo{
     this.setUp();
   }
 
-  set _src(value : any){
-    this.src = value[0].uri;
+  //set _src(value : any){
+    //this.src = value[0].uri;
     //this.element.src = this.src;
-  }
+  //}
 
   set _muted(value : boolean){
     this.muted = value;
