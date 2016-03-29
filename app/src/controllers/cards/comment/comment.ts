@@ -36,6 +36,7 @@ export class CommentCard {
   session = SessionFactory.build();
 
   canPost: boolean = true;
+  triedToPost: boolean = false;
   inProgress: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
@@ -73,7 +74,33 @@ export class CommentCard {
           comment: response.comment
         });
       }
+    })
+    .catch(e => {
+      this.inProgress = false;
     });
+  }
+
+  applyAndSave(control: any, e) {
+    e.preventDefault();
+    
+    if (this.inProgress || !this.canPost) {
+      this.triedToPost = true;
+      return;
+    }
+
+    this.comment.description = control.value;
+    this.save();
+  }
+
+  cancel(control: any, e) {
+    e.preventDefault();
+    
+    if (this.inProgress) {
+      return;
+    }
+
+    this.editing = false;
+    control.value = this.comment.description;
   }
 
   delete(){
@@ -83,34 +110,34 @@ export class CommentCard {
 
   uploadAttachment(file: HTMLInputElement) {
     this.canPost = false;
-    this.inProgress = true;
+    this.triedToPost = false;
 
     this.attachment.upload(file)
     .then(guid => {
-      this.inProgress = false;
       this.canPost = true;
+      this.triedToPost = false;
       file.value = null;
     })
     .catch(e => {
       console.error(e);
-      this.inProgress = false;
       this.canPost = true;
+      this.triedToPost = false;
       file.value = null;
     });
   }
 
   removeAttachment(file: HTMLInputElement) {
     this.canPost = false;
-    this.inProgress = true;
+    this.triedToPost = false;
 
     this.attachment.remove(file).then(() => {
-      this.inProgress = false;
       this.canPost = true;
+      this.triedToPost = false;
       file.value = "";
     }).catch(e => {
       console.error(e);
-      this.inProgress = false;
       this.canPost = true;
+      this.triedToPost = false;
     });
   }
 

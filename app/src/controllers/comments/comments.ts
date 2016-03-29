@@ -41,6 +41,7 @@ export class Comments {
   offset : string = "";
   inProgress : boolean = false;
   canPost: boolean = true;
+  triedToPost: boolean = false;
   moreData : boolean = true;
 
 	constructor(public client: Client, public attachment: AttachmentService, private modal : SignupModalService){
@@ -65,6 +66,8 @@ export class Comments {
 
   load(refresh = false){
     var self = this;
+    this.inProgress = true;
+
     this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: true })
       .then((response : any) => {
         if(!response.comments){
@@ -81,7 +84,7 @@ export class Comments {
         self.inProgress = false;
       })
       .catch((e) => {
-
+        this.inProgress = false;
       });
   }
 
@@ -89,6 +92,11 @@ export class Comments {
     e.preventDefault();
 
     if (!this.content && !this.attachment.has()) {
+      return;
+    }
+
+    if (this.inProgress || !this.canPost) {
+      this.triedToPost = true;
       return;
     }
 
@@ -125,34 +133,34 @@ export class Comments {
 
   uploadAttachment(file: HTMLInputElement) {
     this.canPost = false;
-    this.inProgress = true;
+    this.triedToPost = false;
 
     this.attachment.upload(file)
     .then(guid => {
-      this.inProgress = false;
       this.canPost = true;
+      this.triedToPost = false;
       file.value = null;
     })
     .catch(e => {
       console.error(e);
-      this.inProgress = false;
       this.canPost = true;
+      this.triedToPost = false;
       file.value = null;
     });
   }
 
   removeAttachment(file: HTMLInputElement) {
     this.canPost = false;
-    this.inProgress = true;
+    this.triedToPost = false;
 
     this.attachment.remove(file).then(() => {
-      this.inProgress = false;
       this.canPost = true;
+      this.triedToPost = false;
       file.value = "";
     }).catch(e => {
       console.error(e);
-      this.inProgress = false;
       this.canPost = true;
+      this.triedToPost = false;
     });
   }
 

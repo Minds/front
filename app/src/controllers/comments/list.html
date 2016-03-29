@@ -31,8 +31,11 @@
                   (click)="isLoggedIn()"
                   [disabled]="inProgress"
                 ></textarea>
-
             </form>
+
+            <div class="minds-comment-span mdl-color-text--red-500" *ngIf="!canPost && triedToPost">
+              Please wait until the upload is complete.
+            </div>
 
             <div class="mdl-card__actions">
               <!-- Attachements -->

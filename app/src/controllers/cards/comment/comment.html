@@ -115,11 +115,15 @@
         [ngModel]="comment.description"
         #edit
         [autoGrow]
-        (keydown.enter)="comment.description = edit.value; save();"
-        (keydown.esc)="editing = false; edit.value = comment.description"
+        (keydown.enter)="applyAndSave(edit, $event)"
+        (keydown.esc)="cancel(edit, $event)"
         (keyup)="getPostPreview(edit)"
+        [disabled]="inProgress"
         ></textarea>
-      <span class="minds-comment-span">Press ESC to cancel</span>
+      <span class="minds-comment-span" *ngIf="canPost">Press ESC to cancel</span>
+      <div class="minds-comment-span mdl-color-text--red-500" *ngIf="!canPost && triedToPost">
+        Please wait until the upload is complete.
+      </div>
 
       <div class="mdl-card__actions">
         <!-- Attachements -->
