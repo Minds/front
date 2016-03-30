@@ -29,7 +29,7 @@
                   (keydown.enter)="post($event)"
                   [autoGrow]
                   (click)="isLoggedIn()"
-                  [disabled]="inProgress"
+                  [disabled]="inProgress && attachment.hasFile()"
                 ></textarea>
             </form>
 
