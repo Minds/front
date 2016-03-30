@@ -40,10 +40,10 @@ import { ScrollService } from '../../services/ux/scroll';
         lightbulb_outline
       </a>
       <i class="material-icons" (click)="openFullScreen()">tv</i>
-      <span class="m-play-count" *ngIf="playCount > -1">
+      <!--<span class="m-play-count" *ngIf="playCount > -1">
         <i class="material-icons">ondemand_video</i>
         <span>{{ playCount }}</span>
-      </span>
+      </span>-->
     </div>
   `,
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material ]
