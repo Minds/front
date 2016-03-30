@@ -9,7 +9,7 @@ import { ScrollService } from '../../services/ux/scroll';
 
 @Component({
   selector: 'minds-video',
-  inputs: [ 'src', '_autoplay: autoplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid' ],
+  inputs: [ 'src', '_autoplay: autoplay', '_visibleplay: visibleplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid', 'log', '_playCount: playCount' ],
   host: {
     //'(click)': 'onClick()',
     '(mouseenter)': 'onMouseEnter()',
@@ -41,6 +41,10 @@ import { ScrollService } from '../../services/ux/scroll';
         lightbulb_outline
       </a>
       <i class="material-icons" (click)="openFullScreen()">tv</i>
+      <!--<span class="m-play-count" *ngIf="playCount > -1">
+        <i class="material-icons">ondemand_video</i>
+        <span>{{ playCount }}</span>
+      </span>-->
     </div>
   `,
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material ]
@@ -52,6 +56,7 @@ export class MindsVideo{
   container : any;
   src : Array<any> = [];
   guid : string | number;
+  log : string | number;
 
   time : { minutes: any, seconds: any } = {
     minutes: '00',
@@ -66,11 +71,15 @@ export class MindsVideo{
 
   muted : boolean = true;
   autoplay : boolean = false;
+  visibleplay : boolean = true;
   loop : boolean = true;
   scroll_listener;
 
+  playedOnce: boolean = false;
+  playCount: number = -1;
+  playCountDisabled: boolean = false;
 
-  constructor(public _element : ElementRef, public scroll : ScrollService, private cd: ChangeDetectorRef){
+  constructor(public _element : ElementRef, public scroll : ScrollService, private cd: ChangeDetectorRef, public client: Client){
 
   }
 
@@ -82,6 +91,21 @@ export class MindsVideo{
     });
     this.isVisible();
     this.setUp();
+
+    if (this.guid && !this.log) {
+      this.log = this.guid;
+    }
+
+    if (!this.playCountDisabled && this.log && this.playCount === -1) {
+      this.client.get(`api/v1/analytics/@counter/play/${this.log}`)
+      .then((response: any) => {
+        if (!response.data) {
+          return;
+        }
+
+        this.playCount = response.data
+      })
+    }
   }
 
   //set _src(value : any){
@@ -108,10 +132,25 @@ export class MindsVideo{
     //this.element.loop = value;
   }
 
+  set _visibleplay(value : boolean){
+    this.visibleplay = value;
+  }
+
+  set _playCount(value: any) {
+    if (!value && value !== 0) {
+      if (value === false) {
+        this.playCountDisabled = true;
+      }
+      return;
+    }
+
+    this.playCount = value;
+  }
+
   setUp(){
-    //this.element.addEventListener('play', (e)=>{
-    //  console.log('got play event');
-    //});
+    this.element.addEventListener('play', (e)=>{
+      this.addViewCount();
+    });
     //this.element.addEventListener('error', (e)=>{
     //  console.log('got error event', e);
     //});
@@ -122,6 +161,20 @@ export class MindsVideo{
     //  console.log('progress', e);
     //});
     //this.getSeeker();
+  }
+
+  addViewCount() {
+    if (!this.log || this.playedOnce) {
+      return;
+    }
+
+    this.client.put('api/v1/analytics/play/' + this.log)
+    .then(() => {
+      if (!this.playCountDisabled) {
+        this.playCount++;
+      }
+    });
+    this.playedOnce = true;
   }
 
   calculateTime(){
@@ -210,6 +263,8 @@ export class MindsVideo{
 
   isVisible(){
     if(this.autoplay)
+      return;
+    if(!this.visibleplay)
       return;
     if(!this.guid)
       return;

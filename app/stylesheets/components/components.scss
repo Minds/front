@@ -178,6 +178,25 @@ minds-video{
         font-family: 'Lato';
         flex: 2;
       }
+      &.m-play-count {
+        flex: 2;
+        text-align: right;
+
+        minds-archive-view & {
+          flex: 1;
+        }
+
+        > i {
+          vertical-align: middle;
+          margin-right: 0.15em;
+        }
+
+        > span {
+          vertical-align: middle;
+          font-size: 12px;
+          font-weight: 300;
+        }
+      }
       cursor:pointer;
       text-decoration:none;
     }

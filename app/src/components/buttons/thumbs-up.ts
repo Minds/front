@@ -27,6 +27,7 @@ export class ThumbsUpButton {
 
   object = {
     'guid': null,
+    'owner_guid': null,
     'thumbs:up:user_guids': []
   };
   session = SessionFactory.build();
@@ -57,14 +58,18 @@ export class ThumbsUpButton {
       //this.object['thumbs:up:user_guids'].push(this.session.getLoggedInUser().guid);
       this.object['thumbs:up:user_guids'] = [this.session.getLoggedInUser().guid];
       this.object['thumbs:up:count']++;
-      self.wallet.increment();
+      if (this.session.getLoggedInUser().guid != this.object.owner_guid) {
+        self.wallet.increment();
+      }
     } else {
       for(let key in this.object['thumbs:up:user_guids']){
         if(this.object['thumbs:up:user_guids'][key] == this.session.getLoggedInUser().guid)
           delete this.object['thumbs:up:user_guids'][key];
       }
       this.object['thumbs:up:count']--;
-      self.wallet.decrement();
+      if (this.session.getLoggedInUser().guid != this.object.owner_guid) {
+        self.wallet.decrement();
+      }
     }
   }
 

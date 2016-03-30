@@ -36,4 +36,28 @@
       </span>
     </a>
   </div>
+  <div class="m-social-icons-icon m-social-icons-icon--embed" *ngIf="embedCode">
+    <a class="m-social-icons-wrapper" (click)="embedModalOpen = true" target="_blank" title="Embeddable code">
+      <span class="m-social-icons-icon-inline ">
+        <svg width="40" height="40" viewBox="-100 -50 703 603">
+          <path d="M153.821,358.226L0,274.337v-46.463l153.821-83.414v54.574L46.636,250.523l107.185,53.431   C153.821,303.954,153.821,358.226,153.821,358.226z"></path>
+          <path d="M180.094,387.584L282.103,115.08h32.227L212.084,387.584H180.094z"></path>
+          <path d="M348.843,358.226v-54.272l107.164-52.999l-107.164-52.59v-53.927l153.821,83.522v46.183    L348.843,358.226z"></path>
+        </svg>
+      </span>
+    </a>
+  </div>
 </div>
+
+<m-modal [open]="embedModalOpen" (closed)="embedModalClose($event)" *ngIf="embedCode">
+
+  <div class="m-modal-share-embed m-modal-share-embed--first">
+    <span class="m-modal-share-embed__label mdl-color-text--blue-grey-300">
+      Embed into your website:
+    </span>
+    <div>
+      <textarea (click)="copy($event)" readonly>{{ embedCode }}</textarea>
+    </div>
+  </div>
+
+</m-modal>

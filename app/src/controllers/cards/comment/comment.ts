@@ -7,55 +7,25 @@ import { SessionFactory } from '../../../services/session';
 import { AutoGrow } from '../../../directives/autogrow';
 import { BUTTON_COMPONENTS } from '../../../components/buttons';
 import { TagsPipe } from '../../../pipes/tags';
+import { MINDS_PIPES } from '../../../pipes/pipes';
 
+import { MDL_DIRECTIVES } from '../../../directives/material';
+import { AttachmentService } from '../../../services/attachment';
+
+import { MindsVideo } from '../../../components/video';
 
 @Component({
   selector: 'minds-card-comment',
   viewProviders: [ ],
   inputs: ['object', 'parent'],
-  outputs: [ '_delete: delete'],
+  outputs: [ '_delete: delete', '_saved: saved'],
   host: {
     '(keydown.esc)': 'editing = false'
   },
-  template: `
-  <div class="mdl-card minds-comment minds-block">
-    <div class="minds-avatar">
-      <a [routerLink]="['/Channel', {username: comment.ownerObj.username}]">
-        <img src="{{minds.cdn_url}}/icon/{{comment.ownerObj.guid}}/small" class="mdl-shadow--2dp"/>
-      </a>
-    </div>
-    <div class="minds-body">
-      <a [routerLink]="['/Channel', {username: comment.ownerObj.username}]" class="username mdl-color-text--blue-grey-500">{{comment.ownerObj.name}} @{{comment.ownerObj.username}}</a>
-      <span class="mdl-color-text--blue-grey-300">{{comment.time_created * 1000 | date: 'medium'}}</span>
-      <p [hidden]="editing" [innerHtml]="comment.description | tags"></p>
-
-      <div class="minds-editable-container" *ngIf="editing">
-      	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-      	<textarea class="mdl-card__supporting-text message"
-          [ngModel]="comment.description"
-          #edit
-          [autoGrow]
-          (keydown.enter)="comment.description = edit.value; save();"
-          (keydown.esc)="editing = false; edit.value = comment.description"
-          ></textarea>
-        <span>Press ESC to cancel</span>
-      </div>
-
-      <div class="mdl-card__menu mdl-color-text--blue-grey-300">
-      	<button class="mdl-button minds-more mdl-button--icon" (click)="delete(i)"
-          *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid">
-      		<i class="material-icons">delete</i>
-      	</button>
-        <button class="mdl-button minds-more mdl-button--icon" (click)="editing = !editing"
-          *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()">
-          <i class="material-icons">edit</i>
-        </button>
-      </div>
-    </div>
-  </div>
-  `,
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, AutoGrow, RouterLink ],
-  pipes: [ TagsPipe ]
+  templateUrl: 'src/controllers/cards/comment/comment.html',
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo ],
+  pipes: [ TagsPipe, MINDS_PIPES ],
+  bindings: [ AttachmentService ]
 })
 
 export class CommentCard {
@@ -65,16 +35,21 @@ export class CommentCard {
   minds = window.Minds;
   session = SessionFactory.build();
 
+  canPost: boolean = true;
+  triedToPost: boolean = false;
+  inProgress: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
+  _saved: EventEmitter<any> = new EventEmitter();
 
-	constructor(public client: Client){
+	constructor(public client: Client, public attachment: AttachmentService){
 	}
 
   set object(value: any) {
     if(!value)
       return;
     this.comment = value;
+    this.attachment.load(this.comment);
   }
 
   set _editing(value : boolean){
@@ -82,15 +57,95 @@ export class CommentCard {
   }
 
   save(){
-    this.editing = false;
-    this.client.post('api/v1/comments/update/' + this.comment.guid, this.comment)
-      .then((response : any) => {
+    if (!this.comment.description && !this.attachment.has()) {
+      return;
+    }
 
-      });
+    let data = this.attachment.exportMeta();
+    data['comment'] = this.comment.description;
+
+    this.editing = false;
+    this.inProgress = true;
+    this.client.post('api/v1/comments/update/' + this.comment.guid, data)
+    .then((response : any) => {
+      this.inProgress = false;
+      if (response.comment) {
+        this._saved.next({
+          comment: response.comment
+        });
+      }
+    })
+    .catch(e => {
+      this.inProgress = false;
+    });
+  }
+
+  applyAndSave(control: any, e) {
+    e.preventDefault();
+    
+    if (this.inProgress || !this.canPost) {
+      this.triedToPost = true;
+      return;
+    }
+
+    this.comment.description = control.value;
+    this.save();
+  }
+
+  cancel(control: any, e) {
+    e.preventDefault();
+    
+    if (this.inProgress) {
+      return;
+    }
+
+    this.editing = false;
+    control.value = this.comment.description;
   }
 
   delete(){
     this.client.delete('api/v1/comments/' + this.comment.guid);
     this._delete.next(true);
+  }
+
+  uploadAttachment(file: HTMLInputElement) {
+    this.canPost = false;
+    this.triedToPost = false;
+
+    this.attachment.upload(file)
+    .then(guid => {
+      this.canPost = true;
+      this.triedToPost = false;
+      file.value = null;
+    })
+    .catch(e => {
+      console.error(e);
+      this.canPost = true;
+      this.triedToPost = false;
+      file.value = null;
+    });
+  }
+
+  removeAttachment(file: HTMLInputElement) {
+    this.canPost = false;
+    this.triedToPost = false;
+
+    this.attachment.remove(file).then(() => {
+      this.canPost = true;
+      this.triedToPost = false;
+      file.value = "";
+    }).catch(e => {
+      console.error(e);
+      this.canPost = true;
+      this.triedToPost = false;
+    });
+  }
+
+  getPostPreview(message){
+    if (!message.value) {
+      return;
+    }
+
+    this.attachment.preview(message.value);
   }
 }

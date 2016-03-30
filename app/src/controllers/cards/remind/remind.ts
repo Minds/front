@@ -13,6 +13,7 @@ import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
 
+import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   selector: 'minds-remind',
@@ -20,7 +21,8 @@ import { TagsLinks } from '../../../directives/tags';
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks],
   pipes: [ MINDS_PIPES ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  bindings: [ AttachmentService ]
 })
 
 export class Remind {
@@ -28,7 +30,7 @@ export class Remind {
   hideTabs : boolean;
   session =  SessionFactory.build();
 
-	constructor(public client: Client){
+	constructor(public client: Client, public attachment: AttachmentService){
     this.hideTabs = true;
 	}
 

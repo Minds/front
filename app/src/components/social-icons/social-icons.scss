@@ -39,4 +39,18 @@
   .m-social-icons-icon--gplus .m-social-icons-icon-inline{
     background-color: #e15440;
   }
+  .m-social-icons-icon--embed .m-social-icons-icon-inline{
+    background-color: #767676;
+  }
+}
+
+m-social-icons {
+  .m-modal-container {
+    min-height: 0;
+
+    .mdl-card {
+      min-height: 0;
+      padding-bottom: 16px;
+    }
+  }
 }

@@ -80,6 +80,13 @@
 
           <div class="mdl-layout-spacer"></div>
 
+          <a class="mdl-color-text--blue-grey-300 m-capture-default-maturity" (click)="default_maturity = !default_maturity">
+            <i class="material-icons"
+            [ngClass]="{ 'mdl-color-text--red-500': default_maturity }"
+            title="Explicit content"
+            >explicit</i>
+          </a>
+
           <select [(ngModel)]="default_license" class="mdl-color-text--blue-grey-300 m-form-select">
               <option *ngFor="#l of licenses" [value]="l.value">{{l.text}}</option>
           </select>
@@ -97,6 +104,14 @@
           [(ngModel)]="upload.title"
           (change)="modify(i)"
           />
+
+          <a class="mdl-color-text--blue-grey-300 m-capture-mature" (click)="upload.mature = !upload.mature">
+            <i class="material-icons"
+            [ngClass]="{ 'mdl-color-text--red-500': upload.mature }"
+            title="Explicit content"
+            >explicit</i>
+          </a>
+
           <select [(ngModel)]="upload.license" (change)="modify(i)" class="mdl-color-text--blue-grey-300 m-form-select">
               <option *ngFor="#l of licenses" [value]="l.value" >{{l.text}}</option>
           </select>

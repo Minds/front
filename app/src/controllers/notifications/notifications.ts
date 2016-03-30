@@ -7,18 +7,20 @@ import { SessionFactory } from '../../services/session';
 import { Material } from '../../directives/material';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { NotificationService } from '../../services/notification';
+import { CARDS } from '../cards/cards';
 
 
 @Component({
   selector: 'minds-notifications',
   bindings: [ MindsTitle, NotificationService ],
   templateUrl: 'src/controllers/notifications/list.html',
-  directives: [ CORE_DIRECTIVES, RouterLink, Material, InfiniteScroll ]
+  directives: [ CORE_DIRECTIVES, RouterLink, Material, CARDS, InfiniteScroll ]
 })
 
 export class Notifications {
 
   notifications : Array<Object> = [];
+  entity;
   moreData : boolean = true;
   offset: string = "";
   inProgress : boolean = false;
@@ -66,6 +68,17 @@ export class Notifications {
         self.inProgress = false;
 
       });
+  }
+
+  loadEntity(entity){
+    if(entity.type == 'comment'){
+      this.client.get('api/v1/entities/entity/' + entity.parent_guid)
+        .then((response : any) => {
+          this.entity = response.entity;
+        });
+    } else {
+      this.entity = entity;
+    }
   }
 
 }

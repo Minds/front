@@ -47,7 +47,7 @@
 
               <template ngSwitchWhen="blog">
                 <a [routerLink]="['/Blog-View', {guid: notification.entityObj.guid}]">
-                  {{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.entityObj.title}}</span>
+                  <p>{{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.entityObj.title}}</span></p>
                 </a>
               </template>
 
@@ -174,21 +174,23 @@
 
           <!-- boost_gift -->
           <template ngSwitchWhen="boost_gift">
-            <a [routerLink]="['/Activity', {guid: notification.entityObj.guid}]">
+            <a [routerLink]="notification.entityObj.type == 'activity' ? ['/Activity', {guid: notification.entityObj.guid}] : ['/Boosts', { type: 'content', filter: 'inbox' }]">
               <p>
-                {{notification.fromObj.name}} gifted you {{notification.params.impressions}} views for
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="!notification.entityObj.title"> your post</span>
+                {{notification.fromObj.name}} gifted you {{notification.params.impressions}} views <span *ngIf="notification.entityObj">for</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'"> your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'"> your channel</span>
               </p>
             </a>
           </template>
 
           <!-- Standard boost notification for owner -->
           <template ngSwitchWhen="boost_submitted">
-            <a [routerLink]="['/Activity', {guid: notification.entityObj.guid}]">
-             <p>{{notification.params.impressions}} views for
-              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title">{{notification.entityObj.title}}</span>
-              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="!notification.entityObj.title">your post</span>
+            <a [routerLink]="notification.entityObj.type == 'activity' ? ['/Activity', {guid: notification.entityObj.guid}] : ['/Boosts', { type: 'content', filter: 'inbox' }]">
+             <p>{{notification.params.impressions}} views <span *ngIf="notification.entityObj">for</span>
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">your post</span>
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">your channel</span>
               is awaiting approval.
              </p>
            </a>
@@ -196,10 +198,11 @@
 
           <!-- P2P boost submitted -->
           <template ngSwitchWhen="boost_submitted_p2p">
-              <a [routerLink]="['/Activity', {guid: notification.entityObj.guid}]">
-                <p>{{notification.params.points}} points for
-                  <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title">{{notification.entityObj.title}}</span>
-                  <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="!notification.entityObj.title">your post</span>
+              <a [routerLink]="notification.entityObj.type == 'activity' ? ['/Activity', {guid: notification.entityObj.guid}] : ['/Boosts', { type: 'content', filter: 'inbox' }]">
+                <p>{{notification.params.points}} points <span *ngIf="notification.entityObj">for</span>
+                  <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
+                  <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">your post</span>
+                  <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">your channel</span>
                   is awaiting approval by <span class="pseudo-link mdl-color-text--blue-grey-400">@{{notification.params.channel}}</span>
                 </p>
               </a>
@@ -210,17 +213,19 @@
               <a ng-click="loadBoostReview(notification.entityObj.guid)">
                   <p>{{notification.fromObj.name}} is offering you {{notification.params.points}} points to boost
                       <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title" >{{notification.entityObj.title}}</span>
-                      <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title">their activity</span>
+                      <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">their activity</span>
+                      <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">their channel</span>
                  </p>
               </a>
           </template>
 
           <!-- Boost reject -->
           <template ngSwitchWhen="boost_rejected">
-            <a [routerLink]="['/Activity', {guid: notification.entityObj.guid}]">
-              <p>You boost for
+            <a [routerLink]="notification.entityObj.type == 'activity' ? ['/Activity', {guid: notification.entityObj.guid}] : ['/Boosts', { type: 'content', filter: 'inbox' }]">
+              <p>You boost <span *ngIf="notification.entityObj">for</span>
                 <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">your channel</span>
                 was rejected. Your points have been credited back to your wallet.
               </p>
             </a>
@@ -228,15 +233,17 @@
 
           <!-- Boost accepted -->
           <template ngSwitchWhen="boost_accepted">
-            <a [routerLink]="['/Activity', {guid: notification.entityObj.guid}]">
+            <a [routerLink]="notification.entityObj.type == 'activity' ? ['/Activity', {guid: notification.entityObj.guid}] : ['/Boosts', { type: 'content', filter: 'inbox' }]">
               <p *ngIf="notification.params.impressions">{{notification.params.impressions}} views for
                 <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">your channel</span>
                 were accepted.
               </p>
-              <p *ngIf="notification.params.points">{{notification.params.points}} points for
+              <p *ngIf="notification.params.points">{{notification.params.points}} points <span *ngIf="notification.entityObj">for</span>
                 <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">your channel</span>
                 were accepted.
               </p>
             </a>
@@ -244,10 +251,11 @@
 
           <!-- Boost completed -->
           <template ngSwitchWhen="boost_completed">
-            <a [routerLink]="['/Activity', {guid: notification.entityObj.guid}]">
-              <p>{{notification.params.impressions}}/{{notification.params.impressions}} views for
+            <a [routerLink]="notification.entityObj.type == 'activity' ? ['/Activity', {guid: notification.entityObj.guid}] : ['/Boosts', { type: 'content', filter: 'inbox' }]">
+              <p>{{notification.params.impressions}}/{{notification.params.impressions}} views <span *ngIf="notification.entityObj">for</span>
                 <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">your channel</span>
                 have been met.</p>
             </a>
           </template>
@@ -262,9 +270,10 @@
                   <span [hidden]="notification.params.type != 'pro'">USD</span>
                   <span [hidden]="notification.params.type != 'points'">points</span>
                 </b>
-                for
-                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entity.title">{{notification.entity.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="!notification.entity.title">their post</span>
+                <span *ngIf="notification.entityObj">for</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entity.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">their post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">their channel</span>
               </p>
             </a>
           </template>
@@ -279,9 +288,10 @@
                   <span [hidden]="notification.params.type != 'pro'">USD</span>
                   <span [hidden]="notification.params.type != 'points'">points</span>
                 </b>
-                for
-                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entity.title">{{notification.entity.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="!notification.entity.title">your post</span>
+                <span *ngIf="notification.entityObj">for</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entity.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">your channel</span>
               </p>
             </a>
           </template>
@@ -296,9 +306,10 @@
                   <span [hidden]="notification.params.type != 'pro'">USD</span>
                   <span [hidden]="notification.params.type != 'points'">points</span>
                 </b>
-                for
-                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entity.title">{{notification.entity.title}}</span>
-                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="!notification.entity.title">your post</span>.
+                <span *ngIf="notification.entityObj">for</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entity.title}}</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'">your post</span>
+                <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'">your channel</span>
                 You have not been charged.
               </p>
             </a>

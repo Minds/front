@@ -4,13 +4,15 @@ import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
 
 import { Modal } from '../modal';
 import { SessionFactory } from '../../../services/session';
+import { EmbedService } from '../../../services/embed';
 
 
 @Component({
   selector: 'm-modal-share',
-  inputs: [ 'open', '_url: url' ],
+  inputs: [ 'open', '_url: url', '_embed: embed' ],
   outputs: ['closed'],
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal ],
+  bindings: [ EmbedService ],
   template: `
     <m-modal [open]="open" (closed)="close($event)">
 
@@ -26,8 +28,18 @@ import { SessionFactory } from '../../../services/session';
         <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-twitter" (click)="openWindow('https://twitter.com/intent/tweet?text=Shared%20via%20Minds.com&tw_p=tweetbutton&url=' + encodedUrl)">
           Share on Twitter
         </button>
+      </div>
 
-    </div>
+      <div class="m-modal-share-embed" *ngIf="embedCode">
+        <span class="m-modal-share-embed__label mdl-color-text--blue-grey-300">
+          Embed into your website:
+        </span>
+        <div>
+          <textarea (click)="copy($event)" readonly>{{ embedCode }}</textarea>
+        </div>
+      </div>
+
+    </m-modal>
   `
 })
 
@@ -37,12 +49,20 @@ export class ShareModal {
   closed : EventEmitter<any> = new EventEmitter();
   url : string = "";
   encodedUrl : string = "";
+  embedCode : string = '';
 
   session = SessionFactory.build();
+
+  constructor(public embed: EmbedService) {
+  }
 
   set _url(value : string){
     this.url = value;
     this.encodedUrl = encodeURI(this.url);
+  }
+
+  set _embed(object: any){
+    this.embedCode = this.embed.getIframeFromObject(object);
   }
 
   close(){

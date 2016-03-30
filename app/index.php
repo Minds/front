@@ -1,3 +1,8 @@
+<?php
+    if (!defined('__MINDS_CONTEXT__')) {
+        define('__MINDS_CONTEXT__', 'app');
+    }
+?>
 <html>
   <head>
 
@@ -44,39 +49,44 @@
   <body>
 
 
-    <!-- The app component created in app.ts -->
-    <minds-app class="">
-      <div class="mdl-progress mdl-progress__indeterminate initial-loading is-upgraded">
-        <div class="progressbar bar bar1" style="width: 0%;"></div>
-        <div class="bufferbar bar bar2" style="width: 100%;"></div>
-        <div class="auxbar bar bar3" style="width: 0%;"></div>
-      </div>
+    <?php if (__MINDS_CONTEXT__ === 'embed'): ?>
+        <!-- The embed component created in embed.ts -->
+        <minds-embed></minds-embed>
+    <?php else: ?>
+        <!-- The app component created in app.ts -->
+        <minds-app class="">
+          <div class="mdl-progress mdl-progress__indeterminate initial-loading is-upgraded">
+            <div class="progressbar bar bar1" style="width: 0%;"></div>
+            <div class="bufferbar bar bar2" style="width: 100%;"></div>
+            <div class="auxbar bar bar3" style="width: 0%;"></div>
+          </div>
 
-      <div class="m-initial-loading-centred" style="width:100%; text-align:center; margin: auto;">
-        <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active is-upgraded" style="width: 64px;height: 64px;" data-upgraded=",MaterialSpinner">
-          <div class="mdl-spinner__layer mdl-spinner__layer-1">
-            <div class="mdl-spinner__circle-clipper mdl-spinner__left">
-              <div class="mdl-spinner__circle"></div>
-            </div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div>
+          <div class="m-initial-loading-centred" style="width:100%; text-align:center; margin: auto;">
+            <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active is-upgraded" style="width: 64px;height: 64px;" data-upgraded=",MaterialSpinner">
+              <div class="mdl-spinner__layer mdl-spinner__layer-1">
+                <div class="mdl-spinner__circle-clipper mdl-spinner__left">
+                  <div class="mdl-spinner__circle"></div>
+                </div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div>
+              </div>
+              <div class="mdl-spinner__layer mdl-spinner__layer-2">
+                <div class="mdl-spinner__circle-clipper mdl-spinner__left">
+                  <div class="mdl-spinner__circle"></div>
+                </div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div>
+              </div>
+              <div class="mdl-spinner__layer mdl-spinner__layer-3">
+                <div class="mdl-spinner__circle-clipper mdl-spinner__left">
+                  <div class="mdl-spinner__circle"></div>
+                </div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div>
+              </div>
+              <div class="mdl-spinner__layer mdl-spinner__layer-4">
+                <div class="mdl-spinner__circle-clipper mdl-spinner__left">
+                  <div class="mdl-spinner__circle"></div>
+                </div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div>
+              </div>
+            </div>
           </div>
-          <div class="mdl-spinner__layer mdl-spinner__layer-2">
-            <div class="mdl-spinner__circle-clipper mdl-spinner__left">
-              <div class="mdl-spinner__circle"></div>
-            </div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div>
-          </div>
-          <div class="mdl-spinner__layer mdl-spinner__layer-3">
-            <div class="mdl-spinner__circle-clipper mdl-spinner__left">
-              <div class="mdl-spinner__circle"></div>
-            </div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div>
-          </div>
-          <div class="mdl-spinner__layer mdl-spinner__layer-4">
-            <div class="mdl-spinner__circle-clipper mdl-spinner__left">
-              <div class="mdl-spinner__circle"></div>
-            </div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div>
-          </div>
-        </div>
-      </div>
-    </minds-app>
+        </minds-app>
+    <?php endif; ?>
 
 
     <script>
@@ -103,6 +113,7 @@
     <script>
       <?php
           $minds = array(
+              "MindsContext" => __MINDS_CONTEXT__,
               "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
               "Admin" => Minds\Core\Session::isAdmin() ? true : false,
               "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
@@ -114,6 +125,10 @@
               $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
               $minds['user']['chat'] = (bool) elgg_get_plugin_user_setting('option', Minds\Core\Session::getLoggedinUser()->guid, 'gatherings') == 1 ? true : false;
               $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
+          }
+
+          if (__MINDS_CONTEXT__ === 'embed') {
+              $minds['MindsEmbed'] = $embedded_entity;
           }
       ?>
       window.Minds = <?= json_encode($minds) ?>;

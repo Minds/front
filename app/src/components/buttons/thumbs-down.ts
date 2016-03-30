@@ -50,14 +50,18 @@ export class ThumbsDownButton {
       //this.object['thumbs:down:user_guids'].push(this.session.getLoggedInUser().guid);
       this.object['thumbs:down:user_guids'] = [this.session.getLoggedInUser().guid];
       this.object['thumbs:down:count']++;
-      self.wallet.increment();
+      if (this.session.getLoggedInUser().guid != this.object.owner_guid) {
+        self.wallet.increment();
+      }
     } else {
       for(let key in this.object['thumbs:down:user_guids']){
         if(this.object['thumbs:down:user_guids'][key] == this.session.getLoggedInUser().guid)
           delete this.object['thumbs:down:user_guids'][key];
       }
       this.object['thumbs:down:count']--;
-      self.wallet.decrement();
+      if (this.session.getLoggedInUser().guid != this.object.owner_guid) {
+        self.wallet.decrement();
+      }
     }
   }
 
