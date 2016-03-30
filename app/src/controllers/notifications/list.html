@@ -47,7 +47,7 @@
 
               <template ngSwitchWhen="blog">
                 <a [routerLink]="['/Blog-View', {guid: notification.entityObj.guid}]">
-                  {{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.entityObj.title}}</span>
+                  <p>{{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.entityObj.title}}</span></p>
                 </a>
               </template>
 
