@@ -35,7 +35,7 @@ export class Poster {
   }
 
   set _container_guid(guid: any){
-    this.attachment.setContainer({ guid });
+    this.attachment.setContainer(guid);
   }
 
   set accessId(access_id: any){
