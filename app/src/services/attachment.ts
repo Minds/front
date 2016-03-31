@@ -51,10 +51,11 @@ export class AttachmentService {
   setContainer(container: any) {
     if ((typeof container === 'string') || typeof container === 'number') {
       this.container = { guid: container };
-      this.meta.container_guid = container;
     } else {
       this.container = container;
     }
+
+    this.meta.container_guid = this.container.guid;
 
     return this;
   }
