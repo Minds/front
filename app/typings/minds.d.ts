@@ -1,5 +1,7 @@
 // Type definitions for Minds
 interface Minds{
+ MindsContext : string;
+ MindsEmbed : any;
  LoggedIn : boolean;
  Admin ?: boolean;
  user: any;

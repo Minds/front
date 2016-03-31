@@ -20,14 +20,19 @@ minds-comments{
     //border-bottom:1px solid #DDD;
 
     .minds-more{
-      display:none;
+      display:inline-block;
+      visibility: hidden;
 
       i {
         font-size: 18px;
+        line-height: 18px;
+        width: 32px;
+        transform: initial;
+        position: static;
       }
     }
     &:hover .minds-more{
-      display:inline-block;
+      visibility: visible;
     }
 
     .mdl-card__menu{
@@ -40,6 +45,8 @@ minds-comments{
     }
 
     .minds-avatar{
+      background: transparent;
+
       img{
         width:36px;
       }
@@ -50,20 +57,24 @@ minds-comments{
       font-size: 12px;
 
       .username {
+        font-size: 13px;
         text-decoration: none;
         font-weight:bold;
       }
-      span{
-        &:before{
+
+      .minds-comment-span{
+        font-size: 10px;
+        position: relative;
+        top: -1px;
+
+        &.minds-comment-bullet:before{
           content:'·';
           font-weight:bold;
           padding: 0 $minds-padding;
         }
-        font-size: 10px;
-        vertical-align: middle;
       }
       p{
-        margin:0;
+        margin: 0.35em 0 0.5em;
         font-size:12px;
         line-height: 16px;
       }
@@ -71,23 +82,198 @@ minds-comments{
         text-decoration:none;
       }
     }
+
+    .minds-comments-voting {
+      display: inline-block;
+      position: relative;
+      top: 6px;
+
+      minds-button-thumbs-up,
+      minds-button-thumbs-down {
+        display: inline-block;
+        margin-left: 0.35em;
+      }
+
+      minds-button-thumbs-down {
+        margin-left: 1em;
+      }
+
+      .material-icons {
+        font-size: 18px;
+      }
+
+      counter {
+        font-size: 12px;
+        line-height: 18px;
+        vertical-align: top;
+      }
+    }
   }
 
-  form{
-    display:flex;
-    textarea{
-      border:1px solid #DDD;
-      padding:$minds-padding;
-      resize:none;
-      background:transparent;
-      font-family:inherit;
-      font-size:12px;
-      outline:none;
-      flex:1;
+  .minds-editable-container {
+    padding: $minds-padding 0;
+  }
+
+  .m-comment-attachment,
+  .m-comments-composer,
+  .m-editable-attachment-container {
+
+    background: transparent;
+
+    .m-rich-embed {
+      background: #fff;
+      text-align: left;
+      border: 1px solid #ddd;
+      margin: 0 0 $minds-padding;
+
+      .thumbnail {
+        display: block;
+        width: 100%;
+
+        >img {
+          width: 100%;
+        }
+      }
+
+      .meta {
+        display: block;
+        padding: $minds-padding * 2;
+        box-sizing: border-box;
+        width: 100%;
+        text-decoration: none;
+
+        h2 {
+          margin-bottom: 0.35em;
+        }
+
+        p {
+          $lh: 1.2em;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          max-height: ($lh * 2) + 1em;
+          line-height: $lh;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
     }
 
-    .mdl-button{
+  }
+
+  .m-comment-attachment {
+    box-sizing: border-box;
+    padding: 0;
+
+    .item-image {
+      max-width: 100%;
     }
   }
 
+  .m-comments-composer {
+    position: relative;
+
+    form{
+      display:flex;
+      margin: 0;
+
+      textarea{
+        border:1px solid #DDD;
+        padding: $minds-padding;
+        resize:none;
+        background:transparent;
+        font-family:inherit;
+        font-size:12px;
+        outline:none;
+        flex:1;
+        margin-bottom: $minds-padding;
+      }
+    }
+  }
+
+  .m-comments-composer form textarea,
+  .minds-editable-container textarea {
+    width: 100%;
+    padding: $minds-padding ($minds-padding + 56px) $minds-padding $minds-padding;
+    background: #fff;
+  }
+
+
+  .m-comments-composer .mdl-card__actions {
+    top: $minds-padding / 2;
+    right: $minds-padding;
+  }
+
+  .minds-editable-container .mdl-card__actions {
+    top: $minds-padding + 34px;
+    right: $minds-padding + 14px;
+  }
+
+  .m-comments-composer .mdl-card__actions,
+  .minds-editable-container .mdl-card__actions {
+    position: absolute;
+    z-index: 250;
+    width: auto;
+    display: inline-block;
+    padding: 0;
+    text-align:right;
+
+    .m-mature-button {
+      display:inline-block;
+      vertical-align:middle;
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+
+      i{
+        cursor:pointer;
+      }
+    }
+
+    .attachment-button:before{
+      color: #888;
+      font-family:'material icons';
+      position: absolute;
+      top: 7px;
+      left: 6px;
+    }
+
+    .attachment-button{
+      display:inline-block;
+      vertical-align:middle;
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
+
+      i{
+        cursor:pointer;
+      }
+
+      input{
+        position: absolute;
+         color: #888;
+         position: absolute;
+         height: 100%;
+         width: 100%;
+         top: 0;
+         left: 0;
+         cursor: pointer;
+         opacity: 0;
+      }
+      input::-webkit-file-upload-button{
+        cursor:pointer;
+      }
+
+    }
+
+  }
+
+  .attachment-preview-delete {
+    cursor: pointer;
+  }
+
+  .post-preview {
+    margin-botom: $minds-padding;
+  }
 }

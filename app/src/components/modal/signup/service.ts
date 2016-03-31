@@ -13,6 +13,7 @@ export class SignupModalService{
   scroll_listener;
 
   constructor(private router : Router, public scroll : ScrollService){
+    console.log('modal service constructed');
     this.initOnScroll();
   }
 
@@ -27,6 +28,8 @@ export class SignupModalService{
           this.close();
           break;
         default:
+          if(this.scroll_listener)
+            return;
           this.scroll_listener = this.scroll.listen((e) => {
             if(this.scroll.view.scrollTop > 100){
               if(window.localStorage.getItem('hideSignupModal'))

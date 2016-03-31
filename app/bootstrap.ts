@@ -6,12 +6,21 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {MINDS_PROVIDERS} from './src/services/providers';
 import {Minds} from './app';
+import {Embed} from './embed';
 
 if ('<%= ENV %>' === 'prod') { enableProdMode(); }
 
-bootstrap(Minds, [
-  ROUTER_PROVIDERS,
-  HTTP_PROVIDERS,
-  MINDS_PROVIDERS
-  //provide(LocationStrategy, { useClass: HashLocationStrategy })
-]);
+if (window.Minds.MindsContext === 'embed') {
+  bootstrap(Embed, [
+    ROUTER_PROVIDERS,
+    HTTP_PROVIDERS,
+    MINDS_PROVIDERS
+  ]);
+} else {
+  bootstrap(Minds, [
+    ROUTER_PROVIDERS,
+    HTTP_PROVIDERS,
+    MINDS_PROVIDERS
+    //provide(LocationStrategy, { useClass: HashLocationStrategy })
+  ]);
+}

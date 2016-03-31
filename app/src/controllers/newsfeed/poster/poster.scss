@@ -44,6 +44,18 @@
     .mdl-card__actions{
       text-align:right;
 
+      .m-mature-button {
+        display:inline-block;
+        vertical-align:middle;
+        position:relative;
+        overflow:hidden;
+        cursor:pointer;
+
+        i{
+          cursor:pointer;
+        }
+      }
+
       .attachment-button:before{
         color: #888;
         font-family:'material icons';
@@ -89,7 +101,7 @@
   position:relative;
   display:block !important;
 
-  .minds-rich-embed{
+  .m-rich-embed{
     a{
       width:100%;
     }

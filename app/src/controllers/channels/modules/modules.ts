@@ -7,6 +7,7 @@ import { CARDS } from '../../../controllers/cards/cards';
 import { Material } from '../../../directives/material';
 import { BlogCard } from '../../../plugins/blog/card/card';
 
+import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   selector: 'minds-channel-modules',
@@ -22,7 +23,12 @@ import { BlogCard } from '../../../plugins/blog/card/card';
     </div>
 
     <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;" *ngIf="type != 'blog'">
-      <a *ngFor="#object of items" [routerLink]="['/Archive-View', {guid: object.guid}]" [ngStyle]="{'background-image': 'url(' + object.thumbnail_src + ')'}" >
+      <a *ngFor="#object of items"
+      [routerLink]="['/Archive-View', {guid: object.guid}]"
+      [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(object) }"
+      >
+        <span class="m-thumb-image" [ngStyle]="{'background-image': 'url(' + object.thumbnail_src + ')'}"></span>
+        <i class="material-icons">explicit</i>
       </a>
     </div>
     <div *ngIf="type == 'blog'" style="min-height:0;">
@@ -35,7 +41,8 @@ import { BlogCard } from '../../../plugins/blog/card/card';
     <ng-content></ng-content>
 
   `,
-  directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, CARDS, BlogCard, Material ]
+  directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, CARDS, BlogCard, Material ],
+  bindings: [ AttachmentService ]
 })
 
 export class ChannelModules {
@@ -48,7 +55,7 @@ export class ChannelModules {
 
   inProgress : boolean = false;
 
-  constructor(public client: Client){
+  constructor(public client: Client, public attachment: AttachmentService){
     //this.load();
   }
 

@@ -5,6 +5,18 @@
 
 .material-icons{
   text-rendering: optimizeLegibility;
+
+  &.m-material-icons-inline {
+    vertical-align: bottom;
+    font-size: 1.4em;
+  }
+
+  &.m-material-icons-inline-text {
+    vertical-align: bottom;
+    font-size: 1.4em;
+    position: relative;
+    top: -0.15em;
+  }
 }
 
 .mdl-progress{

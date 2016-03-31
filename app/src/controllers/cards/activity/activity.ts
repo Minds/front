@@ -16,6 +16,7 @@ import { TagsLinks } from '../../../directives/tags';
 import { ScrollService } from '../../../services/ux/scroll';
 import { ShareModal } from '../../../components/modal/modal';
 
+import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   selector: 'minds-activity',
@@ -23,7 +24,8 @@ import { ShareModal } from '../../../components/modal/modal';
     'class': 'mdl-card mdl-shadow--2dp'
   },
   inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible'],
-  outputs: [ '_delete: delete']
+  outputs: [ '_delete: delete'],
+  bindings: [ AttachmentService ]
 })
 @View({
   templateUrl: 'src/controllers/cards/activity/activity.html',
@@ -48,7 +50,7 @@ export class Activity {
   _delete: EventEmitter<any> = new EventEmitter();
   scroll_listener;
 
-	constructor(public client: Client, public scroll : ScrollService, _element: ElementRef){
+	constructor(public client: Client, public scroll : ScrollService, _element: ElementRef, public attachment: AttachmentService){
     this.element = _element.nativeElement;
     this.isVisible();
 	}

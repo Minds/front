@@ -26,7 +26,7 @@ export class NewsfeedSingle {
   session = SessionFactory.build();
   minds;
   inProgress : boolean = false;
-  activity : MindsActivityObject;
+  activity : any;
 
 
 	constructor(public client: Client, public upload: Upload, public router: Router, public params: RouteParams){
@@ -38,13 +38,23 @@ export class NewsfeedSingle {
 	 * Load newsfeed
 	 */
 	load(guid : string){
-		var self = this;
 		this.client.get('api/v1/newsfeed/single/' + guid, { }, {cache: true})
 				.then((data : any) => {
-					self.activity = data.activity;
+            this.activity = data.activity;
+
+            switch(this.activity.subtype){
+              case 'image':
+              case 'video':
+              case 'album':
+                this.router.navigate(['/Archive-View', {guid: this.activity.guid}]);
+                break;
+              case 'blog':
+                this.router.navigate(['/Blog-View', {guid: this.activity.guid}]);
+                break;
+            }
 				})
 				.catch(function(e){
-					self.inProgress = false;
+					this.inProgress = false;
 				});
 	}
 

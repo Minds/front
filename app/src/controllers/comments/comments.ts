@@ -4,20 +4,22 @@ import { RouterLink } from "angular2/router";
 
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
-import { Material } from '../../directives/material';
+import { MDL_DIRECTIVES } from '../../directives/material';
 import { AutoGrow } from '../../directives/autogrow';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { CommentCard } from '../../controllers/cards/comment/comment';
 import { TagsPipe } from '../../pipes/tags';
 import { SignupModalService } from '../../components/modal/signup/service';
 
+import { AttachmentService } from '../../services/attachment';
 
 @Component({
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit'],
   templateUrl: 'src/controllers/comments/list.html',
-  directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow ],
-  pipes: [ TagsPipe ]
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow ],
+  pipes: [ TagsPipe ],
+  bindings: [ AttachmentService ]
 })
 
 export class Comments {
@@ -27,7 +29,7 @@ export class Comments {
   guid: string = "";
   parent: any;
   comments : Array<any> = [];
-  postMeta : any = {};
+  content = '';
   reversed : boolean = false;
   session = SessionFactory.build();
 
@@ -38,9 +40,11 @@ export class Comments {
   limit : number = 5;
   offset : string = "";
   inProgress : boolean = false;
+  canPost: boolean = true;
+  triedToPost: boolean = false;
   moreData : boolean = true;
 
-	constructor(public client: Client, private modal : SignupModalService){
+	constructor(public client: Client, public attachment: AttachmentService, private modal : SignupModalService){
     this.minds = window.Minds;
 	}
 
@@ -60,8 +64,10 @@ export class Comments {
       this.reversed = false;
   }
 
-  load(refresh : boolean = false){
+  load(refresh = false){
     var self = this;
+    this.inProgress = true;
+
     this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: true })
       .then((response : any) => {
         if(!response.comments){
@@ -78,24 +84,36 @@ export class Comments {
         self.inProgress = false;
       })
       .catch((e) => {
-
+        this.inProgress = false;
       });
   }
 
   post(e){
     e.preventDefault();
-    if(!this.postMeta.comment || this.inProgress)
+
+    if (!this.content && !this.attachment.has()) {
       return;
+    }
+
+    if (this.inProgress || !this.canPost) {
+      this.triedToPost = true;
+      return;
+    }
+
+    let data = this.attachment.exportMeta();
+    data['comment'] = this.content;
+
     this.inProgress = true;
-    this.client.post('api/v1/comments/' + this.guid, { comment: this.postMeta.comment })
-      .then((response : any) => {
-        this.postMeta.comment = "";
-        this.comments.push(response.comment);
-        this.inProgress = false;
-      })
-      .catch((e) => {
-        this.inProgress = false;
-      });
+    this.client.post('api/v1/comments/' + this.guid, data)
+    .then((response : any) => {
+      this.attachment.reset();
+      this.content = '';
+      this.comments.push(response.comment);
+      this.inProgress = false;
+    })
+    .catch((e) => {
+      this.inProgress = false;
+    });
   }
 
   isLoggedIn(){
@@ -107,6 +125,51 @@ export class Comments {
 
   delete(index : number){
     this.comments.splice(index, 1);
+  }
+
+  edited(index: number, $event) {
+    this.comments[index] = $event.comment;
+  }
+
+  uploadAttachment(file: HTMLInputElement) {
+    this.canPost = false;
+    this.triedToPost = false;
+
+    this.attachment.upload(file)
+    .then(guid => {
+      this.canPost = true;
+      this.triedToPost = false;
+      file.value = null;
+    })
+    .catch(e => {
+      console.error(e);
+      this.canPost = true;
+      this.triedToPost = false;
+      file.value = null;
+    });
+  }
+
+  removeAttachment(file: HTMLInputElement) {
+    this.canPost = false;
+    this.triedToPost = false;
+
+    this.attachment.remove(file).then(() => {
+      this.canPost = true;
+      this.triedToPost = false;
+      file.value = "";
+    }).catch(e => {
+      console.error(e);
+      this.canPost = true;
+      this.triedToPost = false;
+    });
+  }
+
+  getPostPreview(message){
+    if (!message.value) {
+      return;
+    }
+
+    this.attachment.preview(message.value);
   }
 
 }

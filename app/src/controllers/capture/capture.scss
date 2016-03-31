@@ -4,7 +4,7 @@ minds-capture{
   height: calc(100vh - 80px);
   display:block;
 
-  
+
 }
 
 .drag-animation{
@@ -54,6 +54,15 @@ minds-capture{
   .mdl-card{
     min-height:0;
     width:100%;
+  }
+
+  .m-capture-default-maturity {
+    cursor: pointer;
+
+    i.material-icons {
+      position: relative;
+      top: 0.25em;
+    }
   }
 
   .m-albums-selector{
@@ -170,6 +179,11 @@ minds-capture{
   select{
     width: auto;
     flex: 1;
+  }
+
+  .m-capture-mature {
+    margin-left: $minds-padding;
+    cursor: pointer;
   }
 }
 .m-capture-save-to-album-button{

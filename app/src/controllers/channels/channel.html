@@ -1,9 +1,9 @@
-<div class="mdl-grid channel-grid" style="max-width:900px" *ngIf="error">
-  <h1>{{error}}</h1>
+<div [hidden]="user || error" style="width:100%; text-align:center; ">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
 </div>
-
-<div [hidden]="user" style="width:100%; text-align: center;">
-  <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+<div class="m-error-splash" *ngIf="error && !user">
+  <h3 class="mdl-color-text--red-300">{{error}}</h3>
+  <span class="mdl-color-text--blue-grey-300">Please check the username</span>
 </div>
 
 <header [hidden]="!isLocked"></header>

@@ -8,11 +8,13 @@ import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { MindsBanner } from '../../components/banner';
 
+import { ListablePipe } from '../../pipes/listable';
 
 @Component({
   bindings: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/pages/pages.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material, MindsBanner ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material, MindsBanner ],
+  pipes: [ ListablePipe ]
 })
 
 export class Pages {

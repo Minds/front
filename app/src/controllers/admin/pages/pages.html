@@ -12,17 +12,25 @@
   <div class="mdl-cell mdl-cell--4-col">
       <ul class="m-content-sidebar-nav">
           <li class="m-content-sidebar-nav-item">
-            <a (click)="newPage()" [ngClass]="{'is-active': !page.path}">
+            <a (click)="newPage()" [ngClass]="{'is-active': !page.path && page.subtype !== 'link' }">
               Add a new page
             </a>
           </li>
+          <li class="m-content-sidebar-nav-item">
+            <a (click)="newLink()">
+              Add a new link
+            </a>
+          </li>
           <li class="m-content-sidebar-nav-item" *ngFor="#p of pages">
-            <a (click)="setPage(p)" [ngClass]="{'is-active': p.path == page.path }">{{p.title}}</a>
+            <a (click)="setPage(p)" [ngClass]="{'is-active': p.path == page.path }">
+              {{p.title}}
+              <i *ngIf="p.subtype == 'link'" class="material-icons m-material-icons-inline-text mdl-color-text--blue-grey-300">link</i>
+            </a>
           </li>
       </ul>
   </div>
 
-  <div class="mdl-cell mdl-cell--8-col m-form">
+  <div [hidden]="page.subtype !== 'page'" class="mdl-cell mdl-cell--8-col m-form">
       <input type="text" class="m-h1-input" [(ngModel)]="page.title"/>
 
       <div class="m-admin-pages-path">
@@ -32,7 +40,23 @@
 
       <div class="m-form-actions">
         <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page)" [hidden]="status == 'saving'">Save & Publish</button>
-        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page)" [hidden]="status != 'saving'">Saving</button>
+        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="false" [hidden]="status != 'saving'">Saving</button>
+
+        <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="delete(page)">Delete</button>
+      </div>
+  </div>
+
+  <div [hidden]="page.subtype !== 'link'" class="mdl-cell mdl-cell--8-col m-form">
+      <input type="text" class="m-h1-input" [(ngModel)]="page.title"/>
+
+      <div class="m-admin-pages-link-path">
+        <label for="">URL (relative or absolute):</label>
+        <input type="text" class="m-form-input" [(ngModel)]="page.path"/>
+      </div>
+
+      <div class="m-form-actions">
+        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page, false)" [hidden]="status == 'saving'">Save & Publish</button>
+        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="false" [hidden]="status != 'saving'">Saving</button>
 
         <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="delete(page)">Delete</button>
       </div>
