@@ -66,7 +66,7 @@ export class AttachmentService {
 
   setAccessId(access_id) {
     this.accessId = access_id;
-
+    this.meta.access_id = access_id;
     return this;
   }
 
