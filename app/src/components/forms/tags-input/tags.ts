@@ -12,7 +12,7 @@ import { SessionFactory } from '../../../services/session';
   host: {
     '(click)': 'focus()'
   },
-  inputs: [ 'tags: _tags' ],
+  inputs: [ '_tags: tags' ],
   outputs: [ 'change' ],
   directives: [ FORM_DIRECTIVES, Material ],
   template: `
@@ -60,11 +60,6 @@ export class TagsInput{
         }
         break;
     }
-
-    if(this.tags.length > 0)
-      this.placeholder = "+";
-    else
-      this.placeholder = "Type your tags here";
 
     this.change.next(this.tags);
   }
