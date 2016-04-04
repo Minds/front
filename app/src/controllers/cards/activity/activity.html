@@ -174,6 +174,8 @@
 	</button>
 
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
+		<li class="mdl-menu__item" *ngIf="!activity['is:muted']" (click)="mute(); toggle.value = false">Mute notifications</li>
+		<li class="mdl-menu__item" *ngIf="activity['is:muted']" (click)="unmute(); toggle.value = false">Unmute notifications</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="delete(); toggle.value = !toggle.value">Delete</li>

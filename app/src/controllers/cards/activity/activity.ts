@@ -76,6 +76,40 @@ export class Activity {
     this._delete.next(true);
   }
 
+  mute() {
+    this.activity['is:muted'] = true;
+
+    this.client.post(`api/v1/entities/notifications/${this.activity.guid}/mute`)
+    .then((response: any) => {
+      if (response.done) {
+        this.activity['is:muted'] = true;
+        return;
+      }
+
+      throw new Error('E_NOT_DONE');
+    })
+    .catch(e => {
+      this.activity['is:muted'] = false;
+    });
+  }
+
+  unmute() {
+    this.activity['is:muted'] = false;
+
+    this.client.post(`api/v1/entities/notifications/${this.activity.guid}/unmute`)
+    .then((response: any) => {
+      if (response.done) {
+        this.activity['is:muted'] = false;
+        return;
+      }
+
+      throw new Error('E_NOT_DONE');
+    })
+    .catch(e => {
+      this.activity['is:muted'] = true;
+    });
+  }
+
   openMenu(){
     this.menuToggle = !this.menuToggle;
     console.log(this.menuToggle);
