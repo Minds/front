@@ -36,7 +36,7 @@
 	<span class="m-mature-message-content"
 	[innerHtml]="activity.message | tags"
 	[ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
-	(click)="activity.mature_visibility = !activity.mature_visibility"
+	(click)="activity.mature && !activity.mature_visibility ? activity.mature_visibility = !activity.mature_visibility : null"
 	></span>
 </div>
 
