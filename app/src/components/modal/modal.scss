@@ -74,19 +74,50 @@ m-modal-signup, m-modal-signup-on-action{
     }
   }
 
+  .m-signup-modal-feature-icons{
+    display:flex;
+    flex-flow:row nowrap;
+    align-items:center;
+
+    > div {
+      text-align:center;
+      flex:1;
+      i{
+        width:100%;
+        font-size: 42px;
+      }
+      span{
+        width:100%;
+        display:block;
+        font-size:9px;
+        text-transform:uppercase;
+      }
+    }
+  }
+
   .m-signup-buttons{
+    display:flex;
+    flex-flow:row nowrap;
+    width: 100%;
+    box-sizing: border-box;
+
     .mdl-button{
       padding: 8px;
+      margin:0 4px;
       font-size: 22px;
       height: 48px;
-      width:48%;
+      width:auto;
+      flex:1;
     }
   }
 
   .m-modal-signup-apps{
     display:flex;
-    flex-flow:row wrap;
+    flex-flow:row nowrap;
     align-items:center;
+    padding:0 8px;
+    width: 100%;
+    box-sizing: border-box;
 
     a{
       flex:1;

@@ -26,6 +26,26 @@ import { AnalyticsService } from '../../../services/analytics';
         <div class="mdl-card__supporting-text">
           {{service.subtitle}}
         </div>
+
+        <div class="m-signup-modal-feature-icons">
+          <div class="">
+            <i class="material-icons mdl-color-text--blue-grey-300">trending_up</i>
+            <span class="mdl-color-text--blue-grey-700">Viral Reach</span>
+          </div>
+          <div class="">
+            <i class="material-icons mdl-color-text--blue-grey-300">remove_red_eye</i>
+            <span class="mdl-color-text--blue-grey-700">Privacy</span>
+          </div>
+          <div class="">
+            <i class="material-icons mdl-color-text--blue-grey-300">code</i>
+            <span class="mdl-color-text--blue-grey-700">Transparency</span>
+          </div>
+          <div class="">
+            <i class="material-icons mdl-color-text--blue-grey-300">attach_money</i>
+            <span class="mdl-color-text--blue-grey-700">Earn Money</span>
+          </div>
+        </div>
+
         <div class="mdl-card__supporting-text m-signup-buttons">
           <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="do('register')">Signup</button>
           <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="do('login')">Login</button>
