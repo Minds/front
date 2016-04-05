@@ -109,9 +109,9 @@ export class Newsfeed {
   prepend(activity : any){
     if(this.newUserPromo){
       this.autoBoost(activity);
+      activity.boostToggle = false;
+      activity.boosted = true;
     }
-    activity.boostToggle = false;
-    activity.boosted = true;
     this.prepended.unshift(activity);
     this.newUserPromo = false;
   }
