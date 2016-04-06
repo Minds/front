@@ -72,3 +72,78 @@ minds-admin-boosts{
   }
 
 }
+
+.m-admin-reports {
+  .m-report {
+    margin-bottom: $minds-padding * 2;
+  }
+
+  .m-no-reports {
+    text-align: center;
+  }
+
+  .m-action-buttons {
+    text-align: right;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .m-report-archive-button {
+    float: left;
+  }
+
+  //
+
+  minds-activity {
+    &.mdl-shadow--2dp {
+      box-shadow: none !important;
+    }
+
+    .tabs {
+      display: none;
+    }
+
+    .impressions-tag {
+      display: none;
+    }
+
+    .mdl-card__menu {
+      display: none;
+    }
+  }
+
+  //
+
+  minds-comments {
+    margin-top: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    .minds-comment {
+      padding: $minds-padding;
+
+      .mdl-card__menu {
+        display: none;
+      }
+    }
+  }
+
+  .m-report-meta {
+    border-bottom: 2px solid #ddd;
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+
+    p {
+      margin: 0 0 0.35em;
+
+      span {
+        font-weight: bold;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}

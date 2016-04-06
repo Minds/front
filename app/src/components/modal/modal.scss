@@ -11,6 +11,7 @@ m-modal{
     position: fixed;
     background: rgba(0,0,0,.8);
     cursor:pointer;
+    z-index: 9999995;
   }
 
   .m-modal-container{
@@ -20,6 +21,7 @@ m-modal{
     transform: translate(-50%, -50%);
     min-width:50%;
     min-height:50%;
+    z-index: 9999998;
 
     @media screen and (max-width:$min-tablet){
       &{
@@ -152,4 +154,20 @@ m-modal-share{
       background:#335795;
     }
   }
+}
+
+m-modal-report {
+
+  .m-modal-report-question {
+    font-weight: bold;
+  }
+
+  .m-modal-report-body {
+    padding: $minds-padding * 2;
+  }
+
+  .m-modal-report-buttons {
+    margin-top: $minds-padding * 2;
+  }
+
 }

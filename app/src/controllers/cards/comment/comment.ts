@@ -14,6 +14,8 @@ import { AttachmentService } from '../../../services/attachment';
 
 import { MindsVideo } from '../../../components/video';
 
+import { ReportModal } from '../../../components/modal/modal';
+
 @Component({
   selector: 'minds-card-comment',
   viewProviders: [ ],
@@ -23,7 +25,7 @@ import { MindsVideo } from '../../../components/video';
     '(keydown.esc)': 'editing = false'
   },
   templateUrl: 'src/controllers/cards/comment/comment.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal ],
   pipes: [ TagsPipe, MINDS_PIPES ],
   bindings: [ AttachmentService ]
 })
@@ -41,6 +43,8 @@ export class CommentCard {
 
   _delete: EventEmitter<any> = new EventEmitter();
   _saved: EventEmitter<any> = new EventEmitter();
+
+  reportToggle: boolean = false;
 
 	constructor(public client: Client, public attachment: AttachmentService){
 	}
@@ -82,7 +86,7 @@ export class CommentCard {
 
   applyAndSave(control: any, e) {
     e.preventDefault();
-    
+
     if (this.inProgress || !this.canPost) {
       this.triedToPost = true;
       return;
@@ -94,7 +98,7 @@ export class CommentCard {
 
   cancel(control: any, e) {
     e.preventDefault();
-    
+
     if (this.inProgress) {
       return;
     }

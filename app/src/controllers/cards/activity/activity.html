@@ -179,8 +179,10 @@
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="delete(); toggle.value = !toggle.value">Delete</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
 	</ul>
   <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 
   <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url" [embed]="activity"></m-modal-share>
+	<m-modal-report *ngIf="reportToggle" [open]="true" (closed)="reportToggle = false" [object]="activity"></m-modal-report>
 </div>

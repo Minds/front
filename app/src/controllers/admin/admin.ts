@@ -8,6 +8,7 @@ import { Material } from '../../directives/material';
 import { AdminAnalytics } from './analytics/analytics';
 import { AdminBoosts } from './boosts/boosts';
 import { AdminPages } from './pages/pages';
+import { AdminReports } from './reports/reports';
 
 
 @Component({
@@ -19,8 +20,9 @@ import { AdminPages } from './pages/pages';
     <minds-admin-analytics *ngIf="filter == 'analytics'"></minds-admin-analytics>
     <minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>
     <minds-admin-pages *ngIf="filter == 'pages'"></minds-admin-pages>
+    <minds-admin-reports *ngIf="filter == 'reports'"></minds-admin-reports>
   `,
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, AdminAnalytics, AdminBoosts, AdminPages ]
+  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, AdminAnalytics, AdminBoosts, AdminPages, AdminReports ]
 })
 
 export class Admin {

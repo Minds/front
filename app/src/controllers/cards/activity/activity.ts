@@ -14,7 +14,7 @@ import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
 import { ScrollService } from '../../../services/ux/scroll';
-import { ShareModal } from '../../../components/modal/modal';
+import { ShareModal, ReportModal } from '../../../components/modal/modal';
 
 import { AttachmentService } from '../../../services/attachment';
 
@@ -29,7 +29,7 @@ import { AttachmentService } from '../../../services/attachment';
 })
 @View({
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal ],
   pipes: [ MINDS_PIPES ]
 })
 
@@ -39,6 +39,7 @@ export class Activity {
   menuToggle : boolean = false;
   commentsToggle : boolean = false;
   shareToggle : boolean = false;
+  reportToggle: boolean = false;
   session = SessionFactory.build();
   showBoostOptions : boolean = false;
   type : string;
