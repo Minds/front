@@ -46,7 +46,7 @@
         <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
           <span class="m-mature-overlay-note m-mature-overlay-note-smaller">
             <i class="material-icons" title="Explicit content">explicit</i>
-            <span>Click to see content</span>
+            <span>Click to confirm your are 18+</span>
           </span>
         </div>
         <a [href]="comment.perma_url" class="thumbnail" target="_blank" *ngIf="comment.thumbnail_src">
@@ -67,7 +67,7 @@
           <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
             <span class="m-mature-overlay-note">
               <i class="material-icons" title="Explicit content">explicit</i>
-              <span>Click to see content</span>
+              <span>Click to confirm your are 18+</span>
             </span>
           </div>
 
@@ -96,7 +96,7 @@
         <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
           <span class="m-mature-overlay-note">
             <i class="material-icons" title="Explicit content">explicit</i>
-            <span>Click to see content</span>
+            <span>Click to confirm your are 18+</span>
           </span>
         </div>
         <a [routerLink]="['/Archive-View', {guid: comment.attachment_guid}]" *ngIf="comment.attachment_guid">
