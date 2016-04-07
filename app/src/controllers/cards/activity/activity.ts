@@ -51,6 +51,9 @@ export class Activity {
   _delete: EventEmitter<any> = new EventEmitter();
   scroll_listener;
 
+  asyncMute: boolean = false;
+  asyncMuteInProgress: boolean = false;
+
 	constructor(public client: Client, public scroll : ScrollService, _element: ElementRef, public attachment: AttachmentService){
     this.element = _element.nativeElement;
     this.isVisible();
@@ -111,9 +114,27 @@ export class Activity {
     });
   }
 
-  openMenu(){
-    this.menuToggle = !this.menuToggle;
-    console.log(this.menuToggle);
+  cardMenuHandler(opened: boolean) {
+    this.asyncMuteFetch();
+  }
+
+  asyncMuteFetch() {
+    if (this.asyncMute || this.asyncMuteInProgress) {
+      return;
+    }
+
+    this.asyncMuteInProgress = true;
+
+    this.client.get(`api/v1/entities/notifications/${this.activity.guid}`)
+    .then((response: any) => {
+      this.asyncMuteInProgress = false;
+      this.asyncMute = true;
+
+      this.activity['is:muted'] = !!response['is:muted'];
+    })
+    .catch(e => {
+      this.asyncMuteInProgress = false;
+    });
   }
 
   openComments(){
