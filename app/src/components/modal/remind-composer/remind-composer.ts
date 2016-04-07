@@ -24,11 +24,11 @@ import { ActivityPreview } from '../../../controllers/cards/activity/preview';
         </div>
       </div>
 
-      <minds-activity-preview
+      <minds-activity-preview class="mdl-shadow--8dp"
       *ngIf="object && !object.remind_object"
       [object]="object"
       ></minds-activity-preview>
-      <minds-activity-preview
+      <minds-activity-preview class="mdl-shadow--8dp"
       *ngIf="object && object.remind_object"
       [object]="object.remind_object"
       ></minds-activity-preview>

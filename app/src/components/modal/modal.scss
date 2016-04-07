@@ -173,6 +173,8 @@ m-modal-report {
 }
 
 m-modal-remind-composer {
+  cursor: default;
+  
   .m-modal-remind-composer {
     padding: 0 $minds-padding * 2 $minds-padding * 2;
     margin-top: 36px + ($minds-padding * 2);
@@ -194,34 +196,67 @@ m-modal-remind-composer {
   }
 
   minds-activity-preview {
+    display: block;
+    max-width: 100%;
+    margin: $minds-padding * 2;
     text-align: left;
-    width: 100%;
-    padding: $minds-padding * 2;
     box-sizing: border-box;
-    border-top: 1px solid #ddd;
+    pointer-events: none;
+    cursor: default;
+
+    .m-owner-block {
+      padding: ($minds-padding * 2) !important;
+    }
 
     .m-mature-overlay {
       display: none !important;
     }
 
+    .mdl-card__supporting-text {
+      padding: ($minds-padding * 2) !important;
+    }
+
     .m-rich-embed {
+      padding: 0 ($minds-padding * 2) ($minds-padding * 2);
+
+      a {
+        width: auto !important;
+        float: left;
+        margin-right: 16px;
+
+        &.meta {
+          width: 100% !important;
+          float: none;
+          margin-right: 0;
+          padding: 0 !important;
+        }
+      }
+
       img {
         width: auto !important;
         max-width: 100%;
         max-height: 150px;
         max-height: 20vh;
-        margin-left: 16px;
+        margin-left: 0 !important;
+        border: 1px solid #ddd;
+      }
+
+      &:after {
+        content: "";
+        display: table;
+        clear: both;
       }
     }
 
     .item-image {
-      padding: 0 16px;
+      padding: 0 ($minds-padding * 2) ($minds-padding * 2);
 
       img {
         width: auto !important;
         max-width: 100%;
         max-height: 150px;
         max-height: 20vh;
+        border: 1px solid #ddd;
       }
     }
 
