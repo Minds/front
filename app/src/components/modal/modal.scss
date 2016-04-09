@@ -174,8 +174,15 @@ m-modal-report {
 
 m-modal-remind-composer {
   cursor: default;
-  
+
+  .m-modal-container {
+    width: 520px;
+    max-width: 90%;
+    min-width: 0;
+  }
+
   .m-modal-remind-composer {
+    position: relative;
     padding: 0 $minds-padding * 2 $minds-padding * 2;
     margin-top: 36px + ($minds-padding * 2);
     text-align: left;
@@ -186,23 +193,29 @@ m-modal-remind-composer {
       height: 4em;
       border: 1px solid #ddd;
       box-sizing: border-box;
-      padding: $minds-padding;
+      padding: $minds-padding (24px + $minds-padding) $minds-padding $minds-padding;
     }
 
     .m-modal-remind-composer-buttons {
-      margin-top: $minds-padding * 2;
-      text-align: right;
+      position: absolute;
+      right: $minds-padding * 3;
+      bottom: $minds-padding * 3;
     }
   }
 
   minds-activity-preview {
     display: block;
     max-width: 100%;
-    margin: $minds-padding * 2;
+    margin: 0 ($minds-padding * 2) ($minds-padding * 2);
     text-align: left;
     box-sizing: border-box;
-    pointer-events: none;
     cursor: default;
+    overflow: auto !important;
+    max-height: 40vh;
+
+    > * {
+      pointer-events: none;
+    }
 
     .m-owner-block {
       padding: ($minds-padding * 2) !important;
@@ -218,58 +231,15 @@ m-modal-remind-composer {
 
     .m-rich-embed {
       padding: 0 ($minds-padding * 2) ($minds-padding * 2);
-
-      a {
-        width: auto !important;
-        float: left;
-        margin-right: 16px;
-
-        &.meta {
-          width: 100% !important;
-          float: none;
-          margin-right: 0;
-          padding: 0 !important;
-        }
-      }
-
-      img {
-        width: auto !important;
-        max-width: 100%;
-        max-height: 150px;
-        max-height: 20vh;
-        margin-left: 0 !important;
-        border: 1px solid #ddd;
-      }
-
-      &:after {
-        content: "";
-        display: table;
-        clear: both;
-      }
     }
 
     .item-image {
       padding: 0 ($minds-padding * 2) ($minds-padding * 2);
-
-      img {
-        width: auto !important;
-        max-width: 100%;
-        max-height: 150px;
-        max-height: 20vh;
-        border: 1px solid #ddd;
-      }
     }
 
     .item-image-video {
       minds-video {
         background: transparent !important;
-        max-height: 20vh;
-        width: auto !important;
-
-        video {
-          max-height: 20vh;
-          width: auto !important;
-        }
 
         .minds-video-bar-full {
           display: none !important;

@@ -15,12 +15,15 @@ import { ActivityPreview } from '../../../controllers/cards/activity/preview';
     <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
 
       <div class="m-modal-remind-composer">
-        <textarea [(ngModel)]="message" [autoGrow]></textarea>
+        <textarea [(ngModel)]="message"
+        placeholder="Enter your remind status here"
+        [autoGrow]
+        ></textarea>
 
         <div class="m-modal-remind-composer-buttons">
-          <button class="mdl-button mdl-button--raised" (click)="send()">
-            Post <i class="material-icons">send</i>
-          </button>
+          <a class="m-modal-remind-composer-send" (click)="send()">
+            <i class="material-icons">send</i>
+          </a>
         </div>
       </div>
 
