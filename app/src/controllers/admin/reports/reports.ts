@@ -64,8 +64,16 @@ export class AdminReports {
     });
   }
 
+  removeFromList(index) {
+    if (this.type === 'history') {
+      return;
+    }
+
+    this.reports.splice(index, 1);
+  }
+
   archive(report: any, index: number) {
-    this.client.post(`api/v1/admin/reports/${report._id}/archive`, {})
+    this.client.post(`api/v1/admin/reports/${report.guid}/archive`, {})
     .then((response: any) => {
       if (!response.done) {
         alert('There was a problem archiving this report. Please reload.');
@@ -75,25 +83,7 @@ export class AdminReports {
       alert('There was a problem archiving this report. Please reload.');
     });
 
-    this.reports.splice(index, 1);
-  }
-
-  ignore(report: any, index: number) {
-    if (!confirm('This will ignore this report. Are you sure?')) {
-      return;
-    }
-
-    this.client.post(`api/v1/admin/reports/${report._id}/ignore`, {})
-    .then((response: any) => {
-      if (!response.done) {
-        alert('There was a problem ignoring this report. Please reload.');
-      }
-    })
-    .catch(e => {
-      alert('There was a problem ignoring this report. Please reload.');
-    });
-
-    this.reports.splice(index, 1);
+    this.removeFromList(index);
   }
 
   explicit(report: any, index: number) {
@@ -101,7 +91,7 @@ export class AdminReports {
       return;
     }
 
-    this.client.post(`api/v1/admin/reports/${report._id}/explicit`, {})
+    this.client.post(`api/v1/admin/reports/${report.guid}/explicit`, {})
     .then((response: any) => {
       if (!response.done) {
         alert('There was a problem marking this content. Please reload.');
@@ -111,7 +101,7 @@ export class AdminReports {
       alert('There was a problem marking this content. Please reload.');
     });
 
-    this.reports.splice(index, 1);
+    this.removeFromList(index);
   }
 
   delete(report: any, index: number) {
@@ -119,7 +109,7 @@ export class AdminReports {
       return;
     }
 
-    this.client.post(`api/v1/admin/reports/${report._id}/delete`, {})
+    this.client.post(`api/v1/admin/reports/${report.guid}/delete`, {})
     .then((response: any) => {
       if (!response.done) {
         alert('There was a problem deleting this content. Please reload.');
@@ -129,6 +119,6 @@ export class AdminReports {
       alert('There was a problem deleting this content. Please reload.');
     });
 
-    this.reports.splice(index, 1);
+    this.removeFromList(index);
   }
 }
