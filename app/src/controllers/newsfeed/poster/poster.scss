@@ -53,7 +53,16 @@
 
         i{
           cursor:pointer;
+          vertical-align: middle;
         }
+        span{
+          font-size: 11px;
+          text-transform: uppercase;
+        }
+      }
+
+      .mdl-button{
+        padding:0;
       }
 
       .attachment-button:before{

@@ -58,10 +58,15 @@ minds-capture{
 
   .m-capture-default-maturity {
     cursor: pointer;
+    padding-top:$minds-padding;
 
-    i.material-icons {
-      position: relative;
-      top: 0.25em;
+    i{
+      cursor:pointer;
+      vertical-align: middle;
+    }
+    span{
+      font-size: 11px;
+      text-transform: uppercase;
     }
   }
 
@@ -184,6 +189,15 @@ minds-capture{
   .m-capture-mature {
     margin-left: $minds-padding;
     cursor: pointer;
+
+    i{
+      cursor:pointer;
+      vertical-align: middle;
+    }
+    span{
+      font-size: 11px;
+      text-transform: uppercase;
+    }
   }
 }
 .m-capture-save-to-album-button{

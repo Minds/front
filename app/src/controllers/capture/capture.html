@@ -85,6 +85,7 @@
             [ngClass]="{ 'mdl-color-text--red-500': default_maturity }"
             title="Explicit content"
             >explicit</i>
+            <span *ngIf="default_maturity" class="mdl-color-text--red-500">Mature content</span>
           </a>
 
           <select [(ngModel)]="default_license" class="mdl-color-text--blue-grey-300 m-form-select">
