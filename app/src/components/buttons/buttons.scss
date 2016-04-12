@@ -3,7 +3,7 @@
 
 minds-button-subscribe, minds-groups-join-button, minds-button-edit, minds-button-feature, minds-button-user-dropdown, .m-button{
 
-  button{
+  > button{
     cursor:pointer;
     background: transparent;
     border: 1px solid #78909c;
@@ -18,12 +18,12 @@ minds-button-subscribe, minds-groups-join-button, minds-button-edit, minds-butto
     }
   }
 
-  &:focus,button:focus{
+  &:focus, > button:focus{
     outline: none;
     -webkit-appearance:none;
   }
 
-  button:hover,button.subscribed,button.selected{
+  > button:hover, > button.subscribed, > button.selected{
     background-color: #78909c;
     color:#FFF !important;
   }
