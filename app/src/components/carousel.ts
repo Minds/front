@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
 
@@ -10,9 +10,7 @@ import { MindsBanner } from './banner';
 @Component({
   selector: 'minds-carousel',
   inputs: [ '_banners: banners', '_editMode: editMode'],
-  outputs: ['done_event: done', 'delete_event: delete']
-})
-@View({
+  outputs: ['done_event: done', 'delete_event: delete'],
   template: `
     <i class="material-icons left" (click)="prev()" [hidden]="banners.length <= 1">keyboard_arrow_left</i>
     <div *ngFor="#banner of banners; #i = index">

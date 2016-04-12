@@ -8,6 +8,7 @@ export = function buildJS(gulp, plugins) {
     let src = [
       'typings/browser.d.ts',
       'tools/manual_typings/**/*.d.ts',
+      'tools/typings/tsd/systemjs/systemjs.d.ts',
       join(APP_SRC, '**/*.ts'),
       '!' + join(APP_SRC, '**/*_spec.ts')
     ];

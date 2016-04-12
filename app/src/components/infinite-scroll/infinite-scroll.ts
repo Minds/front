@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter, ElementRef, Inject } from 'angular2/core';
+import { Component, EventEmitter, ElementRef, Inject } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { MDL_DIRECTIVES } from '../../directives/material';

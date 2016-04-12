@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -13,9 +13,6 @@ import { AdminReports } from './reports/reports';
 
 @Component({
   selector: 'minds-admin',
-  viewBindings: [ ]
-})
-@View({
   template: `
     <minds-admin-analytics *ngIf="filter == 'analytics'"></minds-admin-analytics>
     <minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>

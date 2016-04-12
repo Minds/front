@@ -23,5 +23,7 @@ interface Window {
 	componentHandler : any;
   ga : any;
   adsbygoogle ?: any;
+  onSuccessCallback ?: any;
+  BraintreeLoaded ?: any;
 }
 declare var window:Window;

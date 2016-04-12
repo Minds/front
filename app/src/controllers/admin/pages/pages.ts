@@ -1,4 +1,4 @@
-import { Component, View} from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -10,8 +10,6 @@ import { MindsBanner } from '../../../components/banner';
 
 @Component({
   selector: 'minds-admin-pages',
-})
-@View({
   templateUrl: 'src/controllers/admin/pages/pages.html',
   directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES, MindsBanner, MindsTinymce ]
 })

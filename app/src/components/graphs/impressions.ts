@@ -1,4 +1,4 @@
-import { Component, View, Directive } from 'angular2/core';
+import { Component, Directive } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { GraphSVG } from './svg';
@@ -6,9 +6,7 @@ import { GraphPoints } from './points';
 
 @Component({
   selector: 'minds-graph-impressions',
-  inputs: [ '_impressions: impressions', 'y: height', 'x: width' ]
-})
-@View({
+  inputs: [ '_impressions: impressions', 'y: height', 'x: width' ],
   template: `
     <svg fill="currentColor" [viewBox]="'0 0 ' + x + ' ' + y" style="stroke:#757575; opacity:0.8" xmlns="http://www.w3.org/2000/svg" >
       <!-- X Y, X Y (from top to bottom) -->

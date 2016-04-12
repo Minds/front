@@ -57,8 +57,8 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
   { src: 'reflect-metadata/Reflect.js', inject: 'shims', dest: JS_DEST },
   { src: 'systemjs/dist/system.src.js', inject: 'shims', dest: JS_DEST },
   { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'shims', dest: JS_DEST },
-  { src: 'intl/dist/Intl.min.js', inject: 'shims', dest: JS_DEST },
-  { src: 'intl/locale-data/jsonp/en.js', inject: 'shims', dest: JS_DEST },
+  //{ src: 'intl/dist/Intl.min.js', inject: 'shims', dest: JS_DEST },
+  //{ src: 'intl/locale-data/jsonp/en.js', inject: 'shims', dest: JS_DEST },
 
   // Faster dev page load
   { src: 'rxjs/bundles/Rx.min.js', inject: 'libs', dest: JS_DEST },

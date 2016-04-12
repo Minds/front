@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { Client } from '../../services/api';
@@ -7,9 +7,7 @@ import { Client } from '../../services/api';
 @Component({
   selector: 'minds-button-user-dropdown',
   inputs: ['user'],
-  outputs: ['userChanged']
-})
-@View({
+  outputs: ['userChanged'],
   template: `
     <button class="material-icons" (click)="toggleMenu($event)">settings</button>
 

@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 declare var tinymce;
@@ -6,9 +6,7 @@ declare var tinymce;
 @Component({
   selector: 'minds-tinymce',
   properties: [ '_content: content', 'reset' ],
-  events: [ 'update: contentChange' ]
-})
-@View({
+  events: [ 'update: contentChange' ],
   template: `
     <textarea>{{content}}</textarea>
   `,

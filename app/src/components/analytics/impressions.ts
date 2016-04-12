@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { Client } from '../../services/api';
@@ -6,9 +6,7 @@ import { MINDS_GRAPHS } from '../../components/graphs';
 
 @Component({
   selector: 'minds-analytics-impressions',
-  inputs: ['_key: key', 'span', 'unit']
-})
-@View({
+  inputs: ['_key: key', 'span', 'unit'],
   template: `
     <minds-graph-line [data]="data"></minds-graph-line>
 

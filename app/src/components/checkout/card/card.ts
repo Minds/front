@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 
 import { Client } from '../../../services/api';
@@ -8,9 +8,7 @@ import { CreditCard } from '../../../interfaces/card-interface';
 
 @Component({
   selector: 'minds-checkout-card-input',
-  outputs: ['_confirm: confirm']
-})
-@View({
+  outputs: ['_confirm: confirm'],
   templateUrl: 'src/components/checkout/card/card.html',
   directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, MDL_DIRECTIVES]
 })

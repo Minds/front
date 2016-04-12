@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
 
@@ -11,9 +11,7 @@ import { TopbarNavigation } from './topbar-navigation';
 
 @Component({
   selector: 'minds-topbar',
-  viewBindings: [Storage, Sidebar ]
-})
-@View({
+  viewBindings: [ Storage, Sidebar ],
   templateUrl: 'src/components/topbar/topbar.html',
   directives: [ CORE_DIRECTIVES, RouterLink, Material, SearchBar, TopbarNavigation ]
 })

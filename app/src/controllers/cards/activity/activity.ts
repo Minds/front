@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter, ElementRef} from 'angular2/core';
+import { Component, EventEmitter, ElementRef} from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 
@@ -27,9 +27,7 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
   },
   inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible'],
   outputs: [ '_delete: delete'],
-  bindings: [ AttachmentService ]
-})
-@View({
+  bindings: [ AttachmentService ],
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard ],
   pipes: [ MINDS_PIPES ]

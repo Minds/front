@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter, NgZone} from 'angular2/core';
+import { Component, EventEmitter, NgZone} from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 

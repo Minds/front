@@ -104,8 +104,10 @@ export class NewsfeedBoostRotator {
 
   recordImpression(position : number, force : boolean){
     //ensure was seen for at least 1 second
-    if(Date.now() > this.lastTs + 1000 || force){
-      this.client.put('api/v1/boost/fetch/newsfeed/' + this.boosts[position].boosted_guid);
+    if((Date.now() > this.lastTs + 1000 || force) && this.boosts[position].boosted_guid){
+      this.client.put('api/v1/boost/fetch/newsfeed/' + this.boosts[position].boosted_guid)
+        .then(() => {})
+        .catch(() => {});
     }
     this.lastTs = Date.now();
   }

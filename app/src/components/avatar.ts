@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
 
@@ -8,9 +8,7 @@ import { Material } from '../directives/material';
 @Component({
   selector: 'minds-avatar',
   inputs: ['_object: object', '_src: src', '_editMode: editMode', 'waitForDoneSignal'],
-  outputs: ['added']
-})
-@View({
+  outputs: ['added'],
   template: `
   <div class="minds-avatar">
     <img *ngIf="src" src="{{src}}" class="mdl-shadow--4dp" />

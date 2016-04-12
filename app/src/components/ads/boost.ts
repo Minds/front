@@ -43,7 +43,8 @@ export class BoostAds{
           return;
         }
         this.boosts = response.boosts;
-      });
+      })
+      .catch(() => {});
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
@@ -7,9 +7,7 @@ import { SignupModalService } from '../modal/signup/service';
 
 @Component({
   selector: 'minds-button-subscribe',
-  properties: ['user']
-})
-@View({
+  properties: ['user'],
   template: `
     <button class="minds-subscribe-button" *ngIf="!_user.subscribed" (click)="subscribe()">
       <i class="material-icons">person_add</i>

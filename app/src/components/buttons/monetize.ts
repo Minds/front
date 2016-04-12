@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
@@ -10,9 +10,7 @@ import { Client } from '../../services/api';
   host: {
     '(click)': 'monetize()',
     'class': 'm-button'
-  }
-})
-@View({
+  },
   template: `
     <button class="material-icons" [ngClass]="{'selected': isMonetized }">
       <i class="material-icons">attach_money</i>
