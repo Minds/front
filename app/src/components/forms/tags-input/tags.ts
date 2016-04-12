@@ -9,7 +9,9 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-form-tags-input',
-
+  host: {
+    '(click)': 'focus()'
+  },
   inputs: [ '_tags: tags' ],
   outputs: [ 'change: tagsChange' ],
   directives: [ FORM_DIRECTIVES, Material ],
