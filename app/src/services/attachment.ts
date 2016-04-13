@@ -270,10 +270,8 @@ export class AttachmentService {
         this.meta.url = data.meta.canonical;
         this.meta.description = data.meta.description;
 
-        for (var link of data.links.thumbnail) {
-          //if (link.rel.indexOf('thumbnail') > -1) {
-          this.meta.thumbnail = link.href;
-          //}
+        if(data.links.thumbnail && data.links.thumbnail[0]) {
+          this.meta.thumbnail = data.links.thumbnail[0].href;
         }
       })
       .catch(e => {
