@@ -17,6 +17,7 @@ import { ScrollService } from '../../../services/ux/scroll';
 import { ShareModal, ReportModal } from '../../../components/modal/modal';
 
 import { AttachmentService } from '../../../services/attachment';
+import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 
 @Component({
   selector: 'minds-activity',
@@ -29,7 +30,7 @@ import { AttachmentService } from '../../../services/attachment';
 })
 @View({
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed ],
   pipes: [ MINDS_PIPES ]
 })
 

@@ -58,14 +58,9 @@
 			<span>Click to confirm your are 18+</span>
 		</span>
 	</div>
-	<a [href]="activity.perma_url" target="_blank" *ngIf="activity.thumbnail_src">
-		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null"/>
-	</a>
-	<a [href]="activity.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900">
-		<h2 class="mdl-card__title-text mdl-typography--font-medium" *ngIf="activity.title">{{activity.title}}</h2>
-		<p *ngIf="activity.blurb">{{activity.blurb}}</p>
-    <p class="m-url mdl-color-text--blue-grey-400">{{activity.perma_url | domain}}</p>
-	</a>
+	<minds-rich-embed
+	[src]="activity"
+	></minds-rich-embed>
 </div>
 
 <div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [innerHtml]="activity.title | tags"></div>

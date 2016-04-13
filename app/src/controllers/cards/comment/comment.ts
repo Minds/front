@@ -13,6 +13,7 @@ import { MDL_DIRECTIVES } from '../../../directives/material';
 import { AttachmentService } from '../../../services/attachment';
 
 import { MindsVideo } from '../../../components/video';
+import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 
 import { ReportModal } from '../../../components/modal/modal';
 
@@ -25,7 +26,7 @@ import { ReportModal } from '../../../components/modal/modal';
     '(keydown.esc)': 'editing = false'
   },
   templateUrl: 'src/controllers/cards/comment/comment.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal, MindsRichEmbed ],
   pipes: [ TagsPipe, MINDS_PIPES ],
   bindings: [ AttachmentService ]
 })

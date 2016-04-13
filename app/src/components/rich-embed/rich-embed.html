@@ -1,0 +1,35 @@
+<div class="m-rich-embed-src" *ngIf="src && type == 'src'">
+  <a [href]="src.perma_url" class="thumbnail" (click)="action($event)" target="_blank" *ngIf="src.thumbnail_src || inlineEmbed">
+    <img
+    *ngIf="src.thumbnail_src || !inlineEmbed"
+    [hidden]="embeddedInline"
+    [src]="src.thumbnail_src"
+    (error)="src.thumbnail_src = null" />
+    <div class="m-rich-embed-thumbnail-placeholder"
+    *ngIf="!src.thumbnail_src"
+    [hidden]="embeddedInline"
+    ></div>
+
+    <div *ngIf="!embeddedInline && inlineEmbed" class="m-rich-embed-action-overlay">
+      <i *ngIf="inlineEmbed.playable" class="material-icons">play_arrow</i>
+      <i *ngIf="inlineEmbed.viewable" class="material-icons">remove_red_eye</i>
+      <i *ngIf="inlineEmbed.downloadable" class="material-icons">file_download</i>
+    </div>
+
+    <div *ngIf="embeddedInline && inlineEmbed" [class]="inlineEmbed.className" [innerHtml]="inlineEmbed.html"></div>
+  </a>
+  <a [href]="src.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src }">
+    <h2 class="mdl-card__title-text mdl-typography--font-medium" *ngIf="src.title">{{src.title}}</h2>
+    <p *ngIf="src.blurb">{{src.blurb}}</p>
+    <p class="m-url mdl-color-text--blue-grey-400">{{src.perma_url | domain}}</p>
+  </a>
+</div>
+<div class="m-rich-embed-preview" *ngIf="preview && type == 'preview'">
+  <a class="thumbnail" *ngIf="preview.thumbnail">
+    <img src="{{preview.thumbnail}}" />
+  </a>
+  <a class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-has-thumbnail': preview.thumbnail }">
+    <h2 class="mdl-card__title-text">{{preview.title}}</h2>
+    <p>{{preview.description}}</p>
+  </a>
+</div>

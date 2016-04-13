@@ -10,13 +10,14 @@ import { MindsActivityObject } from '../../../interfaces/entities';
 import { SessionFactory } from '../../../services/session';
 
 import { AttachmentService } from '../../../services/attachment';
+import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 
 @Component({
   selector: 'minds-newsfeed-poster',
   inputs: [ '_container_guid: containerGuid', 'accessId', 'message'],
   outputs: ['load'],
   templateUrl: 'src/controllers/newsfeed/poster/poster.html',
-  directives: [ MDL_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, AutoGrow, InfiniteScroll ],
+  directives: [ MDL_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, AutoGrow, InfiniteScroll, MindsRichEmbed ],
   bindings: [ AttachmentService ]
 })
 

@@ -53,14 +53,10 @@
             <span>Click to confirm your are 18+</span>
           </span>
         </div>
-        <a [href]="comment.perma_url" class="thumbnail" target="_blank" *ngIf="comment.thumbnail_src">
-          <img [src]="comment.thumbnail_src" (error)="comment.thumbnail_src = null"/>
-        </a>
-        <a [href]="comment.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-has-thumbnail': comment.thumbnail_src }">
-          <h2 class="mdl-card__title-text mdl-typography--font-medium" *ngIf="comment.title">{{comment.title}}</h2>
-          <p *ngIf="comment.blurb">{{comment.blurb}}</p>
-          <p class="m-url mdl-color-text--blue-grey-400">{{comment.perma_url | domain}}</p>
-        </a>
+
+        <minds-rich-embed
+      	[src]="comment"
+      	></minds-rich-embed>
       </div>
 
       <!-- Custom type ::  video -->
@@ -169,13 +165,9 @@
        <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="attachment.getMeta().title"></div>
        <div class="m-rich-embed mdl-shadow--2dp cf" *ngIf="attachment.getMeta().title">
 
-         <a class="thumbnail" *ngIf="attachment.getMeta().thumbnail">
-           <img src="{{ attachment.getMeta().thumbnail }}" />
-         </a>
-         <a class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-has-thumbnail': attachment.getMeta().thumbnail }">
-           <h2 class="mdl-card__title-text">{{attachment.getMeta().title}}</h2>
-           <p>{{attachment.getMeta().description}}</p>
-         </a>
+        <minds-rich-embed
+        [preview]="attachment.getMeta()"
+        ></minds-rich-embed>
        </div>
      </div>
     </div>
