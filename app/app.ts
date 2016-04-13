@@ -4,6 +4,8 @@ import {bootstrap} from 'angular2/platform/browser';
 import {RouteConfig, Route, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
 import {HTTP_PROVIDERS} from 'angular2/http';
 
+import { MindsRouterOutlet } from './src/directives/router-outlet';
+
 import { NotificationService } from './src/services/notification';
 import { AnalyticsService} from './src/services/analytics'
 import { Client } from './src/services/api';
@@ -43,7 +45,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/groups/groups'
   selector: 'minds-app',
   bindings: [ NotificationService, AnalyticsService ],
   templateUrl: './src/controllers/index.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal, MindsRouterOutlet ]
 })
 @RouteConfig([
   { path: '/login', component: Login, as: 'Login' },
