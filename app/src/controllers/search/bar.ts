@@ -38,13 +38,13 @@ export class SearchBar {
         var r = route.substring(route.indexOf('q=')+2);
         if(r.indexOf('&type=') > 0)
           r = r.substring(0, r.indexOf('&type='));
-        this.q = decodeURI(r);
+        this.q = decodeURIComponent(r);
       }
     });
   }
 
   search(){
-    this.router.navigate(['/Search', {q: this.q}]);
+    this.router.navigate(['/Search', { q: encodeURIComponent(this.q) }]);
   }
 
   keyup(e){
