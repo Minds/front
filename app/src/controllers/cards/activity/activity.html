@@ -17,7 +17,9 @@
       >
       <strong>({{activity.containerObj.name}})</strong>
     </a>
-		<span>{{activity.time_created * 1000 | date:'medium'}}</span>
+		<a [routerLink]="['/Activity', { guid: activity.guid }]" class="permalink">
+			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
+		</a>
 	</div>
 
 </div>
