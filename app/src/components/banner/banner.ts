@@ -34,7 +34,7 @@ import { Material } from '../../directives/material';
       <minds-button-edit class="cancel-button" (click)="cancel()">
         <button>Cancel</button>
       </minds-button-edit>
-      <minds-button-edit (click)="done()">
+      <minds-button-edit class="save-button" (click)="done()">
         <button>Save</button>
       </minds-button-edit>
     </div>
