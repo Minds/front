@@ -67,7 +67,7 @@ export class MindsBanner{
     if(!value)
       return;
     this.object = value;
-    this.src = "/fs/v1/banners/" + this.object.guid + '/' + this.top;
+    this.src = "/fs/v1/banners/" + this.object.guid + '/' + this.top + '/' + this.object.banner;
   }
 
   set _src(value : any){
