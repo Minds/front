@@ -23,6 +23,8 @@ export class HovercardService {
       return;
     }
 
+    this.shown = true;
+    this.unstick();
     this.setAnchor(anchor);
 
     if (this.guid == guid) {
@@ -30,8 +32,6 @@ export class HovercardService {
     }
 
     this.guid = guid;
-    this.shown = true;
-    this.sticky = false;
 
     let data = this.cache.get(`hovercard-${this.guid}`);
 
@@ -70,6 +70,18 @@ export class HovercardService {
     this.guid = '';
     this.shown = false;
     this.data = null;
+  }
+
+  stick(guid: any) {
+    if (this.guid != guid) {
+      return;
+    }
+
+    this.sticky = true;
+  }
+
+  unstick() {
+    this.sticky = false;
   }
 
   setAnchor(elem: any) {

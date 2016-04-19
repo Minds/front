@@ -13,7 +13,7 @@ import { HovercardService } from '../../services/hovercard';
     [style.right]="hovercardService.anchor.right"
     [style.bottom]="hovercardService.anchor.bottom"
     [style.left]="hovercardService.anchor.left"
-    (mouseenter)="hovercardService.sticky = true"
+    (mouseenter)="hovercardService.stick(hovercardService.data.guid)"
     (mouseleave)="hide(hovercardService.data.guid)"
     >
       <minds-card-user [object]="hovercardService.data"></minds-card-user>
@@ -25,7 +25,7 @@ export class HovercardPopup {
   constructor(public hovercardService: HovercardService) {}
 
   hide(guid: any) {
-    this.hovercardService.sticky = false;
+    this.hovercardService.unstick();
 
     setTimeout(() => {
       this.hovercardService.hide(guid);

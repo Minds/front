@@ -47,7 +47,7 @@ export class Hovercard implements OnDestroy {
     }
 
     setTimeout(() => {
-      this.hideForcefully();
+      this.hovercardService.hide(this.guid);
     }, 250);
   }
 
@@ -56,7 +56,7 @@ export class Hovercard implements OnDestroy {
       return;
     }
 
-    this.hovercardService.sticky = false;
+    this.hovercardService.unstick();
     this.hovercardService.hide(this.guid);
   }
 
