@@ -2,36 +2,41 @@ import { Directive,  EventEmitter, ElementRef } from 'angular2/core';
 
 @Directive({
   selector: '[autoGrow]',
-  inputs: ['autoGrow', 'for'],
+  inputs: ['autoGrow', '_model: ngModel'],
   host: {
     '(keydown)': 'grow()',
-    '(paste)': 'grow()'
+    '(paste)': 'grow()',
+    '(change)': 'grow()',
+    '(ngModelChange)': 'grow()'
   }
 })
 
 
 export class AutoGrow{
-
-  _listener : Function;
   _element : any;
+  timeout: any;
 
   constructor(element: ElementRef) {
-
     this._element =  element.nativeElement;
     setTimeout(()=>{
       this.grow();
     });
   }
 
+  set _model(value: any) {
+    this.grow();
+  }
+
   grow(){
-    this._element.style.overflow = 'hidden';
-  //  if(!this._element.style.height)
-    this._element.style.height = 'auto';
-    this._element.style.height = this._element.scrollHeight + "px";
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+
+    this.timeout = setTimeout(() => {
+      this._element.style.overflow = 'hidden';
+      this._element.style.height = 'auto';
+      this._element.style.height = this._element.scrollHeight + "px";
+    });
   }
-
-  set autoGrow(value){
-
-  }
-
 }
