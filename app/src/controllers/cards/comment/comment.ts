@@ -5,6 +5,7 @@ import { RouterLink } from "angular2/router";
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { AutoGrow } from '../../../directives/autogrow';
+import { Hovercard } from '../../../directives/hovercard';
 import { BUTTON_COMPONENTS } from '../../../components/buttons';
 import { TagsPipe } from '../../../pipes/tags';
 import { MINDS_PIPES } from '../../../pipes/pipes';
@@ -26,7 +27,7 @@ import { ReportModal } from '../../../components/modal/modal';
     '(keydown.esc)': 'editing = false'
   },
   templateUrl: 'src/controllers/cards/comment/comment.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal, MindsRichEmbed ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal, MindsRichEmbed, Hovercard ],
   pipes: [ TagsPipe, MINDS_PIPES ],
   bindings: [ AttachmentService ]
 })

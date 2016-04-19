@@ -441,3 +441,15 @@ minds-graph-line{
   }
 
 }
+
+.minds-avatar-hovercard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  right: auto;
+  z-index: 999995;
+  background: #ffffff;
+  width: 330px;
+  padding-bottom: $minds-padding;
+}

@@ -1,7 +1,7 @@
 <!-- Owner block -->
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block" *ngIf="activity.ownerObj && activity.ownerObj.username">
 
-	<div class="avatar">
+	<div class="avatar" [hovercard]="activity.ownerObj.guid">
 		<a [routerLink]="['/Channel', {username: activity.ownerObj.username}]">
 			<img [src]="'/icon/' + activity.ownerObj.guid + '/medium/' + activity.ownerObj.icontime" class="mdl-shadow--2dp"/>
 		</a>

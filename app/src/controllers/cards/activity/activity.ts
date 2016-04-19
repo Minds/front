@@ -6,6 +6,7 @@ import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { Material } from '../../../directives/material';
 import { AutoGrow } from '../../../directives/autogrow';
+import { Hovercard } from '../../../directives/hovercard';
 import { Remind } from '../remind/remind';
 import { BUTTON_COMPONENTS } from '../../../components/buttons';
 import { MindsVideo } from '../../../components/video';
@@ -30,7 +31,7 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 })
 @View({
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard ],
   pipes: [ MINDS_PIPES ]
 })
 
