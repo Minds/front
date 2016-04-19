@@ -3,7 +3,7 @@ import { HovercardService } from '../services/hovercard';
 
 @Directive({
   selector: '[hovercard]',
-  inputs: ['_hovercard: hovercard'],
+  inputs: ['_hovercard: hovercard', '_hovercardAnchor: hovercardAnchor'],
   host: {
     '(mouseenter)': 'show()',
     '(mouseleave)': 'hide()',
@@ -12,6 +12,7 @@ import { HovercardService } from '../services/hovercard';
 })
 export class Hovercard implements OnDestroy {
   guid: any = '';
+  anchor: any = ['right', 'top'];
   _element: any;
 
   constructor(public hovercardService: HovercardService, element: ElementRef) {
@@ -31,13 +32,25 @@ export class Hovercard implements OnDestroy {
     this.guid = value;
   }
 
+  set _hovercardAnchor(value: any) {
+    if (!value) {
+      return;
+    }
+
+    if (typeof value === 'string' || value.length !== 2) {
+      return;
+    }
+
+    this.anchor = value;
+  }
+
   show() {
     if (!this.guid) {
       return;
     }
 
     setTimeout(() => {
-      this.hovercardService.show(this.guid, this._element);
+      this.hovercardService.show(this.guid, this._element, this.anchor);
     }, 250);
   }
 

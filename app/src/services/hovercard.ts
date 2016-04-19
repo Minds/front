@@ -18,14 +18,14 @@ export class HovercardService {
   constructor(public client: Client, public cache: CacheService) {
   }
 
-  show(guid: any, anchor: any) {
+  show(guid: any, elem: any, anchor: any) {
     if (!guid) {
       return;
     }
 
     this.shown = true;
     this.unstick();
-    this.setAnchor(anchor);
+    this.setAnchor(elem, anchor);
 
     if (this.guid == guid) {
       return;
@@ -84,7 +84,7 @@ export class HovercardService {
     this.sticky = false;
   }
 
-  setAnchor(elem: any) {
+  setAnchor(elem: any, anchor: any) {
     if (!elem.getClientRects().length) {
       // dettached DOM element
       return;
@@ -98,14 +98,28 @@ export class HovercardService {
     }
 
     let doc = elem.ownerDocument.documentElement,
+      docW = doc.clientWidth,
+      docH = doc.clientHeight,
       top = rect.top + window.pageYOffset - doc.clientTop,
       left = rect.left + window.pageXOffset - doc.clientLeft,
       right = left + rect.width,
-      bottom = top + rect.height;
+      bottom = top + rect.height,
+      yPadding = 4;
 
-    this.anchor.right = 'auto';
-    this.anchor.bottom = 'auto';
-    this.anchor.top = top;
-    this.anchor.left = right + 4;
+    if (anchor.indexOf('left') !== -1) {
+      this.anchor.left = 'auto';
+      this.anchor.right = docW - left + yPadding;
+    } else { // right: default
+      this.anchor.right = 'auto';
+      this.anchor.left = right + yPadding;
+    }
+
+    if (anchor.indexOf('bottom') !== -1) {
+      this.anchor.top = 'auto';
+      this.anchor.bottom = docH - top - rect.height;
+    } else { // top: default
+      this.anchor.bottom = 'auto';
+      this.anchor.top = top;
+    }
   }
 }
