@@ -62,6 +62,10 @@ export class CommentCard {
     this.editing = value;
   }
 
+  saveEnabled() {
+    return !this.inProgress && this.canPost && (this.comment.description || this.attachment.has());
+  }
+
   save(){
     if (!this.comment.description && !this.attachment.has()) {
       return;

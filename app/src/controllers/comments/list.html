@@ -51,6 +51,13 @@
               >
                 <i class="material-icons">explicit</i>
               </a>
+
+              <a class="m-post-button"
+              (click)="post($event)"
+              [ngClass]="{ 'm-button-disabled': !postEnabled() }"
+              >
+                <i class="material-icons">send</i>
+              </a>
             </div>
 
             <!-- Rich embed preview -->

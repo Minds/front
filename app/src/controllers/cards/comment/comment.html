@@ -139,6 +139,13 @@
         >
           <i class="material-icons">explicit</i>
         </a>
+
+        <a class="m-post-button"
+        (click)="applyAndSave(edit, $event)"
+        [ngClass]="{ 'm-button-disabled': !saveEnabled() }"
+        >
+          <i class="material-icons">send</i>
+        </a>
       </div>
     </div>
 

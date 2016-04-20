@@ -89,6 +89,10 @@ export class Comments {
       });
   }
 
+  postEnabled() {
+    return !this.inProgress && this.canPost && (this.content || this.attachment.has());
+  }
+
   post(e){
     e.preventDefault();
 
