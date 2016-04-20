@@ -13,11 +13,11 @@ import { Material } from '../../directives/material';
 @View({
   template: `
   <div class="minds-banner" *ngIf="!editing">
-    <div class="minds-banner-img" [ngStyle]="{'background-position': '0 ' + top + 'px', 'background-image': 'url(' + src + ')'}"></div>
+    <div class="minds-banner-img mdl-color--blue-grey" [ngStyle]="{'background-position': '0 ' + top + 'px', 'background-image': 'url(' + src + ')'}"></div>
     <div class="minds-banner-overlay"></div>
   </div>
   <div *ngIf="editing" class="minds-banner minds-banner-editing">
-    <img src="{{src}}" [ngStyle]="{'top': top}" (dragstart)="dragstart($event)" (dragover)="drag($event)" (dragend)="dragend($event)"/>
+    <img class="mdl-color--blue-grey" src="{{src}}" [ngStyle]="{'top': top}" (dragstart)="dragstart($event)" (dragover)="drag($event)" (dragend)="dragend($event)"/>
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
       <span>Click here to add a new banner</span>
@@ -34,7 +34,7 @@ import { Material } from '../../directives/material';
       <minds-button-edit class="cancel-button" (click)="cancel()">
         <button>Cancel</button>
       </minds-button-edit>
-      <minds-button-edit (click)="done()">
+      <minds-button-edit class="save-button" (click)="done()">
         <button>Save</button>
       </minds-button-edit>
     </div>
@@ -67,7 +67,7 @@ export class MindsBanner{
     if(!value)
       return;
     this.object = value;
-    this.src = "/fs/v1/banners/" + this.object.guid + '/' + this.top;
+    this.src = "/fs/v1/banners/" + this.object.guid + '/' + this.top + '/' + this.object.banner;
   }
 
   set _src(value : any){

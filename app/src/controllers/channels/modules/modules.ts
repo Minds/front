@@ -11,7 +11,7 @@ import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   selector: 'minds-channel-modules',
-  inputs: ['type', '_owner: owner', 'limit'],
+  inputs: ['type', '_owner: owner', '_container: container', 'limit'],
   host: {
     'class': 'mdl-card mdl-shadow--2dp',
     '[hidden]': 'items.length == 0'
@@ -25,7 +25,7 @@ import { AttachmentService } from '../../../services/attachment';
     <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;" *ngIf="type != 'blog'">
       <a *ngFor="#object of items"
       [routerLink]="['/Archive-View', {guid: object.guid}]"
-      [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(object) }"
+      [ngClass]="{ 'm-mature-thumbnail': object.mature }"
       >
         <span class="m-thumb-image" [ngStyle]="{'background-image': 'url(' + object.thumbnail_src + ')'}"></span>
         <i class="material-icons">explicit</i>
@@ -50,6 +50,7 @@ export class ChannelModules {
   items : Array<any> = [];
   type : string = "all";
   owner : any;
+  container : any;
   limit : number = 9;
 
   inProgress : boolean = false;
@@ -63,21 +64,29 @@ export class ChannelModules {
     this.load();
   }
 
+  set _container(value : any){
+    this.container = value;
+    this.load();
+  }
+
   load(){
     this.inProgress = true;
 
-    var endpoint = 'api/v1/entities/owner/all/'+ this.owner.guid;
+    let containerType = this.owner ? 'owner' : 'container',
+      guid = this.owner ? this.owner.guid : this.container.guid;
+
+    var endpoint = `api/v1/entities/${containerType}/all/${guid}`;
     switch(this.type){
       case 'blog':
-        endpoint = 'api/v1/blog/owner/'+ this.owner.guid;
+        endpoint = `api/v1/blog/${containerType}/${guid}`;
         this.limit = 3;
         break;
       case 'video':
-        endpoint = 'api/v1/entities/owner/video/'+ this.owner.guid;
+        endpoint = `api/v1/entities/${containerType}/video/${guid}`;
         this.limit = 6;
         break;
       case 'image':
-        endpoint = 'api/v1/entities/owner/image/'+ this.owner.guid;
+        endpoint = `api/v1/entities/${containerType}/image/${guid}`;
         break;
     }
 

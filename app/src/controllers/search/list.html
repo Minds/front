@@ -3,6 +3,7 @@
     <a [routerLink]="['/Search', {q: q, type: 'images'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'images' || type == ''}">Images</a>
     <a [routerLink]="['/Search', {q: q, type: 'channels'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'channels' || type == ''}">Channels</a>
     <a [routerLink]="['/Search', {q: q, type: 'blogs'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'blogs' || type == ''}">Blogs</a>
+    <a [routerLink]="['/Search', {q: q, type: 'groups'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'groups' || type == ''}">Groups</a>
 </div>
 
 <div class="mdl-grid search-grid" style="max-width:500px">
@@ -15,6 +16,7 @@
         <minds-card-image [object]="entity" *ngIf="entity.subtype == 'image'"></minds-card-image>
         <minds-card-blog [object]="entity" *ngIf="entity.subtype == 'blog'"></minds-card-blog>
         <minds-activity [object]="entity" *ngIf="entity.type == 'activity'"></minds-activity>
+        <minds-card-group [group]="entity" *ngIf="entity.type == 'group'"></minds-card-group>
 
         <!-- START: User Only -->
         <minds-card-user [object]="entity" *ngIf="entity.type == 'user'"></minds-card-user>
