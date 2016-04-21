@@ -15,10 +15,12 @@ import { ActivityPreview } from '../../../controllers/cards/activity/preview';
     <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
 
       <div class="m-modal-remind-composer">
+        <h3 class="m-modal-remind-title">Remind</h3>
+
         <textarea [(ngModel)]="message"
-        placeholder="Enter your remind status here"
-        [autoGrow]
-        ></textarea>
+          placeholder="Enter your remind status here (optional)"
+          [autoGrow]
+          ></textarea>
 
         <div class="m-modal-remind-composer-buttons">
           <a class="m-modal-remind-composer-send" (click)="send()">
@@ -28,13 +30,13 @@ import { ActivityPreview } from '../../../controllers/cards/activity/preview';
       </div>
 
       <minds-activity-preview class="mdl-shadow--8dp"
-      *ngIf="object && !object.remind_object"
-      [object]="object"
-      ></minds-activity-preview>
-      <minds-activity-preview class="mdl-shadow--8dp"
-      *ngIf="object && object.remind_object"
-      [object]="object.remind_object"
-      ></minds-activity-preview>
+        *ngIf="object && !object.remind_object"
+        [object]="object"
+        ></minds-activity-preview>
+        <minds-activity-preview class="mdl-shadow--8dp"
+        *ngIf="object && object.remind_object"
+        [object]="object.remind_object"
+        ></minds-activity-preview>
 
     </m-modal>
   `

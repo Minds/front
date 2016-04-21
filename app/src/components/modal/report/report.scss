@@ -1,0 +1,31 @@
+m-modal-report {
+
+  .m-modal-container{
+    min-width:25%;
+  }
+
+  .m-modal-report-title {
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    font-size: 21px;
+  }
+
+  .m-modal-report-body {
+    padding: $minds-padding * 2;
+  }
+
+  .m-modal-report-reason{
+    padding:8px 0;
+
+    label{
+      padding-left:12px;
+      font-weight:bold;
+    }
+  }
+
+  .m-modal-report-buttons {
+    margin-top: $minds-padding * 2;
+  }
+
+}

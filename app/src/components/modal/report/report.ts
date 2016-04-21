@@ -14,19 +14,17 @@ import { Client } from '../../../services/api';
     <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
 
       <div [hidden]="sent" class="m-modal-report-body">
-        <p class="m-modal-report-question">
-          What's going on?
-        </p>
+        <h3 class="m-modal-report-title">Report</h3>
 
-        <div *ngFor="#item of subjects">
+        <div *ngFor="#item of subjects" class="m-modal-report-reason mdl-color-text--blue-grey-900">
           <input type="radio"
-          [disabled]="inProgress"
-          [ngModel]="{ checked: subject == item.value }"
-          (ngModelChange)="subject = item.value"
-          name="subject"
-          value="{{ item.value }}"
-          />
-          <label>{{ item.label }}</label>
+            [disabled]="inProgress"
+            [ngModel]="{ checked: subject == item.value }"
+            (ngModelChange)="subject = item.value"
+            name="subject"
+            value="{{ item.value }}"
+            />
+          <label (click)="subject = item.value">{{ item.label }}</label>
         </div>
 
         <div class="m-modal-report-buttons">
@@ -37,6 +35,7 @@ import { Client } from '../../../services/api';
       </div>
 
       <div [hidden]="!sent" class="m-modal-report-body">
+        <h3 class="m-modal-report-title">Report</h3>
         <p>
           Thanks for letting us know! We appreciate
           your effort to keep Minds safe and secure.
@@ -48,7 +47,7 @@ import { Client } from '../../../services/api';
 
         <div class="m-modal-report-buttons">
           <button class="mdl-button mdl-button--raised" (click)="close()">
-            Dismiss
+            Close
           </button>
         </div>
       </div>
