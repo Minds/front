@@ -42,14 +42,6 @@ export class RemindButton {
 
   set _object(value : any){
     this.object = value;
-
-    if (this.object) {
-      if (this.object.remind_object && this.object.remind_object.owner_guid != this.session.getLoggedInUser().guid) {
-        this.message = `via @${this.object.remind_object.ownerObj.username}`;
-      } else if (this.object.owner_guid != this.session.getLoggedInUser().guid) {
-        this.message = `via @${this.object.ownerObj.username}`;
-      }
-    }
   }
 
   remind(){
