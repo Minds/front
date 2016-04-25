@@ -108,7 +108,7 @@
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     </script>
     <!-- End Google Analytics -->
-    <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
 
     <script>
       <?php
