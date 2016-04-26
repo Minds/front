@@ -25,5 +25,6 @@ interface Window {
   adsbygoogle ?: any;
   onSuccessCallback ?: any;
   BraintreeLoaded ?: any;
+  io ?: any;
 }
 declare var window:Window;

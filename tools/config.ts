@@ -65,6 +65,7 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
   { src: 'angular2/bundles/angular2.min.js', inject: 'libs', dest: JS_DEST },
   { src: 'angular2/bundles/router.min.js', inject: 'libs', dest: JS_DEST }, // use router.min.js with alpha47
   { src: 'angular2/bundles/http.min.js', inject: 'libs', dest: JS_DEST },
+  { src: 'socket.io-client/socket.io.js', inject: 'libs', dest: JS_DEST },
 
   // async
   { src: 'tinymce/tinymce.min.js', inject: 'async', dest: JS_DEST },
@@ -78,6 +79,7 @@ export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependenci
   { src: 'es6-shim/es6-shim.min.js', inject: 'shims' },
   { src: 'systemjs/dist/system.js', inject: 'shims' },
   { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
+  { src: 'socket.io-client/socket.io.js', inject: 'libs' },
   { src: 'angular2/es6/dev/src/testing/shims_for_IE.js', inject: 'shims' },
   { src: 'intl/dist/Intl.min.js', inject: 'shims' },
   { src: 'intl/locale-data/jsonp/en.js', inject: 'shims' },
