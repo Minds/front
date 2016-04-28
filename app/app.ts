@@ -37,7 +37,7 @@ import {Pages} from './src/controllers/pages/pages';
 /**
  * TODO: Load these automagically from gulp
  */
-import {Gatherings} from './src/plugins/Messenger/gatherings';
+import {Messenger} from './src/plugins/Messenger/messenger';
 import {Blog, BlogViewInfinite, BlogEdit} from './src/plugins/blog/blog';
 import {ArchiveView, ArchiveEdit} from './src/plugins/archive/archive';
 import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups';
@@ -46,7 +46,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups'
   selector: 'minds-app',
   bindings: [ NotificationService, AnalyticsService ],
   templateUrl: './src/controllers/index.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal, MindsRouterOutlet, HovercardPopup ]
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal, MindsRouterOutlet, HovercardPopup, Messenger ]
 })
 @RouteConfig([
   { path: '/login', component: Login, as: 'Login' },
@@ -64,9 +64,6 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups'
 
   { path: '/discovery/:filter', component: Discovery, as: 'Discovery'},
   { path: '/discovery/:filter/:type', component: Discovery, as: 'Discovery'},
-
-  { path: '/messenger', component:  Gatherings, as: 'Messenger'},
-  { path: '/messenger/:guid', component:  Gatherings, as: 'Messenger-Conversation'},
 
   { path: '/blog/:filter', component:  Blog, as: 'Blog'},
   { path: '/blog/view/:guid', component:  BlogViewInfinite, as: 'Blog-View'},
