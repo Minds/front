@@ -1,5 +1,6 @@
 import { EventEmitter } from 'angular2/core';
 import { SessionFactory } from './session';
+import { Client } from './api';
 
 export class SocketsService {
   SOCKET_IO_SERVER = window.Minds.socket_server;
@@ -7,10 +8,11 @@ export class SocketsService {
   session = SessionFactory.build();
 
   socket: any;
+  registered: boolean = false;
   subscriptions: any = {};
   rooms: string[] = [];
 
-  constructor(){
+  constructor(public client: Client){
     this.setUp();
   }
 
@@ -27,6 +29,7 @@ export class SocketsService {
     });
 
     this.rooms = [];
+    this.registered = false;
     this.setUpDefaultListeners();
 
     if (this.session.isLoggedIn()) {
@@ -42,6 +45,7 @@ export class SocketsService {
         console.log(`[ws]::disconnecting | logged out`);
         this.disconnect();
         this.rooms = [];
+        this.registered = false;
       }
     });
 
@@ -53,6 +57,17 @@ export class SocketsService {
   setUpDefaultListeners() {
     this.socket.on('connect', () => {
       console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
+      this.register();
+    });
+
+    this.socket.on('disconnect', () => {
+      console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
+      this.registered = false;
+    });
+
+    this.socket.on('registered', () => {
+      console.log(`[ws]::registered`);
+      this.registered = true;
       this.socket.emit('join', this.rooms);
     });
 
@@ -78,8 +93,65 @@ export class SocketsService {
     });
   }
 
+  register() {
+    this.registered = false;
+
+    console.log(`[ws]::trying to register`);
+
+    this.getRegistrationData().then((result) => {
+      console.log(`[ws]::registering`, result);
+
+      if (!result[0] || !result[1]) {
+        throw new Error('Missing registration data');
+      }
+
+      this.socket.emit('register', result[0], result[1]);
+    })
+    .catch(e => {
+      console.log(`[ws]::registering error`, e);
+    });
+  }
+
+  getRegistrationData() {
+    if (!this.session.isLoggedIn()) {
+      return Promise.reject('No user');
+    }
+
+    // TODO: [emi] Check this out. For some reason Promise.all is failing the second time it gets called
+    // ^ Second time = when reconnecting
+    // ^ The promise looks good, but .then() is never executing on it.
+    // ^ Shim issue? Apparently.
+    return Promise.all([
+      this.session.getLoggedInUser().guid,
+      this.getLoggedInAccessToken()
+    ]);
+  }
+
+  getLoggedInAccessToken() {
+
+    return 'SOCKET_TEST_TOKEN'; // Until we figure out a way to get an in-app access token
+
+    // // TODO: this should be in session.ts
+    // // But the injector has to be moved to
+    // // providers.ts in order to Client work
+    // 
+    // if (!this.session.isLoggedIn()) {
+    //   return false;
+    // }
+    //
+    // if (window.localStorage.getItem('currentAccessToken')) {
+    //   return window.localStorage.getItem('currentAccessToken');
+    // }
+    //
+    // return this.client.post('oauth2/token', {})
+    // .then(
+    //   (result: any) => result.access_token
+    // );
+  }
+
   reconnect() {
     console.log('[ws]::reconnect');
+    this.registered = false;
     this.socket.disconnect();
     this.socket.connect();
 
@@ -88,6 +160,7 @@ export class SocketsService {
 
   disconnect() {
     console.log('[ws]::disconnect');
+    this.registered = false;
     this.socket.disconnect();
 
     return this;
@@ -123,6 +196,11 @@ export class SocketsService {
 
   join(room: string) {
     if (!room) {
+      return this;
+    }
+
+    if (!this.registered || !this.socket.connected) {
+      this.rooms.push(room);
       return this;
     }
 
