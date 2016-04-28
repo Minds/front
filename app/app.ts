@@ -37,7 +37,7 @@ import {Pages} from './src/controllers/pages/pages';
 /**
  * TODO: Load these automagically from gulp
  */
-import {Gatherings} from './src/plugins/gatherings/gatherings';
+import {Gatherings} from './src/plugins/Messenger/gatherings';
 import {Blog, BlogViewInfinite, BlogEdit} from './src/plugins/blog/blog';
 import {ArchiveView, ArchiveEdit} from './src/plugins/archive/archive';
 import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups';

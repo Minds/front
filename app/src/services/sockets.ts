@@ -1,87 +1,139 @@
-import { Inject, Injector, provide, EventEmitter } from 'angular2/core';
+import { EventEmitter } from 'angular2/core';
 import { SessionFactory } from './session';
 
 export class SocketsService {
+  SOCKET_IO_SERVER = window.Minds.socket_server;
 
   session = SessionFactory.build();
 
-  socket;
-  emitters : {} = {};
+  socket: any;
+  subscriptions: any = {};
+  rooms: string[] = [];
 
   constructor(){
-  //this.setUp();
+    this.setUp();
   }
 
   setUp(){
+    if (this.socket) {
+      this.socket.destroy();
+    }
 
-    System.import('https://cdn.socket.io/socket.io-1.3.7.js').then((io) => {
-      this.socket = io.connect(window.Minds.socket_server, {
-				'reconnect': true,
-        'reconnection': true,
-        'timeout': 40000
-			});
-
-  		this.socket.on('connect', () => {
-  			console.log('[ws]::connect', 'connect to socket server');
-  		});
-
-      this.socket.on('error', (err) => {
-        console.log('[ws]::error', err);
-      });
-
-      this.session.isLoggedIn((is) => {
-        if(is){
-          this.reconnect();
-        } else {
-          this.disconnect();
-        }
-      })
+    this.socket = window.io.connect(this.SOCKET_IO_SERVER, {
+      'reconnect': true,
+      'reconnection': true,
+      'timeout': 40000,
+      'autoConnect': false
     });
 
-  }
+    this.rooms = [];
+    this.setUpDefaultListeners();
 
-  reconnect(){
-    console.log('[ws][reconnect]::triggered');
-    this.socket.io.disconnect();
-    this.socket.io.connect();
-  }
-
-  disconnect(){
-    console.log('[ws][disconnect]::triggered');
-    this.socket.io.disconnect();
-  }
-
-  emit(){
-    if(this.socket) {
-      var _emit = this.socket.emit;
-      _emit.apply(this.socket, arguments);
-    } else {
-      //console.log('[ws][emit]:: called before socket setup');
+    if (this.session.isLoggedIn()) {
+      console.log('[ws]::connecting | is logged in');
+      this.socket.connect();
     }
+
+    this.session.isLoggedIn((is: any) => {
+      if(is){
+        console.log(`[ws]::connecting | logged in`);
+        this.reconnect();
+      } else {
+        console.log(`[ws]::disconnecting | logged out`);
+        this.disconnect();
+        this.rooms = [];
+      }
+    });
+
+    window.TEST_SOCKET_SERVICE = this;
+
+    return this;
   }
 
-  subscribe(name : string, callback : Function){
-    if(!this.emitters[name] && this.socket){
-      //console.log('[sub][registered]:: ' + name);
-      this.emitters[name] = new EventEmitter();
-      var emitter = this.emitters[name];
-      this.socket.on(name, function() {
-        emitter.next(arguments);
+  setUpDefaultListeners() {
+    this.socket.on('connect', () => {
+      console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
+      this.socket.emit('join', this.rooms);
+    });
+
+    this.socket.on('error', (e: any) => {
+      console.error('[ws]::error', e);
+    });
+
+    // -- Rooms
+
+    this.socket.on('rooms', (rooms: string[]) => {
+      console.log(`[ws]::rooms`, rooms);
+      this.rooms = rooms;
+    });
+
+    this.socket.on('joined', (room: string, rooms: string[]) => {
+      console.log(`[ws]::joined`, room, rooms);
+      this.rooms = rooms;
+    });
+
+    this.socket.on('left', (room: string, rooms: string[]) => {
+      console.log(`[ws]::left`, room, rooms);
+      this.rooms = rooms;
+    });
+  }
+
+  reconnect() {
+    console.log('[ws]::reconnect');
+    this.socket.disconnect();
+    this.socket.connect();
+
+    return this;
+  }
+
+  disconnect() {
+    console.log('[ws]::disconnect');
+    this.socket.disconnect();
+
+    return this;
+  }
+
+  emit(...args) {
+    console.log('[ws]::emit', JSON.stringify(args));
+    this.socket.emit.apply(this.socket, args);
+
+    return this;
+  }
+
+  subscribe(name: string, callback: Function) {
+    console.log(`[ws]::subscription | -> ${name}`);
+
+    if (!this.subscriptions[name]){
+      this.subscriptions[name] = new EventEmitter();
+
+      this.socket.on(name, (...args) => {
+        console.log(`[ws]::event | -> ${name}`, args);
+        this.subscriptions[name].next(args);
       });
     }
-    if(this.socket){
-      return this.emitters[name].subscribe({
-        next: (args) => { callback.apply(this, args); }
-      });
-    } else {
-      setTimeout(() => {
-        this.subscribe(name, callback);
-      }, 1000);
-    }
+
+    return this.subscriptions[name].subscribe({
+      next: (args) => { callback.apply(this, args); }
+    });
   }
 
   unSubscribe(subscription){
     subscription.unSubscribe();
   }
 
+  join(room: string) {
+    if (!room) {
+      return this;
+    }
+
+    return this.emit('join', room);
+  }
+
+  leave(room: string) {
+    if (!room) {
+      return this;
+    }
+
+    return this.emit('leave', room);
+  }
 }
