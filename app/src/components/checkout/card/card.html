@@ -22,7 +22,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <select name="credit-card-month" [(ngModel)]="card.month">
+      <select name="credit-card-month" [ngModel]="card.month" (change)="card.month = $event.target.value">
         <option>mm</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -37,7 +37,7 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <select name="credit-card-year" [(ngModel)]="card.year">
+      <select name="credit-card-year" [ngModel]="card.year"  (change)="card.year = $event.target.value">
         <option>yyyy</option>
         <option value="2015">2015</option>
         <option value="2016">2016</option>
