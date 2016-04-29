@@ -14,6 +14,10 @@ export const MINDS_PROVIDERS : any[] = [
      useFactory: () => new ScrollService(),
      deps: []
    }),
+   provide(SocketsService, {
+     useFactory: () => new SocketsService(),
+     deps: []
+   }),
    provide(Client, {
      useFactory: (http) => new Client(http),
      deps: [ Http ]
@@ -21,10 +25,6 @@ export const MINDS_PROVIDERS : any[] = [
    provide(Upload, {
      useFactory: (http) => new Upload(http),
      deps: [ Http ]
-   }),
-   provide(SocketsService, {
-     useFactory: (client) => new SocketsService(client),
-     deps: [ Client ]
    }),
    provide(SignupModalService, {
      useFactory: (router, scroll) => new SignupModalService(router, scroll),
