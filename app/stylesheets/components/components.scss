@@ -453,3 +453,26 @@ minds-graph-line{
   width: 330px;
   padding-bottom: $minds-padding;
 }
+
+m-emoji-popup .m-bubble-popup {
+  position: fixed;
+  z-index: 999995;
+  max-width: 180px;
+  max-height: 336px;
+  overflow-y: auto;
+  background: #ffffff;
+  margin: $minds-padding;
+  padding: $minds-padding;
+  border-radius: 3px;
+
+  .emoji {
+    display: inline-block;
+    padding: $minds-padding;
+    cursor: pointer;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+  }
+}
