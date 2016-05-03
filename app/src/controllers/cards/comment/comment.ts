@@ -5,6 +5,7 @@ import { RouterLink } from "angular2/router";
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { AutoGrow } from '../../../directives/autogrow';
+import { Hovercard } from '../../../directives/hovercard';
 import { BUTTON_COMPONENTS } from '../../../components/buttons';
 import { TagsPipe } from '../../../pipes/tags';
 import { MINDS_PIPES } from '../../../pipes/pipes';
@@ -13,6 +14,7 @@ import { MDL_DIRECTIVES } from '../../../directives/material';
 import { AttachmentService } from '../../../services/attachment';
 
 import { MindsVideo } from '../../../components/video';
+import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 
 import { ReportModal } from '../../../components/modal/modal';
 
@@ -25,7 +27,7 @@ import { ReportModal } from '../../../components/modal/modal';
     '(keydown.esc)': 'editing = false'
   },
   templateUrl: 'src/controllers/cards/comment/comment.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal, MindsRichEmbed, Hovercard ],
   pipes: [ TagsPipe, MINDS_PIPES ],
   bindings: [ AttachmentService ]
 })
@@ -58,6 +60,10 @@ export class CommentCard {
 
   set _editing(value : boolean){
     this.editing = value;
+  }
+
+  saveEnabled() {
+    return !this.inProgress && this.canPost && (this.comment.description || this.attachment.has());
   }
 
   save(){

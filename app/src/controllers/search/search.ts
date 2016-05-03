@@ -29,7 +29,7 @@ export class Search {
   moreData : boolean = true;
 
   constructor(public client: Client, public params : RouteParams, public title: MindsTitle){
-    this.q = params.params['q'];
+    this.q = decodeURIComponent(params.params['q']);
     if(params.params['type'])
       this.type = params.params['type'];
   	this.search();

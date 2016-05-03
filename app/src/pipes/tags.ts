@@ -21,7 +21,7 @@ export class TagsPipe {
 
     //#hashtag
     var hash = /(^|\s)#(\w*[a-zA-Z_]+\w*)/gim;
-    value = value.replace(hash, '$1<a href="/search?q=#$2" target="_blank">#$2</a>');
+    value = value.replace(hash, '$1<a href="/search?q=%23$2&type=activities" target="_blank">#$2</a>');
 
     //@tag
     var at = /(^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;

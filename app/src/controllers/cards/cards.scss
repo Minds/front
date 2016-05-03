@@ -133,6 +133,14 @@ minds-card-image, minds-card-video{
         white-space: nowrap;
         text-overflow: ellipsis
       }
+
+      .permalink {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

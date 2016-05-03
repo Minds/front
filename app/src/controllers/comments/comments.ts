@@ -12,12 +12,13 @@ import { TagsPipe } from '../../pipes/tags';
 import { SignupModalService } from '../../components/modal/signup/service';
 
 import { AttachmentService } from '../../services/attachment';
+import { MindsRichEmbed } from '../../components/rich-embed/rich-embed';
 
 @Component({
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit'],
   templateUrl: 'src/controllers/comments/list.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow ],
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed ],
   pipes: [ TagsPipe ],
   bindings: [ AttachmentService ]
 })
@@ -86,6 +87,10 @@ export class Comments {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  postEnabled() {
+    return !this.inProgress && this.canPost && (this.content || this.attachment.has());
   }
 
   post(e){

@@ -195,7 +195,7 @@ minds-comments{
   .m-comments-composer form textarea,
   .minds-editable-container textarea {
     width: 100%;
-    padding: $minds-padding ($minds-padding + 56px) $minds-padding $minds-padding;
+    padding: $minds-padding ($minds-padding + 88px) $minds-padding $minds-padding;
     background: #fff;
   }
 
@@ -219,7 +219,7 @@ minds-comments{
     padding: 0;
     text-align:right;
 
-    .m-mature-button {
+    .m-mature-button, .m-post-button {
       display:inline-block;
       vertical-align:middle;
       position:relative;
@@ -228,6 +228,15 @@ minds-comments{
 
       i{
         cursor:pointer;
+      }
+
+      &.m-button-disabled {
+        cursor: default;
+
+        i {
+          cursor: default;
+          opacity: 0.65;
+        }
       }
     }
 
