@@ -2,34 +2,33 @@ import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { EmojiService } from '../../services/emoji';
-
-// Initial list based on http://emojitracker.com/
-export const EmojiList = [
-  { codePoint: 128514, name: 'Joy' },
-  { codePoint: 128155, name: 'Heart' }, // change me to red one (now: rendering issues on OSX)
-  { codePoint: 128525, name: 'Heart Eyes' },
-  { codePoint: 128530, name: 'Unamused' },
-  { codePoint: 128522, name: 'Blush' },
-  { codePoint: 128557, name: 'Crying' },
-  { codePoint: 128536, name: 'Kissing Heart' },
-  { codePoint: 128513, name: 'Grin' },
-  { codePoint: 128515, name: 'Smile' },
-  { codePoint: 128077, name: 'Thumbs Up' }
-];
+import { EmojiList } from '../../services/emoji-list';
 
 @Component({
   selector: 'm-emoji-popup',
   template: `
-    <div class="m-bubble-popup mdl-shadow--8dp"
+    <div class="m-bubble-popup mdl-shadow--4dp"
     *ngIf="emojiService.shown"
     [style.bottom]="emojiService.anchor.bottom + emojiService.anchor.height"
     [style.right]="emojiService.anchor.right"
     >
-    <span *ngFor="#emoji of emojis"
-    class="emoji"
-    [title]="emoji.name"
-    (click)="select(emoji.codePoint, $event)"
-    >{{ fromCodePoint(emoji.codePoint) }}</span>
+      <div class="m-emoji-selector-title">
+        Emoji
+        <i class="material-icons m-emoji-selector-close"
+        (click)="hide()"
+        >close</i>
+      </div>
+      <div class="m-emoji-selector-list">
+        <span *ngFor="#emoji of emojis"
+        tabindex="0"
+        class="m-emoji"
+        [title]="emoji.name"
+        (click)="select(emoji.codePoint, $event)"
+        (keydown.enter)="select(emoji.codePoint, $event)"
+        (keydown.space)="select(emoji.codePoint, $event)"
+        (keydown.esc)="hide()"
+        >{{ represent(emoji.codePoint) }}</span>
+      </div>
     </div>
 
 
@@ -43,12 +42,20 @@ export class EmojiPopup {
   constructor(public emojiService: EmojiService) {}
 
   hide() {
+    if (!this.emojiService.shown) {
+      return;
+    }
+
     this.emojiService.close()
   }
 
-  select(codePoint: number) {
-    this.emojiService.select(this.fromCodePoint(codePoint));
+  select(codePoint: number, $event: any) {
+    this.emojiService.select(this.represent(codePoint));
     this.hide();
+  }
+
+  represent(codePoint: number) {
+    return this.fromCodePoint(0xFE0F, codePoint);
   }
 
   // Internal

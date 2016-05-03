@@ -1,7 +1,7 @@
 import { EventEmitter } from 'angular2/core';
 
 export class EmojiService {
-  private shown: boolean = false;
+  shown: boolean = false;
   private selected: EventEmitter<any>;
   private anchor: any = {
     top: 0,

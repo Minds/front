@@ -457,15 +457,39 @@ minds-graph-line{
 m-emoji-popup .m-bubble-popup {
   position: fixed;
   z-index: 999995;
-  max-width: 180px;
-  max-height: 336px;
-  overflow-y: auto;
+  max-width: 180px + ($minds-padding * 2);
   background: #ffffff;
   margin: $minds-padding;
-  padding: $minds-padding;
   border-radius: 3px;
 
-  .emoji {
+  .m-emoji-selector-title {
+    width: 100%;
+    position: relative;
+    padding: ($minds-padding / 2) $minds-padding;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: bold;
+    border-bottom: 1px solid #eaeaea;
+
+    .m-emoji-selector-close {
+      position: absolute;
+      right: $minds-padding;
+      top: $minds-padding / 2;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+
+  .m-emoji-selector-list {
+    width: 100%;
+    max-height: 336px;
+    overflow-y: auto;
+    padding: $minds-padding;
+    box-sizing: border-box;
+  }
+
+  .m-emoji {
     display: inline-block;
     padding: $minds-padding;
     cursor: pointer;
@@ -474,5 +498,6 @@ m-emoji-popup .m-bubble-popup {
     width: 36px;
     height: 36px;
     text-align: center;
+    font-family: AppleColorEmoji, -apple-system-body, system, sans-serif;
   }
 }
