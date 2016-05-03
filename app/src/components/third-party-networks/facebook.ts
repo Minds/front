@@ -88,7 +88,7 @@ export class ThirdPartyNetworksFacebook {
     window.onSuccessCallback = () => {
       this.getAccounts();
     }
-    window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login');
+    window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/link');
   }
 
   getAccounts(){

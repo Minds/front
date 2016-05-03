@@ -97,19 +97,56 @@ m-modal-signup, m-modal-signup-on-action{
     }
   }
 
+  .m-signup-modal-feature-text{
+    padding: 0px 8px;
+    margin: 0px 8px;
+  }
+
   .m-signup-buttons{
     display:flex;
     flex-flow:row nowrap;
     width: 100%;
     box-sizing: border-box;
 
-    .mdl-button{
-      padding: 8px;
-      margin:0 4px;
-      font-size: 22px;
-      height: 48px;
-      width:auto;
-      flex:1;
+    button{
+
+      color: rgb(255, 255, 255);
+      font-size: 14px;
+      border: 0;
+      cursor:pointer;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 0;
+      margin:2px;
+      flex: 1;
+
+      &.m-fb-login-button{
+        background: rgb(59, 89, 152);
+      }
+
+      .m-social-icons-icon-inline{
+        fill: rgb(255, 255, 255);
+        vertical-align: middle;
+        display: inline-block;
+      }
+
+      .m-signup-email-icon{
+        font-size: 24px;
+        padding: 0px 5px;
+        fill: white;
+        vertical-align: middle;
+        display: inline-block;
+      }
+
+      .m-signup-button-text{
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 13px;
+        width: auto;
+        max-width: calc(100% - 65px);
+        letter-spacing: 0.1em;
+        padding-left: 8px;
+      }
     }
   }
 

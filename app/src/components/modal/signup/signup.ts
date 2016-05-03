@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, ChangeDetectorRef } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
 
@@ -27,28 +27,27 @@ import { AnalyticsService } from '../../../services/analytics';
           {{service.subtitle}}
         </div>
 
-        <div class="m-signup-modal-feature-icons">
-          <div class="">
-            <i class="material-icons mdl-color-text--blue-grey-300">trending_up</i>
-            <span class="mdl-color-text--blue-grey-700">Viral Reach</span>
-          </div>
-          <div class="">
-            <i class="material-icons mdl-color-text--blue-grey-300">remove_red_eye</i>
-            <span class="mdl-color-text--blue-grey-700">Privacy</span>
-          </div>
-          <div class="">
-            <i class="material-icons mdl-color-text--blue-grey-300">code</i>
-            <span class="mdl-color-text--blue-grey-700">Transparency</span>
-          </div>
-          <div class="">
-            <i class="material-icons mdl-color-text--blue-grey-300">attach_money</i>
-            <span class="mdl-color-text--blue-grey-700">Earn Money</span>
-          </div>
+        <div class="m-signup-modal-feature-text mdl-card__supporting-text">
+          Encrypted messenger. Groups. Wallet. Boost. Upload. Newsfeed. Blog. Peer-to-peer ad network. Earn money.
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
-          <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="do('register')">Signup</button>
-          <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="do('login')">Login</button>
+          <button class="m-fb-login-button" (click)="do('fb')">
+            <span class="m-social-icons-icon-inline">
+              <svg width="40" height="40" viewBox="-2 -2 32 32">
+                <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
+              </svg>
+            </span>
+            <span class="m-signup-button-text">
+              Join with Facebook
+            </span>
+          </button>
+          <button class="mdl-color--amber" (click)="do('register')">
+            <span class="m-signup-email-icon">@</span>
+            <span class="m-signup-button-text">
+              Signup with email
+            </span>
+          </button>
         </div>
 
         <div class="mdl-card__supporting-text m-modal-signup-apps">
@@ -86,7 +85,7 @@ export class SignupModal {
   subtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
   display : string = 'initial';
 
-  constructor(private router : Router, private location : Location, private service : SignupModalService){
+  constructor(private router : Router, private location : Location, private service : SignupModalService, private cd : ChangeDetectorRef){
     this.listen();
     this.service.isOpen.subscribe({next: open => this.open = open });
     this.service.display.subscribe({next: display => this.display = display});
@@ -124,6 +123,16 @@ export class SignupModal {
         window.history.pushState(null, 'Register', this.route + `${op}modal=register`);
         AnalyticsService.send('pageview', { 'page' : this.route + `${op}modal=register` });
         this.display = 'register';
+        break;
+      case "fb":
+        window.onSuccessCallback = (user) => {
+          this.session.login(user);
+          setTimeout(() => {
+            this.done('register');
+            this.cd.detectChanges();
+          })
+        }
+        window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login');
         break;
       case "onboarding":
         this.display = 'onboarding';
