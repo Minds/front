@@ -461,6 +461,7 @@ m-emoji-popup .m-bubble-popup {
   background: #ffffff;
   margin: $minds-padding;
   border-radius: 3px;
+  user-select: none;
 
   .m-emoji-selector-title {
     width: 100%;
