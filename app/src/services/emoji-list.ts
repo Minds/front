@@ -3,6 +3,10 @@
 export const EmojiList =
 [
   {
+    "codePoint": 128161,
+    "name": "ELECTRIC LIGHT BULB"
+  },
+  {
     "codePoint": 128514,
     "name": "FACE WITH TEARS OF JOY"
   },
@@ -497,10 +501,6 @@ export const EmojiList =
   {
     "codePoint": 9992,
     "name": "AIRPLANE"
-  },
-  {
-    "codePoint": 9745,
-    "name": "BALLOT BOX WITH CHECK"
   }
 ]
 ;
