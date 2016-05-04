@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from 'angular2/core';
+import { Component, ChangeDetectorRef, NgZone} from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
 
@@ -28,7 +28,7 @@ import { AnalyticsService } from '../../../services/analytics';
         </div>
 
         <div class="m-signup-modal-feature-text mdl-card__supporting-text">
-          Encrypted messenger. Groups. Wallet. Boost. Upload. Newsfeed. Blog. Peer-to-peer ad network. Earn money.
+          Encrypted messenger. Groups. Wallet. Boost. Newsfeed. Blog. Peer-to-peer network.
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
@@ -39,13 +39,13 @@ import { AnalyticsService } from '../../../services/analytics';
               </svg>
             </span>
             <span class="m-signup-button-text">
-              Join with Facebook
+              Signin with Facebook
             </span>
           </button>
           <button class="mdl-color--amber" (click)="do('register')">
-            <span class="m-signup-email-icon">@</span>
+            <span class="m-signup-bulb-icon m-wiggle-animation"><img src="/assets/icon.png"></span>
             <span class="m-signup-button-text">
-              Signup with email
+              Signin with Minds
             </span>
           </button>
         </div>
@@ -66,7 +66,10 @@ import { AnalyticsService } from '../../../services/analytics';
       <!-- Login Display -->
       <minds-form-login (done)="done('login')" (canceled)="close()" *ngIf="display == 'login'"></minds-form-login>
       <!-- Register Display -->
+      <span style="font-weight: bold;text-align:center;font-size: 13px;margin-bottom: -14px;cursor: pointer;" class="mdl-color-text--blue-grey" *ngIf="display == 'register'" (click)="do('login')">Already have a channel? Click here.</span>
       <minds-form-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'register'"></minds-form-register>
+      <!-- FB Signin final phase -->
+      <minds-form-fb-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'fb-complete'"></minds-form-fb-register>
       <!-- Onboarding Display -->
       <minds-form-onboarding (done)="done('onboarding')" *ngIf="display == 'onboarding'"></minds-form-onboarding>
       <!-- Tutorial Display -->
@@ -85,7 +88,7 @@ export class SignupModal {
   subtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
   display : string = 'initial';
 
-  constructor(private router : Router, private location : Location, private service : SignupModalService, private cd : ChangeDetectorRef){
+  constructor(private router : Router, private location : Location, private service : SignupModalService, private cd : ChangeDetectorRef, private zone : NgZone){
     this.listen();
     this.service.isOpen.subscribe({next: open => this.open = open });
     this.service.display.subscribe({next: display => this.display = display});
@@ -110,7 +113,7 @@ export class SignupModal {
   }
 
   do(display : string){
-    console.log(this.route);
+
     let op = this.route.indexOf('?') > -1 ? '&' : '?';
     switch(display){
       case "login":
@@ -125,12 +128,20 @@ export class SignupModal {
         this.display = 'register';
         break;
       case "fb":
+
         window.onSuccessCallback = (user) => {
-          this.session.login(user);
-          setTimeout(() => {
-            this.done('register');
-            this.cd.detectChanges();
-          })
+          this.zone.run(() => {
+            this.session.login(user);
+
+            if(user['new']){
+              this.display = 'fb-complete';
+            }
+
+            if(!user['new']){
+              this.done('login');
+            }
+
+          });
         }
         window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login');
         break;
@@ -159,6 +170,9 @@ export class SignupModal {
             this.route  + '?referrer=signup-model&ts=' + Date.now());
         }
         this.display = 'onboarding';
+        break;
+      case "fb":
+        this.display = 'fb-username';
         break;
       case "onboarding":
         this.display = 'tutorial'

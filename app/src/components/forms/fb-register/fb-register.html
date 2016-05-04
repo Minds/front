@@ -1,0 +1,32 @@
+
+<div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
+    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+      {{errorMessage}}
+    </div>
+</div>
+
+<!-- START: Complete -->
+<form (submit)="complete($event)" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 m-form" [hidden]="hideLogin">
+
+  <div class="mdl-card__supporting-text mdl-grid">
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <label>Pick a username</label>
+      <input
+        type="text"
+        id="username"
+        ngControl="username"
+        placeholder="Username (eg. @me)"
+        />
+    </div>
+
+  </div>
+
+  <div class="mdl-card__actions">
+    <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="complete($event)" [disabled]="inProgress">
+      Complete
+    </button>
+  </div>
+
+</form>
+<!-- END: Complete -->
