@@ -27,4 +27,37 @@
     padding-left:$minds-padding*2;
     text-decoration:none;
   }
+
+  //this is exactly the same as modal.scss
+  .m-fb-login-button{
+
+    background: rgb(59, 89, 152);
+    color:#FFF;
+    width: 135px;
+    float: right;
+    border: 0;
+    cursor:pointer;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+
+    .m-social-icons-icon-inline{
+      fill: rgb(255, 255, 255);
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    .m-signup-button-text{
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 11px;
+      width: auto;
+      max-width: calc(100% - 55px);
+      letter-spacing: 0.1em;
+      padding-left: 4px;
+      font-weight:300;
+    }
+
+  }
 }

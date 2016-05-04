@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter, NgZone } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
 import { Router, RouteParams, RouterLink } from 'angular2/router';
 
@@ -28,7 +28,7 @@ export class LoginForm {
 
   done : EventEmitter<any> = new EventEmitter();
 
-	constructor(public client : Client, public router: Router, fb: FormBuilder){
+	constructor(public client : Client, public router: Router, fb: FormBuilder, private zone : NgZone){
 
     this.form = fb.group({
       username: ['', Validators.required],
@@ -81,6 +81,16 @@ export class LoginForm {
           self.twofactorToken = "";
           self.hideLogin = false;
         });
+  }
+
+  loginWithFb(){
+    window.onSuccessCallback = (user) => {
+      this.zone.run(() => {
+        this.session.login(user);
+        this.done.next(user);
+      });
+    }
+    window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login');
   }
 
 }
