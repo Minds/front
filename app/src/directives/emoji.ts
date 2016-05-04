@@ -1,20 +1,20 @@
-import { Directive,  EventEmitter, ElementRef } from 'angular2/core';
+import { Directive,  EventEmitter, ElementRef, ChangeDetectorRef } from 'angular2/core';
 import { EmojiService } from '../services/emoji';
 
 @Directive({
   selector: '[emoji]',
-  inputs: ['emoji', 'for'],
+  inputs: ['_emojiTarget: emoji'],
   host: {
-    '(click)': 'open()',
-    '(keydown.esc)': 'close()'
+    '(click)': 'toggle()',
+    '(keydown.esc)': 'closeAndFocus()'
   }
 })
 export class Emoji {
   _element: any;
-  for: any = null;
+  emojiTarget: any = null;
   selected: EventEmitter<any> = new EventEmitter();
 
-  constructor(element: ElementRef, public service: EmojiService) {
+  constructor(element: ElementRef, public service: EmojiService, private ref: ChangeDetectorRef) {
     this._element = element.nativeElement;
 
     this.selected.subscribe((character: string) => {
@@ -22,8 +22,20 @@ export class Emoji {
     });
   }
 
+  set _emojiTarget(value: any) {
+    this.emojiTarget = value;
+  }
+
+  toggle() {
+    if (this.service.shown) {
+      this.close();
+    } else {
+      this.open();
+    }
+  }
+
   open() {
-    if (!this.for) {
+    if (!this.emojiTarget) {
       return;
     }
 
@@ -36,13 +48,23 @@ export class Emoji {
     this.service.open(this.selected, pos);
   }
 
+  closeAndFocus() {
+    this.close();
+
+    if (this.emojiTarget) {
+      this.emojiTarget.focus();
+    }
+  }
+
   close() {
     this.service.close();
   }
 
   insert(character: string) {
-    this.for.value = (this.for.value || '') + character;
-    this.for.focus();
+    setTimeout(() => {
+      this.emojiTarget.value = (this.emojiTarget.value || '') + character;
+      this.ref.detectChanges();
+    });
   }
 
   ngOnDestroy() {

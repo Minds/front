@@ -50,12 +50,15 @@ export class EmojiPopup {
   }
 
   select(codePoint: number, $event: any) {
+    if ($event) {
+      $event.preventDefault();
+    }
+
     this.emojiService.select(this.represent(codePoint));
-    this.hide();
   }
 
   represent(codePoint: number) {
-    return this.fromCodePoint(0xFE0F, codePoint);
+    return this.fromCodePoint(codePoint);
   }
 
   // Internal
