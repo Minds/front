@@ -499,6 +499,8 @@ m-emoji-popup .m-bubble-popup {
     width: 36px;
     height: 36px;
     text-align: center;
-    font-family: AppleColorEmoji, -apple-system-body, system, sans-serif;
+    vertical-align: middle;
+    font-family: minds_emoji;
+    line-height: 24px;
   }
 }
