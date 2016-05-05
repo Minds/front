@@ -1,0 +1,36 @@
+@font-face {
+  font-family: minds_emoji;
+
+  src:
+    local('Lato'),
+    local('Helvetica'),
+    local('Roboto'),
+    local('Arial')
+  ;
+}
+
+@font-face {
+  font-family: minds_emoji;
+
+  src:
+    local('Apple Color Emoji'),
+    local('Android Emoji'),
+    local('Segoe UI'),
+    local(EmojiSymbols),
+    local(Symbola),
+    url('../assets/fonts/Symbola-Emoji.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/Symbola-Emoji.woff') format('woff'),
+    url('../assets/fonts/Symbola-Emoji.ttf') format('truetype')
+  ;
+
+  unicode-range:
+    U+2500-26FF, // Symbols
+    U+2700-27BF, // Dingbats
+    U+1F170-1F251, // Enclosed characters
+    U+1F300-1F5FF, // Additional symbols
+    U+1F600-1F64F, // Emoticons
+    U+1F650-1F67F, // Ornamental Dingbats
+    U+1F680-1F6FF, // Transport and Map
+    U+1F900-1F9FF // Supplemental symbols and pictographs
+  ;
+}
