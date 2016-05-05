@@ -32,23 +32,18 @@ export class SocketsService {
     this.setUpDefaultListeners();
 
     if (this.session.isLoggedIn()) {
-      console.log('[ws]::connecting | is logged in');
       this.socket.connect();
     }
 
     this.session.isLoggedIn((is: any) => {
       if(is){
-        console.log(`[ws]::connecting | logged in`);
         this.reconnect();
       } else {
-        console.log(`[ws]::disconnecting | logged out`);
         this.disconnect();
         this.rooms = [];
         this.registered = false;
       }
     });
-
-    window.TEST_SOCKET_SERVICE = this;
 
     return this;
   }
@@ -64,7 +59,6 @@ export class SocketsService {
     });
 
     this.socket.on('registered', (guid) => {
-      console.log(`[ws]::registered as ${guid}`);
       this.registered = true;
       this.socket.emit('join', this.rooms);
     });
@@ -76,7 +70,6 @@ export class SocketsService {
     // -- Rooms
 
     this.socket.on('rooms', (rooms: string[]) => {
-      console.log(`[ws]::rooms`, rooms);
       this.rooms = rooms;
     });
 
@@ -109,20 +102,16 @@ export class SocketsService {
   }
 
   emit(...args) {
-    console.log('[ws]::emit', JSON.stringify(args));
     this.socket.emit.apply(this.socket, args);
 
     return this;
   }
 
   subscribe(name: string, callback: Function) {
-    console.log(`[ws]::subscription | -> ${name}`);
-
     if (!this.subscriptions[name]){
       this.subscriptions[name] = new EventEmitter();
 
       this.socket.on(name, (...args) => {
-        console.log(`[ws]::event | -> ${name}`, args);
         this.subscriptions[name].next(args);
       });
     }
