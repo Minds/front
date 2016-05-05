@@ -90,6 +90,11 @@ export class LoginForm {
         this.done.next(user);
       });
     }
+    window.onErrorCallback = (reason) => {
+      if(reason){
+        alert(reason);
+      }
+    };
     window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login');
   }
 

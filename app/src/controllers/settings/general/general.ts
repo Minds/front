@@ -118,4 +118,13 @@ export class SettingsGeneral{
         self.inProgress = false;
       });
   }
+
+  removeFb(){
+    this.client.delete('api/v1/thirdpartynetworks/facebook/login')
+      .then(() => {
+          if (window.Minds.user) {
+              window.Minds.user.signup_method = 'ex-facebook';
+          }
+      });
+  }
 }

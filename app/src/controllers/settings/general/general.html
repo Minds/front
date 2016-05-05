@@ -130,6 +130,20 @@
 </div>
 <!-- END: EMAIL -->
 
+<!-- START: FB connect -->
+<div class="mdl-card mdl-shadow--2dp" *ngIf="minds.user.signup_method == 'facebook'">
+
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text">Login with Facebook</h2>
+  </div>
+  <div class="mdl-card__supporting-text">
+
+    <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeFb()">Click to detach facebook</button>
+  </div>
+
+</div>
+<!-- END: FB connect -->
+
 <!-- START: LANGUAGE -->
 <!--<div class="mdl-card mdl-shadow--2dp">
 
