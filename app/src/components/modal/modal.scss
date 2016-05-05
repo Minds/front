@@ -197,6 +197,18 @@ m-modal-signup, m-modal-signup-on-action{
         text-shadow: -0.02em 0 0 #EEE;
       }
     }
+
+    @media screen and (max-width:$min-tablet){
+      &{
+        padding:16px 0;
+      }
+      button{
+        .m-signup-button-text{
+          font-size: 11px;
+          padding-left: 0;
+        }
+      }
+    }
   }
 
   .m-modal-signup-apps{
