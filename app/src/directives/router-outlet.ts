@@ -3,7 +3,9 @@ import { Directive, DynamicComponentLoader, ComponentRef, ElementRef, Attribute 
 import * as routerMod from 'angular2/src/router/router';
 import { RouterOutlet, ComponentInstruction } from 'angular2/router';
 
-@Directive({selector: 'router-outlet'})
+@Directive({
+  selector: 'minds-router-outlet'
+})
 export class MindsRouterOutlet extends RouterOutlet{
 
   constructor(private elementRef: ElementRef, private loader: DynamicComponentLoader, private parentRouter : routerMod.Router, @Attribute('name') nameAttr: string) {
