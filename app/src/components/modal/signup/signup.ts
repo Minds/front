@@ -28,7 +28,7 @@ import { AnalyticsService } from '../../../services/analytics';
         </div>
 
         <div class="m-signup-modal-feature-text mdl-card__supporting-text">
-          Encrypted messenger. Groups. Wallet. Boost. Newsfeed. Blog. Peer-to-peer network.
+          Encrypted messenger. Wallet. Boost. Newsfeed. Blog. Groups. Find people in your city.
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
@@ -148,7 +148,8 @@ export class SignupModal {
             alert(reason);
           }
         };
-        window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login');
+        window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login', "Login with Facebook",
+          'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=600, height=400, top=100, left=100');
         break;
       case "onboarding":
         this.display = 'onboarding';
@@ -191,7 +192,7 @@ export class SignupModal {
 
   onClose(e : boolean){
     this.service.close();
-    if(this.display == 'login' || this.display == 'register'){
+    if(this.display == 'login' || this.display == 'register' || this.display == 'fb-complete'){
       this.display = 'initial';
       setTimeout(() => { this.service.open(); });
       this.router.navigateByUrl(this.route);
