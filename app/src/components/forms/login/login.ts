@@ -9,7 +9,7 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-form-login',
-  outputs: [ 'done' ],
+  outputs: [ 'done', 'doneRegistered' ],
   templateUrl: 'src/components/forms/login/login.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink]
 })
@@ -27,6 +27,7 @@ export class LoginForm {
   form : ControlGroup;
 
   done : EventEmitter<any> = new EventEmitter();
+  doneRegistered : EventEmitter<any> = new EventEmitter();
 
 	constructor(public client : Client, public router: Router, fb: FormBuilder, private zone : NgZone){
 
@@ -87,7 +88,15 @@ export class LoginForm {
     window.onSuccessCallback = (user) => {
       this.zone.run(() => {
         this.session.login(user);
-        this.done.next(user);
+
+        if(user['new']){
+          this.doneRegistered.next(user);
+        }
+
+        if(!user['new']){
+          this.done.next(user);
+        }
+
       });
     }
     window.onErrorCallback = (reason) => {
@@ -95,7 +104,8 @@ export class LoginForm {
         alert(reason);
       }
     };
-    window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login');
+    window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login', "Login with Facebook",
+      'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=600, height=400, top=100, left=100');
   }
 
 }

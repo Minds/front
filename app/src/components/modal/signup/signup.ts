@@ -64,7 +64,7 @@ import { AnalyticsService } from '../../../services/analytics';
         </div>
       </div>
       <!-- Login Display -->
-      <minds-form-login (done)="done('login')" (canceled)="close()" *ngIf="display == 'login'"></minds-form-login>
+      <minds-form-login (done)="done('login')" (doneRegistered)="display = 'fb-complete'" (canceled)="close()" *ngIf="display == 'login'"></minds-form-login>
       <!-- Register Display -->
       <span style="font-weight: bold;text-align:center;font-size: 13px;margin-bottom: -14px;cursor: pointer;" class="mdl-color-text--blue-grey" *ngIf="display == 'register'" (click)="do('login')">Already have a channel? Click here.</span>
       <minds-form-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'register'"></minds-form-register>
