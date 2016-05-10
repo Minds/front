@@ -454,9 +454,13 @@ minds-graph-line{
   padding-bottom: $minds-padding;
 }
 
-m-emoji-popup .m-bubble-popup {
+.m-bubble-popup {
   position: fixed;
   z-index: 999995;
+  user-select: none;
+}
+
+m-emoji-popup .m-bubble-popup {
   max-width: 180px + ($minds-padding * 2);
   background: #ffffff;
   margin: $minds-padding;
@@ -503,4 +507,12 @@ m-emoji-popup .m-bubble-popup {
     font-family: minds_emoji;
     line-height: 24px;
   }
+}
+
+m-tooltip-popup .m-bubble-popup {
+  background: #000000;
+  color: #ffffff;
+  padding: ($minds-padding / 2) $minds-padding;
+  margin: $minds-padding;
+  font-size: 10px;
 }
