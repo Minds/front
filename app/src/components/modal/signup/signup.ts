@@ -90,7 +90,10 @@ export class SignupModal {
 
   constructor(private router : Router, private location : Location, private service : SignupModalService, private cd : ChangeDetectorRef, private zone : NgZone){
     this.listen();
-    this.service.isOpen.subscribe({next: open => this.open = open });
+    this.service.isOpen.subscribe({next: open => {
+      this.open = open;
+      this.listen();
+    }});
     this.service.display.subscribe({next: display => this.display = display});
   }
 
@@ -178,6 +181,11 @@ export class SignupModal {
         this.display = 'onboarding';
         break;
       case "fb":
+        if(this.router){
+          this.router.navigateByUrl(this.route.indexOf('?') > -1 ?
+            this.route  + '&referrer=signup-model&ts=' + Date.now() :
+            this.route  + '?referrer=signup-model&ts=' + Date.now());
+        }
         this.display = 'fb-username';
         break;
       case "onboarding":
