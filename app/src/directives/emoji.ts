@@ -4,6 +4,7 @@ import { EmojiService } from '../services/emoji';
 @Directive({
   selector: '[emoji]',
   outputs: [ 'emoji' ],
+  exportAs: 'emoji',
   host: {
     '(click)': 'toggle()'
   }
