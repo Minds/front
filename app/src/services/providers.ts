@@ -39,6 +39,7 @@ export const MINDS_PROVIDERS : any[] = [
    provide(HovercardService, {
      useFactory: (client, cache) => new HovercardService(client, cache),
      deps: [ Client, CacheService ]
+   }),
    provide(EmojiService, {
      useFactory: () => new EmojiService(),
      deps: [ ]
