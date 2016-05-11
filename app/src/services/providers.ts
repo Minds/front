@@ -8,7 +8,6 @@ import { Client, Upload } from './api';
 import { SignupModalService } from '../components/modal/signup/service';
 import { CacheService } from './cache';
 import { HovercardService } from './hovercard';
-import { EmojiService } from './emoji';
 
 export const MINDS_PROVIDERS : any[] = [
    provide(ScrollService, {
@@ -38,9 +37,5 @@ export const MINDS_PROVIDERS : any[] = [
    provide(HovercardService, {
      useFactory: (client, cache) => new HovercardService(client, cache),
      deps: [ Client, CacheService ]
-   }),
-   provide(EmojiService, {
-     useFactory: () => new EmojiService(),
-     deps: [ ]
    })
 ];

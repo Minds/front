@@ -1,16 +1,16 @@
 import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
-import { EmojiService } from '../../services/emoji';
 import { EmojiList } from '../../services/emoji-list';
+import { Emoji as EmojiDirective } from '../../directives/emoji';
 
 @Component({
-  selector: 'm-emoji-popup',
+  selector: 'minds-emoji',
+  inputs: [ 'localDirective' ],
   template: `
     <div class="m-bubble-popup mdl-shadow--4dp"
-    *ngIf="emojiService.shown"
-    [style.bottom]="emojiService.anchor.bottom + emojiService.anchor.height"
-    [style.right]="emojiService.anchor.right"
+    *ngIf="localDirective.shown"
+    [ngStyle]="localDirective.style"
     >
       <div class="m-emoji-selector-title">
         Emoji
@@ -30,23 +30,21 @@ import { EmojiList } from '../../services/emoji-list';
         >{{ represent(emoji.codePoint) }}</span>
       </div>
     </div>
-
-
-    <!-- TODO: Use emoji pipe when displaying -->
   `,
   directives: [ CORE_DIRECTIVES ]
 })
-export class EmojiPopup {
+export class MindsEmoji {
   private emojis = EmojiList;
+  localDirective: EmojiDirective;
 
-  constructor(public emojiService: EmojiService) {}
+  constructor() {}
 
   hide() {
-    if (!this.emojiService.shown) {
+    if (!this.localDirective.shown) {
       return;
     }
 
-    this.emojiService.close()
+    this.localDirective.close();
   }
 
   select(codePoint: number, $event: any) {
@@ -54,7 +52,9 @@ export class EmojiPopup {
       $event.preventDefault();
     }
 
-    this.emojiService.select(this.represent(codePoint));
+    this.localDirective.emoji.next({
+      character: this.represent(codePoint)
+    });
   }
 
   represent(codePoint: number) {

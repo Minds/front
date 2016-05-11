@@ -1,5 +1,4 @@
-import { Directive,  EventEmitter, ElementRef, ChangeDetectorRef } from 'angular2/core';
-import { EmojiService } from '../services/emoji';
+import { Directive, EventEmitter, ElementRef } from 'angular2/core';
 
 @Directive({
   selector: '[emoji]',
@@ -11,21 +10,16 @@ import { EmojiService } from '../services/emoji';
 })
 export class Emoji {
   emoji: EventEmitter<any>  = new EventEmitter();
-  _element: any;
-  _passthru: EventEmitter<any> = new EventEmitter();
+  shown: boolean = false;
+  style: any = {};
+  private _element: any;
 
-  constructor(element: ElementRef, public service: EmojiService, private ref: ChangeDetectorRef) {
+  constructor(element: ElementRef) {
     this._element = element.nativeElement;
-
-    this._passthru.subscribe((character: string) => {
-      this.emoji.next({
-        character
-      });
-    });
   }
 
   toggle() {
-    if (this.service.shown) {
+    if (this.shown) {
       this.close();
     } else {
       this.open();
@@ -33,17 +27,21 @@ export class Emoji {
   }
 
   open() {
-    let pos = this.getFixedPosition(this._element);
+    let position = this.getFixedPosition(this._element);
 
-    if (!pos) {
+    if (!position) {
       return;
     }
 
-    this.service.open(this._passthru, pos);
+    this.shown = true;
+    this.style = {
+      bottom: position.bottom + position.height,
+      right: position.right
+    };
   }
 
   close() {
-    this.service.close();
+    this.shown = false;
   }
 
   ngOnDestroy() {
