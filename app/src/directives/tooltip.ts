@@ -1,9 +1,8 @@
-import { Directive,  ElementRef } from 'angular2/core';
-import { TooltipService } from '../services/tooltip';
+import { Directive, ElementRef } from 'angular2/core';
 
 @Directive({
   selector: '[tooltip]',
-  inputs: ['tooltip'],
+  exportAs: 'tooltip',
   host: {
     '(mouseenter)': 'show()',
     '(mouseleave)': 'hide()'
@@ -11,18 +10,29 @@ import { TooltipService } from '../services/tooltip';
 })
 export class Tooltip {
 
-  _element: any;
-  tooltip: string = '';
-  private timeout:any;
+  private _element: any;
+  private timeout: any;
+  shown: boolean = false;
+  style: any = {};
 
-  constructor(element: ElementRef, public service: TooltipService) {
+  constructor(element: ElementRef) {
     this._element = element.nativeElement;
   }
 
   show() {
+    let position = this.getFixedPosition(this._element);
+
+    if (!position) {
+      return;
+    }
+
     this.timeout = setTimeout(() => {
       this.timeout = null;
-      this.service.show(this.tooltip, this.getFixedPosition(this._element));
+      this.shown = true;
+      this.style = {
+        top: position.top + position.height,
+        left: position.left
+      };
     }, 1000);
   }
 
@@ -31,8 +41,8 @@ export class Tooltip {
       clearTimeout(this.timeout);
       this.timeout = null;
     }
-    
-    this.service.hide();
+
+    this.shown = false;
   }
 
   // Internal

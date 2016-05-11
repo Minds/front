@@ -9,7 +9,6 @@ import { SignupModalService } from '../components/modal/signup/service';
 import { CacheService } from './cache';
 import { HovercardService } from './hovercard';
 import { EmojiService } from './emoji';
-import { TooltipService } from './tooltip';
 
 export const MINDS_PROVIDERS : any[] = [
    provide(ScrollService, {
@@ -42,10 +41,6 @@ export const MINDS_PROVIDERS : any[] = [
    }),
    provide(EmojiService, {
      useFactory: () => new EmojiService(),
-     deps: [ ]
-   }),
-   provide(TooltipService, {
-     useFactory: () => new TooltipService(),
      deps: [ ]
    })
 ];
