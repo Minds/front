@@ -1,4 +1,5 @@
 import { Directive, EventEmitter, ElementRef } from 'angular2/core';
+import { AnchorPosition } from '../services/ux/anchor-position';
 
 @Directive({
   selector: '[emoji]',
@@ -27,7 +28,7 @@ export class Emoji {
   }
 
   open() {
-    let position = this.getFixedPosition(this._element);
+    let position = AnchorPosition.getFixed(this._element, [ 'right', 'top' ]);
 
     if (!position) {
       return;
@@ -35,8 +36,10 @@ export class Emoji {
 
     this.shown = true;
     this.style = {
-      bottom: position.bottom + position.height,
-      right: position.right
+      top: position.top,
+      right: position.right,
+      bottom: position.bottom,
+      left: position.left
     };
   }
 
@@ -46,30 +49,5 @@ export class Emoji {
 
   ngOnDestroy() {
     this.close();
-  }
-
-  // Internal
-
-  private getFixedPosition(elem: any) {
-    if (!elem.getClientRects().length) {
-      // dettached DOM element
-      return false;
-    }
-
-    let rect = elem.getBoundingClientRect(),
-      result: any = {};
-
-    if (typeof rect.top === 'undefined') {
-      return false;
-    }
-
-    result.top = rect.top;
-    result.right = window.innerWidth - rect.right;
-    result.bottom = window.innerHeight - rect.bottom;
-    result.left = rect.left;
-    result.width = rect.width;
-    result.height = rect.height;
-
-    return result;
   }
 }

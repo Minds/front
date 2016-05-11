@@ -1,4 +1,5 @@
 import { Directive, ElementRef } from 'angular2/core';
+import { AnchorPosition } from '../services/ux/anchor-position';
 
 @Directive({
   selector: '[tooltip]',
@@ -20,17 +21,20 @@ export class Tooltip {
   }
 
   show() {
-    let position = this.getFixedPosition(this._element);
-
-    if (!position) {
-      return;
-    }
-
     this.timeout = setTimeout(() => {
       this.timeout = null;
+
+      let position = AnchorPosition.getFixed(this._element, [ 'left', 'bottom' ]);
+
+      if (!position) {
+        return;
+      }
+
       this.shown = true;
       this.style = {
-        top: position.top + position.height,
+        top: position.top,
+        right: position.right,
+        bottom: position.bottom,
         left: position.left
       };
     }, 1000);
@@ -43,30 +47,5 @@ export class Tooltip {
     }
 
     this.shown = false;
-  }
-
-  // Internal
-
-  private getFixedPosition(elem: any) {
-    if (!elem.getClientRects().length) {
-      // dettached DOM element
-      return false;
-    }
-
-    let rect = elem.getBoundingClientRect(),
-      result: any = {};
-
-    if (typeof rect.top === 'undefined') {
-      return false;
-    }
-
-    result.top = rect.top;
-    result.right = window.innerWidth - rect.right;
-    result.bottom = window.innerHeight - rect.bottom;
-    result.left = rect.left;
-    result.width = rect.width;
-    result.height = rect.height;
-
-    return result;
   }
 }
