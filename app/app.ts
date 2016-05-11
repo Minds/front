@@ -100,6 +100,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups'
 
 export class Minds {
   name: string;
+  minds = window.Minds;
 
   constructor(public notificationService : NotificationService, public analytics : AnalyticsService, public sockets: SocketsService) {
     this.name = 'Minds';
