@@ -31,8 +31,8 @@
   //this is exactly the same as modal.scss
   .m-fb-login-button{
 
-    background: rgb(59, 89, 152);
-    color:#FFF;
+    background: #FFF;
+    color: #3b5998;
     width: 135px;
     float: right;
     border: 0;
@@ -42,9 +42,10 @@
     padding: 0;
     margin: 0;
     border-radius:3px;
+    box-shadow: 0 0 1px #3b5998;
 
     .m-social-icons-icon-inline{
-      fill: rgb(255, 255, 255);
+      fill: #3b5998;
       vertical-align: middle;
       display: inline-block;
     }
@@ -52,12 +53,12 @@
     .m-signup-button-text{
       display: inline-block;
       vertical-align: middle;
-      font-size: 11px;
+      font-size: 9px;
       width: auto;
       max-width: calc(100% - 46px);
       letter-spacing: 0.1em;
       padding-left: 4px;
-      font-weight:300;
+      font-weight:600;
     }
 
   }

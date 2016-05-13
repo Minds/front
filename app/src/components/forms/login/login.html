@@ -6,7 +6,7 @@
 </div>
 
 <!-- START: LOGIN -->
-<form (submit)="login()" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin">
+<form (submit)="$event.preventDefault()" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin">
 
   <div class="mdl-card__supporting-text mdl-grid">
 
@@ -16,7 +16,7 @@
         id="username"
         ngControl="username"
         placeholder="Username (eg. @me)"
-        (keydown.enter)="login()"
+        (keydown.enter)="login(); $event.preventDefault();"
         />
     </div>
 
@@ -26,7 +26,7 @@
         id="password"
         ngControl="password"
         placeholder="Password"
-        (keydown.enter)="login()"
+        (keydown.enter)="login(); $event.preventDefault();"
         />
     </div>
   </div>
@@ -46,7 +46,7 @@
         </svg>
       </span>
       <span class="m-signup-button-text">
-        Signin with Facebook
+       Migrate from Facebook 
       </span>
     </button>
   </div>
