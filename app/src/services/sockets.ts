@@ -1,4 +1,4 @@
-import { EventEmitter } from 'angular2/core';
+import { EventEmitter, Inject, NgZone } from 'angular2/core';
 import { SessionFactory } from './session';
 
 export class SocketsService {
@@ -11,7 +11,7 @@ export class SocketsService {
   subscriptions: any = {};
   rooms: string[] = [];
 
-  constructor(){
+  constructor(private nz: NgZone){
     this.setUp();
   }
 
@@ -49,46 +49,65 @@ export class SocketsService {
   }
 
   setUpDefaultListeners() {
-    this.socket.on('connect', () => {
-      console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
-    });
+    this.nz.runOutsideAngular(() => {
+      this.socket.on('connect', () => {
+        this.nz.run(() => {
+          console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
+        });
+      });
 
-    this.socket.on('disconnect', () => {
-      console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
-      this.registered = false;
-    });
+      this.socket.on('disconnect', () => {
+        this.nz.run(() => {
+          console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
+          this.registered = false;
+        });
+      });
 
-    this.socket.on('registered', (guid) => {
-      this.registered = true;
-      this.socket.emit('join', this.rooms);
-    });
+      this.socket.on('registered', (guid) => {
+        this.nz.run(() => {
+          this.registered = true;
+          this.socket.emit('join', this.rooms);
+        });
+      });
 
-    this.socket.on('error', (e: any) => {
-      console.error('[ws]::error', e);
-    });
+      this.socket.on('error', (e: any) => {
+        this.nz.run(() => {
+          console.error('[ws]::error', e);
+        });
+      });
 
-    // -- Rooms
+      // -- Rooms
 
-    this.socket.on('rooms', (rooms: string[]) => {
-      this.rooms = rooms;
-    });
+      this.socket.on('rooms', (rooms: string[]) => {
+        this.nz.run(() => {
+          this.rooms = rooms;
+        });
+      });
 
-    this.socket.on('joined', (room: string, rooms: string[]) => {
-      console.log(`[ws]::joined`, room, rooms);
-      this.rooms = rooms;
-    });
+      this.socket.on('joined', (room: string, rooms: string[]) => {
+        this.nz.run(() => {
+          console.log(`[ws]::joined`, room, rooms);
+          this.rooms = rooms;
+        });
+      });
 
-    this.socket.on('left', (room: string, rooms: string[]) => {
-      console.log(`[ws]::left`, room, rooms);
-      this.rooms = rooms;
+      this.socket.on('left', (room: string, rooms: string[]) => {
+        this.nz.run(() => {
+          console.log(`[ws]::left`, room, rooms);
+          this.rooms = rooms;
+        });
+      });
     });
   }
 
   reconnect() {
     console.log('[ws]::reconnect');
     this.registered = false;
-    this.socket.disconnect();
-    this.socket.connect();
+
+    this.nz.runOutsideAngular(() => {
+      this.socket.disconnect();
+      this.socket.connect();
+    });
 
     return this;
   }
@@ -96,13 +115,17 @@ export class SocketsService {
   disconnect() {
     console.log('[ws]::disconnect');
     this.registered = false;
-    this.socket.disconnect();
+    this.nz.runOutsideAngular(() => {
+      this.socket.disconnect();
+    });
 
     return this;
   }
 
   emit(...args) {
-    this.socket.emit.apply(this.socket, args);
+    this.nz.runOutsideAngular(() => {
+      this.socket.emit.apply(this.socket, args);
+    });
 
     return this;
   }
@@ -111,18 +134,18 @@ export class SocketsService {
     if (!this.subscriptions[name]){
       this.subscriptions[name] = new EventEmitter();
 
-      this.socket.on(name, (...args) => {
-        this.subscriptions[name].next(args);
+      this.nz.runOutsideAngular(() => {
+        this.socket.on(name, (...args) => {
+          this.nz.run(() => {
+            this.subscriptions[name].next(args);
+          });
+        });
       });
     }
 
     return this.subscriptions[name].subscribe({
       next: (args) => { callback.apply(this, args); }
     });
-  }
-
-  unSubscribe(subscription){
-    subscription.unSubscribe();
   }
 
   join(room: string) {
