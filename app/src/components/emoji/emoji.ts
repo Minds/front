@@ -64,8 +64,8 @@ export class MindsEmoji {
   // Internal
 
   private fromCodePoint(...args: any[]) {
-    if (typeof String.fromCodePoint !== 'undefined') {
-      return String.fromCodePoint.apply(String, args);
+    if (typeof (<any>String).fromCodePoint !== 'undefined') {
+      return (<any>String).fromCodePoint.apply(String, args);
     }
 
     var chars = [], point, offset, units, i;
