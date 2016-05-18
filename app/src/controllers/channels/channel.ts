@@ -24,6 +24,8 @@ import { ChannelModules } from './modules/modules';
 import { ChannelSubscribers } from './subscribers/subscribers';
 import { ChannelSubscriptions } from './subscriptions/subscriptions';
 
+import { MessengerChannelButton } from '../../plugins/Messenger/channel-button/channel-button';
+
 
 @Component({
   selector: 'minds-channel',
@@ -32,7 +34,7 @@ import { ChannelSubscriptions } from './subscriptions/subscriptions';
   pipes: [ TagsPipe ],
   directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, Material, InfiniteScroll, CARDS,
     AutoGrow, ChannelSubscribers, ChannelSubscriptions, BUTTON_COMPONENTS, MindsCarousel,
-    Poster, MindsAvatar, ChannelModules ]
+    Poster, MindsAvatar, ChannelModules, MessengerChannelButton ]
 })
 
 export class Channel {

@@ -14,6 +14,7 @@ import { Client } from '../../services/api';
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
       <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()">Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()">Un-Block @{{user.username}}</li>
+      <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()">Un-subscribe</li>
       <li class="mdl-menu__item">Report</li>
     </ul>
     <minds-bg-overlay (click)="toggleMenu($event)" [hidden]="!showMenu"></minds-bg-overlay>
@@ -56,6 +57,17 @@ export class UserDropdownButton{
         self.user.blocked = true;
       });
     this.showMenu = false;
+  }
+
+  unSubscribe(){
+    this.user.subscribed = false;
+    this.client.delete('api/v1/subscribe/' + this.user.guid, {})
+      .then((response : any) => {
+          this.user.subscribed = false;
+      })
+      .catch((e) => {
+        this.user.subscribed = true;
+      });
   }
 
   toggleMenu(e){

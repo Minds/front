@@ -43,7 +43,8 @@
           <b>{{user.impressions}}</b>
         </a>
         <div class="mdl-tabs__tab mdl-tabs__action-buttons" style="padding: 12px 0;">
-          <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked"></minds-button-subscribe>
+          <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked && !user.subscribed"></minds-button-subscribe>
+          <minds-messenger-channel-button [user]="user" *ngIf="user.subscribed"></minds-messenger-channel-button>
           <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
 
           <minds-button-edit (click)="toggleEditing()" [hidden]="editing" *ngIf="session.getLoggedInUser().guid == user.guid">
