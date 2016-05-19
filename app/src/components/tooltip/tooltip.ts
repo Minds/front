@@ -6,7 +6,7 @@ import { CORE_DIRECTIVES } from 'angular2/common';
   inputs: [ 'properties' ],
   template: `
     <div class="m-bubble-popup"
-    *ngIf="properties.shown"
+    *ngIf="properties && properties.shown"
     [ngStyle]="properties.style">
       <ng-content></ng-content>
     </div>
