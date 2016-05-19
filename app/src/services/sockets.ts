@@ -12,7 +12,9 @@ export class SocketsService {
   rooms: string[] = [];
 
   constructor(private nz: NgZone){
-    this.setUp();
+    nz.runOutsideAngular(() => {
+      this.setUp();
+    });
   }
 
   setUp(){
@@ -49,53 +51,51 @@ export class SocketsService {
   }
 
   setUpDefaultListeners() {
-    this.nz.runOutsideAngular(() => {
-      this.socket.on('connect', () => {
-        this.nz.run(() => {
-          console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
-        });
+    this.socket.on('connect', () => {
+      this.nz.run(() => {
+        console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
       });
+    });
 
-      this.socket.on('disconnect', () => {
-        this.nz.run(() => {
-          console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
-          this.registered = false;
-        });
+    this.socket.on('disconnect', () => {
+      this.nz.run(() => {
+        console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
+        this.registered = false;
       });
+    });
 
-      this.socket.on('registered', (guid) => {
-        this.nz.run(() => {
-          this.registered = true;
-          this.socket.emit('join', this.rooms);
-        });
+    this.socket.on('registered', (guid) => {
+      this.nz.run(() => {
+        this.registered = true;
+        this.socket.emit('join', this.rooms);
       });
+    });
 
-      this.socket.on('error', (e: any) => {
-        this.nz.run(() => {
-          console.error('[ws]::error', e);
-        });
+    this.socket.on('error', (e: any) => {
+      this.nz.run(() => {
+        console.error('[ws]::error', e);
       });
+    });
 
-      // -- Rooms
+    // -- Rooms
 
-      this.socket.on('rooms', (rooms: string[]) => {
-        this.nz.run(() => {
-          this.rooms = rooms;
-        });
+    this.socket.on('rooms', (rooms: string[]) => {
+      this.nz.run(() => {
+        this.rooms = rooms;
       });
+    });
 
-      this.socket.on('joined', (room: string, rooms: string[]) => {
-        this.nz.run(() => {
-          console.log(`[ws]::joined`, room, rooms);
-          this.rooms = rooms;
-        });
+    this.socket.on('joined', (room: string, rooms: string[]) => {
+      this.nz.run(() => {
+        console.log(`[ws]::joined`, room, rooms);
+        this.rooms = rooms;
       });
+    });
 
-      this.socket.on('left', (room: string, rooms: string[]) => {
-        this.nz.run(() => {
-          console.log(`[ws]::left`, room, rooms);
-          this.rooms = rooms;
-        });
+    this.socket.on('left', (room: string, rooms: string[]) => {
+      this.nz.run(() => {
+        console.log(`[ws]::left`, room, rooms);
+        this.rooms = rooms;
       });
     });
   }
@@ -104,10 +104,8 @@ export class SocketsService {
     console.log('[ws]::reconnect');
     this.registered = false;
 
-    this.nz.runOutsideAngular(() => {
-      this.socket.disconnect();
-      this.socket.connect();
-    });
+    this.socket.disconnect();
+    this.socket.connect();
 
     return this;
   }
@@ -115,9 +113,8 @@ export class SocketsService {
   disconnect() {
     console.log('[ws]::disconnect');
     this.registered = false;
-    this.nz.runOutsideAngular(() => {
-      this.socket.disconnect();
-    });
+
+    this.socket.disconnect();
 
     return this;
   }
