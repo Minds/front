@@ -50,10 +50,15 @@ export class SubscribeButton{
     this._user.subscribed = true;
     this.client.post('api/v1/subscribe/' + this._user.guid, {})
       .then((response : any) => {
+          if (response && response.error) {
+            throw 'error';
+          }
+
           this._user.subscribed = true;
       })
       .catch((e) => {
         this._user.subscribed = false;
+        alert('You can\'t subscribe to this user.');
       });
   }
 
