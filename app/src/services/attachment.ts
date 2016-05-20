@@ -26,7 +26,7 @@ export class AttachmentService {
     this.reset();
 
     if (object.perma_url) {
-      this.meta.is_rich = true;
+      this.meta.is_rich = 1;
       this.meta.thumbnail = object.thumbnail_src || '';
       this.meta.title = object.title || '';
       this.meta.url = object.perma_url || '';
@@ -75,7 +75,7 @@ export class AttachmentService {
   }
 
   setMature(mature) {
-    this.meta.mature = !!mature;
+    this.meta.mature = mature ? 1 : 0;
 
     return this;
   }
@@ -203,20 +203,20 @@ export class AttachmentService {
     };
 
     this.meta = {
-      is_rich: false,
+      is_rich: 0,
       title: '',
       description: '',
       thumbnail: '',
       url: '',
       attachment_guid: null,
-      mature: false,
+      mature: 0,
       container_guid: this.getContainer().guid,
       access_id: this.getAccessId()
     };
   }
 
   resetRich() {
-    this.meta.is_rich = false;
+    this.meta.is_rich = 0;
     this.meta.thumbnail = '';
     this.meta.title = '';
     this.meta.url = '';
@@ -246,7 +246,7 @@ export class AttachmentService {
       return;
     }
 
-    this.meta.is_rich = true;
+    this.meta.is_rich = 1;
 
     if (this.previewTimeout) {
       clearTimeout(this.previewTimeout);
@@ -256,7 +256,7 @@ export class AttachmentService {
 
     this.previewTimeout = window.setTimeout(() => {
       this.resetRich();
-      this.meta.is_rich = true;
+      this.meta.is_rich = 1;
 
       this.clientService.get('api/v1/newsfeed/preview', { url })
       .then((data: any) => {
