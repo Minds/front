@@ -18,13 +18,13 @@
   }
 }
 
-.m-mature-blog-thumbnail {
+.m-mature-thumbnail {
   filter: blur(15px) grayscale(100%);
   overflow: hidden;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0) scale(1.001);
 }
 
-.m-mature-blog-thumbnail-overlay {
+.m-mature-thumbnail-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -48,7 +48,7 @@
 
   // Hide blur overflowness
   overflow: hidden;
-  transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0) scale(1.001);
 
   .m-mature-overlay {
     display: block;
@@ -109,7 +109,8 @@
     }
   }
 
-  img {
+  img,
+  minds-video {
     filter: blur(15px) grayscale(100%);
   }
 

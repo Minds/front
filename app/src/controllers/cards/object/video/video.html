@@ -1,10 +1,16 @@
-<div class="mdl-card__title minds-video-thumbnail"
+<a class="mdl-card__title minds-video-thumbnail"
 	style="height:168px; background:#333; background-size:cover;"
 	[ngStyle]="{background: '#333 url(' + entity.thumbnail_src + ') center center / cover'}"
 	[routerLink]="['/Archive-View', {guid: entity.guid}]"
+	[ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(entity) }"
 	>
-	<span class="material-icons">play_circle_outline</span>
-</div>
+	<span class="material-icons"
+	*ngIf="!attachment.shouldBeBlurred(entity)">play_circle_outline</span>
+</a>
+<span class="m-mature-thumbnail-overlay"
+	style="height: 168px;"
+  *ngIf="attachment.shouldBeBlurred(entity)"
+><i class="material-icons">explicit</i></span>
 
 <!-- Owner block -->
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block" *ngIf="entity.ownerObj && entity.ownerObj.username">
