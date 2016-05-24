@@ -1,4 +1,4 @@
-import { Component, View, Directive } from 'angular2/core';
+import { Component, Directive } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { GraphSVG } from './svg';
@@ -7,9 +7,7 @@ import { GraphPoints } from './points';
 
 @Component({
   selector: 'minds-graph-line',
-  inputs: [ '_data: data', 'y: height', 'x: width' ]
-})
-@View({
+  inputs: [ '_data: data', 'y: height', 'x: width' ],
   template: `
     <div [hidden]="!data"> <!-- Angular has svg problems... -->
       <svg fill="currentColor" [svgHack] [viewBox]="'0 0 ' + x + ' ' + y" style="stroke:#757575; opacity:0.8; overflow:visible; max-width:100%;" xmlns="http://www.w3.org/2000/svg" >

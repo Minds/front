@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
@@ -8,9 +8,7 @@ import { BoostModal } from '../modal/modal';
 
 @Component({
   selector: 'minds-button-boost',
-  inputs: ['object']
-})
-@View({
+  inputs: ['object'],
   template: `
     <button class="mdl-button mdl-color-text--white mdl-button--colored mdl-button--raised m-boost-button-fat"
       (click)="boost()">

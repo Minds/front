@@ -1,4 +1,4 @@
-import { Component, View, Directive } from 'angular2/core';
+import { Component, Directive } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { GraphSVG } from './svg';
@@ -7,9 +7,7 @@ import { GraphPoints } from './points';
 
 @Component({
   selector: 'minds-graph-pie',
-  inputs: [ '_data: data', 'y: height', 'x: width' ]
-})
-@View({
+  inputs: [ '_data: data', 'y: height', 'x: width' ],
   template: `
     <div [hidden]="!data"> <!-- Angular has svg problems... -->
       <svg viewBox="0,0,100,100" class="chart" style="height:100px; width:100px; margin: 0 auto; transform: rotate(90deg); background: #ddd; border-radius: 50%; display: block;">

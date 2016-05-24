@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -10,12 +10,9 @@ import { Material } from '../../../directives/material';
 
 @Component({
   selector: 'minds-admin-boosts',
-  
   host: {
     '(keydown)': 'onKeyDown($event)'
-  }
-})
-@View({
+  },
   templateUrl: 'src/controllers/admin/boosts/boosts.html',
   directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, MINDS_GRAPHS, CARDS ]
 })

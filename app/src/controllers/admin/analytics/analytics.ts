@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -9,9 +9,6 @@ import { Material } from '../../../directives/material';
 
 @Component({
   selector: 'minds-admin-analytics',
-  viewBindings: [ ]
-})
-@View({
   templateUrl: 'src/controllers/admin/analytics/analytics.html',
   directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, MINDS_GRAPHS ]
 })

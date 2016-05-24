@@ -1,87 +1,168 @@
-import { Inject, Injector, provide, EventEmitter } from 'angular2/core';
+import { EventEmitter, Inject, NgZone } from 'angular2/core';
 import { SessionFactory } from './session';
 
 export class SocketsService {
+  SOCKET_IO_SERVER = window.Minds.socket_server;
 
   session = SessionFactory.build();
 
-  socket;
-  emitters : {} = {};
+  socket: any;
+  registered: boolean = false;
+  subscriptions: any = {};
+  rooms: string[] = [];
 
-  constructor(){
-  //this.setUp();
+  constructor(private nz: NgZone){
+    nz.runOutsideAngular(() => {
+      this.setUp();
+    });
   }
 
   setUp(){
+    if (this.socket) {
+      this.socket.destroy();
+    }
 
-    System.import('https://cdn.socket.io/socket.io-1.3.7.js').then((io) => {
-      this.socket = io.connect(window.Minds.socket_server, {
-				'reconnect': true,
-        'reconnection': true,
-        'timeout': 40000
-			});
-
-  		this.socket.on('connect', () => {
-  			console.log('[ws]::connect', 'connect to socket server');
-  		});
-
-      this.socket.on('error', (err) => {
-        console.log('[ws]::error', err);
-      });
-
-      this.session.isLoggedIn((is) => {
-        if(is){
-          this.reconnect();
-        } else {
-          this.disconnect();
-        }
-      })
+    this.socket = window.io.connect(this.SOCKET_IO_SERVER, {
+      'reconnect': true,
+      'reconnection': true,
+      'timeout': 40000,
+      'autoConnect': false
     });
 
-  }
+    this.rooms = [];
+    this.registered = false;
+    this.setUpDefaultListeners();
 
-  reconnect(){
-    console.log('[ws][reconnect]::triggered');
-    this.socket.io.disconnect();
-    this.socket.io.connect();
-  }
-
-  disconnect(){
-    console.log('[ws][disconnect]::triggered');
-    this.socket.io.disconnect();
-  }
-
-  emit(){
-    if(this.socket) {
-      var _emit = this.socket.emit;
-      _emit.apply(this.socket, arguments);
-    } else {
-      //console.log('[ws][emit]:: called before socket setup');
+    if (this.session.isLoggedIn()) {
+      this.socket.connect();
     }
+
+    this.session.isLoggedIn((is: any) => {
+      if(is){
+        this.reconnect();
+      } else {
+        this.disconnect();
+        this.rooms = [];
+        this.registered = false;
+      }
+    });
+
+    return this;
   }
 
-  subscribe(name : string, callback : Function){
-    if(!this.emitters[name] && this.socket){
-      //console.log('[sub][registered]:: ' + name);
-      this.emitters[name] = new EventEmitter();
-      var emitter = this.emitters[name];
-      this.socket.on(name, function() {
-        emitter.next(arguments);
+  setUpDefaultListeners() {
+    this.socket.on('connect', () => {
+      this.nz.run(() => {
+        console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
+      });
+    });
+
+    this.socket.on('disconnect', () => {
+      this.nz.run(() => {
+        console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
+        this.registered = false;
+      });
+    });
+
+    this.socket.on('registered', (guid) => {
+      this.nz.run(() => {
+        this.registered = true;
+        this.socket.emit('join', this.rooms);
+      });
+    });
+
+    this.socket.on('error', (e: any) => {
+      this.nz.run(() => {
+        console.error('[ws]::error', e);
+      });
+    });
+
+    // -- Rooms
+
+    this.socket.on('rooms', (rooms: string[]) => {
+      this.nz.run(() => {
+        this.rooms = rooms;
+      });
+    });
+
+    this.socket.on('joined', (room: string, rooms: string[]) => {
+      this.nz.run(() => {
+        console.log(`[ws]::joined`, room, rooms);
+        this.rooms = rooms;
+      });
+    });
+
+    this.socket.on('left', (room: string, rooms: string[]) => {
+      this.nz.run(() => {
+        console.log(`[ws]::left`, room, rooms);
+        this.rooms = rooms;
+      });
+    });
+  }
+
+  reconnect() {
+    console.log('[ws]::reconnect');
+    this.registered = false;
+
+    this.socket.disconnect();
+    this.socket.connect();
+
+    return this;
+  }
+
+  disconnect() {
+    console.log('[ws]::disconnect');
+    this.registered = false;
+
+    this.socket.disconnect();
+
+    return this;
+  }
+
+  emit(...args) {
+    this.nz.runOutsideAngular(() => {
+      this.socket.emit.apply(this.socket, args);
+    });
+
+    return this;
+  }
+
+  subscribe(name: string, callback: Function) {
+    if (!this.subscriptions[name]){
+      this.subscriptions[name] = new EventEmitter();
+
+      this.nz.runOutsideAngular(() => {
+        this.socket.on(name, (...args) => {
+          this.nz.run(() => {
+            this.subscriptions[name].next(args);
+          });
+        });
       });
     }
-    if(this.socket){
-      return this.emitters[name].subscribe({
-        next: (args) => { callback.apply(this, args); }
-      });
-    } else {
-      setTimeout(() => {
-        this.subscribe(name, callback);
-      }, 1000);
+
+    return this.subscriptions[name].subscribe({
+      next: (args) => { callback.apply(this, args); }
+    });
+  }
+
+  join(room: string) {
+    if (!room) {
+      return this;
     }
+
+    if (!this.registered || !this.socket.connected) {
+      this.rooms.push(room);
+      return this;
+    }
+
+    return this.emit('join', room);
   }
 
-  unSubscribe(subscription){
-    subscription.unSubscribe();
-  }
+  leave(room: string) {
+    if (!room) {
+      return this;
+    }
 
+    return this.emit('leave', room);
+  }
 }

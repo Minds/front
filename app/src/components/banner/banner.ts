@@ -1,4 +1,4 @@
-import { Component, View, EventEmitter } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from 'angular2/router';
 
@@ -8,9 +8,7 @@ import { Material } from '../../directives/material';
 @Component({
   selector: 'minds-banner',
   inputs: ['_object: object', '_src: src', '_top: top', 'overlay', '_editMode: editMode', '_done: done'],
-  outputs: ['added']
-})
-@View({
+  outputs: ['added'],
   template: `
   <div class="minds-banner" *ngIf="!editing">
     <div class="minds-banner-img mdl-color--blue-grey" [ngStyle]="{'background-position': '0 ' + top + 'px', 'background-image': 'url(' + src + ')'}"></div>

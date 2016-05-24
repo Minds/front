@@ -1,4 +1,4 @@
-import { Component, View, ChangeDetectionStrategy } from 'angular2/core';
+import { Component, ChangeDetectionStrategy } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { Client } from '../../services/api';
@@ -6,9 +6,7 @@ import { Client } from '../../services/api';
 @Component({
   selector: 'minds-button-comment',
   properties: ['_object: object'],
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-@View({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a class="mdl-color-text--blue-grey-500" [ngClass]="{'selected': object['comments:count'] > 0 }">
       <i class="material-icons">chat_bubble</i>

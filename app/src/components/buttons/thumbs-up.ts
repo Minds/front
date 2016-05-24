@@ -1,4 +1,4 @@
-import { Component, View, ChangeDetectionStrategy } from 'angular2/core';
+import { Component, ChangeDetectionStrategy } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
@@ -11,9 +11,7 @@ import { SignupModalService } from '../modal/signup/service';
   selector: 'minds-button-thumbs-up',
   viewBindings: [WalletService ],
   properties: ['_object: object'],
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-@View({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a class="mdl-color-text--blue-grey-500" (click)="thumb()" [ngClass]="{'selected': has() }">
       <i class="material-icons">thumb_up</i>

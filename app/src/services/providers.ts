@@ -1,4 +1,4 @@
-import { provide } from 'angular2/core';
+import { provide, NgZone } from 'angular2/core';
 import { Http } from 'angular2/http';
 import { Router } from 'angular2/router';
 
@@ -15,8 +15,8 @@ export const MINDS_PROVIDERS : any[] = [
      deps: []
    }),
    provide(SocketsService, {
-     useFactory: () => new SocketsService(),
-     deps: []
+     useFactory: (nz) => new SocketsService(nz),
+     deps: [ NgZone ]
    }),
    provide(Client, {
      useFactory: (http) => new Client(http),

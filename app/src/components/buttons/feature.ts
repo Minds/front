@@ -1,4 +1,4 @@
-import { Component, View } from 'angular2/core';
+import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
@@ -9,9 +9,7 @@ import { Client } from '../../services/api';
   inputs: ['_object: object'],
   host: {
     '(click)': 'feature()'
-  }
-})
-@View({
+  },
   template: `
     <button class="" [ngClass]="{'selected': isFeatured }">
       <i class="material-icons">star</i>

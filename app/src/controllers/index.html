@@ -5,10 +5,11 @@
 </minds-sidebar>
 
 <minds-body class="mdl-color--grey-100">
-  	<router-outlet></router-outlet>
+  	<minds-router-outlet></minds-router-outlet>
 </minds-body>
 
 <minds-footer></minds-footer>
+<minds-messenger *ngIf="minds.LoggedIn"></minds-messenger>
 
 
 <m-modal-signup></m-modal-signup>

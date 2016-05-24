@@ -1,4 +1,4 @@
-import { forwardRef, Component, View, ChangeDetectionStrategy } from 'angular2/core';
+import { Component, ChangeDetectionStrategy, forwardRef } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 
 import { SessionFactory } from '../../services/session';
@@ -9,9 +9,7 @@ import { RemindComposerModal } from '../modal/modal';
 @Component({
   selector: 'minds-button-remind',
   properties: ['_object: object'],
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-@View({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a class="mdl-color-text--blue-grey-500" (click)="remind()" [ngClass]="{'selected': object.reminded }">
       <i class="material-icons">repeat</i>
