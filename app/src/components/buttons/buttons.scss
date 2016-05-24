@@ -103,6 +103,7 @@ counter{
   // font-weight:bold;
   vertical-align: middle;
   padding:0;
+  white-space: nowrap;
 }
 counter:after{
    content:' )';
