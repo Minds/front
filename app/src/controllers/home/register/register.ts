@@ -28,10 +28,18 @@ export class Register {
 
   form : ControlGroup;
 
+  flags = {
+    canPlayInlineVideos: true
+  };
+
 	constructor(public client : Client, public router: Router, public params: RouteParams, private modal : SignupModalService){
 
     if(params.params['referrer'])
       this.referrer = params.params['referrer'];
+
+    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+      this.flags.canPlayInlineVideos = false;
+    }
 	}
 
   registered(){

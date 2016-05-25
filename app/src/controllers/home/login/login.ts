@@ -31,6 +31,10 @@ export class Login {
 
   form : ControlGroup;
 
+  flags = {
+    canPlayInlineVideos: true
+  };
+
 	constructor(public client : Client, public router: Router, public params: RouteParams, public title: MindsTitle, private modal : SignupModalService){
 		if(this.session.isLoggedIn())
       router.navigate(['/Newsfeed']);
@@ -39,6 +43,10 @@ export class Login {
 
     if(params.params['referrer'])
       this.referrer = params.params['referrer'];
+
+    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+      this.flags.canPlayInlineVideos = false;
+    }
 	}
 
 	loggedin(){
