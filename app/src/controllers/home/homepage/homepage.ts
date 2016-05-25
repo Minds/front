@@ -29,10 +29,18 @@ export class Homepage {
   session = SessionFactory.build();
   minds = window.Minds;
 
+  flags = {
+    canPlayInlineVideos: true
+  };
+
   constructor(public client: Client, public title: MindsTitle, public router : Router, public navigation: NavigationService, private modal : SignupModalService){
     this.title.setTitle("Home");
     this.loadVideos();
     this.loadBlogs();
+
+    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+      this.flags.canPlayInlineVideos = false;
+    }
   }
 
   loadVideos(){
