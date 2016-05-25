@@ -19,7 +19,7 @@ import { SessionFactory } from '../../../services/session';
 export class Register {
 
   minds = window.Minds;
-	session = SessionFactory.build();
+  session = SessionFactory.build();
   errorMessage : string = "";
   twofactorToken : string = "";
   hideLogin : boolean = false;
@@ -32,7 +32,7 @@ export class Register {
     canPlayInlineVideos: true
   };
 
-	constructor(public client : Client, public router: Router, public params: RouteParams, private modal : SignupModalService){
+  constructor(public client : Client, public router: Router, public params: RouteParams, private modal : SignupModalService){
 
     if(params.params['referrer'])
       this.referrer = params.params['referrer'];
@@ -40,7 +40,7 @@ export class Register {
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
-	}
+  }
 
   registered(){
     this.modal.setDisplay('onboarding').open();

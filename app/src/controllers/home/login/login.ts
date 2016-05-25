@@ -21,7 +21,7 @@ import { Register } from '../register/register';
 
 export class Login {
 
-	session = SessionFactory.build();
+  session = SessionFactory.build();
   errorMessage : string = "";
   twofactorToken : string = "";
   hideLogin : boolean = false;
@@ -35,8 +35,8 @@ export class Login {
     canPlayInlineVideos: true
   };
 
-	constructor(public client : Client, public router: Router, public params: RouteParams, public title: MindsTitle, private modal : SignupModalService){
-		if(this.session.isLoggedIn())
+  constructor(public client : Client, public router: Router, public params: RouteParams, public title: MindsTitle, private modal : SignupModalService){
+    if(this.session.isLoggedIn())
       router.navigate(['/Newsfeed']);
 
     this.title.setTitle("Login");
@@ -47,14 +47,14 @@ export class Login {
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
-	}
+  }
 
-	loggedin(){
+  loggedin(){
     if(this.referrer)
       this.router.navigateByUrl(this.referrer);
     else
-		  this.router.navigate(['/Newsfeed', {}]);
-	}
+      this.router.navigate(['/Newsfeed', {}]);
+  }
 
   registered(){
     this.modal.setDisplay('onboarding').open();
