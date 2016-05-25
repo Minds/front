@@ -7,6 +7,7 @@ import { SessionFactory } from '../../../../services/session';
 import { Material } from '../../../../directives/material';
 import { BUTTON_COMPONENTS } from '../../../../components/buttons';
 
+import { AttachmentService } from '../../../../services/attachment';
 
 @Component({
   selector: 'minds-card-image',
@@ -15,7 +16,8 @@ import { BUTTON_COMPONENTS } from '../../../../components/buttons';
   },
   inputs: ['object'],
   templateUrl: 'src/controllers/cards/object/image/image.html',
-  directives: [ CORE_DIRECTIVES, BUTTON_COMPONENTS, Material, RouterLink]
+  directives: [ CORE_DIRECTIVES, BUTTON_COMPONENTS, Material, RouterLink],
+  bindings: [AttachmentService]
 })
 
 export class ImageCard {
@@ -23,7 +25,7 @@ export class ImageCard {
   session = SessionFactory.build();
   minds: {};
 
-	constructor(public client: Client){
+	constructor(public client: Client, public attachment: AttachmentService){
     this.minds = window.Minds;
 	}
 

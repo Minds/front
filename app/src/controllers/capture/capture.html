@@ -80,7 +80,7 @@
 
           <div class="mdl-layout-spacer"></div>
 
-          <a class="mdl-color-text--blue-grey-300 m-capture-default-maturity" (click)="default_maturity = !default_maturity">
+          <a class="mdl-color-text--blue-grey-300 m-capture-default-maturity" (click)="default_maturity = default_maturity ? 0 : 1">
             <i class="material-icons"
             [ngClass]="{ 'mdl-color-text--red-500': default_maturity }"
             title="Explicit content"
@@ -106,7 +106,7 @@
           (change)="modify(i)"
           />
 
-          <a class="mdl-color-text--blue-grey-300 m-capture-mature" (click)="upload.mature = !upload.mature">
+          <a class="mdl-color-text--blue-grey-300 m-capture-mature" (click)="upload.mature = upload.mature ? 0 : 1">
             <i class="material-icons"
             [ngClass]="{ 'mdl-color-text--red-500': upload.mature }"
             title="Explicit content"

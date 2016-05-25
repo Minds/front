@@ -112,7 +112,7 @@ export class Capture {
         state: 'created',
         progress: 0,
         license: this.default_license || 'all-rights-reserved',
-        mature: this.default_maturity || false
+        mature: this.default_maturity || 0
       }
 
       var fileInfo = file.files[i];
