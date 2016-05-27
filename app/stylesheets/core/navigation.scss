@@ -18,6 +18,8 @@ minds-sidebar-navigation{
     padding-top:0 !important;
     display:flex;
     flex-flow: column nowrap;
+    flex-shrink: 0;
+    flex-basis: auto;
     align-items: stretch;
     padding-top: 16px;
 
