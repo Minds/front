@@ -1,3 +1,13 @@
+<div class="mdl-tabs__tab-bar">
+    <a [routerLink]="['/Notifications-Filter', { filter: 'tags' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'tags' || _filter == 'all' }">Tags</a>
+    <a [routerLink]="['/Notifications-Filter', { filter: 'comments' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'comments' || _filter == 'all' }">Comments</a>
+    <a [routerLink]="['/Notifications-Filter', { filter: 'boosts' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'boosts' || _filter == 'all' }">Boosts</a>
+    <a [routerLink]="['/Notifications-Filter', { filter: 'groups' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'groups' || _filter == 'all' }">Groups</a>
+    <a [routerLink]="['/Notifications-Filter', { filter: 'subscriptions' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' || _filter == 'all' }">Subscriptions</a>
+    <a [routerLink]="['/Notifications-Filter', { filter: 'votes' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'votes' || _filter == 'all' }">Votes</a>
+    <a [routerLink]="['/Notifications-Filter', { filter: 'reminds' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'reminds' || _filter == 'all' }">Reminds</a>
+</div>
+
 <div class="mdl-grid notifications-grid" style="max-width:600px">
 
   <div class="mdl-cell mdl-cell--12-col">
