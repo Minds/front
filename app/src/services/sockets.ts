@@ -2,7 +2,9 @@ import { EventEmitter, Inject, NgZone } from 'angular2/core';
 import { SessionFactory } from './session';
 
 export class SocketsService {
-  SOCKET_IO_SERVER = window.Minds.socket_server;
+
+  const SOCKET_IO_SERVER = window.Minds.socket_server;
+  const LIVE_ROOM_NAME = 'messenger';
 
   session = SessionFactory.build();
 
@@ -54,6 +56,7 @@ export class SocketsService {
     this.socket.on('connect', () => {
       this.nz.run(() => {
         console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
+        this.join(`${this.LIVE_ROOM_NAME}:${window.Minds.user.guid}`);
       });
     });
 
