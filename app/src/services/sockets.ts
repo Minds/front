@@ -3,8 +3,8 @@ import { SessionFactory } from './session';
 
 export class SocketsService {
 
-  const SOCKET_IO_SERVER = window.Minds.socket_server;
-  const LIVE_ROOM_NAME = 'messenger';
+  SOCKET_IO_SERVER = window.Minds.socket_server;
+  LIVE_ROOM_NAME = 'messenger';
 
   session = SessionFactory.build();
 
