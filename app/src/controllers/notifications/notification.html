@@ -369,6 +369,7 @@
   <!-- Default -->
   <template ngSwitchDefault>
     <i>Sorry, there was an error viewing this notification</i>
+    <span hidden>View: {{ notification.notification_view }}</span>
   </template>
 
   <span class="ts mdl-color-text--grey">{{ notification.time_created * 1000 | date : 'medium' }}</span>

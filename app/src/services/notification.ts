@@ -1,4 +1,4 @@
-import { Inject, Injector, bind } from 'angular2/core';
+import { EventEmitter } from 'angular2/core';
 import { Client } from './api';
 import { SocketsService } from './sockets';
 import { SessionFactory } from './session';
@@ -6,14 +6,37 @@ import { SessionFactory } from './session';
 export class NotificationService {
 
   session = SessionFactory.build();
+  socketSubscriptions: any = {
+    notification: null
+  };
+  onReceive: EventEmitter<any> = new EventEmitter();
 
   constructor(public client: Client, public sockets: SocketsService){
     if(!window.Minds.notifications_count)
       window.Minds.notifications_count = 0;
+
+    this.listen();
   }
 
   /**
-   * Increment the notifications. For boost
+   * Listen to socket events
+   */
+  listen() {
+    this.socketSubscriptions.notification = this.sockets.subscribe('notification', (guid) => {
+      this.increment();
+
+      this.client.get(`api/v1/notifications/single/${guid}`)
+        .then((response: any) => {
+          if (response.notification) {
+            this.onReceive.next(response.notification);
+          }
+        })
+        .catch(e => {});
+    });
+  }
+
+  /**
+   * Increment the notifications counter
    */
   increment(notifications : number = 1){
     window.Minds.notifications_count = window.Minds.notifications_count + notifications;
