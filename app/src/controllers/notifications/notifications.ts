@@ -8,13 +8,13 @@ import { Material } from '../../directives/material';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { NotificationService } from '../../services/notification';
 import { CARDS } from '../cards/cards';
-
+import { Notification } from './notification';
 
 @Component({
   selector: 'minds-notifications',
   bindings: [ MindsTitle, NotificationService ],
   templateUrl: 'src/controllers/notifications/list.html',
-  directives: [ CORE_DIRECTIVES, RouterLink, Material, CARDS, InfiniteScroll ]
+  directives: [ CORE_DIRECTIVES, RouterLink, Material, CARDS, InfiniteScroll, Notification ]
 })
 
 export class Notifications {
