@@ -4,7 +4,7 @@ import { SessionFactory } from './session';
 export class SocketsService {
 
   SOCKET_IO_SERVER = window.Minds.socket_server;
-  LIVE_ROOM_NAME = 'messenger';
+  LIVE_ROOM_NAME = 'live';
 
   session = SessionFactory.build();
 
