@@ -14,7 +14,6 @@ import { BoostP2P} from './p2p/p2p';
 
 @Component({
   selector: 'minds-boost',
-  viewBindings: [ NotificationService ],
   inputs: ['object'],
   outputs: ['_done: done'],
   templateUrl: 'src/controllers/boosts/boost/boost.html',

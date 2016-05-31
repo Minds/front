@@ -1,12 +1,13 @@
 import { Inject, Injector, bind } from 'angular2/core';
 import { Client } from './api';
+import { SocketsService } from './sockets';
 import { SessionFactory } from './session';
 
 export class NotificationService {
 
   session = SessionFactory.build();
 
-  constructor(@Inject(Client) public client : Client){
+  constructor(public client: Client, public sockets: SocketsService){
     if(!window.Minds.notifications_count)
       window.Minds.notifications_count = 0;
   }

@@ -44,7 +44,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups'
 
 @Component({
   selector: 'minds-app',
-  bindings: [ NotificationService, AnalyticsService ],
+  bindings: [ AnalyticsService ],
   templateUrl: './src/controllers/index.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal, MindsRouterOutlet, HovercardPopup, Messenger  ]
 })

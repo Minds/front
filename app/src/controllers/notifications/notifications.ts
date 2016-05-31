@@ -12,7 +12,7 @@ import { Notification } from './notification';
 
 @Component({
   selector: 'minds-notifications',
-  bindings: [ MindsTitle, NotificationService ],
+  bindings: [ MindsTitle ],
   templateUrl: 'src/controllers/notifications/list.html',
   directives: [ CORE_DIRECTIVES, RouterLink, Material, CARDS, InfiniteScroll, Notification ]
 })
