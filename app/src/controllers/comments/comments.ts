@@ -13,6 +13,7 @@ import { SignupModalService } from '../../components/modal/signup/service';
 
 import { AttachmentService } from '../../services/attachment';
 import { MindsRichEmbed } from '../../components/rich-embed/rich-embed';
+import { SocketsService } from '../../services/sockets';
 
 @Component({
   selector: 'minds-comments',
@@ -45,7 +46,12 @@ export class Comments {
   triedToPost: boolean = false;
   moreData : boolean = true;
 
-	constructor(public client: Client, public attachment: AttachmentService, private modal : SignupModalService){
+  socketRoomName: string;
+  socketSubscriptions: any = {
+    comment: null
+  };
+
+	constructor(public client: Client, public attachment: AttachmentService, private modal : SignupModalService, public sockets: SocketsService){
     this.minds = window.Minds;
 	}
 
@@ -56,6 +62,7 @@ export class Comments {
       this.guid = this.object.entity_guid;
     this.parent = this.object;
     this.load();
+    this.listen();
   }
 
   set _reversed(value: boolean){
@@ -71,6 +78,12 @@ export class Comments {
 
     this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: true })
       .then((response : any) => {
+
+        if (!this.socketRoomName && response.socketRoomName) {
+          this.socketRoomName = response.socketRoomName;
+          this.joinSocketRoom();
+        }
+
         if(!response.comments){
           self.moreData = false;
           self.inProgress = false;
@@ -87,6 +100,40 @@ export class Comments {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  joinSocketRoom() {
+    if (this.socketRoomName) {
+      this.sockets.join(this.socketRoomName);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.socketRoomName) {
+      this.sockets.leave(this.socketRoomName);
+    }
+  }
+
+  listen() {
+    this.socketSubscriptions.comment = this.sockets.subscribe('comment', (parent_guid, owner_guid, guid) => {
+      if (parent_guid !== this.guid) {
+        return;
+      }
+
+      if (this.session.isLoggedIn() && owner_guid === this.session.getLoggedInUser().guid) {
+        return;
+      }
+
+      this.client.get('api/v1/comments/' + this.guid, { limit: 1, offset: guid, reversed: false })
+        .then((response: any) => {
+          if (!response.comments || response.comments.length === 0) {
+            return;
+          }
+
+          this.comments.push(response.comments[0]);
+        })
+        .catch(e => {});
+    });
   }
 
   postEnabled() {
