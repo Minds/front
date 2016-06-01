@@ -8,6 +8,10 @@ h1{
   font-weight:300;
 }
 
+p {
+  word-wrap: break-word;
+}
+
 minds-app{
   .initial-loading{
     width:100%;
@@ -92,6 +96,8 @@ minds-topbar{
   }
 }
 .mdl-card__supporting-text{
+  word-wrap: break-word;
+  
   textarea{
     color: rgba(0,0,0,.87);
     font-size: 13px;

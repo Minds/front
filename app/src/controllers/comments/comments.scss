@@ -55,6 +55,8 @@ minds-comments{
     .minds-body{
       margin-left:$minds-margin;
       font-size: 12px;
+      max-width: 100%;
+      max-width: calc(100% - 60px);
 
       .username {
         font-size: 13px;
