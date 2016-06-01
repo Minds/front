@@ -24,7 +24,10 @@
     </div>
     <p class="mdl-color-text--red">{{error}}</p>
     <div>
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="setup(smsNumber.value)">
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+        (click)="setup(smsNumber.value)"
+        [disabled]="waitingForCheck"
+      >
         Setup
       </button>
     </div>
@@ -32,8 +35,11 @@
 
   <!-- CHECK -->
   <div class="mdl-card__supporting-text" *ngIf="!inProgress && telno && waitingForCheck">
-    <div class="minds-settings-text">
-      We sent an SMS to <b>{{telbo}}</b>. Enter the code below to complete your two factor setup.
+    <div class="minds-settings-text" *ngIf="!sendingSms">
+      We sent an SMS to <b>{{telno}}</b>. Enter the code below to complete your two factor setup.
+    </div>
+    <div class="minds-settings-text" *ngIf="sendingSms">
+      We are sending an SMS to <b>{{telno}}</b>. Enter the code below to complete your two factor setup.
     </div>
     <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
       <input class="mdl-textfield__input"

@@ -19,6 +19,7 @@ export class SettingsTwoFactor{
   telno : number;
   secret;
   waitingForCheck : boolean = false;
+  sendingSms: boolean = false;
 
   inProgress : boolean = false;
   error : string = "";
@@ -41,16 +42,19 @@ export class SettingsTwoFactor{
   setup(smsNumber : any){
     this.telno = smsNumber;
     this.waitingForCheck = true;
+    this.sendingSms = true;
     this.error = "";
     this.client.post('api/v1/twofactor/setup', { tel: smsNumber })
       .then((response : any) => {
         this.secret = response.secret;
+        this.sendingSms = false;
       })
       .catch(() => {
         this.waitingForCheck = false;
+        this.sendingSms = false;
         this.telno = null;
-        this.error = "The number you entered was incorrect";
-      })
+        this.error = "The phone number you entered was incorrect. Please, try again.";
+      });
   }
 
   check(code : number){
@@ -64,7 +68,7 @@ export class SettingsTwoFactor{
       .catch((response : any) => {
         this.waitingForCheck = false;
         this.telno = null;
-        this.error = "The code was incorrect. Try again.";
+        this.error = "The code was incorrect. Please, try again.";
       });
   }
 
