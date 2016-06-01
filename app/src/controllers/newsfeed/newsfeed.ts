@@ -56,6 +56,7 @@ export class Newsfeed {
       router.navigate(['/Login']);
     } else {
       this.load();
+      this.setUpPoll();
       this.minds = window.Minds;
     }
 
@@ -70,6 +71,33 @@ export class Newsfeed {
     this.title.setTitle("Newsfeed");
   }
 
+  pollingTimer: any;
+  pollingOffset: string = '';
+  pollingNewPosts: number = 0;
+
+  setUpPoll() {
+    this.pollingTimer = setInterval(() => {
+      this.client.get('api/v1/newsfeed/count', { offset: this.pollingOffset }, {cache: true})
+        .then((response: any) => {
+          if (typeof response.count === 'undefined') {
+            return;
+          }
+
+          this.pollingNewPosts += response.count;
+          this.pollingOffset = response['load-next'];
+        })
+        .catch(e => { console.error('Newsfeed polling', e); });
+    }, 60000);
+  }
+
+  pollingLoadNew() {
+    this.load(true);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.pollingTimer);
+  }
+
   /**
    * Load newsfeed
    */
@@ -82,6 +110,8 @@ export class Newsfeed {
 
     if(refresh){
       this.offset = "";
+      this.pollingOffset = '';
+      this.pollingNewPosts = 0;
     }
 
     this.inProgress = true;
@@ -97,6 +127,10 @@ export class Newsfeed {
             self.newsfeed = self.newsfeed.concat(data.activity);
           } else {
             self.newsfeed = data.activity;
+
+            if (typeof data.activity[0] !== 'undefined') {
+              self.pollingOffset = data.activity[0].guid;
+            }
           }
           self.offset = data['load-next'];
           self.inProgress = false;
@@ -113,6 +147,8 @@ export class Newsfeed {
       activity.boosted = true;
     }
     this.prepended.unshift(activity);
+    this.pollingOffset = activity.guid;
+
     this.newUserPromo = false;
   }
 
