@@ -46,3 +46,4 @@ export { ShareModal } from './share/share';
 export { ReportModal } from './report/report';
 export { RemindComposerModal } from './remind-composer/remind-composer';
 export { BoostModal } from '../../controllers/boosts/modal/modal';
+export { ConfirmModal } from './confirm/confirm';
