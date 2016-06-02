@@ -49,7 +49,7 @@
       >
         <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
           <span class="m-mature-overlay-note m-mature-overlay-note-smaller">
-            <i class="material-icons" title="Explicit content">explicit</i>
+            <i class="material-icons" title="Mature content">explicit</i>
             <span>Click to confirm your are 18+</span>
           </span>
         </div>
@@ -66,7 +66,7 @@
       >
           <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
             <span class="m-mature-overlay-note">
-              <i class="material-icons" title="Explicit content">explicit</i>
+              <i class="material-icons" title="Mature content">explicit</i>
               <span>Click to confirm your are 18+</span>
             </span>
           </div>
@@ -95,7 +95,7 @@
       >
         <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
           <span class="m-mature-overlay-note">
-            <i class="material-icons" title="Explicit content">explicit</i>
+            <i class="material-icons" title="Mature content">explicit</i>
             <span>Click to confirm your are 18+</span>
           </span>
         </div>
@@ -135,7 +135,7 @@
         <a class="m-mature-button"
         [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
         (click)="attachment.toggleMature()"
-        title="Explicit content"
+        title="Mature content"
         >
           <i class="material-icons">explicit</i>
         </a>
