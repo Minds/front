@@ -173,7 +173,7 @@
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="delete(); toggle.value = !toggle.value">Delete</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled>Mute notifications</li>
 		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false">Mute notifications</li>
@@ -183,4 +183,17 @@
 
   <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url" [embed]="activity"></m-modal-share>
 	<m-modal-report *ngIf="reportToggle" [open]="true" (closed)="reportToggle = false" [object]="activity"></m-modal-report>
+  <m-modal-confirm *ngIf="deleteToggle"
+    [open]="true"
+    (closed)="deleteToggle = false"
+    (actioned)="delete($event)"
+    yesButton="Delete permanently"
+  >
+    <p confirm-message>
+        Are you sure you want to delete this activity? There's no UNDO.
+    </p>
+    <p confirm-success-message>
+        The activity has been deleted.
+    </p>
+  </m-modal-confirm>
 </div>

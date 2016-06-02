@@ -15,7 +15,7 @@ import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
 import { ScrollService } from '../../../services/ux/scroll';
-import { ShareModal, ReportModal } from '../../../components/modal/modal';
+import { ShareModal, ReportModal, ConfirmModal } from '../../../components/modal/modal';
 
 import { AttachmentService } from '../../../services/attachment';
 import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
@@ -29,7 +29,7 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
   outputs: [ '_delete: delete'],
   bindings: [ AttachmentService ],
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard, ConfirmModal ],
   pipes: [ MINDS_PIPES ]
 })
 
@@ -40,6 +40,7 @@ export class Activity {
   commentsToggle : boolean = false;
   shareToggle : boolean = false;
   reportToggle: boolean = false;
+  deleteToggle: boolean = false;
   session = SessionFactory.build();
   showBoostOptions : boolean = false;
   type : string;
@@ -75,9 +76,25 @@ export class Activity {
       });
   }
 
-  delete(){
-    this.client.delete('api/v1/newsfeed/'+this.activity.guid);
-    this._delete.next(true);
+  delete($event: any = {}) {
+    if ($event.inProgress) {
+      $event.inProgress.emit(true);
+    }
+    this.client.delete(`api/v1/newsfeed/${this.activity.guid}`)
+      .then((response: any) => {
+        if ($event.inProgress) {
+          $event.inProgress.emit(false);
+          $event.completed.emit(0);
+        }
+
+        this._delete.next(true);
+      })
+      .catch(e => {
+        if ($event.inProgress) {
+          $event.inProgress.emit(false);
+          $event.completed.emit(1);
+        }
+      });
   }
 
   mute() {
