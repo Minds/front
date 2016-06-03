@@ -28,7 +28,8 @@ export class NewsfeedBoostRotator {
   inProgress : boolean = false;
   moreData : boolean = true;
   rotator;
-  running : boolean = false;
+  running: boolean = false;
+  sticky: boolean = false;
   interval : number = 5;
   currentPosition : number = 0;
   lastTs : number = Date.now();
@@ -82,6 +83,10 @@ export class NewsfeedBoostRotator {
       window.clearInterval(this.rotator);
     this.running = true;
     this.rotator = setInterval((e) => {
+      if (this.sticky) {
+        return;
+      }
+      
       this.next();
       //this.recordImpression(this.currentPosition);
     }, this.interval*1000);
@@ -129,6 +134,10 @@ export class NewsfeedBoostRotator {
   mouseOut(){
     this.isVisible();
   }
+
+  setSticky(status: boolean) {
+    this.sticky = status; 
+  } 
 
   pause(){
     alert("Hover you mouse over the boost to pause the rotator");

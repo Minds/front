@@ -26,7 +26,7 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
     'class': 'mdl-card mdl-shadow--2dp'
   },
   inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible'],
-  outputs: [ '_delete: delete'],
+  outputs: [ '_delete: delete', 'commentsOpened'],
   bindings: [ AttachmentService ],
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard, ConfirmModal ],
@@ -50,6 +50,7 @@ export class Activity {
   editing : boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
+  commentsOpened: EventEmitter<boolean> = new EventEmitter();
   scroll_listener;
 
   asyncMute: boolean = false;
@@ -156,6 +157,7 @@ export class Activity {
 
   openComments(){
     this.commentsToggle = !this.commentsToggle;
+    this.commentsOpened.emit(this.commentsToggle);
   }
 
   showBoost(){

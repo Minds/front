@@ -9,7 +9,7 @@
   <li (click)="next()">
     <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
   </li>
-  <li class="m-boost-rotator-paused" [hidden]="running" (click)="pause()">
+  <li class="m-boost-rotator-paused" [hidden]="running && !sticky" (click)="pause()">
     <i class="material-icons mdl-color-text--blue-grey-200" title="Hover over the boosted post to pause">pause</i>
   </li>
 </ul>
@@ -22,4 +22,5 @@
   [class]="'mdl-card mdl-shadow--2dp item m-boost-rotator-item m-boost-rotator-item-' + i"
   visible="true"
   [hidden]="i != currentPosition"
+  (commentsOpened)="setSticky($event)"
   ></minds-activity>
