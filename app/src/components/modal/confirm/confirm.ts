@@ -6,7 +6,7 @@ import { Modal } from '../modal';
 
 @Component({
   selector: 'm-modal-confirm',
-  inputs: ['open', 'yesButton', 'noButton'],
+  inputs: ['open', 'yesButton', 'noButton', 'closeAfterAction'],
   outputs: ['actioned', 'closed'],
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal ],
   templateUrl: 'src/components/modal/confirm/confirm.html'
@@ -25,6 +25,7 @@ export class ConfirmModal {
   yesButton: string = 'Yes';
   noButton: string = 'No';
   dismissButton: string = 'Dismiss';
+  closeAfterAction: boolean = false;
 
   constructor() {
     this.inProgressEmitter.subscribe((value: boolean) => {
@@ -32,6 +33,11 @@ export class ConfirmModal {
     });
     
     this.completedEmitter.subscribe((value: number) => {
+      if (this.closeAfterAction) {
+        this.close(null);
+        return;
+      }
+      
       this.errorlevel = value;
     });
   }

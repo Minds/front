@@ -185,6 +185,7 @@
 	<m-modal-report *ngIf="reportToggle" [open]="true" (closed)="reportToggle = false" [object]="activity"></m-modal-report>
   <m-modal-confirm *ngIf="deleteToggle"
     [open]="true"
+    [closeAfterAction]=true
     (closed)="deleteToggle = false"
     (actioned)="delete($event)"
     yesButton="Delete permanently"
