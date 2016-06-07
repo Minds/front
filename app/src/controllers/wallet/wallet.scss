@@ -61,7 +61,7 @@
     .mdl-cell{
       margin:0;
       padding:0;
-      @include flex-display();
+      display: flex;
       align-items: center;
       -webkit-align-items: center;
     }

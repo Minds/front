@@ -156,9 +156,9 @@ minds-video{
     text-align:center;
 
     > span, i, a{
-      @include flex(1);
+      flex: 1;
       &.progress-bar{
-          @include flex(6);
+          flex: 6;
           position: relative;
           bar{
             position: absolute;
@@ -209,7 +209,7 @@ minds-video{
       display:none;
     }
     .minds-video-bar-full{
-      @include flex-display();
+      display: flex;
     }
   }
 }

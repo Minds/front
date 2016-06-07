@@ -119,7 +119,7 @@ minds-topbar{
     align-items: center;
     -webkit-align-items: center;
     justify-content: center;
-    @include flex-display();
+    display: flex;
     padding: 55px;
     text-transform: uppercase;
     font-weight: 100;
@@ -138,8 +138,8 @@ minds-topbar{
 
 
 .minds-block {
-  @include flex-display();
-  @include flex-direction(row);
+  display: flex;
+  flex-direction: row;
 
   .minds-avatar{
     margin-right:$minds-margin;

@@ -9,8 +9,8 @@ minds-capture{
 
 .drag-animation{
   position: fixed;
-  @include flex-display();
-  @include flex-direction(row);
+  display: flex;
+  flex-direction: row;
   align-items:center;
   -webkit-align-items:center;
 
@@ -23,8 +23,8 @@ minds-capture{
   animation: fade-animation 2s infinite alternate;
 
   .drop{
-    @include flex-display();
-    @include flex-wrap(wrap);
+    display: flex;
+    flex-wrap: wrap;
     text-align: center;
     margin:auto;
     width:50%;

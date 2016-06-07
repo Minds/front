@@ -92,10 +92,10 @@
       right: 0;
       padding:$minds-padding $minds-padding*2;
       background-color: rgba(0,0,0,0.5);
-      @include flex-display();
+      display: flex;
       align-items: flex-end;
       -webkit-align-item: flex-end;
-      @include flex-direction(row);
+      flex-direction: row;
 
       p{
         margin: 0;

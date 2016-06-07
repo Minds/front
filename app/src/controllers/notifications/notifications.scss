@@ -7,12 +7,12 @@
     padding:$minds-padding * 2;
     margin-bottom:$minds-margin*2;
 
-    @include flex-display();
-    @include flex-direction(row);
+    display: flex;
+    flex-direction: row;
 
     .avatar{
-      @include flex-display();
-      @include flex-direction(column);
+      display: flex;
+      flex-direction: column;
 
       img{
         border-radius: 3px;
