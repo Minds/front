@@ -77,7 +77,7 @@ export class Newsfeed {
 
   setUpPoll() {
     this.pollingTimer = setInterval(() => {
-      this.client.get('api/v1/newsfeed/count', { offset: this.pollingOffset }, {cache: true})
+      this.client.get('api/v1/newsfeed', { offset: this.pollingOffset, count: true }, {cache: true})
         .then((response: any) => {
           if (typeof response.count === 'undefined') {
             return;
