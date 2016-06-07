@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, NgZone} from 'angular2/core';
+import { Component, ChangeDetectorRef, NgZone, ApplicationRef } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
 import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
 
@@ -88,10 +88,13 @@ export class SignupModal {
   subtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
   display : string = 'initial';
 
-  constructor(private router : Router, private location : Location, private service : SignupModalService, private cd : ChangeDetectorRef, private zone : NgZone){
+  constructor(private router : Router, private location : Location, private service : SignupModalService, 
+    private cd : ChangeDetectorRef, private zone : NgZone, private applicationRef : ApplicationRef){
     this.listen();
     this.service.isOpen.subscribe({next: open => {
       this.open = open;
+      //hack: nasty ios work around
+      this.applicationRef.tick();
       this.listen();
     }});
     this.service.display.subscribe({next: display => this.display = display});
