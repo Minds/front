@@ -140,7 +140,7 @@ export class NewsfeedBoostRotator {
   } 
 
   pause(){
-    alert("Hover you mouse over the boost to pause the rotator");
+    this.setSticky(!this.sticky);
   }
 
   prev(){

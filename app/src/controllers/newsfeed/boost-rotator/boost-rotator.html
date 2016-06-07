@@ -9,8 +9,10 @@
   <li (click)="next()">
     <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
   </li>
-  <li class="m-boost-rotator-paused" [hidden]="running && !sticky" (click)="pause()">
-    <i class="material-icons mdl-color-text--blue-grey-200" title="Hover over the boosted post to pause">pause</i>
+  <li class="m-boost-rotator-paused" (click)="pause()">
+    <i class="material-icons mdl-color-text--blue-grey-200"
+    [ngClass]="{ 'mdl-color-text--blue-grey-600': sticky }"
+    >{{ (sticky || !running) ? 'play_arrow' : 'pause' }}</i>
   </li>
 </ul>
 
