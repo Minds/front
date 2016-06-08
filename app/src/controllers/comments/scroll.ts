@@ -8,12 +8,15 @@ import { Observable, Subscription } from 'rxjs/Rx';
   exportAs: 'commentsScroll'
 })
 export class CommentsScrollDirective {
-  private DEBOUNCE_TIME = 100;
-  private SCROLL_THRESHOLD = 200; // pixels
+  private DEBOUNCE_TIME_MS = 1000 / 30; // fps
+  private STICK_INTERVAL_MS = this.DEBOUNCE_TIME_MS * 30; // frames
+  private SCROLL_THRESHOLD = 12; // pixels
 
   private scroll: Observable<any>;
-  private scrollSubscription: Subscription; 
-  
+  private scrollSubscription: Subscription;
+  private stickInterval: any;
+  private stickTo: string;
+
   emitter: EventEmitter<string>;
   previous: EventEmitter<any> = new EventEmitter();
   next: EventEmitter<any> = new EventEmitter();
@@ -38,21 +41,23 @@ export class CommentsScrollDirective {
       setTimeout(() => {
         switch (command) {
           case 'top':
-            this.top();
+            this.top(true, true);
             break;
-          
+
           case 'bottom':
-            this.bottom();
+            this.bottom(true, true);
             break;
         }
-      }, this.DEBOUNCE_TIME);
+      }, this.DEBOUNCE_TIME_MS);
     });
   }
 
   ngOnInit() {
     this.scrollSubscription = this.scroll
-      .debounceTime(this.DEBOUNCE_TIME)
+      .debounceTime(this.DEBOUNCE_TIME_MS)
       .subscribe((event: Event) => this.run(event));
+    
+    this.setStick();
   }
 
   ngOnDestroy() {
@@ -63,6 +68,10 @@ export class CommentsScrollDirective {
     if (this.emitterSubscription) {
       this.emitterSubscription.unsubscribe();
     }
+
+    if (this.stickInterval) {
+      clearInterval(this.stickInterval);
+    }
   }
 
   run(event?: Event) {
@@ -72,23 +81,59 @@ export class CommentsScrollDirective {
       this.previous.emit(true);
     }
 
-    if (
-      el.scrollTop + el.clientHeight >= el.scrollHeight - this.SCROLL_THRESHOLD
-    ) {
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - this.SCROLL_THRESHOLD) {
       this.next.emit(true);
+    } else {
+      this.setStick(null);
     }
   }
 
-  top(run?: boolean) {
+  stick() {
+    if (!this.stickTo) {
+      return;
+    }
+
+    switch (this.stickTo) {
+      case 'top':
+        this.top();
+        break;
+      
+      case 'bottom':
+        this.bottom();
+        break;
+    }
+  }
+
+  setStick(value?: string) {
+    if (value || value === null) {
+      this.stickTo = value;
+    }
+
+    // Refresh timer
+    if (this.stickInterval) {
+      clearInterval(this.stickInterval);
+    }
+    this.stickInterval = setInterval(() => this.stick(), this.STICK_INTERVAL_MS);
+  }
+
+  top(run?: boolean, stick?: boolean) {
     this.elementRef.nativeElement.scrollTop = 0;
+    
+    if (stick) {
+      this.setStick('top');
+    }
 
     if (run) {
       this.run();
     }
   }
 
-  bottom(run?: boolean) {
+  bottom(run?: boolean, stick?: boolean) {
     this.elementRef.nativeElement.scrollTop = this.elementRef.nativeElement.scrollHeight;
+    
+    if (stick) {
+      this.setStick('bottom');
+    }
 
     if (run) {
       this.run();
