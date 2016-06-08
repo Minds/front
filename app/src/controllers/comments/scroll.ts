@@ -35,15 +35,17 @@ export class CommentsScrollDirective {
     }
 
     this.emitterSubscription = emitter.subscribe((command: string) => {
-      switch (command) {
-        case 'top':
-          this.top();
-          break;
-        
-        case 'bottom':
-          this.bottom();
-          break;
-      }
+      setTimeout(() => {
+        switch (command) {
+          case 'top':
+            this.top();
+            break;
+          
+          case 'bottom':
+            this.bottom();
+            break;
+        }
+      }, this.DEBOUNCE_TIME);
     });
   }
 
@@ -78,7 +80,7 @@ export class CommentsScrollDirective {
   }
 
   top(run?: boolean) {
-    this.elementRef.nativeElement.scrollTop = this.elementRef.nativeElement.scrollHeight;
+    this.elementRef.nativeElement.scrollTop = 0;
 
     if (run) {
       this.run();
@@ -86,7 +88,7 @@ export class CommentsScrollDirective {
   }
 
   bottom(run?: boolean) {
-    this.elementRef.nativeElement.scrollTop = 0;
+    this.elementRef.nativeElement.scrollTop = this.elementRef.nativeElement.scrollHeight;
 
     if (run) {
       this.run();
