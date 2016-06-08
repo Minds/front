@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 
@@ -15,11 +15,13 @@ import { AttachmentService } from '../../services/attachment';
 import { MindsRichEmbed } from '../../components/rich-embed/rich-embed';
 import { SocketsService } from '../../services/sockets';
 
+import { CommentsScrollDirective } from './scroll';
+
 @Component({
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit'],
   templateUrl: 'src/controllers/comments/list.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed ],
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed, CommentsScrollDirective ],
   pipes: [ TagsPipe ],
   bindings: [ AttachmentService ]
 })
@@ -44,14 +46,17 @@ export class Comments {
   inProgress : boolean = false;
   canPost: boolean = true;
   triedToPost: boolean = false;
-  moreData : boolean = true;
+  moreData: boolean = false;
+  loaded: boolean = false;
 
   socketRoomName: string;
   socketSubscriptions: any = {
     comment: null
   };
 
-	constructor(public client: Client, public attachment: AttachmentService, private modal : SignupModalService, public sockets: SocketsService){
+  commentsScrollEmitter: EventEmitter<string> = new EventEmitter();
+
+  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService) {
     this.minds = window.Minds;
 	}
 
@@ -61,7 +66,7 @@ export class Comments {
     if(this.object.entity_guid)
       this.guid = this.object.entity_guid;
     this.parent = this.object;
-    this.load();
+    this.load(true);
     this.listen();
   }
 
@@ -72,8 +77,11 @@ export class Comments {
       this.reversed = false;
   }
 
-  load(refresh = false){
-    var self = this;
+  load(refresh = false) {
+    if (this.inProgress) {
+      return;
+    }
+
     this.inProgress = true;
 
     this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: true })
@@ -84,22 +92,42 @@ export class Comments {
           this.joinSocketRoom();
         }
 
+        this.loaded = true;
+        this.inProgress = false;
+        this.moreData = true;
+
         if(!response.comments){
-          self.moreData = false;
-          self.inProgress = false;
+          this.moreData = false;
           return false;
         }
 
-        self.comments = response.comments.concat(self.comments);
+        this.comments = response.comments.concat(this.comments);
 
-        self.offset = response['load-previous'];
-        if(!self.offset || self.offset == null)
-          self.moreData = false;
-        self.inProgress = false;
+        this.offset = response['load-previous'];
+
+        if (refresh) {
+          this.commentsScrollEmitter.emit('bottom');
+        }
+        
+        if (
+          !this.offset ||
+          this.offset == null ||
+          response.comments.length < (this.limit - 1)
+        ) {
+          this.moreData = false;
+        }
       })
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  autoloadPrevious() {
+    if (!this.moreData) {
+      return;
+    }
+
+    this.load();
   }
 
   joinSocketRoom() {
@@ -131,6 +159,7 @@ export class Comments {
           }
 
           this.comments.push(response.comments[0]);
+          this.commentsScrollEmitter.emit('bottom');
         })
         .catch(e => {});
     });
@@ -161,6 +190,7 @@ export class Comments {
       this.attachment.reset();
       this.content = '';
       this.comments.push(response.comment);
+      this.commentsScrollEmitter.emit('bottom');
       this.inProgress = false;
     })
     .catch((e) => {
