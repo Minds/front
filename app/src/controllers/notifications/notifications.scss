@@ -40,6 +40,42 @@ minds-notification.mdl-card {
   }
 }
 
-.notifications-grid{
-  // Styles for notifications page list
+minds-notifications {
+  .mdl-tabs__tab {
+    .m-full-label {
+      display: inline-block;
+    }
+
+    .m-icon {
+      line-height: 2em;
+      margin-left: 0.35em;
+      vertical-align: middle;
+      opacity: 0.45;
+    }
+
+    @media only screen and (max-width: $min-desktop) {
+      padding: 0 $minds-padding * 2;
+
+      .m-full-label {
+        display: none;
+      }
+
+      .m-icon {
+        margin-left: 0;
+        opacity: 1;
+      }
+    }
+
+    @media only screen and (max-width: $max-mobile) {
+      padding: 0 $minds-padding * 1.5;
+    }
+
+    @media only screen and (max-width: $min-mobile) {
+      padding: 0 ($minds-padding / 1.333);
+    }
+  }
+
+  .notifications-grid{
+    // Styles for notifications page list
+  }
 }

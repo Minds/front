@@ -1,30 +1,70 @@
 <div class="mdl-tabs__tab-bar">
-    <a [routerLink]="['/Notifications']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'all' || !_filter }">All</a>
-    <a [routerLink]="['/Notifications-Filter', { filter: 'tags' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'tags' }">Tags</a>
-    <a [routerLink]="['/Notifications-Filter', { filter: 'comments' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'comments' }">Comments</a>
-    <a [routerLink]="['/Notifications-Filter', { filter: 'boosts' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'boosts' }">Boosts</a>
-    <a [routerLink]="['/Notifications-Filter', { filter: 'groups' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'groups' }">Groups</a>
-    <a [routerLink]="['/Notifications-Filter', { filter: 'subscriptions' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }">Subscriptions</a>
-    <a [routerLink]="['/Notifications-Filter', { filter: 'votes' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'votes' }">Votes</a>
-    <a [routerLink]="['/Notifications-Filter', { filter: 'reminds' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'reminds' }">Reminds</a>
+  <a [routerLink]="['/Notifications']" class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': _filter == 'all' || !_filter }"
+  >
+    <i class="material-icons m-icon">notifications</i>
+    <span class="m-full-label">All</span>
+  </a>
+  <a [routerLink]="['/Notifications-Filter', { filter: 'tags' }]" class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': _filter == 'tags' }"
+  >
+    <i class="material-icons m-icon">face</i>
+    <span class="m-full-label">Tags</span>
+  </a>
+  <a [routerLink]="['/Notifications-Filter', { filter: 'comments' }]" class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': _filter == 'comments' }"
+  >
+    <i class="material-icons m-icon">chat_bubble</i>
+    <span class="m-full-label">Comments</span>
+  </a>
+  <a [routerLink]="['/Notifications-Filter', { filter: 'boosts' }]" class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': _filter == 'boosts' }"
+  >
+    <i class="material-icons m-icon">trending_up</i>
+    <span class="m-full-label">Boosts</span>
+  </a>
+  <a [routerLink]="['/Notifications-Filter', { filter: 'groups' }]" class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': _filter == 'groups' }"
+  >
+    <i class="material-icons m-icon">group_work</i>
+    <span class="m-full-label">Groups</span>
+  </a>
+  <a [routerLink]="['/Notifications-Filter', { filter: 'subscriptions' }]" class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': _filter == 'subscriptions' }"
+  >
+    <i class="material-icons m-icon">people</i>
+    <span class="m-full-label">Subscriptions</span>
+  </a>
+  <a [routerLink]="['/Notifications-Filter', { filter: 'votes' }]" class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': _filter == 'votes' }"
+  >
+    <i class="material-icons m-icon">thumbs_up_down</i>
+    <span class="m-full-label">Votes</span>
+  </a>
+  <a [routerLink]="['/Notifications-Filter', { filter: 'reminds' }]" class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': _filter == 'reminds' }"
+  >
+    <i class="material-icons m-icon">repeat</i>
+    <span class="m-full-label">Reminds</span>
+  </a>
 </div>
 
 <div class="mdl-grid notifications-grid" style="max-width:600px">
 
   <div class="mdl-cell mdl-cell--12-col">
 
-    <minds-notification
-      *ngFor="#notification of notifications"
-      class="mdl-card mdl-shadow--2dp item"
-      [notification]="notification"
-    ></minds-notification>
+  <minds-notification
+    *ngFor="#notification of notifications"
+    class="mdl-card mdl-shadow--2dp item"
+    [notification]="notification"
+  ></minds-notification>
 
-    <infinite-scroll
-        distance="25%"
-        (load)="load()"
-        [moreData]="moreData"
-        [inProgress]="inProgress">
-    </infinite-scroll>
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress">
+  </infinite-scroll>
 
   </div>
 
