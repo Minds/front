@@ -16,12 +16,13 @@ import { MindsRichEmbed } from '../../components/rich-embed/rich-embed';
 import { SocketsService } from '../../services/sockets';
 
 import { CommentsScrollDirective } from './scroll';
+import { ScrollLock } from '../../directives/scroll-lock';
 
 @Component({
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit'],
   templateUrl: 'src/controllers/comments/list.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed, CommentsScrollDirective ],
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed, CommentsScrollDirective, ScrollLock ],
   pipes: [ TagsPipe ],
   bindings: [ AttachmentService ]
 })
