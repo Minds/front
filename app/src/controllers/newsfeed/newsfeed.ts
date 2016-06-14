@@ -91,7 +91,36 @@ export class Newsfeed {
   }
 
   pollingLoadNew() {
-    this.load(true);
+    if (!this.pollingOffset || !this.pollingNewPosts) {
+      return;
+    }
+
+    if (this.pollingNewPosts > 120) { // just replace the whole newsfeed
+      return this.load(true);
+    }
+
+    this.inProgress = true;
+
+    this.client.get('api/v1/newsfeed', { limit: this.pollingNewPosts, offset: this.pollingOffset, prepend: true }, { cache: true })
+      .then((data: MindsActivityObject) => {
+        this.inProgress = false;
+        this.pollingNewPosts = 0;
+
+        if (!data.activity) {
+          return;
+        }
+
+        this.prepended = data.activity.concat(this.prepended);
+
+        if (typeof data.activity[0] !== 'undefined') {
+          this.pollingOffset = data.activity[0].guid;
+        } else {
+          this.pollingOffset = '';
+        }
+      })
+      .catch(e => {
+        this.inProgress = false;
+      })
   }
 
   ngOnDestroy() {
