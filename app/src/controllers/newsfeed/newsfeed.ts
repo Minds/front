@@ -56,6 +56,7 @@ export class Newsfeed {
       router.navigate(['/Login']);
     } else {
       this.load();
+      this.setUpPoll();
       this.minds = window.Minds;
     }
 
@@ -70,6 +71,58 @@ export class Newsfeed {
     this.title.setTitle("Newsfeed");
   }
 
+  pollingTimer: any;
+  pollingOffset: string = '';
+  pollingNewPosts: number = 0;
+
+  setUpPoll() {
+    this.pollingTimer = setInterval(() => {
+      this.client.get('api/v1/newsfeed', { offset: this.pollingOffset, count: true }, {cache: true})
+        .then((response: any) => {
+          if (typeof response.count === 'undefined') {
+            return;
+          }
+
+          this.pollingNewPosts += response.count;
+          this.pollingOffset = response['load-previous'];
+        })
+        .catch(e => { console.error('Newsfeed polling', e); });
+    }, 60000);
+  }
+
+  pollingLoadNew() {
+    if (!this.pollingOffset || !this.pollingNewPosts) {
+      return;
+    }
+
+    if (this.pollingNewPosts > 120) { // just replace the whole newsfeed
+      return this.load(true);
+    }
+
+    this.inProgress = true;
+
+    this.client.get('api/v1/newsfeed', { limit: this.pollingNewPosts, offset: this.pollingOffset, prepend: true }, { cache: true })
+      .then((data: MindsActivityObject) => {
+        this.inProgress = false;
+        this.pollingNewPosts = 0;
+
+        if (!data.activity) {
+          return;
+        }
+
+        this.prepended = data.activity.concat(this.prepended);
+
+        this.pollingOffset = data['load-previous'] ? data['load-previous'] : '';
+      })
+      .catch(e => {
+        this.inProgress = false;
+      })
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.pollingTimer);
+  }
+
   /**
    * Load newsfeed
    */
@@ -82,6 +135,8 @@ export class Newsfeed {
 
     if(refresh){
       this.offset = "";
+      this.pollingOffset = '';
+      this.pollingNewPosts = 0;
     }
 
     this.inProgress = true;
@@ -97,6 +152,10 @@ export class Newsfeed {
             self.newsfeed = self.newsfeed.concat(data.activity);
           } else {
             self.newsfeed = data.activity;
+
+            if (data['load-previous']) {
+              self.pollingOffset = data['load-previous'];
+            }
           }
           self.offset = data['load-next'];
           self.inProgress = false;
@@ -113,6 +172,8 @@ export class Newsfeed {
       activity.boosted = true;
     }
     this.prepended.unshift(activity);
+    this.pollingOffset = activity.guid;
+
     this.newUserPromo = false;
   }
 

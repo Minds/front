@@ -1,4 +1,4 @@
-import { Component } from 'angular2/core';
+import { Component, EventEmitter } from 'angular2/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
 import { RouterLink } from "angular2/router";
 
@@ -13,12 +13,16 @@ import { SignupModalService } from '../../components/modal/signup/service';
 
 import { AttachmentService } from '../../services/attachment';
 import { MindsRichEmbed } from '../../components/rich-embed/rich-embed';
+import { SocketsService } from '../../services/sockets';
+
+import { CommentsScrollDirective } from './scroll';
+import { ScrollLock } from '../../directives/scroll-lock';
 
 @Component({
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit'],
   templateUrl: 'src/controllers/comments/list.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed ],
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed, CommentsScrollDirective, ScrollLock ],
   pipes: [ TagsPipe ],
   bindings: [ AttachmentService ]
 })
@@ -43,9 +47,17 @@ export class Comments {
   inProgress : boolean = false;
   canPost: boolean = true;
   triedToPost: boolean = false;
-  moreData : boolean = true;
+  moreData: boolean = false;
+  loaded: boolean = false;
 
-	constructor(public client: Client, public attachment: AttachmentService, private modal : SignupModalService){
+  socketRoomName: string;
+  socketSubscriptions: any = {
+    comment: null
+  };
+
+  commentsScrollEmitter: EventEmitter<string> = new EventEmitter();
+
+  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService) {
     this.minds = window.Minds;
 	}
 
@@ -55,7 +67,8 @@ export class Comments {
     if(this.object.entity_guid)
       this.guid = this.object.entity_guid;
     this.parent = this.object;
-    this.load();
+    this.load(true);
+    this.listen();
   }
 
   set _reversed(value: boolean){
@@ -65,28 +78,92 @@ export class Comments {
       this.reversed = false;
   }
 
-  load(refresh = false){
-    var self = this;
+  load(refresh = false) {
+    if (this.inProgress) {
+      return;
+    }
+
     this.inProgress = true;
 
     this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: true })
       .then((response : any) => {
+
+        if (!this.socketRoomName && response.socketRoomName) {
+          this.socketRoomName = response.socketRoomName;
+          this.joinSocketRoom();
+        }
+
+        this.loaded = true;
+        this.inProgress = false;
+        this.moreData = true;
+
         if(!response.comments){
-          self.moreData = false;
-          self.inProgress = false;
+          this.moreData = false;
           return false;
         }
 
-        self.comments = response.comments.concat(self.comments);
+        this.comments = response.comments.concat(this.comments);
 
-        self.offset = response['load-previous'];
-        if(!self.offset || self.offset == null)
-          self.moreData = false;
-        self.inProgress = false;
+        this.offset = response['load-previous'];
+
+        if (refresh) {
+          this.commentsScrollEmitter.emit('bottom');
+        }
+        
+        if (
+          !this.offset ||
+          this.offset == null ||
+          response.comments.length < (this.limit - 1)
+        ) {
+          this.moreData = false;
+        }
       })
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  autoloadPrevious() {
+    if (!this.moreData) {
+      return;
+    }
+
+    this.load();
+  }
+
+  joinSocketRoom() {
+    if (this.socketRoomName) {
+      this.sockets.join(this.socketRoomName);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.socketRoomName) {
+      this.sockets.leave(this.socketRoomName);
+    }
+  }
+
+  listen() {
+    this.socketSubscriptions.comment = this.sockets.subscribe('comment', (parent_guid, owner_guid, guid) => {
+      if (parent_guid !== this.guid) {
+        return;
+      }
+
+      if (this.session.isLoggedIn() && owner_guid === this.session.getLoggedInUser().guid) {
+        return;
+      }
+
+      this.client.get('api/v1/comments/' + this.guid, { limit: 1, offset: guid, reversed: false })
+        .then((response: any) => {
+          if (!response.comments || response.comments.length === 0) {
+            return;
+          }
+
+          this.comments.push(response.comments[0]);
+          this.commentsScrollEmitter.emit('bottom');
+        })
+        .catch(e => {});
+    });
   }
 
   postEnabled() {
@@ -114,6 +191,7 @@ export class Comments {
       this.attachment.reset();
       this.content = '';
       this.comments.push(response.comment);
+      this.commentsScrollEmitter.emit('bottom');
       this.inProgress = false;
     })
     .catch((e) => {

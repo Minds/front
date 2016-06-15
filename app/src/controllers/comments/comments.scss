@@ -4,13 +4,6 @@ minds-comments{
   margin-top:50px;
   width:100%;
 
-  .load-earlier-comments{
-    margin-left: $minds-margin*2;
-    font-size: 12px;
-    font-weight:bold;
-    color: #888;
-  }
-
   .minds-comment{
     min-height:0;
     margin:0;
@@ -284,5 +277,44 @@ minds-comments{
 
   .post-preview {
     margin-botom: $minds-padding;
+  }
+
+  .m-comments-load-more {
+    padding: ($minds-padding / 2) $minds-padding;
+    margin: ($minds-padding / 2) 0;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.85em;
+
+    &.m-disabled {
+      cursor: default !important;
+      opacity: 0.35;
+    }
+
+    i {
+      font-size: 20px;
+      vertical-align: middle;
+      padding-right: 12px;
+    }
+  }
+
+  .minds-comments-container {
+    $mcc-height: 300px;
+
+    max-height: $mcc-height;
+    overflow-y: auto;
+
+    .m-comment-attachment .item-image {
+      &.m-mature-content-shown .m-mature-overlay {
+        left: $minds-padding;
+        right: auto;
+      }
+
+      img {
+        width: auto;
+        max-width: 100%;
+        max-height: $mcc-height - ($minds-padding * 2) - 50px;
+      }
+    }
   }
 }

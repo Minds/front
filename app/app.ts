@@ -44,7 +44,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups'
 
 @Component({
   selector: 'minds-app',
-  bindings: [ NotificationService, AnalyticsService ],
+  bindings: [ AnalyticsService ],
   templateUrl: './src/controllers/index.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal, MindsRouterOutlet, HovercardPopup, Messenger  ]
 })
@@ -74,6 +74,7 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups'
   { path: '/archive/edit/:guid', component: ArchiveEdit, as: 'Archive-Edit'},
 
   { path: '/notifications', component: Notifications, as: 'Notifications'},
+  { path: '/notifications/:filter', component: Notifications, as: 'Notifications-Filter'},
 
   { path: '/groups/:filter', component: Groups, as: 'Groups'},
   { path: '/groups/create', component: GroupsCreator, as: 'Groups-Create'},

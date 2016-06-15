@@ -39,3 +39,12 @@
       Login
     </button>
 </div>
+
+<div class="m-notifications-toaster" *ngIf="session.isLoggedIn()">
+  <minds-notification
+    *ngFor="#notification of notifications"
+    class="mdl-card mdl-shadow--4dp item"
+    [notification]="notification"
+    (click)="closeNotification(notification)"
+  ></minds-notification>
+</div>

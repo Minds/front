@@ -7,6 +7,13 @@
         </div>
         <minds-newsfeed-poster (load)="prepend($event)" [message]="message"></minds-newsfeed-poster>
 
+        <div class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
+          (click)="pollingLoadNew()"
+          *ngIf="pollingNewPosts"
+        >
+          <i class="material-icons">update</i> {{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}
+        </div>
+
         <div class="minds-list">
 
             <minds-activity *ngFor="#preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>

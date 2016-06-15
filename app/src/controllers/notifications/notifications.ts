@@ -1,6 +1,6 @@
 import { Component } from 'angular2/core';
 import { CORE_DIRECTIVES } from 'angular2/common';
-import { Router, RouterLink } from 'angular2/router';
+import { Router, RouterLink, RouteParams } from 'angular2/router';
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
@@ -8,13 +8,13 @@ import { Material } from '../../directives/material';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { NotificationService } from '../../services/notification';
 import { CARDS } from '../cards/cards';
-
+import { Notification } from './notification';
 
 @Component({
   selector: 'minds-notifications',
-  bindings: [ MindsTitle, NotificationService ],
+  bindings: [ MindsTitle ],
   templateUrl: 'src/controllers/notifications/list.html',
-  directives: [ CORE_DIRECTIVES, RouterLink, Material, CARDS, InfiniteScroll ]
+  directives: [ CORE_DIRECTIVES, RouterLink, Material, CARDS, InfiniteScroll, Notification ]
 })
 
 export class Notifications {
@@ -25,8 +25,13 @@ export class Notifications {
   offset: string = "";
   inProgress : boolean = false;
   session = SessionFactory.build();
+  _filter: string = 'all';
 
-  constructor(public client: Client, public router: Router, public title : MindsTitle, public notificationService : NotificationService ){
+  constructor(public client: Client, public router: Router, public title : MindsTitle, public notificationService : NotificationService, public params: RouteParams){
+    if(params.params['filter']) {
+      this._filter = params.params['filter'];
+    }
+
     if(!this.session.isLoggedIn()){
       router.navigate(['/Login']);
     } else {
@@ -46,7 +51,7 @@ export class Notifications {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/notifications', {limit:12, offset:this.offset})
+    this.client.get(`api/v1/notifications/${this._filter}`, {limit:12, offset:this.offset})
       .then((data : any) => {
 
         if(!data.notifications){
