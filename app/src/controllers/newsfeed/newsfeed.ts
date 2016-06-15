@@ -84,7 +84,7 @@ export class Newsfeed {
           }
 
           this.pollingNewPosts += response.count;
-          this.pollingOffset = response['load-next'];
+          this.pollingOffset = response['load-previous'];
         })
         .catch(e => { console.error('Newsfeed polling', e); });
     }, 60000);
@@ -112,11 +112,7 @@ export class Newsfeed {
 
         this.prepended = data.activity.concat(this.prepended);
 
-        if (typeof data.activity[0] !== 'undefined') {
-          this.pollingOffset = data.activity[0].guid;
-        } else {
-          this.pollingOffset = '';
-        }
+        this.pollingOffset = data['load-previous'] ? data['load-previous'] : '';
       })
       .catch(e => {
         this.inProgress = false;
@@ -157,8 +153,8 @@ export class Newsfeed {
           } else {
             self.newsfeed = data.activity;
 
-            if (typeof data.activity[0] !== 'undefined') {
-              self.pollingOffset = data.activity[0].guid;
+            if (data['load-previous']) {
+              self.pollingOffset = data['load-previous'];
             }
           }
           self.offset = data['load-next'];
