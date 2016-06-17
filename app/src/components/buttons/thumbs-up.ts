@@ -29,8 +29,7 @@ export class ThumbsUpButton {
     'thumbs:up:user_guids': []
   };
   session = SessionFactory.build();
-  showModal: boolean = false;
-  guid: string = null;
+  showModal : boolean = false;
 
   constructor(public client : Client, public wallet : WalletService, private modal : SignupModalService) {
   }
@@ -41,12 +40,6 @@ export class ThumbsUpButton {
     this.object = value;
     if(!this.object['thumbs:up:user_guids'])
       this.object['thumbs:up:user_guids'] = [];
-
-    if (this.object['thumbs:guid']) {
-      this.guid = this.object['thumbs:guid'];
-    } else {
-      this.guid = this.object.guid;
-    }
   }
 
   thumb(){
@@ -58,7 +51,7 @@ export class ThumbsUpButton {
       return false;
     }
 
-    this.client.put('api/v1/thumbs/' + this.guid + '/up', {});
+    this.client.put('api/v1/thumbs/' + this.object.guid + '/up', {});
     if(!this.has()){
       //this.object['thumbs:up:user_guids'].push(this.session.getLoggedInUser().guid);
       this.object['thumbs:up:user_guids'] = [this.session.getLoggedInUser().guid];
