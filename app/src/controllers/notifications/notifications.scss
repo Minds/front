@@ -1,6 +1,4 @@
-.notifications-grid{
-
-  .mdl-card{
+minds-notification.mdl-card{
     width:100%;
     min-height:0;
     padding:$minds-padding * 2;
@@ -42,7 +40,6 @@
         }
     }
   }
-}
 
 minds-notifications {
   .mdl-tabs__tab {
