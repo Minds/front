@@ -56,7 +56,7 @@
 >
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
-			<i class="material-icons" title="Explicit content">explicit</i>
+			<i class="material-icons" title="Mature content">explicit</i>
 			<span>Click to confirm your are 18+</span>
 		</span>
 	</div>
@@ -79,7 +79,7 @@
 >
 		<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 			<span class="m-mature-overlay-note">
-				<i class="material-icons" title="Explicit content">explicit</i>
+				<i class="material-icons" title="Mature content">explicit</i>
 				<span>Click to confirm your are 18+</span>
 			</span>
 		</div>
@@ -106,7 +106,7 @@
 >
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
-			<i class="material-icons" title="Explicit content">explicit</i>
+			<i class="material-icons" title="Mature content">explicit</i>
 			<span>Click to confirm your are 18+</span>
 		</span>
 	</div>
@@ -123,7 +123,7 @@
 >
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
-			<i class="material-icons" title="Explicit content">explicit</i>
+			<i class="material-icons" title="Mature content">explicit</i>
 			<span>Click to confirm your are 18+</span>
 		</span>
 	</div>
@@ -173,7 +173,7 @@
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="delete(); toggle.value = !toggle.value">Delete</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled>Mute notifications</li>
 		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false">Mute notifications</li>
@@ -183,4 +183,18 @@
 
   <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url" [embed]="activity"></m-modal-share>
 	<m-modal-report *ngIf="reportToggle" [open]="true" (closed)="reportToggle = false" [object]="activity"></m-modal-report>
+  <m-modal-confirm *ngIf="deleteToggle"
+    [open]="true"
+    [closeAfterAction]=true
+    (closed)="deleteToggle = false"
+    (actioned)="delete($event)"
+    yesButton="Delete permanently"
+  >
+    <p confirm-message>
+        Are you sure you want to delete this post? 
+    </p>
+    <p confirm-success-message>
+        The post has been deleted.
+    </p>
+  </m-modal-confirm>
 </div>

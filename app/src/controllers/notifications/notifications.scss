@@ -1,41 +1,45 @@
-minds-notification.mdl-card {
-  width:100%;
-  min-height:0;
-  padding:$minds-padding * 2;
-  margin-bottom:$minds-margin*2;
+.notifications-grid{
 
-  @include flex-display();
-  @include flex-direction(row);
+  .mdl-card{
+    width:100%;
+    min-height:0;
+    padding:$minds-padding * 2;
+    margin-bottom:$minds-margin*2;
 
-  .avatar{
-    @include flex-display();
-    @include flex-direction(column);
+    display: flex;
+    flex-direction: row;
 
-    img{
-      border-radius: 3px;
-      max-height:50px;
-    }
-  }
+    .avatar{
+      display: flex;
+      flex-direction: column;
 
-  .body{
-    padding:0 $minds-padding*2;
-
-    a{
-      color:#333;
-      text-decoration: none;
+      img{
+          border-radius: 3px;
+         max-height:50px;
+       }
     }
 
-    .pseudo-link{
-      font-weight:bold;
-    }
+    .body{
+       padding:0 $minds-padding*2;
 
-    p{
-      padding:0;
-      margin:0;
-    }
 
-    .ts{
-      font-size:11px;
+        a{
+          color:#333;
+          text-decoration: none;
+        }
+
+        .pseudo-link{
+          font-weight:bold;
+        }
+
+        p{
+          padding:0;
+          margin:0;
+        }
+
+        .ts{
+          font-size:11px;
+        }
     }
   }
 }

@@ -8,6 +8,10 @@ h1{
   font-weight:300;
 }
 
+p {
+  word-wrap: break-word;
+}
+
 minds-app{
   .initial-loading{
     width:100%;
@@ -118,6 +122,8 @@ minds-topbar{
   }
 }
 .mdl-card__supporting-text{
+  word-wrap: break-word;
+  
   textarea{
     color: rgba(0,0,0,.87);
     font-size: 13px;
@@ -139,7 +145,7 @@ minds-topbar{
     align-items: center;
     -webkit-align-items: center;
     justify-content: center;
-    @include flex-display();
+    display: flex;
     padding: 55px;
     text-transform: uppercase;
     font-weight: 100;
@@ -158,8 +164,8 @@ minds-topbar{
 
 
 .minds-block {
-  @include flex-display();
-  @include flex-direction(row);
+  display: flex;
+  flex-direction: row;
 
   .minds-avatar{
     margin-right:$minds-margin;

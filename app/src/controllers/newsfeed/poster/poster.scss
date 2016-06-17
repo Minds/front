@@ -9,9 +9,9 @@
 
 
   > div {
-    @include flex-direction(row);
-    @include flex-wrap(wrap);
-    @include flex-display();
+    flex-direction: row;
+    flex-wrap: wrap;
+    display: flex;
     width: 100%;
     box-sizing: border-box;
     padding-bottom:0;
@@ -25,7 +25,7 @@
     }
 
     form{
-      @include flex(1);
+      flex: 1;
       margin-bottom:0;
 
       .mdl-textfield__input{

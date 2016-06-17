@@ -83,7 +83,7 @@
           <a class="mdl-color-text--blue-grey-300 m-capture-default-maturity" (click)="default_maturity = default_maturity ? 0 : 1">
             <i class="material-icons"
             [ngClass]="{ 'mdl-color-text--red-500': default_maturity }"
-            title="Explicit content"
+            title="Mature content"
             >explicit</i>
             <span *ngIf="default_maturity" class="mdl-color-text--red-500">Mature content</span>
           </a>
@@ -109,7 +109,7 @@
           <a class="mdl-color-text--blue-grey-300 m-capture-mature" (click)="upload.mature = upload.mature ? 0 : 1">
             <i class="material-icons"
             [ngClass]="{ 'mdl-color-text--red-500': upload.mature }"
-            title="Explicit content"
+            title="Mature content"
             >explicit</i>
           </a>
 

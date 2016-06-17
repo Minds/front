@@ -22,7 +22,8 @@ interface Window {
 	Minds : Minds;
 	componentHandler : any;
   ga : any;
-  adsbygoogle ?: any;
+  adsbygoogle?: any;
+  onErrorCallback?: any;
   onSuccessCallback ?: any;
   BraintreeLoaded ?: any;
   io ?: any;

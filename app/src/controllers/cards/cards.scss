@@ -151,9 +151,9 @@ minds-card-album{
     margin: -16px;
     height: 200px;
     overflow: hidden;
-    @include flex-display();
-    @include flex-direction(row);
-    @include flex-wrap(wrap);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: stretch;
     -webkit-align-items: stretch;
 
@@ -202,6 +202,7 @@ minds-activity.mdl-card, minds-activity{
   }
   .mdl-card__supporting-text.message{
     white-space: pre-line;
+    word-wrap: break-word;
   }
 
   .m-owner-block{

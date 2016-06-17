@@ -76,7 +76,7 @@ minds-channel{
   }
 
   .minds-tabs{
-    @include flex(1);
+    flex: 1;
     align-items: flex-start;
     -webkit-align-items: -webkit-flex-start;
     justify-content: flex-start;
