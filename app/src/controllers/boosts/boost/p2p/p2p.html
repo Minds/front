@@ -90,7 +90,7 @@
 
     <div *ngIf="option == 'pro'" class="mdl-grid minds-boost-points-wrapper">
 
-      <div class="mdl-cell mdl-cell--11-col minds-boost-points-input" [hidden]="stage == 3 || stage == 4">
+      <div class="mdl-cell mdl-cell--8-col minds-boost-points-input" [hidden]="stage == 3 || stage == 4">
         <div class="cell">
           <input
             type="number"
@@ -103,7 +103,7 @@
   			</div>
       </div>
 
-      <div class="mdl-cell mdl-cell--1-col minds-boost-points-input" [hidden]="stage != 1">
+      <div class="mdl-cell mdl-cell--4-col minds-boost-points-input" [hidden]="stage != 1">
          <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="stage = 2" [hidden]="inProgress">Boost!</button>
       </div>
 
