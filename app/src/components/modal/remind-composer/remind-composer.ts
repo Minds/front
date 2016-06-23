@@ -1,6 +1,6 @@
-import { forwardRef, Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
+import { forwardRef, Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
 import { Modal } from '../modal';
 import { AutoGrow } from '../../../directives/autogrow';

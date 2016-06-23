@@ -1,5 +1,6 @@
-import {Inject} from 'angular2/core';
-import {Router, Location} from 'angular2/router';
+import {Inject} from '@angular/core';
+import {Location} from '@angular/common';
+import {Router} from '@angular/router-deprecated';
 
 export class Navigation {
 

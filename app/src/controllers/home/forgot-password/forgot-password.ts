@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { Router, RouteParams } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { Router, RouteParams } from '@angular/router-deprecated';
 
 import { MindsTitle } from '../../../services/ux/title';
 import { Material } from '../../../directives/material';
@@ -10,7 +10,7 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-register',
-  bindings: [ MindsTitle ],
+  providers: [ MindsTitle ],
   templateUrl: 'src/controllers/home/forgot-password/forgot-password.html',
   directives: [ CORE_DIRECTIVES, Material ]
 })

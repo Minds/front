@@ -16,9 +16,9 @@
 
         <div class="minds-list">
 
-            <minds-activity *ngFor="#preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+            <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
             <minds-newsfeed-boost-rotator interval="12"></minds-newsfeed-boost-rotator>
-            <minds-activity *ngFor="#activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+            <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
             <infinite-scroll
                 distance="25%"
                 (load)="load()"
@@ -77,7 +77,7 @@
 
       <div class="m-newsfeed-footer">
         <ul class="m-footer-nav m-footer-nav-inline">
-          <li *ngFor="#page of navigation.getItems('footer')" class="m-footer-nav-item">
+          <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item">
             <a *ngIf="page.path === '/P'" [routerLink]="['/P', {page: page.params.page }]">{{page.title}}</a>
             <a *ngIf="!page.path" [href]="page.params.page" target="_blank">{{page.title}}</a>
           </li>

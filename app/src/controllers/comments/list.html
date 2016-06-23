@@ -21,7 +21,7 @@
     
   </div>
 
-  <minds-card-comment *ngFor="#comment of comments; #i = index"
+  <minds-card-comment *ngFor="let comment of comments; let i = index"
     [object]="comment"
     [parent]="parent"
     (delete)="delete(i)"

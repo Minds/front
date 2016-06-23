@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { Router, ROUTER_DIRECTIVES, RouteParams } from '@angular/router-deprecated';
 
 import { Client } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
@@ -23,7 +23,7 @@ import { AttachmentService } from '../../../services/attachment';
     </div>
 
     <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;" *ngIf="type != 'blog'">
-      <a *ngFor="#object of items"
+      <a *ngFor="let object of items"
       [routerLink]="['/Archive-View', {guid: object.guid}]"
       [ngClass]="{ 'm-mature-module-thumbnail': attachment.shouldBeBlurred(object) }"
       >
@@ -32,7 +32,7 @@ import { AttachmentService } from '../../../services/attachment';
       </a>
     </div>
     <div *ngIf="type == 'blog'" style="min-height:0;">
-      <minds-card-blog [object]="blog" *ngFor="#blog of items" class="mdl-card" style="border-radius:0;">
+      <minds-card-blog [object]="blog" *ngFor="let blog of items" class="mdl-card" style="border-radius:0;">
         {{blog.title}}
       </minds-card-blog>
     </div>
@@ -42,7 +42,7 @@ import { AttachmentService } from '../../../services/attachment';
 
   `,
   directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, CARDS, BlogCard, Material ],
-  bindings: [ AttachmentService ]
+  providers: [ AttachmentService ]
 })
 
 export class ChannelModules {

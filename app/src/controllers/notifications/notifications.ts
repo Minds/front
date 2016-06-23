@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { Router, RouterLink, RouteParams } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { Router, RouterLink, RouteParams } from '@angular/router-deprecated';
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
@@ -12,7 +12,7 @@ import { Notification } from './notification';
 
 @Component({
   selector: 'minds-notifications',
-  bindings: [ MindsTitle ],
+  providers: [ MindsTitle ],
   templateUrl: 'src/controllers/notifications/list.html',
   directives: [ CORE_DIRECTIVES, RouterLink, Material, CARDS, InfiniteScroll, Notification ]
 })

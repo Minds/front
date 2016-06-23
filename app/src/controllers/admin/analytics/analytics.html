@@ -9,7 +9,7 @@
         <minds-graph-line [data]="dam"></minds-graph-line>
       </div>
       <div class="mdl-card__supporting-text results">
-        <div *ngFor="#stat of dam_list" class="row">
+        <div *ngFor="let stat of dam_list" class="row">
           <label>{{stat.timestamp * 1000 | date: 'dEEEEMM'}}</label>
           <b>{{stat.total}}</b>
         </div>
@@ -25,7 +25,7 @@
         <minds-graph-line [data]="mam"></minds-graph-line>
       </div>
       <div class="mdl-card__supporting-text results">
-        <div *ngFor="#stat of mam_list" class="row">
+        <div *ngFor="let stat of mam_list" class="row">
           <label>{{stat.timestamp * 1000 | date: 'MMMM'}}</label>
           <b>{{stat.total}}</b>
         </div>
@@ -38,7 +38,7 @@
         <minds-graph-line [data]="retention.totals"></minds-graph-line>
       </div>
       <div class="mdl-card__supporting-text results" *ngIf="retention">
-        <div class="cell" style="width:25%" *ngFor="#stat of retention.totals">
+        <div class="cell" style="width:25%" *ngFor="let stat of retention.totals">
           <label>{{stat.day }}</label>
           <b>{{stat.total * 100 | number:'1.0-0'}}%</b>
         </div>
@@ -55,7 +55,7 @@
         <minds-graph-line [data]="signups"></minds-graph-line>
       </div>
       <div class="mdl-card__supporting-text results">
-        <div *ngFor="#stat of signups_list" class="row">
+        <div *ngFor="let stat of signups_list" class="row">
           <label>{{stat.timestamp * 1000 | date: 'dEEEEMM'}}</label>
           <b>{{stat.total}}</b>
         </div>

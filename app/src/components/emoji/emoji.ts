@@ -1,5 +1,5 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 import { EmojiList } from '../../services/emoji-list';
 import { Emoji as EmojiDirective } from '../../directives/emoji';
@@ -19,7 +19,7 @@ import { Emoji as EmojiDirective } from '../../directives/emoji';
         >close</i>
       </div>
       <div class="m-emoji-selector-list">
-        <span *ngFor="#emoji of emojis"
+        <span *ngFor="let emoji of emojis"
         tabindex="0"
         class="m-emoji"
         [title]="emoji.name"

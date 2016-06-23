@@ -1,13 +1,13 @@
-import { EventEmitter } from 'angular2/core';
-import { Router } from 'angular2/router';
+import { EventEmitter } from '@angular/core';
+import { Router } from '@angular/router-deprecated';
 import { ScrollService } from '../../../services/ux/scroll';
 
 export class SignupModalService{
 
   defaultSubtitle : string = "Signup to comment, upload, vote and earn 100+ free views on your content daily.";
   subtitle : string = this.defaultSubtitle;
-  isOpen : EventEmitter<boolean> = new EventEmitter();
-  display : EventEmitter<string> = new EventEmitter();
+  isOpen : EventEmitter<any> = new EventEmitter();
+  display : EventEmitter<any> = new EventEmitter();
 
   route : string;
   scroll_listener;

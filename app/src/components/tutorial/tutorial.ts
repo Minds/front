@@ -1,6 +1,6 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from 'angular2/common';
-import { Router, RouteParams } from 'angular2/router';
+import { Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from '@angular/common';
+import { Router, RouteParams } from '@angular/router-deprecated';
 
 
 import { Material } from '../../directives/material';

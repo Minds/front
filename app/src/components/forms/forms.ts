@@ -1,4 +1,4 @@
-import { Type } from 'angular2/core';
+import { Type } from '@angular/core';
 
 import { CityFinderForm } from './city-finder/city-finder';
 import { LoginForm } from './login/login';

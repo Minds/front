@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, Location } from '@angular/common';
+import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -12,7 +12,7 @@ import { BlogCard } from '../../plugins/blog/card/card';
 
 @Component({
   selector: 'minds-search',
-  bindings: [ MindsTitle ],
+  providers: [ MindsTitle ],
   templateUrl: 'src/controllers/search/list.html',
   directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
     CARDS, BlogCard, InfiniteScroll ]

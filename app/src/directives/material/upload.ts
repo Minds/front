@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, Inject } from 'angular2/core';
+import { Directive, ViewContainerRef, Inject } from '@angular/core';
 import { Material as MaterialService } from "../../services/ui";
 
 @Directive({

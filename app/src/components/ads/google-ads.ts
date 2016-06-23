@@ -1,5 +1,5 @@
-import { Component, EventEmitter, ElementRef } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, EventEmitter, ElementRef } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 @Component({
   selector: 'google-ad',

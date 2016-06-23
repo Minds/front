@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
-import { Router, RouteParams } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
+import { Router, RouteParams } from '@angular/router-deprecated';
 
 import { FORM_COMPONENTS } from '../../../components/forms/forms';
 

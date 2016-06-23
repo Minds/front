@@ -1,8 +1,8 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 
-import { Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -22,7 +22,7 @@ import { InviteModal } from '../../components/modal/invite/invite';
 
 @Component({
   selector: 'minds-newsfeed',
-  bindings: [ MindsTitle, NavigationService ],
+  providers: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/newsfeed/list.html',
   directives: [ Poster, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
     InfiniteScroll, AnalyticsImpressions, CARDS, BoostAds, NewsfeedBoostRotator, InviteModal ]
@@ -187,8 +187,9 @@ export class Newsfeed {
       });
   }
 
-  delete(activity){
-    for(var i in this.newsfeed){
+  delete(activity) {
+    let i: any;
+    for(i in this.newsfeed){
       if(this.newsfeed[i] == activity)
         this.newsfeed.splice(i,1);
     }

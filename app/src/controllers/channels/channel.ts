@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { Router, ROUTER_DIRECTIVES, RouteParams } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { Router, ROUTER_DIRECTIVES, RouteParams } from '@angular/router-deprecated';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -29,7 +29,7 @@ import { MessengerChannelButton } from '../../plugins/Messenger/channel-button/c
 
 @Component({
   selector: 'minds-channel',
-  bindings: [ MindsTitle ],
+  providers: [ MindsTitle ],
   templateUrl: 'src/controllers/channels/channel.html',
   pipes: [ TagsPipe ],
   directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, Material, InfiniteScroll, CARDS,
@@ -181,8 +181,9 @@ export class Channel {
       });
   }
 
-  delete(activity){
-    for(var i in this.feed){
+  delete(activity) {
+    let i: any;
+    for(i in this.feed){
       if(this.feed[i] == activity)
         this.feed.splice(i,1);
     }

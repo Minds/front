@@ -1,4 +1,4 @@
-import { EventEmitter, Injector, provide } from 'angular2/core';
+import { EventEmitter, Injector, provide } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 
 export class ScrollService{

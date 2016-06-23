@@ -1,6 +1,6 @@
-import { Component, Inject} from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { Router, RouteParams, Location } from 'angular2/router';
+import { Component, Inject} from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, Location } from '@angular/common';
+import { Router, RouteParams } from '@angular/router-deprecated';
 
 import { Client, Upload } from '../../services/api';
 import { Material } from '../../directives/material';

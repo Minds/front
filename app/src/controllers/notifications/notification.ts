@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { RouterLink } from 'angular2/router';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router-deprecated';
+import { CORE_DIRECTIVES } from '@angular/common';
 import { Material } from '../../directives/material';
 import { SessionFactory } from '../../services/session';
 

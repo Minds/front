@@ -1,5 +1,5 @@
-import { Component, EventEmitter, ChangeDetectorRef  } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, EventEmitter, ChangeDetectorRef  } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
@@ -43,7 +43,7 @@ import { Material } from '../../directives/material';
 
       <b *ngIf="accounts.length > 0" class="mdl-color-text--blue-grey-400" style="text-align: center; margin: 0; display:block;">Select a page to link below</b>
       <div class="m-third-party-networks-facebook-pages-list">
-        <div class="m-block mdl-card mdl-shadow--2dp" *ngFor="#account of accounts" (click)="selectAccount(account)">
+        <div class="m-block mdl-card mdl-shadow--2dp" *ngFor="let account of accounts" (click)="selectAccount(account)">
           <div class="m-avatar">
             <img [src]="'https://graph.facebook.com/' + account.id + '/picture'" />
           </div>

@@ -55,16 +55,25 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
 
   { src: 'es6-shim/es6-shim.min.js', inject: 'shims', dest: JS_DEST },
   { src: 'reflect-metadata/Reflect.js', inject: 'shims', dest: JS_DEST },
+  { src: 'zone.js/dist/zone.min.js', inject: 'shims', dest: JS_DEST },
   { src: 'systemjs/dist/system.src.js', inject: 'shims', dest: JS_DEST },
-  { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'shims', dest: JS_DEST },
+  // { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'shims', dest: JS_DEST },
   //{ src: 'intl/dist/Intl.min.js', inject: 'shims', dest: JS_DEST },
   //{ src: 'intl/locale-data/jsonp/en.js', inject: 'shims', dest: JS_DEST },
 
   // Faster dev page load
   { src: 'rxjs/bundles/Rx.min.js', inject: 'libs', dest: JS_DEST },
-  { src: 'angular2/bundles/angular2.min.js', inject: 'libs', dest: JS_DEST },
-  { src: 'angular2/bundles/router.min.js', inject: 'libs', dest: JS_DEST }, // use router.min.js with alpha47
-  { src: 'angular2/bundles/http.min.js', inject: 'libs', dest: JS_DEST },
+  // { src: 'angular2/bundles/angular2.min.js', inject: 'libs', dest: JS_DEST },
+  // { src: 'angular2/bundles/router.min.js', inject: 'libs', dest: JS_DEST }, // use router.min.js with alpha47
+  // { src: 'angular2/bundles/http.min.js', inject: 'libs', dest: JS_DEST },
+  // -ng-rc- { src: '@angular/core/bundles/core.umd.min.js', inject: 'libs', dest: JS_DEST },
+  // -ng-rc- { src: '@angular/common/bundles/common.umd.min.js', inject: 'libs', dest: JS_DEST },
+  // -ng-rc- { src: '@angular/compiler/bundles/compiler.umd.min.js', inject: 'libs', dest: JS_DEST },
+  // -ng-rc- { src: '@angular/http/bundles/http.umd.min.js', inject: 'libs', dest: JS_DEST },
+  // -ng-rc- { src: '@angular/platform-browser/bundles/platform-browser.umd.min.js', inject: 'libs', dest: JS_DEST },
+  // -ng-rc- { src: '@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.min.js', inject: 'libs', dest: JS_DEST },
+  // -ng-rc- { src: '@angular/router/bundles/router.umd.min.js', inject: 'libs', dest: JS_DEST },
+  // -ng-rc- { src: '@angular/router-deprecated/bundles/router-deprecated.umd.min.js', inject: 'libs', dest: JS_DEST },
   { src: 'socket.io-client/socket.io.js', inject: 'libs', dest: JS_DEST },
 
   // async
@@ -76,11 +85,12 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
 export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencies([
   { src: 'systemjs/dist/system-polyfills.src.js', inject: 'shims' },
   { src: 'reflect-metadata/Reflect.js', inject: 'shims' },
+  { src: 'zone.js/dist/zone.min.js', inject: 'shims' },
   { src: 'es6-shim/es6-shim.min.js', inject: 'shims' },
   { src: 'systemjs/dist/system.js', inject: 'shims' },
-  { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
+  // { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
   { src: 'socket.io-client/socket.io.js', inject: 'libs' },
-  { src: 'angular2/es6/dev/src/testing/shims_for_IE.js', inject: 'shims' },
+  // { src: 'angular2/es6/dev/src/testing/shims_for_IE.js', inject: 'shims' },
   { src: 'intl/dist/Intl.min.js', inject: 'shims' },
   { src: 'intl/locale-data/jsonp/en.js', inject: 'shims' },
 ]);
@@ -107,18 +117,28 @@ export const AUTOPREFIXER_BROWSERS = [
 
 // ----------------
 // SystemsJS Configuration.
+
+const SYSTEM_PACKAGES = {
+  '@angular/core': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/common': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/compiler': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/http': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/platform-browser': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/platform-browser-dynamic': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/router': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/router-deprecated': { main: 'index.js', defaultExtension: 'js' },
+  'symbol-observable': { main: 'index.js', defaultExtension: 'js' }
+};
+
 const SYSTEM_CONFIG_DEV = {
   defaultJSExtensions: true,
   paths: {
     [BOOTSTRAP_MODULE]: `${APP_BASE}${BOOTSTRAP_MODULE}`,
-    'angular2/*': `${APP_BASE}angular2/*`,
-    'rxjs/*': `${APP_BASE}rxjs/*`,
+    // '@angular/*': `${APP_BASE}@angular/*`,
+    // 'rxjs/*': `${APP_BASE}node_modules/rxjs/*`,
     '*': `${APP_BASE}node_modules/*`
   },
-  packages: {
-    angular2: { defaultExtension: false },
-    rxjs: { defaultExtension: false }
-  }
+  packages: SYSTEM_PACKAGES
 };
 
 export const SYSTEM_CONFIG = SYSTEM_CONFIG_DEV;
@@ -128,7 +148,8 @@ export const SYSTEM_BUILDER_CONFIG = {
   paths: {
     [`${TMP_DIR}/*`]: `${TMP_DIR}/*`,
     '*': 'node_modules/*'
-  }
+  },
+  packages: SYSTEM_PACKAGES
 };
 
 // --------------

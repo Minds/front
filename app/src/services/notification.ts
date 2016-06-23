@@ -1,4 +1,4 @@
-import { EventEmitter } from 'angular2/core';
+import { EventEmitter } from '@angular/core';
 import { Client } from './api';
 import { SocketsService } from './sockets';
 import { SessionFactory } from './session';

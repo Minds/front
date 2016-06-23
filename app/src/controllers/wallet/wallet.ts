@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from "angular2/router";
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { Router, RouteParams, ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -17,7 +17,7 @@ import { Merchants } from './merchants/merchants';
 
 @Component({
   selector: 'minds-wallet',
-  bindings: [ MindsTitle, WalletService ],
+  providers: [ MindsTitle, WalletService ],
   templateUrl: 'src/controllers/wallet/wallet.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, MDL_DIRECTIVES, InfiniteScroll,
     WalletTransactions, WalletPurchase, Merchants]

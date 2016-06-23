@@ -1,6 +1,6 @@
 <nav class="minds-navigation mdl-navigation">
 
-  <div *ngFor="#item of navigation.getItems()">
+  <div *ngFor="let item of navigation.getItems()">
 
   	<a class="mdl-navigation__link mdl-color-text--white"
   		[ngClass]="{'mdl-color--blue-grey-600' : item.active, 'mdl-color--blue-grey-800': !item.active}"
@@ -13,7 +13,7 @@
 
   	</a>
 
-    <div *ngFor="#subitem of item.submenus" [hidden]="!item.active">
+    <div *ngFor="let subitem of item.submenus" [hidden]="!item.active">
       <a class="mdl-navigation__link mdl-color-text--white subitem"
         [ngClass]="{'mdl-color--blue-grey-500' : subitem.active, 'mdl-color--blue-grey-700': !subitem.active}"
         [routerLink]="[subitem.path, subitem.params]"

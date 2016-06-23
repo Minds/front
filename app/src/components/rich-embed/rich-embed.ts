@@ -1,5 +1,5 @@
-import { Component, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Material } from '../../directives/material';
 import { MINDS_PIPES } from '../../pipes/pipes';

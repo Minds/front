@@ -1,6 +1,6 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client, Upload } from '../../../services/api';
 import { MDL_DIRECTIVES } from '../../../directives/material';
@@ -18,7 +18,7 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
   outputs: ['load'],
   templateUrl: 'src/controllers/newsfeed/poster/poster.html',
   directives: [ MDL_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, AutoGrow, InfiniteScroll, MindsRichEmbed ],
-  bindings: [ AttachmentService ]
+  providers: [ AttachmentService ]
 })
 
 export class Poster {

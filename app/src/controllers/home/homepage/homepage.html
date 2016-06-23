@@ -106,7 +106,7 @@
     <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
       <h4><a [routerLink]="['/Discovery', {filter: 'featured', 'type':'videos'}]" class="mdl-color-text--blue-grey-200">Featured videos <span>More</span></a></h4>
       <div class="m-contents mdl-grid">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ngFor="#video of videos">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ngFor="let video of videos">
           <minds-card-video [object]="video" class="mdl-card mdl-shadow--2dp"></minds-card-video>
         </div>
       </div>
@@ -115,7 +115,7 @@
     <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
       <h4><a [routerLink]="['/Blog', {filter: 'featured'}]" class="mdl-color-text--blue-grey-200">Featured blogs <span>More</span></a></h4>
       <div class="m-contents mdl-grid">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ngFor="#blog of blogs">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ngFor="let blog of blogs">
           <minds-card-blog [object]="blog" class="mdl-card mdl-shadow--2dp"></minds-card-blog>
         </div>
       </div>
@@ -189,7 +189,7 @@
 
     <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
       <ul class="m-footer-nav m-footer-nav-inline">
-        <li *ngFor="#page of navigation.getItems('footer')" class="m-footer-nav-item ">
+        <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item ">
           <a *ngIf="page.path === '/P'" [routerLink]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
           <a *ngIf="!page.path" [href]="page.params.page" target="_blank" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
         </li>

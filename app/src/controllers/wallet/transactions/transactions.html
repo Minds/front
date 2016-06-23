@@ -1,4 +1,4 @@
-<div class="mdl-card mdl-shadow--2dp minds-transaction-card" *ngFor="#transaction of transactions">
+<div class="mdl-card mdl-shadow--2dp minds-transaction-card" *ngFor="let transaction of transactions">
   <div class="mdl-card__title mdl-card--expand minds-transaction-points">
     <span [hidden]="transaction.points < 0" class="positive">
       + {{transaction.points}}

@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
@@ -11,7 +11,7 @@ import { MindsBanner } from '../../components/banner';
 import { ListablePipe } from '../../pipes/listable';
 
 @Component({
-  bindings: [ MindsTitle, NavigationService ],
+  providers: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/pages/pages.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material, MindsBanner ],
   pipes: [ ListablePipe ]

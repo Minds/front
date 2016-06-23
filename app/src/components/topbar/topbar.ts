@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { RouterLink } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { RouterLink } from '@angular/router-deprecated';
 
 import { Material } from '../../directives/material';
 import { Storage } from '../../services/storage';
@@ -13,7 +13,7 @@ import { Notification } from '../../controllers/notifications/notification';
 
 @Component({
   selector: 'minds-topbar',
-  viewBindings: [ Storage, Sidebar ],
+  viewProviders: [ Storage, Sidebar ],
   templateUrl: 'src/components/topbar/topbar.html',
   directives: [ CORE_DIRECTIVES, RouterLink, Material, SearchBar, TopbarNavigation, Notification ]
 })
@@ -53,9 +53,10 @@ export class Topbar{
   }
 
   closeNotification(notification: any) {
-    for (let i in this.notifications) {
+    let i: any;
+    for (i in this.notifications) {
       if (this.notifications[i] == notification) {
-        this.notifications.splice(i,1);
+        this.notifications.splice(i, 1);
       }
     }
   }

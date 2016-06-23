@@ -1,7 +1,7 @@
-import { Component, ElementRef } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
+import { Component, ElementRef } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
-import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client, Upload } from '../../../services/api';

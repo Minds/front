@@ -1,6 +1,6 @@
-import { Component, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
@@ -18,7 +18,7 @@ import { ScrollService } from '../../services/ux/scroll';
   //changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <video (click)="onClick()" preload="none" [poster]="poster" allowfullscreen [muted]="muted" [loop]="loop" [autoplay]="autoplay">
-      <source [src]="s.uri" *ngFor="#s of src">
+      <source [src]="s.uri" *ngFor="let s of src">
     </video>
     <div class="minds-video-bar-min">
       {{time.minutes}}:{{time.seconds}}

@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
-import { Router, RouteParams, RouterLink } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
+import { Router, RouteParams, RouterLink } from '@angular/router-deprecated';
 
 import { FORM_COMPONENTS } from '../../../components/forms/forms';
 
@@ -14,7 +14,7 @@ import { Register } from '../register/register';
 
 @Component({
   selector: 'minds-login',
-  bindings: [ MindsTitle ],
+  providers: [ MindsTitle ],
   templateUrl: 'src/controllers/home/login/login.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, FORM_COMPONENTS, Material, Register, RouterLink]
 })

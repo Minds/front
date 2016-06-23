@@ -1,6 +1,6 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
+import { Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
 import { Modal } from '../modal';
 import { Client } from '../../../services/api';
@@ -16,7 +16,7 @@ import { Client } from '../../../services/api';
       <div [hidden]="sent" class="m-modal-report-body">
         <h3 class="m-modal-report-title">Report</h3>
 
-        <div *ngFor="#item of subjects" class="m-modal-report-reason mdl-color-text--blue-grey-900">
+        <div *ngFor="let item of subjects" class="m-modal-report-reason mdl-color-text--blue-grey-900">
           <input type="radio"
             [disabled]="inProgress"
             [ngModel]="{ checked: subject == item.value }"

@@ -1,5 +1,5 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 
 @Component({
@@ -10,16 +10,16 @@ import { CORE_DIRECTIVES } from 'angular2/common';
   template: `
     <!-- Day -->
     <select [(ngModel)]="selectedDate" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
-        <option *ngFor="#d of dates; #i = index" [value]="i">{{d.formatted}}</option>
+        <option *ngFor="let d of dates; let i = index" [value]="i">{{d.formatted}}</option>
     </select>
     <!-- Hour -->
     <select [(ngModel)]="selectedHour" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
-        <option *ngFor="#h of hours; #i = index" [value]="i">{{h.label}}</option>
+        <option *ngFor="let h of hours; let i = index" [value]="i">{{h.label}}</option>
     </select>
     <b>:</b>
     <!-- Minutes -->
     <select [(ngModel)]="selectedMinutes" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
-        <option *ngFor="#m of minutes; #i = index" [value]="i">{{m.label}}</option>
+        <option *ngFor="let m of minutes; let i = index" [value]="i">{{m.label}}</option>
     </select>
   `
 })

@@ -40,7 +40,7 @@
           [hidden]="albums.length > 0 && !inProgress"
           [mdl]
           ></div>
-        <div *ngFor="#album of albums"
+        <div *ngFor="let album of albums"
           class="mdl-card m-album mdl-color--blue-grey-50 mdl-color-text--blue-grey-500"
           [ngClass]="{'mdl-color--blue-grey-500': postMeta.album_guid == album.guid, 'mdl-color-text--blue-grey-50': postMeta.album_guid == album.guid}"
           (click)="selectAlbum(album)">
@@ -89,7 +89,7 @@
           </a>
 
           <select [(ngModel)]="default_license" class="mdl-color-text--blue-grey-300 m-form-select">
-              <option *ngFor="#l of licenses" [value]="l.value">{{l.text}}</option>
+              <option *ngFor="let l of licenses" [value]="l.value">{{l.text}}</option>
           </select>
 
           <button class="mdl-button mdl-button--raised mdl-button--colored m-capture-save-to-album-button" (click)="publish()" [disabled]="!uploads">
@@ -98,7 +98,7 @@
       </div>
     </form>
 
-    <div class="mdl-card mdl-shadow--2dp m-upload" *ngFor="#upload of uploads; #i = index">
+    <div class="mdl-card mdl-shadow--2dp m-upload" *ngFor="let upload of uploads; let i = index">
       <div class="mdl-card__title m-capture-edit-container">
         <input
           type="text"
@@ -114,7 +114,7 @@
           </a>
 
           <select [(ngModel)]="upload.license" (change)="modify(i)" class="mdl-color-text--blue-grey-300 m-form-select">
-              <option *ngFor="#l of licenses" [value]="l.value" >{{l.text}}</option>
+              <option *ngFor="let l of licenses" [value]="l.value" >{{l.text}}</option>
           </select>
       </div>
 

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Inject } from 'angular2/core';
+import { Directive, ElementRef, Inject } from '@angular/core';
 import { Material as MaterialService } from "../../services/ui";
 
 @Directive({

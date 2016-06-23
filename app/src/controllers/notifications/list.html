@@ -54,7 +54,7 @@
   <div class="mdl-cell mdl-cell--12-col">
 
   <minds-notification
-    *ngFor="#notification of notifications"
+    *ngFor="let notification of notifications"
     class="mdl-card mdl-shadow--2dp item"
     [notification]="notification"
   ></minds-notification>

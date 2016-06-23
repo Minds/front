@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, Location } from '@angular/common';
+import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client, Upload } from '../../../services/api';
 import { CARDS } from '../../../controllers/cards/cards';
@@ -100,8 +100,9 @@ export class AdminBoosts {
   /**
    * Remove an entity from the list
    */
-  pop(boost){
-    for(var i in this.boosts){
+  pop(boost) {
+    let i: any;
+    for(i in this.boosts){
       if(boost == this.boosts[i])
         this.boosts.splice(i,1);
     }

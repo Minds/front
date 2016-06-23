@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { RouterLink } from "angular2/router";
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
@@ -23,7 +23,7 @@ import { AttachmentService } from '../../../services/attachment';
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks, Hovercard ],
   pipes: [ MINDS_PIPES ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  bindings: [ AttachmentService ]
+  providers: [ AttachmentService ]
 })
 
 export class ActivityPreview {

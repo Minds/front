@@ -1,5 +1,5 @@
-import { Component, Inject, Injector, bind } from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { Component, Inject, Injector, bind } from '@angular/core';
+import {Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
 
 @Component({
   directives: [ ROUTER_DIRECTIVES ]

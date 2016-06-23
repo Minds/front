@@ -21,7 +21,7 @@
               Add a new link
             </a>
           </li>
-          <li class="m-content-sidebar-nav-item" *ngFor="#p of pages">
+          <li class="m-content-sidebar-nav-item" *ngFor="let p of pages">
             <a (click)="setPage(p)" [ngClass]="{'is-active': p.path == page.path }">
               {{p.title}}
               <i *ngIf="p.subtype == 'link'" class="material-icons m-material-icons-inline-text mdl-color-text--blue-grey-300">link</i>

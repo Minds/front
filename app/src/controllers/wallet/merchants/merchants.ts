@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from 'angular2/common';
-import { ROUTER_DIRECTIVES } from "angular2/router";
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
+import { ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';

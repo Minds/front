@@ -10,13 +10,13 @@ import {
   inject,
   it,
   xit
-} from 'angular2/test';
+} from '@angular/test';
 
-import {Component, ViewMetadata, UrlResolver, bind} from 'angular2/core';
-import { HTTP_PROVIDERS } from 'angular2/http';
-import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES } from 'angular2/router';
+import {Component, ViewMetadata, UrlResolver, bind} from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
-import {DOM} from 'angular2/src/core/dom/dom_adapter';
+import {DOM} from '@angular/src/core/dom/dom_adapter';
 import { Login as LoginComponent } from 'src/controllers/login';
 
 export function main() {

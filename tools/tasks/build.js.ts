@@ -6,9 +6,9 @@ export = function buildJS(gulp, plugins) {
   return function () {
     let tsProject = tsProjectFn(plugins);
     let src = [
-      'typings/browser.d.ts',
+      // 'typings/browser.d.ts',
       'tools/manual_typings/**/*.d.ts',
-      'tools/typings/tsd/systemjs/systemjs.d.ts',
+      'tools/typings/tsd/index.d.ts',
       join(APP_SRC, '**/*.ts'),
       '!' + join(APP_SRC, '**/*_spec.ts')
     ];

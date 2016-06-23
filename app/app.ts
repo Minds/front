@@ -1,8 +1,8 @@
-import {Component, provide} from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
-import {bootstrap} from 'angular2/platform/browser';
-import {RouteConfig, Route, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
-import {HTTP_PROVIDERS} from 'angular2/http';
+import {Component, provide} from '@angular/core';
+import {CORE_DIRECTIVES, APP_BASE_HREF} from '@angular/common';
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {RouteConfig, Route, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT} from '@angular/router-deprecated';
+import {HTTP_PROVIDERS} from '@angular/http';
 
 import { MindsRouterOutlet } from './src/directives/router-outlet';
 
@@ -44,58 +44,58 @@ import {Groups, GroupsProfile, GroupsCreator} from './src/plugins/Groups/groups'
 
 @Component({
   selector: 'minds-app',
-  bindings: [ AnalyticsService ],
+  providers: [ AnalyticsService ],
   templateUrl: './src/controllers/index.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Topbar, SidebarNavigation, SignupModal, MindsRouterOutlet, HovercardPopup, Messenger  ]
 })
 @RouteConfig([
-  { path: '/login', component: Login, as: 'Login' },
-  { path: '/logout', component: Logout, as: 'Logout' },
-  { path: '/register', component: Register, as: 'Register' },
-  { path: '/forgot-password', component: ForgotPassword, as: 'Forgot-Password' },
+  { path: '/login', component: Login, name: 'Login' },
+  { path: '/logout', component: Logout, name: 'Logout' },
+  { path: '/register', component: Register, name: 'Register' },
+  { path: '/forgot-password', component: ForgotPassword, name: 'Forgot-Password' },
 
-  { path: '/newsfeed', component: Newsfeed, as: 'Newsfeed' },
-  { path: '/newsfeed/:guid', component: NewsfeedSingle, as: 'Activity' },
-  { path: '/capture', component: Capture, as: 'Capture' },
+  { path: '/newsfeed', component: Newsfeed, name: 'Newsfeed' },
+  { path: '/newsfeed/:guid', component: NewsfeedSingle, name: 'Activity' },
+  { path: '/capture', component: Capture, name: 'Capture' },
 
-  { path: '/boosts', component: Boosts, as: 'Boosts' },
-  { path: '/boosts/:type', component: Boosts, as: 'Boosts' },
-  { path: '/boosts/:type/:filter', component: Boosts, as: 'Boosts' },
+  { path: '/boosts', component: Boosts, name: 'Boosts' },
+  { path: '/boosts/:type', component: Boosts, name: 'Boosts' },
+  { path: '/boosts/:type/:filter', component: Boosts, name: 'Boosts' },
 
-  { path: '/discovery/:filter', component: Discovery, as: 'Discovery'},
-  { path: '/discovery/:filter/:type', component: Discovery, as: 'Discovery'},
+  { path: '/discovery/:filter', component: Discovery, name: 'Discovery'},
+  { path: '/discovery/:filter/:type', component: Discovery, name: 'Discovery'},
 
-  { path: '/blog/:filter', component:  Blog, as: 'Blog'},
-  { path: '/blog/view/:guid', component:  BlogViewInfinite, as: 'Blog-View'},
-  { path: '/blog/view/:guid/:title', component:  BlogViewInfinite, as: 'Blog-View-Title'},
-  { path: '/blog/edit/:guid', component:  BlogEdit, as: 'Blog-Edit'},
+  { path: '/blog/:filter', component:  Blog, name: 'Blog'},
+  { path: '/blog/view/:guid', component:  BlogViewInfinite, name: 'Blog-View'},
+  { path: '/blog/view/:guid/:title', component:  BlogViewInfinite, name: 'Blog-View-Title'},
+  { path: '/blog/edit/:guid', component:  BlogEdit, name: 'Blog-Edit'},
 
-  { path: '/archive/view/:guid', component: ArchiveView, as: 'Archive-View'},
-  { path: '/archive/edit/:guid', component: ArchiveEdit, as: 'Archive-Edit'},
+  { path: '/archive/view/:guid', component: ArchiveView, name: 'Archive-View'},
+  { path: '/archive/edit/:guid', component: ArchiveEdit, name: 'Archive-Edit'},
 
-  { path: '/notifications', component: Notifications, as: 'Notifications'},
-  { path: '/notifications/:filter', component: Notifications, as: 'Notifications-Filter'},
+  { path: '/notifications', component: Notifications, name: 'Notifications'},
+  { path: '/notifications/:filter', component: Notifications, name: 'Notifications-Filter'},
 
-  { path: '/groups/:filter', component: Groups, as: 'Groups'},
-  { path: '/groups/create', component: GroupsCreator, as: 'Groups-Create'},
-  { path: '/groups/profile/:guid', component: GroupsProfile, as: 'Groups-Profile'},
-  { path: '/groups/profile/:guid/:filter', component: GroupsProfile, as: 'Groups-Profile'},
+  { path: '/groups/:filter', component: Groups, name: 'Groups'},
+  { path: '/groups/create', component: GroupsCreator, name: 'Groups-Create'},
+  { path: '/groups/profile/:guid', component: GroupsProfile, name: 'Groups-Profile'},
+  { path: '/groups/profile/:guid/:filter', component: GroupsProfile, name: 'Groups-Profile'},
 
-  { path: '/wallet', component: Wallet, as: 'Wallet'},
-  { path: '/wallet/:filter', component: Wallet, as: 'Wallet-Filter'},
+  { path: '/wallet', component: Wallet, name: 'Wallet'},
+  { path: '/wallet/:filter', component: Wallet, name: 'Wallet-Filter'},
 
-  { path: '/search', component: Search, as: 'Search' },
+  { path: '/search', component: Search, name: 'Search' },
 
-  { path: '/:username', component: Channel, as: 'Channel' },
-  { path: '/:username/:filter', component: Channel, as: 'Channel-Filter' },
+  { path: '/:username', component: Channel, name: 'Channel' },
+  { path: '/:username/:filter', component: Channel, name: 'Channel-Filter' },
 
-  { path: '/settings/:filter', component: Settings, as: 'Settings' },
+  { path: '/settings/:filter', component: Settings, name: 'Settings' },
 
-  { path: '/admin/:filter', component: Admin, as: 'Admin' },
+  { path: '/admin/:filter', component: Admin, name: 'Admin' },
 
-   { path: '/p/:page', component: Pages, as: 'P' },
+   { path: '/p/:page', component: Pages, name: 'P' },
 
-  { path: '/', component: Homepage, as: 'Homepage' }
+  { path: '/', component: Homepage, name: 'Homepage' }
 
 ])
 

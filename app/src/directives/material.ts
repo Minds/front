@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, Type, Inject } from 'angular2/core';
+import { Directive, ViewContainerRef, Type, Inject } from '@angular/core';
 import { Material as MaterialService } from "../services/ui";
 
 import { MaterialTextfield } from './material/text-field';

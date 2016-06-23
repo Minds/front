@@ -13,7 +13,7 @@
       There are no reports.
     </div>
 
-    <div class="mdl-card mdl-shadow--4dp m-report" *ngFor="#report of reports; #i = index">
+    <div class="mdl-card mdl-shadow--4dp m-report" *ngFor="let report of reports; let i = index">
 
       <div class="m-report-meta mdl-color-text--blue-grey-500">
         <p *ngIf="report.from && report.from.username">

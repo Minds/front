@@ -1,6 +1,6 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { ROUTER_DIRECTIVES, Router } from 'angular2/router';
+import { Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
 import { Modal } from '../modal';
 
@@ -16,8 +16,8 @@ export class ConfirmModal {
   open : boolean = false;
   closed : EventEmitter<any> = new EventEmitter();
   actioned: EventEmitter<any> = new EventEmitter();
-  inProgressEmitter: EventEmitter<boolean> = new EventEmitter();
-  completedEmitter: EventEmitter<number> = new EventEmitter();
+  inProgressEmitter: EventEmitter<any> = new EventEmitter();
+  completedEmitter: EventEmitter<any> = new EventEmitter();
 
   inProgress: boolean = false;
   errorlevel: number = null;

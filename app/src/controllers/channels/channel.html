@@ -99,7 +99,7 @@
             </div>
             <div class="m-discovery-cities mdl-card mdl-shadow--4dp" *ngIf="editing && cities.length > 0">
               <p class="mdl-color-text--blue-grey-300">Select your city:</p>
-              <li (click)="setCity(c)" *ngFor="#c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
+              <li (click)="setCity(c)" *ngFor="let c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
             </div>
           </div>
           <!-- END City / Location -->
@@ -176,7 +176,7 @@
 
     <div class="minds-list">
 
-        <minds-activity *ngFor="#activity of feed" [object]="activity" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
+        <minds-activity *ngFor="let activity of feed" [object]="activity" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
         <infinite-scroll
             distance="25%"
             (load)="loadFeed()"

@@ -1,9 +1,9 @@
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 import { Storage } from '../services/storage';
 
 @Component({
   selector: 'minds-loggedin',
-  viewBindings: [Storage]
+  viewProviders: [Storage]
 })
 
 export class LoggedIn {

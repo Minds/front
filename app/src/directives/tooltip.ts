@@ -1,4 +1,4 @@
-import { Directive, ElementRef } from 'angular2/core';
+import { Directive, ElementRef } from '@angular/core';
 import { AnchorPosition } from '../services/ux/anchor-position';
 
 @Directive({

@@ -1,6 +1,6 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { RouterLink } from 'angular2/router';
+import { Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { RouterLink } from '@angular/router-deprecated';
 
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
@@ -13,7 +13,7 @@ import { MindsBanner } from './banner';
   outputs: ['done_event: done', 'delete_event: delete'],
   template: `
     <i class="material-icons left" (click)="prev()" [hidden]="banners.length <= 1">keyboard_arrow_left</i>
-    <div *ngFor="#banner of banners; #i = index">
+    <div *ngFor="let banner of banners; let i = index">
       <minds-banner
         [src]="banner.src"
         [top]="banner.top_offset"

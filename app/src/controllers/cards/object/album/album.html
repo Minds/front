@@ -3,7 +3,7 @@
 
 	<div *ngIf="entity.images" class="minds-album-tiles tiles-{{entity.images.length}}">
 		<a class=""
-			 *ngFor="#image of entity.images"
+			 *ngFor="let image of entity.images"
 			 [routerLink]="['/Archive-View', {guid: image}]">
 			<img src="archive/thumbnail/{{image}}/medium" />
 		</a>

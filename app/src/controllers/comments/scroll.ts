@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, ElementRef } from 'angular2/core';
+import { Directive, EventEmitter, ElementRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 @Directive({
@@ -17,7 +17,7 @@ export class CommentsScrollDirective {
   private stickInterval: any;
   private stickTo: string;
 
-  emitter: EventEmitter<string>;
+  emitter: EventEmitter<any>;
   previous: EventEmitter<any> = new EventEmitter();
   next: EventEmitter<any> = new EventEmitter();
 
@@ -27,7 +27,7 @@ export class CommentsScrollDirective {
     this.scroll = Observable.fromEvent(elementRef.nativeElement, 'scroll');
   }
 
-  set _emitter(emitter: EventEmitter<string>) {
+  set _emitter(emitter: EventEmitter<any>) {
     if (!(emitter instanceof EventEmitter)) {
       console.error('Not an emitter');
       return;

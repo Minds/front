@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { Router, RouterLink, RouteParams } from "angular2/router";
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { Router, RouterLink, RouteParams } from "@angular/router-deprecated";
 
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -16,7 +16,7 @@ import { InviteModal } from '../../components/modal/invite/invite';
 
 @Component({
   selector: 'minds-settings',
-  bindings: [ MindsTitle ],
+  providers: [ MindsTitle ],
   templateUrl: 'src/controllers/settings/settings.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink, SettingsGeneral, SettingsStatistics, SettingsDisableChannel, SettingsTwoFactor, InviteModal ]
 })

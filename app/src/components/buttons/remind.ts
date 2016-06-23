@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, forwardRef } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, ChangeDetectionStrategy, forwardRef } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';

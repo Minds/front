@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
@@ -9,7 +9,7 @@ import { SignupModalService } from '../modal/signup/service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
-  viewBindings: [WalletService ],
+  viewProviders: [WalletService ],
   properties: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

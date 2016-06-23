@@ -1,6 +1,6 @@
-import { Component, EventEmitter} from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { RouterLink } from "angular2/router";
+import { Component, EventEmitter} from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
@@ -20,7 +20,6 @@ import { ReportModal } from '../../../components/modal/modal';
 
 @Component({
   selector: 'minds-card-comment',
-  viewProviders: [ ],
   inputs: ['object', 'parent'],
   outputs: [ '_delete: delete', '_saved: saved'],
   host: {
@@ -29,7 +28,7 @@ import { ReportModal } from '../../../components/modal/modal';
   templateUrl: 'src/controllers/cards/comment/comment.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal, MindsRichEmbed, Hovercard ],
   pipes: [ TagsPipe, MINDS_PIPES ],
-  bindings: [ AttachmentService ]
+  providers: [ AttachmentService ]
 })
 
 export class CommentCard {

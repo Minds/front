@@ -2,7 +2,7 @@
   <li (click)="prev()">
     <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
   </li>
-  <li *ngFor="#boost of boosts; #i = index"
+  <li *ngFor="let boost of boosts; let i = index"
     [ngClass]="{'m-boost-rotator-tabs-tab': true, 'mdl-color--blue-grey-100': i != currentPosition, 'mdl-color--blue-grey-400': i == currentPosition}"
     (click)="currentPosition = i; recordImpression(i);">
   </li>
@@ -17,7 +17,7 @@
 </ul>
 
 <minds-activity
-  *ngFor="#boost of boosts; #i = index"
+  *ngFor="let boost of boosts; let i = index"
   [object]="boost"
   [boost-toggle]="boost.boostToggle"
   (delete)="delete(boost)"

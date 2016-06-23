@@ -1,6 +1,6 @@
-import { Component, EventEmitter, ElementRef} from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { RouterLink } from "angular2/router";
+import { Component, EventEmitter, ElementRef} from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
@@ -27,7 +27,7 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
   },
   inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible'],
   outputs: [ '_delete: delete', 'commentsOpened'],
-  bindings: [ AttachmentService ],
+  providers: [ AttachmentService ],
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard, ConfirmModal ],
   pipes: [ MINDS_PIPES ]
@@ -50,7 +50,7 @@ export class Activity {
   editing : boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
-  commentsOpened: EventEmitter<boolean> = new EventEmitter();
+  commentsOpened: EventEmitter<any> = new EventEmitter();
   scroll_listener;
 
   asyncMute: boolean = false;

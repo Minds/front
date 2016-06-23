@@ -68,7 +68,7 @@
         <div class="m-boost-console-booster-posts m-boost-console-booster-posts-newsfeed" *ngIf="type == 'newsfeed' || type == 'peer'">
           <h3 class="mdl-color-text--blue-grey-300">Recent posts</h3>
           <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl] [hidden]="!boosterToggleInProgress"></div>
-          <minds-activity [object]="post" *ngFor="#post of latestPosts"></minds-activity>
+          <minds-activity [object]="post" *ngFor="let post of latestPosts"></minds-activity>
         </div>
         <div class="m-boost-console-booster-posts m-boost-console-booster-content"  *ngIf="type == 'content'">
           <h3 class="mdl-color-text--blue-grey-300">Your channel</h3>
@@ -81,7 +81,7 @@
           <h3 class="mdl-color-text--blue-grey-300">Recent videos & images</h3>
           <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl] [hidden]="!boosterToggleInProgress"></div>
           <div class="mdl-grid media">
-            <div class="mdl-cell mdl-cell--6-col" *ngFor="#object of latestMedia" (click)="boostContent($event)">
+            <div class="mdl-cell mdl-cell--6-col" *ngFor="let object of latestMedia" (click)="boostContent($event)">
               <minds-card-video [object]="object" *ngIf="object.subtype == 'video'"></minds-card-video>
               <minds-card-image [object]="object" *ngIf="object.subtype == 'image'"></minds-card-image>
               <minds-card-album [object]="object" *ngIf="object.subtype == 'album'"></minds-card-album>
@@ -100,7 +100,7 @@
       You have no boosts in your {{filter}}
     </div>
 
-    <div class="mdl-card mdl-shadow--4dp m-boost-admin" *ngFor="#boost of boosts; #i = index">
+    <div class="mdl-card mdl-shadow--4dp m-boost-admin" *ngFor="let boost of boosts; let i = index">
 
       <div class="mdl-card__supporting-text" *ngIf="filter == 'inbox'">
       </div>

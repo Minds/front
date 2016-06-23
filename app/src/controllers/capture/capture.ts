@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { Router } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { Router } from '@angular/router-deprecated';
 
 import { LICENSES, ACCESS } from '../../services/list-options';
 import { MindsTitle } from '../../services/ux/title';
@@ -12,7 +12,7 @@ import { Client } from '../../services/api/client';
 
 @Component({
   selector: 'minds-capture',
-  bindings: [ MindsTitle ],
+  providers: [ MindsTitle ],
   host : {
     '(dragover)': 'dragover($event)',
     '(dragleave)': 'dragleave($event)',
@@ -90,8 +90,9 @@ export class Capture {
   }
 
   deleteAlbum(album){
-    if(confirm("Are you sure?")){
-      for(var i in this.albums){
+    if (confirm("Are you sure?")) {
+      let i: any;
+      for(i in this.albums){
         if(album.guid == this.albums[i].guid)
           this.albums.splice(i, 1);
       }

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, ElementRef, Inject } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, EventEmitter, ElementRef, Inject } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 import { MDL_DIRECTIVES } from '../../directives/material';
 import { Material as MaterialService } from "../../services/ui";
@@ -31,7 +31,7 @@ import { ScrollService } from '../../services/ux/scroll';
 export class InfiniteScroll{
 
   element : any;
-  loadHandler: EventEmitter<boolean> = new EventEmitter(true);
+  loadHandler: EventEmitter<any> = new EventEmitter(true);
   distance : any;
   inProgress : boolean = false;
   moreData : boolean = true;

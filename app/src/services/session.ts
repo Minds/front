@@ -1,7 +1,7 @@
 /**
  * Sesions
  */
-import { EventEmitter, Injector, provide } from 'angular2/core';
+import { EventEmitter, ReflectiveInjector, provide } from '@angular/core';
 
 export class Session {
 	loggedinEmitter : EventEmitter<any> = new EventEmitter();
@@ -79,7 +79,7 @@ export class Session {
 
 }
 
-var injector = Injector.resolveAndCreate([
+var injector = ReflectiveInjector.resolveAndCreate([
 	provide(Session, { useFactory: () => new Session() })
 ]);
 

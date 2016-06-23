@@ -1,6 +1,6 @@
-import {Component} from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
-import {RouteConfig, Route, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF} from 'angular2/router';
+import {Component} from '@angular/core';
+import {CORE_DIRECTIVES, APP_BASE_HREF} from '@angular/common';
+import {RouteConfig, Route, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, ROUTER_PRIMARY_COMPONENT} from '@angular/router-deprecated';
 
 import { ArchiveView } from './src/plugins/archive/archive';
 import { MindsVideo } from './src/components/video';
@@ -11,7 +11,7 @@ import { MindsVideo } from './src/components/video';
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, MindsVideo ]
 })
 @RouteConfig([
-  { path: '/archive/view/:guid', component: ArchiveView, as: 'Archive-View'},
+  { path: '/archive/view/:guid', component: ArchiveView, name: 'Archive-View'},
 ])
 
 export class Embed {

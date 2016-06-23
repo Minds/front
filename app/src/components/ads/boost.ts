@@ -1,5 +1,5 @@
-import { Component, EventEmitter, ElementRef } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, EventEmitter, ElementRef } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 import { Client } from '../../services/api';
 import { CARDS } from '../../controllers/cards/cards';
 
@@ -9,7 +9,7 @@ import { CARDS } from '../../controllers/cards/cards';
   inputs: ['handler', 'limit'],
   template: `
     <h3 class="m-ad-boost-heading mdl-color-text--blue-grey-300"><i class="material-icons">trending_up</i> Boosted content</h3>
-    <div class="m-ad-boost-entity" *ngFor="#entity of boosts">
+    <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
       <minds-card-video [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.subtype == 'video'"></minds-card-video>
       <minds-card-image [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.subtype == 'image'"></minds-card-image>
       <minds-card-blog [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.subtype == 'blog'"></minds-card-blog>

@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { Router, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { FORM_COMPONENTS } from '../../../components/forms/forms';
 
@@ -16,7 +16,7 @@ import { SignupModalService } from '../../../components/modal/signup/service';
 
 @Component({
   selector: 'minds-homepage',
-  bindings: [ MindsTitle, NavigationService ],
+  providers: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/home/homepage/homepage.html',
   directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, FORM_COMPONENTS, CARDS, BlogCard, Material, Register ]
 })

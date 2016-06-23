@@ -1,6 +1,6 @@
-import { Component, ChangeDetectorRef, NgZone, ApplicationRef } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
-import { ROUTER_DIRECTIVES, Router, Location } from 'angular2/router';
+import { Component, ChangeDetectorRef, NgZone, ApplicationRef } from '@angular/core';
+import { CORE_DIRECTIVES, Location } from '@angular/common';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
 import { Modal } from '../modal';
 import { SignupModalService } from './service';

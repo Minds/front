@@ -1,4 +1,4 @@
-import { Type } from 'angular2/core';
+import { Type } from '@angular/core';
 import { UserCard } from './user/user';
 import { VideoCard } from './object/video/video';
 import { ImageCard } from './object/image/image';

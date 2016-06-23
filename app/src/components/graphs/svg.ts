@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, ViewContainerRef, Inject } from 'angular2/core';
+import { Directive, EventEmitter, ViewContainerRef, Inject } from '@angular/core';
 
 
 @Directive({

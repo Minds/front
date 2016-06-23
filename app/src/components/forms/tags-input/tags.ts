@@ -1,6 +1,6 @@
-import { Component, EventEmitter, ElementRef } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from 'angular2/common';
-import { Router, RouteParams } from 'angular2/router';
+import { Component, EventEmitter, ElementRef } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from '@angular/common';
+import { Router, RouteParams } from '@angular/router-deprecated';
 
 import { Material } from '../../../directives/material';
 import { Client, Upload } from '../../../services/api';
@@ -16,7 +16,7 @@ import { SessionFactory } from '../../../services/session';
   outputs: [ 'change: tagsChange' ],
   directives: [ FORM_DIRECTIVES, Material ],
   template: `
-    <div class="m-form-tags-input-tags-tag mdl-shadow--2dp mdl-color--blue-grey-600 mdl-color-text--blue-grey-50" *ngFor="#tag of tags; #i = index" (click)="removeTag(i)">
+    <div class="m-form-tags-input-tags-tag mdl-shadow--2dp mdl-color--blue-grey-600 mdl-color-text--blue-grey-50" *ngFor="let tag of tags; let i = index" (click)="removeTag(i)">
       <span>{{tag}}</span>
       <i class="material-icons mdl-color-text--white">close</i>
     </div>

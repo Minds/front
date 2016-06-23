@@ -1,4 +1,4 @@
-import { Inject } from 'angular2/core';
+import { Inject } from '@angular/core';
 import { Client, Upload } from './api';
 import { SessionFactory } from './session';
 

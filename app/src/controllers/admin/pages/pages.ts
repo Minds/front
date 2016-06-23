@@ -1,6 +1,6 @@
-import { Component } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, Location } from '@angular/common';
+import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client, Upload } from '../../../services/api';
 import { Material } from '../../../directives/material';
@@ -70,7 +70,8 @@ export class AdminPages {
       this.newPage();
     }
     this.client.delete(`api/v1/admin/pages/?path=${page.path}`);
-    for(var i in this.pages){
+    let i: any;
+    for(i in this.pages){
       if(page.path == this.pages[i].path) {
         this.pages.splice(i, 1);
         break;

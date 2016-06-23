@@ -1,6 +1,6 @@
-import { Component, EventEmitter, NgZone } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/common';
-import { Router, RouteParams, RouterLink } from 'angular2/router';
+import { Component, EventEmitter, NgZone } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
+import { Router, RouteParams, RouterLink } from '@angular/router-deprecated';
 
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';

@@ -13,7 +13,7 @@
       There are no more boosts to approve
     </div>
 
-    <div class="mdl-card mdl-shadow--4dp boost" *ngFor="#boost of boosts; #i = index">
+    <div class="mdl-card mdl-shadow--4dp boost" *ngFor="let boost of boosts; let i = index">
 
       <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
       <minds-card-video [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.subtype == 'video'"></minds-card-video>

@@ -1,6 +1,6 @@
-import { provide, NgZone } from 'angular2/core';
-import { Http } from 'angular2/http';
-import { Router } from 'angular2/router';
+import { provide, NgZone } from '@angular/core';
+import { Http } from '@angular/http';
+import { Router } from '@angular/router-deprecated';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';

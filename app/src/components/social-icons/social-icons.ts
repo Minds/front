@@ -1,5 +1,5 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES } from 'angular2/common';
+import { Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Modal } from '../modal/modal';
 import { EmbedService } from '../../services/embed';
@@ -9,7 +9,7 @@ import { EmbedService } from '../../services/embed';
   inputs: [ '_url: url', '_title: title', '_embed: embed' ],
   directives: [ CORE_DIRECTIVES, Modal ],
   templateUrl: 'src/components/social-icons/social-icons.html',
-  bindings: [ EmbedService ]
+  providers: [ EmbedService ]
 })
 
 export class SocialIcons {

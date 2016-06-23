@@ -1,4 +1,4 @@
-import { EventEmitter, Inject, NgZone } from 'angular2/core';
+import { EventEmitter, Inject, NgZone } from '@angular/core';
 import { SessionFactory } from './session';
 
 export class SocketsService {

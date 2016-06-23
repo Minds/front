@@ -1,4 +1,4 @@
-import { Type } from 'angular2/core';
+import { Type } from '@angular/core';
 import { SubscribeButton } from './buttons/subscribe';
 import { UserDropdownButton } from './buttons/user-dropdown';
 import { ThumbsUpButton } from './buttons/thumbs-up';

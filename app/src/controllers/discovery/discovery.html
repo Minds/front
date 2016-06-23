@@ -32,12 +32,12 @@
         </span>
         <div class="m-discovery-cities mdl-card mdl-shadow--4dp" *ngIf="cities.length > 0">
           <p class="mdl-color-text--blue-grey-300">Select your city:</p>
-          <li (click)="setCity(c)" *ngFor="#c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
+          <li (click)="setCity(c)" *ngFor="let c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
         </div>
       </div>
     </div>
 
-    <div class="mdl-cell mdl-cell--4-col m-discovery-wrapper" *ngFor="#entity of entities; #i = index" [hidden]="i != 0 && _filter == 'suggested'">
+    <div class="mdl-cell mdl-cell--4-col m-discovery-wrapper" *ngFor="let entity of entities; let i = index" [hidden]="i != 0 && _filter == 'suggested'">
 
       <minds-card-video [object]="entity" *ngIf="entity.subtype == 'video'" class="mdl-card mdl-shadow--2dp" [ngClass]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-video>
       <minds-card-image [object]="entity" *ngIf="entity.subtype == 'image'" class="mdl-card mdl-shadow--2dp" [ngClass]="{'mdl-shadow--6dp': _filter == 'suggested'}"></minds-card-image>

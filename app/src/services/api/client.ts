@@ -1,5 +1,5 @@
-import {Inject} from 'angular2/core';
-import {Http, Headers} from 'angular2/http';
+import {Inject} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 import {Cookie} from '../cookie';
 
 /**

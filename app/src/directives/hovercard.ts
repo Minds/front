@@ -1,4 +1,4 @@
-import { Directive,  EventEmitter, ElementRef, OnDestroy } from 'angular2/core';
+import { Directive,  EventEmitter, ElementRef, OnDestroy } from '@angular/core';
 import { HovercardService } from '../services/hovercard';
 
 @Directive({

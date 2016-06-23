@@ -1,6 +1,6 @@
-import { Component, EventEmitter } from 'angular2/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from 'angular2/common';
-import { RouterLink } from "angular2/router";
+import { Component, EventEmitter } from '@angular/core';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
@@ -24,7 +24,7 @@ import { ScrollLock } from '../../directives/scroll-lock';
   templateUrl: 'src/controllers/comments/list.html',
   directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed, CommentsScrollDirective, ScrollLock ],
   pipes: [ TagsPipe ],
-  bindings: [ AttachmentService ]
+  providers: [ AttachmentService ]
 })
 
 export class Comments {
@@ -55,7 +55,7 @@ export class Comments {
     comment: null
   };
 
-  commentsScrollEmitter: EventEmitter<string> = new EventEmitter();
+  commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService) {
     this.minds = window.Minds;
