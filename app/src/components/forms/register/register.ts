@@ -9,6 +9,7 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'minds-form-register',
+  inputs: [ 'referrer' ],
   outputs: [ 'done' ],
   templateUrl: 'src/components/forms/register/register.html',
   directives: [ FORM_DIRECTIVES, Material ]
@@ -44,6 +45,8 @@ export class RegisterForm {
         this.errorMessage = "Passwords must match.";
         return;
     }
+
+    this.form.value.referrer = this.referrer;
 
     this.inProgress = true;
 		var self = this; //this <=> that for promises
