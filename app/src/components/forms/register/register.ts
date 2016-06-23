@@ -52,7 +52,7 @@ export class RegisterForm {
 		var self = this; //this <=> that for promises
 		this.client.post('api/v1/register', this.form.value)
 			.then((data : any) => {
-			  this.form.value = null;
+			  // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
         this.inProgress = false;
 				self.session.login(data.user);

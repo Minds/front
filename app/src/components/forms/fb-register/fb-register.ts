@@ -45,7 +45,7 @@ export class FbRegisterForm {
         this.inProgress = false;
         this.minds.user.username = this.form.value.username;
 
-        this.form.value = null;
+        // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
         this.done.next(true);
 			})

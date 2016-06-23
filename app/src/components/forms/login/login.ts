@@ -47,7 +47,7 @@ export class LoginForm {
 		var self = this; //this <=> that for promises
 		this.client.post('api/v1/authenticate', {username: this.form.value.username, password: this.form.value.password})
 			.then((data : any) => {
-				this.form.value = null;
+				// TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
         this.inProgress = false;
 				this.session.login(data.user);
         this.done.next(data.user);

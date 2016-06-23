@@ -49,7 +49,7 @@ export class OnboardingForm {
 
 		this.client.post('api/v1/channel/info', info)
 			.then((data : any) => {
-			  this.form.value = null;
+			  // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
         this.inProgress = false;
 
