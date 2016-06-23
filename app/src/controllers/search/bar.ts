@@ -27,11 +27,16 @@ export class SearchBar {
   q : string;
 
   constructor(public router : Router){
+  }
+
+  ngOnInit() {
     this.listen();
   }
 
   listen(){
-    this.router.subscribe((route : string) => {
+    this.router.subscribe((value: any) => {
+      let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`;
+
       if(route.indexOf('search') == -1){
         this.q = "";
       } else {

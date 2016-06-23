@@ -14,7 +14,11 @@ export class AnalyticsService {
     window.ga('create', this.id, 'auto');
 
     //We set the router to call onRouteChanged every time we change the page
-    this.router.subscribe(this.onRouteChanged);
+    this.router.subscribe((value: any) => {
+      let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`;
+
+      this.onRouteChanged(route);
+    });
   }
 
   onRouteChanged(path){

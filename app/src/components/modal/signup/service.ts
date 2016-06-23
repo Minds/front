@@ -18,7 +18,9 @@ export class SignupModalService{
   }
 
   private initOnScroll(){
-    this.router.subscribe((route) => {
+    this.router.subscribe((value: any) => {
+      let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`; 
+
       this.route = route;
       switch(route.split('?')[0]){
         case 'register':

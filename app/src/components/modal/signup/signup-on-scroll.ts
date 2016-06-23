@@ -27,11 +27,16 @@ export class SignupOnScrollModal {
   display : string = 'initial';
 
   constructor(public router : Router, public scroll : ScrollService){
+  }
+
+  ngOnInit() {
     this.listen();
   }
 
   listen(){
-    this.router.subscribe((route) => {
+    this.router.subscribe((value: any) => {
+      let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`; 
+
       this.route = route;
       switch(route.split('?')[0]){
         case 'register':
