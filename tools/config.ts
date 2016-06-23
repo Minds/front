@@ -125,7 +125,7 @@ const SYSTEM_PACKAGES = {
   '@angular/http': { main: 'index.js', defaultExtension: 'js' },
   '@angular/platform-browser': { main: 'index.js', defaultExtension: 'js' },
   '@angular/platform-browser-dynamic': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/router': { main: 'index.js', defaultExtension: 'js' },
+  // '@angular/router': { main: 'index.js', defaultExtension: 'js' },
   '@angular/router-deprecated': { main: 'index.js', defaultExtension: 'js' },
   'symbol-observable': { main: 'index.js', defaultExtension: 'js' }
 };

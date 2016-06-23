@@ -14,7 +14,6 @@
     "@angular/http": "^2.0.0-rc.3",
     "@angular/platform-browser": "^2.0.0-rc.3",
     "@angular/platform-browser-dynamic": "^2.0.0-rc.3",
-    "@angular/router": "^3.0.0-alpha.7",
     "@angular/router-deprecated": "^2.0.0-rc.2",
     "braintree-web": "2.15.2",
     "es6-module-loader": "^0.17.8",
@@ -22,11 +21,11 @@
     "es6-shim": "^0.35",
     "intl": "^1.0.0",
     "reflect-metadata": "0.1.2",
-    "rxjs": "^5.0.0-beta.6",
+    "rxjs": "5.0.0-beta.6",
     "socket.io-client": "^1.4.5",
     "systemjs": "^0.19.18",
     "tinymce": "^4.2.6",
-    "zone.js": "^0.6.12"
+    "zone.js": "0.6.12"
   },
   "devDependencies": {
     "async": "^1.4.2",
