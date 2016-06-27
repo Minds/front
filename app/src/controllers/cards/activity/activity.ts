@@ -15,10 +15,12 @@ import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
 import { ScrollService } from '../../../services/ux/scroll';
-import { ShareModal, ReportModal, ConfirmModal } from '../../../components/modal/modal';
+import { ShareModal, ReportModal, ConfirmModal, TranslateModal } from '../../../components/modal/modal';
 
 import { AttachmentService } from '../../../services/attachment';
 import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
+
+import { TranslationService } from '../../../services/translation';
 
 @Component({
   selector: 'minds-activity',
@@ -29,7 +31,7 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
   outputs: [ '_delete: delete', 'commentsOpened'],
   providers: [ AttachmentService ],
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard, ConfirmModal ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard, ConfirmModal, TranslateModal ],
   pipes: [ MINDS_PIPES ]
 })
 
@@ -41,6 +43,7 @@ export class Activity {
   shareToggle : boolean = false;
   reportToggle: boolean = false;
   deleteToggle: boolean = false;
+  translateToggle: boolean = false;
   session = SessionFactory.build();
   showBoostOptions : boolean = false;
   type : string;
@@ -56,7 +59,13 @@ export class Activity {
   asyncMute: boolean = false;
   asyncMuteInProgress: boolean = false;
 
-	constructor(public client: Client, public scroll : ScrollService, _element: ElementRef, public attachment: AttachmentService){
+  constructor(
+    public client: Client,
+    public scroll: ScrollService,
+    _element: ElementRef,
+    public attachment: AttachmentService,
+    public translation: TranslationService
+  ) {
     this.element = _element.nativeElement;
     this.isVisible();
 	}
@@ -179,6 +188,24 @@ export class Activity {
         }
     });
     //this.scroll.fire();
+  }
+
+  translate($event: any = {}) {
+    if (!$event.selected) {
+      return;
+    }
+
+    this.translation.translate(this.activity.guid, $event.selected)
+      .then((translation: any) => {
+        if (translation.message) {
+          this.activity.translated = true;
+          this.activity.message = translation.message;
+          this.activity.source_language = translation.source_language;
+        }
+      })
+      .catch(e => {
+        console.error('translate()', e);
+      });
   }
 
   ngOnDestroy(){

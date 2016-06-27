@@ -173,6 +173,7 @@
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
+		<li class="mdl-menu__item" *ngIf="activity.message || (activity.remind_object && activity.remind_object.message)" (click)="translateToggle = true; toggle.value = false">Translate</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled>Mute notifications</li>
@@ -197,4 +198,5 @@
         The post has been deleted.
     </p>
   </m-modal-confirm>
+  <m-modal-translate *ngIf="translateToggle" [open]="true" (closed)="translateToggle = false" (action)="translate($event)"></m-modal-translate>
 </div>
