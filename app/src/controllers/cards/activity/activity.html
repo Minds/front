@@ -189,7 +189,7 @@
 		<li class="mdl-menu__item"
             *ngIf="activity.message || (activity.remind_object && activity.remind_object.message)"
             (click)="translateToggle = true; toggle.value = false"
-            [disabled]="activity.translating || activity.translated"
+            [hidden]="activity.translating || activity.translated"
         >Translate</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
