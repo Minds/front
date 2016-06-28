@@ -209,6 +209,20 @@ minds-activity.mdl-card, minds-activity{
     position: relative;
   }
 
+  .m-translation-label {
+    font-size: 0.75em;
+
+    i {
+      vertical-align: bottom;
+      vertical-align: text-bottom;
+    }
+
+    a {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
   minds-comments{
     margin-top:0;
   }

@@ -8,6 +8,7 @@ export class TranslationService {
 
   getLanguages(): Promise<any> {
     // TODO: Read localstorage cache
+    // TODO: Pass ?target parameter to get translated names (when i18n is in place)
     
     return this.clientService.get(`api/v1/translation/languages`)
       .then((response: any) => {
@@ -22,13 +23,11 @@ export class TranslationService {
   }
 
   translate(guid, language): Promise<any> {
-    return this.clientService.post(`api/v1/translation/translate/${guid}`, { language: language })
+    return this.clientService.post(`api/v1/translation/translate/${guid}?target=${language}`)
       .then((response: any) => {
         if (!response.translation) {
           throw new Error('No translation available');
         }
-
-        // TODO: Cache in localstorage (???)
 
         return response.translation;
       });

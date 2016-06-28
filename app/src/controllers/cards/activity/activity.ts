@@ -195,17 +195,60 @@ export class Activity {
       return;
     }
 
-    this.translation.translate(this.activity.guid, $event.selected)
+    let guid = this.activity.guid,
+      isRemind = false;
+
+    if (this.activity.remind_object && this.activity.remind_object.guid) {
+      guid = this.activity.remind_object.guid;
+      isRemind = true;
+    }
+
+    if (isRemind) {
+      this.activity.remind_object.translating = true;
+    } else {
+      this.activity.translating = true;
+    }
+
+    this.translation.translate(guid, $event.selected)
       .then((translation: any) => {
-        if (translation.message) {
-          this.activity.translated = true;
-          this.activity.message = translation.message;
-          this.activity.source_language = translation.source_language;
+        if (isRemind) {
+          this.activity.remind_object.translating = false;
+        } else {
+          this.activity.translating = false;
+        }
+
+        if (typeof translation.result !== 'undefined') {
+          if (isRemind) {
+            this.activity.remind_object.translated = true;
+            this.activity.remind_object.original_message = this.activity.remind_object.message;
+            this.activity.remind_object.message = translation.result;
+            this.activity.remind_object.source_language = translation.source;
+          } else {
+            this.activity.translated = true;
+            this.activity.original_message = this.activity.message;
+            this.activity.message = translation.result;
+            this.activity.source_language = translation.source;
+          }
         }
       })
       .catch(e => {
+        if (isRemind) {
+          this.activity.remind_object.translating = false;
+        } else {
+          this.activity.translating = false;
+        }
+
         console.error('translate()', e);
       });
+  }
+
+  hideTranslation() {
+    if (!this.activity.translated) {
+      return;
+    }
+
+    this.activity.translated = false;
+    this.activity.message = this.activity.original_message;
   }
 
   ngOnDestroy(){

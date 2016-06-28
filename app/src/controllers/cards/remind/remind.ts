@@ -43,4 +43,13 @@ export class Remind {
   toDate(timestamp){
     return new Date(timestamp*1000);
   }
+
+  hideTranslation() {
+    if (!this.activity.translated) {
+      return;
+    }
+
+    this.activity.translated = false;
+    this.activity.message = this.activity.original_message;
+  }
 }
