@@ -15,6 +15,10 @@ import { SessionFactory } from '../../../services/session';
     <m-modal [open]="open" (closed)="close($event)">
 
       <div class="mdl-card__supporting-text">
+        Send the link below to your friends and get 100 points when they signup.
+      </div>
+
+      <div class="mdl-card__supporting-text">
         <input class="" value="{{url}}" (click)="copy($event)"/>
       </div>
 
