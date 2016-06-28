@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { RouterLink } from "@angular/router-deprecated";
 
@@ -19,7 +19,7 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 
 @Component({
   selector: 'minds-remind',
-  properties: ['object'],
+  properties: ['object', '_changed: changed'],
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks, MindsRichEmbed, Hovercard ],
   pipes: [ MINDS_PIPES ],
@@ -30,14 +30,35 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 export class Remind {
   activity : any;
   hideTabs : boolean;
-  session =  SessionFactory.build();
+  session = SessionFactory.build();
+  
+  changed: EventEmitter<any>;
+  changedSubscription: any;
 
-	constructor(public client: Client, public attachment: AttachmentService){
+	constructor(public client: Client, public attachment: AttachmentService, private changeDetectorRef: ChangeDetectorRef){
     this.hideTabs = true;
-	}
+  }
+  
+  set _changed(value: any) {
+    if (this.changedSubscription) {
+      this.changedSubscription.unsubscribe();
+    }
+
+    this.changed = value;
+
+    this.changedSubscription = this.changed.subscribe(() => {
+      this.changeDetectorRef.markForCheck();
+    });
+  }
 
   set object(value: any) {
     this.activity = value;
+  }
+
+  ngOnDestroy() {
+    if (this.changedSubscription) {
+      this.changedSubscription.unsubscribe();
+    }
   }
 
   toDate(timestamp){

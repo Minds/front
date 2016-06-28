@@ -59,6 +59,8 @@ export class Activity {
   asyncMute: boolean = false;
   asyncMuteInProgress: boolean = false;
 
+  propagateChanges: EventEmitter<any> = new EventEmitter();
+
   constructor(
     public client: Client,
     public scroll: ScrollService,
@@ -230,6 +232,8 @@ export class Activity {
             this.activity.source_language = translation.source;
           }
         }
+
+        this.propagateChanges.emit(true);
       })
       .catch(e => {
         if (isRemind) {
@@ -238,8 +242,12 @@ export class Activity {
           this.activity.translating = false;
         }
 
+        this.propagateChanges.emit(true);
+
         console.error('translate()', e);
       });
+    
+      this.propagateChanges.emit(true);
   }
 
   hideTranslation() {
