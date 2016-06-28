@@ -11,9 +11,13 @@ import { TranslationService } from '../../../services/translation';
   directives: [ CORE_DIRECTIVES, Modal ],
   template: `
     <m-modal [open]="open" (closed)="close($event)">
-      <ul>
-        <li *ngFor="let language of languages">
-          <a (click)="select(language.language)">{{ language.name }}</a>
+      <ul class="m-translate-languages-list">
+        <li *ngFor="let language of languages"
+          [ngClass]="{ 'm-default-locale': language.isDefault }"
+        >
+          <a (click)="select(language.language)">
+            {{ language.name }} (<span class="m-locale">{{ language.language }}</span>)
+          </a>
         </li>
       </ul>
     </m-modal>
