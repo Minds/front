@@ -217,16 +217,16 @@ export class Activity {
           this.activity.translating = false;
         }
 
-        if (typeof translation.result !== 'undefined') {
+        if (typeof translation.content !== 'undefined') {
           if (isRemind) {
             this.activity.remind_object.translated = true;
             this.activity.remind_object.original_message = this.activity.remind_object.message;
-            this.activity.remind_object.message = translation.result;
+            this.activity.remind_object.message = translation.content;
             this.activity.remind_object.source_language = translation.source;
           } else {
             this.activity.translated = true;
             this.activity.original_message = this.activity.message;
-            this.activity.message = translation.result;
+            this.activity.message = translation.content;
             this.activity.source_language = translation.source;
           }
         }

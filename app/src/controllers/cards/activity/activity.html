@@ -52,7 +52,7 @@
 >
     <i class="material-icons m-material-icons-inline">public</i>
     Translated from <b>{{ activity.source_language }}</b>.
-    <a (click)="hideTranslation()">See original message</a>.
+    <a (click)="hideTranslation()">See original</a>.
 </div>
 
 <div class="minds-editable-container" *ngIf="activity.message && editing">
@@ -186,7 +186,11 @@
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
-		<li class="mdl-menu__item" *ngIf="activity.message || (activity.remind_object && activity.remind_object.message)" (click)="translateToggle = true; toggle.value = false">Translate</li>
+		<li class="mdl-menu__item"
+            *ngIf="activity.message || (activity.remind_object && activity.remind_object.message)"
+            (click)="translateToggle = true; toggle.value = false"
+            [disabled]="activity.translating || activity.translated"
+        >Translate</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled>Mute notifications</li>
