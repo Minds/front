@@ -23,7 +23,7 @@ export class TranslationService {
   }
 
   translate(guid, language): Promise<any> {
-    return this.clientService.get(`api/v1/translation/translate/${guid}?target=${language}`)
+    return this.clientService.get(`api/v1/translation/translate/${guid}`, { target: language })
       .then((response: any) => {
         if (!response.translation) {
           throw new Error('No translation available');
