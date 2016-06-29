@@ -24,6 +24,7 @@ minds-search-bar{
   }
   @media screen and (max-width: $min-tablet){
     width:auto;
+    max-width: 30%;
 
     input{
       border:0 !important;
