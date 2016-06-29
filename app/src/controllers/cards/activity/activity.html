@@ -51,7 +51,7 @@
     *ngIf="activity.translated"
 >
     <i class="material-icons m-material-icons-inline">public</i>
-    Translated from <b>{{ activity.source_language }}</b>.
+    Translated<span *ngIf="activity.source_language"> from <b>{{ activity.source_language }}</b></span>.
     <a (click)="hideTranslation()">See original</a>.
 </div>
 

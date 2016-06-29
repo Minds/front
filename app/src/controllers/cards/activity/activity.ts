@@ -224,25 +224,33 @@ export class Activity {
             this.activity.remind_object.translated = true;
             this.activity.remind_object.original_message = this.activity.remind_object.message;
             this.activity.remind_object.message = translation.content;
-            this.activity.remind_object.source_language = translation.source;
+            
+            this.activity.remind_object.source_language = '';
+            this.translation.getLanguageName(translation.source)
+              .then(name => {
+                this.activity.remind_object.source_language = name;
+                this.propagateChanges.emit(true);
+              });
+            
+            this.propagateChanges.emit(true);
           } else {
             this.activity.translated = true;
             this.activity.original_message = this.activity.message;
             this.activity.message = translation.content;
-            this.activity.source_language = translation.source;
+
+            this.activity.source_language = '';
+            this.translation.getLanguageName(translation.source)
+              .then(name => this.activity.source_language = name);
           }
         }
-
-        this.propagateChanges.emit(true);
       })
       .catch(e => {
         if (isRemind) {
           this.activity.remind_object.translating = false;
+          this.propagateChanges.emit(true);
         } else {
           this.activity.translating = false;
         }
-
-        this.propagateChanges.emit(true);
 
         console.error('translate()', e);
       });

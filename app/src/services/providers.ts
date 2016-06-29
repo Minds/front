@@ -5,6 +5,7 @@ import { Router } from '@angular/router-deprecated';
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
 import { Client, Upload } from './api';
+import { Storage } from './storage';
 import { SignupModalService } from '../components/modal/signup/service';
 import { CacheService } from './cache';
 import { HovercardService } from './hovercard';
@@ -28,6 +29,10 @@ export const MINDS_PROVIDERS : any[] = [
      useFactory: (http) => new Upload(http),
      deps: [ Http ]
    }),
+   provide(Storage, {
+     useFactory: () => new Storage(),
+     deps: []
+   }),
    provide(SignupModalService, {
      useFactory: (router, scroll) => new SignupModalService(router, scroll),
      deps: [ Router, ScrollService ]
@@ -45,7 +50,7 @@ export const MINDS_PROVIDERS : any[] = [
      deps: [ Client, SocketsService ]
    }),
    provide(TranslationService, {
-     useFactory: (client) => new TranslationService(client),
-     deps: [ Client ]
+     useFactory: (client, storage) => new TranslationService(client, storage),
+     deps: [ Client, Storage ]
    })
 ];
