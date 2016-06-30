@@ -61,6 +61,19 @@ export class TranslationService {
       });
   }
 
+  isTranslatable(entity): boolean {
+    if (typeof entity !== 'object') {
+      return false;
+    }
+
+    // Message should exist and have content
+    if (typeof entity.message !== 'undefined' && entity.message) {
+      return true;
+    }
+
+    return false;
+  }
+
   translate(guid, language): Promise<any> {
     return this.clientService.get(`api/v1/translation/translate/${guid}`, { target: language })
       .then((response: any) => {

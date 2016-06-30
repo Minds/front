@@ -15,11 +15,12 @@ import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
 
 import { AttachmentService } from '../../../services/attachment';
+import { TranslationService } from '../../../services/translation';
 import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 
 @Component({
   selector: 'minds-remind',
-  properties: ['object', '_changed: changed'],
+  properties: ['object', '_events: events'],
   templateUrl: 'src/controllers/cards/activity/activity.html',
   directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks, MindsRichEmbed, Hovercard ],
   pipes: [ MINDS_PIPES ],
@@ -32,21 +33,32 @@ export class Remind {
   hideTabs : boolean;
   session = SessionFactory.build();
   
-  changed: EventEmitter<any>;
-  changedSubscription: any;
+  events: EventEmitter<any>;
+  eventsSubscription: any;
 
-	constructor(public client: Client, public attachment: AttachmentService, private changeDetectorRef: ChangeDetectorRef){
+  constructor(
+    public client: Client,
+    public attachment: AttachmentService,
+    public translation: TranslationService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
     this.hideTabs = true;
   }
   
-  set _changed(value: any) {
-    if (this.changedSubscription) {
-      this.changedSubscription.unsubscribe();
+  set _events(value: any) {
+    if (this.eventsSubscription) {
+      this.eventsSubscription.unsubscribe();
     }
 
-    this.changed = value;
+    this.events = value;
 
-    this.changedSubscription = this.changed.subscribe(() => {
+    this.eventsSubscription = this.events.subscribe(({ action, args = [] }) => {
+      switch (action) {
+        case 'translate':
+          this.translate.apply(this, args);
+          break;
+      }
+
       this.changeDetectorRef.markForCheck();
     });
   }
@@ -56,13 +68,48 @@ export class Remind {
   }
 
   ngOnDestroy() {
-    if (this.changedSubscription) {
-      this.changedSubscription.unsubscribe();
+    if (this.eventsSubscription) {
+      this.eventsSubscription.unsubscribe();
     }
   }
 
   toDate(timestamp){
     return new Date(timestamp*1000);
+  }
+
+  translate($event: any = {}) {
+    if (!$event.selected) {
+      return;
+    }
+
+    if (!this.translation.isTranslatable(this.activity)) {
+      return;
+    }
+
+    this.activity.translating = true;
+
+    this.translation.translate(this.activity.guid, $event.selected)
+      .then((translation: any) => {
+        this.activity.translating = false;
+
+        if (typeof translation.content !== 'undefined') {
+          this.activity.translated = true;
+          this.activity.original_message = this.activity.message;
+          this.activity.message = translation.content;
+
+          this.activity.source_language = '';
+          this.translation.getLanguageName(translation.source)
+            .then(name => this.activity.source_language = name);
+        }
+
+        this.changeDetectorRef.markForCheck();
+      })
+      .catch(e => {
+        this.activity.translating = false;
+        this.changeDetectorRef.markForCheck();
+
+        console.error('translate()', e);
+      });
   }
 
   hideTranslation() {
@@ -72,5 +119,6 @@ export class Remind {
 
     this.activity.translated = false;
     this.activity.message = this.activity.original_message;
+    this.changeDetectorRef.markForCheck();
   }
 }

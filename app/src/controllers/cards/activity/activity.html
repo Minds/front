@@ -148,7 +148,7 @@
 
 <!-- Reminds -->
 <div *ngIf="activity.remind_object">
-	<minds-remind [object]="activity.remind_object" [changed]="propagateChanges" class="mdl-card mdl-shadow--6dp item"></minds-remind>
+	<minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" class="mdl-card mdl-shadow--6dp item"></minds-remind>
 </div>
 
 <div class="mdl-card__supporting-text is-boosted" *ngIf="activity.boosted">

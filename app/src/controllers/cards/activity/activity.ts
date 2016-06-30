@@ -59,7 +59,7 @@ export class Activity {
   asyncMute: boolean = false;
   asyncMuteInProgress: boolean = false;
 
-  propagateChanges: EventEmitter<any> = new EventEmitter();
+  childEventsEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(
     public client: Client,
@@ -197,65 +197,38 @@ export class Activity {
       return;
     }
 
-    let guid = this.activity.guid,
-      isRemind = false;
-
     if (this.activity.remind_object && this.activity.remind_object.guid) {
-      guid = this.activity.remind_object.guid;
-      isRemind = true;
+      this.childEventsEmitter.emit({
+        action: 'translate',
+        args: [ $event ]
+      });
     }
 
-    if (isRemind) {
-      this.activity.remind_object.translating = true;
-    } else {
-      this.activity.translating = true;
+    if (!this.translation.isTranslatable(this.activity)) {
+      return;
     }
 
-    this.translation.translate(guid, $event.selected)
+    this.activity.translating = true;
+
+    this.translation.translate(this.activity.guid, $event.selected)
       .then((translation: any) => {
-        if (isRemind) {
-          this.activity.remind_object.translating = false;
-        } else {
-          this.activity.translating = false;
-        }
+        this.activity.translating = false;
 
         if (typeof translation.content !== 'undefined') {
-          if (isRemind) {
-            this.activity.remind_object.translated = true;
-            this.activity.remind_object.original_message = this.activity.remind_object.message;
-            this.activity.remind_object.message = translation.content;
-            
-            this.activity.remind_object.source_language = '';
-            this.translation.getLanguageName(translation.source)
-              .then(name => {
-                this.activity.remind_object.source_language = name;
-                this.propagateChanges.emit(true);
-              });
-            
-            this.propagateChanges.emit(true);
-          } else {
-            this.activity.translated = true;
-            this.activity.original_message = this.activity.message;
-            this.activity.message = translation.content;
+          this.activity.translated = true;
+          this.activity.original_message = this.activity.message;
+          this.activity.message = translation.content;
 
-            this.activity.source_language = '';
-            this.translation.getLanguageName(translation.source)
-              .then(name => this.activity.source_language = name);
-          }
+          this.activity.source_language = '';
+          this.translation.getLanguageName(translation.source)
+            .then(name => this.activity.source_language = name);
         }
       })
       .catch(e => {
-        if (isRemind) {
-          this.activity.remind_object.translating = false;
-          this.propagateChanges.emit(true);
-        } else {
-          this.activity.translating = false;
-        }
+        this.activity.translating = false;
 
         console.error('translate()', e);
       });
-    
-      this.propagateChanges.emit(true);
   }
 
   hideTranslation() {
