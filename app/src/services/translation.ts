@@ -3,10 +3,13 @@ import { Client } from './api';
 import { Storage } from './storage';
 
 export class TranslationService {
+  private defaultLanguage: string;
+
   constructor(
     @Inject(Client) private clientService: Client,
     @Inject(Storage) private storage: Storage
   ) {
+    this.defaultLanguage = 'en'; // TODO: Set to get translated names (when i18n is in place)
     this.load();
   }
 
@@ -17,21 +20,19 @@ export class TranslationService {
   }
 
   getLanguages(): Promise<any> {
-    let target = 'en'; // TODO: Set target to get translated names (when i18n is in place)
-
     if (!this.languagesReady) {
-      let cached = this.storage.get(`translation:languages:${target}`);
+      let cached = this.storage.get(`translation:languages:${this.defaultLanguage}`);
 
       if (cached) {
         this.languagesReady = Promise.resolve(JSON.parse(cached));
       } else {
-        this.languagesReady = this.clientService.get(`api/v1/translation/languages`, { target })
+        this.languagesReady = this.clientService.get(`api/v1/translation/languages`, { target: this.defaultLanguage })
           .then((response: any) => {
             if (!response.languages) {
               throw new Error('No languages array');
             }
 
-            this.storage.set(`translation:languages:${target}`, JSON.stringify(response.languages));
+            this.storage.set(`translation:languages:${this.defaultLanguage}`, JSON.stringify(response.languages));
 
             return response.languages;
           })
@@ -40,6 +41,11 @@ export class TranslationService {
     }
 
     return this.languagesReady;
+  }
+
+  purgeLanguagesCache() {
+    this.languagesReady = void 0;
+    this.storage.set(`translation:languages:${this.defaultLanguage}`, '');
   }
 
   getLanguageName(query: string): Promise<string> {
@@ -77,6 +83,10 @@ export class TranslationService {
   translate(guid, language): Promise<any> {
     return this.clientService.get(`api/v1/translation/translate/${guid}`, { target: language })
       .then((response: any) => {
+        if (response.purgeLanguagesCache) {
+          this.purgeLanguagesCache();
+        }
+
         if (!response.translation) {
           throw new Error('No translation available');
         }
