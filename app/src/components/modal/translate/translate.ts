@@ -13,11 +13,10 @@ import { TranslationService } from '../../../services/translation';
     <m-modal [open]="open" (closed)="close($event)">
       <ul class="m-translate-languages-list">
         <li *ngFor="let language of languages"
-          [ngClass]="{ 'm-default-locale': language.isDefault }"
+          [ngClass]="{ 'm-preferred-locale mdl-color-text--blue-grey-600': language.isPreferred, 'mdl-color-text--blue-grey-400': !language.isPreferred }"
+          (click)="select(language.language)"
         >
-          <a (click)="select(language.language)">
-            {{ language.name }} (<span class="m-locale">{{ language.language }}</span>)
-          </a>
+          {{ language.name }} (<span class="m-locale">{{ language.language }}</span>)
         </li>
       </ul>
     </m-modal>

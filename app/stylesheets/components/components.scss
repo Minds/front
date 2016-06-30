@@ -542,17 +542,15 @@ m-modal-translate {
       float: left;
       padding: 0 ($minds-padding / 2);
 
-      &.m-default-locale {
-        font-weight: bold;
-      }
-    }
-
-    a {
       cursor: pointer;
       text-decoration: none;
 
       &:hover, &:active {
         text-decoration: underline;
+      }
+
+      &.m-preferred-locale {
+        font-weight: bold;
       }
     }
 
