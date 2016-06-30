@@ -19,7 +19,7 @@ import { SessionFactory } from '../../../services/session';
       </div>
 
       <div class="mdl-card__supporting-text">
-        <input class="" value="{{url}}" (click)="copy($event)"/>
+        <input class="" value="{{url}}" (focus)="copy($event)" (click)="copy($event)" autofocus/>
       </div>
 
       <div class="m-social-share-buttons">
@@ -29,7 +29,7 @@ import { SessionFactory } from '../../../services/session';
         <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-twitter" (click)="openWindow('https://twitter.com/intent/tweet?text=Join%20me%20on%20Minds&tw_p=tweetbutton&url=' + encodedUrl)">
           Twitter
         </button>
-        <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-email" (click)="openWindow('mailto:?subject=Join%20me%20on%20minds&body=Join me on Minds ' + encodedUrl)">
+        <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-email" (click)="openEmail()">
           Email
         </button>
       </div>
@@ -69,6 +69,10 @@ export class InviteModal {
 
   openWindow(url : string){
     window.open(url, "_blank", "width=600, height=300, left=80, top=80")
+  }
+
+  openEmail(){
+    window.location.href = 'mailto:?subject=Join%20me%20on%20minds&body=Join me on Minds ' + this.encodedUrl;
   }
 
 }
