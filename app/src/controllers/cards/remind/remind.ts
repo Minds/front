@@ -106,6 +106,7 @@ export class Remind {
       })
       .catch(e => {
         this.activity.translating = false;
+        this.activity.translation_error = true;
         this.changeDetectorRef.markForCheck();
 
         console.error('translate()', e);

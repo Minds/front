@@ -226,6 +226,7 @@ export class Activity {
       })
       .catch(e => {
         this.activity.translating = false;
+        this.activity.translation_error = true;
 
         console.error('translate()', e);
       });

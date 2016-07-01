@@ -42,17 +42,27 @@
 	></span>
 </div>
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
-    *ngIf="activity.translating && !activity.translated"
+  *ngIf="activity.translating && !activity.translated"
 >
-    <i class="material-icons m-material-icons-inline">public</i>
-    Translating&hellip;
+  <i class="material-icons m-material-icons-inline">public</i>
+  Translating&hellip;
 </div>
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
-    *ngIf="activity.translated"
+  *ngIf="activity.translated"
 >
-    <i class="material-icons m-material-icons-inline">public</i>
-    Translated<span *ngIf="activity.source_language"> from <b>{{ activity.source_language }}</b></span>.
-    <a (click)="hideTranslation()">See original</a>.
+  <i class="material-icons m-material-icons-inline">public</i>
+  Translated<span *ngIf="activity.source_language"> from <b>{{ activity.source_language }}</b></span>.
+  <a (click)="hideTranslation()">See original</a>.
+</div>
+<div class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label"
+  *ngIf="!activity.translating && activity.translation_error"
+>
+  <i class="material-icons m-material-icons-inline">warning</i>
+  There was an error when translating this content.
+  <a
+    class="mdl-color-text--red-900"
+    (click)="activity.translation_error = false"
+  >Dismiss</a>
 </div>
 
 <div class="minds-editable-container" *ngIf="activity.message && editing">
