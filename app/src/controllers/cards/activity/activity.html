@@ -43,6 +43,12 @@
 </div>
 
 <!-- Translations -->
+<div *ngIf="translateToggle"
+  class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
+>
+  <m-translate (action)="translateToggle = false; translate($event)"></m-translate>
+</div>
+
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
   *ngIf="translationInProgress"
 >
@@ -236,5 +242,4 @@
         The post has been deleted.
     </p>
   </m-modal-confirm>
-  <m-modal-translate *ngIf="translateToggle" [open]="true" (closed)="translateToggle = false" (action)="translate($event)"></m-modal-translate>
 </div>

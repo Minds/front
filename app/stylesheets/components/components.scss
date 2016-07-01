@@ -529,34 +529,36 @@ minds-tooltip .m-bubble-popup {
   font-size: 10px;
 }
 
-m-modal-translate {
-  .m-translate-languages-list {
-    max-height: 400px;
-    overflow-y: auto;
-    list-style: none;
-    padding: 0 $minds-padding;
-    font-size: 12px;
+m-translate {
+  .m-translate-select {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
 
-    li {
-      width: calc(50% - #{$minds-padding});
-      float: left;
-      padding: 0 ($minds-padding / 2);
-
-      cursor: pointer;
-      text-decoration: none;
-
-      &:hover, &:active {
-        text-decoration: underline;
-      }
-
-      &.m-preferred-locale {
-        font-weight: bold;
-      }
+    &:after {
+      font-family: 'Material Icons';
+      font-size: 14px;
+      font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      content: '\e313';
+      line-height: 1em;
+      position: absolute;
+      top: 50%;
+      right: $minds-padding;
+      transform: translateY(-50%);
+      pointer-events: none;
     }
+  }
 
-    .m-locale {
-      font-weight: bold;
-    }
+  .m-translate-select-control {
+    cursor: pointer;
+    width: 200px;
+    max-width: 100%;
+    appearance: none;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    padding: $minds-padding / 2;
+    font-size: 0.85em;
   }
 }
 
