@@ -61,12 +61,21 @@ export class Activity {
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
 
+  translation = {
+    translated: false,
+    error: false,
+    message: '',
+    source: ''
+  };
+  isTranslatable: boolean;
+  translationInProgress: boolean;
+
   constructor(
     public client: Client,
     public scroll: ScrollService,
     _element: ElementRef,
     public attachment: AttachmentService,
-    public translation: TranslationService
+    public translationService: TranslationService
   ) {
     this.element = _element.nativeElement;
     this.isVisible();
@@ -77,6 +86,11 @@ export class Activity {
       return;
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
+
+    this.isTranslatable = (
+      this.translationService.isTranslatable(this.activity) ||
+      (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object))
+    );
   }
 
   save(){
@@ -197,48 +211,46 @@ export class Activity {
       return;
     }
 
-    if (this.activity.remind_object && this.activity.remind_object.guid) {
+    if (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object)) {
       this.childEventsEmitter.emit({
         action: 'translate',
         args: [ $event ]
       });
     }
 
-    if (!this.translation.isTranslatable(this.activity)) {
+    if (!this.translationService.isTranslatable(this.activity)) {
       return;
     }
 
-    this.activity.translating = true;
+    this.translationInProgress = true;
 
-    this.translation.translate(this.activity.guid, $event.selected)
+    this.translationService.translate(this.activity.guid, $event.selected)
       .then((translation: any) => {
-        this.activity.translating = false;
+        this.translationInProgress = false;
 
         if (typeof translation.content !== 'undefined') {
-          this.activity.translated = true;
-          this.activity.original_message = this.activity.message;
-          this.activity.message = translation.content;
+          this.translation.translated = true;
+          this.translation.message = translation.content;
 
-          this.activity.source_language = '';
-          this.translation.getLanguageName(translation.source)
-            .then(name => this.activity.source_language = name);
+          this.translation.source = '';
+          this.translationService.getLanguageName(translation.source)
+            .then(name => this.translation.source = name);
         }
       })
       .catch(e => {
-        this.activity.translating = false;
-        this.activity.translation_error = true;
+        this.translationInProgress = false;
+        this.translation.error = true;
 
         console.error('translate()', e);
       });
   }
 
   hideTranslation() {
-    if (!this.activity.translated) {
+    if (!this.translation.translated) {
       return;
     }
 
-    this.activity.translated = false;
-    this.activity.message = this.activity.original_message;
+    this.translation.translated = false;
   }
 
   ngOnDestroy(){

@@ -41,29 +41,40 @@
 	(click)="activity.mature && !activity.mature_visibility ? activity.mature_visibility = !activity.mature_visibility : null"
 	></span>
 </div>
+
+<!-- Translations -->
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
-  *ngIf="activity.translating && !activity.translated"
+  *ngIf="translationInProgress"
 >
   <i class="material-icons m-material-icons-inline">public</i>
   Translating&hellip;
 </div>
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
-  *ngIf="activity.translated"
+
+<div *ngIf="translation.translated"
+  class="m-translation-wrapper"
 >
-  <i class="material-icons m-material-icons-inline">public</i>
-  Translated<span *ngIf="activity.source_language"> from <b>{{ activity.source_language }}</b></span>.
-  <a (click)="hideTranslation()">See original</a>.
+  <div class="mdl-card__supporting-text message"
+    [hidden]="!translation.message"
+  ><span [innerHtml]="translation.message | tags" ></span></div>
+
+  <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
+    <i class="material-icons m-material-icons-inline">public</i>
+    Translated<span *ngIf="translation.source"> from <b>{{ translation.source }}</b></span>.
+    <a (click)="hideTranslation()">Hide translation</a>.
+  </div>
 </div>
+
 <div class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label"
-  *ngIf="!activity.translating && activity.translation_error"
+  *ngIf="!translationInProgress && translation.error"
 >
   <i class="material-icons m-material-icons-inline">warning</i>
   There was an error when translating this content.
   <a
     class="mdl-color-text--red-900"
-    (click)="activity.translation_error = false"
+    (click)="translation.error = false"
   >Dismiss</a>
 </div>
+<!-- End Translations -->
 
 <div class="minds-editable-container" *ngIf="activity.message && editing">
 	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
@@ -197,9 +208,8 @@
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
 		<li class="mdl-menu__item"
-            *ngIf="activity.message || (activity.remind_object && activity.remind_object.message)"
+            *ngIf="isTranslatable"
             (click)="translateToggle = true; toggle.value = false"
-            [hidden]="activity.translating || activity.translated || (activity.remind_object && (activity.remind_object.translating || activity.remind_object.translated))"
         >Translate</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>

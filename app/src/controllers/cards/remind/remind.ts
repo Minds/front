@@ -36,10 +36,18 @@ export class Remind {
   events: EventEmitter<any>;
   eventsSubscription: any;
 
+  translation = {
+    translated: false,
+    error: false,
+    message: '',
+    source: ''
+  };
+  translationInProgress: boolean;
+
   constructor(
     public client: Client,
     public attachment: AttachmentService,
-    public translation: TranslationService,
+    public translationService: TranslationService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
     this.hideTabs = true;
@@ -82,31 +90,30 @@ export class Remind {
       return;
     }
 
-    if (!this.translation.isTranslatable(this.activity)) {
+    if (!this.translationService.isTranslatable(this.activity)) {
       return;
     }
 
-    this.activity.translating = true;
+    this.translationInProgress = true;
 
-    this.translation.translate(this.activity.guid, $event.selected)
+    this.translationService.translate(this.activity.guid, $event.selected)
       .then((translation: any) => {
-        this.activity.translating = false;
+        this.translationInProgress = false;
 
         if (typeof translation.content !== 'undefined') {
-          this.activity.translated = true;
-          this.activity.original_message = this.activity.message;
-          this.activity.message = translation.content;
+          this.translation.translated = true;
+          this.translation.message = translation.content;
 
-          this.activity.source_language = '';
-          this.translation.getLanguageName(translation.source)
-            .then(name => this.activity.source_language = name);
+          this.translation.source = '';
+          this.translationService.getLanguageName(translation.source)
+            .then(name => this.translation.source = name);
         }
 
         this.changeDetectorRef.markForCheck();
       })
       .catch(e => {
-        this.activity.translating = false;
-        this.activity.translation_error = true;
+        this.translationInProgress = false;
+        this.translation.error = true;
         this.changeDetectorRef.markForCheck();
 
         console.error('translate()', e);
@@ -114,12 +121,11 @@ export class Remind {
   }
 
   hideTranslation() {
-    if (!this.activity.translated) {
+    if (!this.translation.translated) {
       return;
     }
 
-    this.activity.translated = false;
-    this.activity.message = this.activity.original_message;
+    this.translation.translated = false;
     this.changeDetectorRef.markForCheck();
   }
 }

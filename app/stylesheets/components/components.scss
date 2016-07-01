@@ -559,3 +559,11 @@ m-modal-translate {
     }
   }
 }
+
+.m-translation-wrapper {
+  .message {
+    margin: 0 ($minds-padding * 2) $minds-padding;
+    padding: $minds-padding 0 $minds-padding $minds-padding;
+    border-left: 2px solid #ddd;
+  }
+}

@@ -72,6 +72,10 @@ export class TranslationService {
       return false;
     }
 
+    if (!entity.guid) {
+      return false;
+    }
+
     // Message should exist and have content
     if (typeof entity.message !== 'undefined' && entity.message) {
       return true;
