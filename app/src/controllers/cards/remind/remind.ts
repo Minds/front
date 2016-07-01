@@ -38,6 +38,7 @@ export class Remind {
 
   translation = {
     translated: false,
+    target: '',
     error: false,
     message: '',
     source: ''
@@ -94,7 +95,13 @@ export class Remind {
       return;
     }
 
+    this.translation.target = '';
+    this.translationService.getLanguageName($event.selected)
+      .then(name => this.translation.target = name);
+    
     this.translationInProgress = true;
+
+    this.changeDetectorRef.markForCheck();
 
     this.translationService.translate(this.activity.guid, $event.selected)
       .then((translation: any) => {

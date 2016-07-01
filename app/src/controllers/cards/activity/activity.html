@@ -53,7 +53,7 @@
   *ngIf="translationInProgress"
 >
   <i class="material-icons m-material-icons-inline">public</i>
-  Translating&hellip;
+  Translating<span *ngIf="translation.target"> to <b>{{ translation.target }}</b></span>&hellip;
 </div>
 
 <div *ngIf="translation.translated"

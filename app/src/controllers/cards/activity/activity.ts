@@ -64,6 +64,7 @@ export class Activity {
 
   translation = {
     translated: false,
+    target: '',
     error: false,
     message: '',
     source: ''
@@ -222,6 +223,10 @@ export class Activity {
     if (!this.translationService.isTranslatable(this.activity)) {
       return;
     }
+
+    this.translation.target = '';
+    this.translationService.getLanguageName($event.selected)
+      .then(name => this.translation.target = name);
 
     this.translationInProgress = true;
 
