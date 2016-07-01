@@ -18,13 +18,14 @@ import { BoostAds } from '../../components/ads/boost';
 import { AnalyticsImpressions } from '../../components/analytics/impressions';
 import { NewsfeedBoostRotator } from './boost-rotator/boost-rotator';
 
+import { InviteModal } from '../../components/modal/invite/invite';
 
 @Component({
   selector: 'minds-newsfeed',
   bindings: [ MindsTitle, NavigationService ],
   templateUrl: 'src/controllers/newsfeed/list.html',
   directives: [ Poster, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
-    InfiniteScroll, AnalyticsImpressions, CARDS, BoostAds, NewsfeedBoostRotator ]
+    InfiniteScroll, AnalyticsImpressions, CARDS, BoostAds, NewsfeedBoostRotator, InviteModal ]
 })
 
 export class Newsfeed {

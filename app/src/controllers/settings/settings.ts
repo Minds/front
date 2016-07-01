@@ -12,12 +12,13 @@ import { SettingsStatistics } from './statistics/statistics';
 import { SettingsDisableChannel } from './disable/disable';
 import { SettingsTwoFactor } from './two-factor/two-factor';
 
+import { InviteModal } from '../../components/modal/invite/invite';
 
 @Component({
   selector: 'minds-settings',
   bindings: [ MindsTitle ],
   templateUrl: 'src/controllers/settings/settings.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink, SettingsGeneral, SettingsStatistics, SettingsDisableChannel, SettingsTwoFactor]
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink, SettingsGeneral, SettingsStatistics, SettingsDisableChannel, SettingsTwoFactor, InviteModal ]
 })
 
 export class Settings{

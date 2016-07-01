@@ -22,7 +22,14 @@
           Two factor authentication
         </a>
       </li>
-    </ul>
+
+      <li class="minds-settings-item" >
+        <m-modal-invite #invite [open]="invite.open" (closed)="invite.open = false"></m-modal-invite>
+        <a (click)="invite.open = true" class="mdl-color-text--blue-grey-500">
+            Invite your friends
+        </a>
+      </li>  
+    </ul> 
   </div>
 
   <div class="mdl-cell mdl-cell--8-col minds-settings-content">
