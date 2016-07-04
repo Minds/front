@@ -225,7 +225,6 @@
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
 		<li class="mdl-menu__item"
             *ngIf="isTranslatable"
-            [hidden]="activity.owner_guid == session.getLoggedInUser().guid"
             (click)="translateToggle = true; toggle.value = false"
         >Translate</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
