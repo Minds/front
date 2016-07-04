@@ -97,7 +97,10 @@ export class Remind {
 
     this.translation.target = '';
     this.translationService.getLanguageName($event.selected)
-      .then(name => this.translation.target = name);
+      .then(name => {
+        this.translation.target = name;
+        this.changeDetectorRef.markForCheck();
+      });
     
     this.translationInProgress = true;
 
@@ -113,7 +116,10 @@ export class Remind {
 
           this.translation.source = '';
           this.translationService.getLanguageName(translation.source)
-            .then(name => this.translation.source = name);
+            .then(name => {
+              this.translation.source = name;
+              this.changeDetectorRef.markForCheck();
+            });
         }
 
         this.changeDetectorRef.markForCheck();
