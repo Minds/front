@@ -41,6 +41,7 @@ export class Remind {
     target: '',
     error: false,
     message: '',
+    title: '',
     source: ''
   };
   translationInProgress: boolean;
@@ -109,17 +110,20 @@ export class Remind {
     this.translationService.translate(this.activity.guid, $event.selected)
       .then((translation: any) => {
         this.translationInProgress = false;
+        this.translation.source = null;
 
-        if (typeof translation.content !== 'undefined') {
+        for (let field in translation) {
           this.translation.translated = true;
-          this.translation.message = translation.content;
+          this.translation[field] = translation[field].content;
 
-          this.translation.source = '';
-          this.translationService.getLanguageName(translation.source)
-            .then(name => {
-              this.translation.source = name;
-              this.changeDetectorRef.markForCheck();
-            });
+          if (this.translation.source === null && translation[field].source) {
+            this.translation.source = '';
+            this.translationService.getLanguageName(translation[field].source)
+              .then(name => {
+                this.translation.source = name;
+                this.changeDetectorRef.markForCheck();
+              });
+          }
         }
 
         this.changeDetectorRef.markForCheck();

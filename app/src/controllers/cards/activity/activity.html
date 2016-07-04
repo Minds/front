@@ -106,6 +106,16 @@
 </div>
 
 <div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [innerHtml]="activity.title | tags"></div>
+<!-- Translation -->
+<div *ngIf="translation.translated && translation.title"
+  class="m-translation-wrapper"
+>
+  <div class="mdl-card__supporting-text message"
+    [hidden]="!translation.title"
+  ><span [innerHtml]="translation.title | tags"></span></div>
+</div>
+<!-- End translation -->
+
 <div class="minds-editable-container" *ngIf="(activity.title || activity.custom_type) && editing">
 	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
 	<textarea class="mdl-card__supporting-text message" [ngModel]="activity.title" #titleEdit [autoGrow]></textarea>
