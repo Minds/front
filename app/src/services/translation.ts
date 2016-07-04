@@ -79,6 +79,8 @@ export class TranslationService {
     // Message should exist and have content
     if (typeof entity.message !== 'undefined' && entity.message) {
       return true;
+    } else if (entity.type === 'comment' && entity.description) {
+      return true;
     } else if (
       entity.custom_type &&
       (

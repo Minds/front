@@ -9,18 +9,31 @@
     <span class="mdl-color-text--blue-grey-300 minds-comment-span minds-comment-bullet">{{comment.time_created * 1000 | date: 'medium'}}</span>
 
     <div class="mdl-card__menu mdl-color-text--blue-grey-300">
-      <button class="mdl-button minds-more mdl-button--icon" (click)="reportToggle = true"
-        *ngIf="comment.owner_guid != session.getLoggedInUser()?.guid">
-        <i class="material-icons">flag</i>
+
+      <button class="mdl-button mdl-button--icon" (click)="toggle.value = !toggle.value">
+        <i class="material-icons">keyboard_arrow_down</i>
       </button>
-      <button class="mdl-button minds-more mdl-button--icon" (click)="delete(i)"
-        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid">
-        <i class="material-icons">delete</i>
-      </button>
-      <button class="mdl-button minds-more mdl-button--icon" (click)="editing = !editing"
-        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()">
-        <i class="material-icons">edit</i>
-      </button>
+      
+      <ul class="minds-dropdown-menu" [hidden]="!toggle.value" #toggle>
+        <li class="mdl-menu__item"
+          *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()"
+          (click)="editing = !editing; toggle.value = false"
+        >Edit</li>
+        <li class="mdl-menu__item"
+          *ngIf="isTranslatable && !editing"
+          (click)="translateToggle = true; toggle.value = false"
+        >Translate</li>
+        <li class="mdl-menu__item"
+          *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid"
+          (click)="delete(i); toggle.value = false"
+        >Delete</li>
+        <li class="mdl-menu__item"
+          *ngIf="!editing && comment.owner_guid != session.getLoggedInUser()?.guid"
+          (click)="reportToggle = true; toggle.value = false"
+        >Report</li>
+      </ul>
+      <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
+
       <span class="minds-comments-voting" [hidden]="editing">
           <minds-button-thumbs-up [object]="comment"></minds-button-thumbs-up>
           <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
@@ -40,6 +53,46 @@
       [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(comment) }"
       ></span>
     </p>
+
+    <!-- Translations -->
+    <div *ngIf="translateToggle"
+      class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
+    >
+      <m-translate (action)="translateToggle = false; translate($event)"></m-translate>
+    </div>
+
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
+      *ngIf="translationInProgress"
+    >
+      <i class="material-icons m-material-icons-inline">public</i>
+      Translating<span *ngIf="translation.target"> to <b>{{ translation.target }}</b></span>&hellip;
+    </div>
+
+    <div *ngIf="translation.translated"
+      class="m-translation-wrapper"
+    >
+      <div class="mdl-card__supporting-text translated-comment"
+        [hidden]="!translation.description"
+      ><span [innerHtml]="translation.description | tags" ></span></div>
+
+      <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
+        <i class="material-icons m-material-icons-inline">public</i>
+        Translated<span *ngIf="translation.source"> from <b>{{ translation.source }}</b></span>.
+        <a (click)="hideTranslation()">Hide translation</a>.
+      </div>
+    </div>
+
+    <div class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label"
+      *ngIf="!translationInProgress && translation.error"
+    >
+      <i class="material-icons m-material-icons-inline">warning</i>
+      There was an error when translating this content.
+      <a
+        class="mdl-color-text--red-900"
+        (click)="translation.error = false"
+      >Dismiss</a>
+    </div>
+    <!-- End Translations -->
 
     <div class="mdl-card m-comment-attachment" [hidden]="editing" *ngIf="(comment.perma_url && comment.title) || comment.custom_type == 'batch' || comment.custom_type == 'video'">
       <!-- Rich content -->

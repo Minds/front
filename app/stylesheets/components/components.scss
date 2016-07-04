@@ -563,7 +563,7 @@ m-translate {
 }
 
 .m-translation-wrapper {
-  .message {
+  .message, .translated-comment {
     width: calc(100% - #{$minds-padding * 4}) !important;
     margin: 0 ($minds-padding * 2) $minds-padding;
     padding: $minds-padding 0 $minds-padding $minds-padding;

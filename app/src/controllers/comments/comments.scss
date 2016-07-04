@@ -67,6 +67,18 @@ minds-comments{
           font-weight:bold;
           padding: 0 $minds-padding;
         }
+
+        @media screen and (max-width: $min-tablet) {
+          display: block;
+          position: initial;
+          top: initial;
+
+          &.minds-comment-bullet:before {
+            content: '';
+            padding: 0;
+          }
+        }
+
       }
       p{
         margin: 0.35em 0 0.5em;
@@ -201,8 +213,12 @@ minds-comments{
   }
 
   .minds-editable-container .mdl-card__actions {
-    top: $minds-padding + 34px;
+    top: $minds-padding + 44px;
     right: $minds-padding + 14px;
+
+    @media screen and (max-width: $min-tablet) {
+      top: $minds-padding + 52px;
+    }
   }
 
   .m-comments-composer .mdl-card__actions,

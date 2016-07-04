@@ -12,9 +12,11 @@ import { MINDS_PIPES } from '../../../pipes/pipes';
 
 import { MDL_DIRECTIVES } from '../../../directives/material';
 import { AttachmentService } from '../../../services/attachment';
+import { TranslationService } from '../../../services/translation';
 
 import { MindsVideo } from '../../../components/video';
 import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
+import { Translate } from '../../../components/translate/translate';
 
 import { ReportModal } from '../../../components/modal/modal';
 
@@ -26,7 +28,7 @@ import { ReportModal } from '../../../components/modal/modal';
     '(keydown.esc)': 'editing = false'
   },
   templateUrl: 'src/controllers/cards/comment/comment.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal, MindsRichEmbed, Hovercard ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal, MindsRichEmbed, Hovercard, Translate ],
   pipes: [ TagsPipe, MINDS_PIPES ],
   providers: [ AttachmentService ]
 })
@@ -47,7 +49,17 @@ export class CommentCard {
 
   reportToggle: boolean = false;
 
-	constructor(public client: Client, public attachment: AttachmentService){
+  translation = {
+    translated: false,
+    target: '',
+    error: false,
+    description: '',
+    source: null
+  };
+  isTranslatable: boolean;
+  translationInProgress: boolean;
+
+	constructor(public client: Client, public attachment: AttachmentService, public translationService: TranslationService){
 	}
 
   set object(value: any) {
@@ -55,6 +67,8 @@ export class CommentCard {
       return;
     this.comment = value;
     this.attachment.load(this.comment);
+
+    this.isTranslatable = this.translationService.isTranslatable(this.comment);
   }
 
   set _editing(value : boolean){
@@ -156,5 +170,52 @@ export class CommentCard {
     }
 
     this.attachment.preview(message.value);
+  }
+
+  translate($event: any = {}) {
+    if (!$event.selected) {
+      return;
+    }
+
+    if (!this.translationService.isTranslatable(this.comment)) {
+      return;
+    }
+
+    this.translation.target = '';
+    this.translationService.getLanguageName($event.selected)
+      .then(name => this.translation.target = name);
+
+    this.translationInProgress = true;
+
+    this.translationService.translate(this.comment.guid, $event.selected)
+      .then((translation: any) => {
+        this.translationInProgress = false;
+        this.translation.source = null;
+
+        for (let field in translation) {
+          this.translation.translated = true;
+          this.translation[field] = translation[field].content;
+
+          if (this.translation.source === null && translation[field].source) {
+            this.translation.source = '';
+            this.translationService.getLanguageName(translation[field].source)
+              .then(name => this.translation.source = name);
+          }
+        }
+      })
+      .catch(e => {
+        this.translationInProgress = false;
+        this.translation.error = true;
+
+        console.error('translate()', e);
+      });
+  }
+
+  hideTranslation() {
+    if (!this.translation.translated) {
+      return;
+    }
+
+    this.translation.translated = false;
   }
 }
