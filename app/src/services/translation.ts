@@ -24,7 +24,11 @@ export class TranslationService {
       let cached = this.storage.get(`translation:languages:${this.defaultLanguage}`);
 
       if (cached) {
-        this.languagesReady = Promise.resolve(JSON.parse(cached));
+        cached = JSON.parse(cached);
+      }
+
+      if (cached && cached.length > 0) {
+        this.languagesReady = Promise.resolve(cached);
       } else {
         this.languagesReady = this.clientService.get(`api/v1/translation/languages`, { target: this.defaultLanguage })
           .then((response: any) => {
