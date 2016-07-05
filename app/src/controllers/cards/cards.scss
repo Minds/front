@@ -42,6 +42,7 @@ minds-card-user, .minds-banner-card{
     .body{
       flex:1;
       margin: $minds-margin*2;
+      max-width: calc(100% - #{100px + ($minds-padding * 3)});
 
       h3{
         overflow: hidden;
