@@ -243,8 +243,11 @@ svg.m-facebook-icon{
       display: block;
       width: 100%;
       text-align: center;
-      z-index: 999;
       position: relative;
+
+      m-modal-boost {
+        z-index: 999;
+      }
     }
   }
 }
