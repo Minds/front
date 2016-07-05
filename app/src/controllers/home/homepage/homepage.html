@@ -18,17 +18,32 @@
       <div class="mdl-cell mdl-cell--6-col m-homepage-signup" [hidden]="session.isLoggedIn()">
         <minds-form-register (done)="registered()"></minds-form-register>
       </div>
-      <div class="mdl-cell mdl-cell--12-col m-app-links">
+      <!--<div class="mdl-cell mdl-cell--12-col m-app-links">
         <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6" target="_blank">
           <img src="assets/ext/appstore.png">
         </a>
         <a href="https://play.google.com/store/apps/details?id=com.minds.mobile">
           <img src="assets/ext/playstore.png">
         </a>
-      </div>
+      </div>-->
     </div>
   </div>
 </section>
+
+<div class="mdl-grid mdl-grid--no-spacing m-homepage-stream">
+
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="#activity of stream[1]"></minds-activity>
+    </section>
+
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="#activity of stream[2]"></minds-activity>
+    </section>
+
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="#activity of stream[3]"></minds-activity>
+    </section>
+</div>
 
 <section class="m-homepage-facts">
   <div class="mdl-grid ">
@@ -101,25 +116,7 @@
 
 </section>
 
-<div class="mdl-grid mdl-grid--no-spacing m-homepage-featured">
-
-    <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
-      <h4><a [routerLink]="['/Discovery', {filter: 'featured', 'type':'videos'}]" class="mdl-color-text--blue-grey-200">Featured videos <span>More</span></a></h4>
-      <div class="m-contents mdl-grid">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ngFor="let video of videos">
-          <minds-card-video [object]="video" class="mdl-card mdl-shadow--2dp"></minds-card-video>
-        </div>
-      </div>
-    </section>
-
-    <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
-      <h4><a [routerLink]="['/Blog', {filter: 'featured'}]" class="mdl-color-text--blue-grey-200">Featured blogs <span>More</span></a></h4>
-      <div class="m-contents mdl-grid">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ngFor="let blog of blogs">
-          <minds-card-blog [object]="blog" class="mdl-card mdl-shadow--2dp"></minds-card-blog>
-        </div>
-      </div>
-    </section>
+<div class="mdl-grid mdl-grid--no-spacing m-homepage-featured m-homepage-footer">
 
     <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel m-homepage-press">
       <h4 class="mdl-color-text--blue-grey-200">Press coverage</h4>

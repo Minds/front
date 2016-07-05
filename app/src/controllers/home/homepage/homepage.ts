@@ -26,6 +26,12 @@ export class Homepage {
   videos : Array<any> = [];
   blogs : Array<any> = [];
   channels : Array<any> = [];
+  stream = {
+    1: [],
+    2: [],
+    3: []
+  };
+
   session = SessionFactory.build();
   minds = window.Minds;
 
@@ -35,12 +41,26 @@ export class Homepage {
 
   constructor(public client: Client, public title: MindsTitle, public router : Router, public navigation: NavigationService, private modal : SignupModalService){
     this.title.setTitle("Home");
-    this.loadVideos();
-    this.loadBlogs();
+    this.loadStream();
+    //this.loadVideos();
+    //this.loadBlogs();
 
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
+  }
+
+  loadStream(){
+    this.client.get('api/v1/newsfeed/featured', { limit: 24 })
+      .then((response : any) => {
+        let col = 0;
+        for(let activity of response.activity){
+          //split stream into 3 columns
+          if(col++ >= 3)
+            col = 1;
+          this.stream[col].push(activity);
+        }
+      });
   }
 
   loadVideos(){

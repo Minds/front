@@ -195,10 +195,10 @@
 		<!-- FEATURE -->
 		<li class="mdl-menu__item" *ngIf="!activity.featured && session.isAdmin()" (click)="feature()">Feature</li>
 		<li class="mdl-menu__item" *ngIf="activity.featured && session.isAdmin()" (click)="unFeature()">un-Feature</li>
-        <!-- DELETE -->
-        <li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true; toggle.value = !toggle.value">Delete</li>
-        <!-- REPORT -->
-        <li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
+		<!-- DELETE -->
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true; toggle.value = false">Delete</li>
+		<!-- REPORT -->
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
 		<!-- NOTIFICATIONS -->
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled>Mute notifications</li>
 		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false">Mute notifications</li>

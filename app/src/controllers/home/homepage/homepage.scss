@@ -2,9 +2,14 @@
 
 .minds-homepage-banner{
   position:relative;
-  min-height:100vh;
-  height:650px;
+  min-height:200px;
+  height:200px;
   overflow:hidden;
+
+  video{
+    bottom:auto;
+    top:-50px;
+  }
 
   .overlay{
     background: rgba(0,0,0,0.3);
@@ -29,7 +34,7 @@
         }
         h1{
           margin: 0;
-          font-size: 72px;
+          font-size: 46px;
           font-weight: 300;
           line-height:100px;
           //padding-bottom:$minds-padding*2;
@@ -125,6 +130,19 @@ minds-homepage{
     //text-transform: uppercase;
     font-weight: 100;
     font-size: 41px;
+  }
+
+  .m-homepage-stream{
+    padding:$minds-padding !important;
+    section{
+      display:block;
+      padding:$minds-padding*2;
+      height:auto;
+
+      minds-activity{
+        width:100%;
+      }
+    }
   }
 
   .m-homepage-facts{

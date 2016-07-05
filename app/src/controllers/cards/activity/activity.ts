@@ -197,6 +197,22 @@ export class Activity {
       this.showBoostOptions = !this.showBoostOptions;
   }
 
+  feature(){
+    this.activity.featured = true;
+    this.client.put('api/v1/admin/feature/' + this.activity.guid)
+      .catch(() => {
+        this.activity.featured = false;
+      });
+  }
+
+  unFeature(){
+    this.activity.featured = false;
+    this.client.delete('api/v1/admin/feature/' + this.activity.guid)
+      .catch(() => {
+        this.activity.featured = true;
+      });
+  }
+
   isVisible(){
     if(this.visible){
       return true;
