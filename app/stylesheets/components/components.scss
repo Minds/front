@@ -569,4 +569,8 @@ m-translate {
     padding: $minds-padding 0 $minds-padding $minds-padding;
     border-left: 2px solid #ddd;
   }
+
+  .translated-comment {
+    font-size: inherit;
+  }
 }
