@@ -38,34 +38,15 @@
     </span>
 </div>
 
-<!-- Translations -->
-<div *ngIf="translateToggle" class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
-  <m-translate (action)="translateToggle = false; translate($event)"></m-translate>
-</div>
-
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label" *ngIf="translationInProgress">
-  <i class="material-icons m-material-icons-inline">public</i>
-  Translating<span *ngIf="translation.target"> to <b>{{ translation.target }}</b></span>&hellip;
-</div>
-
-<div *ngIf="translation.translated" class="m-translation-wrapper">
-  <div class="mdl-card__supporting-text message" [hidden]="!translation.message">
-      <span [innerHtml]="translation.message | tags" ></span>
-  </div>
-
-  <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
-    <i class="material-icons m-material-icons-inline">public</i>
-    Translated<span *ngIf="translation.source"> from <b>{{ translation.source }}</b></span>.
-    <a (click)="hideTranslation()">Hide translation</a>.
-  </div>
-</div>
-
-<div class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label" *ngIf="!translationInProgress && translation.error">
-  <i class="material-icons m-material-icons-inline">warning</i>
-  There was an error when translating this content.
-  <a class="mdl-color-text--red-900" (click)="translation.error = false">Dismiss</a>
-</div>
-<!-- End Translations -->
+<m-translate
+  [open]="translateToggle"
+  [entity]="activity"
+  [translateEvent]="translateEvent"
+  (onTranslateInit)="propagateTranslation($event)"
+  (onTranslate)="translateToggle = false"
+  (onTranslateError)="translateToggle = false"
+  #translate
+></m-translate>
 
 <div class="minds-editable-container" *ngIf="activity.message && editing">
 	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
@@ -89,9 +70,9 @@
 
 <div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [innerHtml]="activity.title | tags"></div>
 <!-- Translation -->
-<div *ngIf="translation.translated && translation.title" class="m-translation-wrapper">
-  <div class="mdl-card__supporting-text message" [hidden]="!translation.title">
-    <span [innerHtml]="translation.title | tags"></span>
+<div *ngIf="translate.translation.translated && translate.translation.title" class="m-translation-wrapper">
+  <div class="mdl-card__supporting-text message" [hidden]="!translate.translation.title">
+    <span [innerHtml]="translate.translation.title | tags"></span>
   </div>
 </div>
 <!-- End translation -->

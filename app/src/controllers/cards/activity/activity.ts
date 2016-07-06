@@ -62,16 +62,7 @@ export class Activity {
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
 
-  translation = {
-    translated: false,
-    target: '',
-    error: false,
-    message: '',
-    title: '',
-    source: ''
-  };
   isTranslatable: boolean;
-  translationInProgress: boolean;
 
   constructor(
     public client: Client,
@@ -209,61 +200,16 @@ export class Activity {
     //this.scroll.fire();
   }
 
-  translate($event: any = {}) {
-    if (!$event.selected) {
-      return;
-    }
+  ngOnDestroy(){
+    this.scroll.unListen(this.scroll_listener);
+  }
 
+  propagateTranslation($event) {
     if (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object)) {
       this.childEventsEmitter.emit({
         action: 'translate',
         args: [ $event ]
       });
     }
-
-    if (!this.translationService.isTranslatable(this.activity)) {
-      return;
-    }
-
-    this.translation.target = '';
-    this.translationService.getLanguageName($event.selected)
-      .then(name => this.translation.target = name);
-
-    this.translationInProgress = true;
-
-    this.translationService.translate(this.activity.guid, $event.selected)
-      .then((translation: any) => {
-        this.translationInProgress = false;
-        this.translation.source = null;
-
-        for (let field in translation) {
-          this.translation.translated = true;
-          this.translation[field] = translation[field].content;
-
-          if (this.translation.source === null && translation[field].source) {
-            this.translation.source = '';
-            this.translationService.getLanguageName(translation[field].source)
-              .then(name => this.translation.source = name);
-          }
-        }
-      })
-      .catch(e => {
-        this.translationInProgress = false;
-        this.translation.error = true;
-
-        console.error('translate()', e);
-      });
-  }
-
-  hideTranslation() {
-    if (!this.translation.translated) {
-      return;
-    }
-
-    this.translation.translated = false;
-  }
-
-  ngOnDestroy(){
-    this.scroll.unListen(this.scroll_listener);
   }
 }

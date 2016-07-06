@@ -1,45 +1,23 @@
-import { Component, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { CORE_DIRECTIVES } from '@angular/common';
+import { MINDS_PIPES } from '../../pipes/pipes';
 
 import { TranslationService } from '../../services/translation';
 
 @Component({
   selector: 'm-translate',
-  outputs: [ 'action' ],
-  directives: [ CORE_DIRECTIVES ],
-  template: `
-    <i class="material-icons m-material-icons-inline">public</i>
-    Translate to:
-    <div class="m-translate-select">
-      <select class="m-translate-select-control"
-        (change)="select($event.target.value)"
-        [disabled]="languagesInProgress"
-      >
-        <option value="" selected>Language&hellip;</option>
-
-        <optgroup label="Preferred Languages" *ngIf="preferredLanguages.length > 0">
-          <option *ngFor="let language of preferredLanguages"
-            [value]="language.language"
-          >
-            {{ language.name }} ({{ language.language }})
-          </option>
-        </optgroup>
-
-        <optgroup label="{{ preferredLanguages.length > 0 ? 'Other' : 'All Languages' }}">
-          <option *ngFor="let language of languages"
-            [value]="language.language"
-          >
-            {{ language.name }} ({{ language.language }})
-          </option>
-        </optgroup>
-      </select>
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  inputs: ['open', '_entity: entity', '_translateEvent: translateEvent'],
+  outputs: ['onTranslateInit', 'onTranslate', 'onTranslateError'],
+  exportAs: 'translate',
+  directives: [CORE_DIRECTIVES],
+  pipes: [MINDS_PIPES],
+  templateUrl: 'src/components/translate/translate.html'
 })
 
 export class Translate {
-  action: EventEmitter<any> = new EventEmitter();
+  onTranslateInit: EventEmitter<any> = new EventEmitter();
+  onTranslate: EventEmitter<any> = new EventEmitter();
+  onTranslateError: EventEmitter<any> = new EventEmitter();
 
   languagesInProgress: boolean = false;
   languagesError: boolean = false;
@@ -47,16 +25,53 @@ export class Translate {
   preferredLanguages: any[] = [];
   languages: any[] = [];
 
+  open: boolean = false;
+  entity: any = {};
+  translateEvent: EventEmitter<any> = new EventEmitter();
+  translateEventSubscription: any;
+
+  translatable: boolean = false;
+  translation = {
+    translated: false,
+    target: '',
+    error: false,
+    message: '',
+    title: '',
+    description: '',
+    source: ''
+  };
+  translationInProgress: boolean;
+
   constructor(
-    public translation: TranslationService,
-    private changeDetectorRef: ChangeDetectorRef
+    public translationService: TranslationService,
+    public changeDetectorRef: ChangeDetectorRef
   ) { }
+
+  set _entity(value: any) {
+    this.entity = value;
+    this.translatable = this.translationService.isTranslatable(this.entity);
+  }
+
+  set _translateEvent(value: any) {
+    if (this.translateEventSubscription) {
+      this.translateEventSubscription.unsubscribe();
+    }
+
+    this.translateEvent = value;
+    
+    if (!value) {
+      return;
+    }
+
+    this.translateEventSubscription = this.translateEvent.subscribe(($event) => {
+      this.translate($event);
+    });
+  }
 
   ngOnInit() {
     this.languagesInProgress = true;
-    this.changeDetectorRef.markForCheck();
 
-    this.translation.getLanguages()
+    this.translationService.getLanguages()
       .then((languages: any[]) => {
         this.languagesInProgress = false;
         this.parseLanguages(languages);
@@ -68,8 +83,15 @@ export class Translate {
         this.languagesError = true;
 
         this.changeDetectorRef.markForCheck();
+
         console.error('TranslateModal::onInit', e);
       })
+  }
+
+  ngOnDestroy() {
+    if (this.translateEventSubscription) {
+      this.translateEventSubscription.unsubscribe();
+    }
   }
 
   parseLanguages(allLanguages: any[]) {
@@ -90,8 +112,86 @@ export class Translate {
       return;
     }
 
-    this.action.emit({
+    let $event = {
+      entity: this.entity,
       selected: language
-    });
+    };
+
+    this.onTranslateInit.emit($event);
+    this.changeDetectorRef.markForCheck();
+
+    this.translate($event);
+  }
+
+  translate($event: any = {}) {
+    if (!$event.selected) {
+      return;
+    }
+
+    this.open = false;
+
+    if (!this.translationService.isTranslatable(this.entity)) {
+      return;
+    }
+
+    this.translation.target = '';
+    this.translationService.getLanguageName($event.selected)
+      .then(name => {
+        this.translation.target = name;
+        this.changeDetectorRef.markForCheck();
+      });
+
+    this.translationInProgress = true;
+
+    this.translationService.translate(this.entity.guid, $event.selected)
+      .then((translation: any) => {
+        this.translationInProgress = false;
+        this.translation.source = null;
+
+        for (let field in translation) {
+          this.translation.translated = true;
+          this.translation[field] = translation[field].content;
+
+          if (this.translation.source === null && translation[field].source) {
+            this.translation.source = '';
+            this.translationService.getLanguageName(translation[field].source)
+              .then(name => {
+                this.translation.source = name;
+                this.changeDetectorRef.markForCheck();
+              });
+          }
+        }
+
+        this.onTranslate.emit({
+          entity: this.entity,
+          translation: this.translation,
+          selected: $event.selected
+        });
+
+        this.changeDetectorRef.markForCheck();
+
+      })
+      .catch(e => {
+        this.translationInProgress = false;
+        this.translation.error = true;
+
+        this.onTranslateError.emit({
+          entity: this.entity,
+          selected: $event.selected
+        });
+
+        this.changeDetectorRef.markForCheck();
+
+        console.error('translate()', e);
+      });
+  }
+
+  hideTranslation() {
+    if (!this.translation.translated) {
+      return;
+    }
+
+    this.translation.translated = false;
+    this.changeDetectorRef.markForCheck();
   }
 }

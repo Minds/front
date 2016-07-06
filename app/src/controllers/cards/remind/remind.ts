@@ -13,16 +13,16 @@ import { Boost } from '../../boosts/boost/boost';
 import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
 import { TagsLinks } from '../../../directives/tags';
+import { Translate } from '../../../components/translate/translate';
 
 import { AttachmentService } from '../../../services/attachment';
-import { TranslationService } from '../../../services/translation';
 import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 
 @Component({
   selector: 'minds-remind',
   properties: ['object', '_events: events'],
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks, MindsRichEmbed, Hovercard ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks, MindsRichEmbed, Hovercard, Translate ],
   pipes: [ MINDS_PIPES ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [ AttachmentService ]
@@ -36,20 +36,11 @@ export class Remind {
   events: EventEmitter<any>;
   eventsSubscription: any;
 
-  translation = {
-    translated: false,
-    target: '',
-    error: false,
-    message: '',
-    title: '',
-    source: ''
-  };
-  translationInProgress: boolean;
+  translateEvent: EventEmitter<any> = new EventEmitter(); 
 
   constructor(
     public client: Client,
     public attachment: AttachmentService,
-    public translationService: TranslationService,
     private changeDetectorRef: ChangeDetectorRef
   ) {
     this.hideTabs = true;
@@ -87,62 +78,9 @@ export class Remind {
     return new Date(timestamp*1000);
   }
 
-  translate($event: any = {}) {
-    if (!$event.selected) {
-      return;
-    }
-
-    if (!this.translationService.isTranslatable(this.activity)) {
-      return;
-    }
-
-    this.translation.target = '';
-    this.translationService.getLanguageName($event.selected)
-      .then(name => {
-        this.translation.target = name;
-        this.changeDetectorRef.markForCheck();
-      });
-    
-    this.translationInProgress = true;
-
-    this.changeDetectorRef.markForCheck();
-
-    this.translationService.translate(this.activity.guid, $event.selected)
-      .then((translation: any) => {
-        this.translationInProgress = false;
-        this.translation.source = null;
-
-        for (let field in translation) {
-          this.translation.translated = true;
-          this.translation[field] = translation[field].content;
-
-          if (this.translation.source === null && translation[field].source) {
-            this.translation.source = '';
-            this.translationService.getLanguageName(translation[field].source)
-              .then(name => {
-                this.translation.source = name;
-                this.changeDetectorRef.markForCheck();
-              });
-          }
-        }
-
-        this.changeDetectorRef.markForCheck();
-      })
-      .catch(e => {
-        this.translationInProgress = false;
-        this.translation.error = true;
-        this.changeDetectorRef.markForCheck();
-
-        console.error('translate()', e);
-      });
+  translate($event: any) {
+    this.translateEvent.emit($event);
   }
 
-  hideTranslation() {
-    if (!this.translation.translated) {
-      return;
-    }
-
-    this.translation.translated = false;
-    this.changeDetectorRef.markForCheck();
-  }
+  propagateTranslation() { }
 }

@@ -563,14 +563,16 @@ m-translate {
 }
 
 .m-translation-wrapper {
-  .message, .translated-comment {
+  .message {
+    font-size: 14px;
+    white-space: inherit !important;
     width: calc(100% - #{$minds-padding * 4}) !important;
     margin: 0 ($minds-padding * 2) $minds-padding;
     padding: $minds-padding 0 $minds-padding $minds-padding;
     border-left: 2px solid #ddd;
-  }
 
-  .translated-comment {
-    font-size: inherit;
+    minds-card-comment & {
+      font-size: inherit !important;
+    }
   }
 }
