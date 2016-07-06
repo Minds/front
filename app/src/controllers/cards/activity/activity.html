@@ -11,12 +11,11 @@
 		<a [routerLink]="['/Channel', {username: activity.ownerObj.username}]">
 			<strong>{{activity.ownerObj.name}}</strong>
 		</a>
-    <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
-      [routerLink]="['/Groups-Profile', {guid: activity.containerObj.guid, filter: 'activity'}]"
-      class="mdl-color-text--blue-grey-300"
-      >
-      <strong>({{activity.containerObj.name}})</strong>
-    </a>
+        <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
+          [routerLink]="['/Groups-Profile', {guid: activity.containerObj.guid, filter: 'activity'}]"
+          class="mdl-color-text--blue-grey-300">
+          <strong>({{activity.containerObj.name}})</strong>
+        </a>
 		<a [routerLink]="['/Activity', { guid: activity.guid }]" class="permalink">
 			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
 		</a>
@@ -25,43 +24,34 @@
 </div>
 
 <!-- Messages -->
-<div class="mdl-card__supporting-text message m-mature-message"
-[hidden]="!activity.message || editing"
->
+<div class="mdl-card__supporting-text message m-mature-message" [hidden]="!activity.message || editing">
 	<a class="m-mature-text-toggle"
-	(click)="activity.mature_visibility = !activity.mature_visibility"
-	*ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
-	[ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }"
-	>
+	  (click)="activity.mature_visibility = !activity.mature_visibility"
+	  *ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
+	  [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }">
 		<i class="material-icons m-material-icons-inline">explicit</i>
 	</a>
 	<span class="m-mature-message-content"
-	[innerHtml]="activity.message | tags"
-	[ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
-	(click)="activity.mature && !activity.mature_visibility ? activity.mature_visibility = !activity.mature_visibility : null"
-	></span>
+	  [innerHtml]="activity.message | tags"
+	  [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
+	  (click)="activity.mature && !activity.mature_visibility ? activity.mature_visibility = !activity.mature_visibility : null">
+    </span>
 </div>
 
 <!-- Translations -->
-<div *ngIf="translateToggle"
-  class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
->
+<div *ngIf="translateToggle" class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
   <m-translate (action)="translateToggle = false; translate($event)"></m-translate>
 </div>
 
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
-  *ngIf="translationInProgress"
->
+<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label" *ngIf="translationInProgress">
   <i class="material-icons m-material-icons-inline">public</i>
   Translating<span *ngIf="translation.target"> to <b>{{ translation.target }}</b></span>&hellip;
 </div>
 
-<div *ngIf="translation.translated"
-  class="m-translation-wrapper"
->
-  <div class="mdl-card__supporting-text message"
-    [hidden]="!translation.message"
-  ><span [innerHtml]="translation.message | tags" ></span></div>
+<div *ngIf="translation.translated" class="m-translation-wrapper">
+  <div class="mdl-card__supporting-text message" [hidden]="!translation.message">
+      <span [innerHtml]="translation.message | tags" ></span>
+  </div>
 
   <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
     <i class="material-icons m-material-icons-inline">public</i>
@@ -70,15 +60,10 @@
   </div>
 </div>
 
-<div class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label"
-  *ngIf="!translationInProgress && translation.error"
->
+<div class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label" *ngIf="!translationInProgress && translation.error">
   <i class="material-icons m-material-icons-inline">warning</i>
   There was an error when translating this content.
-  <a
-    class="mdl-color-text--red-900"
-    (click)="translation.error = false"
-  >Dismiss</a>
+  <a class="mdl-color-text--red-900" (click)="translation.error = false">Dismiss</a>
 </div>
 <!-- End Translations -->
 
@@ -91,28 +76,23 @@
 
 <!-- Rich content -->
 <div class="m-rich-embed"
-*ngIf="activity.perma_url && activity.title"
-[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
->
+  *ngIf="activity.perma_url && activity.title"
+  [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }">
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
 			<i class="material-icons" title="Mature content">explicit</i>
 			<span>Click to confirm your are 18+</span>
 		</span>
 	</div>
-	<minds-rich-embed
-	[src]="activity"
-	></minds-rich-embed>
+	<minds-rich-embed [src]="activity"></minds-rich-embed>
 </div>
 
 <div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [innerHtml]="activity.title | tags"></div>
 <!-- Translation -->
-<div *ngIf="translation.translated && translation.title"
-  class="m-translation-wrapper"
->
-  <div class="mdl-card__supporting-text message"
-    [hidden]="!translation.title"
-  ><span [innerHtml]="translation.title | tags"></span></div>
+<div *ngIf="translation.translated && translation.title" class="m-translation-wrapper">
+  <div class="mdl-card__supporting-text message" [hidden]="!translation.title">
+    <span [innerHtml]="translation.title | tags"></span>
+  </div>
 </div>
 <!-- End translation -->
 
@@ -124,9 +104,8 @@
 </div>
 
 <div class="item item-image item-image-video"
-[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
-*ngIf="activity.custom_type == 'video'"
->
+  [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }" 
+  *ngIf="activity.custom_type == 'video'">
 		<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 			<span class="m-mature-overlay-note">
 				<i class="material-icons" title="Mature content">explicit</i>
@@ -144,16 +123,14 @@
 				[poster]="activity.custom_data.thumbnail_src"
 				[src]="[{ 'res': '720', 'uri': 'api/v1/archive/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
         [guid]="activity.custom_data.guid"
-				[playCount]="activity['play:count']"
-			>
+				[playCount]="activity['play:count']">
 		</minds-video>
  </div>
 
 <!-- Images -->
 <div class="item item-image allow-select"
-[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
-*ngIf="activity.thumbnail_src && !activity.perma_url"
->
+ [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+ *ngIf="activity.thumbnail_src && !activity.perma_url">
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
 			<i class="material-icons" title="Mature content">explicit</i>
@@ -168,9 +145,8 @@
 
 <!-- Custom type:: batch -->
 <div class="item item-image allow-select"
-[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
-*ngIf="activity.custom_type == 'batch'"
->
+ [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
+ *ngIf="activity.custom_type == 'batch'">
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
 			<i class="material-icons" title="Mature content">explicit</i>
@@ -215,7 +191,11 @@
 </div>
 
 <div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ngIf="!hideTabs">
-	<!-- Right aligned menu below button -->
+    <button class="mdl-button m-translate-button mdl-button--icon" *ngIf="isTranslatable" (click)="translateToggle = true;">
+        <i class="material-icons">public</i>
+    </button>
+
+    <!-- Right aligned menu below button -->
 	<button class="mdl-button minds-more mdl-button--icon" (click)="toggle.value = !toggle.value; cardMenuHandler(toggle.value)">
 		<i class="material-icons">keyboard_arrow_down</i>
 	</button>
@@ -223,10 +203,7 @@
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
-		<li class="mdl-menu__item"
-            *ngIf="isTranslatable"
-            (click)="translateToggle = true; toggle.value = false"
-        >Translate</li>
+		<li class="mdl-menu__item" *ngIf="isTranslatable" (click)="translateToggle = true; toggle.value = false">Translate</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled>Mute notifications</li>
@@ -236,7 +213,7 @@
   <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 
   <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url" [embed]="activity"></m-modal-share>
-	<m-modal-report *ngIf="reportToggle" [open]="true" (closed)="reportToggle = false" [object]="activity"></m-modal-report>
+  <m-modal-report *ngIf="reportToggle" [open]="true" (closed)="reportToggle = false" [object]="activity"></m-modal-report>
   <m-modal-confirm *ngIf="deleteToggle"
     [open]="true"
     [closeAfterAction]=true
