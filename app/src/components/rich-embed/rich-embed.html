@@ -16,7 +16,9 @@
       <i *ngIf="inlineEmbed.downloadable" class="material-icons">file_download</i>
     </div>
 
-    <div *ngIf="embeddedInline && inlineEmbed" [class]="inlineEmbed.className" [innerHtml]="inlineEmbed.html"></div>
+    <div *ngIf="embeddedInline && inlineEmbed" [class]="inlineEmbed.className">
+        <div [outerHTML]="inlineEmbed.html"></div>
+    </div>
   </a>
   <a [href]="src.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src }">
     <h2 class="mdl-card__title-text mdl-typography--font-medium" *ngIf="src.title">{{src.title}}</h2>

@@ -1,4 +1,5 @@
 import { Component, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { DomSanitizationService } from '@angular/platform-browser';
 import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Material } from '../../directives/material';
@@ -17,6 +18,9 @@ export class MindsRichEmbed {
   preview: any = {};
   inlineEmbed: any = null;
   embeddedInline: boolean = false;
+
+  constructor(private sanitizer: DomSanitizationService){
+  }
 
   set _src(value: any) {
     if (!value) {
@@ -83,10 +87,10 @@ export class MindsRichEmbed {
         return {
           id: `video-youtube-${matches[1]}`,
           className: 'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-youtube',
-          html: `<iframe
+          html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
           src="https://www.youtube.com/embed/${matches[1]}?autoplay=1&controls=2&modestbranding=1&origin=${origin}&rel=0"
           frameborder="0"
-          allowfullscreen></iframe>`,
+          allowfullscreen></iframe>`),
           playable: true
         };
       }
@@ -100,10 +104,10 @@ export class MindsRichEmbed {
         return {
           id: `video-vimeo-${matches[1]}`,
           className: 'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-vimeo',
-          html: `<iframe
+          html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
           src="https://player.vimeo.com/video/${matches[1]}?autoplay=1&title=0&byline=0&portrait=0"
           frameborder="0"
-          webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`,
+          webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`),
           playable: true
         };
       }
