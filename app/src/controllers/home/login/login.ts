@@ -58,7 +58,7 @@ export class Login {
 
   registered(){
     this.modal.setDisplay('onboarding').open();
-    this.router.navigate(['/Discovery', {filter:'suggested', 'type': 'channels'}]);
+    this.router.navigate(['/Newsfeed', {}]);
   }
 
 }
