@@ -133,10 +133,11 @@ minds-homepage{
   }
 
   .m-homepage-stream{
+    max-width:1100px;
     padding:$minds-padding !important;
     section{
       display:block;
-      padding:$minds-padding*2;
+      padding:$minds-padding*1.5;
       height:auto;
 
       minds-activity{
