@@ -185,8 +185,14 @@
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
 		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
 		<li class="mdl-menu__item" *ngIf="isTranslatable" (click)="translateToggle = true; toggle.value = false">Translate</li>
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="deleteToggle = true; toggle.value = false">Delete</li>
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
+		<!-- FEATURE -->
+		<li class="mdl-menu__item" *ngIf="!activity.featured && session.isAdmin()" (click)="feature()">Feature</li>
+		<li class="mdl-menu__item" *ngIf="activity.featured && session.isAdmin()" (click)="unFeature()">un-Feature</li>
+        <!-- DELETE -->
+        <li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="delete(); toggle.value = !toggle.value">Delete</li>
+        <!-- REPORT -->
+        <li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
+		<!-- NOTIFICATIONS -->
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled>Mute notifications</li>
 		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false">Mute notifications</li>
 		<li class="mdl-menu__item" *ngIf="asyncMute && activity['is:muted']" (click)="unmute(); toggle.value = false">Unmute notifications</li>
