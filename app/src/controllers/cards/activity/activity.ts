@@ -28,7 +28,7 @@ import { TranslationService } from '../../../services/translation';
   host: {
     'class': 'mdl-card mdl-shadow--2dp'
   },
-  inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible'],
+  inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible', 'canDelete'],
   outputs: [ '_delete: delete', 'commentsOpened'],
   providers: [ AttachmentService ],
   templateUrl: 'src/controllers/cards/activity/activity.html',
@@ -63,6 +63,7 @@ export class Activity {
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
 
   isTranslatable: boolean;
+  canDelete : boolean = false;
 
   constructor(
     public client: Client,
@@ -71,9 +72,10 @@ export class Activity {
     public attachment: AttachmentService,
     public translationService: TranslationService
   ) {
+
     this.element = _element.nativeElement;
     this.isVisible();
-	}
+  }
 
   set object(value: any) {
     if(!value)
