@@ -70,7 +70,7 @@
 
 <div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [innerHtml]="activity.title | tags"></div>
 <!-- Translation -->
-<div *ngIf="translate.translation.translated && translate.translation.title" class="m-translation-wrapper">
+<div *ngIf="translate && translate.translation && translate.translation.translated && translate.translation.title" class="m-translation-wrapper">
   <div class="mdl-card__supporting-text message" [hidden]="!translate.translation.title">
     <span [innerHtml]="translate.translation.title | tags"></span>
   </div>
