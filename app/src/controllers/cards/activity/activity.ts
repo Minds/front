@@ -83,6 +83,14 @@ export class Activity {
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
 
+    if (!this.activity.message) {
+      this.activity.message = '';
+    }
+
+    if (!this.activity.title) {
+      this.activity.title = '';
+    }
+
     this.isTranslatable = (
       this.translationService.isTranslatable(this.activity) ||
       (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object))
