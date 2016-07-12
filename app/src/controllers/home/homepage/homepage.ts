@@ -30,7 +30,8 @@ export class Homepage {
     1: [],
     2: [],
     3: []
-  };
+    };
+  inProgress : boolean = false;
 
   session = SessionFactory.build();
   minds = window.Minds;
@@ -51,6 +52,7 @@ export class Homepage {
   }
 
   loadStream(){
+    this.inProgress = true;
     this.client.get('api/v1/newsfeed/featured', { limit: 24 })
       .then((response : any) => {
         let col = 0;
@@ -60,6 +62,10 @@ export class Homepage {
             col = 1;
           this.stream[col].push(activity);
         }
+        this.inProgress = false;
+      })
+      .catch(() => {
+        this.inProgress = false;
       });
   }
 

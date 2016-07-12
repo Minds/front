@@ -15,7 +15,7 @@
         <h3 [hidden]="session.isLoggedIn()">Launch a channel today</h3>
         <h3 *ngIf="session.isLoggedIn()">Welcome {{session.getLoggedInUser().name}}</h3>
       </div>
-      <div class="mdl-cell mdl-cell--6-col m-homepage-signup" [hidden]="session.isLoggedIn()">
+      <div class="mdl-cell mdl-cell--6-col m-homepage-signup" [hidden]="session.isLoggedIn() || true">
         <minds-form-register (done)="registered()"></minds-form-register>
       </div>
       <!--<div class="mdl-cell mdl-cell--12-col m-app-links">
@@ -33,7 +33,11 @@
 <div class="mdl-color--blue-grey" style="width: 100%; height: 8px;"></div>
 
 <div class="mdl-grid mdl-grid--no-spacing m-homepage-stream">
+    <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    </div>
 
+    <h4 class="mdl-color-text--blue-grey-200 mdl-cell--12-col">Featured Posts</h4>
     <section class="mdl-cell mdl-cell--4-col">
       <minds-activity [object]="activity"  *ngFor="#activity of stream[1]"></minds-activity>
     </section>
