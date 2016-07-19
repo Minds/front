@@ -126,7 +126,11 @@ export class CommentCard {
     control.value = this.comment.description;
   }
 
-  delete(){
+  delete() {
+    if (!confirm('Do you want to delete this comment?\n\nThere\'s no UNDO.')) {
+      return;
+    }
+
     this.client.delete('api/v1/comments/' + this.comment.guid);
     this._delete.next(true);
   }
