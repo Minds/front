@@ -18,7 +18,7 @@
         $content = str_replace(['"'], '\'', $content);
         switch($name){
           case "title":
-            echo "<title>$content | Minds</title>\n";
+            echo "<title>$content</title>\n";
             break;
           case strpos($name, ":") !== FALSE:
             echo "<meta property=\"$name\" content=\"$content\">\n";
