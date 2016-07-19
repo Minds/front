@@ -235,13 +235,13 @@ minds-activity.mdl-card, minds-activity{
     .m-translation-label {
       font-size: 1em;
     }
-    .m-comment-carrot{
+    .m-comment-carrot.m-comment-carrot-collapsed {
         display:none;
     }
     minds-card-comment:hover{
-        .m-comment-carrot{
-            display:inline-block;
-        }
+      .m-comment-carrot{
+          display:inline-block;
+      }
     }
   }
 

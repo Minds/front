@@ -10,27 +10,34 @@
 
     <div class="mdl-card__menu mdl-color-text--blue-grey-300">
 
-      <button class="mdl-button mdl-button--icon m-comment-carrot" (click)="toggle.value = !toggle.value">
-        <i class="material-icons">keyboard_arrow_down</i>
+      <button class="mdl-button mdl-button--icon m-comment-carrot"
+        [ngClass]="{ 'm-comment-carrot-collapsed': !toggle.value }"
+        (click)="toggle.value = !toggle.value"
+      >
+        <i class="material-icons">{{ !toggle.value ? 'keyboard_arrow_left' : 'keyboard_arrow_right' }}</i>
       </button>
       
-      <ul class="minds-dropdown-menu" [hidden]="!toggle.value" #toggle>
-        <li class="mdl-menu__item"
+      <ul class="m-ribbon m-ribbon-right" [hidden]="!toggle.value" #toggle>
+        <li class="m-ribbon--item"
           *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()"
           (click)="editing = !editing; toggle.value = false"
-        >Edit</li>
-        <li class="mdl-menu__item"
+          title="Edit"
+        ><i class="material-icons">edit</i></li>
+        <li class="m-ribbon--item"
           *ngIf="isTranslatable && !editing"
           (click)="translateToggle = true; toggle.value = false"
-        >Translate</li>
-        <li class="mdl-menu__item"
+          title="Translate"
+        ><i class="material-icons">public</i></li>
+        <li class="m-ribbon--item"
           *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid"
           (click)="delete(i); toggle.value = false"
-        >Delete</li>
-        <li class="mdl-menu__item"
+          title="Delete"
+        ><i class="material-icons">delete</i></li>
+        <li class="m-ribbon--item"
           *ngIf="!editing && comment.owner_guid != session.getLoggedInUser()?.guid"
           (click)="reportToggle = true; toggle.value = false"
-        >Report</li>
+          title="Report"
+        ><i class="material-icons">flag</i></li>
       </ul>
       <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 

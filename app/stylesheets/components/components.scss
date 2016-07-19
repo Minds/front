@@ -576,3 +576,38 @@ m-translate {
     }
   }
 }
+
+.m-ribbon {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #ffffff;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99990;
+
+  &.m-ribbon-right {
+    right: 0;
+    left: auto;
+
+    minds-card-comment & {
+      margin: ($minds-padding / 2) $minds-padding 0 0;
+      right: ((3 * 24px) + (2 * $minds-padding) + $minds-padding); // 3 buttons + spacing
+    }
+  }
+}
+
+.m-ribbon--item {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  padding: 0 ($minds-padding / 2);
+  cursor: pointer;
+
+  .material-icons {
+    font-size: 20px;
+    line-height: 1;
+  }
+}
