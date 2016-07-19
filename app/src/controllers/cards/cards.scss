@@ -237,6 +237,10 @@ minds-activity.mdl-card, minds-activity{
     }
     .m-comment-carrot.m-comment-carrot-collapsed {
         display:none;
+
+        @media screen and (max-width: $max-mobile) {
+          display: inline-block;
+        }
     }
     minds-card-comment:hover{
       .m-comment-carrot{
