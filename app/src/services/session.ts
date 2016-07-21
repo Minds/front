@@ -62,6 +62,8 @@ export class Session {
 		window.localStorage.clear();
 		this.userEmitter.next(user);
 		window.Minds.user = user;
+		if(user.admin == 'user')
+			window.Minds.Admin = true;
 		window.Minds.LoggedIn = true;
 		this.loggedinEmitter.next(true);
 	}
