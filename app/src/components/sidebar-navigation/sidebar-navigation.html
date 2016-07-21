@@ -5,7 +5,7 @@
   	<a class="mdl-navigation__link mdl-color-text--white"
   		[ngClass]="{'mdl-color--blue-grey-600' : item.active, 'mdl-color--blue-grey-800': !item.active}"
   		[routerLink]="[item.path, item.params]"
-      *ngIf="!(!session.isLoggedIn() && item.visibility < 2)"
+      *ngIf="item.visibility == 2 || (item.visibility == 0 && session.isLoggedIn()) || (item.visability == -1 && session.isAdmin())"
   		>
 
   		<i class="material-icons" [ngClass]="{'mdl-color-text--blue-grey-100': !item.active, 'mdl-color-text--amber-400' : item.active}">{{item.icon}}</i>
