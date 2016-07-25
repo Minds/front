@@ -42,7 +42,7 @@
       if(ua.indexOf("MSIE") > -1 ||
         (ua.indexOf("Android 4.3") > -1 && !(ua.indexOf('Chrome') > -1)) //android 4.3, but not chrome browser
         ){
-          window.location.href = window.location.href.replace('<?= Minds\Core\Config::_()->get('site_url') ?>', 'https://legacy.minds.com/');
+          window.location.href = window.location.href.replace('<?= Minds\Core\Config::_()->get('site_url') ?>', 'https://www.minds.com/not-supported');
       }
     </script>
 
