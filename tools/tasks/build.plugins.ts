@@ -13,6 +13,9 @@ export = function buildPlugins(gulp, _plugins, option) {
 
       try {
         var info = require(join('../../', path, 'plugin.json'));
+        if(info.name == '{{plugin.name}}'){
+          throw "Plugin not setup";
+        }
 
         // ----------
         // Build plugins to source
