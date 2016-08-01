@@ -22,15 +22,18 @@
       </a>
     </div>
 
-    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="header-actions" [mdl]>
-        <i class="material-icons">more_vert</i>
+    <button [hidden]="!session.isLoggedIn()"
+      class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+      id="header-actions" [mdl]
+    >
+      <i class="material-icons">more_vert</i>
     </button>
 
-
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-        for="header-actions"
-        [mdl]
-        >
+    <ul
+      class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+      for="header-actions"
+      [mdl]
+    >
       <li class="mdl-menu__item" *ngIf="session.isLoggedIn()" [routerLink]="['/Settings', {'filter': 'general'}]">Settings</li>
       <li class="mdl-menu__item" *ngIf="session.isLoggedIn()" [routerLink]="['/Logout']">Logout</li>
     </ul>
