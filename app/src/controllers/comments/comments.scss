@@ -12,6 +12,10 @@ minds-comments{
     overflow: visible;
     //border-bottom:1px solid #DDD;
 
+    .m-comment-message {
+      white-space: pre-line;
+    }
+
     .minds-more{
       display:inline-block;
       visibility: hidden;
@@ -84,6 +88,7 @@ minds-comments{
         margin: 0.35em 0 0.5em;
         font-size:12px;
         line-height: 16px;
+
       }
       a{
         text-decoration:none;
