@@ -54,7 +54,7 @@ export class CommentsScrollDirective {
 
   ngOnInit() {
     this.scrollSubscription = this.scroll
-      .debounceTime(this.DEBOUNCE_TIME_MS)
+      .debounceTime(this.DEBOUNCE_TIME_MS / 5)
       .subscribe((event: Event) => this.run(event));
     
     this.setStick();
