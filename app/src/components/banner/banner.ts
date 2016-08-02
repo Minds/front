@@ -18,7 +18,10 @@ import { Material } from '../../directives/material';
     <img class="mdl-color--blue-grey" src="{{src}}" [ngStyle]="{'top': top}" (dragstart)="dragstart($event)" (dragover)="drag($event)" (dragend)="dragend($event)"/>
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
-      <span>Click here to add a new banner</span>
+      <span>
+        Click here to add a new banner<br>
+        <em>Recommended size: 1920&times;360</em>
+      </span>
     </div>
     <div class="minds-banner-overlay"></div>
 

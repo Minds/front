@@ -75,6 +75,11 @@
         padding: $minds-padding*2;
         display: block;
       }
+      em {
+        font-style: normal;
+        font-size: 0.8em;
+        opacity: 0.65;
+      }
     }
     .minds-banner-overlay{
       height:60px;
