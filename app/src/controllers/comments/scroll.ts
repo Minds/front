@@ -81,7 +81,7 @@ export class CommentsScrollDirective {
       this.previous.emit(true);
     }
 
-    if (el.scrollTop + el.clientHeight >= el.scrollHeight - this.SCROLL_THRESHOLD) {
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 1) {
       this.next.emit(true);
     } else {
       this.setStick(null);
