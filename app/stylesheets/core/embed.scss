@@ -1,5 +1,10 @@
 .m-embed-video {
   background: #000;
+
+  video {
+    min-height: 320px;
+    max-height: 100vh;
+  }
 }
 
 .m-modal-share-embed {
