@@ -18,8 +18,8 @@
 
       <div class="body">
         <div class="flex-bottom  mdl-color-text--blue-grey-50">
-          <h1>{{user.name}}</h1>
-          <h3>@{{user.username}}</h3>
+          <h1><a class="m-isomorphic-link" [routerLink]="['/Channel', { username: user.username }]">{{user.name}}</a></h1>
+          <h3><a class="m-isomorphic-link" [routerLink]="['/Channel', { username: user.username }]">@{{user.username}}</a></h3>
         </div>
       </div>
 
