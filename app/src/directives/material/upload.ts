@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, Inject } from '@angular/core';
+import { Directive, ElementRef, Inject } from '@angular/core';
 import { Material as MaterialService } from "../../services/ui";
 
 @Directive({
@@ -8,13 +8,14 @@ import { Material as MaterialService } from "../../services/ui";
 
 export class MaterialUpload{
 
-  element : any;
+  private element: any;
 
-  constructor(viewContainer: ViewContainerRef) {
-    this.element = viewContainer.element.nativeElement;
-    MaterialService.updateElement(viewContainer.element.nativeElement);
+  constructor(_element: ElementRef) {
+    this.element = _element.nativeElement;
+  }
 
-
+  ngAfterViewInit() {
+    MaterialService.updateElement(this.element);
   }
 
   set progress(value : number){

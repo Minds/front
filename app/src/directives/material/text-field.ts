@@ -3,24 +3,17 @@ import { Material as MaterialService } from "../../services/ui";
 
 @Directive({
   selector: '[mdlTextfield]',
-  inputs: ['mdlTextfield'],
-  host: {
-    "(change)": 'change()'
-  }
+  inputs: ['mdlTextfield'] 
 })
 
 export class MaterialTextfield{
+  private element: any;
 
-  element : any;
-
-  constructor(_element : ElementRef) {
+  constructor(_element: ElementRef) {
     this.element = _element.nativeElement;
+  }
 
+  ngAfterViewInit() {
     MaterialService.updateElement(this.element);
-
   }
-
-  change(){
-  }
-
 }

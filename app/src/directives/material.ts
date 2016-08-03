@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, Type, Inject } from '@angular/core';
+import { Directive, ElementRef, Type, Inject } from '@angular/core';
 import { Material as MaterialService } from "../services/ui";
 
 import { MaterialTextfield } from './material/text-field';
@@ -6,13 +6,18 @@ import { MaterialUpload } from './material/upload';
 
 @Directive({
   selector: '[mdl]',
-  properties: ['mdl']
+  inputs: ['mdl']
 })
 
-export class Material{
-  constructor(viewContainer: ViewContainerRef) {
-    //MaterialService.rebuild();
-    MaterialService.updateElement(viewContainer.element.nativeElement);
+export class Material {
+  private element: any;
+
+  constructor(_element: ElementRef) {
+    this.element = _element.nativeElement;
+  }
+
+  ngAfterViewInit() {
+    MaterialService.updateElement(this.element);
   }
 }
 
