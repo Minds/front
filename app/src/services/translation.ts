@@ -37,6 +37,7 @@ export class TranslationService {
             }
 
             this.storage.set(`translation:languages:${this.defaultLanguage}`, JSON.stringify(response.languages));
+            this.storage.set(`translation:userDefault`, response.userDefault);
 
             return response.languages;
           })
@@ -47,9 +48,17 @@ export class TranslationService {
     return this.languagesReady;
   }
 
+  getUserDefaultLanguage(): Promise<any> {
+    return this.getLanguages()
+      .then(() => {
+        return this.storage.get(`translation:userDefault`);
+      });
+  }
+
   purgeLanguagesCache() {
     this.languagesReady = void 0;
     this.storage.set(`translation:languages:${this.defaultLanguage}`, '');
+    this.storage.set(`translation:userDefault`, null);
   }
 
   getLanguageName(query: string): Promise<string> {
@@ -101,6 +110,11 @@ export class TranslationService {
   translate(guid, language): Promise<any> {
     return this.clientService.get(`api/v1/translation/translate/${guid}`, { target: language })
       .then((response: any) => {
+        // Optimistically set default language
+        if (!this.storage.get(`translation:userDefault`)) {
+          this.storage.set(`translation:userDefault`, language);
+        }
+
         if (response.purgeLanguagesCache) {
           this.purgeLanguagesCache();
         }

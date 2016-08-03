@@ -44,7 +44,9 @@
   <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
     <i class="material-icons m-material-icons-inline">public</i>
     Translated<span *ngIf="translation.source"> from <b>{{ translation.source }}</b></span>.
-    <a (click)="hideTranslation()">Hide translation</a>.
+    <a (click)="hideTranslation()">Hide translation</a>
+    |
+    <a (click)="changeDefaultLanguage()">Change language</a>
   </div>
 </div>
 

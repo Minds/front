@@ -6,7 +6,7 @@ import { TranslationService } from '../../services/translation';
 
 @Component({
   selector: 'm-translate',
-  inputs: ['open', '_entity: entity', '_translateEvent: translateEvent'],
+  inputs: ['_open: open', '_entity: entity', '_translateEvent: translateEvent'],
   outputs: ['onTranslateInit', 'onTranslate', 'onTranslateError'],
   exportAs: 'translate',
   directives: [CORE_DIRECTIVES],
@@ -46,6 +46,17 @@ export class Translate {
     public translationService: TranslationService,
     public changeDetectorRef: ChangeDetectorRef
   ) { }
+
+  set _open(value: any) {
+    let wasOpened = !this.open && value;
+    this.open = value;
+
+    if (wasOpened && !this.translation.translated) {
+      this.onOpen();
+    } else if (wasOpened) {
+      this.changeDefaultLanguage();
+    }
+  }
 
   set _entity(value: any) {
     this.entity = value;
@@ -92,6 +103,20 @@ export class Translate {
     if (this.translateEventSubscription) {
       this.translateEventSubscription.unsubscribe();
     }
+  }
+
+  onOpen() {
+    this.translationService.getUserDefaultLanguage()
+      .then((lang) => {
+        if (lang) {
+          this.select(lang);
+        }
+      });
+  }
+
+  changeDefaultLanguage() {
+    this.translationService.purgeLanguagesCache();
+    this.open = true;
   }
 
   parseLanguages(allLanguages: any[]) {
@@ -191,6 +216,7 @@ export class Translate {
       return;
     }
 
+    this.open = false;
     this.translation.translated = false;
     this.changeDetectorRef.markForCheck();
   }
