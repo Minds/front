@@ -84,8 +84,9 @@
         </div>
 
         <minds-rich-embed
-      	[src]="comment"
-      	></minds-rich-embed>
+          [src]="comment"
+          [maxheight]="240"
+        ></minds-rich-embed>
       </div>
 
       <!-- Custom type ::  video -->
@@ -202,7 +203,7 @@
        <div class="m-rich-embed mdl-shadow--2dp cf" *ngIf="attachment.getMeta().title">
 
         <minds-rich-embed
-        [preview]="attachment.getMeta()"
+          [preview]="attachment.getMeta()"
         ></minds-rich-embed>
        </div>
      </div>

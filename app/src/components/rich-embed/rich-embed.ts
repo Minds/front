@@ -8,7 +8,7 @@ import { RichEmbedService } from '../../services/rich-embed';
 
 @Component({
   selector: 'minds-rich-embed',
-  inputs: [ '_src: src', '_preview: preview' ],
+  inputs: [ '_src: src', '_preview: preview', 'maxheight' ],
   templateUrl: 'src/components/rich-embed/rich-embed.html',
   directives: [ CORE_DIRECTIVES, Material ],
   pipes: [ MINDS_PIPES ]
@@ -17,6 +17,7 @@ export class MindsRichEmbed {
   type: string = '';
   src: any = {};
   preview: any = {};
+  maxheight: number = 320;
   inlineEmbed: any = null;
   embeddedInline: boolean = false;
 
@@ -139,11 +140,28 @@ export class MindsRichEmbed {
           id: `audio-soundcloud-${matches[1]}`,
           className: 'm-rich-embed-audio m-rich-embed-audio-iframe m-rich-embed-audio-soundcloud',
           htmlProvisioner: () => {
-            return this.service.soundcloud(url, 320)
+            return this.service.soundcloud(url, this.maxheight)
               .then((response) => {
                 return this.sanitizer.bypassSecurityTrustHtml(response.html)
-              })
+              });
           },
+          playable: true
+        };
+      }
+    }
+
+    // Spotify
+    let spotify = /^(?:https?:\/\/)?open\.spotify\.com\/track\/([a-z0-9]+)/i;
+
+    if ((matches = spotify.exec(url)) !== null) {
+      if (matches[1]) {
+        return {
+          id: `audio-spotify-${matches[1]}`,
+          className: 'm-rich-embed-audio m-rich-embed-audio-iframe m-rich-embed-audio-spotify',
+          html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
+          style="height: ${this.maxheight}px;"
+          src="https://embed.spotify.com/?uri=spotify:track:${matches[1]}"
+          frameborder="0" allowtransparency="true"></iframe>`),
           playable: true
         };
       }
@@ -151,5 +169,9 @@ export class MindsRichEmbed {
 
     // No match
     return null;
+  }
+
+  hasInlineContentLoaded() {
+    return this.embeddedInline && this.inlineEmbed && this.inlineEmbed.html;
   }
 }

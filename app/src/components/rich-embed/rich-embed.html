@@ -1,7 +1,7 @@
 <div class="m-rich-embed-src" *ngIf="src && type == 'src'">
   <a [href]="src.perma_url"
     class="thumbnail"
-    [ngClass]="{ 'embeddedInline && inlineEmbed && inlineEmbed.html': 'm-inline-embed' }"
+    [ngClass]="{ 'm-inline-embed': hasInlineContentLoaded() }"
     (click)="action($event)"
     target="_blank"
     *ngIf="src.thumbnail_src || inlineEmbed"
@@ -12,13 +12,13 @@
 
     <img
       *ngIf="src.thumbnail_src || !inlineEmbed"
-      [hidden]="embeddedInline && inlineEmbed && inlineEmbed.html"
+      [hidden]="hasInlineContentLoaded()"
       [src]="src.thumbnail_src"
       (error)="src.thumbnail_src = null"
     />
     <div class="m-rich-embed-thumbnail-placeholder"
       *ngIf="!src.thumbnail_src"
-      [hidden]="embeddedInline && inlineEmbed && inlineEmbed.html"
+      [hidden]="hasInlineContentLoaded()"
     ></div>
 
     <div *ngIf="!embeddedInline && inlineEmbed" class="m-rich-embed-action-overlay">
@@ -27,7 +27,7 @@
       <i *ngIf="inlineEmbed.downloadable" class="material-icons">file_download</i>
     </div>
 
-    <div *ngIf="embeddedInline && inlineEmbed && inlineEmbed.html" [class]="inlineEmbed.className">
+    <div *ngIf="hasInlineContentLoaded()" [class]="inlineEmbed.className">
         <div [outerHTML]="inlineEmbed.html"></div>
     </div>
   </a>

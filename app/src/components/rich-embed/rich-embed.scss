@@ -55,4 +55,11 @@ minds-rich-embed {
       height: 100%;
     }
   }
+
+  .m-rich-embed-audio-spotify {
+    > iframe {
+      padding: 0 ($minds-padding * 2);
+      box-sizing: border-box;
+    }
+  }
 }

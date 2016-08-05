@@ -65,7 +65,7 @@
 			<span>Click to confirm your are 18+</span>
 		</span>
 	</div>
-	<minds-rich-embed [src]="activity"></minds-rich-embed>
+	<minds-rich-embed [src]="activity" [maxheight]="480"></minds-rich-embed>
 </div>
 
 <div class="mdl-card__supporting-text message" [hidden]="!activity.title || activity.perma_url || editing" [innerHtml]="activity.title | tags"></div>
