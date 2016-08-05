@@ -4,6 +4,7 @@ import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Material } from '../../directives/material';
 import { MINDS_PIPES } from '../../pipes/pipes';
+import { RichEmbedService } from '../../services/rich-embed';
 
 @Component({
   selector: 'minds-rich-embed',
@@ -19,7 +20,7 @@ export class MindsRichEmbed {
   inlineEmbed: any = null;
   embeddedInline: boolean = false;
 
-  constructor(private sanitizer: DomSanitizationService){
+  constructor(private sanitizer: DomSanitizationService, private service: RichEmbedService){
   }
 
   set _src(value: any) {
@@ -46,8 +47,7 @@ export class MindsRichEmbed {
 
   init() {
     // Inline Embedding
-
-    let inlineEmbed = this.parseInlineEmbed();
+    let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
     if (inlineEmbed && inlineEmbed.id && this.inlineEmbed && this.inlineEmbed.id) {
       // Do not replace if ID codes are the same
@@ -67,10 +67,21 @@ export class MindsRichEmbed {
       $event.stopPropagation();
 
       this.embeddedInline = true;
+
+      if (this.inlineEmbed.htmlProvisioner) {
+        this.inlineEmbed.htmlProvisioner()
+          .then((html) => {
+            this.inlineEmbed.html = html;
+          });
+
+        // @todo: catch any error here and forcefully window.open to destination
+      }
     }
   }
 
-  parseInlineEmbed() {
+  private lastInlineEmbedParsed: string;
+
+  parseInlineEmbed(current?: any) {
     if (!this.src || !this.src.perma_url) {
       return null;
     }
@@ -78,6 +89,12 @@ export class MindsRichEmbed {
     let url = this.src.perma_url,
       origin = window.location.host,
       matches;
+
+    if (url === this.lastInlineEmbedParsed) {
+      return current;
+    }
+
+    this.lastInlineEmbedParsed = url;
 
     // YouTube
     let youtube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i;
@@ -96,7 +113,7 @@ export class MindsRichEmbed {
       }
     }
 
-    // YouTube
+    // Vimeo
     let vimeo = /^(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(\d+)/i;
 
     if ((matches = vimeo.exec(url)) !== null) {
@@ -108,6 +125,25 @@ export class MindsRichEmbed {
           src="https://player.vimeo.com/video/${matches[1]}?autoplay=1&title=0&byline=0&portrait=0"
           frameborder="0"
           webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`),
+          playable: true
+        };
+      }
+    }
+
+    // SoundCloud
+    let soundcloud = /^(?:https?:\/\/)?(?:www\.)?soundcloud\.com\/([a-z0-9\-\/]+)/i;
+
+    if ((matches = soundcloud.exec(url)) !== null) {
+      if (matches[1]) {
+        return {
+          id: `audio-soundcloud-${matches[1]}`,
+          className: 'm-rich-embed-audio m-rich-embed-audio-iframe m-rich-embed-audio-soundcloud',
+          htmlProvisioner: () => {
+            return this.service.soundcloud(url, 320)
+              .then((response) => {
+                return this.sanitizer.bypassSecurityTrustHtml(response.html)
+              })
+          },
           playable: true
         };
       }

@@ -1,13 +1,18 @@
 <div class="m-rich-embed-src" *ngIf="src && type == 'src'">
   <a [href]="src.perma_url" class="thumbnail" (click)="action($event)" target="_blank" *ngIf="src.thumbnail_src || inlineEmbed">
+    <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"
+      *ngIf="embeddedInline && (!inlineEmbed || !inlineEmbed.html)"
+    [mdl]></div>
+
     <img
-    *ngIf="src.thumbnail_src || !inlineEmbed"
-    [hidden]="embeddedInline"
-    [src]="src.thumbnail_src"
-    (error)="src.thumbnail_src = null" />
+      *ngIf="src.thumbnail_src || !inlineEmbed"
+      [hidden]="embeddedInline && inlineEmbed && inlineEmbed.html"
+      [src]="src.thumbnail_src"
+      (error)="src.thumbnail_src = null"
+    />
     <div class="m-rich-embed-thumbnail-placeholder"
-    *ngIf="!src.thumbnail_src"
-    [hidden]="embeddedInline"
+      *ngIf="!src.thumbnail_src"
+      [hidden]="embeddedInline && inlineEmbed && inlineEmbed.html"
     ></div>
 
     <div *ngIf="!embeddedInline && inlineEmbed" class="m-rich-embed-action-overlay">
@@ -16,7 +21,7 @@
       <i *ngIf="inlineEmbed.downloadable" class="material-icons">file_download</i>
     </div>
 
-    <div *ngIf="embeddedInline && inlineEmbed" [class]="inlineEmbed.className">
+    <div *ngIf="embeddedInline && inlineEmbed && inlineEmbed.html" [class]="inlineEmbed.className">
         <div [outerHTML]="inlineEmbed.html"></div>
     </div>
   </a>
