@@ -167,6 +167,28 @@ export class MindsRichEmbed {
       }
     }
 
+    // Giphy
+    let giphy = /^(?:https?:\/\/)?(?:www\.)?giphy\.com\/gifs\/([a-z0-9\-]+)/i;
+
+    if ((matches = giphy.exec(url)) !== null) {
+      if (matches[1]) {
+        let idTokens: string[] = matches[1].split('-'),
+          id: string = idTokens.pop();
+
+        if (!id) {
+          return null;
+        }
+
+        return {
+          id: `image-giphy-${matches[1]}`,
+          className: 'm-rich-embed-image m-rich-embed-image-iframe m-rich-embed-image-giphy',
+          html: this.sanitizer.bypassSecurityTrustHtml(`<iframe src="//giphy.com/embed/${id}"
+          frameBorder="0" class="giphy-embed" allowFullScreen></iframe>`),
+          playable: true
+        };
+      }
+    }
+
     // No match
     return null;
   }
