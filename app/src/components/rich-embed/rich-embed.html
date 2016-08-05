@@ -1,6 +1,12 @@
 <div class="m-rich-embed-src" *ngIf="src && type == 'src'">
-  <a [href]="src.perma_url" class="thumbnail" (click)="action($event)" target="_blank" *ngIf="src.thumbnail_src || inlineEmbed">
-    <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"
+  <a [href]="src.perma_url"
+    class="thumbnail"
+    [ngClass]="{ 'embeddedInline && inlineEmbed && inlineEmbed.html': 'm-inline-embed' }"
+    (click)="action($event)"
+    target="_blank"
+    *ngIf="src.thumbnail_src || inlineEmbed"
+  >
+    <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate m-html-loading"
       *ngIf="embeddedInline && (!inlineEmbed || !inlineEmbed.html)"
     [mdl]></div>
 
