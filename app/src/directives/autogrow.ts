@@ -35,8 +35,11 @@ export class AutoGrow{
 
     this.timeout = setTimeout(() => {
       this._element.style.overflow = 'hidden';
+      this._element.style.maxHeight = 'none';
       this._element.style.height = 'auto';
       this._element.style.height = this._element.scrollHeight + "px";
+      this._element.style.overflow = '';
+      this._element.style.maxHeight = '';
     });
   }
 }
