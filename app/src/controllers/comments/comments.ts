@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { RouterLink } from "@angular/router-deprecated";
 
@@ -20,7 +20,7 @@ import { ScrollLock } from '../../directives/scroll-lock';
 
 @Component({
   selector: 'minds-comments',
-  inputs: ['_object : object', '_reversed : reversed', 'limit'],
+  inputs: ['_object : object', '_reversed : reversed', 'limit', 'focusOnInit'],
   templateUrl: 'src/controllers/comments/list.html',
   directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed, CommentsScrollDirective, ScrollLock ],
   pipes: [ TagsPipe ],
@@ -37,6 +37,9 @@ export class Comments {
   content = '';
   reversed : boolean = false;
   session = SessionFactory.build();
+
+  focusOnInit: boolean = false;
+  @ViewChild('message') composerTextarea: ElementRef;
 
   editing : boolean = false;
 
@@ -57,7 +60,7 @@ export class Comments {
 
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService) {
+  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService, private renderer: Renderer) {
     this.minds = window.Minds;
 	}
 
@@ -134,6 +137,12 @@ export class Comments {
   joinSocketRoom() {
     if (this.socketRoomName) {
       this.sockets.join(this.socketRoomName);
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.focusOnInit) {
+      this.renderer.invokeElementMethod(this.composerTextarea.nativeElement, 'focus');
     }
   }
 
