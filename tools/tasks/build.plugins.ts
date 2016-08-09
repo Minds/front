@@ -9,6 +9,10 @@ export = function buildPlugins(gulp, _plugins, option) {
     var plugins = readdirSync(PLUGINS_DIR);
 
     plugins.map((plugin, i) => {
+      if (plugin.indexOf('_') === 0) {
+        return;
+      }
+
       var path = join(PLUGINS_DIR, plugin);
 
       try {
