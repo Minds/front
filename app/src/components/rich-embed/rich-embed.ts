@@ -8,7 +8,7 @@ import { RichEmbedService } from '../../services/rich-embed';
 
 @Component({
   selector: 'minds-rich-embed',
-  inputs: [ '_src: src', '_preview: preview', 'maxheight' ],
+  inputs: [ '_src: src', '_preview: preview', 'maxheight', 'cropImage' ],
   templateUrl: 'src/components/rich-embed/rich-embed.html',
   directives: [ CORE_DIRECTIVES, Material ],
   pipes: [ MINDS_PIPES ]
@@ -20,6 +20,7 @@ export class MindsRichEmbed {
   maxheight: number = 320;
   inlineEmbed: any = null;
   embeddedInline: boolean = false;
+  cropImage: boolean = false;
 
   constructor(private sanitizer: DomSanitizationService, private service: RichEmbedService){
   }
