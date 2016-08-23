@@ -42,6 +42,13 @@
         </div>
       </a>
 
+      <a [routerLink]="['/Discovery', {filter: 'suggested', 'type': 'channels'}]" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-suggested-channels-link">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">search</i>
+          Find channels
+        </div>
+      </a>
+
       <m-modal-invite #invite [open]="invite.open" (closed)="invite.open = false"></m-modal-invite>
       <a (click)="invite.open = true" class="mdl-card mdl-color--amber mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-invite-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
