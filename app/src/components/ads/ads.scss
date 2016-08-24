@@ -36,6 +36,20 @@
       margin-top:8px;
       margin-left: 16px;
   }
+  &.m-ad-block-pd.square{
+      width: 300px;
+      min-height: 300px;
+      float: right;
+      display: block;
+      margin-top: 8px;
+      margin-left: 16px;
+  }
+  &.m-ad-block-pd.banner{
+      min-width: 970px;
+      text-align: center;
+      margin-left: -146px;
+      display: block;
+  }
 
 }
 .m-ad-boost-heading{
