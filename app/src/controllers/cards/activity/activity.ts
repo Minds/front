@@ -9,7 +9,7 @@ import { AutoGrow } from '../../../directives/autogrow';
 import { Hovercard } from '../../../directives/hovercard';
 import { Remind } from '../remind/remind';
 import { BUTTON_COMPONENTS } from '../../../components/buttons';
-import { MindsVideo } from '../../../components/video';
+import { MindsVideo, VideoAds } from '../../../components/video';
 import { Boost } from '../../boosts/boost/boost';
 import { Comments } from '../../comments/comments';
 import { MINDS_PIPES } from '../../../pipes/pipes';
@@ -32,7 +32,9 @@ import { TranslationService } from '../../../services/translation';
   outputs: [ '_delete: delete', 'commentsOpened'],
   providers: [ AttachmentService ],
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, ShareModal, ReportModal, MindsRichEmbed, Hovercard, ConfirmModal, Translate ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments,
+    Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, VideoAds, ShareModal,
+    ReportModal, MindsRichEmbed, Hovercard, ConfirmModal, Translate ],
   pipes: [ MINDS_PIPES ]
 })
 

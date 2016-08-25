@@ -1,1 +1,1 @@
-export { MindsVideo } from './video/video'; 
+export { MindsVideo, VideoAds } from './video/video';

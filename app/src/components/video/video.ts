@@ -5,7 +5,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
 import { ScrollService } from '../../services/ux/scroll';
-
+import { VideoAdsService } from './ads-service';
 
 @Component({
   selector: 'minds-video',
@@ -20,6 +20,7 @@ import { ScrollService } from '../../services/ux/scroll';
     <video (click)="onClick()" preload="none" [poster]="poster" allowfullscreen [muted]="muted" [loop]="loop" [autoplay]="autoplay">
       <source [src]="s.uri" *ngFor="let s of src">
     </video>
+    <ng-content></ng-content>
     <div class="minds-video-bar-min">
       {{time.minutes}}:{{time.seconds}}
     </div>
@@ -292,3 +293,5 @@ export class MindsVideo{
   }
 
 }
+
+export { VideoAds } from './ads';

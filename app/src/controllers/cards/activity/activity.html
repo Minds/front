@@ -85,7 +85,7 @@
 </div>
 
 <div class="item item-image item-image-video"
-  [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }" 
+  [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
   *ngIf="activity.custom_type == 'video'">
 		<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 			<span class="m-mature-overlay-note">
@@ -104,7 +104,9 @@
 				[poster]="activity.custom_data.thumbnail_src"
 				[src]="[{ 'res': '720', 'uri': 'api/v1/archive/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
         [guid]="activity.custom_data.guid"
-				[playCount]="activity['play:count']">
+				[playCount]="activity['play:count']"
+				#player>
+				<video-ads [player]="player"></video-ads>
 		</minds-video>
  </div>
 
@@ -209,7 +211,7 @@
     yesButton="Delete permanently"
   >
     <p confirm-message>
-        Are you sure you want to delete this post? 
+        Are you sure you want to delete this post?
     </p>
     <p confirm-success-message>
         The post has been deleted.
