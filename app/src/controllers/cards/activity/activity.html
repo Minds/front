@@ -106,7 +106,7 @@
         [guid]="activity.custom_data.guid"
 				[playCount]="activity['play:count']"
 				#player>
-				<video-ads [player]="player"></video-ads>
+				<video-ads [player]="player" *ngIf="activity.monetized"></video-ads>
 		</minds-video>
  </div>
 
