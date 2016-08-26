@@ -189,7 +189,8 @@ export class VideoAds{
   }
 
   ngOnDestroy(){
-    this.adManager.destroy();
+    if(this.adManager)
+      this.adManager.destroy();
   }
 
 }
