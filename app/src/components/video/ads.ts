@@ -15,6 +15,7 @@ export class VideoAds{
   adContainer;
   adLoader;
   adManager;
+  initialized : boolean = false;
 
   google = window.google;
 
@@ -118,9 +119,13 @@ export class VideoAds{
   }
 
   playAds(){
-    // Initialize the container. Must be done via a user action on mobile devices.
-    //this.player.load();
+
+    if(this.initialized)
+      return;
+
+    this.initialized = true;
     this.element.nativeElement.style.display = 'block';
+    this.player.autoplay = true;
     this.adContainer.initialize();
 
     try {
@@ -133,6 +138,7 @@ export class VideoAds{
       // An error may be thrown if there was a problem with the VAST response.
       //videoContent.play();
       console.log(err)
+      this.element.nativeElement.style.display = 'none';
       return false;
     }
 
@@ -168,11 +174,13 @@ export class VideoAds{
   }
 
   onPause(e){
+    this.element.nativeElement.style.display = 'block';
     this.player.element.pause();
   }
 
   onResume(e){
     this.player.element.play();
+    this.element.nativeElement.style.display = 'none';
   }
 
   onError(e){
