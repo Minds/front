@@ -41,7 +41,7 @@ export class MonetizeButton {
 
     this.isMonetized = true;
 
-    this.client.put('api/v1/admin/monetize/' + this.object.guid, {})
+    this.client.put('api/v1/monetize/' + this.object.guid, {})
       .then((response : any) => {
 
       })
@@ -53,7 +53,7 @@ export class MonetizeButton {
   unMonetize(){
     this.isMonetized = false;
     this.object.monetized = false;
-    this.client.delete('api/v1/admin/monetize/' + this.object.guid, {})
+    this.client.delete('api/v1/monetize/' + this.object.guid, {})
       .then((response : any) => {
 
       })
