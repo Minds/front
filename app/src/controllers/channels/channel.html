@@ -132,6 +132,12 @@
           </div>
           <!-- END DoB -->
 
+          <minds-channel-social-profiles
+            [user]="user"
+            [editing]="editing && isOwner()"
+            (changed)="setSocialProfile($event)"
+          ></minds-channel-social-profiles>
+
         </div>
 
       </div>

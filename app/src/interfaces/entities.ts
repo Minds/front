@@ -16,6 +16,11 @@ export interface Message {
 
 }
 
+export interface KeyVal {
+	key: string;
+	value: any;
+}
+
 export interface MindsUser {
 	guid : string,
 	name : string,
@@ -25,6 +30,7 @@ export interface MindsUser {
 	blocked ?: boolean,
 	carousels ?: boolean,
 	city ?: string
+	social_profiles ?: KeyVal[];
 }
 
 export interface MindsGroup {

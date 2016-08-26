@@ -23,6 +23,7 @@ import { MindsAvatar } from '../../components/avatar';
 import { ChannelModules } from './modules/modules';
 import { ChannelSubscribers } from './subscribers/subscribers';
 import { ChannelSubscriptions } from './subscriptions/subscriptions';
+import { ChannelSocialProfiles } from './social-profiles/social-profiles';
 
 import { MessengerChannelButton } from '../../plugins/Messenger/channel-button/channel-button';
 
@@ -34,7 +35,7 @@ import { MessengerChannelButton } from '../../plugins/Messenger/channel-button/c
   pipes: [ TagsPipe ],
   directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, Material, InfiniteScroll, CARDS,
     AutoGrow, ChannelSubscribers, ChannelSubscriptions, BUTTON_COMPONENTS, MindsCarousel,
-    Poster, MindsAvatar, ChannelModules, MessengerChannelButton ]
+    Poster, MindsAvatar, ChannelModules, MessengerChannelButton, ChannelSocialProfiles ]
 })
 
 export class Channel {
@@ -230,6 +231,9 @@ export class Channel {
       });
   }
 
+  setSocialProfile(value: any) {
+    this.user.social_profiles = value;
+  }
 }
 
 export { ChannelSubscribers } from './subscribers/subscribers';

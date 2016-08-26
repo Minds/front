@@ -143,6 +143,11 @@ minds-channel{
      align-items: center;
    }
 
+   minds-channel-social-profiles {
+     display: block;
+     width: 100%;
+   }
+
    .m-channel-bio-field{
      display:flex;
      flex-flow:row nowrap;
@@ -156,6 +161,13 @@ minds-channel{
      }
      span{
        flex:1;
+     }
+
+     &.m-channel-social-profiles {
+       display: block;
+       width: 100%;
+       font-size: 20px;
+       border-top: 1px solid #eeeeee;
      }
    }
 
@@ -188,6 +200,41 @@ minds-channel{
            text-align:center;
            cursor:pointer;
          }
+       }
+
+       &.m-channel-social-profile-input {
+          display: block;
+          padding: $minds-padding;
+          border: 1px solid #eee;
+          margin-top: $minds-padding;
+
+          &:first-child {
+            margin-top: 0;
+          }
+
+          > select, > input[type="text"], > a {
+            display: block;
+            width: 100%;
+            margin-bottom: 8px;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+
+          > a {
+            text-align: right;
+            font-size: 12px;
+            cursor: pointer;
+
+            &.m-social-profile-add {
+              text-align: left;
+            }
+
+            > i {
+              padding: 0;
+            }
+          }
        }
      }
 
