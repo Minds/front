@@ -35,15 +35,19 @@ export class SearchBar {
 
   listen(){
     this.router.subscribe((value: any) => {
-      let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`;
+      try {
+        let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`;
 
-      if(route.indexOf('search') == -1){
-        this.q = "";
-      } else {
-        var r = route.substring(route.indexOf('q=')+2);
-        if(r.indexOf('&type=') > 0)
-          r = r.substring(0, r.indexOf('&type='));
-        this.q = decodeURIComponent(r);
+        if(route.indexOf('search') == -1){
+          this.q = "";
+        } else {
+          var r = route.substring(route.indexOf('q=')+2);
+          if(r.indexOf('&type=') > 0)
+            r = r.substring(0, r.indexOf('&type='));
+          this.q = decodeURIComponent(r);
+        }
+      } catch (e) {
+        console.error('Minds: router hook(SearchBar)', e);
       }
     });
   }

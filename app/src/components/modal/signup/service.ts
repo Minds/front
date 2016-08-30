@@ -19,28 +19,32 @@ export class SignupModalService{
 
   private initOnScroll(){
     this.router.subscribe((value: any) => {
-      let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`; 
+      try {
+        let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`; 
 
-      this.route = route;
-      switch(route.split('?')[0]){
-        case 'register':
-        case 'login':
-        case 'forgot-password':
-        case '':
-          this.close();
-          break;
-        default:
-          if(this.scroll_listener)
-            return;
-          this.scroll_listener = this.scroll.listen((e) => {
-            if(this.scroll.view.scrollTop > 100){
-              if(window.localStorage.getItem('hideSignupModal'))
-                this.close();
-              else
-                this.open();
-              this.scroll.unListen(this.scroll_listener);
-            }
-          }, 100);
+        this.route = route;
+        switch(route.split('?')[0]){
+          case 'register':
+          case 'login':
+          case 'forgot-password':
+          case '':
+            this.close();
+            break;
+          default:
+            if(this.scroll_listener)
+              return;
+            this.scroll_listener = this.scroll.listen((e) => {
+              if(this.scroll.view.scrollTop > 100){
+                if(window.localStorage.getItem('hideSignupModal'))
+                  this.close();
+                else
+                  this.open();
+                this.scroll.unListen(this.scroll_listener);
+              }
+            }, 100);
+        }
+      } catch (e) {
+        console.error('Minds: router hook(SignupModalService)', e);
       }
     });
   }

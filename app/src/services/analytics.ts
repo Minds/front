@@ -15,9 +15,13 @@ export class AnalyticsService {
 
     //We set the router to call onRouteChanged every time we change the page
     this.router.subscribe((value: any) => {
-      let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`;
+      try {
+        let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`;
 
-      this.onRouteChanged(route);
+        this.onRouteChanged(route);
+      } catch (e) {
+        console.error('Minds: router hook(AnalyticsService)', e);
+      }
     });
   }
 
