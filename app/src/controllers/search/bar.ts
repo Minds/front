@@ -7,6 +7,7 @@ import { Material } from '../../directives/material';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { MindsActivityObject } from '../../interfaces/entities';
 
+import { SearchBarSuggestions } from './suggestions/suggestions';
 
 @Component({
   selector: 'minds-search-bar',
@@ -16,10 +17,17 @@ import { MindsActivityObject } from '../../interfaces/entities';
   template: `
     <div class="mdl-textfield mdl-js-textfield">
         <i class="material-icons" (click)="onClick()">search</i>
-        <input [(ngModel)]="q" class="mdl-textfield__input" type="text" id="search" />
+        <input [(ngModel)]="q"
+          class="mdl-textfield__input"
+          type="text"
+          id="search"
+          autocomplete="off"
+          />
         <label class="mdl-textfield__label" for="search"></label>
-    </div>`,
-  directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES ]
+        <minds-search-bar-suggestions [q]="q"></minds-search-bar-suggestions>
+    </div>
+    `,
+  directives: [ CORE_DIRECTIVES, Material, SearchBarSuggestions, FORM_DIRECTIVES ]
 })
 
 export class SearchBar {

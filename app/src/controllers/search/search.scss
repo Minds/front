@@ -35,3 +35,21 @@ minds-search-bar{
     }
   }
 }
+
+minds-search-bar-suggestions{
+  display: block;
+
+  .m-search-bar-suggestions-list{
+    background: #FFF;
+    border: 1px solid #EEE;
+    padding: 8px 11px;
+    margin: 0;
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+
+    .m-search-bar-suggestions-suggestion{
+      cursor:pointer;
+    }
+  }
+}
