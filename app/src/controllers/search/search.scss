@@ -42,7 +42,7 @@ minds-search-bar-suggestions{
   .m-search-bar-suggestions-list{
     background: #FFF;
     border: 1px solid #EEE;
-    padding: 8px 11px;
+    padding: 0;
     margin: 0;
     position: absolute;
     box-sizing: border-box;
@@ -50,6 +50,15 @@ minds-search-bar-suggestions{
 
     .m-search-bar-suggestions-suggestion{
       cursor:pointer;
+      padding: 4px;
+      border-bottom: 1px solid #EEE;
+      display:block;
+      text-decoration: none;
+
+      img{
+        border-radius: 50%;
+        margin: 0 8px 0 4px;
+      }
     }
   }
 }
