@@ -120,7 +120,8 @@
               "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
               "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
               "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
-              "navigation" => Minds\Core\Navigation\Manager::export()
+              "navigation" => Minds\Core\Navigation\Manager::export(),
+              "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
             );
           if(Minds\Core\Session::isLoggedIn()){
               $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();

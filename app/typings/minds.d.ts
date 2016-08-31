@@ -10,7 +10,8 @@ interface Minds{
  cdn_url: string;
  site_url: string;
  notifications_count: number;
- socket_server : string;
+ socket_server: string;
+ thirdpartynetworks: any; 
 }
 
 interface MindsNavigation {

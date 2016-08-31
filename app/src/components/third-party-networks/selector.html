@@ -1,0 +1,19 @@
+<span [hidden]="!opened || !ready" class="m-bar-wrapper">
+  <a
+    *ngFor="let network of networks"
+    class="m-bar-button mdl-color-text--blue-grey-100"
+    [ngClass]="{ 'mdl-color-text--blue-grey-600': state[network] }"
+    (click)="toggleState(network)"
+  >
+    <i class="fa fa-fw" [ngClass]="[ 'fa-' + getNetworkIconClass(network) ]"></i>
+  </a>
+</span>
+
+<a
+  (click)="opened = !opened"
+  class="m-bar-button m-bar-button-expand"
+  [ngClass]="{ 'm-bar-button-expanded': opened }"
+  *ngIf="ready"
+>
+  <i class="material-icons m-overgrown-material-icon">share</i>
+</a>

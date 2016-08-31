@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { RouterLink, RouteParams } from "@angular/router-deprecated";
 
 import { SessionFactory } from '../../../services/session';
 import { Client } from '../../../services/api';
+import { ThirdPartyNetworksService } from '../../../services/third-party-networks';
 import { MDL_DIRECTIVES } from '../../../directives/material';
 
 
@@ -34,8 +35,7 @@ export class SettingsGeneral{
   password1 : string;
   password2 : string;
 
-
-  constructor(public client: Client, public params: RouteParams){
+  constructor(public client: Client, public params: RouteParams, private zone: NgZone, private thirdpartynetworks: ThirdPartyNetworksService){
     this.minds = window.Minds;
     if(params.params['guid'] && params.params['guid'] == this.session.getLoggedInUser().guid)
       this.load(true);
@@ -54,6 +54,8 @@ export class SettingsGeneral{
       .then((response : any) => {
         self.email = response.channel.email;
         self.mature = !!parseInt(response.channel.mature, 10);
+
+        this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
         if (window.Minds.user) {
           window.Minds.user.mature = self.mature;
@@ -119,12 +121,31 @@ export class SettingsGeneral{
       });
   }
 
-  removeFb(){
-    this.client.delete('api/v1/thirdpartynetworks/facebook/login')
+  // Third Party Networks
+
+  connectFb() {
+    this.thirdpartynetworks.connect('facebook')
       .then(() => {
-          if (window.Minds.user) {
-              window.Minds.user.signup_method = 'ex-facebook';
-          }
+        this.load();
       });
+  }
+
+  connectTw() {
+    this.thirdpartynetworks.connect('twitter')
+      .then(() => {
+        this.load();
+      });
+  }
+
+  removeFbLogin(){
+    this.thirdpartynetworks.removeFbLogin();
+  }
+
+  removeFb() {
+    this.thirdpartynetworks.disconnect('facebook');
+  }
+
+  removeTw() {
+    this.thirdpartynetworks.disconnect('twitter');
   }
 }

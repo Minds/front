@@ -12,6 +12,7 @@ import { HovercardService } from './hovercard';
 import { NotificationService } from './notification';
 import { TranslationService } from './translation';
 import { RichEmbedService } from './rich-embed';
+import { ThirdPartyNetworksService } from './third-party-networks';
 
 export const MINDS_PROVIDERS : any[] = [
    provide(ScrollService, {
@@ -57,5 +58,9 @@ export const MINDS_PROVIDERS : any[] = [
    provide(RichEmbedService, {
      useFactory: (client) => new RichEmbedService(client),
      deps: [ Client ]
+   }),
+   provide(ThirdPartyNetworksService, {
+     useFactory: (client, zone) => new ThirdPartyNetworksService(client, zone),
+     deps: [ Client, NgZone ]
    })
 ];

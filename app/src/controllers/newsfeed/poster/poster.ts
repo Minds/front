@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, ViewChild } from '@angular/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
@@ -11,13 +11,14 @@ import { SessionFactory } from '../../../services/session';
 
 import { AttachmentService } from '../../../services/attachment';
 import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
+import { ThirdPartyNetworksSelector } from '../../../components/third-party-networks/selector';
 
 @Component({
   selector: 'minds-newsfeed-poster',
   inputs: [ '_container_guid: containerGuid', 'accessId', 'message'],
   outputs: ['load'],
   templateUrl: 'src/controllers/newsfeed/poster/poster.html',
-  directives: [ MDL_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, AutoGrow, InfiniteScroll, MindsRichEmbed ],
+  directives: [ MDL_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, AutoGrow, InfiniteScroll, MindsRichEmbed, ThirdPartyNetworksSelector ],
   providers: [ AttachmentService ]
 })
 
@@ -29,7 +30,9 @@ export class Poster {
   load: EventEmitter<any> = new EventEmitter();
   inProgress : boolean = false;
 
-  canPost : boolean = true;
+  canPost: boolean = true;
+  
+  @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
 
   constructor(public client: Client, public upload: Upload, public attachment: AttachmentService){
     this.minds = window.Minds;
@@ -61,6 +64,8 @@ export class Poster {
 
     let data = this.attachment.exportMeta();
     data['message'] = this.content;
+
+    data = this.thirdPartyNetworksSelector.inject(data);
 
     this.inProgress = true;
     this.client.post('api/v1/newsfeed', data)
