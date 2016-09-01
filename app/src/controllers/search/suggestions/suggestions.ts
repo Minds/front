@@ -8,7 +8,8 @@ import { Client, Upload } from '../../../services/api';
 @Component({
   selector: 'minds-search-bar-suggestions',
   host: {
-    '(window:click)': 'onWindowClick($event)'
+    '(window:click)': 'onWindowClick($event)',
+    '(window:keydown)': 'onKey($event)'
   },
   template: `
       <div class="m-search-bar-suggestions-list" [hidden]="!showResults || !suggestions || !suggestions.length">
@@ -33,9 +34,10 @@ export class SearchBarSuggestions {
 
   @Input('q')
   set q(q : string) {
-    if(!q)
+    if(!q || this.router.currentInstruction.urlPath == "search") {
       this.suggestions = [];
-
+      return;
+    }
     if(this.timeout){
       clearTimeout(this.timeout);
     }
@@ -54,6 +56,11 @@ export class SearchBarSuggestions {
       return;
     }
     this.showResults = false;
-   }
+  }
+
+  onKey(e) {
+    if(e.key == "Enter")
+      this.showResults = false;
+  }
 
 }
