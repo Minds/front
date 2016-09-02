@@ -27,6 +27,8 @@ import { AttachmentService } from '../../../services/attachment';
 })
 
 export class ActivityPreview {
+
+  minds = window.Minds;
   activity : any;
   hideTabs : boolean;
   session =  SessionFactory.build();
