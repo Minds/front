@@ -29,6 +29,9 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 })
 
 export class Remind {
+
+  minds = window.Minds;
+
   activity : any;
   hideTabs : boolean;
   session = SessionFactory.build();

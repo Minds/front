@@ -3,7 +3,7 @@
 
 	<div class="avatar" [hovercard]="activity.ownerObj.guid">
 		<a [routerLink]="['/Channel', {username: activity.ownerObj.username}]">
-			<img [src]="'/icon/' + activity.ownerObj.guid + '/medium/' + activity.ownerObj.icontime" class="mdl-shadow--2dp"/>
+			<img [src]="minds.cdn_url + '/icon/' + activity.ownerObj.guid + '/medium/' + activity.ownerObj.icontime" class="mdl-shadow--2dp"/>
 		</a>
 	</div>
 

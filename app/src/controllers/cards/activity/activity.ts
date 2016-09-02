@@ -38,6 +38,8 @@ import { TranslationService } from '../../../services/translation';
 
 export class Activity {
 
+  minds = window.Minds;
+
   activity : any;
   menuToggle : boolean = false;
   commentsToggle : boolean = false;
