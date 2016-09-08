@@ -43,7 +43,7 @@
     </button>
 </div>
 
-<div class="m-notifications-toaster" *ngIf="session.isLoggedIn()">
+<div class="m-notifications-toaster" *ngIf="session.isLoggedIn() && notifications">
   <minds-notification
     *ngFor="let notification of notifications"
     class="mdl-card mdl-shadow--4dp item"
