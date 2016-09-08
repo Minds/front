@@ -10,10 +10,10 @@
 </span>
 
 <a
-  (click)="opened = !opened"
+  (click)="toggleOpened()"
   class="m-bar-button m-bar-button-expand"
   [ngClass]="{ 'm-bar-button-expanded': opened }"
-  *ngIf="ready"
 >
-  <i class="material-icons m-overgrown-material-icon">share</i>
+  <i [hidden]="inProgress" class="material-icons m-overgrown-material-icon">share</i>
+  <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </a>

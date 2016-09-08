@@ -1,23 +1,25 @@
 import { Component, EventEmitter, ChangeDetectorRef  } from '@angular/core';
 import { CORE_DIRECTIVES } from '@angular/common';
+import { Material } from '../../directives/material';
 
 import { ThirdPartyNetworksService } from '../../services/third-party-networks';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
   exportAs: 'thirdPartyNetworksSelector',
-  directives: [ CORE_DIRECTIVES ],
+  directives: [ CORE_DIRECTIVES, Material ],
   templateUrl: 'src/components/third-party-networks/selector.html',
 })
 
 export class ThirdPartyNetworksSelector {
   integrations: any;
-  
+
   networks: string[] = [];
   state: any = {};
 
   opened: boolean = false;
   ready: boolean = false;
+  inProgress: boolean = false;
 
   private networkIconsMap: any = {
     'facebook': 'facebook-official'
@@ -33,24 +35,49 @@ export class ThirdPartyNetworksSelector {
         this.state[network] = false;
       }
     }
+  }
 
-    this.thirdpartynetworks.getStatus()
-      .then(() => {
-        this.ready = true;
-      });
+  toggleOpened() {
+    if (!this.ready) {
+      this.inProgress = true;
+
+      this.thirdpartynetworks.getStatus()
+        .then(() => {
+          this.inProgress = false;
+          this.ready = true;
+        })
+        .catch(e => {
+          console.error('[Third Party Networks/toggleOpened]', e);
+          this.inProgress = false;
+        });
+    }
+
+    this.opened = !this.opened;
   }
 
   toggleState(network: string) {
-    if (!this.thirdpartynetworks.isConnected(network)) {
-      this.thirdpartynetworks.connect(network)
-        .then(() => {
-          this.state[network] = true;
-        });
-      
+    if (this.inProgress || !this.ready) {
       return;
     }
 
-    this.state[network] = !this.state[network]; 
+    if (this.state[network]) {
+      this.state[network] = false;
+      return;
+    }
+
+    this.inProgress = true;
+    if (!this.thirdpartynetworks.isConnected(network)) {
+      this.thirdpartynetworks.connect(network)
+        .then(() => {
+          this.inProgress = false;
+          this.state[network] = true;
+        });
+
+      return;
+    }
+
+    this.inProgress = false;
+    this.state[network] = true;
   }
 
   inject(data: any) {
