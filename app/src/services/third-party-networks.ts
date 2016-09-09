@@ -155,7 +155,7 @@ export class ThirdPartyNetworksService {
   private connectTw(): Promise<any> {
     this.inProgress = true;
 
-    return new Promise((reject, resolve) => {
+    return new Promise((resolve, reject) => {
       window.onSuccessCallback = () => this.zone.run(() => {
         this.getStatus(true)
           .then(() => {
