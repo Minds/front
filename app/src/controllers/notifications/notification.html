@@ -56,15 +56,15 @@
     </a>
 
     <!-- Object-->
-    <div *ngIf="notification.entityObj.type == 'object'" [ngSwitch]="notification.entityObj.subtype">
+    <div *ngIf="notification.entityObj.type == 'object'">
 
-      <template ngSwitchWhen="blog">
-        <a [routerLink]="['/Blog-View', {guid: notification.entityObj.guid}]">
-          <p>{{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.entityObj.title}}</span></p>
+      <div *ngIf="notification.entityObj.subtype == 'blog'">
+        <a [routerLink]="['/Blog-View-Title', {guid: notification.entityObj.guid, title: notification.entityObj.title}]"> 
+            <p>{{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.entityObj.title}}</span></p>
         </a>
-      </template>
+      </div>
 
-      <template ngSwitchDefault>
+      <div *ngIf="notification.entityObj.subtype != 'blog'">
         <a [routerLink]="['/Archive-View', {guid: notification.entityObj.guid}]">
           <p>
             {{notification.fromObj.name}} commented on
@@ -73,7 +73,7 @@
             <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title">your {{notification.entityObj.subtype}}</span>
           </p>
         </a>
-      </template>
+      </div>
 
     </div>
 
