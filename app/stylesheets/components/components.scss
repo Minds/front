@@ -611,3 +611,27 @@ m-translate {
     line-height: 1;
   }
 }
+
+.m-custom-icon {
+  display: inline-block;
+  width: 1.28571429em;
+  height: 1em;
+  text-align: center;
+
+  &:before {
+    display: inline-block;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: none no-repeat center center transparent;
+    background-size: contain;
+  }
+
+  &.m-custom-icon-minds {
+    height: 1.2em;
+    
+    &:before {
+      background-image: url('../assets/gs-icon.png');
+    }
+  }
+}

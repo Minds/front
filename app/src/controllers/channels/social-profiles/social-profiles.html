@@ -9,7 +9,7 @@
       [href]="buildSocialProfileLink(profile)"
       rel="noopener"
       target="_blank"
-    ><i class="fa fa-fw" [ngClass]="[ 'fa-' + getSocialProfileIcon(profile) ]"></i></a>
+    ><i [ngClass]="[ getSocialProfileIconClass(profile) ]"></i></a>
   </span>
 </div>
 <div class="m-channel-bio-editor m-channel-social-profiles-editor" *ngIf="editing">

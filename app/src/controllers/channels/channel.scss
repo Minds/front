@@ -168,6 +168,15 @@ minds-channel{
        width: 100%;
        font-size: 20px;
        border-top: 1px solid #eeeeee;
+
+       .m-channel-social-profile > a {
+         display: inline-block;
+         vertical-align: middle;
+       }
+
+       .m-channel-social-profile-minds > a {
+         margin-top: -0.25em;
+       }
      }
    }
 

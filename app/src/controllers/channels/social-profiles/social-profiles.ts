@@ -4,6 +4,15 @@ import { Material } from '../../../directives/material';
 
 import { KeyVal } from '../../../interfaces/entities';
 
+export interface SocialProfileMeta {
+    key: string,
+    label: string,
+    placeholder: string,
+    link: string,
+    icon: string,
+    customIcon?: boolean,
+}
+
 @Component({
   selector: 'minds-channel-social-profiles',
   inputs: ['_user : user', 'editing'],
@@ -17,13 +26,14 @@ export class ChannelSocialProfiles {
   editing: boolean = false;
   changed: EventEmitter<any> = new EventEmitter();
 
-  private socialProfileMeta = [
+  private socialProfileMeta: SocialProfileMeta[] = [
     {
       key: 'minds',
       label: 'Minds',
       placeholder: 'Username',
       link: 'https://www.minds.com/:value',
-      icon: 'lightbulb-o'
+      icon: 'minds',
+      customIcon: true,
     },
     {
       key: 'facebook',
@@ -76,8 +86,8 @@ export class ChannelSocialProfiles {
     },
   ];
 
-  private getSocialProfileMeta(key: string) {
-    let defaultMeta = {
+  private getSocialProfileMeta(key: string): SocialProfileMeta {
+    let defaultMeta: SocialProfileMeta = {
       key: '', label: '',
       placeholder: '',
       link: '#', icon: 'question'
@@ -127,8 +137,17 @@ export class ChannelSocialProfiles {
     return this.getSocialProfileMeta(key).placeholder;
   }
 
-  getSocialProfileIcon({ key = '' }) {
-    return this.getSocialProfileMeta(key).icon;
+  getSocialProfileIconClass({ key = '' }) {
+    let meta = this.getSocialProfileMeta(key),
+      domClass;
+
+    if (meta.customIcon) {
+      domClass = `m-custom-icon m-custom-icon-${meta.icon}`;
+    } else {
+      domClass = `fa fa-fw fa-${meta.icon}`;
+    }
+
+    return domClass;
   }
 
   buildSocialProfileLink({ key = '', value = '' }) {
