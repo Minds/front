@@ -1,0 +1,16 @@
+@import "defaults";
+
+minds-onboarding-categories-selector{
+  display:block;
+  width:300px;
+  min-height:200px;
+
+  .m-category-selector-category{
+    display: inline-block;
+    font-size: 11px;
+    padding: 0px 8px;
+    margin: 4px;
+    border: 1px solid #EEE;
+    cursor: pointer;
+  }
+}

@@ -113,7 +113,7 @@
 
     <script>
       <?php
-          $minds = array(
+          $minds = [
               "MindsContext" => __MINDS_CONTEXT__,
               "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
               "Admin" => Minds\Core\Session::isAdmin() ? true : false,
@@ -122,7 +122,8 @@
               "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
               "navigation" => Minds\Core\Navigation\Manager::export(),
               "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
-            );
+              "categories" => Minds\Core\Config::_()->get('categories')
+          ];
           if(Minds\Core\Session::isLoggedIn()){
               $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
               $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));

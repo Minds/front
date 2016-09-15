@@ -6,6 +6,7 @@ import { Modal } from '../modal';
 import { SignupModalService } from './service';
 import { FORM_COMPONENTS } from '../../forms/forms';
 import { Tutorial } from '../../tutorial/tutorial';
+import { OnboardingCategoriesSelector } from '../../onboarding/categories-selector/categories-selector';
 import { SessionFactory } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
 
@@ -13,10 +14,10 @@ import { AnalyticsService } from '../../../services/analytics';
 @Component({
   selector: 'm-modal-signup',
   inputs: ['open', 'subtitle'],
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, FORM_COMPONENTS, Tutorial ],
+  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, FORM_COMPONENTS, Tutorial, OnboardingCategoriesSelector ],
   template: `
     <m-modal [open]="open" (closed)="onClose($event)" *ngIf="!session.isLoggedIn() || display != 'initial'">
-      <div class="mdl-card__title" [hidden]="display == 'onboarding'">
+      <div class="mdl-card__title" [hidden]="display == 'onboarding' || display == 'categories'">
         <img src="/assets/logos/small.png" (click)="close()"/>
         <h4 class="mdl-color-text--grey-600">Your Social Network</h4>
       </div>
@@ -70,6 +71,8 @@ import { AnalyticsService } from '../../../services/analytics';
       <minds-form-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'register'"></minds-form-register>
       <!-- FB Signin final phase -->
       <minds-form-fb-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'fb-complete'"></minds-form-fb-register>
+      <!-- Categories selector -->
+      <minds-onboarding-categories-selector (done)="done('categories')" *ngIf="display == 'categories'"></minds-onboarding-categories-selector>
       <!-- Onboarding Display -->
       <minds-form-onboarding (done)="done('onboarding')" *ngIf="display == 'onboarding'"></minds-form-onboarding>
       <!-- Tutorial Display -->
@@ -86,9 +89,9 @@ export class SignupModal {
   minds = window.Minds;
 
   subtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
-  display : string = 'initial';
+  display : string = 'categories';
 
-  constructor(private router : Router, private location : Location, private service : SignupModalService, 
+  constructor(private router : Router, private location : Location, private service : SignupModalService,
     private cd : ChangeDetectorRef, private zone : NgZone, private applicationRef : ApplicationRef){
     this.listen();
     this.service.isOpen.subscribe({next: open => {
@@ -157,6 +160,9 @@ export class SignupModal {
         window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login', "Login with Facebook",
           'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=600, height=400, top=100, left=100');
         break;
+      case "categories":
+        this.display = 'categories';
+        break;
       case "onboarding":
         this.display = 'onboarding';
         break;
@@ -181,7 +187,7 @@ export class SignupModal {
             this.route  + '&referrer=signup-model&ts=' + Date.now() :
             this.route  + '?referrer=signup-model&ts=' + Date.now());
         }
-        this.display = 'onboarding';
+        this.display = 'categories';
         break;
       case "fb":
         if(this.router){
@@ -190,6 +196,9 @@ export class SignupModal {
             this.route  + '?referrer=signup-model&ts=' + Date.now());
         }
         this.display = 'fb-username';
+        break;
+      case "categories":
+        this.display = 'onboarding'
         break;
       case "onboarding":
         this.display = 'tutorial'
