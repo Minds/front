@@ -3,19 +3,27 @@ import { CORE_DIRECTIVES } from '@angular/common';
 
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'minds-button-feature',
   inputs: ['_object: object'],
-  host: {
-    '(click)': 'feature()'
-  },
   template: `
-    <button class="" [ngClass]="{'selected': isFeatured }">
+    <button class="" [ngClass]="{'selected': isFeatured }" (click)="isFeatured ? feature() : (open = true)">
       <i class="material-icons">star</i>
     </button>
+    <m-modal [open]="open" (closed)="onClose($event)">
+      <div class="m-button-feature-modal">
+        <select [(ngModel)]="category">
+          <option value="not-selected">-- SELECT A CATEGORY --</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.label}}</option>
+        </select>
+
+        <button class="mdl-button mdl-button--colored" (click)="feature()">Feature</button>
+      </div>
+    </m-modal>
   `,
-  directives: [CORE_DIRECTIVES]
+  directives: [CORE_DIRECTIVES, Modal]
 })
 
 export class FeatureButton {
@@ -24,7 +32,24 @@ export class FeatureButton {
   session = SessionFactory.build();
   isFeatured : boolean = false;
 
+  open : boolean = false;
+  category : string = 'not-selected';
+  categories : Array<any> = [];
+
   constructor(public client : Client) {
+  }
+
+  ngOnInit(){
+    this.initCategories();
+  }
+
+  initCategories(){
+    this.categories = Object.keys(window.Minds.categories).map(function(key) {
+        return {
+          id: key,
+          label: window.Minds.categories[key]
+        };
+    });
   }
 
   set _object(value : any){
@@ -42,9 +67,9 @@ export class FeatureButton {
 
     this.isFeatured = true;
 
-    this.client.put('api/v1/admin/feature/' + this.object.guid, {})
+    this.client.put('api/v1/admin/feature/' + this.object.guid + '/' + this.category, {})
       .then((response : any) => {
-
+        this.open = false
       })
       .catch((e) => {
         this.isFeatured = false;
@@ -57,11 +82,15 @@ export class FeatureButton {
     this.object.featured = false;
     this.client.delete('api/v1/admin/feature/' + this.object.guid, {})
       .then((response : any) => {
-
+        this.open = false;
       })
       .catch((e) => {
         this.isFeatured = true;
       });
+  }
+
+  onModalClose(){
+    this.open = false;
   }
 
 }

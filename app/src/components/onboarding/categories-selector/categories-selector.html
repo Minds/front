@@ -36,7 +36,7 @@
         <h3>{{channel.name}}</h3>
         <span>@ {{channel.username}}</span>
       </div>
-      <input type="checkbox" [ngModel]="channel.selected" (click)="$event.stopPropagation()"/>
+      <input type="checkbox" [(ngModel)]="channel.selected" (click)="$event.stopPropagation()"/>
     </div>
   </div>
   <button class="mdl-button mdl-button--colored" (click)="subscribe()">Subscribe</button>

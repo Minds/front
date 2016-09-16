@@ -89,7 +89,7 @@ export class SignupModal {
   minds = window.Minds;
 
   subtitle : string = "Signup to comment, upload, vote and receive 100 free views on your content.";
-  display : string = 'categories';
+  display : string = 'initial';
 
   constructor(private router : Router, private location : Location, private service : SignupModalService,
     private cd : ChangeDetectorRef, private zone : NgZone, private applicationRef : ApplicationRef){
