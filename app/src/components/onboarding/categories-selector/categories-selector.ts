@@ -13,6 +13,8 @@ import { Client } from '../../../services/api';
 
 export class OnboardingCategoriesSelector {
 
+  minds = window.Minds;
+
   categories : Array<any> = [];
   channels : Array<any> = [];
 
@@ -58,6 +60,19 @@ export class OnboardingCategoriesSelector {
       .catch(() => {
         this.inProgress = false;
       })
+  }
+
+  subscribe(){
+    this.client.post('api/v1/subscribe/batch', {
+        guids: this.channels
+          .filter((channel) => {
+            return channel.selected;
+          })
+          .map((channel) => {
+            return channel.guid
+          })
+      });
+    this.done.next(true);
   }
 
 }
