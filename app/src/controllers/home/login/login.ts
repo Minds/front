@@ -57,7 +57,7 @@ export class Login {
   }
 
   registered(){
-    this.modal.setDisplay('onboarding').open();
+    this.modal.setDisplay('categories').open();
     this.router.navigate(['/Newsfeed', {}]);
   }
 
