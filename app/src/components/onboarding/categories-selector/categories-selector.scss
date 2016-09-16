@@ -44,6 +44,10 @@ minds-onboarding-categories-selector{
     margin-top:16px;
     overflow: scroll;
     max-height: 200px;
+
+    .m-category-channels-channel{
+      padding:$minds-padding 0;
+    }
   }
 
   .m-category-channels-channel-avatar{
@@ -71,7 +75,7 @@ minds-onboarding-categories-selector{
 
   input[type='checkbox']{
     float: right;
-    margin: 14px 0;
+    margin-top: 14px;
   }
 
 }
