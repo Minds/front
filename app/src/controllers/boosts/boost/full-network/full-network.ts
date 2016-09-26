@@ -94,7 +94,7 @@ export class BoostFullNetwork{
         this._done.next(true);
       })
       .catch((e) => {
-        this.error = 'Sorry, something went wrong.';
+        this.error = (e && e.message) || 'Sorry, something went wrong.';
         this.inProgress = false;
       });
 

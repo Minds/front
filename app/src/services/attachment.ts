@@ -155,7 +155,7 @@ export class AttachmentService {
   }
 
   has() {
-    return !!this.meta.attachment_guid;
+    return !!this.meta.attachment_guid || this.isRich();
   }
 
   hasFile() {

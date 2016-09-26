@@ -189,7 +189,7 @@
 		<li class="mdl-menu__item" *ngIf="!activity.featured && session.isAdmin()" (click)="feature()">Feature</li>
 		<li class="mdl-menu__item" *ngIf="activity.featured && session.isAdmin()" (click)="unFeature()">un-Feature</li>
         <!-- DELETE -->
-        <li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="delete(); toggle.value = !toggle.value">Delete</li>
+        <li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true; toggle.value = !toggle.value">Delete</li>
         <!-- REPORT -->
         <li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
 		<!-- NOTIFICATIONS -->

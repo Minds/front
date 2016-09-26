@@ -6,6 +6,7 @@
         <input
           [(ngModel)]="points"
           type="number"
+          min="0"
           (keyup)="calculateUSD()"
           (change)="calculateUSD()"
           />
@@ -20,6 +21,7 @@
         <input
           [(ngModel)]="usd"
           type="number"
+          min="0"
           (keyup)="calculatePoints()"
           (change)="calculatePoints()"
           placeholder="..."
