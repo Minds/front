@@ -50,7 +50,14 @@
       margin-left: -146px;
       display: block;
   }
-
+  &.m-ad-block-pd div[data-tpd-id="dsk-banner-ad-a"]{
+      width: 100%;
+      margin: 0 auto;
+  }
+  &.m-ad-block-pd div[data-tpd-id="mob-box-ad-a"] {
+      width: 300px;
+      margin: 0 auto;
+  }
 }
 .m-ad-boost-heading{
   font-size: 12px;
