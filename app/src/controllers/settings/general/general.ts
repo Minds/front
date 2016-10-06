@@ -30,7 +30,6 @@ export class SettingsGeneral{
   name : string;
   email : string;
   mature: boolean = false;
-  monetized : boolean = false;
 
   password : string;
   password1 : string;
@@ -55,7 +54,6 @@ export class SettingsGeneral{
       .then((response : any) => {
         self.email = response.channel.email;
         self.mature = !!parseInt(response.channel.mature, 10);
-        this.monetized = response.channel.monetized;
 
         this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
@@ -104,8 +102,7 @@ export class SettingsGeneral{
         email: this.email,
         password: this.password,
         new_password: this.password2,
-        mature: this.mature ? 1 : 0,
-        monetized: this.monetized ? true : false
+        mature: this.mature ? 1 : 0
       })
       .then((response : any) => {
         self.changed = false;
@@ -118,7 +115,6 @@ export class SettingsGeneral{
 
         if (window.Minds.user) {
           window.Minds.user.mature = this.mature ? 1 : 0;
-          window.Minds.user.monetized = this.monetized ? true : false;
         }
 
         self.inProgress = false;
