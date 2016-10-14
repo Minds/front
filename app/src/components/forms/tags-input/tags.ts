@@ -20,7 +20,7 @@ import { SessionFactory } from '../../../services/session';
       <span>{{tag}}</span>
       <i class="material-icons mdl-color-text--white">close</i>
     </div>
-    <input type="text" [(ngModel)]="input" (keyup)="keyUp($event)" [size]="input.length ? input.length : 1">
+    <input type="text" [(ngModel)]="input" (keyup)="keyUp($event)" (blur)="blur($event)" [size]="input.length ? input.length : 1">
   `
 })
 
@@ -50,21 +50,22 @@ export class TagsInput{
       case 32: //space
       case 9: //tab
       case 13: //enter
-        if(this.input){
-
-          this.tags.push(this.input);
-          this.input = "";
-        }
+      case 188: //comma
+        this.push();
         break;
       case 8: //backspace
         //remove the last tag if we don't have an input
-        if(!this.input){
-          this.tags.pop();
+        if (!this.input) {
+          this.pop();
         }
         break;
     }
 
     this.change.next(this.tags);
+  }
+
+  blur(e) {
+    this.push();
   }
 
   removeTag(index : number){
@@ -74,6 +75,26 @@ export class TagsInput{
 
   focus(){
     this.element.nativeElement.getElementsByTagName('input')[0].focus();
+  }
+
+  push() {
+    let input = this.input;
+
+    // sanitize tag
+    input = input
+      .replace(/^[,\s]+/, '') // strip initial commas and spaces
+      .replace(/[,\s]+$/, ''); // strip final commas and spaces
+
+    if (!input) {
+      return;
+    }
+
+    this.tags.push(input);
+    this.input = '';
+  }
+
+  pop() {
+    this.tags.pop();
   }
 
 }
