@@ -16,9 +16,14 @@
           class="mdl-color-text--blue-grey-300">
           <strong>({{activity.containerObj.name}})</strong>
         </a>
-		<a [routerLink]="['/Activity', { guid: activity.guid }]" class="permalink">
+		<a [routerLink]="['/Activity', { guid: activity.guid }]" class="permalink" *ngIf="activity.guid">
 			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
 		</a>
+    <a [routerLink]="['/Archive-View', { guid: activity.entity_guid }]" class="permalink" 
+      *ngIf="!activity.guid && activity.entity_guid"
+    >
+      <span>{{activity.time_created * 1000 | date:'medium'}}</span>
+    </a>
 	</div>
 
 </div>
