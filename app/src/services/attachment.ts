@@ -266,11 +266,16 @@ export class AttachmentService {
           return;
         }
 
-        this.meta.title = data.meta.title;
-        this.meta.url = data.meta.canonical;
-        this.meta.description = data.meta.description;
+        if (data.meta) {
+          this.meta.url = data.meta.canonical || url;
+          this.meta.title = data.meta.title || this.meta.url;
+          this.meta.description = data.meta.description || '';
+        } else {
+          this.meta.url = url;
+          this.meta.title = url;
+        }
 
-        if(data.links.thumbnail && data.links.thumbnail[0]) {
+        if (data.links && data.links.thumbnail && data.links.thumbnail[0]) {
           this.meta.thumbnail = data.links.thumbnail[0].href;
         }
       })
