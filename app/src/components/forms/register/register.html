@@ -52,7 +52,7 @@
     <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="register($event)" [disabled]="inProgress">
       Signup
     </button>
-    <span class="m-register-tac">By creating an account you agree to the Terms & Conditions</span>
+    <a [routerLink]="['/P', { page: 'terms' }]" class="m-register-tac">By creating an account you agree to the Terms & Conditions</a>
   </div>
 
 </form>

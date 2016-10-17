@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
+import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
@@ -12,7 +12,7 @@ import { SessionFactory } from '../../../services/session';
   inputs: [ 'referrer' ],
   outputs: [ 'done' ],
   templateUrl: 'src/components/forms/register/register.html',
-  directives: [ FORM_DIRECTIVES, Material ]
+  directives: [ FORM_DIRECTIVES, Material, ROUTER_DIRECTIVES ]
 })
 
 export class RegisterForm {
