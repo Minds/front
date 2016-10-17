@@ -21,12 +21,13 @@ export class UserCard {
   session = SessionFactory.build();
   minds = window.Minds;
   avatarSize : string = 'medium';
+  bannerSrc: string;
 
 	constructor(public client: Client){
 	}
 
   set object(value: any) {
     this.user = value;
+    this.bannerSrc = `${this.minds.cdn_url}/fs/v1/banners/${this.user.guid}/fat/${this.user.icontime}`
   }
-
 }

@@ -1,5 +1,7 @@
 <div class="minds-usercard-banner">
-	<img src="{{minds.cdn_url}}/fs/v1/banners/{{user.guid}}/fat/{{user.icontime}}"/>
+	<div class="mdl-color--blue-grey minds-card-banner"
+    [ngStyle]="{'background-image': 'url(' + bannerSrc + ')'}"
+  ></div>
 	<div class="minds-banner-overlay"></div>
 </div>
 

@@ -17,9 +17,11 @@ minds-card-user, .minds-banner-card{
     overflow: hidden;
     position:relative;
 
-    > img{
-      min-width:100%;
-      max-width:100%;
+    .minds-card-banner {
+      width: 100%;
+      height: 100%;
+      background: none no-repeat center center transparent;
+      background-size: cover;
     }
 
     .minds-banner-overlay{
