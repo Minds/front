@@ -1,8 +1,9 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef, EventEmitter } from '@angular/core';
 
 @Directive({
   selector: '[scrollLock]',
   inputs: [ 'strictScrollLock' ],
+  outputs: [ 'overscroll' ],
   host: {
     '(mouseenter)': 'lock()',
     '(mouseleave)': 'unlock()'
@@ -13,25 +14,28 @@ export class ScrollLock {
   private body: HTMLElement;
 
   strictScrollLock: boolean = false;
+  overscroll: EventEmitter<any> = new EventEmitter();
 
+  private wheelHandler;  
   constructor(private _element: ElementRef) {
     this.element = _element.nativeElement;
+    this.wheelHandler = this._domWheelLock(this);
   }
 
   lock() {
-    this.element.addEventListener('wheel', this._domWheelLock, true);
+    this.element.addEventListener('wheel', this.wheelHandler, true);
   }
 
   unlock() {
-    this.element.removeEventListener('wheel', this._domWheelLock, true);
+    this.element.removeEventListener('wheel', this.wheelHandler, true);
   }
 
   ngOnDestroy() {
     this.unlock();
   }
 
-  private _domWheelLock(event: WheelEvent) {
-    return (() => { // Bind to this
+  private _domWheelLock(_this) {
+    return function (event: WheelEvent) {
       let el: HTMLElement = <HTMLElement>(event.currentTarget);
       if (event.ctrlKey) { // Zooming
         return;
@@ -53,10 +57,14 @@ export class ScrollLock {
       ) {
         event.preventDefault();
 
+        _this.overscroll.emit({
+          deltaY
+        });
+
         if (deltaY) {
           el.scrollTop += deltaY;
         }
       }
-    })()
+    };
   }
 }

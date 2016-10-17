@@ -126,12 +126,47 @@ export class Comments {
       });
   }
 
+  private autoloadBlocked = false;
   autoloadPrevious() {
-    if (!this.moreData) {
+    if (!this.moreData || this.autoloadBlocked) {
       return;
     }
 
+    this.cancelOverscroll();
+
+    this.autoloadBlocked = true;
+    setTimeout(() => {
+      this.autoloadBlocked = false;
+    }, 1000);
+
     this.load();
+  }
+
+  private overscrollTimer;
+  private overscrollAmount = 0;
+  overscrollHandler({ deltaY }) {
+    this.cancelOverscroll();
+
+    if (this.autoloadBlocked) {
+      this.overscrollAmount = 0;
+      return;
+    }
+
+    this.overscrollAmount += deltaY;
+
+    this.overscrollTimer = setTimeout(() => {
+      if (this.overscrollAmount < -75) { //75px
+        this.autoloadPrevious();
+      }
+
+      this.overscrollAmount = 0;
+    }, 250); // in 250ms
+  }
+
+  cancelOverscroll() {
+    if (this.overscrollTimer) {
+      clearTimeout(this.overscrollTimer);
+    }
   }
 
   joinSocketRoom() {
@@ -147,6 +182,8 @@ export class Comments {
   }
 
   ngOnDestroy() {
+    this.cancelOverscroll();
+
     if (this.socketRoomName) {
       this.sockets.leave(this.socketRoomName);
     }
