@@ -2,18 +2,19 @@ import { Component } from '@angular/core';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
 import { ROUTER_DIRECTIVES } from "@angular/router-deprecated";
 
-import { Client } from '../../../services/api';
+import { Client, Upload } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
 import { MDL_DIRECTIVES } from '../../../directives/material';
 import { InfiniteScroll } from '../../../directives/infinite-scroll';
+import { FORM_COMPONENTS } from '../../../components/forms/forms';
 
 
 @Component({
   selector: 'minds-wallet-merchants',
   templateUrl: 'src/controllers/wallet/merchants/merchants.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, InfiniteScroll ]
+  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, InfiniteScroll, FORM_COMPONENTS ]
 })
 
 export class Merchants {
@@ -23,6 +24,7 @@ export class Merchants {
   onboardForm: ControlGroup;
   editForm: ControlGroup;
 
+  user = this.session.getLoggedInUser();
   isMerchant : boolean = false;
   status : string = "pending";
   sales : Array<any> = [];
@@ -34,8 +36,8 @@ export class Merchants {
 
   minds = window.Minds;
 
-	constructor(public client: Client, public fb: FormBuilder){
-    if(this.session.getLoggedInUser().merchant && this.session.getLoggedInUser().merchant != "0"){
+	constructor(public client: Client, public upload : Upload, public fb: FormBuilder){
+    if(this.user.merchant && this.user.merchant.service == 'stripe' && this.user.merchant.id){
       this.isMerchant = true;
       this.getSettings();
       this.getSales();
@@ -44,17 +46,13 @@ export class Merchants {
     this.onboardForm = fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      dob: ['', (control) => {
-        var regex = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-        return !regex.test(control.value) ? {"invalidDate": true} : null;
-      }],
-      ssn:  [''],
+      dob: ['', Validators.required],
+      //ssn:  [''],
       street:  ['', Validators.required],
       city:  ['', Validators.required],
-      region:  ['', Validators.required],
+      //region:  ['', Validators.required],
+      country: ['', Validators.required],
       postCode:  ['', Validators.required],
-      venmo: [true],
       accountNumber:  [''],
       routingNumber:  ['']
     });
@@ -62,7 +60,7 @@ export class Merchants {
     this.editForm = fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required],
+      //email: ['', Validators.required],
       venmo: [true],
       ssn: [''],
       accountNumber: [''],
@@ -135,5 +133,24 @@ export class Merchants {
         this.updating = false;
       });
   }
+
+  uploadDocument(input: HTMLInputElement) {
+
+    let file = input ? input.files[0] : null;
+
+    this.upload.post('api/v1/merchant/verification', [ file ], {},
+      (progress) => {
+        console.log(progress);
+      })
+      .then((response: any) => {
+        this.status = 'pending';
+        input.value = null;
+      })
+      .catch((e) => {
+        alert('Sorry, there was a problem. Try again.');
+        input.value = null;
+      });
+  }
+
 
 }

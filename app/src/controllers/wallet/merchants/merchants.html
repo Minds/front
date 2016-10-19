@@ -1,12 +1,14 @@
 <div *ngIf="isMerchant">
 
   <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500" [hidden]="inProgress">
-    <div class="mdl-card__supporting-text">
-      Status: {{status}}
-    </div>
     <div class="mdl-card__supporting-text" *ngIf="status == 'pending'">
       Thanks for monetizing your channel, we are currently reviewing your application.
       For now, checkout your <a [routerLink]="['/Boosts', { type:'peer', filter: 'inbox' }]">boost console</a> where you can advertise your content.
+    </div>
+    <div class="mdl-card__supporting-text" *ngIf="status == 'awaiting-document'">
+      <p>We need you to upload verification of your identity. Please provide us with photo ID.</p>
+      <input type="file" #file name="identification"/>
+      <button class="mdl-button mdl-button--colored" (click)="uploadDocument(file)">Upload</button>
     </div>
   </div>
 
@@ -14,7 +16,7 @@
 
   <div class="minds-spacer-2x"></div>
 
-  <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500 m-merchant-transactions">
+  <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500 m-merchant-transactions" *ngIf="status == 'active'">
 
     <div class="mdl-card md-shadow--2dp m-merchant-transaction" *ngFor="let sale of sales">
 
@@ -51,6 +53,7 @@
     #e="ngForm"
     class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500"
     [hidden]="inProgress"
+    *ngIf="status == 'active'"
     >
     <div class="mdl-cell mdl-cell--6-col">
       <label>First name</label>
@@ -61,28 +64,19 @@
       <input ngControl="lastName" type="text" placeholder="Last name">
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col">
-      <label>Email</label>
-      <input ngControl="email" type="email" placeholder="Email">
-    </div>
-
     <!--<div class="mdl-cell mdl-cell--6-col">
       <label>Social Security Number (optional)</label>
       <input ngControl="ssn" type="number" placeholder="Social Security Number">
     </div>-->
 
-    <div class="mdl-cell mdl-cell--12-col">
-      <input type="checkbox" ngControl="venmo"> Payout to email address (using venmo)
-    </div>
-
     <div class="mdl-cell mdl-cell--6-col" >
       <label>Bank Account number</label>
-      <input ngControl="accountNumber" type="number" placeholder="Account Number" [disabled]="editForm.value.venmo">
+      <input ngControl="accountNumber" type="number" placeholder="Account Number">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Bank Routing number</label>
-      <input ngControl="routingNumber" type="number" placeholder="Routing Number" [disabled]="editForm.value.venmo">
+      <label>Bank Routing number / Sort code</label>
+      <input ngControl="routingNumber" type="number" placeholder="Routing Number / Sort Code">
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -117,14 +111,9 @@
       <input ngControl="lastName" type="text" placeholder="Last name">
     </div>
 
-    <div class="mdl-cell mdl-cell--4-col">
-      <label>Email</label>
-      <input ngControl="email" type="email" placeholder="Email">
-    </div>
-
     <div class="mdl-cell mdl-cell--5-col">
       <label>Date of Birth</label>
-      <input ngControl="dob" type="date" placeholder="YYYY-MM-DD">
+      <minds-date-input [date]="onboardForm.value.dob" (dateChange)="onboardForm.controls.dob.updateValue($event)"></minds-date-input>
     </div>
 
     <!--<div class="mdl-cell mdl-cell--5-col">
@@ -143,8 +132,8 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Region / State</label>
-      <input ngControl="region" type="text" placeholder="eg. NY">
+      <label>Country</label>
+      <minds-country-input [country]="onboardForm.value.country" (countryChange)="onboardForm.controls.country.updateValue($event)"></minds-country-input>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
@@ -152,33 +141,13 @@
       <input ngControl="postCode" type="text" placeholder="eg. 10001">
     </div>
 
-    <div class="mdl-cell mdl-cell--12-col">
-      <label>Payout method</label>
-      <p class="mdl-color-text--grey-600">Enter your bank account details <b>or</b> select payout out to email. You can change these details later.</p>
-    </div>
-
-    <div class="mdl-cell mdl-cell--6-col">
-      <label>Email</label>
-      <input type="checkbox" ngControl="venmo" id="venmo-checkbox"> <span for="#venmo-checkbox" (click)="onboardForm.controls.venmo.updateValue(true)">Payout via venmo</span>
-      <p class="mdl-color-text--grey-600">You can create a venmo account later, we'll send the funds to
-        <b [hidden]="!onboardForm.value.email">{{onboardForm.value.email}}</b><i [hidden]="onboardForm.value.email">your email address</i>.
-      </p>
-    </div>
-
     <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Account number</label>
-      <input ngControl="accountNumber" type="number" placeholder="10-12 digit account number" (click)="onboardForm.controls.venmo.updateValue(false)">
-      <label>Bank Routing number</label>
-      <input ngControl="routingNumber" type="number" placeholder="9 digit routing number" (click)="onboardForm.controls.venmo.updateValue(false)">
+      <input ngControl="accountNumber" type="text" placeholder="10-12 digit account number">
     </div>
-
-    <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">
-      <p>Minds, Inc. uses Braintree, a division of PayPal, Inc. (Braintree) for payment processing services.
-        By using the Braintree payment processing services you agree to the Braintree Payment Services Agreement available at
-        <a href="https://www.braintreepayments.com/legal/gateway-agreement" target="_blank">https://www.braintreepayments.com/legal/gateway-agreement</a>,
-        and the applicable bank agreement available at
-        <a href="https://www.braintreepayments.com/legal/cea-wells" target="_blank">https://www.braintreepayments.com/legal/cea-wells</a>
-      </p>
+    <div class="mdl-cell mdl-cell--6-col">
+      <label>Bank Routing number / Sort Code</label>
+      <input ngControl="routingNumber" type="text" placeholder="9 digit routing number">
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -186,7 +155,7 @@
     </div>
 
     <div style="margin:16px; width:100%; text-align:right;">
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!f.form.valid">Accept & Submit</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!f.form.valid">Next</button>
     </div>
 
   </form>
