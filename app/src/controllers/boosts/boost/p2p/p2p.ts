@@ -5,7 +5,7 @@ import { RouterLink } from "@angular/router-deprecated";
 import { Client } from '../../../../services/api';
 import { Material } from '../../../../directives/material';
 
-import { Checkout } from '../../../payments/checkout';
+import { StripeCheckout } from '../../../payments/checkout';
 
 import { Scheduler } from '../../../../components/scheduler/scheduler';
 
@@ -21,7 +21,7 @@ import { MindsBoostRateResponse } from '../../../../interfaces/responses';
   inputs: ['activity: object'],
   outputs: ['_done: done'],
   templateUrl: 'src/controllers/boosts/boost/p2p/p2p.html',
-  directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink, Checkout, Scheduler]
+  directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink, StripeCheckout, Scheduler]
 })
 
 export class BoostP2P{

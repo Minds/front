@@ -129,7 +129,7 @@
         The message field will not be posted to facebook. Only the attachment will be sent
       </p>
 
-      <minds-payments-checkout (inputed)="boost($event);" [hidden]="stage != 2"></minds-payments-checkout>
+      <minds-payments-stripe-checkout (inputed)="boost($event);" [hidden]="stage != 2"></minds-payments-stripe-checkout>
       <p class="m-checkout-hint mdl-color-text--blue-grey-300" [hidden]="stage != 2">
         You won't be charged until your boost is accepted by @{{destination.username}}
       </p>

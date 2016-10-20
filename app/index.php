@@ -90,40 +90,42 @@
     <?php endif; ?>
 
 
-    <script>
+      <script>
       // Fixes undefined module function in SystemJS bundle
       function module() {}
-    </script>
+          </script>
 
     <!-- shims:js -->
-  	<!-- endinject -->
+    <!-- endinject -->
 
     <!-- libs:js -->
-  	<!-- endinject -->
+    <!-- endinject -->
 
     <!-- Google Analytics -->
-    <script>
+      <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    </script>
+      </script>
     <!-- End Google Analytics -->
     <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
 
-    <script>
-      <?php
-          $minds = [
-              "MindsContext" => __MINDS_CONTEXT__,
-              "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
-              "Admin" => Minds\Core\Session::isAdmin() ? true : false,
-              "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
-              "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
-              "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
-              "navigation" => Minds\Core\Navigation\Manager::export(),
-              "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
-              "categories" => Minds\Core\Config::_()->get('categories')
+      <script>
+<?php
+      $minds = [
+          "MindsContext" => __MINDS_CONTEXT__,
+          "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
+          "Admin" => Minds\Core\Session::isAdmin() ? true : false,
+          "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
+          "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
+          "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
+          "navigation" => Minds\Core\Navigation\Manager::export(),
+          "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
+          "categories" => Minds\Core\Config::_()->get('categories')
+          "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key']
           ];
+
           if(Minds\Core\Session::isLoggedIn()){
               $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
               $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
@@ -149,6 +151,8 @@
         .catch(function(){console.error(e,'Report this error at https://github.com/minds/front')});
     </script>
     <% } %>
+
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
   </body>
 </html>

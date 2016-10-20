@@ -21,15 +21,12 @@
     <div class="mdl-card md-shadow--2dp m-merchant-transaction" *ngFor="let sale of sales">
 
       <div class="mdl-card__supporting-text m-merchant-transaction-tabs">
-        <div class="m-merchant-transaction-id"><i class="material-icons">description</i>{{sale.id}}</div>
+        <!--<div class="m-merchant-transaction-id"><i class="material-icons">description</i>{{sale.id}}</div>-->
 
         <div class="m-merchant-transaction-amount mdl-color-text--green"><i class="material-icons">attach_money</i>{{sale.amount}}</div>
 
         <div class="m-merchant-transaction-status"><i class="material-icons">hourglass_empty</i>
-          <span [hidden]="sale.status != 'submitted_for_settlement'">Approved (settling)</span>
-          <span [hidden]="sale.status != 'settled'">Approved</span>
-          <span [hidden]="sale.status != 'disbursed'">Disbursed</span>
-          <span [hidden]="sale.status != 'voided'">Voided</span>
+          <span>{{sale.status}}</span>
         </div>
 
         <div class="m-merchant-transaction-orderId"><i class="material-icons">shopping_cart</i>
