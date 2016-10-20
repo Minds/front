@@ -5,7 +5,7 @@ import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
   selector: 'minds-date-input',
   template: `
     <select [ngModel]="selectedMonth" (ngModelChange)="selectedMonth = $event; build()">
-      <option value="" disabled hidden><i>Month</i></option>
+      <option value=""><i>Month</i></option>
       <option *ngFor="let month of months; let i = index"
         [value]="i + 1"
       >{{ month }}</option>
@@ -43,6 +43,10 @@ export class DateInput implements OnInit {
   @Output() dateChange: EventEmitter<any> = new EventEmitter();
   @Input()
   set date(value: string) {
+
+    if(!value)
+      return;
+
     if (value === this._date) {
       return;
     }
