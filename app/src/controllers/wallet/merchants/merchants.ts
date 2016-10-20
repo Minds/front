@@ -38,7 +38,7 @@ export class Merchants {
 
 	constructor(public client: Client, public upload : Upload, public fb: FormBuilder){
     if(this.user.merchant && this.user.merchant.service == 'stripe' && this.user.merchant.id){
-      this.isMerchant = true;
+      //this.isMerchant = true;
       this.getSettings();
       this.getSales();
     }
