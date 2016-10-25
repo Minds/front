@@ -14,7 +14,7 @@
               type="text"
               id="message"
               #message
-              [(ngModel)]="content"
+              [(ngModel)]="meta.message"
               (keyup)="getPostPreview(message)"
               placeholder="Enter your status here"
               [autoGrow]
@@ -37,6 +37,14 @@
               >
                 <i class="material-icons">explicit</i>
                 <span *ngIf="attachment.isMature()">Mature content</span>
+              </a>
+
+              <a class="m-monetize-button"
+                [ngClass]="{ 'mdl-color-text--green-500': meta.paywall }"
+                (click)="meta.paywall = !meta.paywall"
+                title="Monetize"
+                >
+                <i class="material-icons">attach_money</i>
               </a>
 
               <button

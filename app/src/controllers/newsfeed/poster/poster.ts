@@ -25,13 +25,16 @@ import { ThirdPartyNetworksSelector } from '../../../components/third-party-netw
 export class Poster {
 
   content = '';
+  meta : any = {
+    paywall : false
+  };
   session = SessionFactory.build();
   minds;
   load: EventEmitter<any> = new EventEmitter();
   inProgress : boolean = false;
 
   canPost: boolean = true;
-  
+
   @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
 
   constructor(public client: Client, public upload: Upload, public attachment: AttachmentService){
@@ -49,7 +52,7 @@ export class Poster {
   set message(value : any){
     if(value){
       value = decodeURIComponent((value).replace(/\+/g, '%20'));
-      this.content = value;
+      this.meta.message = value;
       this.getPostPreview({value: value}); //a little ugly here!
     }
   }
@@ -58,12 +61,11 @@ export class Poster {
 	 * Post to the newsfeed
 	 */
 	post(){
-    if (!this.content && !this.attachment.has()) {
+    if (!this.meta.message && !this.attachment.has()) {
       return;
     }
 
-    let data = this.attachment.exportMeta();
-    data['message'] = this.content;
+    let data = Object.assign(this.meta, this.attachment.exportMeta());
 
     data = this.thirdPartyNetworksSelector.inject(data);
 
@@ -73,7 +75,7 @@ export class Poster {
       data.activity.boostToggle = true;
       this.load.next(data.activity);
       this.attachment.reset();
-      this.content = '';
+      this.meta = { monetized : false };
       this.inProgress = false;
     })
     .catch(function(e){
