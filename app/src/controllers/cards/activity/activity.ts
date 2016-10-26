@@ -17,6 +17,7 @@ import { TagsLinks } from '../../../directives/tags';
 import { ScrollService } from '../../../services/ux/scroll';
 import { ShareModal, ReportModal, ConfirmModal } from '../../../components/modal/modal';
 import { Translate } from '../../../components/translate/translate';
+import { PayWall } from '../../payments/paywall/paywall.component';
 
 import { AttachmentService } from '../../../services/attachment';
 import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
@@ -32,9 +33,9 @@ import { TranslationService } from '../../../services/translation';
   outputs: [ '_delete: delete', 'commentsOpened'],
   providers: [ AttachmentService ],
   templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments,
-    Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, VideoAds, ShareModal,
-    ReportModal, MindsRichEmbed, Hovercard, ConfirmModal, Translate ],
+  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments, 
+    Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, VideoAds, ShareModal, 
+    ReportModal, MindsRichEmbed, Hovercard, ConfirmModal, Translate, PayWall ],
   pipes: [ MINDS_PIPES ]
 })
 

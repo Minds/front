@@ -39,10 +39,10 @@
                 <span *ngIf="attachment.isMature()">Mature content</span>
               </a>
 
-              <a class="m-monetize-button"
+              <a class="m-paywall-button"
                 [ngClass]="{ 'mdl-color-text--green-500': meta.paywall }"
                 (click)="meta.paywall = !meta.paywall"
-                title="Monetize"
+                title="PayWall"
                 >
                 <i class="material-icons">attach_money</i>
               </a>

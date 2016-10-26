@@ -28,6 +28,11 @@
 
 </div>
 
+<!-- PayWall -->
+<minds-paywall class="m-paywall" [entity]="activity" *ngIf="activity.paywall">
+</minds-paywall>
+<!-- END: PayWall -->
+
 <!-- Messages -->
 <div class="mdl-card__supporting-text message m-mature-message" [hidden]="!activity.message || editing">
 	<a class="m-mature-text-toggle"
