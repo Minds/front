@@ -3,9 +3,10 @@
   <p class="mdl-color-text--white"><b>{{entity.ownerObj?.name}}</b> has made this content exclusive to paid subscribers.</p>
 
   <button class="mdl-button mdl-button--colored mdl-color--green-300 mdl-color-text--white"
-    (click)="showCheckout = !showCheckout">
-    Buy an exclusive pass
+    (click)="checkout()" *ngIf="!showCheckout">
+    Get an exclusive pass
   </button>
+
 </div>
 
 <div class="m-paywall-card-input" *ngIf="showCheckout">

@@ -34,11 +34,17 @@ export class Merchants {
   confirmation : boolean = false;
   error : string = "";
 
+  exclusive = {
+    enabled : false,
+    amount: 1,
+    intro: ''
+  };
+
   minds = window.Minds;
 
 	constructor(public client: Client, public upload : Upload, public fb: FormBuilder){
     if(this.user.merchant && this.user.merchant.service == 'stripe' && this.user.merchant.id){
-      //this.isMerchant = true;
+      this.isMerchant = true;
       this.getSettings();
       this.getSales();
     }
@@ -150,6 +156,11 @@ export class Merchants {
         alert('Sorry, there was a problem. Try again.');
         input.value = null;
       });
+  }
+
+  saveExclusive(){
+    this.client.post('api/v1/merchant/exclusive', this.exclusive)
+      .then(() => {});
   }
 
 

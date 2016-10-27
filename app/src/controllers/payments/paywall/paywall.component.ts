@@ -32,10 +32,19 @@ export class PayWall {
     //get the subscription amount
   }
 
+  checkout(){
+    this.showCheckout = true;
+
+    this.client.get('api/v1/payments/plans/exclusive/' + this.entity.owner_guid)
+      .then((response) => {
+        console.log(response);
+      });
+  }
+
   subscribe(nonce){
     this.showCheckout = false;
     console.log('nonce: ' + nonce);
-    this.client.post('api/v1/payments/paywall/subscribe', {
+    this.client.post('api/v1/payments/plans/subscribe', {
         nonce: nonce
       })
       .then((response) => {
