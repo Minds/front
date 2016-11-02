@@ -3,7 +3,7 @@
 .minds-homepage-banner{
   position:relative;
   min-height:200px;
-  min-height:50vh;
+  min-height:75vh;
   //height:200px;
   overflow:hidden;
 
@@ -109,9 +109,11 @@
           }
         }
       }
-
+      .m-homepage-titles {
+        display:none;
+      }
       .m-app-links {
-        max-width:60%;
+        //max-width:60%;
         margin:$minds-margin;
         a{
           flex:auto;
@@ -266,6 +268,13 @@ minds-homepage{
 
 }
 
+@media screen and (max-height: 750px ) and (min-width: $max-mobile){
+    .m-app-links{
+        display: none !important;
+    }
+}
+
+
 .m-app-links{
 
   padding:28px;
@@ -278,7 +287,7 @@ minds-homepage{
   a{
     flex:1;
     padding:8px;
-    max-width: 172px;
+    max-width: 132px;
 
     img{
       width:100%;
