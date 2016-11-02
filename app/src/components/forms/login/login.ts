@@ -62,6 +62,12 @@ export class LoginForm {
         }
 
         if(e.status == 'error'){
+          if (e.message == "LoginException:BannedUser") {
+            self.errorMessage = "You are not allowed to login.";
+            self.session.logout();
+            return;
+          }
+
           //two factor?
           self.twofactorToken = e.message;
           self.hideLogin = true;

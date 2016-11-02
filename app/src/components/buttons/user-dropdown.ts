@@ -2,7 +2,9 @@ import { Component, EventEmitter } from '@angular/core';
 import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Client } from '../../services/api';
+import { SessionFactory } from '../../services/session';
 
+import { ConfirmModal } from '../modal/modal';
 
 @Component({
   selector: 'minds-button-user-dropdown',
@@ -16,10 +18,28 @@ import { Client } from '../../services/api';
       <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()">Un-Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()">Un-subscribe</li>
       <li class="mdl-menu__item">Report</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned" (click)="banToggle = true; showMenu = false">Ban globally</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!user.banned" (click)="unBan()">Un-ban globally</li>
     </ul>
     <minds-bg-overlay (click)="toggleMenu($event)" [hidden]="!showMenu"></minds-bg-overlay>
+
+    <m-modal-confirm *ngIf="banToggle"
+      [open]="true"
+      [closeAfterAction]="true"
+      (closed)="banToggle = false"
+      (actioned)="ban($event)"
+      yesButton="Ban user"
+    >
+      <p confirm-message>
+          Are you sure you want to ban this user?<br><br>
+          This will close all open sessions and lock him/her out from Minds.
+      </p>
+      <p confirm-success-message>
+          User has been banned.
+      </p>
+    </m-modal-confirm>
   `,
-  directives: [ CORE_DIRECTIVES ]
+  directives: [ CORE_DIRECTIVES, ConfirmModal ]
 })
 
 export class UserDropdownButton{
@@ -29,6 +49,9 @@ export class UserDropdownButton{
   };
   userChanged: EventEmitter<any> = new EventEmitter;
   showMenu : boolean = false;
+  banToggle: boolean = false;
+
+  session = SessionFactory.build();
 
   constructor(public client : Client) {
   }
@@ -68,6 +91,32 @@ export class UserDropdownButton{
       .catch((e) => {
         this.user.subscribed = true;
       });
+  }
+
+  ban() {
+    this.user.banned = true;
+    this.client.put(`api/v1/admin/ban/${this.user.guid}`, {})
+      .then(() => {
+        this.user.banned = true;
+      })
+      .catch(e => {
+        this.user.banned = false;
+      });
+
+    this.banToggle = false;
+  }
+
+  unBan() {
+    this.user.banned = false;
+    this.client.delete(`api/v1/admin/ban/${this.user.guid}`, {})
+      .then(() => {
+        this.user.banned = false;
+      })
+      .catch(e => {
+        this.user.banned = true;
+      });
+
+    this.showMenu = false;
   }
 
   toggleMenu(e){

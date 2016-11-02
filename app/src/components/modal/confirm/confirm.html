@@ -7,7 +7,7 @@
         {{ yesButton }}
       </button>
 
-      <button class="mdl-button mdl-button--raised" [disabled]="inProgress" (click)="close($event)" *ngIf="noButton">
+      <button class="mdl-button mdl-button--raised mdl-color-text--blue-grey-700" [disabled]="inProgress" (click)="close($event)" *ngIf="noButton">
         {{ noButton }}
       </button>
     </div>
@@ -17,7 +17,7 @@
     <ng-content select="[confirm-success-message]"></ng-content>
 
     <div class="m-modal-confirm-buttons" *ngIf="dismissButton">
-      <button class="mdl-button mdl-button--raised" (click)="close($event)">
+      <button class="mdl-button mdl-button--raised mdl-color-text--blue-grey-700" (click)="close($event)">
         {{ dismissButton }}
       </button>
     </div>
@@ -27,7 +27,7 @@
     <ng-content select="[confirm-error-message]"></ng-content>
 
     <div class="m-modal-confirm-buttons" *ngIf="dismissButton">
-      <button class="mdl-button mdl-button--raised" (click)="close($event)">
+      <button class="mdl-button mdl-button--raised mdl-color-text--blue-grey-700" (click)="close($event)">
         {{ dismissButton }}
       </button>
     </div>
