@@ -37,15 +37,15 @@
 
     <h4 class="mdl-color-text--blue-grey-200 mdl-cell--12-col">Featured Posts</h4>
     <section class="mdl-cell mdl-cell--4-col">
-      <minds-activity [object]="activity"  *ngFor="#activity of stream[1]"></minds-activity>
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[1]"></minds-activity>
     </section>
 
     <section class="mdl-cell mdl-cell--4-col">
-      <minds-activity [object]="activity"  *ngFor="#activity of stream[2]"></minds-activity>
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[2]"></minds-activity>
     </section>
 
     <section class="mdl-cell mdl-cell--4-col">
-      <minds-activity [object]="activity"  *ngFor="#activity of stream[3]"></minds-activity>
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[3]"></minds-activity>
     </section>
 </div>
 
