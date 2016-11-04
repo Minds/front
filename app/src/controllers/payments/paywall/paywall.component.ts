@@ -21,7 +21,7 @@ export class PayWall {
   showCheckout : boolean = false;
   nonce : string = "";
 
-  @Output() update : EventEmitter<any> = new EventEmitter;
+  @Output('entityChange') update : EventEmitter<any> = new EventEmitter;
 
   @Input() entity;
 
@@ -35,8 +35,12 @@ export class PayWall {
   checkout(){
     this.showCheckout = true;
 
-    this.client.get('api/v1/payments/plans/exclusive/' + this.entity.owner_guid)
+    this.client.get('api/v1/payments/plans/exclusive/' + this.entity.guid)
       .then((response) => {
+        if(response.subscribed){
+          this.update.next(response.entity);
+          return;
+        }
         console.log(response);
       });
   }
@@ -44,7 +48,7 @@ export class PayWall {
   subscribe(nonce){
     this.showCheckout = false;
     console.log('nonce: ' + nonce);
-    this.client.post('api/v1/payments/plans/subscribe', {
+    this.client.post('api/v1/payments/plans/subscribe/' + this.entity.owner_guid + '/exclusive', {
         nonce: nonce
       })
       .then((response) => {

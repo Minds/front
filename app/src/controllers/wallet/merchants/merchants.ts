@@ -24,7 +24,7 @@ export class Merchants {
   onboardForm: ControlGroup;
   editForm: ControlGroup;
 
-  user = this.session.getLoggedInUser();
+  user = window.Minds.user;
   isMerchant : boolean = false;
   status : string = "pending";
   sales : Array<any> = [];
@@ -75,14 +75,18 @@ export class Merchants {
 	}
 
   onboard(form){
-    var self = this;
     this.client.post('api/v1/merchant/onboard', this.onboardForm.value)
       .then((response : any) => {
         this.isMerchant = true;
-        window.Minds.user.merchant = true;
+        this.user.merchant = {
+          id: response.id,
+          service: 'stripe',
+          status: 'awaiting-document'
+        };
+        this.status = 'awaiting-document';
       })
       .catch((e) => {
-        self.error = e.message;
+        this.error = e.message;
       });
   }
 
@@ -91,7 +95,7 @@ export class Merchants {
     this.inProgress = true;
     this.client.get('api/v1/merchant/settings')
       .then((response : any) => {
-        self.status = response.merchant.status;
+        this.status = response.merchant.status;
         var controls : any = self.editForm.controls;
         controls.firstName.updateValue(response.merchant.firstName);
         controls.lastName.updateValue(response.merchant.lastName);
@@ -128,10 +132,15 @@ export class Merchants {
     this.error = "";
     this.client.post('api/v1/merchant/update', this.editForm.value)
       .then((response : any) => {
+        if(response.error){
+          this.error = response.message;
+          return false;
+        }
         this.isMerchant = true;
         this.confirmation = true;
         this.updating = false;
-        window.Minds.user.merchant = true;
+        this.Minds.user.merchant.status = 'active';
+        this.status = 'active';
       })
       .catch((e) => {
         this.error = e.message;
@@ -149,7 +158,7 @@ export class Merchants {
         console.log(progress);
       })
       .then((response: any) => {
-        this.status = 'pending';
+        this.status = 'active';
         input.value = null;
       })
       .catch((e) => {
