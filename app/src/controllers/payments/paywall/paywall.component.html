@@ -1,13 +1,25 @@
 <div class="m-paywall-splash mdl-color--green">
   <i class="mdl-color-text--white material-icons">vpn_key</i>
   <p class="mdl-color-text--white"><b>{{entity.ownerObj?.name}}</b> has made this content exclusive to paid subscribers.</p>
+  <p class="mdl-color-text--green-100" *ngIf="entity.ownerObj.merchant?.exclusive?.intro"><b>@ {{entity.ownerObj?.username}}:</b> {{entity.ownerObj?.merchant?.exclusive?.intro}}</p>
+
 
   <button class="mdl-button mdl-button--colored mdl-color--green-300 mdl-color-text--white"
     (click)="checkout()" *ngIf="!showCheckout">
-    Get an exclusive pass
+    View
   </button>
 
 </div>
+
+
+<div [hidden]="!inProgress" style="width:100%; text-align:center; ">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+</div>
+
+<div class="m-paywall-amount" *ngIf="showCheckout">
+  $ {{ amount }}
+</div>
+
 
 <div class="m-paywall-card-input" *ngIf="showCheckout">
   <minds-payments-stripe-checkout (inputed)="subscribe($event);"></minds-payments-stripe-checkout>

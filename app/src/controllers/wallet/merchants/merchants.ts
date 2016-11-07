@@ -49,6 +49,10 @@ export class Merchants {
       this.getSales();
     }
 
+    if(this.user.merchant.exclusive){
+      this.exclusive = this.user.merchant.exclusive;
+    }
+
     this.onboardForm = fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -169,7 +173,9 @@ export class Merchants {
 
   saveExclusive(){
     this.client.post('api/v1/merchant/exclusive', this.exclusive)
-      .then(() => {});
+      .then(() => {
+        this.Minds.user.merchant.exclusive = this.exclusive;
+      });
   }
 
 

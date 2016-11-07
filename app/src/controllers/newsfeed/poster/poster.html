@@ -40,6 +40,7 @@
               </a>
 
               <a class="m-paywall-button"
+                *ngIf="session.getLoggedInUser().merchant?.exclusive?.enabled"
                 [ngClass]="{ 'mdl-color-text--green-500': meta.paywall }"
                 (click)="meta.paywall = !meta.paywall"
                 title="PayWall"

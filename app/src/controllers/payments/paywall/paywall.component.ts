@@ -19,6 +19,7 @@ export class PayWall {
 
   inProgress : boolean = false;
   showCheckout : boolean = false;
+  amount : number;
   nonce : string = "";
 
   @Output('entityChange') update : EventEmitter<any> = new EventEmitter;
@@ -33,15 +34,17 @@ export class PayWall {
   }
 
   checkout(){
-    this.showCheckout = true;
+    this.inProgress = true;
 
     this.client.get('api/v1/payments/plans/exclusive/' + this.entity.guid)
       .then((response) => {
+        this.inProgress = false;
         if(response.subscribed){
           this.update.next(response.entity);
           return;
         }
-        console.log(response);
+        this.showCheckout = true;
+        this.amount = response.amount;
       });
   }
 

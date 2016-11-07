@@ -26,13 +26,13 @@
         <span class="mdl-switch__label">Allow exclusive content</span>
       </label>
     </div>
-    <div class="mdl-grid" *ngIf="exclusive.enabled">
-      <div class="mdl-cell mdl-cell--6-col m-merchant-plans-exclusive--price">
+    <div class="mdl-grid m-merchant-plans-exclusive--inputs" *ngIf="exclusive.enabled">
+      <div class="mdl-cell mdl-cell--12-col m-merchant-plans-exclusive--price">
         <label>Monthly price</label>
-        <span class="m-merchant-plans-exclusive--price-dolar">$</span>
-        <input type="number" min="1" placeholder="eg.1" [(ngModel)]="exclusive.amount"/>
+        <span class="m-merchant-plans-exclusive--price-dolar mdl-color-text--green">$</span>
+        <input class="mdl-color-text--green" type="number" min="1" placeholder="eg.1" [(ngModel)]="exclusive.amount"/>
       </div>
-      <div class="mdl-cell mdl-cell--6-col m-merchant-plans-exclusive--intro">
+      <div class="mdl-cell mdl-cell--12-col m-merchant-plans-exclusive--intro">
         <label>Introduction</label>
         <input type="text" placeholder="eg. Exclusive content" [(ngModel)]="exclusive.intro"/>
       </div>
