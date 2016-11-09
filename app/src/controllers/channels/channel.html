@@ -145,7 +145,7 @@
       <div class="minds-spacer-2x"></div>
 
       <!-- images  -->
-      <minds-channel-modules [owner]="user" type="image">
+      <minds-channel-modules [owner]="user" type="image" [linksTo]="['/Discovery', {filter:user.username, type:'images'}]">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/Discovery', {filter:user.username, type:'images'}]">
           View More
@@ -155,7 +155,7 @@
       <div class="minds-spacer-2x"></div>
 
       <!-- videos  -->
-      <minds-channel-modules [owner]="user" type="video" limit="6">
+      <minds-channel-modules [owner]="user" type="video" limit="6" [linksTo]="['/Discovery', {filter:user.username, type:'videos'}]">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/Discovery', {filter:user.username, type:'videos'}]">
           View More
@@ -165,7 +165,7 @@
       <div class="minds-spacer-2x"></div>
 
       <!-- Blogs  -->
-      <minds-channel-modules [owner]="user" type="blog" limit="3">
+      <minds-channel-modules [owner]="user" type="blog" limit="3" [linksTo]="['/Blog', {filter:user.username}]">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/Blog', {filter:user.username}]">
           View More

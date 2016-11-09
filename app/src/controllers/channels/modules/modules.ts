@@ -11,14 +11,14 @@ import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   selector: 'minds-channel-modules',
-  inputs: ['type', '_owner: owner', '_container: container', 'limit'],
+  inputs: ['type', '_owner: owner', '_container: container', 'limit', 'linksTo'],
   host: {
     'class': 'mdl-card mdl-shadow--2dp',
     '[hidden]': 'items.length == 0'
   },
   template: `
 
-    <div class="mdl-card__title">
+    <div class="mdl-card__title" [routerLink]="linksTo">
       <h2 class="mdl-card__title-text" style="text-transform:capitalize">{{type}}s</h2>
     </div>
 
@@ -52,6 +52,7 @@ export class ChannelModules {
   owner : any;
   container : any;
   limit : number = 9;
+  linksTo: any;
 
   inProgress : boolean = false;
 
