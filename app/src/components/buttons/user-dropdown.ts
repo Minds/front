@@ -17,7 +17,6 @@ import { ConfirmModal } from '../modal/modal';
       <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()">Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()">Un-Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()">Un-subscribe</li>
-      <li class="mdl-menu__item">Report</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned" (click)="banToggle = true; showMenu = false">Ban globally</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!user.banned" (click)="unBan()">Un-ban globally</li>
     </ul>
