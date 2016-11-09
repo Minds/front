@@ -41,6 +41,11 @@ export class Notifications {
         this.notifications = [];
         this.load(true);
       }
+      if(params['ts']){
+        this.notifications = [];
+        this.load(true);
+        this.notificationService.clear();
+      }
     });
 
     this.load(true);
