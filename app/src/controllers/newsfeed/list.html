@@ -3,7 +3,7 @@
     <div class="mdl-cell mdl-cell--8-col">
 
         <div class="mdl-shadow--4dp mdl-color--green mdl-color-text--white m-newsfeed-boost-promo" *ngIf="newUserPromo">
-          <i class="material-icons">trending_up</i> Have 200 free views on us. Hit post to be boosted.
+          <i class="material-icons">trending_up</i> <!-- i18n -->Have 200 free views on us. Hit post to be boosted.<!-- /i18n -->
         </div>
         <minds-newsfeed-poster (load)="prepend($event)" [message]="message"></minds-newsfeed-poster>
 
@@ -11,7 +11,7 @@
           (click)="pollingLoadNew()"
           *ngIf="pollingNewPosts"
         >
-          <i class="material-icons">update</i> {{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}
+          <i class="material-icons">update</i> <!-- i18n -->{{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}<!-- /i18n -->
         </div>
 
         <div class="minds-list">
@@ -35,17 +35,17 @@
 
       <minds-card-user [object]="session.getLoggedInUser()" class="mdl-card mdl-shadow--2dp" style="margin-bottom:16px;"></minds-card-user>
 
-      <a [routerLink]="['/Wallet-Filter', {filter: 'merchants'}]" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+      <a [routerLink]="['/wallet/merchants']" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">account_balance</i>
-          Become a Boost Pro
+          <!-- i18n -->Become a Boost Pro<!-- /i18n -->
         </div>
       </a>
 
-      <a [routerLink]="['/Discovery', {filter: 'trending', 'type': 'channels'}]" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-suggested-channels-link">
+      <a [routerLink]="['/discovery/trending/channels']" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-suggested-channels-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">search</i>
-          Find channels
+          <!-- i18n -->Find channels<!-- /i18n -->
         </div>
       </a>
 
@@ -53,14 +53,14 @@
       <a (click)="invite.open = true" class="mdl-card mdl-color--amber mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-invite-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">email</i>
-          Invite your friends
+          <!-- i18n -->Invite your friends<!-- /i18n -->
         </div>
       </a>
 
-      <a [routerLink]="['/Boosts', {type: 'peer', 'filter': 'inbox'}]" class="mdl-card mdl-color--blue-grey-700 mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+      <a [routerLink]="['/boosts/peer/inbox']" class="mdl-card mdl-color--blue-grey-700 mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">trending_up</i>
-          Boost console
+          <!-- i18n -->Boost console<!-- /i18n -->
         </div>
     	</a>
 
@@ -69,7 +69,7 @@
       <div class="mdl-card mdl-color--white mdl-shadow--2dp">
 
         <div class="mdl-card__supporting-text">
-          Views
+          <!-- i18n -->Views<!-- /i18n -->
         </div>
     		<div class="mdl-card__supporting-text mdl-color-text--blue-grey-700">
 
@@ -85,11 +85,11 @@
       <div class="m-newsfeed-footer">
         <ul class="m-footer-nav m-footer-nav-inline">
           <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item">
-            <a *ngIf="page.path === '/P'" [routerLink]="['/P', {page: page.params.page }]">{{page.title}}</a>
-            <a *ngIf="!page.path" [href]="page.params.page" target="_blank">{{page.title}}</a>
+            <a *ngIf="page.path && page.path.substr(0,2) === 'p/'" [routerLink]="['/', page.path]">{{page.title}}</a>
+            <a *ngIf="page.path && page.path.substr(0,2) !== 'p/'" [href]="page.path" target="_blank">{{page.title}}</a>
           </li>
         </ul>
-        <span class="copyright mdl-color-text--blue-grey-700">&#169; Minds 2016</span>
+        <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2016</span>
       </div>
 
     </div>

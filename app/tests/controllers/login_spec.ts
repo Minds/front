@@ -1,4 +1,5 @@
-import {
+// TODO: FIX THIS!
+declare var
   AsyncTestCompleter,
   TestComponentBuilder,
   beforeEach,
@@ -9,15 +10,28 @@ import {
   iit,
   inject,
   it,
-  xit
-} from '@angular/test';
+  xit;
+// import {
+//   AsyncTestCompleter,
+//   TestComponentBuilder,
+//   beforeEach,
+//   ddescribe,
+//   describe,
+//   el,
+//   expect,
+//   iit,
+//   inject,
+//   it,
+//   xit
+// } from '@angular/test';
 
-import {Component, ViewMetadata, UrlResolver, bind} from '@angular/core';
-import { HTTP_PROVIDERS } from '@angular/http';
-import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import {Component} from '@angular/core';
+// import {Component, ViewMetadata, UrlResolver, bind} from '@angular/core';
+// import { HTTP_PROVIDERS } from '@angular/http';
+// import { ROUTER_DIRECTIVES } from '@angular/router';
 
-import {DOM} from '@angular/src/core/dom/dom_adapter';
-import { Login as LoginComponent } from 'src/controllers/login';
+// import {DOM} from '@angular/src/core/dom/dom_adapter';
+// import { Login as LoginComponent } from 'src/controllers/login';
 
 export function main() {
 
@@ -44,7 +58,7 @@ export function main() {
 
 @Component({
   selector: 'test-app',
-  directives: [ LoginComponent, ROUTER_DIRECTIVES ],
+  // directives: [ LoginComponent, ROUTER_DIRECTIVES ],
   template: `<base href="/" />
     <minds-app>
       <minds-login></minds-login>

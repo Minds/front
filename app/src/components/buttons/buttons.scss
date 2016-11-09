@@ -93,10 +93,10 @@ minds-button-remind, minds-button-thumbs-up, minds-button-thumbs-down{
   color:$minds-blue !important;
 }
 
-counter:before{
+minds-counter:before{
   content:'( ';
 }
-counter{
+minds-counter{
   font-family:"Lato", "Helvetica", "Roboto", sans-serif;
   display:inline-block;
   font-size:12px;
@@ -105,7 +105,7 @@ counter{
   padding:0;
   white-space: nowrap;
 }
-counter:after{
+minds-counter:after{
    content:' )';
 }
 

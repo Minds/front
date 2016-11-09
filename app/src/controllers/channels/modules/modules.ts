@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Router, ROUTER_DIRECTIVES, RouteParams } from '@angular/router-deprecated';
 
 import { Client } from '../../../services/api';
-import { CARDS } from '../../../controllers/cards/cards';
-import { Material } from '../../../directives/material';
-import { BlogCard } from '../../../plugins/blog/card/card';
-
 import { AttachmentService } from '../../../services/attachment';
 
 @Component({
@@ -24,7 +18,7 @@ import { AttachmentService } from '../../../services/attachment';
 
     <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;" *ngIf="type != 'blog'">
       <a *ngFor="let object of items"
-      [routerLink]="['/Archive-View', {guid: object.guid}]"
+      [routerLink]="['/archive/view', object.guid]"
       [ngClass]="{ 'm-mature-module-thumbnail': attachment.shouldBeBlurred(object) }"
       >
         <span class="m-thumb-image" [ngStyle]="{'background-image': 'url(' + object.thumbnail_src + ')'}"></span>
@@ -41,7 +35,6 @@ import { AttachmentService } from '../../../services/attachment';
     <ng-content></ng-content>
 
   `,
-  directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, CARDS, BlogCard, Material ],
   providers: [ AttachmentService ]
 })
 

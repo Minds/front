@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
@@ -7,18 +6,17 @@ import { SignupModalService } from '../modal/signup/service';
 
 @Component({
   selector: 'minds-button-subscribe',
-  properties: ['user'],
+  inputs: ['user'],
   template: `
     <button class="minds-subscribe-button" *ngIf="!_user.subscribed" (click)="subscribe()">
       <i class="material-icons">person_add</i>
-      Subscribe
+      <!-- i18n -->Subscribe<!-- /i18n -->
     </button>
     <button class="minds-subscribe-button subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">
       <i class="material-icons">person_add</i>
-      Subscribed
+      <!-- i18n -->Subscribed<!-- /i18n -->
     </button>
-  `,
-  directives: [ CORE_DIRECTIVES ]
+  `
 })
 
 export class SubscribeButton{

@@ -1,29 +1,13 @@
 import { Component, EventEmitter, ElementRef} from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { Material } from '../../../directives/material';
-import { AutoGrow } from '../../../directives/autogrow';
-import { Hovercard } from '../../../directives/hovercard';
-import { Remind } from '../remind/remind';
-import { BUTTON_COMPONENTS } from '../../../components/buttons';
-import { MindsVideo, VideoAds } from '../../../components/video';
-import { Boost } from '../../boosts/boost/boost';
-import { Comments } from '../../comments/comments';
-import { MINDS_PIPES } from '../../../pipes/pipes';
-import { TagsLinks } from '../../../directives/tags';
 import { ScrollService } from '../../../services/ux/scroll';
-import { ShareModal, ReportModal, ConfirmModal } from '../../../components/modal/modal';
-import { Translate } from '../../../components/translate/translate';
-
 import { AttachmentService } from '../../../services/attachment';
-import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
-
 import { TranslationService } from '../../../services/translation';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-activity',
   host: {
     'class': 'mdl-card mdl-shadow--2dp'
@@ -31,11 +15,7 @@ import { TranslationService } from '../../../services/translation';
   inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible', 'canDelete'],
   outputs: [ '_delete: delete', 'commentsOpened'],
   providers: [ AttachmentService ],
-  templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, Boost, Comments,
-    Material, AutoGrow, Remind, RouterLink, TagsLinks, MindsVideo, VideoAds, ShareModal,
-    ReportModal, MindsRichEmbed, Hovercard, ConfirmModal, Translate ],
-  pipes: [ MINDS_PIPES ]
+  templateUrl: 'activity.html'
 })
 
 export class Activity {

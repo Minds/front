@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../services/api';
-import { Material } from '../../directives/material';
 import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
-import { MindsBanner } from '../../components/banner';
-
-import { ListablePipe } from '../../pipes/listable';
 
 @Component({
+  moduleId: module.id,
   providers: [ MindsTitle, NavigationService ],
-  templateUrl: 'src/controllers/pages/pages.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material, MindsBanner ],
-  pipes: [ ListablePipe ]
+  templateUrl: 'pages.html'
 })
 
 export class Pages {
@@ -25,16 +21,31 @@ export class Pages {
   header : boolean = false;
   headerTop : number = 0;
 
-  pages : Array<any> = [];
+  pages: Array<any> = [];
+  page: string = '';
 
-  constructor(public titleService: MindsTitle, public client: Client, public navigation : NavigationService, public params: RouteParams){
+  constructor(public titleService: MindsTitle, public client: Client, public navigation : NavigationService, public route: ActivatedRoute){
+  }
+
+  paramsSubscription: Subscription;  
+  ngOnInit() {
     this.titleService.setTitle("...");
-    this.load();
     this.setUpMenu();
+    
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['page']) {
+        this.page = params['page'];
+        this.load();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   load(){
-    this.client.get('api/v1/admin/pages/' + this.params.params['page'])
+    this.client.get('api/v1/admin/pages/' + this.page)
       .then((response : any) => {
           this.title = response.title;
           this.body = response.body;
@@ -47,7 +58,5 @@ export class Pages {
 
   setUpMenu(){
     this.pages = this.navigation.getItems('footer');
-    console.log(this.pages);
   }
-
 }

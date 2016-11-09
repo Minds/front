@@ -14,7 +14,7 @@ export class ListablePipe {
     }
 
     for (let i = 0; i < value.length; i++) {
-      if (value[i].params && value[i].params.listed) {
+      if (value[i].extras && value[i].extras.listed) {
         result.push(value[i]);
       }
     }

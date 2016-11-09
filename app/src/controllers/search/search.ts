@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, Location } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
-import { Material } from '../../directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
-import { CARDS } from '../../controllers/cards/cards';
-import { BlogCard } from '../../plugins/blog/card/card';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-search',
   providers: [ MindsTitle ],
-  templateUrl: 'src/controllers/search/list.html',
-  directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
-    CARDS, BlogCard, InfiniteScroll ]
+  templateUrl: 'list.html'
 })
 
 export class Search {
@@ -28,13 +24,32 @@ export class Search {
   inProgress : boolean = false;
   moreData : boolean = true;
 
-  constructor(public client: Client, public params : RouteParams, public title: MindsTitle){
-    this.q = decodeURIComponent(params.params['q']);
-    if(params.params['type'])
-      this.type = params.params['type'];
-  	this.search();
+  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle){
+  }
+
+  paramsSubscription: Subscription;
+  ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['q']) {
+        this.q = decodeURIComponent(params['q']);
+      }
+
+      if (params['type']) {
+        this.type = params['type'];
+      }
+
+      this.entities = [];
+      this.inProgress = false;
+      this.offset = '';
+
+      this.search();
+    });
 
     this.title.setTitle("Search");
+  }
+  
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   /**

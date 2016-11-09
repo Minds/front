@@ -1,16 +1,13 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 
 import { Client } from '../../../services/api';
-import { MDL_DIRECTIVES } from '../../../directives/material';
-
 import { CreditCard } from '../../../interfaces/card-interface';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-checkout-card-input',
   outputs: ['_confirm: confirm'],
-  templateUrl: 'src/components/checkout/card/card.html',
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, MDL_DIRECTIVES]
+  templateUrl: 'card.html'
 })
 
 export class CardInput {

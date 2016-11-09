@@ -10,4 +10,8 @@ export class RichEmbedService {
       maxheight
     });
   }
+
+  static _(client: Client) {
+    return new RichEmbedService(client);
+  }
 }

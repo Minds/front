@@ -1,15 +1,10 @@
 import { Component, EventEmitter, ChangeDetectorRef  } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Client } from '../../services/api';
-import { Material } from '../../directives/material';
-
-
 
 @Component({
   selector: 'm-third-party-networks-facebook',
   outputs: [ 'done' ],
-  directives: [ CORE_DIRECTIVES, Material ],
   template: `
 
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
@@ -28,7 +23,7 @@ import { Material } from '../../directives/material';
           <svg width="24" height="24" viewBox="-2 -2 32 32" class="m-facebook-icon">
             <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
           </svg>
-          <a class="mdl-color-text--red" (click)="drop()">Detach page</a>
+          <a class="mdl-color-text--red" (click)="drop()" i18n>Detach page</a>
         </div>
       </div>
     </div>
@@ -38,7 +33,7 @@ import { Material } from '../../directives/material';
         <svg width="40" height="40" viewBox="-2 -2 32 32" class="m-facebook-icon">
           <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
         </svg>
-        <b>Link your boosts to facebook</b>
+        <b i18n>Link your boosts to facebook</b>
       </div>
 
       <b *ngIf="accounts.length > 0" class="mdl-color-text--blue-grey-400" style="text-align: center; margin: 0; display:block;">Select a page to link below</b>

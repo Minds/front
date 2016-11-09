@@ -1,9 +1,6 @@
 import { Component, EventEmitter} from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../../services/api';
-import { Material } from '../../../../directives/material';
 import { MindsWalletResponse } from '../../../../interfaces/responses';
 import { MindsUserSearchResponse } from '../../../../interfaces/responses';
 import { MindsBoostResponse } from '../../../../interfaces/responses';
@@ -11,11 +8,11 @@ import { MindsBoostRateResponse } from '../../../../interfaces/responses';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-boost-full-network',
   inputs: ['_object: object'],
   outputs: ['_done: done'],
-  templateUrl: 'src/controllers/boosts/boost/full-network/full-network.html',
-  directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink]
+  templateUrl: 'full-network.html'
 })
 
 export class BoostFullNetwork{

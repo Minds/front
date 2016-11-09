@@ -1,19 +1,18 @@
-import { Component, ChangeDetectionStrategy, forwardRef } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
 import { SignupModalService } from '../modal/signup/service';
-import { RemindComposerModal } from '../modal/modal';
 
+// had forwardRef(() => RemindComposerModal)
 @Component({
   selector: 'minds-button-remind',
-  properties: ['_object: object'],
+  inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a class="mdl-color-text--blue-grey-500" (click)="remind()" [ngClass]="{'selected': object.reminded }">
       <i class="material-icons">repeat</i>
-      <counter *ngIf="object.reminds > 0">{{object.reminds}}</counter>
+      <minds-counter *ngIf="object.reminds > 0">{{object.reminds}}</minds-counter>
     </a>
 
     <m-modal-remind-composer *ngIf="remindOpen"
@@ -23,8 +22,7 @@ import { RemindComposerModal } from '../modal/modal';
     (closed)="remindOpen = false"
     (post)="send($event)"
     ></m-modal-remind-composer>
-  `,
-  directives: [ CORE_DIRECTIVES, forwardRef(() => RemindComposerModal) ]
+  `
 })
 
 export class RemindButton {

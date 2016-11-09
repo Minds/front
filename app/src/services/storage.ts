@@ -9,5 +9,9 @@ export class Storage {
 	}
 	destroy(key : string){
 		return window.localStorage.removeItem(key);
-	}
+  }
+  
+  static _() {
+    return new Storage();
+  }
 }

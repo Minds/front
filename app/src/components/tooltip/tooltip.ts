@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 @Component({
   selector: 'minds-tooltip',
@@ -10,8 +9,7 @@ import { CORE_DIRECTIVES } from '@angular/common';
     [ngStyle]="properties.style">
       <ng-content></ng-content>
     </div>
-  `,
-  directives: [ CORE_DIRECTIVES ]
+  `
 })
 export class MindsTooltip {
   

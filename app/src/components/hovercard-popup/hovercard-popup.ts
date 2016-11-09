@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { CARDS } from '../../controllers/cards/cards';
 
 import { HovercardService } from '../../services/hovercard';
 
@@ -18,8 +16,7 @@ import { HovercardService } from '../../services/hovercard';
     >
       <minds-card-user [object]="hovercardService.data"></minds-card-user>
     </div>
-  `,
-  directives: [ CORE_DIRECTIVES, CARDS ]
+  `
 })
 export class HovercardPopup {
   constructor(public hovercardService: HovercardService) {}

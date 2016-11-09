@@ -12,6 +12,8 @@ interface Minds{
  notifications_count: number;
  socket_server: string;
  thirdpartynetworks: any; 
+ categories: any;
+ language: any;
 }
 
 interface MindsNavigation {
@@ -27,6 +29,8 @@ interface Window {
   onErrorCallback?: any;
   onSuccessCallback ?: any;
   BraintreeLoaded ?: any;
-  io ?: any;
+  io?: any;
+  google?: any;
+  twoOhSix?: any;
 }
 declare var window:Window;

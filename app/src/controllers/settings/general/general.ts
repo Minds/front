@@ -1,18 +1,19 @@
-import { Component, NgZone } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink, RouteParams } from "@angular/router-deprecated";
+import { Component } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+
+import { Subscription } from 'rxjs/Rx';
 
 import { SessionFactory } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { ThirdPartyNetworksService } from '../../../services/third-party-networks';
-import { MDL_DIRECTIVES } from '../../../directives/material';
 
+import { Experimental } from '../../../services/experimental';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-settings-general',
   inputs: ['object'],
-  templateUrl: 'src/controllers/settings/general/general.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES]
+  templateUrl: 'general.html'
 })
 
 export class SettingsGeneral{
@@ -35,12 +36,26 @@ export class SettingsGeneral{
   password1 : string;
   password2 : string;
 
-  constructor(public client: Client, public params: RouteParams, private zone: NgZone, private thirdpartynetworks: ThirdPartyNetworksService){
+  language: string = 'en';
+  experimental: Experimental = Experimental;
+
+  constructor(public client: Client, public route: ActivatedRoute, private thirdpartynetworks: ThirdPartyNetworksService){
     this.minds = window.Minds;
-    if(params.params['guid'] && params.params['guid'] == this.session.getLoggedInUser().guid)
-      this.load(true);
-    else
-      this.load(false);
+  }
+
+  paramsSubscription: Subscription;
+  ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['guid'] && params['guid'] == this.session.getLoggedInUser().guid) {
+        this.load(true);
+      } else {
+        this.load(false);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   load(remote : boolean = false){
@@ -54,6 +69,7 @@ export class SettingsGeneral{
       .then((response : any) => {
         self.email = response.channel.email;
         self.mature = !!parseInt(response.channel.mature, 10);
+        self.language = response.channel.language || 'en';
 
         this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
@@ -102,7 +118,8 @@ export class SettingsGeneral{
         email: this.email,
         password: this.password,
         new_password: this.password2,
-        mature: this.mature ? 1 : 0
+        mature: this.mature ? 1 : 0,
+        language: this.language,
       })
       .then((response : any) => {
         self.changed = false;
@@ -116,6 +133,10 @@ export class SettingsGeneral{
         if (window.Minds.user) {
           window.Minds.user.mature = this.mature ? 1 : 0;
         }
+
+        if (this.language != window.Minds['language']) {
+          window.location.reload(true);
+        } 
 
         self.inProgress = false;
       });

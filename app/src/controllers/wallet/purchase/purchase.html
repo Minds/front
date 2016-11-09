@@ -4,6 +4,7 @@
     <div class="minds-boost-points-input">
       <div>
         <input
+          name="points"
           [(ngModel)]="points"
           type="number"
           min="0"
@@ -12,13 +13,14 @@
           />
       </div>
       <div>
-        <label class="mdl-color-text--blue-grey-300">Points</label>
+        <label class="mdl-color-text--blue-grey-300" i18n>Points</label>
       </div>
     </div>
 
     <div class="minds-boost-points-input">
       <div>
         <input
+          name="usd"
           [(ngModel)]="usd"
           type="number"
           min="0"
@@ -28,12 +30,12 @@
           />
       </div>
       <div>
-        <label class="mdl-color-text--blue-grey-300">USD</label>
+        <label class="mdl-color-text--blue-grey-300" i18n>USD</label>
       </div>
     </div>
 
     <div class="" [hidden]="toggled">
-      <button class="mdl-button mdl-button--raised mdl-color--blue-grey-500 mdl-color-text--white" style="display: block; position: relative; margin: 16px 16px 0 0; padding: 0;" (click)="buy()">BUY!</button>
+      <button class="mdl-button mdl-button--raised mdl-color--blue-grey-500 mdl-color-text--white" style="display: block; position: relative; margin: 16px 16px 0 0; padding: 0;" (click)="buy()" i18n>BUY!</button>
     </div>
 
   </div>
@@ -42,12 +44,12 @@
   <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="inProgress || confirmation">
 
     <div class="minds-purchase-recurring-option">
-      <input type="checkbox" [(ngModel)]="recurring">
+      <input type="checkbox" name="recurring" [(ngModel)]="recurring">
       <label class="mdl-color-text--blue-grey-600" (click)="recurring = !recurring">
-        Repeat this transaction every month and get <b>10%</b> more points
+        <!-- i18n -->Repeat this transaction every month and get <b>10%</b> more points<!-- /i18n -->
       </label>
 
-      <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription" (click)="cancelSubscription()">cancel recurring (<i>$</i>{{subscription.price}})</span>
+      <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription" (click)="cancelSubscription()" i18n>Cancel recurring (<i>$</i>{{subscription.price}})</span>
     </div>
 
     <p *ngIf="error" class="mdl-color-text--red" style="padding-left:16px">{{error}}</p>
@@ -65,15 +67,15 @@
 
   <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!inProgress">
     <div class="mdl-card__supporting-text">
-      Please wait...
+      <!-- i18n -->Please wait...<!-- /i18n -->
     </div>
     <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
   </div>
 
   <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!confirmation">
     <div class="mdl-card__supporting-text">
-      <b>Great, you now have {{wallet.points}} points! </b>
-      <b (click)="reset()" class="mdl-color-text--blue-grey-400" style="cursor:pointer;">Click here to BUY more.</b>
+      <b i18n>Great, you now have {{wallet.points}} points!</b>
+      <b (click)="reset()" class="mdl-color-text--blue-grey-400" style="cursor:pointer;" i18n>Click here to BUY more.</b>
     </div>
   </div>
 

@@ -1,22 +1,17 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../../services/api';
 import { SessionFactory } from '../../../../services/session';
-import { Material } from '../../../../directives/material';
-import { BUTTON_COMPONENTS } from '../../../../components/buttons';
-
 import { AttachmentService } from '../../../../services/attachment';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-card-video',
   host: {
     'class': 'mdl-card mdl-shadow--2dp'
   },
   inputs: ['object'],
-  templateUrl: 'src/controllers/cards/object/video/video.html',
-  directives: [ CORE_DIRECTIVES, BUTTON_COMPONENTS,  Material, RouterLink],
+  templateUrl: 'video.html',
   providers: [AttachmentService]
 })
 

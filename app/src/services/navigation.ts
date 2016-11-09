@@ -1,10 +1,9 @@
 import {Inject} from '@angular/core';
 import {Location} from '@angular/common';
-import {Router} from '@angular/router-deprecated';
 
 export class Navigation {
 
-	constructor(@Inject(Router) public router: Router, @Inject(Location) public location: Location){
+	constructor(@Inject(Location) public location: Location){
 	}
 
 	getItems(container : string = "sidebar") : Array<any> {
@@ -31,8 +30,11 @@ export class Navigation {
 							sub_path +=  '/' + subitem.params[p];
 					}
 
-					if(path && path.indexOf(sub_path.toLowerCase()) > -1)
+					if (path && path.indexOf(sub_path.toLowerCase()) > -1)
+					{
+						item.active = true; // activate parent aswell
 						subitem.active = true;
+					}
 					else
 						subitem.active = false;
 				}

@@ -1,12 +1,8 @@
 import { Component, ChangeDetectorRef, NgZone, ApplicationRef } from '@angular/core';
-import { CORE_DIRECTIVES, Location } from '@angular/common';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
-import { Modal } from '../modal';
 import { SignupModalService } from './service';
-import { FORM_COMPONENTS } from '../../forms/forms';
-import { Tutorial } from '../../tutorial/tutorial';
-import { OnboardingCategoriesSelector } from '../../onboarding/categories-selector/categories-selector';
 import { SessionFactory } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
 
@@ -14,12 +10,11 @@ import { AnalyticsService } from '../../../services/analytics';
 @Component({
   selector: 'm-modal-signup',
   inputs: ['open', 'subtitle'],
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, FORM_COMPONENTS, Tutorial, OnboardingCategoriesSelector ],
   template: `
     <m-modal [open]="open" (closed)="onClose($event)" *ngIf="!session.isLoggedIn() || display != 'initial'">
       <div class="mdl-card__title" [hidden]="display == 'onboarding' || display == 'categories'">
         <img src="/assets/logos/small.png" (click)="close()"/>
-        <h4 class="mdl-color-text--grey-600">Your Social Network</h4>
+        <h4 class="mdl-color-text--grey-600" i18n>Your Social Network</h4>
       </div>
 
       <!-- Initial Display -->
@@ -29,7 +24,7 @@ import { AnalyticsService } from '../../../services/analytics';
         </div>
 
         <div class="m-signup-modal-feature-text mdl-card__supporting-text">
-          Encrypted messenger. Wallet. Boost. Newsfeed. Blog. Groups. Find people in your city.
+          <!-- i18n -->Encrypted messenger. Wallet. Boost. Newsfeed. Blog. Groups. Find people in your city.<!-- /i18n -->
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
@@ -40,13 +35,13 @@ import { AnalyticsService } from '../../../services/analytics';
               </svg>
             </span>
             <span class="m-signup-button-text">
-              Signin with Facebook
+              <!-- i18n -->Signin with Facebook<!-- /i18n -->
             </span>
           </button>
           <button class="mdl-color--amber" (click)="do('register')">
             <span class="m-signup-bulb-icon m-wiggle-animation"><img src="/assets/icon.png"></span>
             <span class="m-signup-button-text">
-              Signin with Minds
+              <!-- i18n -->Signin with Minds<!-- /i18n -->
             </span>
           </button>
         </div>
@@ -61,13 +56,13 @@ import { AnalyticsService } from '../../../services/analytics';
         </div>
 
         <div class="mdl-card__supporting-text">
-          <span class="m-modal-signup-skip" (click)="close()">Maybe later</span>
+          <span class="m-modal-signup-skip" (click)="close()" i18n>Maybe later</span>
         </div>
       </div>
       <!-- Login Display -->
       <minds-form-login (done)="done('login')" (doneRegistered)="display = 'fb-complete'" (canceled)="close()" *ngIf="display == 'login'"></minds-form-login>
       <!-- Register Display -->
-      <span style="font-weight: bold;text-align:center;font-size: 13px;margin-bottom: -14px;cursor: pointer;" class="mdl-color-text--blue-grey" *ngIf="display == 'register'" (click)="do('login')">Already have a channel? Click here.</span>
+      <span style="font-weight: bold;text-align:center;font-size: 13px;margin-bottom: -14px;cursor: pointer;" class="mdl-color-text--blue-grey" *ngIf="display == 'register'" (click)="do('login')" i18n>Already have a channel? Click here.</span>
       <minds-form-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'register'"></minds-form-register>
       <!-- FB Signin final phase -->
       <minds-form-fb-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'fb-complete'"></minds-form-fb-register>
@@ -170,7 +165,8 @@ export class SignupModal {
 
   }
 
-  done(display : string){
+  done(display: string) {
+    // @todo: emi - check if this is working
     switch(display){
       case "login":
         if(this.router){

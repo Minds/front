@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router-deprecated';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { Material } from '../../directives/material';
 import { SessionFactory } from '../../services/session';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-notification',
   inputs: ['_notification: notification'],
-  templateUrl: 'src/controllers/notifications/notification.html',
-  directives: [ CORE_DIRECTIVES, RouterLink, Material ]
+  templateUrl: 'notification.html'
 })
 export class Notification {
   notification: any;

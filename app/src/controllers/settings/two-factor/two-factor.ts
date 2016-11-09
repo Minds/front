@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
-import { Material } from '../../../directives/material';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-settings-two-factor',
   inputs: ['object'],
-  templateUrl: 'src/controllers/settings/two-factor/two-factor.html',
-  directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES]
+  templateUrl: 'two-factor.html'
 })
 
 export class SettingsTwoFactor{

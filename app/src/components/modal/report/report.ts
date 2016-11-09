@@ -1,20 +1,15 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
-
-import { Modal } from '../modal';
 import { Client } from '../../../services/api';
 
 @Component({
   selector: 'm-modal-report',
   inputs: [ 'open', '_object: object' ],
   outputs: ['closed'],
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal ],
   template: `
     <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
 
       <div [hidden]="sent" class="m-modal-report-body">
-        <h3 class="m-modal-report-title">Report</h3>
+        <h3 class="m-modal-report-title" i18n>Report</h3>
 
         <div *ngFor="let item of subjects" class="m-modal-report-reason mdl-color-text--blue-grey-900">
           <input type="radio"
@@ -29,25 +24,24 @@ import { Client } from '../../../services/api';
 
         <div class="m-modal-report-buttons">
           <button class="mdl-button mdl-button--raised" [disabled]="inProgress" (click)="send()">
-            Send
+            <!-- i18n -->Send<!-- /i18n -->
           </button>
         </div>
       </div>
 
       <div [hidden]="!sent" class="m-modal-report-body">
-        <h3 class="m-modal-report-title">Report</h3>
+        <h3 class="m-modal-report-title" i18n>Report</h3>
         <p>
-          Thanks for letting us know! We appreciate
-          your effort to keep Minds safe and secure.
+          <!-- i18n -->Thanks for letting us know! We appreciate your effort to keep Minds safe and secure.<!-- /i18n -->
         </p>
 
         <p>
-          We will review your report as soon as possible.
+          <!-- i18n -->We will review your report as soon as possible.<!-- /i18n -->
         </p>
 
         <div class="m-modal-report-buttons">
           <button class="mdl-button mdl-button--raised" (click)="close()">
-            Close
+            <!-- i18n -->Close<!-- /i18n -->
           </button>
         </div>
       </div>

@@ -1,6 +1,6 @@
 <div class="mdl-tabs__tab-bar">
-    <a [routerLink]="['/Admin', {filter: 'boosts', type: 'newsfeed'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'newsfeed'}">Newsfeed ({{newsfeed_count}})</a>
-    <a [routerLink]="['/Admin', {filter: 'boosts', type: 'content'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'content'}">Content ({{suggested_count}})</a>
+    <a [routerLink]="['/admin/boosts/newsfeed']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'newsfeed'}" i18n>Newsfeed ({{newsfeed_count}})</a>
+    <a [routerLink]="['/admin/boosts/content']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'content'}" i18n>Content ({{suggested_count}})</a>
 </div>
 
 <div class="mdl-grid minds-boosts" style="max-width:600px">
@@ -10,7 +10,7 @@
     <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [hidden]="boosts.length > 0 || !inProgress"></div>
 
     <div class="mdl-card__supporting-text" [hidden]="inProgress || moreData">
-      There are no more boosts to approve
+      <!-- i18n -->There are no more boosts to approve<!-- /i18n -->
     </div>
 
     <div class="mdl-card mdl-shadow--4dp boost" *ngFor="let boost of boosts; let i = index">
@@ -23,11 +23,11 @@
       <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'activity'"></minds-activity>
 
       <div class="mdl-card__supporting-text action-buttons">
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost)">Accept</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost)">Reject</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost)" i18n>Accept</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost)" i18n>Reject</button>
 
         <span class="impressions">
-          Requesting: {{boost.bid}} views
+          <!-- i18n -->Requesting: {{boost.bid}} views<!-- /i18n -->
         </span>
       </div>
 

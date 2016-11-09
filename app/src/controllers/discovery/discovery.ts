@@ -1,21 +1,18 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { Router, RouteParams, RouterLink } from '@angular/router-deprecated';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
 
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
-import { Material } from '../../directives/material';
 import { SessionFactory } from '../../services/session';
 import { InfiniteScroll } from '../../directives/infinite-scroll';
-import { CARDS } from '../../controllers/cards/cards';
-import { BUTTON_COMPONENTS } from '../../components/buttons';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-discovery',
   providers: [ MindsTitle ],
-  templateUrl: 'src/controllers/discovery/discovery.html',
-  directives: [ CORE_DIRECTIVES, RouterLink, Material, InfiniteScroll, CARDS, BUTTON_COMPONENTS ]
+  templateUrl: 'discovery.html'
 })
 
 export class Discovery {
@@ -36,44 +33,59 @@ export class Discovery {
   hasNearby : boolean = false;
   distance : number = 5;
 
-  constructor(public client: Client, public router: Router, public params: RouteParams, public title: MindsTitle){
-    this._filter = params.params['filter'];
+  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
+  }
 
-    switch(this._filter){
-      case "all":
-        break;
-      case "suggested":
-        if(!this.session.isLoggedIn()){
-          this.router.navigate(['/Discovery', {'filter': 'featured', 'type': 'channels'}]);
-          return;
-        }
-
-        this._type = "channels";
-        if(this.session.getLoggedInUser().city){
-          this.city = this.session.getLoggedInUser().city;
-          this.nearby = true;
-          this.hasNearby = false;
-        }
-        break;
-      case "trending":
-        this._type = "images";
-        break;
-      case "featured":
-        this._type = "channels";
-        break;
-      case "owner":
-        break;
-      default:
-        this._owner = this._filter;
-        this._filter =  this._filter;
-    }
-
-    if(params.params['type'])
-      this._type = params.params['type'];
-
+  paramsSubscription: Subscription;
+  ngOnInit() {
     this.title.setTitle("Discovery");
 
-    this.load(true);
+    this.paramsSubscription = this.route.params.subscribe((params) => {
+      if (params['filter']) {
+        this._filter = params['filter'];
+
+        switch(this._filter){
+          case "all":
+            break;
+          case "suggested":
+            if(!this.session.isLoggedIn()){
+              this.router.navigate(['/discovery/featured/channels' ]);
+              return;
+            }
+
+            this._type = "channels";
+            if(this.session.getLoggedInUser().city){
+              this.city = this.session.getLoggedInUser().city;
+              this.nearby = true;
+              this.hasNearby = false;
+            }
+            break;
+          case "trending":
+            this._type = "images";
+            break;
+          case "featured":
+            this._type = "channels";
+            break;
+          case "owner":
+            break;
+          default:
+            this._owner = this._filter;
+            this._filter =  this._filter;
+        }
+      }
+      
+      if (params['type']) {
+        this._type = params['type'];
+      }
+
+      this.inProgress = false;
+      this.entities = [];
+      this.load(true);
+    });
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   load(refresh : boolean = false){

@@ -189,4 +189,8 @@ export class ThirdPartyNetworksService {
         this.inProgress = false;
       });
   }
+
+  static _(client: Client, zone: NgZone) {
+    return new ThirdPartyNetworksService(client, zone);
+  }
 }

@@ -1,31 +1,18 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs/Rx';
 
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
-import { Material } from '../../directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
-import { Poster } from './poster/poster';
-import { CARDS } from '../../controllers/cards/cards';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { SessionFactory } from '../../services/session';
-import { BoostAds } from '../../components/ads/boost';
-
-import { AnalyticsImpressions } from '../../components/analytics/impressions';
-import { NewsfeedBoostRotator } from './boost-rotator/boost-rotator';
-
-import { InviteModal } from '../../components/modal/invite/invite';
 
 @Component({
   selector: 'minds-newsfeed',
   providers: [ MindsTitle, NavigationService ],
-  templateUrl: 'src/controllers/newsfeed/list.html',
-  directives: [ Poster, Material, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES,
-    InfiniteScroll, AnalyticsImpressions, CARDS, BoostAds, NewsfeedBoostRotator, InviteModal ]
+  templateUrl: 'list.html'
 })
 
 export class Newsfeed {
@@ -52,22 +39,26 @@ export class Newsfeed {
   }
 
   constructor(public client: Client, public upload: Upload, public navigation : NavigationService,
-    public router: Router, public params: RouteParams, public title: MindsTitle){
+    public router: Router, public route: ActivatedRoute, public title: MindsTitle){
+  }
+
+  paramsSubscription: Subscription;  
+  ngOnInit() {
     if(!this.session.isLoggedIn()){
-      router.navigate(['/Login']);
+      this.router.navigate(['/login']);
     } else {
       this.load();
       this.setUpPoll();
       this.minds = window.Minds;
     }
 
-    if(params.params['message']){
-      this.message = params.params['message'];
-    }
-    if(params.params['newUser']){
-      this.newUserPromo = Boolean(params.params['newUser']);
-    }
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['message']) {
+        this.message = params['message'];
+      }
 
+      this.newUserPromo = !!params['newUser'];
+    });
 
     this.title.setTitle("Newsfeed");
   }
@@ -122,6 +113,7 @@ export class Newsfeed {
 
   ngOnDestroy() {
     clearInterval(this.pollingTimer);
+    this.paramsSubscription.unsubscribe();
   }
 
   /**

@@ -52,8 +52,8 @@ export class VideoAds{
         'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&' +
         'cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=';
     */
-    adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/134702932/0134-minds.com//video&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=http://www.minds.com&description_url=www.minds.com&correlator=[timestamp]';
-    //adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=';
+    //adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/134702932/0134-minds.com//video&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=www.minds.com&description_url=[description_url]&correlator=[timestamp]';
+    adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=';
 
     adsRequest.linearAdSlotWidth = this.player.element.clientWidth;
     adsRequest.linearAdSlotHeight = this.player.element.clientHeight;

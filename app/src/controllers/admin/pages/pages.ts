@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, Location } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../../services/api';
-import { Material } from '../../../directives/material';
-import { MindsTinymce } from '../../../components/editors/tinymce';
-import { MindsBanner } from '../../../components/banner';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-admin-pages',
-  templateUrl: 'src/controllers/admin/pages/pages.html',
-  directives: [ CORE_DIRECTIVES, Material, FORM_DIRECTIVES, ROUTER_DIRECTIVES, MindsBanner, MindsTinymce ]
+  templateUrl: 'pages.html'
 })
 
 export class AdminPages {
@@ -30,9 +28,19 @@ export class AdminPages {
   status : string = "saved";
   headerFile : File;
 
-  constructor(public client: Client, public upload : Upload, public params : RouteParams){
-    this.path = params.params['path'];
-    this.load();
+  constructor(public client: Client, public upload : Upload, private route: ActivatedRoute){
+  }
+
+  paramsSubscription: Subscription;
+  ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
+      this.path = params['path'];
+      this.load();
+    });
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   load(){

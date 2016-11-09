@@ -2,11 +2,10 @@
 
   <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500" [hidden]="inProgress">
     <div class="mdl-card__supporting-text">
-      Status: {{status}}
+      <!-- i18n -->Status: {{status}}<!-- /i18n -->
     </div>
     <div class="mdl-card__supporting-text" *ngIf="status == 'pending'">
-      Thanks for monetizing your channel, we are currently reviewing your application.
-      For now, checkout your <a [routerLink]="['/Boosts', { type:'peer', filter: 'inbox' }]">boost console</a> where you can advertise your content.
+      <!-- i18n -->Thanks for monetizing your channel, we are currently reviewing your application. For now, checkout your <a [routerLink]="['/boosts/peer/inbox']">boost console</a> where you can advertise your content.<!-- /i18n -->
     </div>
   </div>
 
@@ -24,10 +23,10 @@
         <div class="m-merchant-transaction-amount mdl-color-text--green"><i class="material-icons">attach_money</i>{{sale.amount}}</div>
 
         <div class="m-merchant-transaction-status"><i class="material-icons">hourglass_empty</i>
-          <span [hidden]="sale.status != 'submitted_for_settlement'">Approved (settling)</span>
-          <span [hidden]="sale.status != 'settled'">Approved</span>
-          <span [hidden]="sale.status != 'disbursed'">Disbursed</span>
-          <span [hidden]="sale.status != 'voided'">Voided</span>
+          <span [hidden]="sale.status != 'submitted_for_settlement'" i18n>Approved (settling)</span>
+          <span [hidden]="sale.status != 'settled'" i18n>Approved</span>
+          <span [hidden]="sale.status != 'disbursed'" i18n>Disbursed</span>
+          <span [hidden]="sale.status != 'voided'" i18n>Voided</span>
         </div>
 
         <div class="m-merchant-transaction-orderId"><i class="material-icons">shopping_cart</i>
@@ -47,42 +46,42 @@
 
   <form (submit)="update($event)"
     (change)="confirmation = false"
-    [ngFormModel]="editForm"
+    [formGroup]="editForm"
     #e="ngForm"
     class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500"
     [hidden]="inProgress"
     >
     <div class="mdl-cell mdl-cell--6-col">
-      <label>First name</label>
-      <input ngControl="firstName" type="text" placeholder="First name">
+      <label i18n>First name</label>
+      <input formControlName="firstName" type="text" placeholder="First name" i18n-placeholder>
     </div>
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Last name</label>
-      <input ngControl="lastName" type="text" placeholder="Last name">
+      <label i18n>Last name</label>
+      <input formControlName="lastName" type="text" placeholder="Last name" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Email</label>
-      <input ngControl="email" type="email" placeholder="Email">
+      <label i18n>Email</label>
+      <input formControlName="email" type="email" placeholder="Email" i18n-placeholder>
     </div>
 
     <!--<div class="mdl-cell mdl-cell--6-col">
       <label>Social Security Number (optional)</label>
-      <input ngControl="ssn" type="number" placeholder="Social Security Number">
+      <input formControlName="ssn" type="number" placeholder="Social Security Number" i18n-placeholder>
     </div>-->
 
     <div class="mdl-cell mdl-cell--12-col">
-      <input type="checkbox" ngControl="venmo"> Payout to email address (using venmo)
+      <input type="checkbox" formControlName="venmo"> <!-- i18n -->Payout to email address (using venmo)<!-- /i18n -->
     </div>
 
     <div class="mdl-cell mdl-cell--6-col" >
-      <label>Bank Account number</label>
-      <input ngControl="accountNumber" type="number" placeholder="Account Number" [disabled]="editForm.value.venmo">
+      <label i18n>Bank Account number</label>
+      <input formControlName="accountNumber" type="number" placeholder="Account Number" i18n-placeholder [disabled]="editForm.value.venmo">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Bank Routing number</label>
-      <input ngControl="routingNumber" type="number" placeholder="Routing Number" [disabled]="editForm.value.venmo">
+      <label i18n>Bank Routing number</label>
+      <input formControlName="routingNumber" type="number" placeholder="Routing Number" i18n-placeholder [disabled]="editForm.value.venmo">
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -90,9 +89,9 @@
     </div>
 
     <div style="margin:16px; width:100%; text-align:right;">
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!e.form.valid" [hidden]="confirmation || updating">Update</button>
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!e.form.valid" [hidden]="!confirmation || updating">Updated</button>
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" disabled [hidden]="!updating">Updating</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!e.form.valid" [hidden]="confirmation || updating" i18n>Update</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!e.form.valid" [hidden]="!confirmation || updating" i18n>Updated</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" disabled [hidden]="!updating" i18n>Updating</button>
     </div>
   </form>
 </div>
@@ -102,83 +101,76 @@
 
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__supporting-text">
-      Join the Minds Merchant programme. You can now send and receive channel boosts for money. Many more monetization features are coming.
+      <!-- i18n -->Join the Minds Merchant programme. You can now send and receive channel boosts for money. Many more monetization features are coming.<!-- /i18n -->
     </div>
   </div>
 
-  <form (submit)="onboard($event)" [ngFormModel]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
+  <form (submit)="onboard($event)" [formControl]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
     <div class="mdl-cell mdl-cell--6-col">
-      <label>First name</label>
-      <input ngControl="firstName" type="text" placeholder="First name">
+      <label i18n>First name</label>
+      <input formControlName="firstName" type="text" placeholder="First name" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Last name</label>
-      <input ngControl="lastName" type="text" placeholder="Last name">
+      <label i18n>Last name</label>
+      <input formControlName="lastName" type="text" placeholder="Last name" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--4-col">
-      <label>Email</label>
-      <input ngControl="email" type="email" placeholder="Email">
+      <label i18n>Email</label>
+      <input formControlName="email" type="email" placeholder="Email" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--5-col">
-      <label>Date of Birth</label>
-      <input ngControl="dob" type="date" placeholder="YYYY-MM-DD">
+      <label i18n>Date of Birth</label>
+      <input formControlName="dob" type="date" placeholder="YYYY-MM-DD" i18n-placeholder>
     </div>
 
     <!--<div class="mdl-cell mdl-cell--5-col">
-      <label>Social Security Number</label>
-      <input ngControl="ssn" type="number" placeholder="optional">
+      <label i18n>Social Security Number</label>
+      <input formControlName="ssn" type="number" placeholder="optional" i18n-placeholder>
     </div>-->
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Address</label>
-      <input ngControl="street" type="text" placeholder="House name/number, Street name">
+      <label i18n>Address</label>
+      <input formControlName="street" type="text" placeholder="House name/number, Street name" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>City</label>
-      <input ngControl="city" type="text" placeholder="eg. New York City">
+      <label i18n>City</label>
+      <input formControlName="city" type="text" placeholder="eg. New York City" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Region / State</label>
-      <input ngControl="region" type="text" placeholder="eg. NY">
+      <label i18n>Region / State</label>
+      <input formControlName="region" type="text" placeholder="eg. NY" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Post Code / Zip Code</label>
-      <input ngControl="postCode" type="text" placeholder="eg. 10001">
+      <label i18n>Post Code / Zip Code</label>
+      <input formControlName="postCode" type="text" placeholder="eg. 10001" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--12-col">
-      <label>Payout method</label>
-      <p class="mdl-color-text--grey-600">Enter your bank account details <b>or</b> select payout out to email. You can change these details later.</p>
+      <label i18n>Payout method</label>
+      <p class="mdl-color-text--grey-600" i18n>Enter your bank account details <b>or</b> select payout out to email. You can change these details later.</p>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Email</label>
-      <input type="checkbox" ngControl="venmo" id="venmo-checkbox"> <span for="#venmo-checkbox" (click)="onboardForm.controls.venmo.updateValue(true)">Payout via venmo</span>
-      <p class="mdl-color-text--grey-600">You can create a venmo account later, we'll send the funds to
-        <b [hidden]="!onboardForm.value.email">{{onboardForm.value.email}}</b><i [hidden]="onboardForm.value.email">your email address</i>.
-      </p>
+      <label i18n>Email</label>
+      <input type="checkbox" formControlName="venmo" id="venmo-checkbox"> <span for="#venmo-checkbox" (click)="onboardForm.controls.venmo.updateValue(true)" i18n>Payout via venmo</span>
+      <p class="mdl-color-text--grey-600" i18n>You can create a venmo account later, we'll send the funds to <b [hidden]="!onboardForm.value.email">{{onboardForm.value.email}}</b><i [hidden]="onboardForm.value.email">your email address</i>.</p>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Bank Account number</label>
-      <input ngControl="accountNumber" type="number" placeholder="10-12 digit account number" (click)="onboardForm.controls.venmo.updateValue(false)">
-      <label>Bank Routing number</label>
-      <input ngControl="routingNumber" type="number" placeholder="9 digit routing number" (click)="onboardForm.controls.venmo.updateValue(false)">
+      <label i18n>Bank Account number</label>
+      <input formControlName="accountNumber" type="number" placeholder="10-12 digit account number" (click)="onboardForm.controls.venmo.updateValue(false)" i18n-placeholder>
+      <label i18n>Bank Routing number</label>
+      <input formControlName="routingNumber" type="number" placeholder="9 digit routing number" (click)="onboardForm.controls.venmo.updateValue(false)" i18n-placeholder>
     </div>
 
     <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">
-      <p>Minds, Inc. uses Braintree, a division of PayPal, Inc. (Braintree) for payment processing services.
-        By using the Braintree payment processing services you agree to the Braintree Payment Services Agreement available at
-        <a href="https://www.braintreepayments.com/legal/gateway-agreement" target="_blank">https://www.braintreepayments.com/legal/gateway-agreement</a>,
-        and the applicable bank agreement available at
-        <a href="https://www.braintreepayments.com/legal/cea-wells" target="_blank">https://www.braintreepayments.com/legal/cea-wells</a>
-      </p>
+      <p i18n>Minds, Inc. uses Braintree, a division of PayPal, Inc. (Braintree) for payment processing services. By using the Braintree payment processing services you agree to the Braintree Payment Services Agreement available at <a href="https://www.braintreepayments.com/legal/gateway-agreement" target="_blank">https://www.braintreepayments.com/legal/gateway-agreement</a>, and the applicable bank agreement available at <a href="https://www.braintreepayments.com/legal/cea-wells" target="_blank">https://www.braintreepayments.com/legal/cea-wells</a></p>
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -186,7 +178,7 @@
     </div>
 
     <div style="margin:16px; width:100%; text-align:right;">
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!f.form.valid">Accept & Submit</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!f.form.valid" i18n>Accept & Submit</button>
     </div>
 
   </form>

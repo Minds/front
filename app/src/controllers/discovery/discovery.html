@@ -1,37 +1,37 @@
 <div class="mdl-tabs__tab-bar">
-    <a [routerLink]="['/Discovery', {filter: _filter, type: 'albums'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'albums' || _type == 'all'}" [hidden]="_filter != 'owner'">Albums</a>
-    <a [routerLink]="['/Discovery', {filter: _filter, type: 'videos'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'videos' || _type == 'all'}">Videos</a>
-    <a [routerLink]="['/Discovery', {filter: _filter, type: 'images'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'images' || _type == 'all'}">Images</a>
-    <a [routerLink]="['/Discovery', {filter: _filter, type: 'channels'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'channels' || _type == 'all'}" [hidden]="_filter == 'owner' || _owner">Channels</a>
+    <a [routerLink]="['/discovery', _filter, 'albums']" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'albums' || _type == 'all'}" [hidden]="_filter != 'owner'" i18n>Albums</a>
+    <a [routerLink]="['/discovery', _filter, 'videos']" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'videos' || _type == 'all'}" i18n>Videos</a>
+    <a [routerLink]="['/discovery', _filter, 'images']" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'images' || _type == 'all'}" i18n>Images</a>
+    <a [routerLink]="['/discovery', _filter, 'channels']" class="mdl-tabs__tab" [ngClass]="{'is-active': _type == 'channels' || _type == 'all'}" [hidden]="_filter == 'owner' || _owner" i18n>Channels</a>
 </div>
 
 <div class="mdl-grid m-discovery-{{_filter}} m-discovery-{{_filter}}-{{_type}}" style="max-width:900px">
 
-    <a class="mdl-cell mdl-cell--4-col" [routerLink]="['/Capture']" style="text-decoration: none;" [hidden]="_type == 'channels' || _filter == 'suggested'">
+    <a class="mdl-cell mdl-cell--4-col" [routerLink]="['/capture']" style="text-decoration: none;" [hidden]="_type == 'channels' || _filter == 'suggested'">
       <minds-add-card class="mdl-card mdl-shadow--2dp mdl-color--blue-grey-400 mdl-color-text--blue-grey-100">
         <i class="material-icons">file_upload</i>
-        <h3>Upload</h3>
+        <h3 i18n>Upload</h3>
       </minds-add-card>
     </a>
 
     <div *ngIf="_filter == 'suggested' && _type == 'channels'" class="m-discovery-suggested-location-bar">
       <div class="m-discovery-suggested-location-inner">
-        <span *ngIf="!nearby && hasNearby" (click)="setNearby(true)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white">Location off</span>
-        <span *ngIf="!nearby && !hasNearby" (click)="setNearby(true)" class="m-discovery-suggested-location-toggle mdl-color--grey-400 mdl-color-text--white">No results</span>
-        <span *ngIf="nearby" (click)="setNearby(false)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white">Locating</span>
+        <span *ngIf="!nearby && hasNearby" (click)="setNearby(true)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white" i18n>Location off</span>
+        <span *ngIf="!nearby && !hasNearby" (click)="setNearby(true)" class="m-discovery-suggested-location-toggle mdl-color--grey-400 mdl-color-text--white" i18n>No results</span>
+        <span *ngIf="nearby" (click)="setNearby(false)" class="m-discovery-suggested-location-toggle mdl-color--blue-grey-400 mdl-color-text--white" i18n>Locating</span>
 
         <!-- only show if locating is on -->
         <span *ngIf="nearby || (!nearby && !hasNearby)" class="m-discovery-suggested-location-options">
           <select (change)="distance = dist.value; load(true)" #dist class="mdl-color-text--blue-grey-600">
-            <option value="5"> 5 miles </option>
-            <option value="25"> 25 miles </option>
-            <option value="50"> 50 miles </option>
-            <option value="100"> 100 miles </option>
+            <option value="5" i18n>5 miles</option>
+            <option value="25" i18n>25 miles</option>
+            <option value="50" i18n>50 miles</option>
+            <option value="100" i18n>100 miles</option>
           </select>
-          of <input (keyup)="findCity(city)" [(ngModel)]="city" class="mdl-color--blue-grey-300 mdl-color-text--white" placeholder="Enter your city..."/>
+          <m-18n i18n="Distance from a city">of</m-18n> <input (keyup)="findCity(city)" name="city" [(ngModel)]="city" class="mdl-color--blue-grey-300 mdl-color-text--white" placeholder="Enter your city..." i18n-placeholder />
         </span>
         <div class="m-discovery-cities mdl-card mdl-shadow--4dp" *ngIf="cities.length > 0">
-          <p class="mdl-color-text--blue-grey-300">Select your city:</p>
+          <p class="mdl-color-text--blue-grey-300" i18n>Select your city:</p>
           <li (click)="setCity(c)" *ngFor="let c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
         </div>
       </div>
@@ -49,7 +49,7 @@
 
       <div class="m-discovery-suggested-actions mdl-card mdl-shadow--6dp mdl-color--blue-grey-900" *ngIf="_filter == 'suggested'">
         <minds-button-edit class="m-button" (click)="pass(i)">
-          <button>Pass</button>
+          <button i18n>Pass</button>
         </minds-button-edit>
         <minds-button-subscribe class="m-button" [user]="entity" (click)="pop(i)" [hidden]="_type != 'channels'"></minds-button-subscribe>
         <minds-button-thumbs-up class="m-button" [object]="entity" (click)="pop(i)" [hidden]="_type == 'channels'"></minds-button-thumbs-up>

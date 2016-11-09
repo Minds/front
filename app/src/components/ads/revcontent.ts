@@ -1,13 +1,10 @@
 import { Component, EventEmitter, ElementRef } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-
 
 @Component({
   selector: 'revcontent',
   template: `
     <!-- ads will load into here -->
   `,
-  directives: [ CORE_DIRECTIVES ],
   host: {
     'class': 'm-ad-block m-ad-block-revcontent'
   }

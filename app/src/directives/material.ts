@@ -21,4 +21,4 @@ export class Material {
   }
 }
 
-export const MDL_DIRECTIVES: Type[] = [Material, MaterialTextfield, MaterialUpload];
+export const MDL_DIRECTIVES: any[] = [Material, MaterialTextfield, MaterialUpload];

@@ -1,10 +1,10 @@
 <div class="mdl-tabs__tab-bar">
-    <a [routerLink]="['/Search', {q: q, type: 'activities'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'activities' || type == ''}">Activities</a>
-    <a [routerLink]="['/Search', {q: q, type: 'videos'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'videos' || type == ''}">Videos</a>
-    <a [routerLink]="['/Search', {q: q, type: 'images'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'images' || type == ''}">Images</a>
-    <a [routerLink]="['/Search', {q: q, type: 'channels'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'channels' || type == ''}">Channels</a>
-    <a [routerLink]="['/Search', {q: q, type: 'blogs'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'blogs' || type == ''}">Blogs</a>
-    <a [routerLink]="['/Search', {q: q, type: 'groups'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'groups' || type == ''}">Groups</a>
+    <a [routerLink]="['/search', {q: q, type: 'activities'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'activities' || type == ''}" i18n>Activities</a>
+    <a [routerLink]="['/search', {q: q, type: 'videos'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'videos' || type == ''}" i18n>Videos</a>
+    <a [routerLink]="['/search', {q: q, type: 'images'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'images' || type == ''}" i18n>Images</a>
+    <a [routerLink]="['/search', {q: q, type: 'channels'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'channels' || type == ''}" i18n>Channels</a>
+    <a [routerLink]="['/search', {q: q, type: 'blogs'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'blogs' || type == ''}" i18n>Blogs</a>
+    <a [routerLink]="['/search', {q: q, type: 'groups'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'groups' || type == ''}" i18n>Groups</a>
 </div>
 
 <div class="mdl-grid search-grid" style="max-width:500px">

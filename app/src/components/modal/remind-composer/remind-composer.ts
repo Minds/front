@@ -1,24 +1,20 @@
 import { forwardRef, Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
-import { Modal } from '../modal';
-import { AutoGrow } from '../../../directives/autogrow';
-import { ActivityPreview } from '../../../controllers/cards/activity/preview';
-
+// had forwardRef(() => ActivityPreview)
 @Component({
   selector: 'm-modal-remind-composer',
   inputs: [ '_default: default', 'open', '_object: object' ],
   outputs: [ 'closed', 'post' ],
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, AutoGrow, forwardRef(() => ActivityPreview) ],
   template: `
     <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
 
       <div class="m-modal-remind-composer">
-        <h3 class="m-modal-remind-title">Remind</h3>
+        <h3 class="m-modal-remind-title" i18n>Remind</h3>
 
-        <textarea [(ngModel)]="message"
+        <textarea name="message"
+          [(ngModel)]="message"
           placeholder="Enter your remind status here (optional)"
+          i18n-placeholder
           [autoGrow]
           ></textarea>
 

@@ -122,4 +122,8 @@ export class HovercardService {
       this.anchor.top = top;
     }
   }
+
+  static _(client: Client, cache: CacheService) {
+    return new HovercardService(client, cache);
+  }
 }

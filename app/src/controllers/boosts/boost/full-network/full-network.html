@@ -3,7 +3,7 @@
   <!-- Not enough point warning -->
   <div class="mdl-card__supporting-text minds-boost-error-message mdl-color--red mdl-color-text--white" [hidden]="!error">
     {{error}}
-    <span *ngIf="rate && (rate.balance < data.points)">Why not <a class="mdl-color-text--blue-grey-50" [routerLink]="['/Wallet']">click here to buy some?</a></span>
+    <span *ngIf="rate && (rate.balance < data.points)" i18n>Why not <a class="mdl-color-text--blue-grey-50" [routerLink]="['/wallet']">click here to buy some?</a></span>
   </div>
 
   <div class="mdl-grid minds-boost-points-wrapper">
@@ -14,13 +14,15 @@
             min="0"
             #points
             placeholder="Enter here"
+            i18n-placeholder
+            name="points"
             [(ngModel)]= "data.points"
             (change)="calculateImpressions()"
             (keyup)="calculateImpressions()"
             />
           </div>
           <div class="cell">
-    				<label>Points</label>
+    				<label i18n>Points</label>
     			</div>
       </div>
       <div class="mdl-cell mdl-cell--6-col minds-boost-points-input">
@@ -30,23 +32,23 @@
             min="0"
             #impressions
             placeholder="Views"
+            i18n-placeholder
+            name="impressions"
             [(ngModel)] = "data.impressions"
             (change)="calculatePoints()"
             (keyup)="calculatePoints()"
           />
         </div>
         <div class="cell">
-          <label>Views</label>
+          <label i18n>Views</label>
         </div>
       </div>
   </div>
 
   <p style="color:#888; font-size:11px;">
-     Transactions are non-refundable.
-     You will be notified when your post reaches the requested number of views.
-     The amount of time this will take depends on site activity, so don't worry if you don't hear from us for a while; we will keep it in circulation until it reaches the goal!
+     <!-- i18n -->Transactions are non-refundable. You will be notified when your post reaches the requested number of views. The amount of time this will take depends on site activity, so don't worry if you don't hear from us for a while; we will keep it in circulation until it reaches the goal!<!-- /i18n -->
   </p>
 
-  <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="close()" [disabled]="inProgress">Cancel</button>
-  <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green minds-boost-button--bottom" (click)="boost()" [disabled]="inProgress">Boost!</button>
+  <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="close()" [disabled]="inProgress" i18n>Cancel</button>
+  <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green minds-boost-button--bottom" (click)="boost()" [disabled]="inProgress" i18n>Boost!</button>
 </div>

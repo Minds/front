@@ -1,14 +1,13 @@
 import { Component, EventEmitter, ChangeDetectorRef  } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 import { Material } from '../../directives/material';
 
 import { ThirdPartyNetworksService } from '../../services/third-party-networks';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-third-party-networks-selector',
   exportAs: 'thirdPartyNetworksSelector',
-  directives: [ CORE_DIRECTIVES, Material ],
-  templateUrl: 'src/components/third-party-networks/selector.html',
+  templateUrl: 'selector.html',
 })
 
 export class ThirdPartyNetworksSelector {

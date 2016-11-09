@@ -1,13 +1,6 @@
-import { Component, EventEmitter, NgZone} from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
+import { Component, EventEmitter, NgZone } from '@angular/core';
 
 import { Client } from '../../../../services/api';
-import { Material } from '../../../../directives/material';
-
-import { Checkout } from '../../../payments/checkout';
-
-import { Scheduler } from '../../../../components/scheduler/scheduler';
 
 import { MindsWalletResponse } from '../../../../interfaces/responses';
 import { MindsUserSearchResponse } from '../../../../interfaces/responses';
@@ -16,12 +9,11 @@ import { MindsBoostRateResponse } from '../../../../interfaces/responses';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-boost-p2p',
-  providers: [  ],
   inputs: ['activity: object'],
   outputs: ['_done: done'],
-  templateUrl: 'src/controllers/boosts/boost/p2p/p2p.html',
-  directives: [ FORM_DIRECTIVES, CORE_DIRECTIVES, Material, RouterLink, Checkout, Scheduler]
+  templateUrl: 'p2p.html',
 })
 
 export class BoostP2P{

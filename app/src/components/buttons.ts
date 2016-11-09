@@ -1,4 +1,3 @@
-import { Type } from '@angular/core';
 import { SubscribeButton } from './buttons/subscribe';
 import { UserDropdownButton } from './buttons/user-dropdown';
 import { ThumbsUpButton } from './buttons/thumbs-up';
@@ -9,5 +8,5 @@ import { FeatureButton } from './buttons/feature';
 import { MonetizeButton } from './buttons/monetize';
 import { BoostButton } from './buttons/boost';
 
-export const BUTTON_COMPONENTS: Type[] = [SubscribeButton, UserDropdownButton, ThumbsUpButton,
+export const BUTTON_COMPONENTS: any[] = [SubscribeButton, UserDropdownButton, ThumbsUpButton,
   ThumbsDownButton, CommentButton, RemindButton, FeatureButton, MonetizeButton, BoostButton];

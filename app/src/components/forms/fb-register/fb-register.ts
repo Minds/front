@@ -1,17 +1,15 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-form-fb-register',
   outputs: [ 'done' ],
-  templateUrl: 'src/components/forms/fb-register/fb-register.html',
-  directives: [ FORM_DIRECTIVES, Material ]
+  templateUrl: 'fb-register.html'
 })
 
 export class FbRegisterForm {
@@ -24,11 +22,11 @@ export class FbRegisterForm {
   inProgress : boolean = false;
   referrer : string;
 
-  form : ControlGroup;
+  form : FormGroup;
 
   done : EventEmitter<any> = new EventEmitter();
 
-	constructor(public client : Client, public router: Router, fb: FormBuilder){
+	constructor(public client : Client, fb: FormBuilder){
     this.form = fb.group({
       username: [ this.session.getLoggedInUser().username , Validators.required]
     });

@@ -8,8 +8,8 @@
     <ul class="m-content-sidebar-nav">
       <li *ngFor="let page of pages | listable" class="m-content-sidebar-nav-item">
         <a
-          [routerLink]="['/P', {page: page.params.page }]"
-          [ngClass]="{'is-active': path == page.params.page }">
+          [routerLink]="['/', page.path]"
+          [ngClass]="{'is-active': path == page.path }">
           {{page.title}}
         </a>
       </li>

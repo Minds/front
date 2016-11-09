@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
@@ -15,8 +14,7 @@ import { Client } from '../../services/api';
     <button class="material-icons" [ngClass]="{'selected': isMonetized }">
       <i class="material-icons">attach_money</i>
     </button>
-  `,
-  directives: [CORE_DIRECTIVES]
+  `
 })
 
 export class MonetizeButton {

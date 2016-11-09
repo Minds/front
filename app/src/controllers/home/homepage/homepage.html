@@ -11,9 +11,9 @@
     <img src="assets/logos/medium-white.png" class="m-logo"/>
     <div class="mdl-grid m-homepage-grid">
       <div class="mdl-cell mdl-cell--12-col m-homepage-titles">
-        <h1>Your Social Network</h1>
-        <h3 [hidden]="session.isLoggedIn()">Launch a channel today</h3>
-        <h3 *ngIf="session.isLoggedIn()">Welcome {{session.getLoggedInUser().name}}</h3>
+        <h1 i18n>Your Social Network</h1>
+        <h3 [hidden]="session.isLoggedIn()" i18n>Launch a channel today</h3>
+        <h3 *ngIf="session.isLoggedIn()" i18n>Welcome {{session.getLoggedInUser().name}}</h3>
       </div>
       <div class="mdl-cell mdl-cell--6-col m-homepage-signup" [hidden]="session.isLoggedIn()">
         <minds-form-register (done)="registered()"></minds-form-register>
@@ -53,23 +53,23 @@
   <div class="mdl-grid ">
     <div class="mdl-cell mdl-cell--6-col">
       <i class="material-icons mdl-color-text--blue-grey-300">trending_up</i>
-      <h3 class="mdl-color-text--blue-grey-700">Viral Reach</h3>
-      <p class="mdl-color-text--blue-grey-300">Be heard. Boost your content with points earned from voting, commenting, uploading & sharing on the app.</p>
+      <h3 class="mdl-color-text--blue-grey-700" i18n>Viral Reach</h3>
+      <p class="mdl-color-text--blue-grey-300" i18n>Be heard. Boost your content with points earned from voting, commenting, uploading & sharing on the app.</p>
     </div>
     <div class="mdl-cell mdl-cell--6-col">
       <i class="material-icons mdl-color-text--blue-grey-300">remove_red_eye</i>
-      <h3 class="mdl-color-text--blue-grey-700">Privacy</h3>
-      <p class="mdl-color-text--blue-grey-300">Be anonymous if you wish. We encrypt all sensitive data and have zero-knowledge of your private messages.</p>
+      <h3 class="mdl-color-text--blue-grey-700" i18n>Privacy</h3>
+      <p class="mdl-color-text--blue-grey-300" i18n>Be anonymous if you wish. We encrypt all sensitive data and have zero-knowledge of your private messages.</p>
     </div>
     <div class="mdl-cell mdl-cell--6-col">
       <i class="material-icons mdl-color-text--blue-grey-300">code</i>
-      <h3 class="mdl-color-text--blue-grey-700">Transparency</h3>
-      <p class="mdl-color-text--blue-grey-300">This is a free and open source project. Code and policies are available for public comment at Minds.org.</p>
+      <h3 class="mdl-color-text--blue-grey-700" i18n>Transparency</h3>
+      <p class="mdl-color-text--blue-grey-300" i18n>This is a free and open source project. Code and policies are available for public comment at Minds.org.</p>
     </div>
     <div class="mdl-cell mdl-cell--6-col">
       <i class="material-icons mdl-color-text--blue-grey-300">attach_money</i>
-      <h3 class="mdl-color-text--blue-grey-700">Earn Money</h3>
-      <p class="mdl-color-text--blue-grey-300">Be rewarded for your energy online. Exchange money for shares with other users. It's peer-to-peer advertising.</p>
+      <h3 class="mdl-color-text--blue-grey-700" i18n>Earn Money</h3>
+      <p class="mdl-color-text--blue-grey-300" i18n>Be rewarded for your energy online. Exchange money for shares with other users. It's peer-to-peer advertising.</p>
     </div>
   </div>
 </section>
@@ -78,43 +78,43 @@
   <div class="mdl-grid mdl-color-text--blue-grey-300">
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">timeline</i>
-      <h3>Newsfeed</h3>
+      <h3 i18n>Newsfeed</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">person_pin</i>
-      <h3>Channels</h3>
+      <h3 i18n>Channels</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">thumbs_up_down</i>
-      <h3>Vote</h3>
+      <h3 i18n>Vote</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">comment</i>
-      <h3>Comment</h3>
+      <h3 i18n>Comment</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">file_upload</i>
-      <h3>Upload</h3>
+      <h3 i18n>Upload</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">subject</i>
-      <h3>Blog</h3>
+      <h3 i18n>Blog</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">chat_bubble</i>
-      <h3>Chat</h3>
+      <h3 i18n>Chat</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">group_work</i>
-      <h3>Groups</h3>
+      <h3 i18n>Groups</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">account_balance</i>
-      <h3>Wallet</h3>
+      <h3 i18n>Wallet</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">location_on</i>
-      <h3>Find Nearby</h3>
+      <h3 i18n>Find Nearby</h3>
     </div>
   </div>
 
@@ -123,7 +123,7 @@
 <div class="mdl-grid mdl-grid--no-spacing m-homepage-featured m-homepage-footer">
 
     <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel m-homepage-press">
-      <h4 class="mdl-color-text--blue-grey-200">Press coverage</h4>
+      <h4 class="mdl-color-text--blue-grey-200" i18n>Press coverage</h4>
       <div class="m-contents">
         <div>
           <a target="_blank" href="http://www.bbc.co.uk/newsbeat/article/33181388/anonymous-backs-new-encrypted-social-network-site">
@@ -191,11 +191,11 @@
     <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
       <ul class="m-footer-nav m-footer-nav-inline">
         <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item ">
-          <a *ngIf="page.path === '/P'" [routerLink]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+          <a *ngIf="page.path" [routerLink]="[page.path]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
           <a *ngIf="!page.path" [href]="page.params.page" target="_blank" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
         </li>
       </ul>
-      <span class="copyright mdl-color-text--blue-grey-700">&#169; Minds 2016</span>
+      <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2016</span>
     </section>
 
 </div>

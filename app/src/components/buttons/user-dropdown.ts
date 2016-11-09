@@ -1,10 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
-
-import { ConfirmModal } from '../modal/modal';
 
 @Component({
   selector: 'minds-button-user-dropdown',
@@ -14,11 +11,11 @@ import { ConfirmModal } from '../modal/modal';
     <button class="material-icons" (click)="toggleMenu($event)">settings</button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
-      <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()">Block @{{user.username}}</li>
-      <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()">Un-Block @{{user.username}}</li>
-      <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()">Un-subscribe</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned" (click)="banToggle = true; showMenu = false">Ban globally</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!user.banned" (click)="unBan()">Un-ban globally</li>
+      <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n>Block @{{user.username}}</li>
+      <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n>Un-Block @{{user.username}}</li>
+      <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n>Un-subscribe</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned" (click)="banToggle = true; showMenu = false" i18n>Ban globally</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!user.banned" (click)="unBan()" i18n>Un-ban globally</li>
     </ul>
     <minds-bg-overlay (click)="toggleMenu($event)" [hidden]="!showMenu"></minds-bg-overlay>
 
@@ -37,8 +34,7 @@ import { ConfirmModal } from '../modal/modal';
           User has been banned.
       </p>
     </m-modal-confirm>
-  `,
-  directives: [ CORE_DIRECTIVES, ConfirmModal ]
+  `
 })
 
 export class UserDropdownButton{

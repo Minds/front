@@ -1,22 +1,18 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
-import { Router, RouteParams, RouterLink } from '@angular/router-deprecated';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { FORM_COMPONENTS } from '../../../components/forms/forms';
+import { Subscription } from 'rxjs/Rx';
 
 import { SignupModalService } from '../../../components/modal/signup/service';
 import { MindsTitle } from '../../../services/ux/title';
-import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { Register } from '../register/register';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-login',
   providers: [ MindsTitle ],
-  templateUrl: 'src/controllers/home/login/login.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, FORM_COMPONENTS, Material, Register, RouterLink]
+  templateUrl: 'login.html'
 })
 
 export class Login {
@@ -29,36 +25,46 @@ export class Login {
   referrer : string;
   minds = window.Minds;
 
-  form : ControlGroup;
-
   flags = {
     canPlayInlineVideos: true
   };
 
-  constructor(public client : Client, public router: Router, public params: RouteParams, public title: MindsTitle, private modal : SignupModalService){
-    if(this.session.isLoggedIn())
-      router.navigate(['/Newsfeed']);
+  constructor(public client : Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle, private modal : SignupModalService){
+  }
+
+  paramsSubscription: Subscription;
+  ngOnInit() {
+    if (this.session.isLoggedIn()) {
+      this.router.navigate(['/newsfeed']);
+    }
 
     this.title.setTitle("Login");
 
-    if(params.params['referrer'])
-      this.referrer = params.params['referrer'];
+    this.paramsSubscription = this.route.params.subscribe((params) => {
+      if (params['referrer']) {
+        this.referrer = params['referrer'];
+      }
+    });
 
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
   }
 
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
+
   loggedin(){
     if(this.referrer)
       this.router.navigateByUrl(this.referrer);
     else
-      this.router.navigate(['/Newsfeed', {}]);
+      this.router.navigate(['/newsfeed']);
   }
 
   registered(){
     this.modal.setDisplay('categories').open();
-    this.router.navigate(['/Newsfeed', {}]);
+    this.router.navigate(['/newsfeed']);
   }
 
 }

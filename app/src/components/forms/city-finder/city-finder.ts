@@ -1,20 +1,13 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
 
-import { MindsBanner } from '../../banner';
-import { MindsAvatar } from '../../avatar';
-
-import { Material } from '../../../directives/material';
 import { Client, Upload } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 
-
 @Component({
+  moduleId: module.id,
   selector: 'minds-form-city-finder',
   outputs: [ 'done' ],
-  templateUrl: 'src/components/forms/city-finder/city-finder.html',
-  directives: [ FORM_DIRECTIVES, Material, MindsAvatar, MindsBanner ]
+  templateUrl: 'city-finder.html'
 })
 
 export class CityFinderForm {
@@ -28,7 +21,7 @@ export class CityFinderForm {
 
   done : EventEmitter<any> = new EventEmitter();
 
-	constructor(public client : Client, public upload : Upload, public router: Router, fb: FormBuilder){
+	constructor(public client : Client, public upload : Upload){
 
 	}
 

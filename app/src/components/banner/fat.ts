@@ -1,6 +1,4 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from '@angular/router-deprecated';
 
 import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
@@ -17,7 +15,7 @@ import { Material } from '../../directives/material';
     <img [src]="src" class="minds-banner-img"/>
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
-      <span>Click here to add a new banner</span>
+      <span i18n>Click here to add a new banner</span>
     </div>
 
     <button class="add-button mdl-button mdl-button--raised mdl-button--colored material-icons" (click)="onClick($event)">
@@ -25,8 +23,7 @@ import { Material } from '../../directives/material';
     </button>
     <input type="file" id="file" (change)="add($event)" [hidden]="file" />
   </div>
-  `,
-  directives: [ CORE_DIRECTIVES, RouterLink, Material ]
+  `
 })
 
 export class MindsFatBanner{

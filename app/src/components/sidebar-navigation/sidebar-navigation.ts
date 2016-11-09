@@ -1,17 +1,14 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from '@angular/router-deprecated';
 
 import { Navigation as NavigationService } from '../../services/navigation';
 import { SessionFactory } from '../../services/session';
 import { SocketsService } from '../../services/sockets';
 
-
 @Component({
+  moduleId: module.id,
   selector: 'minds-sidebar-navigation',
   viewProviders: [NavigationService ],
-  templateUrl: 'src/components/sidebar-navigation/sidebar-navigation.html',
-  directives: [ RouterLink, CORE_DIRECTIVES ]
+  templateUrl: 'sidebar-navigation.html'
 })
 
 export class SidebarNavigation {

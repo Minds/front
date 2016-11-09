@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, Location } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Location } from '@angular/common';
 
 import { Client, Upload } from '../../../services/api';
-import { MINDS_GRAPHS } from '../../../components/graphs';
-import { Material } from '../../../directives/material';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-admin-analytics',
-  templateUrl: 'src/controllers/admin/analytics/analytics.html',
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, MINDS_GRAPHS ]
+  templateUrl: 'analytics.html'
 })
 
 export class AdminAnalytics {
@@ -29,7 +25,7 @@ export class AdminAnalytics {
     total: 0
   };
 
-  constructor(public client: Client, public params : RouteParams){
+  constructor(public client: Client){
     this.getActives();
     this.getSignups();
     this.getRetention();

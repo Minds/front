@@ -1,17 +1,13 @@
 import { Component, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { DomSanitizationService } from '@angular/platform-browser';
-import { CORE_DIRECTIVES } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
-import { Material } from '../../directives/material';
-import { MINDS_PIPES } from '../../pipes/pipes';
 import { RichEmbedService } from '../../services/rich-embed';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-rich-embed',
   inputs: [ '_src: src', '_preview: preview', 'maxheight', 'cropImage' ],
-  templateUrl: 'src/components/rich-embed/rich-embed.html',
-  directives: [ CORE_DIRECTIVES, Material ],
-  pipes: [ MINDS_PIPES ]
+  templateUrl: 'rich-embed.html'
 })
 export class MindsRichEmbed {
   type: string = '';
@@ -22,7 +18,7 @@ export class MindsRichEmbed {
   embeddedInline: boolean = false;
   cropImage: boolean = false;
 
-  constructor(private sanitizer: DomSanitizationService, private service: RichEmbedService){
+  constructor(private sanitizer: DomSanitizer, private service: RichEmbedService){
   }
 
   set _src(value: any) {

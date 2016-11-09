@@ -1,29 +1,17 @@
 import { Component, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
-import { MDL_DIRECTIVES } from '../../directives/material';
-import { AutoGrow } from '../../directives/autogrow';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
-import { CommentCard } from '../../controllers/cards/comment/comment';
-import { TagsPipe } from '../../pipes/tags';
 import { SignupModalService } from '../../components/modal/signup/service';
 
 import { AttachmentService } from '../../services/attachment';
-import { MindsRichEmbed } from '../../components/rich-embed/rich-embed';
 import { SocketsService } from '../../services/sockets';
 
-import { CommentsScrollDirective } from './scroll';
-import { ScrollLock } from '../../directives/scroll-lock';
-
 @Component({
+  moduleId: module.id,
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit', 'focusOnInit'],
-  templateUrl: 'src/controllers/comments/list.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES, CommentCard, InfiniteScroll, AutoGrow, MindsRichEmbed, CommentsScrollDirective, ScrollLock ],
-  pipes: [ TagsPipe ],
+  templateUrl: 'list.html',
   providers: [ AttachmentService ]
 })
 

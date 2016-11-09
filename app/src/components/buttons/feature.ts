@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
-import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'minds-button-feature',
@@ -22,8 +19,7 @@ import { Modal } from '../modal/modal';
         <button class="mdl-button mdl-button--colored" (click)="feature()">Feature</button>
       </div>
     </m-modal>
-  `,
-  directives: [CORE_DIRECTIVES, Modal]
+  `
 })
 
 export class FeatureButton {

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, ElementRef } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 @Component({
+  moduleId: module.id,
   selector: 'pd-ad',
   inputs: [ 'type', 'location' ],
   template: `
@@ -14,7 +14,6 @@ import { CORE_DIRECTIVES } from '@angular/common';
     <div class="tpd-box" data-tpd-id="ad-contextual-a" *ngIf="type == 'context'"></div>
     <div class="tpd-box" data-tpd-id="ad-contextual-b" *ngIf="type == 'context'"></div>
   `,
-  directives: [ CORE_DIRECTIVES ],
   host: {
     '[class]': "'m-ad-block m-ad-block-pd ' + type + ' m-ad-block-' + location"
   }
@@ -30,13 +29,13 @@ export class PDAds{
   }
 
   ngOnInit(){
-  //if (typeof twoOhSix !== 'undefined') {
+    if (typeof twoOhSix !== 'undefined') {
       window.twoOhSix.insertAds();
       //if(this.type == 'context')
       setTimeout(() => {
         window.twoOhSix.insertContextualAds();
       }, 100);
-      // }
+     }
   }
 
   ngOnDestroy(){

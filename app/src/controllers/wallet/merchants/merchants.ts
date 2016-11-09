@@ -1,27 +1,23 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
-import { ROUTER_DIRECTIVES } from "@angular/router-deprecated";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
-import { MDL_DIRECTIVES } from '../../../directives/material';
-import { InfiniteScroll } from '../../../directives/infinite-scroll';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-wallet-merchants',
-  templateUrl: 'src/controllers/wallet/merchants/merchants.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, InfiniteScroll ]
+  templateUrl: 'merchants.html'
 })
 
 export class Merchants {
 
   session = SessionFactory.build();
 
-  onboardForm: ControlGroup;
-  editForm: ControlGroup;
+  onboardForm: FormGroup;
+  editForm: FormGroup;
 
   isMerchant : boolean = false;
   status : string = "pending";

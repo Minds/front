@@ -1,51 +1,51 @@
 <div class="mdl-tabs__tab-bar">
-  <a [routerLink]="['/Notifications']" class="mdl-tabs__tab"
+  <a [routerLink]="['/notifications/all']" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'all' || !_filter }"
   >
     <i class="material-icons m-icon">notifications</i>
-    <span class="m-full-label">All</span>
+    <span class="m-full-label" i18n>All</span>
   </a>
-  <a [routerLink]="['/Notifications-Filter', { filter: 'tags' }]" class="mdl-tabs__tab"
+  <a [routerLink]="['/notifications/tags']" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'tags' }"
   >
     <i class="material-icons m-icon">face</i>
-    <span class="m-full-label">Tags</span>
+    <span class="m-full-label" i18n>Tags</span>
   </a>
-  <a [routerLink]="['/Notifications-Filter', { filter: 'comments' }]" class="mdl-tabs__tab"
+  <a [routerLink]="['/notifications/comments']" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'comments' }"
   >
     <i class="material-icons m-icon">chat_bubble</i>
-    <span class="m-full-label">Comments</span>
+    <span class="m-full-label" i18n>Comments</span>
   </a>
-  <a [routerLink]="['/Notifications-Filter', { filter: 'boosts' }]" class="mdl-tabs__tab"
+  <a [routerLink]="['/notifications/boosts']" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'boosts' }"
   >
     <i class="material-icons m-icon">trending_up</i>
-    <span class="m-full-label">Boosts</span>
+    <span class="m-full-label" i18n>Boosts</span>
   </a>
-  <a [routerLink]="['/Notifications-Filter', { filter: 'groups' }]" class="mdl-tabs__tab"
+  <a [routerLink]="['/notifications/groups']" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'groups' }"
   >
     <i class="material-icons m-icon">group_work</i>
-    <span class="m-full-label">Groups</span>
+    <span class="m-full-label" i18n>Groups</span>
   </a>
-  <a [routerLink]="['/Notifications-Filter', { filter: 'subscriptions' }]" class="mdl-tabs__tab"
+  <a [routerLink]="['/notifications/subscriptions']" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'subscriptions' }"
   >
     <i class="material-icons m-icon">people</i>
-    <span class="m-full-label">Subscriptions</span>
+    <span class="m-full-label" i18n>Subscriptions</span>
   </a>
-  <a [routerLink]="['/Notifications-Filter', { filter: 'votes' }]" class="mdl-tabs__tab"
+  <a [routerLink]="['/notifications/votes']" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'votes' }"
   >
     <i class="material-icons m-icon">thumbs_up_down</i>
-    <span class="m-full-label">Votes</span>
+    <span class="m-full-label" i18n>Votes</span>
   </a>
-  <a [routerLink]="['/Notifications-Filter', { filter: 'reminds' }]" class="mdl-tabs__tab"
+  <a [routerLink]="['/notifications/reminds']" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'reminds' }"
   >
     <i class="material-icons m-icon">repeat</i>
-    <span class="m-full-label">Reminds</span>
+    <span class="m-full-label" i18n>Reminds</span>
   </a>
 </div>
 

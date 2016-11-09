@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { Router, RouterLink, RouteParams } from '@angular/router-deprecated';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
+
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
-import { Material } from '../../directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { NotificationService } from '../../services/notification';
-import { CARDS } from '../cards/cards';
-import { Notification } from './notification';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-notifications',
   providers: [ MindsTitle ],
-  templateUrl: 'src/controllers/notifications/list.html',
-  directives: [ CORE_DIRECTIVES, RouterLink, Material, CARDS, InfiniteScroll, Notification ]
+  templateUrl: 'list.html'
 })
 
 export class Notifications {
@@ -27,18 +25,32 @@ export class Notifications {
   session = SessionFactory.build();
   _filter: string = 'all';
 
-  constructor(public client: Client, public router: Router, public title : MindsTitle, public notificationService : NotificationService, public params: RouteParams){
-    if(params.params['filter']) {
-      this._filter = params.params['filter'];
+  constructor(public client: Client, public router: Router, public title : MindsTitle, public notificationService : NotificationService, public route: ActivatedRoute){
+  }
+
+  paramsSubscription: Subscription;
+  ngOnInit() {
+    if(!this.session.isLoggedIn()){
+      this.router.navigate(['/login']);
+      return;
     }
 
-    if(!this.session.isLoggedIn()){
-      router.navigate(['/Login']);
-    } else {
-      this.load(true);
-    }
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['filter']) {
+        this._filter = params['filter'];
+        this.notifications = [];
+        this.load(true);
+      }
+    });
+
+    this.load(true);
+
     this.notificationService.clear();
     this.title.setTitle("Notifications");
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   load(refresh : boolean = false){

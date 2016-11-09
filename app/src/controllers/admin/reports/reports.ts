@@ -1,17 +1,15 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, Location } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../../services/api';
-import { CARDS } from '../../../controllers/cards/cards';
-import { Material } from '../../../directives/material';
-
-import { InfiniteScroll } from '../../../directives/infinite-scroll';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-admin-reports',
-  templateUrl: 'src/controllers/admin/reports/reports.html',
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS, InfiniteScroll ]
+  templateUrl: 'reports.html',
 })
 
 export class AdminReports {
@@ -30,14 +28,24 @@ export class AdminReports {
     'annoying': 'It shouldn\'t be on Minds'
   };
 
-  constructor(public client: Client, public params : RouteParams){
-    if(params.params['type']) {
-      this.type = params.params['type'];
-    } else {
-      this.type = 'review';
-    }
+  constructor(public client: Client, private route: ActivatedRoute){
+  }
 
-    this.load();
+  paramsSubscription: Subscription;  
+  ngOnInit() {
+    this.type = 'review';
+    
+    this.paramsSubscription = this.route.params.subscribe((params: any) => {
+      if (params['type']) {
+        this.type = params['type'];
+      }
+
+      this.load();
+    });
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
   }
 
   load() {

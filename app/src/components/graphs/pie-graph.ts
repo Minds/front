@@ -1,9 +1,4 @@
 import { Component, Directive } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-
-import { GraphSVG } from './svg';
-import { GraphPoints } from './points';
-
 
 @Component({
   selector: 'minds-graph-pie',
@@ -21,8 +16,7 @@ import { GraphPoints } from './points';
       </svg>
     </div>
     <div class="mdl-spinner mdl-js-spinner is-active" [hidden]="data"></div>
-  `,
-  directives: [ CORE_DIRECTIVES, GraphSVG, GraphPoints ]
+  `
 })
 
 export class PieGraph {

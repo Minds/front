@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
-import { RouterLink } from "@angular/router-deprecated";
 import { Client } from '../../../services/api';
-import { Material } from '../../../directives/material';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-settings-statistics',
   inputs: ['object'],
-  templateUrl: 'src/controllers/settings/statistics/statistics.html',
-  directives: [ CORE_DIRECTIVES, Material, RouterLink ]
+  templateUrl: 'statistics.html',
 })
 
 export class SettingsStatistics{

@@ -1,18 +1,13 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { Material } from '../../../directives/material';
-import { BUTTON_COMPONENTS } from '../../../components/buttons';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-card-user',
   inputs: ['object', 'avatarSize'],
-  templateUrl: 'src/controllers/cards/user/user.html',
-  directives: [ CORE_DIRECTIVES, Material, RouterLink, BUTTON_COMPONENTS ]
+  templateUrl: 'user.html'
 })
 
 export class UserCard {

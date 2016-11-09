@@ -1,6 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, Location } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Location } from '@angular/common';
 
 import { Client, Upload } from '../../../services/api';
 
@@ -19,8 +18,7 @@ import { Client, Upload } from '../../../services/api';
            <img src="icon/{{suggestion.payload.guid}}/small"/> @{{suggestion.payload.username}}
         </a>
       </div>
-    `,
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, FORM_DIRECTIVES ]
+    `
 })
 
 export class SearchBarSuggestions {
@@ -29,12 +27,12 @@ export class SearchBarSuggestions {
   showResults : boolean = false;
   timeout;
 
-  constructor(public client : Client, public router : Router){
+  constructor(public client : Client, public location: Location){
   }
 
   @Input('q')
   set q(q : string) {
-    if(!q || this.router.currentInstruction.urlPath == "search") {
+    if(!q || this.location.path().indexOf("/search") === 0) {
       this.suggestions = [];
       return;
     }
