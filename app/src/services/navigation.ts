@@ -15,9 +15,10 @@ export class Navigation {
 
 		var path = this.location.path();
 		for(var item of items){
-			if(path == item.path || (path && path.indexOf(item.path.toLowerCase()) > -1))
+            if(path == item.path || (path && path.indexOf(item.path.toLowerCase()) > -1)){
 				item.active = true;
-			else
+                item.params = { ts: Date.now() };    
+            } else
 				item.active = false;
 
 			// a recursive function needs creating here
@@ -33,7 +34,8 @@ export class Navigation {
 					if (path && path.indexOf(sub_path.toLowerCase()) > -1)
 					{
 						item.active = true; // activate parent aswell
-						subitem.active = true;
+                        subitem.active = true;
+                        path += ';ts=' + Date.now();
 					}
 					else
 						subitem.active = false;

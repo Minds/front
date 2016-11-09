@@ -20,6 +20,7 @@ export class Newsfeed {
   newsfeed : Array<Object>;
   prepended : Array<any> = [];
   offset : string = "";
+  showBoostRotator : boolean = true;
   inProgress : boolean = false;
   moreData : boolean = true;
   session = SessionFactory.build();
@@ -58,6 +59,14 @@ export class Newsfeed {
       }
 
       this.newUserPromo = !!params['newUser'];
+
+      if(params['ts']){
+        this.showBoostRotator = false;
+        this.load(true);
+        setTimeout(() => {
+          this.showBoostRotator = true;
+        }, 300);
+      }
     });
 
     this.title.setTitle("Newsfeed");
