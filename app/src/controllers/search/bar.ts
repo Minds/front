@@ -83,7 +83,7 @@ export class SearchBar {
   }
 
   search(){
-    this.router.navigate(['search', { q: encodeURIComponent(this.q) }]);
+    this.router.navigate(['search', { q: this.q }]);
   }
 
   keyup(e){
