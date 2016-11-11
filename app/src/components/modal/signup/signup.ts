@@ -48,7 +48,7 @@ import { AnalyticsService } from '../../../services/analytics';
 
         <div class="mdl-card__supporting-text m-modal-signup-apps">
           <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6">
-            <img src="https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.png">
+            <img src="https://devimages.apple.com.edgekey.net/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg">
           </a>
           <a href="https://play.google.com/store/apps/details?id=com.minds.mobile" align="center">
             <img alt="Android app on Google Play" src="{{minds.cdn_url}}assets/ext/playstore.png">
