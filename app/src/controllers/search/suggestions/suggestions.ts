@@ -14,7 +14,7 @@ import { Client, Upload } from '../../../services/api';
       <div class="m-search-bar-suggestions-list" [hidden]="!showResults || !suggestions || !suggestions.length">
         <a class="m-search-bar-suggestions-suggestion" 
            *ngFor="let suggestion of suggestions"
-           [routerLink]="['/Channel', {username: suggestion.payload.username}]">
+           [routerLink]="['/', suggestion.payload.username]">
            <img src="icon/{{suggestion.payload.guid}}/small"/> @{{suggestion.payload.username}}
         </a>
       </div>
