@@ -85,6 +85,13 @@ export class ChannelSocialProfiles {
       icon: 'reddit'
     },
     {
+      key: 'github',
+      label: 'Github',
+      placeholder: 'Username',
+      link: 'https://github.com/:value',
+      icon: 'github'
+    },
+    {
       key: 'linkedin',
       label: 'LinkedIn',
       placeholder: 'Username',
