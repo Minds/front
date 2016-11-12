@@ -97,7 +97,14 @@ export class ChannelSocialProfiles {
       placeholder: 'Username',
       link: 'https://www.instagram.com/:value',
       icon: 'instagram'
-    }
+    },
+    {
+      key: 'wikipedia_user',
+      label: 'Wikipedia User',
+      placeholder: 'Username',
+      link: 'https://wikipedia.org/wiki/:value',
+      icon: 'wikipedia-w'
+    },
   ];
 
   private getSocialProfileMeta(key: string): SocialProfileMeta {
