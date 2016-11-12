@@ -112,6 +112,13 @@ export class ChannelSocialProfiles {
       link: 'https://wikipedia.org/wiki/:value',
       icon: 'wikipedia-w'
     },
+    {
+      key: 'imdb_user',
+      label: 'IMDb User',
+      placeholder: 'Name',
+      link: 'https://www.imdb.com/name/:value',
+      icon: 'imdb'
+    },      
   ];
 
   private getSocialProfileMeta(key: string): SocialProfileMeta {
