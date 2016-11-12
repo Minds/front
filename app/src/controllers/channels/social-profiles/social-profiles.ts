@@ -50,6 +50,13 @@ export class ChannelSocialProfiles {
       icon: 'twitter'
     },
     {
+      key: 'twitch',
+      label: 'Twitch',
+      placeholder: 'Username',
+      link: 'https://www.twitch.tv/:value',
+      icon: 'twitch'
+    },
+    {
       key: 'youtube_user',
       label: 'YouTube User',
       placeholder: 'Username',
