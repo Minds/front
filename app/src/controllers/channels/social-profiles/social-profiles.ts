@@ -91,6 +91,13 @@ export class ChannelSocialProfiles {
       link: 'https://linkedin.com/:value',
       icon: 'linkedin'
     },
+    {
+      key: 'instagram',
+      label: 'Instagram',
+      placeholder: 'Username',
+      link: 'https://www.instagram.com/:value',
+      icon: 'instagram'
+    }
   ];
 
   private getSocialProfileMeta(key: string): SocialProfileMeta {
