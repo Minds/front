@@ -85,6 +85,13 @@ export class ChannelSocialProfiles {
       icon: 'reddit'
     },
     {
+      key: 'reddit_sub',
+      label: 'Subreddit',
+      placeholder: 'Subreddit',
+      link: 'https://www.reddit.com/r/:value',
+      icon: 'reddit'
+    },
+    {
       key: 'github',
       label: 'Github',
       placeholder: 'Username',
