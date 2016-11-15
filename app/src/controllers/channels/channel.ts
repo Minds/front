@@ -15,7 +15,6 @@ import { MindsChannelResponse } from '../../interfaces/responses';
 @Component({
   moduleId: module.id,
   selector: 'minds-channel',
-  providers: [ MindsTitle ],
   templateUrl: 'channel.html'
 })
 

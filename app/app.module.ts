@@ -1,13 +1,15 @@
 import { NgModule, enableProdMode, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
-import { Minds } from './app';
-import { Embed } from './embed';
+import { Minds } from './app.component';
+import { Embed } from './embed.component';
 
-import { MindsAppRouting, MindsAppRoutingProviders, MINDS_APP_ROUTING_DECLARATIONS } from './src/router/app';
-import { MindsEmbedRouting, MindsEmbedRoutingProviders, MINDS_EMBED_ROUTING_DECLARATIONS } from './src/router/embed';
+import { MindsAppRoutes, MindsAppRoutingProviders, MINDS_APP_ROUTING_DECLARATIONS } from './src/router/app';
+import { MindsEmbedRoutes, MindsEmbedRoutingProviders, MINDS_EMBED_ROUTING_DECLARATIONS } from './src/router/embed';
 
 import { MINDS_DECLARATIONS } from './src/declarations';
 import { MINDS_PLUGIN_DECLARATIONS } from './src/plugin-declarations';
@@ -18,7 +20,7 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
 
 let dynamicLoader: any = {
   bootstrapComponent: Minds,
-  routing: [],
+  routing: MindsAppRoutes,
   routingProviders: MindsAppRoutingProviders,
   routingDeclarations: MINDS_APP_ROUTING_DECLARATIONS,
 };
@@ -26,12 +28,10 @@ let dynamicLoader: any = {
 if (window.Minds.MindsContext === 'embed') {
   dynamicLoader = {
     bootstrapComponent: Embed,
-    routing: MindsEmbedRouting,
+    routing: MindsEmbedRoutes,
     routingProviders: MindsEmbedRoutingProviders,
     routingDeclarations: MINDS_EMBED_ROUTING_DECLARATIONS,
   };
-} else if (window) {
-  dynamicLoader.routing = MindsAppRouting;
 }
 
 @NgModule({
@@ -50,7 +50,7 @@ if (window.Minds.MindsContext === 'embed') {
     ReactiveFormsModule,
     FormsModule,
     HttpModule,
-    dynamicLoader.routing,
+    RouterModule.forRoot(dynamicLoader.routing),
   ],
   providers: [
     MINDS_PROVIDERS,

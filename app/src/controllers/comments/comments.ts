@@ -11,8 +11,7 @@ import { SocketsService } from '../../services/sockets';
   moduleId: module.id,
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit', 'focusOnInit'],
-  templateUrl: 'list.html',
-  providers: [ AttachmentService ]
+  templateUrl: 'list.html'
 })
 
 export class Comments {
@@ -248,7 +247,7 @@ export class Comments {
     this.comments[index] = $event.comment;
   }
 
-  uploadAttachment(file: HTMLInputElement) {
+  uploadAttachment(file: HTMLInputElement, e?: any) {
     this.canPost = false;
     this.triedToPost = false;
 

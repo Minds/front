@@ -11,7 +11,6 @@ import { SessionFactory } from '../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'minds-login',
-  providers: [ MindsTitle ],
   templateUrl: 'login.html'
 })
 

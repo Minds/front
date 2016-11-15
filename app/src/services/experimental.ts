@@ -1,6 +1,6 @@
 export class Experimental
 {
-  static feature(feature: string): boolean {
+  feature(feature: string): boolean {
     return window.Minds.user &&
       window.Minds.user.feature_flags &&
       window.Minds.user.feature_flags.length &&

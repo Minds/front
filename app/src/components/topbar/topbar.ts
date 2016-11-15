@@ -8,7 +8,6 @@ import { SessionFactory } from '../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'minds-topbar',
-  viewProviders: [ Storage, Sidebar ],
   templateUrl: 'topbar.html'
 })
 

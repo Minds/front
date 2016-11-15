@@ -12,7 +12,6 @@ import { AttachmentService } from '../../../../services/attachment';
   },
   inputs: ['object'],
   templateUrl: 'video.html',
-  providers: [AttachmentService]
 })
 
 export class VideoCard {

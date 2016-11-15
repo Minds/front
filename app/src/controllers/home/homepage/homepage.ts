@@ -10,7 +10,6 @@ import { SignupModalService } from '../../../components/modal/signup/service';
 @Component({
   moduleId: module.id,
   selector: 'minds-homepage',
-  providers: [ MindsTitle, NavigationService ],
   templateUrl: 'homepage.html'
 })
 

@@ -17,6 +17,7 @@ export class SettingsDisableChannel{
   minds : Minds;
   user : any;
   settings : string;
+  object: any;
 
   constructor(public client: Client, public router: Router){
     this.minds = window.Minds;

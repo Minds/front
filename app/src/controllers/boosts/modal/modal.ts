@@ -22,7 +22,7 @@ export class BoostModal {
 
   session = SessionFactory.build();
 
-  done(e){
+  done(e?){
     this.closed.next(true);
   }
 

@@ -6,8 +6,7 @@ import { EmbedService } from '../../services/embed';
   moduleId: module.id,
   selector: 'm-social-icons',
   inputs: [ '_url: url', '_title: title', '_embed: embed' ],
-  templateUrl: 'social-icons.html',
-  providers: [ EmbedService ]
+  templateUrl: 'social-icons.html'
 })
 
 export class SocialIcons {

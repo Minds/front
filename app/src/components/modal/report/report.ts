@@ -74,7 +74,7 @@ export class ReportModal {
     this.object = object;
   }
 
-  close(){
+  close(e?){
     this.open = false;
     this.closed.next(true);
   }

@@ -6,7 +6,7 @@ import { Pipe }  from '@angular/core';
 })
 
 export class ListablePipe {
-  transform(value: any, args: any[]) {
+  transform(value: any) {
     let result = [];
 
     if(!value || value.length == 0) {

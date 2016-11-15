@@ -10,7 +10,6 @@ import { Client } from '../../services/api/client';
 
 @Component({
   selector: 'minds-capture',
-  providers: [ MindsTitle ],
   host : {
     '(dragover)': 'dragover($event)',
     '(dragleave)': 'dragleave($event)',
@@ -34,7 +33,7 @@ export class Capture {
 
   control;
 
-  default_maturity : boolean = false;
+  default_maturity : number = 0;
   default_license : string = "all-rights-reserved";
   licenses = LICENSES;
   access = ACCESS;

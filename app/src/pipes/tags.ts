@@ -10,7 +10,7 @@ export class TagsPipe {
   }
 
 
-  transform(value: string, args: any[]) {
+  transform(value: string) {
 
     if(!value || typeof value !== "string")
       return value;

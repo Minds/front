@@ -9,7 +9,7 @@ import { Client } from '../../services/api';
     <button class="" [ngClass]="{'selected': isFeatured }" (click)="isFeatured ? feature() : (open = true)">
       <i class="material-icons">star</i>
     </button>
-    <m-modal [open]="open" (closed)="onClose($event)">
+    <m-modal [open]="open" (closed)="onModalClose($event)">
       <div class="m-button-feature-modal">
         <select [(ngModel)]="category">
           <option value="not-selected">-- SELECT A CATEGORY --</option>
@@ -85,7 +85,7 @@ export class FeatureButton {
       });
   }
 
-  onModalClose(){
+  onModalClose(e){
     this.open = false;
   }
 

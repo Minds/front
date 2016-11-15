@@ -21,6 +21,7 @@ export class SettingsGeneral{
   session = SessionFactory.build();
   minds : Minds;
   settings : string;
+  object: any;
 
   error : string = "";
   changed : boolean = false;
@@ -37,9 +38,9 @@ export class SettingsGeneral{
   password2 : string;
 
   language: string = 'en';
-  experimental: Experimental = Experimental;
+  experimental: Experimental = new Experimental();
 
-  constructor(public client: Client, public route: ActivatedRoute, private thirdpartynetworks: ThirdPartyNetworksService){
+  constructor(public client: Client, public route: ActivatedRoute, public thirdpartynetworks: ThirdPartyNetworksService){
     this.minds = window.Minds;
   }
 

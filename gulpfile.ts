@@ -2,6 +2,15 @@ import * as gulp from 'gulp';
 import {runSequence, task} from './tools/utils';
 
 // --------------
+// Prepare (AoT - Production)
+gulp.task('prepare.prod', done =>
+  runSequence(
+    'build.plugins',
+    'build.sass',
+    'build.assets',
+    done));
+
+// --------------
 // Build
 gulp.task('build', done =>
   runSequence(

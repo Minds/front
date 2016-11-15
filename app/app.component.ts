@@ -7,7 +7,6 @@ import { SocketsService } from './src/services/sockets';
 @Component({
   moduleId: module.id,
   selector: 'minds-app',
-  providers: [ AnalyticsService ],
   templateUrl: 'src/controllers/index.html'
 })
 export class Minds {

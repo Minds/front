@@ -34,8 +34,7 @@ import { AttachmentService } from '../../../services/attachment';
 
     <ng-content></ng-content>
 
-  `,
-  providers: [ AttachmentService ]
+  `
 })
 
 export class ChannelModules {

@@ -11,7 +11,6 @@ import { InfiniteScroll } from '../../directives/infinite-scroll';
 @Component({
   moduleId: module.id,
   selector: 'minds-discovery',
-  providers: [ MindsTitle ],
   templateUrl: 'discovery.html'
 })
 

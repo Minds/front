@@ -5,7 +5,6 @@ import { SessionFactory } from '../../services/session';
 
 @Component({
   selector: 'minds-topbar-navigation',
-  viewProviders: [NavigationService ],
   template: `
     <nav class="" *ngIf="session.isLoggedIn()">
 

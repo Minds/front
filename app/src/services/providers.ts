@@ -1,6 +1,7 @@
 import { NgZone } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -15,6 +16,12 @@ import { RichEmbedService } from './rich-embed';
 import { Session } from './session';
 import { ThirdPartyNetworksService } from './third-party-networks';
 import { AnalyticsService } from './analytics';
+import { Navigation } from './navigation';
+import { WalletService } from './wallet';
+import { AttachmentService } from './attachment';
+import { Sidebar } from './ui/sidebar';
+import { EmbedService } from './embed';
+import { MindsTitle } from './ux/title';
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -80,5 +87,37 @@ export const MINDS_PROVIDERS : any[] = [
      provide: ThirdPartyNetworksService,
      useFactory: ThirdPartyNetworksService._,
      deps: [ Client, NgZone ]
+   },
+   {
+     provide: AnalyticsService,
+     useFactory: AnalyticsService._,
+     deps: [ Router ]
+   },
+   {
+     provide: Navigation,
+     useFactory: Navigation._,
+     deps: [ Location ]
+   },
+   {
+     provide: WalletService,
+     useFactory: WalletService._,
+     deps: [ Client ]
+   },
+   {
+     provide: AttachmentService,
+     useFactory: AttachmentService._,
+     deps: [ Client, Upload ]
+   },
+   {
+     provide: Sidebar,
+     useFactory: Sidebar._
+   },
+   {
+     provide: EmbedService,
+     useFactory: EmbedService._
+   },
+   {
+     provide: MindsTitle,
+     useFactory: MindsTitle._
    },
 ];

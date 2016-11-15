@@ -11,7 +11,6 @@ import { NotificationService } from '../../services/notification';
 @Component({
   moduleId: module.id,
   selector: 'minds-notifications',
-  providers: [ MindsTitle ],
   templateUrl: 'list.html'
 })
 

@@ -1,6 +1,5 @@
 import {MINDS_PIPES} from './pipes/pipes';
 
-import {Material} from './directives/material';
 import {MDL_DIRECTIVES} from './directives/material';
 import {InfiniteScroll} from './directives/infinite-scroll';
 import {Hovercard} from './directives/hovercard';
@@ -37,7 +36,6 @@ import {ThirdPartyNetworksFacebook} from './components/third-party-networks/face
 import {MindsVideo, VideoAds} from './components/video';
 import {SocialIcons} from './components/social-icons/social-icons';
 import {MindsAvatar} from './components/avatar';
-import {CityFinderForm} from './components/forms/city-finder/city-finder';
 import {Tutorial} from './components/tutorial/tutorial';
 import {MindsTinymce} from './components/editors/tinymce';
 import {FORM_COMPONENTS} from './components/forms/forms';
@@ -56,7 +54,7 @@ import {ThirdPartyNetworksSelector} from './components/third-party-networks/sele
 import {OnboardingCategoriesSelector} from './components/onboarding/categories-selector/categories-selector';
 import {PDAds} from './components/ads/pd-ads';
 
-import {CARDS, UserCard} from './controllers/cards/cards';
+import {CARDS} from './controllers/cards/cards';
 import {SearchBar} from './controllers/search/bar';
 import {Notification} from './controllers/notifications/notification';
 import {AdminAnalytics} from './controllers/admin/analytics/analytics';
@@ -69,7 +67,6 @@ import {WalletTransactions} from './controllers/wallet/transactions/transactions
 import {WalletPurchase} from './controllers/wallet/purchase/purchase';
 import {Merchants} from './controllers/wallet/merchants/merchants';
 import {Comments} from './controllers/comments/comments';
-import {Register} from './controllers/home/register/register';
 import {ActivityPreview} from './controllers/cards/activity/preview';
 import {Checkout} from './controllers/payments/checkout';
 import {Boost} from './controllers/boosts/boost/boost';
@@ -79,7 +76,6 @@ import {ChannelSubscribers} from './controllers/channels/subscribers/subscribers
 import {ChannelSubscriptions} from './controllers/channels/subscriptions/subscriptions';
 import {ChannelSocialProfiles} from './controllers/channels/social-profiles/social-profiles';
 import {Poster} from './controllers/newsfeed/poster/poster';
-import {CommentCard} from './controllers/cards/comment/comment';
 import {CommentsScrollDirective} from './controllers/comments/scroll';
 import {NewsfeedBoostRotator} from './controllers/newsfeed/boost-rotator/boost-rotator';
 import {SettingsGeneral} from './controllers/settings/general/general';
@@ -93,7 +89,6 @@ export const MINDS_DECLARATIONS: any[] = [
   MINDS_PIPES,
 
   // Directives
-  Material,
   MDL_DIRECTIVES,
   InfiniteScroll,
   Hovercard,
@@ -123,7 +118,6 @@ export const MINDS_DECLARATIONS: any[] = [
   MindsVideo,
   SocialIcons,
   MindsAvatar,
-  CityFinderForm,
   Tutorial,
   MindsTinymce,
   FORM_COMPONENTS,
@@ -160,12 +154,10 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminReports,
   BoostFullNetwork,
   BoostP2P,
-  UserCard,
   WalletTransactions,
   WalletPurchase,
   Merchants,
   Comments,
-  Register,
   ActivityPreview,
   Checkout,
   Boost,
@@ -175,7 +167,6 @@ export const MINDS_DECLARATIONS: any[] = [
   ChannelModules,
   ChannelSocialProfiles,
   Poster,
-  CommentCard,
   CommentsScrollDirective,
   NewsfeedBoostRotator,
   SettingsGeneral,

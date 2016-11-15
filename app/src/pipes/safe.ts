@@ -10,7 +10,7 @@ export class SafePipe {
   constructor(private sanitizer : DomSanitizer) {
   }
 
-  transform(value: string, args: any[]) {
+  transform(value: string) {
 
     if(!value)
       return value;

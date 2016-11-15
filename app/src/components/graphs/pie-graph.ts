@@ -2,7 +2,7 @@ import { Component, Directive } from '@angular/core';
 
 @Component({
   selector: 'minds-graph-pie',
-  inputs: [ '_data: data', 'y: height', 'x: width' ],
+  inputs: [ '_data: data' ],
   template: `
     <div [hidden]="!data"> <!-- Angular has svg problems... -->
       <svg viewBox="0,0,100,100" class="chart" style="height:100px; width:100px; margin: 0 auto; transform: rotate(90deg); background: #ddd; border-radius: 50%; display: block;">

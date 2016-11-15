@@ -36,4 +36,7 @@ export class EmbedService {
     return `${window.Minds.site_url}api/v1/embed/${guid}`;
   }
 
+  static _() {
+    return new EmbedService();
+  }
 }

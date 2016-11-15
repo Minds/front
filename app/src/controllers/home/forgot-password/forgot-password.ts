@@ -10,7 +10,6 @@ import { SessionFactory } from '../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'minds-register',
-  providers: [ MindsTitle ],
   templateUrl: 'forgot-password.html'
 })
 

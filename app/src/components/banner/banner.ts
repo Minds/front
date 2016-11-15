@@ -57,6 +57,7 @@ export class MindsBanner{
   dragging : boolean = false;
   dragTimeout;
   added : EventEmitter<any> = new EventEmitter();
+  overlay: any; // @todo: ??
 
 	constructor(){
 	}

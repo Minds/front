@@ -6,7 +6,7 @@
 </div>
 
 <!-- START: Register -->
-<form (submit)="login($event)" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin">
+<form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin">
 
   <div class="mdl-card__supporting-text mdl-grid">
 
@@ -56,7 +56,7 @@
     <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="register($event)" [disabled]="inProgress">
       <!-- i18n -->Signup<!-- /i18n -->
     </button>
-    <span [routerLink]="p/terms" class="m-register-tac" i18n>By creating an account you agree to the Terms & Conditions</span>
+    <span routerLink="p/terms" class="m-register-tac" i18n>By creating an account you agree to the Terms & Conditions</span>
   </div>
 
 </form>

@@ -58,7 +58,7 @@ export class RemindComposerModal {
     this.message = message;
   }
 
-  close(){
+  close(e?){
     this.open = false;
     this.closed.next(true);
   }

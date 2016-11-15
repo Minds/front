@@ -9,7 +9,6 @@ import { Navigation as NavigationService } from '../../services/navigation';
 
 @Component({
   moduleId: module.id,
-  providers: [ MindsTitle, NavigationService ],
   templateUrl: 'pages.html'
 })
 

@@ -68,4 +68,7 @@ export class WalletService {
     }
   }
 
+  static _(client: Client) {
+    return new WalletService(client);
+  }
 }

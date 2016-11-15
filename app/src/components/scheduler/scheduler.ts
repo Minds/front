@@ -57,7 +57,7 @@ export class Scheduler {
     this.selectedMinutes = Math.round(now.getMinutes() / 5);
   }
 
-  onChange(){
+  onChange(e?){
     this.compileTs();
   }
 

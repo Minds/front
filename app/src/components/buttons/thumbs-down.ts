@@ -7,7 +7,6 @@ import { SignupModalService } from '../modal/signup/service';
 
 @Component({
   selector: 'minds-button-thumbs-down',
-  viewProviders: [WalletService ],
   inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `

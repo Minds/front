@@ -6,7 +6,7 @@ import { VideoAdsService } from './ads-service';
 
 @Component({
   selector: 'minds-video',
-  inputs: [ 'src', '_autoplay: autoplay', '_visibleplay: visibleplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid', 'log', '_playCount: playCount' ],
+  inputs: [ 'src', '_autoplay: autoplay', '_visibleplay: visibleplay', '_loop: loop', '_muted: muted', 'poster', 'guid', 'log', '_playCount: playCount' ],
   host: {
     //'(click)': 'onClick()',
     '(mouseenter)': 'onMouseEnter()',

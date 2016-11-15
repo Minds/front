@@ -9,6 +9,7 @@ export class TagsLinks {
 
   element : any;
   rendered : boolean = false;
+  tags: any;
 
   constructor(@Inject(ElementRef) _element : ElementRef) {
     this.element = _element.nativeElement;

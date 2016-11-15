@@ -7,7 +7,6 @@ import { SocketsService } from '../../services/sockets';
 @Component({
   moduleId: module.id,
   selector: 'minds-sidebar-navigation',
-  viewProviders: [NavigationService ],
   templateUrl: 'sidebar-navigation.html'
 })
 

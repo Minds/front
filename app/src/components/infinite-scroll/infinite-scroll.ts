@@ -34,6 +34,7 @@ export class InfiniteScroll{
   hideManual : boolean = false;
   _content : any;
   _listener;
+  on: any;
 
   constructor(_element: ElementRef, public scroll : ScrollService) {
     this.element = _element.nativeElement;

@@ -7,7 +7,6 @@ import { EmbedService } from '../../../services/embed';
   selector: 'm-modal-share',
   inputs: [ 'open', '_url: url', '_embed: embed' ],
   outputs: ['closed'],
-  providers: [ EmbedService ],
   template: `
     <m-modal [open]="open" (closed)="close($event)">
 
@@ -60,7 +59,7 @@ export class ShareModal {
     this.embedCode = this.embed.getIframeFromObject(object);
   }
 
-  close(){
+  close(e?){
     this.open = false;
     this.closed.next(true);
   }

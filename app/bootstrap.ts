@@ -4,7 +4,7 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { getTranslationProviders } from './src/i18n-providers';
-import { MindsModule } from './minds';
+import { MindsModule } from './app.module';
 
 if (String('<%= ENV %>') === 'prod') { enableProdMode(); }
 

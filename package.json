@@ -6,7 +6,9 @@
     "build": "gulp build.prod",
     "gulp": "gulp",
     "extract": "ng-xi18n -p tsconfig.json",
-    "postinstall": "typings install"
+    "postinstall": "typings install",
+    "compile-aot": "ngc -p tsconfig-aot.json",
+    "bundle": "rollup -c rollup-config.ts"
   },
   "dependencies": {
     "@angular/common": "2.1.2",
@@ -68,6 +70,10 @@
     "open": "0.0.5",
     "protractor": "^2.5.1",
     "rimraf": "^2.5.4",
+    "rollup": "^0.36.3",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
     "run-sequence": "^1.1.0",
     "sauce-connect-launcher": "^0.2.2",
     "semver": "^4.3.6",

@@ -16,6 +16,7 @@ export class SettingsTwoFactor{
   secret;
   waitingForCheck : boolean = false;
   sendingSms: boolean = false;
+  object: any;
 
   inProgress : boolean = false;
   error : string = "";

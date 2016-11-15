@@ -12,8 +12,7 @@ import { ThirdPartyNetworksSelector } from '../../../components/third-party-netw
   selector: 'minds-newsfeed-poster',
   inputs: [ '_container_guid: containerGuid', 'accessId', 'message'],
   outputs: ['load'],
-  templateUrl: 'poster.html',
-  providers: [ AttachmentService ]
+  templateUrl: 'poster.html'
 })
 
 export class Poster {

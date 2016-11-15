@@ -1,5 +1,6 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { APP_BASE_HREF } from '@angular/common';
 
 import {Homepage} from '../controllers/home/homepage/homepage';
 import {Login} from '../controllers/home/login/login';
@@ -27,7 +28,7 @@ import {Blog, BlogViewInfinite, BlogEdit} from '../plugins/blog/blog';
 import {ArchiveView, ArchiveEdit} from '../plugins/archive/archive';
 import {Groups, GroupsProfile, GroupsCreator} from '../plugins/Groups/groups';
 
-export const appRoutes: Routes = [
+export const MindsAppRoutes: Routes = [
   { path: '', component: Homepage },
 
   { path: 'login', component: Login },
@@ -78,8 +79,7 @@ export const appRoutes: Routes = [
   { path: ':username', component: Channel },
 ];
 
-export const MindsAppRoutingProviders: any[] = [];
-export const MindsAppRouting: ModuleWithProviders = RouterModule.forRoot(appRoutes);
+export const MindsAppRoutingProviders: any[] = [{ provide: APP_BASE_HREF, useValue: '/' }];
 export const MINDS_APP_ROUTING_DECLARATIONS: any[] = [
   Homepage,
   Login,

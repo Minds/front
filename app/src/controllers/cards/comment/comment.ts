@@ -13,8 +13,7 @@ import { TranslationService } from '../../../services/translation';
   host: {
     '(keydown.esc)': 'editing = false'
   },
-  templateUrl: 'comment.html',
-  providers: [ AttachmentService ]
+  templateUrl: 'comment.html'
 })
 
 export class CommentCard {
@@ -32,6 +31,7 @@ export class CommentCard {
   _saved: EventEmitter<any> = new EventEmitter();
 
   reportToggle: boolean = false;
+  parent: any;
 
   translation = {
     translated: false,
@@ -42,6 +42,7 @@ export class CommentCard {
   };
   isTranslatable: boolean;
   translationInProgress: boolean;
+  translateToggle: boolean = false;
 
 	constructor(public client: Client, public attachment: AttachmentService, public translationService: TranslationService){
 	}

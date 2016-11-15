@@ -22,7 +22,11 @@ export class AdminAnalytics {
     review: 0,
     approved: 0,
     percent: 50,
-    total: 0
+    total: 0,
+    review_backlog: 0,
+    approved_backlog: 0,
+    impressions: 0,
+    impressions_met: 0
   };
 
   constructor(public client: Client){

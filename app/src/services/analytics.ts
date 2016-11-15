@@ -35,4 +35,8 @@ export class AnalyticsService {
     if (window.ga)
       window.ga('send', type, {});
   }
+
+  static _(router: Router) {
+    return new AnalyticsService(router);
+  }
 }

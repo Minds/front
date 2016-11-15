@@ -54,4 +54,7 @@ export class Navigation {
     }
   }
 
+  static _(location: Location) {
+    return new Navigation(location);
+  }
 }

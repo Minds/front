@@ -26,6 +26,7 @@ export class Boosts{
   error : string = "";
 
   boosterToggle : boolean = false;
+  boostToggle: boolean = false;
   boosterToggleInProgress : boolean = false;
   latestPosts = [];
   latestMedia = [];

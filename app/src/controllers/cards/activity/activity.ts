@@ -14,7 +14,6 @@ import { TranslationService } from '../../../services/translation';
   },
   inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible', 'canDelete'],
   outputs: [ '_delete: delete', 'commentsOpened'],
-  providers: [ AttachmentService ],
   templateUrl: 'activity.html'
 })
 
@@ -29,6 +28,7 @@ export class Activity {
   reportToggle: boolean = false;
   deleteToggle: boolean = false;
   translateToggle: boolean = false;
+  translateEvent: EventEmitter<any> = new EventEmitter();
   session = SessionFactory.build();
   showBoostOptions : boolean = false;
   type : string;
@@ -36,6 +36,7 @@ export class Activity {
   visible : boolean = false;
 
   editing : boolean = false;
+  hideTabs: boolean;
 
   _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();

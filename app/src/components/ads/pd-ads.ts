@@ -29,7 +29,7 @@ export class PDAds{
   }
 
   ngOnInit(){
-    if (typeof twoOhSix !== 'undefined') {
+    if (typeof window.twoOhSix !== 'undefined') {
       window.twoOhSix.insertAds();
       //if(this.type == 'context')
       setTimeout(() => {

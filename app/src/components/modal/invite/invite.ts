@@ -52,7 +52,7 @@ export class InviteModal {
     this.encodedUrl = encodeURI(this.url);
   }
 
-  close(){
+  close(e?){
     this.open = false;
     this.closed.next(true);
   }

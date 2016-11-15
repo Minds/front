@@ -20,5 +20,9 @@ export class Sidebar{
 	close(){
 		var drawer : any = document.getElementsByTagName('minds-sidebar')[0];
 		drawer.classList.remove("is-visible");
-	}
+  }
+
+  static _() {
+    return new Sidebar();
+  }
 }

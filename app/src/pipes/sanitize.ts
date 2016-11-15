@@ -257,7 +257,7 @@ export class SanitizePipe {
   constructor() {
   }
 
-  transform(value: string, args: any[]) {
+  transform(value: string) {
 
     if(!value)
       return value;

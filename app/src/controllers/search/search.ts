@@ -10,7 +10,6 @@ import { MindsTitle } from '../../services/ux/title';
 @Component({
   moduleId: module.id,
   selector: 'minds-search',
-  providers: [ MindsTitle ],
   templateUrl: 'list.html'
 })
 

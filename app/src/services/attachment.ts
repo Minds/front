@@ -346,4 +346,8 @@ export class AttachmentService {
 
     return this.parseMaturity(object);
   }
+
+  static _(client: Client, upload: Upload) {
+    return new AttachmentService(client, upload);
+  }
 }

@@ -11,6 +11,7 @@ import { MaterialUpload } from './material/upload';
 
 export class Material {
   private element: any;
+  mdl: any;
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;

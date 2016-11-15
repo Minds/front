@@ -11,7 +11,6 @@ import { SessionFactory } from '../../services/session';
 
 @Component({
   selector: 'minds-newsfeed',
-  providers: [ MindsTitle, NavigationService ],
   templateUrl: 'list.html'
 })
 

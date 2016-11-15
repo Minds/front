@@ -10,7 +10,6 @@ import { SessionFactory } from '../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'minds-settings',
-  providers: [ MindsTitle ],
   templateUrl: 'settings.html'
 })
 

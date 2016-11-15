@@ -13,7 +13,6 @@ import { WalletService } from '../../services/wallet';
 @Component({
   moduleId: module.id,
   selector: 'minds-wallet',
-  providers: [ MindsTitle, WalletService ],
   templateUrl: 'wallet.html'
 })
 

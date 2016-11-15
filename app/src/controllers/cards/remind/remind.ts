@@ -11,7 +11,6 @@ import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
   inputs: ['object', '_events: events'],
   templateUrl: '../activity/activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ AttachmentService ]
 })
 
 export class Remind {
@@ -25,6 +24,10 @@ export class Remind {
   events: EventEmitter<any>;
   eventsSubscription: any;
 
+  editing: boolean = false;
+  commentsToggle: boolean = false;
+  showBoostOptions: boolean = false;
+  translateToggle: any;
   translateEvent: EventEmitter<any> = new EventEmitter(); 
 
   constructor(
@@ -71,5 +74,5 @@ export class Remind {
     this.translateEvent.emit($event);
   }
 
-  propagateTranslation() { }
+  propagateTranslation(e?) { }
 }
