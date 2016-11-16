@@ -28,6 +28,7 @@ export class Poster {
   @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
 
   constructor(public client: Client, public upload: Upload, public attachment: AttachmentService){
+    this.attachment = AttachmentService._(client, upload); //use a new instance
     this.minds = window.Minds;
   }
 

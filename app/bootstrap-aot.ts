@@ -5,6 +5,6 @@ import { enableProdMode } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 import { MindsModuleNgFactory } from '../.tmp.aot/app/app.module.ngfactory';
 
-// enableProdMode();
+enableProdMode();
 platformBrowser().bootstrapModuleFactory(MindsModuleNgFactory);
 

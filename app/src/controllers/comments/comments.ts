@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
 
-import { Client } from '../../services/api';
+import { Client, Upload } from '../../services/api';
 import { SessionFactory } from '../../services/session';
 import { SignupModalService } from '../../components/modal/signup/service';
 
@@ -47,7 +47,8 @@ export class Comments {
 
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService, private renderer: Renderer) {
+  constructor(public client: Client, public upload : Upload, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService, private renderer: Renderer) {
+    this.attachment = AttachmentService._(client, upload);
     this.minds = window.Minds;
 	}
 
