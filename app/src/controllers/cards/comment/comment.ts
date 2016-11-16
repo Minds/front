@@ -1,6 +1,6 @@
 import { Component, EventEmitter} from '@angular/core';
 
-import { Client } from '../../../services/api';
+import { Client, Upload } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
@@ -13,7 +13,14 @@ import { TranslationService } from '../../../services/translation';
   host: {
     '(keydown.esc)': 'editing = false'
   },
-  templateUrl: 'comment.html'
+  templateUrl: 'comment.html',
+  providers: [
+    {
+      provide: AttachmentService,
+      useFactory: AttachmentService._,
+      deps: [ Client, Upload ]
+    }
+  ]
 })
 
 export class CommentCard {

@@ -11,7 +11,14 @@ import { SocketsService } from '../../services/sockets';
   moduleId: module.id,
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit', 'focusOnInit'],
-  templateUrl: 'list.html'
+  templateUrl: 'list.html',
+  providers: [ 
+    { 
+      provide: AttachmentService,
+      useFactory: AttachmentService._, 
+      deps: [ Client, Upload ]
+    } 
+  ]
 })
 
 export class Comments {
@@ -47,8 +54,7 @@ export class Comments {
 
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, public upload : Upload, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService, private renderer: Renderer) {
-    this.attachment = AttachmentService._(client, upload);
+  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService, private renderer: Renderer) {
     this.minds = window.Minds;
 	}
 

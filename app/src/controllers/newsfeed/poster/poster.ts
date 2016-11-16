@@ -12,6 +12,13 @@ import { ThirdPartyNetworksSelector } from '../../../components/third-party-netw
   selector: 'minds-newsfeed-poster',
   inputs: [ '_container_guid: containerGuid', 'accessId', 'message'],
   outputs: ['load'],
+  providers: [ 
+    { 
+      provide: AttachmentService,
+      useFactory: AttachmentService._, 
+      deps: [ Client, Upload ]
+    } 
+  ],
   templateUrl: 'poster.html'
 })
 
@@ -28,7 +35,6 @@ export class Poster {
   @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
 
   constructor(public client: Client, public upload: Upload, public attachment: AttachmentService){
-    this.attachment = AttachmentService._(client, upload); //use a new instance
     this.minds = window.Minds;
   }
 
