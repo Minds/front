@@ -7,6 +7,7 @@ export = function buildJS(gulp, plugins) {
     let tsProject = tsProjectFn(plugins);
     let src = [
       // 'typings/browser.d.ts',
+      '!' + join(APP_SRC, '**/bootstrap-aot.ts'),
       'tools/manual_typings/**/*.d.ts',
       'tools/typings/tsd/index.d.ts',
       join(APP_SRC, '**/*.ts'),
