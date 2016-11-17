@@ -1,5 +1,5 @@
 import { Pipe, Renderer }  from '@angular/core';
-import { DomSanitizationService } from '@angular/platform-browser'
+import { DomSanitizer } from '@angular/platform-browser'
 
 @Pipe({
   name: 'safe'
@@ -7,10 +7,10 @@ import { DomSanitizationService } from '@angular/platform-browser'
 
 export class SafePipe {
 
-  constructor(private sanitizer : DomSanitizationService) {
+  constructor(private sanitizer : DomSanitizer) {
   }
 
-  transform(value: string, args: any[]) {
+  transform(value: string) {
 
     if(!value)
       return value;

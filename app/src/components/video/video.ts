@@ -1,15 +1,12 @@
 import { Component, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client } from '../../services/api';
-import { Material } from '../../directives/material';
 import { ScrollService } from '../../services/ux/scroll';
 import { VideoAdsService } from './ads-service';
 
 @Component({
   selector: 'minds-video',
-  inputs: [ 'src', '_autoplay: autoplay', '_visibleplay: visibleplay', '_loop: loop', '_muted: muted', 'controls', 'poster', 'guid', 'log', '_playCount: playCount' ],
+  inputs: [ 'src', '_autoplay: autoplay', '_visibleplay: visibleplay', '_loop: loop', '_muted: muted', 'poster', 'guid', 'log', '_playCount: playCount' ],
   host: {
     //'(click)': 'onClick()',
     '(mouseenter)': 'onMouseEnter()',
@@ -28,15 +25,15 @@ import { VideoAdsService } from './ads-service';
       <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
       <i class="material-icons" [hidden]="element.paused" (click)="onClick()">pause</i>
       <span id="seeker" class="progress-bar" (click)="seek($event)">
-        <bar class="progress" [ngStyle]="{ 'width': seeked + '%'}"></bar>
-        <bar class="total"></bar>
+        <minds-bar class="progress" [ngStyle]="{ 'width': seeked + '%'}"></minds-bar>
+        <minds-bar class="total"></minds-bar>
       </span>
       <span class="progress-stamps">{{elapsed.minutes}}:{{elapsed.seconds}}/{{time.minutes}}:{{time.seconds}}</span>
       <i class="material-icons" [hidden]="element.muted" (click)="element.muted = true">volume_up</i>
       <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
       <a class="material-icons m-video-full-page mdl-color-text--white"
         *ngIf="guid"
-        [routerLink]="['/Archive-View', {guid: guid}]"
+        [routerLink]="['/archive/view', guid]"
         target="_blank"
         (click)="element.pause()">
         lightbulb_outline
@@ -47,8 +44,7 @@ import { VideoAdsService } from './ads-service';
         <span>{{ playCount }}</span>
       </span>-->
     </div>
-  `,
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Material ]
+  `
 })
 
 export class MindsVideo{

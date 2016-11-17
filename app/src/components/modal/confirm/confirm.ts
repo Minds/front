@@ -1,15 +1,11 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
-
-import { Modal } from '../modal';
 
 @Component({
+  moduleId: module.id,
   selector: 'm-modal-confirm',
   inputs: ['open', 'yesButton', 'noButton', 'closeAfterAction'],
   outputs: ['actioned', 'closed'],
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal ],
-  templateUrl: 'src/components/modal/confirm/confirm.html'
+  templateUrl: 'confirm.html'
 })
 export class ConfirmModal {
 

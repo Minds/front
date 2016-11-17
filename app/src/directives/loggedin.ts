@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Storage } from '../services/storage';
 
 @Component({
-  selector: 'minds-loggedin',
-  viewProviders: [Storage]
+  selector: 'minds-loggedin'
 })
 
 export class LoggedIn {

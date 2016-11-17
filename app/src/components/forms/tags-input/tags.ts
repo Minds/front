@@ -1,11 +1,8 @@
 import { Component, EventEmitter, ElementRef } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
 
 import { Material } from '../../../directives/material';
 import { Client, Upload } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-
 
 @Component({
   selector: 'minds-form-tags-input',
@@ -14,13 +11,12 @@ import { SessionFactory } from '../../../services/session';
   },
   inputs: [ '_tags: tags' ],
   outputs: [ 'change: tagsChange' ],
-  directives: [ FORM_DIRECTIVES, Material ],
   template: `
     <div class="m-form-tags-input-tags-tag mdl-shadow--2dp mdl-color--blue-grey-600 mdl-color-text--blue-grey-50" *ngFor="let tag of tags; let i = index" (click)="removeTag(i)">
       <span>{{tag}}</span>
       <i class="material-icons mdl-color-text--white">close</i>
     </div>
-    <input type="text" [(ngModel)]="input" (keyup)="keyUp($event)" (blur)="blur($event)" [size]="input.length ? input.length : 1">
+    <input type="text" name="input-tags" [(ngModel)]="input" (keyup)="keyUp($event)" (blur)="blur($event)" [size]="input.length ? input.length : 1">
   `
 })
 

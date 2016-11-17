@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 import { Client } from '../../services/api';
-import { MINDS_GRAPHS } from '../../components/graphs';
 
 @Component({
   selector: 'minds-analytics-impressions',
@@ -17,7 +15,6 @@ import { MINDS_GRAPHS } from '../../components/graphs';
       </div>
     </div>
   `,
-  directives: [CORE_DIRECTIVES, MINDS_GRAPHS]
 })
 
 export class AnalyticsImpressions {

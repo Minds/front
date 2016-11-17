@@ -2,8 +2,7 @@
 
   <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500" [hidden]="inProgress">
     <div class="mdl-card__supporting-text" *ngIf="status == 'pending'">
-      Thanks for monetizing your channel, we are currently reviewing your application.
-      For now, checkout your <a [routerLink]="['/Boosts', { type:'peer', filter: 'inbox' }]">boost console</a> where you can advertise your content.
+      <!-- i18n -->Thanks for monetizing your channel, we are currently reviewing your application. For now, checkout your <a [routerLink]="['/boosts/peer/inbox']">boost console</a> where you can advertise your content.<!-- /i18n -->
     </div>
     <div class="mdl-card__supporting-text" *ngIf="status == 'awaiting-document'">
       <p>We need you to upload verification of your identity. Please provide us with photo ID.</p>
@@ -73,34 +72,34 @@
 
   <form (submit)="update($event)"
     (change)="confirmation = false"
-    [ngFormModel]="editForm"
+    [formGroup]="editForm"
     #e="ngForm"
     class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500"
     [hidden]="inProgress"
     *ngIf="status == 'active'"
     >
     <div class="mdl-cell mdl-cell--6-col">
-      <label>First name</label>
-      <input ngControl="firstName" type="text" placeholder="First name">
+      <label i18n>First name</label>
+      <input formControlName="firstName" type="text" placeholder="First name" i18n-placeholder>
     </div>
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Last name</label>
-      <input ngControl="lastName" type="text" placeholder="Last name">
+      <label i18n>Last name</label>
+      <input formControlName="lastName" type="text" placeholder="Last name" i18n-placeholder>
     </div>
 
     <!--<div class="mdl-cell mdl-cell--6-col">
       <label>Social Security Number (optional)</label>
-      <input ngControl="ssn" type="number" placeholder="Social Security Number">
+      <input formControlName="ssn" type="number" placeholder="Social Security Number" i18n-placeholder>
     </div>-->
 
     <div class="mdl-cell mdl-cell--6-col" >
-      <label>Bank Account number</label>
-      <input ngControl="accountNumber" type="number" placeholder="Account Number">
+      <label i18n>Bank Account number</label>
+      <input formControlName="accountNumber" type="number" placeholder="Account Number" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Bank Routing number / Sort code</label>
-      <input ngControl="routingNumber" type="number" placeholder="Routing Number / Sort Code">
+      <label i18n>Bank Routing number / Sort code</label>
+      <input formControlName="routingNumber" type="number" placeholder="Routing Number / Sort Code" i18n-placeholder>
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -108,9 +107,9 @@
     </div>
 
     <div style="margin:16px; width:100%; text-align:right;">
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!e.form.valid" [hidden]="confirmation || updating">Update</button>
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!e.form.valid" [hidden]="!confirmation || updating">Updated</button>
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" disabled [hidden]="!updating">Updating</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!e.form.valid" [hidden]="confirmation || updating" i18n>Update</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!e.form.valid" [hidden]="!confirmation || updating" i18n>Updated</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" disabled [hidden]="!updating" i18n>Updating</button>
     </div>
   </form>
 </div>
@@ -120,49 +119,49 @@
 
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__supporting-text">
-      Join the Minds Merchant programme. You can now send and receive channel boosts for money. Many more monetization features are coming.
+      <!-- i18n -->Join the Minds Merchant programme. You can now send and receive channel boosts for money. Many more monetization features are coming.<!-- /i18n -->
     </div>
   </div>
 
-  <form (submit)="onboard($event)" [ngFormModel]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
+  <form (submit)="onboard($event)" [formControl]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
     <div class="mdl-cell mdl-cell--6-col">
-      <label>First name</label>
-      <input ngControl="firstName" type="text" placeholder="First name">
+      <label i18n>First name</label>
+      <input formControlName="firstName" type="text" placeholder="First name" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Last name</label>
-      <input ngControl="lastName" type="text" placeholder="Last name">
+      <label i18n>Last name</label>
+      <input formControlName="lastName" type="text" placeholder="Last name" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--5-col">
-      <label>Date of Birth</label>
+      <label i18n>Date of Birth</label>
       <minds-date-input [date]="onboardForm.value.dob" (dateChange)="onboardForm.controls.dob.updateValue($event)"></minds-date-input>
     </div>
 
     <!--<div class="mdl-cell mdl-cell--5-col">
-      <label>Social Security Number</label>
-      <input ngControl="ssn" type="number" placeholder="optional">
+      <label i18n>Social Security Number</label>
+      <input formControlName="ssn" type="number" placeholder="optional" i18n-placeholder>
     </div>-->
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Address</label>
-      <input ngControl="street" type="text" placeholder="House name/number, Street name">
+      <label i18n>Address</label>
+      <input formControlName="street" type="text" placeholder="House name/number, Street name" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>City</label>
-      <input ngControl="city" type="text" placeholder="eg. New York City">
+      <label i18n>City</label>
+      <input formControlName="city" type="text" placeholder="eg. New York City" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Country</label>
+      <label i18n>Country</label>
       <minds-country-input [country]="onboardForm.value.country" (countryChange)="onboardForm.controls.country.updateValue($event)"></minds-country-input>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label>Post Code / Zip Code</label>
-      <input ngControl="postCode" type="text" placeholder="eg. 10001">
+      <label i18n>Post Code / Zip Code</label>
+      <input formControlName="postCode" type="text" placeholder="eg. 10001" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
@@ -170,11 +169,15 @@
 
     <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Account number</label>
-      <input ngControl="accountNumber" type="text" placeholder="10-12 digit account number">
+      <input formControlName="accountNumber" type="text" placeholder="10-12 digit account number" i18n-placeholder>
     </div>
     <div class="mdl-cell mdl-cell--6-col">
       <label>Bank Routing number / Sort Code</label>
-      <input ngControl="routingNumber" type="text" placeholder="9 digit routing number">
+      <input formControlName="routingNumber" type="text" placeholder="9 digit routing number" i18n-placeholder>
+    </div>
+
+    <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">
+      <p i18n>Minds, Inc. uses Stripe for payment processing services. By using the Stripe payment processing services you agree to the Stripe Connected Account Agreement available at <a href="https://stripe.com/us/connect-account/legal" target="_blank">https://stripe.com/us/connect-account/legal</a>.</p>
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -182,7 +185,7 @@
     </div>
 
     <div style="margin:16px; width:100%; text-align:right;">
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!f.form.valid">Next</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!f.form.valid" i18n>Next</button>
     </div>
 
   </form>

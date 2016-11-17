@@ -1,8 +1,4 @@
 import { Component, Directive } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-
-import { GraphSVG } from './svg';
-import { GraphPoints } from './points';
 
 @Component({
   selector: 'minds-graph-impressions',
@@ -15,8 +11,7 @@ import { GraphPoints } from './points';
       />
 
     </svg>
-  `,
-  directives: [ CORE_DIRECTIVES, GraphSVG, GraphPoints ]
+  `
 })
 
 export class GraphImpressions {
@@ -67,7 +62,4 @@ export class GraphImpressions {
     }
 
   }
-
-
-
 }

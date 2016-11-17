@@ -1,23 +1,16 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Router, RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
-import { MDL_DIRECTIVES } from '../../../directives/material';
-import { InfiniteScroll } from '../../../directives/infinite-scroll';
-
-import { Checkout } from '../../payments/checkout';
-
 import { CreditCard } from '../../../interfaces/card-interface';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-wallet-purchase',
-  templateUrl: 'src/controllers/wallet/purchase/purchase.html',
-  inputs: [ 'toggled' ],
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, InfiniteScroll, Checkout ]
+  templateUrl: 'purchase.html',
+  inputs: [ 'toggled' ]
 })
 
 export class WalletPurchase {
@@ -38,7 +31,7 @@ export class WalletPurchase {
 
   toggled : boolean = false;
 
-	constructor(public client: Client, public wallet: WalletService, public router: Router){
+	constructor(public client: Client, public wallet: WalletService){
     this.getRate();
     this.calculateUSD();
     this.getSubscription();

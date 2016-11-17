@@ -1,23 +1,20 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
+import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
 import { Modal, SignupModal } from '../modal';
 import { SessionFactory } from '../../../services/session';
 import { ScrollService } from '../../../services/ux/scroll';
 import { AnalyticsService } from '../../../services/analytics';
 
-
 @Component({
   selector: 'm-modal-signup-on-scroll',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal, SignupModal ],
   template: `
     <m-modal-signup open="true" *ngIf="open"></m-modal-signup>
   `
 })
 
 export class SignupOnScrollModal {
-
   open : boolean = false;
   session = SessionFactory.build();
   route : string = "";
@@ -33,29 +30,52 @@ export class SignupOnScrollModal {
     this.listen();
   }
 
-  listen(){
-    this.router.subscribe((value: any) => {
-      try {
-        let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`; 
+  ngOnDestroy() {
+    this.unListen();
 
-        this.route = route;
-        switch(route.split('?')[0]){
-          case 'register':
-          case 'login':
-          case 'forgot-password':
-          case '':
-            this.open = false;
-            break;
-          default:
-            this.scroll_listener = this.scroll.listen((e) => {
-              if(this.scroll.view.scrollTop > 100){
-                if(window.localStorage.getItem('hideSignupModal'))
-                  this.open = false;
-                else
-                  this.open = true;
-                this.scroll.unListen(this.scroll_listener);
-              }
-            }, 100);
+    if(this.scroll_listener) {
+      this.scroll.unListen(this.scroll_listener);
+    }
+  }
+
+  routerSubscription: Subscription;
+
+  listen() {
+    this.routerSubscription = this.router.events.subscribe((navigationEvent: NavigationEnd) => {
+      try {
+        if (navigationEvent instanceof NavigationEnd) {
+          if (!navigationEvent.urlAfterRedirects) {
+            return;
+          }
+
+          let url = navigationEvent.urlAfterRedirects;
+
+          if (url.indexOf('/') === 0) {
+            url = url.substr(1);
+          }
+
+          let fragments = url.replace(/\//g, ';').split(';');
+
+          this.route = navigationEvent.urlAfterRedirects;
+
+          switch (fragments[0]) {
+            case 'register':
+            case 'login':
+            case 'forgot-password':
+            case '':
+              this.open = false;
+              break;
+            default:
+              this.scroll_listener = this.scroll.listen((e) => {
+                if(this.scroll.view.scrollTop > 100){
+                  if(window.localStorage.getItem('hideSignupModal'))
+                    this.open = false;
+                  else
+                    this.open = true;
+                  this.scroll.unListen(this.scroll_listener);
+                }
+              }, 100);
+          }
         }
       } catch (e) {
         console.error('Minds: router hook(SignupOnScrollModal)', e);
@@ -63,9 +83,7 @@ export class SignupOnScrollModal {
     });
   }
 
-  ngOnDestroy(){
-    if(this.scroll_listener)
-      this.scroll.unListen(this.scroll_listener);
+  unListen() {
+    this.routerSubscription.unsubscribe();
   }
-
 }

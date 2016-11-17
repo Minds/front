@@ -1,6 +1,7 @@
 import { EventEmitter } from '@angular/core';
-import { Router } from '@angular/router-deprecated';
+import { Router, NavigationEnd } from '@angular/router';
 import { ScrollService } from '../../../services/ux/scroll';
+import { Subscription } from 'rxjs/Rx';
 
 export class SignupModalService{
 
@@ -17,31 +18,46 @@ export class SignupModalService{
     this.initOnScroll();
   }
 
-  private initOnScroll(){
-    this.router.subscribe((value: any) => {
-      try {
-        let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`; 
+  routerSubscription: Subscription;
 
-        this.route = route;
-        switch(route.split('?')[0]){
-          case 'register':
-          case 'login':
-          case 'forgot-password':
-          case '':
-            this.close();
-            break;
-          default:
-            if(this.scroll_listener)
-              return;
-            this.scroll_listener = this.scroll.listen((e) => {
-              if(this.scroll.view.scrollTop > 100){
-                if(window.localStorage.getItem('hideSignupModal'))
-                  this.close();
-                else
-                  this.open();
-                this.scroll.unListen(this.scroll_listener);
-              }
-            }, 100);
+  private initOnScroll() {
+    this.routerSubscription = this.router.events.subscribe((navigationEvent: NavigationEnd) => {
+      try {
+        if (navigationEvent instanceof NavigationEnd) {
+          if (!navigationEvent.urlAfterRedirects) {
+            return;
+          }
+
+          let url = navigationEvent.urlAfterRedirects;
+
+          if (url.indexOf('/') === 0) {
+            url = url.substr(1);
+          }
+
+          let fragments = url.replace(/\//g, ';').split(';');
+
+          this.route = navigationEvent.urlAfterRedirects;
+
+          switch (fragments[0]) {
+            case 'register':
+            case 'login':
+            case 'forgot-password':
+            case '':
+              this.close();
+              break;
+            default:
+              if(this.scroll_listener)
+                return;
+              this.scroll_listener = this.scroll.listen((e) => {
+                if(this.scroll.view.scrollTop > 100){
+                  if(window.localStorage.getItem('hideSignupModal'))
+                    this.close();
+                  else
+                    this.open();
+                  this.scroll.unListen(this.scroll_listener);
+                }
+              }, 100);
+          }
         }
       } catch (e) {
         console.error('Minds: router hook(SignupModalService)', e);
@@ -71,4 +87,7 @@ export class SignupModalService{
     return this;
   }
 
+  static _(router: Router, scroll: ScrollService) {
+    return new SignupModalService(router, scroll);
+  }
 }

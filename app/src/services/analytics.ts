@@ -1,28 +1,28 @@
-import { Component, Inject, Injector, bind } from '@angular/core';
-import {Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated';
+import { Component, Inject, Injector } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
-@Component({
-  directives: [ ROUTER_DIRECTIVES ]
-})
 export class AnalyticsService {
 
   //Set the analytics id of the page we want to send data
   id : string = "UA-35146796-1";
 
-  constructor(public router: Router){
-    //we instantiate the google analytics service
-    window.ga('create', this.id, 'auto');
+  constructor(@Inject(Router) public router: Router){
+    this.onRouterInit();
 
-    //We set the router to call onRouteChanged every time we change the page
-    this.router.subscribe((value: any) => {
-      try {
-        let route = `${value.instruction.urlPath}?${value.instruction.urlParams.join('&')}`;
-
-        this.onRouteChanged(route);
-      } catch (e) {
-        console.error('Minds: router hook(AnalyticsService)', e);
+    this.router.events.subscribe((navigationState) => {
+      if (navigationState instanceof NavigationEnd) {
+        try {
+          this.onRouteChanged(navigationState.urlAfterRedirects);
+        } catch (e) {
+          console.error('Minds: router hook(AnalyticsService)', e);
+        }
       }
     });
+  }
+
+  onRouterInit() {
+    //we instantiate the google analytics service
+    window.ga('create', this.id, 'auto');
   }
 
   onRouteChanged(path){
@@ -34,5 +34,9 @@ export class AnalyticsService {
   static send(type : string, opts : any = {}){
     if (window.ga)
       window.ga('send', type, {});
+  }
+
+  static _(router: Router) {
+    return new AnalyticsService(router);
   }
 }

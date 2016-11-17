@@ -1,36 +1,26 @@
 import { Component, EventEmitter} from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
-import { Client } from '../../../services/api';
+import { Client, Upload } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { AutoGrow } from '../../../directives/autogrow';
-import { Hovercard } from '../../../directives/hovercard';
-import { BUTTON_COMPONENTS } from '../../../components/buttons';
-import { TagsPipe } from '../../../pipes/tags';
-import { MINDS_PIPES } from '../../../pipes/pipes';
-
-import { MDL_DIRECTIVES } from '../../../directives/material';
 import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
 
-import { MindsVideo } from '../../../components/video';
-import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
-import { Translate } from '../../../components/translate/translate';
-
-import { ReportModal } from '../../../components/modal/modal';
-
 @Component({
+  moduleId: module.id,
   selector: 'minds-card-comment',
   inputs: ['object', 'parent'],
   outputs: [ '_delete: delete', '_saved: saved'],
   host: {
     '(keydown.esc)': 'editing = false'
   },
-  templateUrl: 'src/controllers/cards/comment/comment.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_COMPONENTS, MDL_DIRECTIVES, AutoGrow, RouterLink, MindsVideo, ReportModal, MindsRichEmbed, Hovercard, Translate ],
-  pipes: [ TagsPipe, MINDS_PIPES ],
-  providers: [ AttachmentService ]
+  templateUrl: 'comment.html',
+  providers: [
+    {
+      provide: AttachmentService,
+      useFactory: AttachmentService._,
+      deps: [ Client, Upload ]
+    }
+  ]
 })
 
 export class CommentCard {
@@ -48,6 +38,7 @@ export class CommentCard {
   _saved: EventEmitter<any> = new EventEmitter();
 
   reportToggle: boolean = false;
+  parent: any;
 
   translation = {
     translated: false,
@@ -58,6 +49,7 @@ export class CommentCard {
   };
   isTranslatable: boolean;
   translationInProgress: boolean;
+  translateToggle: boolean = false;
 
 	constructor(public client: Client, public attachment: AttachmentService, public translationService: TranslationService){
 	}

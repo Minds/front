@@ -1,26 +1,14 @@
-import {provide, enableProdMode, PLATFORM_PIPES} from '@angular/core';
-import {bootstrap} from '@angular/platform-browser-dynamic';
-import {HTTP_PROVIDERS} from '@angular/http';
-import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
-import {MINDS_PROVIDERS} from './src/services/providers';
-import {Minds} from './app';
-import {Embed} from './embed';
+/// <reference path="typings/minds.d.ts" />
+/// <reference path="../tools/typings/tsd/index.d.ts" />
 
-import {MINDS_PIPES} from './src/pipes/pipes';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { getTranslationProviders } from './src/i18n-providers';
+import { MindsModule } from './app.module';
 
-if ('<%= ENV %>' === 'prod') { enableProdMode(); }
+if (String('<%= ENV %>') === 'prod') { enableProdMode(); }
 
-if (window.Minds.MindsContext === 'embed') {
-  bootstrap(Embed, [
-    ROUTER_PROVIDERS,
-    HTTP_PROVIDERS,
-    MINDS_PROVIDERS
-  ]);
-} else {
-  bootstrap(Minds, [
-    ROUTER_PROVIDERS,
-    HTTP_PROVIDERS,
-    MINDS_PROVIDERS,
-    provide(PLATFORM_PIPES, {useValue: MINDS_PIPES, multi: true})
-  ]);
-}
+getTranslationProviders().then(providers => {
+  platformBrowserDynamic().bootstrapModule(MindsModule, { providers });
+});
+

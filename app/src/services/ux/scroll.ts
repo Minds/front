@@ -1,4 +1,4 @@
-import { EventEmitter, Injector, provide } from '@angular/core';
+import { EventEmitter, Injector } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 
 export class ScrollService{
@@ -42,6 +42,10 @@ export class ScrollService{
       this.viewListener = this.scroll.debounceTime(500).subscribe((e) => { this.viewEmitter.next(e) });
     }
     return this.viewEmitter;
+  }
+
+  static _() {
+    return new ScrollService();
   }
 
 }

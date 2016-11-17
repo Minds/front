@@ -168,4 +168,8 @@ export class SocketsService {
 
     return this.emit('leave', room);
   }
+
+  static _(nz: NgZone) {
+    return new SocketsService(nz);
+  }
 }

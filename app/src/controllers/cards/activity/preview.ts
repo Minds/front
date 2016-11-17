@@ -1,29 +1,16 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { Material } from '../../../directives/material';
-import { AutoGrow } from '../../../directives/autogrow';
-import { Hovercard } from '../../../directives/hovercard';
-import { BUTTON_COMPONENTS } from '../../../components/buttons';
-import { MindsVideo } from '../../../components/video';
-import { Boost } from '../../boosts/boost/boost';
-import { Comments } from '../../comments/comments';
-import { MINDS_PIPES } from '../../../pipes/pipes';
-import { TagsLinks } from '../../../directives/tags';
 
 import { AttachmentService } from '../../../services/attachment';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-activity-preview',
-  properties: ['object'],
-  templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks, Hovercard ],
-  pipes: [ MINDS_PIPES ],
+  inputs: ['object'],
+  templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ AttachmentService ]
 })
 
 export class ActivityPreview {
@@ -31,7 +18,13 @@ export class ActivityPreview {
   minds = window.Minds;
   activity : any;
   hideTabs : boolean;
-  session =  SessionFactory.build();
+  session = SessionFactory.build();
+
+  editing: boolean = false;
+  commentsToggle: boolean = false;
+  showBoostOptions: boolean = false;
+  translateToggle: any;
+  translateEvent: any;
 
 	constructor(public client: Client, public attachment: AttachmentService){
     this.hideTabs = true;
@@ -47,4 +40,6 @@ export class ActivityPreview {
   toDate(timestamp){
     return new Date(timestamp*1000);
   }
+
+  propagateTranslation(e?) { }
 }

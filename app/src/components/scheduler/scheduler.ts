@@ -1,24 +1,21 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-
 
 @Component({
   selector: 'm-scheduler',
   inputs: [ 'days', ],
   outputs: [ 'update: ts' ],
-  directives: [ CORE_DIRECTIVES ],
   template: `
     <!-- Day -->
-    <select [(ngModel)]="selectedDate" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
+    <select name="date" [(ngModel)]="selectedDate" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
         <option *ngFor="let d of dates; let i = index" [value]="i">{{d.formatted}}</option>
     </select>
     <!-- Hour -->
-    <select [(ngModel)]="selectedHour" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
+    <select name="hour" [(ngModel)]="selectedHour" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
         <option *ngFor="let h of hours; let i = index" [value]="i">{{h.label}}</option>
     </select>
     <b>:</b>
     <!-- Minutes -->
-    <select [(ngModel)]="selectedMinutes" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
+    <select name="minutes" [(ngModel)]="selectedMinutes" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
         <option *ngFor="let m of minutes; let i = index" [value]="i">{{m.label}}</option>
     </select>
   `
@@ -60,7 +57,7 @@ export class Scheduler {
     this.selectedMinutes = Math.round(now.getMinutes() / 5);
   }
 
-  onChange(){
+  onChange(e?){
     this.compileTs();
   }
 

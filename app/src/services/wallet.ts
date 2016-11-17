@@ -1,4 +1,4 @@
-import { Inject, Injector, bind } from '@angular/core';
+import { Inject, Injector } from '@angular/core';
 import { Client } from './api';
 import { SessionFactory } from './session';
 
@@ -68,4 +68,7 @@ export class WalletService {
     }
   }
 
+  static _(client: Client) {
+    return new WalletService(client);
+  }
 }

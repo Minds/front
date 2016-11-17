@@ -13,4 +13,8 @@ export class MindsTitle {
     }
     else this.title.setTitle(this.default_title);
   }
+
+  static _() {
+    return new MindsTitle();
+  }
 }

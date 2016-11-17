@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, Location } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../../services/api';
-import { CARDS } from '../../../controllers/cards/cards';
-import { MINDS_GRAPHS } from '../../../components/graphs';
-import { Material } from '../../../directives/material';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-admin-boosts',
   host: {
     '(keydown)': 'onKeyDown($event)'
   },
-  templateUrl: 'src/controllers/admin/boosts/boosts.html',
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, MINDS_GRAPHS, CARDS ]
+  templateUrl: 'boosts.html'
 })
 
 export class AdminBoosts {
@@ -29,13 +27,35 @@ export class AdminBoosts {
   moreData : boolean = true;
   offset : string = "";
 
-  constructor(public client: Client, public params : RouteParams){
-    if(params.params['type'])
-      this.type = params.params['type'];
-    else
-      this.type = "newsfeed";
-    this.load();
+  constructor(public client: Client, private route: ActivatedRoute){
+  }
+
+  paramsSubscription: Subscription;
+  ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
+      if (params['type']) {
+        this.type = params['type'];
+      } else {
+        this.type = 'newsfeed';
+      }
+
+      this.boosts = [];
+      this.count = 0;
+      this.newsfeed_count = 0;
+      this.suggested_count = 0;
+      this.inProgress = false;
+      this.moreData = true;
+      this.offset = "";
+
+      this.load();
+    });
+
     this.domHack();
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+    this.undoDomHack();
   }
 
   load(){
@@ -131,7 +151,7 @@ export class AdminBoosts {
     document.getElementsByTagName('minds-admin-boosts')[0].dispatchEvent(event);
   }
 
-  ngOnDestroy(){
+  undoDomHack(){
     document.removeEventListener('keydown', this.onKeypress);
   }
 

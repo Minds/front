@@ -1,18 +1,12 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
-import { Modal } from '../modal';
 import { SessionFactory } from '../../../services/session';
 import { EmbedService } from '../../../services/embed';
-
 
 @Component({
   selector: 'm-modal-share',
   inputs: [ 'open', '_url: url', '_embed: embed' ],
   outputs: ['closed'],
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, Modal ],
-  providers: [ EmbedService ],
   template: `
     <m-modal [open]="open" (closed)="close($event)">
 
@@ -23,16 +17,16 @@ import { EmbedService } from '../../../services/embed';
 
       <div class="m-social-share-buttons">
         <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-fb" (click)="openWindow('https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl + '&display=popup&ref=plugin&src=share_button')">
-         Share on Facebook
+          <!-- i18n -->Share on Facebook<!-- /i18n -->
         </button>
         <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-twitter" (click)="openWindow('https://twitter.com/intent/tweet?text=Shared%20via%20Minds.com&tw_p=tweetbutton&url=' + encodedUrl)">
-          Share on Twitter
+          <!-- i18n -->Share on Twitter<!-- /i18n -->
         </button>
       </div>
 
       <div class="m-modal-share-embed" *ngIf="embedCode">
         <span class="m-modal-share-embed__label mdl-color-text--blue-grey-300">
-          Embed into your website:
+          <!-- i18n -->Embed into your website:<!-- /i18n -->
         </span>
         <div>
           <textarea (click)="copy($event)" readonly>{{ embedCode }}</textarea>
@@ -65,7 +59,7 @@ export class ShareModal {
     this.embedCode = this.embed.getIframeFromObject(object);
   }
 
-  close(){
+  close(e?){
     this.open = false;
     this.closed.next(true);
   }

@@ -2,24 +2,24 @@
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block" *ngIf="activity.ownerObj && activity.ownerObj.username">
 
 	<div class="avatar" [hovercard]="activity.ownerObj.guid">
-		<a [routerLink]="['/Channel', {username: activity.ownerObj.username}]">
+		<a [routerLink]="['/', activity.ownerObj.username]">
 			<img [src]="minds.cdn_url + '/icon/' + activity.ownerObj.guid + '/medium/' + activity.ownerObj.icontime" class="mdl-shadow--2dp"/>
 		</a>
 	</div>
 
 	<div class="body">
-		<a [routerLink]="['/Channel', {username: activity.ownerObj.username}]">
+		<a [routerLink]="['/', activity.ownerObj.username]">
 			<strong>{{activity.ownerObj.name}}</strong>
 		</a>
         <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
-          [routerLink]="['/Groups-Profile', {guid: activity.containerObj.guid, filter: 'activity'}]"
+          [routerLink]="['/groups/profile', activity.containerObj.guid, 'activity']"
           class="mdl-color-text--blue-grey-300">
           <strong>({{activity.containerObj.name}})</strong>
         </a>
-		<a [routerLink]="['/Activity', { guid: activity.guid }]" class="permalink" *ngIf="activity.guid">
+		<a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid">
 			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
 		</a>
-    <a [routerLink]="['/Archive-View', { guid: activity.entity_guid }]" class="permalink" 
+    <a [routerLink]="['/archive/view/', activity.entity_guid]" class="permalink" 
       *ngIf="!activity.guid && activity.entity_guid"
     >
       <span>{{activity.time_created * 1000 | date:'medium'}}</span>
@@ -60,9 +60,9 @@
 
 <div class="minds-editable-container" *ngIf="editing && (!activity.custom_type || (activity.custom_type && !activity.title))">
 	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-	<textarea class="mdl-card__supporting-text message" [ngModel]="activity.message" #messageEdit [autoGrow]></textarea>
-	<button class="mdl-button mdl-button--raised mdl-color--blue-grey-100" (click)="messageEdit.value = activity.message; editing=false;">Cancel</button>
-	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.message = messageEdit.value; save();">Save</button>
+	<textarea class="mdl-card__supporting-text message" name="message" [ngModel]="activity.message" #messageEdit [autoGrow]></textarea>
+	<button class="mdl-button mdl-button--raised mdl-color--blue-grey-100" (click)="messageEdit.value = activity.message; editing=false;" i18n>Cancel</button>
+	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.message = messageEdit.value; save();" i18n>Save</button>
 </div>
 
 <!-- Rich content -->
@@ -71,8 +71,8 @@
   [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }">
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
-			<i class="material-icons" title="Mature content">explicit</i>
-			<span>Click to confirm your are 18+</span>
+			<i class="material-icons" title="Mature content" i18n-title>explicit</i>
+			<span i18n>Click to confirm your are 18+</span>
 		</span>
 	</div>
 	<minds-rich-embed [src]="activity" [maxheight]="480"></minds-rich-embed>
@@ -89,9 +89,9 @@
 
 <div class="minds-editable-container" *ngIf="editing && activity.custom_type && activity.title">
 	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-	<textarea class="mdl-card__supporting-text message" [ngModel]="activity.title" #titleEdit [autoGrow]></textarea>
-	<button class="mdl-button mdl-button--raised mdl-color--blue-grey-100" (click)="titleEdit.value = activity.title; editing=false;">Cancel</button>
-	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.title = titleEdit.value; save();">Save</button>
+	<textarea class="mdl-card__supporting-text message" name="title" [ngModel]="activity.title" #titleEdit [autoGrow]></textarea>
+	<button class="mdl-button mdl-button--raised mdl-color--blue-grey-100" (click)="titleEdit.value = activity.title; editing=false;" i18n>Cancel</button>
+	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.title = titleEdit.value; save();" i18n>Save</button>
 </div>
 
 <div class="item item-image item-image-video"
@@ -99,8 +99,8 @@
   *ngIf="activity.custom_type == 'video'">
 		<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 			<span class="m-mature-overlay-note">
-				<i class="material-icons" title="Mature content">explicit</i>
-				<span>Click to confirm your are 18+</span>
+				<i class="material-icons" title="Mature content" i18n-title>explicit</i>
+				<span i18n>Click to confirm your are 18+</span>
 			</span>
 		</div>
 
@@ -126,12 +126,12 @@
  *ngIf="activity.thumbnail_src && !activity.perma_url">
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
-			<i class="material-icons" title="Mature content">explicit</i>
-			<span>Click to confirm your are 18+</span>
+			<i class="material-icons" title="Mature content" i18n-title>explicit</i>
+			<span i18n>Click to confirm your are 18+</span>
 		</span>
 	</div>
 
-	<a [routerLink]="['/Archive-View', {guid: activity.entity_guid}]">
+	<a [routerLink]="['/archive/view', activity.entity_guid]">
 		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null">
 	</a>
 </div>
@@ -142,12 +142,12 @@
  *ngIf="activity.custom_type == 'batch'">
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
 		<span class="m-mature-overlay-note">
-			<i class="material-icons" title="Mature content">explicit</i>
-			<span>Click to confirm your are 18+</span>
+			<i class="material-icons" title="Mature content" i18n-title>explicit</i>
+			<span i18n>Click to confirm your are 18+</span>
 		</span>
 	</div>
 
-	<a [routerLink]="['/Archive-View', {guid: activity.entity_guid}]">
+	<a [routerLink]="['/archive/view', activity.entity_guid]">
 		<img [src]="activity.custom_data[0].src" style="width:100%" (error)="activity.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
 	</a>
 </div>
@@ -159,7 +159,7 @@
 
 <div class="mdl-card__supporting-text is-boosted" *ngIf="activity.boosted">
 	<i class="material-icons">trending_up</i>
-	<a>Boosted</a>
+	<a i18n>Boosted</a>
 </div>
 
 <div class="mdl-card__supporting-text mdl-color--blue-grey-50 tabs" *ngIf="!hideTabs">
@@ -171,11 +171,11 @@
     *ngIf ="session.getLoggedInUser().guid == activity.owner_guid"
     id="boost-actions"
     (click)="showBoost()">
-    Boost
+    <!-- i18n -->Boost<!-- /i18n -->
   </a>
 </div>
 
-<span class="impressions-tag" *ngIf="!hideTabs">{{activity.impressions}} views</span>
+<span class="impressions-tag" *ngIf="!hideTabs" i18n>{{activity.impressions}} views</span>
 
 <minds-comments  *ngIf="commentsToggle" [object]="activity" [focusOnInit]="true"></minds-comments>
 
@@ -194,20 +194,20 @@
 	</button>
 
 	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false">Edit</li>
-		<li class="mdl-menu__item" (click)="sharetoggle = true">Share</li>
-		<li class="mdl-menu__item" *ngIf="isTranslatable" (click)="translateToggle = true; toggle.value = false">Translate</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false" i18n>Edit</li>
+		<li class="mdl-menu__item" (click)="sharetoggle = true" i18n>Share</li>
+		<li class="mdl-menu__item" *ngIf="isTranslatable" (click)="translateToggle = true; toggle.value = false" i18n>Translate</li>
 		<!-- FEATURE -->
-		<li class="mdl-menu__item" *ngIf="!activity.featured && session.isAdmin()" (click)="feature()">Feature</li>
-		<li class="mdl-menu__item" *ngIf="activity.featured && session.isAdmin()" (click)="unFeature()">un-Feature</li>
+		<li class="mdl-menu__item" *ngIf="!activity.featured && session.isAdmin()" (click)="feature()" i18n>Feature</li>
+		<li class="mdl-menu__item" *ngIf="activity.featured && session.isAdmin()" (click)="unFeature()" i18n>un-Feature</li>
 		<!-- DELETE -->
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true; toggle.value = false">Delete</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true; toggle.value = false" i18n>Delete</li>
 		<!-- REPORT -->
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false">Report</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false" i18n>Report</li>
 		<!-- NOTIFICATIONS -->
-		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled>Mute notifications</li>
-		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false">Mute notifications</li>
-		<li class="mdl-menu__item" *ngIf="asyncMute && activity['is:muted']" (click)="unmute(); toggle.value = false">Unmute notifications</li>
+		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled i18n>Mute notifications</li>
+		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false" i18n>Mute notifications</li>
+		<li class="mdl-menu__item" *ngIf="asyncMute && activity['is:muted']" (click)="unmute(); toggle.value = false" i18n>Unmute notifications</li>
 	</ul>
   <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 
@@ -219,12 +219,13 @@
     (closed)="deleteToggle = false"
     (actioned)="delete($event)"
     yesButton="Delete permanently"
+    i18n-yesButton
   >
     <p confirm-message>
-        Are you sure you want to delete this post?
+        <!-- i18n -->Are you sure you want to delete this post?<!-- /i18n -->
     </p>
     <p confirm-success-message>
-        The post has been deleted.
+        <!-- i18n -->The post has been deleted.<!-- /i18n -->
     </p>
   </m-modal-confirm>
 </div>

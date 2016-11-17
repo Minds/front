@@ -86,4 +86,7 @@ export class NotificationService {
     }
   }
 
+  static _(client: Client, sockets: SocketsService) {
+    return new NotificationService(client, sockets);
+  }
 }

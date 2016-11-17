@@ -1,24 +1,16 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 
-import { FORM_COMPONENTS } from '../../../components/forms/forms';
-
-import { Material } from '../../../directives/material';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { SessionFactory } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
-import { CARDS } from '../../../controllers/cards/cards';
-import { BlogCard } from '../../../plugins/blog/card/card';
-import { Register } from '../register/register';
 import { SignupModalService } from '../../../components/modal/signup/service';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-homepage',
-  providers: [ MindsTitle, NavigationService ],
-  templateUrl: 'src/controllers/home/homepage/homepage.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, FORM_COMPONENTS, CARDS, BlogCard, Material, Register ]
+  templateUrl: 'homepage.html'
 })
 
 export class Homepage {
@@ -85,7 +77,7 @@ export class Homepage {
 
   registered(){
     this.modal.setDisplay('onboarding').open();
-    this.router.navigate(['/Newsfeed', {}]);
+    this.router.navigate(['/newsfeed']);
   }
 
 }

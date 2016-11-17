@@ -1,21 +1,15 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { MindsBanner } from '../../banner';
-import { MindsAvatar } from '../../avatar';
-import { CityFinderForm } from '../city-finder/city-finder';
-
-import { Material } from '../../../directives/material';
 import { Client, Upload } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-form-onboarding',
   outputs: [ 'done' ],
-  templateUrl: 'src/components/forms/onboarding/onboarding.html',
-  directives: [ FORM_DIRECTIVES, Material, MindsAvatar, MindsBanner, CityFinderForm ]
+  templateUrl: 'onboarding.html'
 })
 
 export class OnboardingForm {
@@ -25,13 +19,13 @@ export class OnboardingForm {
   inProgress : boolean = false;
   referrer : string;
 
-  form : ControlGroup;
+  form : FormGroup;
   gender : string = 'private';
   banner : string;
 
   done : EventEmitter<any> = new EventEmitter();
 
-	constructor(public client : Client, public upload : Upload, public router: Router, fb: FormBuilder){
+	constructor(public client : Client, public upload : Upload, fb: FormBuilder){
     this.form = fb.group({
       briefdescription: [''],
       dob: [''],

@@ -13,4 +13,8 @@ export class CacheService {
 
     return this.storage[key];
   }
+
+  static _() {
+    return new CacheService;
+  }
 }

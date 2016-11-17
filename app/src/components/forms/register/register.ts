@@ -1,6 +1,5 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
@@ -8,11 +7,11 @@ import { SessionFactory } from '../../../services/session';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-form-register',
   inputs: [ 'referrer' ],
   outputs: [ 'done' ],
-  templateUrl: 'src/components/forms/register/register.html',
-  directives: [ FORM_DIRECTIVES, Material, ROUTER_DIRECTIVES ]
+  templateUrl: 'register.html'
 })
 
 export class RegisterForm {
@@ -24,11 +23,11 @@ export class RegisterForm {
   inProgress : boolean = false;
   referrer : string;
 
-  form : ControlGroup;
+  form : FormGroup;
 
   done : EventEmitter<any> = new EventEmitter();
 
-	constructor(public client : Client, public router: Router, fb: FormBuilder){
+	constructor(public client : Client, fb: FormBuilder){
     this.form = fb.group({
       username: ['', Validators.required],
       email: ['', Validators.required],

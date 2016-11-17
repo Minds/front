@@ -7,6 +7,7 @@ export = function buildJS(gulp, plugins) {
     let tsProject = tsProjectFn(plugins);
     let src = [
       // 'typings/browser.d.ts',
+      '!' + join(APP_SRC, '**/bootstrap-aot.ts'),
       'tools/manual_typings/**/*.d.ts',
       'tools/typings/tsd/index.d.ts',
       join(APP_SRC, '**/*.ts'),
@@ -16,7 +17,9 @@ export = function buildJS(gulp, plugins) {
     let result = gulp.src(src)
       .pipe(plugins.plumber())
       .pipe(plugins.sourcemaps.init())
-      .pipe(plugins.inlineNg2Template({ base: APP_SRC }))
+      .pipe(plugins.inlineNg2Template({
+        useRelativePaths: true
+      }))
       .pipe(plugins.typescript(tsProject));
 
     return result.js

@@ -1,6 +1,7 @@
-import { provide, NgZone } from '@angular/core';
+import { NgZone } from '@angular/core';
 import { Http } from '@angular/http';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -12,55 +13,111 @@ import { HovercardService } from './hovercard';
 import { NotificationService } from './notification';
 import { TranslationService } from './translation';
 import { RichEmbedService } from './rich-embed';
+import { Session } from './session';
 import { ThirdPartyNetworksService } from './third-party-networks';
+import { AnalyticsService } from './analytics';
+import { Navigation } from './navigation';
+import { WalletService } from './wallet';
+import { AttachmentService } from './attachment';
+import { Sidebar } from './ui/sidebar';
+import { EmbedService } from './embed';
+import { MindsTitle } from './ux/title';
 
 export const MINDS_PROVIDERS : any[] = [
-   provide(ScrollService, {
-     useFactory: () => new ScrollService(),
+   {
+     provide: ScrollService,
+     useFactory: ScrollService._,
      deps: []
-   }),
-   provide(SocketsService, {
-     useFactory: (nz) => new SocketsService(nz),
+   },
+   {
+     provide: SocketsService,
+     useFactory: SocketsService._,
      deps: [ NgZone ]
-   }),
-   provide(Client, {
-     useFactory: (http) => new Client(http),
+   },
+   {
+     provide: Client,
+     useFactory: Client._,
      deps: [ Http ]
-   }),
-   provide(Upload, {
-     useFactory: (http) => new Upload(http),
+   },
+   {
+     provide: Upload,
+     useFactory: Upload._,
      deps: [ Http ]
-   }),
-   provide(Storage, {
-     useFactory: () => new Storage(),
+   },
+   {
+     provide: Storage,
+     useFactory: Storage._,
      deps: []
-   }),
-   provide(SignupModalService, {
-     useFactory: (router, scroll) => new SignupModalService(router, scroll),
+   },
+   {
+     provide: SignupModalService,
+     useFactory: SignupModalService._,
      deps: [ Router, ScrollService ]
-   }),
-   provide(CacheService, {
-     useFactory: () => new CacheService(),
+   },
+   {
+     provide: CacheService,
+     useFactory: CacheService._,
      deps: []
-   }),
-   provide(HovercardService, {
-     useFactory: (client, cache) => new HovercardService(client, cache),
+   },
+   {
+     provide: HovercardService,
+     useFactory: HovercardService._,
      deps: [ Client, CacheService ]
-   }),
-   provide(NotificationService, {
-     useFactory: (client, sockets) => new NotificationService(client, sockets),
+   },
+   {
+     provide: NotificationService,
+     useFactory: NotificationService._,
      deps: [ Client, SocketsService ]
-   }),
-   provide(TranslationService, {
-     useFactory: (client, storage) => new TranslationService(client, storage),
+   },
+   {
+     provide: TranslationService,
+     useFactory: TranslationService._,
      deps: [ Client, Storage ]
-   }),
-   provide(RichEmbedService, {
-     useFactory: (client) => new RichEmbedService(client),
+   },
+   {
+     provide: RichEmbedService,
+     useFactory: RichEmbedService._,
      deps: [ Client ]
-   }),
-   provide(ThirdPartyNetworksService, {
-     useFactory: (client, zone) => new ThirdPartyNetworksService(client, zone),
+   },
+   {
+     provide: Session,
+     useFactory: Session._
+   },
+   {
+     provide: ThirdPartyNetworksService,
+     useFactory: ThirdPartyNetworksService._,
      deps: [ Client, NgZone ]
-   })
+   },
+   {
+     provide: AnalyticsService,
+     useFactory: AnalyticsService._,
+     deps: [ Router ]
+   },
+   {
+     provide: Navigation,
+     useFactory: Navigation._,
+     deps: [ Location ]
+   },
+   {
+     provide: WalletService,
+     useFactory: WalletService._,
+     deps: [ Client ]
+   },
+   {
+     provide: AttachmentService,
+     useFactory: AttachmentService._,
+     deps: [ Client, Upload ]
+   },
+   {
+     provide: Sidebar,
+     useFactory: Sidebar._
+   },
+   {
+     provide: EmbedService,
+     useFactory: EmbedService._
+   },
+   {
+     provide: MindsTitle,
+     useFactory: MindsTitle._
+   },
 ];

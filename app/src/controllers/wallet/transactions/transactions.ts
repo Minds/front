@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { MDL_DIRECTIVES } from '../../../directives/material';
-import { InfiniteScroll } from '../../../directives/infinite-scroll';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-wallet-transactions',
-  templateUrl: 'src/controllers/wallet/transactions/transactions.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, InfiniteScroll ]
+  templateUrl: 'transactions.html'
 })
 
 export class WalletTransactions {

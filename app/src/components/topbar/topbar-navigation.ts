@@ -1,15 +1,10 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from '@angular/router-deprecated';
 
 import { Navigation as NavigationService } from '../../services/navigation';
 import { SessionFactory } from '../../services/session';
-import { MINDS_PIPES } from '../../pipes/pipes';
-
 
 @Component({
   selector: 'minds-topbar-navigation',
-  viewProviders: [NavigationService ],
   template: `
     <nav class="" *ngIf="session.isLoggedIn()">
 
@@ -21,9 +16,7 @@ import { MINDS_PIPES } from '../../pipes/pipes';
     	</a>
 
     </nav>
-  `,
-  directives: [RouterLink, CORE_DIRECTIVES],
-  pipes: [MINDS_PIPES]
+  `
 })
 
 export class TopbarNavigation {

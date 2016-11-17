@@ -1,14 +1,11 @@
 import { Component, ElementRef } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client, Upload } from '../../../services/api';
-import { CARDS } from '../../cards/cards';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-newsfeed-boost-rotator',
   host: {
     '(window:blur)': 'inActive()',
@@ -17,8 +14,7 @@ import { CARDS } from '../../cards/cards';
     '(mouseout)': 'mouseOut()'
   },
   inputs: ['interval'],
-  templateUrl: 'src/controllers/newsfeed/boost-rotator/boost-rotator.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, CARDS ]
+  templateUrl: 'boost-rotator.html'
 })
 
 export class NewsfeedBoostRotator {

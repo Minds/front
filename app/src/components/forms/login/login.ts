@@ -1,17 +1,15 @@
 import { Component, EventEmitter, NgZone } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
-import { Router, RouteParams, RouterLink } from '@angular/router-deprecated';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-form-login',
   outputs: [ 'done', 'doneRegistered' ],
-  templateUrl: 'src/components/forms/login/login.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink]
+  templateUrl: 'login.html'
 })
 
 export class LoginForm {
@@ -24,12 +22,12 @@ export class LoginForm {
   referrer : string;
   minds = window.Minds;
 
-  form : ControlGroup;
+  form : FormGroup;
 
   done : EventEmitter<any> = new EventEmitter();
   doneRegistered : EventEmitter<any> = new EventEmitter();
 
-	constructor(public client : Client, public router: Router, fb: FormBuilder, private zone : NgZone){
+	constructor(public client : Client, fb: FormBuilder, private zone : NgZone){
 
     this.form = fb.group({
       username: ['', Validators.required],

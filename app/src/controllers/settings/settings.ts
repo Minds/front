@@ -1,24 +1,16 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Router, RouterLink, RouteParams } from "@angular/router-deprecated";
+import { Router, ActivatedRoute } from "@angular/router";
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { SessionFactory } from '../../services/session';
-import { Material } from '../../directives/material';
-
-import { SettingsGeneral } from './general/general';
-import { SettingsStatistics } from './statistics/statistics';
-import { SettingsDisableChannel } from './disable/disable';
-import { SettingsTwoFactor } from './two-factor/two-factor';
-
-import { InviteModal } from '../../components/modal/invite/invite';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-settings',
-  providers: [ MindsTitle ],
-  templateUrl: 'src/controllers/settings/settings.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink, SettingsGeneral, SettingsStatistics, SettingsDisableChannel, SettingsTwoFactor, InviteModal ]
+  templateUrl: 'settings.html'
 })
 
 export class Settings{
@@ -28,19 +20,30 @@ export class Settings{
   user : any;
   filter : string;
 
-  constructor(public client: Client, public router: Router, public params: RouteParams, public title: MindsTitle){
+  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
+  }
+
+  paramsSubscription: Subscription;
+  ngOnInit() {
     if(!this.session.isLoggedIn()){
-      router.navigate(['/Login']);
+      this.router.navigate(['/login']);
     }
     this.minds = window.Minds;
 
     this.title.setTitle("Settings");
 
-    if(params.params['filter'])
-      this.filter = params.params['filter'];
-    else
-      this.filter = 'general';
+    this.filter = 'general';
+
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['filter']) {
+        this.filter = params['filter'];
+      } else {
+        this.filter = 'general';
+      }
+    });
   }
 
-
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 }

@@ -1,19 +1,15 @@
 import { Component, EventEmitter} from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { ROUTER_DIRECTIVES, RouteParams } from "@angular/router-deprecated";
+import { ActivatedRoute } from "@angular/router";
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
-import { Material } from '../../directives/material';
-import { CARDS } from '../../controllers/cards/cards';
-import { BUTTON_COMPONENTS } from '../../components/buttons';
-import { BoostAds } from '../../components/ads/boost';
-import { ThirdPartyNetworksFacebook } from '../../components/third-party-networks/facebook';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-boosts-console',
-  templateUrl: 'src/controllers/boosts/boosts.html',
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, CARDS, BUTTON_COMPONENTS, BoostAds, ThirdPartyNetworksFacebook ]
+  templateUrl: 'boosts.html'
 })
 
 export class Boosts{
@@ -30,6 +26,7 @@ export class Boosts{
   error : string = "";
 
   boosterToggle : boolean = false;
+  boostToggle: boolean = false;
   boosterToggleInProgress : boolean = false;
   latestPosts = [];
   latestMedia = [];
@@ -38,12 +35,27 @@ export class Boosts{
 
   now = Date.now();
 
-  constructor(public client: Client, params: RouteParams){
-    if(params.params['filter'])
-      this.filter = params.params['filter'];
-    if(params.params['type'])
-      this.type = params.params['type'];
-    this.getBoosts();
+  constructor(public client: Client, private route: ActivatedRoute){
+  }
+
+  paramsSubscription: Subscription;  
+  ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe((params) => {
+      if (params['filter']) {
+        this.filter = params['filter'];
+      }
+      
+      if (params['type']) {
+        this.type = params['type'];
+      }
+
+      this.inProgress = false;
+      this.moreData = true;
+      this.boosts = [];
+      this.offset = '';
+      
+      this.getBoosts();
+    });
   }
 
   getBoosts(){

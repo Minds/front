@@ -11,6 +11,7 @@ import { MaterialUpload } from './material/upload';
 
 export class Material {
   private element: any;
+  mdl: any;
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;
@@ -21,4 +22,4 @@ export class Material {
   }
 }
 
-export const MDL_DIRECTIVES: Type[] = [Material, MaterialTextfield, MaterialUpload];
+export const MDL_DIRECTIVES: any[] = [Material, MaterialTextfield, MaterialUpload];

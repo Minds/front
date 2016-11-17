@@ -15,6 +15,7 @@ import { Directive,  EventEmitter, ElementRef } from '@angular/core';
 export class AutoGrow{
   _element : any;
   timeout: any;
+  autoGrow: any;
 
   constructor(element: ElementRef) {
     this._element =  element.nativeElement;

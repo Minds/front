@@ -9,6 +9,7 @@ import { Material as MaterialService } from "../../services/ui";
 export class MaterialUpload{
 
   private element: any;
+  mdlUpload: any;
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;

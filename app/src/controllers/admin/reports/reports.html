@@ -1,7 +1,7 @@
 <div class="mdl-tabs__tab-bar">
-  <a [routerLink]="['/Admin', { filter: 'reports', type: 'review' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'review' }">Review Pending</a>
-  <a [routerLink]="['/Admin', { filter: 'reports', type: 'archive' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'archive' }">Archived</a>
-  <a [routerLink]="['/Admin', { filter: 'reports', type: 'history' }]" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'history' }">History</a>
+  <a [routerLink]="['/admin/reports/review']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'review' }" i18n>Review Pending</a>
+  <a [routerLink]="['/admin/reports/archive']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'archive' }" i18n>Archived</a>
+  <a [routerLink]="['/admin/reports/history']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'history' }" i18n>History</a>
 </div>
 
 <div class="mdl-grid m-admin-reports" style="max-width:600px">
@@ -10,29 +10,29 @@
     <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [hidden]="reports.length > 0 || !inProgress"></div>
 
     <div class="mdl-card__supporting-text m-no-reports" [hidden]="inProgress || moreData || reports.length > 0">
-      There are no reports.
+      <!-- i18n -->There are no reports.<!-- /i18n -->
     </div>
 
     <div class="mdl-card mdl-shadow--4dp m-report" *ngFor="let report of reports; let i = index">
 
       <div class="m-report-meta mdl-color-text--blue-grey-500">
         <p *ngIf="report.from && report.from.username">
-          <span>Reported by:</span>
-          <a [routerLink]="['/Channel', { username: report.from.username }]" target="_blank">
+          <span i18n>Reported by:</span>
+          <a [routerLink]="['/', report.from.username]" target="_blank">
             @{{report.from.username }}
           </a>
         </p>
 
         <p *ngIf="report.subject">
-          <span>Subject:</span> {{ subjects[report.subject] ? subjects[report.subject] : 'Unknown' }}
+          <span i18n>Subject:</span> {{ subjects[report.subject] ? subjects[report.subject] : 'Unknown' }}
         </p>
 
         <p *ngIf="report.time_created">
-          <span>Date:</span> {{ report.time_created * 1000 | date: 'medium' }}
+          <span i18n>Date:</span> {{ report.time_created * 1000 | date: 'medium' }}
         </p>
 
         <p *ngIf="report.action">
-          <span>Last Action:</span> {{ report.action }}
+          <span i18n>Last Action:</span> {{ report.action }}
         </p>
       </div>
 
@@ -47,9 +47,9 @@
       </minds-comments>
 
       <div class="mdl-card__supporting-text m-action-buttons" *ngIf="!report.read_only">
-        <button *ngIf="type == 'review'" class="mdl-button mdl-button--raised mdl-button--colored mdl-color--amber" (click)="archive(report, index)">Archive</button>
-        <button [disabled]="report.entity.mature || report.action == 'explicit'" class="mdl-button mdl-button--raised mdl-button--colored mdl-color--orange" (click)="explicit(report, index)">Mark as <i class="material-icons">explicit</i></button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="delete(report, index)">Delete</button>
+        <button *ngIf="type == 'review'" class="mdl-button mdl-button--raised mdl-button--colored mdl-color--amber" (click)="archive(report, index)" i18n>Archive</button>
+        <button [disabled]="report.entity.mature || report.action == 'explicit'" class="mdl-button mdl-button--raised mdl-button--colored mdl-color--orange" (click)="explicit(report, index)" i18n>Mark as <i class="material-icons">explicit</i></button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="delete(report, index)" i18n>Delete</button>
       </div>
 
     </div>

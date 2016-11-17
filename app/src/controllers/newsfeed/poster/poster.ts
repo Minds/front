@@ -1,25 +1,25 @@
 import { Component, EventEmitter, ViewChild } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { Client, Upload } from '../../../services/api';
-import { MDL_DIRECTIVES } from '../../../directives/material';
-import { AutoGrow } from '../../../directives/autogrow';
-import { InfiniteScroll } from '../../../directives/infinite-scroll';
 import { MindsActivityObject } from '../../../interfaces/entities';
 import { SessionFactory } from '../../../services/session';
 
 import { AttachmentService } from '../../../services/attachment';
-import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 import { ThirdPartyNetworksSelector } from '../../../components/third-party-networks/selector';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-newsfeed-poster',
   inputs: [ '_container_guid: containerGuid', 'accessId', 'message'],
   outputs: ['load'],
-  templateUrl: 'src/controllers/newsfeed/poster/poster.html',
-  directives: [ MDL_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, AutoGrow, InfiniteScroll, MindsRichEmbed, ThirdPartyNetworksSelector ],
-  providers: [ AttachmentService ]
+  providers: [ 
+    { 
+      provide: AttachmentService,
+      useFactory: AttachmentService._, 
+      deps: [ Client, Upload ]
+    } 
+  ],
+  templateUrl: 'poster.html'
 })
 
 export class Poster {

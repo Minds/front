@@ -1,10 +1,7 @@
 import { Component, EventEmitter, ElementRef, Inject } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
-import { MDL_DIRECTIVES } from '../../directives/material';
 import { Material as MaterialService } from "../../services/ui";
 import { ScrollService } from '../../services/ux/scroll';
-
 
 @Component({
   selector: 'infinite-scroll',
@@ -16,15 +13,14 @@ import { ScrollService } from '../../services/ux/scroll';
       [hidden]="inProgress || !moreData"
       (click)="manualLoad()"
       *ngIf="!hideManual">
-      Click to load more
+      <!-- i18n -->Click to load more<!-- /i18n -->
     </div>
     <div class="m-infinite-scroll-manual mdl-color--blue-grey-200 mdl-color-text--blue-grey-500"
       [hidden]="moreData"
       *ngIf="!hideManual">
-      Nothing more to load
+      <!-- i18n -->Nothing more to load<!-- /i18n -->
     </div>
-  `,
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES ]
+  `
 })
 
 
@@ -38,6 +34,7 @@ export class InfiniteScroll{
   hideManual : boolean = false;
   _content : any;
   _listener;
+  on: any;
 
   constructor(_element: ElementRef, public scroll : ScrollService) {
     this.element = _element.nativeElement;

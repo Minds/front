@@ -53,7 +53,7 @@ interface InjectableDependency {
 export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencies([
   { src: 'systemjs/dist/system-polyfills.js', inject: 'shims', dest: JS_DEST },
 
-  { src: 'es6-shim/es6-shim.min.js', inject: 'shims', dest: JS_DEST },
+  { src: 'core-js/client/shim.min.js', inject: 'shims', dest: JS_DEST },
   { src: 'reflect-metadata/Reflect.js', inject: 'shims', dest: JS_DEST },
   { src: 'zone.js/dist/zone.min.js', inject: 'shims', dest: JS_DEST },
   { src: 'systemjs/dist/system.src.js', inject: 'shims', dest: JS_DEST },
@@ -84,9 +84,9 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
 
 export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencies([
   { src: 'systemjs/dist/system-polyfills.src.js', inject: 'shims' },
+  { src: 'core-js/client/shim.min.js', inject: 'shims' },
   { src: 'reflect-metadata/Reflect.js', inject: 'shims' },
   { src: 'zone.js/dist/zone.min.js', inject: 'shims' },
-  { src: 'es6-shim/es6-shim.min.js', inject: 'shims' },
   { src: 'systemjs/dist/system.js', inject: 'shims' },
   // { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
   { src: 'socket.io-client/socket.io.js', inject: 'libs' },
@@ -123,11 +123,12 @@ const SYSTEM_PACKAGES = {
   '@angular/core': { main: 'index.js', defaultExtension: 'js' },
   '@angular/common': { main: 'index.js', defaultExtension: 'js' },
   '@angular/compiler': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/forms': { main: 'index.js', defaultExtension: 'js' },
   '@angular/http': { main: 'index.js', defaultExtension: 'js' },
   '@angular/platform-browser': { main: 'index.js', defaultExtension: 'js' },
   '@angular/platform-browser-dynamic': { main: 'index.js', defaultExtension: 'js' },
-  // '@angular/router': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/router-deprecated': { main: 'index.js', defaultExtension: 'js' },
+  // '@angular/router-deprecated': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/router': { main: 'index.js', defaultExtension: 'js' },
   'symbol-observable': { main: 'index.js', defaultExtension: 'js' }
 };
 

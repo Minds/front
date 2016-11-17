@@ -11,13 +11,13 @@
     *ngIf="moreData || !loaded"
   >
     <span *ngIf="inProgress">
-      <i class="material-icons">autorenew</i> Loading&hellip;
+      <i class="material-icons">autorenew</i> <!-- i18n -->Loading&hellip;<!-- /i18n -->
     </span>
     <span *ngIf="!inProgress && !loaded">
-      <i class="material-icons">update</i> Load
+      <i class="material-icons">update</i> <!-- i18n -->Load<!-- /i18n -->
     </span>
     <span *ngIf="!inProgress && loaded">
-      <i class="material-icons">update</i> Load earlier
+      <i class="material-icons">update</i> <!-- i18n -->Load earlier<!-- /i18n -->
     </span>
     
   </div>
@@ -34,7 +34,7 @@
 <div class="mdl-card minds-comment minds-comment-post minds-block">
 
     <div class="minds-avatar">
-      <a [routerLink]="['/Channel', {username: session.getLoggedInUser().username }]">
+      <a [routerLink]="['/', session.getLoggedInUser().username]">
         <img src="{{minds.cdn_url}}/icon/{{session.getLoggedInUser().guid}}/small" class="mdl-shadow--2dp"/>
       </a>
     </div>
@@ -42,16 +42,17 @@
     <div class="minds-body">
 
         <div class="m-comments-composer">
-            <form (submit)="post()">
+            <form (submit)="post($event)">
 
                 <textarea
-                  ngControl="message"
                   type="text"
                   id="message"
                   #message
+                  name="message"
                   [(ngModel)]="content"
                   (keyup)="getPostPreview(message)"
                   placeholder="Enter your comment"
+                  i18n-placeholder
                   (keydown.enter)="post($event)"
                   [autoGrow]
                   (click)="isLoggedIn()"
@@ -60,7 +61,7 @@
             </form>
 
             <div class="minds-comment-span mdl-color-text--red-500" *ngIf="!canPost && triedToPost">
-              Please wait until the upload is complete.
+              <!-- i18n -->Please wait until the upload is complete.<!-- /i18n -->
             </div>
 
             <div class="mdl-card__actions">
@@ -74,6 +75,7 @@
               [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
               (click)="attachment.toggleMature()"
               title="Mature content"
+              i18n-title
               >
                 <i class="material-icons">explicit</i>
               </a>

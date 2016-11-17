@@ -1,23 +1,18 @@
 import { Component, EventEmitter} from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { NotificationService } from '../../../services/notification';
-import { Material } from '../../../directives/material';
 import { MindsWalletResponse } from '../../../interfaces/responses';
 import { MindsUserSearchResponse } from '../../../interfaces/responses';
 import { MindsBoostResponse } from '../../../interfaces/responses';
 import { MindsBoostRateResponse } from '../../../interfaces/responses';
-import { BoostFullNetwork } from './full-network/full-network';
-import { BoostP2P} from './p2p/p2p';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-boost',
   inputs: ['object'],
   outputs: ['_done: done'],
-  templateUrl: 'src/controllers/boosts/boost/boost.html',
-  directives: [ CORE_DIRECTIVES, Material, RouterLink, BoostFullNetwork, BoostP2P]
+  templateUrl: 'boost.html'
 })
 
 export class Boost{

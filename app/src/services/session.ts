@@ -1,7 +1,7 @@
 /**
  * Sesions
  */
-import { EventEmitter, ReflectiveInjector, provide } from '@angular/core';
+import { EventEmitter, ReflectiveInjector } from '@angular/core';
 
 export class Session {
 	loggedinEmitter : EventEmitter<any> = new EventEmitter();
@@ -77,16 +77,18 @@ export class Session {
 		window.Minds.LoggedIn = false;
 		window.localStorage.clear();
 		this.loggedinEmitter.next(false);
-	}
-
+  }
+  
+  static _() {
+    return new Session;
+  }
 }
 
-var injector = ReflectiveInjector.resolveAndCreate([
-	provide(Session, { useFactory: () => new Session() })
-]);
-
 export class SessionFactory {
-	static build(){
+  static build() {
+    let providers = ReflectiveInjector.resolve([Session]),
+      injector = ReflectiveInjector.fromResolvedProviders(providers);
+    
 		return injector.get(Session);
 	}
 }

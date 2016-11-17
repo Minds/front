@@ -8,9 +8,10 @@
         <input class="mdl-textfield__input"
           type="number"
           id="number"
+          name="credit-card-number"
           [(ngModel)]="card.number"
           />
-        <label class="mdl-textfield__label" for="number">Card number</label>
+        <label class="mdl-textfield__label" for="number" i18n="Credit Card Number">Card number</label>
       </div>
     </div>
 
@@ -23,7 +24,7 @@
 
     <div class="mdl-cell mdl-cell--6-col">
       <select name="credit-card-month" [ngModel]="card.month" (change)="card.month = $event.target.value">
-        <option>mm</option>
+        <option i18n="Month">mm</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -38,7 +39,7 @@
         <option value="12">12</option>
       </select>
       <select name="credit-card-year" [ngModel]="card.year"  (change)="card.year = $event.target.value">
-        <option>yyyy</option>
+        <option i18n="Year">yyyy</option>
         <option value="2015">2015</option>
         <option value="2016">2016</option>
         <option value="2017">2017</option>
@@ -52,9 +53,10 @@
         <input class="mdl-textfield__input"
           type="number"
           id="cvc"
+          name="credit-card-cvc"
           [(ngModel)]="card.sec"
           />
-        <label class="mdl-textfield__label" for="cvc">CVC/Security Code</label>
+        <label class="mdl-textfield__label" for="cvc" i18n>CVC/Security Code</label>
       </div>
     </div>
     <div class="mdl-cell mdl-cell--6-col">
@@ -62,9 +64,10 @@
         <input class="mdl-textfield__input"
           type="text"
           id="firstname"
+          name="credit-card-name"
           [(ngModel)]="card.name"
           />
-        <label class="mdl-textfield__label" for="firstname">Card holders name</label>
+        <label class="mdl-textfield__label" for="firstname" i18n>Card holders name</label>
       </div>
     </div>
 
@@ -76,7 +79,7 @@
         [disabled]="!validate()"
         (click)="confirm()"
         >
-        Confirm
+        <!-- i18n -->Confirm<!-- /i18n -->
       </button>
     </div>
   </div>
@@ -85,6 +88,6 @@
 
 <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!confirmation">
   <div class="mdl-card__supporting-text">
-    <h2>Complete</h2>
+    <h2 i18n>Complete</h2>
   </div>
 </div>

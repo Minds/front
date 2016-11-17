@@ -6,17 +6,18 @@
 </div>
 
 <!-- START: Complete -->
-<form (submit)="complete($event)" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 m-form" [hidden]="hideLogin">
+<form (submit)="complete($event)" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form">
 
   <div class="mdl-card__supporting-text mdl-grid">
 
     <div class="mdl-cell mdl-cell--12-col">
-      <label>Pick a username</label>
+      <label i18n>Pick a username</label>
       <input
         type="text"
         id="username"
-        ngControl="username"
+        formControlName="username"
         placeholder="Username (eg. @me)"
+        i18n-placeholder
         />
     </div>
 
@@ -24,7 +25,7 @@
 
   <div class="mdl-card__actions">
     <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="complete($event)" [disabled]="inProgress">
-      Complete
+      <!-- i18n -->Complete<!-- /i18n -->
     </button>
   </div>
 

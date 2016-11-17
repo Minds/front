@@ -20,7 +20,7 @@
       [ngModel]="socialProfiles[i].key"
       (change)="socialProfiles[i].key = $event.target.value; propagateChanges()"
     >
-      <option value="">-- Profile --</option>
+      <option value="" i18n>-- Profile --</option>
       <option *ngFor="let opt of socialProfileMeta" [value]="opt.key">{{ opt.label }}</option>
     </select>
 
@@ -33,7 +33,7 @@
 
     <a (click)="removeSocialProfile(i)" class="mdl-color-text--blue-grey-300">
       <i class="material-icons m-material-icons-inline-text">delete</i>
-      Remove
+      <!-- i18n -->Remove<!-- /i18n -->
     </a>
   </div>
 
@@ -42,7 +42,7 @@
       class="m-social-profile-add mdl-color-text--blue-grey-500"
     >
       <i class="material-icons m-material-icons-inline-text">playlist_add</i>
-      Add Social Profile
+      <!-- i18n -->Add Social Profile<!-- /i18n -->
     </a>
   </div>
 </div>

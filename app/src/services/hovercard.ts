@@ -45,21 +45,22 @@ export class HovercardService {
 
     this.cache.set(`hovercard-${this.guid}`, false);
 
+    let currentGuid = this.guid; // Cache parameter scoping (`this` might change)
     this.client.get(`api/v1/entities/entity/${this.guid}`, {})
-    .then((response: any) => {
-      if (response.entity) {
-        this.cache.set(`hovercard-${this.guid}`, response.entity);
+      .then((response: any) => {
+        if (response.entity) {
+          this.cache.set(`hovercard-${currentGuid}`, response.entity);
 
-        if (this.guid == response.entity.guid) {
-          this.data = response.entity;
+          if (this.guid == response.entity.guid) {
+            this.data = response.entity;
+          }
+        } else {
+          this.cache.set(`hovercard-${currentGuid}`, undefined);
         }
-      } else {
-        this.cache.set(`hovercard-${this.guid}`, undefined);
-      }
-    })
-    .catch(e => {
-      this.cache.set(`hovercard-${this.guid}`, undefined);
-    });
+      })
+      .catch(e => {
+        this.cache.set(`hovercard-${currentGuid}`, undefined);
+      });
   }
 
   hide(guid: any) {
@@ -121,5 +122,9 @@ export class HovercardService {
       this.anchor.bottom = 'auto';
       this.anchor.top = top;
     }
+  }
+
+  static _(client: Client, cache: CacheService) {
+    return new HovercardService(client, cache);
   }
 }

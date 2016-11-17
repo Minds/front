@@ -6,7 +6,7 @@ import { Pipe }  from '@angular/core';
 })
 
 export class ListablePipe {
-  transform(value: any, args: any[]) {
+  transform(value: any) {
     let result = [];
 
     if(!value || value.length == 0) {
@@ -14,7 +14,7 @@ export class ListablePipe {
     }
 
     for (let i = 0; i < value.length; i++) {
-      if (value[i].params && value[i].params.listed) {
+      if (value[i].extras && value[i].extras.listed) {
         result.push(value[i]);
       }
     }

@@ -1,17 +1,14 @@
 import { Component, EventEmitter, ChangeDetectorRef } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { MINDS_PIPES } from '../../pipes/pipes';
 
 import { TranslationService } from '../../services/translation';
 
 @Component({
+  moduleId: module.id,
   selector: 'm-translate',
   inputs: ['_open: open', '_entity: entity', '_translateEvent: translateEvent'],
   outputs: ['onTranslateInit', 'onTranslate', 'onTranslateError'],
   exportAs: 'translate',
-  directives: [CORE_DIRECTIVES],
-  pipes: [MINDS_PIPES],
-  templateUrl: 'src/components/translate/translate.html'
+  templateUrl: 'translate.html'
 })
 
 export class Translate {

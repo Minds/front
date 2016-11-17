@@ -10,7 +10,7 @@ export class DomainPipe {
   }
 
 
-  transform(value: string, args: any[]) {
+  transform(value: string) {
 
     if(!value)
       return value;

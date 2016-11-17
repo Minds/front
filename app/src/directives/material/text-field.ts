@@ -8,6 +8,7 @@ import { Material as MaterialService } from "../../services/ui";
 
 export class MaterialTextfield{
   private element: any;
+  mdlTextfield: any;
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;

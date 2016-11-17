@@ -1,19 +1,13 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
 
 import { Client } from '../../../services/api';
-import { Material } from '../../../directives/material';
 import { SessionFactory } from '../../../services/session';
-import { InfiniteScroll } from '../../../directives/infinite-scroll';
-import { UserCard } from '../../../controllers/cards/cards';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-channel-subscribers',
   inputs: ['channel'],
-  templateUrl: 'src/controllers/channels/subscribers/subscribers.html',
-  directives: [ CORE_DIRECTIVES, Material, InfiniteScroll, UserCard ]
+  templateUrl: 'subscribers.html'
 })
 
 export class ChannelSubscribers {

@@ -9,6 +9,7 @@ import { Directive, EventEmitter, ViewContainerRef, Inject } from '@angular/core
 export class GraphSVG {
 
   element : any;
+  svgHack: any;
 
   constructor(@Inject(ViewContainerRef) viewContainer: ViewContainerRef){
     this.element = viewContainer.element.nativeElement;

@@ -1,14 +1,12 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
 
 import { Client } from '../../../services/api';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-onboarding-categories-selector',
   outputs: [ 'done' ],
-  templateUrl: 'src/components/onboarding/categories-selector/categories-selector.html',
-  directives: [ FORM_DIRECTIVES ]
+  templateUrl: 'categories-selector.html',
 })
 
 export class OnboardingCategoriesSelector {

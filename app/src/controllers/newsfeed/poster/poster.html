@@ -1,7 +1,7 @@
 <div class="mdl-card mdl-shadow--4dp post" *ngIf="session.isLoggedIn()">
     <div class="mdl-card__supporting-text">
         <div class="minds-avatar">
-          <a [routerLink]="['/Channel', {username: session.getLoggedInUser().username}]">
+          <a [routerLink]="['/', session.getLoggedInUser().username]">
             <img src="{{minds.cdn_url}}/icon/{{session.getLoggedInUser().guid}}/medium/{{session.getLoggedInUser().icontime}}/" class="mdl-shadow--2dp"/>
           </a>
         </div>
@@ -9,14 +9,15 @@
         <form (submit)="post()">
 
             <textarea
-              ngControl="message"
               class="mdl-textfield__input"
               type="text"
               id="message"
               #message
+              name="message"
               [(ngModel)]="meta.message"
               (keyup)="getPostPreview(message)"
               placeholder="Enter your status here"
+              i18n-placeholder
               [autoGrow]
             ></textarea>
 
@@ -34,9 +35,10 @@
               [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
               (click)="attachment.toggleMature()"
               title="Mature content"
+              i18n-title
               >
                 <i class="material-icons">explicit</i>
-                <span *ngIf="attachment.isMature()">Mature content</span>
+                <span *ngIf="attachment.isMature()" i18n>Mature content</span>
               </a>
 
               <a class="m-paywall-button"
@@ -53,7 +55,7 @@
                 class="mdl-button mdl-button--colored"
                 [disabled]="!canPost || inProgress"
                 >
-                Post <i class="material-icons">send</i>
+                <!-- i18n: Action of posting -->Post<!-- /i18n --> <i class="material-icons">send</i>
               </button>
             </div>
 

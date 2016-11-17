@@ -5,9 +5,9 @@
 ?>
 <html>
   <head>
+    <base href="/" />
 
     <meta charset="utf-8">
-    <base href="/" />
     <link rel="icon" type="image/png" href="/assets/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 
@@ -111,19 +111,20 @@
     <!-- End Google Analytics -->
     <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
 
-      <script>
-<?php
-      $minds = [
-          "MindsContext" => __MINDS_CONTEXT__,
-          "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
-          "Admin" => Minds\Core\Session::isAdmin() ? true : false,
-          "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
-          "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
-          "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
-          "navigation" => Minds\Core\Navigation\Manager::export(),
-          "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
-          "categories" => Minds\Core\Config::_()->get('categories') ?: [],
-          "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key']
+    <script>
+      <?php
+          $minds = [
+              "MindsContext" => __MINDS_CONTEXT__,
+              "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
+              "Admin" => Minds\Core\Session::isAdmin() ? true : false,
+              "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
+              "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
+              "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
+              "navigation" => Minds\Core\Navigation\Manager::export(),
+              "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
+              'language' => Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en',
+              "categories" => Minds\Core\Config::_()->get('categories') ?: [],
+              "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
           ];
 
           if(Minds\Core\Session::isLoggedIn()){
@@ -140,10 +141,9 @@
 
     <!-- inject:js -->
   	<!-- endinject -->
-          <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-          <script>window.twoOhSixId = 'minds.com';</script>
-          <script src='//s.206ads.com/init.js'></script>
-
+    <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+    <script>window.twoOhSixId = 'minds.com';</script>
+    <script src='//s.206ads.com/init.js'></script>
 
     <% if (ENV === 'dev') { %>
     <script>

@@ -1,16 +1,10 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators, RadioButtonState } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
-
-
-import { Material } from '../../directives/material';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-tutorial',
   outputs: [ 'done' ],
-  templateUrl: 'src/components/tutorial/tutorial.html',
-  directives: [ FORM_DIRECTIVES, Material ]
+  templateUrl: 'tutorial.html'
 })
 
 export class Tutorial {
@@ -19,7 +13,6 @@ export class Tutorial {
   inProgress : boolean = false;
   referrer : string;
 
-  form : ControlGroup;
   gender : string = 'private';
   banner : string;
 
@@ -28,6 +21,4 @@ export class Tutorial {
 	constructor(){
 
 	}
-
-
 }

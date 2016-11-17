@@ -126,4 +126,8 @@ export class TranslationService {
         return response.translation;
       });
   }
+
+  static _(client: Client, storage: Storage) {
+    return new TranslationService(client, storage);
+  }
 }

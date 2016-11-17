@@ -1,19 +1,16 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from '@angular/common';
-import { Router, RouteParams } from '@angular/router-deprecated';
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { FORM_COMPONENTS } from '../../../components/forms/forms';
+import { Subscription } from 'rxjs/Rx';
 
-import { SignupModalService } from '../../../components/modal/signup/service';
-import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-
+import { SignupModalService } from '../../../components/modal/signup/service';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-register',
-  templateUrl: 'src/controllers/home/register/register.html',
-  directives: [ FORM_DIRECTIVES, Material, FORM_COMPONENTS ]
+  templateUrl: 'register.html'
 })
 
 export class Register {
@@ -26,25 +23,33 @@ export class Register {
   inProgress : boolean = false;
   referrer : string;
 
-  form : ControlGroup;
-
   flags = {
     canPlayInlineVideos: true
   };
 
-  constructor(public client : Client, public router: Router, public params: RouteParams, private modal : SignupModalService){
+  constructor(public client : Client, public router: Router, public route: ActivatedRoute, private modal : SignupModalService){
+  }
 
-    if(params.params['referrer'])
-      this.referrer = params.params['referrer'];
+  paramsSubscription: Subscription;
+  ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if(params['referrer']) {
+        this.referrer = params['referrer'];
+      }
+    });
 
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
   }
 
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
+
   registered(){
     this.modal.setDisplay('onboarding').open();
-    this.router.navigate(['/Newsfeed', {}]);
+    this.router.navigate(['/newsfeed']);
   }
 
 }

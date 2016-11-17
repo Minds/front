@@ -150,5 +150,9 @@ export class Client {
             }
           });
 		});
-	}
+  }
+  
+  static _(http: Http) {
+    return new Client(http);
+  }
 }

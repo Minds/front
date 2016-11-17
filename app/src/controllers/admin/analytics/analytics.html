@@ -4,7 +4,7 @@
   <!-- Daily active users -->
   <div class="mdl-cell mdl-cell--4-col">
     <div class="mdl-card">
-      <div class="mdl-card__title">Daily Active Users</div>
+      <div class="mdl-card__title" i18n>Daily Active Users</div>
       <div class="mdl-card__supporting-text">
         <minds-graph-line [data]="dam"></minds-graph-line>
       </div>
@@ -20,7 +20,7 @@
   <!-- Monthly active users & Retention -->
   <div class="mdl-cell mdl-cell--4-col">
     <div class="mdl-card">
-      <div class="mdl-card__title">Monthly Active Users</div>
+      <div class="mdl-card__title" i18n>Monthly Active Users</div>
       <div class="mdl-card__supporting-text">
         <minds-graph-line [data]="mam"></minds-graph-line>
       </div>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="mdl-card">
-      <div class="mdl-card__title">Retention</div>
+      <div class="mdl-card__title" i18n>Retention</div>
       <div class="mdl-card__supporting-text" *ngIf="retention">
         <minds-graph-line [data]="retention.totals"></minds-graph-line>
       </div>
@@ -50,7 +50,7 @@
   <!-- Signups & Boost Stats -->
   <div class="mdl-cell mdl-cell--4-col">
     <div class="mdl-card">
-      <div class="mdl-card__title">Signups</div>
+      <div class="mdl-card__title" i18n>Signups</div>
       <div class="mdl-card__supporting-text">
         <minds-graph-line [data]="signups"></minds-graph-line>
       </div>
@@ -63,34 +63,34 @@
     </div>
 
     <div class="mdl-card">
-      <div class="mdl-card__title">Boost</div>
+      <div class="mdl-card__title" i18n>Boost</div>
       <div class="mdl-card__supporting-text">
         <minds-graph-pie [data]="[{ label: 'review', total: boost_newsfeed.percent  }]"></minds-graph-pie>
       </div>
       <div class="mdl-card__supporting-text results">
 
         <div class="row">
-          <label><b>Review</b></label>
+          <label i18n><b>Review</b></label>
           <b>{{boost_newsfeed.review}}</b>
         </div>
         <div class="row">
-          <label><i>Backlog</i></label>
+          <label i18n><i>Backlog</i></label>
           <i>{{boost_newsfeed.review_backlog | number:'1.0-0'}} hours</i>
         </div>
         <div class="row">
-          <label><b>Approved</b></label>
+          <label i18n><b>Approved</b></label>
           <b>{{boost_newsfeed.approved}}</b>
         </div>
         <div class="row">
-          <label><i>Backlog</i></label>
+          <label i18n><i>Backlog</i></label>
           <i>{{boost_newsfeed.approved_backlog | number:'1.0-0'}} hours</i>
         </div>
         <div class="row">
-          <label><i>Impressions</i></label>
+          <label i18n><i>Impressions</i></label>
           <i>{{boost_newsfeed.impressions | number:'1.0-0'}}</i>
         </div>
         <div class="row">
-          <label><i>Burn rate</i></label>
+          <label i18n><i>Burn rate</i></label>
           <i>{{(boost_newsfeed.impressions - boost_newsfeed.impressions_met) / boost_newsfeed.approved_backlog | number:'1.0-3'}} / hour</i>
         </div>
 

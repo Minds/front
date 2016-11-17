@@ -1,25 +1,21 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Router } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 
 import { LICENSES, ACCESS } from '../../services/list-options';
 import { MindsTitle } from '../../services/ux/title';
 import { SessionFactory } from '../../services/session';
-import { MDL_DIRECTIVES } from '../../directives/material';
 import { Upload } from '../../services/api/upload';
 import { Client } from '../../services/api/client';
 
 
 @Component({
   selector: 'minds-capture',
-  providers: [ MindsTitle ],
   host : {
     '(dragover)': 'dragover($event)',
     '(dragleave)': 'dragleave($event)',
     '(drop)': 'drop($event)'
   },
-  templateUrl: 'src/controllers/capture/capture.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MDL_DIRECTIVES ]
+  templateUrl: 'capture.html'
 })
 
 export class Capture {
@@ -37,20 +33,23 @@ export class Capture {
 
   control;
 
-  default_maturity : boolean = false;
+  default_maturity : number = 0;
   default_license : string = "all-rights-reserved";
   licenses = LICENSES;
   access = ACCESS;
 	constructor(public _upload: Upload, public client: Client, public router: Router, public title: MindsTitle){
+  }
+  
+  ngOnInit() {
     if(!this.session.isLoggedIn()){
-      router.navigate(['/Login']);
+      this.router.navigate(['/login']);
     } else {
       this.domListeners();
       this.getAlbums();
     }
 
     this.title.setTitle("Capture");
-	}
+  }
 
   domListeners(){
 
@@ -196,7 +195,7 @@ export class Capture {
     });
     this.client.post('api/v1/archive/albums/' + this.postMeta.album_guid, { guids: guids })
       .then((response : any) => {
-        self.router.navigate(['/Archive-View', {guid: this.postMeta.album_guid}]);
+        self.router.navigate(['/archive/view', this.postMeta.album_guid ]);
       })
       .catch((e) => {
           alert("there was a problem.");

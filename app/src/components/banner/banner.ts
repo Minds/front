@@ -1,6 +1,4 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from '@angular/router-deprecated';
 
 import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
@@ -19,8 +17,8 @@ import { Material } from '../../directives/material';
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
       <span>
-        Click here to add a new banner<br>
-        <em>Recommended size: 1920&times;360</em>
+        <!-- i18n -->Click here to add a new banner<br>
+        <em>Recommended size: 1920&times;360</em><!-- /i18n -->
       </span>
     </div>
     <div class="minds-banner-overlay"></div>
@@ -31,18 +29,17 @@ import { Material } from '../../directives/material';
 
     <div class="save-bar" [hidden]="!file">
       <div class="mdl-layout-spacer"></div>
-      <p>Drag the banner vertically to change its position</p>
+      <p i18n>Drag the banner vertically to change its position</p>
       <minds-button-edit class="cancel-button" (click)="cancel()">
-        <button>Cancel</button>
+        <button i18n>Cancel</button>
       </minds-button-edit>
       <minds-button-edit class="save-button" (click)="done()">
-        <button>Save</button>
+        <button i18n>Save</button>
       </minds-button-edit>
     </div>
     <input type="file" id="file" (change)="add($event)" [hidden]="file" />
   </div>
-  `,
-  directives: [ CORE_DIRECTIVES, RouterLink, Material ]
+  `
 })
 
 export class MindsBanner{
@@ -60,6 +57,7 @@ export class MindsBanner{
   dragging : boolean = false;
   dragTimeout;
   added : EventEmitter<any> = new EventEmitter();
+  overlay: any; // @todo: ??
 
 	constructor(){
 	}

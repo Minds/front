@@ -1,15 +1,12 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
-import { Modal } from '../modal/modal';
 import { EmbedService } from '../../services/embed';
 
 @Component({
+  moduleId: module.id,
   selector: 'm-social-icons',
   inputs: [ '_url: url', '_title: title', '_embed: embed' ],
-  directives: [ CORE_DIRECTIVES, Modal ],
-  templateUrl: 'src/components/social-icons/social-icons.html',
-  providers: [ EmbedService ]
+  templateUrl: 'social-icons.html'
 })
 
 export class SocialIcons {

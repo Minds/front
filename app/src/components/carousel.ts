@@ -1,11 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from '@angular/router-deprecated';
 
 import { Client } from '../services/api';
-import { Material } from '../directives/material';
-import { MindsBanner } from './banner';
-
 
 @Component({
   selector: 'minds-carousel',
@@ -29,8 +24,7 @@ import { MindsBanner } from './banner';
         </div>
       </div>
     <i class="material-icons right" (click)="next()" [hidden]="banners.length <= 1">keyboard_arrow_right</i>
-  `,
-  directives: [ CORE_DIRECTIVES, MindsBanner ]
+  `
 })
 
 export class MindsCarousel{

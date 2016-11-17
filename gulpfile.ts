@@ -2,6 +2,15 @@ import * as gulp from 'gulp';
 import {runSequence, task} from './tools/utils';
 
 // --------------
+// Prepare (AoT - Production)
+gulp.task('prepare.prod', done =>
+  runSequence(
+    'build.plugins',
+    'build.sass',
+    'build.assets',
+    done));
+
+// --------------
 // Build
 gulp.task('build', done =>
   runSequence(
@@ -48,4 +57,12 @@ gulp.task('test', done =>
     'tslint',
     //'build.test',
     //'karma.start',
+    done));
+
+// --------------
+// Test.
+gulp.task('extract', done =>
+  runSequence(
+    'build.plugins',
+    'build.i18n-messages',
     done));

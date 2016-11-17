@@ -1,30 +1,24 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Router, ROUTER_DIRECTIVES, RouteParams } from '@angular/router-deprecated';
 
 import { Client } from '../../../services/api';
-import { CARDS } from '../../../controllers/cards/cards';
-import { Material } from '../../../directives/material';
-import { BlogCard } from '../../../plugins/blog/card/card';
-
 import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   selector: 'minds-channel-modules',
-  inputs: ['type', '_owner: owner', '_container: container', 'limit'],
+  inputs: ['type', '_owner: owner', '_container: container', 'limit', 'linksTo'],
   host: {
     'class': 'mdl-card mdl-shadow--2dp',
     '[hidden]': 'items.length == 0'
   },
   template: `
 
-    <div class="mdl-card__title">
+    <div class="mdl-card__title" [routerLink]="linksTo">
       <h2 class="mdl-card__title-text" style="text-transform:capitalize">{{type}}s</h2>
     </div>
 
     <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;" *ngIf="type != 'blog'">
       <a *ngFor="let object of items"
-      [routerLink]="['/Archive-View', {guid: object.guid}]"
+      [routerLink]="['/archive/view', object.guid]"
       [ngClass]="{ 'm-mature-module-thumbnail': attachment.shouldBeBlurred(object) }"
       >
         <span class="m-thumb-image" [ngStyle]="{'background-image': 'url(' + object.thumbnail_src + ')'}"></span>
@@ -40,9 +34,7 @@ import { AttachmentService } from '../../../services/attachment';
 
     <ng-content></ng-content>
 
-  `,
-  directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, CARDS, BlogCard, Material ],
-  providers: [ AttachmentService ]
+  `
 })
 
 export class ChannelModules {
@@ -52,6 +44,7 @@ export class ChannelModules {
   owner : any;
   container : any;
   limit : number = 9;
+  linksTo: any;
 
   inProgress : boolean = false;
 

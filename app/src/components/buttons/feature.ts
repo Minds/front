@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-
 import { SessionFactory } from '../../services/session';
 import { Client } from '../../services/api';
-import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'minds-button-feature',
@@ -12,7 +9,7 @@ import { Modal } from '../modal/modal';
     <button class="" [ngClass]="{'selected': isFeatured }" (click)="isFeatured ? feature() : (open = true)">
       <i class="material-icons">star</i>
     </button>
-    <m-modal [open]="open" (closed)="onClose($event)">
+    <m-modal [open]="open" (closed)="onModalClose($event)">
       <div class="m-button-feature-modal">
         <select [(ngModel)]="category">
           <option value="not-selected">-- SELECT A CATEGORY --</option>
@@ -22,8 +19,7 @@ import { Modal } from '../modal/modal';
         <button class="mdl-button mdl-button--colored" (click)="feature()">Feature</button>
       </div>
     </m-modal>
-  `,
-  directives: [CORE_DIRECTIVES, Modal]
+  `
 })
 
 export class FeatureButton {
@@ -89,7 +85,7 @@ export class FeatureButton {
       });
   }
 
-  onModalClose(){
+  onModalClose(e){
     this.open = false;
   }
 

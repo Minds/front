@@ -1,10 +1,9 @@
 import {Inject} from '@angular/core';
 import {Location} from '@angular/common';
-import {Router} from '@angular/router-deprecated';
 
 export class Navigation {
 
-	constructor(@Inject(Router) public router: Router, @Inject(Location) public location: Location){
+	constructor(@Inject(Location) public location: Location){
 	}
 
 	getItems(container : string = "sidebar") : Array<any> {
@@ -16,9 +15,10 @@ export class Navigation {
 
 		var path = this.location.path();
 		for(var item of items){
-			if(path == item.path || (path && path.indexOf(item.path.toLowerCase()) > -1))
+            if(path == item.path || (path && path.indexOf(item.path.toLowerCase()) > -1)){
 				item.active = true;
-			else
+                item.params = { ts: Date.now() };    
+            } else
 				item.active = false;
 
 			// a recursive function needs creating here
@@ -31,8 +31,12 @@ export class Navigation {
 							sub_path +=  '/' + subitem.params[p];
 					}
 
-					if(path && path.indexOf(sub_path.toLowerCase()) > -1)
-						subitem.active = true;
+					if (path && path.indexOf(sub_path.toLowerCase()) > -1)
+					{
+						item.active = true; // activate parent aswell
+                        subitem.active = true;
+                        path += ';ts=' + Date.now();
+					}
 					else
 						subitem.active = false;
 				}
@@ -50,4 +54,7 @@ export class Navigation {
     }
   }
 
+  static _(location: Location) {
+    return new Navigation(location);
+  }
 }

@@ -2,8 +2,8 @@
 
 
 minds-search-bar{
-
   width:60%;
+
   .mdl-textfield {
     width:100%;
     .material-icons{
@@ -11,6 +11,7 @@ minds-search-bar{
       margin:6px;
     }
     input{
+      background: #ffffff;
       border: 1px solid rgba(0,0,0,.12);
     }
     input, label{
@@ -31,6 +32,10 @@ minds-search-bar{
       &:focus{
         border: 1px solid rgba(0, 0, 0, 0.12) !important;
         width: 75vw;
+
+        & + .mdl-textfield__label {
+          width: 75vw;
+        }
       }
     }
   }

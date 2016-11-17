@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
 
-import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 
 
 @Component({
-  template: ``,
-  directives: [ Material, ROUTER_DIRECTIVES ]
+  template: ``
 })
 
 export class Logout {
@@ -22,6 +20,6 @@ export class Logout {
 	logout(){
 		this.client.delete('api/v1/authenticate');
 		this.session.logout();
-    this.router.navigate(['/Login', {}]);
+    this.router.navigate(['/login']);
 	}
 }

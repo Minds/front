@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Router, RouterLink } from "@angular/router-deprecated";
+import { Router } from "@angular/router";
 
 import { Client } from '../../../services/api';
 import { Material } from '../../../directives/material';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-settings-disable-channel',
   inputs: ['object'],
-  templateUrl: 'src/controllers/settings/disable/disable.html',
-  directives: [ CORE_DIRECTIVES, Material, RouterLink, FORM_DIRECTIVES]
+  templateUrl: 'disable.html'
 })
 
 export class SettingsDisableChannel{
@@ -18,6 +17,7 @@ export class SettingsDisableChannel{
   minds : Minds;
   user : any;
   settings : string;
+  object: any;
 
   constructor(public client: Client, public router: Router){
     this.minds = window.Minds;
@@ -26,7 +26,7 @@ export class SettingsDisableChannel{
   disable(){
     this.client.delete('api/v1/channel')
       .then((response : any) => {
-        this.router.navigate(['/Logout']);
+        this.router.navigate(['/logout']);
       })
       .catch((e : any) => {
         alert('Sorry, we could not disable your account');

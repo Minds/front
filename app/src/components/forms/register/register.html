@@ -6,7 +6,7 @@
 </div>
 
 <!-- START: Register -->
-<form (submit)="login($event)" [ngFormModel]="form" #f="ngForm" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin">
+<form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin">
 
   <div class="mdl-card__supporting-text mdl-grid">
 
@@ -14,8 +14,9 @@
       <input
         type="text"
         id="username"
-        ngControl="username"
+        formControlName="username"
         placeholder="Username (eg. me)"
+        i18n-placeholder
         />
     </div>
 
@@ -23,8 +24,9 @@
       <input
         type="email"
         id="email"
-        ngControl="email"
+        formControlName="email"
         placeholder="Email (eg. me@minds.com)"
+        i18n-placeholder
         />
     </div>
 
@@ -32,8 +34,9 @@
       <input
         type="password"
         id="password"
-        ngControl="password"
+        formControlName="password"
         placeholder="Password"
+        i18n-placeholder
         />
     </div>
 
@@ -41,8 +44,9 @@
       <input
         type="password"
         id="password2"
-        ngControl="password2"
+        formControlName="password2"
         placeholder="Confirm your password"
+        i18n-placeholder
         (keydown.enter)="register($event)"
         />
     </div>
@@ -50,9 +54,9 @@
 
   <div class="mdl-card__actions">
     <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="register($event)" [disabled]="inProgress">
-      Signup
+      <!-- i18n -->Signup<!-- /i18n -->
     </button>
-    <a [routerLink]="['/P', { page: 'terms' }]" class="m-register-tac">By creating an account you agree to the Terms & Conditions</a>
+    <span routerLink="p/terms" class="m-register-tac" i18n>By creating an account you agree to the Terms & Conditions</span>
   </div>
 
 </form>

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, ElementRef } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 @Component({
   selector: 'google-ad',
@@ -23,7 +22,6 @@ import { CORE_DIRECTIVES } from '@angular/common';
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   `,
-  directives: [ CORE_DIRECTIVES ],
   host: {
     '[class]': "'m-ad-block m-ad-block-google ' + type + ' m-ad-block-' + location"
   }

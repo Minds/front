@@ -1,4 +1,4 @@
-import {Inject, Injector, bind} from '@angular/core';
+import {Inject, Injector} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import {Cookie} from '../cookie';
 
@@ -54,6 +54,9 @@ export class Upload  {
 			xhr.setRequestHeader('X-XSRF-TOKEN', XSRF_TOKEN);
 			xhr.send(formData);
 		});
-	}
-
+  }
+  
+  static _(http: Http) {
+    return new Upload(http);
+  }
 }

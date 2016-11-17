@@ -1,16 +1,14 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 declare var tinymce;
 
 @Component({
   selector: 'minds-tinymce',
-  properties: [ '_content: content', 'reset' ],
-  events: [ 'update: contentChange' ],
+  inputs: [ '_content: content', 'reset' ],
+  outputs: [ 'update: contentChange' ],
   template: `
     <textarea>{{content}}</textarea>
-  `,
-  directives: [ CORE_DIRECTIVES ]
+  `
 })
 
 export class MindsTinymce {

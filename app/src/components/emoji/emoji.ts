@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 
 import { EmojiList } from '../../services/emoji-list';
 import { Emoji as EmojiDirective } from '../../directives/emoji';
@@ -13,7 +12,7 @@ import { Emoji as EmojiDirective } from '../../directives/emoji';
     [ngStyle]="localDirective.style"
     >
       <div class="m-emoji-selector-title">
-        Emoji
+        <!-- i18n -->Emoji<!-- /i18n -->
         <i class="material-icons m-emoji-selector-close"
         (click)="hide()"
         >close</i>
@@ -30,8 +29,7 @@ import { Emoji as EmojiDirective } from '../../directives/emoji';
         >{{ represent(emoji.codePoint) }}</span>
       </div>
     </div>
-  `,
-  directives: [ CORE_DIRECTIVES ]
+  `
 })
 export class MindsEmoji {
   private emojis = EmojiList;

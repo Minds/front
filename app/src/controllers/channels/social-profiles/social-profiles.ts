@@ -1,5 +1,4 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 import { Material } from '../../../directives/material';
 
 import { KeyVal } from '../../../interfaces/entities';
@@ -14,11 +13,11 @@ export interface SocialProfileMeta {
 }
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-channel-social-profiles',
   inputs: ['_user : user', 'editing'],
   outputs: ['changed'],
-  templateUrl: 'src/controllers/channels/social-profiles/social-profiles.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material ]
+  templateUrl: 'social-profiles.html'
 })
 
 export class ChannelSocialProfiles {

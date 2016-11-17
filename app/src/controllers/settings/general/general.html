@@ -11,13 +11,13 @@
       (click)="save()"
       style="float:right"
       >
-      Save
+      <!-- i18n -->Save<!-- /i18n -->
     </button>
     <button class="mdl-button mdl-button--colored"
       [hidden]="!saved"
       style="float:right"
       >
-      Saved
+      <!-- i18n -->Saved<!-- /i18n -->
     </button>
   </div>
   <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" [hidden]="!inProgress"></div>
@@ -27,7 +27,7 @@
 <div class="mdl-card mdl-shadow--2dp">
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Display Name</h2>
+    <h2 class="mdl-card__title-text" i18n>Display Name</h2>
   </div>
 
   <div class="mdl-card__supporting-text">
@@ -35,6 +35,7 @@
       <input class="m-input"
         type="name"
         id="name"
+        name="name"
         [(ngModel)]="name"
         (keyup)="change()"
         />
@@ -47,7 +48,7 @@
 <div class="mdl-card mdl-shadow--2dp">
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Account Password</h2>
+    <h2 class="mdl-card__title-text" i18n>Account Password</h2>
   </div>
 
   <div class="mdl-card__supporting-text">
@@ -56,32 +57,35 @@
       <input class="mdl-textfield__input"
         type="password"
         id="password"
+        name="password"
         [(ngModel)]="password"
         (keyup)="change()"
         />
-      <label class="mdl-textfield__label" for="password">Current password</label>
+      <label class="mdl-textfield__label" for="password" i18n>Current password</label>
     </div>
 
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdlTextfield]>
       <input class="mdl-textfield__input"
         type="password"
         id="password1"
+        name="password1"
         [(ngModel)]="password1"
         [disabled]="!password"
         (keyup)="change()"
         />
-      <label class="mdl-textfield__label" for="password1">Your new password</label>
+      <label class="mdl-textfield__label" for="password1" i18n>Your new password</label>
     </div>
 
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdlTextfield]>
       <input class="mdl-textfield__input"
         type="password"
         id="password2"
+        name="password2"
         [(ngModel)]="password2"
         [disabled]="!password"
         (keyup)="change()"
         />
-      <label class="mdl-textfield__label" for="password2">Your new password again</label>
+      <label class="mdl-textfield__label" for="password2" i18n>Your new password again</label>
     </div>
   </div>
 </div>
@@ -91,17 +95,18 @@
 <div class="mdl-card mdl-shadow--2dp">
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Mature Content</h2>
+    <h2 class="mdl-card__title-text" i18n>Mature Content</h2>
   </div>
   <div class="mdl-card__supporting-text">
     <input type="checkbox"
       id="flag_mature"
       (click)="change()"
+      name="mature"
       [(ngModel)]="mature"
       />
       <i class="material-icons m-material-icons-inline mdl-color-text--red-500">explicit</i>
       <label for="flag_mature">
-          Always show mature content (18+)
+          <!-- i18n -->Always show mature content (18+)<!-- /i18n -->
       </label>
   </div>
 
@@ -112,19 +117,15 @@
 <div class="mdl-card mdl-shadow--2dp">
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Email Settings</h2>
+    <h2 class="mdl-card__title-text" i18n>Email Settings</h2>
   </div>
   <div class="mdl-card__supporting-text">
-
-    <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdlTextfield]>
-      <input class="mdl-textfield__input"
-        type="email"
-        id="email"
-        [(ngModel)]="email"
-        (keyup)="change()"
-        />
-      <label class="mdl-textfield__label" for="email">New email address</label>
-    </div>
+    <input class="m-input"
+      type="email"
+      id="email"
+      [(ngModel)]="email"
+      (keyup)="change()"
+      />
   </div>
 
 </div>
@@ -133,21 +134,21 @@
 <!-- START: FB connect -->
 <div class="mdl-card mdl-shadow--2dp" *ngIf="thirdpartynetworks.hasIntegration('facebook')">
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Facebook</h2>
+    <h2 class="mdl-card__title-text" i18n>Facebook</h2>
   </div>
   <div class="mdl-card__supporting-text" *ngIf="minds.user.signup_method == 'facebook'">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeFbLogin()" [disabled]="thirdpartynetworks.inProgress">
-      Revoke Facebook Login
+      <!-- i18n -->Revoke Facebook Login<!-- /i18n -->
     </button>
   </div>
   <div class="mdl-card__supporting-text" *ngIf="thirdpartynetworks.isConnected('facebook')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeFb()" [disabled]="thirdpartynetworks.inProgress">
-      Disconnect from Facebook
+      <!-- i18n -->Disconnect from Facebook<!-- /i18n -->
     </button>
   </div>
   <div class="mdl-card__supporting-text" *ngIf="!thirdpartynetworks.isConnected('facebook')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="connectFb()" [disabled]="thirdpartynetworks.inProgress">
-      Connect with Facebook
+      <!-- i18n -->Connect with Facebook<!-- /i18n -->
     </button>
   </div>
 </div>
@@ -156,45 +157,37 @@
 <!-- START: Tw connect -->
 <div class="mdl-card mdl-shadow--2dp" *ngIf="thirdpartynetworks.hasIntegration('twitter')">
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Twitter</h2>
+    <h2 class="mdl-card__title-text" i18n>Twitter</h2>
   </div>
   <div class="mdl-card__supporting-text" *ngIf="thirdpartynetworks.isConnected('twitter')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeTw()" [disabled]="thirdpartynetworks.inProgress">
-      Disconnect from Twitter
+      <!-- i18n -->Disconnect from Twitter<!-- /i18n -->
     </button>
-    Connected as @{{ thirdpartynetworks.getStatusKey('twitter', 'username') }}
+    <!-- i18n -->Connected as @{{ thirdpartynetworks.getStatusKey('twitter', 'username') }}<!-- /i18n -->
   </div>
   <div class="mdl-card__supporting-text" *ngIf="!thirdpartynetworks.isConnected('twitter')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="connectTw()" [disabled]="thirdpartynetworks.inProgress">
-      Connect with Twitter
+      <!-- i18n -->Connect with Twitter<!-- /i18n -->
     </button>
   </div>
 </div>
 <!-- END: Tw connect -->
 
 <!-- START: LANGUAGE -->
-<!--<div class="mdl-card mdl-shadow--2dp">
+<div class="mdl-card mdl-shadow--2dp" *ngIf="experimental.feature('i18n')">
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Language Settings</h2>
+    <h2 class="mdl-card__title-text" i18n>Language Settings</h2>
   </div>
 
   <div class="mdl-card__supporting-text">
-    Your language:
-    <select name="language">
-      <option value="en" selected="selected">English</option>
-      <option value="ru">Russian</option>
-      <option value="da">Dansk</option>
-      <option value="tr">Türkçe</option>
-      <option value="de">Deutsch</option>
-      <option value="ja">Japanese(日本語)</option>
-      <option value="zh">中文</option>
-      <option value="it">Italian</option>
-      <option value="fi">Suomi</option>
+    <!-- i18n -->Site language:<!-- /i18n -->
+    <select name="language" [ngModel]="language" (ngModelChange)="language = $event; change()">
+      <option value="en">English</option>
       <option value="es">Español</option>
       <option value="fr">Français</option>
     </select>
   </div>
 
-</div>-->
+</div>
 <!-- END: LANGUAGE -->

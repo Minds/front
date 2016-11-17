@@ -1,14 +1,11 @@
 import { Component, EventEmitter, ElementRef } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
 import { Client } from '../../services/api';
-import { CARDS } from '../../controllers/cards/cards';
 
 @Component({
   selector: 'm-ads-boost',
-  providers: [  ],
   inputs: ['handler', 'limit'],
   template: `
-    <h3 class="m-ad-boost-heading mdl-color-text--blue-grey-300"><i class="material-icons">trending_up</i> Boosted content</h3>
+    <h3 class="m-ad-boost-heading mdl-color-text--blue-grey-300"><i class="material-icons">trending_up</i> <!-- i18n -->Boosted content<!-- /i18n --></h3>
     <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
       <minds-card-video [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.subtype == 'video'"></minds-card-video>
       <minds-card-image [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.subtype == 'image'"></minds-card-image>
@@ -17,7 +14,6 @@ import { CARDS } from '../../controllers/cards/cards';
       <minds-activity [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.type == 'activity'"></minds-activity>
     </div>
   `,
-  directives: [ CORE_DIRECTIVES, CARDS ],
   host: {
     'class': 'm-ad-block m-ad-block-boosts'
   }

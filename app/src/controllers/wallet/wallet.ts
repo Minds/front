@@ -1,26 +1,19 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { Router, RouteParams, ROUTER_DIRECTIVES } from "@angular/router-deprecated";
+import { Router, ActivatedRoute } from "@angular/router";
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { SessionFactory } from '../../services/session';
-import { MDL_DIRECTIVES } from '../../directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
 
 import { WalletService } from '../../services/wallet';
-import { WalletTransactions } from './transactions/transactions';
-import { WalletPurchase } from './purchase/purchase';
-
-import { Merchants } from './merchants/merchants';
 
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-wallet',
-  providers: [ MindsTitle, WalletService ],
-  templateUrl: 'src/controllers/wallet/wallet.html',
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, MDL_DIRECTIVES, InfiniteScroll,
-    WalletTransactions, WalletPurchase, Merchants]
+  templateUrl: 'wallet.html'
 })
 
 export class Wallet {
@@ -34,15 +27,28 @@ export class Wallet {
   inProgress : boolean = false;
   moreData : boolean = true;
 
-	constructor(public client: Client, public wallet: WalletService, public router: Router, public params: RouteParams, public title: MindsTitle){
+	constructor(public client: Client, public wallet: WalletService, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
+  }
+  
+  paramsSubscription: Subscription;
+  ngOnInit() {
     if(!this.session.isLoggedIn()){
-      router.navigate(['/Login']);
+      this.router.navigate(['/login']);
+      return;
     }
-    if(params.params['filter'])
-      this.filter = params.params['filter'];
 
-      this.title.setTitle("Wallet | Minds");
+    this.title.setTitle("Wallet | Minds");
+
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['filter']) {
+        this.filter = params['filter'];
+      }
+    });
+
     this.wallet.getBalance(true);
-	}
+  }
 
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 }

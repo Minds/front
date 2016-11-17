@@ -1,31 +1,16 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { Material } from '../../../directives/material';
-import { AutoGrow } from '../../../directives/autogrow';
-import { Hovercard } from '../../../directives/hovercard';
-import { BUTTON_COMPONENTS } from '../../../components/buttons';
-import { MindsVideo } from '../../../components/video';
-import { Boost } from '../../boosts/boost/boost';
-import { Comments } from '../../comments/comments';
-import { MINDS_PIPES } from '../../../pipes/pipes';
-import { TagsLinks } from '../../../directives/tags';
-import { Translate } from '../../../components/translate/translate';
-
 import { AttachmentService } from '../../../services/attachment';
 import { MindsRichEmbed } from '../../../components/rich-embed/rich-embed';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-remind',
-  properties: ['object', '_events: events'],
-  templateUrl: 'src/controllers/cards/activity/activity.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, MindsVideo, Material, RouterLink, AutoGrow, TagsLinks, MindsRichEmbed, Hovercard, Translate ],
-  pipes: [ MINDS_PIPES ],
+  inputs: ['object', '_events: events'],
+  templateUrl: '../activity/activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ AttachmentService ]
 })
 
 export class Remind {
@@ -39,6 +24,10 @@ export class Remind {
   events: EventEmitter<any>;
   eventsSubscription: any;
 
+  editing: boolean = false;
+  commentsToggle: boolean = false;
+  showBoostOptions: boolean = false;
+  translateToggle: any;
   translateEvent: EventEmitter<any> = new EventEmitter(); 
 
   constructor(
@@ -85,5 +74,5 @@ export class Remind {
     this.translateEvent.emit($event);
   }
 
-  propagateTranslation() { }
+  propagateTranslation(e?) { }
 }

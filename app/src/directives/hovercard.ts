@@ -44,19 +44,26 @@ export class Hovercard implements OnDestroy {
     this.anchor = value;
   }
 
+  private showTimer;
   show() {
     if (!this.guid) {
       return;
     }
 
-    setTimeout(() => {
+    this.showTimer = setTimeout(() => {
       this.hovercardService.show(this.guid, this._element, this.anchor);
+      this.showTimer = null;
     }, 250);
   }
 
   hide() {
     if (!this.guid) {
       return;
+    }
+
+    if (this.showTimer) {
+      clearTimeout(this.showTimer);
+      this.showTimer = null;
     }
 
     setTimeout(() => {
@@ -67,6 +74,11 @@ export class Hovercard implements OnDestroy {
   hideForcefully() {
     if (!this.guid) {
       return;
+    }
+
+    if (this.showTimer) {
+      clearTimeout(this.showTimer);
+      this.showTimer = null;
     }
 
     this.hovercardService.unstick();

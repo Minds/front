@@ -1,41 +1,21 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { Router, ROUTER_DIRECTIVES, RouteParams } from '@angular/router-deprecated';
+import { ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
-import { Material } from '../../directives/material';
 import { SessionFactory } from '../../services/session';
 import { ScrollService } from '../../services/ux/scroll';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
-import { BUTTON_COMPONENTS } from '../../components/buttons';
-import { MindsCarousel } from '../../components/carousel';
-import { TagsPipe } from '../../pipes/tags';
 
-import { AutoGrow } from '../../directives/autogrow';
-import { CARDS } from '../../controllers/cards/cards';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
-import { Poster } from '../../controllers/newsfeed/poster/poster';
-import { MindsAvatar } from '../../components/avatar';
-
-import { ChannelModules } from './modules/modules';
-import { ChannelSubscribers } from './subscribers/subscribers';
-import { ChannelSubscriptions } from './subscriptions/subscriptions';
-import { ChannelSocialProfiles } from './social-profiles/social-profiles';
-
-import { MessengerChannelButton } from '../../plugins/Messenger/channel-button/channel-button';
-
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-channel',
-  providers: [ MindsTitle ],
-  templateUrl: 'src/controllers/channels/channel.html',
-  pipes: [ TagsPipe ],
-  directives: [ ROUTER_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, Material, InfiniteScroll, CARDS,
-    AutoGrow, ChannelSubscribers, ChannelSubscriptions, BUTTON_COMPONENTS, MindsCarousel,
-    Poster, MindsAvatar, ChannelModules, MessengerChannelButton, ChannelSocialProfiles ]
+  templateUrl: 'channel.html'
 })
 
 export class Channel {
@@ -57,53 +37,73 @@ export class Channel {
   //@todo make a re-usable city selection module to avoid duplication here
   cities : Array<any> = [];
 
-  constructor(public client: Client, public upload: Upload, params: RouteParams,
-    public router: Router, public title: MindsTitle, public scroll : ScrollService){
-      this.username = params.params['username'];
-      if(params.params['filter'])
-        this._filter = params.params['filter'];
+  constructor(public client: Client, public upload: Upload, private route: ActivatedRoute,
+    public title: MindsTitle, public scroll : ScrollService){
+  }
 
-      if(params.params['editToggle']){
+  paramsSubscription: Subscription;  
+  ngOnInit() {
+    this.title.setTitle("Channel");
+    this.onScroll();
+
+    this.paramsSubscription = this.route.params.subscribe((params) => {
+      let changed = false;
+
+      if (params['username']) {
+        changed = this.username !== params['username'];
+        this.username = params['username'];
+      }
+
+      if (params['filter']) {
+        this._filter = params['filter'];
+      }
+
+      if (params['editToggle']) {
         this.editing = true;
         this.editForward = true;
       }
 
-      this.title.setTitle("Channel");
-      this.load();
-      this.onScroll();
-
-  }
-
-  load(){
-    var self = this;
-    this.error = "";
-
-    this.client.get('api/v1/channel/' + this.username, {})
-    .then((data : MindsChannelResponse) => {
-      if(data.status != "success"){
-        self.error = data.message;
-        return false;
+      if (changed) {
+        this.load();
       }
-      self.user = data.channel;
-      this.title.setTitle(self.user.username);
-
-      if(self._filter == "feed")
-      self.loadFeed(true);
-    })
-    .catch((e) => {
-      this.error = "Sorry, the channel couldn't be found";
-      console.log('couldnt load channel', e);
     });
   }
 
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
+
+  load(){
+    this.error = "";
+
+    this.user = null;
+    this.title.setTitle(this.username);
+
+    this.client.get('api/v1/channel/' + this.username, {})
+      .then((data : MindsChannelResponse) => {
+        if(data.status != "success"){
+          this.error = data.message;
+          return false;
+        }
+        this.user = data.channel;
+        this.title.setTitle(this.user.username);
+
+        if(this._filter == "feed")
+          this.loadFeed(true);
+      })
+      .catch((e) => {
+        this.error = "Sorry, the channel couldn't be found";
+        console.log('couldnt load channel', e);
+      });
+  }
+
   loadFeed(refresh : boolean = false){
-    var self = this;
     if(this.inProgress){
-      //console.log('already loading more..');
       return false;
     }
 
-    if(refresh){
+    if (refresh) {
+      this.feed = [];
       this.offset = "";
     }
 
@@ -112,21 +112,21 @@ export class Channel {
     this.client.get('api/v1/newsfeed/personal/' + this.user.guid, {limit:12, offset: this.offset}, {cache: true})
         .then((data : MindsActivityObject) => {
           if(!data.activity){
-            self.moreData = false;
-            self.inProgress = false;
+            this.moreData = false;
+            this.inProgress = false;
             return false;
           }
-          if(self.feed && !refresh){
+          if(this.feed && !refresh){
             for(let activity of data.activity)
-              self.feed.push(activity);
+              this.feed.push(activity);
           } else {
-               self.feed = data.activity;
+               this.feed = data.activity;
           }
-          self.offset = data['load-next'];
-          self.inProgress = false;
+          this.offset = data['load-next'];
+          this.inProgress = false;
         })
         .catch(function(e){
-          self.inProgress = false;
+          this.inProgress = false;
         });
   }
 

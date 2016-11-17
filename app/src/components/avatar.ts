@@ -1,6 +1,4 @@
 import { Component, EventEmitter } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { RouterLink } from '@angular/router-deprecated';
 
 import { Client } from '../services/api';
 import { Material } from '../directives/material';
@@ -15,13 +13,12 @@ import { Material } from '../directives/material';
     <img *ngIf="!src" src="/assets/avatars/blue/default-large.png" class="mdl-shadow--4dp" />
     <div *ngIf="editing" class="overlay">
       <i class="material-icons">camera</i>
-      <span *ngIf="src">Change avatar</span>
-      <span *ngIf="!src">Add an avatar</span>
+      <span *ngIf="src" i18n>Change avatar</span>
+      <span *ngIf="!src" i18n>Add an avatar</span>
     </div>
     <input *ngIf="editing" type="file" #file (change)="add($event)"/>
   </div>
-  `,
-  directives: [ CORE_DIRECTIVES, RouterLink, Material ]
+  `
 })
 
 export class MindsAvatar{
