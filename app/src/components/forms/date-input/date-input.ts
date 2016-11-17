@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-date-input',
   template: `
     <select [ngModel]="selectedMonth" (ngModelChange)="selectedMonth = $event; build()">
@@ -23,8 +23,7 @@ import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
         [value]="year"
       >{{ year }}</option>
     </select>
-  `,
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]
+  `
 })
 
 export class DateInput implements OnInit {

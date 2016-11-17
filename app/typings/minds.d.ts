@@ -14,6 +14,7 @@ interface Minds{
  thirdpartynetworks: any; 
  categories: any;
  language: any;
+ stripe_key?: any;
 }
 
 interface MindsNavigation {

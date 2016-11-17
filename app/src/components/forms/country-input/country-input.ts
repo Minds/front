@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-country-input',
   template: `
     <select [ngModel]="country" (ngModelChange)="country = $event; countryChange.next($event)">
@@ -10,8 +10,7 @@ import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
         [value]="country.code"
       >{{ country.name }}</option>
     </select>
-  `,
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]
+  `
 })
 
 export class CountryInput {

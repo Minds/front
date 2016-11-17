@@ -1,14 +1,8 @@
 import { Component, EventEmitter, Input } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RouterLink } from "@angular/router-deprecated";
 
 import { Client } from '../../services/api';
 import { WalletService } from '../../services/wallet';
 import { Storage } from '../../services/storage';
-import { MDL_DIRECTIVES } from '../../directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
-import { CHECKOUT_COMPONENTS } from '../../components/checkout';
-
 
 interface CreditCard {
   number?: number,
@@ -20,6 +14,7 @@ interface CreditCard {
 }
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-payments-checkout',
   outputs: ['inputed', 'done'],
   template: `
@@ -35,8 +30,7 @@ interface CreditCard {
       <p>Capturing card details...</p>
     </div>
 
-  `,
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, FORM_DIRECTIVES, CHECKOUT_COMPONENTS, InfiniteScroll ]
+  `
 })
 
 export class Checkout {
