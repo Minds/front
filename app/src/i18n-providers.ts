@@ -9,7 +9,7 @@ export function getTranslationProviders(): Promise<Object[]> {
   const noProviders: Object[] = [];
 
   // Feature flag not enabled (experimental)
-  if (!Experimental.feature('i18n')) {
+  if (!(new Experimental()).feature('i18n')) {
     return Promise.resolve(noProviders);
   }
 

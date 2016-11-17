@@ -74,35 +74,36 @@ export class Channel {
   }
 
   load(){
-    var self = this;
     this.error = "";
 
-    this.client.get('api/v1/channel/' + this.username, {})
-    .then((data : MindsChannelResponse) => {
-      if(data.status != "success"){
-        self.error = data.message;
-        return false;
-      }
-      self.user = data.channel;
-      this.title.setTitle(self.user.username);
+    this.user = null;
+    this.title.setTitle(this.username);
 
-      if(self._filter == "feed")
-        self.loadFeed(true);
-    })
-    .catch((e) => {
-      this.error = "Sorry, the channel couldn't be found";
-      console.log('couldnt load channel', e);
-    });
+    this.client.get('api/v1/channel/' + this.username, {})
+      .then((data : MindsChannelResponse) => {
+        if(data.status != "success"){
+          this.error = data.message;
+          return false;
+        }
+        this.user = data.channel;
+        this.title.setTitle(this.user.username);
+
+        if(this._filter == "feed")
+          this.loadFeed(true);
+      })
+      .catch((e) => {
+        this.error = "Sorry, the channel couldn't be found";
+        console.log('couldnt load channel', e);
+      });
   }
 
   loadFeed(refresh : boolean = false){
-    var self = this;
     if(this.inProgress){
-      //console.log('already loading more..');
       return false;
     }
 
-    if(refresh){
+    if (refresh) {
+      this.feed = [];
       this.offset = "";
     }
 
@@ -111,21 +112,21 @@ export class Channel {
     this.client.get('api/v1/newsfeed/personal/' + this.user.guid, {limit:12, offset: this.offset}, {cache: true})
         .then((data : MindsActivityObject) => {
           if(!data.activity){
-            self.moreData = false;
-            self.inProgress = false;
+            this.moreData = false;
+            this.inProgress = false;
             return false;
           }
-          if(self.feed && !refresh){
+          if(this.feed && !refresh){
             for(let activity of data.activity)
-              self.feed.push(activity);
+              this.feed.push(activity);
           } else {
-               self.feed = data.activity;
+               this.feed = data.activity;
           }
-          self.offset = data['load-next'];
-          self.inProgress = false;
+          this.offset = data['load-next'];
+          this.inProgress = false;
         })
         .catch(function(e){
-          self.inProgress = false;
+          this.inProgress = false;
         });
   }
 
