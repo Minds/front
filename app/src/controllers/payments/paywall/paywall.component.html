@@ -1,12 +1,11 @@
 <div class="m-paywall-splash mdl-color--green">
   <i class="mdl-color-text--white material-icons">vpn_key</i>
-  <p class="mdl-color-text--white"><b>{{entity.ownerObj?.name}}</b> has made this content exclusive to paid subscribers.</p>
-  <p class="mdl-color-text--green-100" *ngIf="entity.ownerObj.merchant?.exclusive?.intro"><b>@ {{entity.ownerObj?.username}}:</b> {{entity.ownerObj?.merchant?.exclusive?.intro}}</p>
-
+  <p class="mdl-color-text--white" i18n>Access this exclusive content by becoming a paid monthly subscriber of <b>{{entity.ownerObj?.name}}</b>.</p>
+  <p class="mdl-color-text--green-100" *ngIf="entity.ownerObj.merchant?.exclusive?.intro"><b>@{{entity.ownerObj?.username}}:</b> {{entity.ownerObj?.merchant?.exclusive?.intro}}</p>
 
   <button class="mdl-button mdl-button--colored mdl-color--green-300 mdl-color-text--white"
     (click)="checkout()" *ngIf="!showCheckout">
-    View
+    <!-- i18n -->View<!-- /i18n -->
   </button>
 
 </div>

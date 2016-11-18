@@ -31,7 +31,7 @@ export class Merchants {
 
   exclusive = {
     enabled : false,
-    amount: 1,
+    amount: 10,
     intro: ''
   };
 
@@ -59,7 +59,8 @@ export class Merchants {
       country: ['', Validators.required],
       postCode:  ['', Validators.required],
       accountNumber:  [''],
-      routingNumber:  ['']
+      routingNumber: [''],
+      stripeAgree: ['', Validators.required],
     });
 
     this.editForm = fb.group({
