@@ -18,7 +18,10 @@
       </div>
 
       <div class="mdl-card__actions">
-        <a class="mdl-button mdl-js-button mdl-js-ripple-effect" (click)="deleteRow(i)" i18n>Cancel</a>
+        <minds-paywall-cancel-button
+          [target]="subscription.guid"
+          (completed)="deleteRow(i)"
+        ></minds-paywall-cancel-button>
       </div>
     </div>
 

@@ -54,6 +54,7 @@ import {ThirdPartyNetworksSelector} from './components/third-party-networks/sele
 import {OnboardingCategoriesSelector} from './components/onboarding/categories-selector/categories-selector';
 import {PDAds} from './components/ads/pd-ads';
 import { PayWall } from './controllers/payments/paywall/paywall.component';
+import { PaywallCancelButton } from './controllers/payments/paywall/paywall-cancel.component';
 
 import {CARDS} from './controllers/cards/cards';
 import {SearchBar} from './controllers/search/bar';
@@ -146,6 +147,7 @@ export const MINDS_DECLARATIONS: any[] = [
   OnboardingCategoriesSelector,
   PDAds,
   PayWall,
+  PaywallCancelButton,
 
   // Controllers; Controller-based directives
   CARDS,
