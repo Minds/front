@@ -83,6 +83,7 @@ import {SettingsGeneral} from './controllers/settings/general/general';
 import {SettingsStatistics} from './controllers/settings/statistics/statistics';
 import {SettingsDisableChannel} from './controllers/settings/disable/disable';
 import {SettingsTwoFactor} from './controllers/settings/two-factor/two-factor';
+import {SettingsSubscriptions} from './controllers/settings/subscriptions/subscriptions.component';
 import {SearchBarSuggestions} from './controllers/search/suggestions/suggestions';
 import {ComingSoon} from './controllers/home/comingsoon/comingsoon';
 
@@ -176,6 +177,7 @@ export const MINDS_DECLARATIONS: any[] = [
   SettingsStatistics,
   SettingsDisableChannel,
   SettingsTwoFactor,
+  SettingsSubscriptions,
   SearchBarSuggestions,
   ComingSoon,
 ];

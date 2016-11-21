@@ -57,9 +57,7 @@ export class PayWall {
     this.client.post('api/v1/payments/plans/subscribe/' + this.entity.owner_guid + '/exclusive', {
         nonce: nonce
       })
-      .then((response) => {
-
-      });
+      .then((response) => setTimeout(() => this.checkout(), 0));
   }
 
   ngOnDestroy(){

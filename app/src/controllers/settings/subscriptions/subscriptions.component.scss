@@ -1,0 +1,43 @@
+minds-settings-subscriptions .m-settings-subscriptions-list {
+  transform-style: preserve-3d;
+
+  > .mdl-card {
+    max-height: 94px;
+  }
+
+  .mdl-card__title{
+    position: relative;
+    top: 14px - $minds-padding;
+    padding: $minds-padding;
+  }
+
+  .minds-avatar{
+    margin-right:$minds-margin;
+    img{
+      width:50px;
+    }
+  }
+
+  .minds-body {
+    > a {
+      display: block;
+      font-size: 1.1em;
+      text-decoration: none;
+    }
+
+    > span {
+      display: block;
+      font-size: 0.75em;
+    }
+  }
+
+  .mdl-card__actions{
+    border-top: 0;
+    width: auto;
+    right: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 $minds-padding*2;
+  }
+}
