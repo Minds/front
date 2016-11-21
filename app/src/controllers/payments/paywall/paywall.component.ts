@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
+import { SessionFactory } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -16,6 +17,8 @@ export class PayWall {
   showCheckout : boolean = false;
   amount : number;
   nonce : string = "";
+  showSignupModal: boolean = false;
+  private session = SessionFactory.build();
 
   @Output('entityChange') update : EventEmitter<any> = new EventEmitter;
 
@@ -28,7 +31,12 @@ export class PayWall {
     //get the subscription amount
   }
 
-  checkout(){
+  checkout() {
+    if (!this.session.isLoggedIn()) {
+      this.showSignupModal = true;
+      return;
+    }
+
     this.inProgress = true;
 
     this.client.get('api/v1/payments/plans/exclusive/' + this.entity.guid)

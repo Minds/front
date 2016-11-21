@@ -23,3 +23,5 @@
 <div class="m-paywall-card-input" *ngIf="showCheckout">
   <minds-payments-stripe-checkout (inputed)="subscribe($event);"></minds-payments-stripe-checkout>
 </div>
+
+<m-modal-signup-on-action [open]="showSignupModal" (closed)="showSignupModal = false" action="view exclusive content" *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
