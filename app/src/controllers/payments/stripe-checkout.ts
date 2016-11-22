@@ -19,7 +19,7 @@ interface CreditCard {
   selector: 'minds-payments-stripe-checkout',
   outputs: ['inputed', 'done'],
   template: `
-    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="usePayPal || useBitcoin">
+    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="useBitcoin">
         <div id="coinbase-btn" *ngIf="useBitcoin"></div>
     </div>
 

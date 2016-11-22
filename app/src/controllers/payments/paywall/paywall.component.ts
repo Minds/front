@@ -18,7 +18,7 @@ export class PayWall {
   amount : number;
   nonce : string = "";
   showSignupModal: boolean = false;
-  private session = SessionFactory.build();
+  session = SessionFactory.build();
 
   @Output('entityChange') update : EventEmitter<any> = new EventEmitter;
 

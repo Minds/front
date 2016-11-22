@@ -15,7 +15,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 
 export class CountryInput {
 
-  private countries : Array<{name : string, code : string}> = [
+  countries : Array<{name : string, code : string}> = [
     {"name": "Afghanistan", "code": "AF"},
     {"name": "Aland Islands", "code": "AX"},
     {"name": "Albania", "code": "AL"},

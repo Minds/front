@@ -28,9 +28,9 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 
 export class DateInput implements OnInit {
 
-  private months: string[];
-  private days: string[];
-  private years: string[];
+  months: string[];
+  days: string[];
+  years: string[];
 
   selectedMonth: string = '';
   selectedDay: string = '';
