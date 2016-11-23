@@ -85,10 +85,17 @@ export class Session {
 }
 
 export class SessionFactory {
+  // @todo: migrate to regular Angular DI
+  static instance;
+
   static build() {
-    let providers = ReflectiveInjector.resolve([Session]),
-      injector = ReflectiveInjector.fromResolvedProviders(providers);
-    
-		return injector.get(Session);
+    if (!SessionFactory.instance) {
+      let providers = ReflectiveInjector.resolve([Session]),
+        injector = ReflectiveInjector.fromResolvedProviders(providers);
+
+      SessionFactory.instance = injector.get(Session);
+    }
+
+    return SessionFactory.instance;
 	}
 }

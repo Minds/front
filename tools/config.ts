@@ -11,7 +11,7 @@ const ENVIRONMENTS = {
 };
 
 export const PROJECT_ROOT         = normalize(join(__dirname, '..'));
-export const ENV                  = argv['env']         || 'prod';
+export const ENV                  = argv['env']         || ENVIRONMENTS.DEVELOPMENT;
 export const DEBUG                = argv['debug']       || false;
 export const PORT                 = argv['port']        || 5555;
 export const LIVE_RELOAD_PORT     = argv['reload-port'] || 4002;

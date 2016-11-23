@@ -53,9 +53,9 @@ if (window.Minds.MindsContext === 'embed') {
     RouterModule.forRoot(dynamicLoader.routing),
   ],
   providers: [
+    dynamicLoader.routingProviders,
     MINDS_PROVIDERS,
     MINDS_PLUGIN_PROVIDERS,
-    dynamicLoader.routingProviders,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

@@ -3,24 +3,42 @@
   "version": "1.0.0",
   "description": "Front end repository for Minds",
   "scripts": {
-    "build": "gulp build.prod",
     "gulp": "gulp",
-    "extract": "ng-xi18n -p tsconfig.json",
     "postinstall": "typings install",
+
+    "extract": "ng-xi18n -p tsconfig.json",
+
+    "clean": "rimraf .tmp/ .tmp.aot/",
     "compile-aot": "ngc -p tsconfig-aot.json",
-    "bundle": "rollup -c rollup-config.ts"
+    "bundle": "rollup -c rollup-config.ts",
+
+    "prebuild-base": "npm run clean",
+    "build-base": "npm run compile-aot && npm run bundle",
+
+    "prebuild-i18n-es": "npm run clean",
+    "build-i18n-es": "npm run compile-aot -- --i18nFile=./app/locale/Minds.es.xlf --locale=es --i18nFormat=xlf && npm run bundle -- -o public/js/build-aot.es.js",
+
+    "prepare-prod": "gulp prepare.prod",
+    "build-shims": "gulp build.bundle.prod --env=prod",
+    "build-index-prod": "gulp build.index --env=prod",
+
+    "prebuild-prod": "rimraf public/",
+    "build-prod": "npm run prepare-prod && npm run build-base && npm run build-i18n-es && npm run build-shims",
+    "postbuild-prod": "npm run clean",
+
+    "build": "npm run build-prod && npm run build-index-prod --"
   },
   "dependencies": {
-    "@angular/common": "2.1.2",
-    "@angular/compiler": "2.1.2",
-    "@angular/compiler-cli": "2.1.2",
-    "@angular/core": "2.1.2",
-    "@angular/forms": "2.1.2",
-    "@angular/http": "2.1.2",
-    "@angular/platform-browser": "2.1.2",
-    "@angular/platform-browser-dynamic": "2.1.2",
-    "@angular/platform-server": "2.1.2",
-    "@angular/router": "^3.1.1",
+    "@angular/common": "2.2.2",
+    "@angular/compiler": "2.2.2",
+    "@angular/compiler-cli": "2.2.2",
+    "@angular/core": "2.2.2",
+    "@angular/forms": "2.2.2",
+    "@angular/http": "2.2.2",
+    "@angular/platform-browser": "2.2.2",
+    "@angular/platform-browser-dynamic": "2.2.2",
+    "@angular/platform-server": "2.2.2",
+    "@angular/router": "3.2.2",
     "braintree-web": "2.15.2",
     "es6-module-loader": "^0.17.8",
     "es6-promise": "^3.1.2",

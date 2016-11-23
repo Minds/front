@@ -1,5 +1,4 @@
 import { TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID } from '@angular/core';
-import { Experimental } from './services/experimental'
 
 export function getTranslationProviders(): Promise<Object[]> {
   // Get the locale id from the global
@@ -7,11 +6,6 @@ export function getTranslationProviders(): Promise<Object[]> {
 
   // return no providers if fail to get translation file for locale
   const noProviders: Object[] = [];
-
-  // Feature flag not enabled (experimental)
-  if (!(new Experimental()).feature('i18n')) {
-    return Promise.resolve(noProviders);
-  }
 
   // No locale or U.S. English: no translation providers
   if (!locale || locale === 'en') {

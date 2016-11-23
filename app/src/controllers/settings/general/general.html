@@ -174,7 +174,7 @@
 <!-- END: Tw connect -->
 
 <!-- START: LANGUAGE -->
-<div class="mdl-card mdl-shadow--2dp" *ngIf="experimental.feature('i18n')">
+<div class="mdl-card mdl-shadow--2dp">
 
   <div class="mdl-card__title">
     <h2 class="mdl-card__title-text" i18n>Language Settings</h2>
@@ -185,7 +185,6 @@
     <select name="language" [ngModel]="language" (ngModelChange)="language = $event; change()">
       <option value="en">English</option>
       <option value="es">Español</option>
-      <option value="fr">Français</option>
     </select>
   </div>
 

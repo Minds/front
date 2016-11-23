@@ -7,8 +7,6 @@ import { SessionFactory } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { ThirdPartyNetworksService } from '../../../services/third-party-networks';
 
-import { Experimental } from '../../../services/experimental';
-
 @Component({
   moduleId: module.id,
   selector: 'minds-settings-general',
@@ -38,7 +36,6 @@ export class SettingsGeneral{
   password2 : string;
 
   language: string = 'en';
-  experimental: Experimental = new Experimental();
 
   constructor(public client: Client, public route: ActivatedRoute, public thirdpartynetworks: ThirdPartyNetworksService){
     this.minds = window.Minds;
