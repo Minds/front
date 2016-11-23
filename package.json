@@ -22,7 +22,6 @@
     "build-shims": "gulp build.bundle.prod --env=prod",
     "build-index-prod": "gulp build.index --env=prod",
 
-    "prebuild-prod": "rimraf public/",
     "build-prod": "npm run prepare-prod && npm run build-base && npm run build-i18n-es && npm run build-shims",
     "postbuild-prod": "npm run clean",
 
