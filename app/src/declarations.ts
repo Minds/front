@@ -53,6 +53,7 @@ import {MindsTooltip} from './components/tooltip/tooltip';
 import {ThirdPartyNetworksSelector} from './components/third-party-networks/selector';
 import {OnboardingCategoriesSelector} from './components/onboarding/categories-selector/categories-selector';
 import {PDAds} from './components/ads/pd-ads';
+import {Textarea} from './components/editors/textarea.component';
 
 import {CARDS} from './controllers/cards/cards';
 import {SearchBar} from './controllers/search/bar';
@@ -143,6 +144,7 @@ export const MINDS_DECLARATIONS: any[] = [
   TranslateModal,
   OnboardingCategoriesSelector,
   PDAds,
+  Textarea,
 
   // Controllers; Controller-based directives
   CARDS,

@@ -205,21 +205,20 @@ minds-comments{
       display:flex;
       margin: 0;
 
-      textarea{
-        border:1px solid #DDD;
-        padding: $minds-padding;
-        resize:none;
-        background:transparent;
+      minds-textarea {
         font-family:inherit;
         font-size:12px;
-        outline:none;
         flex:1;
         margin-bottom: $minds-padding;
+
+        .m-editor {
+          min-height: 26px;
+        }
       }
     }
   }
 
-  .m-comments-composer form textarea,
+  .m-comments-composer form minds-textarea,
   .minds-editable-container textarea {
     width: 100%;
     padding: $minds-padding ($minds-padding + 88px) $minds-padding $minds-padding;

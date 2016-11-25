@@ -43,21 +43,16 @@
 
         <div class="m-comments-composer">
             <form (submit)="post($event)">
-
-                <textarea
-                  type="text"
-                  id="message"
-                  #message
-                  name="message"
-                  [(ngModel)]="content"
-                  (keyup)="getPostPreview(message)"
+                <minds-textarea
+                  #message="Textarea"
+                  [(mModel)]="content"
+                  [disabled]="inProgress && attachment.hasFile()"
+                  (click)="isLoggedIn()"
+                  (keyup)="getPostPreview(content)"
+                  (keydown.enter)="post($event)"
                   placeholder="Enter your comment"
                   i18n-placeholder
-                  (keydown.enter)="post($event)"
-                  [autoGrow]
-                  (click)="isLoggedIn()"
-                  [disabled]="inProgress && attachment.hasFile()"
-                ></textarea>
+                ></minds-textarea>
             </form>
 
             <div class="minds-comment-span mdl-color-text--red-500" *ngIf="!canPost && triedToPost">
