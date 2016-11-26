@@ -501,6 +501,14 @@ export const EmojiList =
   {
     "codePoint": 9992,
     "name": "AIRPLANE"
+  },
+  {
+    "codePoint": 128422,
+    "name": "KEYBOARD AND MOUSE"
+  },
+  {
+    "codePoint": 9000,
+    "name": "KEYBOARD"
   }
 ]
 ;
