@@ -8,12 +8,14 @@ import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
 import { NotificationService } from '../../services/notification';
 
+// Configure the module
 @Component({
   moduleId: module.id,
   selector: 'minds-notifications',
   templateUrl: 'list.html'
 })
 
+// Notifications page class
 export class Notifications {
 
   notifications : Array<Object> = [];
@@ -29,6 +31,7 @@ export class Notifications {
 
   paramsSubscription: Subscription;
   ngOnInit() {
+    // If the user is not logged in, then redirect the user to the login page
     if(!this.session.isLoggedIn()){
       this.router.navigate(['/login']);
       return;
@@ -57,14 +60,20 @@ export class Notifications {
     this.paramsSubscription.unsubscribe();
   }
 
-  load(refresh : boolean = false){
+  load(refresh : boolean = false) {
     var self = this;
 
-    if(this.inProgress) return false;
+    // If in progress, then stop this function
+    if(this.inProgress) {
+      return false;
+    }
 
-    if(refresh)
+    // Clear offset when the refresh argument is true
+    if(refresh) {
       this.offset = "";
+    }
 
+    // Make sure that there is only one instance of this function
     this.inProgress = true;
 
     this.client.get(`api/v1/notifications/${this._filter}`, {limit:12, offset:this.offset})
