@@ -3,8 +3,11 @@
         define('__MINDS_CONTEXT__', 'app');
     }
 
+    $aotPrefix = '';
     $language = Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en';
-    $aotPrefix = $language === 'en' ? '' : '.' . $language; 
+    if(in_array($language, [ 'en', 'es'])){
+        $aotPrefix = $language === 'en' ? '' : '.' . $language;
+    } 
 ?>
 <html>
   <head>
