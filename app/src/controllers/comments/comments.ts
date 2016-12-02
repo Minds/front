@@ -258,18 +258,20 @@ export class Comments {
     this.canPost = false;
     this.triedToPost = false;
 
+    this.attachment.setHidden(true);
+    this.attachment.setContainer(this.object);
     this.attachment.upload(file)
-    .then(guid => {
-      this.canPost = true;
-      this.triedToPost = false;
-      file.value = null;
-    })
-    .catch(e => {
-      console.error(e);
-      this.canPost = true;
-      this.triedToPost = false;
-      file.value = null;
-    });
+      .then(guid => {
+        this.canPost = true;
+        this.triedToPost = false;
+        file.value = null;
+      })
+      .catch(e => {
+        console.error(e);
+        this.canPost = true;
+        this.triedToPost = false;
+        file.value = null;
+      });
   }
 
   removeAttachment(file: HTMLInputElement) {
