@@ -6,7 +6,8 @@
     "gulp": "gulp",
     "postinstall": "typings install",
 
-    "extract": "ng-xi18n -p tsconfig.json",
+    "extract": "gulp prepare.prod && ng-xi18n -p angular-tsconfig.json",
+    "postextract": "rimraf .ngcli-build/ && rmv \"^messages\\.(.*)$\" ./app/locale/Default.\\$1",
 
     "clean": "rimraf .tmp/ .tmp.aot/",
     "compile-aot": "ngc -p tsconfig-aot.json",
@@ -87,6 +88,7 @@
     "open": "0.0.5",
     "protractor": "^2.5.1",
     "rimraf": "^2.5.4",
+    "rmv": "^1.0.0",
     "rollup": "^0.36.3",
     "rollup-plugin-commonjs": "^5.0.5",
     "rollup-plugin-node-resolve": "^2.0.0",

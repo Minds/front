@@ -65,11 +65,3 @@ gulp.task('test', done =>
     //'build.test',
     //'karma.start',
     done));
-
-// --------------
-// Test.
-gulp.task('extract', done =>
-  runSequence(
-    'build.plugins',
-    'build.i18n-messages',
-    done));
