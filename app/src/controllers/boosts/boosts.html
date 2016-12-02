@@ -157,6 +157,13 @@
       </div>
 
     </div>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="getBoosts()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+    </infinite-scroll>
   </div>
   <!-- END: Contents -->
 

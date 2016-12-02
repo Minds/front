@@ -50,17 +50,20 @@ export class Boosts{
       }
 
       this.inProgress = false;
-      this.moreData = true;
-      this.boosts = [];
-      this.offset = '';
-      
-      this.getBoosts();
+      this.getBoosts(true);
     });
   }
 
-  getBoosts(){
+  getBoosts(refresh: boolean = false){
     if(this.inProgress)
       return;
+
+    if (refresh) {
+      this.boosts = [];
+      this.offset = '';
+      this.moreData = true;
+    }
+
     this.inProgress = true;
     this.client.get('api/v1/boost/' + this.type + '/' + this.filter, {limit: 12, offset: this.offset})
       .then((response: any) => {
@@ -73,7 +76,7 @@ export class Boosts{
         this.boosts = this.boosts.concat(response.boosts);
         this.offset = response['load-next'];
         this.inProgress = false;
-        this.moreData = true;
+        this.moreData = !!response['load-next'];
       })
       .catch((e) => {
         this.inProgress = false;
