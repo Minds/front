@@ -18,8 +18,8 @@ import { VideoAdsService } from './ads-service';
       <source [src]="s.uri" *ngFor="let s of src">
     </video>
     <ng-content></ng-content>
-    <div class="minds-video-bar-min">
-      {{time.minutes}}:{{time.seconds}}
+    <div class="minds-video-bar-min" *ngIf="remaining">
+      {{remaining.minutes}}:{{remaining.seconds}}
     </div>
     <div class="minds-video-bar-full">
       <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
@@ -63,6 +63,7 @@ export class MindsVideo{
     minutes: '00',
     seconds: '00'
   }
+  remaining: { minutes: any, seconds: any } | null = null;
   seek_interval;
   seeked : number = 0;
 
@@ -197,6 +198,22 @@ export class MindsVideo{
       this.elapsed.seconds = "0" + this.elapsed.seconds;
   }
 
+  calculateRemaining() {
+    if (!this.element.duration || this.element.paused) {
+      this.remaining = null;
+      return
+    }
+
+    var seconds = this.element.duration - this.element.currentTime;
+    this.remaining.minutes = Math.floor(seconds / 60);
+    if(parseInt(this.remaining.minutes) < 10)
+      this.remaining.minutes = "0" + this.remaining.minutes;
+
+    this.remaining.seconds = Math.floor(seconds % 60);
+    if(parseInt(this.remaining.seconds) < 10)
+      this.remaining.seconds = "0" + this.remaining.seconds;
+  }
+
   onClick(){
     console.log(this.element.paused)
     if(this.element.paused == false){
@@ -238,6 +255,7 @@ export class MindsVideo{
     this.seek_interval = setInterval(() => {
       this.seeked = (this.element.currentTime / this.element.duration) * 100;
       this.calculateElapsed();
+      this.calculateRemaining();
       this.cd.markForCheck();
     }, 100);
   }
