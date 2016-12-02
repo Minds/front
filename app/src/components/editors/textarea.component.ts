@@ -72,7 +72,7 @@ export class Textarea implements OnChanges {
     }
   }
 
-  ngOnChanges(changes: { model: SimpleChange, disabled: SimpleChange }) {
+  ngOnChanges(changes: any) {
     if (
       changes.model &&
       this.getControlText() !== changes.model.currentValue && 
