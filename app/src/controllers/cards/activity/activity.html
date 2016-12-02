@@ -19,7 +19,7 @@
 		<a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid">
 			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
 		</a>
-    <a [routerLink]="['/archive/view/', activity.entity_guid]" class="permalink" 
+    <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink" 
       *ngIf="!activity.guid && activity.entity_guid"
     >
       <span>{{activity.time_created * 1000 | date:'medium'}}</span>
