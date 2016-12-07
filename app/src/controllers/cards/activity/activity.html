@@ -19,7 +19,7 @@
 		<a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid">
 			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
 		</a>
-    <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink" 
+    <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink"
       *ngIf="!activity.guid && activity.entity_guid"
     >
       <span>{{activity.time_created * 1000 | date:'medium'}}</span>
@@ -31,11 +31,6 @@
 <!-- PayWall -->
 <minds-paywall class="m-paywall" [(entity)]="activity" *ngIf="activity.paywall">
 </minds-paywall>
-
-<div class="m-paywall-notice mdl-color-text--white mdl-color--green" *ngIf="activity.isMonetized">
-  <i class="material-icons m-material-icons-inline-text">vpn_key</i>
-  <!-- i18n -->This activity is monetized.<!-- /i18n -->
-</div>
 <!-- END: PayWall -->
 
 <!-- Messages -->

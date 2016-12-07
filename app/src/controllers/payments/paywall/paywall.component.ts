@@ -13,6 +13,8 @@ import { SessionFactory } from '../../../services/session';
 
 export class PayWall {
 
+  minds = (<any>window).Minds;
+
   inProgress : boolean = false;
   showCheckout : boolean = false;
   amount : number;

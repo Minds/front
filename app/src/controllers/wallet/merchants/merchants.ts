@@ -167,6 +167,35 @@ export class Merchants {
       });
   }
 
+  updatePreview(input: HTMLInputElement) {
+
+    let file = input ? input.files[0] : null;
+
+    var reader  = new FileReader();
+    reader.onloadend = () => {
+      input.src = reader.result;
+    }
+    reader.readAsDataURL(file);
+
+  }
+
+  uploadPreview(input: HTMLInputElement) {
+
+    let file = input ? input.files[0] : null;
+
+    this.upload.post('api/v1/merchant/exclusive-preview', [ file ], {},
+      (progress) => {
+        console.log(progress);
+      })
+      .then((response: any) => {
+        input.value = null;
+      })
+      .catch((e) => {
+        alert('Sorry, there was a problem. Try again.');
+        input.value = null;
+      });
+  }
+
   saveExclusive(){
     this.client.post('api/v1/merchant/exclusive', this.exclusive)
       .then(() => {
