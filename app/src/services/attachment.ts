@@ -74,6 +74,14 @@ export class AttachmentService {
     return this.accessId;
   }
 
+  setHidden(hidden) {
+    this.meta.hidden = hidden ? 1 : 0;
+  }
+
+  isHidden() {
+    return !!this.meta.hidden;
+  }
+
   setMature(mature) {
     this.meta.mature = mature ? 1 : 0;
 

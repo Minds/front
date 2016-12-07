@@ -11,7 +11,7 @@ const ENVIRONMENTS = {
 };
 
 export const PROJECT_ROOT         = normalize(join(__dirname, '..'));
-export const ENV                  = argv['env']         || 'prod';
+export const ENV                  = argv['env']         || ENVIRONMENTS.DEVELOPMENT;
 export const DEBUG                = argv['debug']       || false;
 export const PORT                 = argv['port']        || 5555;
 export const LIVE_RELOAD_PORT     = argv['reload-port'] || 4002;
@@ -74,7 +74,7 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
   // -ng-rc- { src: '@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.min.js', inject: 'libs', dest: JS_DEST },
   // -ng-rc- { src: '@angular/router/bundles/router.umd.min.js', inject: 'libs', dest: JS_DEST },
   // -ng-rc- { src: '@angular/router-deprecated/bundles/router-deprecated.umd.min.js', inject: 'libs', dest: JS_DEST },
-  { src: 'socket.io-client/socket.io.js', inject: 'libs', dest: JS_DEST },
+  { src: 'socket.io-client/dist/socket.io.js', inject: 'libs', dest: JS_DEST },
 
   // async
   { src: 'tinymce/tinymce.min.js', inject: 'async', dest: JS_DEST },
@@ -89,7 +89,7 @@ export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependenci
   { src: 'zone.js/dist/zone.min.js', inject: 'shims' },
   { src: 'systemjs/dist/system.js', inject: 'shims' },
   // { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
-  { src: 'socket.io-client/socket.io.js', inject: 'libs' },
+  { src: 'socket.io-client/dist/socket.io.js', inject: 'libs' },
   // { src: 'angular2/es6/dev/src/testing/shims_for_IE.js', inject: 'shims' },
   { src: 'intl/dist/Intl.min.js', inject: 'shims' },
   { src: 'intl/locale-data/jsonp/en.js', inject: 'shims' },

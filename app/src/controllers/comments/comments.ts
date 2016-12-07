@@ -7,6 +7,8 @@ import { SignupModalService } from '../../components/modal/signup/service';
 import { AttachmentService } from '../../services/attachment';
 import { SocketsService } from '../../services/sockets';
 
+import { Textarea } from '../../components/editors/textarea.component';
+
 @Component({
   moduleId: module.id,
   selector: 'minds-comments',
@@ -33,7 +35,7 @@ export class Comments {
   session = SessionFactory.build();
 
   focusOnInit: boolean = false;
-  @ViewChild('message') composerTextarea: ElementRef;
+  @ViewChild('message') textareaControl: Textarea;
 
   editing : boolean = false;
 
@@ -171,7 +173,7 @@ export class Comments {
 
   ngAfterViewInit() {
     if (this.focusOnInit) {
-      this.renderer.invokeElementMethod(this.composerTextarea.nativeElement, 'focus');
+      this.textareaControl.focus();
     }
   }
 
@@ -258,18 +260,20 @@ export class Comments {
     this.canPost = false;
     this.triedToPost = false;
 
+    this.attachment.setHidden(true);
+    this.attachment.setContainer(this.object);
     this.attachment.upload(file)
-    .then(guid => {
-      this.canPost = true;
-      this.triedToPost = false;
-      file.value = null;
-    })
-    .catch(e => {
-      console.error(e);
-      this.canPost = true;
-      this.triedToPost = false;
-      file.value = null;
-    });
+      .then(guid => {
+        this.canPost = true;
+        this.triedToPost = false;
+        file.value = null;
+      })
+      .catch(e => {
+        console.error(e);
+        this.canPost = true;
+        this.triedToPost = false;
+        file.value = null;
+      });
   }
 
   removeAttachment(file: HTMLInputElement) {
@@ -288,11 +292,11 @@ export class Comments {
   }
 
   getPostPreview(message){
-    if (!message.value) {
+    if (!message) {
       return;
     }
 
-    this.attachment.preview(message.value);
+    this.attachment.preview(message);
   }
 
 }

@@ -10,9 +10,9 @@ export class WalletService {
   constructor(@Inject(Client) public client : Client){
     this.getBalance();
     this.session.isLoggedIn((is) => {
-      if(!is && window.Minds.wallet){
-        window.Minds.wallet.balance = '...';
-        this.sync();
+      if (is) {
+        this.getBalance(true);
+      } else {
         window.Minds.wallet = null;
       }
     });

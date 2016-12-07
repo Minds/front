@@ -19,7 +19,7 @@
 		<a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid">
 			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
 		</a>
-    <a [routerLink]="['/archive/view/', activity.entity_guid]" class="permalink" 
+    <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink" 
       *ngIf="!activity.guid && activity.entity_guid"
     >
       <span>{{activity.time_created * 1000 | date:'medium'}}</span>
@@ -230,7 +230,11 @@
     i18n-yesButton
   >
     <p confirm-message>
-        <!-- i18n -->Are you sure you want to delete this post?<!-- /i18n -->
+        <!-- i18n -->Are you sure you want to delete this post? There's no UNDO.<!-- /i18n -->
+        <span *ngIf="activity.entity_guid && (activity.custom_type == 'batch' || activity.custom_type == 'video')">
+          <br><br>
+          <b i18n>This action will also delete the attached media from your gallery.</b>
+        </span>
     </p>
     <p confirm-success-message>
         <!-- i18n -->The post has been deleted.<!-- /i18n -->

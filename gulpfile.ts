@@ -26,6 +26,13 @@ gulp.task('build', done =>
     done));
 
 // --------------
+// Build bundle (AoT - Production)
+gulp.task('build.bundle.prod', done =>
+  runSequence(
+    'build.bundles',
+    done));
+
+// --------------
 // Build bundle
 gulp.task('build.bundle', done =>
   runSequence(
@@ -57,12 +64,4 @@ gulp.task('test', done =>
     'tslint',
     //'build.test',
     //'karma.start',
-    done));
-
-// --------------
-// Test.
-gulp.task('extract', done =>
-  runSequence(
-    'build.plugins',
-    'build.i18n-messages',
     done));

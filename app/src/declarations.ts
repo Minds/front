@@ -55,6 +55,7 @@ import {OnboardingCategoriesSelector} from './components/onboarding/categories-s
 import {PDAds} from './components/ads/pd-ads';
 import { PayWall } from './controllers/payments/paywall/paywall.component';
 import { PaywallCancelButton } from './controllers/payments/paywall/paywall-cancel.component';
+import {Textarea} from './components/editors/textarea.component';
 
 import {CARDS} from './controllers/cards/cards';
 import {SearchBar} from './controllers/search/bar';
@@ -148,6 +149,7 @@ export const MINDS_DECLARATIONS: any[] = [
   PDAds,
   PayWall,
   PaywallCancelButton,
+  Textarea,
 
   // Controllers; Controller-based directives
   CARDS,

@@ -14,8 +14,8 @@ import { SessionFactory } from '../../services/session';
       <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n>Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n>Un-Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n>Un-subscribe</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned" (click)="banToggle = true; showMenu = false" i18n>Ban globally</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!user.banned" (click)="unBan()" i18n>Un-ban globally</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned === 'yes'" (click)="banToggle = true; showMenu = false" i18n>Ban globally</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n>Un-ban globally</li>
     </ul>
     <minds-bg-overlay (click)="toggleMenu($event)" [hidden]="!showMenu"></minds-bg-overlay>
 
@@ -89,26 +89,26 @@ export class UserDropdownButton{
   }
 
   ban() {
-    this.user.banned = true;
+    this.user.banned = 'yes';
     this.client.put(`api/v1/admin/ban/${this.user.guid}`, {})
       .then(() => {
-        this.user.banned = true;
+        this.user.banned = 'yes';
       })
       .catch(e => {
-        this.user.banned = false;
+        this.user.banned = 'no';
       });
 
     this.banToggle = false;
   }
 
   unBan() {
-    this.user.banned = false;
+    this.user.banned = 'no';
     this.client.delete(`api/v1/admin/ban/${this.user.guid}`, {})
       .then(() => {
-        this.user.banned = false;
+        this.user.banned = 'no';
       })
       .catch(e => {
-        this.user.banned = true;
+        this.user.banned = 'yes';
       });
 
     this.showMenu = false;

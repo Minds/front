@@ -2,6 +2,12 @@
     if (!defined('__MINDS_CONTEXT__')) {
         define('__MINDS_CONTEXT__', 'app');
     }
+
+    $aotPrefix = '';
+    $language = Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en';
+    if(in_array($language, [ 'en', 'es'])){
+        $aotPrefix = $language === 'en' ? '' : '.' . $language;
+    } 
 ?>
 <html>
   <head>
@@ -122,9 +128,8 @@
               "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
               "navigation" => Minds\Core\Navigation\Manager::export(),
               "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
-              'language' => Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en',
-              "categories" => Minds\Core\Config::_()->get('categories') ?: [],
-              "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
+              'language' => $language,
+              "categories" => Minds\Core\Config::_()->get('categories') ?: []
           ];
 
           if(Minds\Core\Session::isLoggedIn()){
@@ -139,8 +144,14 @@
       window.Minds = <?= json_encode($minds) ?>;
     </script>
 
+    <% if (ENV !== 'prod') { %>
     <!-- inject:js -->
   	<!-- endinject -->
+    <% } else { %>
+    <script src="<%= APP_CDN %>/js/shims.js?v=<%= VERSION %>"></script>
+    <script src="<%= APP_CDN %>/js/build-aot<?= $aotPrefix ?>.js?v=<%= VERSION %>"></script>
+    <% } %>
+
     <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
     <script>window.twoOhSixId = 'minds.com';</script>
     <script src='//s.206ads.com/init.js'></script>
