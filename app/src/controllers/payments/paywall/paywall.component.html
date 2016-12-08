@@ -13,7 +13,9 @@
     <i class="mdl-color-text--white material-icons">vpn_key</i>
     <!-- i18n -->View<!-- /i18n -->
   </button>
-  <p class="mdl-color-text--grey-800" *ngIf="entity.ownerObj.merchant?.exclusive?.intro"><b>@{{entity.ownerObj?.username}}:</b> {{entity.ownerObj?.merchant?.exclusive?.intro}}</p>
+  <p class="mdl-color-text--grey-800" *ngIf="entity.ownerObj.merchant?.exclusive?.intro">
+    <b>&ldquo;</b> {{entity.ownerObj?.merchant?.exclusive?.intro}} <b>&rdquo;</b>
+  </p>
 </div>
 
 <div class="m-paywall-splash mdl-color--grey-800" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid">
