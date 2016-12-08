@@ -41,7 +41,7 @@
                 <span *ngIf="attachment.isMature()" i18n>Mature content</span>
               </a>
 
-              <a class="m-paywall-button"
+              <a class="m-paywall-button-icon"
                 *ngIf="session.getLoggedInUser().merchant?.exclusive?.enabled"
                 [ngClass]="{ 'mdl-color-text--green-500': meta.paywall }"
                 (click)="meta.paywall = !meta.paywall"
