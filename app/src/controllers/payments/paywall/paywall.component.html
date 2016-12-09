@@ -18,13 +18,6 @@
   </p>
 </div>
 
-<div class="m-paywall-splash mdl-color--grey-800" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid">
-
-  <img [src]="minds.cdn_url + 'fs/v1/paywall/preview/' + entity.ownerObj.guid"/>
-
-  <!--<p class="mdl-color-text--white" i18n>Access this exclusive content by becoming a paid monthly subscriber of <b>{{entity.ownerObj?.name}}</b>.</p>-->
-
-</div>
 
 <div [hidden]="!inProgress" style="width:100%; text-align:center;" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
@@ -38,5 +31,16 @@
 <div class="m-paywall-card-input" *ngIf="showCheckout">
   <minds-payments-stripe-checkout (inputed)="subscribe($event);"></minds-payments-stripe-checkout>
 </div>
+
+
+
+<div class="m-paywall-splash mdl-color--grey-800" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid">
+
+  <img [src]="minds.cdn_url + 'fs/v1/paywall/preview/' + entity.ownerObj.guid"/>
+
+  <!--<p class="mdl-color-text--white" i18n>Access this exclusive content by becoming a paid monthly subscriber of <b>{{entity.ownerObj?.name}}</b>.</p>-->
+
+</div>
+
 
 <m-modal-signup-on-action [open]="showSignupModal" (closed)="showSignupModal = false" action="view exclusive content" *ngIf="!session.isLoggedIn()"></m-modal-signup-on-action>
