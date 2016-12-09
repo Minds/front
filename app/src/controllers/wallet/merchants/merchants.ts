@@ -32,7 +32,9 @@ export class Merchants {
   exclusive = {
     enabled : false,
     amount: 10,
-    intro: ''
+    intro: '',
+    saving: false,
+    saved: false
   };
 
   minds = window.Minds;
@@ -197,9 +199,13 @@ export class Merchants {
   }
 
   saveExclusive(){
+    this.exclusive.saved = false;
+    this.exclusive.saving = true;
     this.client.post('api/v1/merchant/exclusive', this.exclusive)
       .then(() => {
         this.minds.user.merchant.exclusive = this.exclusive;
+        this.exclusive.saved = true;
+        this.exclusive.saving = false;
       });
   }
 
