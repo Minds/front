@@ -12,13 +12,13 @@
 
     <ul class="mdl-card minds-card-navigation mdl-shadow--2dp" style="width:100%; margin-top:8px;">
       <li>
-        <a class="mdl-color-text--blue-grey-500" [routerLink]="['/wallet/transactions']">
+        <a class="mdl-color-text--blue-grey-500" [routerLink]="['/wallet/transactions']" routerLinkActive="selected">
           <i class="material-icons">history</i>
           <!-- i18n -->Points history<!-- /i18n -->
         </a>
       </li>
       <li>
-        <a class="mdl-color-text--blue-grey-500" [routerLink]="['/wallet/purchase']">
+        <a class="mdl-color-text--blue-grey-500" [routerLink]="['/wallet/purchase']" routerLinkActive="selected">
           <i class="material-icons">shopping_cart</i>
           <!-- i18n -->Buy points<!-- /i18n -->
         </a>
@@ -26,6 +26,7 @@
       <li>
         <a class="mdl-color-text--blue-grey-500"
           [routerLink]="['/wallet/merchants']"
+          routerLinkActive="selected"
           [ngStyle]="{'mdl-color--blue-grey-300': filter == 'merchants'}"
           >
           <i class="material-icons">attach_money</i>
