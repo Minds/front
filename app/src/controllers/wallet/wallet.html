@@ -39,7 +39,7 @@
 
   <div class="mdl-cell mdl-cell--8-col">
 
-    <minds-wallet-purchase [toggled]="filter == 'purchase'"></minds-wallet-purchase>
+    <minds-wallet-purchase [toggled]="filter == 'purchase'" [hidden]="filter == 'merchants'"></minds-wallet-purchase>
 
     <minds-wallet-transactions *ngIf="filter == 'transactions' || filter == 'purchase'"></minds-wallet-transactions>
 
