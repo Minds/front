@@ -3,6 +3,7 @@ import { Material as MaterialService } from "../services/ui";
 
 import { MaterialTextfield } from './material/text-field';
 import { MaterialUpload } from './material/upload';
+import { MaterialSwitch } from './material/switch';
 
 @Directive({
   selector: '[mdl]',
@@ -22,4 +23,4 @@ export class Material {
   }
 }
 
-export const MDL_DIRECTIVES: any[] = [Material, MaterialTextfield, MaterialUpload];
+export const MDL_DIRECTIVES: any[] = [Material, MaterialTextfield, MaterialUpload, MaterialSwitch];
