@@ -129,7 +129,8 @@
               "navigation" => Minds\Core\Navigation\Manager::export(),
               "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
               'language' => $language,
-              "categories" => Minds\Core\Config::_()->get('categories') ?: []
+              "categories" => Minds\Core\Config::_()->get('categories') ?: [],
+              "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
           ];
 
           if(Minds\Core\Session::isLoggedIn()){
