@@ -76,6 +76,7 @@ import {Checkout, StripeCheckout} from './controllers/payments/checkout';
 import {Boost} from './controllers/boosts/boost/boost';
 import {Remind} from './controllers/cards/remind/remind';
 import {ChannelModules} from './controllers/channels/modules/modules';
+import {ChannelSupporters} from './controllers/channels/supporters/supporters';
 import {ChannelSubscribers} from './controllers/channels/subscribers/subscribers';
 import {ChannelSubscriptions} from './controllers/channels/subscriptions/subscriptions';
 import {ChannelSocialProfiles} from './controllers/channels/social-profiles/social-profiles';
@@ -172,6 +173,7 @@ export const MINDS_DECLARATIONS: any[] = [
   StripeCheckout,
   Boost,
   Remind,
+  ChannelSupporters,
   ChannelSubscribers,
   ChannelSubscriptions,
   ChannelModules,

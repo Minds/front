@@ -30,7 +30,11 @@
           <span i18n="Count of activities">Feed</span>
           <b>{{user.activity_count}}</b>
         </a>
-        <a class="mdl-tabs__tab mdl-color-text--blue-grey-50" *ngIf="user.supporters_count">
+        <a class="mdl-tabs__tab mdl-color-text--blue-grey-50" *ngIf="user.supporters_count && session.getLoggedInUser().guid != user.guid">
+          <span i18n="Count of supporters">Supporters</span>
+          <b>{{user.supporters_count}}</b>
+        </a>
+        <a [routerLink]="['/', user.username, 'supporters']"  class="mdl-tabs__tab mdl-color-text--blue-grey-50" *ngIf="user.supporters_count && session.getLoggedInUser().guid == user.guid">
           <span i18n="Count of supporters">Supporters</span>
           <b>{{user.supporters_count}}</b>
         </a>
@@ -196,6 +200,13 @@
         </infinite-scroll>
 
     </div>
+
+  </section>
+
+  <!-- Supporters list -->
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'supporters'">
+
+    <minds-channel-supporters [channel]="user" class="mdl-grid"></minds-channel-supporters>
 
   </section>
 

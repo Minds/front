@@ -1,0 +1,10 @@
+<div class="mdl-cell mdl-cell--6-col" *ngFor="let user of users">
+  <minds-card-user [object]="user" class="mdl-card mdl-shadow--2dp"></minds-card-user>
+</div>
+
+<infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress">
+</infinite-scroll>
