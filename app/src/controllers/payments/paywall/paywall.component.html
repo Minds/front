@@ -16,6 +16,9 @@
   <p class="mdl-color-text--grey-800" *ngIf="entity.ownerObj.merchant?.exclusive?.intro">
     <b>&ldquo;</b> {{entity.ownerObj?.merchant?.exclusive?.intro}} <b>&rdquo;</b>
   </p>
+  <p class="mdl-color-text--grey-800" *ngIf="!entity.ownerObj.merchant?.exclusive?.intro">
+    <b>&ldquo;</b> This post is only available to supporters. <b>&rdquo;</b>
+  </p>
 </div>
 
 
@@ -24,7 +27,7 @@
 </div>
 
 <div class="m-paywall-amount mdl-color-text--green" *ngIf="showCheckout">
-  $ {{ amount }}
+  $ {{ amount }} / month
 </div>
 
 
