@@ -64,6 +64,7 @@ import {AdminAnalytics} from './controllers/admin/analytics/analytics';
 import {AdminBoosts} from './controllers/admin/boosts/boosts';
 import {AdminPages} from './controllers/admin/pages/pages';
 import {AdminReports} from './controllers/admin/reports/reports';
+import {AdminMonetization} from './controllers/admin/monetization/monetization';
 import {BoostFullNetwork} from './controllers/boosts/boost/full-network/full-network';
 import {BoostP2P} from './controllers/boosts/boost/p2p/p2p';
 import {WalletTransactions} from './controllers/wallet/transactions/transactions';
@@ -159,6 +160,7 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminBoosts,
   AdminPages,
   AdminReports,
+  AdminMonetization,
   BoostFullNetwork,
   BoostP2P,
   WalletTransactions,
