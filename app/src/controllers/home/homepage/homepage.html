@@ -1,4 +1,4 @@
-<section class="minds-homepage-banner m-video-banner">
+<section class="minds-homepage-banner m-video-banner" #banner [class.m-video-banner-expand]="banner.expand">
   <div class="video" style="background-image: url('assets/videos/earth-1/earth-1.png')">
     <video autoplay muted loop poster="assets/videos/earth-1/earth-1.png" *ngIf="flags.canPlayInlineVideos">
       <!--<source src="assets/videos/traffic-1/traffic-1.webm" type="video/webm">
@@ -16,7 +16,7 @@
         <h3 *ngIf="session.isLoggedIn()" i18n>Welcome {{session.getLoggedInUser().name}}</h3>
       </div>
       <div class="mdl-cell mdl-cell--6-col m-homepage-signup" [hidden]="session.isLoggedIn()">
-        <minds-form-register (done)="registered()"></minds-form-register>
+        <minds-form-register (done)="registered()" (click)="banner.expand = true"></minds-form-register>
       </div>
       <div class="mdl-cell mdl-cell--12-col m-app-links">
         <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6" target="_blank">

@@ -7,6 +7,11 @@
   //height:200px;
   overflow:hidden;
 
+  &.m-video-banner-expand{
+    overflow-x:visible;
+    overflow: visible;
+  }
+
   video{
     bottom:auto;
     top:-50px;
