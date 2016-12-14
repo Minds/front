@@ -16,6 +16,7 @@ export class PayWall {
   minds = (<any>window).Minds;
 
   inProgress : boolean = false;
+  error : string;
   showCheckout : boolean = false;
   amount : number;
   nonce : string = "";
@@ -50,16 +51,25 @@ export class PayWall {
         }
         this.showCheckout = true;
         this.amount = response.amount;
+      })
+      .catch(e => {
+        this.inProgress = false;
+        this.error = "Sorry, there was an error.";
       });
   }
 
   subscribe(nonce){
     this.showCheckout = false;
+    this.inProgress = true;
     console.log('nonce: ' + nonce);
     this.client.post('api/v1/payments/plans/subscribe/' + this.entity.owner_guid + '/exclusive', {
         nonce: nonce
       })
-      .then((response) => setTimeout(() => this.checkout(), 0));
+      .then((response) => setTimeout(() => this.checkout(), 0))
+      .catch(e => {
+        this.inProgress = false;
+        this.error = "Sorry, we couldn't complete the transaction."; 
+      });
   }
 
   ngOnDestroy(){

@@ -22,6 +22,10 @@
 </div>
 
 
+<div class="mdl-color-text--red mdl-card__supporting-text" *ngIf="error">
+    <p>{{error}}</p>
+</div>
+
 <div [hidden]="!inProgress" style="width:100%; text-align:center;" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
 </div>
