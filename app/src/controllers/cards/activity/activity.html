@@ -203,6 +203,9 @@
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled i18n>Mute notifications</li>
 		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false" i18n>Mute notifications</li>
 		<li class="mdl-menu__item" *ngIf="asyncMute && activity['is:muted']" (click)="unmute(); toggle.value = false" i18n>Unmute notifications</li>
+    <!-- ADMIN EDIT FLAGS -->
+		<li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="activity.mature" (click)="setExplicit(true); toggle.value = false">Set as Explicit</li>
+		<li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!activity.mature" (click)="setExplicit(false); toggle.value = false">Remove Explicit</li>
 	</ul>
   <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 

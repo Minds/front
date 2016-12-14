@@ -194,6 +194,32 @@ export class Activity {
       });
   }
 
+  setExplicit(value: boolean) {
+    let oldValue = this.activity.mature,
+      oldMatureVisibility = this.activity.mature_visibility;
+
+    this.activity.mature = value;
+    this.activity.mature_visibility = void 0;
+
+    if (this.activity.custom_data && this.activity.custom_data[0]) {
+      this.activity.custom_data[0].mature = value;
+    } else if (this.activity.custom_data) {
+      this.activity.custom_data.mature = value;
+    }
+
+    this.client.post(`api/v1/admin/activity/${this.activity.guid}/mature`, { value: value ? '1' : '0' })
+      .catch(e => {
+        this.activity.mature = oldValue;
+        this.activity.mature_visibility = oldMatureVisibility;
+
+        if (this.activity.custom_data && this.activity.custom_data[0]) {
+          this.activity.custom_data[0].mature = oldValue;
+        } else if (this.activity.custom_data) {
+          this.activity.custom_data.mature = oldValue;
+        }
+      });
+  }
+
   isVisible(){
     if(this.visible){
       return true;
