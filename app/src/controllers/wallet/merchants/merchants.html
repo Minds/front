@@ -1,11 +1,13 @@
 <div *ngIf="isMerchant">
 
   <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500" [hidden]="inProgress">
-    <div class="mdl-card__supporting-text">
-      <!-- i18n -->Status: {{status}}<!-- /i18n -->
-    </div>
     <div class="mdl-card__supporting-text" *ngIf="status == 'pending'">
       <!-- i18n -->Thanks for monetizing your channel, we are currently reviewing your application. For now, checkout your <a [routerLink]="['/boosts/peer/inbox']">boost console</a> where you can advertise your content.<!-- /i18n -->
+    </div>
+    <div class="mdl-card__supporting-text" *ngIf="status == 'awaiting-document'">
+      <p i18n>We need you to upload verification of your identity. Please provide us with photo ID.</p>
+      <input type="file" #file name="identification"/>
+      <button class="mdl-button mdl-button--colored" (click)="uploadDocument(file)" i18n>Upload</button>
     </div>
   </div>
 
@@ -13,20 +15,68 @@
 
   <div class="minds-spacer-2x"></div>
 
-  <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500 m-merchant-transactions">
+  <!-- Exclusive content -->
+  <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500 m-merchant-plans-exclusive" *ngIf="status == 'active'">
+    <div class="mdl-card__supporting-text">
+      <p i18n>Monetizing will allow users to support you  monthly and see your monetized posts. Any post can be monetized by clicking the dollar icon in the status field before posting.</p>
+
+      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" for="switch-1" [mdlSwitch] [toggled]="exclusive.enabled">
+          <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="exclusive.enabled" [mdl]>
+        <span class="mdl-switch__label" i18n>Activate monthly support</span>
+      </label>
+    </div>
+    <div class="mdl-grid m-merchant-plans-exclusive--inputs" *ngIf="exclusive.enabled">
+      <div class="mdl-cell mdl-cell--12-col">
+        <p>The below description and preview image is what your subscribers will see on your monetized posts until they become an investor.</p>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col m-merchant-plans-exclusive--price">
+        <label i18n>Monthly price</label>
+        <span class="m-merchant-plans-exclusive--price-dolar mdl-color-text--green">$</span>
+        <input class="mdl-color-text--green" type="number" min="1" placeholder="eg. 10" i18n-placeholder [(ngModel)]="exclusive.amount" (keyup)="exclusive.saved = false"/>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col m-merchant-plans-exclusive--intro">
+        <label i18n>Description</label>
+        <input type="text" placeholder="eg. Support me to see my exclusive content and join me for a monthly video chat" [(ngModel)]="exclusive.intro" (keyup)="exclusive.saved = false"/>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col m-merchant-plans-exclusive--preview">
+        <label i18n>Preview</label>
+        <input type="file" #preview name="preview" (change)="updatePreview(preview)"/>
+        <button class="mdl-button mdl-button--colored" (click)="uploadPreview(preview)" i18n>Upload</button>
+
+        <img [src]="preview.src || minds.cdn_url + 'fs/v1/paywall/preview/' + session.getLoggedInUser().guid" />
+
+      </div>
+
+      <button class="mdl-button mdl-button--colored" (click)="saveExclusive()" [disabled]="exclusive.saving" *ngIf="!exclusive.saved && !exclusive.saving">Save</button>
+       <button class="mdl-button mdl-button--colored" disabled="disabled" *ngIf="exclusive.saving">Saving...</button>
+      <button class="mdl-button mdl-button--colored"  disabled="disabled" *ngIf="exclusive.saved">Saved</button>
+    </div>
+  </div>
+  <!-- END: Exclusive content -->
+
+  <div class="minds-spacer-2x"></div>
+
+  <div class="mdl-card mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500 m-merchant-transactions" *ngIf="status == 'active'">
+
+    <div class="mdl-card__supporting-text">
+        <a href="/api/v1/payments/export"
+          target="_blank"
+          style="text-decoration: none; text-transform: uppercase; font-weight: bold; text-align: right; float: right;"
+          >
+          Download transactions
+      </a>
+    </div>
+
 
     <div class="mdl-card md-shadow--2dp m-merchant-transaction" *ngFor="let sale of sales">
 
       <div class="mdl-card__supporting-text m-merchant-transaction-tabs">
-        <div class="m-merchant-transaction-id"><i class="material-icons">description</i>{{sale.id}}</div>
+        <!--<div class="m-merchant-transaction-id"><i class="material-icons">description</i>{{sale.id}}</div>-->
 
         <div class="m-merchant-transaction-amount mdl-color-text--green"><i class="material-icons">attach_money</i>{{sale.amount}}</div>
 
         <div class="m-merchant-transaction-status"><i class="material-icons">hourglass_empty</i>
-          <span [hidden]="sale.status != 'submitted_for_settlement'" i18n>Approved (settling)</span>
-          <span [hidden]="sale.status != 'settled'" i18n>Approved</span>
-          <span [hidden]="sale.status != 'disbursed'" i18n>Disbursed</span>
-          <span [hidden]="sale.status != 'voided'" i18n>Voided</span>
+          <span>{{sale.status}}</span>
         </div>
 
         <div class="m-merchant-transaction-orderId"><i class="material-icons">shopping_cart</i>
@@ -50,6 +100,7 @@
     #e="ngForm"
     class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500"
     [hidden]="inProgress"
+    *ngIf="status == 'active'"
     >
     <div class="mdl-cell mdl-cell--6-col">
       <label i18n>First name</label>
@@ -60,28 +111,19 @@
       <input formControlName="lastName" type="text" placeholder="Last name" i18n-placeholder>
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col">
-      <label i18n>Email</label>
-      <input formControlName="email" type="email" placeholder="Email" i18n-placeholder>
-    </div>
-
     <!--<div class="mdl-cell mdl-cell--6-col">
       <label>Social Security Number (optional)</label>
       <input formControlName="ssn" type="number" placeholder="Social Security Number" i18n-placeholder>
     </div>-->
 
-    <div class="mdl-cell mdl-cell--12-col">
-      <input type="checkbox" formControlName="venmo"> <!-- i18n -->Payout to email address (using venmo)<!-- /i18n -->
-    </div>
-
     <div class="mdl-cell mdl-cell--6-col" >
       <label i18n>Bank Account number</label>
-      <input formControlName="accountNumber" type="number" placeholder="Account Number" i18n-placeholder [disabled]="editForm.value.venmo">
+      <input formControlName="accountNumber" type="number" placeholder="Account Number" i18n-placeholder>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label i18n>Bank Routing number</label>
-      <input formControlName="routingNumber" type="number" placeholder="Routing Number" i18n-placeholder [disabled]="editForm.value.venmo">
+      <label i18n>Bank Routing number / Sort code</label>
+      <input formControlName="routingNumber" type="number" placeholder="Routing Number / Sort Code" i18n-placeholder>
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -101,11 +143,13 @@
 
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__supporting-text">
-      <!-- i18n -->Join the Minds Merchant programme. You can now send and receive channel boosts for money. Many more monetization features are coming.<!-- /i18n -->
+        <p><b>Monetizing your channel activates:</b></p>
+        <p><b>Supporters:</b> Your audience can support you monthly and see your monetized posts. Any post can be monetized by clicking the <b>&#36;</b> in the status field before posting.</p>
+        <p><b>Peer-to-Peer (P2P) Boosts:</b> Your audience can send you cash offers in exchange for sharing their content. </p>
     </div>
   </div>
 
-  <form (submit)="onboard($event)" [formControl]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
+  <form (submit)="onboard($event)" [formGroup]="onboardForm" #f="ngForm" class="m-form m-merchant-form mdl-grid mdl-shadow--2dp mdl-color--white mdl-color-text--blue-grey-500">
     <div class="mdl-cell mdl-cell--6-col">
       <label i18n>First name</label>
       <input formControlName="firstName" type="text" placeholder="First name" i18n-placeholder>
@@ -116,14 +160,9 @@
       <input formControlName="lastName" type="text" placeholder="Last name" i18n-placeholder>
     </div>
 
-    <div class="mdl-cell mdl-cell--4-col">
-      <label i18n>Email</label>
-      <input formControlName="email" type="email" placeholder="Email" i18n-placeholder>
-    </div>
-
-    <div class="mdl-cell mdl-cell--5-col">
+    <div class="mdl-cell mdl-cell--6-col">
       <label i18n>Date of Birth</label>
-      <input formControlName="dob" type="date" placeholder="YYYY-MM-DD" i18n-placeholder>
+      <minds-date-input [date]="onboardForm.controls.dob.value" (dateChange)="onboardForm.controls.dob.setValue($event)"></minds-date-input>
     </div>
 
     <!--<div class="mdl-cell mdl-cell--5-col">
@@ -142,8 +181,19 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label i18n>Region / State</label>
-      <input formControlName="region" type="text" placeholder="eg. NY" i18n-placeholder>
+      <label i18n>Country</label>
+      <minds-country-input [country]="onboardForm.controls.country.value" (countryChange)="onboardForm.controls.country.setValue($event)"></minds-country-input>
+    </div>
+
+    <!-- US ONLY -->
+    <div class="mdl-cell mdl-cell--6-col" *ngIf="onboardForm.controls.country.value == 'US'">
+      <label i18n>State</label>
+      <input formControlName="state" type="text" placeholder="eg. New York" i18n-placeholder>
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col" *ngIf="onboardForm.controls.country.value == 'US'">
+      <label i18n>Social Security Number (Last 4 digits)</label>
+      <input formControlName="ssn" type="number" placeholder="eg. 3333">
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
@@ -151,26 +201,24 @@
       <input formControlName="postCode" type="text" placeholder="eg. 10001" i18n-placeholder>
     </div>
 
-    <div class="mdl-cell mdl-cell--12-col">
-      <label i18n>Payout method</label>
-      <p class="mdl-color-text--grey-600" i18n>Enter your bank account details <b>or</b> select payout out to email. You can change these details later.</p>
-    </div>
 
     <div class="mdl-cell mdl-cell--6-col">
-      <label i18n>Email</label>
-      <input type="checkbox" formControlName="venmo" id="venmo-checkbox"> <span for="#venmo-checkbox" (click)="onboardForm.controls.venmo.updateValue(true)" i18n>Payout via venmo</span>
-      <p class="mdl-color-text--grey-600" i18n>You can create a venmo account later, we'll send the funds to <b [hidden]="!onboardForm.value.email">{{onboardForm.value.email}}</b><i [hidden]="onboardForm.value.email">your email address</i>.</p>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
       <label i18n>Bank Account number</label>
-      <input formControlName="accountNumber" type="number" placeholder="10-12 digit account number" (click)="onboardForm.controls.venmo.updateValue(false)" i18n-placeholder>
-      <label i18n>Bank Routing number</label>
-      <input formControlName="routingNumber" type="number" placeholder="9 digit routing number" (click)="onboardForm.controls.venmo.updateValue(false)" i18n-placeholder>
+      <input formControlName="accountNumber" type="text" placeholder="10-12 digit account number" i18n-placeholder>
+    </div>
+    <div class="mdl-cell mdl-cell--6-col">
+      <label i18n>Bank Routing number / Sort Code</label>
+      <input formControlName="routingNumber" type="text" placeholder="9 digit routing number" i18n-placeholder>
     </div>
 
     <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">
-      <p i18n>Minds, Inc. uses Braintree, a division of PayPal, Inc. (Braintree) for payment processing services. By using the Braintree payment processing services you agree to the Braintree Payment Services Agreement available at <a href="https://www.braintreepayments.com/legal/gateway-agreement" target="_blank">https://www.braintreepayments.com/legal/gateway-agreement</a>, and the applicable bank agreement available at <a href="https://www.braintreepayments.com/legal/cea-wells" target="_blank">https://www.braintreepayments.com/legal/cea-wells</a></p>
+      <p>
+        <input formControlName="stripeAgree" type="checkbox" value="1">
+        <!-- i18n -->Minds, Inc. uses Stripe for payment processing services. By using the Stripe payment processing services you agree to the Stripe Connected Account Agreement available at <a href="https://stripe.com/us/connect-account/legal" target="_blank">https://stripe.com/us/connect-account/legal</a>.<!-- /i18n -->
+      </p>
     </div>
 
     <div *ngIf="error" class="mdl-color-text--red">
@@ -178,7 +226,7 @@
     </div>
 
     <div style="margin:16px; width:100%; text-align:right;">
-      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!f.form.valid" i18n>Accept & Submit</button>
+      <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!f.form.valid" i18n>Next</button>
     </div>
 
   </form>

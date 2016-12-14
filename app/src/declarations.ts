@@ -53,6 +53,8 @@ import {MindsTooltip} from './components/tooltip/tooltip';
 import {ThirdPartyNetworksSelector} from './components/third-party-networks/selector';
 import {OnboardingCategoriesSelector} from './components/onboarding/categories-selector/categories-selector';
 import {PDAds} from './components/ads/pd-ads';
+import { PayWall } from './controllers/payments/paywall/paywall.component';
+import { PaywallCancelButton } from './controllers/payments/paywall/paywall-cancel.component';
 import {Textarea} from './components/editors/textarea.component';
 
 import {CARDS} from './controllers/cards/cards';
@@ -62,6 +64,7 @@ import {AdminAnalytics} from './controllers/admin/analytics/analytics';
 import {AdminBoosts} from './controllers/admin/boosts/boosts';
 import {AdminPages} from './controllers/admin/pages/pages';
 import {AdminReports} from './controllers/admin/reports/reports';
+import {AdminMonetization} from './controllers/admin/monetization/monetization';
 import {BoostFullNetwork} from './controllers/boosts/boost/full-network/full-network';
 import {BoostP2P} from './controllers/boosts/boost/p2p/p2p';
 import {WalletTransactions} from './controllers/wallet/transactions/transactions';
@@ -69,10 +72,11 @@ import {WalletPurchase} from './controllers/wallet/purchase/purchase';
 import {Merchants} from './controllers/wallet/merchants/merchants';
 import {Comments} from './controllers/comments/comments';
 import {ActivityPreview} from './controllers/cards/activity/preview';
-import {Checkout} from './controllers/payments/checkout';
+import {Checkout, StripeCheckout} from './controllers/payments/checkout';
 import {Boost} from './controllers/boosts/boost/boost';
 import {Remind} from './controllers/cards/remind/remind';
 import {ChannelModules} from './controllers/channels/modules/modules';
+import {ChannelSupporters} from './controllers/channels/supporters/supporters';
 import {ChannelSubscribers} from './controllers/channels/subscribers/subscribers';
 import {ChannelSubscriptions} from './controllers/channels/subscriptions/subscriptions';
 import {ChannelSocialProfiles} from './controllers/channels/social-profiles/social-profiles';
@@ -83,6 +87,7 @@ import {SettingsGeneral} from './controllers/settings/general/general';
 import {SettingsStatistics} from './controllers/settings/statistics/statistics';
 import {SettingsDisableChannel} from './controllers/settings/disable/disable';
 import {SettingsTwoFactor} from './controllers/settings/two-factor/two-factor';
+import {SettingsSubscriptions} from './controllers/settings/subscriptions/subscriptions.component';
 import {SearchBarSuggestions} from './controllers/search/suggestions/suggestions';
 import {ComingSoon} from './controllers/home/comingsoon/comingsoon';
 
@@ -144,6 +149,8 @@ export const MINDS_DECLARATIONS: any[] = [
   TranslateModal,
   OnboardingCategoriesSelector,
   PDAds,
+  PayWall,
+  PaywallCancelButton,
   Textarea,
 
   // Controllers; Controller-based directives
@@ -154,6 +161,7 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminBoosts,
   AdminPages,
   AdminReports,
+  AdminMonetization,
   BoostFullNetwork,
   BoostP2P,
   WalletTransactions,
@@ -162,8 +170,10 @@ export const MINDS_DECLARATIONS: any[] = [
   Comments,
   ActivityPreview,
   Checkout,
+  StripeCheckout,
   Boost,
   Remind,
+  ChannelSupporters,
   ChannelSubscribers,
   ChannelSubscriptions,
   ChannelModules,
@@ -175,6 +185,7 @@ export const MINDS_DECLARATIONS: any[] = [
   SettingsStatistics,
   SettingsDisableChannel,
   SettingsTwoFactor,
+  SettingsSubscriptions,
   SearchBarSuggestions,
   ComingSoon,
 ];

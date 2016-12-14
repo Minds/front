@@ -22,6 +22,10 @@
   p{
     margin:0;
   }
+
+  select{
+    margin: 16px 0;
+  }
 }
 
 .m-merchant-legal{
@@ -55,6 +59,42 @@
 
     .m-merchant-transaction-orderId{
       flex:2;
+    }
+  }
+}
+
+.m-merchant-plans-exclusive--inputs{
+  width: 100%;
+  box-sizing: border-box;
+}
+.m-merchant-plans-exclusive--inputs > div{
+  label{
+    text-transform: uppercase;
+    display: block;
+    font-size: 12px;
+    padding: 4px 2px;
+  }
+  span{
+    position: absolute;
+    margin: 16px;
+    font-size: 28px;
+  }
+  &.m-merchant-plans-exclusive--price input{
+    padding: 12px 12px 12px 40px;
+    font-size: 20px;
+  }
+
+  &.m-merchant-plans-exclusive--intro input{
+    padding: 12px;
+    font-size: 12px;
+    width:100%;
+  }
+  &.m-merchant-plans-exclusive--preview{
+    img{
+      width:100%;
+    }
+    input[type=file]{
+      width:200px;
     }
   }
 }

@@ -19,14 +19,18 @@
 		<a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid">
 			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
 		</a>
-    <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink" 
-      *ngIf="!activity.guid && activity.entity_guid"
-    >
-      <span>{{activity.time_created * 1000 | date:'medium'}}</span>
-    </a>
+        <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink"
+            *ngIf="!activity.guid && activity.entity_guid">
+            <span>{{activity.time_created * 1000 | date:'medium'}}</span>
+        </a>
 	</div>
 
 </div>
+
+<!-- PayWall -->
+<minds-paywall class="m-paywall" [(entity)]="activity" *ngIf="activity.paywall">
+</minds-paywall>
+<!-- END: PayWall -->
 
 <!-- Messages -->
 <div class="mdl-card__supporting-text message m-mature-message" [hidden]="!activity.message || editing">
@@ -143,7 +147,10 @@
 	</div>
 
 	<a [routerLink]="['/archive/view', activity.entity_guid]">
-		<img [src]="activity.custom_data[0].src" style="width:100%" (error)="activity.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
+		<img [src]="activity.custom_data[0].src" style="width:100%"
+      (error)="activity.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'"
+      *ngIf="activity.custom_data"
+    >
 	</a>
 </div>
 

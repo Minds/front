@@ -14,7 +14,7 @@
               id="message"
               #message
               name="message"
-              [(ngModel)]="content"
+              [(ngModel)]="meta.message"
               (keyup)="getPostPreview(message)"
               placeholder="Enter your status here"
               i18n-placeholder
@@ -39,6 +39,15 @@
               >
                 <i class="material-icons">explicit</i>
                 <span *ngIf="attachment.isMature()" i18n>Mature content</span>
+              </a>
+
+              <a class="m-paywall-button-icon"
+                *ngIf="session.getLoggedInUser().merchant?.exclusive?.enabled"
+                [ngClass]="{ 'mdl-color-text--green-500': meta.paywall }"
+                (click)="meta.paywall = !meta.paywall"
+                title="PayWall"
+                >
+                <i class="material-icons">attach_money</i>
               </a>
 
               <button

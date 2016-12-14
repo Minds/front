@@ -96,24 +96,24 @@
     <?php endif; ?>
 
 
-    <script>
+      <script>
       // Fixes undefined module function in SystemJS bundle
       function module() {}
-    </script>
+          </script>
 
     <!-- shims:js -->
-  	<!-- endinject -->
+    <!-- endinject -->
 
     <!-- libs:js -->
-  	<!-- endinject -->
+    <!-- endinject -->
 
     <!-- Google Analytics -->
-    <script>
+      <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    </script>
+      </script>
     <!-- End Google Analytics -->
     <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
 
@@ -129,8 +129,10 @@
               "navigation" => Minds\Core\Navigation\Manager::export(),
               "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
               'language' => $language,
-              "categories" => Minds\Core\Config::_()->get('categories') ?: []
+              "categories" => Minds\Core\Config::_()->get('categories') ?: [],
+              "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
           ];
+
           if(Minds\Core\Session::isLoggedIn()){
               $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
               $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
@@ -161,6 +163,8 @@
         .catch(function(){console.error(e,'Report this error at https://github.com/minds/front')});
     </script>
     <% } %>
+
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
   </body>
 </html>
