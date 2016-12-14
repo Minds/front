@@ -284,7 +284,9 @@ export class MindsVideo{
       return;
     if(!this.guid)
       return;
-      var bounds = this.element.getBoundingClientRect();
+    if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)))
+      return;
+    var bounds = this.element.getBoundingClientRect();
     if(bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0){
       if(this.element.paused == true){
         //console.log('[video]:: playing '  + this.src);
