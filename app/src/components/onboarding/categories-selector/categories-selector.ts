@@ -28,6 +28,7 @@ export class OnboardingCategoriesSelector {
   }
 
   initCategories(){
+    delete window.Minds.categories.other;
     this.categories = Object.keys(window.Minds.categories).map(function(key) {
         return {
           id: key,
