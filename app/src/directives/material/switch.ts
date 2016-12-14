@@ -1,22 +1,32 @@
-import { Directive, ElementRef, Inject } from '@angular/core';
+import { Directive, ElementRef, Inject, Input } from '@angular/core';
 import { Material as MaterialService } from "../../services/ui";
 
 @Directive({
   selector: '[mdlSwitch]',
-  inputs: ['mdlSwitch'] 
+  inputs: ['mdlSwitch', 'toggled'] 
 })
 
 export class MaterialSwitch{
   private element: any;
+  private _toggled : boolean = false;
+
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;
   }
 
   ngAfterViewInit() {
-    MaterialService.updateElement(this.element);
+  //MaterialService.updateElement(this.element);
     //let switch = new (<any>window).MaterialSwitch(this.element);
         //switch.checkToggleState();
-      //this.element.classList.add('is-checked');
+        //if(this._toggled)
+        //this.element.classList.add('is-checked');
   }
+
+  set toggled(value : boolean) {
+    MaterialService.updateElement(this.element);
+    if(value)
+      this.element.classList.add('is-checked');
+  }
+
 }

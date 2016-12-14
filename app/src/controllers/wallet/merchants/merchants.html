@@ -20,8 +20,8 @@
     <div class="mdl-card__supporting-text">
       <p i18n>Monetizing will allow users to support you  monthly and see your monetized posts. Any post can be monetized by clicking the dollar icon in the status field before posting.</p>
 
-      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" for="switch-1" [mdlSwitch]>
-          <input type="checkbox" id="switch-1" class="mdl-switch__input" value="{{exclusive.enabled}}" [(ngModel)]="exclusive.enabled" [disabled]="!exclusive.enabled" [mdl]>
+      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" for="switch-1" [mdlSwitch] [toggled]="exclusive.enabled">
+          <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="exclusive.enabled" [mdl]>
         <span class="mdl-switch__label" i18n>Activate monthly support</span>
       </label>
     </div>
@@ -143,7 +143,7 @@
 
   <div class="mdl-card mdl-shadow--2dp">
     <div class="mdl-card__supporting-text">
-        <p>Monetizing your channel activates:</p>
+        <p><b>Monetizing your channel activates:</b></p>
         <p><b>Supporters:</b> Your audience can support you monthly and see your monetized posts. Any post can be monetized by clicking the <b>&#36;</b> in the status field before posting.</p>
         <p><b>Peer-to-Peer (P2P) Boosts:</b> Your audience can send you cash offers in exchange for sharing their content. </p>
     </div>
