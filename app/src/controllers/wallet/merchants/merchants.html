@@ -188,7 +188,7 @@
     <!-- US ONLY -->
     <div class="mdl-cell mdl-cell--6-col" *ngIf="onboardForm.controls.country.value == 'US'">
       <label i18n>State</label>
-      <input formControlName="state" type="text" placeholder="eg. New York" i18n-placeholder>
+      <minds-state-input [country]="onboardForm.controls.state.value" (stateChange)="onboardForm.controls.state.setValue($event)"></minds-state-input>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col" *ngIf="onboardForm.controls.country.value == 'US'">
