@@ -691,6 +691,10 @@
         <source>Exchange your points for views on your content</source>
         <target/>
       </trans-unit>
+      <trans-unit id="4bc30d24d5b7715e3e4fd0d52732093c7286dc2f" datatype="html">
+        <source>Monetize your channel</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="e41c4e3ffdcc41d3b9fce1fdce2646390aff2f21" datatype="html">
         <source>Protect your privacy with end-to-end encryption</source>
         <target/>
@@ -699,32 +703,52 @@
         <source>Find people in cities around the world with geo-discovery</source>
         <target/>
       </trans-unit>
-      <trans-unit id="ebefbe317176d6237a0fcf0e7b5e324cfc3af57f" datatype="html">
-        <source>Swipe right to subscribe, swipe left to pass</source>
+      <trans-unit id="4c2333ad856f155b0cae249991d8b03530c738d9" datatype="html">
+        <source>Expand your audience and subscribers</source>
         <target/>
       </trans-unit>
-      <trans-unit id="6f165dcccdf0053ddc5ffc0ad44df7292c9f6b7d" datatype="html">
-        <source>If you subscribe to each other, you can chat</source>
+      <trans-unit id="1a6e62bd0544c91c5cc09230488eba59fc3f0f73" datatype="html">
+        <source>Create open and closed groups</source>
         <target/>
       </trans-unit>
-      <trans-unit id="974e30d1734aa3df7d387d6247d1b312dd95a5b1" datatype="html">
-        <source>Share photos, videos and news</source>
+      <trans-unit id="75522a439df59299805da963d816499b84d9e67c" datatype="html">
+        <source>Search and create videos, images, blogs</source>
         <target/>
       </trans-unit>
-      <trans-unit id="2b9f8d5d52d6c83849317b16fb3198a106d9cd3f" datatype="html">
-        <source>Discover great videos, images, blogs and statuses</source>
+      <trans-unit id="a4fc2cf80a80417eae29c42ca0943c36b11ea15e" datatype="html">
+        <source>Express yourself freely without censorship</source>
         <target/>
       </trans-unit>
       <trans-unit id="9141579156b435c7be59df6e592df4b93c134297" datatype="html">
         <source>Rewards</source>
         <target/>
       </trans-unit>
-      <trans-unit id="432f5a9523adb322a76da220722561b451e1a2c3" datatype="html">
-        <source>Receive a vote</source>
+      <trans-unit id="c0f074fc61b10d76a7373600166e42c798ea1a9b" datatype="html">
+        <source>Post a text/link activity</source>
         <target/>
       </trans-unit>
-      <trans-unit id="84e3bdb4084294b10fb53dc7afb879b1944ee141" datatype="html">
-        <source>Status update</source>
+      <trans-unit id="af55150599311cc59eafd8dfc45079aacf0c19ad" datatype="html">
+        <source>Get commented on</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="ae02b3d0ec05729961c896f0ce1110125978405e" datatype="html">
+        <source>Be subscribed to</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="cd30f7842128e1a19f4f18c74c33b456270e9acb" datatype="html">
+        <source>Get voted up</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2cc3f3ce0e0ead932e74260a7e750530b9ef9fa8" datatype="html">
+        <source>Get reminded</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="a9dac6105c71f5f543a870f085c4520c03aeb30f" datatype="html">
+        <source>Post a rich media activity</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="19a7df71393919e8e17f2f41fc23c20195cc837d" datatype="html">
+        <source>Publish a blog</source>
         <target/>
       </trans-unit>
       <trans-unit id="bc14117b9d844f939f5f2eb83614a0a04051fc38" datatype="html">
