@@ -21,6 +21,7 @@
       <minds-card-blog [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.subtype == 'blog'"></minds-card-blog>
       <minds-card-user [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'user'"></minds-card-user>
       <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'activity'"></minds-activity>
+      <minds-card-group [group]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'group'"></minds-card-group>
 
       <div class="mdl-card__supporting-text action-buttons">
         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost)" i18n>Accept</button>

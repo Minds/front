@@ -12,6 +12,7 @@ import { Client } from '../../services/api';
       <minds-card-blog [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.subtype == 'blog'"></minds-card-blog>
       <minds-card-user [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.type == 'user'"></minds-card-user>
       <minds-activity [object]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.type == 'activity'"></minds-activity>
+      <minds-card-group [group]="entity" class="mdl-card mdl-shadow--8dp" *ngIf="entity.type == 'group'"></minds-card-group>
     </div>
   `,
   host: {
