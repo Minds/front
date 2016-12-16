@@ -11,10 +11,15 @@
 
     "clean": "rimraf .tmp/ .tmp.aot/",
     "compile-aot": "ngc -p tsconfig-aot.json",
+    "compile-embed-aot": "ngc -p tsconfig-embed-aot.json",
     "bundle": "rollup -c rollup-config.ts",
+    "bundle-embed": "rollup -c rollup-config-embed.ts",
 
     "prebuild-base": "npm run clean",
     "build-base": "npm run compile-aot && npm run bundle",
+
+    "prebuild-embed": "npm run clean",
+    "build-embed": "npm run compile-embed-aot && npm run bundle-embed",
 
     "prebuild-i18n-es": "npm run clean",
     "build-i18n-es": "npm run compile-aot -- --i18nFile=./app/locale/Minds.es.xlf --locale=es --i18nFormat=xlf && npm run bundle -- -o public/js/build-aot.es.js",
@@ -23,7 +28,7 @@
     "build-shims": "gulp build.bundle.prod --env=prod",
     "build-index-prod": "gulp build.index --env=prod",
 
-    "build-prod": "npm run prepare-prod && npm run build-base && npm run build-i18n-es && npm run build-shims",
+    "build-prod": "npm run prepare-prod && npm run build-base && npm run build-embed && npm run build-i18n-es && npm run build-shims",
     "postbuild-prod": "npm run clean",
 
     "build": "npm run build-prod && npm run build-index-prod --"

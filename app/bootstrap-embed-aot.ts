@@ -3,7 +3,7 @@
 
 import { enableProdMode } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
-import { MindsModuleNgFactory } from '../.tmp.aot/app/app.module.ngfactory';
+import { EmbedModuleNgFactory } from '../.tmp.aot/app/embed.module.ngfactory';
 
 enableProdMode();
-platformBrowser().bootstrapModuleFactory(MindsModuleNgFactory);
+platformBrowser().bootstrapModuleFactory(EmbedModuleNgFactory);

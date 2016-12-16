@@ -5,9 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { Minds } from './app.component';
+import { Embed } from './embed.component';
 
-import { MindsAppRoutes, MindsAppRoutingProviders, MINDS_APP_ROUTING_DECLARATIONS } from './src/router/app';
+import { MindsEmbedRoutes, MindsEmbedRoutingProviders, MINDS_EMBED_ROUTING_DECLARATIONS } from './src/router/embed';
+import { MINDS_APP_ROUTING_DECLARATIONS } from './src/router/app';
 
 import { MINDS_DECLARATIONS } from './src/declarations';
 import { MINDS_PLUGIN_DECLARATIONS } from './src/plugin-declarations';
@@ -16,11 +17,12 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
 
 @NgModule({
   bootstrap: [
-    Minds
+    Embed
   ],
   declarations: [
-    Minds,
+    Embed,
     MINDS_APP_ROUTING_DECLARATIONS,
+    MINDS_EMBED_ROUTING_DECLARATIONS,
     MINDS_DECLARATIONS,
     MINDS_PLUGIN_DECLARATIONS,
   ],
@@ -29,10 +31,10 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
     ReactiveFormsModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(MindsAppRoutes),
+    RouterModule.forRoot(MindsEmbedRoutes, { initialNavigation: false, useHash: true }),
   ],
   providers: [
-    MindsAppRoutingProviders,
+    MindsEmbedRoutingProviders,
     MINDS_PROVIDERS,
     MINDS_PLUGIN_PROVIDERS,
   ],
@@ -40,5 +42,5 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class MindsModule {
+export class EmbedModule {
 }

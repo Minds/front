@@ -150,7 +150,12 @@
   	<!-- endinject -->
     <% } else { %>
     <script src="<%= APP_CDN %>/js/shims.js?v=<%= VERSION %>"></script>
+
+    <?php if (__MINDS_CONTEXT__ === 'embed'): ?>
+    <script src="<%= APP_CDN %>/js/build-embed-aot.js?v=<%= VERSION %>"></script>
+    <?php else: ?>
     <script src="<%= APP_CDN %>/js/build-aot<?= $aotPrefix ?>.js?v=<%= VERSION %>"></script>
+    <?php endif; ?>
     <% } %>
 
     <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
