@@ -126,8 +126,8 @@
         <source><x id="INTERPOLATION"/> new <x id="INTERPOLATION_1"/></source>
         <target/>
       </trans-unit>
-      <trans-unit id="274c1c7e5c2033ddf1bc6b020d9cadd1da54a3fb" datatype="html">
-        <source>Become a Boost Pro</source>
+      <trans-unit id="9801d0104956cbb64413bf0f8f3244a81b946d69" datatype="html">
+        <source>Monetize your Channel</source>
         <target/>
       </trans-unit>
       <trans-unit id="5d713774c3f73b8b93bf1f4f01d37004ef4e1110" datatype="html">
@@ -447,12 +447,8 @@
         <source>Buy points</source>
         <target/>
       </trans-unit>
-      <trans-unit id="84d3c92885ae7ae3eabdf323f24e26c6774e0962" datatype="html">
-        <source>Become a Merchant</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7b02b965533a7c76186c33d62b592addcf357ca9" datatype="html">
-        <source>Merchant Wallet</source>
+      <trans-unit id="e9b20759c1622ea499566ab5ca7084c79b6c8b66" datatype="html">
+        <source>Monetization Settings</source>
         <target/>
       </trans-unit>
       <trans-unit id="dd3b6c367381ddfa8f317b8e9b31c55368c65136" datatype="html">
@@ -475,9 +471,18 @@
         <source>Two factor authentication</source>
         <target/>
       </trans-unit>
+      <trans-unit id="072b24be295d6063b08b8fdd27d0f3cf1ef0e737" datatype="html">
+        <source>Paid subscriptions</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="63a98dd490121d8ac5b80c9420856f56f8610751" datatype="html">
         <source>Please check the username</source>
         <target/>
+      </trans-unit>
+      <trans-unit id="bae722c293c5ea375eff3746b67e47f7c937c018" datatype="html">
+        <source>Supporters</source>
+        <target/>
+        <note priority="1" from="description">Count of supporters</note>
       </trans-unit>
       <trans-unit id="2326d5adeb13a23a2f1e6f598625f0bf73952899" datatype="html">
         <source>Subscribers</source>
@@ -863,6 +868,18 @@
       </trans-unit>
       <trans-unit id="bbbb1ba89510a8aaed795a498af115762dd55eb4" datatype="html">
         <source>Emoji</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="60f673681e0b57c97e8e910fb636b42e8cf1316e" datatype="html">
+        <source>Exclusive</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6829218544e108e152f5fa72cb79c4ccb82e0d06" datatype="html">
+        <source>View</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="19a5d3dc873325c80950d4e441b367197869fbe7" datatype="html">
+        <source>Cancel Subscription</source>
         <target/>
       </trans-unit>
       <trans-unit id="3c737f23b53b9fc85ecb5fad1b6aba0dc3d1876e" datatype="html">
@@ -1278,6 +1295,14 @@
         <source>Mark as <x id="START_ITALIC_TEXT" ctype="x-i"/>explicit<x id="CLOSE_ITALIC_TEXT" ctype="x-i"/></source>
         <target/>
       </trans-unit>
+      <trans-unit id="6a35af3029b2d743465b34eb819cf9a52460a70d" datatype="html">
+        <source>Nothing is monetized .</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="663174fd415765d6b9921d34efa1b1d90a31b59c" datatype="html">
+        <source>De-Monetize</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="939d0138d75bc0bde46102bd20328d538fa008d6" datatype="html">
         <source>Why not <x id="START_LINK" ctype="x-a"/>click here to buy some?<x id="CLOSE_LINK" ctype="x-a"/></source>
         <target/>
@@ -1378,28 +1403,36 @@
         <source>Click here to BUY more.</source>
         <target/>
       </trans-unit>
-      <trans-unit id="2037df15fa14395d8831a6c3c2a93f767d097281" datatype="html">
-        <source>Status: <x id="INTERPOLATION"/></source>
-        <target/>
-      </trans-unit>
       <trans-unit id="a7ce178e6a793f3dc03f0ab5941b63d69156ecdb" datatype="html">
         <source>Thanks for monetizing your channel, we are currently reviewing your application. For now, checkout your <x id="START_LINK" ctype="x-a"/>boost console<x id="CLOSE_LINK" ctype="x-a"/> where you can advertise your content.</source>
         <target/>
       </trans-unit>
-      <trans-unit id="a8046721a19a6dcab651655370b8729dc80788de" datatype="html">
-        <source>Approved (settling)</source>
+      <trans-unit id="cc9daea3013a272194042fa5b2165cc141d233cb" datatype="html">
+        <source>We need you to upload verification of your identity. Please provide us with photo ID.</source>
         <target/>
       </trans-unit>
-      <trans-unit id="48f6d7edad116a39618612c19d20ed2089b54acb" datatype="html">
-        <source>Approved</source>
+      <trans-unit id="1d4811f2b19f8cd3a9e2d36a6b796de60459863f" datatype="html">
+        <source>Monetizing will allow users to support you  monthly and see your monetized posts. Any post can be monetized by clicking the dollar icon in the status field before posting.</source>
         <target/>
       </trans-unit>
-      <trans-unit id="ad1ea4b92eeefab87b27fbb41c19c9abbe51f081" datatype="html">
-        <source>Disbursed</source>
+      <trans-unit id="819502c311b6a7c8efe200ff84fe519d26c25a36" datatype="html">
+        <source>Activate monthly support</source>
         <target/>
       </trans-unit>
-      <trans-unit id="1c6fac4dd4fc0c20888b092f40c7ff87fb74d785" datatype="html">
-        <source>Voided</source>
+      <trans-unit id="a8352b87348cb7d7e3e250c426797209b857cd4b" datatype="html">
+        <source>Monthly price</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="9be7cfa3c8aa9826c60c9a9c965e354c5c924690" datatype="html">
+        <source>eg. 10</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="eec715de352a6b114713b30b640d319fa78207a0" datatype="html">
+        <source>Description</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="3e2a583f531f7dd9f089f68a6968e444c372c3e8" datatype="html">
+        <source>Preview</source>
         <target/>
       </trans-unit>
       <trans-unit id="62b6c66981335ca6eecc36b331103c60f09d1026" datatype="html">
@@ -1410,10 +1443,6 @@
         <source>Last name</source>
         <target/>
       </trans-unit>
-      <trans-unit id="5cb68ff4e1c40ce7d7a96d50cc675e63a2653529" datatype="html">
-        <source>Payout to email address (using venmo)</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="efdd6fa6e7b2f7b63154a412d617e3144fb6ce46" datatype="html">
         <source>Bank Account number</source>
         <target/>
@@ -1422,12 +1451,12 @@
         <source>Account Number</source>
         <target/>
       </trans-unit>
-      <trans-unit id="f8f99e81d4f9282cf71e52306f1d55068d3e9de9" datatype="html">
-        <source>Bank Routing number</source>
+      <trans-unit id="4d5e1643795da7df9106af16c99f9587f78f7c60" datatype="html">
+        <source>Bank Routing number / Sort code</source>
         <target/>
       </trans-unit>
-      <trans-unit id="7db977b4feae2825ce75c542c77af570bab94049" datatype="html">
-        <source>Routing Number</source>
+      <trans-unit id="269f205aacc8e6dfa38f631e46486d51e303d5bd" datatype="html">
+        <source>Routing Number / Sort Code</source>
         <target/>
       </trans-unit>
       <trans-unit id="047f50bc5b5d17b5bec0196355953e1a5c590ddb" datatype="html">
@@ -1440,14 +1469,6 @@
       </trans-unit>
       <trans-unit id="9db60170ef3b3b41a863e7d5ee7cec10919b9141" datatype="html">
         <source>Updating</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="d6f3991db79a44b16f1204651cab65db99c8134c" datatype="html">
-        <source>Join the Minds Merchant programme. You can now send and receive channel boosts for money. Many more monetization features are coming.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4c934df854a2f9c630a15f51b233261aa8c5a170" datatype="html">
-        <source>YYYY-MM-DD</source>
         <target/>
       </trans-unit>
       <trans-unit id="729754dd19eb9ce0670b0aeb5a6ae60574c2c563" datatype="html">
@@ -1466,12 +1487,16 @@
         <source>eg. New York City</source>
         <target/>
       </trans-unit>
-      <trans-unit id="9534ffeaf3eb627f5f8be7e51db278f902224051" datatype="html">
-        <source>Region / State</source>
+      <trans-unit id="a43f25a9ac40e8e2441ff0be7a36b8e5d15534df" datatype="html">
+        <source>Country</source>
         <target/>
       </trans-unit>
-      <trans-unit id="069e909f6295d77283aefdbfe1ee01dac486612d" datatype="html">
-        <source>eg. NY</source>
+      <trans-unit id="873b72903b1858a9cd6c8967521030b4d7d1435b" datatype="html">
+        <source>State</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4d97909f92c084c823a680406c550c5fcbc494a7" datatype="html">
+        <source>Social Security Number (Last 4 digits)</source>
         <target/>
       </trans-unit>
       <trans-unit id="8058768c7ed620c0eed599efbd1e14baa281f713" datatype="html">
@@ -1482,36 +1507,24 @@
         <source>eg. 10001</source>
         <target/>
       </trans-unit>
-      <trans-unit id="8defce9d950e0b594c9321a673280ef717412991" datatype="html">
-        <source>Payout method</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="821446ac24889ef714ca5c66d51b898519376337" datatype="html">
-        <source>Enter your bank account details <x id="START_BOLD_TEXT" ctype="x-b"/>or<x id="CLOSE_BOLD_TEXT" ctype="x-b"/> select payout out to email. You can change these details later.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="8dbfbc906bbcef949ed9613fe3db03eb4d1201c4" datatype="html">
-        <source>Payout via venmo</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4c207dc5b0abd427f69d24b50b009c04d2149543" datatype="html">
-        <source>You can create a venmo account later, we&apos;ll send the funds to <x id="START_BOLD_TEXT" ctype="x-b"/><x id="INTERPOLATION"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/><x id="START_ITALIC_TEXT" ctype="x-i"/>your email address<x id="CLOSE_ITALIC_TEXT" ctype="x-i"/>.</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="6c84c699978f7754436b2041e97fa8d6eae0f603" datatype="html">
         <source>10-12 digit account number</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4a1b0a56711dcfd962318c60335faa6925251015" datatype="html">
+        <source>Bank Routing number / Sort Code</source>
         <target/>
       </trans-unit>
       <trans-unit id="846225fef28ab477722f7e9479167427fa9dc9ec" datatype="html">
         <source>9 digit routing number</source>
         <target/>
       </trans-unit>
-      <trans-unit id="c67a399b462261bc9e8b5f898b2b114a6bec880e" datatype="html">
-        <source>Minds, Inc. uses Braintree, a division of PayPal, Inc. (Braintree) for payment processing services. By using the Braintree payment processing services you agree to the Braintree Payment Services Agreement available at <x id="START_LINK" ctype="x-a"/>https://www.braintreepayments.com/legal/gateway-agreement<x id="CLOSE_LINK" ctype="x-a"/>, and the applicable bank agreement available at <x id="START_LINK_1" ctype="x-a"/>https://www.braintreepayments.com/legal/cea-wells<x id="CLOSE_LINK" ctype="x-a"/></source>
+      <trans-unit id="7f4b6d3974d1ff1b3b70dec64393da6ad380eca4" datatype="html">
+        <source>Minds, Inc. uses Stripe for payment processing services. By using the Stripe payment processing services you agree to the Stripe Connected Account Agreement available at <x id="START_LINK" ctype="x-a"/>https://stripe.com/us/connect-account/legal<x id="CLOSE_LINK" ctype="x-a"/>.</source>
         <target/>
       </trans-unit>
-      <trans-unit id="e938ea436fed42f64483455a8ed193f38e40b2e1" datatype="html">
-        <source>Accept &amp; Submit</source>
+      <trans-unit id="f732c304c7433e5a83ffcd862c3dce709a0f4982" datatype="html">
+        <source>Next</source>
         <target/>
       </trans-unit>
       <trans-unit id="6df3069422db26773a9ec6e7e5d80ccbd1ec1d21" datatype="html">
@@ -1528,10 +1541,6 @@
       </trans-unit>
       <trans-unit id="a1adf9f6c3e7aebc132488997b6e3032cf4f8791" datatype="html">
         <source>Enter your comment</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7bd641c9206ab757fc0046d70a28228862f954a5" datatype="html">
-        <source>Capturing card details...</source>
         <target/>
       </trans-unit>
       <trans-unit id="d3b1ef1f753f23aa5dbcc335cacb1c554a5b3a43" datatype="html">
@@ -1717,6 +1726,10 @@
       </trans-unit>
       <trans-unit id="38e0956efb7c78e758d638c8f1e5c99859b82836" datatype="html">
         <source>Retry</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="c374714e12638b87215d15d38f0dcc1009e0fed4" datatype="html">
+        <source>Paid Subscriptions</source>
         <target/>
       </trans-unit>
       <trans-unit id="c602071b05ea78e4e72a8a632243ddf2475f9d2f" datatype="html">

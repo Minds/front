@@ -12,7 +12,7 @@
         "outDir": ".ngcli-build/"
     },
     "files": [
-        "app/bootstrap.ts"
+        "app/bootstrap-i18n.ts"
     ],
     "compileOnSave": false
 }
