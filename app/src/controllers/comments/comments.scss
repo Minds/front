@@ -154,6 +154,17 @@ minds-comments{
         > img {
           width: 100%;
         }
+
+        &.m-inline-embed {
+          width: 100%;
+          max-height: 200px;
+          display: block;
+          float: none;
+
+          .m-rich-embed-video-iframe {
+            padding-bottom: 200px;
+          }
+        }
       }
 
       .meta {
@@ -184,6 +195,10 @@ minds-comments{
             margin-bottom: 0;
           }
         }
+      }
+
+      .m-has-inline-embed .meta {
+        display: none;
       }
     }
 

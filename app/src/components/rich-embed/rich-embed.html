@@ -1,4 +1,6 @@
-<div class="m-rich-embed-src" *ngIf="src && type == 'src'">
+<div class="m-rich-embed-src" *ngIf="src && type == 'src'"
+  [ngClass]="{ 'm-has-inline-embed': hasInlineContentLoaded() }"
+>
   <a [href]="src.perma_url"
     class="thumbnail"
     [ngClass]="{ 'm-inline-embed': hasInlineContentLoaded() }"
