@@ -55,10 +55,10 @@
           <minds-messenger-channel-button [user]="user" *ngIf="user.subscribed"></minds-messenger-channel-button>
           <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
 
-          <minds-button-edit (click)="toggleEditing()" [hidden]="editing" *ngIf="session.getLoggedInUser().guid == user.guid">
+          <minds-button-edit (click)="toggleEditing()" [hidden]="editing" *ngIf="session.getLoggedInUser().guid == user.guid" title="Edit">
             <button class="material-icons">edit</button>
           </minds-button-edit>
-          <minds-button-edit (click)="toggleEditing()"  [hidden]="!editing" *ngIf="session.getLoggedInUser().guid == user.guid">
+          <minds-button-edit (click)="toggleEditing()"  [hidden]="!editing" *ngIf="session.getLoggedInUser().guid == user.guid" title="Done">
             <button class="material-icons">done</button>
           </minds-button-edit>
         </div>
