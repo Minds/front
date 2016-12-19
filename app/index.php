@@ -159,8 +159,6 @@
     <% } %>
 
     <script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
-    <script>window.twoOhSixId = 'minds.com';</script>
-    <script src='//s.206ads.com/init.js'></script>
 
     <% if (ENV === 'dev') { %>
     <script>
