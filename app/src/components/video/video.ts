@@ -73,6 +73,7 @@ export class MindsVideo{
   muted : boolean = true;
   autoplay : boolean = false;
   visibleplay : boolean = true;
+  wasvisible : boolean = false;
   loop : boolean = true;
   scroll_listener;
   poster:string = '';
@@ -262,7 +263,26 @@ export class MindsVideo{
       this.element.webkitRequestFullscreen();
     }
   }
+  
+  wasFrameVisible(){
+    return this.wasvisible;
+  }
 
+  isFrameVisible(){
+    let visiblenow = (bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0);
+    this.wasvisible = visiblenow;
+    return visiblenow;
+  }
+
+  hasFrameBecomeVisible(){
+    //function order is important
+    return (!(this.wasFrameVisible()) && this.isFrameVisible());
+  }
+
+  hasFrameBecomeInvisible(){
+    return (this.wasFrameVisible() && !this.isFrameVisible());
+  }
+  
   isVisible(){
     if(this.autoplay)
       return;
@@ -271,17 +291,20 @@ export class MindsVideo{
     if(!this.guid)
       return;
       var bounds = this.element.getBoundingClientRect();
-    if(bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0){
+    if(this.hasFrameBecomeVisible()){
+      //stops this section from firing 
       if(this.element.paused == true){
         //console.log('[video]:: playing '  + this.src);
         this.element.play();
       }
-    } else {
+    } else if(this.hasFrameBecomeInvisible()) {
       if(this.element.paused == false){
         this.element.muted = true;
         this.element.pause();
         //console.log('[video]:: pausing ' + this.src);
       }
+    } else {
+      //Frame is eaither in view out out of view, leave alone to play or be paused
     }
       //console.log('[video]: checking visibility');
   }
