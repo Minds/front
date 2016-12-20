@@ -292,7 +292,6 @@ export class MindsVideo{
       return;
       var bounds = this.element.getBoundingClientRect();
     if(this.hasFrameBecomeVisible()){
-      //stops this section from firing 
       if(this.element.paused == true){
         //console.log('[video]:: playing '  + this.src);
         this.element.play();
@@ -304,7 +303,7 @@ export class MindsVideo{
         //console.log('[video]:: pausing ' + this.src);
       }
     } else {
-      //Frame is eaither in view out out of view, leave alone to play or be paused
+
     }
       //console.log('[video]: checking visibility');
   }
