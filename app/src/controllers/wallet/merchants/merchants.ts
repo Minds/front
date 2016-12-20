@@ -84,8 +84,13 @@ export class Merchants {
         this.user.merchant = {
           id: response.id,
           service: 'stripe',
-          status: 'awaiting-document'
+          status: 'awaiting-document',
+          exclusive: {
+            enabled: true,
+            amount: 10
+          }
         };
+        this.exclusive.enabled = true;
         this.status = 'awaiting-document';
       })
       .catch((e) => {
