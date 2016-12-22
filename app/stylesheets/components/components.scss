@@ -359,7 +359,7 @@ minds-carousel{
     margin-right:$minds-margin;
     display: flex;
     align-items: center;
-    
+
     a {
       cursor: pointer;
     }
@@ -368,7 +368,7 @@ minds-carousel{
       padding:$minds-padding;
       vertical-align: middle;
     }
-    
+
     span {
       vertical-align: middle;
       padding: $minds-padding 0;
@@ -594,7 +594,7 @@ m-translate {
 
     minds-card-comment & {
       margin: ($minds-padding / 2) $minds-padding 0 0;
-      right: ((3 * 24px) + (2 * $minds-padding) + $minds-padding); // 3 buttons + spacing
+      right: 90px; // 3 buttons + spacing
     }
   }
 }
@@ -629,7 +629,7 @@ m-translate {
 
   &.m-custom-icon-minds {
     height: 1.2em;
-    
+
     &:before {
       background-image: url('../assets/gs-icon.png');
     }

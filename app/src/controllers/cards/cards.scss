@@ -245,6 +245,9 @@ minds-activity.mdl-card, minds-activity{
           display: inline-block;
         }
     }
+    .mdl-card__menu{
+      background: #FFF;
+    }
     minds-card-comment:hover{
       .m-comment-carrot{
           display:inline-block;
