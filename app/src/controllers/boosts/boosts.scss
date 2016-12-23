@@ -163,6 +163,10 @@ svg.m-facebook-icon{
   padding:0;
   margin:0;
 
+  @media screen and (max-width: 400px){
+    flex-wrap:wrap;
+  }
+
   .minds-boost-points-input{
     display:flex;
     align-items:center;
