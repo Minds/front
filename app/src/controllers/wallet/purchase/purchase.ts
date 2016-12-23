@@ -18,7 +18,7 @@ export class WalletPurchase {
   card : CreditCard = <CreditCard>{ month: 'mm', year: 'yyyy'};
 
   ex : number = 0.01;
-  points : number = 1000;
+  points : number = 10000;
   usd : number;
 
   subscription;
