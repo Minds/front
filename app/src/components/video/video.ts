@@ -284,8 +284,10 @@ export class MindsVideo{
       return;
     if(!this.guid)
       return;
-    if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)))
+    if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))){
+      this.muted = false; //don't mute on ios
       return;
+    }
     var bounds = this.element.getBoundingClientRect();
     if(bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0){
       if(this.element.paused == true){
