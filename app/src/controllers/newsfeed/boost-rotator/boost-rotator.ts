@@ -61,8 +61,8 @@ export class NewsfeedBoostRotator {
           }
           if(!this.running){
             this.recordImpression(this.currentPosition, true);
-            //this.start();
-            //this.isVisible();
+            this.start();
+            this.isVisible();
           }
   	      this.inProgress = false;
           return resolve(true);
@@ -82,14 +82,13 @@ export class NewsfeedBoostRotator {
       if (this.sticky) {
         return;
       }
-
+      
       this.next();
       //this.recordImpression(this.currentPosition);
     }, this.interval*1000);
   }
 
   isVisible(){
-    return false; //disable auto rotation for now
     var bounds = this.element.nativeElement.getBoundingClientRect();
     if(bounds.top + bounds.height > 0){
       //console.log('[rotator]: in view', this.rotator);
@@ -133,8 +132,8 @@ export class NewsfeedBoostRotator {
   }
 
   setSticky(status: boolean) {
-    this.sticky = status;
-  }
+    this.sticky = status; 
+  } 
 
   pause(){
     this.setSticky(!this.sticky);
