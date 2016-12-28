@@ -90,7 +90,7 @@ export class NewsfeedBoostRotator {
 
   isVisible(){
     return false; //disable auto rotation for now
-    /*var bounds = this.element.nativeElement.getBoundingClientRect();
+    var bounds = this.element.nativeElement.getBoundingClientRect();
     if(bounds.top + bounds.height > 0){
       //console.log('[rotator]: in view', this.rotator);
       if(!this.running)
@@ -101,7 +101,7 @@ export class NewsfeedBoostRotator {
         this.running = false;
         window.clearInterval(this.rotator);
       }
-    }*/
+    }
   }
 
   recordImpression(position : number, force : boolean){
