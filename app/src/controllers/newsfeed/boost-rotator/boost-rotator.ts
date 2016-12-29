@@ -25,7 +25,7 @@ export class NewsfeedBoostRotator {
   moreData : boolean = true;
   rotator;
   running: boolean = false;
-  sticky: boolean = false;
+  paused: boolean = false;
   interval : number = 5;
   currentPosition : number = 0;
   lastTs : number = Date.now();
@@ -79,10 +79,10 @@ export class NewsfeedBoostRotator {
       window.clearInterval(this.rotator);
     this.running = true;
     this.rotator = setInterval((e) => {
-      if (this.sticky) {
+      if (this.paused) {
         return;
       }
-      
+
       this.next();
       //this.recordImpression(this.currentPosition);
     }, this.interval*1000);
@@ -90,7 +90,7 @@ export class NewsfeedBoostRotator {
 
   isVisible(){
     var bounds = this.element.nativeElement.getBoundingClientRect();
-    if(bounds.top + bounds.height > 0){
+    if(bounds.top + (bounds.height /2) > 0){
       //console.log('[rotator]: in view', this.rotator);
       if(!this.running)
         this.start();
@@ -131,12 +131,8 @@ export class NewsfeedBoostRotator {
     this.isVisible();
   }
 
-  setSticky(status: boolean) {
-    this.sticky = status; 
-  } 
-
   pause(){
-    this.setSticky(!this.sticky);
+    this.paused = true;
   }
 
   prev(){

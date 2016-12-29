@@ -9,10 +9,10 @@
   <li (click)="next()">
     <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
   </li>
-  <li class="m-boost-rotator-paused" (click)="pause()">
-    <i class="material-icons mdl-color-text--blue-grey-200"
-    [ngClass]="{ 'mdl-color-text--blue-grey-600': sticky }"
-    >{{ (sticky || !running) ? 'play_arrow' : 'pause' }}</i>
+  <li class="m-boost-rotator-paused" style="margin-top: -8px;margin-right: 16px;">
+    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [mdlSwitch] [toggled]="!paused">
+      <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="!paused" (ngModelChange)="paused = !paused">
+    </label>
   </li>
 </ul>
 
