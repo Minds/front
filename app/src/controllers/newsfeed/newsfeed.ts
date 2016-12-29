@@ -42,13 +42,13 @@ export class Newsfeed {
     public router: Router, public route: ActivatedRoute, public title: MindsTitle){
   }
 
-  paramsSubscription: Subscription;  
+  paramsSubscription: Subscription;
   ngOnInit() {
     if(!this.session.isLoggedIn()){
       this.router.navigate(['/login']);
     } else {
       this.load();
-      this.setUpPoll();
+      //this.setUpPoll();
       this.minds = window.Minds;
     }
 
