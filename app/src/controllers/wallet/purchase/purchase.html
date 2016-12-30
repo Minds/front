@@ -57,7 +57,7 @@
     <minds-payments-checkout
       (inputed)="setNonce($event)"
       gateway="default"
-      usePaypal="true"
+      paypal="true"
       creditcard="true"
       bitcoin="false"
       *ngIf="!nonce && toggled"

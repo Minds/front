@@ -51,9 +51,9 @@ export class Checkout {
   bt_checkout;
   nonce : string = "";
 
-  @Input() useCreditCard : boolean = true;
-  @Input() usePayPal : boolean = false;
-  @Input() useBitcoin : boolean = false;
+  @Input('creditcard') useCreditCard : boolean = true;
+  @Input('paypal') usePayPal : boolean = false;
+  @Input('bitcoin') useBitcoin : boolean = false;
 
 	constructor(public client: Client){
      this.init();
