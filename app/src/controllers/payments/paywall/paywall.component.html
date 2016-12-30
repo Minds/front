@@ -43,7 +43,7 @@
 
 <div class="m-paywall-splash mdl-color--grey-800" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid">
 
-  <img [src]="minds.cdn_url + 'fs/v1/paywall/preview/' + entity.ownerObj.guid"/>
+  <img [src]="minds.cdn_url + 'fs/v1/paywall/preview/' + entity.ownerObj.guid + '/' + entity.guid"/>
 
   <!--<p class="mdl-color-text--white" i18n>Access this exclusive content by becoming a paid monthly subscriber of <b>{{entity.ownerObj?.name}}</b>.</p>-->
 

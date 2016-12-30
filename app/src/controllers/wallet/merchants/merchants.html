@@ -43,7 +43,7 @@
         <input type="file" #preview name="preview" (change)="updatePreview(preview)"/>
         <button class="mdl-button mdl-button--colored" (click)="uploadPreview(preview)" i18n>Upload</button>
 
-        <img [src]="preview.src || minds.cdn_url + 'fs/v1/paywall/preview/' + session.getLoggedInUser().guid" />
+        <img [src]="preview.src || minds.cdn_url + 'fs/v1/paywall/preview/' + session.getLoggedInUser().guid + '/' + ts" />
 
       </div>
 

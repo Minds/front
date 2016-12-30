@@ -15,6 +15,7 @@ import { Storage } from '../../../services/storage';
 export class Merchants {
 
   session = SessionFactory.build();
+  ts : number = Date.now();
 
   onboardForm: FormGroup;
   editForm: FormGroup;
