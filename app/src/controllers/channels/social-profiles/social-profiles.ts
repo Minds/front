@@ -40,11 +40,25 @@ export class ChannelSocialProfiles {
       icon: 'github'
     },
     {
-      key: 'linkedin',
-      label: 'LinkedIn',
+      key: 'twitch',
+      label: 'Twitch',
+      placeholder: 'Username',
+      link: 'https://www.twitch.tv/:value',
+      icon: 'twitch'
+    },
+    {
+      key: 'youtube_user',
+      label: 'YouTube User',
       placeholder: 'Username',
       link: 'https://linkedin.com/in/:value',
       icon: 'linkedin'
+    },
+    {
+      key: 'youtube_channel',
+      label: 'YouTube Channel',
+      placeholder: 'Channel ID',
+      link: 'https://www.youtube.com/channel/:value',
+      icon: 'youtube'
     },
     {
       key: 'minds',
@@ -83,19 +97,40 @@ export class ChannelSocialProfiles {
       icon: 'twitter'
     },
     {
-      key: 'youtube_channel',
-      label: 'YouTube Channel',
-      placeholder: 'Channel ID',
-      link: 'https://www.youtube.com/channel/:value',
-      icon: 'youtube'
+      key: 'github',
+      label: 'Github',
+      placeholder: 'Username',
+      link: 'https://github.com/:value',
+      icon: 'github'
     },
     {
-      key: 'youtube_user',
-      label: 'YouTube User',
+      key: 'linkedin',
+      label: 'LinkedIn',
       placeholder: 'Username',
       link: 'https://www.youtube.com/user/:value',
       icon: 'youtube'
     },
+    {
+      key: 'instagram',
+      label: 'Instagram',
+      placeholder: 'Username',
+      link: 'https://www.instagram.com/:value',
+      icon: 'instagram'
+    },
+    {
+      key: 'wikipedia_user',
+      label: 'Wikipedia User',
+      placeholder: 'Username',
+      link: 'https://wikipedia.org/wiki/:value',
+      icon: 'wikipedia-w'
+    },
+    {
+      key: 'imdb_user',
+      label: 'IMDb User',
+      placeholder: 'Name',
+      link: 'https://www.imdb.com/name/:value',
+      icon: 'imdb'
+    }
   ];
 
   private getSocialProfileMeta(key: string): SocialProfileMeta {
@@ -137,7 +172,7 @@ export class ChannelSocialProfiles {
 
   removeSocialProfile(index: number) {
     this.socialProfiles.splice(index, 1);
-    
+
     this.propagateChanges();
   }
 
