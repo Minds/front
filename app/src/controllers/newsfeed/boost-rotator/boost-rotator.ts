@@ -90,12 +90,12 @@ export class NewsfeedBoostRotator {
 
   isVisible(){
     var bounds = this.element.nativeElement.getBoundingClientRect();
-    if(bounds.top + (bounds.height /2) > 0){
+    if(bounds.top > 0){
       //console.log('[rotator]: in view', this.rotator);
       if(!this.running)
         this.start();
     } else {
-      //console.log('[rotator]: out of view', this.rotator);
+      console.log('[rotator]: out of view', this.rotator);
       if(this.running){
         this.running = false;
         window.clearInterval(this.rotator);
