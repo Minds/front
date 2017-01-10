@@ -65,3 +65,10 @@ gulp.task('test', done =>
     //'build.test',
     //'karma.start',
     done));
+
+// --------------
+// Beautify XLF
+gulp.task('beautify.xlf', done =>
+  runSequence(
+    'beautify.xlf',
+    done));

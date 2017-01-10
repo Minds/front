@@ -7,7 +7,7 @@
     "postinstall": "typings install",
 
     "extract": "gulp prepare.prod && ng-xi18n -p angular-tsconfig.json",
-    "postextract": "rimraf .ngcli-build/ && rmv \"^messages\\.(.*)$\" ./app/locale/Default.\\$1",
+    "postextract": "rimraf .ngcli-build/ && rmv \"^messages\\.(.*)$\" ./app/locale/Default.\\$1 && gulp beautify.xlf --source=Default.xlf",
 
     "clean": "rimraf .tmp/ .tmp.aot/",
     "compile-aot": "ngc -p tsconfig-aot.json",
@@ -21,7 +21,7 @@
     "prebuild-embed": "npm run clean",
     "build-embed": "npm run compile-embed-aot && npm run bundle-embed",
 
-    "prebuild-i18n-es": "npm run clean",
+    "prebuild-i18n-es": "npm run clean && gulp beautify.xlf --source=Minds.es.xlf",
     "build-i18n-es": "npm run compile-aot -- --i18nFile=./app/locale/Minds.es.xlf --locale=es --i18nFormat=xlf && npm run bundle -- -o public/js/build-aot.es.js",
 
     "prepare-prod": "gulp prepare.prod",
@@ -91,6 +91,7 @@
     "karma-jasmine": "~0.3.6",
     "merge-stream": "^1.0.0",
     "open": "0.0.5",
+    "pixl-xml": "^1.0.10",
     "protractor": "^2.5.1",
     "rimraf": "^2.5.4",
     "rmv": "^1.0.0",
