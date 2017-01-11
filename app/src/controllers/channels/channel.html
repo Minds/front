@@ -113,34 +113,6 @@
           </div>
           <!-- END City / Location -->
 
-          <!-- Gender -->
-          <div class="m-channel-bio-field m-channel-gender mdl-color-text--blue-grey-600" [hidden]="editing || !user.gender">
-            <i class="material-icons mdl-color-text--blue-grey-300">wc</i>
-            <span>{{user.gender}}</span>
-          </div>
-          <div class="m-channel-bio-editor m-channel-gender-editor" *ngIf="editing && isOwner()">
-            <div class="m-channel-bio-input m-channel-gender-input">
-              <i class="material-icons mdl-color-text--blue-grey-300">wc</i>
-              <a [ngClass]="{'mdl-color-text--blue-grey-600': user.gender == 'male'}"  (click)="user.gender = 'male'" i18n>Male</a>
-              <a [ngClass]="{'mdl-color-text--blue-grey-600': user.gender == 'female'}" (click)="user.gender = 'female'" i18n>Female</a>
-              <a [ngClass]="{'mdl-color-text--blue-grey-600': !user.gender}" (click)="user.gender = ''" i18n>Private</a>
-            </div>
-          </div>
-          <!-- END Gender -->
-
-          <!-- DoB -->
-          <div class="m-channel-bio-field m-channel-dob mdl-color-text--blue-grey-600" [hidden]="editing || !user.dob">
-              <i class="material-icons mdl-color-text--blue-grey-300">date_range</i>
-              <span>{{user.dob}}</span>
-          </div>
-          <div class="m-channel-bio-editor m-channel-dob-editor" *ngIf="editing && isOwner()">
-            <div class="m-channel-bio-input m-channel-dob-input">
-              <i class="material-icons mdl-color-text--blue-grey-300">date_range</i>
-              <input type="month" name="dob" [(ngModel)]="user.dob" class="" placeholder="Date of Birth" i18n-placeholder />
-            </div>
-          </div>
-          <!-- END DoB -->
-
           <minds-channel-social-profiles
             [user]="user"
             [editing]="editing && isOwner()"
