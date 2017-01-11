@@ -47,6 +47,7 @@ import {InviteModal} from './components/modal/invite/invite';
 import {AnalyticsImpressions} from './components/analytics/impressions';
 import {GoogleAds} from './components/ads/google-ads';
 import {RevContent} from './components/ads/revcontent';
+import {Taboola} from './components/ads/taboola';
 import {TagsInput} from './components/forms/tags-input/tags';
 import {MindsEmoji} from './components/emoji/emoji';
 import {MindsTooltip} from './components/tooltip/tooltip';
@@ -141,6 +142,7 @@ export const MINDS_DECLARATIONS: any[] = [
   AnalyticsImpressions,
   GoogleAds,
   RevContent,
+  Taboola,
   TagsInput,
   SignupOnActionModal,
   MindsEmoji,
