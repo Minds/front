@@ -111,15 +111,15 @@ export class AttachmentService {
       this.attachment.mime = 'video';
     } else if (file.type && file.type.indexOf('image/') === 0) {
       this.attachment.mime = 'image';
+      
+      let reader = new FileReader();
+      reader.onloadend = () => {
+        this.attachment.preview = reader.result;
+      };
+      reader.readAsDataURL(file);
     } else {
       this.attachment.mime = 'unknown';
     }
-
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      this.attachment.preview = reader.result;
-    };
-    reader.readAsDataURL(file);
 
     // Upload and return the GUID
     return this.uploadService.post('api/v1/archive', [ file ], this.meta, (progress) => {
