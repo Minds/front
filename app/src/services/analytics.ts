@@ -25,15 +25,28 @@ export class AnalyticsService {
     window.ga('create', this.id, 'auto');
   }
 
-  onRouteChanged(path){
-    //should we send more data?
-    window.ga('send', 'pageview', { 'page' : path});
+  private defaultPrevented: boolean = false;
+  onRouteChanged(path) {
+    if (!this.defaultPrevented) {
+        AnalyticsService.send('pageview', { 'page' : path });
+    }
+
+    this.defaultPrevented = false;
+  }
+
+  preventDefault() {
+    this.defaultPrevented = true;
+  }
+
+  wasDefaultPrevented() {
+    return this.defaultPrevented;
   }
 
   //Manual send.
-  static send(type : string, opts : any = {}){
-    if (window.ga)
-      window.ga('send', type, {});
+  static send(type: string, fields: any = {}) {
+    if (window.ga) {
+      window.ga('send', type, fields);
+    }
   }
 
   static _(router: Router) {
