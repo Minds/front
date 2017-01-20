@@ -33,5 +33,6 @@ interface Window {
   io?: any;
   google?: any;
   twoOhSix?: any;
+  Gun?: any;
 }
 declare var window:Window;

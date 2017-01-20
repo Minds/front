@@ -7,6 +7,7 @@ import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
 import { Client, Upload } from './api';
 import { Storage } from './storage';
+import { GunDB } from './gun';
 import { SignupModalService } from '../components/modal/signup/service';
 import { CacheService } from './cache';
 import { HovercardService } from './hovercard';
@@ -47,6 +48,11 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: Storage,
      useFactory: Storage._,
+     deps: []
+   },
+   {
+     provide: GunDB,
+     useFactory: GunDB._,
      deps: []
    },
    {
