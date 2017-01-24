@@ -2,8 +2,6 @@ var gun = window.Gun();
 
 export class GunDB {
 
-	draft : any
-
 	read(path : string, cb : any){
 		var a = path.split('.');
 		return gun.get(a[0]).path(a[1]).val(cb);

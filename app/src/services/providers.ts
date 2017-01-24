@@ -8,6 +8,7 @@ import { SocketsService } from './sockets';
 import { Client, Upload } from './api';
 import { Storage } from './storage';
 import { GunDB } from './gun';
+import { Draft } from './draft';
 import { SignupModalService } from '../components/modal/signup/service';
 import { CacheService } from './cache';
 import { HovercardService } from './hovercard';
@@ -53,6 +54,11 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: GunDB,
      useFactory: GunDB._,
+     deps: []
+   },
+   {
+     provide: Draft,
+     useFactory: Draft._,
      deps: []
    },
    {

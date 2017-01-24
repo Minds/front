@@ -4,6 +4,7 @@ import { Client, Upload } from '../../../services/api';
 import { MindsActivityObject } from '../../../interfaces/entities';
 import { SessionFactory } from '../../../services/session';
 import { GunDB } from '../../../services/gun';
+import { Draft } from '../../../services/draft';
 
 import { AttachmentService } from '../../../services/attachment';
 import { ThirdPartyNetworksSelector } from '../../../components/third-party-networks/selector';
@@ -38,7 +39,7 @@ export class Poster {
 
   @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
 
-  constructor(public client: Client, public upload: Upload, public attachment: AttachmentService, public gun: GunDB){
+  constructor(public client: Client, public upload: Upload, public attachment: AttachmentService, public gun: GunDB, public draft: Draft){
     this.minds = window.Minds;
   }
 
@@ -59,11 +60,10 @@ export class Poster {
   }
 
   ngOnInit(){
-    var self = this;
-    var gun = self.gun;
-    gun.read('draft.status', function(message){
-      if(gun.draft && gun.draft.writing){ return }
-      self.meta.message = message;
+    var gun = this.gun;
+    gun.read('draft.status', (message) => {
+      if(this.draft && this.draft.writing){ return }
+      this.meta.message = message;
     });
   }
 
@@ -136,10 +136,10 @@ export class Poster {
 
   saveDraft(message){
     var gun = this.gun;
-    var draft = gun.draft || (gun.draft = {throttle: 120});
+    var draft = this.draft;
     clearTimeout(draft.debounce);
     draft.writing = true;
-    draft.debounce = setTimeout(function(){
+    draft.debounce = setTimeout(() => {
       gun.write('draft.status', message.value);
       draft.writing = false;
     }, draft.throttle);
