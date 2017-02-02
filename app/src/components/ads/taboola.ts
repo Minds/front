@@ -59,8 +59,10 @@ class TaboolaService{
          container: id,
          placement: 'Below Article Thumbnails',
          target_type: 'mix'
-       });
-       (<any>window)._taboola.push({flush: true});
+         });
+       //(<any>window)._taboola.push({article:'auto', url: window.location.href});
+           //(<any>window)._taboola.push({notify:'newPageLoad'});
+               //(<any>window)._taboola.push({flush: true});
        resolve(true);
     });
   }
