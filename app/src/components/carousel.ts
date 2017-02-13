@@ -110,6 +110,10 @@ export class MindsCarousel{
     if(!changed)
       return;
 
+    if (!this.banners[index].src) {
+      this.banners[index].src = value.file;
+    }
+
     this.modified.push({
       guid: this.banners[index].guid,
       index: index,
@@ -138,6 +142,17 @@ export class MindsCarousel{
     setTimeout(() => {
       this.done_event.next(this.modified);
       this.modified = [];
+
+      let blank_banner: any = false;
+      for(var i in this.banners){
+        if(!this.banners[i].src)
+          blank_banner=i;
+      }
+
+      if (blank_banner !== false) {
+        this.banners.splice(blank_banner, 1);
+        this.next();
+      }
     }, 1000);
   }
 
