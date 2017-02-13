@@ -10,6 +10,10 @@ export = function buildPlugins(gulp, _plugins, option) {
 
     plugins.map((plugin, i) => {
       if (plugin.indexOf('_') === 0) {
+        if(i == plugins.length -1){
+          cb();
+        }
+
         return;
       }
 
