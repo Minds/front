@@ -14,7 +14,7 @@ import { VideoAdsService } from './ads-service';
     },
   //changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <video (click)="onClick()" preload="none" [poster]="poster" allowfullscreen [muted]="muted" [loop]="loop" [autoplay]="autoplay">
+    <video (click)="onClick()" preload="none" [poster]="poster" allowfullscreen [muted]="muted" [loop]="loop">
       <source [src]="s.uri" *ngFor="let s of src">
     </video>
     <ng-content></ng-content>
@@ -85,10 +85,10 @@ export class MindsVideo{
   ngOnInit(){
     this.container = this._element.nativeElement;
     this.element = this._element.nativeElement.getElementsByTagName("video")[0];
-    this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
-      this.isVisible();
-    });
-    this.isVisible();
+    //this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
+    //  this.isVisible();
+    //});
+    //this.isVisible();
     this.setUp();
 
     if (this.guid && !this.log) {
