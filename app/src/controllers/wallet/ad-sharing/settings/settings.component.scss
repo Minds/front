@@ -1,0 +1,18 @@
+.m-ad-sharing-settings-component {
+  .m-monetization-other {
+    font-size: 12px;
+    font-weight: 300;
+    text-align: center;
+    color: #aaa;
+  }
+
+  .m-ad-sharing-switches {
+    margin-top: $minds-padding * 2;
+    text-align: center;
+    width: 100%;
+
+    .mdl-switch {
+      width: auto;
+    }
+  }
+}

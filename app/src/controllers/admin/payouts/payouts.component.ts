@@ -8,17 +8,18 @@ import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-admin-monetization',
-  templateUrl: 'monetization.html',
+  selector: 'minds-admin-payouts',
+  templateUrl: 'payouts.component.html',
 })
 
-export class AdminMonetization {
+export class AdminPayouts {
 
-  entities: any[] = [];
+  payouts: any[] = [];
 
   inProgress : boolean = false;
   moreData : boolean = true;
   offset : string = '';
+  reviewing: number | null = null;
 
   constructor(public client: Client, private route: ActivatedRoute){
   }
@@ -34,23 +35,22 @@ export class AdminMonetization {
 
     this.inProgress = true;
 
-    this.client.get(`api/v1/admin/paywall/review`, { limit: 12, offset: this.offset })
+    this.client.get(`api/v1/admin/monetization/payouts/queue`, { limit: 50, offset: this.offset })
     .then((response: any) => {
-      if(!response.entities){
+      if(!response.payouts){
         this.inProgress = false;
         this.moreData = false;
         return;
       }
 
-      this.entities.push(...response.entities);
+      this.payouts.push(...response.payouts);
+      this.inProgress = false;
 
       if (response['load-next']) {
         this.offset = response['load-next'];
       } else {
         this.moreData = false;
       }
-
-      this.inProgress = false;
     })
     .catch(e => {
       this.inProgress = false;
@@ -58,21 +58,28 @@ export class AdminMonetization {
   }
 
   removeFromList(index) {
-    this.entities.splice(index, 1);
+    this.payouts.splice(index, 1);
   }
 
-  deMonetize(entity: any, index: number) {
+  review(index: number | null) {
+    this.reviewing = index;
+  }
 
-    this.client.post(`api/v1/admin/paywall/${entity.guid}/demonetize`, {})
-    .then((response: any) => {
-      if (response.status != 'success') {
-        alert('There was a problem demonetizing this content. Please try again.');
-        return;
-      }
-      this.removeFromList(index);
-    })
-    .catch(e => {
-      alert('There was a problem demonetizing this content. Please try again.');
-    });
+  pay(index) {
+    if (!window.confirm('Payment has no UNDO. Proceed?')) {
+      return;
+    }
+
+    this.inProgress = true;
+    this.reviewing = null;
+
+    this.client.post(`api/v1/admin/monetization/payouts/${this.payouts[index].guid}`)
+      .then(response => {
+        this.removeFromList(index);
+        this.inProgress = false;
+      })
+      .catch(e => {
+        this.inProgress = false;
+      })
   }
 }

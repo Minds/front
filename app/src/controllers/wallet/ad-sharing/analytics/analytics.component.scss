@@ -1,0 +1,78 @@
+.m-ad-sharing-analytics-component {
+  .m-monetization-overview {
+    > div {
+      padding: $minds-padding;
+    }
+
+    h2 {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.25em;
+      color: #999999;
+      margin: 0 0 1.61em 0;
+
+      .m-subnote {
+        font-size: 12px;
+      }
+    }
+
+    .m-value {
+      font-size: 18px;
+      font-weight: 300;
+      color: #333333;
+      text-align: right;
+    }
+  }
+
+  .m-monetization-other {
+    font-size: 12px;
+    font-weight: 300;
+    text-align: center;
+    color: #aaa;
+  }
+
+  .m-monetization-cta-wrapper {
+    width: 100%;
+  }
+
+  .m-monetization-cta {
+    text-align: center;
+    padding: $minds-padding;
+
+    &.m-monetization-cta--right {
+      text-align: right;
+    }
+
+    &.m-monetization-cta--left {
+      text-align: right;
+    }
+
+    .m-note {
+      font-size: 11px;
+      color: #999999;
+    }
+  }
+
+  .m-monetization-list {
+    > div {
+      padding: $minds-padding
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+
+      .m-data-title {
+        width: 45%;
+      }
+
+      td {
+        font-weight: 300;
+
+        &.mdl-data-table__cell--non-numeric {
+          white-space: normal;
+        }
+      }
+    }
+  }
+}

@@ -349,6 +349,48 @@
     </a>
   </template>
 
+  <!-- Programs (queued) -->
+  <template ngSwitchCase="program_queued">
+    <a routerLink="/wallet">
+      <!-- i18n -->Your application for {{ notification.params.program }} program is awaiting approval.<!-- /i18n -->
+    </a>
+  </template>
+
+  <!-- Programs (accepted) -->
+  <template ngSwitchCase="program_accepted">
+    <a routerLink="/wallet">
+      <!-- i18n -->Your application for {{ notification.params.program }} program was approved. Congratulations! Please logout, and login again to enable it!<!-- /i18n -->
+    </a>
+  </template>
+
+  <!-- Programs (declined) -->
+  <template ngSwitchCase="program_declined">
+    <a routerLink="/wallet">
+      <!-- i18n -->Your application for {{ notification.params.program }} program was declined.<!-- /i18n -->
+    </a>
+  </template>
+
+  <!-- Payouts (queued) -->
+  <template ngSwitchCase="payout_queued">
+    <a routerLink="/wallet/ledger">
+      <!-- i18n -->Your payment request for {{ notification.params.amount | currency:'USD':true }} is awaiting approval.<!-- /i18n -->
+    </a>
+  </template>
+
+  <!-- Payouts (accepted) -->
+  <template ngSwitchCase="payout_accepted">
+    <a routerLink="/wallet/ledger">
+      <!-- i18n -->Your payment request for {{ notification.params.amount | currency:'USD':true }} was approved.<!-- /i18n -->
+    </a>
+  </template>
+
+  <!-- Payouts (declined) -->
+  <template ngSwitchCase="payout_declined">
+    <a routerLink="/wallet/ledger">
+      <!-- i18n -->Your payment request for {{ notification.params.amount | currency:'USD':true }} was declined.<!-- /i18n -->
+    </a>
+  </template>
+
   <!-- Points prompt -->
   <template ngSwitchCase="custom_message">
       <a>

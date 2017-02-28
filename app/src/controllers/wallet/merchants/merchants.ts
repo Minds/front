@@ -21,9 +21,13 @@ export class Merchants {
   editForm: FormGroup;
 
   user = window.Minds.user;
-  isMerchant : boolean = false;
   status : string = "pending";
   sales : Array<any> = [];
+
+  statusInProgress: boolean = false;
+  loaded: boolean = false;
+  isMerchant: boolean = false;
+  canBecomeMerchant: boolean = false;
 
   inProgress : boolean = false;
   updating : boolean = false;
@@ -40,7 +44,36 @@ export class Merchants {
 
   minds = window.Minds;
 
-	constructor(public client: Client, public upload : Upload, public fb: FormBuilder){
+  constructor(public client: Client, public upload : Upload, public fb: FormBuilder){
+  }
+
+  ngOnInit() {
+    this.load()
+      .then((response: any) => {
+        this.loaded = true;
+        this.canBecomeMerchant = response.canBecomeMerchant;
+
+        if (this.canBecomeMerchant) {
+          this.setUp();
+        }
+      });
+  }
+
+  load(): Promise<any> {
+    this.statusInProgress = true;
+
+    return this.client.get('api/v1/merchant/status')
+      .then((response: any) => {
+        this.statusInProgress = false;
+        return response;
+      })
+      .catch(e => {
+        this.statusInProgress = false;
+        throw e;
+      });
+  }
+
+  setUp() {
     if(this.user.merchant && this.user.merchant.service == 'stripe' && this.user.merchant.id){
       this.isMerchant = true;
       this.getSettings();
@@ -51,7 +84,7 @@ export class Merchants {
       this.exclusive = this.user.merchant.exclusive;
     }
 
-    this.onboardForm = fb.group({
+    this.onboardForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       dob: ['', Validators.required],
@@ -67,7 +100,7 @@ export class Merchants {
       stripeAgree: ['', Validators.required],
     });
 
-    this.editForm = fb.group({
+    this.editForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       //email: ['', Validators.required],
@@ -76,7 +109,7 @@ export class Merchants {
       accountNumber: [''],
       routingNumber: ['']
     });
-	}
+  }
 
   onboard(form){
     this.client.post('api/v1/merchant/onboard', this.onboardForm.value)

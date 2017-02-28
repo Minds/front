@@ -130,3 +130,21 @@
     }
   }
 }
+
+
+minds-wallet-transactions {
+  .mdl-tabs__tab-bar {
+    margin-bottom: $minds-padding * 2;
+  }
+}
+
+.m-root-other {
+  font-size: 12px;
+  font-weight: 300;
+  text-align: center;
+  color: #aaa;
+}
+
+.m-root-loader {
+  text-align: center;
+}

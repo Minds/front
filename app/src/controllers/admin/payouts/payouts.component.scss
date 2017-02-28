@@ -1,0 +1,65 @@
+.m-admin-payouts {
+  .m-payout {
+    padding: $minds-padding * 2;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .m-payout-meta {
+    .m-user {
+      a {
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      img {
+        height: 1.5em;
+        border-radius: 1.5em;
+      }
+    }
+
+    .m-date {
+      font-size: 11px;
+      color: #999999;
+    }
+  }
+
+  .m-payout-info {
+    margin-top: $minds-padding;
+
+    .m-amount {
+      text-decoration: none;
+      font-size: 14px;
+      color: #999999;
+
+      > * {
+        vertical-align: middle;
+      }
+
+      .m-value {
+        font-weight: bold;
+        font-size: 22px;
+        color: #333333;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .m-payout-cta {
+    margin-top: $minds-padding;
+    text-align: right;
+  }
+
+  .m-note {
+    width: 100%;
+    font-size: 11px;
+    color: #999999;
+    text-align: center;
+    margin-bottom: $minds-padding;
+  }
+}

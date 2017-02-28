@@ -63,6 +63,7 @@ export const MindsAppRoutes: Routes = [
   { path: 'groups/create', component: GroupsCreator },
   { path: 'groups/:filter', component: Groups },
 
+  { path: 'wallet/:filter/:type', component: Wallet },
   { path: 'wallet/:filter', component: Wallet },
   { path: 'wallet', component: Wallet },
 

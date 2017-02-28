@@ -1,0 +1,16 @@
+<div class="m-root-loader" *ngIf="inProgress">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+
+<div class="mdl-grid m-ad-sharing-settings-component" *ngIf="!inProgress && loaded" style="max-width: 600px">
+  <div class="mdl-cell mdl-cell--12-col m-monetization-other">
+    <!-- i18n -->Turning the switches below on will enable ads to appear by default in that area of your account. You can turn ads on/off for each individual piece of content when creating it or visiting the content directly.<!-- /i18n -->
+  </div>
+
+  <div class="m-ad-sharing-switches">
+    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" for="switch-1" [mdlSwitch] [toggled]="settings.blogs">
+      <input type="checkbox" id="switch-1" class="mdl-switch__input" [(ngModel)]="settings.blogs" (change)="save('blogs')" [mdl]>
+      <span class="mdl-switch__label" i18n>Blogs</span>
+    </label>
+  </div>
+</div>

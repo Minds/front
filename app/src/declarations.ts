@@ -66,10 +66,17 @@ import {AdminBoosts} from './controllers/admin/boosts/boosts';
 import {AdminPages} from './controllers/admin/pages/pages';
 import {AdminReports} from './controllers/admin/reports/reports';
 import {AdminMonetization} from './controllers/admin/monetization/monetization';
+import {AdminPrograms} from './controllers/admin/programs/programs.component';
+import {AdminPayouts} from './controllers/admin/payouts/payouts.component';
 import {BoostFullNetwork} from './controllers/boosts/boost/full-network/full-network';
 import {BoostP2P} from './controllers/boosts/boost/p2p/p2p';
-import {WalletTransactions} from './controllers/wallet/transactions/transactions';
+import {WalletTransactions} from './controllers/wallet/transactions/transactions.component';
+import {WalletTransactionsPoints} from './controllers/wallet/transactions/points/points.component';
+import {WalletTransactionsMoney} from './controllers/wallet/transactions/money/money.component';
 import {WalletPurchase} from './controllers/wallet/purchase/purchase';
+import {WalletAdSharing} from './controllers/wallet/ad-sharing/ad-sharing.component';
+import {WalletAdSharingAnalytics} from './controllers/wallet/ad-sharing/analytics/analytics.component';
+import {WalletAdSharingSettings} from './controllers/wallet/ad-sharing/settings/settings.component';
 import {Merchants} from './controllers/wallet/merchants/merchants';
 import {Comments} from './controllers/comments/comments';
 import {ActivityPreview} from './controllers/cards/activity/preview';
@@ -164,10 +171,17 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminPages,
   AdminReports,
   AdminMonetization,
+  AdminPrograms,
+  AdminPayouts,
   BoostFullNetwork,
   BoostP2P,
   WalletTransactions,
+  WalletTransactionsPoints,
+  WalletTransactionsMoney,
   WalletPurchase,
+  WalletAdSharing,
+  WalletAdSharingAnalytics,
+  WalletAdSharingSettings,
   Merchants,
   Comments,
   ActivityPreview,

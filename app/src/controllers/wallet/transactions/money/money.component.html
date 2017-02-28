@@ -1,0 +1,27 @@
+<div class="mdl-card mdl-shadow--2dp m-ledger-entry" *ngFor="let entry of ledger">
+  <div class="mdl-card__title mdl-card--expand m-ledger-amount"
+    [ngClass]="{ 'positive': entry.type == 'credit', 'negative': entry.type == 'debit' }"
+  >
+    {{ entry.amount | currency:'USD':true }}
+  </div>
+
+  <div class="mdl-card__actions mdl-card--border m-ledger-details">
+    <p>
+      <span *ngIf="entry.status == 'inprogress'" i18n>In Progress</span>
+      <span *ngIf="entry.status == 'paid'" i18n>Paid</span>
+      <span *ngIf="entry.status == 'cancelled'" i18n>Cancelled</span>
+    </p>
+
+    <div class="mdl-layout-spacer"></div>
+
+    <i class="material-icons mdl-color-text--grey-400">access_time</i>
+    <p class="ts mdl-color-text--grey-400">{{ entry.ts * 1000 | date:'medium' }}</p>
+  </div>
+</div>
+
+<infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress">
+</infinite-scroll>

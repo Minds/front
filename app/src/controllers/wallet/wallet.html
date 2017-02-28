@@ -13,8 +13,8 @@
     <ul class="mdl-card minds-card-navigation mdl-shadow--2dp" style="width:100%; margin-top:8px;">
       <li>
         <a class="mdl-color-text--blue-grey-500" [routerLink]="['/wallet/transactions']" routerLinkActive="selected">
-          <i class="material-icons">history</i>
-          <!-- i18n -->Points history<!-- /i18n -->
+          <i class="material-icons">account_balance_wallet</i>
+          <!-- i18n -->Ledger<!-- /i18n -->
         </a>
       </li>
       <li>
@@ -34,17 +34,25 @@
           <span [hidden]="!session.getLoggedInUser().merchant" i18n>Monetization Settings</span>
         </a>
       </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/ad-sharing" routerLinkActive="selected">
+          <i class="material-icons">branding_watermark</i>
+          <!-- i18n -->Ad Sharing<!-- /i18n -->
+        </a>
+      </li>
     </ul>
 
   </div>
 
   <div class="mdl-cell mdl-cell--8-col">
 
-    <minds-wallet-purchase [toggled]="filter == 'purchase'" [hidden]="filter == 'merchants'"></minds-wallet-purchase>
+    <minds-wallet-purchase [toggled]="filter == 'purchase'" [hidden]="filter == 'merchants' || filter == 'ad-sharing'"></minds-wallet-purchase>
 
     <minds-wallet-transactions *ngIf="filter == 'transactions' || filter == 'purchase'"></minds-wallet-transactions>
 
     <minds-wallet-merchants *ngIf="filter == 'merchants'"></minds-wallet-merchants>
+    
+    <minds-wallet-ad-sharing *ngIf="filter == 'ad-sharing'"></minds-wallet-ad-sharing>
 
   </div>
 

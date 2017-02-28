@@ -439,8 +439,8 @@
         <source><x id="INTERPOLATION"/> points</source>
         <target/>
       </trans-unit>
-      <trans-unit id="bb3a484efed4a2090fee42a75256d4784b7db5ba" datatype="html">
-        <source>Points history</source>
+      <trans-unit id="9f1dbbf0775b2fb2b925d332398e0c9ecfb3cf12" datatype="html">
+        <source>Ledger</source>
         <target/>
       </trans-unit>
       <trans-unit id="4d473bc27b3e484136974196711116b044c61f44" datatype="html">
@@ -449,6 +449,10 @@
       </trans-unit>
       <trans-unit id="e9b20759c1622ea499566ab5ca7084c79b6c8b66" datatype="html">
         <source>Monetization Settings</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2aaa9f0b1f22b70c11ae635ca33919249029d902" datatype="html">
+        <source>Ad Sharing</source>
         <target/>
       </trans-unit>
       <trans-unit id="dd3b6c367381ddfa8f317b8e9b31c55368c65136" datatype="html">
@@ -494,22 +498,6 @@
       </trans-unit>
       <trans-unit id="19991529f3b2827b8665b273580c9d52194df9e8" datatype="html">
         <source>Bio</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="097b5dfee5665aa0f7daba8b696acecde6445474" datatype="html">
-        <source>Male</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="18f3bafdc69b800737e303bc1cb0753bd9dd3f32" datatype="html">
-        <source>Female</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="ddd8a4986d2d1717a274a5a0fbed04988a819e69" datatype="html">
-        <source>Private</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="8314d3a36da2092565b9b0a429b5335542e6c8dd" datatype="html">
-        <source>Date of Birth</source>
         <target/>
       </trans-unit>
       <trans-unit id="4134b90cce18c18336564b6750b6bfe2f72d0192" datatype="html">
@@ -635,6 +623,14 @@
         <source>Un-ban globally</source>
         <target/>
       </trans-unit>
+      <trans-unit id="b7e57d23f46014dc7b6589ddfe9ca5c190b13c5b" datatype="html">
+        <source>Ban from Monetization</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="757611b6fdab994361249d835d5e49f2242da633" datatype="html">
+        <source>Un-ban from Monetization</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="3493a528265aa549ada2f3247e41359b04970fca" datatype="html">
         <source>Boosted content</source>
         <target/>
@@ -755,10 +751,6 @@
         <source>Hourly</source>
         <target/>
       </trans-unit>
-      <trans-unit id="bce2364c0f0b875568eb220806d037bee014a655" datatype="html">
-        <source>Username (eg. me)</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
         <source>Password</source>
         <target/>
@@ -785,10 +777,6 @@
       </trans-unit>
       <trans-unit id="cebb7f27b5028c62b4426da3bb3e3bd3f4a3443b" datatype="html">
         <source>Avatar</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="64879401ef12b84611ca00b4f536456a0605402c" datatype="html">
-        <source>Email (eg. me@minds.com)</source>
         <target/>
       </trans-unit>
       <trans-unit id="2880518d3a5544fa6cd834b1ac80e47978a9c7c4" datatype="html">
@@ -1183,6 +1171,30 @@
         <target/>
         <note priority="1" from="description">boost</note>
       </trans-unit>
+      <trans-unit id="cdb905dac2e93e4817b013036d5e955c79873240" datatype="html">
+        <source>Your application for <x id="INTERPOLATION"/> program is awaiting approval.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="803261eaeac83d3fd835fab14978c9f8807cbeb2" datatype="html">
+        <source>Your application for <x id="INTERPOLATION"/> program was approved. Congratulations! Please logout, and login again to enable it!</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="bf517cb71558b07a6e8870f893205f759ef88e71" datatype="html">
+        <source>Your application for <x id="INTERPOLATION"/> program was declined.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="050855bee1ba1fbff10ea95f344d91c3ae93365d" datatype="html">
+        <source>Your payment request for <x id="INTERPOLATION"/> is awaiting approval.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5170d5fe44888c24b34a543dee7396e0e422fa98" datatype="html">
+        <source>Your payment request for <x id="INTERPOLATION"/> was approved.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="0c11bc383e873249d088d303f74460ec4103dc55" datatype="html">
+        <source>Your payment request for <x id="INTERPOLATION"/> was declined.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="50ad796a605529c7f11c0d18b3f225e38fb21d8b" datatype="html">
         <source>Welcome to Minds. We have given you  <x id="START_TAG_SPAN" ctype="x-span"/>100 points<x id="CLOSE_TAG_SPAN" ctype="x-span"/> to get you started.</source>
         <target/>
@@ -1327,6 +1339,18 @@
         <source>De-Monetize</source>
         <target/>
       </trans-unit>
+      <trans-unit id="07fdd34a0c00f2d732589748973e3c6192a5e54c" datatype="html">
+        <source>Users can be banned for monetizing on the dropdown in their profile.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6523895cfd110d53667e04c82c0f769c19d8ee74" datatype="html">
+        <source>Review</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="506a8569098f2412ee410abf96f805a1eb097987" datatype="html">
+        <source>Pay</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="939d0138d75bc0bde46102bd20328d538fa008d6" datatype="html">
         <source>Why not <x id="START_LINK" ctype="x-a"/>click here to buy some?<x id="CLOSE_LINK" ctype="x-a"/></source>
         <target/>
@@ -1403,6 +1427,18 @@
         <source>You boost has been submitted to @<x id="INTERPOLATION"/></source>
         <target/>
       </trans-unit>
+      <trans-unit id="5ab9a3c727788f3597870dd7e3546fc0b0624024" datatype="html">
+        <source>In Progress</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="d4d9163871c0b1b92a068907ca65f355bab8a9be" datatype="html">
+        <source>Paid</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4d589b093da58dfb8ac9299aa7a82b5b6ccb87f2" datatype="html">
+        <source>Cancelled</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="9d29903692cc53947e865db39ad18e0b3fe8406f" datatype="html">
         <source>BUY!</source>
         <target/>
@@ -1425,6 +1461,114 @@
       </trans-unit>
       <trans-unit id="3f80f9538a22be4c69ddb4d203d7fdf949bfe9fd" datatype="html">
         <source>Click here to BUY more.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e12babb1dda4d981a3fdf7d6e667d049f941f780" datatype="html">
+        <source>You need to be a Minds Merchant in order to apply for Ad Sharing program.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="84d3c92885ae7ae3eabdf323f24e26c6774e0962" datatype="html">
+        <source>Become a Merchant</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="d561ea9509148ecd66f7831117cb65304c77470b" datatype="html">
+        <source>You are not elegible to become a Merchant. Please contact us at info@minds.com</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="cea1d1b65d9f01a06d228d74e9fe950f77392c83" datatype="html">
+        <source>Enable advertising in your account</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e701fdc5677763682b904c32f390c9496604cfe4" datatype="html">
+        <source>Why do you want to participate in the Minds Ad Sharing program? Please, list your other social media accounts and quantity of followers.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="c2d0ac9f528bbd5f53fd34269fde8b59e029621b" datatype="html">
+        <source>Apply</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="f09fb3a616e18dbe1876ef052f7b639119236875" datatype="html">
+        <source>You have applied for the Minds Ad Sharing program. Your application is currently under review. This may take up to 7 days.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="efbe55685ffef5af777f95b5b512f2c8b15cbfcc" datatype="html">
+        <source>Analytics</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="d3936460e40f64679d51235dba8d797a18392cfa" datatype="html">
+        <source>Ads information for @<x id="INTERPOLATION"/></source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="0e1f337c7011d303ca32421150553c3e0a58be5c" datatype="html">
+        <source>Clicking the <x id="START_ITALIC_TEXT" ctype="x-i"/>Request Payment<x id="CLOSE_ITALIC_TEXT" ctype="x-i"/> button will send <x id="INTERPOLATION"/> for review by the Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="da5c547918e9f0613856f1b5de89528a7d20692a" datatype="html">
+        <source>You don&apos;t have enough available revenue in order to request a payment.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="dd46839fe43b82911e5464f980c7c96cb41edba7" datatype="html">
+        <source>Your payment request for <x id="INTERPOLATION"/> is currently under review by Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5e6ed1bb801ebc08ddb3b9ffdad6ffea0d20174f" datatype="html">
+        <source>Request</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e6a27066251ca1e04c5be86ad758380856df2506" datatype="html">
+        <source>Pending</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7fb1099e29660162f9154d5b2feee7743a423df6" datatype="html">
+        <source>Today</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="02e0243b60007368f87dc01e083f232dd025096d" datatype="html">
+        <source>Last 7 days</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="76948d8498c17036f3e2efa23059db30e17b0a94" datatype="html">
+        <source>Last <x id="INTERPOLATION"/> days</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="b7da3e3505cc80f9bf3cffc8444c53e8a9ec70a5" datatype="html">
+        <source>Available</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="781a43845624c6d5c0773c23a2296f9e8424f8e9" datatype="html">
+        <source>In Review</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="af5f20b2ff0bd9be8384c69b698f5a3420523e0c" datatype="html">
+        <source>From <x id="INTERPOLATION"/> to <x id="INTERPOLATION_1"/></source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2cebfbb78c89bb06bc7fe4e731117d680ab36862" datatype="html">
+        <source>Details are not yet available. Please, try again tomorrow.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5f20df53879d515bee961188f2af1ca3e3713269" datatype="html">
+        <source>Ads revenue</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="61e284bc442dac74f8d05698a8ee3bef6d43ff3c" datatype="html">
+        <source>from <x id="INTERPOLATION"/> to <x id="INTERPOLATION_1"/></source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="fdf7cbdc140d0aab0f0b6c06065a0fd448ed6a2e" datatype="html">
+        <source>Title</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="bc0be542fed00c34c312d35ad02afdf26d12b95b" datatype="html">
+        <source>Revenue</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7be720eac3d24ac0d3be84e6f128c7b52a617bc4" datatype="html">
+        <source>RPM</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="79f85ac1330252ddfe6adf1f9015a637f4f4b3ac" datatype="html">
+        <source>Turning the switches below on will enable ads to appear by default in that area of your account. You can turn ads on/off for each individual piece of content when creating it or visiting the content directly.</source>
         <target/>
       </trans-unit>
       <trans-unit id="a7ce178e6a793f3dc03f0ab5941b63d69156ecdb" datatype="html">
@@ -1493,6 +1637,10 @@
       </trans-unit>
       <trans-unit id="9db60170ef3b3b41a863e7d5ee7cec10919b9141" datatype="html">
         <source>Updating</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="8314d3a36da2092565b9b0a429b5335542e6c8dd" datatype="html">
+        <source>Date of Birth</source>
         <target/>
       </trans-unit>
       <trans-unit id="729754dd19eb9ce0670b0aeb5a6ae60574c2c563" datatype="html">

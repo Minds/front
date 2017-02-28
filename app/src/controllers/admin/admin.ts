@@ -13,6 +13,8 @@ import { Client, Upload } from '../../services/api';
     <minds-admin-pages *ngIf="filter == 'pages'"></minds-admin-pages>
     <minds-admin-reports *ngIf="filter == 'reports'"></minds-admin-reports>
     <minds-admin-monetization *ngIf="filter == 'monetization'"></minds-admin-monetization>
+    <minds-admin-programs *ngIf="filter == 'programs'"></minds-admin-programs>
+    <minds-admin-payouts *ngIf="filter == 'payouts'"></minds-admin-payouts>
   `
 })
 
