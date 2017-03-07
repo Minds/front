@@ -68,6 +68,7 @@ import {AdminReports} from './controllers/admin/reports/reports';
 import {AdminMonetization} from './controllers/admin/monetization/monetization';
 import {AdminPrograms} from './controllers/admin/programs/programs.component';
 import {AdminPayouts} from './controllers/admin/payouts/payouts.component';
+import {AdminFeatured} from './controllers/admin/featured/featured';
 import {BoostFullNetwork} from './controllers/boosts/boost/full-network/full-network';
 import {BoostP2P} from './controllers/boosts/boost/p2p/p2p';
 import {WalletTransactions} from './controllers/wallet/transactions/transactions.component';
@@ -173,6 +174,7 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminMonetization,
   AdminPrograms,
   AdminPayouts,
+  AdminFeatured,
   BoostFullNetwork,
   BoostP2P,
   WalletTransactions,

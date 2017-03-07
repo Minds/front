@@ -15,6 +15,7 @@ import { Client, Upload } from '../../services/api';
     <minds-admin-monetization *ngIf="filter == 'monetization'"></minds-admin-monetization>
     <minds-admin-programs *ngIf="filter == 'programs'"></minds-admin-programs>
     <minds-admin-payouts *ngIf="filter == 'payouts'"></minds-admin-payouts>
+    <minds-admin-featured *ngIf="filter == 'featured'"></minds-admin-featured>
   `
 })
 
