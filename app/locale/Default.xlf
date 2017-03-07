@@ -1175,8 +1175,8 @@
         <source>Your application for <x id="INTERPOLATION"/> program is awaiting approval.</source>
         <target/>
       </trans-unit>
-      <trans-unit id="803261eaeac83d3fd835fab14978c9f8807cbeb2" datatype="html">
-        <source>Your application for <x id="INTERPOLATION"/> program was approved. Congratulations! Please logout, and login again to enable it!</source>
+      <trans-unit id="5fc58bd409793a008740bb933cd55aa6f069f4cc" datatype="html">
+        <source>Your application for <x id="INTERPOLATION"/> program was approved. Congratulations!</source>
         <target/>
       </trans-unit>
       <trans-unit id="bf517cb71558b07a6e8870f893205f759ef88e71" datatype="html">
@@ -1481,6 +1481,10 @@
       </trans-unit>
       <trans-unit id="e701fdc5677763682b904c32f390c9496604cfe4" datatype="html">
         <source>Why do you want to participate in the Minds Ad Sharing program? Please, list your other social media accounts and quantity of followers.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="02c2e2a4096cc8517229e7d41f6ea214766efdfa" datatype="html">
+        <source>I agree to the Minds Merchant &amp; Ad Sharing program Terms of Service.</source>
         <target/>
       </trans-unit>
       <trans-unit id="c2d0ac9f528bbd5f53fd34269fde8b59e029621b" datatype="html">
