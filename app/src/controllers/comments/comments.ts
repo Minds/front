@@ -183,6 +183,12 @@ export class Comments {
     if (this.socketRoomName) {
       this.sockets.leave(this.socketRoomName);
     }
+
+    for (let sub in this.socketSubscriptions) {
+      if (this.socketSubscriptions[sub]) {
+        this.socketSubscriptions[sub].unsubscribe();
+      }
+    }
   }
 
   listen() {
