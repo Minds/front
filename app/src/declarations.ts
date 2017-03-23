@@ -57,6 +57,7 @@ import {PDAds} from './components/ads/pd-ads';
 import { PayWall } from './controllers/payments/paywall/paywall.component';
 import { PaywallCancelButton } from './controllers/payments/paywall/paywall-cancel.component';
 import {Textarea} from './components/editors/textarea.component';
+import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 
 import {CARDS} from './controllers/cards/cards';
 import {SearchBar} from './controllers/search/bar';
@@ -162,6 +163,7 @@ export const MINDS_DECLARATIONS: any[] = [
   PayWall,
   PaywallCancelButton,
   Textarea,
+  TagcloudComponent,
 
   // Controllers; Controller-based directives
   CARDS,
