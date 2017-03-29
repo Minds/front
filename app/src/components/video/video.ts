@@ -67,7 +67,7 @@ export class MindsVideo{
   seek_interval;
   seeked : number = 0;
 
-  muted : boolean = true;
+  muted : boolean = false;
   autoplay : boolean = false;
   visibleplay : boolean = true;
   loop : boolean = true;
