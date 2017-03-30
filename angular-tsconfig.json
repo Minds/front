@@ -2,6 +2,8 @@
     "compilerOptions": {
         "target": "es5",
         "module": "commonjs",
+        "moduleResolution": "node",
+        "lib": [ "es2015", "dom" ],
         "declaration": false,
         "noImplicitAny": false,
         "removeComments": true,
@@ -9,7 +11,8 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "outDir": ".ngcli-build/"
+        "outDir": ".ngcli-build/",
+        "types": []
     },
     "files": [
         "app/bootstrap-i18n.ts"

@@ -15,6 +15,6 @@ export class CacheService {
   }
 
   static _() {
-    return new CacheService;
+    return new CacheService();
   }
 }

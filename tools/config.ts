@@ -120,15 +120,15 @@ export const AUTOPREFIXER_BROWSERS = [
 // SystemsJS Configuration.
 
 const SYSTEM_PACKAGES = {
-  '@angular/core': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/common': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/compiler': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/forms': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/http': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/platform-browser': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/platform-browser-dynamic': { main: 'index.js', defaultExtension: 'js' },
-  // '@angular/router-deprecated': { main: 'index.js', defaultExtension: 'js' },
-  '@angular/router': { main: 'index.js', defaultExtension: 'js' },
+  '@angular/common': { main: 'bundles/common.umd.js', defaultExtension: 'js' },
+  '@angular/compiler': { main: 'bundles/compiler.umd.js', defaultExtension: 'js' },
+  '@angular/core': { main: 'bundles/core.umd.js', defaultExtension: 'js' },
+  '@angular/forms': { main: 'bundles/forms.umd.js', defaultExtension: 'js' },
+  '@angular/http': { main: 'bundles/http.umd.js', defaultExtension: 'js' },
+  '@angular/platform-browser': { main: 'bundles/platform-browser.umd.js', defaultExtension: 'js' },
+  '@angular/platform-browser-dynamic': { main: 'bundles/platform-browser-dynamic.umd.js', defaultExtension: 'js' },
+  '@angular/platform-server': { main: 'bundles/platform-server.umd.js', defaultExtension: 'js' },
+  '@angular/router': { main: 'bundles/router.umd.js', defaultExtension: 'js' },
   'symbol-observable': { main: 'index.js', defaultExtension: 'js' }
 };
 

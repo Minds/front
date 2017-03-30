@@ -80,7 +80,7 @@ export class Session {
   }
   
   static _() {
-    return new Session;
+    return new Session();
   }
 }
 

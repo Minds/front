@@ -1,20 +1,20 @@
-import {Title} from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 export class MindsTitle {
 
-  default_title = " | Minds";
-  title = new Title();
+  private sep = ' | ';
+  private default_title = 'Minds';
 
-  constructor(){}
+  constructor(public title: Title) { }
 
   setTitle(value : string){
     if (value){
-      this.title.setTitle(value + this.default_title);
+      this.title.setTitle([value, this.default_title].join(this.sep));
     }
     else this.title.setTitle(this.default_title);
   }
 
-  static _() {
-    return new MindsTitle();
+  static _(title: Title) {
+    return new MindsTitle(title);
   }
 }

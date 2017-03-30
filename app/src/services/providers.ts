@@ -2,6 +2,7 @@ import { NgZone } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { Title } from "@angular/platform-browser";
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -118,6 +119,7 @@ export const MINDS_PROVIDERS : any[] = [
    },
    {
      provide: MindsTitle,
-     useFactory: MindsTitle._
+     useFactory: MindsTitle._,
+     deps: [ Title ]
    },
 ];

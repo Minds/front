@@ -1,7 +1,6 @@
 /// <reference path="globals/Q/index.d.ts" />
 /// <reference path="globals/async/index.d.ts" />
 /// <reference path="globals/chalk/index.d.ts" />
-/// <reference path="globals/es6-shim/index.d.ts" />
 /// <reference path="globals/gulp-shell/index.d.ts" />
 /// <reference path="globals/gulp-util/index.d.ts" />
 /// <reference path="globals/gulp/index.d.ts" />
