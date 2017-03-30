@@ -4,7 +4,7 @@
 
   <div class="m-tagcloud-tag mdl-color-text--blue-grey-600"
     *ngFor="let tag of tags"
-    [routerLink]="['/search', {q: tag, type: 'activities'}]">
+    [routerLink]="['/search', {q: '#' + tag, type: 'activities'}]">
     #{{tag}}
   </div>
 
