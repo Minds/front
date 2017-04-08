@@ -16,6 +16,7 @@
               name="message"
               [(ngModel)]="meta.message"
               (keyup)="getPostPreview(message)"
+              (keyup)="saveDraft(message)"
               placeholder="Enter your status here"
               i18n-placeholder
               [autoGrow]

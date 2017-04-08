@@ -93,6 +93,7 @@ export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependenci
   // { src: 'angular2/es6/dev/src/testing/shims_for_IE.js', inject: 'shims' },
   { src: 'intl/dist/Intl.min.js', inject: 'shims' },
   { src: 'intl/locale-data/jsonp/en.js', inject: 'shims' },
+  { src: 'gun/gun.js', inject: 'shims' }
 ]);
 
 // Declare local files that needs to be injected
