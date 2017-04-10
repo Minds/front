@@ -1110,8 +1110,8 @@
         <source>their channel</source>
         <target/>
       </trans-unit>
-      <trans-unit id="a622ad7ca24cf078e6e1a8b34ceca1f175e856bd" datatype="html">
-        <source>You boost <x id="START_TAG_SPAN" ctype="x-span"/>for<x id="CLOSE_TAG_SPAN" ctype="x-span"/></source>
+      <trans-unit id="bca1163bfc967f52af95c7840c28ab26ac181292" datatype="html">
+        <source>Your boost <x id="START_TAG_SPAN" ctype="x-span"/>for<x id="CLOSE_TAG_SPAN" ctype="x-span"/></source>
         <target/>
       </trans-unit>
       <trans-unit id="d033c710741ddd3c5f5a64bf2c5fd7f1c3049ab3" datatype="html">
@@ -1423,8 +1423,8 @@
         <source>Please wait a moment...</source>
         <target/>
       </trans-unit>
-      <trans-unit id="96fbde9d13937e5865aeab4f5f0294a70b084ec1" datatype="html">
-        <source>You boost has been submitted to @<x id="INTERPOLATION"/></source>
+      <trans-unit id="7dc003dd341dd3825d1240966b25a70b5fc1c002" datatype="html">
+        <source>Your boost has been submitted to @<x id="INTERPOLATION"/></source>
         <target/>
       </trans-unit>
       <trans-unit id="5ab9a3c727788f3597870dd7e3546fc0b0624024" datatype="html">

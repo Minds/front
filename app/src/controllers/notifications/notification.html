@@ -251,7 +251,7 @@
   <!-- Boost reject -->
   <template ngSwitchCase="boost_rejected">
     <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boosts/content/inbox']">
-      <p><!-- i18n -->You boost <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
+      <p><!-- i18n -->Your boost <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && !notification.entityObj.name && notification.entityObj.type !== 'user'" i18n>your post</span>
