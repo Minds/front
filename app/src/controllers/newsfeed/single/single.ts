@@ -51,10 +51,10 @@ export class NewsfeedSingle {
               case 'image':
               case 'video':
               case 'album':
-                this.router.navigate(['/archive/view', this.activity.guid]);
+                this.router.navigate(['/archive/view', this.activity.guid], { replaceUrl: true });
                 break;
               case 'blog':
-                this.router.navigate(['/blog/view', this.activity.guid]);
+                this.router.navigate(['/blog/view', this.activity.guid], { replaceUrl: true });
                 break;
             }
 				})
