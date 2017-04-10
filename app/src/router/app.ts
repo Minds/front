@@ -52,6 +52,7 @@ export const MindsAppRoutes: Routes = [
   { path: 'blog/edit/:guid', component:  BlogEdit },
   { path: 'blog/:filter', component:  Blog },
 
+  { path: 'archive/view/:container/:guid', component: ArchiveView },
   { path: 'archive/view/:guid', component: ArchiveView },
   { path: 'archive/edit/:guid', component: ArchiveEdit },
 
