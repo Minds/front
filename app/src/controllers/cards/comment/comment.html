@@ -46,6 +46,11 @@
       <minds-bg-overlay (click)="toggle.value = false" [hidden]="!toggle.value"></minds-bg-overlay>
 
       <span class="minds-comments-voting" [hidden]="editing">
+          <a class="m-clickable mdl-color-text--blue-grey-500"
+            (click)="onReply.emit({ comment: comment })"
+          >
+            <i class="material-icons">reply</i>
+          </a>
           <minds-button-thumbs-up [object]="comment"></minds-button-thumbs-up>
           <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
       </span>

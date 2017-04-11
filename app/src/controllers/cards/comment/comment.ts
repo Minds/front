@@ -1,4 +1,4 @@
-import { Component, EventEmitter} from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { Client, Upload } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
@@ -53,6 +53,8 @@ export class CommentCard {
 
 	constructor(public client: Client, public attachment: AttachmentService, public translationService: TranslationService){
 	}
+
+  @Output() onReply = new EventEmitter();
 
   set object(value: any) {
     if(!value)

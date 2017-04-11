@@ -27,6 +27,7 @@
     [parent]="parent"
     (delete)="delete(i)"
     (saved)="edited(i, $event)"
+    (onReply)="reply($event.comment)"
   ></minds-card-comment>
 </div>
 

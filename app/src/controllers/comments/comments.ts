@@ -305,4 +305,17 @@ export class Comments {
     this.attachment.preview(message);
   }
 
+  reply(comment: any) {
+    if (!comment || !comment.ownerObj) {
+      return;
+    }
+
+    const username = comment.ownerObj.username;
+
+    this.content = `@${username} ${this.content}`;
+    setTimeout(() => {
+      this.textareaControl.focus();
+    }, 50);
+  }
+
 }
