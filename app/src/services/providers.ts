@@ -101,7 +101,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: WalletService,
      useFactory: WalletService._,
-     deps: [ Client ]
+     deps: [ Client, SocketsService ]
    },
    {
      provide: AttachmentService,

@@ -42,6 +42,14 @@
       </li>
     </ul>
 
+    <div class="mdl-card mdl-shadow--2dp m-wallet-local-settings">
+      <div class="m-wallet-local-settings">
+        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" for="switch-1" [mdlSwitch] [toggled]="disablePointsAnimation">
+          <span class="mdl-switch__label" i18n>Disable points animation</span>
+          <input type="checkbox" class="mdl-switch__input" id="switch-1" name="disablePointsAnimation" [ngModel]="disablePointsAnimation" (ngModelChange)="setDisablePointsAnimation($event)" [mdl]>
+        </label>
+      </div>
+    </div>
   </div>
 
   <div class="mdl-cell mdl-cell--8-col">

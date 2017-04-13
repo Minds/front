@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 
 import { Subscription } from 'rxjs/Rx';
 
+import { Storage } from '../../services/storage';
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { SessionFactory } from '../../services/session';
@@ -27,7 +28,10 @@ export class Wallet {
   inProgress : boolean = false;
   moreData : boolean = true;
 
-	constructor(public client: Client, public wallet: WalletService, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
+  disablePointsAnimation: boolean = false;
+
+  constructor(public client: Client, public wallet: WalletService, public router: Router, public route: ActivatedRoute, public title: MindsTitle, public storage: Storage) {
+    this.disablePointsAnimation = !!this.storage.get('disablePointsAnimation');
   }
   
   paramsSubscription: Subscription;
@@ -50,5 +54,11 @@ export class Wallet {
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+  }
+
+  // Animations
+  setDisablePointsAnimation(value) {
+    this.disablePointsAnimation = !!value;
+    this.storage.set('disablePointsAnimation', !!value ? '1' : '');
   }
 }

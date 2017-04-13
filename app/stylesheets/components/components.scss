@@ -639,3 +639,18 @@ m-translate {
     }
   }
 }
+
+.m-wallet-pop {
+  display: inline-block;
+  position: absolute;
+  top: 0.5em;
+  left: 36px;
+  min-width: 20px;
+  line-height: 1;
+  padding: 7px 2px;
+  white-space: nowrap;
+  font-size: 10px;
+  border-radius: 2em;
+  text-align: center;
+  pointer-events: none;
+}

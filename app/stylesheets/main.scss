@@ -47,6 +47,7 @@ minds-topbar{
         display:flex;
         align-items:center;
         padding-right: $minds-padding;
+        position: relative;
 
         .counter{
           padding:$minds-padding/2;

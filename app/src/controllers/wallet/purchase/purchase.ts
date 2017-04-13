@@ -98,7 +98,6 @@ export class WalletPurchase {
             this.nonce = null;
             return false;
           }
-          this.wallet.increment(this.points*1.1);
           this.confirmation = true;
           this.inProgress = false;
         })
@@ -118,7 +117,6 @@ export class WalletPurchase {
             this.error = "Please check your payment details and try again.";
             return false;
           }
-          this.wallet.increment(this.points);
           this.confirmation = true;
           this.inProgress = false;
         })
