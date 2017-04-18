@@ -80,7 +80,7 @@ export class ChannelSocialProfiles {
       key: 'linkedin',
       label: 'LinkedIn',
       placeholder: 'Username',
-      link: 'https://linkedin.com/:value',
+      link: 'https://linkedin.com/in/:value',
       icon: 'linkedin'
     },
   ];
