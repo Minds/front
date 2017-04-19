@@ -85,6 +85,7 @@ export class Activity {
   save(){
     console.log('trying to save your changes to the server', this.activity);
     this.editing = false;
+    this.activity.edited = true;
     this.client.post('api/v1/newsfeed/' + this.activity.guid, this.activity)
       .then((response : any) => {
 

@@ -7,23 +7,23 @@
 		</a>
 	</div>
 
-	<div class="body">
-		<a [routerLink]="['/', activity.ownerObj.username]">
-			<strong>{{activity.ownerObj.name}}</strong>
-		</a>
-        <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
-          [routerLink]="['/groups/profile', activity.containerObj.guid, 'activity']"
-          class="mdl-color-text--blue-grey-300">
-          <strong>({{activity.containerObj.name}})</strong>
-        </a>
-		<a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid">
-			<span>{{activity.time_created * 1000 | date:'medium'}}</span>
-		</a>
-        <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink"
-            *ngIf="!activity.guid && activity.entity_guid">
-            <span>{{activity.time_created * 1000 | date:'medium'}}</span>
-        </a>
-	</div>
+  <div class="body">
+    <a [routerLink]="['/', activity.ownerObj.username]">
+      <strong>{{activity.ownerObj.name}}</strong>
+    </a>
+    <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
+      [routerLink]="['/groups/profile', activity.containerObj.guid, 'activity']"
+      class="mdl-color-text--blue-grey-300">
+      <strong>({{activity.containerObj.name}})</strong>
+    </a>
+    <a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid">
+      <span>{{activity.time_created * 1000 | date:'medium'}}</span><span *ngIf="activity.edited" class="m-edited-text" i18n>edited</span>
+    </a>
+    <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink"
+      *ngIf="!activity.guid && activity.entity_guid">
+      <span>{{activity.time_created * 1000 | date:'medium'}}</span><span *ngIf="activity.edited" class="m-edited-text" i18n>edited</span>
+    </a>
+  </div>
 
 </div>
 

@@ -114,6 +114,10 @@
         <source>Continue</source>
         <target/>
       </trans-unit>
+      <trans-unit id="c602071b05ea78e4e72a8a632243ddf2475f9d2f" datatype="html">
+        <source>Coming Soon.</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="b7641aed03492978b4ec6843b1e53f30464294d9" datatype="html">
         <source>Views</source>
         <target/>
@@ -140,34 +144,6 @@
       </trans-unit>
       <trans-unit id="c5e8d2e3766ce738ca112b99eeac1a611f79f8cf" datatype="html">
         <source>Boost console</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="06ec377cc1cc33e01ae959560ee92c3a4a60a03a" datatype="html">
-        <source>Drop your files here</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="842a4fcf548e0c52ebab1cb5362f47ab2ca83e12" datatype="html">
-        <source>Album</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="70a67e04629f6d412db0a12d51820b480788d795" datatype="html">
-        <source>Create</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="2c09fcdb07b78ca4d76599f2ddd491437d61d017" datatype="html">
-        <source>Add file</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="555cb4d34a358df7985b28af27e4b410772bafa9" datatype="html">
-        <source>Mature content</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="80f2ade6aa16e76e8d2b6afcd8a2808b95adf9e1" datatype="html">
-        <source>Save to album</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="e1ab57bd42d004293526a5fd311c8e78926ba554" datatype="html">
-        <source>Drag to upload</source>
         <target/>
       </trans-unit>
       <trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
@@ -238,6 +214,42 @@
         <source>Revoke</source>
         <target/>
       </trans-unit>
+      <trans-unit id="06ec377cc1cc33e01ae959560ee92c3a4a60a03a" datatype="html">
+        <source>Drop your files here</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="842a4fcf548e0c52ebab1cb5362f47ab2ca83e12" datatype="html">
+        <source>Album</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="70a67e04629f6d412db0a12d51820b480788d795" datatype="html">
+        <source>Create</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2c09fcdb07b78ca4d76599f2ddd491437d61d017" datatype="html">
+        <source>Add file</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="555cb4d34a358df7985b28af27e4b410772bafa9" datatype="html">
+        <source>Mature content</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="80f2ade6aa16e76e8d2b6afcd8a2808b95adf9e1" datatype="html">
+        <source>Save to album</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e1ab57bd42d004293526a5fd311c8e78926ba554" datatype="html">
+        <source>Drag to upload</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4134b90cce18c18336564b6750b6bfe2f72d0192" datatype="html">
+        <source>Click to load more</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="40835edba807e90163665f71b6ca9ad86d721904" datatype="html">
+        <source>Nothing more to load</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="c8fde66a0022d09a6ec0d3844568e486381d797f" datatype="html">
         <source>Albums</source>
         <target/>
@@ -295,68 +307,38 @@
         <source>Pass</source>
         <target/>
       </trans-unit>
-      <trans-unit id="2138a1645e95131649226ff38b2dea05c6ab60be" datatype="html">
-        <source>Please try again later</source>
+      <trans-unit id="63a98dd490121d8ac5b80c9420856f56f8610751" datatype="html">
+        <source>Please check the username</source>
         <target/>
       </trans-unit>
-      <trans-unit id="d0cf8fcf5452c7af1182b2e89a7dc759beed4327" datatype="html">
-        <source>Your title</source>
+      <trans-unit id="c53dfdadddc7b273928981315a96526724c69b66" datatype="html">
+        <source>Feed</source>
+        <target/>
+        <note priority="1" from="description">Count of activities</note>
+      </trans-unit>
+      <trans-unit id="bae722c293c5ea375eff3746b67e47f7c937c018" datatype="html">
+        <source>Supporters</source>
+        <target/>
+        <note priority="1" from="description">Count of supporters</note>
+      </trans-unit>
+      <trans-unit id="2326d5adeb13a23a2f1e6f598625f0bf73952899" datatype="html">
+        <source>Subscribers</source>
         <target/>
       </trans-unit>
-      <trans-unit id="223aae0477f79f0bc4436c1c57619415f04cbbb3" datatype="html">
-        <source>Publish</source>
+      <trans-unit id="357064ca9d9ac859eb618e28e8126fa32be049e2" datatype="html">
+        <source>Subscriptions</source>
         <target/>
       </trans-unit>
-      <trans-unit id="5beaaf2dfba11774180a9619477bfec14d9afd39" datatype="html">
-        <source>Create a new blog</source>
+      <trans-unit id="2264232fea2aca5a353194d92073ee3d28646964" datatype="html">
+        <source>You have blocked @<x id="INTERPOLATION"/></source>
         <target/>
       </trans-unit>
-      <trans-unit id="f2d8d1dc57e2dd18da6aa616a4bf76e85935db56" datatype="html">
-        <source>Click to confirm your are 18+</source>
+      <trans-unit id="19991529f3b2827b8665b273580c9d52194df9e8" datatype="html">
+        <source>Bio</source>
         <target/>
       </trans-unit>
-      <trans-unit id="4653770bcc3695b8ccf2ccf4e3c125b58798afa4" datatype="html">
-        <source>The post may not exist</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="876c427952959b61f6992b2ff1dfeb570250dfd9" datatype="html">
-        <source>All Rights Reserved</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="3c4c080864b313cfdff5fdea6aae5da276246d99" datatype="html">
-        <source>Public</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4b3963c6d0863118fe9e9e33447d12be3c2db081" datatype="html">
-        <source>Unlisted</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="ef3f458ae915ab19299d7e88579a13f964201fa9" datatype="html">
-        <source><x id="INTERPOLATION"/> plays</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="61a69d9e0e3aad2038c3425b376e43c5564408b2" datatype="html">
-        <source>Back to album</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="6f267e41081cb7458fdfa1c92888cae2ae9f0085" datatype="html">
-        <source>Are you sure you want to delete this?<x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/>There&apos;s no UNDO!</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="364ad24cfc814267475ccbc1bdf06e6343e3a26b" datatype="html">
-        <source>The media has been deleted.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="54235e7f731cf07327e9e29442a69764c08a72af" datatype="html">
-        <source>Delete permanently</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4eeebc07c2e09606bca6c3700ac1163ee3914b7a" datatype="html">
-        <source>Title...</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="52c9a103b812f258bcddc3d90a6e3f46871d25fe" datatype="html">
-        <source>Save</source>
+      <trans-unit id="05738562bcafdd131d91e8b376e1ed0f3ae99ab5" datatype="html">
+        <source>View More</source>
         <target/>
       </trans-unit>
       <trans-unit id="dfc3c34e182ea73c5d784ff7c8135f087992dac1" datatype="html">
@@ -375,10 +357,6 @@
         <source>Boosts</source>
         <target/>
       </trans-unit>
-      <trans-unit id="357064ca9d9ac859eb618e28e8126fa32be049e2" datatype="html">
-        <source>Subscriptions</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="5e29ddde3eccf8b25e541e11b260098361553fd5" datatype="html">
         <source>Votes</source>
         <target/>
@@ -387,8 +365,172 @@
         <source>Reminds</source>
         <target/>
       </trans-unit>
-      <trans-unit id="c53dfdadddc7b273928981315a96526724c69b66" datatype="html">
-        <source>Feed</source>
+      <trans-unit id="dd3b6c367381ddfa8f317b8e9b31c55368c65136" datatype="html">
+        <source>Activities</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="23c6b929a5764f662e285cea81fe612b206bc445" datatype="html">
+        <source>Blogs</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7f1a6d46ebdbbf291ecdeedebc8fff35df40536d" datatype="html">
+        <source><x id="INTERPOLATION"/> points</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="9f1dbbf0775b2fb2b925d332398e0c9ecfb3cf12" datatype="html">
+        <source>Ledger</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4d473bc27b3e484136974196711116b044c61f44" datatype="html">
+        <source>Buy points</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e9b20759c1622ea499566ab5ca7084c79b6c8b66" datatype="html">
+        <source>Monetization Settings</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2aaa9f0b1f22b70c11ae635ca33919249029d902" datatype="html">
+        <source>Ad Sharing</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="fe52dcf263093592ba1d904e6a0e46d96a2cb47c" datatype="html">
+        <source>Change your settings</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7ecf438957a9aaed9862c19c227ba397e8087fa8" datatype="html">
+        <source>Deactivate channel</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="90b6ac5488008996719a106307bd8f0d259d863e" datatype="html">
+        <source>Two factor authentication</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="072b24be295d6063b08b8fdd27d0f3cf1ef0e737" datatype="html">
+        <source>Paid subscriptions</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5a089bf395596f2cf60308df8ab5155b57e7808f" datatype="html">
+        <source>Delete chat history</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="bf463b189696c19769ea263227e6c22aefafb918" datatype="html">
+        <source>Destroy</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="95307fc6945349382ee0699191e04e3063f9e838" datatype="html">
+        <source>Block participants</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7f5d0c10614e8a34f0e2dad33a0568277c50cf69" datatype="html">
+        <source>Block</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="bf9e72e00f689f8d9960aa83a58f619efbc8a006" datatype="html">
+        <source>Un-block chat</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="dc7c08653bc37fb9cdcf3453b7d9680ab808c9cb" datatype="html">
+        <source>Un-block</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="94d1674e27430e9051dc87a58779893b2605ac5d" datatype="html">
+        <source>Call Ended</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="a478a0197700c2360a41d1f343299dc938e53463" datatype="html">
+        <source>Missed Call</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="fadb80ab260c1bce075198beaf83fabc08aaa09b" datatype="html">
+        <source>You have blocked this chat</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7f3bb04fd3c88098a333f05ce1a1bc7e06b3da9d" datatype="html">
+        <source>This chat is no longer available</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="1e6578b9c0cab71d5f46c0041f3c0094c1eed359" datatype="html">
+        <source>Awaiting other party…</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="9078f2de0ffbefe89d0fb9b09cf2038b0b287b3e" datatype="html">
+        <source>Send a message...</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="f2d8d1dc57e2dd18da6aa616a4bf76e85935db56" datatype="html">
+        <source>Click to confirm your are 18+</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="876c427952959b61f6992b2ff1dfeb570250dfd9" datatype="html">
+        <source>All Rights Reserved</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="3c4c080864b313cfdff5fdea6aae5da276246d99" datatype="html">
+        <source>Public</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4b3963c6d0863118fe9e9e33447d12be3c2db081" datatype="html">
+        <source>Unlisted</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="83ea0f7a6f84393af198d48193e01a96f3fcbc9a" datatype="html">
+        <source>SHARE</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="bca5d0b588ffb3dfe26b81fbca776aec48a68a40" datatype="html">
+        <source>Are you sure you want to delete this blog?<x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/>There&apos;s no UNDO!</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e89f503c99d159aa5adca3ba3872ff84e86b936a" datatype="html">
+        <source>The blog has been deleted.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="54235e7f731cf07327e9e29442a69764c08a72af" datatype="html">
+        <source>Delete permanently</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2138a1645e95131649226ff38b2dea05c6ab60be" datatype="html">
+        <source>Please try again later</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="d0cf8fcf5452c7af1182b2e89a7dc759beed4327" datatype="html">
+        <source>Your title</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="223aae0477f79f0bc4436c1c57619415f04cbbb3" datatype="html">
+        <source>Publish</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5beaaf2dfba11774180a9619477bfec14d9afd39" datatype="html">
+        <source>Create a new blog</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4653770bcc3695b8ccf2ccf4e3c125b58798afa4" datatype="html">
+        <source>The post may not exist</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="ef3f458ae915ab19299d7e88579a13f964201fa9" datatype="html">
+        <source><x id="INTERPOLATION"/> plays</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="61a69d9e0e3aad2038c3425b376e43c5564408b2" datatype="html">
+        <source>Back to album</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6f267e41081cb7458fdfa1c92888cae2ae9f0085" datatype="html">
+        <source>Are you sure you want to delete this?<x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/>There&apos;s no UNDO!</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="364ad24cfc814267475ccbc1bdf06e6343e3a26b" datatype="html">
+        <source>The media has been deleted.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4eeebc07c2e09606bca6c3700ac1163ee3914b7a" datatype="html">
+        <source>Title...</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="52c9a103b812f258bcddc3d90a6e3f46871d25fe" datatype="html">
+        <source>Save</source>
         <target/>
       </trans-unit>
       <trans-unit id="80fa90ce67552f3f8a824f756a94327e41d3fc49" datatype="html">
@@ -423,89 +565,12 @@
         <source>Invite</source>
         <target/>
       </trans-unit>
-      <trans-unit id="05738562bcafdd131d91e8b376e1ed0f3ae99ab5" datatype="html">
-        <source>View More</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="0277a632b990f3391c57d6b0ad3bb5be6cfcfc49" datatype="html">
         <source>Views: <x id="INTERPOLATION"/> | Subscribers: <x id="INTERPOLATION_1"/></source>
         <target/>
       </trans-unit>
       <trans-unit id="257be5217c6236ec3a9c2cfa95e7114aafd3fd7c" datatype="html">
         <source>Start a group</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7f1a6d46ebdbbf291ecdeedebc8fff35df40536d" datatype="html">
-        <source><x id="INTERPOLATION"/> points</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="9f1dbbf0775b2fb2b925d332398e0c9ecfb3cf12" datatype="html">
-        <source>Ledger</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4d473bc27b3e484136974196711116b044c61f44" datatype="html">
-        <source>Buy points</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="e9b20759c1622ea499566ab5ca7084c79b6c8b66" datatype="html">
-        <source>Monetization Settings</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="2aaa9f0b1f22b70c11ae635ca33919249029d902" datatype="html">
-        <source>Ad Sharing</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="dd3b6c367381ddfa8f317b8e9b31c55368c65136" datatype="html">
-        <source>Activities</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="23c6b929a5764f662e285cea81fe612b206bc445" datatype="html">
-        <source>Blogs</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="fe52dcf263093592ba1d904e6a0e46d96a2cb47c" datatype="html">
-        <source>Change your settings</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7ecf438957a9aaed9862c19c227ba397e8087fa8" datatype="html">
-        <source>Deactivate channel</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="90b6ac5488008996719a106307bd8f0d259d863e" datatype="html">
-        <source>Two factor authentication</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="072b24be295d6063b08b8fdd27d0f3cf1ef0e737" datatype="html">
-        <source>Paid subscriptions</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="63a98dd490121d8ac5b80c9420856f56f8610751" datatype="html">
-        <source>Please check the username</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="bae722c293c5ea375eff3746b67e47f7c937c018" datatype="html">
-        <source>Supporters</source>
-        <target/>
-        <note priority="1" from="description">Count of supporters</note>
-      </trans-unit>
-      <trans-unit id="2326d5adeb13a23a2f1e6f598625f0bf73952899" datatype="html">
-        <source>Subscribers</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="2264232fea2aca5a353194d92073ee3d28646964" datatype="html">
-        <source>You have blocked @<x id="INTERPOLATION"/></source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="19991529f3b2827b8665b273580c9d52194df9e8" datatype="html">
-        <source>Bio</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4134b90cce18c18336564b6750b6bfe2f72d0192" datatype="html">
-        <source>Click to load more</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="40835edba807e90163665f71b6ca9ad86d721904" datatype="html">
-        <source>Nothing more to load</source>
         <target/>
       </trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
@@ -540,6 +605,50 @@
         <source>Already have a channel? Click here.</source>
         <target/>
       </trans-unit>
+      <trans-unit id="2c8e3bf60fd9f244aa2bec781d2e0abae2560c30" datatype="html">
+        <source>You need to have a channel in order to <x id="INTERPOLATION"/></source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4faad6a1413042845f8dccdf02b60d041ed75f55" datatype="html">
+        <source>Share on Facebook</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="feeadb59007fba5a3cd9f054fe2d573ce64609e3" datatype="html">
+        <source>Share on Twitter</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7ecfcbbcdcce52948ec4ac5df9102ecd8ef4f3bc" datatype="html">
+        <source>Embed into your website:</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="f72992030f134408b675152c397f9d0ec00f3b2a" datatype="html">
+        <source>Report</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2c5ff8fa9c9aaec93f97e37c9a0edcd797194573" datatype="html">
+        <source>Send</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e1b73db058de8e5fbaff83eb3293e0997e541916" datatype="html">
+        <source>Thanks for letting us know! We appreciate your effort to keep Minds safe and secure.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="9b6b1f369121633681d0a1e1d003121e87cc5d5d" datatype="html">
+        <source>We will review your report as soon as possible.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
+        <source>Close</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="917762f042a6bfb54899fd760aa9a07c4aec51f7" datatype="html">
+        <source>Remind</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="c78c29fa8e30edee63e3abebeeabb565a12374e8" datatype="html">
+        <source>Enter your remind status here (optional)</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="b5903aee5ff477fe9fc1df0d91b5997d7a24960b" datatype="html">
         <source>Click here to add a new banner<x id="LINE_BREAK" ctype="lb"/>
         <x id="START_EMPHASISED_TEXT" ctype="x-em"/>Recommended size: 1920×360<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em"/></source>
@@ -551,6 +660,10 @@
       </trans-unit>
       <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
         <source>Cancel</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="8b1a33a96962cf54053147fd9ca15e082b3db7bb" datatype="html">
+        <source>Click here to add a new banner</source>
         <target/>
       </trans-unit>
       <trans-unit id="0a649635b6e836c4f9cf7ebf235922d050d004d8" datatype="html">
@@ -665,10 +778,6 @@
       </trans-unit>
       <trans-unit id="79a18e262a845cd4845e170219f0055a486c1f36" datatype="html">
         <source>Embeddable code</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7ecfcbbcdcce52948ec4ac5df9102ecd8ef4f3bc" datatype="html">
-        <source>Embed into your website:</source>
         <target/>
       </trans-unit>
       <trans-unit id="51daf2fc3914ee6c1560e4d6fb64ab9ddd9c2589" datatype="html">
@@ -803,42 +912,6 @@
         <source>Complete</source>
         <target/>
       </trans-unit>
-      <trans-unit id="917762f042a6bfb54899fd760aa9a07c4aec51f7" datatype="html">
-        <source>Remind</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="c78c29fa8e30edee63e3abebeeabb565a12374e8" datatype="html">
-        <source>Enter your remind status here (optional)</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4faad6a1413042845f8dccdf02b60d041ed75f55" datatype="html">
-        <source>Share on Facebook</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="feeadb59007fba5a3cd9f054fe2d573ce64609e3" datatype="html">
-        <source>Share on Twitter</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="f72992030f134408b675152c397f9d0ec00f3b2a" datatype="html">
-        <source>Report</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="2c5ff8fa9c9aaec93f97e37c9a0edcd797194573" datatype="html">
-        <source>Send</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="e1b73db058de8e5fbaff83eb3293e0997e541916" datatype="html">
-        <source>Thanks for letting us know! We appreciate your effort to keep Minds safe and secure.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="9b6b1f369121633681d0a1e1d003121e87cc5d5d" datatype="html">
-        <source>We will review your report as soon as possible.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
-        <source>Close</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="361fc93dc967477332e16ba4933766f5d254d065" datatype="html">
         <source>Card number</source>
         <target/>
@@ -866,16 +939,8 @@
         <source>Confirm</source>
         <target/>
       </trans-unit>
-      <trans-unit id="8b1a33a96962cf54053147fd9ca15e082b3db7bb" datatype="html">
-        <source>Click here to add a new banner</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="00fd933b1a555a1a783a40af3fe5b3158ccd3b13" datatype="html">
         <source>Send the link below to your friends and get 100 points when they signup.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="2c8e3bf60fd9f244aa2bec781d2e0abae2560c30" datatype="html">
-        <source>You need to have a channel in order to <x id="INTERPOLATION"/></source>
         <target/>
       </trans-unit>
       <trans-unit id="bbbb1ba89510a8aaed795a498af115762dd55eb4" datatype="html">
@@ -892,6 +957,10 @@
       </trans-unit>
       <trans-unit id="19a5d3dc873325c80950d4e441b367197869fbe7" datatype="html">
         <source>Cancel Subscription</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="21b49c781278b889db0e3c586eb5f166634253ce" datatype="html">
+        <source>edited</source>
         <target/>
       </trans-unit>
       <trans-unit id="3c737f23b53b9fc85ecb5fad1b6aba0dc3d1876e" datatype="html">
@@ -1908,22 +1977,6 @@
         <source>Paid Subscriptions</source>
         <target/>
       </trans-unit>
-      <trans-unit id="c602071b05ea78e4e72a8a632243ddf2475f9d2f" datatype="html">
-        <source>Coming Soon.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="83ea0f7a6f84393af198d48193e01a96f3fcbc9a" datatype="html">
-        <source>SHARE</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="bca5d0b588ffb3dfe26b81fbca776aec48a68a40" datatype="html">
-        <source>Are you sure you want to delete this blog?<x id="LINE_BREAK" ctype="lb"/><x id="LINE_BREAK" ctype="lb"/>There&apos;s no UNDO!</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="e89f503c99d159aa5adca3ba3872ff84e86b936a" datatype="html">
-        <source>The blog has been deleted.</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="ccac601bf473fa28c9ac46794f1cd40542f74347" datatype="html">
         <source>Message</source>
         <target/>
@@ -2006,54 +2059,6 @@
       </trans-unit>
       <trans-unit id="74729954ed78d013cf280fd19202af64906061dd" datatype="html">
         <source>Are you sure you want to delete <x id="INTERPOLATION"/>? This action cannot be undone.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="5a089bf395596f2cf60308df8ab5155b57e7808f" datatype="html">
-        <source>Delete chat history</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="bf463b189696c19769ea263227e6c22aefafb918" datatype="html">
-        <source>Destroy</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="95307fc6945349382ee0699191e04e3063f9e838" datatype="html">
-        <source>Block participants</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7f5d0c10614e8a34f0e2dad33a0568277c50cf69" datatype="html">
-        <source>Block</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="bf9e72e00f689f8d9960aa83a58f619efbc8a006" datatype="html">
-        <source>Un-block chat</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="dc7c08653bc37fb9cdcf3453b7d9680ab808c9cb" datatype="html">
-        <source>Un-block</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="94d1674e27430e9051dc87a58779893b2605ac5d" datatype="html">
-        <source>Call Ended</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="a478a0197700c2360a41d1f343299dc938e53463" datatype="html">
-        <source>Missed Call</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="fadb80ab260c1bce075198beaf83fabc08aaa09b" datatype="html">
-        <source>You have blocked this chat</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7f3bb04fd3c88098a333f05ce1a1bc7e06b3da9d" datatype="html">
-        <source>This chat is no longer available</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="1e6578b9c0cab71d5f46c0041f3c0094c1eed359" datatype="html">
-        <source>Awaiting other party…</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="9078f2de0ffbefe89d0fb9b09cf2038b0b287b3e" datatype="html">
-        <source>Send a message...</source>
         <target/>
       </trans-unit>
       <trans-unit id="5fa5c05063493603a4bba6c2341641a83fb0be18" datatype="html">

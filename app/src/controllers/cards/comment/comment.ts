@@ -91,6 +91,7 @@ export class CommentCard {
           comment: response.comment
         });
       }
+      this.comment.edited = true;
     })
     .catch(e => {
       this.inProgress = false;

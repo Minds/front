@@ -7,6 +7,7 @@
   <div class="minds-body">
     <a [routerLink]="['/', comment.ownerObj.username]" class="username mdl-color-text--blue-grey-500">{{comment.ownerObj.name}} @{{comment.ownerObj.username}}</a>
     <span class="mdl-color-text--blue-grey-300 minds-comment-span minds-comment-bullet">{{comment.time_created * 1000 | date: 'medium'}}</span>
+    <span *ngIf="comment.edited" class="mdl-color-text--blue-grey-300 minds-comment-span m-edited-text" i18n>edited</span>
 
     <div class="mdl-card__menu mdl-color-text--blue-grey-300">
 
