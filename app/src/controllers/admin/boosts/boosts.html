@@ -24,6 +24,10 @@
       <minds-card-group [group]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'group'"></minds-card-group>
 
       <div class="mdl-card__supporting-text action-buttons">
+        <select #boostRating (change)="boost.rating = boostRating.value" name="listRatings" id="ratings" >
+          <option *ngFor="let rating of ratingOptions" [value]="rating.id">{{ rating.name }}</option>
+        </select>
+
         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green" (click)="accept(boost)" i18n>Accept</button>
         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost)" i18n>Reject</button>
 

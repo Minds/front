@@ -23,6 +23,21 @@ export class AdminBoosts {
   newsfeed_count : number = 0;
   suggested_count : number = 0;
 
+  ratingOptions = [
+    {
+      id : 1,
+      name : "Universal"
+    },
+    {
+      id : 2,
+      name : "Mainstream"
+    },
+    {
+      id : 3,
+      name : "Mature"
+    }
+  ];
+  
   inProgress : boolean = false;
   moreData : boolean = true;
   offset : string = "";
@@ -93,7 +108,7 @@ export class AdminBoosts {
     if(!boost)
       boost = this.boosts[0];
 
-    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid  + '/accept')
+    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid  + '/accept', { rating : boost.rating })
       .then((response : any) => {
 
       })

@@ -1,20 +1,37 @@
-<ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0">
-  <li (click)="prev()">
-    <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
-  </li>
-  <li *ngFor="let boost of boosts; let i = index"
-    [ngClass]="{'m-boost-rotator-tabs-tab': true, 'mdl-color--blue-grey-100': i != currentPosition, 'mdl-color--blue-grey-400': i == currentPosition}"
-    (click)="currentPosition = i; recordImpression(i);">
-  </li>
-  <li (click)="next()">
-    <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
-  </li>
-  <li class="m-boost-rotator-paused" style="margin-top: -8px;margin-right: 16px;">
+<div class="m-boost-rotator-tools">
+  <ul class="m-boost-rotator-tabs" *ngIf="boosts.length == 0"></ul>
+  <ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0">
+    <li (click)="prev()">
+      <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
+    </li>
+    <li *ngFor="let boost of boosts; let i = index"
+      [ngClass]="{'m-boost-rotator-tabs-tab': true, 'mdl-color--blue-grey-100': i != currentPosition, 'mdl-color--blue-grey-400': i == currentPosition}"
+      (click)="currentPosition = i; recordImpression(i);">
+    </li>
+    <li (click)="next()">
+      <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
+    </li>
+  </ul>
+
+  <div class="m-boost-rotator-tools-tool m-boost-rotator-paused">
     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [mdlSwitch] [toggled]="!paused">
       <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="!paused" (ngModelChange)="paused = !paused">
     </label>
-  </li>
-</ul>
+  </div>
+  <div class="m-boost-rotator-tools-tool m-boost-rotator-settings">
+    <button id="m-rating-boost-menu" (click)="ratingMenuHandler()" 
+      class="mdl-button mdl-js-button mdl-button--icon minds-more mdl-button--icon mdl-color-text--blue-grey-300">
+      <i class="material-icons">settings</i>
+    </button>
+    <ul class="minds-dropdown-menu m-boost-rating-menu" for="m-rating-boost-menu" *ngIf="ratingMenuToggle">
+      <li class="mdl-menu__item" [ngClass]="rating.id == this.session.getLoggedInUser().boost_rating ? 'selected' : ''" 
+        (click)="saveUserRating(rating.id)" *ngFor="let rating of ratingOptions">{{ rating.title }}
+      </li>
+    </ul>
+    <minds-bg-overlay (click)="ratingMenuToggle = false" [hidden]="!ratingMenuToggle"></minds-bg-overlay>
+  </div>
+
+</div>
 
 <minds-activity
   *ngFor="let boost of boosts; let i = index"

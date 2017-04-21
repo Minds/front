@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Rx';
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client, Upload } from '../../../services/api';
 
+import { SessionFactory } from '../../../services/session';
+
 @Component({
   moduleId: module.id,
   selector: 'minds-newsfeed-boost-rotator',
@@ -19,6 +21,7 @@ import { Client, Upload } from '../../../services/api';
 
 export class NewsfeedBoostRotator {
 
+  session = SessionFactory.build();
   boosts : Array<any> = [];
   offset : string = "";
   inProgress : boolean = false;
@@ -32,23 +35,39 @@ export class NewsfeedBoostRotator {
   minds;
   scroll_listener;
 
-	constructor(public client: Client, public scroll : ScrollService, public element: ElementRef){
+  ratingOptions = [
+    {
+      id : 1,
+      title : "Universal"
+    },
+    {
+      id : 2,
+      title : "Mainstream"
+    },
+    {
+      id : 3,
+      title : "Mature"
+    }
+  ];
+
+  ratingMenuToggle : boolean = false;
+
+  constructor(public client: Client, public scroll : ScrollService, public element: ElementRef){
     this.load();
     this.scroll_listener = this.scroll.listenForView().subscribe(() => this.isVisible());
-	}
+  }
 
-	/**
-	 * Load newsfeed
-	 */
-	load(){
-
+  /**
+   * Load newsfeed
+   */
+  load(){
     return new Promise((resolve, reject) => {
       if(this.inProgress){
         return reject(false);
       }
       this.inProgress = true;
 
-  	  this.client.get('api/v1/boost/fetch/newsfeed', {limit:10})
+      this.client.get('api/v1/boost/fetch/newsfeed', { limit:10, rating:this.session.getLoggedInUser().boost_rating })
         .then((response : any) => {
           if(!response.boosts){
             this.inProgress = false;
@@ -64,15 +83,30 @@ export class NewsfeedBoostRotator {
             this.start();
             this.isVisible();
           }
-  	      this.inProgress = false;
+          this.inProgress = false;
           return resolve(true);
-  	    })
+        })
         .catch(function(e){
           this.inProgress = false;
           return reject();
         });
       });
-	}
+  }
+
+  saveUserRating(rating){
+    this.session.getLoggedInUser().boost_rating = rating;
+    this.boosts = [];
+    this.load().then(() => {
+      this.client.post('api/v1/settings/' + this.session.getLoggedInUser().guid, {
+        boost_rating : rating,
+      });
+    });
+    this.ratingMenuHandler();
+  }
+
+  ratingMenuHandler(){
+    this.ratingMenuToggle = !this.ratingMenuToggle;
+  }
 
   start(){
     if(this.rotator)
