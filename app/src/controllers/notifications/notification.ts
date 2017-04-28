@@ -17,4 +17,12 @@ export class Notification {
   set _notification(value: any) {
     this.notification = value;
   }
+
+  openMessengerWindow(event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    (<any>window).openMessengerWindow();
+  }
 }
