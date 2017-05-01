@@ -409,6 +409,38 @@
         <source>Paid subscriptions</source>
         <target/>
       </trans-unit>
+      <trans-unit id="5fa5c05063493603a4bba6c2341641a83fb0be18" datatype="html">
+        <source>Enter password</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="aac99820b81b63dd081ef9449080e545df8b03cd" datatype="html">
+        <source>Unlock</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="3da600d1c07bca497e04290639e681b36c50d65c" datatype="html">
+        <source>Enter a password</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="2880518d3a5544fa6cd834b1ac80e47978a9c7c4" datatype="html">
+        <source>Confirm your password</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="ff3774138bffaf62a4b812046dfbb9939c42657e" datatype="html">
+        <source>Setup</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="8fcd5ac68b67a75cbedc58af3cdbe43871cb52b6" datatype="html">
+        <source>Changing your encryption password will cause your previous messages to be unreadable.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
+        <source>Cancel</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="024cdb2814b0cb3f4ced148f1a0b9854447cb214" datatype="html">
+        <source>Change</source>
+        <target/>
+      </trans-unit>
       <trans-unit id="5a089bf395596f2cf60308df8ab5155b57e7808f" datatype="html">
         <source>Delete chat history</source>
         <target/>
@@ -455,6 +487,46 @@
       </trans-unit>
       <trans-unit id="9078f2de0ffbefe89d0fb9b09cf2038b0b287b3e" datatype="html">
         <source>Send a message...</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="78583d92f26b96e875855729612b59ea506806e2" datatype="html">
+        <source>Messenger</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="292a64764e45a7538202ea8888657ba15c0068ad" datatype="html">
+        <source>Logout of chat</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
+        <source>Logout</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="3b95046d824f0138f44cace2859369c042655629" datatype="html">
+        <source>Disable sounds</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7be9877f3b1042bfc095c728acb0dbeb9c6e8205" datatype="html">
+        <source>Mute</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="4ebe71781b77a896451943d0a9b3cb527e0e4bb7" datatype="html">
+        <source>Enable sounds</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="1f689fada9748a830117f5b429a88ef8629082a8" datatype="html">
+        <source>Unmute</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e7b6e42c6553dba6812def465939dc96bd286d61" datatype="html">
+        <source>Change your encryption password</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="959fdc6bec6e975de7beb7ba6274eb04b5303211" datatype="html">
+        <source>Re-key</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
+        <source>Search</source>
         <target/>
       </trans-unit>
       <trans-unit id="f2d8d1dc57e2dd18da6aa616a4bf76e85935db56" datatype="html">
@@ -577,10 +649,6 @@
         <source>Settings</source>
         <target/>
       </trans-unit>
-      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
-        <source>Logout</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
         <source>Login</source>
         <target/>
@@ -656,10 +724,6 @@
       </trans-unit>
       <trans-unit id="5fb53dc399b676d363ca72653af7312c05de56ed" datatype="html">
         <source>Drag the banner vertically to change its position</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
-        <source>Cancel</source>
         <target/>
       </trans-unit>
       <trans-unit id="8b1a33a96962cf54053147fd9ca15e082b3db7bb" datatype="html">
@@ -886,10 +950,6 @@
       </trans-unit>
       <trans-unit id="cebb7f27b5028c62b4426da3bb3e3bd3f4a3443b" datatype="html">
         <source>Avatar</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="2880518d3a5544fa6cd834b1ac80e47978a9c7c4" datatype="html">
-        <source>Confirm your password</source>
         <target/>
       </trans-unit>
       <trans-unit id="717a5e3574fec754fbeb348c2d5561c4d81facc4" datatype="html">
@@ -1282,6 +1342,10 @@
       </trans-unit>
       <trans-unit id="07c8dfe068244c75dadea5f71671c8d911ae58da" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span"/>Tap here.<x id="CLOSE_TAG_SPAN" ctype="x-span"/> to discover new channels and media.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="aa9bf22f6695f7c93d71ef271febfb0151a95132" datatype="html">
+        <source><x id="START_TAG_SPAN" ctype="x-span"/><x id="INTERPOLATION"/><x id="CLOSE_TAG_SPAN" ctype="x-span"/> wants to chat with you!</source>
         <target/>
       </trans-unit>
       <trans-unit id="ad6e8054ca3f57c9a7cf6245c95528abedb85c9f" datatype="html">
@@ -1957,10 +2021,6 @@
         <source>eg. +44 07999 000909</source>
         <target/>
       </trans-unit>
-      <trans-unit id="ff3774138bffaf62a4b812046dfbb9939c42657e" datatype="html">
-        <source>Setup</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="e4e0a1b2cfa85ba08a19b82d5065ccd527fb8e04" datatype="html">
         <source>We sent an SMS to <x id="START_BOLD_TEXT" ctype="x-b"/><x id="INTERPOLATION"/><x id="CLOSE_BOLD_TEXT" ctype="x-b"/>. Enter the code below to complete your two factor setup.</source>
         <target/>
@@ -2059,62 +2119,6 @@
       </trans-unit>
       <trans-unit id="74729954ed78d013cf280fd19202af64906061dd" datatype="html">
         <source>Are you sure you want to delete <x id="INTERPOLATION"/>? This action cannot be undone.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="5fa5c05063493603a4bba6c2341641a83fb0be18" datatype="html">
-        <source>Enter password</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="aac99820b81b63dd081ef9449080e545df8b03cd" datatype="html">
-        <source>Unlock</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="3da600d1c07bca497e04290639e681b36c50d65c" datatype="html">
-        <source>Enter a password</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="8fcd5ac68b67a75cbedc58af3cdbe43871cb52b6" datatype="html">
-        <source>Changing your encryption password will cause your previous messages to be unreadable.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="024cdb2814b0cb3f4ced148f1a0b9854447cb214" datatype="html">
-        <source>Change</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="78583d92f26b96e875855729612b59ea506806e2" datatype="html">
-        <source>Messenger</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="292a64764e45a7538202ea8888657ba15c0068ad" datatype="html">
-        <source>Logout of chat</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="3b95046d824f0138f44cace2859369c042655629" datatype="html">
-        <source>Disable sounds</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7be9877f3b1042bfc095c728acb0dbeb9c6e8205" datatype="html">
-        <source>Mute</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4ebe71781b77a896451943d0a9b3cb527e0e4bb7" datatype="html">
-        <source>Enable sounds</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="1f689fada9748a830117f5b429a88ef8629082a8" datatype="html">
-        <source>Unmute</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="e7b6e42c6553dba6812def465939dc96bd286d61" datatype="html">
-        <source>Change your encryption password</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="959fdc6bec6e975de7beb7ba6274eb04b5303211" datatype="html">
-        <source>Re-key</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
-        <source>Search</source>
         <target/>
       </trans-unit>
     </body>
