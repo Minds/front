@@ -450,15 +450,6 @@
     </a>
   </ng-template>
 
-  <!-- Messenger -->
-  <template ngSwitchCase="messenger_invite">
-    <a href="#" (click)="openMessengerWindow($event)">
-      <p>
-        <!-- i18n --><span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.username}}</span> wants to chat with you!<!-- /i18n -->
-      </p>
-    </a>
-  </template>
-
   <!-- Default -->
   <ng-template ngSwitchDefault>
     <i i18n>Sorry, there was an error viewing this notification</i>
