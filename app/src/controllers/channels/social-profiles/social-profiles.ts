@@ -27,14 +27,6 @@ export class ChannelSocialProfiles {
 
   private socialProfileMeta: SocialProfileMeta[] = [
     {
-      key: 'minds',
-      label: 'Minds',
-      placeholder: 'Username',
-      link: 'https://www.minds.com/:value',
-      icon: 'minds',
-      customIcon: true,
-    },
-    {
       key: 'facebook',
       label: 'Facebook',
       placeholder: 'Username or ID',
@@ -42,32 +34,26 @@ export class ChannelSocialProfiles {
       icon: 'facebook-official'
     },
     {
-      key: 'twitter',
-      label: 'Twitter',
+      key: 'github',
+      label: 'Github',
       placeholder: 'Username',
-      link: 'https://twitter.com/:value',
-      icon: 'twitter'
+      link: 'https://github.com/:value',
+      icon: 'github'
     },
     {
-      key: 'youtube_user',
-      label: 'YouTube User',
+      key: 'linkedin',
+      label: 'LinkedIn',
       placeholder: 'Username',
-      link: 'https://www.youtube.com/user/:value',
-      icon: 'youtube'
+      link: 'https://linkedin.com/in/:value',
+      icon: 'linkedin'
     },
     {
-      key: 'youtube_channel',
-      label: 'YouTube Channel',
-      placeholder: 'Channel ID',
-      link: 'https://www.youtube.com/channel/:value',
-      icon: 'youtube'
-    },
-    {
-      key: 'soundcloud',
-      label: 'SoundCloud',
+      key: 'minds',
+      label: 'Minds',
       placeholder: 'Username',
-      link: 'https://soundcloud.com/:value',
-      icon: 'soundcloud'
+      link: 'https://www.minds.com/:value',
+      icon: 'minds',
+      customIcon: true,
     },
     {
       key: 'reddit',
@@ -77,11 +63,39 @@ export class ChannelSocialProfiles {
       icon: 'reddit'
     },
     {
-      key: 'linkedin',
-      label: 'LinkedIn',
+      key: 'soundcloud',
+      label: 'SoundCloud',
       placeholder: 'Username',
-      link: 'https://linkedin.com/in/:value',
-      icon: 'linkedin'
+      link: 'https://soundcloud.com/:value',
+      icon: 'soundcloud'
+    },
+    {
+      key: 'tumblr',
+      label: 'Tumblr Site',
+      placeholder: 'Site',
+      link: 'https://:value.tumblr.com',
+      icon: 'tumblr'
+    },
+    {
+      key: 'twitter',
+      label: 'Twitter',
+      placeholder: 'Username',
+      link: 'https://twitter.com/:value',
+      icon: 'twitter'
+    },
+    {
+      key: 'youtube_channel',
+      label: 'YouTube Channel',
+      placeholder: 'Channel ID',
+      link: 'https://www.youtube.com/channel/:value',
+      icon: 'youtube'
+    },
+    {
+      key: 'youtube_user',
+      label: 'YouTube User',
+      placeholder: 'Username',
+      link: 'https://www.youtube.com/user/:value',
+      icon: 'youtube'
     },
   ];
 
