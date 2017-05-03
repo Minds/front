@@ -9,6 +9,7 @@ import {ScrollLock} from './directives/scroll-lock';
 import {Emoji} from './directives/emoji';
 import {Tooltip} from './directives/tooltip';
 
+import {AnnouncementComponent} from './components/announcements/announcement.component';
 import {Topbar} from './components/topbar/topbar';
 import {SidebarNavigation} from './components/sidebar-navigation/sidebar-navigation';
 import {
@@ -117,6 +118,7 @@ export const MINDS_DECLARATIONS: any[] = [
   Tooltip,
 
   // Components
+  AnnouncementComponent,
   Topbar,
   SidebarNavigation,
   BoostModal,
