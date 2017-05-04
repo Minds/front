@@ -140,6 +140,95 @@ minds-homepage{
     font-size: 41px;
   }
 
+  .m-homepage-section{
+    display: block;
+    text-align: center;
+    padding: 80px 0;
+    height:auto;
+
+    h1{
+      font-size: 64px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+    }
+
+    h2{
+      text-transform: uppercase;
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: 4px;
+    }
+
+    h4{
+      font-weight: 300;
+      font-size: 32px;
+      letter-spacing: 4px;
+
+      @media screen and (max-width: 1250px){
+        font-size: 24px;
+      }
+      .m-break--8spaces{
+            padding-left: 60px;
+      }
+    }
+
+    .m-homepage-section--icons{
+      max-width:990px;
+
+      > div {
+        a{
+          text-decoration:none;
+        }
+        i{
+          width: 100%;
+          font-size: 69px;
+          margin: 16px 0;
+        }
+        label{
+          font-size: 18px;
+          font-family: 'Lato';
+          font-weight: 400;
+          color:#4A4A4A;
+          letter-spacing:2px;
+          text-transform: uppercase;
+        }
+        p{
+          font-family: lato;
+          line-height: 18px;
+          font-size: 14px;
+          margin: 24px 0;
+          color: #666;
+          font-weight: 300;
+        }
+      }
+    }
+
+    .m-homepage-section--rewards{
+      max-width: 800px;
+      padding: 32px 0;
+
+      .m-homepage-section--rewards-points{
+        padding: 28px;
+
+        i{
+          font-size: 30px;
+          vertical-align: middle;
+        }
+        span{
+          font-size: 28px;
+        }
+      }
+      label{
+        font-size: 18px;
+        font-family: lato;
+        font-weight: 300;
+        letter-spacing: 2px;
+        color: #333;
+      }
+    }
+  }
+
   .m-homepage-stream{
     max-width:1100px;
     padding:$minds-padding !important;
@@ -319,4 +408,60 @@ minds-homepage{
     font-weight:bold;
   }
 
+}
+
+.m-homepage--feature-btn{
+  border: 0;
+  padding: 12px;
+  margin: 26px auto;
+  border-radius: 5px;
+  height:25px;
+  width:136px;
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  text-align:center;
+
+  i, .m-homepage--feature-btn--icon{
+    width: auto !important;
+    font-size: 22px !important;
+    padding-right:12px;
+    margin: 0 !important;
+    vertical-align: middle;
+  }
+
+  span{
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    flex:1;
+    font-family: lato;
+    font-weight: 300;
+  }
+}
+
+.m-homepage-fader{
+
+  width: 100%;
+  height: 500px;
+  margin-top: -500px;
+  background: linear-gradient(rgba(255,255,255,0), rgb(245, 245, 245));
+  /* position: absolute; */
+  /* bottom: 0; */
+  z-index: 9999;
+  position: relative;
+
+  .m-homepage-fader--load-more{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 36px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: Lato;
+    cursor: pointer;
+  }
 }

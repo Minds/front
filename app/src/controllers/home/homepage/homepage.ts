@@ -23,6 +23,7 @@ export class Homepage {
     2: [],
     3: []
     };
+  offset : string = "";
   inProgress : boolean = false;
 
   session = SessionFactory.build();
@@ -43,9 +44,9 @@ export class Homepage {
     }
   }
 
-  loadStream(){
+  loadStream(refresh : boolean = false){
     this.inProgress = true;
-    this.client.get('api/v1/newsfeed/featured', { limit: 24 })
+    this.client.get('api/v1/newsfeed/featured', { limit: 24, offset: this.offset })
       .then((response : any) => {
         let col = 0;
         for(let activity of response.activity){
@@ -54,6 +55,7 @@ export class Homepage {
             col = 1;
           this.stream[col].push(activity);
         }
+        this.offset = response['load-next'];
         this.inProgress = false;
       })
       .catch(() => {

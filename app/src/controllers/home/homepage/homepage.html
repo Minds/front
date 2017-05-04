@@ -30,46 +30,30 @@
   </div>
 </section>
 
-<div class="mdl-grid mdl-grid--no-spacing m-homepage-stream">
-    <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
-      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+<section class="m-homepage-section">
+  <h2 class="mdl-color-text--blue-grey-800">Take back your internet freedom</h2>
+  <div class="mdl-grid m-homepage-section--icons">
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+      <a href="https://minds.org" target="_blank">
+        <i class="material-icons mdl-color-text--blue-grey-800">code</i>
+        <label>Open Source</label>
+      </a>
     </div>
-
-    <h4 class="mdl-color-text--blue-grey-200 mdl-cell--12-col">Featured Posts</h4>
-    <section class="mdl-cell mdl-cell--4-col">
-      <minds-activity [object]="activity"  *ngFor="let activity of stream[1]"></minds-activity>
-    </section>
-
-    <section class="mdl-cell mdl-cell--4-col">
-      <minds-activity [object]="activity"  *ngFor="let activity of stream[2]"></minds-activity>
-    </section>
-
-    <section class="mdl-cell mdl-cell--4-col">
-      <minds-activity [object]="activity"  *ngFor="let activity of stream[3]"></minds-activity>
-    </section>
-</div>
-
-<section class="m-homepage-facts">
-  <div class="mdl-grid ">
-    <div class="mdl-cell mdl-cell--6-col">
-      <i class="material-icons mdl-color-text--blue-grey-300">trending_up</i>
-      <h3 class="mdl-color-text--blue-grey-700" i18n>Viral Reach</h3>
-      <p class="mdl-color-text--blue-grey-300" i18n>Be heard. Boost your content with points earned from voting, commenting, uploading & sharing on the app.</p>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+      <a href="https://www.minds.com/blog/view/385014724078604288" target="_blank">
+        <i class="material-icons mdl-color-text--blue-grey-800">enhanced_encryption</i>
+        <label>Encryption</label>
+      </a>
     </div>
-    <div class="mdl-cell mdl-cell--6-col">
-      <i class="material-icons mdl-color-text--blue-grey-300">remove_red_eye</i>
-      <h3 class="mdl-color-text--blue-grey-700" i18n>Privacy</h3>
-      <p class="mdl-color-text--blue-grey-300" i18n>Be anonymous if you wish. We encrypt all sensitive data and have zero-knowledge of your private messages.</p>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-800">speaker_notes</i>
+      <label>Free Speech</label>
     </div>
-    <div class="mdl-cell mdl-cell--6-col">
-      <i class="material-icons mdl-color-text--blue-grey-300">code</i>
-      <h3 class="mdl-color-text--blue-grey-700" i18n>Transparency</h3>
-      <p class="mdl-color-text--blue-grey-300" i18n>This is a free and open source project. Code and policies are available for public comment at Minds.org.</p>
-    </div>
-    <div class="mdl-cell mdl-cell--6-col">
-      <i class="material-icons mdl-color-text--blue-grey-300">attach_money</i>
-      <h3 class="mdl-color-text--blue-grey-700" i18n>Earn Money</h3>
-      <p class="mdl-color-text--blue-grey-300" i18n>Be rewarded for your energy online. Exchange money for shares with other users. It's peer-to-peer advertising.</p>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+      <a href="https://wefunder.com/minds" target="_blank">
+        <i class="material-icons mdl-color-text--blue-grey-800">people</i>
+        <label>Community Owned</label>
+      </a>
     </div>
   </div>
 </section>
@@ -112,81 +96,142 @@
       <i class="material-icons">account_balance</i>
       <h3 i18n>Wallet</h3>
     </div>
-    <div class="mdl-cell mdl-cell--1-col">
-      <i class="material-icons">location_on</i>
-      <h3 i18n>Find Nearby</h3>
-    </div>
   </div>
 
 </section>
 
-<div class="mdl-grid mdl-grid--no-spacing m-homepage-featured m-homepage-footer">
-
-    <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel m-homepage-press" *ngIf="false">
-      <h4 class="mdl-color-text--blue-grey-200" i18n>Press coverage</h4>
-      <div class="m-contents">
-        <div>
-          <a target="_blank" href="http://www.bbc.co.uk/newsbeat/article/33181388/anonymous-backs-new-encrypted-social-network-site">
-            <img src="{{minds.cdn_url}}assets/press/bbc.png" alt="BBC">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://www.businessinsider.com/facebook-competitor-mindscom-launches-with-help-from-anonymous-2015-6">
-            <img src="{{minds.cdn_url}}assets/press/business_insider.png" alt="Business Insider">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://www.forbes.com/sites/federicoguerrini/2015/06/15/struggling-with-facebook-organic-reach-decline-try-this-new-open-source-social-networking-app/2/">
-            <img src="{{minds.cdn_url}}assets/press/forbes.png" alt="Forbes">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://rt.com/news/267835-social-network-anonymous-minds/">
-            <img src="{{minds.cdn_url}}assets/press/rt.png" alt="RT">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://www.ibtimes.com/facebooks-latest-challenger-social-network-minds-pushes-privacy-transparency-1966653#.VX8Bvttr3M8.facebook">
-            <img src="{{minds.cdn_url}}assets/press/cnet.png" alt="CNET">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="#">
-            <img src="{{minds.cdn_url}}assets/press/vb.png" alt="VB">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://www.huffingtonpost.com/2015/06/29/minds-social-network_n_7690028.html">
-            <img src="{{minds.cdn_url}}assets/press/huffpost.png" alt="The Huffington Post">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://www.ibtimes.com/facebooks-latest-challenger-social-network-minds-pushes-privacy-transparency-1966653#.VX8Bvttr3M8.facebook">
-            <img src="{{minds.cdn_url}}assets/press/ibtimes.png" alt="International Business Times">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="https://i-d.vice.com/en_gb/article/anonymous-launch-snooper-proof-social-network">
-            <img src="{{minds.cdn_url}}assets/press/vice.png" alt="Vice">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://www.adweek.com/socialtimes/minds-launches-virtual-currency-powered-social-networking-app/622152">
-            <img src="{{minds.cdn_url}}assets/press/dotmic.png" alt=".Mic">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://www.wired.co.uk/news/archive/2015-06/16/anonymous-backs-encrypted-social-network-minds">
-            <img src="{{minds.cdn_url}}assets/press/wired.png" alt="Wired">
-          </a>
-        </div>
-        <div>
-          <a target="_blank" href="http://www.independent.co.uk/life-style/gadgets-and-tech/news/superprivate-social-network-launched-to-take-on-facebook-with-support-of-anonymous-10325307.html">
-            <img src="{{minds.cdn_url}}assets/press/theindependent.png" alt="The Independent">
-          </a>
-        </div>
+<section class="m-homepage-section">
+  <h1 class="mdl-color-text--blue-grey-800">Go viral and expand your reach</h1>
+  <div class="mdl-grid mdl-grid--no-spacing" style="max-width:700px;">
+    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600">1 point = 1 view</h4>
+    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600">$1 = 1,000 points</h4>
+  </div>
+  <div class="mdl-grid m-homepage-section--rewards">
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">create</i>
+        <span class="mdl-color-text--green">+1</span>
       </div>
+      <label>Post a text/link activity</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">chat_bubble</i>
+        <span class="mdl-color-text--green">+5</span>
+      </div>
+      <label>Receive a comment</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">person_add</i>
+        <span class="mdl-color-text--green">+5</span>
+      </div>
+      <label>Gain a subscriber</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">thumb_up</i>
+        <span class="mdl-color-text--green">+5</span>
+      </div>
+      <label>Receive an up vote</label>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">repeat</i>
+        <span class="mdl-color-text--green">+5</span>
+      </div>
+      <label>Get Reminded</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">attachment</i>
+        <span class="mdl-color-text--green">+15</span>
+      </div>
+      <label>Post a rich media activity</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">subject</i>
+        <span class="mdl-color-text--green">+15</span>
+      </div>
+      <label>Publish a blog</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">access_alarm</i>
+        <span class="mdl-color-text--green">+50</span>
+      </div>
+      <label>Hourly Check-in</label>
+    </div>
+
+
+  </div>
+</section>
+
+<span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>
+
+<section class="m-homepage-section">
+  <h2 class="mdl-color-text--blue-grey-800">How users generate revenue</h2>
+  <div class="mdl-grid m-homepage-section--icons">
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <div class="mdl-color--green mdl-color-text--white m-homepage--feature-btn">
+          <i class="material-icons m-homepage--feature-btn--icon">vpn_key</i>
+          <span>Exclusive</span>
+      </div>
+      <label>Paid Subscriptions</label>
+      <p>Set a monthly price for your fans to pay for your exclusive content and services.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <div class="mdl-color-text--white m-homepage--feature-btn" style="background: #428EDA;">
+          <span>Boost</span>
+      </div>
+      <label>Peer-To-Peer Boost</label>
+      <p>Receive offers from other channels to share their content in exchange for points or dollars.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <img src="assets/wire-icon.png" style="display: block; margin: 20px auto; height: 60px;"/>
+      <label>Wire</label>
+      <p>Receive tips from your audience for content they enjoy in points, dollars or Bitcoin.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-800">insert_chart</i>
+      <label>Ad Revenue</label>
+      <p>Monetize your blog with ads.</p>
+    </div>
+  </div>
+</section>
+
+
+<span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>
+
+
+<div class="mdl-grid mdl-grid--no-spacing m-homepage-stream">
+
+    <h4 class="mdl-color-text--blue-grey-200 mdl-cell--12-col">Featured Posts</h4>
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[1]"></minds-activity>
     </section>
+
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[2]"></minds-activity>
+    </section>
+
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[3]"></minds-activity>
+    </section>
+
+    <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    </div>
+
+    <div class="m-homepage-fader" [hidden]="inProgress">
+      <div class="m-homepage-fader--load-more" (click)="loadStream()">Click To See more</div>
+    </div>
+</div>
+
+
+<div class="mdl-grid mdl-grid--no-spacing m-homepage-featured m-homepage-footer">
 
     <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
       <ul class="m-footer-nav m-footer-nav-inline">
