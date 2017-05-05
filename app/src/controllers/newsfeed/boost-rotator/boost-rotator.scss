@@ -48,25 +48,6 @@
     cursor:pointer;
   }
 
-  .rating-menu {
-    top: inherit;
-    right: inherit; 
-
-    .mdl-menu__item {
-      display: flex;
-
-      i {
-        align-self: flex-end;
-        margin-right: 8px;
-        color: rgb(96,125,139);
-      }
-    }
-
-    .selected {
-      color: rgb(96,125,139) !important;
-    }
-  }
-
   li > i{
     margin-top:-10px;
     cursor:pointer;
@@ -84,6 +65,14 @@
   }
 }
 
+.m-boost-rating-menu {
+  .mdl-menu__item {
+    text-overflow: initial !important;
+  }
+  .selected {
+    color: rgb(96,125,139) !important;
+  }
+}
 
 @keyframes pulse {
   0% {

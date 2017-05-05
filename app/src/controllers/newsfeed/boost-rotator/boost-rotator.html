@@ -24,9 +24,8 @@
       <i class="material-icons">settings</i>
     </button>
     <ul class="minds-dropdown-menu m-boost-rating-menu" for="m-rating-boost-menu" *ngIf="ratingMenuToggle">
-      <li class="mdl-menu__item" [ngClass]="rating.id == this.session.getLoggedInUser().boost_rating ? 'selected' : ''" 
-        (click)="saveUserRating(rating.id)" *ngFor="let rating of ratingOptions">{{ rating.title }}
-      </li>
+      <li class="mdl-menu__item" *ngIf="rating == 1" (click)="setRating(2)">Disable Safe Mode</li>
+      <li class="mdl-menu__item" *ngIf="rating != 1" (click)="setRating(1)">Enable Safe Mode</li>
     </ul>
     <minds-bg-overlay (click)="ratingMenuToggle = false" [hidden]="!ratingMenuToggle"></minds-bg-overlay>
   </div>

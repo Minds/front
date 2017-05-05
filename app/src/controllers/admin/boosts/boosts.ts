@@ -22,21 +22,6 @@ export class AdminBoosts {
   count : number = 0;
   newsfeed_count : number = 0;
   suggested_count : number = 0;
-
-  ratingOptions = [
-    {
-      id : 1,
-      name : "Universal"
-    },
-    {
-      id : 2,
-      name : "Mainstream"
-    },
-    {
-      id : 3,
-      name : "Mature"
-    }
-  ];
   
   inProgress : boolean = false;
   moreData : boolean = true;

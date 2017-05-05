@@ -35,24 +35,14 @@ export class NewsfeedBoostRotator {
   minds;
   scroll_listener;
 
-  ratingOptions = [
-    {
-      id : 1,
-      title : "Universal"
-    },
-    {
-      id : 2,
-      title : "Mainstream"
-    },
-    {
-      id : 3,
-      title : "Mature"
-    }
-  ];
-
+  rating : number = 2; //default to Safe Mode Off
   ratingMenuToggle : boolean = false;
 
   constructor(public client: Client, public scroll : ScrollService, public element: ElementRef){
+  }
+
+  ngOnInit(){
+    this.rating = this.session.getLoggedInUser().boost_rating;
     this.load();
     this.scroll_listener = this.scroll.listenForView().subscribe(() => this.isVisible());
   }
@@ -67,7 +57,7 @@ export class NewsfeedBoostRotator {
       }
       this.inProgress = true;
 
-      this.client.get('api/v1/boost/fetch/newsfeed', { limit:10, rating:this.session.getLoggedInUser().boost_rating })
+      this.client.get('api/v1/boost/fetch/newsfeed', { limit:10, rating: this.rating })
         .then((response : any) => {
           if(!response.boosts){
             this.inProgress = false;
@@ -93,7 +83,8 @@ export class NewsfeedBoostRotator {
       });
   }
 
-  saveUserRating(rating){
+  setRating(rating){
+    this.rating = rating;
     this.session.getLoggedInUser().boost_rating = rating;
     this.boosts = [];
     this.load().then(() => {
