@@ -18,7 +18,7 @@
       <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="!paused" (ngModelChange)="paused = !paused">
     </label>
   </div>
-  <div class="m-boost-rotator-tools-tool m-boost-rotator-settings">
+  <div class="m-boost-rotator-tools-tool m-boost-rotator-settings" *ngIf="false">
     <button id="m-rating-boost-menu" (click)="ratingMenuHandler()" 
       class="mdl-button mdl-js-button mdl-button--icon minds-more mdl-button--icon mdl-color-text--blue-grey-300">
       <i class="material-icons">settings</i>
