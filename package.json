@@ -26,17 +26,17 @@
     "build": "npm run build-prod && npm run build-index-prod --"
   },
   "dependencies": {
-    "@angular/animations": "~4.0.1",
-    "@angular/common": "~4.0.1",
-    "@angular/compiler": "~4.0.1",
-    "@angular/compiler-cli": "~4.0.1",
-    "@angular/core": "~4.0.1",
-    "@angular/forms": "~4.0.1",
-    "@angular/http": "~4.0.1",
-    "@angular/platform-browser": "~4.0.1",
-    "@angular/platform-browser-dynamic": "~4.0.1",
-    "@angular/platform-server": "~4.0.1",
-    "@angular/router": "~4.0.1",
+    "@angular/animations": "~4.1.1",
+    "@angular/common": "~4.1.1",
+    "@angular/compiler": "~4.1.1",
+    "@angular/compiler-cli": "~4.1.1",
+    "@angular/core": "~4.1.1",
+    "@angular/forms": "~4.1.1",
+    "@angular/http": "~4.1.1",
+    "@angular/platform-browser": "~4.1.1",
+    "@angular/platform-browser-dynamic": "~4.1.1",
+    "@angular/platform-server": "~4.1.1",
+    "@angular/router": "~4.1.1",
     "angular-in-memory-web-api": "~0.3.0",
     "braintree-web": "2.15.2",
     "core-js": "^2.4.1",
@@ -48,7 +48,7 @@
     "socket.io-client": "^1.4.5",
     "systemjs": "0.19.40",
     "tinymce": "^4.2.6",
-    "zone.js": "~0.8.4"
+    "zone.js": "~0.8.5"
   },
   "devDependencies": {
     "async": "^1.4.2",
