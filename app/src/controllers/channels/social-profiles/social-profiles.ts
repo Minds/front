@@ -49,6 +49,13 @@ export class ChannelSocialProfiles {
       icon: 'twitter'
     },
     {
+      key: 'twitch',
+      label: 'Twitch',
+      placeholder: 'Username',
+      link: 'https://www.twitch.tv/:value',
+      icon: 'twitch'
+    },
+    {
       key: 'youtube_user',
       label: 'YouTube User',
       placeholder: 'Username',
@@ -77,12 +84,47 @@ export class ChannelSocialProfiles {
       icon: 'reddit'
     },
     {
+      key: 'reddit_sub',
+      label: 'Subreddit',
+      placeholder: 'Subreddit',
+      link: 'https://www.reddit.com/r/:value',
+      icon: 'reddit'
+    },
+    {
+      key: 'github',
+      label: 'Github',
+      placeholder: 'Username',
+      link: 'https://github.com/:value',
+      icon: 'github'
+    },
+    {
       key: 'linkedin',
       label: 'LinkedIn',
       placeholder: 'Username',
       link: 'https://linkedin.com/in/:value',
       icon: 'linkedin'
     },
+    {
+      key: 'instagram',
+      label: 'Instagram',
+      placeholder: 'Username',
+      link: 'https://www.instagram.com/:value',
+      icon: 'instagram'
+    },
+    {
+      key: 'wikipedia_user',
+      label: 'Wikipedia User',
+      placeholder: 'Username',
+      link: 'https://wikipedia.org/wiki/:value',
+      icon: 'wikipedia-w'
+    },
+    {
+      key: 'imdb_user',
+      label: 'IMDb User',
+      placeholder: 'Name',
+      link: 'https://www.imdb.com/name/:value',
+      icon: 'imdb'
+    },      
   ];
 
   private getSocialProfileMeta(key: string): SocialProfileMeta {
