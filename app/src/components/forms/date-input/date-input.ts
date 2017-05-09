@@ -4,20 +4,20 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   moduleId: module.id,
   selector: 'minds-date-input',
   template: `
-    <select [ngModel]="selectedMonth" (ngModelChange)="selectedMonth = $event; build()">
+    <select [ngModel]="selectedMonth" (ngModelChange)="selectedMonth = $event; build()" [disabled]="disabled">
       <option value=""><i>Month</i></option>
       <option *ngFor="let month of months; let i = index"
         [value]="i + 1"
       >{{ month }}</option>
     </select>
-    <select [ngModel]="selectedDay" (ngModelChange)="selectedDay = $event; build()">
+    <select [ngModel]="selectedDay" (ngModelChange)="selectedDay = $event; build()" [disabled]="disabled">
       <option value=""><i>Day</i></option>
       <option *ngFor="let day of days"
         [value]="day"
         [disabled]="!isDayAvailable(day, selectedMonth)"
       >{{ day }}</option>
     </select>
-    <select [ngModel]="selectedYear" (ngModelChange)="selectedYear = $event; build()">
+    <select [ngModel]="selectedYear" (ngModelChange)="selectedYear = $event; build()" [disabled]="disabled">
       <option value=""><i>Year</i></option>
       <option *ngFor="let year of years"
         [value]="year"
@@ -36,6 +36,7 @@ export class DateInput implements OnInit {
   selectedDay: string = '';
   selectedYear: string = '';
   @Input() showClearButton: boolean = true;
+  @Input() disabled: boolean = false;
 
   private _date: string;
 
@@ -68,7 +69,7 @@ export class DateInput implements OnInit {
       this.selectedMonth = `${parseInt(values[0], 10)}`;
 
       if (values.length === 2) {
-        this.selectedDay = values[1];
+        this.selectedDay = this.pad(values[1], 2);
       }
     }
 

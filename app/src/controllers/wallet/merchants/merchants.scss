@@ -26,6 +26,11 @@
   select{
     margin: 16px 0;
   }
+
+  .m-merchant-form-action {
+    margin: $minds-padding;
+    text-align: right;
+  }
 }
 
 .m-merchant-legal{

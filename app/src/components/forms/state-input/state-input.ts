@@ -4,7 +4,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   moduleId: module.id,
   selector: 'minds-state-input',
   template: `
-    <select [ngModel]="state" (ngModelChange)="state = $event; stateChange.next($event)">
+    <select [ngModel]="state" (ngModelChange)="state = $event; stateChange.next($event)" [disabled]="disabled">
       <option value="" disabled hidden><i>State</i></option>
       <option *ngFor="let state of states"
         [value]="state.code"
@@ -257,5 +257,7 @@ export class StateInput {
   @Input() state : string = '';
 
   @Output() stateChange: EventEmitter<any> = new EventEmitter();
+
+  @Input() disabled: boolean = false;
 
 }

@@ -1740,102 +1740,6 @@
         <source>Preview</source>
         <target/>
       </trans-unit>
-      <trans-unit id="62b6c66981335ca6eecc36b331103c60f09d1026" datatype="html">
-        <source>First name</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="6ce3dadf53dda1a1ab0c3167a8ed8dced471b0dc" datatype="html">
-        <source>Last name</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="efdd6fa6e7b2f7b63154a412d617e3144fb6ce46" datatype="html">
-        <source>Bank Account number</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="676e95155a8caa584161dc95429fcf70968d572a" datatype="html">
-        <source>Account Number</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4d5e1643795da7df9106af16c99f9587f78f7c60" datatype="html">
-        <source>Bank Routing number / Sort code</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="269f205aacc8e6dfa38f631e46486d51e303d5bd" datatype="html">
-        <source>Routing Number / Sort Code</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="047f50bc5b5d17b5bec0196355953e1a5c590ddb" datatype="html">
-        <source>Update</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="9da0107a35751e722c8b4bca7636fc7645dbdbdc" datatype="html">
-        <source>Updated</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="9db60170ef3b3b41a863e7d5ee7cec10919b9141" datatype="html">
-        <source>Updating</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="8314d3a36da2092565b9b0a429b5335542e6c8dd" datatype="html">
-        <source>Date of Birth</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="729754dd19eb9ce0670b0aeb5a6ae60574c2c563" datatype="html">
-        <source>Address</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="19a9894946ac608cbe13c64f38cc9ab27a93065a" datatype="html">
-        <source>House name/number, Street name</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="5c7012b5a926b32d9e45fefdcc8a1a3cb6f023d0" datatype="html">
-        <source>City</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="9ac3c979503dda965f67d8751c99e555b547ec39" datatype="html">
-        <source>eg. New York City</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="a43f25a9ac40e8e2441ff0be7a36b8e5d15534df" datatype="html">
-        <source>Country</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="873b72903b1858a9cd6c8967521030b4d7d1435b" datatype="html">
-        <source>State</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4d97909f92c084c823a680406c550c5fcbc494a7" datatype="html">
-        <source>Social Security Number (Last 4 digits)</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="8058768c7ed620c0eed599efbd1e14baa281f713" datatype="html">
-        <source>Post Code / Zip Code</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="f8f1ca421292f1a5911fca06ce7550eb7b8919c7" datatype="html">
-        <source>eg. 10001</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="6c84c699978f7754436b2041e97fa8d6eae0f603" datatype="html">
-        <source>10-12 digit account number</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="4a1b0a56711dcfd962318c60335faa6925251015" datatype="html">
-        <source>Bank Routing number / Sort Code</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="846225fef28ab477722f7e9479167427fa9dc9ec" datatype="html">
-        <source>9 digit routing number</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="7f4b6d3974d1ff1b3b70dec64393da6ad380eca4" datatype="html">
-        <source>Minds, Inc. uses Stripe for payment processing services. By using the Stripe payment processing services you agree to the Stripe Connected Account Agreement available at <x id="START_LINK" ctype="x-a"/>https://stripe.com/us/connect-account/legal<x id="CLOSE_LINK" ctype="x-a"/>.</source>
-        <target/>
-      </trans-unit>
-      <trans-unit id="f732c304c7433e5a83ffcd862c3dce709a0f4982" datatype="html">
-        <source>Next</source>
-        <target/>
-      </trans-unit>
       <trans-unit id="6df3069422db26773a9ec6e7e5d80ccbd1ec1d21" datatype="html">
         <source>Loading…</source>
         <target/>
@@ -2035,6 +1939,122 @@
       </trans-unit>
       <trans-unit id="c374714e12638b87215d15d38f0dcc1009e0fed4" datatype="html">
         <source>Paid Subscriptions</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="32257e2b14f6ee5e6f1b4e2a78218adac95158d4" datatype="html">
+        <source>Your account was verified. Most of your legal info cannot be changed. If you need so, please contact us at info@minds.com.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="a43f25a9ac40e8e2441ff0be7a36b8e5d15534df" datatype="html">
+        <source>Country</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="62b6c66981335ca6eecc36b331103c60f09d1026" datatype="html">
+        <source>First name</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6ce3dadf53dda1a1ab0c3167a8ed8dced471b0dc" datatype="html">
+        <source>Last name</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="8314d3a36da2092565b9b0a429b5335542e6c8dd" datatype="html">
+        <source>Date of Birth</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="003d4f5e4909ccf01b6a204c688fd6dab15c20bd" datatype="html">
+        <source>Gender</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="18f3bafdc69b800737e303bc1cb0753bd9dd3f32" datatype="html">
+        <source>Female</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="097b5dfee5665aa0f7daba8b696acecde6445474" datatype="html">
+        <source>Male</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="37aa11caa332dfa078110175364ed2cc71712d74" datatype="html">
+        <source>SSN (last 4 digits)</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="b476bf6b6301f98416be5c0b74acdb4a521f5441" datatype="html">
+        <source>Personal ID</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="fdc783b4d29aad7f59b87ee09abcb47527867187" datatype="html">
+        <source>Personal ID number or code</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="729754dd19eb9ce0670b0aeb5a6ae60574c2c563" datatype="html">
+        <source>Address</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="19a9894946ac608cbe13c64f38cc9ab27a93065a" datatype="html">
+        <source>House name/number, Street name</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5c7012b5a926b32d9e45fefdcc8a1a3cb6f023d0" datatype="html">
+        <source>City</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="9ac3c979503dda965f67d8751c99e555b547ec39" datatype="html">
+        <source>eg. New York City</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="873b72903b1858a9cd6c8967521030b4d7d1435b" datatype="html">
+        <source>State</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="5d4e1a42ce257eb02a1679bf8730475d81874709" datatype="html">
+        <source>State / Province</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="49f44353b7d886f87cdb04fd4ef62851419f5819" datatype="html">
+        <source>State or province</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="ef53df904629f34f8bd1f5c1ec5203549a609807" datatype="html">
+        <source>Zip (Postal) Code</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="f8f1ca421292f1a5911fca06ce7550eb7b8919c7" datatype="html">
+        <source>eg. 10001</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="db654f91d847f34e71ffb99268ff3a1807913421" datatype="html">
+        <source>Phone Number</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="e66a0269300acef553aac7d8000c05e19e6c394c" datatype="html">
+        <source>eg. 123-456789</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="efdd6fa6e7b2f7b63154a412d617e3144fb6ce46" datatype="html">
+        <source>Bank Account number</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="6c84c699978f7754436b2041e97fa8d6eae0f603" datatype="html">
+        <source>10-12 digit account number</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="fab93db746941d884c0d213de6aab7be42886e91" datatype="html">
+        <source>Bank Routing Number / Sort Code</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="846225fef28ab477722f7e9479167427fa9dc9ec" datatype="html">
+        <source>9 digit routing number</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="7f4b6d3974d1ff1b3b70dec64393da6ad380eca4" datatype="html">
+        <source>Minds, Inc. uses Stripe for payment processing services. By using the Stripe payment processing services you agree to the Stripe Connected Account Agreement available at <x id="START_LINK" ctype="x-a"/>https://stripe.com/us/connect-account/legal<x id="CLOSE_LINK" ctype="x-a"/>.</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="f732c304c7433e5a83ffcd862c3dce709a0f4982" datatype="html">
+        <source>Next</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="047f50bc5b5d17b5bec0196355953e1a5c590ddb" datatype="html">
+        <source>Update</source>
         <target/>
       </trans-unit>
       <trans-unit id="ccac601bf473fa28c9ac46794f1cd40542f74347" datatype="html">

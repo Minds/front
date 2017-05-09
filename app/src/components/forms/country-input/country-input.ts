@@ -6,7 +6,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   template: `
     <select [ngModel]="country" (ngModelChange)="country = $event; countryChange.next($event)">
       <option value="" disabled hidden><i>Country</i></option>
-      <option *ngFor="let country of countries"
+      <option *ngFor="let country of filteredCountries"
         [value]="country.code"
       >{{ country.name }}</option>
     </select>
@@ -21,7 +21,7 @@ export class CountryInput {
     {"name": "Albania", "code": "AL"},
     {"name": "Algeria", "code": "DZ"},
     {"name": "American Samoa", "code": "AS"},
-    {"name": "AndorrA", "code": "AD"},
+    {"name": "Andorra", "code": "AD"},
     {"name": "Angola", "code": "AO"},
     {"name": "Anguilla", "code": "AI"},
     {"name": "Antarctica", "code": "AQ"},
@@ -262,8 +262,19 @@ export class CountryInput {
     {"name": "Zimbabwe", "code": "ZW"}
   ];
 
+  filteredCountries: Array<{ name: string, code: string }> = [];
+
   @Input() country : string = '';
+  @Input('allowed') set _allowed(allowed: string[]) {
+    if (!allowed) {
+      this.filteredCountries = this.countries;
+      return;
+    }
+
+    this.filteredCountries = this.countries.filter(item => {
+      return allowed.indexOf(item.code) > -1;
+    });
+  }
 
   @Output() countryChange: EventEmitter<any> = new EventEmitter();
-
 }

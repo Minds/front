@@ -17,10 +17,8 @@ export class Merchants {
   session = SessionFactory.build();
   ts : number = Date.now();
 
-  onboardForm: FormGroup;
-  editForm: FormGroup;
-
   user = window.Minds.user;
+  merchant: any;
   status : string = "pending";
   sales : Array<any> = [];
 
@@ -83,73 +81,55 @@ export class Merchants {
     if(this.user.merchant.exclusive){
       this.exclusive = this.user.merchant.exclusive;
     }
-
-    this.onboardForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      dob: ['', Validators.required],
-      state:  [''],
-      ssn:  [''],
-      street:  ['', Validators.required],
-      city:  ['', Validators.required],
-      //region:  ['', Validators.required],
-      country: ['', Validators.required],
-      postCode:  ['', Validators.required],
-      accountNumber:  [''],
-      routingNumber: [''],
-      stripeAgree: ['', Validators.required],
-    });
-
-    this.editForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      //email: ['', Validators.required],
-      venmo: [true],
-      ssn: [''],
-      accountNumber: [''],
-      routingNumber: ['']
-    });
   }
 
-  onboard(form){
-    this.client.post('api/v1/merchant/onboard', this.onboardForm.value)
-      .then((response : any) => {
-        this.isMerchant = true;
-        this.user.merchant = {
-          id: response.id,
-          service: 'stripe',
-          status: 'awaiting-document',
-          exclusive: {
-            enabled: true,
-            amount: 10
-          }
-        };
-        this.exclusive.enabled = true;
-        this.status = 'awaiting-document';
-      })
-      .catch((e) => {
-        this.error = e.message;
+  onboarded(response) {
+    this.isMerchant = true;
+
+    this.user.merchant = {
+      id: response.id,
+      service: 'stripe',
+      status: 'awaiting-document',
+      exclusive: {
+        enabled: true,
+        amount: 10
+      }
+    };
+
+    this.exclusive.enabled = true;
+    this.status = 'awaiting-document';
+
+    this.getSettings();
+  }
+
+  updated(response) {
+    this.isMerchant = true;
+    this.confirmation = true;
+    this.updating = false;
+    this.minds.user.merchant.status = 'active';
+    this.status = 'active';
+
+    this.getSettings()
+      .then(() => {
+        this.minds.user.merchant.status = 'active';
+        this.status = 'active';
       });
   }
 
   getSettings(){
-    var self = this;
     this.inProgress = true;
-    this.client.get('api/v1/merchant/settings')
+    return this.client.get('api/v1/merchant/settings')
       .then((response : any) => {
         this.status = response.merchant.status;
-        var controls : any = self.editForm.controls;
-        controls.firstName.updateValue(response.merchant.firstName);
-        controls.lastName.updateValue(response.merchant.lastName);
-        controls.email.updateValue(response.merchant.email);
-        controls.venmo.updateValue(response.merchant.venmo);
-        controls.ssn.updateValue(response.merchant.ssn);
-        controls.accountNumber.updateValue(response.merchant.accountNumber);
-        controls.routingNumber.updateValue(response.merchant.routingNumber);
-        self.inProgress = false;
+        this.merchant = response.merchant;
+        this.inProgress = false;
+
+        if (!response.merchant.verified) {
+          this.status = 'awaiting-document';
+        }
       })
       .catch((e) => {
-        self.inProgress = false;
+        this.inProgress = false;
       });
   }
 
@@ -166,28 +146,6 @@ export class Merchants {
     this.client.post('api/v1/merchant/charge/' + sale.id)
       .then((response : any) => {
 
-      });
-  }
-
-  update(){
-    this.updating = true;
-    this.error = "";
-    this.client.post('api/v1/merchant/update', this.editForm.value)
-      .then((response : any) => {
-        if(response.error){
-          this.error = response.message;
-          return false;
-        }
-        this.isMerchant = true;
-        this.confirmation = true;
-        this.updating = false;
-        this.minds.user.merchant.status = 'active';
-        this.status = 'active';
-      })
-      .catch((e) => {
-        this.error = e.message;
-        this.confirmation = false;
-        this.updating = false;
       });
   }
 

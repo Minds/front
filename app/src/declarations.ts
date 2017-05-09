@@ -100,7 +100,8 @@ import {SettingsDisableChannel} from './controllers/settings/disable/disable';
 import {SettingsTwoFactor} from './controllers/settings/two-factor/two-factor';
 import {SettingsSubscriptions} from './controllers/settings/subscriptions/subscriptions.component';
 import {SearchBarSuggestions} from './controllers/search/suggestions/suggestions';
-import {ComingSoon} from './controllers/home/comingsoon/comingsoon';
+import { ComingSoon } from './controllers/home/comingsoon/comingsoon';
+import { MerchantsFormStripe } from "./controllers/wallet/merchants/form/stripe.component";
 
 export const MINDS_DECLARATIONS: any[] = [
   MINDS_PIPES,
@@ -189,6 +190,7 @@ export const MINDS_DECLARATIONS: any[] = [
   WalletAdSharingAnalytics,
   WalletAdSharingSettings,
   Merchants,
+  MerchantsFormStripe,
   Comments,
   ActivityPreview,
   Checkout,
