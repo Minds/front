@@ -18,6 +18,11 @@ m-announcement{
     flex-direction: row;
     align-items:center;
     width: calc(100% - 80px);
+
+    @media screen and (max-width: 770px){
+        width: 100%;
+    }
+    
   }
 
   .m-announcement--content{
@@ -28,6 +33,11 @@ m-announcement{
     font-family: Lato;
     font-size: 16px;
     flex: 1;
+
+    @media screen and (max-width:770px){
+        font-size:13px;
+        padding-right: 50px;
+    }
 
     a{
       text-decoration:none;
