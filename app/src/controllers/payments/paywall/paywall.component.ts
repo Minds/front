@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
@@ -8,7 +8,8 @@ import { SessionFactory } from '../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'minds-paywall',
-  templateUrl: 'paywall.component.html'
+  templateUrl: 'paywall.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class PayWall {
@@ -27,7 +28,7 @@ export class PayWall {
 
   @Input() entity;
 
-	constructor(public client: Client){
+	constructor(public client: Client, public cd: ChangeDetectorRef){
 	}
 
   ngOnInit(){
@@ -37,30 +38,36 @@ export class PayWall {
   checkout() {
     if (!this.session.isLoggedIn()) {
       this.showSignupModal = true;
+      this.detectChanges();
       return;
     }
 
     this.inProgress = true;
+    this.detectChanges();
 
     this.client.get('api/v1/payments/plans/exclusive/' + this.entity.guid)
       .then((response: any) => {
         this.inProgress = false;
         if(response.subscribed){
           this.update.next(response.entity);
+          this.detectChanges();
           return;
         }
         this.showCheckout = true;
         this.amount = response.amount;
+        this.detectChanges();
       })
       .catch(e => {
         this.inProgress = false;
         this.error = "Sorry, there was an error.";
+        this.detectChanges();
       });
   }
 
   subscribe(nonce){
     this.showCheckout = false;
     this.inProgress = true;
+    this.detectChanges();
     console.log('nonce: ' + nonce);
     this.client.post('api/v1/payments/plans/subscribe/' + this.entity.owner_guid + '/exclusive', {
         nonce: nonce
@@ -69,10 +76,16 @@ export class PayWall {
       .catch(e => {
         this.inProgress = false;
         this.error = "Sorry, we couldn't complete the transaction."; 
+        this.detectChanges();
       });
   }
 
   ngOnDestroy(){
+  }
+
+  private detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
 }
