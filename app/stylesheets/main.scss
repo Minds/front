@@ -96,13 +96,35 @@ minds-topbar{
 @media screen and (max-width: $max-mobile){
   minds-topbar {
     .minds-logo{
-      display:none;
+      display: block;
+      position: fixed;
+      width: 75px;
+      height: 30px;
+      left: calc(50vw - 35.5px);
+      /* z-index: 1; */
+      padding: 0;
+      padding-bottom: 2px;
     }
     minds-topbar-navigation{
+      nav a:first-of-type{
+          display:none;
+      }
       nav a .counter{
         display:none;
       }
     }
+    .minds-account img{
+        height:28px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px){
+  minds-topbar minds-topbar-navigation nav{
+      display:none;
+  }
+  minds-topbar minds-search-bar{ 
+      display:none; 
   }
 }
 
