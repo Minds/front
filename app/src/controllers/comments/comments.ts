@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
+import { Component, EventEmitter, Renderer, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 
 import { Client, Upload } from '../../services/api';
 import { SessionFactory } from '../../services/session';
@@ -36,6 +36,7 @@ export class Comments {
 
   focusOnInit: boolean = false;
   @ViewChild('message') textareaControl: Textarea;
+  @ViewChild('scrollArea') scrollView: ElementRef;
 
   editing : boolean = false;
 
@@ -56,7 +57,7 @@ export class Comments {
 
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService, private renderer: Renderer) {
+  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService, private renderer: Renderer, private cd: ChangeDetectorRef) {
     this.minds = window.Minds;
 	}
 
@@ -103,12 +104,21 @@ export class Comments {
 
         this.comments = response.comments.concat(this.comments);
 
-        this.offset = response['load-previous'];
-
         if (refresh) {
           this.commentsScrollEmitter.emit('bottom');
         }
-        
+
+        if (this.offset && this.scrollView) {
+          let el = this.scrollView.nativeElement;
+          let scrollTop = el.scrollTop;
+          let scrollHeight = el.scrollHeight;
+
+          this.cd.detectChanges();
+          el.scrollTop = scrollTop + el.scrollHeight - scrollHeight;
+        }
+
+        this.offset = response['load-previous'];
+
         if (
           !this.offset ||
           this.offset == null ||
