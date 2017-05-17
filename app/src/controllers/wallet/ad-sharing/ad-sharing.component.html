@@ -73,9 +73,9 @@
 </div>
 
 <div *ngIf="!remote && !inProgress && isMerchant && loaded && enabled">
-  <div class="mdl-tabs__tab-bar">
-    <a routerLink="/wallet/ad-sharing/settings" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'settings' }" i18n>Settings</a>
-    <a routerLink="/wallet/ad-sharing/analytics" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'analytics' }" i18n>Analytics</a>
+  <div class="mdl-tabs__tab-bar" *ngIf="false">
+      <a routerLink="/wallet/ad-sharing/analytics" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'analytics' }" i18n>Analytics</a>
+      <a routerLink="/wallet/ad-sharing/settings" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'settings' }" i18n>Settings</a>
   </div>
 
   <minds-wallet-ad-sharing-settings [hidden]="type != 'settings'"></minds-wallet-ad-sharing-settings>

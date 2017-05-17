@@ -10,11 +10,13 @@ import { Client } from '../../../../services/api';
   selector: 'minds-wallet-ad-sharing-analytics',
 })
 export class WalletAdSharingAnalytics {
+
   overview = {
     today: 0,
     last7: 0,
-    lastRetentionDays: 0,
-    lastRetentionAmount: 0,
+    last28: 0,
+    balanceDays: 40,
+    balanceAmount: 0,
   };
 
   payouts = {
@@ -27,7 +29,16 @@ export class WalletAdSharingAnalytics {
     }
   };
 
+  breakdown = {
+    period: 28,
+    dates: {
+      start: 0,
+      end: 0,
+    }
+  };
+
   items: any[] = [];
+  period : number = 28;
   username: string = '';
 
   loaded: boolean = false;
@@ -62,7 +73,7 @@ export class WalletAdSharingAnalytics {
     this.load()
       .then(() => {
         if (this.hasBreakdown()) {
-          this.loadList(true);
+          this.loadList(28, true);
         }
       });
   }
@@ -94,7 +105,8 @@ export class WalletAdSharingAnalytics {
       });
   }
 
-  loadList(refresh: boolean): Promise<any> {
+  loadList(period : number, refresh: boolean): Promise<any> {
+    this.breakdown.period = period;
     if (refresh) {
       this.offset = '';
       this.moreData = true;
@@ -107,18 +119,18 @@ export class WalletAdSharingAnalytics {
 
     this.inProgress = true;
     this.listLoaded = true;
-    return this.client.get(`api/v1/monetization/ads/list/${this.username}`, { offset: this.offset })
+    return this.client.get(`api/v1/monetization/ads/list/${this.username}`, { offset: this.offset, period: period })
       .then((response: any) => {
         this.inProgress = false;
 
-        if (response.payouts && response.payouts.list) {
-          this.items.push(...response.payouts.list);
+        if (response.breakdown && response.breakdown.list) {
+          this.items.push(...response.breakdown.list);
         } else {
           this.moreData = false;
         }
 
-        if (response.payouts && response.payouts.dates) {
-          this.payouts.dates = response.payouts.dates;
+        if (response.breakdown && response.breakdown.dates) {
+           this.breakdown.dates = response.breakdown.dates;
         }
 
         if (response['load-next']) {

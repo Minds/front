@@ -13,7 +13,7 @@ import { Client } from '../../../services/api';
 })
 
 export class WalletAdSharing {
-  type: string = '';
+  type: string = 'analytics';
 
   inProgress: boolean = false;
   loaded: boolean = false;
@@ -36,7 +36,6 @@ export class WalletAdSharing {
 
   paramsSubscription: Subscription;
   ngOnInit() {
-    this.type = 'settings';
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['type']) {
