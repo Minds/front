@@ -50,6 +50,15 @@
         (keydown.enter)="register($event)"
         />
     </div>
+
+    <div class="mdl-cell mdl-cell--12-col" [hidden]="true">
+      <input
+        type="password"
+        id="password3"
+        formControlName="password3"
+        placeholder="Confirm your password"
+        />
+    </div>
   </div>
 
   <div class="mdl-card__actions">

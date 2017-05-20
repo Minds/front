@@ -32,7 +32,8 @@ export class RegisterForm {
       username: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
-      password2: ['', Validators.required]
+      password2: ['', Validators.required],
+      password3: ['']
     });
 	}
 
