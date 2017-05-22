@@ -1,5 +1,6 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 
+import { Storage } from '../../services/storage';
 import { Client } from '../../services/api';
 import { Material } from '../../directives/material';
 
@@ -28,11 +29,18 @@ export class AnnouncementComponent{
 
   minds : Minds = window.Minds;
   hidden : boolean = false;
+  @Input() id : string = 'default';
 
-	constructor(){
+	constructor(private storage : Storage){
 	}
 
+  ngOnInit(){
+    if(this.storage.get('hide-announcement:' + this.id))
+      this.hidden = true;
+  }
+
   close(){
+    this.storage.set('hide-announcement:' + this.id, true);
     this.hidden = true;
   }
 
