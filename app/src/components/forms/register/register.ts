@@ -22,6 +22,7 @@ export class RegisterForm {
   hideLogin : boolean = false;
   inProgress : boolean = false;
   referrer : string;
+  captcha : string;
 
   form : FormGroup;
 
@@ -33,7 +34,7 @@ export class RegisterForm {
       email: ['', Validators.required],
       password: ['', Validators.required],
       password2: ['', Validators.required],
-      password3: ['']
+      captcha: ['']
     });
 	}
 
