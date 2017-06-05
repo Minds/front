@@ -16,6 +16,8 @@ import { MINDS_PLUGIN_DECLARATIONS } from './src/plugin-declarations';
 import { MINDS_PROVIDERS } from './src/services/providers';
 import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
 
+import { MonetizationModule } from './src/modules/monetization/monetization.module';
+
 @NgModule({
   bootstrap: [
     Minds
@@ -33,7 +35,8 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
     FormsModule,
     HttpModule,
     RouterModule.forRoot(MindsAppRoutes),
-    CaptchaModule
+    CaptchaModule,
+    MonetizationModule
   ],
   providers: [
     MindsAppRoutingProviders,

@@ -9,6 +9,8 @@
       </div>
     </div>
 
+    <m-monetization--overview></m-monetization--overview>
+
 
     <ul class="mdl-card minds-card-navigation mdl-shadow--2dp" style="width:100%; margin-top:8px;">
       <li>
@@ -59,7 +61,7 @@
     <minds-wallet-transactions *ngIf="filter == 'transactions' || filter == 'purchase'"></minds-wallet-transactions>
 
     <minds-wallet-merchants *ngIf="filter == 'merchants'"></minds-wallet-merchants>
-    
+
     <minds-wallet-ad-sharing *ngIf="filter == 'ad-sharing'"></minds-wallet-ad-sharing>
 
   </div>

@@ -1,0 +1,40 @@
+.m-monetization--overview{
+  padding: 16px;
+  margin: 8px 0;
+  border-radius: 2px;
+  display:flex;
+  align-items:center;
+  font-family: 'Lato';
+
+  i{
+    font-style: normal;
+    font-weight:100;
+  }
+
+  .m-monetization--overview-volume{
+    font-size:36px;
+    letter-spacing:2px;
+    line-height:36px;
+    flex:1;
+    padding-top:8px;
+    padding-right:32px;
+  }
+
+  .m-monetization--overview-label{
+    display:block;
+    text-transform: uppercase;
+    font-family: 'Lato';
+    letter-spacing:1px;
+    font-size:11px;
+  }
+
+  .m-monetization--overview-breakdown{
+    flex: 1;
+    letter-spacing: 2px;
+    font-size: 16px;
+
+    > * {
+      padding: 4px 0;
+    }
+  }
+}
