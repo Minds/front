@@ -54,14 +54,7 @@
 
     <p *ngIf="error" class="mdl-color-text--red" style="padding-left:16px">{{error}}</p>
 
-    <minds-payments-checkout
-      (inputed)="setNonce($event)"
-      gateway="default"
-      paypal="true"
-      creditcard="true"
-      bitcoin="false"
-      *ngIf="!nonce && toggled"
-    ></minds-payments-checkout>
+    <minds-payments-stripe-checkout (inputed)="setSource($event)" *ngIf="!source && toggled"></minds-payments-stripe-checkout>
 
   </div>
 

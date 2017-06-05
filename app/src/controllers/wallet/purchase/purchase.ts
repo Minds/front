@@ -25,7 +25,7 @@ export class WalletPurchase {
 
   inProgress : boolean = false;
   confirmation : boolean = false;
-  nonce : string | number = "";
+  source : string | number = "";
   recurring : boolean = true;
   error : string = "";
 
@@ -89,13 +89,13 @@ export class WalletPurchase {
     if(this.recurring){
       this.client.post('api/v1/wallet/subscription', {
           points: this.points,
-          nonce: this.nonce
+          source: this.source
         })
         .then((response : any) => {
           if(response.status != 'success'){
             this.error = "Please check your payment details and try again.";
             this.inProgress = false;
-            this.nonce = null;
+            this.source = null;
             return false;
           }
           this.confirmation = true;
@@ -104,13 +104,13 @@ export class WalletPurchase {
         .catch((e) => {
           this.error = e.message;
           this.inProgress = false;
-          this.nonce = null;
+          this.source = null;
         });
     } else {
         this.client.post('api/v1/wallet/purchase-once', {
           amount: this.usd,
           points: this.points,
-          nonce: this.nonce
+          source: this.source
         })
         .then((response : any) => {
           if(response.status != 'success'){
@@ -123,7 +123,7 @@ export class WalletPurchase {
         .catch((e) => {
           this.error = e.message;
           this.inProgress = false;
-          this.nonce = null;
+          this.source = null;
         });
     }
   }
@@ -137,15 +137,15 @@ export class WalletPurchase {
       });
   }
 
-  setNonce(nonce : string){
-    this.nonce = nonce;
+  setSource(source : string){
+    this.source = source;
     this.purchase();
   }
 
   reset(){
     this.getSubscription();
     this.confirmation = false;
-    this.nonce = null;
+    this.source = null;
   }
 
 }
