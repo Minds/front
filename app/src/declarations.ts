@@ -7,7 +7,6 @@ import {AutoGrow} from './directives/autogrow';
 import {TagsLinks} from './directives/tags';
 import {ScrollLock} from './directives/scroll-lock';
 import {Emoji} from './directives/emoji';
-import {Tooltip} from './directives/tooltip';
 
 import {AnnouncementComponent} from './components/announcements/announcement.component';
 import {Topbar} from './components/topbar/topbar';
@@ -116,7 +115,6 @@ export const MINDS_DECLARATIONS: any[] = [
   TagsLinks,
   ScrollLock,
   Emoji,
-  Tooltip,
 
   // Components
   AnnouncementComponent,

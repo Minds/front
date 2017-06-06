@@ -2,16 +2,41 @@
 
   <div class="m-monetization--overview-volume">
     <i>$</i>{{net}}
-    <label class="m-monetization--overview-label">Earnings</label>
+    <div class="m-monetization--overview-label">
+      <label>Earnings</label>
+      <m-tooltip icon="help">
+        This is your total earnings for the past 30 days, minus any fees.
+      </m-tooltip>
+    </div>
   </div>
   <div class="m-monetization--overview-breakdown">
     <div class="m-monetization--overview-balance">
       <i>$</i>{{balance}}
-      <label class="m-monetization--overview-label">Pending</label>
+      <div class="m-monetization--overview-label">
+        <label>Pending</label>
+        <m-tooltip icon="help">
+          This is your earnings awaiting payout. A negative number indicates a refund or chargeback has occured.
+        </m-tooltip>
+      </div>
     </div>
     <div class="m-monetization--overview-payouts">
       <i>$</i>{{payouts}}
-      <label class="m-monetization--overview-label">Paid out</label>
+      <div class="m-monetization--overview-label">
+        <label>Paid out</label>
+        <m-tooltip icon="help">
+          This is what has been sent to your bank account
+        </m-tooltip>
+      </div>
     </div>
   </div>
+</div>
+
+<div class="m-monetization--overview-title mdl-color--blue-800 mdl-color-text--white mdl-shadow--4dp">
+  <div class="m-monetization--overview-title-text">Revenue</div>
+  <m-tooltip icon="help">
+    You earn 25% of all revenue your referrals bring to Minds.
+  </m-tooltip>
+
+  <a class="m-monetization--overview-title-action">See Breakdown</a>
+
 </div>
