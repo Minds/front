@@ -1,5 +1,4 @@
 import { Component, EventEmitter } from '@angular/core';
-import { Material } from '../../../directives/material';
 
 import { KeyVal } from '../../../interfaces/entities';
 

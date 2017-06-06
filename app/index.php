@@ -116,6 +116,7 @@
       </script>
     <!-- End Google Analytics -->
     <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script>
       <?php
@@ -169,6 +170,5 @@
     <% } %>
 
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-
   </body>
 </html>

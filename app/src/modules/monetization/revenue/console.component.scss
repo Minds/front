@@ -1,5 +1,8 @@
+.m-revenue--console-hero{
+  padding-bottom: 32px;
+}
 .m-revenue--console-overview{
-  padding: 36px 16px;
+  padding: 64px 16px 32px 140px;
   margin: auto;
   max-width:990px;
   display:flex;
@@ -13,9 +16,9 @@
   }
 
   > div{
-    font-size:36px;
+    font-size:48px;
     letter-spacing:2px;
-    line-height:36px;
+    line-height:48px;
     flex:1;
     padding:8px 16px;
   }
@@ -31,10 +34,10 @@
       text-transform: uppercase;
       font-family: 'Lato';
       letter-spacing:1px;
-      font-size:11px;
+      font-size:14px;
     }
     i{
-      font-size: 12px;
+      font-size: 16px;
       opacity: 0.5;
       cursor: pointer;
     }
@@ -48,5 +51,27 @@
     > * {
       padding: 4px 0;
     }
+  }
+}
+
+m-monetization--graph{
+  margin-bottom:32px;
+}
+
+.m-revenue--console-nav{
+  padding: 0;
+  text-align: center;
+  text-transform: uppercase;
+
+  display: flex;
+  justify-content: center;
+
+
+  .m-revenue--console-nav-item {
+    padding: 16px 32px;
+    font-family: 'Lato';
+    font-weight: 300;
+    letter-spacing: 2px;
+    cursor: pointer;
   }
 }

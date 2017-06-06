@@ -4,6 +4,10 @@ import { RouterModule } from '@angular/router';
 
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { MDL_DIRECTIVES } from "./directives/material";
+import { InfiniteScroll } from "./components/infinite-scroll/infinite-scroll";
+import { ChartComponent } from "./components/chart/chart.component";
+
 
 @NgModule({
   imports: [
@@ -12,11 +16,19 @@ import { FooterComponent } from './components/footer/footer.component';
   ],
   declarations: [
     TooltipComponent,
-    FooterComponent
+    FooterComponent,
+    InfiniteScroll,
+    ChartComponent,
+
+    MDL_DIRECTIVES
   ],
   exports: [
     TooltipComponent,
-    FooterComponent
+    FooterComponent,
+    InfiniteScroll,
+    ChartComponent,
+
+    MDL_DIRECTIVES
   ],
   entryComponents: [ ]
 })

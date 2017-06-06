@@ -24,6 +24,8 @@ import { Sidebar } from './ui/sidebar';
 import { EmbedService } from './embed';
 import { MindsTitle } from './ux/title';
 
+import { GoogleChartsLoader } from "./third-party/google-charts-loader";
+
 export const MINDS_PROVIDERS : any[] = [
    {
      provide: ScrollService,
@@ -121,5 +123,10 @@ export const MINDS_PROVIDERS : any[] = [
      provide: MindsTitle,
      useFactory: MindsTitle._,
      deps: [ Title ]
+   },
+   {
+     provide: GoogleChartsLoader,
+     useFactory: GoogleChartsLoader._,
+     deps: [ NgZone ]
    },
 ];

@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input } from '@angular/core';
 
 import { Storage } from '../../services/storage';
 import { Client } from '../../services/api';
-import { Material } from '../../directives/material';
 
 @Component({
   selector: 'm-announcement',

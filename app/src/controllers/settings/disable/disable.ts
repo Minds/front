@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 
 import { Client } from '../../../services/api';
-import { Material } from '../../../directives/material';
 
 
 @Component({

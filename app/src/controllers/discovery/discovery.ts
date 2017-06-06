@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs/Rx';
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
 
 @Component({
   moduleId: module.id,

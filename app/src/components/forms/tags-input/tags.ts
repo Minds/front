@@ -1,6 +1,5 @@
 import { Component, EventEmitter, ElementRef } from '@angular/core';
 
-import { Material } from '../../../directives/material';
 import { Client, Upload } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 

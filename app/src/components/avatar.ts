@@ -1,7 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
 import { Client } from '../services/api';
-import { Material } from '../directives/material';
 
 @Component({
   selector: 'minds-avatar',

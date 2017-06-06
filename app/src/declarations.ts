@@ -1,7 +1,5 @@
 import {MINDS_PIPES} from './pipes/pipes';
 
-import {MDL_DIRECTIVES} from './directives/material';
-import {InfiniteScroll} from './directives/infinite-scroll';
 import {Hovercard} from './directives/hovercard';
 import {AutoGrow} from './directives/autogrow';
 import {TagsLinks} from './directives/tags';
@@ -108,8 +106,6 @@ export const MINDS_DECLARATIONS: any[] = [
   MINDS_PIPES,
 
   // Directives
-  MDL_DIRECTIVES,
-  InfiniteScroll,
   Hovercard,
   AutoGrow,
   TagsLinks,

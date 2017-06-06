@@ -1,5 +1,4 @@
 import { Component, EventEmitter, ChangeDetectorRef  } from '@angular/core';
-import { Material } from '../../directives/material';
 
 import { ThirdPartyNetworksService } from '../../services/third-party-networks';
 

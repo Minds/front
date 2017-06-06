@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { InfiniteScroll } from '../../../directives/infinite-scroll';
 
 @Component({
   moduleId: module.id,

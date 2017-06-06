@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Type, Inject } from '@angular/core';
-import { Material as MaterialService } from "../services/ui";
+import { Material as MaterialService } from "../../services/ui";
 
 import { MaterialTextfield } from './material/text-field';
 import { MaterialUpload } from './material/upload';

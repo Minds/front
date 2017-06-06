@@ -1,7 +1,7 @@
 import { Component, EventEmitter, ElementRef, Inject } from '@angular/core';
 
-import { Material as MaterialService } from "../../services/ui";
-import { ScrollService } from '../../services/ux/scroll';
+import { Material as MaterialService } from "../../../services/ui";
+import { ScrollService } from '../../../services/ux/scroll';
 
 @Component({
   selector: 'infinite-scroll',
