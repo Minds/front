@@ -1,0 +1,13 @@
+<div class="mdl-grid mdl-grid--no-spacing">
+
+    <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
+      <ul class="m-footer-nav m-footer-nav-inline">
+        <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item ">
+          <a *ngIf="page.path && page.path.indexOf('p/') > -1" [routerLink]="[page.path]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+          <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+        </li>
+      </ul>
+      <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2017</span>
+    </section>
+
+</div>

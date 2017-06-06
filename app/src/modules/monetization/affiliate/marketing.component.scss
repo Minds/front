@@ -1,0 +1,71 @@
+.m-affiliate--marketing-header{
+  background: url('/assets/photos/balloon.jpg');
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  padding: 224px 36px;
+  box-sizing: border-box;
+
+  h1, h3{
+    color: #FFF;
+
+    font-family: 'Lato';
+    text-shadow: 0 0 3px #333;
+  }
+
+  h1{
+    word-spacing: 25px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+
+  }
+  h3{
+    letter-spacing: 2px;
+    word-spacing:3px;
+    font-weight:300;
+  }
+
+  .m-affiliate--marketing-action-button{
+    margin-bottom: -80px;
+    margin-top: 32px;
+    button{
+      letter-spacing: 3px;
+      font-size: 18px;
+      line-height: 35px;
+      height: 53px;
+      padding: 0 24px;
+      font-weight: 300;
+      font-family: 'Lato';
+      color: #FFF;
+    }
+  }
+}
+
+.m-affiliate--marketing-contents{
+  max-width:990px;
+  padding:64px 0 !important;
+
+  .mdl-cell{
+    padding: 32px 16px;
+    text-align: center;
+
+    i{
+      font-size: 64px;
+    }
+    h2{
+      padding: 0;
+      margin: 24px 0;
+      text-transform: uppercase;
+      font-family: 'Lato';
+      font-weight: 300;
+      letter-spacing: 2px;
+      font-size: 38px;
+    }
+    span{
+      font-family: 'lato';
+      letter-spacing: 1px;
+    }
+  }
+}

@@ -16,7 +16,7 @@
       <li>
         <a class="mdl-color-text--blue-grey-500" [routerLink]="['/wallet/transactions']" routerLinkActive="selected">
           <i class="material-icons">account_balance_wallet</i>
-          <!-- i18n -->Ledger<!-- /i18n -->
+          <!-- i18n -->Points Ledger<!-- /i18n -->
         </a>
       </li>
       <li>
@@ -29,11 +29,38 @@
         <a class="mdl-color-text--blue-grey-500"
           [routerLink]="['/wallet/merchants']"
           routerLinkActive="selected"
-          [ngStyle]="{'mdl-color--blue-grey-300': filter == 'merchants'}"
+          >
+          <i class="material-icons">attach_money</i>
+          <span i18n>Payments Overview</span>
+        </a>
+      </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500"
+          [routerLink]="['/wallet/merchants']"
+          routerLinkActive="selected"
           >
           <i class="material-icons">attach_money</i>
           <span [hidden]="session.getLoggedInUser().merchant" i18n>Monetize your Channel</span>
-          <span [hidden]="!session.getLoggedInUser().merchant" i18n>Monetization Settings</span>
+          <span [hidden]="!session.getLoggedInUser().merchant" i18n>Payout Settings</span>
+        </a>
+      </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500"
+          [routerLink]="['/wallet/merchants']"
+          routerLinkActive="selected"
+          *ngIf="session.getLoggedInUser().merchant"
+          >
+          <i class="material-icons">attach_money</i>
+          <span i18n>Paywall & Subscriptions</span>
+        </a>
+      </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500"
+          [routerLink]="['/wallet/merchants']"
+          routerLinkActive="selected"
+          >
+          <i class="material-icons">attach_money</i>
+          <span i18n>Affiliates</span>
         </a>
       </li>
       <li>
