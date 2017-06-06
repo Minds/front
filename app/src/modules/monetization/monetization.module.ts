@@ -4,9 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { MonetizationOverviewComponent } from './overview.component';
 import { AffiliateMarketingComponent } from './affiliate/marketing.component';
+import { RevenueConsoleComponent } from './revenue/console.component';
 
 const monetizationRoutes : Routes = [
-  { path: 'affiliates',  component: AffiliateMarketingComponent }
+  { path: 'affiliates',  component: AffiliateMarketingComponent },
+  { path: 'wallet/revenue', component: RevenueConsoleComponent }
 ]
 
 @NgModule({
@@ -16,14 +18,16 @@ const monetizationRoutes : Routes = [
   ],
   declarations: [
     MonetizationOverviewComponent,
-    AffiliateMarketingComponent
+    AffiliateMarketingComponent,
+    RevenueConsoleComponent
   ],
   exports: [
     MonetizationOverviewComponent,
     AffiliateMarketingComponent,
+    RevenueConsoleComponent,
     RouterModule
   ],
-  entryComponents: [ MonetizationOverviewComponent, AffiliateMarketingComponent ]
+  entryComponents: [ MonetizationOverviewComponent, AffiliateMarketingComponent, RevenueConsoleComponent ]
 })
 
 export class MonetizationModule {}

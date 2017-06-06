@@ -1,0 +1,52 @@
+.m-revenue--console-overview{
+  padding: 36px 16px;
+  margin: auto;
+  max-width:990px;
+  display:flex;
+  align-items:center;
+  font-family: 'Lato';
+
+
+  i{
+    font-style: normal;
+    font-weight:100;
+  }
+
+  > div{
+    font-size:36px;
+    letter-spacing:2px;
+    line-height:36px;
+    flex:1;
+    padding:8px 16px;
+  }
+
+  .m-revenue--console-label{
+    display:block;
+
+    > * {
+      vertical-align:middle;
+    }
+
+    label{
+      text-transform: uppercase;
+      font-family: 'Lato';
+      letter-spacing:1px;
+      font-size:11px;
+    }
+    i{
+      font-size: 12px;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+
+  .m-revenue--console-breakdown{
+    flex: 1;
+    letter-spacing: 2px;
+    font-size: 16px;
+
+    > * {
+      padding: 4px 0;
+    }
+  }
+}

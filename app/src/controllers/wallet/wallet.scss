@@ -5,7 +5,7 @@
   min-height: 0;
 
   h2{
-    color:green;
+    color:#FFF;
   }
 }
 
@@ -28,11 +28,11 @@
 }
 
 .m-points-balance{
-  padding:$minds-padding;
+  padding:$minds-padding*4 $minds-padding;
 
   i{
     width: 100%;
-    font-size: 138px;
+    font-size: 100px;
     text-align: center;
   }
   h2{

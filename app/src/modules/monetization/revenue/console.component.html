@@ -1,0 +1,38 @@
+<div class="m-revenue--console">
+
+  <div class="mdl-color--blue mdl-color-text--white">
+    <div class="m-revenue--console-overview mdl-grid">
+
+      <div class="m-revenue--console-volume mdl-cell mdl-cell--4-col">
+        <i>$</i>{{net}}
+        <div class="m-revenue--console-label">
+          <label>Earnings</label>
+          <m-tooltip icon="help">
+            This is your total earnings for the past 30 days, minus any fees.
+          </m-tooltip>
+        </div>
+      </div>
+
+      <div class="m-revenue--console-balance mdl-cell mdl-cell--4-col">
+        <i>$</i>{{balance}}
+        <div class="m-revenue--console-label">
+          <label>Pending</label>
+          <m-tooltip icon="help">
+            This is your earnings awaiting payout. A negative number indicates a refund or chargeback has occured.
+          </m-tooltip>
+        </div>
+      </div>
+      <div class="m-revenue--console-payouts mdl-cell mdl-cell--4-col">
+        <i>$</i>{{payouts}}
+        <div class="m-revenue--console-label">
+          <label>Paid out</label>
+          <m-tooltip icon="help">
+            This is what has been sent to your bank account
+          </m-tooltip>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
