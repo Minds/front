@@ -4,12 +4,12 @@ import { Material } from '../../../directives/material';
 import { KeyVal } from '../../../interfaces/entities';
 
 export interface SocialProfileMeta {
-    key: string,
-    label: string,
-    placeholder: string,
-    link: string,
-    icon: string,
-    customIcon?: boolean,
+  key: string,
+  label: string,
+  placeholder: string,
+  link: string,
+  icon: string,
+  customIcon?: boolean,
 }
 
 @Component({
@@ -39,6 +39,13 @@ export class ChannelSocialProfiles {
       placeholder: 'Username',
       link: 'https://github.com/:value',
       icon: 'github'
+    },
+    {
+      key: 'instagram',
+      label: 'Instagram',
+      placeholder: 'Username',
+      link: 'https://instagram.com/:value',
+      icon: 'instagram'
     },
     {
       key: 'linkedin',
@@ -138,7 +145,7 @@ export class ChannelSocialProfiles {
 
   removeSocialProfile(index: number) {
     this.socialProfiles.splice(index, 1);
-    
+
     this.propagateChanges();
   }
 
