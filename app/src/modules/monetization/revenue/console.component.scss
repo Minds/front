@@ -75,3 +75,16 @@ m-monetization--graph{
     cursor: pointer;
   }
 }
+
+.m-revenue--console{
+
+  m-revenue--ledger{
+    display: block;
+    max-width: 600px;
+    margin: 16px auto;
+
+    table{
+      width:100%;
+    }
+  }
+}

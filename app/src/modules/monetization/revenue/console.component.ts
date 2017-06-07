@@ -14,6 +14,9 @@ export class RevenueConsoleComponent {
   payouts : number | string = '...';
   net : number | string = '...';
 
+  filter : string = 'payments';
+  ledgerType : string = 'charge';
+
   constructor(private client : Client, private cd: ChangeDetectorRef) {
 
   }

@@ -6,7 +6,7 @@ import { Client } from "../../../services/api";
 
 @Component({
   moduleId: module.id,
-  selector: 'm-monetization--graph',
+  selector: 'm-revenue--graph',
   templateUrl: 'graph.component.html',
   providers: [
     CurrencyPipe

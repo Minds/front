@@ -38,8 +38,6 @@ export class MerchantsFormStripe implements OnInit {
       state: ['', requiredFor(['AU', 'CA', 'IE', 'US'])],
       postCode: ['', optionalFor(['HK', 'IE', 'JP'])],
       phoneNumber: ['', requiredFor(['JP'])],
-      accountNumber:  [''],
-      routingNumber: [''],
       stripeAgree: ['', Validators.required],
     });
 

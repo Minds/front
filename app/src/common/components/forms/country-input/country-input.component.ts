@@ -13,7 +13,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   `
 })
 
-export class CountryInput {
+export class CountryInputComponent {
 
   countries : Array<{name : string, code : string}> = [
     {"name": "Afghanistan", "code": "AF"},
