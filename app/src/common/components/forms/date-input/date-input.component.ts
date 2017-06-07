@@ -4,29 +4,34 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   moduleId: module.id,
   selector: 'minds-date-input',
   template: `
-    <select [ngModel]="selectedMonth" (ngModelChange)="selectedMonth = $event; build()" [disabled]="disabled">
-      <option value=""><i>Month</i></option>
-      <option *ngFor="let month of months; let i = index"
-        [value]="i + 1"
-      >{{ month }}</option>
-    </select>
-    <select [ngModel]="selectedDay" (ngModelChange)="selectedDay = $event; build()" [disabled]="disabled">
-      <option value=""><i>Day</i></option>
-      <option *ngFor="let day of days"
-        [value]="day"
-        [disabled]="!isDayAvailable(day, selectedMonth)"
-      >{{ day }}</option>
-    </select>
-    <select [ngModel]="selectedYear" (ngModelChange)="selectedYear = $event; build()" [disabled]="disabled">
-      <option value=""><i>Year</i></option>
-      <option *ngFor="let year of years"
-        [value]="year"
-      >{{ year }}</option>
-    </select>
+    <div class="m-date-input--field">
+      <select [ngModel]="selectedMonth" (ngModelChange)="selectedMonth = $event; build()" [disabled]="disabled">
+        <option value=""><i>Month</i></option>
+        <option *ngFor="let month of months; let i = index"
+          [value]="i + 1"
+        >{{ month }}</option>
+      </select>
+    </div>
+    <div class="m-date-input--field">
+      <select [ngModel]="selectedDay" (ngModelChange)="selectedDay = $event; build()" [disabled]="disabled">
+        <option value=""><i>Day</i></option>
+        <option *ngFor="let day of days"
+          [value]="day"
+          [disabled]="!isDayAvailable(day, selectedMonth)"
+        >{{ day }}</option>
+      </select>
+    <div class="m-date-input--field">
+      <select [ngModel]="selectedYear" (ngModelChange)="selectedYear = $event; build()" [disabled]="disabled">
+        <option value=""><i>Year</i></option>
+        <option *ngFor="let year of years"
+          [value]="year"
+        >{{ year }}</option>
+      </select>
+    </div>
   `
 })
 
-export class DateInput implements OnInit {
+export class DateInputComponent implements OnInit {
 
   months: string[];
   days: string[];

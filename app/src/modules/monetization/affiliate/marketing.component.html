@@ -5,10 +5,16 @@
     <h3>Earn 25% of the revenue your referrals generate</h3>
 
     <div class="m-affiliate--marketing-action-button">
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!isAffiliate()" (click)="join()">Join Now</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!isAffiliate() && !showOnboarding" (click)="join()">Join Now</button>
       <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isAffiliate()" routerLink="/wallet/revenue">View Earnings</button>
     </div>
   </div>
+
+  <div class="m-affiliate--marketing-onboarding mdl-shadow--4dp" *ngIf="showOnboarding">
+    <p>In order to become a Minds Affiliate, you must first monetize your channel. Fill out the form below to get started.</p>
+    <m-monetization--onboarding (completed)="onboardCompleted($event)"></m-monetization--onboarding>
+  </div>
+
 
   <div class="m-affiliate--marketing-contents mdl-grid mdl-grid--no-spacing">
 

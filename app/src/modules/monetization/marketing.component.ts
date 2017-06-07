@@ -1,36 +1,44 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
-import { Client } from '../../../common/api/client.service';
+import { Client } from '../../common/api/client.service';
 
 @Component({
-  selector: 'm-affiliate--marketing',
+  selector: 'm-monetization--marketing',
   templateUrl: 'marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AffiliateMarketingComponent {
+export class MonetizationMarketingComponent {
 
   user = window.Minds.user;
-  showOnboarding : boolean = false;
+  showOnboardingForm : boolean = false;
 
   constructor(private client : Client, private cd : ChangeDetectorRef){
   }
 
-  isAffiliate(){
-    for(let program of this.user.programs){
-      if(program == 'affiliate')
-        return true;
-    }
+  ngOnInit(){
+    this.load();
+  }
+
+  load(): Promise<any> {
+    return this.client.get('api/v1/merchant/status')
+      .then((response: any) => {
+        console.log(response);
+        return response;
+      })
+      .catch(e => {
+        throw e;
+      });
+  }
+
+  isMonetized(){
+    if(this.user.merchant.id)
+      return true;
     return false;
   }
 
-  join(){
-    if(!this.user.merchant && !this.user.merchant.id){
-      this.showOnboarding = true;
-      return;
-    }
-    this.user.programs.push('affiliate');
-    this.client.put('api/v1/monetization/affiliates');
+  onboard(){
+    this.showOnboardingForm = true;
     this.detectChanges();
   }
 
@@ -45,9 +53,6 @@ export class AffiliateMarketingComponent {
         amount: 10
       }
     };
-    this.showOnboarding = false;
-
-    this.join();
 
     this.detectChanges();
   }

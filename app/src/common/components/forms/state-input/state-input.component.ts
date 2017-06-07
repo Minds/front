@@ -13,7 +13,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   `
 })
 
-export class StateInput {
+export class StateInputComponent {
 
   states : Array<{name : string, code : string}> = [
     {

@@ -12,14 +12,21 @@
         </div>
       </a>
 
-      <a [routerLink]="['/wallet/merchants']" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+      <a routerLink="/monetization" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">account_balance</i>
           <!-- i18n -->Monetize your Channel<!-- /i18n -->
         </div>
       </a>
 
-      <a [routerLink]="['/discovery/trending/channels']" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-suggested-channels-link">
+      <a routerLink="/affiliates" *ngIf="session.getLoggedInUser().programs.indexOf('affiliate') <= -1" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">share</i>
+          <!-- i18n -->Become an Affiliate<!-- /i18n -->
+        </div>
+      </a>
+
+      <a [routerLink]="['/discovery/trending/channels']" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-suggested-channels-link" *ngIf="false">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">search</i>
           <!-- i18n -->Find channels<!-- /i18n -->

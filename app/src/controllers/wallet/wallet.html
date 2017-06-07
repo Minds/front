@@ -25,7 +25,15 @@
           <!-- i18n -->Buy points<!-- /i18n -->
         </a>
       </li>
-      <li>
+      <li *ngIf="!session.getLoggedInUser().merchant">
+        <a class="mdl-color-text--blue-grey-500"
+          routerLink="/monetization"
+          >
+          <i class="material-icons">attach_money</i>
+          <span i18n>Monetize your channel</span>
+        </a>
+      </li>
+      <li *ngIf="session.getLoggedInUser().merchant">
         <a class="mdl-color-text--blue-grey-500"
           routerLink="/wallet/revenue"
           routerLinkActive="selected"
@@ -34,14 +42,13 @@
           <span i18n>Revenue Console</span>
         </a>
       </li>
-      <li>
+      <li *ngIf="session.getLoggedInUser().merchant">
         <a class="mdl-color-text--blue-grey-500"
           [routerLink]="['/wallet/merchants']"
           routerLinkActive="selected"
-          *ngIf="session.getLoggedInUser().merchant"
           >
-          <i class="material-icons">attach_money</i>
-          <span i18n>Paywall & Subscriptions</span>
+          <i class="material-icons">vpn_key</i>
+          <span i18n>Exclusive Content</span>
         </a>
       </li>
       <li>
@@ -49,11 +56,11 @@
           routerLink="/affiliates"
           routerLinkActive="selected"
           >
-          <i class="material-icons">attach_money</i>
+          <i class="material-icons">share</i>
           <span i18n>Affiliates</span>
         </a>
       </li>
-      <li>
+      <li *ngIf="session.getLoggedInUser().merchant">
         <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/ad-sharing" routerLinkActive="selected">
           <i class="material-icons">branding_watermark</i>
           <!-- i18n -->Ad Sharing<!-- /i18n -->

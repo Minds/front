@@ -14,6 +14,8 @@ export class MonetizationOverviewComponent {
   payouts : number | string = '...';
   net : number | string = '...';
 
+  user = window.Minds.user;
+
   constructor(private client : Client, private cd: ChangeDetectorRef) {
 
   }

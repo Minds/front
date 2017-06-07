@@ -1,0 +1,27 @@
+.m-date-input--field{
+  display: inline-block;
+  max-width: 100%;
+  position:relative;
+
+  &::before{
+    content: '\25bc';
+    position: absolute;
+    pointer-events: none;
+    color: #767676;
+    top: 0;
+    bottom: 1px;
+    padding-top: 0.7em;
+    line-height: 1;
+    right: 0;
+    width: 2em;
+    text-align: center;
+    transform: scale(0.84, 0.42);
+    filter: progid:DXImageTransform.Microsoft.Matrix(M11=.84, M12=0, M21=0, M22=.42, SizingMethod='auto expand');
+  }
+
+  select {
+    padding: 8px 40px 8px 8px;
+    appearance: none;
+    border: 1px solid #CCC;
+  }
+}

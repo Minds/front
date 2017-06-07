@@ -9,6 +9,8 @@ import { MDL_DIRECTIVES } from './directives/material';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { ChartComponent } from './components/chart/chart.component';
 import { CountryInputComponent } from './components/forms/country-input/country-input.component';
+import { DateInputComponent } from './components/forms/date-input/date-input.component';
+import { StateInputComponent } from './components/forms/state-input/state-input.component';
 
 @NgModule({
   imports: [
@@ -22,6 +24,8 @@ import { CountryInputComponent } from './components/forms/country-input/country-
     InfiniteScroll,
     ChartComponent,
     CountryInputComponent,
+    DateInputComponent,
+    StateInputComponent,
 
     MDL_DIRECTIVES
   ],
@@ -31,6 +35,8 @@ import { CountryInputComponent } from './components/forms/country-input/country-
     InfiniteScroll,
     ChartComponent,
     CountryInputComponent,
+    DateInputComponent,
+    StateInputComponent,
 
     MDL_DIRECTIVES
   ],

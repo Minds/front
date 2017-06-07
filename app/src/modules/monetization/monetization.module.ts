@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { MonetizationOverviewComponent } from './overview.component';
+import { MonetizationMarketingComponent } from './marketing.component';
+import { MonetizationOnboardingComponent } from './onboarding/onboarding.component';
 import { AffiliateMarketingComponent } from './affiliate/marketing.component';
 import { RevenueConsoleComponent } from './revenue/console.component';
 import { RevenueGraphComponent } from './revenue/graph.component';
@@ -14,6 +16,7 @@ import { RevenueOptionsComponent } from './revenue/options.component';
 
 const monetizationRoutes : Routes = [
   { path: 'affiliates',  component: AffiliateMarketingComponent },
+  { path: 'monetization', component: MonetizationMarketingComponent },
   { path: 'wallet/revenue', component: RevenueConsoleComponent,
     children: [
       { path: '', redirectTo: 'payments', pathMatch: 'full' },
@@ -34,6 +37,8 @@ const monetizationRoutes : Routes = [
   ],
   declarations: [
     MonetizationOverviewComponent,
+    MonetizationMarketingComponent,
+    MonetizationOnboardingComponent,
     AffiliateMarketingComponent,
     RevenueConsoleComponent,
     RevenueGraphComponent,
@@ -42,6 +47,8 @@ const monetizationRoutes : Routes = [
   ],
   exports: [
     MonetizationOverviewComponent,
+    MonetizationMarketingComponent,
+    MonetizationOnboardingComponent,
     AffiliateMarketingComponent,
     RevenueConsoleComponent,
     RevenueGraphComponent,
@@ -49,7 +56,7 @@ const monetizationRoutes : Routes = [
     RevenueOptionsComponent,
     RouterModule
   ],
-  entryComponents: [ MonetizationOverviewComponent, AffiliateMarketingComponent, RevenueConsoleComponent ]
+  entryComponents: [ MonetizationOverviewComponent, MonetizationMarketingComponent, AffiliateMarketingComponent, RevenueConsoleComponent ]
 })
 
 export class MonetizationModule {}
