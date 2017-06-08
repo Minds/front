@@ -10,10 +10,13 @@ import { Client } from '../../../common/api/client.service';
 
 export class AffiliateMarketingComponent {
 
+  minds = window.Minds;
   user = window.Minds.user;
   showOnboarding : boolean = false;
+  link : string = '';
 
   constructor(private client : Client, private cd : ChangeDetectorRef){
+    this.link = this.minds.site_url + 'register;referrer=' + this.user.username;
   }
 
   isAffiliate(){

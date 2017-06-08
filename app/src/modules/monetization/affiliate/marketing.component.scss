@@ -27,6 +27,33 @@
     font-weight:300;
   }
 
+  .m-affiliate--marketing-link{
+    input{
+      padding:16px;
+      font-size:22px;
+      color:#333;
+      background: rgba(255,255,255,0.5);
+      border:0;
+      border-radius: 3px;
+      max-width:825px;
+      width:100%;
+      display: block;
+      margin: 8px auto;
+      text-align: center;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+    }
+    span{
+      padding:8px;
+      letter-spacing:1px;
+      font-family: 'Lato';
+      color: #FFF;
+      font-size: 16px;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+  }
+
   .m-affiliate--marketing-action-button{
     margin-bottom: -80px;
     margin-top: 32px;
