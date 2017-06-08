@@ -4,7 +4,7 @@
     <div class="m-revenue--console-overview mdl-grid">
 
       <div class="m-revenue--console-volume mdl-cell mdl-cell--4-col">
-        <i>$</i>{{net}}
+        <i>{{ getCurrencySymbol(currency) }}</i>{{net}}
         <div class="m-revenue--console-label">
           <label>Earnings</label>
           <m-tooltip icon="help">
@@ -14,7 +14,7 @@
       </div>
 
       <div class="m-revenue--console-balance mdl-cell mdl-cell--4-col">
-        <i>$</i>{{balance}}
+        <i>{{ getCurrencySymbol(currency) }}</i>{{balance}}
         <div class="m-revenue--console-label">
           <label>Pending</label>
           <m-tooltip icon="help">
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="m-revenue--console-payouts mdl-cell mdl-cell--4-col">
-        <i>$</i>{{payouts}}
+        <i>{{ getCurrencySymbol(currency) }}</i>{{payouts}}
         <div class="m-revenue--console-label">
           <label>Paid out</label>
           <m-tooltip icon="help">

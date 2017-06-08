@@ -10,6 +10,7 @@ import { Client } from '../../../common/api/client.service';
 
 export class RevenueConsoleComponent {
 
+  currency : string = 'usd';
   balance : number | string = '...';
   payouts : number | string = '...';
   net : number | string = '...';
@@ -28,7 +29,7 @@ export class RevenueConsoleComponent {
   getTotals(){
     this.client.get('api/v1/monetization/revenue/overview')
       .then((response : any) => {
-        console.log(response);
+        this.currency = response.currency;
         this.balance = response.balance;
         this.payouts = response.payouts;
         this.net = response.total.net;
@@ -36,6 +37,18 @@ export class RevenueConsoleComponent {
         this.cd.markForCheck();
         this.cd.detectChanges();
       });
+  }
+
+  getCurrencySymbol(currency) {
+    switch(currency){
+      case "gbp":
+        return '£';
+      case "eur":
+        return '€';
+      case "usd":
+      default:
+        return '$';
+    }
   }
 
 }

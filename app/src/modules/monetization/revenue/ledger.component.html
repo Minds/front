@@ -6,7 +6,7 @@
         <thead>
           <tr class="m-revenue--ledger-header">
             <th class="mdl-data-table__cell--non-numeric m-data-title">Date</th>
-            <th class="mdl-data-table__cell--non-numeric m-data-title" *ngIf="type == 'charge'">Type</th>
+            <th class="mdl-data-table__cell--non-numeric m-data-title" *ngIf="type == 'payments'">Type</th>
             <th class="mdl-data-table__cell--non-numeric m-data-title" *ngIf="type == 'payouts'">Status</th>
             <th>Amount</th>
           </tr>
@@ -14,7 +14,7 @@
         <tbody>
           <tr *ngFor="let transaction of transactions" class="m-revenue--ledger-row">
             <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category">{{ transaction.ts * 1000 | date }}</td>
-            <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category" *ngIf="type == 'charge'">{{ transaction.category }}</td>
+            <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category" *ngIf="type == 'payments'">{{ transaction.category }}</td>
             <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category" *ngIf="type == 'payouts'">
               {{transaction.status == 'in_transit' ? 'Sending' : transaction.status}}
             </td>
@@ -31,7 +31,7 @@
                   This payment was disputed by the card holder.
                 </m-tooltip>
               </div>
-              <span>{{ transaction.amount | currency:'USD':true }}</span>
+              <span>{{ transaction.amount | currency:transaction.currency:true }}</span>
             </td>
           </tr>
         </tbody>
