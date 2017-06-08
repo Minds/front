@@ -1,5 +1,5 @@
-import { Component, EventEmitter, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, ViewChild, Input, Output } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
@@ -9,8 +9,6 @@ import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha
 @Component({
   moduleId: module.id,
   selector: 'minds-form-register',
-  inputs: ['referrer'],
-  outputs: ['done'],
   templateUrl: 'register.html'
 })
 
@@ -21,13 +19,13 @@ export class RegisterForm {
   twofactorToken: string = "";
   hideLogin: boolean = false;
   inProgress: boolean = false;
-  referrer: string;
+  @Input() referrer: string;
   captcha: string;
 
   form: FormGroup;
   minds = window.Minds;
 
-  done: EventEmitter<any> = new EventEmitter();
+  @Output() done : EventEmitter<any> = new EventEmitter();
 
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
 
