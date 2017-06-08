@@ -52,6 +52,9 @@ minds-payments-checkout{
   text-transform: uppercase;
   letter-spacing: 2px;
   font-family: 'Lato';
+  border: 1px solid #DDD;
+  margin: 16px;
+  border-radius: 3px;
 
   > *{
     padding:8px;
@@ -61,6 +64,7 @@ minds-payments-checkout{
     flex:auto;
     text-align:right;
     color: #888;
+    cursor: pointer;
   }
 }
 .m-payments--stripe-or{

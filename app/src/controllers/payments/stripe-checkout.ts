@@ -22,9 +22,9 @@ interface CreditCard {
 
     <div class="m-payments--stripe-cards" *ngIf="cards.length">
       <div class="m-payments--stripe-card" *ngFor="let card of cards" (click)="selectSavedCard(card)">
-        <div class="m-payments--stripe-card-type">{{card.brand}}</div>
-        <div class="m-payments--stripe-card-number">**** {{card.last4}}</div>
-        <div class="m-payments--stripe-card-expiry">{{card.exp_month}} / {{card.exp_year}}</div>
+        <div class="m-payments--stripe-card-type mdl-color-text--blue-grey-700">{{card.brand}}</div>
+        <div class="m-payments--stripe-card-number mdl-color-text--blue-grey-500">**** {{card.last4}}</div>
+        <div class="m-payments--stripe-card-expiry mdl-color-text--blue-grey-500">{{card.exp_month}} / {{card.exp_year}}</div>
 
         <div class="m-payments--stripe-card-select">Select</div>
       </div>
