@@ -54,6 +54,8 @@ export class MonetizationMarketingComponent {
       }
     };
 
+    this.showOnboardingForm = false;
+
     this.detectChanges();
   }
 
