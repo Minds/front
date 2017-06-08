@@ -11,9 +11,10 @@ import { Client } from '../../../common/api/client.service';
 export class RevenueConsoleComponent {
 
   currency : string = 'usd';
-  balance : number | string = '...';
-  payouts : number | string = '...';
-  net : number | string = '...';
+  balance : number | string = 0;
+  payouts : number | string = 0;
+  net : number | string = 0;
+  ready : boolean = false;
 
   filter : string = 'payments';
   ledgerType : string = 'charge';
@@ -33,6 +34,7 @@ export class RevenueConsoleComponent {
         this.balance = response.balance;
         this.payouts = response.payouts;
         this.net = response.total.net;
+        this.ready = true;
 
         this.cd.markForCheck();
         this.cd.detectChanges();

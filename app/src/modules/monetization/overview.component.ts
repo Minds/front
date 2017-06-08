@@ -10,9 +10,10 @@ import { Client } from '../../common/api/client.service';
 
 export class MonetizationOverviewComponent {
 
-  balance : number | string = '...';
-  payouts : number | string = '...';
-  net : number | string = '...';
+  balance : number | string = 0;
+  payouts : number | string = 0;
+  net : number | string = 0;
+  ready : boolean = false;
 
   user = window.Minds.user;
 
@@ -31,6 +32,7 @@ export class MonetizationOverviewComponent {
         this.balance = response.balance;
         this.payouts = response.payouts;
         this.net = response.total.net;
+        this.ready = true;
 
         this.cd.markForCheck();
         this.cd.detectChanges();

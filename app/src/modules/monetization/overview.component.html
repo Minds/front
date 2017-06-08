@@ -1,7 +1,7 @@
 <div class="m-monetization--overview mdl-color--blue-500 mdl-color-text--white mdl-shadow--4dp">
 
   <div class="m-monetization--overview-volume">
-    <i>$</i>{{net}}
+    <i>$</i><span *ngIf="ready">{{net | number: '1.2-2'}}</span>
     <div class="m-monetization--overview-label">
       <label>Earnings</label>
       <m-tooltip icon="help">
@@ -11,7 +11,7 @@
   </div>
   <div class="m-monetization--overview-breakdown">
     <div class="m-monetization--overview-balance">
-      <i>$</i>{{balance}}
+      <i>$</i><span *ngIf="ready">{{balance | number: '1.2-2'}}</span>
       <div class="m-monetization--overview-label">
         <label>Pending</label>
         <m-tooltip icon="help">
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="m-monetization--overview-payouts">
-      <i>$</i>{{payouts}}
+      <i>$</i><span *ngIf="ready">{{payouts | number: '1.2-2'}}</span>
       <div class="m-monetization--overview-label">
         <label>Paid out</label>
         <m-tooltip icon="help">
