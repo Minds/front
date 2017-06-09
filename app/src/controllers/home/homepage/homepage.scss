@@ -99,7 +99,7 @@
       .m-homepage-grid{
         .m-homepage-titles{
           h1{
-            font-size: 32px;
+            font-size: 26px;
             line-height:32px;
             //font-weight: 200;
             //margin:16px;
@@ -107,10 +107,10 @@
             padding:0 $minds-padding*2;
           }
           h3{
-            font-size:16px;
+            font-size:14px;
             //font-weight: 200;
             line-height:16px;
-            padding:16px 16px 0;
+            padding:8px 0 0;
           }
         }
       }
@@ -119,6 +119,7 @@
       }
       .m-app-links {
         //max-width:60%;
+        padding:0;
         margin:$minds-margin;
         a{
           flex:auto;
