@@ -113,7 +113,7 @@ export class MindsVideo{
   //}
 
   set _muted(value : boolean){
-    this.muted = value;
+    //this.muted = value;
     //this.element.muted = value;
   }
 
@@ -296,7 +296,7 @@ export class MindsVideo{
       }
     } else {
       if(this.element.paused == false){
-        this.element.muted = true;
+        //this.element.muted = true;
         this.element.pause();
         //console.log('[video]:: pausing ' + this.src);
       }
