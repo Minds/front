@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../../../services/api';
 
@@ -21,7 +21,7 @@ export class MonetizationOnboardingComponent implements OnInit {
 
   @Output() completed: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder, private client: Client) { }
+  constructor(private fb: FormBuilder, private client: Client, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -94,10 +94,12 @@ export class MonetizationOnboardingComponent implements OnInit {
       .then((response: any) => {
         this.inProgress = false;
         this.completed.emit(response);
+        this.detectChanges();
       })
       .catch((e) => {
         this.inProgress = false;
         this.error = e.message;
+        this.detectChanges();
       });
   }
 
@@ -113,10 +115,12 @@ export class MonetizationOnboardingComponent implements OnInit {
       .then((response : any) => {
         this.inProgress = false;
         this.completed.emit(response);
+        this.detectChanges();
       })
       .catch((e) => {
         this.inProgress = false;
         this.error = e.message;
+        this.detectChanges();
       });
   }
 
@@ -142,4 +146,10 @@ export class MonetizationOnboardingComponent implements OnInit {
     const currentCountry = this.form.controls.country.value;
     return countries.indexOf(currentCountry) > -1;
   }
+
+  detectChanges(){
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
 }
