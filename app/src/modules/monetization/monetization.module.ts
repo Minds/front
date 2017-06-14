@@ -8,6 +8,7 @@ import { MonetizationOverviewComponent } from './overview.component';
 import { MonetizationMarketingComponent } from './marketing.component';
 import { MonetizationOnboardingComponent } from './onboarding/onboarding.component';
 import { AffiliateMarketingComponent } from './affiliate/marketing.component';
+import { AffiliateTermsComponent } from './affiliate/terms.component';
 import { RevenueConsoleComponent } from './revenue/console.component';
 import { RevenueGraphComponent } from './revenue/graph.component';
 import { RevenueLedgerComponent } from './revenue/ledger.component';
@@ -40,6 +41,7 @@ const monetizationRoutes : Routes = [
     MonetizationMarketingComponent,
     MonetizationOnboardingComponent,
     AffiliateMarketingComponent,
+    AffiliateTermsComponent,
     RevenueConsoleComponent,
     RevenueGraphComponent,
     RevenueLedgerComponent,
@@ -50,6 +52,7 @@ const monetizationRoutes : Routes = [
     MonetizationMarketingComponent,
     MonetizationOnboardingComponent,
     AffiliateMarketingComponent,
+    AffiliateTermsComponent,
     RevenueConsoleComponent,
     RevenueGraphComponent,
     RevenueLedgerComponent,
