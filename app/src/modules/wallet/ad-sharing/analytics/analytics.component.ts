@@ -7,9 +7,9 @@ import { Client } from '../../../../services/api';
 @Component({
   moduleId: module.id,
   templateUrl: 'analytics.component.html',
-  selector: 'minds-wallet-ad-sharing-analytics',
+  selector: 'm-wallet-ad-sharing-analytics',
 })
-export class WalletAdSharingAnalytics {
+export class WalletAdSharingAnalyticsComponent {
 
   overview = {
     today: 0,

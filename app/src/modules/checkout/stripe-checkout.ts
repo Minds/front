@@ -19,17 +19,8 @@ interface CreditCard {
   selector: 'minds-payments-stripe-checkout',
   outputs: ['inputed', 'done'],
   template: `
-
-    <div class="m-payments--stripe-cards" *ngIf="cards.length">
-      <div class="m-payments--stripe-card" *ngFor="let card of cards" (click)="selectSavedCard(card)">
-        <div class="m-payments--stripe-card-type mdl-color-text--blue-grey-700">{{card.brand}}</div>
-        <div class="m-payments--stripe-card-number mdl-color-text--blue-grey-500">**** {{card.last4}}</div>
-        <div class="m-payments--stripe-card-expiry mdl-color-text--blue-grey-500">{{card.exp_month}} / {{card.exp_year}}</div>
-
-        <div class="m-payments--stripe-card-select">Select</div>
-      </div>
-
-      <div class="m-payments--stripe-or">- OR -</div>
+    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="useBitcoin">
+        <div id="coinbase-btn" *ngIf="useBitcoin"></div>
     </div>
 
     <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation" *ngIf="useCreditCard"></minds-checkout-card-input>
@@ -47,7 +38,6 @@ export class StripeCheckout {
   confirmation : boolean = false;
   error : string = "";
   card;
-  cards : Array<any> = [];
 
   inputed : EventEmitter<any> = new EventEmitter;
   done : EventEmitter<any> = new EventEmitter;
@@ -58,7 +48,7 @@ export class StripeCheckout {
 
   stripe;
   bt_checkout;
-  token : string = "";
+  nonce : string = "";
 
   @Input() useCreditCard : boolean = true;
   @Input() useBitcoin : boolean = false;
@@ -67,17 +57,24 @@ export class StripeCheckout {
 	}
 
   ngOnInit(){
-    (<any>window).Stripe.setPublishableKey(this.minds.stripe_key);
-    this.getSavedCards();
+    setTimeout(() => {
+      this.setupStripe();
+    }, 1000); //sometimes stripe can take a while to download
+  }
+
+  setupStripe(){
+    if((<any>window).Stripe){
+      (<any>window).Stripe.setPublishableKey(this.minds.stripe_key);
+    }
   }
 
   setCard(card){
     console.log(card);
     this.card = card;
-    this.getCardToken();
+    this.getCardNonce();
   }
 
-  getCardToken(){
+  getCardNonce(){
     this.inProgress = true;
 
     (<any>window).Stripe.card.createToken({
@@ -92,23 +89,11 @@ export class StripeCheckout {
         this.inProgress = false;
         return false;
       }
-      this.token = response.id;
-      this.inputed.next(this.token);
+      this.nonce = response.id;
+      this.inputed.next(this.nonce);
       this.inProgress = false;
 
     });
-  }
-
-  getSavedCards(){
-    this.client.get('api/v1/payments/stripe/cards')
-      .then((response : any) => {
-        this.cards = response.cards;
-      });
-  }
-
-  selectSavedCard(card){
-    this.inputed.next(card.id);
-    this.inProgress = true;
   }
 
   purchase(){

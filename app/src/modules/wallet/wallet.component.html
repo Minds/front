@@ -2,15 +2,9 @@
 
   <div class="mdl-cell mdl-cell--4-col">
 
-    <div class="mdl-card mdl-shadow--2dp minds-wallet-points mdl-color--green">
-      <div class="m-points-balance">
-        <i class="material-icons mdl-color-text--white">account_balance</i>
-        <h2 i18n>{{wallet.points}} points</h2>
-      </div>
-    </div>
+    <m-wallet--points-overview></m-wallet--points-overview>
 
     <m-monetization--overview></m-monetization--overview>
-
 
     <ul class="mdl-card minds-card-navigation mdl-shadow--2dp" style="width:100%; margin-top:8px;">
       <li>
@@ -80,15 +74,7 @@
 
   <div class="mdl-cell mdl-cell--8-col">
 
-    <minds-wallet-purchase [toggled]="filter == 'purchase'" [hidden]="filter == 'merchants' || filter == 'ad-sharing'"></minds-wallet-purchase>
-
-    <minds-wallet-transactions *ngIf="filter == 'transactions' || filter == 'purchase'"></minds-wallet-transactions>
-
-    <minds-wallet-merchants *ngIf="filter == 'merchants'"></minds-wallet-merchants>
-
-    <minds-wallet-ad-sharing *ngIf="filter == 'ad-sharing'"></minds-wallet-ad-sharing>
-
-    <m-monetization--analytics *ngIf="filter == 'monetization'"></m-monetization--analytics>
+    <router-outlet></router-outlet>
 
   </div>
 

@@ -1,7 +1,0 @@
-<div class="mdl-tabs__tab-bar">
-  <a routerLink="/wallet/transactions/points" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'points' }" i18n>Points</a>
-  <a routerLink="/wallet/transactions/money" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'money' }" i18n>Money</a>
-</div>
-
-<minds-wallet-transactions-points *ngIf="type == 'points'"></minds-wallet-transactions-points>
-<minds-wallet-transactions-money *ngIf="type == 'money'"></minds-wallet-transactions-money>

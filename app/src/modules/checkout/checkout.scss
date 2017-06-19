@@ -42,34 +42,3 @@ minds-payments-checkout{
   margin:0;
   padding:0;
 }
-
-
-.m-payments--stripe-card{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 16px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-family: 'Lato';
-  border: 1px solid #DDD;
-  margin: 16px;
-  border-radius: 3px;
-
-  > *{
-    padding:8px;
-  }
-
-  .m-payments--stripe-card-select{
-    flex:auto;
-    text-align:right;
-    color: #888;
-    cursor: pointer;
-  }
-}
-.m-payments--stripe-or{
-  text-align: center;
-  padding: 16px;
-  letter-spacing: 2px;
-  color: #AAA;
-}

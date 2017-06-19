@@ -8,12 +8,12 @@ import { CreditCard } from '../../../interfaces/card-interface';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-wallet-purchase',
-  templateUrl: 'purchase.html',
+  selector: 'm-wallet-purchase',
+  templateUrl: 'purchase.component.html',
   inputs: [ 'toggled' ]
 })
 
-export class WalletPurchase {
+export class WalletPurchaseComponent {
 
   card : CreditCard = <CreditCard>{ month: 'mm', year: 'yyyy'};
 

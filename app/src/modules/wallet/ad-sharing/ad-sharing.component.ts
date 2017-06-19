@@ -8,11 +8,11 @@ import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-wallet-ad-sharing',
+  selector: 'm-wallet-ad-sharing',
   templateUrl: 'ad-sharing.component.html'
 })
 
-export class WalletAdSharing {
+export class WalletAdSharingComponent {
   type: string = 'analytics';
 
   inProgress: boolean = false;
@@ -20,7 +20,7 @@ export class WalletAdSharing {
   remote: boolean = false;
   isMerchant: boolean = false;
   canBecomeMerchant: boolean = false;
-  
+
   enabled: boolean = false;
   applied: boolean = false;
 

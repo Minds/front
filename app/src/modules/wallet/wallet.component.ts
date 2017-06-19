@@ -13,11 +13,11 @@ import { WalletService } from '../../services/wallet';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-wallet',
-  templateUrl: 'wallet.html'
+  selector: 'm-wallet',
+  templateUrl: 'wallet.component.html'
 })
 
-export class Wallet {
+export class WalletComponent {
 
   session = SessionFactory.build();
 
@@ -33,7 +33,7 @@ export class Wallet {
   constructor(public client: Client, public wallet: WalletService, public router: Router, public route: ActivatedRoute, public title: MindsTitle, public storage: Storage) {
     this.disablePointsAnimation = !!this.storage.get('disablePointsAnimation');
   }
-  
+
   paramsSubscription: Subscription;
   ngOnInit() {
     if(!this.session.isLoggedIn()){
@@ -49,11 +49,11 @@ export class Wallet {
       }
     });
 
-    this.wallet.getBalance(true);
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if(this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
   }
 
   // Animations

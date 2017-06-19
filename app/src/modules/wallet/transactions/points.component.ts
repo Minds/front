@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 
-import { Client } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Client } from '../../../services/api';
+import { SessionFactory } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-wallet-transactions-points',
+  selector: 'm-wallet-transactions-points',
   templateUrl: 'points.component.html'
 })
 
-export class WalletTransactionsPoints {
+export class WalletPointsTransactionsComponent  {
 
   session = SessionFactory.build();
 

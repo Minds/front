@@ -18,6 +18,8 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
 
 import { CommonModule } from './src/common/common.module';
 import { MonetizationModule } from './src/modules/monetization/monetization.module';
+import { WalletModule } from './src/modules/wallet/wallet.module';
+import { CheckoutModule } from './src/modules/checkout/checkout.module';
 
 @NgModule({
   bootstrap: [
@@ -38,6 +40,8 @@ import { MonetizationModule } from './src/modules/monetization/monetization.modu
     RouterModule.forRoot(MindsAppRoutes),
     CaptchaModule,
     CommonModule,
+    WalletModule,
+    CheckoutModule,
     MonetizationModule
   ],
   providers: [

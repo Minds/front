@@ -8,11 +8,11 @@ import { Storage } from '../../../services/storage';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-wallet-merchants',
-  templateUrl: 'merchants.html'
+  selector: 'm-wallet-merchants',
+  templateUrl: 'merchants.component.html'
 })
 
-export class Merchants {
+export class MerchantsComponent {
 
   session = SessionFactory.build();
   ts : number = Date.now();

@@ -1,7 +1,8 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { Client } from '../../../services/api';
-import { CreditCard } from '../../../interfaces/card-interface';
+import { CreditCard } from "../../../interfaces/card-interface";
+
+import { Client } from "../../../services/api";
 
 @Component({
   moduleId: module.id,

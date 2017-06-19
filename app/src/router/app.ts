@@ -15,7 +15,6 @@ import {Discovery} from '../controllers/discovery/discovery';
 import {Channel, ChannelSubscribers, ChannelSubscriptions} from '../controllers/channels/channel';
 import {Notifications} from '../controllers/notifications/notifications';
 import {Search} from '../controllers/search/search';
-import {Wallet} from '../controllers/wallet/wallet';
 import {Settings} from '../controllers/settings/settings';
 import {Admin} from '../controllers/admin/admin';
 import {Pages} from '../controllers/pages/pages';
@@ -64,10 +63,6 @@ export const MindsAppRoutes: Routes = [
   { path: 'groups/create', component: GroupsCreator },
   { path: 'groups/:filter', component: Groups },
 
-  { path: 'wallet/:filter/:type', component: Wallet },
-  { path: 'wallet/:filter', component: Wallet },
-  { path: 'wallet', component: Wallet },
-
   { path: 'search', component: Search },
 
   { path: 'settings/:filter', component: Settings },
@@ -102,7 +97,6 @@ export const MINDS_APP_ROUTING_DECLARATIONS: any[] = [
   GroupsProfile,
   GroupsCreator,
   Groups,
-  Wallet,
   Search,
   Settings,
   Admin,

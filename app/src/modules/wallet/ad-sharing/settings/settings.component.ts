@@ -5,9 +5,9 @@ import { Client } from '../../../../services/api';
 @Component({
   moduleId: module.id,
   templateUrl: 'settings.component.html',
-  selector: 'minds-wallet-ad-sharing-settings',
+  selector: 'm-wallet-ad-sharing-settings',
 })
-export class WalletAdSharingSettings {
+export class WalletAdSharingSettingsComponent {
   inProgress: boolean = false;
   loaded: boolean = false;
   settings = {

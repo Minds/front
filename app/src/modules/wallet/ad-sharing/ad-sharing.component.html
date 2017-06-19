@@ -78,10 +78,10 @@
       <a routerLink="/wallet/ad-sharing/settings" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'settings' }" i18n>Settings</a>
   </div>
 
-  <minds-wallet-ad-sharing-settings [hidden]="type != 'settings'"></minds-wallet-ad-sharing-settings>
-  <minds-wallet-ad-sharing-analytics [hidden]="type != 'analytics'"></minds-wallet-ad-sharing-analytics>
+  <m-wallet-ad-sharing-settings [hidden]="type != 'settings'"></m-wallet-ad-sharing-settings>
+  <m-wallet-ad-sharing-analytics [hidden]="type != 'analytics'"></m-wallet-ad-sharing-analytics>
 </div>
 
 <div *ngIf="remote">
-  <minds-wallet-ad-sharing-analytics></minds-wallet-ad-sharing-analytics>
+  <m-wallet-ad-sharing-analytics></m-wallet-ad-sharing-analytics>
 </div>
