@@ -35,7 +35,7 @@
 <!-- END: PayWall -->
 
 <!-- Messages -->
-<div class="mdl-card__supporting-text message m-mature-message" [hidden]="!activity.message || editing">
+<div class="mdl-card__supporting-text message m-mature-message" [class.m-activity--message-remind]="activity.remind_object" [hidden]="!activity.message || editing">
 	<a class="m-mature-text-toggle"
 	  (click)="activity.mature_visibility = !activity.mature_visibility"
 	  *ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
