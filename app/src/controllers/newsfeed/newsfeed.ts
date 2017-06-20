@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,6 +23,7 @@ export class Newsfeed {
   inProgress : boolean = false;
   moreData : boolean = true;
   session = SessionFactory.build();
+  showRightSidebar : boolean = true;
   minds;
 
   attachment_preview;
@@ -69,6 +70,7 @@ export class Newsfeed {
     });
 
     this.title.setTitle("Newsfeed");
+    this.detectWidth();
   }
 
   pollingTimer: any;
@@ -194,6 +196,14 @@ export class Newsfeed {
         this.newsfeed.splice(i,1);
     }
   }
+
+  @HostListener('window:resize') detectWidth() {
+    if(window.innerWidth < 1200)
+      this.showRightSidebar = false;
+    else 
+      this.showRightSidebar = true;
+  }
+
 }
 
 export { NewsfeedSingle } from './single/single';

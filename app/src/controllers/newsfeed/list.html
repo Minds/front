@@ -49,19 +49,20 @@
 
       <div class="minds-spacer minds-spacer-2x"></div>
 
-      <div class="mdl-card mdl-color--white mdl-shadow--2dp">
+      <div class="m-newsfeed--dynamic-siderbar" *ngIf="!showRightSidebar">
+        <m-ads-boost limit="8"></m-ads-boost>
+        <div class="minds-spacer minds-spacer-2x"></div>
 
-        <div class="mdl-card__supporting-text">
-          <!-- i18n -->Views<!-- /i18n -->
+        <div class="m-newsfeed-footer">
+          <ul class="m-footer-nav m-footer-nav-inline">
+            <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item">
+              <a *ngIf="page.path && page.path.indexOf('p/') > -1" [routerLink]="['/' + page.path]">{{page.title}}</a>
+              <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
+            </li>
+          </ul>
+          <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2016</span>
         </div>
-    		<div class="mdl-card__supporting-text mdl-color-text--blue-grey-700">
-
-          <minds-analytics-impressions [key]="session.getLoggedInUser().guid" [span]="5" unit="day"></minds-analytics-impressions>
-
-    		</div>
-    	</div>
-
-
+      </div>
     </div>
 
     <div class="mdl-cell mdl-cell--8-col m-newsfeed--feed">
@@ -94,7 +95,7 @@
 
     </div>
 
-    <div class="mdl-cell mdl-cell--4-col m-newsfeed--boost-sidebar">
+    <div class="mdl-cell mdl-cell--4-col m-newsfeed--boost-sidebar" *ngIf="showRightSidebar">
       <m-ads-boost limit="8"></m-ads-boost>
       <div class="minds-spacer minds-spacer-2x"></div>
 
