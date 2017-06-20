@@ -13,6 +13,13 @@ minds-channel{
     position:relative;
     overflow:visible;
 
+    minds-carousel{
+      height:440px;
+      .minds-banner .minds-banner-overlay{
+          display:none;
+      }
+    }
+
     .channel-grid{
       align-items:flex-end;
       -webkit-align-items: flex-end;
@@ -25,66 +32,34 @@ minds-channel{
       pointer-events: none
     }
 
-    .minds-channel-title{
-      display:flex;
-      flex-flow: row wrap;
-      margin:0;
-      width: 320px;
-      pointer-events: all;
 
-      > div{
-        display:flex;
-        align-items: flex-end;
-        padding:$minds-padding;
+      &.isLocked{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:124px;
+        z-index:999;
+        overflow:hidden;
 
-        .flex-bottom{
-
-          h1{
-            margin:0;
-            line-height:30px;
-            font-size:24px;
-          }
-
-          h3{
-            margin:0;
-            line-height:18px;
-            font-size:13px;
+        .minds-channel-title > div h1{
+          font-size:18px !important;
+        }
+        .minds-channel-title .minds-avatar{
+          margin:8px 8px 0 8px;
+          img{
+            max-height: 52px;
           }
         }
       }
-
     }
 
-  &.isLocked{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:124px;
-    z-index:999;
-    overflow:hidden;
-
-    .minds-channel-title > div h1{
-      font-size:18px !important;
-    }
-    .minds-channel-title .minds-avatar{
-      margin:8px 8px 0 8px;
-      img{
-        max-height: 52px;
-      }
-    }
-  }
-
-  .minds-tabs{
-    flex: 1;
-    align-items: flex-start;
-    -webkit-align-items: -webkit-flex-start;
-    justify-content: flex-start;
+  .m-channel--stats{
     border:0;
     pointer-events: all;
 
     a {
-
+      flex:auto;
       span {
         width: 100%;
         display: block;
@@ -116,7 +91,10 @@ minds-channel{
     }
 
   }
- }
+
+  .m-channel--city{
+    //margin:auto;
+  }
 
  .channel-blocked{
    h3{
@@ -128,11 +106,78 @@ minds-channel{
    }
  }
 
- .minds-channel-sidebar{
-   .mdl-card{
-     width:100%;
-     min-height:0;
+
+ .m-channel--action-buttons{
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    margin: 16px auto 0;
+
+    > * {
+     flex: auto;
+     margin: auto;
+     margin-right: 8px;
    }
+
+   minds-button-edit > button, minds-button-user-dropdown > button{
+     font-size: 16px;
+     border:0;
+   }
+
+ }
+
+ .minds-channel-sidebar, .m-channel-sidebar{
+   margin-top: 72px;
+   .mdl-card, .m-channel--bio{
+     width:100%;
+     overflow:visible;
+     min-height:0;
+     
+     minds-avatar{
+       margin:-75px auto 0;
+       .minds-avatar{
+           margin:0;
+           border-radius:50%;
+           width:150px;
+           height:150px;
+           display:flex;
+           flex-direction: row;
+           align-items:center;
+           background-size: cover;
+           background-position: center center;
+           img{ 
+             display:none; 
+           }
+       }
+     }
+     .m-channel--name{
+       text-align: center;
+       > * {
+         display:inline-block;
+         vertical-align:middle;
+       }
+       h2{
+         letter-spacing: 1px;
+         font-size: 28px;
+         margin: 0;
+       }
+       button{ 
+          border:0;
+          font-size:16px; 
+          margin-right:-26px;
+       }
+     }
+     textarea{
+       text-align:center;
+     }
+   }
+ }
+ 
+ .m-channel-feed{
+   margin-top: 8px;
+   display: block;
  }
 
  .m-channel-bio-fields{
@@ -141,11 +186,13 @@ minds-channel{
      display:flex;
      flex-flow:row wrap;
      align-items: center;
+     margin:auto;
    }
 
    minds-channel-social-profiles {
      display: block;
-     width: 100%;
+     //width: 100%;
+     text-align:center;
    }
 
    .m-channel-bio-field{
@@ -157,7 +204,7 @@ minds-channel{
      text-transform: uppercase;
 
      i{
-       padding-right:$minds-padding;
+       padding:0 $minds-padding;
      }
      span{
        flex:1;
@@ -168,6 +215,7 @@ minds-channel{
        width: 100%;
        font-size: 20px;
        border-top: 1px solid #eeeeee;
+       box-sizing:border-box;
 
        .m-channel-social-profile > a {
          display: inline-block;

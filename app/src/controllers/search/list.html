@@ -7,11 +7,18 @@
     <a [routerLink]="['/search', {q: q, type: 'groups'}]" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'groups' || type == ''}" i18n>Groups</a>
 </div>
 
-<div class="mdl-grid search-grid" style="max-width:500px">
+<div class="mdl-grid search-grid" style="max-width:990px">
 
+    <div class="mdl-cell mdl-cell--4-col">
+      <div class="mdl-card mdl-color--white mdl-shadow--2dp">
+        <m-tagcloud></m-tagcloud>
+      </div>
+      <div class="minds-spacer minds-spacer-2x"></div>
+      <m-ads-boost limit="8"></m-ads-boost>
+    </div>
 
-    <div class="search-results mdl-cell mdl-cell--12-col">
-      <div class="mdl-card mdl-shadow--2dp" *ngFor="let entity of entities">
+    <div class="search-results mdl-cell mdl-cell--8-col">
+      <div class="" *ngFor="let entity of entities">
 
         <minds-card-video [object]="entity" *ngIf="entity.subtype == 'video'"></minds-card-video>
         <minds-card-image [object]="entity" *ngIf="entity.subtype == 'image'"></minds-card-image>
@@ -20,7 +27,7 @@
         <minds-card-group [group]="entity" *ngIf="entity.type == 'group'"></minds-card-group>
 
         <!-- START: User Only -->
-        <minds-card-user [object]="entity" *ngIf="entity.type == 'user'"></minds-card-user>
+        <minds-card-user [object]="entity" *ngIf="entity.type == 'user'" class="mdl-card mdl-shadow--2dp"></minds-card-user>
         <!-- END: User Only -->
       </div>
     </div>

@@ -1,37 +1,6 @@
-<div class="mdl-grid newsfeed-grid" style="max-width:900px">
+<div class="mdl-grid newsfeed-grid m-newsfeed" >
 
-    <div class="mdl-cell mdl-cell--8-col">
-
-        <div class="mdl-shadow--4dp mdl-color--green mdl-color-text--white m-newsfeed-boost-promo" *ngIf="newUserPromo">
-          <i class="material-icons">trending_up</i> <!-- i18n -->Have 200 free views on us. Hit post to be boosted.<!-- /i18n -->
-        </div>
-        <minds-newsfeed-poster (load)="prepend($event)" [message]="message"></minds-newsfeed-poster>
-
-        <div class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
-          (click)="pollingLoadNew()"
-          *ngIf="pollingNewPosts"
-        >
-          <i class="material-icons">update</i> <!-- i18n -->{{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}<!-- /i18n -->
-        </div>
-
-        <div class="minds-list">
-
-            <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
-            <minds-newsfeed-boost-rotator interval="12" *ngIf="showBoostRotator"></minds-newsfeed-boost-rotator>
-            <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
-            <infinite-scroll
-                distance="25%"
-                (load)="load()"
-                [moreData]="moreData"
-                [inProgress]="inProgress">
-            </infinite-scroll>
-
-        </div>
-
-    </div>
-
-
-    <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar">
 
       <minds-card-user [object]="session.getLoggedInUser()" class="mdl-card mdl-shadow--2dp" style="margin-bottom:16px;"></minds-card-user>
 
@@ -92,7 +61,40 @@
     		</div>
     	</div>
 
-      <div class="minds-spacer minds-spacer-2x"></div>
+
+    </div>
+
+    <div class="mdl-cell mdl-cell--8-col m-newsfeed--feed">
+
+        <div class="mdl-shadow--4dp mdl-color--green mdl-color-text--white m-newsfeed-boost-promo" *ngIf="newUserPromo">
+          <i class="material-icons">trending_up</i> <!-- i18n -->Have 200 free views on us. Hit post to be boosted.<!-- /i18n -->
+        </div>
+        <minds-newsfeed-poster (load)="prepend($event)" [message]="message"></minds-newsfeed-poster>
+
+        <div class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
+          (click)="pollingLoadNew()"
+          *ngIf="pollingNewPosts"
+        >
+          <i class="material-icons">update</i> <!-- i18n -->{{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}<!-- /i18n -->
+        </div>
+
+        <div class="minds-list">
+
+            <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+            <minds-newsfeed-boost-rotator interval="12" *ngIf="showBoostRotator"></minds-newsfeed-boost-rotator>
+            <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+            <infinite-scroll
+                distance="25%"
+                (load)="load()"
+                [moreData]="moreData"
+                [inProgress]="inProgress">
+            </infinite-scroll>
+
+        </div>
+
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col m-newsfeed--boost-sidebar">
       <m-ads-boost limit="8"></m-ads-boost>
       <div class="minds-spacer minds-spacer-2x"></div>
 
@@ -105,7 +107,6 @@
         </ul>
         <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2016</span>
       </div>
-
     </div>
 
 </div>

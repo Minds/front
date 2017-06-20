@@ -13,7 +13,7 @@
     </li>
   </ul>
 
-  <div class="m-boost-rotator-tools-tool m-boost-rotator-paused">
+  <div class="m-boost-rotator-tools-tool m-boost-rotator-paused" [style.width]="'46px'">
     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [mdlSwitch] [toggled]="!paused">
       <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="!paused" (ngModelChange)="paused = !paused">
     </label>

@@ -1,5 +1,7 @@
 <!-- Owner block -->
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block" *ngIf="activity.ownerObj && activity.ownerObj.username">
+<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block" [class.m-owner-block--remind]="activity.remind_object" *ngIf="activity.ownerObj && activity.ownerObj.username">
+
+   <i class="material-icons selected" *ngIf="activity.remind_object">repeat</i>
 
 	<div class="avatar" [hovercard]="activity.ownerObj.guid">
 		<a [routerLink]="['/', activity.ownerObj.username]">
@@ -16,11 +18,11 @@
       class="mdl-color-text--blue-grey-300">
       <strong>({{activity.containerObj.name}})</strong>
     </a>
-    <a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid">
+    <a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid && !activity.remind_object">
       <span>{{activity.time_created * 1000 | date:'medium'}}</span><span *ngIf="activity.edited" class="m-edited-text" i18n>edited</span>
     </a>
     <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink"
-      *ngIf="!activity.guid && activity.entity_guid">
+      *ngIf="!activity.guid && activity.entity_guid && !activity.remind_object">
       <span>{{activity.time_created * 1000 | date:'medium'}}</span><span *ngIf="activity.edited" class="m-edited-text" i18n>edited</span>
     </a>
   </div>
@@ -156,7 +158,7 @@
 
 <!-- Reminds -->
 <div *ngIf="activity.remind_object">
-	<minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" class="mdl-card mdl-shadow--6dp item"></minds-remind>
+	<minds-remind [object]="activity.remind_object" [events]="childEventsEmitter"></minds-remind>
 </div>
 
 <div class="mdl-card__supporting-text is-boosted" *ngIf="activity.boosted">

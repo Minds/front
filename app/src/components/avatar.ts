@@ -8,7 +8,7 @@ import { Material } from '../directives/material';
   inputs: ['_object: object', '_src: src', '_editMode: editMode', 'waitForDoneSignal'],
   outputs: ['added'],
   template: `
-  <div class="minds-avatar">
+  <div class="minds-avatar" [style.background-image]="'url(' + src + ')'">
     <img *ngIf="src" src="{{src}}" class="mdl-shadow--4dp" />
     <img *ngIf="!src" src="/assets/avatars/blue/default-large.png" class="mdl-shadow--4dp" />
     <div *ngIf="editing" class="overlay">

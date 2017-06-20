@@ -8,6 +8,45 @@
 }
 
 minds-newsfeed {
+
+  .m-newsfeed{
+    max-width:1190px;
+
+    .m-newsfeed--sidebar, .m-newsfeed--boost-sidebar{
+      max-width:270px;
+    }
+
+    .m-newsfeed--feed{
+        max-width:600px;
+    }
+
+    @media screen and (min-width:1200px) and (max-width:1280px){
+      max-width:1120px; //1200 - 80 (sidebar)
+      .m-newsfeed--sidebar, .m-newsfeed--boost-sidebar{
+        max-width: 265px;
+      }
+      .m-newsfeed--feed{
+        max-width: 525px;
+      }
+    }
+
+    @media screen and (max-width:1199px) {
+        &{
+          max-width:900px;
+        }
+        .m-newsfeed--feed{
+            max-width:initial;
+        }
+    }
+
+    @media screen and (max-width:850px) {
+      .m-newsfeed--sidebar, .m-newsfeed--boost-sidebar{
+        display:none;
+      }
+    }
+
+  }
+
   .minds-newsfeed-sidebar-button {
     padding-bottom: 12px;
 

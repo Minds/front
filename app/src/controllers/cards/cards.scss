@@ -6,6 +6,9 @@ minds-card-user{
   .m-usercard-bio{
     display:none;
   }
+  .avatar img{
+    border-radius:50%;
+  }
 }
 
 minds-card-user, .minds-banner-card{
@@ -213,6 +216,23 @@ minds-activity.mdl-card, minds-activity{
     position: relative;
   }
 
+  .m-owner-block--remind{
+    i{
+      font-size: 18px;
+      margin-right: 12px;
+    }
+    .avatar img{
+      max-height:24px;
+    }
+    .body{
+      margin-left:12px;
+      a { 
+        font-size:12px;
+        letter-spacing:1px;
+      }
+    }
+  }
+
   .m-translate-button i{
     font-size:18px;
   }
@@ -351,10 +371,14 @@ minds-activity.mdl-card, minds-activity{
    * Remind
    */
   minds-remind{
-    margin:$minds-margin * 2;
+    margin:0;
     width:auto;
     min-height:0;
     overflow: visible;
+
+    .m-owner-block{
+      padding-top:0;
+    }
   }
 
 }

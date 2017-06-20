@@ -47,13 +47,15 @@
 .m-owner-block{
   padding:$minds-padding * 2;
   display:flex;
+  flex-direction:row;
+  align-items:center;
 
   .avatar{
     display:flex;
     flex-direction:column;
 
     img{
-      border-radius: 3px;
+      border-radius: 50%;
       max-height:50px;
     }
   }
