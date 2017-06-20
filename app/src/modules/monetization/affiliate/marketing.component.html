@@ -4,7 +4,7 @@
     <h1>Affiliate Program</h1>
     <h3>Earn 25% of the revenue your referrals generate</h3>
 
-    <div class="m-affiliate--marketing-link">
+    <div class="m-affiliate--marketing-link" *ngIf="isAffiliate()">
       <input [value]="link" #el (click)="el.select()" />
       <span>Copy and share the link above</span>
     </div>
