@@ -169,12 +169,27 @@ minds-channel{
           margin-right:-26px;
        }
      }
+     .m-channel--username{
+       h2{
+         margin: 0;
+         padding: 0;
+         line-height: 14px;
+         font-size: 14px;
+         text-align: center;
+         letter-spacing: 1px;
+         color: #777;
+       }
+     }
      textarea{
        text-align:center;
      }
    }
  }
- 
+
+ .m-channel--subscribers-tabs{
+   margin-top:40px;
+ }
+
  .m-channel-feed{
    margin-top: 8px;
    display: block;
