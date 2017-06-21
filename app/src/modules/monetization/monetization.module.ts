@@ -22,9 +22,9 @@ const monetizationRoutes : Routes = [
   { path: 'monetization', component: MonetizationMarketingComponent },
   { path: 'wallet/revenue', component: RevenueConsoleComponent,
     children: [
-      { path: '', redirectTo: 'payments', pathMatch: 'full' },
+      { path: '', redirectTo: 'earnings', pathMatch: 'full' },
       { path: 'points', component: WalletPointsTransactionsComponent },
-      { path: 'payments', component: RevenueLedgerComponent },
+      { path: 'earnings', component: RevenueLedgerComponent },
       { path: 'payouts', component: RevenueLedgerComponent },
       { path: 'options', component: RevenueOptionsComponent }
     ]
