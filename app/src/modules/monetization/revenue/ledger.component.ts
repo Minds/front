@@ -68,6 +68,8 @@ export class RevenueLedgerComponent {
       })
       .catch(e => {
         this.inProgress = false;
+        this.cd.markForCheck();
+        this.cd.detectChanges();
         //this.error = e.message || 'Server error';
       });
   }
