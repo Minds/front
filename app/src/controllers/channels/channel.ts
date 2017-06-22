@@ -41,7 +41,7 @@ export class Channel {
     public title: MindsTitle, public scroll : ScrollService){
   }
 
-  paramsSubscription: Subscription;  
+  paramsSubscription: Subscription;
   ngOnInit() {
     this.title.setTitle("Channel");
     this.onScroll();
@@ -233,6 +233,17 @@ export class Channel {
 
   setSocialProfile(value: any) {
     this.user.social_profiles = value;
+  }
+
+  unBlock(){
+    this.user.blocked = false;
+    this.client.delete('api/v1/block/' + this.user.guid, {})
+      .then((response : any) => {
+        this.user.blocked = false;
+      })
+      .catch((e) => {
+        this.user.blocked = true;
+      });
   }
 }
 

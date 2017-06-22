@@ -14,8 +14,9 @@
 </header>
 
 
-<div class="mdl-grid channel-grid channel-blocked" style="max-width:900px" *ngIf="user && user?.blocked">
+<div class="mdl-grid channel-grid m-channel--blocked" style="max-width:900px" *ngIf="user && user?.blocked">
   <h3 class="mdl-color-text--blue-grey-300" i18n>You have blocked @{{user.username}}</h3>
+  <a (click)="unBlock()">Click to Unblock</a>
 </div>
 
 
@@ -99,7 +100,7 @@
             </a>
         </div>
 
-          <div class="m-channel--action-buttons" > 
+          <div class="m-channel--action-buttons" >
             <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked && !user.subscribed"></minds-button-subscribe>
             <minds-messenger-channel-button [user]="user" *ngIf="user.subscribed"></minds-messenger-channel-button>
             <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
@@ -175,7 +176,7 @@
         <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n>Subscribers ({{user.subscribers_count}})</a>
         <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n>Subscriptions ({{user.subscriptions_count}})</a>
       </div>
-    </div> 
+    </div>
 
     <minds-channel-subscriptions [channel]="user" class="mdl-grid"></minds-channel-subscriptions>
 
@@ -188,7 +189,7 @@
       <div class="mdl-tabs__tab-bar">
         <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n>Subscribers ({{user.subscribers_count}})</a>
         <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n>Subscriptions ({{user.subscriptions_count}})</a>
-      </div> 
+      </div>
     </div>
 
     <minds-channel-subscribers [channel]="user" class="mdl-grid"></minds-channel-subscribers>
