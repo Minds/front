@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { CaptchaModule } from './src/modules/captcha/captcha.module';
 
 import { Minds } from './app.component';
 
@@ -32,6 +33,7 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
     FormsModule,
     HttpModule,
     RouterModule.forRoot(MindsAppRoutes),
+    CaptchaModule
   ],
   providers: [
     MindsAppRoutingProviders,

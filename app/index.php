@@ -7,7 +7,7 @@
     $language = Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en';
     if(in_array($language, [ 'en', 'es'])){
         $aotPrefix = $language === 'en' ? '' : '.' . $language;
-    } 
+    }
 ?>
 <html>
   <head>
@@ -131,6 +131,7 @@
               'language' => $language,
               "categories" => Minds\Core\Config::_()->get('categories') ?: [],
               "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
+              "recaptchaKey" => Minds\Core\Config::_()->get('google')['recaptcha']['site_key']
           ];
 
           if(Minds\Core\Session::isLoggedIn()){

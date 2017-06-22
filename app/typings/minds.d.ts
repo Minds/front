@@ -11,10 +11,11 @@ interface Minds{
  site_url: string;
  notifications_count: number;
  socket_server: string;
- thirdpartynetworks: any; 
+ thirdpartynetworks: any;
  categories: any;
  language: any;
  stripe_key?: any;
+ recaptchaKey ?: string;
 }
 
 interface MindsNavigation {

@@ -25,6 +25,7 @@ export class RegisterForm {
   captcha : string;
 
   form : FormGroup;
+  minds = window.Minds;
 
   done : EventEmitter<any> = new EventEmitter();
 
