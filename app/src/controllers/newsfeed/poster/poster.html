@@ -19,7 +19,7 @@
               placeholder="Enter your status here"
               i18n-placeholder
               [autoGrow]
-            ></textarea>
+            ><?php echo(htmlentities($_GET['text'])); ?></textarea>
 
             <div class="mdl-card__actions">
               <minds-third-party-networks-selector
