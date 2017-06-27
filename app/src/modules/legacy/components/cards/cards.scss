@@ -1,0 +1,466 @@
+@import "defaults";
+
+
+minds-card-user{
+  min-height: 182px !important;
+  .m-usercard-bio{
+    display:none;
+  }
+  .avatar img{
+    border-radius:50%;
+  }
+}
+
+minds-card-user, .minds-banner-card{
+
+  display:block !important;
+  .minds-usercard-banner{
+    width: 100%;
+    height: 84px;
+    overflow: hidden;
+    position:relative;
+
+    .minds-card-banner {
+      width: 100%;
+      height: 100%;
+      background: none no-repeat center center transparent;
+      background-size: cover;
+    }
+
+    .minds-banner-overlay{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(transparent, rgba(0,0,0,0.4));
+    }
+  }
+
+  .minds-usercard-block{
+    margin-top: -72px;
+    padding-bottom:0;
+    position:relative;
+    display:flex;
+    text-decoration: none;
+    color:$minds-white;
+
+    .body{
+      flex:1;
+      margin: $minds-margin*2;
+      max-width: calc(100% - #{100px + ($minds-padding * 3)});
+
+      h3{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 16px;
+        line-height: 18px;
+        padding: 0;
+        margin: 0;
+      }
+      button{
+        margin-top:$minds-margin;
+        width:100%;
+      }
+    }
+  }
+
+  minds-button-subscribe, minds-button-boost{
+    position: absolute;
+    margin: -38px 130px;
+    z-index:999;
+  }
+
+  minds-button-feature{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    button {
+      padding:0;
+    }
+  }
+
+  .minds-tabs{
+    flex: 1;
+    align-items: flex-start;
+    -webkit-align-items: -webkit-flex-start;
+    justify-content: flex-start;
+    border:0;
+
+    a {
+      padding: 0 $minds-padding;
+      flex: auto;
+
+      span {
+        width: 100%;
+        display: block;
+        font-size:11px;
+        height: 11px;
+        vertical-align: middle;
+        line-height: 36px;
+      }
+    }
+
+  }
+
+  .minds-usercard-buttons {
+    position: absolute;
+    top: $minds-padding;
+    right: $minds-padding;
+
+    &.has-feature-button {
+      right: $minds-padding + 30px;
+    }
+
+    [buttons] {
+      display: inline-block;
+    }
+  }
+}
+
+minds-card-image, minds-card-video{
+  //min-height:242px !important;
+}
+
+.mdl-card{
+  .m-owner-block{
+    padding: 16px;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    box-sizing: border-box;
+    background-color: #FFF;
+    .body{
+      margin-top: 0;
+      a{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis
+      }
+
+      .permalink {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+minds-card-album{
+  min-height:260px !important;
+  .minds-album-tiles{
+    margin: -16px;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    -webkit-align-items: stretch;
+
+    > a{
+      flex: auto;
+      width: 30%;
+
+    img{
+      max-height: 100%;
+      max-width: 100%;
+      }
+    }
+  }
+
+  .minds-album-tiles.tiles-1 > a{
+      width:100%;
+  }
+  .minds-album-tiles.tiles-2 > a{
+    width:50%;
+    img{
+      max-height:150%;
+      max-width:150%;
+    }
+  }
+  .minds-album-tiles.tiles-3 >a{
+    width:33%;
+  }
+
+}
+
+minds-activity.mdl-card, minds-activity{
+  width:auto;
+  min-height:0;
+  margin-bottom:16px;
+  border-radius:3px;
+  overflow:visible;
+
+  .mdl-card__supporting-text{
+    width:100%;
+    box-sizing: border-box;
+    color: initial;
+
+    a{
+      text-decoration: none;
+    }
+  }
+  .mdl-card__supporting-text.message{
+    white-space: pre-line;
+    word-wrap: break-word;
+  }
+
+  .m-owner-block{
+    position: relative;
+  }
+
+  .m-owner-block--remind{
+    i{
+      font-size: 18px;
+      margin-right: 12px;
+    }
+    .avatar img{
+      max-height:24px;
+    }
+    .body{
+      margin-left:12px;
+      a { 
+        font-size:12px;
+        letter-spacing:1px;
+      }
+    }
+  }
+
+  .m-activity--message-remind{
+    padding-top:0;
+    padding-bottom: 24px;
+  }
+
+  .m-translate-button i{
+    font-size:18px;
+  }
+
+  .m-edited-text {
+    text-transform: uppercase;
+    padding-left: 8px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+
+  .m-translation-label {
+    padding-top: 0;
+    font-size: 0.75em;
+
+    i {
+      vertical-align: bottom;
+      vertical-align: text-bottom;
+    }
+
+    a {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  minds-comments{
+    margin-top:0;
+
+    .m-translation-label {
+      font-size: 1em;
+    }
+    .m-comment-carrot.m-comment-carrot-collapsed {
+        display:none;
+
+        @media screen and (max-width: $max-mobile) {
+          display: inline-block;
+        }
+    }
+    .mdl-card__menu{
+      background: #FFF;
+    }
+    minds-card-comment:hover{
+      .m-comment-carrot{
+          display:inline-block;
+      }
+    }
+  }
+
+  .impressions-tag{
+    position: absolute;
+    z-index: 999;
+    right: -5px;
+    bottom: -8px;
+    background-color: #888;
+    padding: 3px 8px;
+    font-size: 10px;
+    line-height: 9px;
+    color: #FFF;
+    border-radius: 3px;
+    vertical-align: middle;
+    text-align: center;
+  }
+
+  .minds-more{
+
+    i {
+      font-size: 30px;
+      transform: translate(-16px, -12px);
+      font-weight: 100;
+    }
+  }
+
+  /**
+   * Rich embeds
+   */
+  .m-rich-embed{
+
+    a{
+      width:100%;
+    }
+    img {
+      width:100%;
+    }
+
+    .meta{
+      padding:$minds-padding*2;
+      display:block;
+      text-decoration: none;
+      width: calc(100% - 32px);
+
+      p{
+         font-size:13px;
+         text-overflow: ellipsis;
+         text-rendering: auto;
+         white-space: pre-wrap;
+         overflow: hidden;
+         max-height: 45px;
+         margin:0;
+      }
+      p.m-url{
+        white-space:nowrap;
+        max-width:240px;
+      }
+    }
+  }
+
+  .item-image-video{
+    video{
+      width:100%;
+      height:auto;
+    }
+  }
+
+  .item-image{
+    img{
+      width:100%;
+    }
+  }
+
+  .is-boosted{
+    color:#888;
+    padding:$minds-padding;
+
+    i{
+      top: 6px;
+       position: relative;
+    }
+    a{
+      color:#888;
+      font-weight:bold;
+    }
+  }
+
+  /**
+   * Remind
+   */
+  minds-remind{
+    margin:0;
+    width:auto;
+    min-height:0;
+    overflow: visible;
+
+    .m-owner-block{
+      padding-top:0;
+    }
+  }
+
+}
+
+/**
+ * Action tabs
+ */
+.tabs, .m-action-tabs{
+  padding:$minds-padding+2 $minds-padding*2;
+  display:flex;
+  box-sizing:border-box;
+  width:100%;
+
+  &.m-action-tabs-hoverover{
+    visibility:0;
+    :hover{
+      visibility:1;
+    }
+  }
+
+  &.m-action-tabs-fixed{
+    position:absolute;
+    left:0;
+    bottom:0;
+  }
+
+  > * {
+    display:flex;
+    flex-direction:column;
+    flex:auto;
+
+    text-align:center;
+    cursor:pointer;
+  }
+  > template, script{
+    display:none;
+  }
+  > a.minds-boost-button{
+    max-width:40px;
+  }
+  .selected{
+    color:$minds-blue !important;
+  }
+  i{
+    vertical-align: middle;
+    font-size:22px;
+  }
+
+}
+
+.minds-add-card{
+  padding: 32px 16px;
+  text-align: center;
+  text-decoration: none;
+  i {
+    font-size:90px !important;
+  }
+  h3{
+    text-transform: uppercase;
+    font-weight:300;
+    font-size:24px;
+  }
+}
+
+.minds-editable-container{
+  box-sizing: border-box;
+  padding: $minds-padding;
+  text-align: right;
+  width:100%;
+
+  textarea{
+    border:1px solid #DDD;
+    padding:$minds-padding;
+    color: inherit;
+  }
+
+  button{
+    margin: $minds-margin;
+  }
+}

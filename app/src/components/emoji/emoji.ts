@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { EmojiList } from '../../services/emoji-list';
-import { Emoji as EmojiDirective } from '../../directives/emoji';
+import { Emoji as EmojiDirective } from '../../common/directives/emoji';
 
 @Component({
   selector: 'minds-emoji',

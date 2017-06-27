@@ -8,7 +8,7 @@ import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
 import { Client, Upload } from './api';
 import { Storage } from './storage';
-import { SignupModalService } from '../components/modal/signup/service';
+import { SignupModalService } from '../modules/modals/signup/service';
 import { CacheService } from './cache';
 import { HovercardService } from './hovercard';
 import { NotificationService } from './notification';

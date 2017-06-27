@@ -5,6 +5,7 @@
 
 .material-icons{
   text-rendering: optimizeLegibility;
+  text-transform: none !important;
 
   &.m-material-icons-inline {
     vertical-align: bottom;

@@ -5,7 +5,7 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { SessionFactory } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
-import { SignupModalService } from '../../../components/modal/signup/service';
+import { SignupModalService } from '../../../modules/modals/signup/service';
 
 @Component({
   moduleId: module.id,

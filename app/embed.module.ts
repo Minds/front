@@ -14,9 +14,10 @@ import { MINDS_DECLARATIONS } from './src/declarations';
 import { MINDS_PLUGIN_DECLARATIONS } from './src/plugin-declarations';
 import { MINDS_PROVIDERS } from './src/services/providers';
 import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
-import { CaptchaModule } from './src/modules/captcha/captcha.module';
 
+import { CaptchaModule } from './src/modules/captcha/captcha.module';
 import { CommonModule } from './src/common/common.module';
+import { LegacyModule } from "./src/modules/legacy/legacy.module";
 
 @NgModule({
   bootstrap: [
@@ -36,7 +37,8 @@ import { CommonModule } from './src/common/common.module';
     HttpModule,
     RouterModule.forRoot(MindsEmbedRoutes, { initialNavigation: false, useHash: true }),
     CaptchaModule,
-    CommonModule
+    CommonModule,
+    LegacyModule,
   ],
   providers: [
     MindsEmbedRoutingProviders,

@@ -28,10 +28,10 @@
       <minds-avatar [object]="user" [editMode]="editing" (added)="upload_avatar($event)"></minds-avatar>
         <div class="m-channel--name">
           <h2>{{user.name}}</h2>
-          <minds-button-edit (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
+          <span class="minds-button-edit" (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
             <button class="material-icons" [hidden]="editing">edit</button>
             <button class="material-icons" [hidden]="!editing">done</button>
-          </minds-button-edit>
+          </span>
         </div>
         <div class="m-channel--username">
           <h2><span>@</span>{{user.username}}</h2>

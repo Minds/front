@@ -84,7 +84,7 @@ minds-channel{
         }
       }
     }
-    minds-button-edit > button, minds-button-user-dropdown > button{
+    .minds-button-edit > button, minds-button-user-dropdown > button{
       padding: 6px;
       font-size: 18px;
   //    margin: 0px 30px;
@@ -132,7 +132,7 @@ minds-channel{
      margin-right: 8px;
    }
 
-   minds-button-edit > button, minds-button-user-dropdown > button{
+   .minds-button-edit > button, minds-button-user-dropdown > button{
      font-size: 16px;
      border:0;
    }

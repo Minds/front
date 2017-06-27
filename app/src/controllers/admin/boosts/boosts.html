@@ -1,9 +1,41 @@
 <div class="mdl-tabs__tab-bar">
     <a [routerLink]="['/admin/boosts/newsfeed']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'newsfeed'}" i18n>Newsfeed ({{newsfeed_count}})</a>
-    <a [routerLink]="['/admin/boosts/content']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'content'}" i18n>Content ({{suggested_count}})</a>
+    <a [routerLink]="['/admin/boosts/content']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'content'}" i18n>Content ({{content_count}})</a>
 </div>
 
-<div class="mdl-grid minds-boosts" style="max-width:600px">
+<div class="mdl-grid mdl-card mdl-shadow--4dp mdl-color--blue-grey-800 m-admin-boosts-statistics"
+  *ngIf="statistics"
+>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3>In Review</h3>
+    <span class="m-value">{{ statistics.reviewQueue | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3>Backlog (all)</h3>
+    <span class="m-value">{{ statistics.backlog | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3>Backlog (priority)</h3>
+    <span class="m-value">{{ statistics.priorityBacklog | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3>Impressions (backlog)</h3>
+    <span class="m-value">{{ statistics.impressions | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3>Avg. Impressions (backlog)</h3>
+    <span class="m-value">{{ statistics.avgImpressions | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3>Avg. Approval Time</h3>
+    <span class="m-value">{{ _duration(statistics.avgApprovalTime) }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--12-col m-admin-boost-stat-note">
+    Updated {{ statistics.timestamp * 1000 | date:'medium' }}
+  </div>
+</div>
+
+<div class="mdl-grid minds-boosts m-admin-boosts-container">
 
   <!-- Daily active users -->
   <div class="mdl-cell mdl-cell--12-col">
