@@ -1,6 +1,6 @@
 # Ignore front end plugins
-app/src/plugins
-app/templates/plugins
+#app/src/plugins
+#app/templates/plugins
 app/stylesheets/plugins.scss
 app/stylesheets/plugins
 public

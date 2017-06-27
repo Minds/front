@@ -53,8 +53,8 @@ export class ScrollLock {
         deltaY = normalizedWheel.pixelY;
 
       if (
-        (delta > 0 && el.scrollTop + deltaY <= 1201) ||
-        (delta < 0 && el.scrollTop + deltaY >= (el.scrollHeight - el.clientHeight) - 1201)
+        (delta > 0 && el.scrollTop + deltaY <= 0) ||
+        (delta < 0 && el.scrollTop + deltaY >= el.scrollHeight - el.clientHeight)
       ) {
         event.preventDefault();
 

@@ -54,10 +54,8 @@ export class MindsTinymce {
     });
   }
 
-  ngOnDestroy() {
-    if (this.editor) {
-      this.editor.setContent("");
-    }
+  ngOnDestroy(){
+    this.editor.setContent("");
     if(tinymce)
       tinymce.remove('minds-tinymce > textarea');
     this.content = "";

@@ -6,8 +6,13 @@ node {
 		sh 'npm install' 
 		//may also need to grab plugins..  
 
-    stage 'Test'
+    stage 'Build'
    		
-        sh 'npm run build'
+        sh 'npm run build-prod'
+
+    stage 'E2E Tests'
+
+        //sh 'npm install -g protractor@latest'
+        sh 'protractor ./protractor.js'
 
 }
