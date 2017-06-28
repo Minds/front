@@ -20,11 +20,11 @@
     <div class="search-results mdl-cell mdl-cell--8-col">
       <div class="" *ngFor="let entity of entities">
 
-        <minds-card-video [object]="entity" *ngIf="entity.subtype == 'video'"></minds-card-video>
-        <minds-card-image [object]="entity" *ngIf="entity.subtype == 'image'"></minds-card-image>
-        <minds-card-blog [object]="entity" *ngIf="entity.subtype == 'blog'"></minds-card-blog>
-        <minds-activity [object]="entity" *ngIf="entity.type == 'activity'"></minds-activity>
-        <minds-card-group [group]="entity" *ngIf="entity.type == 'group'"></minds-card-group>
+        <minds-card-video [object]="entity" *ngIf="entity.subtype == 'video'" class="mdl-card mdl-shadow--2dp"></minds-card-video>
+        <minds-card-image [object]="entity" *ngIf="entity.subtype == 'image'" class="mdl-card mdl-shadow--2dp"></minds-card-image>
+        <minds-card-blog [object]="entity" *ngIf="entity.subtype == 'blog'" class="mdl-card mdl-shadow--2dp"></minds-card-blog>
+        <minds-activity [object]="entity" *ngIf="entity.type == 'activity'" class="mdl-card mdl-shadow--2dp"></minds-activity>
+        <minds-card-group [group]="entity" *ngIf="entity.type == 'group'" class="mdl-card mdl-shadow--2dp"></minds-card-group>
 
         <!-- START: User Only -->
         <minds-card-user [object]="entity" *ngIf="entity.type == 'user'" class="mdl-card mdl-shadow--2dp"></minds-card-user>
