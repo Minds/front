@@ -26,6 +26,9 @@ export class WalletTransactionsComponent {
       if (params['type']) {
         this.type = params['type'];
       }
+      if (params['stub'] && params['stub'] == 'purchase') {
+        this.togglePurchase = true;
+      }
     });
 
     this.route.url.subscribe(url => {

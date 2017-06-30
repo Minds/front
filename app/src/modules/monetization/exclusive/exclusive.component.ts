@@ -8,11 +8,11 @@ import { Storage } from '../../../services/storage';
 
 @Component({
   moduleId: module.id,
-  selector: 'm-wallet-merchants',
-  templateUrl: 'merchants.component.html'
+  selector: 'm-exclusive-paywall',
+  templateUrl: 'exclusive.component.html'
 })
 
-export class MerchantsComponent {
+export class ExclusivePaywallComponent {
 
   session = SessionFactory.build();
   ts : number = Date.now();

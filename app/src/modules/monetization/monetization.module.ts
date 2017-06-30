@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { WalletModule } from '../wallet/wallet.module';
 import { MonetizationOverviewModule } from './monetization.overview.module';
-import { WalletPointsTransactionsComponent } from '../wallet/transactions/points.component';
+import { WalletTransactionsComponent } from '../wallet/transactions/transactions.component';
 import { MonetizationMarketingComponent } from './marketing.component';
 import { MonetizationOnboardingComponent } from './onboarding/onboarding.component';
 import { AffiliateMarketingComponent } from './affiliate/marketing.component';
@@ -15,6 +15,10 @@ import { RevenueConsoleComponent } from './revenue/console.component';
 import { RevenueGraphComponent } from './revenue/graph.component';
 import { RevenueLedgerComponent } from './revenue/ledger.component';
 import { RevenueOptionsComponent } from './revenue/options.component';
+import { AdSharingComponent } from './ad-sharing/ad-sharing.component';
+import { AdSharingAnalyticsComponent } from './ad-sharing/analytics/analytics.component';
+import { AdSharingSettingsComponent } from './ad-sharing/settings/settings.component';
+import { ExclusivePaywallComponent } from './exclusive/exclusive.component';
 
 
 const monetizationRoutes : Routes = [
@@ -23,10 +27,13 @@ const monetizationRoutes : Routes = [
   { path: 'wallet/revenue', component: RevenueConsoleComponent,
     children: [
       { path: '', redirectTo: 'earnings', pathMatch: 'full' },
-      { path: 'points', component: WalletPointsTransactionsComponent },
+      { path: 'points', component: WalletTransactionsComponent },
+      { path: 'points/:stub', component: WalletTransactionsComponent },
       { path: 'earnings', component: RevenueLedgerComponent },
       { path: 'payouts', component: RevenueLedgerComponent },
-      { path: 'options', component: RevenueOptionsComponent }
+      { path: 'options', component: RevenueOptionsComponent },
+      { path: 'exclusive', component: ExclusivePaywallComponent },
+      { path: 'ad-sharing', component: AdSharingComponent }
     ]
   }
 ]
@@ -49,7 +56,11 @@ const monetizationRoutes : Routes = [
     RevenueConsoleComponent,
     RevenueGraphComponent,
     RevenueLedgerComponent,
-    RevenueOptionsComponent
+    RevenueOptionsComponent,
+    AdSharingComponent,
+    AdSharingSettingsComponent,
+    AdSharingAnalyticsComponent,
+    ExclusivePaywallComponent
   ],
   exports: [
     MonetizationMarketingComponent,
@@ -62,7 +73,13 @@ const monetizationRoutes : Routes = [
     RevenueOptionsComponent,
     RouterModule
   ],
-  entryComponents: [ MonetizationMarketingComponent, AffiliateMarketingComponent, RevenueConsoleComponent ]
+  entryComponents: [
+    MonetizationMarketingComponent,
+    AffiliateMarketingComponent,
+    RevenueConsoleComponent,
+    AdSharingComponent,
+    ExclusivePaywallComponent
+  ]
 })
 
 export class MonetizationModule {}

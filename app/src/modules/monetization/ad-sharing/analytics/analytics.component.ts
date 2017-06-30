@@ -9,7 +9,7 @@ import { Client } from '../../../../services/api';
   templateUrl: 'analytics.component.html',
   selector: 'm-wallet-ad-sharing-analytics',
 })
-export class WalletAdSharingAnalyticsComponent {
+export class AdSharingAnalyticsComponent {
 
   overview = {
     today: 0,

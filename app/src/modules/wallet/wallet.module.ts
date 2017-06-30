@@ -11,10 +11,6 @@ import { PointsOverviewComponent } from './points-overview.component';
 import { WalletTransactionsComponent } from './transactions/transactions.component';
 import { WalletPointsTransactionsComponent } from './transactions/points.component';
 import { WalletPurchaseComponent } from './purchase/purchase.component';
-import { WalletAdSharingComponent } from './ad-sharing/ad-sharing.component';
-import { WalletAdSharingAnalyticsComponent } from './ad-sharing/analytics/analytics.component';
-import { WalletAdSharingSettingsComponent } from './ad-sharing/settings/settings.component';
-import { MerchantsComponent } from './merchants/merchants.component';
 
 
 const walletRoutes : Routes = [
@@ -22,9 +18,7 @@ const walletRoutes : Routes = [
     children: [
       { path: '', redirectTo: 'transactions', pathMatch: 'full' },
       { path: 'transactions', component: WalletTransactionsComponent },
-      { path: 'purchase', component: WalletTransactionsComponent },
-      { path: 'ad-sharing', component: WalletAdSharingComponent },
-      { path: 'merchants', component: MerchantsComponent }
+      { path: 'purchase', component: WalletTransactionsComponent }
     ]
   }
 ]
@@ -44,22 +38,14 @@ const walletRoutes : Routes = [
     PointsOverviewComponent,
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
-    WalletPurchaseComponent,
-    WalletAdSharingComponent,
-    WalletAdSharingAnalyticsComponent,
-    WalletAdSharingSettingsComponent,
-    MerchantsComponent
+    WalletPurchaseComponent
   ],
   exports: [
     WalletComponent,
     PointsOverviewComponent,
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
-    WalletPurchaseComponent,
-    WalletAdSharingComponent,
-    WalletAdSharingAnalyticsComponent,
-    WalletAdSharingSettingsComponent,
-    MerchantsComponent
+    WalletPurchaseComponent
   ],
   entryComponents: [ WalletComponent ]
 })

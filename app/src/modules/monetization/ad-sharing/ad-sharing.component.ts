@@ -8,11 +8,11 @@ import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
-  selector: 'm-wallet-ad-sharing',
+  selector: 'm-ad-sharing',
   templateUrl: 'ad-sharing.component.html'
 })
 
-export class WalletAdSharingComponent {
+export class AdSharingComponent {
   type: string = 'analytics';
 
   inProgress: boolean = false;

@@ -7,7 +7,7 @@ import { Client } from '../../../../services/api';
   templateUrl: 'settings.component.html',
   selector: 'm-wallet-ad-sharing-settings',
 })
-export class WalletAdSharingSettingsComponent {
+export class AdSharingSettingsComponent {
   inProgress: boolean = false;
   loaded: boolean = false;
   settings = {
