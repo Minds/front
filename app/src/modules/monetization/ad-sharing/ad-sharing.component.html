@@ -21,22 +21,9 @@
 
 <div *ngIf="isMerchant && !remote && !inProgress && loaded && !enabled && !applied">
   <form class="m-form mdl-grid mdl-shadow--2dp mdl-color--white"
-    (submit)="$event.preventDefault(); apply()"
-  >
-    <div class="m-apply-switch mdl-cell mdl-cell--12-col">
-      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" for="switch-1" [mdlSwitch] [toggled]="applyForm.enabled">
-        <span class="mdl-switch__label" i18n>Enable advertising in your account</span>
-        <input type="checkbox" class="mdl-switch__input"
-          id="switch-1"
-          name="enabled"
-          [(ngModel)]="applyForm.enabled"
-          value="1"
-          [mdl]
-        >
-      </label>
-    </div>
-
-    <div class="m-apply-more" [hidden]="!applyForm.enabled">
+    (submit)="$event.preventDefault(); apply()">
+    <h2 class="m-revenue--console-product-header">Ad-Revenue Sharing</h2>
+    <div class="m-apply-more">
       <div class="mdl-cell mdl-cell--12-col m-apply-message">
         <textarea
           name="message"
@@ -44,17 +31,6 @@
           placeholder="Why do you want to participate in the Minds Ad Sharing program? Please, list your other social media accounts and quantity of followers."
           i18n-placeholder
         ></textarea>
-      </div>
-
-      <div class="mdl-cell mdl-cell--12-col mdl-color-text--grey-600">
-        <p>
-          <input type="checkbox"
-            name="agree"
-            [(ngModel)]="applyForm.agree"
-            value="1"
-          >
-          <a routerLink="/p/terms" target="_blank" i18n>I agree to the Minds Merchant &amp; Ad Sharing program Terms of Service.</a>
-        </p>
       </div>
 
       <div *ngIf="applyError" class="mdl-cell mdl-cell--12-col mdl-color-text--red">
@@ -69,7 +45,8 @@
 </div>
 
 <div class="m-root-other" *ngIf="!remote && !inProgress && loaded && !enabled && applied">
-  <!-- i18n -->You have applied for the Minds Ad Sharing program. Your application is currently under review. This may take up to 7 days.<!-- /i18n -->
+  <h2 class="m-revenue--console-product-header">Ad-Revenue Sharing</h2>
+  <p><!-- i18n -->You have applied for the Minds Ad Sharing program. Your application is currently under review. This may take up to 7 days.<!-- /i18n --></p>
 </div>
 
 <div *ngIf="!remote && !inProgress && isMerchant && loaded && enabled">
@@ -77,6 +54,10 @@
       <a routerLink="/wallet/ad-sharing/analytics" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'analytics' }" i18n>Analytics</a>
       <a routerLink="/wallet/ad-sharing/settings" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'settings' }" i18n>Settings</a>
   </div>
+
+   <h2 class="m-revenue--console-product-header mdl-color-text--black" style="padding-bottom:16px">Ad-Revenue Sharing</h2>
+
+
 
   <m-wallet-ad-sharing-settings [hidden]="type != 'settings'"></m-wallet-ad-sharing-settings>
   <m-wallet-ad-sharing-analytics [hidden]="type != 'analytics'"></m-wallet-ad-sharing-analytics>

@@ -14,7 +14,7 @@
         <tbody>
           <tr *ngFor="let transaction of transactions" class="m-revenue--ledger-row">
             <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category">{{ transaction.ts * 1000 | date }}</td>
-            <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category" *ngIf="type == 'payments'">{{ transaction.category }}</td>
+            <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category" *ngIf="type == 'earnings'">{{ transaction.category }}</td>
             <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category" *ngIf="type == 'payouts'">
               {{transaction.status == 'in_transit' ? 'Sending' : transaction.status}}
             </td>

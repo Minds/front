@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Client, Upload } from '../../../services/api';
@@ -42,10 +42,10 @@ export class ExclusivePaywallComponent {
 
   minds = window.Minds;
 
-  constructor(public client: Client, public upload : Upload, public fb: FormBuilder){
+  constructor(public client: Client, public upload : Upload, public fb: FormBuilder, private cd : ChangeDetectorRef){
   }
 
-  ngOnInit() {
+  ngOnInit() {  
     this.load()
       .then((response: any) => {
         this.loaded = true;
@@ -54,6 +54,7 @@ export class ExclusivePaywallComponent {
         if (this.canBecomeMerchant) {
           this.setUp();
         }
+        this.detectChanges();
       });
   }
 
@@ -97,7 +98,7 @@ export class ExclusivePaywallComponent {
     };
 
     this.exclusive.enabled = true;
-    this.status = 'awaiting-document';
+    //this.status = 'awaiting-document';
 
     this.getSettings();
   }
@@ -114,22 +115,26 @@ export class ExclusivePaywallComponent {
         this.minds.user.merchant.status = 'active';
         this.status = 'active';
       });
+    this.detectChanges();
   }
 
   getSettings(){
     this.inProgress = true;
+    this.detectChanges();
     return this.client.get('api/v1/merchant/settings')
       .then((response : any) => {
         this.status = response.merchant.status;
         this.merchant = response.merchant;
         this.inProgress = false;
 
-        if (!response.merchant.verified) {
-          this.status = 'awaiting-document';
-        }
+        //if (!response.merchant.verified) {
+        //  this.status = 'awaiting-document';
+        //}
+        this.detectChanges();
       })
       .catch((e) => {
         this.inProgress = false;
+        this.detectChanges();
       });
   }
 
@@ -176,7 +181,7 @@ export class ExclusivePaywallComponent {
       input.src = reader.result;
     }
     reader.readAsDataURL(file);
-
+    this.detectChanges();
   }
 
   uploadPreview(input: HTMLInputElement) {
@@ -189,23 +194,31 @@ export class ExclusivePaywallComponent {
       })
       .then((response: any) => {
         input.value = null;
+        this.detectChanges();
       })
       .catch((e) => {
         alert('Sorry, there was a problem. Try again.');
         input.value = null;
+        this.detectChanges();
       });
   }
 
   saveExclusive(){
     this.exclusive.saved = false;
     this.exclusive.saving = true;
+    this.detectChanges();
     this.client.post('api/v1/merchant/exclusive', this.exclusive)
       .then(() => {
         this.minds.user.merchant.exclusive = this.exclusive;
         this.exclusive.saved = true;
         this.exclusive.saving = false;
+        this.detectChanges();
       });
   }
 
+  detectChanges(){
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
 
 }

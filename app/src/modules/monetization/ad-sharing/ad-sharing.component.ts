@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -27,12 +27,10 @@ export class AdSharingComponent {
   applyInProgress: boolean = false;
   applyError: string = '';
   applyForm = { // @todo: implement FormBuilder when checkboxes validation work
-    enabled: '',
-    message: '',
-    agree: '',
+    message: ''
   };
 
-  constructor(private route: ActivatedRoute, private client: Client, public fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private client: Client, public fb: FormBuilder, private cd : ChangeDetectorRef) { }
 
   paramsSubscription: Subscription;
   ngOnInit() {
@@ -60,6 +58,7 @@ export class AdSharingComponent {
     }
 
     this.inProgress = true;
+    this.detectChanges();
 
     this.client.get(`api/v1/monetization/ads/status`)
       .then((response: any) => {
@@ -70,17 +69,16 @@ export class AdSharingComponent {
         this.canBecomeMerchant = !!response.canBecomeMerchant;
         this.enabled = !!response.enabled;
         this.applied = !!response.applied;
+        this.detectChanges();
       })
       .catch(e => {
         this.inProgress = false;
+        this.detectChanges();
       });
   }
 
   isApplyValid() {
-    return !this.applyInProgress &&
-      this.applyForm.enabled &&
-      this.applyForm.message &&
-      this.applyForm.agree;
+    return !this.applyInProgress && this.applyForm.message;
   }
 
   apply() {
@@ -89,16 +87,24 @@ export class AdSharingComponent {
     }
 
     this.applyInProgress = true;
+    this.detectChanges();
 
     this.client.post(`api/v1/monetization/ads/apply`, this.applyForm)
       .then((response: any) => {
         this.applyInProgress = false;
         this.applyError = '';
         this.applied = !!response.applied;
+        this.detectChanges();
       })
       .catch(e => {
         this.applyInProgress = false;
         this.applyError = e.message ? e.message : 'Unknown error';
+        this.detectChanges();
       });
+  }
+
+  detectChanges(){
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }
