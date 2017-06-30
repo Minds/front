@@ -8,6 +8,7 @@ import { WalletModule } from '../wallet/wallet.module';
 import { MonetizationOverviewModule } from './monetization.overview.module';
 import { WalletTransactionsComponent } from '../wallet/transactions/transactions.component';
 import { MonetizationMarketingComponent } from './marketing.component';
+import { MonetizationTermsComponent } from './terms.component';
 import { MonetizationOnboardingComponent } from './onboarding/onboarding.component';
 import { AffiliateMarketingComponent } from './affiliate/marketing.component';
 import { AffiliateTermsComponent } from './affiliate/terms.component';
@@ -50,6 +51,7 @@ const monetizationRoutes : Routes = [
   ],
   declarations: [
     MonetizationMarketingComponent,
+    MonetizationTermsComponent,
     MonetizationOnboardingComponent,
     AffiliateMarketingComponent,
     AffiliateTermsComponent,
@@ -64,6 +66,7 @@ const monetizationRoutes : Routes = [
   ],
   exports: [
     MonetizationMarketingComponent,
+    MonetizationTermsComponent,
     MonetizationOnboardingComponent,
     AffiliateMarketingComponent,
     AffiliateTermsComponent,

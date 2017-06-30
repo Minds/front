@@ -80,3 +80,39 @@
     padding: 16px;
   }
 }
+
+.m-monetization--marketing-faq {
+  max-width:690px;
+  margin: auto;
+  font-family: 'Lato';
+
+  .m-monetization--marketing-faq-aq {
+    padding: 16px 0;
+
+    h4{
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      word-spacing: 5px;
+      font-weight: 600;
+    }
+
+    p{
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: #000;
+      font-weight: 300;
+    }
+  }
+
+}
+
+.m-monetization--marketing m-monetization--terms{
+  max-width: 600px;
+  margin: 16px auto;
+  display: block;
+  background: #FFF;
+  padding: 16px;
+  max-height: 600px;
+  overflow: scroll;
+}
