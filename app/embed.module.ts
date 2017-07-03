@@ -14,6 +14,7 @@ import { MINDS_DECLARATIONS } from './src/declarations';
 import { MINDS_PLUGIN_DECLARATIONS } from './src/plugin-declarations';
 import { MINDS_PROVIDERS } from './src/services/providers';
 import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
+import { CaptchaModule } from './src/modules/captcha/captcha.module';
 
 @NgModule({
   bootstrap: [
@@ -32,6 +33,7 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
     FormsModule,
     HttpModule,
     RouterModule.forRoot(MindsEmbedRoutes, { initialNavigation: false, useHash: true }),
+    CaptchaModule
   ],
   providers: [
     MindsEmbedRoutingProviders,
