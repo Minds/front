@@ -52,7 +52,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--12-col" [hidden]="!form.value.password2" *ngIf="form.value.password">
-      <re-captcha (captchaResponse)="form.value.captcha = $event" [site_key]="minds.recaptchaKey"></re-captcha>
+      <re-captcha (captchaResponse)="form.value.captcha = $event" [site_key]="minds.recaptchaKey" #reCaptcha></re-captcha>
     </div>
   </div>
 

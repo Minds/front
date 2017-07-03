@@ -1,35 +1,36 @@
-import { Component, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
-import { Material } from '../../../directives/material';
+import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
+import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 
 
 @Component({
   moduleId: module.id,
   selector: 'minds-form-register',
-  inputs: [ 'referrer' ],
-  outputs: [ 'done' ],
+  inputs: ['referrer'],
+  outputs: ['done'],
   templateUrl: 'register.html'
 })
 
 export class RegisterForm {
 
-	session = SessionFactory.build();
-  errorMessage : string = "";
-  twofactorToken : string = "";
-  hideLogin : boolean = false;
-  inProgress : boolean = false;
-  referrer : string;
-  captcha : string;
+  session = SessionFactory.build();
+  errorMessage: string = "";
+  twofactorToken: string = "";
+  hideLogin: boolean = false;
+  inProgress: boolean = false;
+  referrer: string;
+  captcha: string;
 
-  form : FormGroup;
+  form: FormGroup;
   minds = window.Minds;
 
-  done : EventEmitter<any> = new EventEmitter();
+  done: EventEmitter<any> = new EventEmitter();
 
-	constructor(public client : Client, fb: FormBuilder){
+  @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
+
+  constructor(public client: Client, fb: FormBuilder) {
     this.form = fb.group({
       username: ['', Validators.required],
       email: ['', Validators.required],
@@ -37,47 +38,50 @@ export class RegisterForm {
       password2: ['', Validators.required],
       captcha: ['']
     });
-	}
+  }
 
-	register(e){
+  register(e) {
     e.preventDefault();
     this.errorMessage = "";
 
-    if(this.form.value.password != this.form.value.password2){
-        this.errorMessage = "Passwords must match.";
-        return;
+    if (this.form.value.password != this.form.value.password2) {
+      this.reCaptcha.reset();
+      this.errorMessage = "Passwords must match.";
+      return;
     }
 
     this.form.value.referrer = this.referrer;
 
     this.inProgress = true;
-		var self = this; //this <=> that for promises
-		this.client.post('api/v1/register', this.form.value)
-			.then((data : any) => {
-			  // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
+    var self = this; //this <=> that for promises
+    this.client.post('api/v1/register', this.form.value)
+      .then((data: any) => {
+        // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
         this.inProgress = false;
-				self.session.login(data.user);
+        self.session.login(data.user);
 
         this.done.next(data.user);
-			})
-			.catch((e) => {
+      })
+      .catch((e) => {
         console.log(e);
         this.inProgress = false;
-        if(e.status == 'failed'){
+        this.reCaptcha.reset();
+
+        if (e.status == 'failed') {
           //incorrect login details
           self.errorMessage = "Incorrect username/password. Please try again.";
           self.session.logout();
         }
 
-        if(e.status == 'error'){
+        if (e.status == 'error') {
           //two factor?
           self.errorMessage = e.message;
           self.session.logout();
         }
 
         return;
-			});
-	}
+      });
+  }
 
 }
