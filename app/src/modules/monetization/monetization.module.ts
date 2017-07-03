@@ -11,6 +11,7 @@ import { MonetizationMarketingComponent } from './marketing.component';
 import { MonetizationTermsComponent } from './terms.component';
 import { MonetizationOnboardingComponent } from './onboarding/onboarding.component';
 import { AffiliateMarketingComponent } from './affiliate/marketing.component';
+import { AffiliateLinkComponent } from './affiliate/link.component';
 import { AffiliateTermsComponent } from './affiliate/terms.component';
 import { RevenueConsoleComponent } from './revenue/console.component';
 import { RevenueGraphComponent } from './revenue/graph.component';
@@ -32,7 +33,8 @@ const monetizationRoutes : Routes = [
       { path: 'points/:stub', component: WalletTransactionsComponent },
       { path: 'earnings', component: RevenueLedgerComponent },
       { path: 'payouts', component: RevenueLedgerComponent },
-      { path: 'options', component: RevenueOptionsComponent },
+      { path: 'affiliates', component: AffiliateLinkComponent },
+      { path: 'ad-sharing', component: AdSharingComponent },
       { path: 'exclusive', component: ExclusivePaywallComponent },
       { path: 'ad-sharing', component: AdSharingComponent }
     ]
@@ -54,6 +56,7 @@ const monetizationRoutes : Routes = [
     MonetizationTermsComponent,
     MonetizationOnboardingComponent,
     AffiliateMarketingComponent,
+    AffiliateLinkComponent,
     AffiliateTermsComponent,
     RevenueConsoleComponent,
     RevenueGraphComponent,
@@ -79,6 +82,7 @@ const monetizationRoutes : Routes = [
   entryComponents: [
     MonetizationMarketingComponent,
     AffiliateMarketingComponent,
+    AffiliateLinkComponent,
     RevenueConsoleComponent,
     AdSharingComponent,
     ExclusivePaywallComponent
