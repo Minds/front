@@ -33,6 +33,7 @@ const monetizationRoutes : Routes = [
       { path: 'points/:stub', component: WalletTransactionsComponent },
       { path: 'earnings', component: RevenueLedgerComponent },
       { path: 'payouts', component: RevenueLedgerComponent },
+      { path: 'options', component: RevenueOptionsComponent },
       { path: 'affiliates', component: AffiliateLinkComponent },
       { path: 'ad-sharing', component: AdSharingComponent },
       { path: 'exclusive', component: ExclusivePaywallComponent },
