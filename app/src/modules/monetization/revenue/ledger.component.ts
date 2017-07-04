@@ -54,6 +54,17 @@ export class RevenueLedgerComponent {
         this.inProgress = false;
 
         if (transactions) {
+          transactions.map((transaction) => {
+            switch(transaction.category){
+              case "points":
+                transaction.category = "Points (Affiliate)";
+                break;
+              case "plus":
+                transaction.category = "Plus (Affiliate)";
+                break;
+            }
+            return transaction;
+          });
           this.transactions.push(...transactions);
         }
 
