@@ -1,5 +1,9 @@
 .m-revenue--console-hero{
   padding-bottom: 32px;
+
+  @media only screen and (max-width: 400px) {
+    padding-bottom:0;
+  }
 }
 .m-revenue--console-overview{
   padding: 64px 16px 32px 140px;
@@ -9,6 +13,10 @@
   align-items:center;
   font-family: 'Lato';
 
+  @media only screen and (max-width: 400px) {
+    padding:0;
+    text-align: center;
+  }
 
   i{
     font-style: normal;
@@ -66,6 +74,10 @@ m-monetization--graph{
   display: flex;
   justify-content: center;
 
+  @media only screen and (max-width: 400px) {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
 
   .m-revenue--console-nav-item {
     padding: 16px 32px;
@@ -73,6 +85,10 @@ m-monetization--graph{
     font-weight: 300;
     letter-spacing: 2px;
     cursor: pointer;
+
+    @media only screen and (max-width: 400px) {
+      flex: 1;
+    }
   }
 }
 

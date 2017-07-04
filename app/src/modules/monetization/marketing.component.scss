@@ -8,11 +8,19 @@
   padding: 224px 36px;
   box-sizing: border-box;
 
+  @media only screen and (max-width: 400px) {
+    padding:110px 0;
+  }
+
   h1, h3{
     color: #FFF;
 
     font-family: 'Lato';
     text-shadow: 0 0 3px #333;
+
+    @media only screen and (max-width: 400px) {
+      margin:0;
+    }
   }
 
   h1{
@@ -20,11 +28,18 @@
     letter-spacing: 4px;
     text-transform: uppercase;
 
+    @media only screen and (max-width: 400px) {
+      font-size:30px;
+    }
   }
   h3{
     letter-spacing: 2px;
     word-spacing:3px;
     font-weight:300;
+
+    @media only screen and (max-width: 400px) {
+      font-size: 14px;
+    }
   }
 
   .m-monetization--marketing-action-button{
@@ -84,6 +99,7 @@
 .m-monetization--marketing-faq {
   max-width:690px;
   margin: auto;
+  padding:16px;
   font-family: 'Lato';
 
   .m-monetization--marketing-faq-aq {
