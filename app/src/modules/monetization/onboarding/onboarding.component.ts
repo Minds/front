@@ -14,6 +14,7 @@ export class MonetizationOnboardingComponent implements OnInit {
   inProgress: boolean = false;
   restrictAsVerified: boolean = false;
 
+  minds = window.Minds;
   merchant: any;
   error: string;
 
@@ -93,6 +94,11 @@ export class MonetizationOnboardingComponent implements OnInit {
     this.client.post('api/v1/merchant/onboard', this.form.value)
       .then((response: any) => {
         this.inProgress = false;
+   
+        if(!this.minds.user.programs)
+          this.minds.user.programs = [];
+        this.minds.user.programs.push('affiliate');
+
         this.completed.emit(response);
         this.detectChanges();
       })
