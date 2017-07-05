@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { PlusMarketingComponent } from './marketing.component';
+import { PlusSubscriptionComponent } from './subscription.component';
+
 
 const plusRoutes : Routes = [
   { path: 'plus',  component: PlusMarketingComponent }
@@ -22,6 +24,10 @@ const plusRoutes : Routes = [
   ],
   declarations: [
     PlusMarketingComponent,
+    PlusSubscriptionComponent
+  ],
+  exports: [
+    PlusSubscriptionComponent
   ],
   entryComponents: [
     PlusMarketingComponent,

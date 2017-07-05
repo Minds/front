@@ -1,0 +1,39 @@
+<div class="m-plus--subscription mdl-card mdl-shadow--4dp" *ngIf="!inProgress && !completed && !active">
+
+  <p *ngIf="error" class="mdl-color--red mdl-color-text--white m-plus--error" style="padding: 16px;">{{error}}</p>
+
+  <minds-payments-stripe-checkout (inputed)="setSource($event)" *ngIf="!source"></minds-payments-stripe-checkout>
+
+</div>
+
+<div class="m-plus--subscription mdl-card mdl-shadow--4dp" *ngIf="!inProgress && active">
+
+  <p class="mdl-card__supporting-text">
+    You are a currently a Plus member.
+  </p>
+
+  <button
+    (click)="cancel()"
+    class="mdl-button mdl-button--colored mdl-button--raised"
+    style="width:200px; margin: 0 16px 16px;"
+    >
+    Cancel Plus
+  </button>
+
+</div>
+
+
+<div class="m-plus--subscription mdl-card mdl-shadow--4dp" *ngIf="!inProgress && completed">
+
+  <p class="mdl-card__supporting-text">
+    Congratulations, you are now a Minds Plus member!
+  </p>
+
+</div>
+
+<div class="mdl-card mdl-shadow--2dp" [hidden]="!inProgress">
+  <div class="mdl-card__supporting-text">
+    <!-- i18n -->Please wait...<!-- /i18n -->
+  </div>
+  <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" [mdl]></div>
+</div>
