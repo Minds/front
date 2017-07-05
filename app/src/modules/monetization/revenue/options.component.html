@@ -66,5 +66,21 @@
 
   </div>
 
+  <div class="m-revenue--options-cancel mdl-card mdl-shadow--2dp">
+    <h3 class="mdl-color-text--blue-grey-600">Cancel Monetization</h3>
+
+    <p>Click below to leave the monetization program. You will <b>not</b> be able to rejoin in the future.</p>
+    <button
+      (click)="leave()"
+      [disabled]="leaving"
+      class="mdl-button mdl-button--colored mdl-button--raised"
+      >
+      Cancel Monetization
+    </button>
+
+    <div *ngIf="leaveError" class="m-error mdl-color--red mdl-color-text--white">
+      {{leaveError}}
+    </div>
+  </div>
 
 </div>

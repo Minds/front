@@ -1,7 +1,7 @@
 
 .m-revenue--options{
   max-width: 600px;
-  margin: 32px auto;
+  margin: auto;
 
   .m-revenue--options-payout-method{
     width: 100%;
@@ -93,6 +93,25 @@
     font-weight: 300;
     margin: 16px 0;
     border-radius: 2px;
+  }
+
+  .m-revenue--options-cancel{
+    margin-top:32px;
+    padding:16px;
+
+    h3{
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 24px;
+    }
+    p{
+      font-family:'Lato';
+      //margin:0;
+    }
+    button{
+      width: 200px;
+    }
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ChartColumn } from "../../../common/components/chart/chart.component";
@@ -19,8 +19,10 @@ export class RevenueOptionsComponent {
     country: 'US'
   };
   error : string = "";
+  leaving: boolean = false;
+  leaveError: string = "";
 
-  constructor(private client: Client, private cd : ChangeDetectorRef, private fb: FormBuilder) {
+  constructor(private client: Client, private cd : ChangeDetectorRef, private fb: FormBuilder, private router: Router) {
   }
 
   ngOnInit(){
@@ -58,6 +60,20 @@ export class RevenueOptionsComponent {
       .catch((e) => {
         this.inProgress = false;
         this.error = e.message;
+        this.detectChanges();
+      });
+  }
+
+  leave(){
+    this.leaving = true;
+    this.detectChanges();
+    this.client.delete('api/v1/monetization/settings/account')
+      .then((response: any) => {
+        this.router.navigate(['/newsfeed']);
+      })
+      .catch((e) => {
+        this.leaving = false;
+        this.leaveError = e.message;
         this.detectChanges();
       });
   }
