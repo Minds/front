@@ -20,6 +20,8 @@ import { CommonModule } from './src/common/common.module';
 import { MonetizationModule } from './src/modules/monetization/monetization.module';
 import { WalletModule } from './src/modules/wallet/wallet.module';
 import { CheckoutModule } from './src/modules/checkout/checkout.module';
+import { PlusModule } from './src/modules/plus/plus.module';
+
 
 @NgModule({
   bootstrap: [
@@ -42,7 +44,8 @@ import { CheckoutModule } from './src/modules/checkout/checkout.module';
     CommonModule,
     WalletModule,
     CheckoutModule,
-    MonetizationModule
+    MonetizationModule,
+    PlusModule
   ],
   providers: [
     MindsAppRoutingProviders,

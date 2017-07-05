@@ -1,0 +1,140 @@
+<div class="m-plus--marketing">
+
+  <div class="m-plus--marketing-header">
+    <h1>Minds Plus</h1>
+    <h3>Improve your channel, extend your reach, opt-out of ads, and more</h3>
+
+    <div class="m-plus--marketing-action-button">
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!isPlus()" (click)="onboard()" [hidden]="showOnboardingForm">Upgrade - $5.00/month</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" routerLink="/wallet/revenue">Cancel Plus</button>
+    </div>
+
+    <div class="m-plus--overlay"></div>
+  </div>
+
+  <div class="m-plus--marketing-contents mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">add_circle_outline</i>
+      <h2>Badge</h2>
+      <span>Make your channel stand out with a Minds Plus badge, showing your support of Minds</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">verified_user</i>
+      <h2>Verified</h2>
+      <span>Request a verified badge, if you qualify</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">favorite</i>
+      <h2>Exclusive</h2>
+      <span>Attend monthly hangouts with the Minds team and access exclusive behind-the-scenes Minds content</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">announcement</i>
+      <h2>Ad free</h2>
+      <span>Remove all advertisements from all parts of the app</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">trending_up</i>
+      <h2>Hide Boosts</h2>
+      <span>Disable boosts, if you want</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <img src="assets/wire-icon.png" style="display: block; margin: 2px auto 20px; height: 60px;"/>
+      <h2>1,000 points</h2>
+      <span>Plus users get 1,000 points to spend via boosts or wire every month</span>
+    </div>
+
+  </div>
+
+  <div class="m-plus--marketing-faq mdl-color-text--blue-grey-600">
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">What is Minds Plus?</h4>
+      <p>
+        Minds Plus is a paid subscription that provides you with added benefits on Minds, across all mobile and web channels.
+      </p>
+      <ul>
+        <li>Affiliate Program</li>
+        <li>Exclusive Content</li>
+        <li>Wire</li>
+        <li>Ad-Revenue Share</li>
+        <li>Peer-to-Peer Boost</li>
+      </ul>
+    </div>
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">What is the Affiliate Program?</h4>
+      <p>
+        By joining the Affiliate Program, you will earn 25% of the revenue that Minds generates from users that sign up through your referral link.
+        The products that qualify for the Affiliate Program include:
+      </p>
+      <p>The benefits include:</p>
+      <ul>
+        <li>Minds Plus badge on your channel</li>
+        <li>Option to request a Verified badge for your channel</li>
+        <li>Opt-out of all ads and boosted content on the site</li>
+        <li>Access to exclusive Minds content</li>
+        <li>Attend monthly hangouts with the Minds team</li>
+      </ul>
+    </div>
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">What is a Plus badge?</h4>
+      <p>
+        By signing up for Plus, users are given a Plus user badge on their channel.
+      </p>
+    </div>
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">What is Verified badge?</h4>
+      <p>
+        In many cases, users will also want to verify their identity. Plus provides users with the option to request a Verified badge. Once a request is submitted, the Minds team will review the submission.
+      </p>
+    </div>
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">What is Ad-Revenue Share?</h4>
+      <p>
+        Earn revenue with advertisements on your blogs by selecting the '$' sign when you post.
+        The amount of revenue you earn will be determined from the number of pageviews your content drives and the current RPM (revenue per thousand views).
+        The ad-revenue share is 80% for creators and 20% for Minds.
+      </p>
+    </div>
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">What does opting out of ads and boosts do?</h4>
+      <p>
+        Minds users will notice that there are advertisements and boosted content on the site.
+        The purpose of the boost queue is to provide our users with the ability to promote their content and reach new audiences.
+        It also provides our users with a way to discover new content they enjoy, outside of who they are subscribed to.
+      </p>
+      <p>
+        With Plus, you are given the option to opt-out of the boost queue and all third party ads so that they do not appear on your feeds.
+        While we hope that you continue to use the boost queue to keep a better pulse on the Minds community, we understand that many users only desire to see the content they are subscribed to.
+        Plus lets you make this call.
+      </p>
+    </div>
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">What is exclusive Minds content?</h4>
+      <p>
+        Plus users will gain access to exclusive Minds content.
+      </p>
+    </div>
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">How do users receive their 1,000 points a month?</h4>
+      <p>
+        Each month, Plus users will receive 1,000 points in their wallet.
+        This process will be automated and the points will be deposited directly into the user’s wallet.
+      </p>
+      <p>
+        Users may leverage these points to boost their content and earn more views (1 point = 1 view).
+        Users may also wire the points directly to other channels they enjoy and would like to support.
+      </p>
+    </div>
+    <div class="m-plus--marketing-faq-aq">
+      <h4 class="mdl-color-text--blue-grey-800">What is the cancellation policy?</h4>
+      <p>
+        You may cancel your Plus subscription at any time.
+        Refunds and credits will not be issued for partial billing periods.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<m-footer></m-footer>
