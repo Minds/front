@@ -6,7 +6,7 @@
 
     <div class="m-plus--marketing-action-button">
       <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!isPlus()" (click)="openSubscription()" [hidden]="showSubscription">Upgrade - $5.00/month</button>
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" routerLink="/wallet/revenue">Cancel Plus</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="openSubscription()">Cancel Plus</button>
     </div>
 
     <div class="m-plus--overlay"></div>
