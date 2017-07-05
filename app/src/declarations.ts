@@ -81,6 +81,7 @@ import {ChannelSupporters} from './controllers/channels/supporters/supporters';
 import {ChannelSubscribers} from './controllers/channels/subscribers/subscribers';
 import {ChannelSubscriptions} from './controllers/channels/subscriptions/subscriptions';
 import {ChannelSocialProfiles} from './controllers/channels/social-profiles/social-profiles';
+import {ChannelBadgesComponent} from './controllers/channels/badges/badges.component';
 import {Poster} from './controllers/newsfeed/poster/poster';
 import {CommentsScrollDirective} from './controllers/comments/scroll';
 import {NewsfeedBoostRotator} from './controllers/newsfeed/boost-rotator/boost-rotator';
@@ -179,6 +180,7 @@ export const MINDS_DECLARATIONS: any[] = [
   ChannelSubscriptions,
   ChannelModules,
   ChannelSocialProfiles,
+  ChannelBadgesComponent,
   Poster,
   CommentsScrollDirective,
   NewsfeedBoostRotator,
