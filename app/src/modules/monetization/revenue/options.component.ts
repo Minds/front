@@ -69,6 +69,7 @@ export class RevenueOptionsComponent {
     this.detectChanges();
     this.client.delete('api/v1/monetization/settings/account')
       .then((response: any) => {
+        (<any>window).Minds.user.merchant = []; 
         this.router.navigate(['/newsfeed']);
       })
       .catch((e) => {
