@@ -10,6 +10,7 @@ import { MonetizationOverviewComponent } from './overview.component';
 @NgModule({
   imports: [
     NgCommonModule,
+    RouterModule,
     CommonModule
   ],
   declarations: [
