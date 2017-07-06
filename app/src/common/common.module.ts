@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { TooltipComponent } from './components/tooltip/tooltip.component';
+import { FaqComponent } from './components/faq/faq.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MDL_DIRECTIVES } from './directives/material';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
@@ -20,6 +21,7 @@ import { StateInputComponent } from './components/forms/state-input/state-input.
   ],
   declarations: [
     TooltipComponent,
+    FaqComponent,
     FooterComponent,
     InfiniteScroll,
     ChartComponent,
@@ -31,6 +33,7 @@ import { StateInputComponent } from './components/forms/state-input/state-input.
   ],
   exports: [
     TooltipComponent,
+    FaqComponent,
     FooterComponent,
     InfiniteScroll,
     ChartComponent,
