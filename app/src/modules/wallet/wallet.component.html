@@ -36,15 +36,6 @@
           <span i18n>Revenue Console</span>
         </a>
       </li>
-      <li *ngIf="session.getLoggedInUser().merchant">
-        <a class="mdl-color-text--blue-grey-500"
-          [routerLink]="['/wallet/merchants']"
-          routerLinkActive="selected"
-          >
-          <i class="material-icons">vpn_key</i>
-          <span i18n>Exclusive Content</span>
-        </a>
-      </li>
       <li>
         <a class="mdl-color-text--blue-grey-500"
           routerLink="/affiliates"
@@ -52,12 +43,6 @@
           >
           <i class="material-icons">share</i>
           <span i18n>Affiliate Program</span>
-        </a>
-      </li>
-      <li *ngIf="session.getLoggedInUser().merchant">
-        <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/ad-sharing" routerLinkActive="selected">
-          <i class="material-icons">branding_watermark</i>
-          <!-- i18n -->Ad-Revenue Sharing<!-- /i18n -->
         </a>
       </li>
     </ul>
