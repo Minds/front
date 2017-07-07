@@ -200,7 +200,7 @@ export class Newsfeed {
   @HostListener('window:resize') detectWidth() {
     if(window.innerWidth < 1200)
       this.showRightSidebar = false;
-    else 
+    else
       this.showRightSidebar = true;
   }
 

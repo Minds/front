@@ -1,6 +1,6 @@
 <div class="m-boost-rotator-tools">
-  <ul class="m-boost-rotator-tabs" *ngIf="boosts.length == 0"></ul>
-  <ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0">
+  <ul class="m-boost-rotator-tabs" *ngIf="boosts.length == 0 || disabled"></ul>
+  <ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0 && !disabled">
     <li (click)="prev()">
       <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
     </li>
@@ -13,13 +13,13 @@
     </li>
   </ul>
 
-  <div class="m-boost-rotator-tools-tool m-boost-rotator-paused" [style.width]="'46px'">
+  <div class="m-boost-rotator-tools-tool m-boost-rotator-paused" [style.width]="'46px'" *ngIf="!disabled">
     <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [mdlSwitch] [toggled]="!paused">
       <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="!paused" (ngModelChange)="paused = !paused">
     </label>
   </div>
   <div class="m-boost-rotator-tools-tool m-boost-rotator-settings" *ngIf="false">
-    <button id="m-rating-boost-menu" (click)="ratingMenuHandler()" 
+    <button id="m-rating-boost-menu" (click)="ratingMenuHandler()"
       class="mdl-button mdl-js-button mdl-button--icon minds-more mdl-button--icon mdl-color-text--blue-grey-300">
       <i class="material-icons">settings</i>
     </button>
@@ -28,6 +28,15 @@
       <li class="mdl-menu__item" *ngIf="rating != 1" (click)="setRating(1)">Enable Safe Mode</li>
     </ul>
     <minds-bg-overlay (click)="ratingMenuToggle = false" [hidden]="!ratingMenuToggle"></minds-bg-overlay>
+  </div>
+
+  <div class="m-boost--disable" *ngIf="plus">
+    <i class="material-icons mdl-color-text--blue-grey-300" *ngIf="!disabled" (click)="disable()">close</i>
+    <i class="material-icons mdl-color-text--blue-grey-300" *ngIf="disabled" (click)="enable()">power_settings_new</i>
+  </div>
+
+  <div class="m-boost--disable" *ngIf="!plus">
+    <i class="material-icons mdl-color-text--blue-grey-300" routerLink="/plus">close</i>
   </div>
 
 </div>

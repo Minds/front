@@ -51,7 +51,7 @@
   li > i{
     margin-top:-10px;
     cursor:pointer;
-    
+
   }
   .m-boost-rotator-paused{
     margin-top:-8px !important;
@@ -103,4 +103,10 @@
     animation-name: boostProgressBar;
     animation-duration: 1s;
   }
+}
+
+.m-boost--disable{
+  margin-top: -14px;
+  padding: 8px;
+  cursor:pointer;
 }

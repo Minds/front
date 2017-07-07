@@ -37,12 +37,16 @@ export class NewsfeedBoostRotator {
 
   rating : number = 2; //default to Safe Mode Off
   ratingMenuToggle : boolean = false;
+  plus: boolean = false;
+  disabled: boolean = false;
 
   constructor(public client: Client, public scroll : ScrollService, public element: ElementRef){
   }
 
   ngOnInit(){
     this.rating = this.session.getLoggedInUser().boost_rating;
+    this.plus = this.session.getLoggedInUser().plus;
+    this.disabled = this.session.getLoggedInUser().plus && this.session.getLoggedInUser().disabled_boost;
     this.load();
     this.scroll_listener = this.scroll.listenForView().subscribe(() => this.isVisible());
   }
@@ -183,6 +187,26 @@ export class NewsfeedBoostRotator {
       this.currentPosition++;
     }
     this.recordImpression(this.currentPosition, false);
+  }
+
+  disable(){
+    this.session.getLoggedInUser().disabled_boost = true;
+    this.disabled = true;
+    this.client.put('api/v1/plus/boost')
+      .catch(() => {
+          this.session.getLoggedInUser().disabled_boost = false;
+          this.disabled = false;
+      });
+  }
+
+  enable(){
+    this.session.getLoggedInUser().disabled_boost = false;
+    this.disabled = false;
+    this.client.delete('api/v1/plus/boost')
+      .catch(() => {
+          this.session.getLoggedInUser().disabled_boost = true;
+          this.disabled = true;
+      });
   }
 
   ngOnDestroy(){
