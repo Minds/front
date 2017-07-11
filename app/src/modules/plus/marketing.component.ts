@@ -12,6 +12,7 @@ export class PlusMarketingComponent {
 
   user = window.Minds.user;
   showSubscription: boolean = false;
+  showVerify: boolean = false;
 
   constructor(private client : Client, private cd : ChangeDetectorRef){
   }

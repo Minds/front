@@ -12,6 +12,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { CountryInputComponent } from './components/forms/country-input/country-input.component';
 import { DateInputComponent } from './components/forms/date-input/date-input.component';
 import { StateInputComponent } from './components/forms/state-input/state-input.component';
+import { Modal } from '../components/modal/modal';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { StateInputComponent } from './components/forms/state-input/state-input.
     CountryInputComponent,
     DateInputComponent,
     StateInputComponent,
+    Modal,
 
     MDL_DIRECTIVES
   ],
@@ -40,6 +42,7 @@ import { StateInputComponent } from './components/forms/state-input/state-input.
     CountryInputComponent,
     DateInputComponent,
     StateInputComponent,
+    Modal,
 
     MDL_DIRECTIVES
   ],

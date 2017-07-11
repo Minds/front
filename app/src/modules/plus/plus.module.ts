@@ -7,6 +7,7 @@ import { CommonModule } from '../../common/common.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { PlusMarketingComponent } from './marketing.component';
 import { PlusSubscriptionComponent } from './subscription.component';
+import { PlusVerifyComponent } from './verify/verify.component';
 
 
 const plusRoutes : Routes = [
@@ -24,10 +25,12 @@ const plusRoutes : Routes = [
   ],
   declarations: [
     PlusMarketingComponent,
-    PlusSubscriptionComponent
+    PlusSubscriptionComponent,
+    PlusVerifyComponent
   ],
   exports: [
-    PlusSubscriptionComponent
+    PlusSubscriptionComponent,
+    PlusVerifyComponent
   ],
   entryComponents: [
     PlusMarketingComponent,

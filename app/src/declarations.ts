@@ -11,7 +11,6 @@ import {Topbar} from './components/topbar/topbar';
 import {SidebarNavigation} from './components/sidebar-navigation/sidebar-navigation';
 import {
   BoostModal,
-  Modal,
   SignupModal,
   RemindComposerModal,
   ShareModal,
@@ -108,7 +107,6 @@ export const MINDS_DECLARATIONS: any[] = [
   Topbar,
   SidebarNavigation,
   BoostModal,
-  Modal,
   SignupModal,
   SignupOnScrollModal,
   HovercardPopup,
