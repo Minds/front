@@ -1,16 +1,16 @@
 <ul class="m-channel--badges">
-  <li>
-    <i class="material-icons mdl-color-text--blue-grey-800">add_circle_outline</i>
+  <li *ngIf="user.plus">
+    <i class="material-icons selected">add_circle_outline</i>
     <span>Plus</span>
   </li>
 
-  <li>
-    <i class="material-icons mdl-color-text--blue-grey-800">verified_user</i>
+  <li *ngIf="user.verified || session.isAdmin()" (click)="verify()">
+    <i class="material-icons mdl-color-text--blue-grey-800" [class.selected]="session.isAdmin() && user.verified">verified_user</i>
     <span>Verified</span>
   </li>
 
-  <li>
-    <i class="material-icons mdl-color-text--blue-grey-800">flight_takeoff</i>
+  <li *ngIf="user.founder">
+    <i class="material-icons selected">flight_takeoff</i>
     <span>Founder</span>
   </li>
 </ul>
