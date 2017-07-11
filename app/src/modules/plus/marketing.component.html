@@ -40,7 +40,7 @@
       <h2>Verified</h2>
       <span *ngIf="!user.plus">Request to verify your channel</span>
       <span *ngIf="user.plus && !user.verified">
-        <a (click)="showVerify = true; detectChanges()">Click here</a> to request to be verified
+        <a (click)="showVerify = true; detectChanges()" style="cursor:pointer">Click here</a> to request to be verified
       </span>
       <span *ngIf="user.plus && user.verified">You are verified!</span>
     </div>
@@ -110,7 +110,7 @@
     </m-faq>
   </div>
 
-  <m-plus--verify *ngIf="showVerify"></m-plus--verify>
+  <m-plus--verify *ngIf="showVerify" (closed)="showVerify=false; detectChanges()"></m-plus--verify>
 
 </div>
 

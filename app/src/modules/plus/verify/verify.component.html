@@ -1,4 +1,4 @@
-<m-modal [open]="open">
+<m-modal [open]="open" (closed)="closed.next(true)">
   <form (submit)="submit($event)" [formGroup]="form" #f="ngForm" class="m-plus--verify">
 
     <ul>
@@ -12,7 +12,7 @@
       <li><textarea formControlName="description"></textarea></li>
     </ul>
 
-    <button class="mdl-button mdl-button--raised" type="submit">Submit</button>
+    <button class="mdl-button mdl-button--raised" type="submit" [disabled]="inProgress || !f.form.valid">Submit</button>
 
   </form>
 </m-modal>

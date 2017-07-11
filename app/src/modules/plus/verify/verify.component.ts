@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../common/api/client.service';
@@ -14,6 +14,7 @@ export class PlusVerifyComponent {
   form: FormGroup;
   open: boolean = true;
   inProgress: boolean = false;
+  @Output() closed: EventEmitter<any> = new EventEmitter(true);
 
   constructor(private client : Client, private cd : ChangeDetectorRef, private fb: FormBuilder){
   }
@@ -33,6 +34,7 @@ export class PlusVerifyComponent {
       .then((response) => {
         this.inProgress = false;
         this.open = false;
+        this.closed.next(true);
         this.detectChanges();
       })
       .catch(() => {
