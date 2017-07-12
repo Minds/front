@@ -5,7 +5,13 @@
 </minds-sidebar>
 
 <minds-body class="mdl-color--grey-100">
-  	<router-outlet></router-outlet>
+  <m-announcement id="affiliates">
+    <a routerLink="/affiliates" target="_blank">
+      Breaking: Minds launches Affiliate Program to share 25% of revenue. Click here to join.
+    </a>
+  </m-announcement>
+
+  <router-outlet></router-outlet>
 </minds-body>
 
 <minds-footer></minds-footer>
