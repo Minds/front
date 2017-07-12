@@ -67,6 +67,7 @@ export class PlusSubscriptionComponent {
       })
       .catch((e) => {
         this.inProgress = false;
+        this.source = "";
         this.error = e.message;
         this.detectChanges();
       })
