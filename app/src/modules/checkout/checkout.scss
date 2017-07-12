@@ -3,6 +3,11 @@ minds-payments-checkout{
   display:block;
   width:100%;
 
+  .m-error{
+    padding: 16px;
+    font-family: 'Lato';
+  }
+
   .m-checkout-loading{
     padding:16px;
     text-align:center;
