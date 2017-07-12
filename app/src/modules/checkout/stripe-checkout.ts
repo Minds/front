@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../services/api';
 import { WalletService } from '../../services/wallet';
@@ -53,7 +53,7 @@ export class StripeCheckout {
   @Input() useCreditCard : boolean = true;
   @Input() useBitcoin : boolean = false;
 
-	constructor(public client: Client){
+	constructor(public client: Client, private cd: ChangeDetectorRef){
 	}
 
   ngOnInit(){
@@ -87,6 +87,8 @@ export class StripeCheckout {
       if(response.error){
         this.error = response.error.message;
         this.inProgress = false;
+        this.cd.markForCheck();
+        this.cd.detectChanges();
         return false;
       }
       this.nonce = response.id;
