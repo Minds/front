@@ -30,6 +30,7 @@ import { MindsTinymce } from "./components/editors/tinymce";
 import { DynamicHostDirective } from "./directives/dynamic-host.directive";
 import { MindsCard } from "./components/card/card.component";
 import { MindsButton } from "./components/button/button.component";
+import { OverlayModalComponent } from "./components/overlay-modal/overlay-modal.component";
 
 import { FaqComponent } from './components/faq/faq.component';
 import { ChartComponent } from './components/chart/chart.component';
@@ -70,7 +71,8 @@ import { ChartComponent } from './components/chart/chart.component';
     MindsButton,
 
     FaqComponent,
-    ChartComponent
+    ChartComponent,
+    OverlayModalComponent
   ],
   exports: [
     MINDS_PIPES,
@@ -102,7 +104,8 @@ import { ChartComponent } from './components/chart/chart.component';
     MindsButton,
 
     FaqComponent,
-    ChartComponent
+    ChartComponent,
+    OverlayModalComponent
   ],
   entryComponents: [ ]
 })

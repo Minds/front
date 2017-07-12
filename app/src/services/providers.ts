@@ -23,6 +23,7 @@ import { AttachmentService } from './attachment';
 import { Sidebar } from './ui/sidebar';
 import { EmbedService } from './embed';
 import { MindsTitle } from './ux/title';
+import { OverlayModalService } from './ux/overlay-modal';
 
 import { GoogleChartsLoader } from "./third-party/google-charts-loader";
 
@@ -129,4 +130,8 @@ export const MINDS_PROVIDERS : any[] = [
      useFactory: GoogleChartsLoader._,
      deps: [ NgZone ]
    },
+   {
+     provide: OverlayModalService,
+     useFactory: OverlayModalService._
+   }
 ];

@@ -12,6 +12,7 @@ import { BoostModalComponent } from "./modal/modal.component";
 import { BoostComponent } from "./boost/boost.component";
 import { BoostP2PComponent } from "./boost/p2p/p2p.component";
 import { BoostFullNetworkComponent } from "./boost/full-network/full-network.component";
+import { OverlayBoostModal } from "./overlay-modal/overlay-modal.component";
 import { AdsModule } from "../ads/ads.module";
 
 import { GroupsModule } from "../../plugins/Groups/groups.module";
@@ -40,6 +41,7 @@ const routes: Routes = [
     BoostComponent,
     BoostP2PComponent,
     BoostFullNetworkComponent,
+    OverlayBoostModal
   ],
   exports: [
     BoostsComponent,
@@ -47,6 +49,10 @@ const routes: Routes = [
     BoostComponent,
     BoostP2PComponent,
     BoostFullNetworkComponent,
+    OverlayBoostModal
+  ],
+  entryComponents: [
+    OverlayBoostModal
   ]
 })
 export class BoostModule {

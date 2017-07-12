@@ -1,4 +1,6 @@
-<div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="inProgress || confirmation">
+<div class="mdl-card minds-purchase-card" [hidden]="inProgress || confirmation"
+  [class.mdl-shadow--2dp]="useMDLStyling"
+>
 
 
 
@@ -16,10 +18,21 @@
     </div>
 
 
-    <div class="mdl-cell mdl-cell--6-col mdl-color-text--blue-grey-600 minds-purchase-vendors">
-      <span (click)="card.type = 'amex'" [ngClass]="{'mdl-color-text--green': card.type == 'amex'}">Amex</span>
-      <span (click)="card.type = 'visa'" [ngClass]="{'mdl-color-text--green': card.type == 'visa'}">Visa</span>
-      <span (click)="card.type = 'mastercard'" [ngClass]="{'mdl-color-text--green': card.type == 'mastercard'}">MasterCard</span>
+    <div class="mdl-cell mdl-cell--6-col minds-purchase-vendors"
+      [class.mdl-color-text--blue-grey-600]="useMDLStyling"
+    >
+      <span (click)="card.type = 'amex'"
+        [class.m-purchase-card--highlight]="card.type == 'amex'"
+        [class.mdl-color-text--green]="useMDLStyling && card.type == 'amex'"
+      >Amex</span>
+      <span (click)="card.type = 'visa'"
+        [class.m-purchase-card--highlight]="card.type == 'visa'"
+        [class.mdl-color-text--green]="useMDLStyling && card.type == 'visa'"
+      >Visa</span>
+      <span (click)="card.type = 'mastercard'"
+        [class.m-purchase-card--highlight]="card.type == 'mastercard'"
+        [class.mdl-color-text--green]="useMDLStyling && card.type == 'mastercard'"
+      >MasterCard</span>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
@@ -78,10 +91,13 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col m-checkout-confirm">
-      <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">
+      <div class="minds-error" [hidden]="!error"
+        [class.mdl-color--red.mdl-color-text--white]="useMDLStyling"
+      >
         {{error}}
       </div>
-      <button class="mdl-button mdl-button--colored mdl-button--raised"
+      <button 
+        [class.mdl-button.mdl-button--colored.mdl-button--raised]="useMDLStyling"
         [disabled]="!validate()"
         (click)="confirm()"
         >
@@ -92,7 +108,9 @@
 
 </div>
 
-<div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!confirmation">
+<div class="mdl-card minds-purchase-card" [hidden]="!confirmation"
+  [class.mdl-shadow--2dp]="useMDLStyling"
+>
   <div class="mdl-card__supporting-text">
     <h2 i18n>Complete</h2>
   </div>

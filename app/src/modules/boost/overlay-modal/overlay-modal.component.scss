@@ -1,0 +1,326 @@
+m-boost-overlay-modal {
+  font-weight: 300;
+
+  h2, h3, h4 {
+    font-weight: 300;
+  }
+
+  h2 {
+    font-size: 36px;
+    letter-spacing: 1.8px;
+    margin: 0 0 ($minds-padding * 5) 0;
+  }
+
+  h3 {
+    display: flex;
+    font-size: 24px;
+    letter-spacing: 1.2px;
+    align-items: center;
+    margin: 0 0 $minds-padding 0;
+
+    > .m-overlay-section--title-context {
+      font-size: 9px;
+      line-height: 1.1;
+      max-width: 300px;
+      margin-left: $minds-padding * 3;
+    }
+
+    &.m-overlay-section-title--small {
+      display: block;
+      font-size: 16px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+  }
+
+  h4 {
+    font-size: 24px;
+  }
+
+  .material-icons--inline {
+    vertical-align: bottom;
+    font-size: inherit;
+    position: relative;
+    top: -0.15em;
+  }
+
+  .m-overlay-selector {
+    > li {
+      h4, span {
+        margin: 0;
+        font-weight: 300;
+      }
+
+      b {
+        font-weight: 400 !important;
+      }
+
+      .m-overlay-selector--cta,
+      .m-overlay-selector--selected-label,
+      .m-overlay-selector--description {
+        display: block;
+        font-size: 10px;
+      }
+
+      .m-overlay-selector--cta,
+      .m-overlay-selector--selected-label {
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .m-overlay-selector--cta {
+        letter-spacing: 0.5px;
+        line-height: 1.4;
+      }
+
+      .m-overlay-selector--selected-label {
+        font-weight: 400;
+        color: #417cb2;
+      }
+
+      .m-overlay-selector--description {
+        letter-spacing: 1.2px;
+        line-height: 1.1;
+        max-width: 300px;
+      }
+    }
+  }
+
+  .m-overlay-wide-input {
+    $fs: 48px;
+
+    font-size: $fs;
+    letter-spacing: 2.4px;
+    height: $fs + $minds-padding;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    &.m-overlay-wide-input--reading {
+      cursor: pointer;
+    }
+
+    .m-overlay-wide-input--edit {
+      width: 6em;
+      max-width: 50%;
+      height: $fs + $minds-padding;
+      line-height: $fs;
+      font-weight: 400;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      $fs-mobile: 32px;
+
+      font-size: $fs-mobile;
+      height: $fs-mobile + $minds-padding;
+
+      .m-overlay-wide-input--edit {
+        height: $fs-mobile + $minds-padding;
+        line-height: $fs-mobile;
+      }
+    }
+
+    .m-overlay-wide-input--read-mode {
+      font-weight: 400;
+
+      &.m-overlay-wide-input--empty-read-mode {
+        opacity: 0.65;
+      }
+    }
+
+    &.m-boost-overlay--target {
+      .m-overlay-wide-input--edit {
+        width: 15em;
+        max-width: 90%;
+        height: auto;
+        line-height: 1;
+      }
+    }
+  }
+
+  .m-overlay-toggle {
+    .m-overlay-toggle--select,
+    .m-overlay-toggle--selected {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      min-width: 6em;
+      margin-right: $minds-padding * 2;
+    }
+
+    .m-overlay-toggle--selected {
+      color: #417cb2;
+      font-weight: 400;
+    }
+
+    b {
+      font-weight: 400 !important;
+    }
+  }
+
+  .m-boost-overlay--categories {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+  }
+
+  .m-overlay-clickable {
+    text-transform: uppercase;
+    margin-right: $minds-padding * 2;
+
+    &.m-overlay-clickable--highlight {
+      font-weight: 400;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .m-overlay-autocomplete--results {
+    position: relative;
+    width: 30em;
+    max-width: 90%;
+    max-height: 6.5em;
+    font-size: 16px;
+    border: 1px solid #ffffff;
+    padding: $minds-padding;
+    margin-top: $minds-padding * 1.5;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    &:after {
+      bottom: 100%;
+      left: 95%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(102, 102, 102, 0);
+      border-bottom-color: #ffffff;
+      border-width: 8px;
+      margin-left: -8px;
+    }
+
+    .m-overlay-autocomplete--result {
+      padding: $minds-padding / 2;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+
+      &:hover, &.m-overlay-autocomplete--result-highlight {
+        background: #ffffff;
+        color: #000;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .m-boost-overlay--submit {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .m-overlay-button {
+      font-size: 14px;
+      letter-spacing: 2.33px;
+    }
+
+    .m-boost-overlay--submit-label,
+    .m-boost-overlay--submit-error {
+      margin-left: $minds-padding;
+      font-size: 16px;
+
+      > span, > i {
+        vertical-align: middle;
+      }
+    }
+
+    .m-boost-overlay--submit-error {
+      color: #ff0000;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  .m-boost-overlay--wallet {
+    position: absolute;
+    right: $minds-padding + 64px;
+    top: 28px;
+    font-size: 16px;
+
+    .m--middle {
+      vertical-align: middle;
+    }
+  }
+
+  .m-boost-overlay--target-facebook {
+    margin-top: $minds-padding * 2;
+
+    .m-boost-overlay-toggle--target-facebook > img {
+      height: 2em;
+      margin-left: 1em;
+    }
+
+    .m-boost-overlay--target-facebook-scheduler {
+      margin: 8px 0 0 160px;
+
+      m-scheduler > select.m-form-select {
+        background: transparent;
+        color: #ffffff !important;
+        font-weight: 200;
+      }
+    }
+  }
+
+  // Credit Card Input
+  .m-boost-overlay-payment {
+    position: relative;
+    border: 1px solid #ffffff;
+    max-width: 560px;
+    margin-bottom: $minds-padding * 2;
+    padding: $minds-padding * 2;
+
+    &:after {
+      top: 100%;
+      left: 5%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(255, 255, 255, 0);
+      border-top-color: #ffffff;
+      border-width: 7px;
+      margin-left: -7px;
+    }
+  }
+
+  .minds-purchase-card > .mdl-grid {
+    justify-content: space-between;
+  }
+
+  .m-checkout-confirm {
+    padding-left: 0 !important;
+  }
+
+  .minds-purchase-vendors {
+    margin-bottom: ($minds-padding * 2) !important;
+  }
+
+  .m-payments-saved {
+    .m-payments-saved--item {
+      text-transform: uppercase;
+      font-weight: 300;
+      padding: $minds-padding / 2;
+      padding-left: $minds-padding * 2;
+
+      &:hover, &:focus {
+        font-weight: 400;
+      }
+    }
+  }
+}

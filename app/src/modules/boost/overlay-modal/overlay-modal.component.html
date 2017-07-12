@@ -1,0 +1,248 @@
+<h2>Boost</h2>
+
+<div class="m-boost-overlay--wallet">
+  <i class="material-icons m--middle">account_balance</i>
+  <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance | abbr }}</span>
+  <span *ngIf="rates.balance === null" class="m--middle">…</span>
+</div>
+
+<!-- Type -->
+<section class="m-overlay-section">
+  <h3 class="m-overlay-section-title--small">Boost Type</h3>
+
+  <ul class="m-overlay-selector"
+    [class.m-overlay-selector--has-selection]="boost.type"
+  >
+    <li *ngIf="allowedTypes.newsfeed"
+      (click)="setBoostType('newsfeed')"
+      [class.m-overlay-selector--highlight]="!boost.type || boost.type == 'newsfeed'"
+    >
+      <h4>Newsfeeds</h4>
+      <span class="m-overlay-selector--description">You content will appear in newsfeeds across the site.</span>
+      <span class="m-overlay-selector--selected-label">Selected</span>
+    </li>
+
+    <li *ngIf="allowedTypes.p2p"
+      (click)="setBoostType('p2p')"
+      [class.m-overlay-selector--highlight]="!boost.type || boost.type == 'p2p'"
+    >
+      <h4>Channels</h4>
+      <span class="m-overlay-selector--description">Your content will be shared to a specific channel in exchange for USD or points.</span>
+      <span class="m-overlay-selector--selected-label">Selected</span>
+    </li>
+
+    <li *ngIf="allowedTypes.content"
+      (click)="setBoostType('content')"
+      [class.m-overlay-selector--highlight]="!boost.type || boost.type == 'content'"
+    >
+      <h4>Sidebars</h4>
+      <span class="m-overlay-selector--description">Your content will display on the sidebars throughout the site.</span>
+      <span class="m-overlay-selector--selected-label">Selected</span>
+    </li>
+  </ul>
+</section>
+
+<!-- Amount -->
+<section class="m-overlay-section">
+  <h3 class="m-overlay-section-title--small">
+    <ng-container *ngIf="boost.type != 'p2p'">How many views do you want?</ng-container>
+    <ng-container *ngIf="boost.type == 'p2p'">What's your bid?</ng-container>
+  </h3>
+
+  <div class="m-overlay-wide-input m-boost-overlay--amount"
+    [class.m-overlay-wide-input--reading]="!editingAmount"
+  >
+    <input type="number" *ngIf="editingAmount"
+      class="m-overlay-wide-input--edit"
+      [(ngModel)]="boost.amount"
+      (blur)="amountEditorBlur()"
+      (keydown.enter)="amountEditorBlur()"
+      (keydown.esc)="amountEditorBlur()"
+      #amountEditor
+    />
+
+    <span *ngIf="!editingAmount"
+      class="m-overlay-wide-input--read-mode"
+      (click)="amountEditorFocus()"
+    >{{ boost.amount | number }}</span>
+
+    <span class="m-overlay-wide-input--label"
+      (click)="amountEditorFocus()"
+    >
+      <ng-container *ngIf="boost.type != 'p2p'">views</ng-container>
+      <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'points'">points</ng-container>
+      <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'usd'">USD</ng-container>
+      <!-- TODO: BTC -->
+    </span>
+  </div>
+</section>
+
+<!-- Payment Method -->
+<section class="m-overlay-section">
+  <h3 class="m-overlay-section-title--small">Payment Method</h3>
+
+  <ul class="m-overlay-selector"
+    [class.m-overlay-selector--has-selection]="boost.currency"
+  >
+    <li
+      (click)="setBoostCurrency('usd')"
+      [class.m-overlay-selector--highlight]="!boost.currency || boost.currency == 'usd'"
+    >
+      <h4><b *ngIf="boost.amount">{{ calcCharges('usd') | currency:'USD':true }}</b> USD</h4>
+      <span class="m-overlay-selector--cta">Click to pay with money</span>
+      <span class="m-overlay-selector--selected-label">Selected</span>
+    </li>
+
+    <li
+      (click)="setBoostCurrency('points')"
+      [class.m-overlay-selector--highlight]="!boost.currency || boost.currency == 'points'"
+    >
+      <h4>
+        <b *ngIf="boost.amount">{{ calcCharges('points') | number }}</b>
+        {{ boost.amount ? 'points' : 'Points' }}
+      </h4>
+      <span class="m-overlay-selector--cta">Click to pay with points</span>
+      <span class="m-overlay-selector--selected-label">Selected</span>
+    </li>
+
+    <!-- TODO: BTC -->
+  </ul>
+</section>
+
+<!-- Boost Settings -->
+<!-- General -->
+<ng-container *ngIf="boost.type && (boost.type != 'p2p')">
+  <section class="m-overlay-section">
+    <h3>
+      Target
+      <span class="m-overlay-section--title-context">Select the categories which you want your boost to be targetted to ({{ rates.maxCategories }} max).</span>
+    </h3>
+
+    <div class="m-boost-overlay--categories">
+      <span *ngFor="let category of categories"
+        class="m-overlay-clickable"
+        [class.m-overlay-clickable--highlight]="hasCategory(category.id)"
+        (click)="toggleCategory(category.id)"
+      >
+        {{ category.label }}
+      </span>
+    </div>
+  </section>
+
+  <section class="m-overlay-section">
+    <h3>
+      Priority
+      <span class="m-overlay-section--title-context">Priority content goes to the front of the line, but costs at least twice the price of a regular boost.</span>
+    </h3>
+
+    <span class="m-overlay-toggle"
+      [class.m-overlay-toggle--highlight]="boost.priority"
+      (click)="togglePriority()"
+    >
+      <span class="m-overlay-toggle--select">Select</span>
+      <span class="m-overlay-toggle--selected">Selected</span>
+
+      <span class="m-overlay-toggle--label" *ngIf="boost.currency == 'usd'">+ <b>{{ calcPriorityChargesPreview('usd') | currency:'USD':true }} USD</b></span>
+      <span class="m-overlay-toggle--label" *ngIf="boost.currency == 'points'">+ <b>{{ calcPriorityChargesPreview('points') | number }} points</b></span>
+      <!-- TODO: BTC -->
+    </span>
+  </section>
+</ng-container>
+<!-- P2P -->
+<ng-container *ngIf="boost.type && (boost.type == 'p2p')">
+  <section class="m-overlay-section">
+    <h3>
+      Target
+      <span class="m-overlay-section--title-context">Search for the channel you want to boost to.</span>
+    </h3>
+
+    <div class="m-overlay-wide-input m-boost-overlay--target">
+      <input type="text" *ngIf="editingTarget"
+        class="m-overlay-wide-input--edit"
+        [(ngModel)]="targetQuery"
+        (blur)="targetEditorBlur()"
+        (keydown.esc)="targetEditorBlur()"
+        (keyup)="searchTarget()"
+        #targetEditor
+      />
+
+      <span *ngIf="!editingTarget"
+        class="m-overlay-wide-input--read-mode"
+        [class.m-overlay-wide-input--empty-read-mode]="!boost.target"
+        (click)="targetEditorFocus()"
+      >@{{ boost.target?.username || 'channel' }}</span>
+    </div>
+
+    <div *ngIf="editingTarget && targetResults.length > 0"
+      class="m-overlay-autocomplete--results"
+    >
+      <div *ngFor="let target of targetResults"
+        class="m-overlay-autocomplete--result"
+        (mousedown)="setTarget(target, $event); targetEditorBlur()"
+      >
+        <div class="m-overlay-autocomplete--result-content">
+          @{{ target.username }}
+          <ng-container *ngIf="target.merchant"><i class="material-icons material-icons--inline">attach_money</i></ng-container>
+        </div>
+
+        <div class="m-overlay-autocomplete--result-label">
+          <ng-container *ngIf="target.subscribers_count">{{ target.subscribers_count | abbr }} <i class="material-icons material-icons--inline">people</i></ng-container>
+          <ng-container *ngIf="target.impressions">{{ target.impressions | abbr }} <i class="material-icons material-icons--inline">remove_red_eye</i></ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="boost.target && boost.target.boostProPlus"
+      class="m-boost-overlay--target-facebook"
+    >
+      <div class="m-overlay-toggle m-boost-overlay-toggle--target-facebook"
+        [class.m-overlay-toggle--highlight]="boost.postToFacebook"
+        (click)="tooglePostToFacebook()"
+      >
+        <span class="m-overlay-toggle--select">Select</span>
+        <span class="m-overlay-toggle--selected">Selected</span>
+
+        <span>Post to {{ boost.target.fb.name }}</span>
+        <img [src]="'https://graph.facebook.com/' + boost.target.fb.uuid + '/picture'" />
+      </div>
+
+      <div [hidden]="!boost.postToFacebook"
+        class="m-boost-overlay--target-facebook-scheduler"
+      >
+        <m-scheduler (ts)="boost.scheduledTs = ($event / 1000)"></m-scheduler>
+      </div>
+    </div>
+  </section>
+</ng-container>
+<!-- / -->
+
+<!-- Submit -->
+<section class="m-overlay-section"
+  (mouseenter)="showErrors()"
+>
+  <div class="m-boost-overlay-payment" *ngIf="boost.currency == 'usd' && !boost.nonce">
+    <minds-payments-stripe-checkout *ngIf="!boost.nonce"
+      (inputed)="setBoostNonce($event)"
+      [useMDLStyling]="false"
+    ></minds-payments-stripe-checkout>
+  </div>
+
+  <div class="m-boost-overlay--submit">
+    <button class="m-overlay-button"
+      [disabled]="!canSubmit() || inProgress || success || criticalError"
+      (click)="submit()"
+    >Boost</button>
+
+    <div *ngIf="inProgress" class="m-boost-overlay--submit-label mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+
+    <div *ngIf="!inProgress && success" class="m-boost-overlay--submit-label">
+      <i class="material-icons">check</i>
+      <span>Boosted!</span>
+    </div>
+
+    <div *ngIf="!inProgress && !!error" class="m-boost-overlay--submit-error">
+      <i class="material-icons">close</i>
+      <span>{{ error }}</span>
+    </div>
+  </div>
+</section>

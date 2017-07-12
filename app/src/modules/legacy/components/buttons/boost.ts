@@ -3,6 +3,9 @@ import { Component } from '@angular/core';
 import { SessionFactory } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { WalletService } from '../../../../services/wallet';
+import { OverlayModalService } from "../../../../services/ux/overlay-modal";
+
+import { OverlayBoostModal } from "../../../boost/overlay-modal/overlay-modal.component";
 
 @Component({
   selector: 'minds-button-boost',
@@ -12,7 +15,6 @@ import { WalletService } from '../../../../services/wallet';
       (click)="boost()">
     <!-- i18n -->Boost<!-- /i18n -->
     </button>
-    <m-modal-boost [open]="showModal" (closed)="showModal = false" [object]="object"></m-modal-boost>
   `
 })
 
@@ -24,11 +26,12 @@ export class BoostButton {
   session = SessionFactory.build();
   showModal : boolean = false;
 
-  constructor() {
+  constructor(private overlayModal: OverlayModalService) {
   }
 
   boost(){
-    this.showModal = true;
-  }
+    const boostModal = this.overlayModal.create(OverlayBoostModal, this.object);
 
+    boostModal.present();
+  }
 }

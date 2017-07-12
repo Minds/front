@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 
 import { CreditCard } from "../../../interfaces/card-interface";
 
@@ -18,6 +18,8 @@ export class CardInput {
   inProgress : boolean = false;
   confirmation: boolean = false; // @todo: ??
   error: string = ''; // @todo: ??
+
+  @Input('useMDLStyling') useMDLStyling: boolean = true;
 
   constructor(public client : Client) {
   }

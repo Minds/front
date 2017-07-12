@@ -22,11 +22,27 @@ interface CreditCard {
     <div class="m-error mdl-color--red mdl-color-text--white" *ngIf="error">
         {{error}}
     </div>
-    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="useBitcoin">
-        <div id="coinbase-btn" *ngIf="useBitcoin"></div>
+
+    <div class="m-payments-options" style="margin-bottom:8px;" *ngIf="useBitcoin"
+      [class.mdl-card]="useMDLStyling"
+    >
+      <div id="coinbase-btn" *ngIf="useBitcoin"></div>
     </div>
 
-    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation" *ngIf="useCreditCard"></minds-checkout-card-input>
+    <div class="m-payments-saved--title" *ngIf="cards.length">Select:</div>
+
+    <ul class="m-payments-saved" *ngIf="cards.length">
+      <li *ngFor="let card of cards"
+        class="m-payments-saved--item"
+        (click)="setSavedCard(card.id)"
+      >
+        {{ card.label }}
+      </li>
+    </ul>
+
+    <div class="m-payments-new--title" *ngIf="cards.length">Or use a new card:</div>
+
+    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation" [useMDLStyling]="useMDLStyling" *ngIf="useCreditCard"></minds-checkout-card-input>
     <div [hidden]="!inProgress" class="m-checkout-loading">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
       <p>Capturing card details...</p>
@@ -37,6 +53,7 @@ interface CreditCard {
 export class StripeCheckout {
 
   minds = window.Minds;
+  loading: boolean = false;
   inProgress : boolean = false;
   confirmation : boolean = false;
   error : string = "";
@@ -49,9 +66,13 @@ export class StripeCheckout {
   @Input() merchant_guid;
   @Input() gateway : string = "merchants";
 
+  @Input('useMDLStyling') useMDLStyling: boolean = true;
+
   stripe;
   bt_checkout;
   nonce : string = "";
+
+  cards: any[] = [];
 
   @Input() useCreditCard : boolean = true;
   @Input() useBitcoin : boolean = false;
@@ -63,6 +84,8 @@ export class StripeCheckout {
     setTimeout(() => {
       this.setupStripe();
     }, 1000); //sometimes stripe can take a while to download
+
+     this.loadSavedCards();
   }
 
   setupStripe(){
@@ -71,8 +94,36 @@ export class StripeCheckout {
     }
   }
 
+  loadSavedCards() {
+    this.loading = true;
+    this.cards = [];
+
+    return this.client.get(`api/v1/payments/stripe/cards`)
+      .then(({ cards }) => {
+        this.loading = false;
+
+        if (cards && cards.length) {
+          this.cards = (<any[]>cards).map(card => ({
+            id: card.id,
+            label: `${card.brand} ${card.exp_month}/${('' + card.exp_year).substr(2)} **** ${card.last4}`
+          }));
+        }
+      })
+      .catch(e => {
+        this.loading = false;
+      });
+  }
+
+  setSavedCard(id) {
+    this.inProgress = true;
+
+    this.nonce = id;
+    this.inputed.next(this.nonce);
+    this.inProgress = false;
+  }
+
   setCard(card){
-    console.log(card);
+    // console.log(card);
     this.card = card;
     this.getCardNonce();
   }
@@ -97,7 +148,6 @@ export class StripeCheckout {
       this.nonce = response.id;
       this.inputed.next(this.nonce);
       this.inProgress = false;
-
     });
   }
 

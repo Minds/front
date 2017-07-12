@@ -53,6 +53,10 @@
       padding:8px;
       cursor:pointer;
       text-transform:uppercase;
+
+      &:first-child {
+        padding-left: 0;
+      }
     }
   }
 

@@ -5,6 +5,9 @@ import { SessionFactory } from '../../../../../services/session';
 import { ScrollService } from '../../../../../services/ux/scroll';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
+import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
+
+import { OverlayBoostModal } from "../../../../boost/overlay-modal/overlay-modal.component";
 
 @Component({
   moduleId: module.id,
@@ -55,7 +58,8 @@ export class Activity {
     public scroll: ScrollService,
     _element: ElementRef,
     public attachment: AttachmentService,
-    public translationService: TranslationService
+    public translationService: TranslationService,
+    private overlayModal: OverlayModalService
   ) {
 
     this.element = _element.nativeElement;
@@ -176,7 +180,13 @@ export class Activity {
   }
 
   showBoost(){
-      this.showBoostOptions = !this.showBoostOptions;
+    const boostModal = this.overlayModal.create(OverlayBoostModal, this.activity);
+
+    boostModal.onDidDismiss(() => {
+      this.showBoostOptions = false;
+    });
+
+    boostModal.present();
   }
 
   feature(){
