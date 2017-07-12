@@ -4,12 +4,19 @@
 
       <minds-card-user [object]="session.getLoggedInUser()" class="mdl-card mdl-shadow--2dp" style="margin-bottom:16px;"></minds-card-user>
 
-      <a [routerLink]="['/wallet/purchase']" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+      <a [routerLink]="['/wallet/purchase']" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link" *ngIf="session.getLoggedInUser().plus">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">favorite</i>
           Buy Points
           <span class="m-buypoints-tag">1 point = 1 view</span>
         </div>
+      </a>
+
+      <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link"  *ngIf="!session.getLoggedInUser().plus">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">add_circle</i>
+          Upgrade to Plus
+        </div>    
       </a>
 
       <a routerLink="/monetization" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
