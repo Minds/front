@@ -132,7 +132,8 @@
               'language' => $language,
               "categories" => Minds\Core\Config::_()->get('categories') ?: [],
               "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
-              "recaptchaKey" => Minds\Core\Config::_()->get('google')['recaptcha']['site_key']
+              "recaptchaKey" => Minds\Core\Config::_()->get('google')['recaptcha']['site_key'],
+              "max_video_length" => Minds\Core\Config::_()->get('max_video_length')
           ];
 
           if(Minds\Core\Session::isLoggedIn()){

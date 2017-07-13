@@ -16,6 +16,7 @@ interface Minds{
  language: any;
  stripe_key?: any;
  recaptchaKey ?: string;
+ max_video_length ?: number;
 }
 
 interface MindsNavigation {

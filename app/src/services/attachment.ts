@@ -75,7 +75,7 @@ export class AttachmentService {
   }
 
   setHidden(hidden) {
-    this.meta.hidden = hidden ? 1 : 0;
+    this.meta.hidden = hidden ? 1: 0;
   }
 
   isHidden() {
@@ -83,7 +83,7 @@ export class AttachmentService {
   }
 
   setMature(mature) {
-    this.meta.mature = mature ? 1 : 0;
+    this.meta.mature = mature ? 1: 0;
 
     return this;
   }
@@ -100,47 +100,37 @@ export class AttachmentService {
     this.attachment.progress = 0;
     this.attachment.mime = '';
 
-    let file = fileInput ? fileInput.files[0] : null;
+    let file = fileInput ? fileInput.files[0]: null;
 
     if (!file) {
       return Promise.reject(null);
     }
 
-    // Preview
-    if (file.type && file.type.indexOf('video/') === 0){
-      this.attachment.mime = 'video';
-    } else if (file.type && file.type.indexOf('image/') === 0) {
-      this.attachment.mime = 'image';
-      
-      let reader = new FileReader();
-      reader.onloadend = () => {
-        this.attachment.preview = reader.result;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      this.attachment.mime = 'unknown';
-    }
+    return this.checkFileType(file)
+      .then(() => {
+        // Upload and return the GUID
+        return this.uploadService.post('api/v1/archive', [file], this.meta, (progress) => {
+          this.attachment.progress = progress;
+        });
+      })
+      .then((response: any) => {
+        this.meta.attachment_guid = response.guid ? response.guid: null;
 
-    // Upload and return the GUID
-    return this.uploadService.post('api/v1/archive', [ file ], this.meta, (progress) => {
-      this.attachment.progress = progress;
-    })
-    .then((response: any) => {
-      this.meta.attachment_guid = response.guid ? response.guid : null;
+        if (!this.meta.attachment_guid) {
+          throw 'No GUID';
+        }
 
-      if (!this.meta.attachment_guid) {
-        throw 'No GUID';
-      }
+        return Promise.resolve(this.meta.attachment_guid);
+      })
+      .catch(e => {
+        this.meta.attachment_guid = null;
+        this.attachment.progress = 0;
+        this.attachment.preview = null;
 
-      return this.meta.attachment_guid;
-    })
-    .catch(e => {
-      this.meta.attachment_guid = null;
-      this.attachment.progress = 0;
-      this.attachment.preview = null;
+        return Promise.reject(e);
+      });
 
-      throw e;
-    });
+
   }
 
   remove(fileInput: HTMLInputElement) {
@@ -152,14 +142,14 @@ export class AttachmentService {
     }
 
     return this.clientService.delete('api/v1/archive/' + this.meta.attachment_guid)
-    .then(() => {
-      this.meta.attachment_guid = null;
-    })
-    .catch(e => {
-      this.meta.attachment_guid = null;
+      .then(() => {
+        this.meta.attachment_guid = null;
+      })
+      .catch(e => {
+        this.meta.attachment_guid = null;
 
-      throw e;
-    });
+        throw e;
+      });
   }
 
   has() {
@@ -171,7 +161,7 @@ export class AttachmentService {
   }
 
   getUploadProgress() {
-    return this.attachment.progress ? this.attachment.progress : 0;
+    return this.attachment.progress ? this.attachment.progress: 0;
   }
 
   getPreview() {
@@ -267,29 +257,29 @@ export class AttachmentService {
       this.meta.is_rich = 1;
 
       this.clientService.get('api/v1/newsfeed/preview', { url })
-      .then((data: any) => {
+        .then((data: any) => {
 
-        if (!data) {
+          if (!data) {
+            this.resetRich();
+            return;
+          }
+
+          if (data.meta) {
+            this.meta.url = data.meta.canonical || url;
+            this.meta.title = data.meta.title || this.meta.url;
+            this.meta.description = data.meta.description || '';
+          } else {
+            this.meta.url = url;
+            this.meta.title = url;
+          }
+
+          if (data.links && data.links.thumbnail && data.links.thumbnail[0]) {
+            this.meta.thumbnail = data.links.thumbnail[0].href;
+          }
+        })
+        .catch(e => {
           this.resetRich();
-          return;
-        }
-
-        if (data.meta) {
-          this.meta.url = data.meta.canonical || url;
-          this.meta.title = data.meta.title || this.meta.url;
-          this.meta.description = data.meta.description || '';
-        } else {
-          this.meta.url = url;
-          this.meta.title = url;
-        }
-
-        if (data.links && data.links.thumbnail && data.links.thumbnail[0]) {
-          this.meta.thumbnail = data.links.thumbnail[0].href;
-        }
-      })
-      .catch(e => {
-        this.resetRich();
-      });
+        });
     }, 600);
   }
 
@@ -353,6 +343,50 @@ export class AttachmentService {
     }
 
     return this.parseMaturity(object);
+  }
+
+  private checkFileType(file): Promise<any> {
+    // Preview
+    return new Promise((resolve, reject) => {
+      if (file.type && file.type.indexOf('video/') === 0) {
+        this.attachment.mime = 'video';
+        let reader = new FileReader();
+
+        reader.onload = (e: any) => {
+          this.checkVideoDuration(e.target.result).then((duration) => {
+            if (duration > window.Minds.max_video_length)
+              return reject({ message: 'Error: Video duration exceeds 15 minutes' });
+            resolve();
+          });
+        };
+        reader.readAsDataURL(file);
+
+      } else if (file.type && file.type.indexOf('image/') === 0) {
+        this.attachment.mime = 'image';
+
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+          this.attachment.preview = reader.result;
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.attachment.mime = 'unknown';
+      }
+    });
+  }
+
+  private checkVideoDuration(src) {
+    return new Promise((resolve, reject) => {
+      const videoElement = document.createElement('video');
+      videoElement.preload = 'metadata';
+      videoElement.addEventListener('durationchange', function () {
+        window.URL.revokeObjectURL(src);
+        resolve(videoElement.duration);
+      });
+      videoElement.src = src;
+    });
   }
 
   static _(client: Client, upload: Upload) {
