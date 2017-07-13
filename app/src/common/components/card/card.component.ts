@@ -112,7 +112,9 @@ export class MindsCard implements AfterViewInit {
     }
 
     if (this.object.type === 'group') {
-      this.componentInstance.group = this.object;
+      (<GroupsCard>this.componentInstance).group = this.object;
+    } else if (this.object.subtype === 'blog') {
+      (<BlogCard>this.componentInstance)._blog = this.object;
     } else {
       this.componentInstance.object = this.object;
     }
