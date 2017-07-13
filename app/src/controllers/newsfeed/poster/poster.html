@@ -1,14 +1,12 @@
 <div class="mdl-card mdl-shadow--4dp post" *ngIf="session.isLoggedIn()">
-  <div class="mdl-card__supporting-text">
-    <div class="minds-avatar">
-      <a [routerLink]="['/', session.getLoggedInUser().username]">
-        <img
-          src="{{minds.cdn_url}}/icon/{{session.getLoggedInUser().guid}}/medium/{{session.getLoggedInUser().icontime}}/"
-          class="mdl-shadow--2dp"/>
-      </a>
-    </div>
+    <div class="mdl-card__supporting-text">
+        <div class="minds-avatar">
+          <a [routerLink]="['/', session.getLoggedInUser().username]">
+            <img src="{{minds.cdn_url}}/icon/{{session.getLoggedInUser().guid}}/medium/{{session.getLoggedInUser().icontime}}/" class="mdl-shadow--2dp"/>
+          </a>
+        </div>
 
-    <form (submit)="post()">
+        <form (submit)="post()">
 
             <textarea
               class="mdl-textfield__input"
@@ -23,78 +21,71 @@
               [autoGrow]
             ></textarea>
 
-      <div class="mdl-card__actions">
-        <minds-third-party-networks-selector
-          #thirdPartyNetworksSelector="thirdPartyNetworksSelector"
-        ></minds-third-party-networks-selector>
-        <!-- Attachments -->
-        <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
-          <i class="material-icons">attachment</i>
-          <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)"/>
-        </div>
+            <div class="mdl-card__actions">
+              <minds-third-party-networks-selector
+                #thirdPartyNetworksSelector="thirdPartyNetworksSelector"
+              ></minds-third-party-networks-selector>
+              <!-- Attachements -->
+              <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
+                <i class="material-icons">attachment</i>
+                <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)"/>
+              </div>
 
-        <a class="m-mature-button"
-           [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-           (click)="attachment.toggleMature()"
-           title="Mature content"
-           i18n-title
-        >
-          <i class="material-icons">explicit</i>
-          <span *ngIf="attachment.isMature()" i18n>Mature content</span>
-        </a>
+              <a class="m-mature-button"
+              [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+              (click)="attachment.toggleMature()"
+              title="Mature content"
+              i18n-title
+              >
+                <i class="material-icons">explicit</i>
+                <span *ngIf="attachment.isMature()" i18n>Mature content</span>
+              </a>
 
-        <a class="m-paywall-button-icon"
-           *ngIf="session.getLoggedInUser().merchant?.exclusive?.enabled"
-           [ngClass]="{ 'mdl-color-text--green-500': meta.paywall }"
-           (click)="meta.paywall = !meta.paywall"
-           title="PayWall"
-        >
-          <i class="material-icons">attach_money</i>
-        </a>
+              <a class="m-paywall-button-icon"
+                *ngIf="session.getLoggedInUser().merchant?.exclusive?.enabled"
+                [ngClass]="{ 'mdl-color-text--green-500': meta.paywall }"
+                (click)="meta.paywall = !meta.paywall"
+                title="PayWall"
+                >
+                <i class="material-icons">attach_money</i>
+              </a>
 
-        <button
-          type="submit"
-          class="mdl-button mdl-button--colored"
-          [disabled]="!canPost || inProgress"
-        >
-          <!-- i18n: Action of posting -->Post<!-- /i18n --> <i class="material-icons">send</i>
-        </button>
+              <button
+                type="submit"
+                class="mdl-button mdl-button--colored"
+                [disabled]="!canPost || inProgress"
+                >
+                <!-- i18n: Action of posting -->Post<!-- /i18n --> <i class="material-icons">send</i>
+              </button>
+            </div>
+
+        </form>
+    </div>
+    <!-- Rich embed preview -->
+    <div class="post-preview" *ngIf="attachment.isRich()">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="attachment.getMeta().title"></div>
+      <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
+        <minds-rich-embed
+          [preview]="attachment.getMeta()"
+        ></minds-rich-embed>
       </div>
+    </div>
 
-    </form>
-  </div>
-  <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp" style="min-height:0;"
-       *ngIf="errorMessage">
-    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-      {{errorMessage}}
+    <!-- Attachment preview -->
+    <div class="post-preview" *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"  (click)="removeAttachment(file)">
+      <div class="mdl-progress mdl-js-progress"
+        [mdlUpload]
+        [progress]="attachment.getUploadProgress()"
+        [hidden]="attachment.getUploadProgress() == 0"
+        [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
+        ></div>
+      <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
+          <i class="material-icons">videocam</i>
+      </div>
+      <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview"/>
+      <div class="attachment-preview-delete">
+        <i class="material-icons">delete</i>
+      </div>
     </div>
-  </div>
-  <!-- Rich embed preview -->
-  <div class="post-preview" *ngIf="attachment.isRich()">
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="attachment.getMeta().title"></div>
-    <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
-      <minds-rich-embed
-        [preview]="attachment.getMeta()"
-      ></minds-rich-embed>
-    </div>
-  </div>
-
-  <!-- Attachment preview -->
-  <div class="post-preview" *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"
-       (click)="removeAttachment(file)">
-    <div class="mdl-progress mdl-js-progress"
-         [mdlUpload]
-         [progress]="attachment.getUploadProgress()"
-         [hidden]="attachment.getUploadProgress() == 0"
-         [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
-    ></div>
-    <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
-      <i class="material-icons">videocam</i>
-    </div>
-    <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview"/>
-    <div class="attachment-preview-delete">
-      <i class="material-icons">delete</i>
-    </div>
-  </div>
 
 </div>
