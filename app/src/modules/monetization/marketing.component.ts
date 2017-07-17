@@ -17,7 +17,8 @@ export class MonetizationMarketingComponent {
   }
 
   ngOnInit(){
-    this.load();
+    if(this.user)
+      this.load();
   }
 
   load(): Promise<any> {
