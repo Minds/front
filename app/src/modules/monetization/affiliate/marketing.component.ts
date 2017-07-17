@@ -16,14 +16,19 @@ export class AffiliateMarketingComponent {
   link : string = '';
 
   constructor(private client : Client, private cd : ChangeDetectorRef){
-    this.link = this.minds.site_url + 'register;referrer=' + this.user.username;
+    if(this.user)
+      this.link = this.minds.site_url + 'register;referrer=' + this.user.username;
   }
 
   isAffiliate(){
+    if(!this.user)
+      return false;
+
     for(let program of this.user.programs){
       if(program == 'affiliate')
         return true;
     }
+
     return false;
   }
 

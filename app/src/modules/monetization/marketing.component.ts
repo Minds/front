@@ -32,7 +32,7 @@ export class MonetizationMarketingComponent {
   }
 
   isMonetized(){
-    if(this.user.merchant.id)
+    if(this.user && this.user.merchant.id)
       return true;
     return false;
   }
