@@ -40,8 +40,8 @@ export class AttachmentService {
         this.attachment.preview = object.custom_data.thumbnail_src;
       }
 
-      if (object.custom_data && object.custom_data[0] && object.custom_data[0].src) {
-        this.attachment.preview = object.custom_data[0].src;
+      if (object.custom_data && object.custom_data[ 0 ] && object.custom_data[ 0 ].src) {
+        this.attachment.preview = object.custom_data[ 0 ].src;
       }
     }
 
@@ -100,47 +100,37 @@ export class AttachmentService {
     this.attachment.progress = 0;
     this.attachment.mime = '';
 
-    let file = fileInput ? fileInput.files[0] : null;
+    let file = fileInput ? fileInput.files[ 0 ] : null;
 
     if (!file) {
       return Promise.reject(null);
     }
 
-    // Preview
-    if (file.type && file.type.indexOf('video/') === 0){
-      this.attachment.mime = 'video';
-    } else if (file.type && file.type.indexOf('image/') === 0) {
-      this.attachment.mime = 'image';
-      
-      let reader = new FileReader();
-      reader.onloadend = () => {
-        this.attachment.preview = reader.result;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      this.attachment.mime = 'unknown';
-    }
+    return this.checkFileType(file)
+      .then(() => {
+        // Upload and return the GUID
+        return this.uploadService.post('api/v1/archive', [ file ], this.meta, (progress) => {
+          this.attachment.progress = progress;
+        });
+      })
+      .then((response: any) => {
+        this.meta.attachment_guid = response.guid ? response.guid : null;
 
-    // Upload and return the GUID
-    return this.uploadService.post('api/v1/archive', [ file ], this.meta, (progress) => {
-      this.attachment.progress = progress;
-    })
-    .then((response: any) => {
-      this.meta.attachment_guid = response.guid ? response.guid : null;
+        if (!this.meta.attachment_guid) {
+          throw 'No GUID';
+        }
 
-      if (!this.meta.attachment_guid) {
-        throw 'No GUID';
-      }
+        return Promise.resolve(this.meta.attachment_guid);
+      })
+      .catch(e => {
+        this.meta.attachment_guid = null;
+        this.attachment.progress = 0;
+        this.attachment.preview = null;
 
-      return this.meta.attachment_guid;
-    })
-    .catch(e => {
-      this.meta.attachment_guid = null;
-      this.attachment.progress = 0;
-      this.attachment.preview = null;
+        return Promise.reject(e);
+      });
 
-      throw e;
-    });
+
   }
 
   remove(fileInput: HTMLInputElement) {
@@ -152,14 +142,14 @@ export class AttachmentService {
     }
 
     return this.clientService.delete('api/v1/archive/' + this.meta.attachment_guid)
-    .then(() => {
-      this.meta.attachment_guid = null;
-    })
-    .catch(e => {
-      this.meta.attachment_guid = null;
+      .then(() => {
+        this.meta.attachment_guid = null;
+      })
+      .catch(e => {
+        this.meta.attachment_guid = null;
 
-      throw e;
-    });
+        throw e;
+      });
   }
 
   has() {
@@ -195,7 +185,7 @@ export class AttachmentService {
 
     for (var prop in this.meta) {
       if (this.meta.hasOwnProperty(prop)) {
-        result[prop] = this.meta[prop];
+        result[ prop ] = this.meta[ prop ];
       }
     }
 
@@ -241,7 +231,7 @@ export class AttachmentService {
     }
 
     if (match instanceof Array) {
-      url = match[0];
+      url = match[ 0 ];
     } else {
       url = match;
     }
@@ -267,29 +257,29 @@ export class AttachmentService {
       this.meta.is_rich = 1;
 
       this.clientService.get('api/v1/newsfeed/preview', { url })
-      .then((data: any) => {
+        .then((data: any) => {
 
-        if (!data) {
+          if (!data) {
+            this.resetRich();
+            return;
+          }
+
+          if (data.meta) {
+            this.meta.url = data.meta.canonical || url;
+            this.meta.title = data.meta.title || this.meta.url;
+            this.meta.description = data.meta.description || '';
+          } else {
+            this.meta.url = url;
+            this.meta.title = url;
+          }
+
+          if (data.links && data.links.thumbnail && data.links.thumbnail[ 0 ]) {
+            this.meta.thumbnail = data.links.thumbnail[ 0 ].href;
+          }
+        })
+        .catch(e => {
           this.resetRich();
-          return;
-        }
-
-        if (data.meta) {
-          this.meta.url = data.meta.canonical || url;
-          this.meta.title = data.meta.title || this.meta.url;
-          this.meta.description = data.meta.description || '';
-        } else {
-          this.meta.url = url;
-          this.meta.title = url;
-        }
-
-        if (data.links && data.links.thumbnail && data.links.thumbnail[0]) {
-          this.meta.thumbnail = data.links.thumbnail[0].href;
-        }
-      })
-      .catch(e => {
-        this.resetRich();
-      });
+        });
     }, 600);
   }
 
@@ -307,8 +297,8 @@ export class AttachmentService {
       return !!object.flags.mature;
     }
 
-    if (typeof object.custom_data !== 'undefined' && typeof object.custom_data[0] !== 'undefined') {
-      return !!object.custom_data[0].mature;
+    if (typeof object.custom_data !== 'undefined' && typeof object.custom_data[ 0 ] !== 'undefined') {
+      return !!object.custom_data[ 0 ].mature;
     }
 
     if (typeof object.custom_data !== 'undefined') {
@@ -353,6 +343,66 @@ export class AttachmentService {
     }
 
     return this.parseMaturity(object);
+  }
+
+  private checkFileType(file): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (file.type && file.type.indexOf('video/') === 0) {
+        this.attachment.mime = 'video';
+
+        this.checkVideoDuration(file).then(duration => {
+          if (duration > window.Minds.max_video_length) {
+            return reject({ message: 'Error: Video duration exceeds ' + window.Minds.max_video_length / 60 + ' minutes' });
+          }
+
+          resolve();
+        }).catch(error => {
+          reject(error);
+        });
+
+      } else if (file.type && file.type.indexOf('image/') === 0) {
+        this.attachment.mime = 'image';
+
+        let reader = new FileReader();
+
+        reader.onloadend = () => {
+          this.attachment.preview = reader.result;
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.attachment.mime = 'unknown';
+      }
+    });
+  }
+
+  private checkVideoDuration(file) {
+    return new Promise((resolve, reject) => {
+      const videoElement = document.createElement('video');
+      let timeout: number = 0;
+      videoElement.preload = 'metadata';
+      videoElement.onloadedmetadata = function () {
+        if (timeout !== 0)
+          window.clearTimeout(timeout);
+
+        window.URL.revokeObjectURL(videoElement.src);
+        resolve(videoElement.duration);
+      };
+      videoElement.addEventListener('error', function (error) {
+        if (timeout !== 0)
+          window.clearTimeout(timeout);
+
+        window.URL.revokeObjectURL(this.src);
+        reject({ message: 'Error: Video format not supported' });
+      });
+
+      videoElement.src = URL.createObjectURL(file);
+
+      // bypass the 'onloadendmetadata' event, which sometimes does never get called in IE
+      timeout = window.setTimeout(() => {
+        resolve(0); // 0 so it's less windows.Minds.max_video_length
+      }, 5000);
+    })
   }
 
   static _(client: Client, upload: Upload) {
