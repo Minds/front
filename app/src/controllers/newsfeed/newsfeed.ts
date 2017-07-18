@@ -208,8 +208,10 @@ export class Newsfeed {
   }
 
   canDeactivate(){
+    if(!this.poster || !this.poster.attachment)
+      return true;
     const progress = this.poster.attachment.getUploadProgress();
-    if ( progress > 0 && progress < 100 ) {
+    if (progress > 0 && progress < 100) {
       return confirm('Your file is still uploading. Are you sure?');
     }
 
