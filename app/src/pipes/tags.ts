@@ -16,7 +16,7 @@ export class TagsPipe {
       return value;
 
     //<a>tag
-    var url = /(\b(https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    var url = /(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gim;
     value = value.replace(url, '<a href="$1" target="_blank">$1</a>');
 
     //#hashtag

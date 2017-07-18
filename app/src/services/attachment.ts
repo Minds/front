@@ -223,7 +223,7 @@ export class AttachmentService {
 
   preview(content: string) {
 
-    let match = content.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig),
+    let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/ig),
       url;
 
     if (!match) {
