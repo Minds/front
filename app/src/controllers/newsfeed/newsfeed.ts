@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,6 +8,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { SessionFactory } from '../../services/session';
+import { Poster } from "./poster/poster";
 
 @Component({
   selector: 'minds-newsfeed',
@@ -38,6 +39,8 @@ export class Newsfeed {
     active: false,
     attachment_guid: null
   }
+
+  @ViewChild('poster') private poster: Poster;
 
   constructor(public client: Client, public upload: Upload, public navigation : NavigationService,
     public router: Router, public route: ActivatedRoute, public title: MindsTitle){
@@ -202,6 +205,15 @@ export class Newsfeed {
       this.showRightSidebar = false;
     else
       this.showRightSidebar = true;
+  }
+
+  canDeactivate(){
+    const progress = this.poster.attachment.getUploadProgress();
+    if ( progress > 0 && progress < 100 ) {
+      return confirm('Your file is still uploading. Are you sure?');
+    }
+
+    return true;
   }
 
 }

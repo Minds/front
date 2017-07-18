@@ -23,6 +23,7 @@ import { AttachmentService } from './attachment';
 import { Sidebar } from './ui/sidebar';
 import { EmbedService } from './embed';
 import { MindsTitle } from './ux/title';
+import { CanDeactivateGuardService } from './can-deactivate-guard';
 
 import { GoogleChartsLoader } from "./third-party/google-charts-loader";
 
@@ -128,5 +129,9 @@ export const MINDS_PROVIDERS : any[] = [
      provide: GoogleChartsLoader,
      useFactory: GoogleChartsLoader._,
      deps: [ NgZone ]
+   },
+   {
+     provide: CanDeactivateGuardService,
+     useFactory: CanDeactivateGuardService._
    },
 ];

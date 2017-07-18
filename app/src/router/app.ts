@@ -27,6 +27,8 @@ import {Blog, BlogViewInfinite, BlogEdit} from '../plugins/blog/blog';
 import {ArchiveView, ArchiveEdit} from '../plugins/archive/archive';
 import {Groups, GroupsProfile, GroupsCreator} from '../plugins/Groups/groups';
 
+import {CanDeactivateGuardService} from '../services/can-deactivate-guard';
+
 export const MindsAppRoutes: Routes = [
   { path: '', component: Homepage },
 
@@ -36,7 +38,7 @@ export const MindsAppRoutes: Routes = [
   { path: 'forgot-password', component: ForgotPassword },
 
   { path: 'newsfeed/:guid', component: NewsfeedSingle },
-  { path: 'newsfeed', component: Newsfeed },
+  { path: 'newsfeed', component: Newsfeed, canDeactivate: [CanDeactivateGuardService] },
   { path: 'capture', component: Capture },
 
   { path: 'boosts/:type/:filter', component: Boosts },
@@ -58,8 +60,8 @@ export const MindsAppRoutes: Routes = [
   { path: 'notifications/:filter', component: Notifications },
   { path: 'notifications', component: Notifications },
 
-  { path: 'groups/profile/:guid/:filter', component: GroupsProfile },
-  { path: 'groups/profile/:guid', component: GroupsProfile },
+  { path: 'groups/profile/:guid/:filter', component: GroupsProfile, canDeactivate: [CanDeactivateGuardService]  },
+  { path: 'groups/profile/:guid', component: GroupsProfile, canDeactivate: [CanDeactivateGuardService]  },
   { path: 'groups/create', component: GroupsCreator },
   { path: 'groups/:filter', component: Groups },
 
@@ -73,7 +75,7 @@ export const MindsAppRoutes: Routes = [
   { path: 'p/:page', component: Pages },
 
   { path: ':username/:filter', component: Channel },
-  { path: ':username', component: Channel },
+  { path: ':username', component: Channel, canDeactivate: [CanDeactivateGuardService]},
 ];
 
 export const MindsAppRoutingProviders: any[] = [{ provide: APP_BASE_HREF, useValue: '/' }];

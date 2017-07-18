@@ -154,7 +154,7 @@
   <!-- Feed list -->
   <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="_filter == 'feed'">
 
-    <minds-newsfeed-poster (load)="prepend($event)" *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"></minds-newsfeed-poster>
+    <minds-newsfeed-poster (load)="prepend($event)" *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid" #poster></minds-newsfeed-poster>
 
     <div class="minds-list">
 

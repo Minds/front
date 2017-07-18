@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
@@ -11,6 +11,7 @@ import { ScrollService } from '../../services/ux/scroll';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
+import { Poster } from "../newsfeed/poster/poster";
 
 @Component({
   moduleId: module.id,
@@ -36,6 +37,8 @@ export class Channel {
 
   //@todo make a re-usable city selection module to avoid duplication here
   cities : Array<any> = [];
+
+    @ViewChild('poster') private poster: Poster;
 
   constructor(public client: Client, public upload: Upload, private route: ActivatedRoute,
     public title: MindsTitle, public scroll : ScrollService){
@@ -244,6 +247,15 @@ export class Channel {
       .catch((e) => {
         this.user.blocked = true;
       });
+  }
+
+  canDeactivate(){
+    const progress = this.poster.attachment.getUploadProgress();
+    if ( progress > 0 && progress < 100 ) {
+      return confirm('Your file is still uploading. Are you sure?');
+    }
+
+    return true;
   }
 }
 
