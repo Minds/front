@@ -1,49 +1,67 @@
 // Karma configuration
-// Generated on Wed Jul 15 2015 09:44:02 GMT+0200 (Romance Daylight Time)
+// Generated on Tu Jun 27 2017
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    plugins: [
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-typescript')
+    ],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
-
+    frameworks: ['jasmine', 'karma-typescript'],
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/angular2/node_modules/zone.js/dist/zone-microtask.js',
-      'node_modules/angular2/node_modules/zone.js/dist/long-stack-trace-zone.js',
-      'node_modules/angular2/node_modules/zone.js/dist/jasmine-patch.js',
-      'node_modules/angular2/node_modules/traceur/bin/traceur-runtime.js',
-      'node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.src.js',
-      'node_modules/systemjs/dist/system.src.js',
-      'node_modules/reflect-metadata/Reflect.js',
-
-      { pattern: './tests/ng-spec/**/*.js', included: false, watched: true },
-      { pattern: 'node_modules/angular2/**/*.js', included: false, watched: false },
-      './test-main.js',
+      {pattern: 'app/tests/*.spec.ts', included: true, watched: true},
+      {pattern: './app/**/*.spec.ts', included: true, watched: true},
+      {pattern: "./app/**/*.+(ts|html)"}
     ],
+    resolve: {
+      extensions: ['', '.js', '.ts']
+    },
 
+    include: ['app/src/**/*.ts', 'app/typings/*.ts'],
 
     // list of files to exclude
     exclude: [
+      'tools',
+      'aot',
+      './app/bootstrap-aot.ts',
+      './app/bootstrap-embed-aot.ts'
     ],
-
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      '**/*.ts': ['karma-typescript'], // *.tsx for React Jsx
     },
 
+    karmaTypescriptConfig: {
+      bundlerOptions: {
+        entrypoints: /\.spec\.ts$/,
+        transforms: [
+          require("karma-typescript-angular2-transform")
+        ],
+        constants: {
+          "window.Minds": {}
+        }
+      },
+      compilerOptions: {
+        lib: ["ES2015", "DOM"]
+      }
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'karma-typescript'],
 
 
     // web server port
@@ -72,4 +90,4 @@ module.exports = function(config) {
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false
   })
-}
+};
