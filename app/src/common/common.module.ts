@@ -13,6 +13,9 @@ import { CountryInputComponent } from './components/forms/country-input/country-
 import { DateInputComponent } from './components/forms/date-input/date-input.component';
 import { StateInputComponent } from './components/forms/state-input/state-input.component';
 import { Modal } from '../components/modal/modal';
+import { ReadMoreDirective } from './read-more/read-more.directive';
+import { ReadMoreButtonComponent } from './read-more/button.component';
+
 
 @NgModule({
   imports: [
@@ -30,6 +33,8 @@ import { Modal } from '../components/modal/modal';
     DateInputComponent,
     StateInputComponent,
     Modal,
+    ReadMoreDirective,
+    ReadMoreButtonComponent,
 
     MDL_DIRECTIVES
   ],
@@ -43,6 +48,8 @@ import { Modal } from '../components/modal/modal';
     DateInputComponent,
     StateInputComponent,
     Modal,
+    ReadMoreDirective,
+    ReadMoreButtonComponent,
 
     MDL_DIRECTIVES
   ],

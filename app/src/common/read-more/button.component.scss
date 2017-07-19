@@ -1,0 +1,18 @@
+.m-read-more--button {
+  text-align: left;
+  position: absolute; 
+  bottom: 0; 
+  width: 100%; 
+  left: 0; 
+  padding: 42px 16px 16px; 
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%);
+
+  > span {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Lato';
+  }
+}
