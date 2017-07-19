@@ -12,7 +12,7 @@ import { SignupModalService } from '../modal/signup/service';
   template: `
     <a class="mdl-color-text--blue-grey-500" (click)="remind()" [ngClass]="{'selected': object.reminded }">
       <i class="material-icons">repeat</i>
-      <minds-counter *ngIf="object.reminds > 0">{{object.reminds}}</minds-counter>
+      <minds-counter *ngIf="object.reminds > 0">{{object.reminds | number}}</minds-counter>
     </a>
 
     <m-modal-remind-composer *ngIf="remindOpen"

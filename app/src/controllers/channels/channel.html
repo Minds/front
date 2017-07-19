@@ -80,23 +80,23 @@
       <div class="m-channel--stats  mdl-tabs__tab-bar">
             <a [routerLink]="['/', user.username, 'feed']" class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.activity_count">
               <span i18n="Count of activities">Feed</span>
-              <b>{{user.activity_count}}</b>
+              <b>{{user.activity_count | number}}</b>
             </a>
             <a class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.supporters_count && session.getLoggedInUser().guid != user.guid">
               <span i18n="Count of supporters">Supporters</span>
-              <b>{{user.supporters_count}}</b>
+              <b>{{user.supporters_count | number}}</b>
             </a>
             <a [routerLink]="['/', user.username, 'supporters']"  class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.supporters_count && session.getLoggedInUser().guid == user.guid">
               <span i18n="Count of supporters">Supporters</span>
-              <b>{{user.supporters_count}}</b>
+              <b>{{user.supporters_count | number}}</b>
             </a>
             <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab mdl-color-text--blue-grey-500">
               <span i18n>Subscribers</span>
-              <b>{{user.subscribers_count}}</b>
+              <b>{{user.subscribers_count | number}}</b>
             </a>
             <a class="mdl-tabs__tab  mdl-color-text--blue-grey-500">
               <span i18n>Views</span>
-              <b>{{user.impressions}}</b>
+              <b>{{user.impressions | number}}</b>
             </a>
         </div>
 

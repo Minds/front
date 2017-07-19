@@ -9,7 +9,7 @@ import { Client } from '../../services/api';
   template: `
     <a class="mdl-color-text--blue-grey-500" [ngClass]="{'selected': object['comments:count'] > 0 }">
       <i class="material-icons">chat_bubble</i>
-      <minds-counter *ngIf="object['comments:count'] > 0">{{object['comments:count']}}</minds-counter>
+      <minds-counter *ngIf="object['comments:count'] > 0">{{object['comments:count'] | number}}</minds-counter>
     </a>
   `
 })

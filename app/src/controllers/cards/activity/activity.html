@@ -181,7 +181,7 @@
   </a>
 </div>
 
-<span class="impressions-tag" *ngIf="!hideTabs" i18n>{{activity.impressions}} views</span>
+<span class="impressions-tag" *ngIf="!hideTabs" i18n>{{activity.impressions | number}} views</span>
 
 <minds-comments  *ngIf="commentsToggle" [object]="activity" [focusOnInit]="true"></minds-comments>
 

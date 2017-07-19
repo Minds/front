@@ -12,7 +12,7 @@ import { SignupModalService } from '../modal/signup/service';
   template: `
     <a class="mdl-color-text--blue-grey-500" (click)="thumb()" [ngClass]="{'selected': has() }">
       <i class="material-icons">thumb_down</i>
-      <minds-counter *ngIf="object['thumbs:down:count'] > 0">{{object['thumbs:down:count']}}</minds-counter>
+      <minds-counter *ngIf="object['thumbs:down:count'] > 0">{{object['thumbs:down:count'] | number}}</minds-counter>
     </a>
   `
 })
