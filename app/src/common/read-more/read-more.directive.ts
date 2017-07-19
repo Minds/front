@@ -27,10 +27,9 @@ export class ReadMoreDirective {
       this._element.style.position = 'relative';
       setTimeout(() => {
         this.expandable = true;
+        this.detectChanges();
       }, 1);
     }
-
-    this.detectChanges();
   }
 
   expand() {
@@ -42,6 +41,9 @@ export class ReadMoreDirective {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+    if(this.button){
+      this.button.detectChanges();
+    }
   }
 
 }

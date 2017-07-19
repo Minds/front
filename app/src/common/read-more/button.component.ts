@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef } from '@angular/core';
+import { Component, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { ReadMoreDirective } from './read-more.directive';
 
 @Component({
@@ -13,5 +13,14 @@ import { ReadMoreDirective } from './read-more.directive';
 export class ReadMoreButtonComponent {
 
   content: ReadMoreDirective;
+
+  constructor(private cd: ChangeDetectorRef) {
+
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
 
 }
