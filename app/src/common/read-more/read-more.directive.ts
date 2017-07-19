@@ -1,4 +1,4 @@
-import { Directive, ElementRef, ContentChild } from '@angular/core';
+import { Directive, ElementRef, ContentChild, ChangeDetectorRef } from '@angular/core';
 import { ReadMoreButtonComponent } from './button.component';
 
 @Directive({
@@ -12,7 +12,7 @@ export class ReadMoreDirective {
   expandable: boolean = false;
   @ContentChild(ReadMoreButtonComponent) button;
 
-  constructor(element: ElementRef) {
+  constructor(private element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
   }
 
@@ -29,11 +29,19 @@ export class ReadMoreDirective {
         this.expandable = true;
       }, 1);
     }
+
+    this.detectChanges();
   }
 
   expand() {
     this._element.style.maxHeight = "none";
     this.expandable = false;
+    this.detectChanges();
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
 }
