@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CurrencyPipe } from "@angular/common";
 
 import { ChartColumn } from "../../common/components/chart/chart.component";
@@ -24,7 +24,7 @@ export class MonetizationAnalytics {
   chart: { title: string, columns: ChartColumn[], rows: any[][] } | null = null;
   chartInProgress: boolean = false;
 
-  constructor(private client: Client, private currencyPipe: CurrencyPipe) { }
+  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.load(true);
@@ -38,7 +38,7 @@ export class MonetizationAnalytics {
     if (refresh) {
       tasks.push(this.loadChart());
     }
-
+    this.detectChanges();
     return Promise.all(tasks);
   }
 
@@ -55,7 +55,7 @@ export class MonetizationAnalytics {
       this.offset = '';
       this.moreData = true;
     }
-
+    this.detectChanges();
     return this.client.get(`api/v1/monetization/service/analytics/list`, {
       offset: this.offset,
       limit: 12
@@ -72,10 +72,12 @@ export class MonetizationAnalytics {
         } else {
           this.moreData = false;
         }
+        this.detectChanges();
       })
       .catch(e => {
         this.inProgress = false;
         this.error = e.message || 'Server error';
+        this.detectChanges();
       });
   }
 
@@ -88,15 +90,17 @@ export class MonetizationAnalytics {
 
     this.chartInProgress = true;
     this.error = '';
-
+    this.detectChanges();
     return this.client.get(`api/v1/monetization/service/analytics/chart`, { })
       .then(({ chart }) => {
         this.chartInProgress = false;
         this.chart = this._parseChart(chart);
+        this.detectChanges();
       })
       .catch(e => {
         this.chartInProgress = false;
         this.error = e.message || 'Server error';
+        this.detectChanges();
       });
   }
 
@@ -129,7 +133,12 @@ export class MonetizationAnalytics {
 
       chart.rows.push(dataRow);
     }
-
+    this.detectChanges();
     return chart;
+  }
+
+  detectChanges(){
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }
