@@ -61,7 +61,10 @@
         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost)" i18n>Reject</button>
 
         <span class="impressions">
-          <!-- i18n -->Requesting: {{boost.bid}} views<!-- /i18n -->
+          <span *ngIf="boost.impressions" i18n>{{ boost.impressions | number }} views</span>
+          |
+          <span *ngIf="boost.bidType == 'points'" i18n>Bid: {{ boost.bid | number }} points</span>
+          <span *ngIf="boost.bidType == 'usd'" i18n>Bid: {{ boost.bid / 100 | currency:'USD':true }} USD </span>
         </span>
       </div>
 

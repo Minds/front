@@ -1,4 +1,5 @@
 import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from "@angular/core";
+import { CurrencyPipe } from "@angular/common";
 
 import { OverlayModalService } from "../../../services/ux/overlay-modal";
 import { Client } from "../../../services/api";
@@ -28,6 +29,7 @@ export class VisibleBoostError extends Error {
 
 @Component({
   moduleId: module.id,
+  providers: [ CurrencyPipe ],
   selector: 'm-boost-overlay-modal',
   templateUrl: 'overlay-modal.component.html'
 })
@@ -66,6 +68,7 @@ export class OverlayBoostModal implements AfterViewInit {
     cap: 1000,
     usd: 1000,
     btc: 0,
+    minUsd: 0.5,
     priority: 1,
     maxCategories: 3
   }
@@ -91,7 +94,8 @@ export class OverlayBoostModal implements AfterViewInit {
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private client: Client
+    private client: Client,
+    private currency: CurrencyPipe
   ) { }
 
   ngOnInit() {
@@ -489,9 +493,8 @@ export class OverlayBoostModal implements AfterViewInit {
     }
 
     if (this.boost.currency == 'usd') {
-      if (this.calcCharges(this.boost.currency) < 0.5) {
-        // Stripe doesn't support transactions of less that 50 cents
-        throw new VisibleBoostError(`You must spend at least $0.50 USD`);
+      if (this.calcCharges(this.boost.currency) < this.rates.minUsd) {
+        throw new VisibleBoostError(`You must spend at least ${this.currency.transform(this.rates.minUsd, 'USD', true)} USD`);
       }
     }
   }

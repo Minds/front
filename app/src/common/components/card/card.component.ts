@@ -27,6 +27,7 @@ export class MindsCard implements AfterViewInit {
   anchorRef: ElementRef;
 
   cssClasses: string = '';
+  flags: any = {};
 
   private initialized: boolean = false;
 
@@ -54,6 +55,14 @@ export class MindsCard implements AfterViewInit {
 
     if (this.initialized) {
       this.updateClasses();
+    }
+  }
+
+  @Input('flags') set _flags(value: any) {
+    this.flags = value || {};
+
+    if (this.initialized) {
+      this.updateData();
     }
   }
   
@@ -117,6 +126,10 @@ export class MindsCard implements AfterViewInit {
       (<BlogCard>this.componentInstance)._blog = this.object;
     } else {
       this.componentInstance.object = this.object;
+  
+      if (this.object.type === 'activity') { 
+        (<Activity>this.componentInstance).hideTabs = this.flags.hideTabs || false;
+      }
     }
 
     this.componentRef.changeDetectorRef.detectChanges();
