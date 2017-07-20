@@ -1,14 +1,10 @@
-m-boost--creator {
+.m-boost--creator {
   font-weight: 300;
+  max-width: 900px;
+  margin: 32px auto;
 
   h2, h3, h4 {
     font-weight: 300;
-  }
-
-  h2 {
-    font-size: 36px;
-    letter-spacing: 1.8px;
-    margin: 0 0 ($minds-padding * 5) 0;
   }
 
   h3 {
@@ -42,6 +38,28 @@ m-boost--creator {
     font-size: inherit;
     position: relative;
     top: -0.15em;
+  }
+
+
+  .m-boost--creator--header{
+    position: relative;
+
+    h2 {
+      font-size: 36px;
+      letter-spacing: 1.8px;
+      margin: 0 0 ($minds-padding * 5) 0;
+    }
+
+    .m-boost--creator--wallet {
+      position: absolute;
+      right: $minds-padding + 64px;
+      top: 28px;
+      font-size: 16px;
+
+      .m--middle {
+        vertical-align: middle;
+      }
+    }
   }
 
   .m-boost--creator-selector {
@@ -258,17 +276,6 @@ m-boost--creator {
       color: #ff0000;
       font-size: 12px;
       font-weight: 400;
-    }
-  }
-
-  .m-boost--creator--wallet {
-    position: absolute;
-    right: $minds-padding + 64px;
-    top: 28px;
-    font-size: 16px;
-
-    .m--middle {
-      vertical-align: middle;
     }
   }
 

@@ -1,10 +1,13 @@
 <div class="m-boost--creator">
-  <h2>Boost</h2>
 
-  <div class="m-boost--creator--wallet">
-    <i class="material-icons m--middle">account_balance</i>
-    <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance | abbr }}</span>
-    <span *ngIf="rates.balance === null" class="m--middle">…</span>
+  <div class="m-boost--creator--header">
+    <h2>Boost</h2>
+
+    <div class="m-boost--creator--wallet">
+      <i class="material-icons m--middle">account_balance</i>
+      <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance | abbr }}</span>
+      <span *ngIf="rates.balance === null" class="m--middle">…</span>
+    </div>
   </div>
 
   <!-- Type -->
