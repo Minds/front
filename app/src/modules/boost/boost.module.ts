@@ -8,7 +8,7 @@ import { CheckoutModule } from "../checkout/checkout.module";
 import { ThirdPartyNetworksModule } from "../third-party-networks/third-party-networks.module";
 import { AdsModule } from "../ads/ads.module";
 
-import { BoostsComponent } from "./boosts.component";
+//import { BoostsComponent } from "./boosts.component";
 import { OverlayBoostModal } from "./overlay-modal/overlay-modal.component";
 
 import { BoostConsoleComponent } from "./console/console.component";
@@ -18,26 +18,19 @@ import { BoostConsoleCard } from "./console/card/card.component";
 import { BoostConsoleBooster } from "./console/booster/booster.component";
 
 
-// TODO: Deprecate old console
-const routes: Routes = [
-  { path: 'boosts/:type/:filter', component: BoostsComponent },
-  { path: 'boosts/:type', component: BoostsComponent },
-  { path: 'boosts', component: BoostsComponent },
-];
-
 @NgModule({
   imports: [
     NgCommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild([]),
     CommonModule,
     CheckoutModule,
     ThirdPartyNetworksModule,
     AdsModule,
   ],
   declarations: [
-    BoostsComponent,
+    //BoostsComponent,
     OverlayBoostModal,
     BoostConsoleComponent,
     BoostConsoleNetworkListComponent,
@@ -46,7 +39,7 @@ const routes: Routes = [
     BoostConsoleBooster
   ],
   exports: [
-    BoostsComponent,
+    //BoostsComponent,
     OverlayBoostModal,
     BoostConsoleComponent,
     BoostConsoleNetworkListComponent,
