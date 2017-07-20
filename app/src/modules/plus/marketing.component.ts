@@ -33,7 +33,7 @@ export class PlusMarketingComponent {
   }
 
   isPlus(){
-    if(this.user.plus)
+    if(this.user && this.user.plus)
       return true;
     return false;
   }
