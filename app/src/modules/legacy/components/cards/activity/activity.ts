@@ -7,7 +7,7 @@ import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
 
-import { OverlayBoostModal } from "../../../../boost/overlay-modal/overlay-modal.component";
+import { BoostCreatorComponent } from "../../../../boost/creator/creator.component";
 
 @Component({
   moduleId: module.id,
@@ -180,7 +180,7 @@ export class Activity {
   }
 
   showBoost(){
-    const boostModal = this.overlayModal.create(OverlayBoostModal, this.activity);
+    const boostModal = this.overlayModal.create(BoostCreatorComponent, this.activity);
 
     boostModal.onDidDismiss(() => {
       this.showBoostOptions = false;

@@ -30,10 +30,10 @@ export class VisibleBoostError extends Error {
 @Component({
   moduleId: module.id,
   providers: [ CurrencyPipe ],
-  selector: 'm-boost-overlay-modal',
-  templateUrl: 'overlay-modal.component.html'
+  selector: 'm-boost--creator',
+  templateUrl: 'creator.component.html'
 })
-export class OverlayBoostModal implements AfterViewInit {
+export class BoostCreatorComponent implements AfterViewInit {
   @ViewChild('amountEditor') private _amountEditor: ElementRef;
   @ViewChild('targetEditor') private _targetEditor: ElementRef;
 
@@ -539,7 +539,7 @@ export class OverlayBoostModal implements AfterViewInit {
     if (!this.canSubmit()) {
       this.showErrors();
       return;
-    } 
+    }
 
     this.inProgress = true;
 

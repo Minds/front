@@ -8,8 +8,7 @@ import { CheckoutModule } from "../checkout/checkout.module";
 import { ThirdPartyNetworksModule } from "../third-party-networks/third-party-networks.module";
 import { AdsModule } from "../ads/ads.module";
 
-//import { BoostsComponent } from "./boosts.component";
-import { OverlayBoostModal } from "./overlay-modal/overlay-modal.component";
+import { BoostCreatorComponent } from "./creator/creator.component";
 
 import { BoostConsoleComponent } from "./console/console.component";
 import { BoostConsoleNetworkListComponent } from "./console/list/network.component";
@@ -30,8 +29,7 @@ import { BoostConsoleBooster } from "./console/booster/booster.component";
     AdsModule,
   ],
   declarations: [
-    //BoostsComponent,
-    OverlayBoostModal,
+    BoostCreatorComponent,
     BoostConsoleComponent,
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
@@ -39,16 +37,13 @@ import { BoostConsoleBooster } from "./console/booster/booster.component";
     BoostConsoleBooster
   ],
   exports: [
-    //BoostsComponent,
-    OverlayBoostModal,
-    BoostConsoleComponent,
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
     BoostConsoleCard,
     BoostConsoleBooster
   ],
   entryComponents: [
-    OverlayBoostModal,
+    BoostCreatorComponent,
     BoostConsoleComponent
   ]
 })

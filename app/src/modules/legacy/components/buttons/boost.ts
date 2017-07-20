@@ -5,7 +5,7 @@ import { Client } from '../../../../services/api';
 import { WalletService } from '../../../../services/wallet';
 import { OverlayModalService } from "../../../../services/ux/overlay-modal";
 
-import { OverlayBoostModal } from "../../../boost/overlay-modal/overlay-modal.component";
+import { BoostCreatorComponent } from "../../../boost/creator/creator.component";
 
 @Component({
   selector: 'minds-button-boost',
@@ -30,8 +30,8 @@ export class BoostButton {
   }
 
   boost(){
-    const boostModal = this.overlayModal.create(OverlayBoostModal, this.object);
-
-    boostModal.present();
+    const creator = this.overlayModal.create(BoostCreatorComponent, this.object);
+    creator.present();
   }
+
 }
