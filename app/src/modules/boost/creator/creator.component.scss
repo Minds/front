@@ -1,32 +1,29 @@
 .m-boost--creator {
   font-weight: 300;
   max-width: 900px;
-  margin: 32px auto;
+  margin: 10vh auto;
 
   h2, h3, h4 {
     font-weight: 300;
   }
 
   h3 {
-    display: flex;
-    font-size: 24px;
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+    text-transform: uppercase;
     letter-spacing: 1.2px;
     align-items: center;
     margin: 0 0 $minds-padding 0;
 
     > .m-boost--creator-section--title-context {
-      font-size: 9px;
-      line-height: 1.1;
+      font-size: 12px;
+      line-height: 1;
       max-width: 300px;
+      text-transform: initial;
       margin-left: $minds-padding * 3;
     }
 
-    &.m-boost--creator-section-title--small {
-      display: block;
-      font-size: 16px;
-      line-height: 1;
-      text-transform: uppercase;
-    }
   }
 
   h4 {
@@ -47,7 +44,7 @@
     h2 {
       font-size: 36px;
       letter-spacing: 1.8px;
-      margin: 0 0 ($minds-padding * 5) 0;
+      margin: 0;
     }
 
     .m-boost--creator--wallet {
@@ -62,6 +59,36 @@
     }
   }
 
+  .m-boost--creator-section {
+    padding: 16px 0;
+    font-weight: 300;
+  }
+
+  .m-boost--creator--amount {
+    letter-spacing: 2.5px;
+    input {
+      width: 6em;
+      max-width: 180px;
+      padding: 12px;
+      font-weight: 400;
+      letter-spacing: 3px;
+
+      appearance: none;
+      background: rgba(255, 255, 255, 0.05);
+      color: inherit;
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      border: none;
+      border-radius: $minds-padding / 2;
+      margin: 0;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
   .m-boost--creator-selector {
     > li {
       h4, span {
@@ -71,24 +98,21 @@
 
       b {
         font-weight: 400 !important;
+        letter-spacing: 3px;
       }
 
       .m-boost--creator-selector--cta,
       .m-boost--creator-selector--selected-label,
       .m-boost--creator-selector--description {
         display: block;
-        font-size: 10px;
+        font-size: 13px;
       }
 
       .m-boost--creator-selector--cta,
       .m-boost--creator-selector--selected-label {
         text-transform: uppercase;
         letter-spacing: 0.5px;
-      }
-
-      .m-boost--creator-selector--cta {
-        letter-spacing: 0.5px;
-        line-height: 1.4;
+        line-height: 2;
       }
 
       .m-boost--creator-selector--selected-label {
@@ -97,19 +121,23 @@
       }
 
       .m-boost--creator-selector--description {
-        letter-spacing: 1.2px;
-        line-height: 1.1;
+        font-size: 13px;
+        letter-spacing: 1.5px;
+        line-height: 1.3;
         max-width: 300px;
+        color: rgba(255,255,255,0.75);
       }
     }
   }
+
+
 
   .m-boost--creator-wide-input {
     $fs: 48px;
 
     font-size: $fs;
     letter-spacing: 2.4px;
-    height: $fs + $minds-padding;
+    //height: $fs + $minds-padding;
 
     > * {
       vertical-align: middle;
@@ -117,14 +145,6 @@
 
     &.m-boost--creator-wide-input--reading {
       cursor: pointer;
-    }
-
-    .m-boost--creator-wide-input--edit {
-      width: 6em;
-      max-width: 50%;
-      height: $fs + $minds-padding;
-      line-height: $fs;
-      font-weight: 400;
     }
 
     @media screen and (max-width: $max-mobile) {
@@ -301,10 +321,16 @@
   // Credit Card Input
   .m-boost--creator-payment {
     position: relative;
-    border: 1px solid #ffffff;
+    border: 0;
+    background: rgba(255,255,255,0.8);
+    border-radius: 3px;
     max-width: 560px;
     margin-bottom: $minds-padding * 2;
     padding: $minds-padding * 2;
+
+    .mdl-card{
+      background: transparent;
+    }
 
     &:after {
       top: 100%;
@@ -346,11 +372,6 @@
       }
     }
   }
-}
-
-.m-boost--creator-section {
-  margin-bottom: $minds-padding * 4;
-  font-weight: 300;
 }
 
 &:last-child {
@@ -402,28 +423,6 @@
         visibility: visible;
         height: auto;
       }
-    }
-  }
-}
-
-.m-boost--creator-wide-input {
-  line-height: 1;
-
-  .m-boost--creator-wide-input--edit {
-    appearance: none;
-    background: rgba(255, 255, 255, 0.05);
-    color: inherit;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: inherit;
-    border: none;
-    border-radius: $minds-padding / 2;
-    margin: 0;
-    padding: $minds-padding / 2;
-
-    &:focus {
-      outline: none;
     }
   }
 }

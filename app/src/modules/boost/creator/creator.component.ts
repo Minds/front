@@ -40,8 +40,8 @@ export class BoostCreatorComponent implements AfterViewInit {
   object: any = {};
 
   boost: BoostStruc = {
-    amount: 0,
-    currency: null,
+    amount: 1000,
+    currency: 'points',
     type: null,
 
     // General
@@ -64,11 +64,11 @@ export class BoostCreatorComponent implements AfterViewInit {
   rates = {
     balance: null,
     rate: 1,
-    min: 10,
-    cap: 1000,
+    min: 250,
+    cap: 5000,
     usd: 1000,
     btc: 0,
-    minUsd: 0.5,
+    minUsd: 1,
     priority: 1,
     maxCategories: 3
   }
@@ -224,9 +224,18 @@ export class BoostCreatorComponent implements AfterViewInit {
 
     this._changeDetectorRef.detectChanges();
 
-    if (this._amountEditor.nativeElement) {
-      setTimeout(() => (<HTMLInputElement>this._amountEditor.nativeElement).focus(), 100);
+    //if (this._amountEditor.nativeElement) {
+    //  setTimeout(() => (<HTMLInputElement>this._amountEditor.nativeElement).focus(), 100);
+    //}
+  }
+
+  setBoostAmount(amount: string){
+    if(!amount){
+      this.boost.amount = 0;
+      return;
     }
+    amount = amount.replace(/,/g, "");
+    this.boost.amount = parseInt(amount);
   }
 
   /**
