@@ -64,7 +64,8 @@
     font-weight: 300;
   }
 
-  .m-boost--creator--amount {
+  .m-boost--creator--amount, .m-boost--creator--target {
+    margin-top: 16px;
     letter-spacing: 2.5px;
     input {
       width: 6em;
@@ -74,7 +75,7 @@
       letter-spacing: 3px;
 
       appearance: none;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.15);
       color: inherit;
       font-family: inherit;
       font-size: inherit;
@@ -219,9 +220,10 @@
     position: relative;
     width: 30em;
     max-width: 90%;
-    max-height: 6.5em;
+    max-height: 300px;
     font-size: 16px;
-    border: 1px solid #ffffff;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.15);
     padding: $minds-padding;
     margin-top: $minds-padding * 1.5;
     overflow-y: auto;
@@ -461,7 +463,7 @@
 
 .m-boost--creator-clickable {
   display: inline-block;
-  opacity: 0.35;
+  opacity: 0.65;
   cursor: pointer;
   user-select: none;
 

@@ -393,10 +393,6 @@ export class BoostCreatorComponent implements AfterViewInit {
       this._searchThrottle = void 0;
     }
 
-    if (!this.editingTarget) {
-      return;
-    }
-
     if (this.targetQuery.charAt(0) != '@') {
       this.targetQuery = '@' + this.targetQuery;
     }
@@ -439,6 +435,8 @@ export class BoostCreatorComponent implements AfterViewInit {
     }
 
     this.boost.target = { ...target };
+    this.targetResults = [];
+    this.targetQuery = '@' + target.username;
     this.showErrors();
   }
 

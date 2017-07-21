@@ -157,23 +157,18 @@
       </h3>
 
       <div class="m-boost--creator-wide-input m-boost--creator--target">
-        <input type="text" *ngIf="editingTarget"
+        <input type="text"
           class="m-boost--creator-wide-input--edit"
           [(ngModel)]="targetQuery"
           (blur)="targetEditorBlur()"
           (keydown.esc)="targetEditorBlur()"
           (keyup)="searchTarget()"
+          placeholder="@channel"
           #targetEditor
         />
+     </div>
 
-        <span *ngIf="!editingTarget"
-          class="m-boost--creator-wide-input--read-mode"
-          [class.m-boost--creator-wide-input--empty-read-mode]="!boost.target"
-          (click)="targetEditorFocus()"
-        >@{{ boost.target?.username || 'channel' }}</span>
-      </div>
-
-      <div *ngIf="editingTarget && targetResults.length > 0"
+      <div *ngIf="targetResults.length > 0"
         class="m-boost--creator-autocomplete--results"
       >
         <div *ngFor="let target of targetResults"
