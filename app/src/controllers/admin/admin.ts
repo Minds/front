@@ -17,6 +17,7 @@ import { Client, Upload } from '../../services/api';
     <minds-admin-payouts *ngIf="filter == 'payouts'"></minds-admin-payouts>
     <minds-admin-featured *ngIf="filter == 'featured'"></minds-admin-featured>
     <minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
+    <m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
   `
 })
 

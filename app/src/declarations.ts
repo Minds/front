@@ -68,6 +68,7 @@ import {AdminPrograms} from './controllers/admin/programs/programs.component';
 import {AdminPayouts} from './controllers/admin/payouts/payouts.component';
 import {AdminFeatured} from './controllers/admin/featured/featured';
 import {AdminTagcloud} from './controllers/admin/tagcloud/tagcloud.component';
+import {AdminVerify} from './controllers/admin/verify/verify.component';
 import {BoostFullNetwork} from './controllers/boosts/boost/full-network/full-network';
 import {BoostP2P} from './controllers/boosts/boost/p2p/p2p';
 
@@ -166,6 +167,7 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminPayouts,
   AdminFeatured,
   AdminTagcloud,
+  AdminVerify,
   BoostFullNetwork,
   BoostP2P,
 
