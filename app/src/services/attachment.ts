@@ -357,7 +357,8 @@ export class AttachmentService {
 
           resolve();
         }).catch(error => {
-          reject(error);
+          resolve(); //resolve regardless and forward to backend job
+          //reject(error);
         });
 
       } else if (file.type && file.type.indexOf('image/') === 0) {
