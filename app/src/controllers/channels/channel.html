@@ -158,7 +158,7 @@
 
     <div class="minds-list">
 
-        <minds-activity *ngFor="let activity of feed" [object]="activity" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
+        <minds-activity *ngFor="let activity of feed" [object]="activity" [boostToggle]="activity.boostToggle" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
         <infinite-scroll
             distance="25%"
             (load)="loadFeed()"

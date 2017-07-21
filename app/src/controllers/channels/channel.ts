@@ -191,6 +191,7 @@ export class Channel {
   }
 
   prepend(activity : any){
+    activity.boostToggle = true;
     this.feed.unshift(activity);
   }
 

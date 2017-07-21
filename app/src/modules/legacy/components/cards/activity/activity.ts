@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ElementRef} from '@angular/core';
+import { Component, EventEmitter, ElementRef, Input} from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { SessionFactory } from '../../../../../services/session';
@@ -15,7 +15,7 @@ import { BoostCreatorComponent } from "../../../../boost/creator/creator.compone
   host: {
     'class': 'mdl-card mdl-shadow--2dp'
   },
-  inputs: ['object', 'commentsToggle', 'showBoostOptions: boostToggle', 'visible', 'canDelete'],
+  inputs: ['object', 'commentsToggle', 'visible', 'canDelete'],
   outputs: [ '_delete: delete', 'commentsOpened'],
   templateUrl: 'activity.html'
 })
@@ -84,6 +84,11 @@ export class Activity {
       this.translationService.isTranslatable(this.activity) ||
       (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object))
     );
+  }
+
+  @Input() set boostToggle(toggle: boolean) {
+    if(toggle)
+      this.showBoost();
   }
 
   save(){
