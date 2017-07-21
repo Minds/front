@@ -29,20 +29,31 @@ interface CreditCard {
       <div id="coinbase-btn" *ngIf="useBitcoin"></div>
     </div>
 
-    <div class="m-payments-saved--title" *ngIf="cards.length">Select:</div>
+    <div [hidden]="!loading" class="m-checkout-loading">
+      <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
+      <p>One moment please...</p>
+    </div>
 
-    <ul class="m-payments-saved" *ngIf="cards.length">
-      <li *ngFor="let card of cards"
-        class="m-payments-saved--item"
-        (click)="setSavedCard(card.id)"
-      >
-        {{ card.label }}
-      </li>
-    </ul>
+    <div class="m-payments--saved-cards" *ngIf="cards.length">
+      <div class="m-payments-saved--title">Select a card to use</div>
+      <ul>
+        <li *ngFor="let card of cards"
+          class="m-payments--saved-card-item"
+          (click)="setSavedCard(card.id)"
+        >
+          <span class="m-payments--saved-card-item-type">{{card.brand}}</span>
+          <span class="m-payments--saved-card-item-number">**** {{card.last4}}</span>
+          <span class="m-payments--saved-card-item-expiry">{{card.exp_month}} / {{card.exp_year}}</span>
+          <span class="m-payments--saved-card-item-select">Select</span>
+        </li>
+        <li class="m-payments--saved-card-item m-payments-saved--item-new" (click)="cards = []">
+          <span class="m-payments--saved-card-item-type">Use a new card</span>
+          <span class="m-payments--saved-card-item-select">Select</span>
+        </li>
+      </ul>
+    </div>
 
-    <div class="m-payments-new--title" *ngIf="cards.length">Or use a new card:</div>
-
-    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation" [useMDLStyling]="useMDLStyling" *ngIf="useCreditCard"></minds-checkout-card-input>
+    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation || loading" [useMDLStyling]="useMDLStyling" *ngIf="useCreditCard && !cards.length"></minds-checkout-card-input>
     <div [hidden]="!inProgress" class="m-checkout-loading">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
       <p>Capturing card details...</p>
@@ -103,10 +114,11 @@ export class StripeCheckout {
         this.loading = false;
 
         if (cards && cards.length) {
-          this.cards = (<any[]>cards).map(card => ({
+          /*this.cards = (<any[]>cards).map(card => ({
             id: card.id,
             label: `${card.brand} ${card.exp_month}/${('' + card.exp_year).substr(2)} **** ${card.last4}`
-          }));
+          }));*/
+          this.cards = cards;
         }
       })
       .catch(e => {

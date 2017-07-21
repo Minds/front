@@ -322,31 +322,46 @@
 
   // Credit Card Input
   .m-boost--creator-payment {
-    position: relative;
+    position: absolute;
     border: 0;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.1);
     border-radius: 3px;
+    min-width: 440px;
     max-width: 560px;
-    margin-bottom: $minds-padding * 2;
-    padding: $minds-padding * 2;
+    padding: 0px;
+    margin: -252px 400px;
+    min-width: 440px;
 
     .mdl-card{
       background: transparent;
     }
 
-    &:after {
-      top: 100%;
-      left: 5%;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-color: rgba(255, 255, 255, 0);
-      border-top-color: #ffffff;
-      border-width: 7px;
-      margin-left: -7px;
+    .m-boost--creator-payment-attached{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 50px;
+
+      i{
+        font-size: 90px;
+        cursor: default;
+      }
+      span{
+        padding: 16px 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        cursor: default;
+
+        b {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .m-payments--saved-card-item{
+      border: 0;
+      background: rgba(255,255,255,0.15);
     }
 
     input{
@@ -388,7 +403,7 @@
       font-weight: bold;
     }
     .m-checkout--secure{
-      color: rgba(255,255,255,0.80);  
+      color: rgba(255,255,255,0.80);
     }
     button{
       padding: 12px;

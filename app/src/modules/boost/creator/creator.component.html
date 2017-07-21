@@ -107,6 +107,17 @@
 
       <!-- TODO: BTC -->
     </ul>
+
+    <div class="m-boost--creator-payment" *ngIf="boost.currency == 'usd'">
+      <minds-payments-stripe-checkout *ngIf="!boost.nonce"
+        (inputed)="setBoostNonce($event)"
+        [useMDLStyling]="false"
+      ></minds-payments-stripe-checkout>
+      <div class="m-boost--creator-payment-attached" *ngIf="boost.nonce">
+        <i class="material-icons">check_circle</i>
+        <span>Your payment is attached. <b (click)="boost.nonce = null">Change</b></span>
+      </div>
+    </div>
   </section>
 
   <!-- Boost Settings -->
@@ -215,12 +226,6 @@
   <section class="m-boost--creator-section"
     (mouseenter)="showErrors()"
   >
-    <div class="m-boost--creator-payment" *ngIf="boost.currency == 'usd' && !boost.nonce">
-      <minds-payments-stripe-checkout *ngIf="!boost.nonce"
-        (inputed)="setBoostNonce($event)"
-        [useMDLStyling]="false"
-      ></minds-payments-stripe-checkout>
-    </div>
 
     <div class="m-boost--creator--submit">
       <button class="m-boost--creator-button"
