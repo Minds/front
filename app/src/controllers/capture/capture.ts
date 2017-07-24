@@ -57,7 +57,7 @@ export class Capture {
 
   getAlbums(){
     var self = this;
-    this.client.get('api/v1/archive/albums/list', { limit: 5, offset: this.offset })
+    this.client.get('api/v1/media/albums/list', { limit: 5, offset: this.offset })
       .then((response : any) => {
         if(!response.entities)
           return;
@@ -72,7 +72,7 @@ export class Capture {
   createAlbum(album){
     var self = this;
     this.inProgress = true;
-    this.client.post('api/v1/archive/albums', { title: album.value })
+    this.client.post('api/v1/media/albums', { title: album.value })
       .then((response : any) => {
         self.albums.unshift(response.album);
         self.postMeta.album_guid = response.album.guid;
@@ -95,7 +95,7 @@ export class Capture {
         if(album.guid == this.albums[i].guid)
           this.albums.splice(i, 1);
       }
-      this.client.delete('api/v1/archive/albums/' + album.guid);
+      this.client.delete('api/v1/media/albums/' + album.guid);
     }
   }
 
@@ -141,7 +141,7 @@ export class Capture {
 
   upload(data, fileInfo){
     var self = this;
-    this._upload.post('api/v1/archive', [fileInfo], this.uploads[data.index], (progress) => {
+    this._upload.post('api/v1/media', [fileInfo], this.uploads[data.index], (progress) => {
         self.uploads[data.index].progress = progress;
         if(progress == 100){
           self.uploads[data.index].state = 'uploaded';
@@ -174,7 +174,7 @@ export class Capture {
       }, 1000);
     });
     promise.then(() => {
-      this.client.post('api/v1/archive/' + this.uploads[index].guid, this.uploads[index])
+      this.client.post('api/v1/media/' + this.uploads[index].guid, this.uploads[index])
         .then((response : any) => {
           console.log('response from modify', response);
           this.uploads[index].state = 'complete';
@@ -193,9 +193,9 @@ export class Capture {
       if(upload.guid != null || upload.guid != 'null' || !upload.guid)
         return upload.guid;
     });
-    this.client.post('api/v1/archive/albums/' + this.postMeta.album_guid, { guids: guids })
+    this.client.post('api/v1/media/albums/' + this.postMeta.album_guid, { guids: guids })
       .then((response : any) => {
-        self.router.navigate(['/archive/view', this.postMeta.album_guid ]);
+        self.router.navigate(['/media', this.postMeta.album_guid ]);
       })
       .catch((e) => {
           alert("there was a problem.");

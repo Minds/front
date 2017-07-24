@@ -17,12 +17,12 @@ import {Search} from '../controllers/search/search';
 import {Settings} from '../controllers/settings/settings';
 import {Admin} from '../controllers/admin/admin';
 import {Pages} from '../controllers/pages/pages';
+import {MediaView, MediaEdit} from '../controllers/media/media';
 
 /**
  * TODO: Load these automagically from gulp
  */
 import {Messenger} from '../plugins/Messenger/messenger';
-import {ArchiveView, ArchiveEdit} from '../plugins/archive/archive';
 
 export const MindsAppRoutes: Routes = [
   { path: '', component: Homepage },
@@ -39,9 +39,15 @@ export const MindsAppRoutes: Routes = [
   { path: 'discovery/:filter/:type', component: Discovery },
   { path: 'discovery/:filter', component: Discovery },
 
-  { path: 'archive/view/:container/:guid', component: ArchiveView },
-  { path: 'archive/view/:guid', component: ArchiveView },
-  { path: 'archive/edit/:guid', component: ArchiveEdit },
+  { path: 'media/edit/:guid', component: MediaEdit },
+  { path: 'media/:container/:guid', component: MediaView },
+  { path: 'media/:guid', component: MediaView },
+
+  /* Legacy routes */
+  { path: 'archive/view/:container/:guid', component: MediaView },
+  { path: 'archive/view/:guid', component: MediaView },
+  { path: 'archive/edit/:guid', component: MediaEdit },
+  /* /Legacy routes */
 
   { path: 'notifications/:filter', component: Notifications },
   { path: 'notifications', component: Notifications },
@@ -70,8 +76,8 @@ export const MINDS_APP_ROUTING_DECLARATIONS: any[] = [
   Newsfeed,
   Capture,
   Discovery,
-  ArchiveView,
-  ArchiveEdit,
+  MediaView,
+  MediaEdit,
   Notifications,
   Search,
   Settings,

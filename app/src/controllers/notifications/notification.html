@@ -65,7 +65,7 @@
         </div>
 
         <div *ngIf="notification.entityObj.subtype != 'blog'">
-          <a [routerLink]="['/archive/view', notification.entityObj.guid]">
+          <a [routerLink]="['/media', notification.entityObj.guid]">
             <p>
               <!-- i18n -->{{notification.fromObj.name}} commented on<!-- /i18n -->
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title" >{{notification.entityObj.title}}</span>

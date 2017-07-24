@@ -122,14 +122,14 @@ export class AttachmentService {
     }
 
     // Upload and return the GUID
-    return this.uploadService.post('api/v1/archive', [ file ], this.meta, (progress) => {
+    return this.uploadService.post('api/v1/media', [ file ], this.meta, (progress) => {
       this.attachment.progress = progress;
     })
     .then((response: any) => {
       this.meta.attachment_guid = response.guid ? response.guid : null;
 
       if (!this.meta.attachment_guid) {
-        throw 'No GUID';
+        throw new Error(response.message || 'No GUID');
       }
 
       return this.meta.attachment_guid;
@@ -151,7 +151,7 @@ export class AttachmentService {
       return Promise.reject('No GUID');
     }
 
-    return this.clientService.delete('api/v1/archive/' + this.meta.attachment_guid)
+    return this.clientService.delete('api/v1/media/' + this.meta.attachment_guid)
     .then(() => {
       this.meta.attachment_guid = null;
     })

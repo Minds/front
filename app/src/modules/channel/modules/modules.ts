@@ -18,7 +18,7 @@ import { AttachmentService } from '../../../services/attachment';
 
     <div class="mdl-card__supporting-text mdl-color-text--grey-600 minds-channel-media-sidebard" style="min-height:0;" *ngIf="type != 'blog'">
       <a *ngFor="let object of items"
-      [routerLink]="['/archive/view', object.guid]"
+      [routerLink]="['/media', object.guid]"
       [ngClass]="{ 'm-mature-module-thumbnail': attachment.shouldBeBlurred(object) }"
       >
         <span class="m-thumb-image" [ngStyle]="{'background-image': 'url(' + object.thumbnail_src + ')'}"></span>

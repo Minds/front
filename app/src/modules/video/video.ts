@@ -33,7 +33,7 @@ import { VideoAdsService } from './ads-service';
       <i class="material-icons" [hidden]="!element.muted" (click)="element.muted = false">volume_off</i>
       <a class="material-icons m-video-full-page mdl-color-text--white"
         *ngIf="guid"
-        [routerLink]="['/archive/view', guid]"
+        [routerLink]="['/media', guid]"
         target="_blank"
         (click)="element.pause()">
         lightbulb_outline

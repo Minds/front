@@ -1,7 +1,7 @@
 <a class="mdl-card__title minds-video-thumbnail"
 	style="height:200px; background-color:#333; background-position: center center; background-size:cover;"
 	[ngStyle]="{'background': '#333 url(' + entity.thumbnail_src + ') center center / cover'}"
-	[routerLink]="['/archive/view', entity.guid]"
+	[routerLink]="['/media', entity.guid]"
 	[ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(entity) }"
 	>
 </a>
@@ -13,7 +13,7 @@
 <!-- Owner block -->
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block" *ngIf="entity.ownerObj && entity.ownerObj.username">
 
-		<a [routerLink]="['/archive/view', entity.guid]" class="mdl-color-text--blue-grey-700">
+		<a [routerLink]="['/media', entity.guid]" class="mdl-color-text--blue-grey-700">
 			<strong>{{ entity.title }}</strong>
 		</a>
 
@@ -30,7 +30,7 @@
 <div class="mdl-card__supporting-text mdl-color--blue-grey-50 m-action-tabs">
 	<minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
-	<minds-button-comment [object]="entity" [routerLink]="['/archive/view', entity.guid]"></minds-button-comment>
+	<minds-button-comment [object]="entity" [routerLink]="['/media', entity.guid]"></minds-button-comment>
 	<minds-button-remind [object]="entity"></minds-button-remind>
 	<minds-button-feature [object]="entity" *ngIf="session.isAdmin()"></minds-button-feature>
 </div>

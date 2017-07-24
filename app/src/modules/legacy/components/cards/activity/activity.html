@@ -113,7 +113,7 @@
 				controls="true"
 				muted="false"
 				[poster]="activity.custom_data.thumbnail_src"
-				[src]="[{ 'res': '720', 'uri': 'api/v1/archive/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
+				[src]="[{ 'res': '720', 'uri': 'api/v1/media/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
         [guid]="activity.custom_data.guid"
 				[playCount]="activity['play:count']"
 				#player>
@@ -132,7 +132,7 @@
 		</span>
 	</div>
 
-	<a [routerLink]="['/archive/view', activity.entity_guid]">
+	<a [routerLink]="['/media', activity.entity_guid]">
 		<img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null">
 	</a>
 </div>
@@ -148,7 +148,7 @@
 		</span>
 	</div>
 
-	<a [routerLink]="['/archive/view', activity.entity_guid]">
+	<a [routerLink]="['/media', activity.entity_guid]">
 		<img [src]="activity.custom_data[0].src" style="width:100%"
       (error)="activity.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'"
       *ngIf="activity.custom_data"

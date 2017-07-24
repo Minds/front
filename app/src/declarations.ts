@@ -37,6 +37,9 @@ import {SettingsTwoFactor} from './controllers/settings/two-factor/two-factor';
 import {SettingsSubscriptions} from './controllers/settings/subscriptions/subscriptions.component';
 import {SearchBarSuggestions} from './controllers/search/suggestions/suggestions';
 import { ComingSoon } from './controllers/home/comingsoon/comingsoon';
+import {MediaTheatre} from './controllers/media/view/views/theatre';
+import {MediaGrid} from './controllers/media/view/views/grid';
+import {ThumbnailSelector} from './controllers/media/components/thumbnail-selector';
 
 export const MINDS_DECLARATIONS: any[] = [
   // Components
@@ -80,4 +83,7 @@ export const MINDS_DECLARATIONS: any[] = [
   SettingsSubscriptions,
   SearchBarSuggestions,
   ComingSoon,
+  MediaTheatre,
+  MediaGrid,
+  ThumbnailSelector,
 ];

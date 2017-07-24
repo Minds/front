@@ -35,6 +35,8 @@ export class Poster {
 
   canPost: boolean = true;
 
+  attachmentError: string;
+
   @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
 
   constructor(public client: Client, public upload: Upload, public attachment: AttachmentService){
@@ -77,15 +79,19 @@ export class Poster {
       this.attachment.reset();
       this.meta = { monetized : false };
       this.inProgress = false;
+      this.attachmentError = '';
     })
     .catch(function(e){
       this.inProgress = false;
+      this.attachmentError = '';
     });
   }
 
   uploadAttachment(file: HTMLInputElement) {
     this.canPost = false;
     this.inProgress = true;
+
+    this.attachmentError = '';
 
     this.attachment.upload(file)
     .then(guid => {
@@ -97,6 +103,7 @@ export class Poster {
       console.error(e);
       this.inProgress = false;
       this.canPost = true;
+      this.attachmentError = e.message || 'Error uploading media';
       file.value = null;
     });
   }
@@ -104,6 +111,8 @@ export class Poster {
   removeAttachment(file: HTMLInputElement) {
     this.canPost = false;
     this.inProgress = true;
+
+    this.attachmentError = '';
 
     this.attachment.remove(file).then(() => {
       this.inProgress = false;

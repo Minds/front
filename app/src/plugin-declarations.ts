@@ -2,10 +2,7 @@
  * TODO: Load these automagically from gulp
  */
 import {Messenger} from './plugins/Messenger/messenger';
-import {ArchiveTheatre} from './plugins/archive/view/views/theatre';
-import {ArchiveGrid} from './plugins/archive/view/views/grid';
 import {MessengerChannelButton} from './plugins/Messenger/channel-button/channel-button';
-import {ThumbnailSelector} from './plugins/archive/components/thumbnail-selector';
 import {MessengerConversation} from './plugins/Messenger/conversation/conversation';
 import {MessengerEncryption} from './plugins/Messenger/encryption/encryption';
 import {MessengerScrollDirective} from './plugins/Messenger/scroll';
@@ -16,10 +13,7 @@ import {MessengerSetupChat} from './plugins/Messenger/setup-chat/setup-chat';
 export const MINDS_PLUGIN_DECLARATIONS: any[] = [
   // Plugin based Components
   Messenger,
-  ArchiveTheatre,
-  ArchiveGrid,
   MessengerChannelButton,
-  ThumbnailSelector,
   MessengerConversation,
   MessengerEncryption,
   MessengerScrollDirective,
