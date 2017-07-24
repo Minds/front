@@ -68,8 +68,6 @@ import { AnalyticsService } from '../../../services/analytics';
       <minds-form-fb-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'fb-complete'"></minds-form-fb-register>
       <!-- Categories selector -->
       <minds-onboarding-categories-selector (done)="done('categories')" *ngIf="display == 'categories'"></minds-onboarding-categories-selector>
-      <!-- Onboarding Display -->
-      <minds-form-onboarding (done)="done('onboarding')" *ngIf="display == 'onboarding'"></minds-form-onboarding>
       <!-- Tutorial Display -->
       <minds-tutorial *ngIf="display == 'tutorial'"></minds-tutorial>
     </m-modal>
@@ -156,10 +154,7 @@ export class SignupModal {
           'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=600, height=400, top=100, left=100');
         break;
       case "categories":
-        this.display = 'categories';
-        break;
-      case "onboarding":
-        this.display = 'onboarding';
+        this.display = 'tutorial';
         break;
     }
 

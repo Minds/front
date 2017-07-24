@@ -190,3 +190,25 @@
 
 </div>
 <!-- END: LANGUAGE -->
+
+<!-- START: CATEGORIES -->
+<div class="mdl-card mdl-shadow--2dp">
+
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text" i18n>Categories</h2>
+  </div>
+
+  <div class="mdl-card__supporting-text">
+    <ul name="categories" class="minds-settings--list">
+      <li class="minds-settings--list-item"
+        *ngFor="let category of categories" [value]="category.id"
+        [class.selected]="category.selected"
+        (click)="onCategoryClick(category)">
+
+        {{ category.label }}
+
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- END: CATEGORIES -->

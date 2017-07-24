@@ -14,7 +14,6 @@ export class OnboardingCategoriesSelector {
   minds = window.Minds;
 
   categories : Array<any> = [];
-  channels : Array<any> = [];
 
   inProgress : boolean = false;
   done : EventEmitter<any> = new EventEmitter();
@@ -38,40 +37,19 @@ export class OnboardingCategoriesSelector {
     });
   }
 
-  findChannels(){
+  saveCategories() {
     this.inProgress = true;
-    this.client.get('api/v1/categories/featured', {
-        categories: this.categories
-          .filter((category) => {
-            return category.selected;
-          })
-          .map((category) => {
-            return category.id;
-          })
-      })
-      .then((response : any) => {
+    const filteredCategories: any[] = this.categories.filter(category => category.selected).map(category => category.id);
+    this.client.post('api/v1/settings', {
+      categories: filteredCategories
+    })
+      .then((response: any) => {
         this.inProgress = false;
-        this.channels = response.entities.map((channel) => {
-          channel.selected = true;
-          return channel;
-        });
+        this.done.next(true);
       })
       .catch(() => {
         this.inProgress = false;
       })
-  }
-
-  subscribe(){
-    this.client.post('api/v1/subscribe/batch', {
-        guids: this.channels
-          .filter((channel) => {
-            return channel.selected;
-          })
-          .map((channel) => {
-            return channel.guid
-          })
-      });
-    this.done.next(true);
   }
 
 }
