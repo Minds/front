@@ -45,7 +45,7 @@
       </a>
 
       <m-modal-invite #invite [open]="invite.open" (closed)="invite.open = false"></m-modal-invite>
-      <a (click)="invite.open = true" class="mdl-card mdl-color--amber mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-invite-link" *ngIf="session.getLoggedInUser().programs.indexOf('affiliate') <= -1">
+      <a (click)="invite.open = true" class="mdl-card mdl-color--amber mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-invite-link" *ngIf="session.isLoggedIn() && session.getLoggedInUser().programs.indexOf('affiliate') <= -1">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">email</i>
           <!-- i18n -->Invite your friends<!-- /i18n -->
