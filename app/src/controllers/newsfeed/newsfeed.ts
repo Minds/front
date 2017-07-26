@@ -8,7 +8,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { SessionFactory } from '../../services/session';
-import { Poster } from "./poster/poster";
+import { Poster } from "../../modules/legacy/controllers/newsfeed/poster/poster";
 
 @Component({
   selector: 'minds-newsfeed',

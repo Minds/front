@@ -11,7 +11,7 @@ import { ScrollService } from '../../services/ux/scroll';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
-import { Poster } from "../newsfeed/poster/poster";
+import { Poster } from "../../modules/legacy/controllers/newsfeed/poster/poster";
 
 @Component({
   moduleId: module.id,
@@ -194,6 +194,7 @@ export class Channel {
   }
 
   prepend(activity : any){
+    activity.boostToggle = true;
     this.feed.unshift(activity);
   }
 

@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
-import { SignupModalService } from '../../../components/modal/signup/service';
+import { SignupModalService } from '../../../modules/modals/signup/service';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';

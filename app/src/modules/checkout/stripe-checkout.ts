@@ -22,11 +22,38 @@ interface CreditCard {
     <div class="m-error mdl-color--red mdl-color-text--white" *ngIf="error">
         {{error}}
     </div>
-    <div class="mdl-card m-payments-options" style="margin-bottom:8px;" *ngIf="useBitcoin">
-        <div id="coinbase-btn" *ngIf="useBitcoin"></div>
+
+    <div class="m-payments-options" style="margin-bottom:8px;" *ngIf="useBitcoin"
+      [class.mdl-card]="useMDLStyling"
+    >
+      <div id="coinbase-btn" *ngIf="useBitcoin"></div>
     </div>
 
-    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation" *ngIf="useCreditCard"></minds-checkout-card-input>
+    <div [hidden]="!loading" class="m-checkout-loading">
+      <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
+      <p>One moment please...</p>
+    </div>
+
+    <div class="m-payments--saved-cards" *ngIf="cards.length">
+      <div class="m-payments-saved--title">Select a card to use</div>
+      <ul>
+        <li *ngFor="let card of cards"
+          class="m-payments--saved-card-item"
+          (click)="setSavedCard(card.id)"
+        >
+          <span class="m-payments--saved-card-item-type">{{card.brand}}</span>
+          <span class="m-payments--saved-card-item-number">**** {{card.last4}}</span>
+          <span class="m-payments--saved-card-item-expiry">{{card.exp_month}} / {{card.exp_year}}</span>
+          <span class="m-payments--saved-card-item-select">Select</span>
+        </li>
+        <li class="m-payments--saved-card-item m-payments-saved--item-new" (click)="cards = []">
+          <span class="m-payments--saved-card-item-type">Use a new card</span>
+          <span class="m-payments--saved-card-item-select">Select</span>
+        </li>
+      </ul>
+    </div>
+
+    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress || confirmation || loading" [useMDLStyling]="useMDLStyling" *ngIf="useCreditCard && !cards.length"></minds-checkout-card-input>
     <div [hidden]="!inProgress" class="m-checkout-loading">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
       <p>Capturing card details...</p>
@@ -37,6 +64,7 @@ interface CreditCard {
 export class StripeCheckout {
 
   minds = window.Minds;
+  loading: boolean = false;
   inProgress : boolean = false;
   confirmation : boolean = false;
   error : string = "";
@@ -49,9 +77,13 @@ export class StripeCheckout {
   @Input() merchant_guid;
   @Input() gateway : string = "merchants";
 
+  @Input('useMDLStyling') useMDLStyling: boolean = true;
+
   stripe;
   bt_checkout;
   nonce : string = "";
+
+  cards: any[] = [];
 
   @Input() useCreditCard : boolean = true;
   @Input() useBitcoin : boolean = false;
@@ -63,6 +95,8 @@ export class StripeCheckout {
     setTimeout(() => {
       this.setupStripe();
     }, 1000); //sometimes stripe can take a while to download
+
+     this.loadSavedCards();
   }
 
   setupStripe(){
@@ -71,8 +105,37 @@ export class StripeCheckout {
     }
   }
 
+  loadSavedCards() {
+    this.loading = true;
+    this.cards = [];
+
+    return this.client.get(`api/v1/payments/stripe/cards`)
+      .then(({ cards }) => {
+        this.loading = false;
+
+        if (cards && cards.length) {
+          /*this.cards = (<any[]>cards).map(card => ({
+            id: card.id,
+            label: `${card.brand} ${card.exp_month}/${('' + card.exp_year).substr(2)} **** ${card.last4}`
+          }));*/
+          this.cards = cards;
+        }
+      })
+      .catch(e => {
+        this.loading = false;
+      });
+  }
+
+  setSavedCard(id) {
+    this.inProgress = true;
+
+    this.nonce = id;
+    this.inputed.next(this.nonce);
+    this.inProgress = false;
+  }
+
   setCard(card){
-    console.log(card);
+    // console.log(card);
     this.card = card;
     this.getCardNonce();
   }
@@ -97,7 +160,6 @@ export class StripeCheckout {
       this.nonce = response.id;
       this.inputed.next(this.nonce);
       this.inProgress = false;
-
     });
   }
 

@@ -65,7 +65,7 @@
         </div>
 
         <div *ngIf="notification.entityObj.subtype != 'blog'">
-          <a [routerLink]="['/archive/view', notification.entityObj.guid]">
+          <a [routerLink]="['/media', notification.entityObj.guid]">
             <p>
               <!-- i18n -->{{notification.fromObj.name}} commented on<!-- /i18n -->
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title" >{{notification.entityObj.title}}</span>
@@ -199,7 +199,7 @@
 
   <!-- boost_gift -->
   <ng-template ngSwitchCase="boost_gift">
-    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boosts/content/inbox']">
+    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/wallet/boost/content']">
       <p>
         <!-- i18n -->{{notification.fromObj.name}} gifted you {{notification.params.impressions}} views <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
@@ -212,7 +212,7 @@
 
   <!-- Standard boost notification for owner -->
   <ng-template ngSwitchCase="boost_submitted">
-    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boosts/content/inbox']">
+    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/wallet/boost/content']">
      <p><!-- i18n -->{{notification.params.impressions}} views <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
       <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
       <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
@@ -225,7 +225,7 @@
 
   <!-- P2P boost submitted -->
   <ng-template ngSwitchCase="boost_submitted_p2p">
-      <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boosts/content/inbox']">
+      <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/wallet/boost/content']">
         <p><!-- i18n -->{{notification.params.points}} points <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
           <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
           <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
@@ -250,7 +250,7 @@
 
   <!-- Boost reject -->
   <ng-template ngSwitchCase="boost_rejected">
-    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boosts/content/inbox']">
+    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/wallet/boost/content']">
       <p><!-- i18n -->Your boost <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
@@ -261,9 +261,22 @@
     </a>
   </ng-template>
 
+  <!-- Boost revoked -->
+  <ng-template ngSwitchCase="boost_revoked">
+    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/wallet/boost/content']">
+      <p><!-- i18n -->You revoked your boost <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
+        <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
+        <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
+        <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && !notification.entityObj.name && notification.entityObj.type !== 'user'" i18n>your post</span>
+        <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && !notification.entityObj.name && notification.entityObj.type === 'user'" i18n>your channel</span>
+        . <!-- i18n: boost -->Your offer has been refunded.<!-- /i18n -->
+      </p>
+    </a>
+  </ng-template>
+
   <!-- Boost accepted -->
   <ng-template ngSwitchCase="boost_accepted">
-    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boosts/content/inbox']">
+    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/wallet/boost/content']">
       <p *ngIf="notification.params.impressions"><!-- i18n -->{{notification.params.impressions}} points <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
@@ -283,7 +296,7 @@
 
   <!-- Boost completed -->
   <ng-template ngSwitchCase="boost_completed">
-    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boosts/content/inbox']">
+    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/wallet/boost/content']">
       <p><!-- i18n -->{{notification.params.impressions}}/{{notification.params.impressions}} views <span *ngIf="notification.entityObj">for</span><!-- /i18n -->
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
@@ -295,7 +308,7 @@
 
   <!-- Boost (Peer) Request -->
   <ng-template ngSwitchCase="boost_peer_request">
-    <a [routerLink]="['/boosts/peer/inbox']">
+    <a [routerLink]="['/wallet/boost/peer']">
       <p>
         <!-- i18n --><b>@{{notification.from.username}}</b> is offering<!-- /i18n -->
         <b>
@@ -314,7 +327,7 @@
 
   <!-- Boost (Peer) Request -->
   <ng-template ngSwitchCase="boost_peer_accepted">
-    <a [routerLink]="['/boosts/peer/outbox']">
+    <a [routerLink]="['/wallet/boost/peer/outbox']">
       <p>
         <!-- i18n --><b>@{{notification.from.username}}</b> accepted your bid of<!-- /i18n -->
         <b>
@@ -332,7 +345,7 @@
 
   <!-- Boost (Peer) Rejeced -->
   <ng-template ngSwitchCase="boost_peer_rejected">
-    <a [routerLink]="['/boosts/peer/outbox']">
+    <a [routerLink]="['/wallet/boost/peer/outbox']">
       <p>
         <!-- i18n --><b>@{{notification.from.username}}</b> declined your bid of<!-- /i18n -->
         <b>

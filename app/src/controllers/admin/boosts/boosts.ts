@@ -21,11 +21,13 @@ export class AdminBoosts {
   type : string = "newsfeed";
   count : number = 0;
   newsfeed_count : number = 0;
-  suggested_count : number = 0;
+  content_count : number = 0;
   
   inProgress : boolean = false;
   moreData : boolean = true;
   offset : string = "";
+
+  statistics: any = null;
 
   constructor(public client: Client, private route: ActivatedRoute){
   }
@@ -41,13 +43,14 @@ export class AdminBoosts {
 
       this.boosts = [];
       this.count = 0;
-      this.newsfeed_count = 0;
-      this.suggested_count = 0;
       this.inProgress = false;
       this.moreData = true;
       this.offset = "";
 
-      this.load();
+      this.load()
+        .then(() => {
+          this.loadStatistics();
+        });
     });
 
     this.domHack();
@@ -63,7 +66,7 @@ export class AdminBoosts {
       return;
     this.inProgress = true;
 
-    this.client.get('api/v1/admin/boosts/' + this.type, { limit: 24, offset: this.offset })
+    return this.client.get('api/v1/admin/boosts/' + this.type, { limit: 24, offset: this.offset })
       .then((response : any) => {
         if(!response.boosts){
           this.inProgress = false;
@@ -74,13 +77,25 @@ export class AdminBoosts {
         this.boosts = this.boosts.concat(response.boosts);
         this.count = response.count;
         this.newsfeed_count = response.newsfeed_count;
-        this.suggested_count = response.suggested_count;
+        this.content_count = response.content_count;
 
         this.offset = response['load-next'];
         this.inProgress = false;
       })
       .catch((e) => {
         this.inProgress = false;
+      });
+  }
+
+  loadStatistics() {
+    this.statistics = null;
+
+    return this.client.get(`api/v1/admin/boosts/analytics/${this.type}`)
+      .then((response) => {
+        this.statistics = response;
+      })
+      .catch(e => {
+        console.error('[Minds Admin] Cannot load boost statistics', e);
       });
   }
 
@@ -128,8 +143,8 @@ export class AdminBoosts {
     }
     if(this.type == "newsfeed")
       this.newsfeed_count--;
-    else if(this.type == "suggested")
-      this.suggested_count--;
+    else if(this.type == "content")
+      this.content_count--;
     if(this.boosts.length < 5)
       this.load();
   }
@@ -155,4 +170,27 @@ export class AdminBoosts {
     document.removeEventListener('keydown', this.onKeypress);
   }
 
+  // TODO: Please, convert this to a pipe (and maybe add days support)!
+  _duration(duration: number): string {
+    const minsDuration = Math.floor(duration / (60000)),
+      mins = minsDuration % 60,
+      hours = Math.floor(minsDuration / 60);
+
+    return `${hours}:${this._padStart('' + mins, 2, '0')}`;
+  }
+
+  private _padStart(str: string, targetLength, padString) {
+    targetLength = targetLength>>0; //floor if number or convert non-number to 0;
+    padString = String(padString || ' ');
+    if (str.length > targetLength) {
+      return String(str);
+    }
+    else {
+      targetLength = targetLength-str.length;
+      if (targetLength > padString.length) {
+        padString += padString.repeat(targetLength/padString.length); //append to original to ensure we are longer than needed
+      }
+      return padString.slice(0,targetLength) + String(str);
+    }
+  }
 }

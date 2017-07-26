@@ -53,6 +53,10 @@
       padding:8px;
       cursor:pointer;
       text-transform:uppercase;
+
+      &:first-child {
+        padding-left: 0;
+      }
     }
   }
 
@@ -152,4 +156,8 @@ minds-wallet-transactions {
 .m-wallet-local-settings {
   margin-top: $minds-padding;
   padding: $minds-padding;
+}
+
+.m-wallet--boost-ads {
+  margin-top: $minds-padding * 2;
 }

@@ -6,11 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { MonetizationOverviewModule } from '../monetization/monetization.overview.module';
 import { CheckoutModule } from '../checkout/checkout.module';
+import { AdsModule } from "../ads/ads.module";
+
 import { WalletComponent } from './wallet.component';
 import { PointsOverviewComponent } from './points-overview.component';
 import { WalletTransactionsComponent } from './transactions/transactions.component';
 import { WalletPointsTransactionsComponent } from './transactions/points.component';
 import { WalletPurchaseComponent } from './purchase/purchase.component';
+import { WalletBoostComponent } from "./boost/boost.component";
 
 
 const walletRoutes : Routes = [
@@ -18,7 +21,10 @@ const walletRoutes : Routes = [
     children: [
       { path: '', redirectTo: 'transactions', pathMatch: 'full' },
       { path: 'transactions', component: WalletTransactionsComponent },
-      { path: 'purchase', component: WalletTransactionsComponent }
+      { path: 'purchase', component: WalletTransactionsComponent },
+      { path: 'boost/:type/:filter', component: WalletBoostComponent },
+      { path: 'boost/:type', component: WalletBoostComponent },
+      { path: 'boost', component: WalletBoostComponent }
     ]
   }
 ]
@@ -31,21 +37,24 @@ const walletRoutes : Routes = [
     CommonModule,
     CheckoutModule,
     MonetizationOverviewModule,
-    RouterModule.forChild(walletRoutes)
+    RouterModule.forChild(walletRoutes),
+    AdsModule
   ],
   declarations: [
     WalletComponent,
     PointsOverviewComponent,
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
-    WalletPurchaseComponent
+    WalletPurchaseComponent,
+    WalletBoostComponent
   ],
   exports: [
     WalletComponent,
     PointsOverviewComponent,
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
-    WalletPurchaseComponent
+    WalletPurchaseComponent,
+    WalletBoostComponent
   ],
   entryComponents: [ WalletComponent ]
 })

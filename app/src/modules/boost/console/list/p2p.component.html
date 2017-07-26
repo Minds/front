@@ -1,0 +1,15 @@
+<m-boost-console-card *ngFor="let boost of boosts; let i = index"
+  class="mdl-card mdl-shadow--4dp" 
+  [boost]="boost"
+></m-boost-console-card>
+
+<div class="m-boost-console--empty" [hidden]="(boosts && boosts.length) || inProgress">
+  You have no boosts in your {{ filter }}.
+</div>
+
+<infinite-scroll
+  distance="25%"
+  (load)="load()"
+  [moreData]="moreData"
+  [inProgress]="inProgress">
+</infinite-scroll>

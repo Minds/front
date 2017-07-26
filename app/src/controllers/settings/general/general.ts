@@ -37,8 +37,12 @@ export class SettingsGeneral{
 
   language: string = 'en';
 
+  categories: { id, label, selected }[];
+  selectedCategories: string[] = [];
+
   constructor(public client: Client, public route: ActivatedRoute, public thirdpartynetworks: ThirdPartyNetworksService){
     this.minds = window.Minds;
+    this.getCategories();
   }
 
   paramsSubscription: Subscription;
@@ -58,21 +62,28 @@ export class SettingsGeneral{
 
   load(remote : boolean = false){
     if(!remote){
-      var user = this.session.getLoggedInUser();
+      const user = this.session.getLoggedInUser();
       this.name = user.name;
     }
 
-    var self = this;
     this.client.get('api/v1/settings/' + this.guid)
       .then((response : any) => {
-        self.email = response.channel.email;
-        self.mature = !!parseInt(response.channel.mature, 10);
-        self.language = response.channel.language || 'en';
+        this.email = response.channel.email;
+        this.mature = !!parseInt(response.channel.mature, 10);
+        this.language = response.channel.language || 'en';
+        this.selectedCategories = response.channel.categories || [];
 
         this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
         if (window.Minds.user) {
-          window.Minds.user.mature = self.mature;
+          window.Minds.user.mature = this.mature;
+        }
+        if (this.selectedCategories.length > 0) {
+          this.selectedCategories.forEach((item, index, array) => {
+            const i: number = this.categories.findIndex(i => i.id === item);
+            if (i != -1)
+              this.categories[ i ].selected = true;
+          });
         }
       });
   }
@@ -105,7 +116,6 @@ export class SettingsGeneral{
   }
 
   save(){
-    var self = this;
     if(!this.canSubmit())
       return;
 
@@ -118,15 +128,16 @@ export class SettingsGeneral{
         new_password: this.password2,
         mature: this.mature ? 1 : 0,
         language: this.language,
+        categories: this.selectedCategories
       })
       .then((response : any) => {
-        self.changed = false;
-        self.saved = true;
-        self.error = "";
+        this.changed = false;
+        this.saved = true;
+        this.error = "";
 
-        self.password = "";
-        self.password1 = "";
-        self.password2 = "";
+        this.password = "";
+        this.password1 = "";
+        this.password2 = "";
 
         if (window.Minds.user) {
           window.Minds.user.mature = this.mature ? 1 : 0;
@@ -134,9 +145,9 @@ export class SettingsGeneral{
 
         if (this.language != window.Minds['language']) {
           window.location.reload(true);
-        } 
+        }
 
-        self.inProgress = false;
+        this.inProgress = false;
       });
   }
 
@@ -166,5 +177,32 @@ export class SettingsGeneral{
 
   removeTw() {
     this.thirdpartynetworks.disconnect('twitter');
+  }
+
+  getCategories() {
+    this.categories = [];
+
+    for (let id in window.Minds.categories) {
+      this.categories.push({
+        id: id,
+        label: window.Minds.categories[ id ],
+        selected: false
+      });
+    }
+
+    this.categories.sort((a, b) => a.label > b.label ? 1 : -1);
+  }
+
+  onCategoryClick(category) {
+    category.selected = !category.selected;
+
+    if (category.selected) {
+      this.selectedCategories.push(category.id);
+    } else {
+      this.selectedCategories.splice(this.selectedCategories.indexOf(category.id), 1);
+    }
+
+    this.changed = true;
+    this.saved = false;
   }
 }

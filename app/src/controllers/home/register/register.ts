@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { SignupModalService } from '../../../components/modal/signup/service';
+import { SignupModalService } from '../../../modules/modals/signup/service';
 
 @Component({
   moduleId: module.id,

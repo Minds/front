@@ -1,0 +1,55 @@
+.m-overlay-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999999;
+
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: ($minds-padding * 2) ($minds-padding * 8);
+
+  background: none rgba(0, 0, 0, 0.90);
+  color: #ffffff;
+  outline: 0;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  font-family: 'Lato', sans-serif;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: ($minds-padding * 2) ($minds-padding * 4);
+  }
+}
+
+.m-overlay-modal--close {
+  position: absolute;
+  top: $minds-padding * 2;
+  right: $minds-padding * 2;
+  z-index: 99999999;
+
+  display: inline-block;
+  padding: $minds-padding;
+  border-radius: 4px;
+
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+
+  cursor: pointer;
+
+  @media screen and (max-width: $max-mobile) {
+    right: $minds-padding;
+  }
+
+  > i.material-icons {
+    font-size: 32px;
+  }
+}
+
+body.m-overlay-modal--shown {
+  overflow: hidden;
+}

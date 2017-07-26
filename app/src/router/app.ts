@@ -9,7 +9,6 @@ import {Register} from '../controllers/home/register/register';
 import {ForgotPassword} from '../controllers/home/forgot-password/forgot-password';
 import {ComingSoon} from '../controllers/home/comingsoon/comingsoon';
 import {Newsfeed, NewsfeedSingle} from '../controllers/newsfeed/newsfeed';
-import {Boosts} from '../controllers/boosts/boosts';
 import {Capture} from '../controllers/capture/capture';
 import {Discovery} from '../controllers/discovery/discovery';
 import {Channel, ChannelSubscribers, ChannelSubscriptions} from '../controllers/channels/channel';
@@ -18,14 +17,12 @@ import {Search} from '../controllers/search/search';
 import {Settings} from '../controllers/settings/settings';
 import {Admin} from '../controllers/admin/admin';
 import {Pages} from '../controllers/pages/pages';
+import {MediaView, MediaEdit} from '../controllers/media/media';
 
 /**
  * TODO: Load these automagically from gulp
  */
 import {Messenger} from '../plugins/Messenger/messenger';
-import {Blog, BlogViewInfinite, BlogEdit} from '../plugins/blog/blog';
-import {ArchiveView, ArchiveEdit} from '../plugins/archive/archive';
-import {Groups, GroupsProfile, GroupsCreator} from '../plugins/Groups/groups';
 
 import {CanDeactivateGuardService} from '../services/can-deactivate-guard';
 
@@ -41,29 +38,21 @@ export const MindsAppRoutes: Routes = [
   { path: 'newsfeed', component: Newsfeed, canDeactivate: [CanDeactivateGuardService] },
   { path: 'capture', component: Capture },
 
-  { path: 'boosts/:type/:filter', component: Boosts },
-  { path: 'boosts/:type', component: Boosts },
-  { path: 'boosts', component: Boosts },
-
   { path: 'discovery/:filter/:type', component: Discovery },
   { path: 'discovery/:filter', component: Discovery },
 
-  { path: 'blog/view/:guid/:title', component:  BlogViewInfinite },
-  { path: 'blog/view/:guid', component:  BlogViewInfinite },
-  { path: 'blog/edit/:guid', component:  BlogEdit },
-  { path: 'blog/:filter', component:  Blog },
+  { path: 'media/edit/:guid', component: MediaEdit },
+  { path: 'media/:container/:guid', component: MediaView },
+  { path: 'media/:guid', component: MediaView },
 
-  { path: 'archive/view/:container/:guid', component: ArchiveView },
-  { path: 'archive/view/:guid', component: ArchiveView },
-  { path: 'archive/edit/:guid', component: ArchiveEdit },
+  /* Legacy routes */
+  { path: 'archive/view/:container/:guid', component: MediaView },
+  { path: 'archive/view/:guid', component: MediaView },
+  { path: 'archive/edit/:guid', component: MediaEdit },
+  /* /Legacy routes */
 
   { path: 'notifications/:filter', component: Notifications },
   { path: 'notifications', component: Notifications },
-
-  { path: 'groups/profile/:guid/:filter', component: GroupsProfile, canDeactivate: [CanDeactivateGuardService]  },
-  { path: 'groups/profile/:guid', component: GroupsProfile, canDeactivate: [CanDeactivateGuardService]  },
-  { path: 'groups/create', component: GroupsCreator },
-  { path: 'groups/:filter', component: Groups },
 
   { path: 'search', component: Search },
 
@@ -88,17 +77,10 @@ export const MINDS_APP_ROUTING_DECLARATIONS: any[] = [
   NewsfeedSingle,
   Newsfeed,
   Capture,
-  Boosts,
   Discovery,
-  BlogViewInfinite,
-  BlogEdit,
-  Blog,
-  ArchiveView,
-  ArchiveEdit,
+  MediaView,
+  MediaEdit,
   Notifications,
-  GroupsProfile,
-  GroupsCreator,
-  Groups,
   Search,
   Settings,
   Admin,

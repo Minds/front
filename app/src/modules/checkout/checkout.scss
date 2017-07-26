@@ -34,6 +34,45 @@ minds-payments-checkout, minds-payments-stripe-checkout{
 
   }
 
+  .m-payments--saved-cards{
+    ul, li{
+      list-style: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .m-payments-saved--title{
+      padding: 16px 16px 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .m-payments--saved-card-item{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-family: 'Lato';
+      border: 1px solid #DDD;
+      margin: 16px;
+      border-radius: 3px;
+
+      > *{
+        padding:8px;
+      }
+
+      .m-payments--saved-card-item-select{
+        flex:auto;
+        text-align:right;
+        color: #888;
+        cursor: pointer;
+      }
+    }
+
+  }
+
 
   input[type=number]{
     -moz-appearance: textfield;

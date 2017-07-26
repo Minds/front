@@ -71,7 +71,7 @@ export class Discovery {
             this._filter =  this._filter;
         }
       }
-      
+
       if (params['type']) {
         this._type = params['type'];
       }

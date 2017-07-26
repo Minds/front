@@ -8,10 +8,10 @@
 <div class="mdl-grid m-discovery-{{_filter}} m-discovery-{{_filter}}-{{_type}}" style="max-width:900px">
 
     <a class="mdl-cell mdl-cell--4-col" [routerLink]="['/capture']" style="text-decoration: none;" [hidden]="_type == 'channels' || _filter == 'suggested'">
-      <minds-add-card class="mdl-card mdl-shadow--2dp mdl-color--blue-grey-400 mdl-color-text--blue-grey-100">
+      <div class="minds-add-card mdl-card mdl-shadow--2dp mdl-color--blue-grey-400 mdl-color-text--blue-grey-100">
         <i class="material-icons">file_upload</i>
         <h3 i18n>Upload</h3>
-      </minds-add-card>
+      </div>
     </a>
 
     <div *ngIf="_filter == 'suggested' && _type == 'channels'" class="m-discovery-suggested-location-bar">
@@ -48,9 +48,9 @@
       <!-- END: User Only -->
 
       <div class="m-discovery-suggested-actions mdl-card mdl-shadow--6dp mdl-color--blue-grey-900" *ngIf="_filter == 'suggested'">
-        <minds-button-edit class="m-button" (click)="pass(i)">
+        <span class="minds-button-edit m-button" (click)="pass(i)">
           <button i18n>Pass</button>
-        </minds-button-edit>
+        </span>
         <minds-button-subscribe class="m-button" [user]="entity" (click)="pop(i)" [hidden]="_type != 'channels'"></minds-button-subscribe>
         <minds-button-thumbs-up class="m-button" [object]="entity" (click)="pop(i)" [hidden]="_type == 'channels'"></minds-button-thumbs-up>
         <minds-button-thumbs-down class="m-button" [object]="entity" (click)="pop(i)" [hidden]="_type == 'channels'"></minds-button-thumbs-down>

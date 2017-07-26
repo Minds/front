@@ -1,4 +1,6 @@
-<div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="inProgress || confirmation">
+<div class="mdl-card minds-purchase-card" [hidden]="inProgress || confirmation"
+  [class.mdl-shadow--2dp]="useMDLStyling"
+>
 
 
 
@@ -16,10 +18,21 @@
     </div>
 
 
-    <div class="mdl-cell mdl-cell--6-col mdl-color-text--blue-grey-600 minds-purchase-vendors">
-      <span (click)="card.type = 'amex'" [ngClass]="{'mdl-color-text--green': card.type == 'amex'}">Amex</span>
-      <span (click)="card.type = 'visa'" [ngClass]="{'mdl-color-text--green': card.type == 'visa'}">Visa</span>
-      <span (click)="card.type = 'mastercard'" [ngClass]="{'mdl-color-text--green': card.type == 'mastercard'}">MasterCard</span>
+    <div class="mdl-cell mdl-cell--6-col minds-purchase-vendors"
+      [class.mdl-color-text--blue-grey-600]="useMDLStyling"
+    >
+      <span (click)="card.type = 'amex'"
+        [class.m-purchase-card--highlight]="card.type == 'amex'"
+        [class.mdl-color-text--green]="useMDLStyling && card.type == 'amex'"
+      >Amex</span>
+      <span (click)="card.type = 'visa'"
+        [class.m-purchase-card--highlight]="card.type == 'visa'"
+        [class.mdl-color-text--green]="useMDLStyling && card.type == 'visa'"
+      >Visa</span>
+      <span (click)="card.type = 'mastercard'"
+        [class.m-purchase-card--highlight]="card.type == 'mastercard'"
+        [class.mdl-color-text--green]="useMDLStyling && card.type == 'mastercard'"
+      >MasterCard</span>
     </div>
 
     <div class="mdl-cell mdl-cell--6-col">
@@ -38,9 +51,20 @@
         <option value="11">11</option>
         <option value="12">12</option>
       </select>
-      <select name="credit-card-year" [ngModel]="card.year" (change)="card.year = $event.target.value">
+      <select name="credit-card-year" [ngModel]="card.year"  (change)="card.year = $event.target.value">
         <option i18n="Year">yyyy</option>
-        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+        <option value="2016">2016</option>
+        <option value="2017">2017</option>
+        <option value="2018">2018</option>
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
       </select>
     </div>
     <div class="mdl-cell mdl-cell--6-col">
@@ -67,21 +91,33 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col m-checkout-confirm">
-      <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">
+      <div class="minds-error" [hidden]="!error"
+        [class.mdl-color--red.mdl-color-text--white]="useMDLStyling"
+      >
         {{error}}
       </div>
-      <button class="mdl-button mdl-button--colored mdl-button--raised"
+      <button
+        [class.mdl-button.mdl-button--colored.mdl-button--raised]="useMDLStyling"
         [disabled]="!validate()"
         (click)="confirm()"
         >
         <!-- i18n -->Confirm<!-- /i18n -->
       </button>
+
+      <div class="m-checkout--secure">
+        <i class="material-icons">lock_outline</i>
+        <m-tooltip icon="help">
+          Your credit card information is safe, secure and PCI compliant.
+        </m-tooltip>
+      </div>
     </div>
   </div>
 
 </div>
 
-<div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!confirmation">
+<div class="mdl-card minds-purchase-card" [hidden]="!confirmation"
+  [class.mdl-shadow--2dp]="useMDLStyling"
+>
   <div class="mdl-card__supporting-text">
     <h2 i18n>Complete</h2>
   </div>

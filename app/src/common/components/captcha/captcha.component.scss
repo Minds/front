@@ -1,0 +1,23 @@
+.m-captcha--sum{
+  text-align: left;
+
+  .m-captcha--sum-question{
+    font-size: 18px;
+    padding: 8px;
+    letter-spacing: 1px;
+    font-family: 'Lato';
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  input[type=number]{
+    display: inline-block;
+    width: 46px;
+    font-size: 22px;
+    padding: 8px 0px;
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Lato';
+    box-sizing: content-box;
+  }
+}
