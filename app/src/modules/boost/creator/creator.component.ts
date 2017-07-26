@@ -494,9 +494,9 @@ export class BoostCreatorComponent implements AfterViewInit {
         throw new VisibleBoostError(`You must boost between ${this.rates.min} and ${this.rates.cap} views.`);
       }
 
-      if (!this.boost.categories.length) {
-        throw new Error('You should select a category.');
-      }
+      //if (!this.boost.categories.length) {
+      //  throw new Error('You should select a category.');
+      //}
     }
 
     if (this.boost.currency == 'usd') {
