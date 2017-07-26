@@ -189,10 +189,8 @@ export class SignupModal {
         this.display = 'fb-username';
         break;
       case "categories":
-        this.display = 'onboarding'
-        break;
-      case "onboarding":
-        this.display = 'tutorial'
+        this.display = 'initial';
+        this.close();
         break;
       case "tutorial":
         this.display = 'initial';
