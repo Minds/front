@@ -87,8 +87,8 @@ export class Activity {
   }
 
   @Input() set boostToggle(toggle: boolean) {
-    if(toggle)
-      this.showBoost();
+    //if(toggle)
+    //  this.showBoost();
   }
 
   save(){
