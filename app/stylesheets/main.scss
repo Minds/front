@@ -107,7 +107,7 @@ minds-topbar{
     }
     minds-topbar-navigation{
       nav a:first-of-type{
-          display:none;
+          //display:none;
       }
       nav a .counter{
         display:none;
@@ -123,8 +123,8 @@ minds-topbar{
   minds-topbar minds-topbar-navigation nav{
       display:none;
   }
-  minds-topbar minds-search-bar{ 
-      display:none; 
+  minds-topbar minds-search-bar{
+      display:none;
   }
 }
 
@@ -146,7 +146,7 @@ minds-topbar{
 }
 .mdl-card__supporting-text{
   word-wrap: break-word;
-  
+
   textarea{
     color: rgba(0,0,0,.87);
     font-size: 13px;
