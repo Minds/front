@@ -119,10 +119,12 @@ export class StripeCheckout {
             label: `${card.brand} ${card.exp_month}/${('' + card.exp_year).substr(2)} **** ${card.last4}`
           }));*/
           this.cards = cards;
+          this.detectChanges();
         }
       })
       .catch(e => {
         this.loading = false;
+        this.detectChanges();
       });
   }
 
@@ -132,12 +134,14 @@ export class StripeCheckout {
     this.nonce = id;
     this.inputed.next(this.nonce);
     this.inProgress = false;
+    this.detectChanges();
   }
 
   setCard(card){
     // console.log(card);
     this.card = card;
     this.getCardNonce();
+    this.detectChanges();
   }
 
   getCardNonce(){
@@ -153,18 +157,23 @@ export class StripeCheckout {
       if(response.error){
         this.error = response.error.message;
         this.inProgress = false;
-        this.cd.markForCheck();
-        this.cd.detectChanges();
+        this.detectChanges();
         return false;
       }
       this.nonce = response.id;
       this.inputed.next(this.nonce);
       this.inProgress = false;
+      this.detectChanges();
     });
   }
 
   purchase(){
 
+  }
+
+  detectChanges(){
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   ngOnDestroy(){
