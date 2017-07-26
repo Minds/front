@@ -140,7 +140,7 @@
       </div>
     </section>
 
-    <section class="m-boost--creator-section">
+    <section class="m-boost--creator-section" *ngIf="boost.currency == 'usd'">
       <h3>
         Priority
         <span class="m-boost--creator-section--title-context">Priority content goes to the front of the line, but costs at least twice the price of a regular boost.</span>
