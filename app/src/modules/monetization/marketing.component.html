@@ -5,7 +5,8 @@
     <h3>Start earning revenue on Minds by monetizing your channel</h3>
 
     <div class="m-monetization--marketing-action-button">
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!isMonetized()" (click)="onboard()" [hidden]="showOnboardingForm">Click to Onboard</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isMonetized()" (click)="onboard()" [hidden]="showOnboardingForm">Click to Onboard</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login">Click to Onboard</button>
       <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isMonetized()" routerLink="/wallet/revenue">View Earnings</button>
     </div>
   </div>

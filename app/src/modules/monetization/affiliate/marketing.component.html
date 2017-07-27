@@ -10,7 +10,8 @@
     </div>
 
     <div class="m-affiliate--marketing-action-button">
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!isAffiliate() && !showOnboarding" (click)="join()">Join Now</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isAffiliate() && !showOnboarding" (click)="join()">Join Now</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login">Join Now</button>
       <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isAffiliate()" routerLink="/wallet/revenue">View Earnings</button>
     </div>
   </div>

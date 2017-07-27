@@ -42,6 +42,9 @@ export class SignupModalService{
             case 'register':
             case 'login':
             case 'forgot-password':
+            case 'plus':
+            case 'monetization':
+            case 'affiliates':
             case '':
               this.close();
               break;
