@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { SignupModalService } from '../../../modules/modals/signup/service';
+import { LoginReferrerService } from "../../../services/login-referrer.service";
 
 @Component({
   moduleId: module.id,
@@ -27,7 +28,7 @@ export class Register {
     canPlayInlineVideos: true
   };
 
-  constructor(public client : Client, public router: Router, public route: ActivatedRoute, private modal : SignupModalService){
+  constructor(public client : Client, public router: Router, public route: ActivatedRoute, private modal : SignupModalService, private loginReferrer: LoginReferrerService){
   }
 
   paramsSubscription: Subscription;
@@ -49,7 +50,7 @@ export class Register {
 
   registered(){
     this.modal.setDisplay('onboarding').open();
-    this.router.navigate(['/newsfeed']);
+    this.loginReferrer.navigate();
   }
 
 }

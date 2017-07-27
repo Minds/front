@@ -25,6 +25,7 @@ import { EmbedService } from './embed';
 import { MindsTitle } from './ux/title';
 import { CanDeactivateGuardService } from './can-deactivate-guard';
 import { OverlayModalService } from './ux/overlay-modal';
+import { LoginReferrerService } from "./login-referrer.service";
 
 import { GoogleChartsLoader } from "./third-party/google-charts-loader";
 
@@ -138,5 +139,10 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: OverlayModalService,
      useFactory: OverlayModalService._
+   },
+   {
+     provide: LoginReferrerService,
+     useFactory: LoginReferrerService._,
+     deps: [ Router ]
    }
 ];

@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 
 import { GroupsService } from '../../groups-service';
 
 import { Client } from '../../../../services/api';
 import { SessionFactory } from '../../../../services/session';
+import { Poster } from "../../../../modules/legacy/controllers/newsfeed/poster/poster";
 
 interface MindsGroupResponse{
   group : MindsGroup
@@ -34,6 +35,8 @@ export class GroupsProfileFeed {
   offset : string = "";
   inProgress : boolean = false;
   moreData : boolean = true;
+
+  @ViewChild('poster') private poster: Poster;
 
 	constructor(public client : Client, public service: GroupsService){
 	}
@@ -121,4 +124,15 @@ export class GroupsProfileFeed {
         this.activity.splice(i,1);
     }
   }
+
+  canDeactivate(){
+    if(!this.poster || !this.poster.attachment)
+      return true;
+    const progress = this.poster.attachment.getUploadProgress();
+    if (progress > 0 && progress < 100) {
+      return confirm('Your file is still uploading. Are you sure?');
+    }
+    return true;
+  }
+
 }

@@ -7,6 +7,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
+import { LoginReferrerService } from "../../../services/login-referrer.service";
 
 @Component({
   moduleId: module.id,
@@ -28,13 +29,13 @@ export class Login {
     canPlayInlineVideos: true
   };
 
-  constructor(public client : Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle, private modal : SignupModalService){
+  constructor(public client : Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle, private modal : SignupModalService, private loginReferrer: LoginReferrerService){
   }
 
   paramsSubscription: Subscription;
   ngOnInit() {
     if (this.session.isLoggedIn()) {
-      this.router.navigate(['/newsfeed']);
+      this.loginReferrer.navigate();
     }
 
     this.title.setTitle("Login");
@@ -58,12 +59,12 @@ export class Login {
     if(this.referrer)
       this.router.navigateByUrl(this.referrer);
     else
-      this.router.navigate(['/newsfeed']);
+      this.loginReferrer.navigate();
   }
 
   registered(){
     this.modal.setDisplay('categories').open();
-    this.router.navigate(['/newsfeed']);
+    this.loginReferrer.navigate();
   }
 
 }

@@ -4,6 +4,7 @@ import { NotificationService } from './src/services/notification';
 import { AnalyticsService} from './src/services/analytics'
 import { SocketsService } from './src/services/sockets';
 import { Session, SessionFactory } from './src/services/session';
+import { LoginReferrerService } from "./src/services/login-referrer.service";
 
 @Component({
   moduleId: module.id,
@@ -15,7 +16,7 @@ export class Minds {
   minds = window.Minds;
   session: Session = SessionFactory.build();
 
-  constructor(public notificationService : NotificationService, public analytics : AnalyticsService, public sockets: SocketsService) {
+  constructor(public notificationService : NotificationService, public analytics : AnalyticsService, public sockets: SocketsService, public loginReferrer: LoginReferrerService) {
     this.name = 'Minds';
   }
 
@@ -30,5 +31,18 @@ export class Minds {
         }
       }
     });
+
+    this.loginReferrer
+      .avoid([
+        '/login',
+        '/logout',
+        '/register',
+        '/forgot-password',
+      ])  
+      .listen();
+  }
+
+  ngOnDestroy() {
+    this.loginReferrer.unlisten();
   }
 }

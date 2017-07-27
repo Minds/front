@@ -85,7 +85,9 @@ export class BlogEdit {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   load(){
@@ -112,6 +114,7 @@ export class BlogEdit {
     // only allowed props
     blog.mature = blog.mature ? 1 : 0;
     blog.monetization = blog.monetization ? 1 : 0;
+    blog.monetized = blog.monetized ? 1 : 0;
 
     this.canSave = false;
     this.check_for_banner().then(() =>{

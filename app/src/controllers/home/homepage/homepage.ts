@@ -6,6 +6,7 @@ import { SessionFactory } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { SignupModalService } from '../../../modules/modals/signup/service';
+import { LoginReferrerService } from "../../../services/login-referrer.service";
 
 @Component({
   moduleId: module.id,
@@ -33,7 +34,7 @@ export class Homepage {
     canPlayInlineVideos: true
   };
 
-  constructor(public client: Client, public title: MindsTitle, public router : Router, public navigation: NavigationService, private modal : SignupModalService){
+  constructor(public client: Client, public title: MindsTitle, public router : Router, public navigation: NavigationService, private modal : SignupModalService, private loginReferrer: LoginReferrerService){
     this.title.setTitle("Home");
     this.loadStream();
     //this.loadVideos();
@@ -79,7 +80,7 @@ export class Homepage {
 
   registered(){
     this.modal.setDisplay('categories').open();
-    this.router.navigate(['/newsfeed']);
+    this.loginReferrer.navigate();
   }
 
 }

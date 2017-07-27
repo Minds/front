@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SignupModalService } from './service';
 import { SessionFactory } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
+import { LoginReferrerService } from "../../../services/login-referrer.service";
 
 
 @Component({
@@ -85,7 +86,7 @@ export class SignupModal {
   display : string = 'initial';
 
   constructor(private router : Router, private location : Location, private service : SignupModalService,
-    private cd : ChangeDetectorRef, private zone : NgZone, private applicationRef : ApplicationRef){
+    private cd : ChangeDetectorRef, private zone : NgZone, private applicationRef : ApplicationRef, private loginReferrer: LoginReferrerService){
     this.listen();
     this.service.isOpen.subscribe({next: open => {
       this.open = open;
@@ -164,28 +165,22 @@ export class SignupModal {
     // @todo: emi - check if this is working
     switch(display){
       case "login":
-        if(this.router){
-          this.router.navigateByUrl(this.route.indexOf('?') > -1 ?
-            this.route  + '&referrer=signup-model&ts=' + Date.now() :
-            this.route  + '?referrer=signup-model&ts=' + Date.now());
-        }
+        this.loginReferrer.navigate({
+          extraParams: `ref=signup&ts=${Date.now()}`
+        });
         this.display = 'initial'; //stop listening for modal now.
         this.close();
         break;
       case "register":
-        if(this.router){
-          this.router.navigateByUrl(this.route.indexOf('?') > -1 ?
-            this.route  + '&referrer=signup-model&ts=' + Date.now() :
-            this.route  + '?referrer=signup-model&ts=' + Date.now());
-        }
+        this.loginReferrer.navigate({
+          extraParams: `ref=signup-modal&ts=${Date.now()}`
+        });
         this.display = 'categories';
         break;
       case "fb":
-        if(this.router){
-          this.router.navigateByUrl(this.route.indexOf('?') > -1 ?
-            this.route  + '&referrer=signup-model&ts=' + Date.now() :
-            this.route  + '?referrer=signup-model&ts=' + Date.now());
-        }
+        this.loginReferrer.navigate({
+          extraParams: `ref=signup-modal&ts=${Date.now()}`
+        });
         this.display = 'fb-username';
         break;
       case "categories":
