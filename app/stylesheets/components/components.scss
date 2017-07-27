@@ -150,6 +150,17 @@ minds-video{
     border-radius: 3px;
     font-weight: bold;
   }
+  .minds-video-play-icon{
+    color: #fff;
+    display: block;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 100px;
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+  }
   .minds-video-bar-full{
     display:none;
     position:absolute;

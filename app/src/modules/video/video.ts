@@ -16,7 +16,8 @@ import { VideoAdsService } from './ads-service';
   template: `
     <video (click)="onClick()" preload="none" [poster]="poster" allowfullscreen [muted]="muted" [loop]="loop">
       <source [src]="s.uri" *ngFor="let s of src">
-    </video>
+    </video> 
+    <i *ngIf="element.paused" class="material-icons minds-video-play-icon" (click)="onClick()">play_circle_outline</i>
     <ng-content></ng-content>
     <div class="minds-video-bar-min" *ngIf="remaining">
       {{remaining.minutes}}:{{remaining.seconds}}
