@@ -27,6 +27,7 @@ export class WalletPurchaseComponent {
   confirmation : boolean = false;
   source : string | number = "";
   recurring : boolean = true;
+  coupon: string = "";
   error : string = "";
 
   toggled : boolean = false;
@@ -95,7 +96,8 @@ export class WalletPurchaseComponent {
     if(this.recurring){
       this.client.post('api/v1/wallet/subscription', {
           points: this.points,
-          source: this.source
+          source: this.source,
+          coupon: this.coupon
         })
         .then((response : any) => {
           if(response.status != 'success'){
@@ -144,7 +146,7 @@ export class WalletPurchaseComponent {
     if(!confirm("Are you sure you wish to cancel your monthly points subscription?")){
       return false;
     }
-   
+
     this.client.delete('api/v1/wallet/subscription')
       .then((response : any) => {
         this.subscription = null;

@@ -54,6 +54,14 @@
 
     <p *ngIf="error" class="mdl-color-text--red" style="padding-left:16px">{{error}}</p>
 
+    <div class="m-purchase-points--coupon" [hidden]="!recurring || !toggled">
+      <label>Coupon code</label>
+      <m-tooltip icon="help">
+        If you have a discount / coupon code, please apply it here (only for subscriptions)
+      </m-tooltip>
+      <input type="text" [(ngModel)]="coupon" />
+    </div>
+
     <minds-payments-stripe-checkout (inputed)="setSource($event)" *ngIf="!source && toggled"></minds-payments-stripe-checkout>
 
   </div>
