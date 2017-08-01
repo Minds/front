@@ -89,7 +89,7 @@ export class LoginReferrerService {
 
   // based on: https://stackoverflow.com/a/36391166
   private _trim(s): string {
-    const mask = ' /?';
+    const mask = ' /';
 
     while (~mask.indexOf(s[0])) {
       s = s.slice(1);
