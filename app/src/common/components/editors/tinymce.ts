@@ -24,6 +24,7 @@ export class MindsTinymce {
     var self = this;
     tinymce.init({
       selector:'minds-tinymce > textarea',
+      autoresize_max_height: '400',
       content_css : "/stylesheets/main.css",
       format: 'raw',
       menubar: false,
