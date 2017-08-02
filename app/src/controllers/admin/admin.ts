@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../services/api';
+import { MindsTitle } from "../../services/ux/title";
 
 @Component({
   selector: 'minds-admin',
@@ -25,11 +26,12 @@ export class Admin {
 
   filter : string = "";
 
-  constructor(private route: ActivatedRoute){
+  constructor(private route: ActivatedRoute, public title: MindsTitle){
   }
 
   paramsSubscription: Subscription;
   ngOnInit() {
+    this.title.setTitle('Admin');
     this.paramsSubscription = this.route.params.subscribe((params: any) => {
       if (params['filter']) {
         this.filter = params['filter'];
