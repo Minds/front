@@ -4,5 +4,6 @@ import { TagsPipe } from './tags';
 import { SanitizePipe } from './sanitize';
 import { SafePipe } from './safe';
 import { ListablePipe } from './listable';
+import { ExcerptPipe } from './excerpt';
 
-export const MINDS_PIPES = [ AbbrPipe, DomainPipe, TagsPipe, SanitizePipe, SafePipe, ListablePipe ];
+export const MINDS_PIPES = [ AbbrPipe, DomainPipe, TagsPipe, SanitizePipe, SafePipe, ListablePipe, ExcerptPipe ];
