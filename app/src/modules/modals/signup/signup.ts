@@ -20,12 +20,9 @@ import { LoginReferrerService } from "../../../services/login-referrer.service";
 
       <!-- Initial Display -->
       <div *ngIf="display == 'initial'">
-        <div class="mdl-card__supporting-text">
-          {{service.subtitle}}
-        </div>
 
         <div class="m-signup-modal-feature-text mdl-card__supporting-text">
-          <!-- i18n -->Encrypted messenger. Wallet. Boost. Newsfeed. Blog. Groups. Find people in your city.<!-- /i18n -->
+          <!-- i18n -->An open-source, community-owned <b>social network</b> providing tools for revenue, reach, privacy and Internet freedom. <!-- /i18n -->
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
