@@ -52,7 +52,7 @@ export class WireThresholdInputComponent {
   setMinAmount(value: string) {
     const cleanValue = Math.floor(parseFloat(value.replace(/,/g, '')));
 
-    this.threshold.min = !isNaN(cleanValue) ? cleanValue : '';
+    this.threshold.min = !isNaN(cleanValue) ? cleanValue : 0;
     this._emitChange();
   }
 
