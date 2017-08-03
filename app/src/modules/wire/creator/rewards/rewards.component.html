@@ -1,0 +1,24 @@
+<div *ngIf="rewards?.rewards[type]?.length"
+  class="m-wire--creator-rewards"
+>
+  <h2 *ngIf="channel?.username" class="m-wire--creator-rewards--title">{{ channel.username }}'s rewards</h2>
+
+  <ul class="m-wire--creator-rewards--list">
+    <ng-container *ngFor="let reward of rewards.rewards[type]; let i = index">
+      <li class="m-wire--creator-rewards--amount"
+        [class.m-wire--creator-rewards--above-threshold]="isRewardAboveThreshold(i)"
+        [class.m-wire--creator-rewards--best-reward]="isBestReward(i)"
+      >
+        <ng-container *ngIf="type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</ng-container>
+        <ng-container *ngIf="type == 'points'">{{ reward.amount | number }} points</ng-container>
+      </li>
+
+      <li class="m-wire--creator-rewards--description"
+        [class.m-wire--creator-rewards--above-threshold]="isRewardAboveThreshold(i)"
+        [class.m-wire--creator-rewards--best-reward]="isBestReward(i)"
+      >
+        {{ reward.description }}
+      </li>
+    </ng-container>
+  </ul>
+</div>

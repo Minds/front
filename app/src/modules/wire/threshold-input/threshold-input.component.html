@@ -1,0 +1,49 @@
+<div class="m-wire-threshold-input">
+  <a class="m-wire-threshold-input--toggle"
+    [class.m-wire-threshold-input--toggle-enabled]="enabled"
+    (click)="toggle()"
+  >
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      width="1em" height="1em" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"
+    >
+      <path d="M302.7,64L143,288h95.8l-29.5,160L369,224h-95.8L302.7,64L302.7,64z"/>
+    </svg>
+  </a>
+
+  <div *ngIf="enabled"
+    class="m-wire-threshold-input--input"
+  >
+    <span class="m-wire-threshold-input--symbol">&gt;</span>
+
+    <ng-container *ngIf="session.getLoggedInUser()?.merchant; else nonMerchantContainer">
+      <button class="mdl-button mdl-js-button mdl-button--icon" id="poster-wire-currency-selector"
+        [mdl]
+      >
+        <i *ngIf="threshold.type == 'points'" class="material-icons m-wire-threshold-input--type">account_balance</i>
+        <i *ngIf="threshold.type == 'money'" class="material-icons m-wire-threshold-input--type">attach_money</i>
+      </button>
+
+      <ul
+        class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+        for="poster-wire-currency-selector"
+        [mdl]
+      >
+        <li *ngFor="let typeLabel of typeLabels"
+          class="mdl-menu__item"
+          (click)="setType(typeLabel.type)"
+        >{{ typeLabel.label }}</li>
+      </ul>
+    </ng-container>
+
+    <ng-template #nonMerchantContainer>
+      <i class="material-icons m-wire-threshold-input--type">account_balance</i>
+    </ng-template>
+
+    <input type="text"
+      [ngModel]="threshold.min | number"
+      (ngModelChange)="setMinAmount($event)"
+      inlineAutoGrow
+      #minAmountInput
+    />
+  </div>
+</div>

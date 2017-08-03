@@ -20,6 +20,7 @@ import { MindsRichEmbed } from "./components/rich-embed/rich-embed";
 
 import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from "./directives/autogrow";
+import { InlineAutoGrow } from "./directives/inline-autogrow";
 import { Emoji } from "./directives/emoji";
 import { Hovercard } from "./directives/hovercard";
 import { ScrollLock } from "./directives/scroll-lock";
@@ -60,6 +61,7 @@ import { ChartComponent } from './components/chart/chart.component';
     MindsRichEmbed,
 
     AutoGrow,
+    InlineAutoGrow,
     Emoji,
     Hovercard,
     ScrollLock,
@@ -95,6 +97,7 @@ import { ChartComponent } from './components/chart/chart.component';
     MindsRichEmbed,
 
     AutoGrow,
+    InlineAutoGrow,
     Emoji,
     Hovercard,
     ScrollLock,

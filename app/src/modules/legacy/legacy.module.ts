@@ -11,6 +11,7 @@ import { PaymentsModule } from "../payments/payments.module";
 import { BoostModule } from "../boost/boost.module";
 import { ChannelModule } from "../channel/channel.module";
 import { ThirdPartyNetworksModule } from "../third-party-networks/third-party-networks.module";
+import { WireModule } from "../wire/wire.module";
 
 import { Activity } from "./components/cards/activity/activity";
 import { CommentCard } from "./components/cards/comment/comment";
@@ -53,7 +54,8 @@ import { Poster } from "./controllers/newsfeed/poster/poster";
     ModalsModule,
     BoostModule,
     ChannelModule,
-    ThirdPartyNetworksModule
+    ThirdPartyNetworksModule,
+    WireModule
   ],
   declarations: [
     Activity,

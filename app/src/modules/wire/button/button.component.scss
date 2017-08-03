@@ -1,0 +1,18 @@
+.m-wire-button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: 24px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  > svg {
+    transform: scale(1.5);
+    fill: #4690D6;
+  }
+}

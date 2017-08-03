@@ -64,6 +64,7 @@
 <div class="minds-editable-container" *ngIf="editing && (!activity.custom_type || (activity.custom_type && !activity.title))">
 	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
 	<textarea class="mdl-card__supporting-text message" name="message" [ngModel]="activity.message" #messageEdit [autoGrow]></textarea>
+	<m-wire-threshold-input [(threshold)]="activity.wire_threshold"></m-wire-threshold-input>
 	<button class="mdl-button mdl-button--raised mdl-color--blue-grey-100" (click)="messageEdit.value = activity.message; editing=false;" i18n>Cancel</button>
 	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.message = messageEdit.value; save();" i18n>Save</button>
 </div>
@@ -93,6 +94,7 @@
 <div class="minds-editable-container" *ngIf="editing && activity.custom_type && activity.title">
 	<!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
 	<textarea class="mdl-card__supporting-text message" name="title" [ngModel]="activity.title" #titleEdit [autoGrow]></textarea>
+	<m-wire-threshold-input [(threshold)]="activity.wire_threshold"></m-wire-threshold-input>
 	<button class="mdl-button mdl-button--raised mdl-color--blue-grey-100" (click)="titleEdit.value = activity.title; editing=false;" i18n>Cancel</button>
 	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.title = titleEdit.value; save();" i18n>Save</button>
 </div>
@@ -171,6 +173,9 @@
 <div class="mdl-card__supporting-text mdl-color--blue-grey-50 tabs" *ngIf="!hideTabs">
 	<minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
+  <m-wire-button *ngIf="session.getLoggedInUser().guid != (activity.remind_object ? activity.remind_object.owner_guid : activity.owner_guid)"
+    [object]="activity.remind_object ? activity.remind_object : activity"
+  ></m-wire-button>
 	<minds-button-comment [object]="activity" (click)="openComments()"></minds-button-comment>
 	<minds-button-remind [object]="activity"></minds-button-remind>
   <a class="mdl-button mdl-color-text--white mdl-button--colored minds-boost-button"

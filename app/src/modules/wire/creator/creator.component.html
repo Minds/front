@@ -1,0 +1,143 @@
+<div class="m-wire--creator">
+  <div class="m-wire--creator--header">
+    <h2 class="m-wire-creator--header-svg">
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        width="1em" height="1em" viewBox="100 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"
+      >
+        <path d="M302.7,64L143,288h95.8l-29.5,160L369,224h-95.8L302.7,64L302.7,64z"/>
+      </svg>
+
+      <span>Wire</span>
+    </h2>
+
+    <div class="m-wire--creator--wallet">
+      <i class="material-icons m--middle">account_balance</i>
+      <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance | abbr }}</span>
+      <span *ngIf="rates.balance === null" class="m--middle">…</span>
+    </div>
+  </div>
+
+  <!-- Payment Method -->
+  <section class="m-wire--creator-section">
+    <h3 class="m-wire--creator-section-title--small">Wire Type</h3>
+
+    <ul class="m-wire--creator-selector"
+      [class.m-wire--creator-selector--has-selection]="wire.currency"
+    >
+      <li
+        (click)="setCurrency('money')"
+        [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'money'"
+        [class.m-wire--creator-selector--disabled]="!owner?.merchant"
+      >
+        <h4>USD</h4>
+        <span class="m-wire--creator-selector--cta" *ngIf="owner?.merchant">Select Money</span>
+        <span class="m-wire--creator-selector--cta" *ngIf="!owner?.merchant">Cannot receive USD</span>
+        <span class="m-wire--creator-selector--selected-label">Selected</span>
+      </li>
+
+      <li
+        (click)="setCurrency('points')"
+        [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'points'"
+      >
+        <h4>Points</h4>
+        <span class="m-wire--creator-selector--cta">Select Points</span>
+        <span class="m-wire--creator-selector--selected-label">Selected</span>
+      </li>
+
+      <li class="m-wire--creator-selector--disabled">
+        <h4>Bitcoin</h4>
+        <span class="m-wire--creator-selector--cta">Coming soon</span>
+      </li>
+
+      <!-- TODO: BTC selector functionality -->
+    </ul>
+
+    <div class="m-wire--creator-payment" *ngIf="wire.currency == 'money'">
+      <minds-payments-stripe-checkout *ngIf="!wire?.payload?.nonce"
+        (inputed)="setNoncePayload($event)"
+        [useMDLStyling]="false"
+      ></minds-payments-stripe-checkout>
+      <div class="m-wire--creator-payment-attached" *ngIf="wire.payload">
+        <i class="material-icons">check_circle</i>
+        <span>Your payment is attached. <b (click)="wire.payload = null">Change</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amount -->
+  <section class="m-wire--creator-section">
+    <h3 class="m-wire--creator-section-title--small">
+      How
+      <ng-container *ngIf="wire.currency == 'money'">much money</ng-container>
+      <ng-container *ngIf="wire.currency == 'points'">many points</ng-container>
+      <!-- TODO: BTC -->
+      do you want to send?
+    </h3>
+
+    <div class="m-wire--creator-wide-input m-wire--creator--amount"
+      [class.m-wire--creator-wide-input--reading]="!editingAmount"
+    >
+      <input type="text"
+        class="m-wire--creator-wide-input--edit"
+        [ngModel]="wire.amount"
+        (ngModelChange)="setAmount($event)"
+        (blur)="amountEditorBlur()"
+        (keydown.enter)="amountEditorBlur()"
+        (keydown.esc)="amountEditorBlur()"
+        #amountEditor
+      />
+
+      <span class="m-wire--creator-wide-input--label"
+        (click)="amountEditorFocus()"
+      >
+        <ng-container *ngIf="wire.currency == 'points'">points</ng-container>
+        <ng-container *ngIf="wire.currency == 'money'">USD</ng-container>
+        <!-- TODO: BTC -->
+      </span>
+    </div>
+
+    <div class="m-wire--creator--recurring">
+      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="wire-recurring-1" [mdlSwitch] [toggled]="wire.recurring">
+        <input
+          type="checkbox" id="wire-recurring-1" class="mdl-checkbox__input"
+          [ngModel]="wire.recurring"
+          (ngModelChange)="wire.recurring = !wire.recurring"
+        >
+
+        <span class="mdl-checkbox__label">Repeat this transaction monthly.</span>
+      </label>
+    </div>
+  </section>
+
+  <m-wire--creator-rewards
+    [rewards]="owner?.wire_rewards"
+    [type]="wire.currency"
+    [amount]="wire.amount"
+    [channel]="owner"
+  ></m-wire--creator-rewards>
+
+  <!-- Submit -->
+  <section class="m-wire--creator-section m-wire--creator-section--last"
+    (mouseenter)="showErrors()"
+  >
+
+    <div class="m-wire--creator--submit">
+      <button class="m-wire--creator-button"
+        [disabled]="!canSubmit() || inProgress || success || criticalError"
+        (click)="submit()"
+      >SEND</button>
+
+      <div *ngIf="inProgress" class="m-wire--creator--submit-label mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+
+      <div *ngIf="!inProgress && success" class="m-wire--creator--submit-label">
+        <i class="material-icons">check</i>
+        <span>Wired!</span>
+      </div>
+
+      <div *ngIf="!inProgress && !!error" class="m-wire--creator--submit-error">
+        <i class="material-icons">close</i>
+        <span>{{ error }}</span>
+      </div>
+    </div>
+  </section>
+</div>

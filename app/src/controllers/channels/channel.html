@@ -120,6 +120,13 @@
 
       <div class="minds-spacer-2x"></div>
 
+      <m-wire-channel
+        [(rewards)]="user.wire_rewards"
+        [channel]="user"
+      ></m-wire-channel>
+
+      <div class="minds-spacer-2x"></div>
+
       <!-- images  -->
       <minds-channel-modules [owner]="user" type="image" [linksTo]="['/discovery', user.username, 'images']">
 

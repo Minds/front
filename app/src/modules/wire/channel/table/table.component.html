@@ -1,0 +1,32 @@
+<table
+  class="m-wire-channel--rewards"
+  [ngClass]="[ 'm-wire-channel--rewards-' + type ]"
+  cellspacing="0" cellspacing="0"
+>
+  <tr *ngFor="let reward of rewards; let i = index">
+    <td class="m-wire-channel--reward-amount">
+      <ng-container *ngIf="!editing && reward.amount && type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</ng-container>
+      <ng-container *ngIf="!editing && reward.amount && type == 'points'">{{ reward.amount | number }}</ng-container>
+
+      <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
+    </td>
+
+    <td class="m-wire-channel--reward-description">
+      <ng-container *ngIf="!editing">{{ reward.description }}</ng-container>
+      <textarea *ngIf="editing" [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow] placeholder="Describe the reward"></textarea>
+    </td>
+  </tr>
+
+  <tr *ngIf="!rewards.length">
+    <td class="m-wire-channel--empty-rewards">There are no rewards set.</td>
+  </tr>
+</table>
+
+<div class="m-wire-channel--rewards--add-tier">
+  <a *ngIf="editing"
+    (click)="addTier()"
+  >
+    <i class="material-icons">playlist_add</i>
+    <span>Add Reward</span>
+  </a>
+</div>
