@@ -73,7 +73,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: NotificationService,
      useFactory: NotificationService._,
-     deps: [ Client, SocketsService ]
+     deps: [ Client, SocketsService, MindsTitle ]
    },
    {
      provide: TranslationService,

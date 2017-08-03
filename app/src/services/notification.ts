@@ -2,16 +2,16 @@ import { EventEmitter } from '@angular/core';
 import { Client } from './api';
 import { SocketsService } from './sockets';
 import { SessionFactory } from './session';
+import { MindsTitle } from "./ux/title";
 
 export class NotificationService {
-
   session = SessionFactory.build();
   socketSubscriptions: any = {
     notification: null
   };
   onReceive: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, public sockets: SocketsService){
+  constructor(public client: Client, public sockets: SocketsService, public title: MindsTitle){
     if(!window.Minds.notifications_count)
       window.Minds.notifications_count = 0;
 
@@ -84,9 +84,11 @@ export class NotificationService {
         window.Minds.navigation.topbar[i].extras.counter = window.Minds.notifications_count;
       }
     }
+    this.title.setCounter(window.Minds.notifications_count);
+
   }
 
-  static _(client: Client, sockets: SocketsService) {
-    return new NotificationService(client, sockets);
+  static _(client: Client, sockets: SocketsService, title: MindsTitle) {
+    return new NotificationService(client, sockets, title);
   }
 }
