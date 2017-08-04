@@ -56,11 +56,13 @@ m-wire-channel {
 
   .m-wire-channel--rewards {
     width: 100%;
-    margin-top: $minds-padding * 2;
+    //margin-top: $minds-padding * 2;
   }
 
   .m-wire-channel--selector {
     text-align: right;
+    position: absolute;
+    right: 0;
 
     > span, > button {
       vertical-align: middle;
@@ -79,13 +81,17 @@ m-wire-channel {
 
   .m-wire-channel--reward-amount,
   .m-wire-channel--reward-description {
-    padding-bottom: $minds-padding * 2;
-    font-weight: 300;
+    padding: $minds-padding 0;
+    font-weight: 400;
+    span {
+      padding-right: $minds-padding;
+    }
   }
 
   .m-wire-channel--reward-amount {
-    width: 20%;
-    padding-right: $minds-padding * 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     min-width: 3.5em;
     font-size: 32px;
     letter-spacing: 1px;
@@ -93,6 +99,7 @@ m-wire-channel {
     > input {
       width: 100%;
       padding: $minds-padding / 2;
+      margin-left: $minds-margin * 1.5;
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
@@ -101,15 +108,18 @@ m-wire-channel {
   }
 
   .m-wire-channel--rewards-points {
-    .m-wire-channel--reward-amount {
-      font-size: 20px;
-      min-width: 5em;
+    .m-wire-channel--reward-amount input {
+      margin-left: 0;
+      margin-right: $minds-margin * 1.5;
     }
   }
 
   .m-wire-channel--reward-description {
     > textarea {
       min-height: 51px;
+      font-size: 14px;
+      font-weight: 500;
+      color: inherit;
     }
   }
 

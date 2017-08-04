@@ -4,21 +4,21 @@
   cellspacing="0" cellspacing="0"
 >
   <tr *ngFor="let reward of rewards; let i = index">
-    <td class="m-wire-channel--reward-amount">
-      <ng-container *ngIf="!editing && reward.amount && type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</ng-container>
-      <ng-container *ngIf="!editing && reward.amount && type == 'points'">{{ reward.amount | number }}</ng-container>
+    <td>
+      <div class="m-wire-channel--reward-amount">
+        <span *ngIf="!editing && reward.amount && type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</span>
+        <span *ngIf="!editing && reward.amount && type == 'points'">{{ reward.amount | number }}</span>
 
-      <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
+        <ng-container *ngIf="editing && type=='money'">$</ng-container>
+        <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
+        <ng-container *ngIf="type=='points'">points</ng-container>
+      </div>
+
+      <div class="m-wire-channel--reward-description">
+        <p *ngIf="!editing">{{ reward.description }}</p>
+        <textarea *ngIf="editing" [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow] placeholder="Describe the reward"></textarea>
+      </div>
     </td>
-
-    <td class="m-wire-channel--reward-description">
-      <ng-container *ngIf="!editing">{{ reward.description }}</ng-container>
-      <textarea *ngIf="editing" [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow] placeholder="Describe the reward"></textarea>
-    </td>
-  </tr>
-
-  <tr *ngIf="!rewards.length">
-    <td class="m-wire-channel--empty-rewards">There are no rewards set.</td>
   </tr>
 </table>
 

@@ -52,11 +52,11 @@ export class WireChannelTableComponent {
 
     switch (this.type) {
       case 'points':
-        placeholder = 'Points';
+        placeholder = '1,000';
         break;
 
       case 'money':
-        placeholder = '$ USD';
+        placeholder = '5';
         break;
     }
 

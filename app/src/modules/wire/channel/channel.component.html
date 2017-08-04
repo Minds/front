@@ -2,7 +2,7 @@
   class="mdl-card mdl-shadow--2dp"
 >
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Wire</h2>
+    <h2 class="mdl-card__title-text">Rewards</h2>
 
     <span *ngIf="session.getLoggedInUser().guid == channel.guid"
       class="m-wire-channel--edit-button"
@@ -11,6 +11,7 @@
       <button class="material-icons" [hidden]="editing">edit</button>
       <button class="material-icons" [hidden]="!editing">done</button>
     </span>
+
   </div>
 
   <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-wire-channel--rewards">
@@ -26,39 +27,15 @@
       placeholder="Describe what your supporters will get…"
     ></textarea>
 
-    <div class="m-wire-channel--selector">
-      <span>{{ getCurrentTypeLabel()?.label }}</span>
-
-      <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="channel-wire-selector"
-        [mdl]
-      >
-        <i class="material-icons">more_vert</i>
-      </button>
-
-      <ul
-        class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-        for="channel-wire-selector"
-        [mdl]
-      >
-        <li *ngFor="let typeLabel of typeLabels"
-          class="mdl-menu__item"
-          [hidden]="!shouldShow(typeLabel.type)"
-          (click)="display = typeLabel.type"
-        >{{ typeLabel.label }}</li>
-      </ul>
-    </div>
+    <m-wire-channel-table type="money"
+      *ngIf="shouldShow('money')"
+      [(rewards)]="rewards.rewards.money"
+      [editing]="editing"
+    ></m-wire-channel-table>
 
     <m-wire-channel-table type="points"
       *ngIf="shouldShow('points')"
       [(rewards)]="rewards.rewards.points"
-      [hidden]="display != 'points'"
-      [editing]="editing"
-    ></m-wire-channel-table>
-
-    <m-wire-channel-table type="money"
-      *ngIf="shouldShow('money')"
-      [(rewards)]="rewards.rewards.money"
-      [hidden]="display != 'money'"
       [editing]="editing"
     ></m-wire-channel-table>
   </div>
