@@ -94,6 +94,9 @@ export class WalletPurchaseComponent {
     this.error = "";
 
     if(this.recurring){
+      if (!confirm('Are you sure you want to repeat this transaction every month and get 10% more points?')) {
+        return;
+      }
       this.client.post('api/v1/wallet/subscription', {
           points: this.points,
           source: this.source,
