@@ -136,7 +136,7 @@ m-wire-channel {
   }
 
   .m-wire-channel--call-to-action {
-    margin-top: $minds-padding * 2;
+    //margin-top: $minds-padding * 2;
 
     > button {
       display: flex;
@@ -158,7 +158,12 @@ m-wire-channel {
 
       > svg {
         fill: #ffffff;
-        transform: scale(1.4);
+        transform: scale(2);
+        margin: 0 12px 0 18px;
+      }
+
+      > span {
+        letter-spacing: 2.5px;
       }
     }
   }
