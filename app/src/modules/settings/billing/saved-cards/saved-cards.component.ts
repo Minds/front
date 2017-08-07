@@ -55,10 +55,17 @@ export class SettingsBillingSavedCardsComponent {
   removeCard(index: number) {
     this.inProgress = true;
 
-    this.cards.splice(index, 1);
+    this.client.delete('api/v1/payments/stripe/card/' + this.cards[index].id)
+      .then(() => {
+        this.cards.splice(index, 1);
 
-    this.inProgress = false;
-    this.detectChanges();
+        this.inProgress = false;
+        this.detectChanges();
+      })
+      .catch(() => {
+        this.inProgress = false;
+        this.detectChanges();
+      });
   }
 
   setCard(card) {
