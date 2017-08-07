@@ -33,6 +33,7 @@ import { PaymentsModule } from "./src/modules/payments/payments.module";
 import { ThirdPartyNetworksModule } from "./src/modules/third-party-networks/third-party-networks.module";
 import { TranslateModule } from "./src/modules/translate/translate.module";
 import { VideoModule } from "./src/modules/video/video.module";
+import { SettingsModule } from "./src/modules/settings/settings.module";
 
 import { GroupsModule } from "./src/plugins/Groups/groups.module";
 import { BlogModule } from "./src/plugins/blog/blog.module";
@@ -67,6 +68,7 @@ import { BlogModule } from "./src/plugins/blog/blog.module";
     LegacyModule,
     TranslateModule,
     VideoModule,
+    SettingsModule,
     ModalsModule,
     PaymentsModule,
     MindsFormsModule,

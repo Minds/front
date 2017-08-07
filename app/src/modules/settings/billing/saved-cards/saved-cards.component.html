@@ -1,0 +1,32 @@
+<div class="mdl-card mdl-shadow--2dp">
+
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text" i18n>Payment Methods</h2>
+  </div>
+
+  <div [hidden]="!inProgress" style="width:100%; text-align:center;">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+  </div>
+
+  <div class="m-settings--billing-saved-cards--cards">
+    <ul>
+      <li *ngFor="let card of cards; let i = index"
+        class="m-settings--billing-saved-cards--cards-item"
+      >
+        <span class="m-settings--billing-saved-cards--cards-item-type">{{card.brand}}</span>
+        <span class="m-settings--billing-saved-cards--cards-item-number">**** {{card.last4}}</span>
+        <span class="m-settings--billing-saved-cards--cards-item-expiry">{{card.exp_month}} / {{card.exp_year}}</span>
+        <span class="m-settings--billing-saved-cards--cards-item-select" (click)="removeCard(i)">Remove</span>
+      </li>
+      <li class="m-settings--billing-saved-cards--cards-item m-settings--billing-saved-cards--cards-item-new">
+        <span class="m-settings--billing-saved-cards--cards-item-type">Add a new card</span>
+        <span class="m-settings--billing-saved-cards--cards-item-select" (click)="addNewCard = true">ADD</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="m-settings--billing-saved-cards--card-input" *ngIf="addNewCard">
+    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress"></minds-checkout-card-input>
+  </div>
+
+</div>
