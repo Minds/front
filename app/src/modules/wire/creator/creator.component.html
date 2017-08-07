@@ -10,7 +10,7 @@
       <span>Wire</span>
     </h2>
 
-    <div class="m-wire--creator--wallet">
+    <div class="m-wire--creator--wallet" *ngIf="false">
       <i class="material-icons m--middle">account_balance</i>
       <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance | abbr }}</span>
       <span *ngIf="rates.balance === null" class="m--middle">…</span>
@@ -25,6 +25,15 @@
       [class.m-wire--creator-selector--has-selection]="wire.currency"
     >
       <li
+        (click)="setCurrency('points')"
+        [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'points'"
+      >
+        <h4>Points</h4>
+        <span class="m-wire--creator-selector--cta">Select Points</span>
+        <span class="m-wire--creator-selector--selected-label">Selected</span>
+      </li> 
+    
+      <li
         (click)="setCurrency('money')"
         [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'money'"
         [class.m-wire--creator-selector--disabled]="!owner?.merchant"
@@ -34,16 +43,7 @@
         <span class="m-wire--creator-selector--cta" *ngIf="!owner?.merchant">Cannot receive USD</span>
         <span class="m-wire--creator-selector--selected-label">Selected</span>
       </li>
-
-      <li
-        (click)="setCurrency('points')"
-        [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'points'"
-      >
-        <h4>Points</h4>
-        <span class="m-wire--creator-selector--cta">Select Points</span>
-        <span class="m-wire--creator-selector--selected-label">Selected</span>
-      </li>
-
+      
       <li class="m-wire--creator-selector--disabled">
         <h4>Bitcoin</h4>
         <span class="m-wire--creator-selector--cta">Coming soon</span>

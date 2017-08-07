@@ -45,7 +45,7 @@ export class WireCreatorComponent implements AfterViewInit {
     rate: 1,
     min: 250,
     cap: 5000,
-    usd: 1000,
+    usd: 1,
     btc: 0,
     minUsd: 1,
   }
@@ -135,6 +135,10 @@ export class WireCreatorComponent implements AfterViewInit {
       .then(({ merchant, wire_rewards }) => {
         this.owner.merchant = merchant;
         this.owner.wire_rewards = wire_rewards;
+
+        if (merchant)
+          this.wire.currency = 'money';
+     
       });
   }
 
