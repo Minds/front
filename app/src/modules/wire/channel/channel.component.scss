@@ -2,6 +2,10 @@ m-wire-channel {
   display: block;
   font-family: 'Lato', sans-serif;
 
+  .mdl-card {
+    margin-bottom: 8px;
+  }
+
   .m-wire-channel--edit-button {
     display: inline-block;
     vertical-align: middle;
