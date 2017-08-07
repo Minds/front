@@ -136,8 +136,10 @@ export class WireCreatorComponent implements AfterViewInit {
         this.owner.merchant = merchant;
         this.owner.wire_rewards = wire_rewards;
 
-        if (merchant)
+        if (merchant) {
           this.wire.currency = 'money';
+          this.wire.amount = 1;
+        }
      
       });
   }
@@ -189,6 +191,11 @@ export class WireCreatorComponent implements AfterViewInit {
   setAmount(amount: string) {
     if (!amount) {
       this.wire.amount = 0;
+      return;
+    }
+
+    if (typeof amount == 'number') {
+      this.wire.amount = amount;
       return;
     }
 

@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 import { WireRewardsType, WireRewardsStruc, WireRewardsTiers } from "../../interfaces/wire.interfaces";
 
@@ -8,10 +8,12 @@ import { WireRewardsType, WireRewardsStruc, WireRewardsTiers } from "../../inter
   templateUrl: 'rewards.component.html'
 })
 export class WireCreatorRewardsComponent {
+
   @Input() rewards: WireRewardsStruc;
   @Input() type: WireRewardsType | null;
   @Input() amount: string | number;
   @Input() channel: any;
+  @Output() selectAmount: EventEmitter<any> = new EventEmitter(true);
 
   isRewardAboveThreshold(index: number): boolean {
     if (!this.rewards || !this.type || !this.amount) {
@@ -34,5 +36,10 @@ export class WireCreatorRewardsComponent {
     return lastEligibleReward ?
       index === lastEligibleReward.index :
       false;
+    }
+
+  selectReward(index: number): void {
+    this.selectAmount.next(this.rewards.rewards[this.type][index].amount);
   }
+
 }

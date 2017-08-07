@@ -93,10 +93,11 @@
     letter-spacing: 2.5px;
     input {
       width: 6em;
-      max-width: 180px;
+      max-width: 229px;
       padding: 12px;
       font-weight: 400;
-      letter-spacing: 3px;
+      letter-spacing: 5px;
+      text-align: right;
 
       appearance: none;
       background: rgba(255, 255, 255, 0.15);
@@ -119,6 +120,18 @@
       h4, span {
         margin: 0;
         font-weight: 300;
+      }
+
+      .m-wire--creator-selector-type {
+        padding: $minds-padding 0;
+        > * {
+          vertical-align: middle;
+          display: inline-block;
+        }
+        i {
+          margin-right: 8px;
+          font-size: 28px;
+        }
       }
 
       b {
@@ -637,12 +650,12 @@
 
 .m-wire--creator-rewards {
   position: absolute;
-  left: 472px;
+  left: 510px;
   top: 92px;
   max-width: 330px;
   display: block;
   border-left: 1px solid rgba(255, 255, 255, 0.2);
-  padding: ($minds-padding * 3) 0 ($minds-padding * 3) ($minds-padding * 3);
+  padding: ($minds-padding * 3) 0 ($minds-padding * 3) 60px;
   color: #ffffff;
   font-family: inherit;
   font-weight: 200;
@@ -659,7 +672,7 @@
     margin: 0 0 ($minds-padding * 2);
     padding: 0;
     font-size: 24px;
-    font-weight: 300;
+    font-weight: 200;
     letter-spacing: 2.5px;
     line-height: 1;
     color: rgba(255, 255, 255, 0.8);
@@ -672,6 +685,11 @@
     padding: 0;
     color: rgba(255, 255, 255, 0.35);
 
+    .m-wire--creator-rewards--threshold {
+      padding: 8px 0;
+      cursor: pointer;
+    }
+
     .m-wire--creator-rewards--above-threshold {
       color: rgba(255, 255, 255, 0.6);
     }
@@ -680,21 +698,18 @@
       color: #ffffff;
     }
 
-    .m-wire--creator-rewards--amount {
+    .m-wire--creator-rewards--amount span {
       padding-bottom: $minds-padding;
       font-size: 24px;
-      font-weight: 700;
+      font-weight: 500;
       letter-spacing: 2.5px;
     }
 
-    .m-wire--creator-rewards--description {
-      padding-bottom: $minds-padding * 3;
+    .m-wire--creator-rewards--description p {
+      font-family: 'Lato';
+      padding: 8px 0;
       font-size: 14px;
       font-weight: 300;
-
-      &:last-child {
-        padding-bottom: 0;
-      }
     }
   }
 }

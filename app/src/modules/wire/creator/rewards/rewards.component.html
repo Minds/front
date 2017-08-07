@@ -5,19 +5,18 @@
 
   <ul class="m-wire--creator-rewards--list">
     <ng-container *ngFor="let reward of rewards.rewards[type]; let i = index">
-      <li class="m-wire--creator-rewards--amount"
+      <li class="m-wire--creator-rewards--threshold"
         [class.m-wire--creator-rewards--above-threshold]="isRewardAboveThreshold(i)"
         [class.m-wire--creator-rewards--best-reward]="isBestReward(i)"
+        (click)="selectReward(i)"
       >
-        <ng-container *ngIf="type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</ng-container>
-        <ng-container *ngIf="type == 'points'">{{ reward.amount | number }} points</ng-container>
-      </li>
-
-      <li class="m-wire--creator-rewards--description"
-        [class.m-wire--creator-rewards--above-threshold]="isRewardAboveThreshold(i)"
-        [class.m-wire--creator-rewards--best-reward]="isBestReward(i)"
-      >
-        {{ reward.description }}
+        <div class="m-wire--creator-rewards--amount">
+          <span *ngIf="type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</span>
+          <span *ngIf="type == 'points'">{{ reward.amount | number }} points</span>
+        </div>
+        <div class="m-wire--creator-rewards--description"> 
+          <p>{{ reward.description }}</p>
+        </div>
       </li>
     </ng-container>
   </ul>

@@ -28,7 +28,10 @@
         (click)="setCurrency('points')"
         [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'points'"
       >
-        <h4>Points</h4>
+        <div class="m-wire--creator-selector-type">
+          <i class="material-icons">account_balance</i>
+          <h4>Points</h4>
+        </div>
         <span class="m-wire--creator-selector--cta">Select Points</span>
         <span class="m-wire--creator-selector--selected-label">Selected</span>
       </li> 
@@ -38,14 +41,20 @@
         [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'money'"
         [class.m-wire--creator-selector--disabled]="!owner?.merchant"
       >
-        <h4>USD</h4>
+        <div class="m-wire--creator-selector-type">
+          <i class="material-icons">attach_money</i>
+          <h4>USD</h4>
+        </div>
         <span class="m-wire--creator-selector--cta" *ngIf="owner?.merchant">Select Money</span>
         <span class="m-wire--creator-selector--cta" *ngIf="!owner?.merchant">Cannot receive USD</span>
         <span class="m-wire--creator-selector--selected-label">Selected</span>
       </li>
       
       <li class="m-wire--creator-selector--disabled">
-        <h4>Bitcoin</h4>
+        <div class="m-wire--creator-selector-type">
+          <i class="material-icons">help_outline</i>
+          <h4>Bitcoin</h4>
+        </div>
         <span class="m-wire--creator-selector--cta">Coming soon</span>
       </li>
 
@@ -79,7 +88,7 @@
     >
       <input type="text"
         class="m-wire--creator-wide-input--edit"
-        [ngModel]="wire.amount"
+        [ngModel]="wire.amount | number"
         (ngModelChange)="setAmount($event)"
         (blur)="amountEditorBlur()"
         (keydown.enter)="amountEditorBlur()"
@@ -113,6 +122,7 @@
     [rewards]="owner?.wire_rewards"
     [type]="wire.currency"
     [amount]="wire.amount"
+    (selectAmount)="setAmount($event)"
     [channel]="owner"
   ></m-wire--creator-rewards>
 
