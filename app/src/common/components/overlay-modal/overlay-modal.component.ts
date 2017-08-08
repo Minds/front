@@ -56,6 +56,14 @@ export class OverlayModalComponent implements AfterViewInit {
     this.componentRef.changeDetectorRef.detectChanges();
   }
 
+  setOpts(opts) {
+    if (!this.componentInstance) {
+      return;
+    }
+
+    this.componentInstance.opts = opts;
+  }
+
   present() {
     if (!this.componentInstance) {
       return;

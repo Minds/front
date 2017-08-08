@@ -50,7 +50,7 @@ export class WireLockScreenComponent implements AfterViewInit {
   }
 
   showWire() {
-    this.overlayModal.create(WireCreatorComponent, this.entity)
+    this.overlayModal.create(WireCreatorComponent, this.entity, { onComplete: () => { this.unlock(); } })
       .present();
   }
 

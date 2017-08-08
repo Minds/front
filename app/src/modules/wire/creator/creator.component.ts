@@ -78,6 +78,8 @@ export class WireCreatorComponent implements AfterViewInit {
     }
   }
 
+  opts: any;
+
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
@@ -140,7 +142,7 @@ export class WireCreatorComponent implements AfterViewInit {
           this.wire.currency = 'money';
           this.wire.amount = 1;
         }
-     
+
       });
   }
 
@@ -371,6 +373,10 @@ export class WireCreatorComponent implements AfterViewInit {
 
         if (done) {
           this.success = true;
+
+          if (this.opts.onComplete) {
+            this.opts.onComplete();
+          }
 
           setTimeout(() => {
             this.overlayModal.dismiss();
