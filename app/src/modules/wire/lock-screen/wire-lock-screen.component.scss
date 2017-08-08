@@ -71,6 +71,12 @@ m-wire--lock-screen{
       vertical-align: center;
       letter-spacing: 1.5px;
     }
+
+    .m-spinner {
+      display: inline-block;
+      vertical-align: middle;
+      transform: scale(0.5);;
+    }
   }
 
   p{

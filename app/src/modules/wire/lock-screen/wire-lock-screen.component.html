@@ -26,8 +26,8 @@
   <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white" (click)="unlock()">
     <i class="mdl-color-text--white material-icons">lock_outline</i>
     <span><!-- i18n -->Unlock<!-- /i18n --></span>
-    <div [hidden]="!inProgress">
-      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    <div [hidden]="!inProgress" class="m-spinner">
+      <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]></div>
     </div>
   </button>
 </div>
