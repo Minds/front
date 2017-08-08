@@ -1,12 +1,52 @@
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" fill="white" width="100px"
-  height="100px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-  <path d="M302.7,64L143,288h95.8l-29.5,160L369,224h-95.8L302.7,64L302.7,64z" stroke="white"/>
-</svg>
+<div class="m-wire--lock-screen--button m-wire--lock-screen--button-owner" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid">
+  <div class="m-wire--lock-screen-introduction">
+    <p class="mdl-color-text--grey-800">Only supporters who wire you over
+      <span *ngIf="entity.wire_threshold?.type == 'money'">$</span>{{ entity.wire_threshold?.min }}
+      <span *ngIf="entity.wire_threshold?.type == 'points'">points</span>/month will see this post
+    </p>
+  </div>
+  <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white">
+    <i class="mdl-color-text--white material-icons">lock_outline</i>
+    <span><!-- i18n -->Locked<!-- /i18n --></span>
+  </button>
+</div>
 
-<h2 class="m-wire--lock-screen-amount">
-  <i class="material-icons" style="font-size: 30px">lock_outline</i>
-  <i class="material-icons" style="font-size: 35px" *ngIf="entity.wire_threshold.type == 'points'">account_balance</i>
-  <span *ngIf="entity.wire_threshold.type == 'money'">$</span>{{ entity.wire_threshold.min }}/month</h2>
 
-<h5 class="m-wire--lock-screen--message">This post can only be seen by supporters who wire over $ {{
-  entity.wire_threshold.min }}/month to @{{ entity.ownerObj.username }}</h5>
+<div class="m-wire--lock-screen--button" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid">
+  <div class="m-wire--lock-screen-introduction">
+    <p class="mdl-color-text--grey-800" *ngIf="entity.ownerObj.merchant?.exclusive?.intro">
+      <b>&ldquo;</b> {{entity.ownerObj?.merchant?.exclusive?.intro}} <b>&rdquo;</b>
+    </p>
+    <p class="mdl-color-text--grey-800" *ngIf="!entity.ownerObj.merchant?.exclusive?.intro">
+      <b>&ldquo;</b> Wire me over
+        <span *ngIf="entity.wire_threshold?.type == 'money'">$</span>{{ entity.wire_threshold?.min }}
+        <span *ngIf="entity.wire_threshold?.type == 'points'">points</span>/month to see this post <b>&rdquo;</b>
+    </p>
+  </div>
+  <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white" (click)="unlock()">
+    <i class="mdl-color-text--white material-icons">lock_outline</i>
+    <span><!-- i18n -->Unlock<!-- /i18n --></span>
+    <div [hidden]="!inProgress">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    </div>
+  </button>
+</div>
+
+<div class="m-wire--lock-screen" *ngIf="entity.wire_threshold && entity.ownerObj.guid != session.getLoggedInUser().guid">
+  <div class="m-wire--lock-screen-overlay"></div>
+
+  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" fill="white" width="100px"
+    height="100px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+    <path d="M302.7,64L143,288h95.8l-29.5,160L369,224h-95.8L302.7,64L302.7,64z" stroke="white"/>
+  </svg>
+
+  <h2 class="m-wire--lock-screen-amount">
+    <i class="material-icons" style="font-size: 30px">lock_outline</i>
+    <span *ngIf="entity.wire_threshold?.type == 'money'">$</span>{{ entity.wire_threshold.min }}
+    <span *ngIf="entity.wire_threshold?.type == 'points'">points</span>/month
+  </h2>
+
+  <h5 class="m-wire--lock-screen--message">
+    This post can only be seen by supporters who wire over ${{entity.wire_threshold.min }}/month to @{{ entity.ownerObj.username }}
+  </h5>
+</div>
