@@ -8,6 +8,7 @@ import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
 
 import { BoostCreatorComponent } from "../../../../boost/creator/creator.component";
+import { WireCreatorComponent } from "../../../../wire/creator/creator.component";
 
 @Component({
   moduleId: module.id,
@@ -192,6 +193,11 @@ export class Activity {
     });
 
     boostModal.present();
+  }
+
+  showWire(){
+    this.overlayModal.create(WireCreatorComponent, this.activity)
+      .present();
   }
 
   feature(){

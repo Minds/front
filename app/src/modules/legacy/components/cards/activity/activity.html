@@ -35,7 +35,7 @@
 
 <div m-read-more class="mdl-card__supporting-text message m-mature-message" [class.m-activity--message-remind]="activity.remind_object"
   [hidden]="!activity.message || editing">
-  <a class="m-mature-text-toggle" (click)="activity.mature_visibility = !activity.mature_visibility" 
+  <a class="m-mature-text-toggle" (click)="activity.mature_visibility = !activity.mature_visibility"
     *ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
     [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }">
     <i class="material-icons m-material-icons-inline">explicit</i>
@@ -183,17 +183,20 @@
   </a>
 </div>
 
-<span class="impressions-tag" *ngIf="!hideTabs">
-	<span>
-		<i class="material-icons">account_balance</i> {{ activity.wire_totals.points | abbr }}
-	</span>
-	<span>
-		<i class="material-icons">attach_money</i> {{ activity.wire_totals.usd | abbr }}
-	</span>
-	<span>
-		<i class="material-icons">remove_red_eye</i> {{ activity.impressions | number }}
-	</span>
-</span>
+<div class="impressions-tag m-activity--metrics" *ngIf="!hideTabs">
+	<div class="m-activity--metrics-metric" (click)="showWire()">
+		<i class="material-icons">account_balance</i>
+    <span *ngIf="activity.wire_totals">{{ activity.wire_totals.points | abbr }}</span>
+	</div>
+	<div class="m-activity--metrics-metric" (click)="showWire()">
+		<i class="material-icons" style="width:10px">attach_money</i>
+    <span *ngIf="activity.wire_totals">{{ activity.wire_totals.money | abbr }}</span>
+	</div>
+	<div class="m-activity--metrics-metric">
+		<i class="material-icons">remove_red_eye</i>
+    <span>{{ activity.impressions | number }}</span>
+	</div>
+</div>
 
 <minds-comments  *ngIf="commentsToggle" [object]="activity" [focusOnInit]="true"></minds-comments>
 

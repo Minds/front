@@ -1,0 +1,19 @@
+.m-activity--metrics{
+  padding-left: 8px;
+  .m-activity--metrics-metric{
+    font-size: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+
+    > * {
+      vertical-align: middle;
+    }
+    i {
+      font-size: 12px;
+    }
+    span {
+      padding-right: 8px;
+    }
+  }
+}
