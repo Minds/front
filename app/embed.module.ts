@@ -18,6 +18,7 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
 import { CaptchaModule } from './src/modules/captcha/captcha.module';
 import { CommonModule } from './src/common/common.module';
 import { LegacyModule } from "./src/modules/legacy/legacy.module";
+import { VideoModule } from './src/modules/video/video.module';
 
 @NgModule({
   bootstrap: [
@@ -39,6 +40,7 @@ import { LegacyModule } from "./src/modules/legacy/legacy.module";
     CaptchaModule,
     CommonModule,
     LegacyModule,
+    VideoModule
   ],
   providers: [
     MindsEmbedRoutingProviders,
