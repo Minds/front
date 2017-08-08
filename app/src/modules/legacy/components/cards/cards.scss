@@ -292,14 +292,24 @@ minds-activity.mdl-card, minds-activity{
     z-index: 999;
     right: -5px;
     bottom: -8px;
-    background-color: #888;
+    background-color: #4a4a4a;
     padding: 3px 8px;
-    font-size: 10px;
+    font-size: 14px;
     line-height: 9px;
     color: #FFF;
     border-radius: 3px;
     vertical-align: middle;
-    text-align: center;
+    //text-align: center;
+    display: flex;
+    justify-content: space-around;
+    & > span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 2px;
+      i.material-icons {
+        font-size: 14px;
+      }
+    }
   }
 
   .minds-more{

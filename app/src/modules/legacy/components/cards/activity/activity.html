@@ -29,10 +29,7 @@
 
 </div>
 
-<!-- PayWall -->
-<minds-paywall class="m-paywall" [(entity)]="activity" *ngIf="activity.paywall">
-</minds-paywall>
-<!-- END: PayWall -->
+<m-wire--lock-screen [(entity)]="activity" *ngIf="activity.paywall"></m-wire--lock-screen>
 
 <!-- Messages -->
 
@@ -186,7 +183,17 @@
   </a>
 </div>
 
-<span class="impressions-tag" *ngIf="!hideTabs" i18n>{{activity.impressions | number}} views</span>
+<span class="impressions-tag" *ngIf="!hideTabs">
+	<span>
+		<i class="material-icons">account_balance</i> {{ activity.wire_totals.points | abbr }}
+	</span>
+	<span>
+		<i class="material-icons">attach_money</i> {{ activity.wire_totals.usd | abbr }}
+	</span>
+	<span>
+		<i class="material-icons">remove_red_eye</i> {{ activity.impressions | number }}
+	</span>
+</span>
 
 <minds-comments  *ngIf="commentsToggle" [object]="activity" [focusOnInit]="true"></minds-comments>
 

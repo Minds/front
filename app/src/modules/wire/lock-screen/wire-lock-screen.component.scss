@@ -1,0 +1,22 @@
+m-wire--lock-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  letter-spacing: 2px;
+  padding: 10px 10px 20px 10px;
+  background-image: url("/assets/photos/andromeda-galaxy.jpg");
+  background-size: cover;
+  color: white;
+}
+
+.m-wire--lock-screen-amount {
+  font-weight: 300;
+}
+
+.m-wire--lock-screen--message {
+  text-align: center;
+  text-transform: uppercase;
+  max-width: 75%;
+  line-height: 30px;
+  font-weight: 300;
+}

@@ -12,6 +12,7 @@ import { WireChannelComponent } from "./channel/channel.component";
 import { WireChannelTableComponent } from "./channel/table/table.component";
 import { WireCreatorRewardsComponent } from "./creator/rewards/rewards.component";
 import { WireThresholdInputComponent } from "./threshold-input/threshold-input.component";
+import { WireLockScreenComponent } from './lock-screen/wire-lock-creen.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { WireThresholdInputComponent } from "./threshold-input/threshold-input.c
     CheckoutModule
   ],
   declarations: [
+    WireLockScreenComponent,
     WireCreatorComponent,
     WireButtonComponent,
     WireChannelComponent,
@@ -31,6 +33,7 @@ import { WireThresholdInputComponent } from "./threshold-input/threshold-input.c
     WireThresholdInputComponent
   ],
   exports: [
+    WireLockScreenComponent,
     WireButtonComponent,
     WireChannelComponent,
     WireThresholdInputComponent
