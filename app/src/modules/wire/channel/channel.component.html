@@ -12,6 +12,16 @@
       <button class="material-icons" [hidden]="!editing">done</button>
     </span>
 
+    <div class="mdl-color-text--grey-600 m-wire-channel--totals" *ngIf="sums.money > 0 || sums.points > 0">
+      <div class="m-wire-channel--totals-total m-wire-channel--totals-money" *ngIf="sums.money > 0">
+        <span class="m-wire-channel--totals-number">{{sums.money | currency:'USD':true:'1.0-0'}}</span>
+        <span class="m-wire-channel--totals-period">in the last 30 days</span>
+      </div>
+      <div class="m-wire-channel--totals-total m-wire-channel--totals-points" *ngIf="sums.points > 0 && !(sums.money > 0)">
+        <span class="m-wire-channel--totals-number">{{sums.points}} points</span>
+        <span class="m-wire-channel--totals-period">in the last 30 days</span>
+      </div>
+    </div>
   </div>
 
   <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-wire-channel--rewards">

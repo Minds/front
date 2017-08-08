@@ -29,6 +29,25 @@ m-wire-channel {
     }
   }
 
+  .m-wire-channel--totals {
+    display: flex;
+    flex: 1;
+    align-items: flex-end;
+    text-align: right;
+
+    .m-wire-channel--totals-total {
+      flex: 1;
+
+      .m-wire-channel--totals-number {
+        font-size: 18px;
+        letter-spacing: 2.5px;
+      }
+      .m-wire-channel--totals-period {
+        font-size: 11px;
+      }
+    }
+  }
+
   .m-wire-channel--rewards {
     padding-top: 0;
     box-sizing: border-box;
