@@ -16,7 +16,7 @@
     <span class="m-wire-threshold-input--symbol">&gt;</span>
 
     <ng-container *ngIf="session.getLoggedInUser()?.merchant; else nonMerchantContainer">
-      <button class="mdl-button mdl-js-button mdl-button--icon" id="poster-wire-currency-selector"
+      <button type="button" class="mdl-button mdl-js-button mdl-button--icon" id="poster-wire-currency-selector"
         [mdl]
       >
         <i *ngIf="threshold.type == 'points'" class="material-icons m-wire-threshold-input--type">account_balance</i>
