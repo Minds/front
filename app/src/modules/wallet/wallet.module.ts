@@ -14,6 +14,7 @@ import { WalletTransactionsComponent } from './transactions/transactions.compone
 import { WalletPointsTransactionsComponent } from './transactions/points.component';
 import { WalletPurchaseComponent } from './purchase/purchase.component';
 import { WalletBoostComponent } from "./boost/boost.component";
+import { WalletWireComponent } from "./wire/wire.component";
 
 
 const walletRoutes : Routes = [
@@ -24,7 +25,8 @@ const walletRoutes : Routes = [
       { path: 'purchase', component: WalletTransactionsComponent },
       { path: 'boost/:type/:filter', component: WalletBoostComponent },
       { path: 'boost/:type', component: WalletBoostComponent },
-      { path: 'boost', component: WalletBoostComponent }
+      { path: 'boost', component: WalletBoostComponent },
+      { path: 'wire', component: WalletWireComponent }
     ]
   }
 ]
@@ -46,7 +48,8 @@ const walletRoutes : Routes = [
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
     WalletPurchaseComponent,
-    WalletBoostComponent
+    WalletBoostComponent,
+    WalletWireComponent
   ],
   exports: [
     WalletComponent,
@@ -54,7 +57,8 @@ const walletRoutes : Routes = [
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
     WalletPurchaseComponent,
-    WalletBoostComponent
+    WalletBoostComponent,
+    WalletWireComponent
   ],
   entryComponents: [ WalletComponent ]
 })

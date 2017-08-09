@@ -161,3 +161,11 @@ minds-wallet-transactions {
 .m-wallet--boost-ads {
   margin-top: $minds-padding * 2;
 }
+
+.m-wallet--wire-link{
+  svg{
+    fill: #607d8b;
+    transform: scale(-1.5);
+    margin-right: 8px;
+  }
+}
