@@ -1,0 +1,32 @@
+<div class="m-wire-console--ledger">
+
+  <div class="m-wire-console--ledger-table">
+    <div class="mdl-card mdl-shadow--2dp" style="overflow:visible">
+      <table class="mdl-data-table mdl-js-data-table" [mdl]>
+        <thead>
+          <tr class="m-wire-console--ledger-header">
+            <th class="mdl-data-table__cell--non-numeric m-data-title">Date</th>
+            <th class="mdl-data-table__cell--non-numeric m-data-title">Channel</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let wire of wires" class="m-wire-console--ledger-row">
+            <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category">{{ wire.time_created * 1000 | date }}</td>
+            <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category"><span>@</span>{{wire.from.username}}</td>
+            <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'points'">{{ wire.amount }} points</td>
+            <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'money'"><i>$</i>{{ wire.amount }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="loadList()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+    </infinite-scroll>
+  </div>
+
+</div>
