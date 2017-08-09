@@ -18,10 +18,15 @@
     td{
       letter-spacing: 1px;
       text-transform: uppercase;
+
+      i{
+        cursor: pointer;
+      }
     }
 
     .m-wire-console--ledger-amount{
       font-size: 26px;
+      text-transform: lowercase;
     }
 
     .m-wire-console--ledger-refunded{

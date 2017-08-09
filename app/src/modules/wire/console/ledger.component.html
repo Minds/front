@@ -8,15 +8,25 @@
             <th class="mdl-data-table__cell--non-numeric m-data-title">Date</th>
             <th class="mdl-data-table__cell--non-numeric m-data-title">Channel</th>
             <th>Amount</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let wire of wires" class="m-wire-console--ledger-row">
-            <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category">{{ wire.time_created * 1000 | date }}</td>
-            <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category"><span>@</span>{{wire.from.username}}</td>
-            <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'points'">{{ wire.amount }} points</td>
-            <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'money'"><i>$</i>{{ wire.amount }}</td>
-          </tr>
+          <ng-container *ngFor="let wire of wires; let i = index">
+            <tr class="m-wire-console--ledger-row">
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category">{{ wire.time_created * 1000 | date }}</td>
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category"><span>@</span>{{wire.from.username}}</td>
+              <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'points'">{{ wire.amount }} points</td>
+              <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'money'"><i>$</i>{{ wire.amount }}</td>
+              <td><i class="material-icons" (click)="expand(i)">keyboard_arrow_down</i></td>
+            </tr>
+            <tr class="m-wire-console--ledger-row m-wire-console--ledger-row-expanded" *ngIf="wire.expanded">
+              <td colspan="4">
+                <m-wire-console--supporter [guid]="wire.from.guid" [supporter]="wire.from"></m-wire-console--supporter>
+              </td>
+            </tr>
+
+          </ng-container>
         </tbody>
       </table>
     </div>

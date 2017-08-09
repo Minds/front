@@ -73,4 +73,10 @@ export class WireConsoleLedgerComponent {
       });
   }
 
+  expand(i: number) {
+    this.wires[i].expanded = !this.wires[i].expanded;
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
 }

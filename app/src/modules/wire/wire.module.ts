@@ -15,6 +15,7 @@ import { WireThresholdInputComponent } from "./threshold-input/threshold-input.c
 import { WireLockScreenComponent } from './lock-screen/wire-lock-creen.component';
 import { WireConsoleComponent } from './console/console.component';
 import { WireConsoleLedgerComponent } from './console/ledger.component';
+import { WireConsoleSupporterComponent } from './console/supporter/supporter.component';
 
 
 @NgModule({
@@ -35,14 +36,16 @@ import { WireConsoleLedgerComponent } from './console/ledger.component';
     WireCreatorRewardsComponent,
     WireThresholdInputComponent,
     WireConsoleComponent,
-    WireConsoleLedgerComponent
+    WireConsoleLedgerComponent,
+    WireConsoleSupporterComponent
   ],
   exports: [
     WireLockScreenComponent,
     WireButtonComponent,
     WireChannelComponent,
     WireThresholdInputComponent,
-    WireConsoleLedgerComponent
+    WireConsoleLedgerComponent,
+    WireConsoleSupporterComponent
   ],
   entryComponents: [
     WireCreatorComponent,
