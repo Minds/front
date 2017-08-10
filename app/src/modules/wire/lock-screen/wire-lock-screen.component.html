@@ -1,8 +1,17 @@
 <div class="m-wire--lock-screen--button m-wire--lock-screen--button-owner" *ngIf="!preview && (entity.ownerObj.guid == session.getLoggedInUser().guid)">
   <div class="m-wire--lock-screen-introduction">
-    <p class="mdl-color-text--grey-800">Only supporters who wire you over
-      <span *ngIf="entity.wire_threshold?.type == 'money'">$</span>{{ entity.wire_threshold?.min }}
-      <span *ngIf="entity.wire_threshold?.type == 'points'">points</span>/month will see this post
+    <p class="mdl-color-text--grey-800">
+      Only supporters who wire you over
+
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'money'">
+        {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+      </ng-container>
+
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'points'">
+        {{ entity.wire_threshold.min | number }} points/month
+      </ng-container>
+
+      will see this post.
     </p>
   </div>
   <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white">
@@ -14,13 +23,28 @@
 
 <div class="m-wire--lock-screen--button" *ngIf="preview || (entity.ownerObj.guid != session.getLoggedInUser().guid)">
   <div class="m-wire--lock-screen-introduction">
-    <p class="mdl-color-text--grey-800" *ngIf="entity.ownerObj.merchant?.exclusive?.intro">
-      <b>&ldquo;</b> {{entity.ownerObj?.merchant?.exclusive?.intro}} <b>&rdquo;</b>
-    </p>
-    <p class="mdl-color-text--grey-800" *ngIf="!entity.ownerObj.merchant?.exclusive?.intro">
-      <b>&ldquo;</b> Wire me over
-        <span *ngIf="entity.wire_threshold?.type == 'money'">$</span>{{ entity.wire_threshold?.min }}
-        <span *ngIf="entity.wire_threshold?.type == 'points'">points</span>/month to see this post <b>&rdquo;</b>
+    <p class="mdl-color-text--grey-800">
+      <b>&ldquo;</b>
+
+      <ng-container *ngIf="entity.ownerObj?.merchant?.exclusive?.intro; else notHasIntro">
+        {{entity.ownerObj?.merchant?.exclusive?.intro}}
+      </ng-container>
+
+      <ng-template #notHasIntro>
+        Wire me over
+
+        <ng-container *ngIf="entity?.wire_threshold?.type == 'money'">
+          {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+        </ng-container>
+
+        <ng-container *ngIf="entity?.wire_threshold?.type == 'points'">
+          {{ entity.wire_threshold.min | number }} points/month
+        </ng-container>
+
+        to see this post.
+      </ng-template>
+
+      <b>&rdquo;</b>
     </p>
   </div>
   <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white" (click)="unlock()">
@@ -44,11 +68,31 @@
 
   <h2 class="m-wire--lock-screen-amount">
     <i class="material-icons" style="font-size: 30px">lock_outline</i>
-    <span *ngIf="entity.wire_threshold?.type == 'money'">$</span>{{ entity.wire_threshold.min }}
-    <span *ngIf="entity.wire_threshold?.type == 'points'">points</span>/month
+
+    <span>
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'money'">
+        {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+      </ng-container>
+
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'points'">
+        {{ entity.wire_threshold.min | number }} points/month
+      </ng-container>
+    </span>
   </h2>
 
   <h5 class="m-wire--lock-screen--message">
-    This post can only be seen by supporters who wire over $ {{entity.wire_threshold.min }}/month to @{{ entity.ownerObj.username }}
+    This post can only be seen by supporters who wire
+
+    <ng-container *ngIf="entity?.wire_threshold?.type == 'money'">
+        over {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+    </ng-container>
+
+    <ng-container *ngIf="entity?.wire_threshold?.type == 'points'">
+      over {{ entity.wire_threshold.min | number }} points/month
+    </ng-container>
+
+    <ng-container *ngIf="entity?.ownerObj?.username">
+      to @{{ entity.ownerObj.username }}
+    </ng-container>
   </h5>
 </div>
