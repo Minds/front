@@ -395,7 +395,7 @@ export class WireCreatorComponent implements AfterViewInit {
         if (done) {
           this.success = true;
 
-          if (this._opts.onComplete) {
+          if (this._opts && this._opts.onComplete) {
             this._opts.onComplete();
           }
 
