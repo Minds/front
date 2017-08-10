@@ -1,3 +1,27 @@
+<div class="m-wire-channel--call-to-action"
+  *ngIf="session.getLoggedInUser().guid != channel.guid"
+>
+  <button class="mdl-color--green mdl-color-text--white mdl-shadow--8dp"
+    (click)="sendWire()"
+  >
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      width="1em" height="1em" viewBox="100 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"
+    >
+      <path d="M302.7,64L143,288h95.8l-29.5,160L369,224h-95.8L302.7,64L302.7,64z"/>
+    </svg>
+
+    <span class="m-wire-channel--cta-label">
+      <span>Wire me</span>
+      <span class="m-wire-channel--cta-legend" *ngIf="userSums?.money || userSums?.points">
+        <ng-container *ngIf="userSums.money">{{ userSums.money | currency:'USD':true:'1.0-0' }}</ng-container>
+        <ng-container *ngIf="userSums.money && userSums.points">and</ng-container>
+        <ng-container *ngIf="userSums.points">{{ userSums.points | number }} points</ng-container>
+        in the last 30 days
+      </span>
+    </span>
+  </button>
+</div>
+
 <div *ngIf="shouldShow()"
   class="mdl-card mdl-shadow--2dp"
 >
@@ -49,28 +73,4 @@
       [editing]="editing"
     ></m-wire-channel-table>
   </div>
-</div>
-
-<div class="m-wire-channel--call-to-action"
-  *ngIf="session.getLoggedInUser().guid != channel.guid"
->
-  <button class="mdl-color--green mdl-color-text--white mdl-shadow--8dp"
-    (click)="sendWire()"
-  >
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-      width="1em" height="1em" viewBox="100 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"
-    >
-      <path d="M302.7,64L143,288h95.8l-29.5,160L369,224h-95.8L302.7,64L302.7,64z"/>
-    </svg>
-
-    <span class="m-wire-channel--cta-label">
-      <span>Wire me</span>
-      <span class="m-wire-channel--cta-legend" *ngIf="userSums?.money || userSums?.points">
-        <ng-container *ngIf="userSums.money">{{ userSums.money | currency:'USD':true:'1.0-0' }}</ng-container>
-        <ng-container *ngIf="userSums.money && userSums.points">and</ng-container>
-        <ng-container *ngIf="userSums.points">{{ userSums.points | number }} points</ng-container>
-        in the last 30 days
-      </span>
-    </span>
-  </button>
 </div>

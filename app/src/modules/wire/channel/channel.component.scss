@@ -160,6 +160,7 @@ m-wire-channel {
   }
 
   .m-wire-channel--call-to-action {
+    margin-bottom: $minds-margin * 2;
     //margin-top: $minds-padding * 2;
 
     > button {
