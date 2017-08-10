@@ -38,6 +38,26 @@
     </div>
   </div>
 
+  <div class="m-wire-console--options mdl-shadow--2dp"
+    [class.m-wire-console--options-active]="showOptions"
+  >
+    <div class="m-wire-console--options-toggle">
+      <button class="mdl-button mdl-button--primary mdl-button--raised"
+        (click)="showOptions = !showOptions"
+      >
+        <i class="material-icons" *ngIf="!showOptions">arrow_drop_down</i>
+        <i class="material-icons" *ngIf="showOptions">arrow_drop_up</i>
+
+        Options
+      </button>
+    </div>
+
+    <m-wire-console-settings
+      [hidden]="!showOptions"
+      (saved)="showOptions = false"
+    ></m-wire-console-settings>
+  </div>
+
   <m-wire-console--ledger></m-wire-console--ledger>
 
 </div>

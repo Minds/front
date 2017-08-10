@@ -58,3 +58,14 @@
     }
   }
 }
+
+.m-wire-console--options {
+  padding: $minds-padding * 2;
+  margin-top: $minds-padding;
+  border-radius: 4px;
+  background: #ffffff;
+
+  .m-wire-console--options-toggle {
+    text-align: right;
+  }
+}

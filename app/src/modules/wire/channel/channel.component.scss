@@ -185,10 +185,21 @@ m-wire-channel {
         transform: scale(2);
         margin: 0 12px 0 18px;
       }
+    }
+
+    .m-wire-channel--cta-label {
+      flex-grow: 1;
+      letter-spacing: 2.5px;
 
       > span {
-        letter-spacing: 2.5px;
+        display: block;
       }
+    }
+
+    .m-wire-channel--cta-legend {
+      text-transform: initial;
+      letter-spacing: 0.5px;
+      font-size: 12px;
     }
   }
 }

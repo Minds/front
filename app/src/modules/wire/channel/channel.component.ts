@@ -36,6 +36,11 @@ export class WireChannelComponent {
     points: -1
   };
 
+  userSums: { money, points } = {
+    money: 0,
+    points: 0
+  }
+
   session: Session = SessionFactory.build();
 
   constructor(private overlayModal: OverlayModalService, private client: Client) { }
@@ -47,6 +52,7 @@ export class WireChannelComponent {
 
     this.setDefaultDisplay();
     this.loadTotalReceived();
+    this.loadUserReceived();
   }
 
   // TODO: Smart default display, based on current user
@@ -84,6 +90,13 @@ export class WireChannelComponent {
     this.client.get(`api/v1/wire/sums/receiver/${this.channel.guid}/points`)
       .then(({ sum }) => {
         this.sums['points'] = sum;
+      });
+  }
+
+  loadUserReceived() {
+    this.client.get(`api/v1/wire/rewards/${this.channel.guid}`)
+      .then(({ sums }) => {
+        this.userSums = sums;
       });
   }
 

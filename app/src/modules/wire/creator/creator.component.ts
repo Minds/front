@@ -40,6 +40,8 @@ export class WireCreatorComponent implements AfterViewInit {
 
   owner: any;
 
+  sums: any;
+
   rates = {
     balance: null,
     rate: 1,
@@ -78,7 +80,11 @@ export class WireCreatorComponent implements AfterViewInit {
     }
   }
 
-  opts: any;
+  _opts: any;
+  set opts(opts: any) {
+    this._opts = opts;
+    this.setDefaults();
+  }
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -134,16 +140,31 @@ export class WireCreatorComponent implements AfterViewInit {
     }
 
     this.client.get(`api/v1/wire/rewards/${this.owner.guid}`)
-      .then(({ merchant, wire_rewards }) => {
+      .then(({ merchant, wire_rewards, sums }) => {
         this.owner.merchant = merchant;
         this.owner.wire_rewards = wire_rewards;
+        this.sums = sums;
 
-        if (merchant) {
-          this.wire.currency = 'money';
-          this.wire.amount = 1;
-        }
-
+        this.setDefaults();
       });
+  }
+
+  setDefaults() {
+    if (this._opts && this._opts.default) {
+      this.wire.currency = this._opts.default.type;
+      this.wire.amount = this._opts.default.min;
+
+      if (this.sums && this.sums[this._opts.default.type]) {
+        this.wire.amount = <number>this.wire.amount - Math.ceil(this.sums[this._opts.default.type]);
+      }
+    } else if (this.owner.merchant) {
+      this.wire.currency = 'money';
+      this.wire.amount = 1;
+    }
+
+    if (this.wire.amount < 0) {
+      this.wire.amount = 0;
+    }
   }
 
   // General
@@ -374,8 +395,8 @@ export class WireCreatorComponent implements AfterViewInit {
         if (done) {
           this.success = true;
 
-          if (this.opts.onComplete) {
-            this.opts.onComplete();
+          if (this._opts.onComplete) {
+            this._opts.onComplete();
           }
 
           setTimeout(() => {

@@ -1,4 +1,4 @@
-<div class="m-wire--lock-screen--button m-wire--lock-screen--button-owner" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid">
+<div class="m-wire--lock-screen--button m-wire--lock-screen--button-owner" *ngIf="!preview && (entity.ownerObj.guid == session.getLoggedInUser().guid)">
   <div class="m-wire--lock-screen-introduction">
     <p class="mdl-color-text--grey-800">Only supporters who wire you over
       <span *ngIf="entity.wire_threshold?.type == 'money'">$</span>{{ entity.wire_threshold?.min }}
@@ -12,7 +12,7 @@
 </div>
 
 
-<div class="m-wire--lock-screen--button" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid">
+<div class="m-wire--lock-screen--button" *ngIf="preview || (entity.ownerObj.guid != session.getLoggedInUser().guid)">
   <div class="m-wire--lock-screen-introduction">
     <p class="mdl-color-text--grey-800" *ngIf="entity.ownerObj.merchant?.exclusive?.intro">
       <b>&ldquo;</b> {{entity.ownerObj?.merchant?.exclusive?.intro}} <b>&rdquo;</b>
@@ -32,7 +32,9 @@
   </button>
 </div>
 
-<div class="m-wire--lock-screen" *ngIf="entity.wire_threshold && entity.ownerObj.guid != session.getLoggedInUser().guid">
+<div class="m-wire--lock-screen" *ngIf="entity.wire_threshold && (preview || (entity.ownerObj.guid != session.getLoggedInUser().guid))"
+  [style.backgroundImage]="getBackground()"
+>
   <div class="m-wire--lock-screen-overlay"></div>
 
   <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" fill="white" width="100px"
@@ -47,6 +49,6 @@
   </h2>
 
   <h5 class="m-wire--lock-screen--message">
-    This post can only be seen by supporters who wire over ${{entity.wire_threshold.min }}/month to @{{ entity.ownerObj.username }}
+    This post can only be seen by supporters who wire over $ {{entity.wire_threshold.min }}/month to @{{ entity.ownerObj.username }}
   </h5>
 </div>

@@ -19,6 +19,8 @@ export class WireLockScreenComponent implements AfterViewInit {
   @Input() entity: any;
   @Output('entityChange') update: EventEmitter<any> = new EventEmitter<any>();
 
+  @Input() preview: any;
+
   inProgress: boolean = false;
 
   constructor(private client: Client, public session: Session, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService) {
@@ -28,6 +30,10 @@ export class WireLockScreenComponent implements AfterViewInit {
   }
 
   unlock() {
+    if (this.preview) {
+      return;
+    }
+
     this.inProgress = true;
     this.detectChanges();
 
@@ -50,8 +56,33 @@ export class WireLockScreenComponent implements AfterViewInit {
   }
 
   showWire() {
-    this.overlayModal.create(WireCreatorComponent, this.entity, { onComplete: () => { this.unlock(); } })
+    if (this.preview) {
+      return;
+    }
+
+    this.overlayModal.create(WireCreatorComponent, this.entity, {
+      onComplete: () => this.unlock(),
+      default: this.entity.wire_threshold
+    })
       .present();
+  }
+
+  getBackground() {
+    if (!this.entity) {
+      return;
+    }
+
+    if (this.entity._preview) {
+      return `url(${this.entity.ownerObj.merchant.exclusive._backgroundPreview})`;
+    }
+
+    if (!this.entity.ownerObj || !this.entity.ownerObj.merchant || !this.entity.ownerObj.merchant.exclusive || !this.entity.ownerObj.merchant.exclusive.background) {
+      return null;
+    }
+
+    let image = window.Minds.cdn_url + 'fs/v1/paywall/preview/' + this.entity.ownerObj.guid + '/' + this.entity.ownerObj.merchant.exclusive.background;
+
+    return `url(${image})`;
   }
 
   private detectChanges() {

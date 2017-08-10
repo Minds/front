@@ -13,30 +13,39 @@ export class WireCreatorRewardsComponent {
   @Input() type: WireRewardsType | null;
   @Input() amount: string | number;
   @Input() channel: any;
+  @Input() sums: any;
   @Output() selectAmount: EventEmitter<any> = new EventEmitter(true);
 
   isRewardAboveThreshold(index: number): boolean {
-    if (!this.rewards || !this.type || !this.amount) {
+    if (!this.rewards || !this.type || !this.calcAmount()) {
       return false;
     }
 
-    return this.amount >= this.rewards.rewards[this.type][index].amount;
+    return this.calcAmount() >= this.rewards.rewards[this.type][index].amount;
   }
 
   isBestReward(index: number): boolean {
-    if (!this.rewards || !this.type || !this.amount) {
+    if (!this.rewards || !this.type || !this.calcAmount()) {
       return false;
     }
 
     const lastEligibleReward = this.rewards.rewards[this.type]
       .map((reward, index) => ({ ...reward, index }))
-      .filter(reward => this.amount >= reward.amount)
+      .filter(reward => this.calcAmount() >= reward.amount)
       .pop();
 
     return lastEligibleReward ?
       index === lastEligibleReward.index :
       false;
+  }
+  
+  calcAmount(): number {
+    if (this.sums && this.sums[this.type]) {
+      return parseFloat(this.sums[this.type]) + parseFloat(<string>this.amount);
     }
+
+    return <number>this.amount;
+  }
 
   selectReward(index: number): void {
     this.selectAmount.next(this.rewards.rewards[this.type][index].amount);

@@ -17,6 +17,8 @@ export class WireConsoleComponent {
     avg: 0
   };
 
+  showOptions: boolean = false;
+
   constructor(private client: Client, private session: Session) { }
 
   ngOnInit() {

@@ -21,7 +21,9 @@ export class WireButtonComponent {
   constructor(private overlayModal: OverlayModalService) { }
 
   wire() {
-    const creator = this.overlayModal.create(WireCreatorComponent, this.object);
+    const creator = this.overlayModal.create(WireCreatorComponent, this.object, {
+      default: this.object && this.object.wire_threshold
+    });
     creator.present();
   }
 }

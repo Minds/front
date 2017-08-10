@@ -678,6 +678,19 @@
     color: rgba(255, 255, 255, 0.8);
   }
 
+  .m-wire--creator-rewards--sums {
+    margin: $minds-padding 0;
+    font-size: 14px;
+    font-weight: 200;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.8);
+
+    b {
+      font-weight: 400;
+    }
+  }
+
   .m-wire--creator-rewards--list {
     max-width: 360px;
     list-style: none;
