@@ -10,6 +10,10 @@
       <span>Wire</span>
     </h2>
 
+    <p class="m-wire-creator--subtext">
+      Support <span>@</span>{{owner.username}} by sending them dollars, points or Bitcoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
+    </p>
+
     <div class="m-wire--creator--wallet" *ngIf="false">
       <i class="material-icons m--middle">account_balance</i>
       <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance | abbr }}</span>
@@ -34,8 +38,8 @@
         </div>
         <span class="m-wire--creator-selector--cta">Select Points</span>
         <span class="m-wire--creator-selector--selected-label">Selected</span>
-      </li> 
-    
+      </li>
+
       <li
         (click)="setCurrency('money')"
         [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'money'"
@@ -49,7 +53,7 @@
         <span class="m-wire--creator-selector--cta" *ngIf="!owner?.merchant">Cannot receive USD</span>
         <span class="m-wire--creator-selector--selected-label">Selected</span>
       </li>
-      
+
       <li class="m-wire--creator-selector--disabled">
         <div class="m-wire--creator-selector-type">
           <i class="material-icons">help_outline</i>
