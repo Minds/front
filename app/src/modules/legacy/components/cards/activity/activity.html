@@ -183,19 +183,21 @@
   </a>
 </div>
 
-<div class="impressions-tag m-activity--metrics" *ngIf="!hideTabs">
-	<div class="m-activity--metrics-metric" (click)="showWire()">
-		<i class="material-icons">account_balance</i>
-    <span *ngIf="activity.wire_totals">{{ activity.wire_totals.points | abbr }}</span>
-	</div>
-	<div class="m-activity--metrics-metric" (click)="showWire()">
-		<i class="material-icons" style="width:10px">attach_money</i>
-    <span *ngIf="activity.wire_totals">{{ activity.wire_totals.money | abbr }}</span>
-	</div>
-	<div class="m-activity--metrics-metric">
-		<i class="material-icons">remove_red_eye</i>
-    <span>{{ activity.impressions | number }}</span>
-	</div>
+<div class="impressions-tag m-activity--metrics" [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid" *ngIf="!hideTabs">
+  <div class="m-activity--metrics-inner">
+    <div class="m-activity--metrics-metric" (click)="showWire()">
+  		<i class="material-icons">account_balance</i>
+      <span *ngIf="activity.wire_totals">{{ activity.wire_totals.points | abbr }}</span>
+  	</div>
+  	<div class="m-activity--metrics-metric" (click)="showWire()">
+  		<i class="material-icons" style="width:10px">attach_money</i>
+      <span *ngIf="activity.wire_totals">{{ activity.wire_totals.money | abbr }}</span>
+  	</div>
+  	<div class="m-activity--metrics-metric">
+  		<i class="material-icons">remove_red_eye</i>
+      <span>{{ activity.impressions | number }}</span>
+  	</div>
+  </div>
 </div>
 
 <minds-comments  *ngIf="commentsToggle" [object]="activity" [focusOnInit]="true"></minds-comments>

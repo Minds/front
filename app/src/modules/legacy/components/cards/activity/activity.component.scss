@@ -1,5 +1,37 @@
+.tabs .m-wire-button{
+  transform: scale(0.8) translateY(-4px);
+}
+
 .m-activity--metrics{
-  padding-left: 8px;
+
+  position: absolute;
+  z-index: 999;
+  bottom: -10px;
+  right: -5px;
+
+  &.m-activity--metrics-wire{
+    width: 100%;
+    display: flex;
+    right: auto;
+  }
+
+  .m-activity--metrics-inner{
+    padding-left: 8px;
+    margin: auto;
+
+    background-color: #4a4a4a;
+    padding: 3px 0 3px 8px;
+    font-size: 14px;
+    line-height: 9px;
+    color: #FFF;
+    border-radius: 3px;
+    vertical-align: middle;
+    //text-align: center;
+    display: flex;
+    justify-content: space-around;
+    max-width: 300px;
+  }
+
   .m-activity--metrics-metric{
     font-size: 10px;
     display: inline-block;

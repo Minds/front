@@ -287,31 +287,6 @@ minds-activity.mdl-card, minds-activity{
     }
   }
 
-  .impressions-tag{
-    position: absolute;
-    z-index: 999;
-    right: -5px;
-    bottom: -10px;
-    background-color: #4a4a4a;
-    padding: 3px 0 3px 8px;
-    font-size: 14px;
-    line-height: 9px;
-    color: #FFF;
-    border-radius: 3px;
-    vertical-align: middle;
-    //text-align: center;
-    display: flex;
-    justify-content: space-around;
-    & > span {
-      display: inline-flex;
-      align-items: center;
-      padding: 0 2px;
-      i.material-icons {
-        font-size: 14px;
-      }
-    }
-  }
-
   .minds-more{
 
     i {
