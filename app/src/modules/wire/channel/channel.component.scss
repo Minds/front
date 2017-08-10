@@ -191,6 +191,7 @@ m-wire-channel {
     .m-wire-channel--cta-label {
       flex-grow: 1;
       letter-spacing: 2.5px;
+      text-align: left;
 
       > span {
         display: block;
@@ -200,7 +201,8 @@ m-wire-channel {
     .m-wire-channel--cta-legend {
       text-transform: initial;
       letter-spacing: 0.5px;
-      font-size: 12px;
+      font-size: 8px;
+      font-weight: 500;
     }
   }
 }
