@@ -8,6 +8,7 @@ import { ModalsModule } from '../modals/modals.module'
 import { CommonModule } from '../../common/common.module';
 import { SettingsBillingComponent } from './billing/billing.component';
 import { SettingsBillingSavedCardsComponent } from './billing/saved-cards/saved-cards.component';
+import { SettingsBillingSubscriptionsComponent } from './billing/subscriptions/subscriptions.component';
 import { SettingsNavigationComponent } from './navigation/navigation.component';
 
 
@@ -28,11 +29,13 @@ const settingsRoutes : Routes = [
   declarations: [
     SettingsBillingComponent,
     SettingsBillingSavedCardsComponent,
+    SettingsBillingSubscriptionsComponent,
     SettingsNavigationComponent
     //BillingComponent
   ],
   exports: [
     SettingsBillingSavedCardsComponent,
+    SettingsBillingSubscriptionsComponent,
     SettingsNavigationComponent
   ],
   entryComponents: [
