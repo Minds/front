@@ -52,7 +52,7 @@
       margin: 0 0 8px;
     }
 
-    .m-wire--creator--subtext {
+    .m-wire-creator--subtext {
       letter-spacing: 1px;
       font-weight: 300;
       margin-bottom: $minds-margin * 2;
@@ -64,7 +64,7 @@
       justify-content: flex-start;
 
       svg {
-        fill: #ffffff;
+        fill: #4690D6;
         transform: scale(1.2);
       }
     }
@@ -106,7 +106,7 @@
       text-align: right;
 
       appearance: none;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(0, 0, 0, 0.15);
       color: inherit;
       font-family: inherit;
       font-size: inherit;
@@ -169,7 +169,7 @@
         letter-spacing: 1.5px;
         line-height: 1.3;
         max-width: 300px;
-        color: rgba(255,255,255,0.75);
+        color: rgba(0,0,0,0.75);
       }
     }
   }
@@ -248,7 +248,7 @@
     max-height: 300px;
     font-size: 16px;
     border-radius: 3px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.15);
     padding: $minds-padding;
     margin-top: $minds-padding * 1.5;
     overflow-y: auto;
@@ -294,13 +294,13 @@
       appearance: none;
       padding: 8px 32px;
       background: none;
-      border: 1px solid #ffffff;
+      border: 1px solid #666;
       border-radius: 0;
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
       text-transform: uppercase;
-      color: #ffffff;
+      color: #666;
       cursor: pointer;
 
       &[disabled] {
@@ -329,7 +329,7 @@
   // Credit Card Input
   .m-wire--creator-payment {
     border: 0;
-    background: rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     max-width: 440px;
     padding: 0px;
@@ -370,19 +370,19 @@
 
     .m-payments--saved-card-item{
       border: 0;
-      background: rgba(255,255,255,0.15);
+      background: rgba(0, 0, 0, 0.15);
     }
 
     input{
       color: #FFF;
-      background: rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.15);
       padding: 12px;
       border: 0;
       border-radius: 3px;
     }
     select{
       padding:12px;
-      background: rgba(255,255,255,0.15);
+      background: rgba(0,0,0,0.15);
       border: 0;
       color: #FFF;
       border-radius: 3px;
@@ -412,7 +412,7 @@
       font-weight: bold;
     }
     .m-checkout--secure{
-      color: rgba(255,255,255,0.80);
+      color: rgba(0,0,0,0.80);
     }
     button{
       padding: 12px;
@@ -450,7 +450,7 @@
   }
 
   .mdl-checkbox {
-    $cb-color: rgba(255, 255, 255, 0.15);
+    $cb-color: rgba(0, 0, 0, 0.15);
 
     .mdl-checkbox__label {
       font-size: inherit;
@@ -580,7 +580,7 @@
   }
 
   .mdl-textfield__label {
-    color: rgba(255, 255, 255, 0.46);
+    color: rgba(0, 0, 0, 0.46);
 
     &:after {
       background-color: #ffffff;
@@ -588,7 +588,7 @@
   }
 
   .mdl-textfield__input {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.32);
     color: #ffffff;
     font-family: inherit;
     font-weight: inherit;
@@ -660,9 +660,9 @@
   top: 92px;
   max-width: 330px;
   display: block;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
   padding: ($minds-padding * 3) 0 ($minds-padding * 3) 60px;
-  color: #ffffff;
+  color: #666;
   font-family: inherit;
   font-weight: 200;
 
@@ -678,19 +678,19 @@
     margin: 0 0 ($minds-padding * 2);
     padding: 0;
     font-size: 24px;
-    font-weight: 200;
+    font-weight: 300;
     letter-spacing: 2.5px;
     line-height: 1;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(0, 0, 0, 0.8);
   }
 
   .m-wire--creator-rewards--sums {
     margin: $minds-padding 0;
     font-size: 14px;
-    font-weight: 200;
+    font-weight: 300;
     letter-spacing: 0.5px;
     line-height: 1;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(0, 0, 0, 0.8);
 
     b {
       font-weight: 400;
@@ -702,7 +702,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(0, 0, 0, 0.35);
 
     .m-wire--creator-rewards--threshold {
       padding: 8px 0;
@@ -710,11 +710,11 @@
     }
 
     .m-wire--creator-rewards--above-threshold {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(0, 0, 0, 0.6);
     }
 
     .m-wire--creator-rewards--best-reward {
-      color: #ffffff;
+      color: #333;
     }
 
     .m-wire--creator-rewards--amount span {
@@ -728,7 +728,7 @@
       font-family: 'Lato';
       padding: 8px 0;
       font-size: 14px;
-      font-weight: 300;
+      font-weight: 400;
     }
   }
 }
