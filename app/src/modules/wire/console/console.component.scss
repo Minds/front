@@ -1,10 +1,18 @@
 .m-wire-console--hero{
   border-radius: 3px;
 
+  .m-wire-console--hero-header{
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    padding-right: 32px;
+  }
+
   h2 {
     margin: 0;
     padding: 16px 32px;
     font-weight: 300;
+    flex: 1;
   }
   p{
     margin:0;

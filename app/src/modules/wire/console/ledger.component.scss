@@ -1,4 +1,7 @@
 .m-wire-console--ledger {
+  .mdl-tabs__tab-bar{
+    justify-content: left;
+  }
   .mdl-tabs__tab {
     cursor: pointer;
   }
