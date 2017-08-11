@@ -12,12 +12,11 @@ import { WireChannelComponent } from "./channel/channel.component";
 import { WireChannelTableComponent } from "./channel/table/table.component";
 import { WireCreatorRewardsComponent } from "./creator/rewards/rewards.component";
 import { WireThresholdInputComponent } from "./threshold-input/threshold-input.component";
-import { WireLockScreenComponent } from './lock-screen/wire-lock-creen.component';
 import { WireConsoleComponent } from './console/console.component';
 import { WireConsoleLedgerComponent } from './console/ledger.component';
 import { WireConsoleSupporterComponent } from './console/supporter/supporter.component';
 import { WireConsoleSettingsComponent } from "./console/settings/settings.component";
-
+import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.component';
 
 @NgModule({
   imports: [
