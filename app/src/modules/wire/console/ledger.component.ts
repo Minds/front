@@ -14,21 +14,30 @@ import { Client } from "../../../services/api";
 })
 export class WireConsoleLedgerComponent {
 
-  @Input() type : string = 'charge';
-
+  @Input() type: string;
   wires: any[] = [];
   inProgress: boolean = false;
 
   offset: string = '';
   moreData: boolean = false;
 
-  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd : ChangeDetectorRef, private route: ActivatedRoute) {
-    route.url.subscribe(url => {
-      this.type = url[0].path;
-    });
+  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd : ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    if (!this.type) {
+      this.type = 'sent';
+
+      if (window.Minds.user.merchant && window.Minds.user.merchant.exclusive) {
+        this.type = 'received';
+      }
+    }
+
+    this.loadList(true);
+  }
+
+  setType(type: string) {
+    this.type = type;
     this.loadList(true);
   }
 
@@ -40,6 +49,7 @@ export class WireConsoleLedgerComponent {
     this.inProgress = true;
 
     if (refresh) {
+      this.wires = [];
       this.offset = '';
       this.moreData = true;
     }
