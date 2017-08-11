@@ -396,7 +396,7 @@ export class WireCreatorComponent implements AfterViewInit {
           this.success = true;
 
           if (this._opts && this._opts.onComplete) {
-            this._opts.onComplete();
+            this._opts.onComplete(this.wire);
           }
 
           setTimeout(() => {

@@ -22,7 +22,10 @@ export class WireButtonComponent {
 
   wire() {
     const creator = this.overlayModal.create(WireCreatorComponent, this.object, {
-      default: this.object && this.object.wire_threshold
+      default: this.object && this.object.wire_threshold,
+      onComplete: (wire) => {
+        this.object.wire_totals[wire.currency] = wire.amount;
+      }
     });
     creator.present();
   }
