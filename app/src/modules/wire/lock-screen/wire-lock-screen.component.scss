@@ -1,4 +1,5 @@
 m-wire--lock-screen{
+  display:block;
   position: relative;
 }
 .m-wire--lock-screen {
@@ -26,6 +27,7 @@ m-wire--lock-screen{
   .m-wire--lock-screen-overlay {
     position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.4);
