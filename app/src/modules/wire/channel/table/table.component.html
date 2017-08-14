@@ -6,11 +6,12 @@
   <tr *ngFor="let reward of rewards; let i = index">
     <td>
       <div class="m-wire-channel--reward-amount mdl-color-text--blue-grey-500">
-        <span *ngIf="!editing && reward.amount && type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</span>
-        <span *ngIf="!editing && reward.amount && type == 'points'">{{ reward.amount | number }}</span>
+        <span *ngIf="!editing && reward.amount && type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}+</span>
+        <span *ngIf="!editing && reward.amount && type == 'points'">{{ reward.amount | number }}+</span>
 
         <ng-container *ngIf="editing && type=='money'">$</ng-container>
         <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
+        <span *ngIf="editing">+</span>
         <ng-container *ngIf="type=='points'">points</ng-container>
       </div>
 
