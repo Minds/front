@@ -75,6 +75,9 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
   // -ng-rc- { src: '@angular/router/bundles/router.umd.min.js', inject: 'libs', dest: JS_DEST },
   // -ng-rc- { src: '@angular/router-deprecated/bundles/router-deprecated.umd.min.js', inject: 'libs', dest: JS_DEST },
   { src: 'socket.io-client/dist/socket.io.js', inject: 'libs', dest: JS_DEST },
+  { src: 'rome/dist/rome.js', inject: 'libs', dest: JS_DEST },
+  { src: 'moment/min/moment.min.js', inject: 'libs', dest: JS_DEST },
+  { src: 'material-datetime-picker/dist/material-datetime-picker.js', inject: 'libs', dest: JS_DEST },
 
   // async
   { src: 'tinymce/tinymce.min.js', inject: 'async', dest: JS_DEST },
@@ -83,6 +86,10 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
 ]);
 
 export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencies([
+  { src: 'rome/dist/rome.js', inject: 'libs', dest: JS_DEST },
+  { src: 'moment/min/moment.min.js', inject: 'libs', dest: JS_DEST },
+  { src: 'material-datetime-picker/dist/material-datetime-picker.js', inject: 'libs', dest: JS_DEST },
+
   { src: 'systemjs/dist/system-polyfills.src.js', inject: 'shims' },
   { src: 'core-js/client/shim.min.js', inject: 'shims' },
   { src: 'reflect-metadata/Reflect.js', inject: 'shims' },

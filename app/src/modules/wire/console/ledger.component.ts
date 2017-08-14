@@ -20,8 +20,12 @@ export class WireConsoleLedgerComponent {
 
   offset: string = '';
   moreData: boolean = false;
+  startDate: string;
 
-  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd : ChangeDetectorRef) {
+  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd: ChangeDetectorRef) {
+    const d = new Date();
+    d.setMonth(d.getMonth() - 1);
+    this.startDate = d.toISOString();
   }
 
   ngOnInit() {
@@ -55,10 +59,11 @@ export class WireConsoleLedgerComponent {
     }
 
     return this.client.get(`api/v1/wire/supporters`, {
-        offset: this.offset,
-        limit: 12,
-        type: this.type
-      })
+      offset: this.offset,
+      limit: 12,
+      type: this.type,
+      start: Date.parse(this.startDate) / 1000
+    })
       .then(({ wires, 'load-next': loadNext }) => {
         this.inProgress = false;
 
@@ -84,9 +89,19 @@ export class WireConsoleLedgerComponent {
   }
 
   expand(i: number) {
-    this.wires[i].expanded = !this.wires[i].expanded;
+    this.wires[ i ].expanded = !this.wires[ i ].expanded;
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  onStartDateChange(newDate) {
+    this.startDate = newDate;
+
+    this.inProgress = false;
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+
+    this.loadList(true);
   }
 
 }

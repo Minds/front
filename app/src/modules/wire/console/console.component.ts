@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 
 
 @Component({
   selector: 'm-wire-console',
-  templateUrl: 'console.component.html'
+  templateUrl: 'console.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class WireConsoleComponent {
@@ -19,21 +20,39 @@ export class WireConsoleComponent {
 
   showOptions: boolean = false;
 
-  constructor(private client: Client, private session: Session) { }
+  startDate: string;
+
+  constructor(private client: Client, private session: Session, private cd: ChangeDetectorRef) {
+    const d = new Date();
+    d.setMonth(d.getMonth() - 1);
+    this.startDate = d.toISOString();
+  }
 
   ngOnInit() {
     this.getStats();
   }
 
   getStats() {
-    this.client.get('api/v1/wire/sums/receiver/' + this.session.getLoggedInUser().guid + '/money', { advanced: true })
+    this.client.get('api/v1/wire/sums/receiver/' + this.session.getLoggedInUser().guid + '/money', { advanced: true, start: Date.parse(this.startDate) / 1000 })
       .then(({ sum, count, avg }) => {
         this.stats = {
           sum: sum,
           count: count,
           avg: avg
         };
+        this.detectChanges();
       });
+  }
+
+  onStartDateChange(newDate) {
+    this.startDate = newDate;
+    this.detectChanges();
+    this.getStats();
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
 }

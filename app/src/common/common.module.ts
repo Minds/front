@@ -38,6 +38,7 @@ import { OverlayModalComponent } from "./components/overlay-modal/overlay-modal.
 
 import { FaqComponent } from './components/faq/faq.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 
 @NgModule({
   imports: [
@@ -68,6 +69,7 @@ import { ChartComponent } from './components/chart/chart.component';
     TagsLinks,
     Tooltip,
     MDL_DIRECTIVES,
+    DateSelectorComponent,
     MindsAvatar,
     CaptchaComponent,
     Textarea,
@@ -104,6 +106,7 @@ import { ChartComponent } from './components/chart/chart.component';
     TagsLinks,
     Tooltip,
     MDL_DIRECTIVES,
+    DateSelectorComponent,
     MindsAvatar,
     CaptchaComponent,
     Textarea,
