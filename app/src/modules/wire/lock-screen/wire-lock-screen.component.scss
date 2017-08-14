@@ -18,8 +18,9 @@ m-wire--lock-screen{
     cursor: default;
   }
 
-  svg {
+  .ion-icon {
     padding: 24px 0;
+    font-size: 75px;
   }
 
   .m-wire--lock-screen-overlay {

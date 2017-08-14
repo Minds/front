@@ -63,9 +63,10 @@
       align-items: center;
       justify-content: flex-start;
 
-      svg {
-        fill: #4690D6;
-        transform: scale(1.2);
+      .ion-icon {
+        color: #4690D6;
+        margin-right: $minds-padding;
+        font-size: 36px;
       }
     }
 

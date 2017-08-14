@@ -181,10 +181,11 @@ m-wire-channel {
         outline: none;
       }
 
-      > svg {
-        fill: #ffffff;
-        transform: scale(2);
-        margin: 0 12px 0 18px;
+      .ion-icon {
+        color: #ffffff;
+        font-size: inherit;
+        transform: scale(1.5);
+        margin: 0 24px 0 18px;
       }
     }
 

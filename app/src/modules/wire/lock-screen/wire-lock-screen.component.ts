@@ -3,9 +3,10 @@ import {
   Output
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
-import { Session } from '../../../services/session';
+import { Session, SessionFactory } from '../../../services/session';
 import { OverlayModalService } from "../../../services/ux/overlay-modal";
 import { WireCreatorComponent } from "../creator/creator.component";
+import { SignupModalService } from "../../modals/signup/service";
 
 @Component({
   moduleId: module.id,
@@ -23,7 +24,9 @@ export class WireLockScreenComponent implements AfterViewInit {
 
   inProgress: boolean = false;
 
-  constructor(private client: Client, public session: Session, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService) {
+  session: Session = SessionFactory.build();
+
+  constructor(private client: Client, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService, private modal: SignupModalService) {
   }
 
   ngAfterViewInit() {
@@ -31,6 +34,12 @@ export class WireLockScreenComponent implements AfterViewInit {
 
   unlock() {
     if (this.preview) {
+      return;
+    }
+
+    if (!this.session.isLoggedIn()) {
+      this.modal.open();
+
       return;
     }
 

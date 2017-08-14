@@ -10,18 +10,13 @@ m-wire-threshold-input, .m-wire-threshold-input {
   font-family: 'Lato', sans-serif;
 
   .m-wire-threshold-input--toggle {
+    display: inline-block;
     vertical-align: middle;
+    color: #455a64;
     cursor: pointer;
 
-    > svg {
-      transform: scale(1.75) translateY(-7.5%) rotate(357.0deg);
-      fill: #455a64;
-    }
-
     &.m-wire-threshold-input--toggle-enabled {
-      > svg {
-        fill: #4690D6;
-      }
+      color: #4690D6;
     }
   }
 
