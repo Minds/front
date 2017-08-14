@@ -10,6 +10,7 @@ import { WireCreatorComponent } from "./creator/creator.component";
 import { WireButtonComponent } from "./button/button.component";
 import { WireChannelComponent } from "./channel/channel.component";
 import { WireChannelTableComponent } from "./channel/table/table.component";
+import { WireChannelOverviewComponent } from "./channel/overview/overview.component";
 import { WireCreatorRewardsComponent } from "./creator/rewards/rewards.component";
 import { WireThresholdInputComponent } from "./threshold-input/threshold-input.component";
 import { WireConsoleComponent } from './console/console.component';
@@ -33,6 +34,7 @@ import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.componen
     WireButtonComponent,
     WireChannelComponent,
     WireChannelTableComponent,
+    WireChannelOverviewComponent,
     WireCreatorRewardsComponent,
     WireThresholdInputComponent,
     WireConsoleComponent,
@@ -44,6 +46,7 @@ import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.componen
     WireLockScreenComponent,
     WireButtonComponent,
     WireChannelComponent,
+    WireChannelOverviewComponent,
     WireThresholdInputComponent,
     WireConsoleLedgerComponent,
     WireConsoleSupporterComponent,

@@ -31,15 +31,6 @@ export class WireChannelComponent {
 
   display: WireRewardsType;
   typeLabels = WireTypeLabels;
-  sums: { money, points} = {
-    money: -1,
-    points: -1
-  };
-
-  userSums: { money, points } = {
-    money: 0,
-    points: 0
-  }
 
   session: Session = SessionFactory.build();
 
@@ -51,8 +42,6 @@ export class WireChannelComponent {
     }
 
     this.setDefaultDisplay();
-    this.loadTotalReceived();
-    this.loadUserReceived();
   }
 
   // TODO: Smart default display, based on current user
@@ -80,24 +69,6 @@ export class WireChannelComponent {
         money: []
       }
     }
-  }
-
-  loadTotalReceived() {
-    this.client.get(`api/v1/wire/sums/receiver/${this.channel.guid}/money`)
-      .then(({ sum }) => {
-        this.sums['money'] = sum;
-      });
-    this.client.get(`api/v1/wire/sums/receiver/${this.channel.guid}/points`)
-      .then(({ sum }) => {
-        this.sums['points'] = sum;
-      });
-  }
-
-  loadUserReceived() {
-    this.client.get(`api/v1/wire/rewards/${this.channel.guid}`)
-      .then(({ sums }) => {
-        this.userSums = sums;
-      });
   }
 
   save() {

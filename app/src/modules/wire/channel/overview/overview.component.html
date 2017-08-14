@@ -1,0 +1,43 @@
+<div class="m-wire-channel--overview mdl-grid mdl-shadow--2dp mdl-color--blue mdl-color-text--white">
+
+  <div class="m-wire-channel--overview--overview-count mdl-cell mdl-cell--6-col">
+    <span *ngIf="ready">{{ stats.count | number:'1.0-0' }}</span>
+    <div class="m-wire-channel--overview--label">
+      <label>Wires</label>
+      <m-tooltip icon="help">
+        How many wires you have received in the last 30 days
+      </m-tooltip>
+    </div>
+  </div>
+
+  <div class="m-wire-channel--overview--overview-earnings mdl-cell mdl-cell--6-col">
+    <i>$</i><span *ngIf="ready">{{ stats.sum | number:'1.0-0' }}</span>
+    <div class="m-wire-channel--overview--label">
+      <label>Earnings</label>
+      <m-tooltip icon="help">
+        This is your total volume (gross) of all wires you have received in the last 30 days
+      </m-tooltip>
+    </div>
+  </div>
+
+  <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col">
+    <i>$</i><span *ngIf="ready">{{ stats.avg | number:'1.0-0' }}</span>
+    <div class="m-wire-channel--overview--label">
+      <label>Average</label>
+      <m-tooltip icon="help">
+        This is average amount received per wire
+      </m-tooltip>
+    </div>
+  </div>
+
+  <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col">
+    <i>$</i><span *ngIf="ready">{{ stats.sent | number:'1.0-0' }}</span>
+    <div class="m-wire-channel--overview--label">
+      <label>You Sent</label>
+      <m-tooltip icon="help">
+        This is the amount you have wired to {{channel.name}} in the last 30 days
+      </m-tooltip>
+    </div>
+  </div>
+
+</div>
