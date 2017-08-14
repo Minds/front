@@ -15,7 +15,7 @@
     </p>
   </div>
   <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white">
-    <i class="mdl-color-text--white material-icons">lock_outline</i>
+    <i class="mdl-color-text--white ion-icon ion-flash"></i>
     <span><!-- i18n -->Locked<!-- /i18n --></span>
   </button>
 </div>
@@ -48,7 +48,7 @@
     </p>
   </div>
   <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white" (click)="unlock()">
-    <i class="mdl-color-text--white material-icons">lock_outline</i>
+    <i class="mdl-color-text--white ion-icon ion-flash"></i>
     <span><!-- i18n -->Unlock<!-- /i18n --></span>
     <div [hidden]="!inProgress" class="m-spinner">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]></div>
@@ -64,8 +64,6 @@
   <i class="ion-icon ion-flash"></i>
 
   <h2 class="m-wire--lock-screen-amount">
-    <i class="material-icons" style="font-size: 30px">lock_outline</i>
-
     <span>
       <ng-container *ngIf="entity?.wire_threshold?.type == 'money'">
         {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month

@@ -69,8 +69,12 @@ m-wire--lock-screen{
     cursor: pointer;
 
     > * {
-      vertical-align: center;
+      vertical-align: middle;
       letter-spacing: 1.5px;
+    }
+
+    i{
+      padding-right: $minds-padding;
     }
 
     .m-spinner {
