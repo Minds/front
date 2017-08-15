@@ -18,13 +18,18 @@ import { WireConsoleLedgerComponent } from './console/ledger.component';
 import { WireConsoleSupporterComponent } from './console/supporter/supporter.component';
 import { WireConsoleSettingsComponent } from "./console/settings/settings.component";
 import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.component';
+import { WireMarketingComponent } from './marketing.component';
+
+const wireRoutes : Routes = [
+  { path: 'wire', component: WireMarketingComponent }
+]
 
 @NgModule({
   imports: [
     NgCommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([]),
+    RouterModule.forChild(wireRoutes),
     CommonModule,
     CheckoutModule
   ],
@@ -40,7 +45,8 @@ import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.componen
     WireConsoleComponent,
     WireConsoleLedgerComponent,
     WireConsoleSupporterComponent,
-    WireConsoleSettingsComponent
+    WireConsoleSettingsComponent,
+    WireMarketingComponent
   ],
   exports: [
     WireLockScreenComponent,
@@ -54,7 +60,8 @@ import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.componen
   ],
   entryComponents: [
     WireCreatorComponent,
-    WireConsoleComponent
+    WireConsoleComponent,
+    WireMarketingComponent
   ]
 })
 export class WireModule {
