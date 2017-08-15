@@ -7,7 +7,7 @@ import { OverlayModalService } from "../../../services/ux/overlay-modal";
   moduleId: module.id,
   selector: 'm-overlay-modal',
   template: `
-    <div class="m-overlay-moda--backdrop" [hidden]="hidden" (click)="dismiss()"></div>
+    <div class="m-overlay-modal--backdrop" [hidden]="hidden" (click)="dismiss()"></div>
     <div class="m-overlay-modal" [hidden]="hidden">
       <a class="m-overlay-modal--close" (click)="dismiss()"><i class="material-icons">close</i></a>
       <ng-template dynamic-host></ng-template>

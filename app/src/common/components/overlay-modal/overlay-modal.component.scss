@@ -11,7 +11,7 @@
   width: 100%;
   max-width: 990px;
   max-height: 84vh;
-  padding: ($minds-padding * 8) ($minds-padding * 8);
+  padding: ($minds-padding * 4) ($minds-padding * 8);
 
   background: none rgba(248, 248, 248, 0.975);
   color: #666;
@@ -60,7 +60,7 @@ body.m-overlay-modal--shown {
   overflow: hidden;
 }
 
-.m-overlay-moda--backdrop {
+.m-overlay-modal--backdrop {
   position: fixed;
   top: 0;
   left: 0;
