@@ -44,13 +44,14 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
         this.stats = {
           sum: sum,
           count: count,
-          avg: avg
+          avg: avg,
+          sent: this.stats.sent
         };
         this.detectChanges();
       });
     this.client.get('api/v1/wire/rewards/' + this.channel.guid)
       .then(({ sums }) => {
-        this.stats.sent = sums.points;
+        this.stats.sent = sums.money;
         this.detectChanges();
       });
   }
