@@ -1,5 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { WireRewardsType, WireRewardsTiers } from "../../interfaces/wire.interfaces";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { WireRewardsTiers, WireRewardsType } from "../../interfaces/wire.interfaces";
+import { WireCreatorComponent } from '../../creator/creator.component';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { Session, SessionFactory } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -8,6 +11,9 @@ import { WireRewardsType, WireRewardsTiers } from "../../interfaces/wire.interfa
 })
 export class WireChannelTableComponent {
   @Input() type: WireRewardsType;
+  @Input() channel;
+
+  private session: Session;
 
   rewards: WireRewardsTiers = [];
 
@@ -30,6 +36,10 @@ export class WireChannelTableComponent {
     } else if (!this.editing) {
       this.rewardsChangeEmitter.emit(this.rewards);
     }
+  }
+
+  constructor(private overlayModal: OverlayModalService) {
+    this.session = SessionFactory.build();
   }
 
   addTier() {
@@ -61,5 +71,19 @@ export class WireChannelTableComponent {
     }
 
     return placeholder;
+  }
+
+  openWireModal(reward) {
+    const user = this.session.getLoggedInUser();
+    if (user.guid !== this.channel.guid) {
+      const creator = this.overlayModal.create(WireCreatorComponent, this.channel, {
+        default: {
+          min: reward.amount,
+          type: this.type
+        },
+        disableThresholdCheck: true
+      });
+      creator.present();
+    }
   }
 }

@@ -46,12 +46,14 @@
       *ngIf="shouldShow('money')"
       [(rewards)]="rewards.rewards.money"
       [editing]="editing"
+      [channel]="channel"
     ></m-wire-channel-table>
 
     <m-wire-channel-table type="points"
       *ngIf="shouldShow('points')"
       [(rewards)]="rewards.rewards.points"
       [editing]="editing"
+      [channel]="channel"
     ></m-wire-channel-table>
 
     <p class="m-wire-channel--disclaimer">

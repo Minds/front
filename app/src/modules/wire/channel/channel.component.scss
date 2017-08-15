@@ -52,6 +52,9 @@ m-wire-channel {
   .m-wire-channel--rewards {
     padding-top: 0;
     box-sizing: border-box;
+    tr {
+      cursor: pointer;
+    }
   }
 
   .m-wire-channel--description,

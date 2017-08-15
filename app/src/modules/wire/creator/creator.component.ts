@@ -4,6 +4,7 @@ import { CurrencyPipe } from "@angular/common";
 import { OverlayModalService } from "../../../services/ux/overlay-modal";
 import { Client } from "../../../services/api";
 import { Session, SessionFactory } from "../../../services/session";
+import { WireService } from '../wire.service';
 
 export type CurrencyType = 'points' | 'money' | 'btc';
 
@@ -87,6 +88,7 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   constructor(
+    private wireService: WireService,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private client: Client,
@@ -154,7 +156,7 @@ export class WireCreatorComponent implements AfterViewInit {
       this.wire.currency = this._opts.default.type;
       this.wire.amount = this._opts.default.min;
 
-      if (this.sums && this.sums[this._opts.default.type]) {
+      if (!this._opts.disableThresholdCheck && this.sums && this.sums[this._opts.default.type]) {
         this.wire.amount = <number>this.wire.amount - Math.ceil(this.sums[this._opts.default.type]);
       }
     } else if (this.owner.merchant) {
@@ -372,21 +374,7 @@ export class WireCreatorComponent implements AfterViewInit {
 
     this.inProgress = true;
 
-    let request: Promise<any> = this.client.post(`api/v1/wire/${this.wire.guid}`, {
-      payload: this.wire.payload,
-      method: this.wire.currency,
-      amount: this.wire.amount,
-      recurring: this.wire.recurring
-    })
-      .then(response => {
-        return { done: true };
-      })
-      .catch(e => {
-        if (e && e.stage == 'transaction') {
-          throw new Error('Sorry, your payment failed. Please, try again or use another card');
-        }
-      });
-
+    let request: Promise<any> = this.wireService.submitWire(this.wire);
 
     request
       .then(({ done }) => {

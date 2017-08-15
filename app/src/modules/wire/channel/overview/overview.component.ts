@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
+import { WireService } from '../../wire.service';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { Session } from '../../../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class WireChannelOverviewComponent {
+export class WireChannelOverviewComponent implements OnInit, OnDestroy {
 
   ready: boolean = true;
   stats: { sum, count, avg, sent? } = {
@@ -21,11 +22,18 @@ export class WireChannelOverviewComponent {
 
   @Input() channel: any;
 
-  constructor(private client: Client, private session: Session, private cd: ChangeDetectorRef) {
+  constructor(private wireService: WireService, private client: Client, private session: Session, private cd: ChangeDetectorRef) {
+    this.wireService.wireSent.subscribe((wire) => {
+      this.getStats();
+    });
   }
 
   ngOnInit() {
     this.getStats();
+  }
+
+  ngOnDestroy() {
+    this.wireService.wireSent.unsubscribe();
   }
 
   getStats() {
