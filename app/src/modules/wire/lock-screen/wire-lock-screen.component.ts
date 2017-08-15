@@ -51,6 +51,9 @@ export class WireLockScreenComponent implements AfterViewInit {
         if (response.hasOwnProperty('activity')) {
           this.update.next(response.activity);
           this.detectChanges();
+        } else if (response.hasOwnProperty('entity')) {
+          this.update.next(response.entity);
+          this.detectChanges();
         } else {
           this.showWire();
         }
