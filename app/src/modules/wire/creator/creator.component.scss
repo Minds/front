@@ -1,5 +1,5 @@
 .m-wire--creator {
-  font-weight: 300;
+  font-weight: 400;
   max-width: 900px;
   margin: auto;
   position: relative;
@@ -8,7 +8,7 @@
     font-weight: 200;
   }
   h3, h4 {
-    font-weight: 300;
+    font-weight: 400;
   }
 
   h3 {
@@ -54,7 +54,7 @@
 
     .m-wire-creator--subtext {
       letter-spacing: 1px;
-      font-weight: 300;
+      font-weight: 400;
       margin-bottom: $minds-margin * 2;
     }
 
@@ -84,7 +84,7 @@
 
   .m-wire--creator-section {
     padding: 16px 0;
-    font-weight: 300;
+    font-weight: 400;
 
     &.m-wire--creator-section--last {
       margin-top: 8px;
@@ -102,7 +102,7 @@
       width: 6em;
       max-width: 229px;
       padding: 12px;
-      font-weight: 400;
+      font-weight: 300;
       letter-spacing: 5px;
       text-align: right;
 
@@ -126,7 +126,7 @@
     > li {
       h4, span {
         margin: 0;
-        font-weight: 300;
+        font-weight: 400;
       }
 
       .m-wire--creator-selector-type {
@@ -142,7 +142,7 @@
       }
 
       b {
-        font-weight: 400 !important;
+        font-weight: 500 !important;
         letter-spacing: 3px;
       }
 
@@ -234,11 +234,11 @@
 
     .m-wire--creator-toggle--selected {
       color: #417cb2;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     b {
-      font-weight: 400 !important;
+      font-weight: 500 !important;
     }
   }
 
@@ -279,7 +279,7 @@
       &:hover, &.m-wire--creator-autocomplete--result-highlight {
         background: #ffffff;
         color: #000;
-        font-weight: 400;
+        font-weight: 500;
       }
     }
   }
@@ -295,13 +295,13 @@
       appearance: none;
       padding: 8px 32px;
       background: none;
-      border: 1px solid #666;
+      border: 1px solid #555;
       border-radius: 0;
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
       text-transform: uppercase;
-      color: #666;
+      color: #555;
       cursor: pointer;
 
       &[disabled] {
@@ -323,7 +323,7 @@
     .m-wire--creator--submit-error {
       color: #ff0000;
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 500;
     }
   }
 
@@ -371,35 +371,45 @@
 
     .m-payments--saved-cards{
       padding-bottom: $minds-padding;
+
+      .m-payments-saved--title {
+        font-size: 11px;
+        letter-spacing: 2.5px;
+      }
     }
 
     .m-payments--saved-card-item{
-      border: 0;
-      background: rgba(0, 0, 0, 0.15);
+      background: rgba(255,255,255, 0.5);
+      color: #555;
+      padding: 4px 8px;
+      margin: 8px 16px;
     }
 
     input{
-      color: #FFF;
-      background: rgba(0,0,0,0.15);
+      color: #555;
+      background: rgba(255,255,255, 0.5);
       padding: 12px;
       border: 0;
       border-radius: 3px;
+      &::placeholder{
+        color: #888;
+      }
     }
     select{
       padding:12px;
-      background: rgba(0,0,0,0.15);
+      background: rgba(255,255,255, 0.5);
       border: 0;
-      color: #FFF;
+      color: #555;
       border-radius: 3px;
     }
     label {
-      color: #FFF;
+      color: #666;
       padding: 8px 12px;
     }
     .is-focused, .is-dirty{
       border: 0;
       label{
-        color: #FFF;
+        color: #555;
         border: 0;
         top: -8px;
         left: -8px;
@@ -411,13 +421,13 @@
     }
     .minds-purchase-vendors {
       margin-bottom: ($minds-padding * 2) !important;
-      color:#FFF;
+      color:#555;
     }
     .m-purchase-card--highlight{
       font-weight: bold;
     }
     .m-checkout--secure{
-      color: rgba(0,0,0,0.80);
+      color: #666;
     }
     button{
       padding: 12px;
@@ -444,7 +454,7 @@
   .m-payments-saved {
     .m-payments-saved--item {
       text-transform: uppercase;
-      font-weight: 300;
+      font-weight: 400;
       padding: $minds-padding / 2;
       padding-left: $minds-padding * 2;
 
@@ -667,7 +677,7 @@
   display: block;
   border-left: 1px solid rgba(0, 0, 0, 0.2);
   padding: ($minds-padding * 3) 0 ($minds-padding * 3) 60px;
-  color: #666;
+  color: #555;
   font-family: inherit;
   font-weight: 200;
 
@@ -683,7 +693,7 @@
     margin: 0 0 ($minds-padding * 2);
     padding: 0;
     font-size: 24px;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 2.5px;
     line-height: 1;
     color: rgba(0, 0, 0, 0.8);
@@ -692,7 +702,7 @@
   .m-wire--creator-rewards--sums {
     margin: $minds-padding 0;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 0.5px;
     line-height: 1;
     color: rgba(0, 0, 0, 0.8);
