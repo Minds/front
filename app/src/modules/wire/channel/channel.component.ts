@@ -121,7 +121,7 @@ export class WireChannelComponent {
 
     return rewards
       .filter(reward => reward.amount || `${reward.description}`.trim())
-      .map(reward => ({ ...reward, amount: Math.floor(reward.amount || 0) }))
+      .map(reward => ({ ...reward, amount: Math.abs(Math.floor(reward.amount || 0)) }))
       .sort((a, b) => a.amount > b.amount ? 1 : -1)
   }
 }
