@@ -90,7 +90,8 @@ minds-card-user, .minds-banner-card{
 
     a {
       padding: 0 $minds-padding;
-      flex: auto;
+      //flex: auto;
+      flex: 1;
 
       span {
         width: 100%;
@@ -398,7 +399,8 @@ minds-activity.mdl-card, minds-activity{
   > * {
     display:flex;
     flex-direction:column;
-    flex:auto;
+    //flex:auto;
+    flex: 1;
 
     text-align:center;
     cursor:pointer;

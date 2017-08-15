@@ -246,6 +246,15 @@ minds-homepage{
 
       minds-activity{
         width:100%;
+
+        .tabs > * {
+          .minds-counter {
+            display: block;
+          }
+          .m-wire-button{
+            transform: scale(1.2) translateY(5px);
+          }
+        }
       }
     }
   }
