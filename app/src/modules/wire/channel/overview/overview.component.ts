@@ -19,11 +19,12 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
     avg: 0,
     sent: 0
   };
+  sentSubscription;
 
   @Input() channel: any;
 
   constructor(private wireService: WireService, private client: Client, private session: Session, private cd: ChangeDetectorRef) {
-    this.wireService.wireSent.subscribe((wire) => {
+    this.sentSubscription = this.wireService.wireSent.subscribe((wire) => {
       this.getStats();
     });
   }
@@ -33,7 +34,8 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.wireService.wireSent.unsubscribe();
+    if (this.sentSubscription) 
+      this.sentSubscription.unsubscribe();
   }
 
   getStats() {
