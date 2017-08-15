@@ -58,6 +58,19 @@
       margin-bottom: $minds-margin * 2;
     }
 
+    @media screen and (max-height: 750px) {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .m-wire-creator--subtext {
+        font-size: 11px;
+        line-height: 15px;
+        padding: 0 36px;
+        margin: 0;
+      }
+    }
+
     .m-wire-creator--header-svg {
       display: flex;
       align-items: center;

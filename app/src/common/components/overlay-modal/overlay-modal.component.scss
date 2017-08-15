@@ -32,6 +32,11 @@
     max-height: 96vh;
   }
 
+  @media screen and (max-height: 750px) {
+    top: 1vh;
+    max-height: 98vh;
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }
