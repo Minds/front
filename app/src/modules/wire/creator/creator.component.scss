@@ -1,7 +1,7 @@
 .m-wire--creator {
   font-weight: 300;
   max-width: 900px;
-  margin: 10vh auto;
+  margin: auto;
   position: relative;
 
   h2 {
@@ -63,10 +63,9 @@
       align-items: center;
       justify-content: flex-start;
 
-      .ion-icon {
-        color: #4690D6;
-        margin-right: $minds-padding;
-        font-size: 36px;
+      svg {
+        fill: #4690D6;
+        transform: scale(1.2);
       }
     }
 
@@ -367,10 +366,6 @@
           cursor: pointer;
         }
       }
-    }
-
-    .m-payments--saved-cards{
-      padding-bottom: $minds-padding;
     }
 
     .m-payments--saved-card-item{
