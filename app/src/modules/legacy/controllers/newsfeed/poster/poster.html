@@ -45,12 +45,13 @@
 
         <m-wire-threshold-input
           [(threshold)]="meta.wire_threshold"
+          (validThreshold)="validThreshold = $event"
         ></m-wire-threshold-input>
 
         <button
           type="submit"
           class="mdl-button mdl-button--colored"
-          [disabled]="!canPost || inProgress"
+          [disabled]="!canPost || !validThreshold || inProgress"
         >
           <!-- i18n: Action of posting -->Post<!-- /i18n --> <i class="material-icons">send</i>
         </button>

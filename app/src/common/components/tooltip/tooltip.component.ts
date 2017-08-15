@@ -11,7 +11,7 @@ import { Component, Input } from '@angular/core';
 
 export class TooltipComponent {
 
-  @Input() icon = 'help';
+  @Input() icon;
   hidden : boolean = true;
 
 }

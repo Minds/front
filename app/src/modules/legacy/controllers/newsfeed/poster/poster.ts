@@ -34,6 +34,7 @@ export class Poster {
   inProgress: boolean = false;
 
   canPost: boolean = true;
+  validThreshold: boolean = true;
 
   errorMessage: string = null;
 

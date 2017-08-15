@@ -12,9 +12,13 @@
       <input type="text" placeholder="eg. Support me to see my exclusive content and join me for a monthly video chat" [(ngModel)]="exclusive.intro" (keyup)="exclusive.saved = false; updatePreviewEntity()"/>
     </div>
 
+    <div class="mdl-cell mdl-cell--12-col m-merchant-plans-exclusive--background">
+      <label i18n>Background</label>
+      <input type="file" #backgroundFile name="preview" (change)="updatePreview(backgroundFile)" accept="image/*" />
+    </div>
+
     <div class="mdl-cell mdl-cell--12-col m-merchant-plans-exclusive--preview">
       <label i18n>Preview</label>
-      <input type="file" #backgroundFile name="preview" (change)="updatePreview(backgroundFile)"/>
 
       <m-wire--lock-screen *ngIf="previewEntity"
         [preview]="true"

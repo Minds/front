@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnInit } from '@angular/core';
 
 import { WireThresholdStruc, WireRewardsType } from "../interfaces/wire.interfaces";
 import { WireTypeLabels } from "../wire";
@@ -8,7 +8,7 @@ import { Session, SessionFactory } from "../../../services/session";
   selector: 'm-wire-threshold-input',
   templateUrl: 'threshold-input.component.html'
 })
-export class WireThresholdInputComponent {
+export class WireThresholdInputComponent implements OnInit {
   threshold: WireThresholdStruc;
 
   @Input('threshold') set _threshold(threshold: WireThresholdStruc) {
@@ -16,7 +16,7 @@ export class WireThresholdInputComponent {
     this.enabled = !!threshold;
 
     if (!this.threshold) {
-      let currency:WireRewardsType = 'points';
+      let currency: WireRewardsType = 'points';
       if (this.session.getLoggedInUser() && this.session.getLoggedInUser().merchant)
         currency = 'money';
       this.threshold = {
@@ -27,6 +27,7 @@ export class WireThresholdInputComponent {
   }
 
   @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<WireThresholdStruc> = new EventEmitter<WireThresholdStruc>();
+  @Output('validThreshold') validThresholdEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   enabled: boolean = false;
 
@@ -34,6 +35,10 @@ export class WireThresholdInputComponent {
   session: Session = SessionFactory.build();
 
   @ViewChild('minAmountInput') minAmountInput: ElementRef;
+
+  ngOnInit() {
+    this.validThresholdEmitter.emit(this.validate());
+  }
 
   toggle() {
     this.enabled = !this.enabled;
@@ -59,6 +64,14 @@ export class WireThresholdInputComponent {
     this._emitChange();
   }
 
+  validate(): boolean {
+    if (!this.enabled) {
+      return true;
+    }
+
+    return !!(this.threshold.type && (this.threshold.min > 0));
+  }
+
   focusInput() {
     setTimeout(() => {
       if (this.minAmountInput.nativeElement) {
@@ -71,5 +84,6 @@ export class WireThresholdInputComponent {
 
   private _emitChange() {
     this.thresholdChangeEmitter.emit(this.enabled ? this.threshold : null);
+    this.validThresholdEmitter.emit(this.validate());
   }
 }

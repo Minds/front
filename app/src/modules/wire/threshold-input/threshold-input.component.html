@@ -3,7 +3,10 @@
     [class.m-wire-threshold-input--toggle-enabled]="enabled"
     (click)="toggle()"
   >
-    <i class="ion-icon ion-flash"></i>
+    <m-tooltip>
+      <i m-tooltip--anchor class="ion-icon ion-flash"></i>
+      Wire
+    </m-tooltip>
   </a>
 
   <div *ngIf="enabled"

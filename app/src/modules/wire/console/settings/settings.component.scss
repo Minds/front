@@ -95,12 +95,9 @@
     font-size: 12px;
     width:100%;
   }
-  &.m-merchant-plans-exclusive--preview{
-    img{
-      width:100%;
-    }
+  &.m-merchant-plans-exclusive--background{
     input[type=file]{
-      width:200px;
+      width: 100%;
     }
   }
 }
