@@ -18,8 +18,8 @@ import { WireConsoleLedgerComponent } from './console/ledger.component';
 import { WireConsoleSupporterComponent } from './console/supporter/supporter.component';
 import { WireConsoleSettingsComponent } from "./console/settings/settings.component";
 import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.component';
-import { WireMarketingComponent } from './marketing.component';
 import { WireService } from './wire.service';
+import { WireMarketingComponent } from './marketing.component';
 
 const wireRoutes : Routes = [
   { path: 'wire', component: WireMarketingComponent }
