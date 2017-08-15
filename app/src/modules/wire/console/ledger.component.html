@@ -22,8 +22,12 @@
             <tr class="m-wire-console--ledger-row">
               <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category">{{ wire.time_created * 1000 | date }}</td>
 
-              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category" *ngIf="type == 'sent'"><span>@</span>{{wire.to.username}}</td>
-              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category" *ngIf="type == 'received'"><span>@</span>{{wire.from.username}}</td>
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-channel" 
+                  *ngIf="type == 'sent'"
+                  [routerLink]="'/' + wire.to.username"><span>@</span>{{wire.to.username}}</td>
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-channel" 
+                  *ngIf="type == 'received'"i
+                  [routerLink]="'/' + wire.from.username"><span>@</span>{{wire.from.username}}</td>
 
               <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'points'">{{ wire.amount }} points</td>
               <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'money'"><i>$</i>{{ wire.amount }}</td>
