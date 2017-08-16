@@ -23,7 +23,7 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
 
   @Input() channel: any;
 
-  constructor(private wireService: WireService, private client: Client, private session: Session, private cd: ChangeDetectorRef) {
+  constructor(private wireService: WireService, private client: Client, public session: Session, private cd: ChangeDetectorRef) {
     this.sentSubscription = this.wireService.wireSent.subscribe((wire) => {
       this.getStats();
     });
@@ -49,6 +49,8 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
         };
         this.detectChanges();
       });
+    if (this.session.getLoggedInUser().guid == this.channel.guid || !this.session.isLoggedIn()) 
+      return;
     this.client.get('api/v1/wire/rewards/' + this.channel.guid)
       .then(({ sums }) => {
         this.stats.sent = sums.money;
