@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col">
+  <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col" *ngIf="session.getLoggedInUser().guid != channel.guid">
     <i>$</i><span *ngIf="ready">{{ stats.avg | number:'1.0-0' }}</span>
     <div class="m-wire-channel--overview--label">
       <label>Average</label>
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col">
+  <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col" *ngIf="session.getLoggedInUser().guid != channel.guid">
     <i>$</i><span *ngIf="ready">{{ stats.sent | number:'1.0-0' }}</span>
     <div class="m-wire-channel--overview--label">
       <label>You Sent</label>
