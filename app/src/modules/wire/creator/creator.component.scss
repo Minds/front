@@ -364,7 +364,7 @@
       flex-direction: column;
       justify-content: center;
       text-align: center;
-      padding: 50px;
+      padding: 16px;
 
       i{
         font-size: 90px;
@@ -415,9 +415,12 @@
       color: #555;
       border-radius: 3px;
     }
-    label {
-      color: #666;
-      padding: 8px 12px;
+    .mdl-textfield {
+       padding: 12px 0;
+       label {
+        color: #666;
+        padding: 0px 12px;
+      }
     }
     .is-focused, .is-dirty{
       border: 0;
