@@ -22,10 +22,10 @@
             <tr class="m-wire-console--ledger-row">
               <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category">{{ wire.time_created * 1000 | date }}</td>
 
-              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-channel" 
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-channel"
                   *ngIf="type == 'sent'"
                   [routerLink]="'/' + wire.to.username"><span>@</span>{{wire.to.username}}</td>
-              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-channel" 
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-channel"
                   *ngIf="type == 'received'"i
                   [routerLink]="'/' + wire.from.username"><span>@</span>{{wire.from.username}}</td>
 
@@ -40,8 +40,12 @@
                 <m-wire-console--supporter [guid]="wire.from.guid" [supporter]="wire.from" *ngIf="type == 'received'"></m-wire-console--supporter>
               </td>
             </tr>
-
           </ng-container>
+          <tr class="m-wire-console--ledger-row m-wire-console--ledger-row-placeholder" *ngIf="!wires || !wires.length">
+            <td colspan="4" style="text-align:center">
+              No Wires to show.
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
