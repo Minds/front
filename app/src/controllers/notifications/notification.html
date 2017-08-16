@@ -463,6 +463,27 @@
     </a>
   </ng-template>
 
+  <!-- Wires prompt -->
+  <ng-template ngSwitchCase="wire_happened">
+    <a *ngIf="notification.params.amount && notification.from && notification.to">
+      <p *ngIf="!notification.params.subscribed && notification.params.from_guid == session.getLoggedInUser().guid" i18n>
+        You have successfully wired {{notification.params.amount}} to <a [routerLink]="['/', notification.params.to_username]" class="pseudo-link mdl-color-text--blue-grey-400">@{{notification.params.to_username}}</a>
+      </p>
+
+      <p *ngIf="!notification.params.subscribed && notification.params.from_guid != session.getLoggedInUser().guid" i18n>
+        You have received a wire of {{notification.params.amount}} from <a [routerLink]="['/', notification.params.from_username]" class="pseudo-link mdl-color-text--blue-grey-400">@{{notification.params.from_username}}</a>
+      </p>
+
+      <p *ngIf="notification.params.subscribed && notification.params.from_guid == session.getLoggedInUser().guid" i18n>
+        You have subscribed to wire {{notification.params.amount}}/month to <a [routerLink]="['/', notification.params.to_username]" class="pseudo-link mdl-color-text--blue-grey-400">@{{notification.params.to_username}}</a>
+      </p>
+
+      <p *ngIf="notification.params.subscribed && notification.params.from_guid != session.getLoggedInUser().guid" i18n>
+        You have received a wire subscription of {{notification.params.amount}}/month from <a [routerLink]="['/', notification.params.from_username]" class="pseudo-link mdl-color-text--blue-grey-400">@{{notification.params.from_username}}</a>
+      </p>
+    </a>
+  </ng-template>
+
   <!-- Default -->
   <ng-template ngSwitchDefault>
     <i i18n>Sorry, there was an error viewing this notification</i>
