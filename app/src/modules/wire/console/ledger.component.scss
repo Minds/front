@@ -1,0 +1,73 @@
+.m-wire-console--ledger {
+  .mdl-tabs__tab-bar{
+    justify-content: left;
+  }
+  .mdl-tabs__tab {
+    cursor: pointer;
+  }
+
+  m-date-selector {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    align-self: center;
+    justify-content: flex-end;
+  }
+}
+
+.m-wire-console--ledger-table{
+  margin-top: 16px;
+
+  table{
+    width:100%;
+    font-family: 'Lato';
+  }
+
+  .m-wire-console--ledger-header{
+    th{
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+  }
+
+  .m-wire-console--ledger-row{
+    td{
+      letter-spacing: 1px;
+      text-transform: uppercase;
+
+      i{
+        cursor: pointer;
+      }
+    }
+
+    .m-wire-console--ledger-channel {
+      cursor: pointer;
+    }
+
+    .m-wire-console--ledger-amount{
+      font-size: 26px;
+      text-transform: lowercase;
+    }
+
+    .m-wire-console--ledger-refunded{
+      color: #888;
+      border: 1px solid #eee;
+      border-radius: 3px;
+      font-size: 11px;
+      display: inline-block;
+      padding: 4px 8px;
+      vertical-align: middle;
+      margin-top: -6px;
+      margin-right: 8px;
+
+      > * {
+        vertical-align: middle;
+      }
+      m-tooltip i{
+        font-size:14px;
+      }
+    }
+  }
+
+}

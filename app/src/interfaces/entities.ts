@@ -1,6 +1,8 @@
 /**
 * Activity Object
 */
+import { WireRewardsStruc } from "../modules/wire/interfaces/wire.interfaces";
+
 export interface MindsActivityObject {
 	activity : Array<any>;
 }
@@ -31,6 +33,7 @@ export interface MindsUser {
 	carousels ?: boolean,
 	city ?: string
 	social_profiles ?: KeyVal[];
+	wire_rewards ?: WireRewardsStruc;
 }
 
 export interface MindsGroup {

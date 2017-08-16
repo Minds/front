@@ -95,19 +95,19 @@ minds-button-remind, minds-button-thumbs-up, minds-button-thumbs-down{
 }
 
 .minds-counter:before{
-  content:'( ';
+  //content:'( ';
 }
 .minds-counter{
   font-family:"Lato", "Helvetica", "Roboto", sans-serif;
   display:inline-block;
   font-size:12px;
-  // font-weight:bold;
+  font-weight: 800;
   vertical-align: middle;
-  padding:0;
+  padding: 0 8px;
   white-space: nowrap;
 }
 .minds-counter:after{
-   content:' )';
+   //content:' )';
 }
 
 .minds-bg-overlay{

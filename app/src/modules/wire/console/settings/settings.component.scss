@@ -67,12 +67,16 @@
     }
   }
 }
-.m-merchant-plans-exclusive{
-  padding:16px;
-}
+
 .m-merchant-plans-exclusive--inputs{
   width: 100%;
   box-sizing: border-box;
+
+  m-wire--lock-screen {
+    display: block;
+    border: 1px solid #ddd;
+    padding: $minds-padding;
+  }
 }
 .m-merchant-plans-exclusive--inputs > div{
   label{
@@ -80,11 +84,6 @@
     display: block;
     font-size: 12px;
     padding: 4px 2px;
-  }
-  span{
-    position: absolute;
-    margin: 16px;
-    font-size: 28px;
   }
   &.m-merchant-plans-exclusive--price input{
     padding: 12px 12px 12px 40px;
@@ -96,12 +95,9 @@
     font-size: 12px;
     width:100%;
   }
-  &.m-merchant-plans-exclusive--preview{
-    img{
-      width:100%;
-    }
+  &.m-merchant-plans-exclusive--background{
     input[type=file]{
-      width:200px;
+      width: 100%;
     }
   }
 }

@@ -7,6 +7,7 @@ import { OverlayModalService } from "../../../services/ux/overlay-modal";
   moduleId: module.id,
   selector: 'm-overlay-modal',
   template: `
+    <div class="m-overlay-modal--backdrop" [hidden]="hidden" (click)="dismiss()"></div>
     <div class="m-overlay-modal" [hidden]="hidden">
       <a class="m-overlay-modal--close" (click)="dismiss()"><i class="material-icons">close</i></a>
       <ng-template dynamic-host></ng-template>
@@ -54,6 +55,14 @@ export class OverlayModalComponent implements AfterViewInit {
 
     this.componentInstance.data = data;
     this.componentRef.changeDetectorRef.detectChanges();
+  }
+
+  setOpts(opts) {
+    if (!this.componentInstance) {
+      return;
+    }
+
+    this.componentInstance.opts = opts;
   }
 
   present() {

@@ -14,7 +14,7 @@ export class OverlayModalService {
     return this;
   }
 
-  create(component, data?) {
+  create(component, data?, opts?) {
     if (!this.container) {
       throw new Error('Missing overlay container');
     }
@@ -23,6 +23,10 @@ export class OverlayModalService {
 
     this.container.create(component);
     this.container.setData(data);
+
+    if (opts) {
+      this.container.setOpts(opts);
+    }
 
     return this;
   }

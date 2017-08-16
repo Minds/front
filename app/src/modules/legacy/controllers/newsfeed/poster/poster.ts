@@ -26,7 +26,7 @@ export class Poster {
 
   content = '';
   meta: any = {
-    paywall: false
+    wire_threshold: null
   };
   session = SessionFactory.build();
   minds;
@@ -34,6 +34,7 @@ export class Poster {
   inProgress: boolean = false;
 
   canPost: boolean = true;
+  validThreshold: boolean = true;
 
   errorMessage: string = null;
 
@@ -77,7 +78,7 @@ export class Poster {
         data.activity.boostToggle = true;
         this.load.next(data.activity);
         this.attachment.reset();
-        this.meta = { monetized: false };
+        this.meta = { wire_threshold: null };
         this.inProgress = false;
       })
       .catch(function (e) {

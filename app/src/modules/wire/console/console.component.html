@@ -1,0 +1,61 @@
+<div class="m-wire-console">
+
+  <div class="m-wire-console--hero mdl-color--blue mdl-color-text--white">
+
+    <div class="m-wire-console--hero-header">
+      <h2>Wire</h2>
+      <div class="m-wire-console--options-toggle">
+        <button class="mdl-button mdl-button--primary mdl-color--white mdl-color-text--blue"
+          (click)="showOptions = !showOptions"
+        >
+          <i class="material-icons" *ngIf="!showOptions">arrow_drop_down</i>
+          <i class="material-icons" *ngIf="showOptions">arrow_drop_up</i>
+          <span>Options</span>
+        </button>
+      </div>
+    </div>
+
+    <p>Wire allows you to receive money for rewards and exclusive content. You can configure your rewards on your channel page.</p>
+
+    <div class="m-wire-console--overview mdl-grid mdl-shadow--2dp">
+
+      <div class="m-wire-console--overview-count mdl-cell mdl-cell--4-col">
+        <span *ngIf="ready">{{ stats.count | number:'1.0-0' }}</span>
+        <div class="m-wire-console--label">
+          <label>Wires</label>
+          <m-tooltip icon="help">
+            How many wires you have received in the last 30 days
+          </m-tooltip>
+        </div>
+      </div>
+
+      <div class="m-wire-console--overview-earnings mdl-cell mdl-cell--4-col">
+        <i>$</i><span *ngIf="ready">{{ stats.sum | number:'1.0-0' }}</span>
+        <div class="m-wire-console--label">
+          <label>Earnings</label>
+          <m-tooltip icon="help">
+            This is your total volume (gross) of all wires you have received in the last 30 days
+          </m-tooltip>
+        </div>
+      </div>
+      <div class="m-wire-console--overview-average mdl-cell mdl-cell--4-col">
+        <i>$</i><span *ngIf="ready">{{ stats.avg | number:'1.0-0' }}</span>
+        <div class="m-wire-console--label">
+          <label>Average</label>
+          <m-tooltip icon="help">
+            This is average amount received per wire
+          </m-tooltip>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-wire-console--options mdl-shadow--2dp m-wire-console--options-active" *ngIf="showOptions">
+    <m-wire-console-settings
+      (saved)="showOptions = false"
+    ></m-wire-console-settings>
+  </div>
+
+  <m-wire-console--ledger></m-wire-console--ledger>
+
+</div>

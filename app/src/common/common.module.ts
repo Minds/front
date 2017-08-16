@@ -20,6 +20,7 @@ import { MindsRichEmbed } from "./components/rich-embed/rich-embed";
 
 import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from "./directives/autogrow";
+import { InlineAutoGrow } from "./directives/inline-autogrow";
 import { Emoji } from "./directives/emoji";
 import { Hovercard } from "./directives/hovercard";
 import { ScrollLock } from "./directives/scroll-lock";
@@ -37,6 +38,7 @@ import { OverlayModalComponent } from "./components/overlay-modal/overlay-modal.
 
 import { FaqComponent } from './components/faq/faq.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 
 @NgModule({
   imports: [
@@ -60,12 +62,14 @@ import { ChartComponent } from './components/chart/chart.component';
     MindsRichEmbed,
 
     AutoGrow,
+    InlineAutoGrow,
     Emoji,
     Hovercard,
     ScrollLock,
     TagsLinks,
     Tooltip,
     MDL_DIRECTIVES,
+    DateSelectorComponent,
     MindsAvatar,
     CaptchaComponent,
     Textarea,
@@ -95,12 +99,14 @@ import { ChartComponent } from './components/chart/chart.component';
     MindsRichEmbed,
 
     AutoGrow,
+    InlineAutoGrow,
     Emoji,
     Hovercard,
     ScrollLock,
     TagsLinks,
     Tooltip,
     MDL_DIRECTIVES,
+    DateSelectorComponent,
     MindsAvatar,
     CaptchaComponent,
     Textarea,

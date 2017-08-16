@@ -37,3 +37,5 @@ interface Window {
   twoOhSix?: any;
 }
 declare var window:Window;
+
+declare var MaterialDatetimePicker;

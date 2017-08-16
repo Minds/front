@@ -1,40 +1,7 @@
 <div class="mdl-grid" style="max-width:900px">
 
   <div class="mdl-cell mdl-cell--4-col">
-    <ul class="mdl-card mdl-color--white mdl-shadow--2dp minds-settings-nav">
-      <li class="minds-settings-item">
-        <a [routerLink]="['/settings/general']" class ="mdl-color-text--blue-grey-500">
-          <!-- i18n -->Change your settings<!-- /i18n -->
-        </a>
-      </li>
-      <!--<li class="minds-settings-item">
-        <a [routerLink]="['/settings/statistics']" class ="mdl-color-text--blue-grey-500" >
-          Account statistics
-        </a>
-      </li>-->
-      <li [routerLink]="['/settings/disable']" class="minds-settings-item">
-        <a class ="mdl-color-text--blue-grey-500">
-          <!-- i18n -->Deactivate channel<!-- /i18n -->
-        </a>
-      </li>
-      <li class="minds-settings-item" >
-        <a [routerLink]="['/settings/twoFactor']" class ="mdl-color-text--blue-grey-500">
-          <!-- i18n -->Two factor authentication<!-- /i18n -->
-        </a>
-      </li>
-      <li class="minds-settings-item" >
-        <a [routerLink]="['/settings/subscriptions']" class ="mdl-color-text--blue-grey-500">
-          <!-- i18n -->Paid subscriptions<!-- /i18n -->
-        </a>
-      </li>
-
-      <li class="minds-settings-item" >
-        <m-modal-invite #invite [open]="invite.open" (closed)="invite.open = false"></m-modal-invite>
-        <a (click)="invite.open = true" class="mdl-color-text--blue-grey-500">
-            <!-- i18n -->Invite your friends<!-- /i18n -->
-        </a>
-      </li>  
-    </ul> 
+    <m-settings--navigation></m-settings--navigation>
   </div>
 
   <div class="mdl-cell mdl-cell--8-col minds-settings-content">

@@ -14,6 +14,9 @@
   class="m-bar-button m-bar-button-expand"
   [ngClass]="{ 'm-bar-button-expanded': opened }"
 >
-  <i [hidden]="inProgress" class="material-icons m-overgrown-material-icon">share</i>
+  <m-tooltip>
+    <i m-tooltip--anchor [hidden]="inProgress" class="material-icons m-overgrown-material-icon">share</i>
+    Share
+  </m-tooltip>
   <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </a>

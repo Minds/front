@@ -1,15 +1,20 @@
-<minds-media-theatre [object]="entity"
-*ngIf="entity.subtype != 'album'"
-[hidden]="!entity.subtype || entity.subtype == 'album'"
-[ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(entity), 'm-mature-content-shown': attachment.isForcefullyShown(entity) }"
->
-  <div class="m-mature-overlay" (click)="entity.mature_visibility = !entity.mature_visibility">
-      <span class="m-mature-overlay-note">
-        <i class="material-icons" title="Mature content" i18n-title>explicit</i>
-        <span i18n>Click to confirm your are 18+</span>
-      </span>
-  </div>
-</minds-media-theatre>
+<ng-container *ngIf="(!entity.paywalled || entity.ownerObj.guid == session.getLoggedInUser().guid); else isPaywalled">
+  <minds-media-theatre [object]="entity"
+    *ngIf="entity.subtype != 'album'"
+    [hidden]="!entity.subtype || entity.subtype == 'album'"
+    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(entity), 'm-mature-content-shown': attachment.isForcefullyShown(entity) }"
+  >
+    <div class="m-mature-overlay" (click)="entity.mature_visibility = !entity.mature_visibility">
+        <span class="m-mature-overlay-note">
+          <i class="material-icons" title="Mature content" i18n-title>explicit</i>
+          <span i18n>Click to confirm your are 18+</span>
+        </span>
+    </div>
+  </minds-media-theatre>
+</ng-container>
+<ng-template #isPaywalled>
+  <m-wire--lock-screen [(entity)]="entity"></m-wire--lock-screen>
+</ng-template>
 
 <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress" style="margin: 16px auto;"></div>
 <div class="m-error-splash" *ngIf="error && !inProgress">

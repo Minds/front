@@ -20,7 +20,7 @@ import { RevenueOptionsComponent } from './revenue/options.component';
 import { AdSharingComponent } from './ad-sharing/ad-sharing.component';
 import { AdSharingAnalyticsComponent } from './ad-sharing/analytics/analytics.component';
 import { AdSharingSettingsComponent } from './ad-sharing/settings/settings.component';
-import { ExclusivePaywallComponent } from './exclusive/exclusive.component';
+import { WalletWireComponent } from '../wallet/wire/wire.component';
 
 
 const monetizationRoutes : Routes = [
@@ -36,8 +36,8 @@ const monetizationRoutes : Routes = [
       { path: 'options', component: RevenueOptionsComponent },
       { path: 'affiliates', component: AffiliateLinkComponent },
       { path: 'ad-sharing', component: AdSharingComponent },
-      { path: 'exclusive', component: ExclusivePaywallComponent },
-      { path: 'ad-sharing', component: AdSharingComponent }
+      { path: 'ad-sharing', component: AdSharingComponent },
+      { path: 'wire', component: WalletWireComponent }
     ]
   }
 ]
@@ -65,8 +65,7 @@ const monetizationRoutes : Routes = [
     RevenueOptionsComponent,
     AdSharingComponent,
     AdSharingSettingsComponent,
-    AdSharingAnalyticsComponent,
-    ExclusivePaywallComponent
+    AdSharingAnalyticsComponent
   ],
   exports: [
     MonetizationMarketingComponent,
@@ -85,8 +84,7 @@ const monetizationRoutes : Routes = [
     AffiliateMarketingComponent,
     AffiliateLinkComponent,
     RevenueConsoleComponent,
-    AdSharingComponent,
-    ExclusivePaywallComponent
+    AdSharingComponent
   ]
 })
 

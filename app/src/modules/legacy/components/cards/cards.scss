@@ -90,7 +90,8 @@ minds-card-user, .minds-banner-card{
 
     a {
       padding: 0 $minds-padding;
-      flex: auto;
+      //flex: auto;
+      flex: 1;
 
       span {
         width: 100%;
@@ -226,7 +227,7 @@ minds-activity.mdl-card, minds-activity{
     }
     .body{
       margin-left:12px;
-      a { 
+      a {
         font-size:12px;
         letter-spacing:1px;
       }
@@ -285,21 +286,6 @@ minds-activity.mdl-card, minds-activity{
           display:inline-block;
       }
     }
-  }
-
-  .impressions-tag{
-    position: absolute;
-    z-index: 999;
-    right: -5px;
-    bottom: -8px;
-    background-color: #888;
-    padding: 3px 8px;
-    font-size: 10px;
-    line-height: 9px;
-    color: #FFF;
-    border-radius: 3px;
-    vertical-align: middle;
-    text-align: center;
   }
 
   .minds-more{
@@ -413,7 +399,8 @@ minds-activity.mdl-card, minds-activity{
   > * {
     display:flex;
     flex-direction:column;
-    flex:auto;
+    //flex:auto;
+    flex: 1;
 
     text-align:center;
     cursor:pointer;
