@@ -106,6 +106,15 @@ m-wire-channel {
     font-size: 12px;
   }
 
+  .m-wire-channel--reward-send-wire {
+    width: 100%;
+    text-align: right;
+    color: #4690d6;
+    & > i {
+      transform: scale(1.6);
+    }
+  }
+
   .m-wire-channel--reward-amount,
   .m-wire-channel--reward-description {
     padding: $minds-padding 0;
