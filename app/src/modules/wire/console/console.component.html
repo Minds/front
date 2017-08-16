@@ -50,7 +50,7 @@
     </div>
   </div>
 
-  <div class="m-wire-console--options mdl-shadow--2dp m-wire-console--options-active" [hidden]="!showOptions">
+  <div class="m-wire-console--options mdl-shadow--2dp m-wire-console--options-active" *ngIf="showOptions">
     <m-wire-console-settings
       (saved)="showOptions = false"
     ></m-wire-console-settings>
