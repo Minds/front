@@ -121,6 +121,7 @@ export class StripeCheckout {
           this.cards = cards;
           this.detectChanges();
         }
+        this.detectChanges();
       })
       .catch(e => {
         this.loading = false;
