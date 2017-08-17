@@ -95,8 +95,12 @@ export class Channel {
           this.loadFeed(true);
       })
       .catch((e) => {
-        this.error = "Sorry, the channel couldn't be found";
-        console.log('couldnt load channel', e);
+        if (e.status === 0) {
+          this.error = "Sorry, there was a timeout error.";
+        } else {
+          this.error = "Sorry, the channel couldn't be found";
+          console.log('couldnt load channel', e);
+        }
       });
   }
 

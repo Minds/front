@@ -15,12 +15,11 @@ import { SessionFactory } from '../../../services/session';
 
 export class NewsfeedSingle {
 
-
   session = SessionFactory.build();
   minds;
   inProgress : boolean = false;
   activity : any;
-
+  error: string = "";
 
 	constructor(public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute){
   }
@@ -42,26 +41,32 @@ export class NewsfeedSingle {
 	/**
 	 * Load newsfeed
 	 */
-	load(guid : string){
-		this.client.get('api/v1/newsfeed/single/' + guid, { }, {cache: true})
-				.then((data : any) => {
-            this.activity = data.activity;
+  load(guid: string) {
+    this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
+      .then((data: any) => {
 
-            switch(this.activity.subtype){
-              case 'image':
-              case 'video':
-              case 'album':
-                this.router.navigate(['/media', this.activity.guid], { replaceUrl: true });
-                break;
-              case 'blog':
-                this.router.navigate(['/blog/view', this.activity.guid], { replaceUrl: true });
-                break;
-            }
-				})
-				.catch(function(e){
-					this.inProgress = false;
-				});
-	}
+        this.activity = data.activity;
+
+        switch (this.activity.subtype) {
+          case 'image':
+          case 'video':
+          case 'album':
+            this.router.navigate(['/media', this.activity.guid], { replaceUrl: true });
+            break;
+          case 'blog':
+            this.router.navigate(['/blog/view', this.activity.guid], { replaceUrl: true });
+            break;
+        }
+      })
+      .catch(e => {
+        if (e.status === 0) {
+          this.error = "Sorry, there was a timeout error.";
+        } else {
+          this.error = "Sorry, we couldn't load the activity";
+        }
+        this.inProgress = false;
+      });
+  }
 
   delete(activity){
     this.router.navigate(['/newsfeed']);
