@@ -38,9 +38,20 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col" *ngIf="isCountry(['CA', 'HK', 'SG'])">
-      <label i18n>Personal ID</label>
+      <label i18n>Personal ID
+        <m-tooltip *ngIf="isCountry(['CA'])" icon="help" style="vertical-align: middle;">
+            Social Insurance Number (SIN).
+        </m-tooltip>
+        <m-tooltip *ngIf="isCountry(['HK'])" icon="help" style="vertical-align: middle;">
+            Hong Kong Identity Card (HKID).
+        </m-tooltip>
+        <m-tooltip *ngIf="isCountry(['SG'])" icon="help" style="vertical-align: middle;">
+            National Registration Identity Card (NRIC).
+        </m-tooltip>
+      </label>
       <input formControlName="personalIdNumber" type="text" placeholder="Personal ID number or code" i18n-placeholder>
     </div>
+
   </div>
 
   <div class="mdl-grid">
