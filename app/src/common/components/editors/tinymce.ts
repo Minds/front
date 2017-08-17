@@ -30,6 +30,8 @@ export class MindsTinymce {
       menubar: false,
       toolbar: "styleselect | bold italic underline textcolor | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | removeformat | code",
       statusbar: false,
+      relative_urls: false,
+      remove_script_host: false,
       plugins: [
 	         "advlist autolink link image lists preview hr anchor pagebreak",
 	         "media nonbreaking code",
