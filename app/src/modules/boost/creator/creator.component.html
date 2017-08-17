@@ -5,7 +5,7 @@
 
     <div class="m-boost--creator--wallet">
       <i class="material-icons m--middle">account_balance</i>
-      <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance | abbr }}</span>
+      <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance - boost.amount | number }} Points</span>
       <span *ngIf="rates.balance === null" class="m--middle">…</span>
     </div>
   </div>
