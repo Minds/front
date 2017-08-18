@@ -9,7 +9,7 @@
   </ng-container>
 </div>
 
-<m-boost-console-booster [type]="type"></m-boost-console-booster>
+<m-boost-console-booster [type]="type" [toggled]="toggled"></m-boost-console-booster>
 
 <div *ngIf="type == 'peer' && !session.getLoggedInUser().merchant"
   class="m-boost-console--merchant mdl-color--blue-500 mdl-color-text--white mdl-shadow--4dp"

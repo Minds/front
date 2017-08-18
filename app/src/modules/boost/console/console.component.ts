@@ -14,6 +14,7 @@ export type BoostConsoleFilter = 'inbox' | 'outbox';
 export class BoostConsoleComponent {
   type: BoostConsoleType;
   filter: BoostConsoleFilter;
+  toggled: boolean;
 
   session: Session = SessionFactory.build();
 
@@ -31,6 +32,10 @@ export class BoostConsoleComponent {
     this.activatedRoute.params.subscribe(params => {
       if (params['type']) {
         this.type = params['type'];
+      }
+
+      if (params['toggled']) {
+        this.toggled = params['toggled'];
       }
 
       this.filter = params['filter'] || 'inbox';
