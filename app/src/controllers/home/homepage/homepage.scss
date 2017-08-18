@@ -459,6 +459,7 @@ minds-homepage{
   /* bottom: 0; */
   z-index: 9999;
   position: relative;
+  pointer-events: none;
 
   .m-homepage-fader--load-more{
     position: absolute;
@@ -472,5 +473,6 @@ minds-homepage{
     font-weight: 400;
     font-family: Lato;
     cursor: pointer;
+    pointer-events: all;
   }
 }
