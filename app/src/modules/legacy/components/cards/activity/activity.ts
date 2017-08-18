@@ -162,8 +162,9 @@ export class Activity {
   }
 
   showWire() {
-    this.overlayModal.create(WireCreatorComponent, this.activity)
-      .present();
+    this.overlayModal.create(WireCreatorComponent,
+      this.activity.remind_object ? this.activity.remind_object : this.activity)
+        .present();
   }
 
   menuOptionSelected(option: string) {
