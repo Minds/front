@@ -394,7 +394,11 @@ export class WireCreatorComponent implements AfterViewInit {
       })
       .catch(e => {
         this.inProgress = false;
-        this.error = (e && e.message) || 'Sorry, something went wrong';
+        if (e && e.message) {
+          this.error = e.message;
+        } else {
+          this.error = 'Sorry, something went wrong';
+        }
       });
   }
 }
