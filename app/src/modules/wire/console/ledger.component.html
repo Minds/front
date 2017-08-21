@@ -3,7 +3,29 @@
     <a class="mdl-tabs__tab" [class.is-active]="type == 'sent'" (click)="setType('sent')" i18n>Sent</a>
     <a class="mdl-tabs__tab" [class.is-active]="type == 'received'" (click)="setType('received')" i18n>Received</a>
 
-    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
+    <div class="m-wire-console--ledger-filters">
+      <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
+
+      <div class="m-wire-console--ledger-method" *ngIf="canSelectMethod()">
+        <span>
+          <ng-container *ngIf="method == 'points'">Points</ng-container>
+          <ng-container *ngIf="method == 'money'">$ USD</ng-container>
+        </span>
+
+        <button id="m-wire-console-ledger-method" class="mdl-button mdl-js-button mdl-button--icon" [mdl]>
+          <i class="material-icons">more_vert</i>
+        </button>
+
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="m-wire-console-ledger-method" [mdl]>
+          <li class="mdl-menu__item"
+            (click)="setMethod('points')"
+          >Points</li>
+          <li class="mdl-menu__item"
+            (click)="setMethod('money')"
+          >$ USD</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <div class="m-wire-console--ledger-table">
@@ -36,8 +58,8 @@
             </tr>
             <tr class="m-wire-console--ledger-row m-wire-console--ledger-row-expanded" *ngIf="wire.expanded">
               <td colspan="4">
-                <m-wire-console--supporter [guid]="wire.to.guid" [supporter]="wire.to" *ngIf="type == 'sent'" [reverse]="true"></m-wire-console--supporter>
-                <m-wire-console--supporter [guid]="wire.from.guid" [supporter]="wire.from" *ngIf="type == 'received'"></m-wire-console--supporter>
+                <m-wire-console--supporter [method]="method" [guid]="wire.to.guid" [supporter]="wire.to" *ngIf="type == 'sent'" [reverse]="true"></m-wire-console--supporter>
+                <m-wire-console--supporter [method]="method" [guid]="wire.from.guid" [supporter]="wire.from" *ngIf="type == 'received'"></m-wire-console--supporter>
               </td>
             </tr>
           </ng-container>

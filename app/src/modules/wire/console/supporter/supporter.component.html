@@ -2,7 +2,10 @@
 
   <div class="m-wire-console--supporter-sent">
     <div class="m-wire-console--supporter-sent-amount">
-      <span>$</span>{{sum}}
+      <span>
+        <ng-container *ngIf="method == 'money'">{{ sum | currency:'USD':true:'1.0-0' }}</ng-container>
+        <ng-container *ngIf="method == 'points'">{{ sum | number }}</ng-container>
+      </span>
     </div>
     <div class="m-wire-console--supporter-sent-tag">
       this month

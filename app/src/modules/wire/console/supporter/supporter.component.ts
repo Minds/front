@@ -20,6 +20,8 @@ export class WireConsoleSupporterComponent {
 
   @Input() reverse: boolean = false;
 
+  @Input() method: string = 'money';
+
   sum: number = 0;
   inProgress: boolean = false;
 
@@ -39,8 +41,8 @@ export class WireConsoleSupporterComponent {
     this.inProgress = true;
 
     let endpoint = this.reverse ?
-      `api/v1/wire/sums/sender/${this.session.getLoggedInUser().guid}/money/${this.guid}` :
-      `api/v1/wire/sums/sender/${this.guid}/money/${this.session.getLoggedInUser().guid}`;
+      `api/v1/wire/sums/sender/${this.session.getLoggedInUser().guid}/${this.method}/${this.guid}` :
+      `api/v1/wire/sums/sender/${this.guid}/${this.method}/${this.session.getLoggedInUser().guid}`;
 
     this.client.get(endpoint, { })
       .then(({ sum }) => {

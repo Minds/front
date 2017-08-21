@@ -15,6 +15,7 @@ import { Client } from "../../../services/api";
 export class WireConsoleLedgerComponent {
 
   @Input() type: string;
+  @Input() method: string;
   wires: any[] = [];
   inProgress: boolean = false;
 
@@ -37,11 +38,24 @@ export class WireConsoleLedgerComponent {
       }
     }
 
+    if (!this.method) {
+      this.method = 'points';
+
+      if (window.Minds.user.merchant) {
+        this.method = 'money';
+      }
+    }
+
     this.loadList(true);
   }
 
   setType(type: string) {
     this.type = type;
+    this.loadList(true);
+  }
+
+  setMethod(method: string) {
+    this.method = method;
     this.loadList(true);
   }
 
@@ -62,6 +76,7 @@ export class WireConsoleLedgerComponent {
       offset: this.offset,
       limit: 12,
       type: this.type,
+      method: this.method,
       start: Date.parse(this.startDate) / 1000
     })
       .then(({ wires, 'load-next': loadNext }) => {
@@ -102,6 +117,10 @@ export class WireConsoleLedgerComponent {
     this.cd.detectChanges();
 
     this.loadList(true);
+  }
+
+  canSelectMethod() {
+    return !!window.Minds.user.merchant;
   }
 
 }
