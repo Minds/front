@@ -40,7 +40,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   object: any = {};
 
   boost: BoostStruc = {
-    amount: 2500,
+    amount: 1000,
     currency: 'points',
     type: null,
 
