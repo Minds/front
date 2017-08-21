@@ -14,6 +14,7 @@ export class RevenueOptionsComponent {
 
   form: FormGroup;
   inProgress : boolean = true;
+  editing: boolean = false;
   payoutMethod = {
     account: null,
     country: 'US'
@@ -50,6 +51,8 @@ export class RevenueOptionsComponent {
 
   addBankAccount(){
     this.inProgress = true;
+    this.error = '';
+    this.editing = false;
     this.detectChanges();
 
     this.client.post('api/v1/monetization/settings', this.form.value)
@@ -77,6 +80,16 @@ export class RevenueOptionsComponent {
         this.leaveError = e.message;
         this.detectChanges();
       });
+  }
+
+  edit() {
+    this.editing = true;
+    this.detectChanges();
+  }
+
+  cancelEditing() {
+    this.editing = false;
+    this.detectChanges();
   }
 
   detectChanges(){
