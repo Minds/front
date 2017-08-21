@@ -1,0 +1,75 @@
+<div class="m-wire-console--overview">
+  <!-- Money -->
+  <div class="m-wire-console--overview-stat-label" *ngIf="isMerchant()">
+    Money
+  </div>
+
+  <div class="mdl-grid m-wire-console--overview-stat-type" *ngIf="isMerchant()">
+    <div class="m-wire-console--overview-count mdl-cell mdl-cell--4-col">
+      <span>{{ stats.money_count | number:'1.0-0' }}</span>
+      <div class="m-wire-console--label">
+        <label>Wires</label>
+        <m-tooltip icon="help">
+          How many money wires you have received in the last 30 days
+        </m-tooltip>
+      </div>
+    </div>
+  
+    <div class="m-wire-console--overview-earnings mdl-cell mdl-cell--4-col">
+      <i>$</i><span>{{ stats.money | number:'1.0-0' }}</span>
+      <div class="m-wire-console--label">
+        <label>Earnings</label>
+        <m-tooltip icon="help">
+          This is your total volume (gross) of all money wires you have received in the last 30 days
+        </m-tooltip>
+      </div>
+    </div>
+  
+    <div class="m-wire-console--overview-average mdl-cell mdl-cell--4-col">
+      <i>$</i><span>{{ stats.money_avg | number:'1.0-0' }}</span>
+      <div class="m-wire-console--label">
+        <label>Average</label>
+        <m-tooltip icon="help">
+          This is average amount received per money wire
+        </m-tooltip>
+      </div>
+    </div>
+  </div>
+
+  <!-- Points -->
+  <div class="m-wire-console--overview-stat-label" *ngIf="isMerchant()">
+    Points
+  </div>
+
+  <div class="mdl-grid m-wire-console--overview-stat-type">
+    <div class="m-wire-console--overview-count mdl-cell mdl-cell--4-col">
+      <span>{{ stats.points_count | number:'1.0-0' }}</span>
+      <div class="m-wire-console--label">
+        <label>Wires</label>
+        <m-tooltip icon="help">
+          How many point wires you have received in the last 30 days
+        </m-tooltip>
+      </div>
+    </div>
+
+    <div class="m-wire-console--overview-earnings mdl-cell mdl-cell--4-col">
+      <span>{{ stats.points | number:'1.0-0' }}</span>
+      <div class="m-wire-console--label">
+        <label>Earnings</label>
+        <m-tooltip icon="help">
+          This is your total volume (gross) of all point wires you have received in the last 30 days
+        </m-tooltip>
+      </div>
+    </div>
+
+    <div class="m-wire-console--overview-average mdl-cell mdl-cell--4-col">
+      <span>{{ stats.points_avg | number:'1.0-0' }}</span>
+      <div class="m-wire-console--label">
+        <label>Average</label>
+        <m-tooltip icon="help">
+          This is average amount received per points wire
+        </m-tooltip>
+      </div>
+    </div>
+  </div>
+</div>

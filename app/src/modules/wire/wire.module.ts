@@ -20,6 +20,7 @@ import { WireConsoleSettingsComponent } from './console/settings/settings.compon
 import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.component';
 import { WireService } from './wire.service';
 import { WireMarketingComponent } from './marketing.component';
+import { WireConsoleOverviewComponent } from "./console/overview/overview.component";
 
 const wireRoutes : Routes = [
   { path: 'wire', component: WireMarketingComponent }
@@ -47,7 +48,8 @@ const wireRoutes : Routes = [
     WireConsoleLedgerComponent,
     WireConsoleSupporterComponent,
     WireConsoleSettingsComponent,
-    WireMarketingComponent
+    WireMarketingComponent,
+    WireConsoleOverviewComponent
   ],
   providers: [
     WireService
