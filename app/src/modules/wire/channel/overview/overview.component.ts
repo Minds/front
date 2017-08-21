@@ -13,10 +13,10 @@ import { WireService } from '../../wire.service';
 export class WireChannelOverviewComponent implements OnInit, OnDestroy {
 
   ready: boolean = true;
-  stats: { sum, count, avg, sent? } = {
-    sum: 0,
+  stats: { count, money, points, sent? } = {
     count: 0,
-    avg: 0,
+    money: 0,
+    points: 0,
     sent: 0
   };
   sentSubscription;
@@ -39,23 +39,36 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
   }
 
   getStats() {
-    this.client.get('api/v1/wire/sums/receiver/' + this.channel.guid + '/money', { advanced: true })
-      .then(({ sum, count, avg }) => {
+    this.client.get('api/v1/wire/sums/overview/' + this.channel.guid, {
+      merchant: this.channel.merchant ? 1 : 0
+    })
+      .then(({ count, money, points }) => {
         this.stats = {
-          sum: sum,
-          count: count,
-          avg: avg,
+          count,
+          money,
+          points,
           sent: this.stats.sent
         };
         this.detectChanges();
       });
-    if (this.session.getLoggedInUser().guid === this.channel.guid || !this.session.isLoggedIn())
+
+    if (!this.canWire()) 
       return;
+
     this.client.get('api/v1/wire/rewards/' + this.channel.guid)
       .then(({ sums }) => {
-        this.stats.sent = sums.money;
+        if (this.channel.merchant) {
+          this.stats.sent = sums.money;
+        } else {
+          this.stats.sent = sums.points;
+        }
+
         this.detectChanges();
       });
+  }
+
+  canWire() {
+    return this.session.getLoggedInUser().guid != this.channel.guid && this.session.isLoggedIn();
   }
 
   detectChanges() {
