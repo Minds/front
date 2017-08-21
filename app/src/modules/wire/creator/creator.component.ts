@@ -66,6 +66,11 @@ export class WireCreatorComponent implements AfterViewInit {
 
   @Input('object') set data(object) {
     this.wire.guid = object ? object.guid : null;
+
+    if (!this.wire.guid && object.entity_guid) {
+      this.wire.guid = object.entity_guid;
+    }
+
     this.owner = void 0;
 
     if (object) {
