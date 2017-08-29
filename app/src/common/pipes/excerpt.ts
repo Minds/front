@@ -9,9 +9,7 @@ export class ExcerptPipe {
   constructor( ) {
   }
 
-  transform(value: string) {
-    let maxLength: number = 140;
-
+  transform(value: string, maxLength: number = 140) {
     if(!value || value.length <= maxLength)
       return value;
 

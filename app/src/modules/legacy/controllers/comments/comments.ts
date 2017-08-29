@@ -79,6 +79,17 @@ export class Comments {
   }
 
   load(refresh = false) {
+    if (refresh) {
+      this.offset = '';
+      this.moreData = true;
+      this.comments = [];
+
+      if (this.socketRoomName) {
+        this.sockets.leave(this.socketRoomName);
+      }
+      this.socketRoomName = void 0;
+    }
+
     if (this.inProgress) {
       return;
     }

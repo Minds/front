@@ -41,6 +41,7 @@ import { ComingSoon } from './controllers/home/comingsoon/comingsoon';
 import {MediaTheatre} from './controllers/media/view/views/theatre';
 import {MediaGrid} from './controllers/media/view/views/grid';
 import {ThumbnailSelector} from './controllers/media/components/thumbnail-selector';
+import { MediaViewRecommended } from "./controllers/media/view/recommended/recommended.component";
 
 export const MINDS_DECLARATIONS: any[] = [
   // Components
@@ -88,4 +89,5 @@ export const MINDS_DECLARATIONS: any[] = [
   MediaTheatre,
   MediaGrid,
   ThumbnailSelector,
+  MediaViewRecommended
 ];

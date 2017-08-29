@@ -157,7 +157,7 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   setDefaults() {
-    if (this._opts && this._opts.default) {
+    if (this._opts && this._opts.default && typeof this._opts.default === 'object') {
       this.wire.currency = this._opts.default.type;
       this.wire.amount = this._opts.default.min;
 

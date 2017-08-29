@@ -1,118 +1,181 @@
-<ng-container *ngIf="(!entity.paywalled || entity.ownerObj.guid == session.getLoggedInUser().guid); else isPaywalled">
-  <minds-media-theatre [object]="entity"
-    *ngIf="entity.subtype != 'album'"
-    [hidden]="!entity.subtype || entity.subtype == 'album'"
-    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(entity), 'm-mature-content-shown': attachment.isForcefullyShown(entity) }"
-  >
-    <div class="m-mature-overlay" (click)="entity.mature_visibility = !entity.mature_visibility">
-        <span class="m-mature-overlay-note">
-          <i class="material-icons" title="Mature content" i18n-title>explicit</i>
-          <span i18n>Click to confirm your are 18+</span>
-        </span>
-    </div>
-  </minds-media-theatre>
-</ng-container>
-<ng-template #isPaywalled>
-  <m-wire--lock-screen [(entity)]="entity"></m-wire--lock-screen>
-</ng-template>
+<div class="media--loading mdl-progress mdl-js-progress mdl-progress__indeterminate" [mdl] [hidden]="!inProgress"></div>
 
-<div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress" style="margin: 16px auto;"></div>
 <div class="m-error-splash" *ngIf="error && !inProgress">
   <h3 class="mdl-color-text--red-300">{{error}}</h3>
   <span class="mdl-color-text--blue-grey-300" i18n>The post may not exist</span>
 </div>
 
-<div class="mdl-grid media-grid" style="max-width:660px" *ngIf="entity.guid">
+<div class="media--wrapper" *ngIf="entity.guid">
+  <div class="media--content"
+    [class.media--content--has-recommended]="!theaterMode && entity.guid && entity.subtype != 'album'"
+  >
 
-  <div class="mdl-grid" style="width:100%">
-    <div class="mdl-cell mdl-cell--12-col" [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(entity) }">
-      <h1>{{entity.title}}</h1>
-    </div>
+    <ng-container *ngIf="(!entity.paywalled || entity.ownerObj.guid == session.getLoggedInUser().guid); else isPaywalled">
+      <minds-media-theatre [object]="entity"
+        *ngIf="entity.subtype != 'album'"
+        [hidden]="!entity.subtype || entity.subtype == 'album'"
+        class="mdl-shadow--4dp"
+        [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(entity), 'm-mature-content-shown': attachment.isForcefullyShown(entity) }"
+      >
+        <div class="m-mature-overlay" (click)="entity.mature_visibility = !entity.mature_visibility">
+          <span class="m-mature-overlay-note">
+            <i class="material-icons" title="Mature content" i18n-title>explicit</i>
+            <span i18n>Click to confirm your are 18+</span>
+          </span>
+        </div>
 
-    <!-- Owner box -->
-    <div class="mdl-cell mdl-cell--5-col minds-blog-ownerblock">
-
-      <div class="minds-avatar" [hovercard]="entity.ownerObj.guid">
-        <a [routerLink]="['/', entity.ownerObj.username]">
-          <img src="{{minds.cdn_url}}/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
-        </a>
-      </div>
-      <div class="minds-body">
-        <a [routerLink]="['/', entity.ownerObj.username]" class="mdl-color-text--blue-grey-500">{{entity.ownerObj.name}}</a>
-        <span>{{ entity.time_created * 1000 | date: 'medium'}}</span>
-      </div>
-    </div>
-
-    <!-- Actions block -->
-    <div class="mdl-cell mdl-cell--7-col m-actions-block">
-      <minds-button-subscribe [user]="entity.ownerObj" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid"></minds-button-subscribe>
-      <span class="minds-button-edit" [routerLink]="['/media/edit', entity.guid]" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
-        <button class="material-icons">edit</button>
-      </span>
-
-      <span class="minds-button-edit" (click)="deleteToggle = true"  *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
-        <button class="material-icons">close</button>
-      </span>
-
-      <minds-button-feature [object]="entity" *ngIf="session.isAdmin()"></minds-button-feature>
-      <minds-button-monetize [object]="entity" *ngIf="session.getLoggedInUser().monetized"></minds-button-monetize>
-
-      <div class="mdl-layout-spacer"></div>
-      <minds-button-remind [object]="entity"></minds-button-remind>
-      <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
-      <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
-    </div>
-    <!-- Additional block -->
-    <div class="mdl-cell mdl-cell--12-col m-additional-block mdl-color-text--blue-grey-200">
-
-      <div class="m-license-info">
-        <i class="material-icons">public</i>
-        <span [hidden]="!entity.license">{{entity.license}}</span>
-        <span [hidden]="entity.license" i18n>All Rights Reserved</span>
-      </div>
-      <div class="m-visibility-info" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
-        <i class="material-icons">visibility</i>
-        <span [hidden]="entity.access_id != 2" i18n>Public</span>
-        <span [hidden]="entity.access_id != 0" i18n>Unlisted</span>
-      </div>
-      <div class="m-mature-info" *ngIf="entity.flags && entity.flags.mature">
-        <i class="material-icons">explicit</i>
-        <span i18n>Mature content</span>
-      </div>
-      <div class="m-play-count" *ngIf="entity['play:count'] || entity['play:count'] === 0">
-        <i class="material-icons">ondemand_video</i>
-        <span i18n>{{ entity['play:count'] }} plays</span>
-      </div>
-
-      <a class="album_backlink mdl-color-text--blue-grey-400"
-        [routerLink]="['/media', entity.container_guid]"
-        [hidden]="entity.subtype == 'album' || entity.container_guid == entity.owner_guid"
+        <a *ngIf="entity.guid && entity.subtype != 'album'"
+          class="media--theater-toggle"
+          [class.media--theater-toggle--active]="theaterMode"
+          (click)="theaterMode = !theaterMode"
         >
-        <i class="material-icons">photo_album</i> <!-- i18n -->Back to album<!-- /i18n -->
-      </a>
+          <i class="material-icons">launch</i>
+        </a>
+      </minds-media-theatre>
+    </ng-container>
+    <ng-template #isPaywalled>
+      <m-wire--lock-screen [(entity)]="entity"></m-wire--lock-screen>
+    </ng-template>
 
-      <minds-button-boost [object]="entity" *ngIf="entity.subtype != 'album'"></minds-button-boost>
+    <minds-media-grid [object]="entity" *ngIf="entity.subtype == 'album'"></minds-media-grid>
 
+    <div class="media--content-wrapper">
+      <div class="media--content--container">
+        <!-- Meta bar -->
+        <div class="mdl-grid media--content--meta">
+          <div class="mdl-cell mdl-cell--12-col media--title" [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(entity) }">
+            <h1>{{ entity.title | excerpt:100 }}</h1>
+          </div>
+
+          <!-- Additional block -->
+          <div class="mdl-cell mdl-cell--12-col media--meta">
+            <div class="media--meta-info">
+              <div class="m-play-count" *ngIf="entity['play:count'] || entity['play:count'] === 0">
+                <span i18n>{{ entity['play:count'] | number }} plays</span>
+              </div>
+
+              <div class="m-play-count" *ngIf="entity['impressions'] || entity['impressions'] === 0">
+                <span i18n>{{ entity['impressions'] | number }} views</span>
+              </div>
+
+              <a class="album_backlink"
+                [routerLink]="['/media', entity.container_guid]"
+                [hidden]="entity.subtype == 'album' || entity.container_guid == entity.owner_guid"
+              >
+                <i class="material-icons">photo_album</i> <!-- i18n -->Back to album<!-- /i18n -->
+              </a>
+            </div>
+
+            <!-- Actions block -->
+            <div class="media--actions">
+              <span class="minds-button-edit" [routerLink]="['/media/edit', entity.guid]" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
+                <button class="material-icons">edit</button>
+              </span>
+
+              <span class="minds-button-edit" (click)="deleteToggle = true"  *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
+                <button class="material-icons">close</button>
+              </span>
+
+              <minds-button-feature [object]="entity" *ngIf="session.isAdmin()"></minds-button-feature>
+              <minds-button-monetize [object]="entity" *ngIf="session.getLoggedInUser().monetized"></minds-button-monetize>
+
+              <div class="mdl-layout-spacer"></div>
+
+              <m-wire-button *ngIf="entity.ownerObj.guid != session.getLoggedInUser()?.guid"
+                [object]="entity"
+              ></m-wire-button>
+              <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
+              <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
+              <minds-button-remind [object]="entity"></minds-button-remind>
+            </div>
+          </div>
+
+          <!-- Owner box -->
+          <div class="mdl-cell mdl-cell--12-col media--owner">
+            <div class="minds-avatar" [hovercard]="entity.ownerObj.guid">
+              <a [routerLink]="['/', entity.ownerObj.username]">
+                <img [src]="minds.cdn_url + 'icon/' + entity.ownerObj.guid + '/small/' + entity.ownerObj.icontime" class="mdl-shadow--2dp"/>
+              </a>
+            </div>
+            <div class="minds-body">
+              <div class="m-media--owner-info">
+                <a [routerLink]="['/', entity.ownerObj.username]" class="mdl-color-text--blue-grey-500">{{entity.ownerObj.name}}</a>
+              </div>
+
+              <div class="m-media--owner-info">
+                <span i18n>Posted on {{ entity.time_created * 1000 | date: 'medium'}}</span>
+              </div>
+
+              <div class="m-media--media-info">
+                <div class="m-license-info">
+                    <i class="material-icons">public</i>
+                    <span [hidden]="!entity.license">{{entity.license}}</span>
+                    <span [hidden]="entity.license" i18n>All Rights Reserved</span>
+                  </div>
+
+                  <div class="m-visibility-info" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
+                    <i class="material-icons">visibility</i>
+                    <span [hidden]="entity.access_id != 2" i18n>Public</span>
+                    <span [hidden]="entity.access_id != 0" i18n>Unlisted</span>
+                  </div>
+
+                  <div class="m-mature-info" *ngIf="entity.flags && entity.flags.mature">
+                    <i class="material-icons">explicit</i>
+                    <span i18n>Mature content</span>
+                  </div>
+              </div>
+            </div>
+
+            <minds-button-subscribe [user]="entity.ownerObj" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid"></minds-button-subscribe>
+
+            <minds-button-boost *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid && entity.subtype != 'album'"
+              [object]="entity"
+            ></minds-button-boost>
+          </div>
+
+          <div class="mdl-cell mdl-cell--12-col media--description" *ngIf="entity.description"
+            [innerHtml]="entity.description | safe"
+            [hidden]="!descriptionContainer.innerText.trim('')"
+            #descriptionContainer
+          ></div>
+        </div>
+
+        <!-- Don't show comments for albums -->
+        <div class="mdl-grid media--content--comments" *ngIf="entity.guid && entity.subtype != 'album'">
+          <minds-comments [object]="entity"></minds-comments>
+        </div>
+      </div>
+
+      <div class="media--recommended"
+        *ngIf="theaterMode && entity.guid && entity.subtype != 'album'"
+      >
+        <m-media--recommended
+          [opts]="{ current: entity.guid, next: getNext(), channel: entity.ownerObj.guid, type: entity.subtype }"
+          limit="6"
+        ></m-media--recommended>
+    
+        <m-ads-boost limit="4"></m-ads-boost>
+      </div>
     </div>
+  </div>
+  
+  <div class="media--recommended"
+    *ngIf="!theaterMode && entity.guid && entity.subtype != 'album'"
+  >
+    <m-media--recommended
+      [opts]="{ current: entity.guid, next: getNext(), channel: entity.ownerObj.guid, type: entity.subtype }"
+      limit="6"
+    ></m-media--recommended>
 
-
-    <div class="mdl-cell mdl-cell--12-col m-discovery-full-description" [innerHtml]="entity.description | safe" *ngIf="entity.description"></div>
-
-
+    <m-ads-boost limit="4"></m-ads-boost>
+  </div>
 </div>
 
-<m-social-icons [url]="minds.site_url + 'media/' + entity.guid"
-[title]="entity.title || ''"
-[embed]="entity"
-*ngIf="!attachment.shouldBeBlurred(entity)"
-></m-social-icons>
-
-<minds-media-grid [object]="entity" *ngIf="entity.subtype == 'album'"></minds-media-grid>
-
-<!-- Don't show comments for albums -->
-<div class="mdl-grid media-grid" style="width:100%; max-width:660px" *ngIf="entity.guid && entity.subtype != 'album'">
-  <minds-comments [object]="entity"></minds-comments>
-</div>
+<!-- <m-social-icons [url]="minds.site_url + 'media/' + entity.guid"
+  [title]="entity.title || ''"
+  [embed]="entity"
+  *ngIf="!attachment.shouldBeBlurred(entity)"
+></m-social-icons> -->
 
 <m-modal-confirm *ngIf="deleteToggle"
   [open]="true"

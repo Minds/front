@@ -24,6 +24,8 @@ export class MediaView {
   error : string = "";
   deleteToggle: boolean = false;
 
+  theaterMode: boolean = false;
+
   constructor(public client: Client,public router: Router, public route: ActivatedRoute, public attachment: AttachmentService){
   }
 
@@ -68,6 +70,25 @@ export class MediaView {
       })
       .catch((e) => {
       });
+  }
+
+  getNext() {
+    if (this.entity.container_guid == this.entity.owner_guid || !this.entity.album_children_guids || this.entity.album_children_guids.length <= 1) {
+      return;
+    }
+
+    let pos = this.entity['album_children_guids'].indexOf(this.entity.guid);
+    //bump up if less than 0
+    if(pos <= 0)
+      pos = 1;
+    //bump one up if we are in the same position as ourself
+    if(this.entity['album_children_guids'][pos] == this.entity.guid)
+      pos++;
+    //reset back to 0 if we are are the end
+    if(pos >= this.entity['album_children_guids'].length)
+      pos = 0;
+
+    return this.entity['album_children_guids'][pos];
   }
 
 }

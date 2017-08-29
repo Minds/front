@@ -120,8 +120,13 @@ minds-card-user, .minds-banner-card{
   }
 }
 
-minds-card-image, minds-card-video{
-  //min-height:242px !important;
+minds-card-image, minds-card-video {
+  position: relative;
+  overflow: hidden;
+
+  .m-mature-thumbnail-overlay > i.material-icons {
+    transform: translate(-50%, calc(-50% - 36px));
+  }
 }
 
 .mdl-card{

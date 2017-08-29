@@ -10,13 +10,17 @@ import { SessionFactory } from '../../../../services/session';
   template: `
     <i class="material-icons left"
       (click)="prev()"
-      [hidden]="object.container_guid == object.owner_guid || !object.album_children_guids || object.album_children_guids.length <= 1">
+      [hidden]="!isAlbum()">
         keyboard_arrow_left
     </i>
-    <div class="minds-media-stage" *ngIf="object.subtype == 'image'">
+    <div class="minds-media-stage" *ngIf="object.subtype == 'image'"
+      [class.m--media-stage--has-nav]="isAlbum()"
+    >
       <img src="/fs/v1/thumbnail/{{object.guid}}/xlarge"/>
     </div>
-    <div class="minds-media-stage" *ngIf="object.subtype == 'video'">
+    <div class="minds-media-stage" *ngIf="object.subtype == 'video'"
+      [class.m--media-stage--has-nav]="isAlbum()"
+    >
       <minds-video
       [poster]="object.thumbnail_src"
 	    [autoplay]="!object.monetized"
@@ -31,7 +35,7 @@ import { SessionFactory } from '../../../../services/session';
     </div>
     <i class="material-icons right"
       (click)="next()"
-      [hidden]="object.container_guid == object.owner_guid || !object.album_children_guids || object.album_children_guids.length <= 1">
+      [hidden]="!isAlbum()">
         keyboard_arrow_right
     </i>
     <ng-content></ng-content>
@@ -74,4 +78,7 @@ export class MediaTheatre {
     this.router.navigate(['/media', this.object['album_children_guids'][pos]]);
   }
 
+  isAlbum() {
+    return this.object.container_guid != this.object.owner_guid && this.object.album_children_guids && this.object.album_children_guids.length > 1;
+  }
 }
