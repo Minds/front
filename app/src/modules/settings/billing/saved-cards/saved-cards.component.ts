@@ -81,16 +81,16 @@ export class SettingsBillingSavedCardsComponent {
             this.detectChanges();
             this.loadSavedCards();
           })
-          .catch(() => {
+          .catch(e => {
             this.inProgress = false;
             this.detectChanges();
-            alert('There ware an error saving your card.');
+            alert((e && e.message) || 'There was an error saving your card.');
           });
       })
       .catch((e) => {
         this.inProgress = false;
         this.detectChanges();
-        alert(e);
+        alert((e && e.message) || 'There was an error with your card information.');
       })
   }
 
