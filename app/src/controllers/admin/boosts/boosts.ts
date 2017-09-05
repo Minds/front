@@ -10,7 +10,7 @@ import { Client, Upload } from '../../../services/api';
   moduleId: module.id,
   selector: 'minds-admin-boosts',
   host: {
-    '(window:keydown)': 'onKeyDown($event)'
+    '(keydown)': 'onKeyDown($event)'
   },
   templateUrl: 'boosts.html'
 })
