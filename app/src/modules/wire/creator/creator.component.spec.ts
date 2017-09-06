@@ -49,7 +49,7 @@ export class StripeCheckoutMock {
   @Input() useBitcoin: boolean = false;
 }
 
-fdescribe('WireCreatorComponent', () => {
+describe('WireCreatorComponent', () => {
 
   let comp: WireCreatorComponent;
   let fixture: ComponentFixture<WireCreatorComponent>;

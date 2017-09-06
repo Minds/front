@@ -355,7 +355,7 @@ describe('Activity', () => {
   }
 
   function getActivityMetric(i: number): DebugElement {
-    return fixture.debugElement.query(By.css(`.m-activity--metrics > .m-activity--metrics-metric:nth-child(${i}) > span`));
+    return fixture.debugElement.query(By.css(`.m-activity--metrics .m-activity--metrics-metric:nth-child(${i}) > span`));
   }
 
   beforeEach(async(() => {
