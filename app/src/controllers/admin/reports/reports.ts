@@ -40,7 +40,7 @@ export class AdminReports {
         this.type = params['type'];
       }
 
-      this.load();
+      this.load(true);
     });
   }
 
@@ -48,9 +48,15 @@ export class AdminReports {
     this.paramsSubscription.unsubscribe();
   }
 
-  load() {
+  load(refresh: boolean = false) {
     if (this.inProgress) {
       return;
+    }
+
+    if (refresh) {
+      this.reports = [];
+      this.offset = "";
+      this.moreData = true;
     }
 
     this.inProgress = true;
