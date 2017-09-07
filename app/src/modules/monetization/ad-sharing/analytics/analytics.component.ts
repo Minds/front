@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
@@ -53,7 +53,7 @@ export class AdSharingAnalyticsComponent {
 
   listLoaded: boolean = false;
 
-  constructor(private client: Client, private route: ActivatedRoute) { }
+  constructor(private client: Client, private route: ActivatedRoute, private cd: ChangeDetectorRef) { }
 
   paramsSubscription: Subscription;
   ngOnInit() {
@@ -67,6 +67,8 @@ export class AdSharingAnalyticsComponent {
           this.listLoaded = false;
           this.items = [];
         }
+
+        this.detectChanges();
       }
     });
 
@@ -84,6 +86,8 @@ export class AdSharingAnalyticsComponent {
 
   load(): Promise<any> {
     this.overviewInProgress = true;
+    this.detectChanges();
+
     return this.client.get(`api/v1/monetization/ads/overview/${this.username}`)
       .then((response: any) => {
         this.overviewInProgress = false;
@@ -99,9 +103,11 @@ export class AdSharingAnalyticsComponent {
         this.isMerchant = !!response.isMerchant;
         this.canBecomeMerchant = !!response.canBecomeMerchant;
         this.loaded = true;
+        this.detectChanges();
       })
       .catch(e => {
         this.overviewInProgress = false;
+        this.detectChanges();
       });
   }
 
@@ -111,6 +117,7 @@ export class AdSharingAnalyticsComponent {
       this.offset = '';
       this.moreData = true;
       this.items = [];
+      this.detectChanges();
     }
 
     if (this.inProgress) {
@@ -119,6 +126,8 @@ export class AdSharingAnalyticsComponent {
 
     this.inProgress = true;
     this.listLoaded = true;
+    this.detectChanges();
+
     return this.client.get(`api/v1/monetization/ads/list/${this.username}`, { offset: this.offset, period: period })
       .then((response: any) => {
         this.inProgress = false;
@@ -138,9 +147,12 @@ export class AdSharingAnalyticsComponent {
         } else {
           this.moreData = false;
         }
+
+        this.detectChanges();
       })
       .catch(e => {
         this.inProgress = false;
+        this.detectChanges();
       });
   }
 
@@ -150,15 +162,18 @@ export class AdSharingAnalyticsComponent {
     }
 
     this.payoutRequestInProgress = true;
+    this.detectChanges();
 
     this.client.post('api/v1/monetization/ads/payout')
       .then(response => {
         this.payoutRequestInProgress = false;
         this.payouts.available = false;
         this.payouts.status = 'inprogress';
+        this.detectChanges();
       })
       .catch(e => {
         this.payoutRequestInProgress = false;
+        this.detectChanges();
       });
   }
 
@@ -172,5 +187,10 @@ export class AdSharingAnalyticsComponent {
 
   hasBreakdown() {
     return this.payouts && this.payouts.dates.start && this.payouts.dates.end;
+  }
+
+  detectChanges(){
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../../services/api';
 
@@ -14,7 +14,7 @@ export class AdSharingSettingsComponent {
     blogs: false
   }
 
-  constructor(private client: Client) { }
+  constructor(private client: Client, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.load();
@@ -29,9 +29,12 @@ export class AdSharingSettingsComponent {
         this.loaded = true;
 
         this.settings = response.settings;
+
+        this.detectChanges();
       })
       .catch(e => {
         this.inProgress = false;
+        this.detectChanges();
       });
   }
 
@@ -41,5 +44,10 @@ export class AdSharingSettingsComponent {
       })
       .catch(e => {
       });
+  }
+
+  detectChanges(){
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }
