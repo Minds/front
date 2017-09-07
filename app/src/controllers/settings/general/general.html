@@ -127,6 +127,18 @@
       (keyup)="change()"
       />
   </div>
+  <div class="mdl-card__supporting-text">
+    <input type="checkbox"
+      id="flag_mails"
+      (click)="change()"
+      name="enabled_emails"
+      [(ngModel)]="enabled_mails"
+      />
+      <i class="material-icons m-material-icons-inline mdl-color-text--red-500">email</i>
+      <label for="flag_mature">
+          <!-- i18n -->Receive emails<!-- /i18n -->
+      </label>
+  </div>
 
 </div>
 <!-- END: EMAIL -->

@@ -30,6 +30,7 @@ export class SettingsGeneral{
   name : string;
   email : string;
   mature: boolean = false;
+  enabled_mails: boolean = true;
 
   password : string;
   password1 : string;
@@ -68,8 +69,10 @@ export class SettingsGeneral{
 
     this.client.get('api/v1/settings/' + this.guid)
       .then((response : any) => {
+        console.log("LOAD", response.channel);
         this.email = response.channel.email;
         this.mature = !!parseInt(response.channel.mature, 10);
+        this.enabled_mails = !parseInt(response.channel.disabled_emails, 10);
         this.language = response.channel.language || 'en';
         this.selectedCategories = response.channel.categories || [];
 
@@ -127,6 +130,7 @@ export class SettingsGeneral{
         password: this.password,
         new_password: this.password2,
         mature: this.mature ? 1 : 0,
+        disabled_emails: this.enabled_mails ? 0 : 1,
         language: this.language,
         categories: this.selectedCategories
       })
