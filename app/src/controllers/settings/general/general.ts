@@ -141,6 +141,11 @@ export class SettingsGeneral{
 
         if (window.Minds.user) {
           window.Minds.user.mature = this.mature ? 1 : 0;
+          
+          if (window.Minds.user.name !== this.name) {
+            window.Minds.user.name = this.name;
+          }
+          
         }
 
         if (this.language != window.Minds['language']) {
