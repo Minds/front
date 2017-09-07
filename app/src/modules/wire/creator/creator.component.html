@@ -105,7 +105,7 @@
       </span>
     </div>
 
-    <div class="m-wire--creator--recurring">
+    <div class="m-wire--creator--recurring" *ngIf="wire.currency == 'money'">
       <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="wire-recurring-1" [mdlSwitch] [toggled]="wire.recurring">
         <input
           type="checkbox" id="wire-recurring-1" class="mdl-checkbox__input"

@@ -187,6 +187,10 @@ export class WireCreatorComponent implements AfterViewInit {
     let oldCurrency = this.wire.currency;
     this.wire.currency = currency;
 
+    if (currency == 'points') {
+      this.wire.recurring = false;
+    }
+
     this.roundAmount();
     this.showErrors();
   }
