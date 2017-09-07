@@ -1,6 +1,6 @@
 <div class="avatar">
   <a [routerLink]="['/', notification.fromObj.username || '']" *ngIf="notification.fromObj">
-    <img [src]="'/icon/' + notification.fromObj.guid + '/small'" class="mdl-shadow--2dp"/>
+    <img [src]="'/icon/' + notification.fromObj.guid + '/small/' + notification.fromObj.icontime" class="mdl-shadow--2dp"/>
   </a>
 </div>
 

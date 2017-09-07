@@ -20,7 +20,7 @@
 
 		<div class="m-inline-owner-block">
 			<a [routerLink]="['/', entity.ownerObj.username]" class="mdl-color-text--blue-grey-300">
-				<img src="/icon/{{entity.ownerObj.guid}}/small" class="mdl-shadow--2dp"/>
+				<img src="/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
 				{{entity.ownerObj.username}}
 			</a>
 			<span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
