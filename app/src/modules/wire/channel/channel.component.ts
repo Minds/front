@@ -6,6 +6,7 @@ import { WireCreatorComponent } from "../creator/creator.component";
 import { Client } from "../../../services/api";
 import { WireRewardsType, WireRewardsStruc } from "../interfaces/wire.interfaces";
 import { WireTypeLabels } from "../wire";
+import { SignupModalService } from "../../modals/signup/service";
 
 @Component({
   moduleId: module.id,
@@ -34,7 +35,7 @@ export class WireChannelComponent {
 
   session: Session = SessionFactory.build();
 
-  constructor(private overlayModal: OverlayModalService, private client: Client) { }
+  constructor(private overlayModal: OverlayModalService, private client: Client, private signupModal: SignupModalService) { }
 
   ngOnInit() {
     if (!this.rewards) {
@@ -88,6 +89,12 @@ export class WireChannelComponent {
   }
 
   sendWire() {
+    if (!this.session.isLoggedIn()) {
+      this.signupModal.open();
+
+      return;
+    }
+
     const creator = this.overlayModal.create(WireCreatorComponent, this.channel);
     creator.present();
   }
