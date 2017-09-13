@@ -19,6 +19,7 @@ export class Settings{
   session =  SessionFactory.build();
   user : any;
   filter : string;
+  account_time_created: any;
 
   constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
   }
@@ -33,6 +34,8 @@ export class Settings{
     this.title.setTitle("Settings");
 
     this.filter = 'general';
+
+    this.account_time_created = window.Minds.user.time_created;;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
