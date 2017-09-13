@@ -64,7 +64,9 @@ export class Login {
 
   registered(){
     this.modal.setDisplay('categories').open();
-    this.loginReferrer.navigate();
+    this.loginReferrer.navigate({ 
+      defaultUrl: '/' + this.session.getLoggedInUser().username + ';editToggle=1'
+    });
   }
 
 }

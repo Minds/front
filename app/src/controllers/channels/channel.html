@@ -123,6 +123,7 @@
       <m-wire-channel
         [(rewards)]="user.wire_rewards"
         [channel]="user"
+        [editing]="showOnboarding"
       ></m-wire-channel>
 
       <div class="minds-spacer-2x"></div>
@@ -163,7 +164,7 @@
 
     <minds-newsfeed-poster (load)="prepend($event)" *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid" #poster></minds-newsfeed-poster>
 
-    <div class="minds-list">
+    <div class="minds-list" *ngIf="!showOnboarding">
 
         <minds-activity *ngFor="let activity of feed" [object]="activity" [boostToggle]="activity.boostToggle" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
         <infinite-scroll
@@ -174,6 +175,11 @@
         </infinite-scroll>
 
     </div>
+
+    <div class="minds-list" *ngIf="showOnboarding">
+      <m-onboarding-feed></m-onboarding-feed>
+    </div>
+    
 
   </section>
 

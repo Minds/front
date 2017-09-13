@@ -34,6 +34,7 @@ import { ThirdPartyNetworksModule } from "./src/modules/third-party-networks/thi
 import { TranslateModule } from "./src/modules/translate/translate.module";
 import { VideoModule } from "./src/modules/video/video.module";
 import { SettingsModule } from "./src/modules/settings/settings.module";
+import { OnboardingModule } from "./src/modules/onboarding/onboarding.module";
 
 import { GroupsModule } from "./src/plugins/Groups/groups.module";
 import { BlogModule } from "./src/plugins/blog/blog.module";
@@ -73,6 +74,7 @@ import { BlogModule } from "./src/plugins/blog/blog.module";
     PaymentsModule,
     MindsFormsModule,
     ChannelModule,
+    OnboardingModule,
 
     GroupsModule,
     BlogModule,

@@ -28,7 +28,7 @@ export class WireChannelComponent {
 
   @Input() channel: any;
 
-  editing: boolean;
+  @Input() editing: boolean;
 
   display: WireRewardsType;
   typeLabels = WireTypeLabels;
