@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from "../../services/ux/title";
+import { Session, SessionFactory } from "../../services/session";
 
 @Component({
   selector: 'minds-admin',
@@ -25,12 +25,18 @@ import { MindsTitle } from "../../services/ux/title";
 export class Admin {
 
   filter : string = "";
+  session: Session = SessionFactory.build();
 
-  constructor(private route: ActivatedRoute, public title: MindsTitle){
+  constructor(private route: ActivatedRoute, public title: MindsTitle, public router: Router){
   }
 
   paramsSubscription: Subscription;
   ngOnInit() {
+
+    if (!this.session.isAdmin()) {
+      this.router.navigate(['/']);
+    }
+
     this.title.setTitle('Admin');
     this.paramsSubscription = this.route.params.subscribe((params: any) => {
       if (params['filter']) {
