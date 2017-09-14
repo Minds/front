@@ -65,7 +65,6 @@ export class Channel {
       if (params['editToggle']) {
         this.editing = true;
         this.editForward = true;
-        this.showOnboarding = true;
       }
 
       if (changed) {

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
+import { OnboardingService } from "./onboarding.service";
 
 @Component({
   moduleId: module.id,
@@ -8,10 +9,22 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class OnboardingFeedComponent {
 
-  constructor() { }
+  paramsSubscription;
+
+  constructor(public service: OnboardingService, private route: ActivatedRoute) { 
+   
+  }
 
   ngOnInit() {
-  
+    this.paramsSubscription = this.route.params.subscribe((params) => {
+      if (params['editToggle'])
+        this.service.enable();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
   }
 
 }

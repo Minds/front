@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { OnboardingCardComponent } from './card/card.component';
 import { OnboardingFeedComponent } from './feed.component';
+import { OnboardingService } from './onboarding.service';
 
 
 @NgModule({
@@ -20,6 +21,9 @@ import { OnboardingFeedComponent } from './feed.component';
   declarations: [
     OnboardingCardComponent,
     OnboardingFeedComponent
+  ],
+  providers: [
+    OnboardingService
   ],
   exports: [
     OnboardingCardComponent,

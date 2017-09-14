@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
+import { OnboardingService } from "../onboarding.service";
 
 @Component({
   moduleId: module.id,
@@ -13,11 +14,17 @@ export class OnboardingCardComponent {
   @Input() text;
   @Input() subtext;
   @Input() class;
+  @Input() id;
 
-  constructor() { }
+  constructor(public service: OnboardingService) { }
 
   ngOnInit() {
   
+  }
+
+  close(e) {
+    e.stopPropagation();
+    this.service.hide(this.id);
   }
 
 }
