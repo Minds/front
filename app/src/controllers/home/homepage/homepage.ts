@@ -81,7 +81,7 @@ export class Homepage {
   registered(){
     this.modal.setDisplay('categories').open();
     this.loginReferrer.navigate({ 
-      defaultUrl: '/' + this.session.getLoggedInUser().username + ';editToggle=1'
+      defaultUrl: '/' + this.session.getLoggedInUser().username
     });
   }
 

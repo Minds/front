@@ -1,6 +1,6 @@
 <div 
   [class]="'mdl-card mdl-shadow--2dp ' + class" 
-  [routerLink]="[route]"  
+  [routerLink]="route"  
   *ngIf="service.shouldShow(id)"
   (click)="service.hide(id)">
 

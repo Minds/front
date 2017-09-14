@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { OnboardingService } from "./onboarding.service";
+import { Session, SessionFactory } from "../../services/session";
 
 @Component({
   moduleId: module.id,
@@ -11,7 +12,7 @@ export class OnboardingFeedComponent {
 
   paramsSubscription;
 
-  constructor(public service: OnboardingService, private route: ActivatedRoute) { 
+  constructor(public service: OnboardingService, private route: ActivatedRoute, public session: Session) { 
    
   }
 

@@ -51,7 +51,7 @@ export class Register {
   registered(){
     this.modal.setDisplay('onboarding').open();
     this.loginReferrer.navigate({ 
-      defaultUrl: '/' + this.session.getLoggedInUser().username + ';editToggle=1'
+      defaultUrl: '/' + this.session.getLoggedInUser().username
     });
   }
 
