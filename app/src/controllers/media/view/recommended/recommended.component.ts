@@ -3,7 +3,7 @@ import { Client } from "../../../../services/api";
 
 @Component({
   moduleId: module.id,
-  selector: 'm-media--recommended',
+  selector: 'm-media-recommended',
   templateUrl: 'recommended.component.html'
 })
 export class MediaViewRecommended {

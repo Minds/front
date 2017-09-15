@@ -5,7 +5,7 @@ import { SessionFactory } from '../../../../services/session';
 import { AttachmentService } from '../../../../services/attachment';
 
 @Component({
-  selector: 'minds-media-grid',
+  selector: 'm-media-grid',
   inputs: ['_object: object'],
   template: `
     <a *ngFor="let item of items"

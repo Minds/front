@@ -10,7 +10,7 @@ import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-media-view',
+  selector: 'm-media-view',
   templateUrl: 'view.html'
 })
 

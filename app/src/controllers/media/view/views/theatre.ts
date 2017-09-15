@@ -5,7 +5,7 @@ import { Client } from '../../../../services/api';
 import { SessionFactory } from '../../../../services/session';
 
 @Component({
-  selector: 'minds-media-theatre',
+  selector: 'm-media-theatre',
   inputs: ['_object: object'],
   template: `
     <i class="material-icons left"
@@ -13,13 +13,13 @@ import { SessionFactory } from '../../../../services/session';
       [hidden]="!isAlbum()">
         keyboard_arrow_left
     </i>
-    <div class="minds-media-stage" *ngIf="object.subtype == 'image'"
-      [class.m--media-stage--has-nav]="isAlbum()"
+    <div class="m-media-stage" *ngIf="object.subtype == 'image'"
+      [class.m-media-stage--has-nav]="isAlbum()"
     >
       <img src="/fs/v1/thumbnail/{{object.guid}}/xlarge"/>
     </div>
-    <div class="minds-media-stage" *ngIf="object.subtype == 'video'"
-      [class.m--media-stage--has-nav]="isAlbum()"
+    <div class="m-media-stage" *ngIf="object.subtype == 'video'"
+      [class.m-media-stage--has-nav]="isAlbum()"
     >
       <minds-video
       [poster]="object.thumbnail_src"
