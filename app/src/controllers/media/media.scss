@@ -272,11 +272,15 @@ m-media-thumbnail-selector{
 
   .m-media-content--title {
 
+    display: flex;
+
     h1 {
       font-family: 'Lato', sans-serif;
       font-weight: 400;
-      font-size: 24px;
+      font-size: 36px;
+      letter-spacing: 1.5px;
       padding-left: $minds-padding * 1.5;
+      flex: 1;
     }
   }
 
@@ -297,6 +301,7 @@ m-media-thumbnail-selector{
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-left: $minds-margin;
+      color: #666;
 
       > * {
         vertical-align: middle;
@@ -365,10 +370,13 @@ m-media-thumbnail-selector{
 
       a {
         text-decoration: none;
+        letter-spacing: 1.5px;
       }
 
       span {
         font-size: 11px;
+        letter-spacing: 1.5px;
+        font-weight: 600;
       }
     }
 

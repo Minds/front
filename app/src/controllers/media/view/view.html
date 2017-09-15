@@ -43,31 +43,46 @@
       <div class="m-media-content--container">
         <!-- Meta bar -->
         <div class="mdl-grid m-media-content--meta">
-          <div class="mdl-cell mdl-cell--6-col m-media-content--title" [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(entity) }">
+          <div class="mdl-cell mdl-cell--12-col m-media-content--title" [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(entity) }">
             <h1>{{ entity.title | excerpt:100 }}</h1>
-          </div>
 
-          <!-- Actions block -->
-          <div class="mdl-cell mdl-cell--6-col m-media-content--actions">
             <div class="mdl-layout-spacer"></div>
-              
-            <span class="minds-button-edit" [routerLink]="['/media/edit', entity.guid]" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
-              <button class="material-icons">edit</button>
-            </span>
-
-            <span class="minds-button-edit" (click)="deleteToggle = true"  *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
-              <button class="material-icons">close</button>
-            </span>
-
-            <minds-button-feature [object]="entity" *ngIf="session.isAdmin()"></minds-button-feature>
-            <minds-button-monetize [object]="entity" *ngIf="session.getLoggedInUser().monetized"></minds-button-monetize>
-
-            <m-wire-button *ngIf="entity.ownerObj.guid != session.getLoggedInUser()?.guid"
-              [object]="entity"
-            ></m-wire-button>
-            <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
-            <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
-            <minds-button-remind [object]="entity"></minds-button-remind>
+            
+            <!-- Additional block -->
+            <div class="m-media-content--info">
+  
+              <div class="m-media-content--play-count" *ngIf="entity['play:count'] || entity['play:count'] === 0">
+                <span i18n>{{ entity['play:count'] | number }} plays</span>
+              </div>
+  
+              <div class="m-media-content--play-count" *ngIf="entity['impressions'] || entity['impressions'] === 0">
+                <span i18n>{{ entity['impressions'] | number }} views</span>
+              </div>
+  
+              <div class="m-visibility-info" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
+                <i class="material-icons">visibility</i>
+                <span [hidden]="entity.access_id != 2" i18n>Public</span>
+                <span [hidden]="entity.access_id != 0" i18n>Unlisted</span>
+              </div>
+  
+              <div class="m-mature-info" *ngIf="entity.flags && entity.flags.mature">
+                <i class="material-icons">explicit</i>
+                <span i18n>Mature content</span>
+              </div>
+  
+              <div class="m-license-info">
+                <i class="material-icons">public</i>
+                <span [hidden]="!entity.license">{{entity.license}}</span>
+                <span [hidden]="entity.license" i18n>All Rights Reserved</span>
+              </div>
+  
+              <a class="m-media-album--backlink"
+                [routerLink]="['/media', entity.container_guid]"
+                [hidden]="entity.subtype == 'album' || entity.container_guid == entity.owner_guid"
+              >
+                <i class="material-icons">photo_album</i> <!-- i18n -->Back to album<!-- /i18n -->
+              </a>
+            </div>
           </div>
 
           <!-- Owner box -->
@@ -96,43 +111,30 @@
             <div class="mdl-layout-spacer"></div>
           </div>
 
-          <!-- Additional block -->
-          <div class="mdl-cell mdl-cell--6-col m-media-content--info">
-
-            <div class="mdl-layout-spacer"></div>
-
-            <div class="m-media-content--play-count" *ngIf="entity['play:count'] || entity['play:count'] === 0">
-              <span i18n>{{ entity['play:count'] | number }} plays</span>
+          <!-- Actions block -->
+          <div class="mdl-cell mdl-cell--6-col m-media-content--actions">
+              <div class="mdl-layout-spacer"></div>
+                
+              <span class="minds-button-edit" [routerLink]="['/media/edit', entity.guid]" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
+                <button class="material-icons">edit</button>
+              </span>
+  
+              <span class="minds-button-edit" (click)="deleteToggle = true"  *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
+                <button class="material-icons">close</button>
+              </span>
+  
+              <minds-button-feature [object]="entity" *ngIf="session.isAdmin()"></minds-button-feature>
+              <minds-button-monetize [object]="entity" *ngIf="session.getLoggedInUser().monetized"></minds-button-monetize>
+  
+              <m-wire-button *ngIf="entity.ownerObj.guid != session.getLoggedInUser()?.guid"
+                [object]="entity"
+              ></m-wire-button>
+              <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
+              <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
+              <minds-button-remind [object]="entity"></minds-button-remind>
             </div>
 
-            <div class="m-media-content--play-count" *ngIf="entity['impressions'] || entity['impressions'] === 0">
-              <span i18n>{{ entity['impressions'] | number }} views</span>
-            </div>
-
-            <div class="m-visibility-info" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
-              <i class="material-icons">visibility</i>
-              <span [hidden]="entity.access_id != 2" i18n>Public</span>
-              <span [hidden]="entity.access_id != 0" i18n>Unlisted</span>
-            </div>
-
-            <div class="m-mature-info" *ngIf="entity.flags && entity.flags.mature">
-              <i class="material-icons">explicit</i>
-              <span i18n>Mature content</span>
-            </div>
-
-            <div class="m-license-info">
-              <i class="material-icons">public</i>
-              <span [hidden]="!entity.license">{{entity.license}}</span>
-              <span [hidden]="entity.license" i18n>All Rights Reserved</span>
-            </div>
-
-            <a class="m-media-album--backlink"
-              [routerLink]="['/media', entity.container_guid]"
-              [hidden]="entity.subtype == 'album' || entity.container_guid == entity.owner_guid"
-            >
-              <i class="material-icons">photo_album</i> <!-- i18n -->Back to album<!-- /i18n -->
-            </a>
-          </div>
+          
 
           
 
