@@ -18,7 +18,7 @@ export class OnboardingFeedComponent {
 
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe((params) => {
-      if (params['editToggle'])
+      if (params['onboarding'])
         this.service.enable();
     });
   }
