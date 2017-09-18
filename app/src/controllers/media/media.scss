@@ -429,13 +429,17 @@ m-media-thumbnail-selector{
 }
 
 .m-media-content--comments {
-  width: 100%;
+  width: auto;
   max-width: 1168px;
-  margin: 0 auto;
+  margin: $minds-margin * 2;
   box-sizing: border-box;
+  border: 1px solid #EEE;
 
   minds-comments {
     margin-top: 0;
+    .minds-comments-container {
+      max-height: none;
+    }
   }
 }
 
@@ -454,6 +458,7 @@ m-media-thumbnail-selector{
 
   .m-media-content--container {
     flex-grow: 1;
+    background: #FFF;
   }
 
   .m-media-content--recommended {
