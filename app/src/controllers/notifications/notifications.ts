@@ -67,7 +67,7 @@ export class Notifications {
 
     this.inProgress = true;
 
-    this.client.get(`api/v1/notifications/${this._filter}`, {limit:12, offset:this.offset})
+    this.client.get(`api/v1/notifications/${this._filter}`, {limit: 24, offset:this.offset})
       .then((data : any) => {
 
         if(!data.notifications){
@@ -79,12 +79,12 @@ export class Notifications {
         if(refresh){
           self.notifications = data.notifications;
         }else{
-          if(self.offset)
-            data.notifications.shift();
           for(let entity of data.notifications)
             self.notifications.push(entity);
         }
 
+        if (!data['load-next']) 
+            this.moreData = false;
         self.offset = data['load-next'];
         self.inProgress = false;
 
