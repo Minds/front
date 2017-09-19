@@ -102,7 +102,7 @@
 
             <minds-button-subscribe [user]="entity.ownerObj" *ngIf="entity.ownerObj.guid != session.getLoggedInUser().guid"></minds-button-subscribe>
 
-            <minds-button-boost *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid && entity.subtype != 'album'"
+            <minds-button-boost *ngIf="entity.subtype != 'album'"
               [object]="entity"
             ></minds-button-boost>
 
