@@ -11,7 +11,9 @@ export interface MindsBlogEntity {
 	guid : string,
 	title : string,
 	description : string,
-	ownerObj : any
+    ownerObj : any,
+    spam ?: boolean,
+    deleted ?: boolean
 }
 
 export interface Message {
