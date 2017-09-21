@@ -484,6 +484,41 @@
     </a>
   </ng-template>
 
+
+  <!-- report actioned notification -->
+  <ng-template ngSwitchCase="report_actioned">
+    <div *ngIf="notification.entityObj">
+          
+      <!-- Activity -->
+      <a *ngIf="notification.entityObj.type == 'activity'"
+        target="_blank"
+        routerLink="/settings/reported-content">
+        <p *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title">
+          <span class="pseudo-link mdl-color-text--blue-grey-400">Your post</span> has been {{notification.params.action}}
+        </p>
+        <p *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && notification.entityObj.title">
+          <span class="pseudo-link mdl-color-text--blue-grey-400">Your post {{notification.entityObj.title}}</span> has been {{notification.params.action}}
+        </p>
+      </a>
+
+      <!-- Comments -->
+      <a *ngIf="notification.entityObj.type == 'comment'"
+        target="_blank"
+        routerLink="/settings/reported-content">
+        <p *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid">
+          <span class="pseudo-link mdl-color-text--blue-grey-400">Your comment</span> has been {{notification.params.action}}
+        </p>
+      </a>
+
+      <!-- Default -->
+      <a *ngIf="notification.entityObj.type != 'comment' && notification.entityObj.type != 'activity'">
+        <p style="font-style:italic">
+        <!-- i18n -->There was an error viewing this notification.<!-- /i18n -->
+        </p>
+      </a>
+    </div> 
+  </ng-template>
+    
   <!-- Default -->
   <ng-template ngSwitchDefault>
     <i i18n>Sorry, there was an error viewing this notification</i>

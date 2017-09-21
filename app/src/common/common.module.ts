@@ -39,6 +39,7 @@ import { OverlayModalComponent } from "./components/overlay-modal/overlay-modal.
 import { FaqComponent } from './components/faq/faq.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
+import { AdminActionsButtonComponent } from './components/button/admin-actions/admin-actions.component';
 
 @NgModule({
   imports: [
@@ -81,7 +82,9 @@ import { DateSelectorComponent } from './components/date-selector/date-selector.
 
     FaqComponent,
     ChartComponent,
-    OverlayModalComponent
+    OverlayModalComponent,
+
+    AdminActionsButtonComponent
   ],
   exports: [
     MINDS_PIPES,
@@ -118,7 +121,9 @@ import { DateSelectorComponent } from './components/date-selector/date-selector.
 
     FaqComponent,
     ChartComponent,
-    OverlayModalComponent
+    OverlayModalComponent,
+
+    AdminActionsButtonComponent
   ],
   entryComponents: [ ]
 })

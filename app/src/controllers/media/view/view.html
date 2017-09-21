@@ -1,5 +1,32 @@
 <div class="m-media-loading mdl-progress mdl-js-progress mdl-progress__indeterminate" [mdl] [hidden]="!inProgress"></div>
 
+<div class="m--spam-notice mdl-shadow--2dp" *ngIf="entity?.flags?.spam">
+  <ng-container *ngIf="entity?.flags?.spam">This media was flagged as spam.</ng-container>
+  <ng-container *ngIf="entity?.flags?.deleted">This media was flagged as deleted.</ng-container>
+
+  <ng-container *ngIf="!session.isAdmin()">
+    If you wish to appeal, please check your <a routerLink="/settings/reported-content">Reported Content console</a>.
+  </ng-container>
+</div>
+
+<ng-container *ngIf="(!entity.paywalled || entity.ownerObj.guid == session.getLoggedInUser().guid); else isPaywalled">
+  <minds-media-theatre [object]="entity"
+    *ngIf="entity.subtype != 'album'"
+    [hidden]="!entity.subtype || entity.subtype == 'album'"
+    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(entity), 'm-mature-content-shown': attachment.isForcefullyShown(entity) }"
+  >
+    <div class="m-mature-overlay" (click)="entity.mature_visibility = !entity.mature_visibility">
+        <span class="m-mature-overlay-note">
+          <i class="material-icons" title="Mature content" i18n-title>explicit</i>
+          <span i18n>Click to confirm your are 18+</span>
+        </span>
+    </div>
+  </minds-media-theatre>
+</ng-container>
+<ng-template #isPaywalled>
+  <m-wire--lock-screen [(entity)]="entity"></m-wire--lock-screen>
+</ng-template>
+
 <div class="m-error-splash" *ngIf="error && !inProgress">
   <h3 class="mdl-color-text--red-300">{{error}}</h3>
   <span class="mdl-color-text--blue-grey-300" i18n>The post may not exist</span>

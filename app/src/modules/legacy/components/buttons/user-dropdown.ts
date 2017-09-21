@@ -18,6 +18,8 @@ import { SessionFactory } from '../../../../services/session';
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n>Un-ban globally</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.ban_monetization === 'yes'" (click)="banMonetizationToggle = true; showMenu = false" i18n>Ban from Monetization</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.ban_monetization !== 'yes'" (click)="unBanMonetization()" i18n>Un-ban from Monetization</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.spam" (click)="setSpam(true); showMenu = false" i18n>Mark as spam</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!user.spam" (click)="setSpam(false); showMenu = false" i18n>Not spam</li>
     </ul>
     <div class="minds-bg-overlay" (click)="toggleMenu($event)" [hidden]="!showMenu"></div>
 
@@ -180,6 +182,20 @@ export class UserDropdownButton{
             self.user.ban_monetization = response.banned ? 'yes' : 'no';
           }
         });
+    }
+  }
+
+  async setSpam(value: boolean) {
+    this.user['spam'] = value ? 1 : 0;
+
+    try {
+      if (value) {
+        await this.client.put(`api/v1/admin/spam/${this.user.guid}`);
+      } else {
+        await this.client.delete(`api/v1/admin/spam/${this.user.guid}`);
+      }
+    } catch (e) {
+      this.user['spam'] = !value ? 1 : 0;
     }
   }
 

@@ -1,6 +1,6 @@
 @import "defaults";
 
-minds-comments{
+minds-comments, .m-comment-wrapper{
   margin-top:50px;
   width:100%;
 
@@ -368,5 +368,13 @@ minds-comments{
         max-height: $mcc-height - ($minds-padding * 2) - 50px;
       }
     }
+  }
+}
+
+.m-comment-wrapper {
+  margin-top: 0;
+
+  .m-ribbon {
+    display: none;
   }
 }

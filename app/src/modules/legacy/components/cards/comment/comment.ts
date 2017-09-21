@@ -5,6 +5,10 @@ import { SessionFactory } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 
+import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
+
+import { ReportCreatorComponent } from "../../../../report/creator/creator.component";
+
 @Component({
   moduleId: module.id,
   selector: 'minds-card-comment',
@@ -51,7 +55,11 @@ export class CommentCard {
   translationInProgress: boolean;
   translateToggle: boolean = false;
 
-	constructor(public client: Client, public attachment: AttachmentService, public translationService: TranslationService){
+	constructor(
+    public client: Client, 
+    public attachment: AttachmentService, 
+    public translationService: TranslationService,
+    private overlayModal: OverlayModalService){
 	}
 
   @Output() onReply = new EventEmitter();
@@ -216,5 +224,10 @@ export class CommentCard {
     }
 
     this.translation.translated = false;
+  }
+
+  showReport(){
+    this.overlayModal.create(ReportCreatorComponent, this.comment)
+      .present();
   }
 }

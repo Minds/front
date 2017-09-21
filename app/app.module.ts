@@ -25,6 +25,7 @@ import { PlusModule } from './src/modules/plus/plus.module';
 import { AdsModule } from "./src/modules/ads/ads.module";
 import { BoostModule } from "./src/modules/boost/boost.module";
 import { WireModule } from "./src/modules/wire/wire.module";
+import { ReportModule } from "./src/modules/report/report.module";
 import { ChannelModule } from "./src/modules/channel/channel.module";
 import { MindsFormsModule } from "./src/modules/forms/forms.module";
 import { LegacyModule } from "./src/modules/legacy/legacy.module";
@@ -65,6 +66,7 @@ import { BlogModule } from "./src/plugins/blog/blog.module";
     AdsModule,
     BoostModule,
     WireModule,
+    ReportModule,
     ThirdPartyNetworksModule,
     LegacyModule,
     TranslateModule,

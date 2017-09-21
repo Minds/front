@@ -39,7 +39,7 @@
         ><i class="material-icons">delete</i></li>
         <li class="m-ribbon--item"
           *ngIf="!editing && comment.owner_guid != session.getLoggedInUser()?.guid"
-          (click)="reportToggle = true; toggle.value = false"
+          (click)="showReport()"
           title="Report"
           i18n-title
         ><i class="material-icons">flag</i></li>
@@ -225,4 +225,3 @@
   </div>
 </div>
 
-<m-modal-report *ngIf="reportToggle" [open]="true" (closed)="reportToggle = false" [object]="comment"></m-modal-report>

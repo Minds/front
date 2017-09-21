@@ -9,6 +9,7 @@ import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
 
 import { BoostCreatorComponent } from "../../../../boost/creator/creator.component";
 import { WireCreatorComponent } from "../../../../wire/creator/creator.component";
+import { ReportCreatorComponent } from "../../../../report/creator/creator.component";
 
 @Component({
   moduleId: module.id,
@@ -29,7 +30,6 @@ export class Activity {
   menuToggle : boolean = false;
   commentsToggle : boolean = false;
   shareToggle : boolean = false;
-  reportToggle: boolean = false;
   deleteToggle: boolean = false;
   translateToggle: boolean = false;
   translateEvent: EventEmitter<any> = new EventEmitter();
@@ -180,6 +180,34 @@ export class Activity {
     });
   }
 
+  /*async setSpam(value: boolean) {
+    this.activity['spam'] = value;
+
+    try {
+      if (value) {
+        await this.client.put(`api/v1/admin/spam/${this.activity.guid}`);
+      } else {
+        await this.client.delete(`api/v1/admin/spam/${this.activity.guid}`);
+      }
+    } catch (e) {
+      this.activity['spam'] = !value;
+    }
+  }
+
+  async setDeleted(value: boolean) {
+    this.activity['deleted'] = value;
+
+    try {
+      if (value) {
+        await this.client.put(`api/v1/admin/delete/${this.activity.guid}`);
+      } else {
+        await this.client.delete(`api/v1/admin/delete/${this.activity.guid}`);
+      }
+    } catch (e) {
+      this.activity['delete'] = !value;
+    }
+  }*/
+
   openComments(){
     this.commentsToggle = !this.commentsToggle;
     this.commentsOpened.emit(this.commentsToggle);
@@ -197,6 +225,11 @@ export class Activity {
 
   showWire(){
     this.overlayModal.create(WireCreatorComponent, this.activity)
+      .present();
+  }
+
+  showReport(){
+    this.overlayModal.create(ReportCreatorComponent, this.activity)
       .present();
   }
 

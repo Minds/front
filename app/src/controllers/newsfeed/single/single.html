@@ -7,6 +7,13 @@
   </div>
 
   <div class="mdl-cell mdl-cell--8-col">
+    <div class="m--spam-notice mdl-shadow--2dp" *ngIf="activity?.spam">
+      This activity is flagged as spam.
+      <ng-container *ngIf="!session.isAdmin()">
+        If you wish to appeal, please contact us at info@minds.com.
+      </ng-container>
+    </div>
+
     <div class="minds-list">
       <minds-activity *ngIf="activity" [object]="activity" [commentsToggle]="true" (delete)="delete(activity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
     </div>

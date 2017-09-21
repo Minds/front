@@ -36,6 +36,8 @@ export interface MindsUser {
 	city ?: string
 	social_profiles ?: KeyVal[];
 	wire_rewards ?: WireRewardsStruc;
+	spam ?: boolean;
+	deleted ?: boolean;
 }
 
 export interface MindsGroup {

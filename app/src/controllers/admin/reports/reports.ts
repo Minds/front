@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../../services/api';
+import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
 
 @Component({
   moduleId: module.id,
@@ -14,6 +15,7 @@ import { Client } from '../../../services/api';
 
 export class AdminReports {
 
+  filter: string = 'reports';
   type: string = 'review'
   reports: any[] = [];
 
@@ -21,21 +23,17 @@ export class AdminReports {
   moreData : boolean = true;
   offset : string = '';
 
-  subjects: any = {
-    'spam': 'It\'s spam',
-    'sensitive': 'It displays a sensitive image',
-    'abusive': 'It\'s abusive or harmful',
-    'annoying': 'It shouldn\'t be on Minds'
-  };
-
-  constructor(public client: Client, private route: ActivatedRoute){
-  }
+  constructor(public client: Client, private route: ActivatedRoute) { }
 
   paramsSubscription: Subscription;  
   ngOnInit() {
     this.type = 'review';
     
     this.paramsSubscription = this.route.params.subscribe((params: any) => {
+      if (params['filter']) {
+        this.filter = params['filter'];
+      }
+
       if (params['type']) {
         this.type = params['type'];
       }
@@ -48,34 +46,59 @@ export class AdminReports {
     this.paramsSubscription.unsubscribe();
   }
 
-  load(refresh: boolean = false) {
+  async load(refresh: boolean = false) {
+    if (refresh) {
+      this.inProgress = false;
+      this.reports = [];
+      this.offset = '';
+      this.moreData = true;
+    }
+
     if (this.inProgress) {
       return;
     }
 
-    if (refresh) {
-      this.reports = [];
-      this.offset = "";
-      this.moreData = true;
-    }
-
     this.inProgress = true;
 
-    this.client.get(`api/v1/admin/reports/${this.type}`, { limit: 24, offset: this.offset })
-    .then((response: any) => {
-      if(!response.reports){
-        this.inProgress = false;
-        this.moreData = false;
-        return;
+    try {
+      let response: any = await this.client.get(`api/v1/admin/reports/${this.type}`, { limit: 24, offset: this.offset });
+
+      if (refresh) {
+        this.reports = [];
       }
 
-      this.reports = this.reports.concat(response.reports);
-      this.offset = response['load-next'];
+      if (response.reports) {
+        this.reports.push(...response.reports);
+      }
+
+      if (response['load-next']) {
+        this.offset = response['load-next'];
+      } else {
+        this.moreData = false;
+      }
+    } catch (e) {
+      alert((e && e.message) || 'Error getting list');
+    } finally {
       this.inProgress = false;
-    })
-    .catch(e => {
-      this.inProgress = false;
+    }
+  }
+
+  parseReason(reasonValue: string | number) {
+    let reason = reasonValue;
+
+    REASONS.forEach(item => {
+      if (item.value == reasonValue) {
+        reason = item.label;
+      }
     });
+
+    return reason;
+  }
+
+  parseAction(action: string) {
+    return typeof REPORT_ACTIONS[action] !== 'undefined' ?
+      REPORT_ACTIONS[action] :
+      action;
   }
 
   removeFromList(index) {
@@ -86,53 +109,107 @@ export class AdminReports {
     this.reports.splice(index, 1);
   }
 
-  archive(report: any, index: number) {
-    this.client.post(`api/v1/admin/reports/${report.guid}/archive`, {})
-    .then((response: any) => {
+  async archive(report: any, index: number) {
+    this.removeFromList(index);
+
+    try {
+      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/archive`, {});
+
       if (!response.done) {
         alert('There was a problem archiving this report. Please reload.');
       }
-    })
-    .catch(e => {
-      alert('There was a problem archiving this report. Please reload.');
-    });
-
-    this.removeFromList(index);
+    } catch (e) {
+      alert((e && e.message) || 'There was a problem archiving this report. Please reload.');
+    }
   }
 
-  explicit(report: any, index: number) {
+  async explicit(report: any, index: number) {
     if (!confirm('This will make this content explicit. Are you sure?')) {
       return;
     }
 
-    this.client.post(`api/v1/admin/reports/${report.guid}/explicit`, {})
-    .then((response: any) => {
-      if (!response.done) {
-        alert('There was a problem marking this content. Please reload.');
-      }
-    })
-    .catch(e => {
-      alert('There was a problem marking this content. Please reload.');
-    });
-
     this.removeFromList(index);
+
+    try {
+      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/explicit`, {});
+
+      if (!response.done) {
+        alert('There was a problem marking this content as explicit. Please reload.');
+      }
+    } catch (e) {
+      alert((e && e.message) || 'There was a problem marking this content as explicit. Please reload.');
+    }
   }
 
-  delete(report: any, index: number) {
+  async spam(report: any, index: number) {
+    if (!confirm('This will mark this content as spam. Are you sure?')) {
+      return;
+    }
+
+    this.removeFromList(index);
+
+    try {
+      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/spam`, {});
+
+      if (!response.done) {
+        alert('There was a problem marking this content as spam. Please reload.');
+      }
+    } catch (e) {
+      alert((e && e.message) || 'There was a problem marking this content as spam. Please reload.');
+    }
+  }
+
+  async delete(report: any, index: number) {
     if (!confirm('This will delete this from Minds. Are you sure?')) {
       return;
     }
 
-    this.client.post(`api/v1/admin/reports/${report.guid}/delete`, {})
-    .then((response: any) => {
+    this.removeFromList(index);
+
+    try {
+      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/delete`, {});
+
       if (!response.done) {
         alert('There was a problem deleting this content. Please reload.');
       }
-    })
-    .catch(e => {
-      alert('There was a problem deleting this content. Please reload.');
-    });
+    } catch (e) {
+      alert((e && e.message) || 'There was a problem deleting this content. Please reload.');
+    }
+  }
+
+  async approveAppeal(report: any, index: number) {
+    if (!confirm(`This will approve an appeal and undo the last administrative action. There's no UNDO. Are you sure?`)) {
+      return;
+    }
 
     this.removeFromList(index);
+
+    try {
+      let response: any = await this.client.put(`api/v1/admin/reports/appeals/${report.guid}`, {});
+
+      if (!response.done) {
+        alert(`There was a problem approving this content's appeal. Please reload.`);
+      }
+    } catch (e) {
+      alert((e && e.message) || `There was a problem approving this content's appeal. Please reload.`);
+    }
+  }
+
+  async rejectAppeal(report: any, index: number) {
+    if (!confirm(`This will reject an appeal. There's no UNDO. Are you sure?`)) {
+      return;
+    }
+
+    this.removeFromList(index);
+
+    try {
+      let response: any = await this.client.delete(`api/v1/admin/reports/appeals/${report.guid}`, {});
+
+      if (!response.done) {
+        alert(`There was a problem rejecting this content's appeal. Please reload.`);
+      }
+    } catch (e) {
+      alert((e && e.message) || `There was a problem rejecting this content's appeal. Please reload.`);
+    }
   }
 }

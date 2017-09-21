@@ -9,7 +9,6 @@ import { MindsFormsModule } from "../forms/forms.module";
 import { ConfirmModal } from "./confirm/confirm";
 import { InviteModal } from "./invite/invite";
 import { RemindComposerModal } from "./remind-composer/remind-composer";
-import { ReportModal } from "./report/report";
 import { ShareModal } from "./share/share";
 import { SignupOnActionModal } from "./signup/signup-on-action";
 import { SignupOnScrollModal } from "./signup/signup-on-scroll";
@@ -28,7 +27,6 @@ import { SignupModal } from "./signup/signup";
     ConfirmModal,
     InviteModal,
     RemindComposerModal,
-    ReportModal,
     ShareModal,
     SignupOnActionModal,
     SignupOnScrollModal,
@@ -38,7 +36,6 @@ import { SignupModal } from "./signup/signup";
     ConfirmModal,
     InviteModal,
     RemindComposerModal,
-    ReportModal,
     ShareModal,
     SignupOnActionModal,
     SignupOnScrollModal,

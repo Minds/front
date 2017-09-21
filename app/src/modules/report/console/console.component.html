@@ -1,0 +1,55 @@
+<div class="mdl-tabs__tab-bar m-report-console--tabs">
+  <a (click)="setFilter('review')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'review' }" i18n>Review Pending</a>
+  <a (click)="setFilter('pending')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'pending' }" i18n>Appealed</a>
+  <a (click)="setFilter('approved')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'approved' }" i18n>Approved</a>
+  <a (click)="setFilter('rejected')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'rejected' }" i18n>Rejected</a>
+</div>
+
+<div *ngFor="let appeal of appeals; let i = index"
+  class="mdl-card mdl-shadow--2dp m-report-console--item"
+>
+
+  <div class="m-report-console--header mdl-color--blue mdl-color-text--white">
+    <b>{{ appeal.time_created * 1000 | date: 'short' }}</b>
+    <p>The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>{{ parseReason(appeal.reason) }}</b>.</p>
+  </div>
+
+  <div class="m-report-console--appeal">
+    <div class="m-report-console--appeal--composer" *ngIf="filter == 'review'">
+      <textarea #appealContent placeholder="Please type in this box if you wish to appeal this decision, explaining your reasons"></textarea>
+
+      <button class="m-report-console--appeal--button"
+        [disabled]="appeal.inProgress"
+        (click)="sendAppeal(appeal, appealContent.value, i)"
+      >
+        Appeal
+      </button>
+    </div>
+    <div class="m-report-console--appeal-note" *ngIf="appeal.appeal_note">
+      <p>{{appeal.appeal_note}}</p>  
+    </div>    
+  </div>
+
+
+
+  <minds-card *ngIf="appeal.entityObj.type != 'comment'"
+    class="m-report-console--card"
+    [object]="appeal.entityObj"
+    hostClass="mdl-card"
+  ></minds-card>
+
+  <div *ngIf="appeal.entityObj.type == 'comment'" class="m-comment-wrapper">
+    <div class="m-report-console--comment-note">
+      <a target="_blank" [routerLink]="['/newsfeed', appeal.entityObj.parent_guid]">View parent and its comment thread</a>
+    </div>
+    <minds-card-comment [object]="appeal.entityObj" class="mdl-card"></minds-card-comment>
+  </div>
+
+</div>
+
+<infinite-scroll
+  distance="25%"
+  (load)="load()"
+  [moreData]="moreData"
+  [inProgress]="inProgress">
+</infinite-scroll>

@@ -226,7 +226,7 @@
 		<!-- DELETE -->
 		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true; toggle.value = false" i18n>Delete</li>
 		<!-- REPORT -->
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="reportToggle = true; toggle.value = false" i18n>Report</li>
+		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="showReport()" i18n>Report</li>
 		<!-- NOTIFICATIONS -->
 		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled i18n>Mute notifications</li>
 		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false" i18n>Mute notifications</li>
@@ -238,7 +238,6 @@
   <div class="minds-bg-overlay" (click)="toggle.value = false" [hidden]="!toggle.value"></div>
 
   <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url" [embed]="activity"></m-modal-share>
-  <m-modal-report *ngIf="reportToggle" [open]="true" (closed)="reportToggle = false" [object]="activity"></m-modal-report>
   <m-modal-confirm *ngIf="deleteToggle"
     [open]="true"
     [closeAfterAction]=true
