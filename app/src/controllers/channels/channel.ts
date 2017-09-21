@@ -12,6 +12,7 @@ import { MindsActivityObject } from '../../interfaces/entities';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
 import { Poster } from "../../modules/legacy/controllers/newsfeed/poster/poster";
+import { WireChannelComponent } from '../../modules/wire/channel/channel.component';
 
 @Component({
   moduleId: module.id,
@@ -34,11 +35,13 @@ export class Channel {
   editing : boolean = false;
   editForward : boolean = false;
   error: string = "";
+  openWireModal: boolean = false;
 
   //@todo make a re-usable city selection module to avoid duplication here
   cities : Array<any> = [];
 
-    @ViewChild('poster') private poster: Poster;
+  @ViewChild('poster') private poster: Poster;
+  @ViewChild('wire') private wire: WireChannelComponent;
 
   constructor(public client: Client, public upload: Upload, private route: ActivatedRoute,
     public title: MindsTitle, public scroll : ScrollService){
@@ -59,7 +62,11 @@ export class Channel {
       }
 
       if (params['filter']) {
-        this._filter = params['filter'];
+        if(params['filter'] === 'wire'){
+          this.openWireModal = true;
+        }else {
+          this._filter = params['filter'];
+        }
       }
 
       if (params['editToggle']) {
@@ -91,6 +98,12 @@ export class Channel {
         }
         this.user = data.channel;
         this.title.setTitle(this.user.username);
+
+        if(this.openWireModal) {
+          setTimeout(() => {
+            this.wire.sendWire();
+          });
+        }
 
         if(this._filter == "feed")
           this.loadFeed(true);
