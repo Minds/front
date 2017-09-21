@@ -39,3 +39,21 @@
     text-align: center;
   }
 }
+.m--inputs {
+  display: flex;
+
+  .mdl-slider__container {
+    flex-grow: 1;
+  }
+
+  input[type=text] {
+    width: 60px;
+  }
+}
+.m-previously-rejected-notice {
+  display: flex;
+  align-items: center;
+  margin: 16px;
+  font-family: Lato;
+  color: #f44336;
+}

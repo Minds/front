@@ -1,10 +1,11 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client, Upload } from '../../../services/api';
 
 import { SessionFactory } from '../../../services/session';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -40,7 +41,7 @@ export class NewsfeedBoostRotator {
   plus: boolean = false;
   disabled: boolean = false;
 
-  constructor(public client: Client, public scroll : ScrollService, public element: ElementRef){
+  constructor(public router: Router, public client: Client, public scroll : ScrollService, public element: ElementRef, private cd: ChangeDetectorRef){
   }
 
   ngOnInit(){
@@ -96,7 +97,15 @@ export class NewsfeedBoostRotator {
         boost_rating : rating,
       });
     });
-    this.ratingMenuHandler();
+  }
+
+  toggleRating(){
+    if (this.rating != 1) {
+      this.setRating(1);
+    } else {
+      this.setRating(2);
+    }
+    this.detectChanges();
   }
 
   ratingMenuHandler(){
@@ -207,6 +216,15 @@ export class NewsfeedBoostRotator {
           this.session.getLoggedInUser().disabled_boost = true;
           this.disabled = true;
       });
+  }
+
+  selectCategories() {
+    this.router.navigate(['/settings/general/categories']);
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   ngOnDestroy(){

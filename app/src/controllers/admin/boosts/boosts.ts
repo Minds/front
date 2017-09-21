@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
-import { Client, Upload } from '../../../services/api';
+import { Client } from '../../../services/api';
+import { RejectionReasonModalComponent } from './modal/rejection-reason-modal.component';
+import { Reason, rejectionReasons } from './rejection-reasons';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-admin-boosts',
   host: {
-    '(keydown)': 'onKeyDown($event)'
+    '(document:keypress)': 'onKeyPress($event)'
   },
   templateUrl: 'boosts.html'
 })
@@ -26,8 +27,12 @@ export class AdminBoosts {
   inProgress : boolean = false;
   moreData : boolean = true;
   offset : string = "";
+  reasonModalOpened: boolean = false;
 
   statistics: any = null;
+  selectedBoost: any = null;
+
+  @ViewChild('reasonModal') modal: RejectionReasonModalComponent;
 
   constructor(public client: Client, private route: ActivatedRoute){
   }
@@ -52,13 +57,10 @@ export class AdminBoosts {
           this.loadStatistics();
         });
     });
-
-    this.domHack();
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
-    this.undoDomHack();
   }
 
   load(){
@@ -99,16 +101,20 @@ export class AdminBoosts {
       });
   }
 
-  domHack(){
-    var self = this;
-    document.addEventListener('keydown', self.onKeypress);
-  }
-
-  accept(boost : any = null){
+  accept(boost: any = null, open: boolean = false, opts: any = { mature: 0}) {
     if(!boost)
       boost = this.boosts[0];
 
-    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid  + '/accept', { rating : boost.rating })
+    boost.rating = open ? 2 : 1;
+
+    if(!opts.mature)
+      opts.mature = 0;
+
+    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/accept', {
+      quality: boost.quality,
+      rating: boost.rating,
+      mature: opts.mature
+    })
       .then((response : any) => {
 
       })
@@ -118,11 +124,13 @@ export class AdminBoosts {
     this.pop(boost);
   }
 
-  reject(boost : any = null){
+  reject(boost: any = null) {
     if(!boost)
       boost = this.boosts[0];
 
-    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid  + '/reject')
+    this.reasonModalOpened = false;
+
+    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/reject', { reason: boost.rejection_reason })
       .then((response : any) => {
 
       })
@@ -130,6 +138,23 @@ export class AdminBoosts {
 
       });
     this.pop(boost);
+  }
+
+  openReasonsModal(boost: any = null) {
+    if (!boost)
+      boost = this.boosts[ 0 ];
+
+    this.reasonModalOpened = true;
+    this.selectedBoost = boost;
+  }
+
+  eTag(boost: any = null) {
+    if (!boost)
+      boost = this.boosts[ 0 ];
+
+    boost.rejection_reason = this.findReason('Explicit', 'label').code;
+
+    this.reject(boost);
   }
 
   /**
@@ -149,25 +174,39 @@ export class AdminBoosts {
       this.load();
   }
 
-  onKeyDown(e){
-    //e.preventDefault();
-    e.stopPropagation()
-    if(e.keyCode == 37)
+  onKeyPress(e: KeyboardEvent) {
+    if (this.reasonModalOpened || e.ctrlKey || e.altKey || e.shiftKey) {
+      return;
+    }
+    e.stopPropagation();
+
+    // numbers
+    if (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105) {
+      const keyValue = Number.parseInt(e.key);
+      this.boosts[ 0 ].quality = keyValue > 0 ? keyValue * 10 : 100; // if we detect 0 then put 100%, else just multiply by 10
+    }
+
+    if (e.keyCode == 37)
       return this.accept();
-    if(e.keyCode == 39)
-      return this.reject();
-  }
+    if (e.keyCode == 39)
+      return this.openReasonsModal();
 
-  /**
-   * Hack to make host keypress listen
-   */
-  onKeypress(e){
-    var event = new KeyboardEvent('keydown', e);
-    document.getElementsByTagName('minds-admin-boosts')[0].dispatchEvent(event);
-  }
-
-  undoDomHack(){
-    document.removeEventListener('keydown', this.onKeypress);
+    switch (e.code) {
+      case "KeyE":
+        //mark as nsfw and reject
+        this.eTag(this.boosts[0]);
+        break;
+      case "KeyN":
+        //mark as nsfw and accept
+        this.accept(this.boosts[0], true);
+        break;
+      case "KeyA":
+        this.accept();
+        break;
+      case "KeyR":
+        this.openReasonsModal();
+        break;
+    }
   }
 
   // TODO: Please, convert this to a pipe (and maybe add days support)!
@@ -192,5 +231,11 @@ export class AdminBoosts {
       }
       return padString.slice(0,targetLength) + String(str);
     }
+  }
+
+  findReason(value: any, field: 'code' | 'label' = 'code'): Reason {
+    return rejectionReasons.find((item: Reason) => {
+      return item[field] == value;
+    });
   }
 }

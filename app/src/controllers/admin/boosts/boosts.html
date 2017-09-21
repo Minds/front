@@ -55,20 +55,43 @@
       <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'activity'"></minds-activity>
       <minds-card-group [group]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'group'"></minds-card-group>
 
-      <div class="mdl-card__supporting-text action-buttons">
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-300" (click)="boost.rating = 1; accept(boost)" i18n>Safe</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500" (click)="boost.rating = 2; accept(boost)" i18n>Accept</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="reject(boost)" i18n>Reject</button>
+      <div class="mdl-card__supporting-text quality-slider">
+        <!--i18n-->Quality: <!--/i18n-->
+        <div class="m--inputs">
+          <input type="range" class="mdl-slider mdl-js-slider" [(ngModel)]="boost.quality" min="0" max="100" step="5" [mdlSlider]>
+          <input type="number" min="0" max="100" step="5" [(ngModel)]="boost.quality">
+        </div>
+      </div>
 
-        <span class="impressions">
-          <span *ngIf="boost.impressions" i18n>{{ boost.impressions | number }} views</span>
-          |
-          <span *ngIf="boost.bidType == 'points'" i18n>Bid: {{ boost.bid | number }} points</span>
-          <span *ngIf="boost.bidType == 'usd'" i18n>Bid: {{ boost.bid / 100 | currency:'USD':true }} USD </span>
-        </span>
+      <div class="m-previously-rejected-notice" *ngIf="boost.entity.boost_rejection_reason && boost.entity.boost_rejection_reason != -1">
+        <i class="material-icons">warning</i>
+        Previously rejected: {{  findReason(boost.entity.boost_rejection_reason).label }}
+      </div>
+
+      <span class="impressions">
+        <span *ngIf="boost.impressions" i18n>{{ boost.impressions | number }} views</span>
+        |
+        <span *ngIf="boost.bidType == 'points'" i18n>Bid: {{ boost.bid | number }} points</span>
+        <span *ngIf="boost.bidType == 'usd'" i18n>Bid: {{ boost.bid / 100 | currency:'USD':true }} USD </span>
+      </span>
+
+      <div class="mdl-card__supporting-text action-buttons">
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-300 m-admin-boosts--accept-button" (click)="accept(boost, false)" i18n>Accept</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500 m-admin-boosts--open-button" (click)="accept(boost, true)" i18n>Open</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500 m-admin-boosts--e-tag-button" (click)="accept(boost, true, { mature: 1 })" i18n>Open (E-tag)</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red m-admin-boosts--reject-button" (click)="openReasonsModal(boost)" i18n>Reject</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red m-admin-boosts--e-tag-button" (click)="eTag(boost)" i18n>E-tag</button>
       </div>
 
     </div>
   </div>
 
 </div>
+<m--rejection-reason-modal #reasonModal
+  *ngIf="reasonModalOpened"
+  [boost]="selectedBoost"
+  [closeAfterAction]="true"
+  (closed)="reasonModalOpened = false"
+  (actioned)="reject($event)"
+  yesButton="Reject Boost"
+  noButton="Cancel"></m--rejection-reason-modal>

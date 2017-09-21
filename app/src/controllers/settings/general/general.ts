@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 
 import { Subscription } from 'rxjs/Rx';
@@ -10,7 +10,6 @@ import { ThirdPartyNetworksService } from '../../../services/third-party-network
 @Component({
   moduleId: module.id,
   selector: 'minds-settings-general',
-  inputs: ['object'],
   templateUrl: 'general.html'
 })
 
@@ -19,7 +18,9 @@ export class SettingsGeneral{
   session = SessionFactory.build();
   minds : Minds;
   settings : string;
-  object: any;
+  @Input() object: any;
+
+  @Input() card: string; // card we'll scroll to
 
   error : string = "";
   changed : boolean = false;
@@ -41,7 +42,7 @@ export class SettingsGeneral{
   categories: { id, label, selected }[];
   selectedCategories: string[] = [];
 
-  constructor(public client: Client, public route: ActivatedRoute, public thirdpartynetworks: ThirdPartyNetworksService){
+  constructor(public element: ElementRef, public client: Client, public route: ActivatedRoute, public thirdpartynetworks: ThirdPartyNetworksService){
     this.minds = window.Minds;
     this.getCategories();
   }
@@ -55,6 +56,13 @@ export class SettingsGeneral{
         this.load(false);
       }
     });
+  }
+
+  ngAfterViewInit() {
+    if (this.card && this.card != '') {
+      const el = this.element.nativeElement.querySelector('.m-settings--' + this.card);
+      window.scrollTo(0, el.offsetTop - 64); // 64 comes from the topbar's height
+    }
   }
 
   ngOnDestroy() {
@@ -145,11 +153,11 @@ export class SettingsGeneral{
 
         if (window.Minds.user) {
           window.Minds.user.mature = this.mature ? 1 : 0;
-          
+
           if (window.Minds.user.name !== this.name) {
             window.Minds.user.name = this.name;
           }
-          
+
         }
 
         if (this.language != window.Minds['language']) {

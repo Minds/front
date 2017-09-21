@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from "@angular/router";
 
@@ -15,6 +15,11 @@ import { BoostConsoleNetworkListComponent } from "./console/list/network.compone
 import { BoostConsoleP2PListComponent } from "./console/list/p2p.component";
 import { BoostConsoleCard } from "./console/card/card.component";
 import { BoostConsoleBooster } from "./console/booster/booster.component";
+import { BoostMarketingComponent } from './marketing.component';
+
+const boostRoutes: Routes = [
+  { path: 'boost', component: BoostMarketingComponent }
+];
 
 
 @NgModule({
@@ -22,7 +27,7 @@ import { BoostConsoleBooster } from "./console/booster/booster.component";
     NgCommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([]),
+    RouterModule.forChild(boostRoutes),
     CommonModule,
     CheckoutModule,
     ThirdPartyNetworksModule,
@@ -34,7 +39,8 @@ import { BoostConsoleBooster } from "./console/booster/booster.component";
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
     BoostConsoleCard,
-    BoostConsoleBooster
+    BoostConsoleBooster,
+    BoostMarketingComponent
   ],
   exports: [
     BoostConsoleNetworkListComponent,
@@ -44,7 +50,8 @@ import { BoostConsoleBooster } from "./console/booster/booster.component";
   ],
   entryComponents: [
     BoostCreatorComponent,
-    BoostConsoleComponent
+    BoostConsoleComponent,
+    BoostMarketingComponent
   ]
 })
 export class BoostModule {

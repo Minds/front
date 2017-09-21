@@ -94,3 +94,7 @@
     >Accept</button>
   </div>
 </div>
+
+<div class="m-boost-card--rejection-reason" *ngIf="boost.rejection_reason && boost.rejection_reason != -1">
+  <i class="material-icons">warning</i> Your boost was rejected: {{ findReason(boost.rejection_reason).label }}
+</div>

@@ -5,7 +5,7 @@
   </div>
 
   <div class="mdl-cell mdl-cell--8-col minds-settings-content">
-    <minds-settings-general *ngIf="filter == 'general'"></minds-settings-general>
+    <minds-settings-general [card]="card" *ngIf="filter == 'general'"></minds-settings-general>
     <!--<minds-settings-statistics *ngIf="filter == 'statistics'"></minds-settings-statistics>-->
     <minds-settings-disable-channel *ngIf="filter == 'disable'"></minds-settings-disable-channel>
     <minds-settings-two-factor *ngIf="filter == 'twoFactor'"></minds-settings-two-factor>

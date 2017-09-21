@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SessionFactory } from '../../services/session';
+import { Reason, rejectionReasons } from '../admin/boosts/rejection-reasons';
 
 @Component({
   moduleId: module.id,
@@ -24,5 +25,11 @@ export class Notification {
     }
 
     (<any>window).openMessengerWindow();
+  }
+
+  findReason(code: number): Reason {
+    return rejectionReasons.find((item: Reason) => {
+      return item.code == code;
+    });
   }
 }

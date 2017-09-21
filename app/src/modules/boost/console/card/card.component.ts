@@ -1,20 +1,25 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 import { BoostService } from "../../boost.service";
+import { Reason, rejectionReasons } from '../../../../controllers/admin/boosts/rejection-reasons';
 
 @Component({
   moduleId: module.id,
-  providers: [BoostService],
+  providers: [ BoostService ],
   selector: 'm-boost-console-card',
   templateUrl: 'card.component.html'
 })
 export class BoostConsoleCard {
-  constructor(public service: BoostService) { }
+  constructor(public service: BoostService) {
+  }
 
   boost: any;
   type: string;
 
-  @Input('boost') set _boost(boost: any) {
+  reasons: Array<Reason> = rejectionReasons;
+
+  @Input('boost')
+  set _boost(boost: any) {
     this.boost = boost;
     this.type = this.service.getBoostType(this.boost) || '';
   }
@@ -59,5 +64,11 @@ export class BoostConsoleCard {
 
   isIncoming() {
     return this.service.isIncoming(this.boost);
+  }
+
+  findReason(code: number): Reason {
+    return rejectionReasons.find((item: Reason) => {
+      return item.code == code;
+    });
   }
 }

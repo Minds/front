@@ -42,6 +42,7 @@ import {MediaTheatre} from './controllers/media/view/views/theatre';
 import {MediaGrid} from './controllers/media/view/views/grid';
 import {ThumbnailSelector} from './controllers/media/components/thumbnail-selector';
 import { MediaViewRecommended } from "./controllers/media/view/recommended/recommended.component";
+import { RejectionReasonModalComponent } from './controllers/admin/boosts/modal/rejection-reason-modal.component';
 
 export const MINDS_DECLARATIONS: any[] = [
   // Components
@@ -64,6 +65,7 @@ export const MINDS_DECLARATIONS: any[] = [
   SearchBar,
   Notification,
   AdminAnalytics,
+  RejectionReasonModalComponent,
   AdminBoosts,
   AdminPages,
   AdminReports,

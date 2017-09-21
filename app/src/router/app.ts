@@ -56,6 +56,7 @@ export const MindsAppRoutes: Routes = [
 
   { path: 'search', component: Search },
 
+  { path: 'settings/:filter/:card', component: Settings },
   { path: 'settings/:filter', component: Settings },
 
   { path: 'admin/:filter/:type', component: Admin },

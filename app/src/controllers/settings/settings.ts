@@ -20,6 +20,7 @@ export class Settings{
   user : any;
   filter : string;
   account_time_created: any;
+   card: string;
 
   constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
   }
@@ -43,6 +44,9 @@ export class Settings{
       } else {
         this.filter = 'general';
       }
+       if (params[ 'card' ]) {
+         this.card = params[ 'card' ];
+       }
     });
   }
 
