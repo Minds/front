@@ -299,10 +299,16 @@ describe('WireCreatorComponent', () => {
   });
 
   it('should have a recurring checkbox', () => {
+    comp.setCurrency('money');
+    fixture.detectChanges();
     expect(getRecurringCheckbox()).not.toBeNull();
   });
 
   it('recurring checkbox should toggle wire\'s recurring property', () => {
+
+    comp.setCurrency('money');
+    fixture.detectChanges();
+
     expect(comp.wire.recurring).toBe(false);
     const checkbox: DebugElement = getRecurringCheckbox();
 
@@ -384,7 +390,7 @@ describe('WireCreatorComponent', () => {
     expect(comp.submit).toHaveBeenCalled();
   });
 
-  it('send send a correct wire', fakeAsync(() => {
+  it('send a correct wire', fakeAsync(() => {
     spyOn(comp, 'submit').and.callThrough();
     spyOn(comp, 'canSubmit').and.returnValue(true);
 
@@ -400,7 +406,7 @@ describe('WireCreatorComponent', () => {
 
     fixture.detectChanges();
 
-    getRecurringCheckbox().nativeElement.click();
+    //getRecurringCheckbox().nativeElement.click();
 
     fixture.detectChanges();
 
@@ -422,7 +428,7 @@ describe('WireCreatorComponent', () => {
       payload: null,
       method: 'points',
       amount: 10,
-      recurring: true
+      recurring: false
     });
   }));
 });
