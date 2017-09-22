@@ -6,20 +6,21 @@ import { SessionFactory } from '../../../services/session';
 
 
 @Component({
-  template: ``
+	template: ``
 })
 
 export class Logout {
 
 	session = SessionFactory.build();
 
-	constructor(public client : Client, public router: Router){
+	constructor(public client: Client, public router: Router) {
 		this.logout();
 	}
 
-	logout(){
+	logout() {
 		this.client.delete('api/v1/authenticate');
 		this.session.logout();
-    this.router.navigate(['/login']);
+		this.router.navigate(['/login']);
 	}
+
 }

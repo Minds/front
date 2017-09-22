@@ -20,26 +20,26 @@ import { Client } from '../../services/api';
 export class AnalyticsImpressions {
 
   key;
-  span : number = 5;
-  unit : string = "day";
+  span: number = 5;
+  unit: string = 'day';
 
-  data : Array<any> = [];
+  data: Array<any> = [];
 
-  constructor(public client : Client) {
+  constructor(public client: Client) {
   }
 
-  set _key(value : any){
+  set _key(value: any) {
     this.key = value;
     this.get();
   }
 
-  get(){
+  get() {
     var self = this;
     this.client.get('api/v1/analytics/' + this.key, {
-        span: this.span,
-        unit: this.unit
-      })
-      .then((response : any) => {
+      span: this.span,
+      unit: this.unit
+    })
+      .then((response: any) => {
         self.data = response.data;
       });
   }

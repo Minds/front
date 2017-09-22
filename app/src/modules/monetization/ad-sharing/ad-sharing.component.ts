@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Rx';
@@ -30,11 +30,16 @@ export class AdSharingComponent {
     message: ''
   };
 
-  constructor(private route: ActivatedRoute, private client: Client, public fb: FormBuilder, private cd : ChangeDetectorRef) { }
-
   paramsSubscription: Subscription;
-  ngOnInit() {
 
+  constructor(
+    private route: ActivatedRoute,
+    private client: Client,
+    public fb: FormBuilder,
+    private cd: ChangeDetectorRef
+  ) { }
+
+  ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['type']) {
         this.type = params['type'];
@@ -103,8 +108,9 @@ export class AdSharingComponent {
       });
   }
 
-  detectChanges(){
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
 }

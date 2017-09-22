@@ -32,10 +32,9 @@ import { Emoji as EmojiDirective } from '../../common/directives/emoji';
   `
 })
 export class MindsEmoji {
-  private emojis = EmojiList;
-  localDirective: EmojiDirective;
 
-  constructor() {}
+  localDirective: EmojiDirective;
+  private emojis = EmojiList;
 
   hide() {
     if (!this.localDirective.shown) {
@@ -73,6 +72,6 @@ export class MindsEmoji {
       units = point > 0xFFFF ? [0xD800 + (offset >> 10), 0xDC00 + (offset & 0x3FF)] : [point];
       chars.push(String.fromCharCode.apply(null, units));
     }
-    return chars.join("");
+    return chars.join('');
   }
 }

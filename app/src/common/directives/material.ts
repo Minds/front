@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Type, Inject } from '@angular/core';
-import { Material as MaterialService } from "../../services/ui";
+import { Material as MaterialService } from '../../services/ui';
 
 import { MaterialTextfield } from './material/text-field';
 import { MaterialUpload } from './material/upload';
@@ -13,8 +13,9 @@ import { MaterialSlider } from './material/slider';
 })
 
 export class Material {
-  private element: any;
+
   mdl: any;
+  private element: any;
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;
@@ -25,4 +26,11 @@ export class Material {
   }
 }
 
-export const MDL_DIRECTIVES: any[] = [Material, MaterialTextfield, MaterialUpload, MaterialSwitch, MaterialDateTimePickerDirective, MaterialSlider];
+export const MDL_DIRECTIVES: any[] = [
+  Material,
+  MaterialTextfield,
+  MaterialUpload,
+  MaterialSwitch,
+  MaterialDateTimePickerDirective,
+  MaterialSlider
+];

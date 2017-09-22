@@ -12,7 +12,7 @@ import { Client, Upload } from '../../../services/api';
   },
   template: `
       <div class="m-search-bar-suggestions-list" [hidden]="!showResults || !suggestions || !suggestions.length">
-        <a class="m-search-bar-suggestions-suggestion" 
+        <a class="m-search-bar-suggestions-suggestion"
            *ngFor="let suggestion of suggestions"
            [routerLink]="['/', suggestion.payload.username]">
            <img src="icon/{{suggestion.payload.guid}}/small"/> @{{suggestion.payload.username}}
@@ -23,33 +23,33 @@ import { Client, Upload } from '../../../services/api';
 
 export class SearchBarSuggestions {
 
-  suggestions : Array<any> = [];
-  showResults : boolean = false;
+  suggestions: Array<any> = [];
+  showResults: boolean = false;
   timeout;
 
-  constructor(public client : Client, public location: Location){
+  constructor(public client: Client, public location: Location) {
   }
 
   @Input('q')
-  set q(q : string) {
-    if(!q || this.location.path().indexOf("/search") === 0) {
+  set q(q: string) {
+    if (!q || this.location.path().indexOf('/search') === 0) {
       this.suggestions = [];
       return;
     }
-    if(this.timeout){
+    if (this.timeout) {
       clearTimeout(this.timeout);
     }
     this.timeout = setTimeout(() => {
       this.client.get('api/v1/search/suggest', { q: q })
-        .then((response : any) => {
+        .then((response: any) => {
           this.showResults = true;
           this.suggestions = response.suggestions;
-        })
+        });
     }, 300);
   }
 
   onWindowClick(e) {
-    if(e.target.id == "search"){
+    if (e.target.id === 'search') {
       this.showResults = true;
       return;
     }
@@ -57,7 +57,7 @@ export class SearchBarSuggestions {
   }
 
   onKey(e) {
-    if(e.key == "Enter")
+    if (e.key === 'Enter')
       this.showResults = false;
   }
 

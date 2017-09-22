@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { WireRewardsTiers, WireRewardsType } from "../../interfaces/wire.interfaces";
+import { WireRewardsTiers, WireRewardsType } from '../../interfaces/wire.interfaces';
 import { WireCreatorComponent } from '../../creator/creator.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Session, SessionFactory } from '../../../../services/session';
@@ -13,7 +13,6 @@ export class WireChannelTableComponent {
   @Input() type: WireRewardsType;
   @Input() channel;
 
-  private session: Session;
 
   rewards: WireRewardsTiers = [];
 
@@ -37,6 +36,8 @@ export class WireChannelTableComponent {
       this.rewardsChangeEmitter.emit(this.rewards);
     }
   }
+
+  private session: Session;
 
   constructor(private overlayModal: OverlayModalService) {
     this.session = SessionFactory.build();

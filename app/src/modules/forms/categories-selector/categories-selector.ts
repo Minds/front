@@ -5,7 +5,7 @@ import { Client } from '../../../services/api';
 @Component({
   moduleId: module.id,
   selector: 'minds-onboarding-categories-selector',
-  outputs: [ 'done' ],
+  outputs: ['done'],
   templateUrl: 'categories-selector.html',
 })
 
@@ -13,27 +13,27 @@ export class OnboardingCategoriesSelector {
 
   minds = window.Minds;
 
-  categories : Array<any> = [];
+  categories: Array<any> = [];
 
-  inProgress : boolean = false;
-  done : EventEmitter<any> = new EventEmitter();
+  inProgress: boolean = false;
+  done: EventEmitter<any> = new EventEmitter();
 
-	constructor(public client : Client){
+  constructor(public client: Client) {
 
-	}
+  }
 
-  ngOnInit(){
+  ngOnInit() {
     this.initCategories();
   }
 
-  initCategories(){
+  initCategories() {
     delete window.Minds.categories.other;
-    this.categories = Object.keys(window.Minds.categories).map(function(key) {
-        return {
-          id: key,
-          label: window.Minds.categories[key],
-          selected: false
-        };
+    this.categories = Object.keys(window.Minds.categories).map(function (key) {
+      return {
+        id: key,
+        label: window.Minds.categories[key],
+        selected: false
+      };
     });
   }
 
@@ -49,7 +49,7 @@ export class OnboardingCategoriesSelector {
       })
       .catch(() => {
         this.inProgress = false;
-      })
+      });
   }
 
 }

@@ -21,7 +21,7 @@ export class WireService {
         return { done: true };
       })
       .catch(e => {
-        if (e && e.stage == 'transaction') {
+        if (e && e.stage === 'transaction') {
           throw new Error('Sorry, your payment failed. Please, try again or use another card');
         }
 

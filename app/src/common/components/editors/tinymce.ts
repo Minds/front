@@ -2,12 +2,12 @@ import { Component, EventEmitter } from '@angular/core';
 
 declare var tinymce;
 
-type Pattern = {regex: any, type:string, w:number, h:number, url: string, allowFullscreen: boolean};
+type Pattern = { regex: any, type: string, w: number, h: number, url: string, allowFullscreen: boolean };
 
 @Component({
   selector: 'minds-tinymce',
-  inputs: [ '_content: content', 'reset' ],
-  outputs: [ 'update: contentChange' ],
+  inputs: ['_content: content', 'reset'],
+  outputs: ['update: contentChange'],
   template: `
     <textarea>{{content}}</textarea>
   `
@@ -15,9 +15,9 @@ type Pattern = {regex: any, type:string, w:number, h:number, url: string, allowF
 
 export class MindsTinymce {
 
-  editor : any;
-  ready : boolean = false;
-  content = "";
+  editor: any;
+  ready: boolean = false;
+  content = '';
   update = new EventEmitter();
   timeout;
 
@@ -48,8 +48,8 @@ export class MindsTinymce {
     },
     {
       regex: /vimeo\.com\/(.*)\/([0-9]+)/,
-      type: "iframe", w: 425, h: 350,
-      url: "https://player.vimeo.com/video/$2?title=0&amp;byline=0",
+      type: 'iframe', w: 425, h: 350,
+      url: 'https://player.vimeo.com/video/$2?title=0&amp;byline=0',
       allowFullscreen: true
     },
     {
@@ -67,29 +67,35 @@ export class MindsTinymce {
   ];
 
 
-  ngOnInit(){
+  ngOnInit() {
     tinymce.init({
-      selector:'minds-tinymce > textarea',
+      selector: 'minds-tinymce > textarea',
       autoresize_max_height: '400',
-      content_css : "/stylesheets/main.css",
+      content_css: '/stylesheets/main.css',
       format: 'raw',
       menubar: false,
-      toolbar: "styleselect | bold italic underline textcolor | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | removeformat | code",
+      toolbar: `styleselect
+        | bold italic underline textcolor
+        | alignleft aligncenter alignright alignjustify
+        | bullist numlist
+        | link image media
+        | removeformat
+        | code`,
       statusbar: false,
       relative_urls: false,
       remove_script_host: false,
       media_url_resolver: (data, resolve) => {
         for (let i: number = 0; i < this.urlPatterns.length; ++i) {
-          const pattern: Pattern = this.urlPatterns[ i ];
+          const pattern: Pattern = this.urlPatterns[i];
           const match = pattern.regex.exec(data.url);
           let url;
 
           if (match) {
             url = pattern.url;
 
-            for (i = 0; match[ i ]; i++) {
+            for (i = 0; match[i]; i++) {
               url = url.replace('$' + i, function () {
-                return match[ i ];
+                return match[i];
               });
             }
 
@@ -107,13 +113,13 @@ export class MindsTinymce {
             fullscreen="${data.allowFullscreen}"></iframe>`;
 
         }
-        resolve({'html': html});
+        resolve({ 'html': html });
       },
       plugins: [
-	         "advlist autolink link image lists preview hr anchor pagebreak",
-	         "media nonbreaking code",
-	         "table directionality autoresize"
-	    ],
+        'advlist autolink link image lists preview hr anchor pagebreak',
+        'media nonbreaking code',
+        'table directionality autoresize'
+      ],
       setup: (ed) => {
 
         this.editor = ed;
@@ -134,30 +140,30 @@ export class MindsTinymce {
     });
   }
 
-  ngOnDestroy(){
-    this.editor.setContent("");
-    if(tinymce)
+  ngOnDestroy() {
+    this.editor.setContent('');
+    if (tinymce)
       tinymce.remove('minds-tinymce > textarea');
-    this.content = "";
+    this.content = '';
     this.ready = false;
   }
 
-  set _content(value : string){
+  set _content(value: string) {
     this.content = value;
     new Promise((resolve, reject) => {
-      if(this.editor)
+      if (this.editor)
         resolve(value);
     })
-    .then((value : string) => {
-      if(!this.ready && value && value != this.editor.getContent()){
-        this.ready = true;
-        this.editor.setContent(value);
-      }
-    });
+      .then((value: string) => {
+        if (!this.ready && value && value !== this.editor.getContent()) {
+          this.ready = true;
+          this.editor.setContent(value);
+        }
+      });
   }
 
-  set reset(value : boolean){
-    if(value && this.editor.getContent()){
+  set reset(value: boolean) {
+    if (value && this.editor.getContent()) {
       this.editor.setContent(this.content);
       this.ready = false;
     }

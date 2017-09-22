@@ -15,20 +15,21 @@ import { SessionFactory } from '../../../services/session';
 
 export class ForgotPassword {
 
-	session = SessionFactory.build();
-  error : string = "";
-  inProgress : boolean = false;
-  step : number = 1;
+  session = SessionFactory.build();
+  error: string = '';
+  inProgress: boolean = false;
+  step: number = 1;
 
-  username : string = "";
-  code : string = "";
-
-	constructor(public client : Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
-  }
+  username: string = '';
+  code: string = '';
 
   paramsSubscription: Subscription;
+
+  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+  }
+
   ngOnInit() {
-    this.title.setTitle("Forgot Password");
+    this.title.setTitle('Forgot Password');
 
     this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['code']) {
@@ -45,47 +46,47 @@ export class ForgotPassword {
     this.paramsSubscription.unsubscribe();
   }
 
-	request(username){
-    this.error = "";
+  request(username) {
+    this.error = '';
     this.inProgress = true;
-		var self = this;
-		this.client.post('api/v1/forgotpassword/request', {
-        username: username.value
-      })
-			.then((data : any) => {
-				username.value = '';
+    var self = this;
+    this.client.post('api/v1/forgotpassword/request', {
+      username: username.value
+    })
+      .then((data: any) => {
+        username.value = '';
 
         this.inProgress = false;
         self.step = 2;
-				//self.router.navigate(['/Homepage', {}]);
-			})
-			.catch((e) => {
+        //self.router.navigate(['/Homepage', {}]);
+      })
+      .catch((e) => {
 
         this.inProgress = false;
-        if(e.status == 'failed'){
-          self.error = "There was a problem trying to reset your password. Please try again.";
+        if (e.status === 'failed') {
+          self.error = 'There was a problem trying to reset your password. Please try again.';
         }
 
-        if(e.status == 'error'){
+        if (e.status === 'error') {
           self.error = e.message;
         }
 
-			});
-	}
+      });
+  }
 
-  setCode(code : string){
+  setCode(code: string) {
     this.step = 3;
     this.code = code;
   }
 
-  reset(password){
+  reset(password) {
     var self = this;
     this.client.post('api/v1/forgotpassword/reset', {
-        password: password.value,
-        code: this.code,
-        username: this.username
-      })
-      .then((response : any) => {
+      password: password.value,
+      code: this.code,
+      username: this.username
+    })
+      .then((response: any) => {
         self.session.login(response.user);
         self.router.navigate(['/newsfeed']);
       })

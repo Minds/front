@@ -4,6 +4,8 @@ import { SessionFactory } from './session';
 
 export class AttachmentService {
 
+  public session = SessionFactory.build();
+
   private meta: any = {};
   private attachment: any = {};
 
@@ -12,9 +14,11 @@ export class AttachmentService {
 
   private previewTimeout: any = null;
 
-  public session = SessionFactory.build();
+  static _(client: Client, upload: Upload) {
+    return new AttachmentService(client, upload);
+  }
 
-  constructor(@Inject(Client) public clientService: Client, @Inject(Upload) public uploadService: Upload) {
+  constructor( @Inject(Client) public clientService: Client, @Inject(Upload) public uploadService: Upload) {
     this.reset();
   }
 
@@ -40,8 +44,8 @@ export class AttachmentService {
         this.attachment.preview = object.custom_data.thumbnail_src;
       }
 
-      if (object.custom_data && object.custom_data[ 0 ] && object.custom_data[ 0 ].src) {
-        this.attachment.preview = object.custom_data[ 0 ].src;
+      if (object.custom_data && object.custom_data[0] && object.custom_data[0].src) {
+        this.attachment.preview = object.custom_data[0].src;
       }
     }
 
@@ -100,7 +104,7 @@ export class AttachmentService {
     this.attachment.progress = 0;
     this.attachment.mime = '';
 
-    let file = fileInput ? fileInput.files[ 0 ] : null;
+    let file = fileInput ? fileInput.files[0] : null;
 
     if (!file) {
       return Promise.reject(null);
@@ -109,7 +113,7 @@ export class AttachmentService {
     return this.checkFileType(file)
       .then(() => {
         // Upload and return the GUID
-        return this.uploadService.post('api/v1/media', [ file ], this.meta, (progress) => {
+        return this.uploadService.post('api/v1/media', [file], this.meta, (progress) => {
           this.attachment.progress = progress;
         });
       })
@@ -157,7 +161,7 @@ export class AttachmentService {
   }
 
   hasFile() {
-    return !!this.attachment.preview || this.getMime() == 'video';
+    return !!this.attachment.preview || this.getMime() === 'video';
   }
 
   getUploadProgress() {
@@ -185,7 +189,7 @@ export class AttachmentService {
 
     for (var prop in this.meta) {
       if (this.meta.hasOwnProperty(prop)) {
-        result[ prop ] = this.meta[ prop ];
+        result[prop] = this.meta[prop];
       }
     }
 
@@ -231,7 +235,7 @@ export class AttachmentService {
     }
 
     if (match instanceof Array) {
-      url = match[ 0 ];
+      url = match[0];
     } else {
       url = match;
     }
@@ -240,7 +244,7 @@ export class AttachmentService {
       return;
     }
 
-    if (url == this.attachment.richUrl) {
+    if (url === this.attachment.richUrl) {
       return;
     }
 
@@ -273,8 +277,8 @@ export class AttachmentService {
             this.meta.title = url;
           }
 
-          if (data.links && data.links.thumbnail && data.links.thumbnail[ 0 ]) {
-            this.meta.thumbnail = data.links.thumbnail[ 0 ].href;
+          if (data.links && data.links.thumbnail && data.links.thumbnail[0]) {
+            this.meta.thumbnail = data.links.thumbnail[0].href;
           }
         })
         .catch(e => {
@@ -297,8 +301,8 @@ export class AttachmentService {
       return !!object.flags.mature;
     }
 
-    if (typeof object.custom_data !== 'undefined' && typeof object.custom_data[ 0 ] !== 'undefined') {
-      return !!object.custom_data[ 0 ].mature;
+    if (typeof object.custom_data !== 'undefined' && typeof object.custom_data[0] !== 'undefined') {
+      return !!object.custom_data[0].mature;
     }
 
     if (typeof object.custom_data !== 'undefined') {
@@ -332,7 +336,7 @@ export class AttachmentService {
       if (
         user &&
         this.parseMaturity(object) &&
-        (user.mature || user.guid == object.owner_guid)
+        (user.mature || user.guid === object.owner_guid)
       ) {
         object.mature_visibility = true;
       }
@@ -403,10 +407,7 @@ export class AttachmentService {
       timeout = window.setTimeout(() => {
         resolve(0); // 0 so it's less windows.Minds.max_video_length
       }, 5000);
-    })
+    });
   }
 
-  static _(client: Client, upload: Upload) {
-    return new AttachmentService(client, upload);
-  }
 }

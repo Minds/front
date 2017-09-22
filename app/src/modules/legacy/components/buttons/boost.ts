@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { SessionFactory } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { WalletService } from '../../../../services/wallet';
-import { OverlayModalService } from "../../../../services/ux/overlay-modal";
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
-import { BoostCreatorComponent } from "../../../boost/creator/creator.component";
+import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
 
 @Component({
   selector: 'minds-button-boost',
@@ -24,12 +24,12 @@ export class BoostButton {
     'guid': null
   };
   session = SessionFactory.build();
-  showModal : boolean = false;
+  showModal: boolean = false;
 
   constructor(private overlayModal: OverlayModalService) {
   }
 
-  boost(){
+  boost() {
     const creator = this.overlayModal.create(BoostCreatorComponent, this.object);
     creator.present();
   }

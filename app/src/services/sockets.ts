@@ -13,13 +13,17 @@ export class SocketsService {
   subscriptions: any = {};
   rooms: string[] = [];
 
-  constructor(private nz: NgZone){
+  static _(nz: NgZone) {
+    return new SocketsService(nz);
+  }
+
+  constructor(private nz: NgZone) {
     nz.runOutsideAngular(() => {
       this.setUp();
     });
   }
 
-  setUp(){
+  setUp() {
     if (this.socket) {
       this.socket.destroy();
     }
@@ -40,7 +44,7 @@ export class SocketsService {
     }
 
     this.session.isLoggedIn((is: any) => {
-      if(is){
+      if (is) {
         this.reconnect();
       } else {
         this.disconnect();
@@ -131,7 +135,7 @@ export class SocketsService {
   }
 
   subscribe(name: string, callback: Function) {
-    if (!this.subscriptions[name]){
+    if (!this.subscriptions[name]) {
       this.subscriptions[name] = new EventEmitter();
 
       this.nz.runOutsideAngular(() => {
@@ -169,7 +173,4 @@ export class SocketsService {
     return this.emit('leave', room);
   }
 
-  static _(nz: NgZone) {
-    return new SocketsService(nz);
-  }
 }

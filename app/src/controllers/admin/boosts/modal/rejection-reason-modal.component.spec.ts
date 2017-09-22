@@ -4,7 +4,7 @@ import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/c
 import { RejectionReasonModalComponent } from './rejection-reason-modal.component';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { CommonModule as NgCommonModule } from "@angular/common";
+import { CommonModule as NgCommonModule } from '@angular/common';
 
 @Component({
   selector: 'm-modal',
@@ -45,32 +45,32 @@ describe('RejectionReasonModalComponent', () => {
     comp = fixture.componentInstance; // RejectionReasonModalComponent test instance
 
     comp.boost = {
-      "guid": "123",
-      "_id": "59ba98d3b13628293d705ff2",
-      "entity": {
-        "guid": "752893213072691218",
-        "type": "activity",
-        "time_created": "1504879730",
-        "time_updated": "1504879730",
-        "container_guid": "732337264197111809",
-        "owner_guid": "732337264197111809",
-        "access_id": "2",
-        "title": false,
-        "blurb": false,
-        "perma_url": false,
-        "message": "",
-        "ownerObj": {
-          "guid": "732337264197111809",
-          "type": "user",
-          "access_id": "2",
-          "name": "minds",
-          "username": "minds",
-          "mature": "0",
-          "boost_rating": "1"
+      'guid': '123',
+      '_id': '59ba98d3b13628293d705ff2',
+      'entity': {
+        'guid': '752893213072691218',
+        'type': 'activity',
+        'time_created': '1504879730',
+        'time_updated': '1504879730',
+        'container_guid': '732337264197111809',
+        'owner_guid': '732337264197111809',
+        'access_id': '2',
+        'title': false,
+        'blurb': false,
+        'perma_url': false,
+        'message': '',
+        'ownerObj': {
+          'guid': '732337264197111809',
+          'type': 'user',
+          'access_id': '2',
+          'name': 'minds',
+          'username': 'minds',
+          'mature': '0',
+          'boost_rating': '1'
         },
       },
-      "state": "created",
-      "rejection_reason": -1
+      'state': 'created',
+      'rejection_reason': -1
     };
 
     comp.noButton = 'No';

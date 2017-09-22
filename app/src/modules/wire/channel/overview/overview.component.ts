@@ -34,7 +34,7 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.sentSubscription) 
+    if (this.sentSubscription)
       this.sentSubscription.unsubscribe();
   }
 
@@ -49,7 +49,7 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
         };
         this.detectChanges();
       });
-    if (this.session.getLoggedInUser().guid == this.channel.guid || !this.session.isLoggedIn()) 
+    if (this.session.getLoggedInUser().guid === this.channel.guid || !this.session.isLoggedIn())
       return;
     this.client.get('api/v1/wire/rewards/' + this.channel.guid)
       .then(({ sums }) => {

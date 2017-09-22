@@ -19,10 +19,10 @@ export class ReadMoreDirective {
   ngAfterViewInit() {
     this.realHeight = this._element.clientHeight;
 
-    if(this.button)
+    if (this.button)
       this.button.content = this;
 
-    if(this.realHeight > this.maxHeightAllowed){
+    if (this.realHeight > this.maxHeightAllowed) {
       this._element.style.maxHeight = this.maxHeightAllowed + 'px';
       this._element.style.position = 'relative';
       setTimeout(() => {
@@ -33,7 +33,7 @@ export class ReadMoreDirective {
   }
 
   expand() {
-    this._element.style.maxHeight = "none";
+    this._element.style.maxHeight = 'none';
     this.expandable = false;
     this.detectChanges();
   }
@@ -41,7 +41,7 @@ export class ReadMoreDirective {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-    if(this.button){
+    if (this.button) {
       this.button.detectChanges();
     }
   }

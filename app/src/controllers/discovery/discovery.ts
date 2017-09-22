@@ -15,60 +15,61 @@ import { SessionFactory } from '../../services/session';
 
 export class Discovery {
 
-  session  = SessionFactory.build();
+  session = SessionFactory.build();
 
-  _filter : string = "featured";
-  _owner : string = "";
-  _type : string = "all";
-  entities : Array<Object> = [];
-  moreData : boolean = true;
-  offset: string | number = "";
-  inProgress : boolean = false;
+  _filter: string = 'featured';
+  _owner: string = '';
+  _type: string = 'all';
+  entities: Array<Object> = [];
+  moreData: boolean = true;
+  offset: string | number = '';
+  inProgress: boolean = false;
 
-  city : string = "";
-  cities : Array<any> = [];
-  nearby : boolean = false;
-  hasNearby : boolean = false;
-  distance : number = 5;
+  city: string = '';
+  cities: Array<any> = [];
+  nearby: boolean = false;
+  hasNearby: boolean = false;
+  distance: number = 5;
+  paramsSubscription: Subscription;
+  searching;
 
-  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
+  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
   }
 
-  paramsSubscription: Subscription;
   ngOnInit() {
-    this.title.setTitle("Discovery");
+    this.title.setTitle('Discovery');
 
     this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['filter']) {
         this._filter = params['filter'];
 
-        switch(this._filter){
-          case "all":
+        switch (this._filter) {
+          case 'all':
             break;
-          case "suggested":
-            if(!this.session.isLoggedIn()){
-              this.router.navigate(['/discovery/featured/channels' ]);
+          case 'suggested':
+            if (!this.session.isLoggedIn()) {
+              this.router.navigate(['/discovery/featured/channels']);
               return;
             }
 
-            this._type = "channels";
-            if(this.session.getLoggedInUser().city){
+            this._type = 'channels';
+            if (this.session.getLoggedInUser().city) {
               this.city = this.session.getLoggedInUser().city;
               this.nearby = true;
               this.hasNearby = false;
             }
             break;
-          case "trending":
-            this._type = "images";
+          case 'trending':
+            this._type = 'images';
             break;
-          case "featured":
-            this._type = "channels";
+          case 'featured':
+            this._type = 'channels';
             break;
-          case "owner":
+          case 'owner':
             break;
           default:
             this._owner = this._filter;
-            this._filter =  this._filter;
+            this._filter = this._filter;
         }
       }
 
@@ -86,30 +87,30 @@ export class Discovery {
     this.paramsSubscription.unsubscribe();
   }
 
-  load(refresh : boolean = false){
+  load(refresh: boolean = false) {
 
-    if(this.inProgress)
+    if (this.inProgress)
       return false;
 
-    if(refresh)
-      this.offset = "";
+    if (refresh)
+      this.offset = '';
 
     this.inProgress = true;
 
     var filter = this._filter;
-    if(this._owner)
+    if (this._owner)
       filter = 'owner';
 
-    this.client.get('api/v1/entities/'+filter+'/'+this._type+'/' + this._owner, {
-        limit:12,
-        offset: this.offset,
-        skip: 0,
-        nearby : this.nearby,
-        distance : this.distance
-      })
-      .then((data : any) => {
-        if(!data.entities){
-          if(this.nearby){
+    this.client.get('api/v1/entities/' + filter + '/' + this._type + '/' + this._owner, {
+      limit: 12,
+      offset: this.offset,
+      skip: 0,
+      nearby: this.nearby,
+      distance: this.distance
+    })
+      .then((data: any) => {
+        if (!data.entities) {
+          if (this.nearby) {
             this.hasNearby = false;
             return this.setNearby(false);
           }
@@ -118,14 +119,14 @@ export class Discovery {
           return false;
         }
 
-        if(this.nearby){
+        if (this.nearby) {
           this.hasNearby = true;
         }
 
-        if(refresh){
+        if (refresh) {
           this.entities = data.entities;
-        }else{
-          if(this.offset)
+        } else {
+          if (this.offset)
             data.entities.shift();
           this.entities = this.entities.concat(data.entities);
         }
@@ -133,63 +134,62 @@ export class Discovery {
         this.offset = data['load-next'];
         this.inProgress = false;
 
-       })
-       .catch((e) => {
-         this.inProgress = false;
-         if(this.nearby){
-           this.setNearby(false);
-         }
-       });
+      })
+      .catch((e) => {
+        this.inProgress = false;
+        if (this.nearby) {
+          this.setNearby(false);
+        }
+      });
   }
 
-  pass(index : number){
-    var entity : any = this.entities[index];
+  pass(index: number) {
+    var entity: any = this.entities[index];
     this.client.post('api/v1/entities/suggested/pass/' + entity.guid);
     this.pop(index);
   }
 
-  pop(index : number){
+  pop(index: number) {
     this.entities.splice(index, 1);
-    if(this.entities.length < 3){
+    if (this.entities.length < 3) {
       this.offset = 3;
       this.load(true);
     }
   }
 
-  searching;
-  findCity(q : string){
-    if(this.searching){
+  findCity(q: string) {
+    if (this.searching) {
       clearTimeout(this.searching);
     }
     this.searching = setTimeout(() => {
-      this.client.get('api/v1/geolocation/list', {	q: q })
-        .then((response : any) => {
+      this.client.get('api/v1/geolocation/list', { q: q })
+        .then((response: any) => {
           this.cities = response.results;
         });
     }, 100);
   }
 
-  setCity(row : any){
+  setCity(row: any) {
     this.cities = [];
-    if(row.address.city)
+    if (row.address.city)
       window.Minds.user.city = row.address.city;
-    if(row.address.town)
+    if (row.address.town)
       window.Minds.user.city = row.address.town;
     this.city = window.Minds.user.city;
     this.entities = [];
     this.inProgress = true;
     this.client.post('api/v1/channel/info', {
-        coordinates : row.lat + ',' + row.lon,
-        city : window.Minds.user.city
-      })
-      .then((response : any) => {
+      coordinates: row.lat + ',' + row.lon,
+      city: window.Minds.user.city
+    })
+      .then((response: any) => {
         this.inProgress = false;
         this.setNearby(true);
       });
   }
 
-  setNearby(nearby : boolean){
-    this.nearby  = nearby;
+  setNearby(nearby: boolean) {
+    this.nearby = nearby;
     this.entities = [];
     this.load(true);
   }

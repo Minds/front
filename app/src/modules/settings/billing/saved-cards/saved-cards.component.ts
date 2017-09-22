@@ -27,7 +27,7 @@ export class SettingsBillingSavedCardsComponent {
     }, 1000); //sometimes stripe can take a while to download
   }
 
-  setupStripe(){
+  setupStripe() {
     if ((<any>window).Stripe) {
       (<any>window).Stripe.setPublishableKey(this.minds.stripe_key);
     }
@@ -91,7 +91,7 @@ export class SettingsBillingSavedCardsComponent {
         this.inProgress = false;
         this.detectChanges();
         alert((e && e.message) || 'There was an error with your card information.');
-      })
+      });
   }
 
   saveCard(token: string): Promise<any> {
@@ -106,7 +106,7 @@ export class SettingsBillingSavedCardsComponent {
         exp_month: card.month,
         exp_year: card.year
       }, (status, response) => {
-        if(response.error){
+        if (response.error) {
           return reject(response.error.message);
         }
         return resolve(response.id);

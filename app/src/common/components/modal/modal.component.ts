@@ -1,12 +1,12 @@
-import {Component, EventEmitter} from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'm-modal',
   host: {
     '[hidden]': 'hidden'
   },
-  inputs: [ 'open' ],
-  outputs: [ 'closed' ],
+  inputs: ['open'],
+  outputs: ['closed'],
   template: `
     <div class="m-modal-bg" (click)="close()"></div>
     <div class="m-modal-container">
@@ -20,18 +20,18 @@ import {Component, EventEmitter} from '@angular/core';
 
 export class Modal {
 
-  hidden : boolean = true;
-  closed : EventEmitter<any> = new EventEmitter();
+  hidden: boolean = true;
+  closed: EventEmitter<any> = new EventEmitter();
 
-  set _hidden(value : boolean){
+  set _hidden(value: boolean) {
     this.hidden = value;
   }
 
-  set open(value : boolean){
+  set open(value: boolean) {
     this.hidden = !value;
   }
 
-  close(){
+  close() {
     this.hidden = true;
     this.closed.next(true);
   }

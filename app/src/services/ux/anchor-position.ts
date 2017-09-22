@@ -19,7 +19,7 @@ export class AnchorPosition {
       };
 
     if (anchor.indexOf('right') > -1) {
-      result.right = window.innerWidth - rect.right
+      result.right = window.innerWidth - rect.right;
     } else { // Default: 'left'
       result.left = rect.left;
     }

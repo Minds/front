@@ -15,9 +15,9 @@ export type WireRewardsStruc = {
   rewards: {
     [key in WireRewardsType]: WireRewardsTiers
   }
-}
+};
 
 export type WireThresholdStruc = {
   type: WireRewardsType,
   min: number | ''
-}
+};

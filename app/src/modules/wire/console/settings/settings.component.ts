@@ -22,7 +22,7 @@ export class WireConsoleSettingsComponent {
   user = window.Minds.user;
   minds = window.Minds;
 
-  error: string = "";
+  error: string = '';
 
   exclusive: any = {
     intro: '',
@@ -80,7 +80,7 @@ export class WireConsoleSettingsComponent {
 
       this.preview = { src: reader.result };
       this.updatePreviewEntity();
-    }
+    };
     reader.readAsDataURL(file);
 
     this.detectChanges();

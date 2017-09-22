@@ -11,9 +11,11 @@ import { HovercardService } from '../../services/hovercard';
   }
 })
 export class Hovercard implements OnDestroy {
+
   guid: any = '';
   anchor: any = ['right', 'top'];
   _element: any;
+  private showTimer;
 
   constructor(public hovercardService: HovercardService, element: ElementRef) {
     this._element = element.nativeElement;
@@ -44,7 +46,6 @@ export class Hovercard implements OnDestroy {
     this.anchor = value;
   }
 
-  private showTimer;
   show() {
     if (!this.guid) {
       return;

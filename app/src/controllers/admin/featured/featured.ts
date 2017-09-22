@@ -14,17 +14,14 @@ export class AdminFeatured {
   category: string = '';
   featured: any[] = [];
 
-  inProgress : boolean = false;
-  moreData : boolean = true;
+  inProgress: boolean = false;
+  moreData: boolean = true;
 
-  constructor(public client: Client){
+  constructor(public client: Client) {
   }
 
   ngOnInit() {
     this.loadCategories(window.Minds.categories);
-  }
-
-  ngOnDestroy() {
   }
 
   load(refresh: boolean = false) {
@@ -45,7 +42,7 @@ export class AdminFeatured {
     }
 
     this.client.get(`api/v1/categories/featured`, {
-      categories: [ this.category ]
+      categories: [this.category]
     })
       .then((response: any) => {
         //@todo: refactor if pagination (offset) is implemented

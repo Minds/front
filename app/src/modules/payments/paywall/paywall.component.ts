@@ -16,23 +16,19 @@ export class PayWall {
 
   minds = (<any>window).Minds;
 
-  inProgress : boolean = false;
-  error : string;
-  showCheckout : boolean = false;
-  amount : number;
-  nonce : string = "";
+  inProgress: boolean = false;
+  error: string;
+  showCheckout: boolean = false;
+  amount: number;
+  nonce: string = '';
   showSignupModal: boolean = false;
   session = SessionFactory.build();
 
-  @Output('entityChange') update : EventEmitter<any> = new EventEmitter;
+  @Output('entityChange') update: EventEmitter<any> = new EventEmitter;
 
   @Input() entity;
 
-	constructor(public client: Client, public cd: ChangeDetectorRef){
-	}
-
-  ngOnInit(){
-    //get the subscription amount
+  constructor(public client: Client, public cd: ChangeDetectorRef) {
   }
 
   checkout() {
@@ -48,7 +44,7 @@ export class PayWall {
     this.client.get('api/v1/payments/plans/exclusive/' + this.entity.guid)
       .then((response: any) => {
         this.inProgress = false;
-        if(response.subscribed){
+        if (response.subscribed) {
           this.update.next(response.entity);
           this.detectChanges();
           return;
@@ -59,28 +55,25 @@ export class PayWall {
       })
       .catch(e => {
         this.inProgress = false;
-        this.error = "Sorry, there was an error.";
+        this.error = 'Sorry, there was an error.';
         this.detectChanges();
       });
   }
 
-  subscribe(nonce){
+  subscribe(nonce) {
     this.showCheckout = false;
     this.inProgress = true;
     this.detectChanges();
     console.log('nonce: ' + nonce);
     this.client.post('api/v1/payments/plans/subscribe/' + this.entity.owner_guid + '/exclusive', {
-        nonce: nonce
-      })
+      nonce: nonce
+    })
       .then((response) => setTimeout(() => this.checkout(), 0))
       .catch(e => {
         this.inProgress = false;
-        this.error = "Sorry, we couldn't complete the transaction."; 
+        this.error = 'Sorry, we couldn\'t complete the transaction.';
         this.detectChanges();
       });
-  }
-
-  ngOnDestroy(){
   }
 
   private detectChanges() {

@@ -13,7 +13,7 @@ export class SettingsSubscriptions {
   inProgress: boolean = false;
   moreData: boolean = true;
   offset: string = '';
-  
+
   minds: any;
 
   constructor(private client: Client) {
@@ -22,9 +22,6 @@ export class SettingsSubscriptions {
 
   ngOnInit() {
     this.load(true);
-  }
-
-  ngOnDestroy() {
   }
 
   load(refresh: boolean = false) {
@@ -63,4 +60,5 @@ export class SettingsSubscriptions {
   deleteRow(index) {
     this.subscriptions.splice(index, 1);
   }
+
 }

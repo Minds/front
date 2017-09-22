@@ -1,6 +1,6 @@
 import { Component, EventEmitter, ElementRef, Inject } from '@angular/core';
 
-import { Material as MaterialService } from "../../../services/ui";
+import { Material as MaterialService } from '../../../services/ui';
 import { ScrollService } from '../../../services/ux/scroll';
 
 @Component({
@@ -24,37 +24,42 @@ import { ScrollService } from '../../../services/ux/scroll';
 })
 
 
-export class InfiniteScroll{
+export class InfiniteScroll {
 
-  element : any;
+  element: any;
   loadHandler: EventEmitter<any> = new EventEmitter(true);
-  distance : any;
-  inProgress : boolean = false;
-  moreData : boolean = true;
-  hideManual : boolean = false;
-  _content : any;
+  distance: any;
+  inProgress: boolean = false;
+  moreData: boolean = true;
+  hideManual: boolean = false;
+  _content: any;
   _listener;
   on: any;
 
-  constructor(_element: ElementRef, public scroll : ScrollService) {
+  constructor(_element: ElementRef, public scroll: ScrollService) {
     this.element = _element.nativeElement;
     this.init();
   }
 
-  init(){
+  init() {
     this._listener = this.scroll.listen((e) => {
-      if(this.element.offsetTop - this.element.clientHeight - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && this.moreData){
+      if (
+        this.element.offsetTop
+        - this.element.clientHeight
+        - this.scroll.view.clientHeight
+        <= this.scroll.view.scrollTop && this.moreData
+      ) {
         this.loadHandler.next(true);
       }
-    },100);
+    }, 100);
   }
 
-  manualLoad(){
+  manualLoad() {
     this.loadHandler.next(true);
   }
 
-  ngOnDestroy(){
-    if(this._listener)
+  ngOnDestroy() {
+    if (this._listener)
       this.scroll.unListen(this._listener);
   }
 

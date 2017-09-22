@@ -2,61 +2,45 @@ import { Component, Directive } from '@angular/core';
 
 @Component({
   selector: 'minds-graph-pie',
-  inputs: [ '_data: data' ],
-  template: `
-    <div [hidden]="!data"> <!-- Angular has svg problems... -->
-      <svg viewBox="0,0,100,100" class="chart" style="height:100px; width:100px; margin: 0 auto; transform: rotate(90deg); background: #ddd; border-radius: 50%; display: block;">
-
-        <circle *ngFor="let s of segments"
-          r="25" cx="50" cy="50" [attr.stroke-dasharray]="s.array" [attr.stroke-dashoffset]="s.offset"
-          class="pie"
-          style="fill: transparent; stroke: #0074d9; stroke-width: 50px;"
-          />
-
-      </svg>
-    </div>
-    <div class="mdl-spinner mdl-js-spinner is-active" [hidden]="data"></div>
-  `
+  inputs: ['_data: data'],
+  templateUrl: 'pie-graph.component.html'
 })
 
 export class PieGraph {
 
-  data : Array<any>;
-  segments : Array<any>;
+  data: Array<any>;
+  segments: Array<any>;
 
-  max : number = 156;
-  radius : number = 25;
-  diameter : number = 50;
+  max: number = 156;
+  radius: number = 25;
+  diameter: number = 50;
 
-  constructor() {
-  }
-
-  set _data(value : any){
-    if(!value)
+  set _data(value: any) {
+    if (!value)
       return;
     this.data = value;
     this.calculate();
   }
 
-  getBounds(){
+  getBounds() {
     var max = 0;
-    for(var stat of this.data){
-      if(stat.total > max)
+    for (var stat of this.data) {
+      if (stat.total > max)
         max = stat.total;
     }
     return max;
   }
 
-  calculate(){
+  calculate() {
 
     var r = 25;
     var c = Math.PI * (r * 2);
 
-    for(var stat of this.data){
+    for (var stat of this.data) {
 
       var value = stat.total;
 
-      var offset = ( (100 - value) / 100 ) * c;
+      var offset = ((100 - value) / 100) * c;
 
       this.segments = [
         {

@@ -1,8 +1,8 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
-import { BoostConsoleType } from "../console.component";
-import { Client } from "../../../../services/api";
-import { Session, SessionFactory } from "../../../../services/session";
+import { BoostConsoleType } from '../console.component';
+import { Client } from '../../../../services/api';
+import { Session, SessionFactory } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -10,7 +10,6 @@ import { Session, SessionFactory } from "../../../../services/session";
   templateUrl: 'booster.component.html'
 })
 export class BoostConsoleBooster {
-  constructor(public client: Client) { }
 
   inProgress: boolean = false;
   loaded: boolean = false;
@@ -22,6 +21,8 @@ export class BoostConsoleBooster {
   session: Session = SessionFactory.build();
 
   @Input('type') type: BoostConsoleType;
+
+  constructor(public client: Client) { }
 
   ngOnInit() {
     this.load();
@@ -64,4 +65,5 @@ export class BoostConsoleBooster {
       this.load();
     }
   }
+
 }

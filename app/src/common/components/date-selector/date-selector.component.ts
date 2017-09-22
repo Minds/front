@@ -12,17 +12,13 @@ import { DatePipe } from '@angular/common';
       <i class="material-icons">keyboard_arrow_down</i>
     </div>
   `,
-  providers: [ DatePipe ]
+  providers: [DatePipe]
 })
 
 export class DateSelectorComponent {
   @Input() label: string;
   @Input() date: string;
   @Output() dateChange: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor() {
-  }
-
   onDateChange(newDate) {
     this.dateChange.emit(newDate);
   }

@@ -16,19 +16,19 @@ import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
 export class AdminReports {
 
   filter: string = 'reports';
-  type: string = 'review'
+  type: string = 'review';
   reports: any[] = [];
 
-  inProgress : boolean = false;
-  moreData : boolean = true;
-  offset : string = '';
+  inProgress: boolean = false;
+  moreData: boolean = true;
+  offset: string = '';
+  paramsSubscription: Subscription;
 
   constructor(public client: Client, private route: ActivatedRoute) { }
 
-  paramsSubscription: Subscription;  
   ngOnInit() {
     this.type = 'review';
-    
+
     this.paramsSubscription = this.route.params.subscribe((params: any) => {
       if (params['filter']) {
         this.filter = params['filter'];
@@ -87,7 +87,7 @@ export class AdminReports {
     let reason = reasonValue;
 
     REASONS.forEach(item => {
-      if (item.value == reasonValue) {
+      if (item.value === reasonValue) {
         reason = item.label;
       }
     });
@@ -212,4 +212,5 @@ export class AdminReports {
       alert((e && e.message) || `There was a problem rejecting this content's appeal. Please reload.`);
     }
   }
+
 }

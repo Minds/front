@@ -1,14 +1,24 @@
-import { Component, ViewChild, Input, ComponentFactoryResolver, AfterViewInit, Type, ChangeDetectorRef, ComponentRef, ElementRef } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  Input,
+  ComponentFactoryResolver,
+  AfterViewInit,
+  Type,
+  ChangeDetectorRef,
+  ComponentRef,
+  ElementRef
+} from '@angular/core';
 
-import { DynamicHostDirective } from "../../directives/dynamic-host.directive";
+import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 
-import { UserCard } from "../../../modules/legacy/components/cards/user/user";
-import { Activity } from "../../../modules/legacy/components/cards/activity/activity";
-import { GroupsCard } from "../../../plugins/Groups/card/card";
-import { ImageCard } from "../../../modules/legacy/components/cards/object/image/image";
-import { VideoCard } from "../../../modules/legacy/components/cards/object/video/video";
-import { BlogCard } from "../../../plugins/blog/card/card";
-import { AlbumCard } from "../../../modules/legacy/components/cards/object/album/album";
+import { UserCard } from '../../../modules/legacy/components/cards/user/user';
+import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
+import { GroupsCard } from '../../../plugins/Groups/card/card';
+import { ImageCard } from '../../../modules/legacy/components/cards/object/image/image';
+import { VideoCard } from '../../../modules/legacy/components/cards/object/video/video';
+import { BlogCard } from '../../../plugins/blog/card/card';
+import { AlbumCard } from '../../../modules/legacy/components/cards/object/album/album';
 
 @Component({
   selector: 'minds-card',
@@ -39,10 +49,10 @@ export class MindsCard implements AfterViewInit {
     const oldType = this.type;
 
     this.object = value ? value : {};
-    this.type = `${this.object.type || ''}/${this.object.subtype || ''}`
+    this.type = `${this.object.type || ''}/${this.object.subtype || ''}`;
 
     if (this.initialized) {
-      if (!this.componentInstance || this.type != oldType) {
+      if (!this.componentInstance || this.type !== oldType) {
         setTimeout(() => this.loadComponent(), 0);
       } else {
         this.updateData();
@@ -65,7 +75,7 @@ export class MindsCard implements AfterViewInit {
       this.updateData();
     }
   }
-  
+
   ngAfterViewInit() {
     this.loadComponent();
     this.initialized = true;
@@ -126,8 +136,8 @@ export class MindsCard implements AfterViewInit {
       (<BlogCard>this.componentInstance)._blog = this.object;
     } else {
       this.componentInstance.object = this.object;
-  
-      if (this.object.type === 'activity') { 
+
+      if (this.object.type === 'activity') {
         (<Activity>this.componentInstance).hideTabs = this.flags.hideTabs || false;
       }
     }

@@ -1,16 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { BoostConsoleFilter } from "../console.component";
+import { BoostConsoleFilter } from '../console.component';
 
-import { BoostService } from "../../boost.service";
+import { BoostService } from '../../boost.service';
 
 @Component({
   moduleId: module.id,
-  providers: [ BoostService ],
+  providers: [BoostService],
   selector: 'm-boost-console-p2p',
   templateUrl: 'p2p.component.html'
 })
 export class BoostConsoleP2PListComponent {
-  constructor(public service: BoostService) { }
 
   initialized: boolean = false;
   inProgress: boolean = false;
@@ -21,6 +20,8 @@ export class BoostConsoleP2PListComponent {
   moreData = true;
 
   error: string = '';
+
+  constructor(public service: BoostService) { }
 
   @Input('filter') set _filter(filter: BoostConsoleFilter) {
     this.filter = filter;

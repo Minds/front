@@ -1,16 +1,15 @@
 import { Component, Input } from '@angular/core';
-import { BoostConsoleType } from "../console.component";
+import { BoostConsoleType } from '../console.component';
 
-import { BoostService } from "../../boost.service";
+import { BoostService } from '../../boost.service';
 
 @Component({
   moduleId: module.id,
-  providers: [ BoostService ],
+  providers: [BoostService],
   selector: 'm-boost-console-network',
   templateUrl: 'network.component.html'
 })
 export class BoostConsoleNetworkListComponent {
-  constructor(public service: BoostService) { }
 
   initialized: boolean = false;
   inProgress: boolean = false;
@@ -21,6 +20,8 @@ export class BoostConsoleNetworkListComponent {
   moreData = true;
 
   error: string = '';
+
+  constructor(public service: BoostService) { }
 
   @Input('type') set _type(type: BoostConsoleType) {
     this.type = type;

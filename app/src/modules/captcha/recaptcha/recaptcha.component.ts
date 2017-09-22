@@ -30,8 +30,12 @@ export class ReCaptchaComponent implements OnInit, ControlValueAccessor {
     @ViewChild('target') targetRef: ElementRef;
     widgetId: any = null;
 
-    onChange: Function = () => {};
-    onTouched: Function = () => {};
+    onChange: Function = () => {
+        return;
+    }
+    onTouched: Function = () => {
+        return;
+    }
 
     constructor(
         private _zone: NgZone,

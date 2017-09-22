@@ -1,8 +1,8 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { CurrencyPipe } from "@angular/common";
+import { CurrencyPipe } from '@angular/common';
 
-import { ChartColumn } from "../../common/components/chart/chart.component";
-import { Client } from "../../services/api";
+import { ChartColumn } from '../../common/components/chart/chart.component';
+import { Client } from '../../services/api';
 
 @Component({
   moduleId: module.id,
@@ -91,7 +91,7 @@ export class MonetizationAnalytics {
     this.chartInProgress = true;
     this.error = '';
     this.detectChanges();
-    return this.client.get(`api/v1/monetization/service/analytics/chart`, { })
+    return this.client.get(`api/v1/monetization/service/analytics/chart`, {})
       .then(({ chart }) => {
         this.chartInProgress = false;
         this.chart = this._parseChart(chart);
@@ -102,6 +102,11 @@ export class MonetizationAnalytics {
         this.error = e.message || 'Server error';
         this.detectChanges();
       });
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   private _parseChart(data) {
@@ -117,7 +122,7 @@ export class MonetizationAnalytics {
 
     for (let dataColumn of (data.columns || [])) {
       let column = { ...dataColumn }; // clone
-      if (column.type == 'currency') {
+      if (column.type === 'currency') {
         column.type = 'number';
       }
 
@@ -126,8 +131,8 @@ export class MonetizationAnalytics {
 
     for (let dataRow of data.rows) {
       for (let colIndex = 0; colIndex < dataRow.length; colIndex++) {
-        if (data.columns[colIndex] && data.columns[colIndex].type == 'currency') {
-          dataRow[colIndex] = { v: dataRow[colIndex], f: this.currencyPipe.transform(dataRow[colIndex], 'USD', true) }
+        if (data.columns[colIndex] && data.columns[colIndex].type === 'currency') {
+          dataRow[colIndex] = { v: dataRow[colIndex], f: this.currencyPipe.transform(dataRow[colIndex], 'USD', true) };
         }
       }
 
@@ -137,8 +142,4 @@ export class MonetizationAnalytics {
     return chart;
   }
 
-  detectChanges(){
-    this.cd.markForCheck();
-    this.cd.detectChanges();
-  }
 }

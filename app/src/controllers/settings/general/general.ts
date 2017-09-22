@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
@@ -13,44 +13,50 @@ import { ThirdPartyNetworksService } from '../../../services/third-party-network
   templateUrl: 'general.html'
 })
 
-export class SettingsGeneral{
+export class SettingsGeneral {
 
   session = SessionFactory.build();
-  minds : Minds;
-  settings : string;
+  minds: Minds;
+  settings: string;
   @Input() object: any;
 
   @Input() card: string; // card we'll scroll to
 
-  error : string = "";
-  changed : boolean = false;
-  saved : boolean = false;
-  inProgress : boolean = false;
+  error: string = '';
+  changed: boolean = false;
+  saved: boolean = false;
+  inProgress: boolean = false;
 
-  guid : string = "";
-  name : string;
-  email : string;
+  guid: string = '';
+  name: string;
+  email: string;
   mature: boolean = false;
   enabled_mails: boolean = true;
 
-  password : string;
-  password1 : string;
-  password2 : string;
+  password: string;
+  password1: string;
+  password2: string;
 
   language: string = 'en';
 
   categories: { id, label, selected }[];
   selectedCategories: string[] = [];
 
-  constructor(public element: ElementRef, public client: Client, public route: ActivatedRoute, public thirdpartynetworks: ThirdPartyNetworksService){
+  paramsSubscription: Subscription;
+
+  constructor(
+    public element: ElementRef,
+    public client: Client,
+    public route: ActivatedRoute,
+    public thirdpartynetworks: ThirdPartyNetworksService
+  ) {
     this.minds = window.Minds;
     this.getCategories();
   }
 
-  paramsSubscription: Subscription;
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(params => {
-      if (params['guid'] && params['guid'] == this.session.getLoggedInUser().guid) {
+      if (params['guid'] && params['guid'] === this.session.getLoggedInUser().guid) {
         this.load(true);
       } else {
         this.load(false);
@@ -59,7 +65,7 @@ export class SettingsGeneral{
   }
 
   ngAfterViewInit() {
-    if (this.card && this.card != '') {
+    if (this.card && this.card !== '') {
       const el = this.element.nativeElement.querySelector('.m-settings--' + this.card);
       window.scrollTo(0, el.offsetTop - 64); // 64 comes from the topbar's height
     }
@@ -69,15 +75,15 @@ export class SettingsGeneral{
     this.paramsSubscription.unsubscribe();
   }
 
-  load(remote : boolean = false){
-    if(!remote){
+  load(remote: boolean = false) {
+    if (!remote) {
       const user = this.session.getLoggedInUser();
       this.name = user.name;
     }
 
     this.client.get('api/v1/settings/' + this.guid)
-      .then((response : any) => {
-        console.log("LOAD", response.channel);
+      .then((response: any) => {
+        console.log('LOAD', response.channel);
         this.email = response.channel.email;
         this.mature = !!parseInt(response.channel.mature, 10);
         this.enabled_mails = !parseInt(response.channel.disabled_emails, 10);
@@ -92,42 +98,42 @@ export class SettingsGeneral{
         if (this.selectedCategories.length > 0) {
           this.selectedCategories.forEach((item, index, array) => {
             const i: number = this.categories.findIndex(i => i.id === item);
-            if (i != -1)
-              this.categories[ i ].selected = true;
+            if (i !== -1)
+              this.categories[i].selected = true;
           });
         }
       });
   }
 
   canSubmit() {
-    if(!this.changed)
+    if (!this.changed)
       return false;
 
-    if(this.password && !this.password1 || this.password && !this.password2)
+    if (this.password && !this.password1 || this.password && !this.password2)
       return false;
 
-    if(this.password1 && !this.password){
-      this.error = "You must enter your current password";
-      return false;
-    }
-
-    if(this.password1 != this.password2){
-      this.error = "Your new passwords do not match";
+    if (this.password1 && !this.password) {
+      this.error = 'You must enter your current password';
       return false;
     }
 
-    this.error = "";
+    if (this.password1 !== this.password2) {
+      this.error = 'Your new passwords do not match';
+      return false;
+    }
+
+    this.error = '';
 
     return true;
   }
 
-  change(){
+  change() {
     this.changed = true;
     this.saved = false;
   }
 
-  save(){
-    if(!this.canSubmit())
+  save() {
+    if (!this.canSubmit())
       return;
 
     this.inProgress = true;
@@ -142,14 +148,14 @@ export class SettingsGeneral{
         language: this.language,
         categories: this.selectedCategories
       })
-      .then((response : any) => {
+      .then((response: any) => {
         this.changed = false;
         this.saved = true;
-        this.error = "";
+        this.error = '';
 
-        this.password = "";
-        this.password1 = "";
-        this.password2 = "";
+        this.password = '';
+        this.password1 = '';
+        this.password2 = '';
 
         if (window.Minds.user) {
           window.Minds.user.mature = this.mature ? 1 : 0;
@@ -160,7 +166,7 @@ export class SettingsGeneral{
 
         }
 
-        if (this.language != window.Minds['language']) {
+        if (this.language !== window.Minds['language']) {
           window.location.reload(true);
         }
 
@@ -184,7 +190,7 @@ export class SettingsGeneral{
       });
   }
 
-  removeFbLogin(){
+  removeFbLogin() {
     this.thirdpartynetworks.removeFbLogin();
   }
 
@@ -202,7 +208,7 @@ export class SettingsGeneral{
     for (let id in window.Minds.categories) {
       this.categories.push({
         id: id,
-        label: window.Minds.categories[ id ],
+        label: window.Minds.categories[id],
         selected: false
       });
     }

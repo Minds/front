@@ -14,6 +14,7 @@ import { WireService } from '../wire.service';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
+/* tslint:disable */
 @Component({
   selector: 'm-wire--creator-rewards',
   template: ''
@@ -41,7 +42,7 @@ export class StripeCheckoutMock {
 
   @Input() amount: number = 0;
   @Input() merchant_guid;
-  @Input() gateway: string = "merchants";
+  @Input() gateway: string = 'merchants';
 
   @Input('useMDLStyling') useMDLStyling: boolean = true;
 
@@ -57,51 +58,51 @@ describe('WireCreatorComponent', () => {
   let sendButton: DebugElement;
 
   const owner = {
-    "guid": "123",
-    "type": "user",
-    "subtype": false,
-    "time_created": "1500037446",
-    "time_updated": false,
-    "container_guid": "0",
-    "owner_guid": "0",
-    "site_guid": false,
-    "access_id": "2",
-    "name": "minds",
-    "username": "minds",
-    "language": "en",
-    "icontime": false,
-    "legacy_guid": false,
-    "featured_id": false,
-    "banned": "no",
-    "website": "",
-    "briefdescription": "test",
-    "dob": "",
-    "gender": "",
-    "city": "",
-    "merchant": {
-      "service": "stripe",
-      "id": "acct_1ApIzEA26BgQpK9C",
-      "exclusive": { "background": 1502453050, "intro": "" }
+    'guid': '123',
+    'type': 'user',
+    'subtype': false,
+    'time_created': '1500037446',
+    'time_updated': false,
+    'container_guid': '0',
+    'owner_guid': '0',
+    'site_guid': false,
+    'access_id': '2',
+    'name': 'minds',
+    'username': 'minds',
+    'language': 'en',
+    'icontime': false,
+    'legacy_guid': false,
+    'featured_id': false,
+    'banned': 'no',
+    'website': '',
+    'briefdescription': 'test',
+    'dob': '',
+    'gender': '',
+    'city': '',
+    'merchant': {
+      'service': 'stripe',
+      'id': 'acct_1ApIzEA26BgQpK9C',
+      'exclusive': { 'background': 1502453050, 'intro': '' }
     },
-    "boostProPlus": false,
-    "fb": false,
-    "mature": 0,
-    "monetized": "",
-    "signup_method": false,
-    "social_profiles": [],
-    "feature_flags": false,
-    "programs": [ "affiliate" ],
-    "plus": false,
-    "verified": false,
-    "disabled_boost": false,
-    "categories": [ "news", "film", "spirituality" ],
-    "wire_rewards": null,
-    "subscribed": false,
-    "subscriber": false,
-    "subscribers_count": 1,
-    "subscriptions_count": 1,
-    "impressions": 337,
-    "boost_rating": "2"
+    'boostProPlus': false,
+    'fb': false,
+    'mature': 0,
+    'monetized': '',
+    'signup_method': false,
+    'social_profiles': [],
+    'feature_flags': false,
+    'programs': [ 'affiliate' ],
+    'plus': false,
+    'verified': false,
+    'disabled_boost': false,
+    'categories': [ 'news', 'film', 'spirituality' ],
+    'wire_rewards': null,
+    'subscribed': false,
+    'subscriber': false,
+    'subscribers_count': 1,
+    'subscriptions_count': 1,
+    'impressions': 337,
+    'boost_rating': '2'
   };
 
   function getPaymentMethodItem(i: number): DebugElement {
@@ -117,7 +118,7 @@ describe('WireCreatorComponent', () => {
   }
 
   function getRecurringCheckbox(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-wire--creator--recurring input[type=checkbox]'))
+    return fixture.debugElement.query(By.css('.m-wire--creator--recurring input[type=checkbox]'));
   }
 
   function getErrorLabel(): DebugElement {
@@ -148,38 +149,38 @@ describe('WireCreatorComponent', () => {
     comp = fixture.componentInstance; // LoginForm test instance
     clientMock.response = {};
     clientMock.response[ `api/v1/boost/rates` ] = {
-      "status": "success",
-      "balance": 301529,
-      "hasPaymentMethod": false,
-      "rate": 1,
-      "cap": 5000,
-      "min": 100,
-      "priority": 1,
-      "usd": 1000,
-      "minUsd": 1
+      'status': 'success',
+      'balance': 301529,
+      'hasPaymentMethod': false,
+      'rate': 1,
+      'cap': 5000,
+      'min': 100,
+      'priority': 1,
+      'usd': 1000,
+      'minUsd': 1
     };
     clientMock.response[ `api/v1/wire/rewards/${owner.guid}` ] = {
-      "status": "success",
-      "username": "minds",
-      "wire_rewards": {
-        "description": "description",
-        "rewards": {
-          "points": [ { "amount": 10, "description": "description" }, {
-            "amount": 100,
-            "description": "description"
+      'status': 'success',
+      'username': 'minds',
+      'wire_rewards': {
+        'description': 'description',
+        'rewards': {
+          'points': [ { 'amount': 10, 'description': 'description' }, {
+            'amount': 100,
+            'description': 'description'
           } ],
-          "money": [ { "amount": 1, "description": "description" }, {
-            "amount": 10,
-            "description": ":)"
-          }, { "amount": 1000, "description": "description" } ]
+          'money': [ { 'amount': 1, 'description': 'description' }, {
+            'amount': 10,
+            'description': ':)'
+          }, { 'amount': 1000, 'description': 'description' } ]
         }
       },
-      "merchant": {
-        "service": "stripe",
-        "id": "acct_123",
-        "exclusive": { "background": 1502474954, "intro": "Support me!" }
+      'merchant': {
+        'service': 'stripe',
+        'id': 'acct_123',
+        'exclusive': { 'background': 1502474954, 'intro': 'Support me!' }
       },
-      "sums": { "points": "40", "money": "3096" }
+      'sums': { 'points': '40', 'money': '3096' }
     };
 
     submitSection = fixture.debugElement.query(By.css('.m-wire--creator-section--last'));

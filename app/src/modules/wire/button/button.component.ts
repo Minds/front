@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 
-import { OverlayModalService } from "../../../services/ux/overlay-modal";
-import { SignupModalService } from "../../modals/signup/service";
-import { WireCreatorComponent } from "../creator/creator.component";
-import { Session, SessionFactory } from "../../../services/session";
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { SignupModalService } from '../../modals/signup/service';
+import { WireCreatorComponent } from '../creator/creator.component';
+import { Session, SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'm-wire-button',

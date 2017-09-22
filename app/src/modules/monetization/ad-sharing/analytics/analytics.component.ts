@@ -38,7 +38,7 @@ export class AdSharingAnalyticsComponent {
   };
 
   items: any[] = [];
-  period : number = 28;
+  period: number = 28;
   username: string = '';
 
   loaded: boolean = false;
@@ -53,9 +53,10 @@ export class AdSharingAnalyticsComponent {
 
   listLoaded: boolean = false;
 
+  paramsSubscription: Subscription;
+
   constructor(private client: Client, private route: ActivatedRoute, private cd: ChangeDetectorRef) { }
 
-  paramsSubscription: Subscription;
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe((params: any) => {
       if (typeof params['username'] !== 'undefined') {
@@ -111,7 +112,7 @@ export class AdSharingAnalyticsComponent {
       });
   }
 
-  loadList(period : number, refresh: boolean): Promise<any> {
+  loadList(period: number, refresh: boolean): Promise<any> {
     this.breakdown.period = period;
     if (refresh) {
       this.offset = '';
@@ -139,7 +140,7 @@ export class AdSharingAnalyticsComponent {
         }
 
         if (response.breakdown && response.breakdown.dates) {
-           this.breakdown.dates = response.breakdown.dates;
+          this.breakdown.dates = response.breakdown.dates;
         }
 
         if (response['load-next']) {
@@ -182,14 +183,14 @@ export class AdSharingAnalyticsComponent {
   }
 
   isPayoutInProgress() {
-    return this.payouts.status == 'inprogress';
+    return this.payouts.status === 'inprogress';
   }
 
   hasBreakdown() {
     return this.payouts && this.payouts.dates.start && this.payouts.dates.end;
   }
 
-  detectChanges(){
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }

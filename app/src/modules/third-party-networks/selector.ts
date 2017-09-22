@@ -21,7 +21,7 @@ export class ThirdPartyNetworksSelector {
 
   private networkIconsMap: any = {
     'facebook': 'facebook-official'
-  }
+  };
 
   constructor(private thirdpartynetworks: ThirdPartyNetworksService) {
   }

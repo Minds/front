@@ -1,14 +1,15 @@
 import { Directive, ElementRef, Inject } from '@angular/core';
-import { Material as MaterialService } from "../../../services/ui";
+import { Material as MaterialService } from '../../../services/ui';
 
 @Directive({
   selector: '[mdlTextfield]',
-  inputs: ['mdlTextfield'] 
+  inputs: ['mdlTextfield']
 })
 
-export class MaterialTextfield{
-  private element: any;
+export class MaterialTextfield {
+
   mdlTextfield: any;
+  private element: any;
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;

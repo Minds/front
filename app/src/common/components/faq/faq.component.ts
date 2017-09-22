@@ -7,13 +7,10 @@ import { Component, Input } from '@angular/core';
 
 export class FaqComponent {
 
-  @Input() question = "";
+  @Input() question = '';
   showAnswer: boolean = false;
 
-  constructor() {
-  }
-
-  toggleAnswer(){
+  toggleAnswer() {
     this.showAnswer = !this.showAnswer;
   }
 

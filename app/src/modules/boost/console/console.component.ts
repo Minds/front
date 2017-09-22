@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
 
-import { Session, SessionFactory } from "../../../services/session";
+import { Session, SessionFactory } from '../../../services/session';
 
 export type BoostConsoleType = 'newsfeed' | 'content' | 'peer';
 export type BoostConsoleFilter = 'inbox' | 'outbox';
@@ -12,6 +12,7 @@ export type BoostConsoleFilter = 'inbox' | 'outbox';
   templateUrl: 'console.component.html'
 })
 export class BoostConsoleComponent {
+
   type: BoostConsoleType;
   filter: BoostConsoleFilter;
   toggled: boolean;
@@ -45,4 +46,5 @@ export class BoostConsoleComponent {
       this.type = 'newsfeed';
     }
   }
+
 }

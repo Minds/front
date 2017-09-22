@@ -4,9 +4,9 @@ import {
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session, SessionFactory } from '../../../services/session';
-import { OverlayModalService } from "../../../services/ux/overlay-modal";
-import { WireCreatorComponent } from "../creator/creator.component";
-import { SignupModalService } from "../../modals/signup/service";
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { WireCreatorComponent } from '../creator/creator.component';
+import { SignupModalService } from '../../modals/signup/service';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +15,7 @@ import { SignupModalService } from "../../modals/signup/service";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class WireLockScreenComponent implements AfterViewInit {
+export class WireLockScreenComponent {
 
   @Input() entity: any;
   @Output('entityChange') update: EventEmitter<any> = new EventEmitter<any>();
@@ -26,11 +26,12 @@ export class WireLockScreenComponent implements AfterViewInit {
 
   session: Session = SessionFactory.build();
 
-  constructor(private client: Client, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService, private modal: SignupModalService) {
-  }
-
-  ngAfterViewInit() {
-  }
+  constructor(
+    private client: Client,
+    private cd: ChangeDetectorRef,
+    private overlayModal: OverlayModalService,
+    private modal: SignupModalService
+  ) { }
 
   unlock() {
     if (this.preview) {
@@ -88,11 +89,17 @@ export class WireLockScreenComponent implements AfterViewInit {
       return `url(${this.entity.ownerObj.merchant.exclusive._backgroundPreview})`;
     }
 
-    if (!this.entity.ownerObj || !this.entity.ownerObj.merchant || !this.entity.ownerObj.merchant.exclusive || !this.entity.ownerObj.merchant.exclusive.background) {
+    if (
+      !this.entity.ownerObj
+      || !this.entity.ownerObj.merchant
+      || !this.entity.ownerObj.merchant.exclusive
+      || !this.entity.ownerObj.merchant.exclusive.background
+    ) {
       return null;
     }
 
-    let image = window.Minds.cdn_url + 'fs/v1/paywall/preview/' + this.entity.ownerObj.guid + '/' + this.entity.ownerObj.merchant.exclusive.background;
+    let image = window.Minds.cdn_url + 'fs/v1/paywall/preview/' + this.entity.ownerObj.guid + '/'
+      + this.entity.ownerObj.merchant.exclusive.background;
 
     return `url(${image})`;
   }

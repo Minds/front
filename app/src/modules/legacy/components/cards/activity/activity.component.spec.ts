@@ -11,7 +11,7 @@ import { Client } from '../../../../../services/api/client';
 import { MaterialMock } from '../../../../../../tests/material-mock.spec';
 import { scrollServiceMock } from '../../../../../../tests/scroll-service-mock.spec';
 import { ScrollService } from '../../../../../services/ux/scroll';
-import { AttachmentService } from "../../../../../services/attachment";
+import { AttachmentService } from '../../../../../services/attachment';
 import { attachmentServiceMock } from '../../../../../../tests/attachment-service-mock.spec';
 import { translationServiceMock } from '../../../../../../tests/translation-service-mock.spec';
 import { TranslationService } from '../../../../../services/translation';
@@ -22,6 +22,7 @@ import { MindsRichEmbed } from '../../../../../common/components/rich-embed/rich
 import { DomainPipe } from '../../../../../common/pipes/domain';
 import { AbbrPipe } from '../../../../../common/pipes/abbr';
 
+/* tslint:disable */
 // START MOCKS
 @Component({
   selector: 'm-wire--lock-screen',
@@ -34,8 +35,8 @@ export class WireLockScreenComponentMock {
 
 @Component({
   selector: 'm-translate',
-  inputs: [ '_open: open', '_entity: entity', '_translateEvent: translateEvent' ],
-  outputs: [ 'onTranslateInit', 'onTranslate', 'onTranslateError' ],
+  inputs: ['_open: open', '_entity: entity', '_translateEvent: translateEvent'],
+  outputs: ['onTranslateInit', 'onTranslate', 'onTranslateError'],
   exportAs: 'translate',
   template: ''
 })
@@ -98,8 +99,8 @@ export class WireThresholdInputComponentMock {
 
 @Component({
   selector: 'minds-newsfeed-poster',
-  inputs: [ '_container_guid: containerGuid', 'accessId', 'message' ],
-  outputs: [ 'load' ],
+  inputs: ['_container_guid: containerGuid', 'accessId', 'message'],
+  outputs: ['load'],
   template: ''
 })
 
@@ -138,7 +139,7 @@ export class VideoComponentMock {
 
   @Input('preview')
   set _preview(value) {
-  };
+  }
 
   @Input('previewPlayback')
   set _previewPlayback(value) {
@@ -274,7 +275,7 @@ export class ModalConfirmMock {
 
 @Directive({
   selector: '[hovercard]',
-  inputs: [ '_hovercard: hovercard', '_hovercardAnchor: hovercardAnchor' ],
+  inputs: ['_hovercard: hovercard', '_hovercardAnchor: hovercardAnchor'],
   host: {
     '(mouseenter)': 'show()',
     '(mouseleave)': 'hide()',
@@ -308,7 +309,7 @@ export class ReadMoreButtonComponentMock {
 
 @Directive({
   selector: '[autoGrow]',
-  inputs: [ 'autoGrow', '_model: ngModel' ],
+  inputs: ['autoGrow', '_model: ngModel'],
   host: {
     '(keydown)': 'grow()',
     '(paste)': 'grow()',
@@ -361,8 +362,37 @@ describe('Activity', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ TagsPipe, DomainPipe, AbbrPipe, MindsRichEmbed, MaterialMock, HovercardMock, WireLockScreenComponentMock, TranslateMock, WireThresholdInputComponentMock, PosterMock, VideoComponentMock, VideoAdsMock, RemindMock, ThumbsUpButtonMock, ThumbsDownButtonMock, ButtonCommentMock, ButtonRemindMock, MindsCommentsMock, WireButtonMock, ModalShareMock, ModalReportMock, ModalConfirmMock, ReadMoreButtonComponentMock, AutoGrowMock, Activity ], // declare the test component
-      imports: [ RouterTestingModule, FormsModule/*, CommonModule*/ ],
+      declarations: [
+        TagsPipe,
+        DomainPipe,
+        AbbrPipe,
+        MindsRichEmbed,
+        MaterialMock,
+        HovercardMock,
+        WireLockScreenComponentMock,
+        TranslateMock,
+        WireThresholdInputComponentMock,
+        PosterMock,
+        VideoComponentMock,
+        VideoAdsMock,
+        RemindMock,
+        ThumbsUpButtonMock,
+        ThumbsDownButtonMock,
+        ButtonCommentMock,
+        ButtonRemindMock,
+        MindsCommentsMock,
+        WireButtonMock,
+        ModalShareMock,
+        ModalReportMock,
+        ModalConfirmMock,
+        ReadMoreButtonComponentMock,
+        AutoGrowMock,
+        Activity
+      ], // declare the test component
+      imports: [
+        RouterTestingModule,
+        FormsModule/*, CommonModule*/
+      ],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: ScrollService, useValue: scrollServiceMock },

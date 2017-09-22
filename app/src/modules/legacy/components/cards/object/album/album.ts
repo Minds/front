@@ -14,13 +14,14 @@ import { SessionFactory } from '../../../../../../services/session';
 })
 
 export class AlbumCard {
-  entity : any;
+
+  entity: any;
   session = SessionFactory.build();
   minds: {};
 
-	constructor(public client: Client){
+  constructor(public client: Client) {
     this.minds = window.Minds;
-	}
+  }
 
   set object(value: any) {
     this.entity = value;

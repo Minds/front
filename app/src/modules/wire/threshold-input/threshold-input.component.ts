@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnInit } from '@angular/core';
 
-import { WireThresholdStruc, WireRewardsType } from "../interfaces/wire.interfaces";
-import { WireTypeLabels } from "../wire";
-import { Session, SessionFactory } from "../../../services/session";
+import { WireThresholdStruc, WireRewardsType } from '../interfaces/wire.interfaces';
+import { WireTypeLabels } from '../wire';
+import { Session, SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'm-wire-threshold-input',
@@ -76,7 +76,7 @@ export class WireThresholdInputComponent implements OnInit {
     setTimeout(() => {
       if (this.minAmountInput.nativeElement) {
         this.minAmountInput.nativeElement.focus();
-      };
+      }
     }, 0);
   }
 

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Client } from "../../../../services/api";
+import { Client } from '../../../../services/api';
 
 @Component({
   moduleId: module.id,
@@ -8,13 +8,13 @@ import { Client } from "../../../../services/api";
 })
 export class MediaViewRecommended {
   @Input() limit: string | number;
-  
+
   @Input('opts') set _opts({ current, next, channel, type }) {
     this.current = current || '';
     this.next = next || '';
     this.channel = channel;
     this.type = type;
-    
+
     if (this.initialized) {
       this.load(true);
     }

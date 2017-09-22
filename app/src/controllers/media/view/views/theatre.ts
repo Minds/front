@@ -47,38 +47,41 @@ export class MediaTheatre {
   object: any = {};
   session = SessionFactory.build();
 
-  constructor(public client: Client, public router: Router){
+  constructor(public client: Client, public router: Router) {
   }
 
-  set _object(value : any){
-    if(!value.guid)
+  set _object(value: any) {
+    if (!value.guid)
       return;
     this.object = value;
   }
 
-  prev(){
-    var pos = this.object['album_children_guids'].indexOf(this.object.guid) -1;
+  prev() {
+    var pos = this.object['album_children_guids'].indexOf(this.object.guid) - 1;
     //go from the top if less than 0
-    if(pos <= 0)
-      pos = this.object['album_children_guids'].length -1;
+    if (pos <= 0)
+      pos = this.object['album_children_guids'].length - 1;
     this.router.navigate(['/media', this.object['album_children_guids'][pos]]);
   }
 
-  next(){
+  next() {
     var pos = this.object['album_children_guids'].indexOf(this.object.guid);
     //bump up if less than 0
-    if(pos <= 0)
+    if (pos <= 0)
       pos = 1;
     //bump one up if we are in the same position as ourself
-    if(this.object['album_children_guids'][pos] == this.object.guid)
+    if (this.object['album_children_guids'][pos] === this.object.guid)
       pos++;
     //reset back to 0 if we are are the end
-    if(pos >= this.object['album_children_guids'].length)
+    if (pos >= this.object['album_children_guids'].length)
       pos = 0;
     this.router.navigate(['/media', this.object['album_children_guids'][pos]]);
   }
 
   isAlbum() {
-    return this.object.container_guid != this.object.owner_guid && this.object.album_children_guids && this.object.album_children_guids.length > 1;
+    return this.object.container_guid !== this.object.owner_guid
+      && this.object.album_children_guids
+      && this.object.album_children_guids.length > 1;
   }
+
 }

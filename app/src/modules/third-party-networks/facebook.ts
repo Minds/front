@@ -1,10 +1,10 @@
-import { Component, EventEmitter, ChangeDetectorRef  } from '@angular/core';
+import { Component, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../services/api';
 
 @Component({
   selector: 'm-third-party-networks-facebook',
-  outputs: [ 'done' ],
+  outputs: ['done'],
   template: `
 
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
@@ -36,7 +36,10 @@ import { Client } from '../../services/api';
         <b i18n>Link your boosts to facebook</b>
       </div>
 
-      <b *ngIf="accounts.length > 0" class="mdl-color-text--blue-grey-400" style="text-align: center; margin: 0; display:block;">Select a page to link below</b>
+      <b *ngIf="accounts.length > 0"
+        class="mdl-color-text--blue-grey-400"
+        style="text-align: center; margin: 0; display:block;">Select a page to link below
+      </b>
       <div class="m-third-party-networks-facebook-pages-list">
         <div class="m-block mdl-card mdl-shadow--2dp" *ngFor="let account of accounts" (click)="selectAccount(account)">
           <div class="m-avatar">
@@ -54,23 +57,23 @@ import { Client } from '../../services/api';
 export class ThirdPartyNetworksFacebook {
 
   minds = window.Minds;
-  done : EventEmitter<any> = new EventEmitter(true);
+  done: EventEmitter<any> = new EventEmitter(true);
 
   page;
   accounts = [];
 
-  inProgress : boolean = false;
+  inProgress: boolean = false;
 
-  constructor(public client : Client, private cd : ChangeDetectorRef ){
+  constructor(public client: Client, private cd: ChangeDetectorRef) {
     this.getPage();
   }
 
-  getPage(){
+  getPage() {
     this.inProgress = true;
     this.client.get('api/v1/thirdpartynetworks/facebook/page')
-      .then((response : any) => {
+      .then((response: any) => {
         this.inProgress = false;
-        if(!response.page){
+        if (!response.page) {
           this.page = null;
           return true;
         }
@@ -78,44 +81,44 @@ export class ThirdPartyNetworksFacebook {
       });
   }
 
-  connect(){
+  connect() {
     this.inProgress = true;
     window.onSuccessCallback = () => {
       this.getAccounts();
-    }
+    };
     window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/link');
   }
 
-  getAccounts(){
+  getAccounts() {
     this.inProgress = true;
     this.client.get('api/v1/thirdpartynetworks/facebook/accounts')
-      .then((response : any) => {
+      .then((response: any) => {
         this.inProgress = false;
         this.accounts = response.accounts;
         this.cd.detectChanges();
       });
   }
 
-  selectAccount(account){
+  selectAccount(account) {
     this.inProgress = true;
     this.client.post('api/v1/thirdpartynetworks/facebook/select-page', {
-        id: account.id,
-        name: account.name,
-        accessToken: account.access_token
-      })
-      .then((response : any) => {
+      id: account.id,
+      name: account.name,
+      accessToken: account.access_token
+    })
+      .then((response: any) => {
         this.inProgress = false;
         this.page = account;
       });
   }
 
-  drop(){
+  drop() {
     this.inProgress = true;
     this.client.delete('api/v1/thirdpartynetworks/facebook')
       .then(() => {
         this.inProgress = false;
         this.page = null;
-      })
+      });
   }
 
 }

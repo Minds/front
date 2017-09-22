@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
 import { NotificationService } from './src/services/notification';
-import { AnalyticsService} from './src/services/analytics'
+import { AnalyticsService } from './src/services/analytics';
 import { SocketsService } from './src/services/sockets';
 import { Session, SessionFactory } from './src/services/session';
-import { LoginReferrerService } from "./src/services/login-referrer.service";
+import { LoginReferrerService } from './src/services/login-referrer.service';
 
 @Component({
   moduleId: module.id,
@@ -16,7 +16,12 @@ export class Minds {
   minds = window.Minds;
   session: Session = SessionFactory.build();
 
-  constructor(public notificationService : NotificationService, public analytics : AnalyticsService, public sockets: SocketsService, public loginReferrer: LoginReferrerService) {
+  constructor(
+    public notificationService: NotificationService,
+    public analytics: AnalyticsService,
+    public sockets: SocketsService,
+    public loginReferrer: LoginReferrerService
+  ) {
     this.name = 'Minds';
   }
 
@@ -25,8 +30,8 @@ export class Minds {
 
     this.session.isLoggedIn((is) => {
       if (is) {
-        if (this.minds.user.language != this.minds.language) {
-          console.log('[app]:: language change', this.minds.user.language, this.minds.language)
+        if (this.minds.user.language !== this.minds.language) {
+          console.log('[app]:: language change', this.minds.user.language, this.minds.language);
           window.location.reload(true);
         }
       }
@@ -38,7 +43,7 @@ export class Minds {
         '/logout',
         '/register',
         '/forgot-password',
-      ])  
+      ])
       .listen();
   }
 

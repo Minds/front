@@ -1,13 +1,13 @@
 import { Component, EventEmitter, ViewChild, ComponentFactoryResolver } from '@angular/core';
 
-import { DynamicHostDirective } from "../../../common/directives/dynamic-host.directive";
-import { ActivityPreview } from "../../legacy/components/cards/activity/preview";
+import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
+import { ActivityPreview } from '../../legacy/components/cards/activity/preview';
 
 // had forwardRef(() => ActivityPreview)
 @Component({
   selector: 'm-modal-remind-composer',
-  inputs: [ '_default: default', 'open', '_object: object' ],
-  outputs: [ 'closed', 'post' ],
+  inputs: ['_default: default', 'open', '_object: object'],
+  outputs: ['closed', 'post'],
   template: `
     <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
 
@@ -35,10 +35,10 @@ import { ActivityPreview } from "../../legacy/components/cards/activity/preview"
 
 export class RemindComposerModal {
 
-  open : boolean = false;
-  closed : EventEmitter<any> = new EventEmitter();
-  post : EventEmitter<any> = new EventEmitter();
-  object : any = {};
+  open: boolean = false;
+  closed: EventEmitter<any> = new EventEmitter();
+  post: EventEmitter<any> = new EventEmitter();
+  object: any = {};
 
   message: string = '';
 
@@ -46,11 +46,11 @@ export class RemindComposerModal {
 
   constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
 
-  set _object(object: any){
+  set _object(object: any) {
     this.object = object;
   }
 
-  set _default(message: string){
+  set _default(message: string) {
     this.message = message;
   }
 
@@ -58,12 +58,12 @@ export class RemindComposerModal {
     this.loadPreview();
   }
 
-  close(e?){
+  close(e?) {
     this.open = false;
     this.closed.next(true);
   }
 
-  send(){
+  send() {
     this.post.next({
       message: this.message
     });

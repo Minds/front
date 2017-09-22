@@ -66,7 +66,7 @@ export class Translate {
     }
 
     this.translateEvent = value;
-    
+
     if (!value) {
       return;
     }
@@ -93,7 +93,7 @@ export class Translate {
         this.changeDetectorRef.markForCheck();
 
         console.error('TranslateModal::onInit', e);
-      })
+      });
   }
 
   ngOnDestroy() {

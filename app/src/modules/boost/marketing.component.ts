@@ -7,12 +7,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class BoostMarketingComponent implements OnInit {
+export class BoostMarketingComponent {
+
   user = window.Minds.user;
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
 }

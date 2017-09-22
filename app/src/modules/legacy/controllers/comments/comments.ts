@@ -7,19 +7,19 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
 import { AttachmentService } from '../../../../services/attachment';
 import { SocketsService } from '../../../../services/sockets';
 
-import { Textarea } from "../../../../common/components/editors/textarea.component";
+import { Textarea } from '../../../../common/components/editors/textarea.component';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit', 'focusOnInit'],
   templateUrl: 'list.html',
-  providers: [ 
-    { 
+  providers: [
+    {
       provide: AttachmentService,
-      useFactory: AttachmentService._, 
-      deps: [ Client, Upload ]
-    } 
+      useFactory: AttachmentService._,
+      deps: [Client, Upload]
+    }
   ]
 })
 
@@ -27,24 +27,24 @@ export class Comments {
 
   minds;
   object;
-  guid: string = "";
+  guid: string = '';
   parent: any;
-  comments : Array<any> = [];
+  comments: Array<any> = [];
   content = '';
-  reversed : boolean = false;
+  reversed: boolean = false;
   session = SessionFactory.build();
 
   focusOnInit: boolean = false;
   @ViewChild('message') textareaControl: Textarea;
   @ViewChild('scrollArea') scrollView: ElementRef;
 
-  editing : boolean = false;
+  editing: boolean = false;
 
-  showModal : boolean = false;
+  showModal: boolean = false;
 
-  limit : number = 5;
-  offset : string = "";
-  inProgress : boolean = false;
+  limit: number = 5;
+  offset: string = '';
+  inProgress: boolean = false;
   canPost: boolean = true;
   triedToPost: boolean = false;
   moreData: boolean = false;
@@ -57,22 +57,34 @@ export class Comments {
 
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, public attachment: AttachmentService, private modal: SignupModalService, public sockets: SocketsService, private renderer: Renderer, private cd: ChangeDetectorRef) {
+  private autoloadBlocked = false;
+
+  private overscrollTimer;
+  private overscrollAmount = 0;
+
+  constructor(
+    public client: Client,
+    public attachment: AttachmentService,
+    private modal: SignupModalService,
+    public sockets: SocketsService,
+    private renderer: Renderer,
+    private cd: ChangeDetectorRef
+  ) {
     this.minds = window.Minds;
-	}
+  }
 
   set _object(value: any) {
     this.object = value;
     this.guid = this.object.guid;
-    if(this.object.entity_guid)
+    if (this.object.entity_guid)
       this.guid = this.object.entity_guid;
     this.parent = this.object;
     this.load(true);
     this.listen();
   }
 
-  set _reversed(value: boolean){
-    if(value)
+  set _reversed(value: boolean) {
+    if (value)
       this.reversed = true;
     else
       this.reversed = false;
@@ -97,7 +109,7 @@ export class Comments {
     this.inProgress = true;
 
     this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: true })
-      .then((response : any) => {
+      .then((response: any) => {
 
         if (!this.socketRoomName && response.socketRoomName) {
           this.socketRoomName = response.socketRoomName;
@@ -108,7 +120,7 @@ export class Comments {
         this.inProgress = false;
         this.moreData = true;
 
-        if(!response.comments){
+        if (!response.comments) {
           this.moreData = false;
           return false;
         }
@@ -132,7 +144,7 @@ export class Comments {
 
         if (
           !this.offset ||
-          this.offset == null ||
+          this.offset === null ||
           response.comments.length < (this.limit - 1)
         ) {
           this.moreData = false;
@@ -143,7 +155,6 @@ export class Comments {
       });
   }
 
-  private autoloadBlocked = false;
   autoloadPrevious() {
     if (!this.moreData || this.autoloadBlocked) {
       return;
@@ -159,8 +170,6 @@ export class Comments {
     this.load();
   }
 
-  private overscrollTimer;
-  private overscrollAmount = 0;
   overscrollHandler({ deltaY }) {
     this.cancelOverscroll();
 
@@ -230,8 +239,7 @@ export class Comments {
 
           this.comments.push(response.comments[0]);
           this.commentsScrollEmitter.emit('bottom');
-        })
-        .catch(e => {});
+        });
     });
   }
 
@@ -239,7 +247,7 @@ export class Comments {
     return !this.inProgress && this.canPost && (this.content || this.attachment.has());
   }
 
-  post(e){
+  post(e) {
     e.preventDefault();
 
     if (!this.content && !this.attachment.has()) {
@@ -256,26 +264,26 @@ export class Comments {
 
     this.inProgress = true;
     this.client.post('api/v1/comments/' + this.guid, data)
-    .then((response : any) => {
-      this.attachment.reset();
-      this.content = '';
-      this.comments.push(response.comment);
-      this.commentsScrollEmitter.emit('bottom');
-      this.inProgress = false;
-    })
-    .catch((e) => {
-      this.inProgress = false;
-    });
+      .then((response: any) => {
+        this.attachment.reset();
+        this.content = '';
+        this.comments.push(response.comment);
+        this.commentsScrollEmitter.emit('bottom');
+        this.inProgress = false;
+      })
+      .catch((e) => {
+        this.inProgress = false;
+      });
   }
 
-  isLoggedIn(){
-    if(!this.session.isLoggedIn()){
-      this.modal.setSubtitle("You need to have channel in order to comment").open();
+  isLoggedIn() {
+    if (!this.session.isLoggedIn()) {
+      this.modal.setSubtitle('You need to have channel in order to comment').open();
     }
   }
 
 
-  delete(index : number){
+  delete(index: number) {
     this.comments.splice(index, 1);
   }
 
@@ -310,7 +318,7 @@ export class Comments {
     this.attachment.remove(file).then(() => {
       this.canPost = true;
       this.triedToPost = false;
-      file.value = "";
+      file.value = '';
     }).catch(e => {
       console.error(e);
       this.canPost = true;
@@ -318,7 +326,7 @@ export class Comments {
     });
   }
 
-  getPostPreview(message){
+  getPostPreview(message) {
     if (!message) {
       return;
     }

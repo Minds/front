@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { SignupModalService } from '../../../modules/modals/signup/service';
-import { LoginReferrerService } from "../../../services/login-referrer.service";
+import { LoginReferrerService } from '../../../services/login-referrer.service';
 
 @Component({
   moduleId: module.id,
@@ -18,23 +18,29 @@ export class Register {
 
   minds = window.Minds;
   session = SessionFactory.build();
-  errorMessage : string = "";
-  twofactorToken : string = "";
-  hideLogin : boolean = false;
-  inProgress : boolean = false;
-  referrer : string;
+  errorMessage: string = '';
+  twofactorToken: string = '';
+  hideLogin: boolean = false;
+  inProgress: boolean = false;
+  referrer: string;
 
   flags = {
     canPlayInlineVideos: true
   };
 
-  constructor(public client : Client, public router: Router, public route: ActivatedRoute, private modal : SignupModalService, private loginReferrer: LoginReferrerService){
-  }
-
   paramsSubscription: Subscription;
+
+  constructor(
+    public client: Client,
+    public router: Router,
+    public route: ActivatedRoute,
+    private modal: SignupModalService,
+    private loginReferrer: LoginReferrerService
+  ) { }
+
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(params => {
-      if(params['referrer']) {
+      if (params['referrer']) {
         this.referrer = params['referrer'];
       }
     });
@@ -48,9 +54,9 @@ export class Register {
     this.paramsSubscription.unsubscribe();
   }
 
-  registered(){
+  registered() {
     this.modal.setDisplay('onboarding').open();
-    this.loginReferrer.navigate({ 
+    this.loginReferrer.navigate({
       defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
     });
   }

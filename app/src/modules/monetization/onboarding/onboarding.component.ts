@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } fro
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../../../services/api';
 
-import { requiredFor, optionalFor } from "./onboarding.validators";
+import { requiredFor, optionalFor } from './onboarding.validators';
 
 @Component({
   selector: 'm-monetization--onboarding',
@@ -94,8 +94,8 @@ export class MonetizationOnboardingComponent implements OnInit {
     this.client.post('api/v1/merchant/onboard', this.form.value)
       .then((response: any) => {
         this.inProgress = false;
-   
-        if(!this.minds.user.programs)
+
+        if (!this.minds.user.programs)
           this.minds.user.programs = [];
         this.minds.user.programs.push('affiliate');
 
@@ -118,7 +118,7 @@ export class MonetizationOnboardingComponent implements OnInit {
     this.error = '';
 
     this.client.post('api/v1/merchant/update', this.form.value)
-      .then((response : any) => {
+      .then((response: any) => {
         this.inProgress = false;
         this.completed.emit(response);
         this.detectChanges();
@@ -153,7 +153,7 @@ export class MonetizationOnboardingComponent implements OnInit {
     return countries.indexOf(currentCountry) > -1;
   }
 
-  detectChanges(){
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }

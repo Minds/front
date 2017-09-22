@@ -16,20 +16,25 @@ import { NotificationService } from '../../services/notification';
 
 export class Notifications {
 
-  notifications : Array<Object> = [];
+  notifications: Array<Object> = [];
   entity;
-  moreData : boolean = true;
-  offset: string = "";
-  inProgress : boolean = false;
+  moreData: boolean = true;
+  offset: string = '';
+  inProgress: boolean = false;
   session = SessionFactory.build();
   _filter: string = 'all';
-
-  constructor(public client: Client, public router: Router, public title : MindsTitle, public notificationService : NotificationService, public route: ActivatedRoute){
-  }
-
   paramsSubscription: Subscription;
+
+  constructor(
+    public client: Client,
+    public router: Router,
+    public title: MindsTitle,
+    public notificationService: NotificationService,
+    public route: ActivatedRoute
+  ) { }
+
   ngOnInit() {
-    if(!this.session.isLoggedIn()){
+    if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
     }
@@ -40,7 +45,7 @@ export class Notifications {
         this.notifications = [];
         this.load(true);
       }
-      if(params['ts']){
+      if (params['ts']) {
         this.notifications = [];
         this.load(true);
         this.notificationService.clear();
@@ -50,51 +55,51 @@ export class Notifications {
     this.load(true);
 
     this.notificationService.clear();
-    this.title.setTitle("Notifications");
+    this.title.setTitle('Notifications');
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
 
-  load(refresh : boolean = false){
+  load(refresh: boolean = false) {
     var self = this;
 
-    if(this.inProgress) return false;
+    if (this.inProgress) return false;
 
-    if(refresh)
-      this.offset = "";
+    if (refresh)
+      this.offset = '';
 
     this.inProgress = true;
 
-    this.client.get(`api/v1/notifications/${this._filter}`, {limit: 24, offset:this.offset})
-      .then((data : any) => {
+    this.client.get(`api/v1/notifications/${this._filter}`, { limit: 24, offset: this.offset })
+      .then((data: any) => {
 
-        if(!data.notifications){
+        if (!data.notifications) {
           self.moreData = false;
           self.inProgress = false;
           return false;
         }
 
-        if(refresh){
+        if (refresh) {
           self.notifications = data.notifications;
-        }else{
-          for(let entity of data.notifications)
+        } else {
+          for (let entity of data.notifications)
             self.notifications.push(entity);
         }
 
-        if (!data['load-next']) 
-            this.moreData = false;
+        if (!data['load-next'])
+          this.moreData = false;
         self.offset = data['load-next'];
         self.inProgress = false;
 
       });
   }
 
-  loadEntity(entity){
-    if(entity.type == 'comment'){
+  loadEntity(entity) {
+    if (entity.type === 'comment') {
       this.client.get('api/v1/entities/entity/' + entity.parent_guid)
-        .then((response : any) => {
+        .then((response: any) => {
           this.entity = response.entity;
         });
     } else {

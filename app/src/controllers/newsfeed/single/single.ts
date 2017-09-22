@@ -17,14 +17,14 @@ export class NewsfeedSingle {
 
   session = SessionFactory.build();
   minds;
-  inProgress : boolean = false;
-  activity : any;
-  error: string = "";
-
-	constructor(public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute){
-  }
-  
+  inProgress: boolean = false;
+  activity: any;
+  error: string = '';
   paramsSubscription: Subscription;
+
+  constructor(public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute) {
+  }
+
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
@@ -60,15 +60,15 @@ export class NewsfeedSingle {
       })
       .catch(e => {
         if (e.status === 0) {
-          this.error = "Sorry, there was a timeout error.";
+          this.error = 'Sorry, there was a timeout error.';
         } else {
-          this.error = "Sorry, we couldn't load the activity";
+          this.error = 'Sorry, we couldn\'t load the activity';
         }
         this.inProgress = false;
       });
   }
 
-  delete(activity){
+  delete(activity) {
     this.router.navigate(['/newsfeed']);
   }
 }

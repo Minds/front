@@ -32,6 +32,6 @@ function getTranslationsWithSystemJs(file: string) {
       text: 'shims/systemjs-text-plugin.js'
     }
   });
-  
+
   return System.import(file + '!text'); // relies on text plugin
 }

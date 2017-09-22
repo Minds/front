@@ -3,22 +3,19 @@ import { Component, EventEmitter } from '@angular/core';
 @Component({
   moduleId: module.id,
   selector: 'minds-tutorial',
-  outputs: [ 'done' ],
+  outputs: ['done'],
   templateUrl: 'tutorial.html'
 })
 
 export class Tutorial {
 
-  error : string = "";
-  inProgress : boolean = false;
-  referrer : string;
+  error: string = '';
+  inProgress: boolean = false;
+  referrer: string;
 
-  gender : string = 'private';
-  banner : string;
+  gender: string = 'private';
+  banner: string;
 
-  done : EventEmitter<any> = new EventEmitter();
+  done: EventEmitter<any> = new EventEmitter();
 
-	constructor(){
-
-	}
 }

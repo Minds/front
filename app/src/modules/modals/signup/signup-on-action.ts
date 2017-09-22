@@ -4,7 +4,7 @@ import { SessionFactory } from '../../../services/session';
 
 @Component({
   selector: 'm-modal-signup-on-action',
-  inputs: ['open','action'],
+  inputs: ['open', 'action'],
   outputs: ['closed'],
   template: `
     <m-modal-signup open="true" subtitle="You need to have a channel in order to {{action}}" i18n-subtitle *ngIf="open"></m-modal-signup>
@@ -13,17 +13,13 @@ import { SessionFactory } from '../../../services/session';
 
 export class SignupOnActionModal {
 
-  open : boolean = false;
-  action : string = "";
+  open: boolean = false;
+  action: string = '';
   session = SessionFactory.build();
-  closed : EventEmitter<any> = new EventEmitter();
+  closed: EventEmitter<any> = new EventEmitter();
   minds = window.Minds;
 
-  constructor(){
-
-  }
-
-  close(){
+  close() {
     this.open = false;
     this.closed.next(true);
   }

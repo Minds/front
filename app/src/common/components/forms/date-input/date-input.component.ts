@@ -43,13 +43,10 @@ export class DateInputComponent implements OnInit {
   @Input() showClearButton: boolean = true;
   @Input() disabled: boolean = false;
 
-  private _date: string;
-
   @Output() dateChange: EventEmitter<any> = new EventEmitter();
-  @Input()
-  set date(value: string) {
+  @Input() set date(value: string) {
 
-    if(!value)
+    if (!value)
       return;
 
     if (value === this._date) {
@@ -81,12 +78,14 @@ export class DateInputComponent implements OnInit {
     this._date = value;
   }
 
+  private _date: string;
+
   ngOnInit() {
     this.months = [
-      "January", "February", "March",
-      "April", "May", "June",
-      "July", "August", "September",
-      "October", "November", "December"
+      'January', 'February', 'March',
+      'April', 'May', 'June',
+      'July', 'August', 'September',
+      'October', 'November', 'December'
     ];
 
     this.days = [];

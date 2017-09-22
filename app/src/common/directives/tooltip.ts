@@ -11,10 +11,10 @@ import { AnchorPosition } from '../../services/ux/anchor-position';
 })
 export class Tooltip {
 
-  private _element: any;
-  private timeout: any;
   shown: boolean = false;
   style: any = {};
+  private _element: any;
+  private timeout: any;
 
   constructor(element: ElementRef) {
     this._element = element.nativeElement;
@@ -24,7 +24,7 @@ export class Tooltip {
     this.timeout = setTimeout(() => {
       this.timeout = null;
 
-      let position = AnchorPosition.getFixed(this._element, [ 'left', 'bottom' ]);
+      let position = AnchorPosition.getFixed(this._element, ['left', 'bottom']);
 
       if (!position) {
         return;

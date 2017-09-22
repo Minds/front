@@ -29,7 +29,8 @@ import { MindsActivityObject } from '../../interfaces/entities';
 
 export class SearchBar {
 
-  q : string;
+  q: string;
+  routerSubscription: Subscription;
 
   constructor(public router: Router) {
   }
@@ -41,8 +42,6 @@ export class SearchBar {
   ngOnDestroy() {
     this.unListen();
   }
-
-  routerSubscription: Subscription;
 
   listen() {
     this.routerSubscription = this.router.events.subscribe((navigationEvent: NavigationEnd) => {
@@ -60,7 +59,7 @@ export class SearchBar {
 
           let fragments = url.replace(/\//g, ';').split(';');
 
-          if (fragments[0] == 'search') {
+          if (fragments[0] === 'search') {
             fragments.forEach((fragment: string) => {
               let param = fragment.split('=');
 
@@ -82,17 +81,17 @@ export class SearchBar {
     this.routerSubscription.unsubscribe();
   }
 
-  search(){
+  search() {
     this.router.navigate(['search', { q: this.q }]);
   }
 
-  keyup(e){
-    if(e.keyCode == 13)
+  keyup(e) {
+    if (e.keyCode === 13)
       this.search();
   }
 
-  onClick(){
-    document.getElementById("search").focus();
+  onClick() {
+    document.getElementById('search').focus();
   }
 
 }

@@ -1,4 +1,4 @@
-import { Pipe, Inject, Renderer }  from '@angular/core';
+import { Pipe, Inject, Renderer } from '@angular/core';
 
 @Pipe({
   name: 'tags'
@@ -6,13 +6,9 @@ import { Pipe, Inject, Renderer }  from '@angular/core';
 
 export class TagsPipe {
 
-  constructor() {
-  }
-
-
   transform(value: string) {
 
-    if(!value || typeof value !== "string")
+    if (!value || typeof value !== 'string')
       return value;
 
     //<a>tag
@@ -29,6 +25,5 @@ export class TagsPipe {
 
     return value;
   }
-
 
 }

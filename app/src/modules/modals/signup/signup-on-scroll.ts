@@ -14,15 +14,17 @@ import { AnalyticsService } from '../../../services/analytics';
 })
 
 export class SignupOnScrollModal {
-  open : boolean = false;
+  open: boolean = false;
   session = SessionFactory.build();
-  route : string = "";
+  route: string = '';
   scroll_listener;
   minds = window.Minds;
 
-  display : string = 'initial';
+  display: string = 'initial';
 
-  constructor(public router : Router, public scroll : ScrollService){
+  routerSubscription: Subscription;
+
+  constructor(public router: Router, public scroll: ScrollService) {
   }
 
   ngOnInit() {
@@ -32,12 +34,10 @@ export class SignupOnScrollModal {
   ngOnDestroy() {
     this.unListen();
 
-    if(this.scroll_listener) {
+    if (this.scroll_listener) {
       this.scroll.unListen(this.scroll_listener);
     }
   }
-
-  routerSubscription: Subscription;
 
   listen() {
     this.routerSubscription = this.router.events.subscribe((navigationEvent: NavigationEnd) => {
@@ -66,8 +66,8 @@ export class SignupOnScrollModal {
               break;
             default:
               this.scroll_listener = this.scroll.listen((e) => {
-                if(this.scroll.view.scrollTop > 100){
-                  if(window.localStorage.getItem('hideSignupModal'))
+                if (this.scroll.view.scrollTop > 100) {
+                  if (window.localStorage.getItem('hideSignupModal'))
                     this.open = false;
                   else
                     this.open = true;

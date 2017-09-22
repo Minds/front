@@ -3,12 +3,12 @@ import { Component, EventEmitter } from '@angular/core';
 import { KeyVal } from '../../../interfaces/entities';
 
 export interface SocialProfileMeta {
-    key: string,
-    label: string,
-    placeholder: string,
-    link: string,
-    icon: string,
-    customIcon?: boolean,
+  key: string;
+  label: string;
+  placeholder: string;
+  link: string;
+  icon: string;
+  customIcon?: boolean;
 }
 
 @Component({
@@ -20,6 +20,7 @@ export interface SocialProfileMeta {
 })
 
 export class ChannelSocialProfiles {
+
   socialProfiles: KeyVal[];
   editing: boolean = false;
   changed: EventEmitter<any> = new EventEmitter();
@@ -133,26 +134,6 @@ export class ChannelSocialProfiles {
     }
   ];
 
-  private getSocialProfileMeta(key: string): SocialProfileMeta {
-    let defaultMeta: SocialProfileMeta = {
-      key: '', label: '',
-      placeholder: '',
-      link: '#', icon: 'question'
-    };
-
-    if (!key) {
-      return defaultMeta;
-    }
-
-    for (let i in this.socialProfileMeta) {
-      if (this.socialProfileMeta[i].key === key) {
-        return this.socialProfileMeta[i];
-      }
-    }
-
-    return defaultMeta;
-  }
-
   set _user(value: any) {
     this.socialProfiles = value.social_profiles || [];
   }
@@ -202,4 +183,25 @@ export class ChannelSocialProfiles {
 
     return link.replace(':value', value);
   }
+
+  private getSocialProfileMeta(key: string): SocialProfileMeta {
+    let defaultMeta: SocialProfileMeta = {
+      key: '', label: '',
+      placeholder: '',
+      link: '#', icon: 'question'
+    };
+
+    if (!key) {
+      return defaultMeta;
+    }
+
+    for (let i in this.socialProfileMeta) {
+      if (this.socialProfileMeta[i].key === key) {
+        return this.socialProfileMeta[i];
+      }
+    }
+
+    return defaultMeta;
+  }
+
 }

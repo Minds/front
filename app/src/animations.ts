@@ -19,4 +19,4 @@ export const animations: AnimationEntryMetadata[] = [
       ]))
     ])
   ])
-]
+];

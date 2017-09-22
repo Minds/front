@@ -5,9 +5,9 @@ import { SessionFactory } from '../../services/session';
 import { SocketsService } from '../../services/sockets';
 
 @Component({
-  moduleId: module.id,
-  selector: 'minds-sidebar-navigation',
-  templateUrl: 'sidebar-navigation.html'
+	moduleId: module.id,
+	selector: 'minds-sidebar-navigation',
+	templateUrl: 'sidebar-navigation.html'
 })
 
 export class SidebarNavigation {
@@ -15,28 +15,28 @@ export class SidebarNavigation {
 	session = SessionFactory.build();
 	items;
 
-	constructor(public navigation : NavigationService, public sockets : SocketsService){
+	constructor(public navigation: NavigationService, public sockets: SocketsService) {
 		var self = this;
-    this.items = navigation.getItems('sidebar');
+		this.items = navigation.getItems('sidebar');
 		this.getUser();
 
 		//listen out for new messages
-    //this.messengerListener();
+		//this.messengerListener();
 	}
 
-	getUser(){
+	getUser() {
 		var self = this;
 		this.user = this.session.getLoggedInUser((user) => {
-				self.user = user;
-			});
+			self.user = user;
+		});
 	}
 
-  messengerListener(){
-    this.sockets.subscribe('messageReceived', (from_guid, message) => {
-      if(message.type != "message"){
-        return;
-      }
-      this.navigation.setCounter("Messenger", 1);
-    });
-  }
+	messengerListener() {
+		this.sockets.subscribe('messageReceived', (from_guid, message) => {
+			if (message.type !== 'message') {
+				return;
+			}
+			this.navigation.setCounter('Messenger', 1);
+		});
+	}
 }

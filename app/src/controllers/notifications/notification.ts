@@ -9,11 +9,9 @@ import { Reason, rejectionReasons } from '../admin/boosts/rejection-reasons';
   templateUrl: 'notification.html'
 })
 export class Notification {
+
   notification: any;
   session = SessionFactory.build();
-
-  constructor() {
-  }
 
   set _notification(value: any) {
     this.notification = value;
@@ -29,7 +27,8 @@ export class Notification {
 
   findReason(code: number): Reason {
     return rejectionReasons.find((item: Reason) => {
-      return item.code == code;
+      return item.code === code;
     });
   }
+
 }

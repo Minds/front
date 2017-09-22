@@ -1,7 +1,7 @@
-import { Component, AfterViewInit, ViewChild, ComponentFactoryResolver, ComponentRef, Input } from "@angular/core";
+import { Component, AfterViewInit, ViewChild, ComponentFactoryResolver, ComponentRef, Input } from '@angular/core';
 
-import { DynamicHostDirective } from "../../directives/dynamic-host.directive";
-import { OverlayModalService } from "../../../services/ux/overlay-modal";
+import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   moduleId: module.id,
@@ -15,13 +15,14 @@ import { OverlayModalService } from "../../../services/ux/overlay-modal";
   `
 })
 export class OverlayModalComponent implements AfterViewInit {
+
+  hidden: boolean = true;
+
   @ViewChild(DynamicHostDirective)
   private host: DynamicHostDirective;
 
   private componentRef: ComponentRef<{}>;
   private componentInstance;
-
-  hidden: boolean = true;
 
   constructor(
     private service: OverlayModalService,

@@ -2,8 +2,8 @@ import { Component, ChangeDetectorRef, Input } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { ChartColumn } from "../../../common/components/chart/chart.component";
-import { Client } from "../../../services/api";
+import { ChartColumn } from '../../../common/components/chart/chart.component';
+import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +15,7 @@ import { Client } from "../../../services/api";
 })
 export class RevenueLedgerComponent {
 
-  @Input() type : string = 'charge';
+  @Input() type: string = 'charge';
 
   transactions: any[] = [];
   inProgress: boolean = false;
@@ -23,7 +23,7 @@ export class RevenueLedgerComponent {
   offset: string = '';
   moreData: boolean = false;
 
-  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd : ChangeDetectorRef, private route: ActivatedRoute) {
+  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd: ChangeDetectorRef, private route: ActivatedRoute) {
     route.url.subscribe(url => {
       this.type = url[0].path;
     });
@@ -46,21 +46,21 @@ export class RevenueLedgerComponent {
     }
 
     return this.client.get(`api/v1/monetization/service/analytics/list`, {
-        offset: this.offset,
-        limit: 12,
-        type: this.type
-      })
+      offset: this.offset,
+      limit: 12,
+      type: this.type
+    })
       .then(({ transactions, 'load-next': loadNext }) => {
         this.inProgress = false;
 
         if (transactions) {
           transactions.map((transaction) => {
-            switch(transaction.category){
-              case "points":
-                transaction.category = "Points (Affiliate)";
+            switch (transaction.category) {
+              case 'points':
+                transaction.category = 'Points (Affiliate)';
                 break;
-              case "plus":
-                transaction.category = "Plus (Affiliate)";
+              case 'plus':
+                transaction.category = 'Plus (Affiliate)';
                 break;
             }
             return transaction;

@@ -2,7 +2,7 @@ import { NgZone } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Title } from "@angular/platform-browser";
+import { Title } from '@angular/platform-browser';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -25,9 +25,9 @@ import { EmbedService } from './embed';
 import { MindsTitle } from './ux/title';
 import { CanDeactivateGuardService } from './can-deactivate-guard';
 import { OverlayModalService } from './ux/overlay-modal';
-import { LoginReferrerService } from "./login-referrer.service";
+import { LoginReferrerService } from './login-referrer.service';
 
-import { GoogleChartsLoader } from "./third-party/google-charts-loader";
+import { GoogleChartsLoader } from './third-party/google-charts-loader';
 
 export const MINDS_PROVIDERS : any[] = [
    {

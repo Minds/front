@@ -14,12 +14,42 @@ import { SessionFactory } from '../../../../services/session';
       <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n>Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n>Un-Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n>Un-subscribe</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned === 'yes'" (click)="banToggle = true; showMenu = false" i18n>Ban globally</li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="user.banned === 'yes'"
+        (click)="banToggle = true; showMenu = false" i18n
+        >
+        Ban globally
+      </li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n>Un-ban globally</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.ban_monetization === 'yes'" (click)="banMonetizationToggle = true; showMenu = false" i18n>Ban from Monetization</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.ban_monetization !== 'yes'" (click)="unBanMonetization()" i18n>Un-ban from Monetization</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.spam" (click)="setSpam(true); showMenu = false" i18n>Mark as spam</li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!user.spam" (click)="setSpam(false); showMenu = false" i18n>Not spam</li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="user.ban_monetization === 'yes'"
+        (click)="banMonetizationToggle = true; showMenu = false" i18n
+        >
+        Ban from Monetization
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="user.ban_monetization !== 'yes'"
+        (click)="unBanMonetization()" i18n
+        >
+        Un-ban from Monetization
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="user.spam"
+        (click)="setSpam(true); showMenu = false" i18n
+        >
+        Mark as spam
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="!user.spam"
+        (click)="setSpam(false); showMenu = false" i18n
+        >
+        Not spam
+      </li>
     </ul>
     <div class="minds-bg-overlay" (click)="toggleMenu($event)" [hidden]="!showMenu"></div>
 
@@ -57,26 +87,26 @@ import { SessionFactory } from '../../../../services/session';
   `
 })
 
-export class UserDropdownButton{
+export class UserDropdownButton {
 
-  user : any = {
+  user: any = {
     blocked: false
   };
   userChanged: EventEmitter<any> = new EventEmitter;
-  showMenu : boolean = false;
+  showMenu: boolean = false;
   banToggle: boolean = false;
   banMonetizationToggle: boolean = false;
 
   session = SessionFactory.build();
 
-  constructor(public client : Client) {
+  constructor(public client: Client) {
   }
 
-  block(){
+  block() {
     var self = this;
     this.user.blocked = true;
     this.client.put('api/v1/block/' + this.user.guid, {})
-      .then((response : any) => {
+      .then((response: any) => {
         self.user.blocked = true;
       })
       .catch((e) => {
@@ -85,11 +115,11 @@ export class UserDropdownButton{
     this.showMenu = false;
   }
 
-  unBlock(){
+  unBlock() {
     var self = this;
     this.user.blocked = false;
     this.client.delete('api/v1/block/' + this.user.guid, {})
-      .then((response : any) => {
+      .then((response: any) => {
         self.user.blocked = false;
       })
       .catch((e) => {
@@ -98,11 +128,11 @@ export class UserDropdownButton{
     this.showMenu = false;
   }
 
-  unSubscribe(){
+  unSubscribe() {
     this.user.subscribed = false;
     this.client.delete('api/v1/subscribe/' + this.user.guid, {})
-      .then((response : any) => {
-          this.user.subscribed = false;
+      .then((response: any) => {
+        this.user.subscribed = false;
       })
       .catch((e) => {
         this.user.subscribed = true;
@@ -161,9 +191,9 @@ export class UserDropdownButton{
     this.showMenu = false;
   }
 
-  toggleMenu(e){
+  toggleMenu(e) {
     e.stopPropagation();
-    if(this.showMenu){
+    if (this.showMenu) {
       this.showMenu = false;
 
       return;
@@ -174,7 +204,7 @@ export class UserDropdownButton{
       .then((response: any) => {
         self.user.blocked = response.blocked;
       });
-    
+
     if (this.session.isAdmin()) {
       this.client.get(`api/v1/admin/monetization/ban/${this.user.guid}`)
         .then((response: any) => {
@@ -197,9 +227,6 @@ export class UserDropdownButton{
     } catch (e) {
       this.user['spam'] = !value ? 1 : 0;
     }
-  }
-
-  ngOnDestroy(){
   }
 
 }

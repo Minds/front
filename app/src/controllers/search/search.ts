@@ -15,18 +15,19 @@ import { MindsTitle } from '../../services/ux/title';
 
 export class Search {
 
-  q : string = "";
-  type : string = "";
+  q: string = '';
+  type: string = '';
 
   entities: Array<Object> = [];
-  offset : string = "";
-  inProgress : boolean = false;
-  moreData : boolean = true;
-
-  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle){
-  }
+  offset: string = '';
+  inProgress: boolean = false;
+  moreData: boolean = true;
 
   paramsSubscription: Subscription;
+
+  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle) {
+  }
+
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['q']) {
@@ -44,9 +45,9 @@ export class Search {
       this.search();
     });
 
-    this.title.setTitle("Search");
+    this.title.setTitle('Search');
   }
-  
+
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
@@ -54,15 +55,15 @@ export class Search {
   /**
    * Search
    */
-   search(refresh : boolean = true){
-     if(this.inProgress)
+  search(refresh: boolean = true) {
+    if (this.inProgress)
       return;
 
     this.inProgress = true;
 
     this.client.get('api/v1/search', { q: this.q, type: this.type, limit: 12, offset: this.offset })
       .then((response: any) => {
-        if(!response.entities || response.entities.length == 0){
+        if (!response.entities || response.entities.length === 0) {
           this.inProgress = false;
           return;
         }
@@ -73,5 +74,5 @@ export class Search {
       .catch((e) => {
         this.inProgress = false;
       });
-   }
+  }
 }

@@ -28,31 +28,31 @@ import { AttachmentService } from '../../../../services/attachment';
 
 export class MediaGrid {
 
-  object : any = {};
+  object: any = {};
   session = SessionFactory.build();
 
-  items : Array<any> = [];
-  inProgress : boolean = false;
-  moreData : boolean = true;
-  offset : string = "";
+  items: Array<any> = [];
+  inProgress: boolean = false;
+  moreData: boolean = true;
+  offset: string = '';
 
-  constructor(public client: Client, public attachment: AttachmentService){
+  constructor(public client: Client, public attachment: AttachmentService) {
   }
 
-  set _object(value : any){
+  set _object(value: any) {
     this.object = value;
     this.load();
   }
 
-  load(){
+  load() {
     var self = this;
-    if(this.inProgress)
+    if (this.inProgress)
       return;
     this.inProgress = true;
     this.client.get('api/v1/media/albums/' + this.object.guid, { offset: this.offset })
-      .then((response : any) => {
-        if(!response.entities || response.entities.length == 0){
-          self.inProgress = false
+      .then((response: any) => {
+        if (!response.entities || response.entities.length === 0) {
+          self.inProgress = false;
           self.moreData = false;
           return false;
         }
@@ -60,9 +60,6 @@ export class MediaGrid {
         self.items = self.items.concat(response.entities);
         self.offset = response['load-next'];
         self.inProgress = false;
-      })
-      .catch((e)=>{
-
       });
   }
 

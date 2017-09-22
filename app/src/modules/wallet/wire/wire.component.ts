@@ -1,9 +1,9 @@
 import { Component, ViewChild, ComponentFactoryResolver } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { DynamicHostDirective } from "../../../common/directives/dynamic-host.directive";
-import { WireConsoleComponent } from "../../wire/console/console.component";
-import { Session } from "../../../services/session";
+import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
+import { WireConsoleComponent } from '../../wire/console/console.component';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,

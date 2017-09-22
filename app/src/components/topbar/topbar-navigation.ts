@@ -1,34 +1,16 @@
 import { Component, EventEmitter, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Subscription } from "rxjs/Rx";
+import { Subscription } from 'rxjs/Rx';
 
 import { Navigation as NavigationService } from '../../services/navigation';
-import { WalletService } from "../../services/wallet";
+import { WalletService } from '../../services/wallet';
 import { SessionFactory } from '../../services/session';
 import { Storage } from '../../services/storage';
 
-import { animations } from "../../animations";
+import { animations } from '../../animations';
 
 @Component({
   selector: 'minds-topbar-navigation',
-  template: `
-    <nav class="" *ngIf="session.isLoggedIn()">
-
-    <a *ngFor="let item of navigation.getItems('topbar')" class="mdl-color-text--blue-grey-500"
-      [routerLink]="[item.path, item.params]"
-    >
-      <i class="material-icons" [ngClass]="{'mdl-color-text--amber-300' : item.extras?.counter > 0 && item.name == 'Notifications'}">{{item.icon}}</i>
-      <span id="{{item.name | lowercase}}-counter" class="counter mdl-color-text--green-400" *ngIf="item.extras">{{item.extras?.counter | abbr}}</span>
-      <span class="mdl-color--blue-grey-500 mdl-color-text--white m-wallet-pop"
-        *ngIf="item.name === 'Wallet'"
-        [hidden]="!walletPopContent"
-        [@foolishIn]="walletPopState"
-        (@foolishIn.done)="walletPopContent = ''"
-        #walletPop
-      >{{ walletPopContent }}</span>
-    </a>
-
-    </nav>
-  `,
+  templateUrl: 'topbar-navigation.component.html',
   animations: animations
 })
 
@@ -36,6 +18,16 @@ export class TopbarNavigation implements AfterViewInit, OnDestroy {
 
   user;
   session = SessionFactory.build();
+
+  walletPopContent: string = '';
+  walletPopState: any;
+
+  // Wallet-specific
+  private walletSubscription: Subscription;
+
+  // -- Wallet animation
+  private queueWalletAnimationTimer;
+  private queueWalletAnimationPoints: number = 0;
 
   constructor(public navigation: NavigationService, public wallet: WalletService, public storage: Storage) { }
 
@@ -57,9 +49,6 @@ export class TopbarNavigation implements AfterViewInit, OnDestroy {
     });
   }
 
-  // Wallet-specific
-  private walletSubscription: Subscription;
-
   walletListen() {
     this.walletSubscription = this.wallet.onPoints().subscribe(({ batch, total }) => {
       if (total === null) {
@@ -80,9 +69,6 @@ export class TopbarNavigation implements AfterViewInit, OnDestroy {
     }
   }
 
-  // -- Wallet animation
-  private queueWalletAnimationTimer;
-  private queueWalletAnimationPoints: number = 0;
   queueWalletAnimation(points: number) {
     if (this.queueWalletAnimationTimer) {
       clearTimeout(this.queueWalletAnimationTimer);
@@ -98,9 +84,6 @@ export class TopbarNavigation implements AfterViewInit, OnDestroy {
       this.queueWalletAnimationPoints = 0;
     }, 1000);
   }
-
-  walletPopContent: string = '';
-  walletPopState: any;
 
   playWalletAnimation(points: number) {
     this.walletPopContent = `+${points}`;

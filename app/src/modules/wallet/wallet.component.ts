@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
@@ -21,27 +21,35 @@ export class WalletComponent {
 
   session = SessionFactory.build();
 
-  filter : string = "transactions";
-  points : Number = 0;
-  transactions : Array<any> = [];
-  offset: string = "";
-  inProgress : boolean = false;
-  moreData : boolean = true;
+  filter: string = 'transactions';
+  points: Number = 0;
+  transactions: Array<any> = [];
+  offset: string = '';
+  inProgress: boolean = false;
+  moreData: boolean = true;
 
   disablePointsAnimation: boolean = false;
 
-  constructor(public client: Client, public wallet: WalletService, public router: Router, public route: ActivatedRoute, public title: MindsTitle, public storage: Storage) {
+  paramsSubscription: Subscription;
+
+  constructor(
+    public client: Client,
+    public wallet: WalletService,
+    public router: Router,
+    public route: ActivatedRoute,
+    public title: MindsTitle,
+    public storage: Storage
+  ) {
     this.disablePointsAnimation = !!this.storage.get('disablePointsAnimation');
   }
 
-  paramsSubscription: Subscription;
   ngOnInit() {
-    if(!this.session.isLoggedIn()){
+    if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
     }
 
-    this.title.setTitle("Wallet | Minds");
+    this.title.setTitle('Wallet | Minds');
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
@@ -52,7 +60,7 @@ export class WalletComponent {
   }
 
   ngOnDestroy() {
-    if(this.paramsSubscription)
+    if (this.paramsSubscription)
       this.paramsSubscription.unsubscribe();
   }
 

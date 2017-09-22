@@ -1,12 +1,16 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { OverlayModalComponent } from "../../common/components/overlay-modal/overlay-modal.component";
+import { OverlayModalComponent } from '../../common/components/overlay-modal/overlay-modal.component';
 
 @Injectable()
 export class OverlayModalService {
   private container: OverlayModalComponent;
 
   private _onDidDismissFn: Function;
+
+  static _() {
+    return new OverlayModalService();
+  }
 
   setContainer(container: OverlayModalComponent) {
     this.container = container;
@@ -75,7 +79,4 @@ export class OverlayModalService {
     return this;
   }
 
-  static _() {
-    return new OverlayModalService();
-  }
 }

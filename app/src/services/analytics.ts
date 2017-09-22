@@ -4,9 +4,22 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AnalyticsService {
 
   //Set the analytics id of the page we want to send data
-  id : string = "UA-35146796-1";
+  id: string = 'UA-35146796-1';
 
-  constructor(@Inject(Router) public router: Router){
+  private defaultPrevented: boolean = false;
+
+  //Manual send.
+  static send(type: string, fields: any = {}) {
+    if (window.ga) {
+      window.ga('send', type, fields);
+    }
+  }
+
+  static _(router: Router) {
+    return new AnalyticsService(router);
+  }
+
+  constructor( @Inject(Router) public router: Router) {
     this.onRouterInit();
 
     this.router.events.subscribe((navigationState) => {
@@ -25,10 +38,9 @@ export class AnalyticsService {
     window.ga('create', this.id, 'auto');
   }
 
-  private defaultPrevented: boolean = false;
   onRouteChanged(path) {
     if (!this.defaultPrevented) {
-        AnalyticsService.send('pageview', { 'page' : path });
+      AnalyticsService.send('pageview', { 'page': path });
     }
 
     this.defaultPrevented = false;
@@ -42,14 +54,5 @@ export class AnalyticsService {
     return this.defaultPrevented;
   }
 
-  //Manual send.
-  static send(type: string, fields: any = {}) {
-    if (window.ga) {
-      window.ga('send', type, fields);
-    }
-  }
 
-  static _(router: Router) {
-    return new AnalyticsService(router);
-  }
 }

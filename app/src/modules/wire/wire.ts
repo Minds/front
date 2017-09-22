@@ -1,4 +1,4 @@
-import { WireRewardsType } from "./interfaces/wire.interfaces";
+import { WireRewardsType } from './interfaces/wire.interfaces';
 
 type WireTypeLabelsStruc = Array<{ type: WireRewardsType, label: string }>;
 

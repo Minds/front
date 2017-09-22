@@ -1,4 +1,4 @@
-import { Directive,  EventEmitter, ElementRef } from '@angular/core';
+import { Directive, EventEmitter, ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[autoGrow]',
@@ -12,14 +12,14 @@ import { Directive,  EventEmitter, ElementRef } from '@angular/core';
 })
 
 
-export class AutoGrow{
-  _element : any;
+export class AutoGrow {
+  _element: any;
   timeout: any;
   autoGrow: any;
 
   constructor(element: ElementRef) {
-    this._element =  element.nativeElement;
-    setTimeout(()=>{
+    this._element = element.nativeElement;
+    setTimeout(() => {
       this.grow();
     });
   }
@@ -28,7 +28,7 @@ export class AutoGrow{
     this.grow();
   }
 
-  grow(){
+  grow() {
     if (this.timeout) {
       clearTimeout(this.timeout);
       this.timeout = null;
@@ -38,7 +38,7 @@ export class AutoGrow{
       this._element.style.overflow = 'hidden';
       this._element.style.maxHeight = 'none';
       this._element.style.height = 'auto';
-      this._element.style.height = this._element.scrollHeight + "px";
+      this._element.style.height = this._element.scrollHeight + 'px';
       this._element.style.overflow = '';
       this._element.style.maxHeight = '';
     });

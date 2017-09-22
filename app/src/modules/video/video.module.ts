@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule } from "@angular/router";
+import { RouterModule } from '@angular/router';
 
-import { CommonModule } from "../../common/common.module";
+import { CommonModule } from '../../common/common.module';
 
-import { VideoAdsDirective } from "./ads-directive";
-import { VideoAds, MindsVideo } from "./video";
+import { VideoAdsDirective } from './ads-directive';
+import { VideoAds, MindsVideo } from './video';
 
 @NgModule({
   imports: [

@@ -6,10 +6,6 @@ import { Pipe, Inject, Renderer }  from '@angular/core';
 
 export class DomainPipe {
 
-  constructor() {
-  }
-
-
   transform(value: string) {
 
     if(!value)
@@ -28,8 +24,6 @@ export class DomainPipe {
 			output = output.split('www.').pop();
 
     return output;
-
   }
-
 
 }

@@ -40,7 +40,7 @@ const monetizationRoutes : Routes = [
       { path: 'wire', component: WalletWireComponent }
     ]
   }
-]
+];
 
 @NgModule({
   imports: [

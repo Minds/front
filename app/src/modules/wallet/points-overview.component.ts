@@ -12,8 +12,7 @@ import { WalletService } from '../../services/wallet';
 
 export class PointsOverviewComponent {
 
-  constructor(public wallet : WalletService, private cd : ChangeDetectorRef){
-
+  constructor(public wallet: WalletService, private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -21,8 +20,7 @@ export class PointsOverviewComponent {
       .then(() => {
         this.cd.markForCheck();
         this.cd.detectChanges();
-      })
+      });
   }
-
 
 }

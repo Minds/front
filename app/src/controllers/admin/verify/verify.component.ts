@@ -16,11 +16,11 @@ export class AdminVerify {
 
   requests: any[] = [];
 
-  inProgress : boolean = false;
-  moreData : boolean = true;
-  offset : string = '';
+  inProgress: boolean = false;
+  moreData: boolean = true;
+  offset: string = '';
 
-  constructor(public client: Client, private route: ActivatedRoute){
+  constructor(public client: Client, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -35,25 +35,25 @@ export class AdminVerify {
     this.inProgress = true;
 
     this.client.get(`api/v1/admin/verify`, { limit: 24, offset: this.offset })
-    .then((response: any) => {
-      if(!response.requests){
+      .then((response: any) => {
+        if (!response.requests) {
+          this.inProgress = false;
+          this.moreData = false;
+          return;
+        }
+
+        this.requests.push(...response.requests);
         this.inProgress = false;
-        this.moreData = false;
-        return;
-      }
 
-      this.requests.push(...response.requests);
-      this.inProgress = false;
-
-      if (response['load-next']) {
-        this.offset = response['load-next'];
-      } else {
-        this.moreData = false;
-      }
-    })
-    .catch(e => {
-      this.inProgress = false;
-    });
+        if (response['load-next']) {
+          this.offset = response['load-next'];
+        } else {
+          this.moreData = false;
+        }
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
   }
 
   removeFromList(index) {
@@ -71,7 +71,7 @@ export class AdminVerify {
       })
       .catch(e => {
         this.inProgress = false;
-      })
+      });
   }
 
   reject(index) {
@@ -88,6 +88,6 @@ export class AdminVerify {
       })
       .catch(e => {
         this.inProgress = false;
-      })
+      });
   }
 }

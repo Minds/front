@@ -1,15 +1,15 @@
-import { Component, EventEmitter, ElementRef, Input} from '@angular/core';
+import { Component, EventEmitter, ElementRef, Input } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { SessionFactory } from '../../../../../services/session';
 import { ScrollService } from '../../../../../services/ux/scroll';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
-import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
+import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 
-import { BoostCreatorComponent } from "../../../../boost/creator/creator.component";
-import { WireCreatorComponent } from "../../../../wire/creator/creator.component";
-import { ReportCreatorComponent } from "../../../../report/creator/creator.component";
+import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
+import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
+import { ReportCreatorComponent } from '../../../../report/creator/creator.component';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +18,7 @@ import { ReportCreatorComponent } from "../../../../report/creator/creator.compo
     'class': 'mdl-card mdl-shadow--2dp'
   },
   inputs: ['object', 'commentsToggle', 'visible', 'canDelete'],
-  outputs: [ '_delete: delete', 'commentsOpened'],
+  outputs: ['_delete: delete', 'commentsOpened'],
   templateUrl: 'activity.html'
 })
 
@@ -26,20 +26,20 @@ export class Activity {
 
   minds = window.Minds;
 
-  activity : any;
-  menuToggle : boolean = false;
-  commentsToggle : boolean = false;
-  shareToggle : boolean = false;
+  activity: any;
+  menuToggle: boolean = false;
+  commentsToggle: boolean = false;
+  shareToggle: boolean = false;
   deleteToggle: boolean = false;
   translateToggle: boolean = false;
   translateEvent: EventEmitter<any> = new EventEmitter();
   session = SessionFactory.build();
-  showBoostOptions : boolean = false;
-  type : string;
-  element : any;
-  visible : boolean = false;
+  showBoostOptions: boolean = false;
+  type: string;
+  element: any;
+  visible: boolean = false;
 
-  editing : boolean = false;
+  editing: boolean = false;
   hideTabs: boolean;
 
   _delete: EventEmitter<any> = new EventEmitter();
@@ -52,7 +52,7 @@ export class Activity {
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
 
   isTranslatable: boolean;
-  canDelete : boolean = false;
+  canDelete: boolean = false;
 
   constructor(
     public client: Client,
@@ -68,7 +68,7 @@ export class Activity {
   }
 
   set object(value: any) {
-    if(!value)
+    if (!value)
       return;
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
@@ -90,16 +90,14 @@ export class Activity {
   @Input() set boostToggle(toggle: boolean) {
     //if(toggle)
     //  this.showBoost();
+    return;
   }
 
-  save(){
+  save() {
     console.log('trying to save your changes to the server', this.activity);
     this.editing = false;
     this.activity.edited = true;
-    this.client.post('api/v1/newsfeed/' + this.activity.guid, this.activity)
-      .then((response : any) => {
-
-      });
+    this.client.post('api/v1/newsfeed/' + this.activity.guid, this.activity);
   }
 
   delete($event: any = {}) {
@@ -127,34 +125,34 @@ export class Activity {
     this.activity['is:muted'] = true;
 
     this.client.post(`api/v1/entities/notifications/${this.activity.guid}/mute`)
-    .then((response: any) => {
-      if (response.done) {
-        this.activity['is:muted'] = true;
-        return;
-      }
+      .then((response: any) => {
+        if (response.done) {
+          this.activity['is:muted'] = true;
+          return;
+        }
 
-      throw new Error('E_NOT_DONE');
-    })
-    .catch(e => {
-      this.activity['is:muted'] = false;
-    });
+        throw new Error('E_NOT_DONE');
+      })
+      .catch(e => {
+        this.activity['is:muted'] = false;
+      });
   }
 
   unmute() {
     this.activity['is:muted'] = false;
 
     this.client.post(`api/v1/entities/notifications/${this.activity.guid}/unmute`)
-    .then((response: any) => {
-      if (response.done) {
-        this.activity['is:muted'] = false;
-        return;
-      }
+      .then((response: any) => {
+        if (response.done) {
+          this.activity['is:muted'] = false;
+          return;
+        }
 
-      throw new Error('E_NOT_DONE');
-    })
-    .catch(e => {
-      this.activity['is:muted'] = true;
-    });
+        throw new Error('E_NOT_DONE');
+      })
+      .catch(e => {
+        this.activity['is:muted'] = true;
+      });
   }
 
   cardMenuHandler(opened: boolean) {
@@ -169,15 +167,15 @@ export class Activity {
     this.asyncMuteInProgress = true;
 
     this.client.get(`api/v1/entities/notifications/${this.activity.guid}`)
-    .then((response: any) => {
-      this.asyncMuteInProgress = false;
-      this.asyncMute = true;
+      .then((response: any) => {
+        this.asyncMuteInProgress = false;
+        this.asyncMute = true;
 
-      this.activity['is:muted'] = !!response['is:muted'];
-    })
-    .catch(e => {
-      this.asyncMuteInProgress = false;
-    });
+        this.activity['is:muted'] = !!response['is:muted'];
+      })
+      .catch(e => {
+        this.asyncMuteInProgress = false;
+      });
   }
 
   /*async setSpam(value: boolean) {
@@ -208,12 +206,12 @@ export class Activity {
     }
   }*/
 
-  openComments(){
+  openComments() {
     this.commentsToggle = !this.commentsToggle;
     this.commentsOpened.emit(this.commentsToggle);
   }
 
-  showBoost(){
+  showBoost() {
     const boostModal = this.overlayModal.create(BoostCreatorComponent, this.activity);
 
     boostModal.onDidDismiss(() => {
@@ -223,17 +221,17 @@ export class Activity {
     boostModal.present();
   }
 
-  showWire(){
+  showWire() {
     this.overlayModal.create(WireCreatorComponent, this.activity)
       .present();
   }
 
-  showReport(){
+  showReport() {
     this.overlayModal.create(ReportCreatorComponent, this.activity)
       .present();
   }
 
-  feature(){
+  feature() {
     this.activity.featured = true;
     this.client.put('api/v1/admin/feature/' + this.activity.guid)
       .catch(() => {
@@ -241,7 +239,7 @@ export class Activity {
       });
   }
 
-  unFeature(){
+  unFeature() {
     this.activity.featured = false;
     this.client.delete('api/v1/admin/feature/' + this.activity.guid)
       .catch(() => {
@@ -275,24 +273,24 @@ export class Activity {
       });
   }
 
-  isVisible(){
-    if(this.visible){
+  isVisible() {
+    if (this.visible) {
       return true;
     }
     this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
-      if(this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible){
+      if (this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible) {
         //stop listening
         this.scroll.unListen(this.scroll_listener);
         //make visible
         this.visible = true;
         //update the analytics
         this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
-        }
+      }
     });
     //this.scroll.fire();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.scroll.unListen(this.scroll_listener);
   }
 
@@ -300,7 +298,7 @@ export class Activity {
     if (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object)) {
       this.childEventsEmitter.emit({
         action: 'translate',
-        args: [ $event ]
+        args: [$event]
       });
     }
   }

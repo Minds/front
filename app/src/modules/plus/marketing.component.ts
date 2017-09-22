@@ -14,10 +14,10 @@ export class PlusMarketingComponent {
   showSubscription: boolean = false;
   showVerify: boolean = false;
 
-  constructor(private client : Client, private cd : ChangeDetectorRef){
+  constructor(private client: Client, private cd: ChangeDetectorRef) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.load();
   }
 
@@ -32,18 +32,18 @@ export class PlusMarketingComponent {
       });
   }
 
-  isPlus(){
-    if(this.user && this.user.plus)
+  isPlus() {
+    if (this.user && this.user.plus)
       return true;
     return false;
   }
 
-  openSubscription(){
+  openSubscription() {
     this.showSubscription = true;
     this.detectChanges();
   }
 
-  detectChanges(){
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }

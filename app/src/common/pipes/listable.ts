@@ -6,10 +6,11 @@ import { Pipe }  from '@angular/core';
 })
 
 export class ListablePipe {
+
   transform(value: any) {
     let result = [];
 
-    if(!value || value.length == 0) {
+    if(!value || value.length === 0) {
       return result;
     }
 
@@ -21,4 +22,5 @@ export class ListablePipe {
 
     return result;
   }
+
 }

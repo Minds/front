@@ -54,7 +54,7 @@ export class SettingsBillingSubscriptionsComponent {
         this.cd.detectChanges();
       })
       .catch(e => {
-        alert("Sorry, there was an error");
+        alert('Sorry, there was an error');
         this.inProgress = false;
         this.cd.detectChanges();
       });

@@ -22,23 +22,23 @@ import { WalletModule } from './src/modules/wallet/wallet.module';
 import { CheckoutModule } from './src/modules/checkout/checkout.module';
 import { PlusModule } from './src/modules/plus/plus.module';
 
-import { AdsModule } from "./src/modules/ads/ads.module";
-import { BoostModule } from "./src/modules/boost/boost.module";
-import { WireModule } from "./src/modules/wire/wire.module";
-import { ReportModule } from "./src/modules/report/report.module";
-import { ChannelModule } from "./src/modules/channel/channel.module";
-import { MindsFormsModule } from "./src/modules/forms/forms.module";
-import { LegacyModule } from "./src/modules/legacy/legacy.module";
-import { ModalsModule } from "./src/modules/modals/modals.module";
-import { PaymentsModule } from "./src/modules/payments/payments.module";
-import { ThirdPartyNetworksModule } from "./src/modules/third-party-networks/third-party-networks.module";
-import { TranslateModule } from "./src/modules/translate/translate.module";
-import { VideoModule } from "./src/modules/video/video.module";
-import { SettingsModule } from "./src/modules/settings/settings.module";
-import { OnboardingModule } from "./src/modules/onboarding/onboarding.module";
+import { AdsModule } from './src/modules/ads/ads.module';
+import { BoostModule } from './src/modules/boost/boost.module';
+import { WireModule } from './src/modules/wire/wire.module';
+import { ReportModule } from './src/modules/report/report.module';
+import { ChannelModule } from './src/modules/channel/channel.module';
+import { MindsFormsModule } from './src/modules/forms/forms.module';
+import { LegacyModule } from './src/modules/legacy/legacy.module';
+import { ModalsModule } from './src/modules/modals/modals.module';
+import { PaymentsModule } from './src/modules/payments/payments.module';
+import { ThirdPartyNetworksModule } from './src/modules/third-party-networks/third-party-networks.module';
+import { TranslateModule } from './src/modules/translate/translate.module';
+import { VideoModule } from './src/modules/video/video.module';
+import { SettingsModule } from './src/modules/settings/settings.module';
+import { OnboardingModule } from './src/modules/onboarding/onboarding.module';
 
-import { GroupsModule } from "./src/plugins/Groups/groups.module";
-import { BlogModule } from "./src/plugins/blog/blog.module";
+import { GroupsModule } from './src/plugins/Groups/groups.module';
+import { BlogModule } from './src/plugins/blog/blog.module';
 
 @NgModule({
   bootstrap: [

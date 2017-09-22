@@ -5,7 +5,7 @@ import { MindsActivityObject } from '../../../../../interfaces/entities';
 import { SessionFactory } from '../../../../../services/session';
 
 import { AttachmentService } from '../../../../../services/attachment';
-import { ThirdPartyNetworksSelector } from "../../../../../modules/third-party-networks/selector";
+import { ThirdPartyNetworksSelector } from '../../../../../modules/third-party-networks/selector';
 
 @Component({
   moduleId: module.id,
@@ -119,7 +119,7 @@ export class Poster {
     this.attachment.remove(file).then(() => {
       this.inProgress = false;
       this.canPost = true;
-      file.value = "";
+      file.value = '';
     }).catch(e => {
       console.error(e);
       this.inProgress = false;

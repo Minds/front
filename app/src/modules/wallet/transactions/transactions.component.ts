@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 import { SessionFactory } from '../../../services/session';
@@ -13,12 +13,12 @@ import { SessionFactory } from '../../../services/session';
 export class WalletTransactionsComponent {
 
   type: string = '';
-  togglePurchase : boolean = false;
+  togglePurchase: boolean = false;
   session = SessionFactory.build();
-
-  constructor(private route: ActivatedRoute, private router: Router,) { }
-
   paramsSubscription: Subscription;
+
+  constructor(private route: ActivatedRoute, private router: Router, ) { }
+
   ngOnInit() {
     this.type = 'points';
 
@@ -26,16 +26,16 @@ export class WalletTransactionsComponent {
       if (params['type']) {
         this.type = params['type'];
       }
-      if (params['stub'] && params['stub'] == 'purchase') {
+      if (params['stub'] && params['stub'] === 'purchase') {
         this.togglePurchase = true;
       }
     });
 
     this.route.url.subscribe(url => {
-      if(url[0].path == 'purchase')
+      if (url[0].path === 'purchase')
         this.togglePurchase = true;
 
-      if (url[0].path == 'transactions' && this.session.getLoggedInUser().merchant) {
+      if (url[0].path === 'transactions' && this.session.getLoggedInUser().merchant) {
         this.router.navigate(['/wallet/revenue']);
       }
     });
@@ -44,4 +44,5 @@ export class WalletTransactionsComponent {
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
+
 }

@@ -5,15 +5,15 @@ import { SessionFactory } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 
-import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
+import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 
-import { ReportCreatorComponent } from "../../../../report/creator/creator.component";
+import { ReportCreatorComponent } from '../../../../report/creator/creator.component';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-card-comment',
   inputs: ['object', 'parent'],
-  outputs: [ '_delete: delete', '_saved: saved'],
+  outputs: ['_delete: delete', '_saved: saved'],
   host: {
     '(keydown.esc)': 'editing = false'
   },
@@ -22,15 +22,15 @@ import { ReportCreatorComponent } from "../../../../report/creator/creator.compo
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [ Client, Upload ]
+      deps: [Client, Upload]
     }
   ]
 })
 
 export class CommentCard {
 
-  comment : any;
-  editing : boolean = false;
+  comment: any;
+  editing: boolean = false;
   minds = window.Minds;
   session = SessionFactory.build();
 
@@ -55,17 +55,18 @@ export class CommentCard {
   translationInProgress: boolean;
   translateToggle: boolean = false;
 
-	constructor(
-    public client: Client, 
-    public attachment: AttachmentService, 
-    public translationService: TranslationService,
-    private overlayModal: OverlayModalService){
-	}
-
   @Output() onReply = new EventEmitter();
 
+
+  constructor(
+    public client: Client,
+    public attachment: AttachmentService,
+    public translationService: TranslationService,
+    private overlayModal: OverlayModalService) {
+  }
+
   set object(value: any) {
-    if(!value)
+    if (!value)
       return;
     this.comment = value;
     this.attachment.load(this.comment);
@@ -73,7 +74,7 @@ export class CommentCard {
     this.isTranslatable = this.translationService.isTranslatable(this.comment);
   }
 
-  set _editing(value : boolean){
+  set _editing(value: boolean) {
     this.editing = value;
   }
 
@@ -81,7 +82,7 @@ export class CommentCard {
     return !this.inProgress && this.canPost && (this.comment.description || this.attachment.has());
   }
 
-  save(){
+  save() {
     if (!this.comment.description && !this.attachment.has()) {
       return;
     }
@@ -92,18 +93,18 @@ export class CommentCard {
     this.editing = false;
     this.inProgress = true;
     this.client.post('api/v1/comments/update/' + this.comment.guid, data)
-    .then((response : any) => {
-      this.inProgress = false;
-      if (response.comment) {
-        this._saved.next({
-          comment: response.comment
-        });
-      }
-      this.comment.edited = true;
-    })
-    .catch(e => {
-      this.inProgress = false;
-    });
+      .then((response: any) => {
+        this.inProgress = false;
+        if (response.comment) {
+          this._saved.next({
+            comment: response.comment
+          });
+        }
+        this.comment.edited = true;
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
   }
 
   applyAndSave(control: any, e) {
@@ -143,17 +144,17 @@ export class CommentCard {
     this.triedToPost = false;
 
     this.attachment.upload(file)
-    .then(guid => {
-      this.canPost = true;
-      this.triedToPost = false;
-      file.value = null;
-    })
-    .catch(e => {
-      console.error(e);
-      this.canPost = true;
-      this.triedToPost = false;
-      file.value = null;
-    });
+      .then(guid => {
+        this.canPost = true;
+        this.triedToPost = false;
+        file.value = null;
+      })
+      .catch(e => {
+        console.error(e);
+        this.canPost = true;
+        this.triedToPost = false;
+        file.value = null;
+      });
   }
 
   removeAttachment(file: HTMLInputElement) {
@@ -163,7 +164,7 @@ export class CommentCard {
     this.attachment.remove(file).then(() => {
       this.canPost = true;
       this.triedToPost = false;
-      file.value = "";
+      file.value = '';
     }).catch(e => {
       console.error(e);
       this.canPost = true;
@@ -171,7 +172,7 @@ export class CommentCard {
     });
   }
 
-  getPostPreview(message){
+  getPostPreview(message) {
     if (!message.value) {
       return;
     }
@@ -226,7 +227,7 @@ export class CommentCard {
     this.translation.translated = false;
   }
 
-  showReport(){
+  showReport() {
     this.overlayModal.create(ReportCreatorComponent, this.comment)
       .present();
   }

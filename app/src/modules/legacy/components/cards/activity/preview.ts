@@ -19,8 +19,8 @@ import { AttachmentService } from '../../../../../services/attachment';
 export class ActivityPreview {
 
   minds = window.Minds;
-  activity : any;
-  hideTabs : boolean;
+  activity: any;
+  hideTabs: boolean;
   session = SessionFactory.build();
 
   editing: boolean = false;
@@ -29,9 +29,9 @@ export class ActivityPreview {
   translateToggle: any;
   translateEvent: any;
 
-	constructor(public client: Client, public attachment: AttachmentService, private _changeDetectorRef: ChangeDetectorRef){
+  constructor(public client: Client, public attachment: AttachmentService, private _changeDetectorRef: ChangeDetectorRef) {
     this.hideTabs = true;
-	}
+  }
 
   set object(value: any) {
     this.activity = value;
@@ -40,9 +40,12 @@ export class ActivityPreview {
     }
   }
 
-  toDate(timestamp){
-    return new Date(timestamp*1000);
+  toDate(timestamp) {
+    return new Date(timestamp * 1000);
   }
 
-  propagateTranslation(e?) { }
+  propagateTranslation(e?) {
+    return;
+  }
+
 }

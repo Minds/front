@@ -26,9 +26,6 @@ export class RejectionReasonModalComponent {
 
   open: boolean = true;
 
-  constructor() {
-  }
-
   close() {
     this.open = false;
 
@@ -58,14 +55,15 @@ export class RejectionReasonModalComponent {
       }
     }
 
-    if (e.keyCode == 13) { // enter
+    if (e.keyCode === 13) { // enter
       if (this.boost.rejection_reason !== -1) {
         return this.action();
       }
     }
 
-    if (e.keyCode == 27) { // escape
+    if (e.keyCode === 27) { // escape
       return this.close();
     }
   }
+
 }

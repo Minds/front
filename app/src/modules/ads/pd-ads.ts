@@ -3,7 +3,7 @@ import { Component, EventEmitter, ElementRef } from '@angular/core';
 @Component({
   moduleId: module.id,
   selector: 'pd-ad',
-  inputs: [ 'type', 'location' ],
+  inputs: ['type', 'location'],
   template: `
     <div class="tpd-box" data-tpd-id="dsk-banner-ad-a" *ngIf="type == 'banner'"></div>
     <div class="tpd-box" data-tpd-id="mob-banner-ad-a" *ngIf="type == 'banner'"></div>
@@ -15,30 +15,24 @@ import { Component, EventEmitter, ElementRef } from '@angular/core';
     <div class="tpd-box" data-tpd-id="ad-contextual-b" *ngIf="type == 'context'"></div>
   `,
   host: {
-    '[class]': "'m-ad-block m-ad-block-pd ' + type + ' m-ad-block-' + location"
+    '[class]': '\'m-ad-block m-ad-block-pd \' + type + \' m-ad-block-\' + location'
   }
 })
 
-export class PDAds{
+export class PDAds {
 
-  visible : boolean = false;
-  type: string = "square";
-  location: string = "default";
+  visible: boolean = false;
+  type: string = 'square';
+  location: string = 'default';
 
-  constructor(element : ElementRef) {
-  }
-
-  ngOnInit(){
+  ngOnInit() {
     if (typeof window.twoOhSix !== 'undefined') {
       window.twoOhSix.insertAds();
       //if(this.type == 'context')
       setTimeout(() => {
         window.twoOhSix.insertContextualAds();
       }, 100);
-     }
-  }
-
-  ngOnDestroy(){
+    }
   }
 
 }

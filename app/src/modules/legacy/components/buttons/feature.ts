@@ -26,36 +26,36 @@ export class FeatureButton {
 
   object;
   session = SessionFactory.build();
-  isFeatured : boolean = false;
+  isFeatured: boolean = false;
 
-  open : boolean = false;
-  category : string = 'not-selected';
-  categories : Array<any> = [];
+  open: boolean = false;
+  category: string = 'not-selected';
+  categories: Array<any> = [];
 
-  constructor(public client : Client) {
+  constructor(public client: Client) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.initCategories();
   }
 
-  initCategories(){
-    this.categories = Object.keys(window.Minds.categories).map(function(key) {
-        return {
-          id: key,
-          label: window.Minds.categories[key]
-        };
+  initCategories() {
+    this.categories = Object.keys(window.Minds.categories).map(function (key) {
+      return {
+        id: key,
+        label: window.Minds.categories[key]
+      };
     });
   }
 
-  set _object(value : any){
-    if(!value)
+  set _object(value: any) {
+    if (!value)
       return;
     this.object = value;
-    this.isFeatured = value.featured_id || (value.featured == true);
+    this.isFeatured = value.featured_id || (value.featured === true);
   }
 
-  feature(){
+  feature() {
     var self = this;
 
     if (this.isFeatured)
@@ -64,20 +64,20 @@ export class FeatureButton {
     this.isFeatured = true;
 
     this.client.put('api/v1/admin/feature/' + this.object.guid + '/' + this.category, {})
-      .then((response : any) => {
-        this.open = false
+      .then((response: any) => {
+        this.open = false;
       })
       .catch((e) => {
         this.isFeatured = false;
       });
   }
 
-  unFeature(){
+  unFeature() {
     var self = this;
     this.isFeatured = false;
     this.object.featured = false;
     this.client.delete('api/v1/admin/feature/' + this.object.guid, {})
-      .then((response : any) => {
+      .then((response: any) => {
         this.open = false;
       })
       .catch((e) => {
@@ -85,7 +85,7 @@ export class FeatureButton {
       });
   }
 
-  onModalClose(e){
+  onModalClose(e) {
     this.open = false;
   }
 

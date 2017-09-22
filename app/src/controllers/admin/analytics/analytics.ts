@@ -29,7 +29,7 @@ export class AdminAnalytics {
     impressions_met: 0
   };
 
-  constructor(public client: Client){
+  constructor(public client: Client) {
     this.getActives();
     this.getSignups();
     this.getRetention();
@@ -39,10 +39,10 @@ export class AdminAnalytics {
   /**
    * Return active user analytics
    */
-  getActives(){
+  getActives() {
     var self = this;
     this.client.get('api/v1/admin/analytics/active')
-      .then((response : any) => {
+      .then((response: any) => {
         self.dam = response['daily'];
         self.dam_list = response['daily'].slice(0).reverse();
         self.mam = response['monthly'];
@@ -53,9 +53,9 @@ export class AdminAnalytics {
   /**
    * Return signups
    */
-  getSignups(){
+  getSignups() {
     this.client.get('api/v1/admin/analytics/signups')
-      .then((response : any) => {
+      .then((response: any) => {
         this.signups = response['daily'];
         this.signups_list = response['daily'].slice(0).reverse();
       });
@@ -64,9 +64,9 @@ export class AdminAnalytics {
   /**
    * Return retention rates
    */
-  getRetention(){
+  getRetention() {
     this.client.get('api/v1/admin/analytics/retention')
-      .then((response : any) => {
+      .then((response: any) => {
         this.retention = response.retention[0];
         console.log(this.retention);
       });
@@ -75,10 +75,10 @@ export class AdminAnalytics {
   /**
    * Return boost analytics
    */
-  getBoosts(){
+  getBoosts() {
     var self = this;
     this.client.get('api/v1/admin/analytics/boost')
-      .then((response : any) => {
+      .then((response: any) => {
         self.boost_newsfeed = response.newsfeed;
         self.boost_newsfeed.total = self.boost_newsfeed.review + self.boost_newsfeed.approved;
         self.boost_newsfeed.percent = (self.boost_newsfeed.approved / self.boost_newsfeed.total) * 100;

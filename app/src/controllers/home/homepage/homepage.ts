@@ -6,7 +6,7 @@ import { SessionFactory } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { SignupModalService } from '../../../modules/modals/signup/service';
-import { LoginReferrerService } from "../../../services/login-referrer.service";
+import { LoginReferrerService } from '../../../services/login-referrer.service';
 
 @Component({
   moduleId: module.id,
@@ -16,16 +16,16 @@ import { LoginReferrerService } from "../../../services/login-referrer.service";
 
 export class Homepage {
 
-  videos : Array<any> = [];
-  blogs : Array<any> = [];
-  channels : Array<any> = [];
+  videos: Array<any> = [];
+  blogs: Array<any> = [];
+  channels: Array<any> = [];
   stream = {
     1: [],
     2: [],
     3: []
-    };
-  offset : string = "";
-  inProgress : boolean = false;
+  };
+  offset: string = '';
+  inProgress: boolean = false;
 
   session = SessionFactory.build();
   minds = window.Minds;
@@ -34,8 +34,15 @@ export class Homepage {
     canPlayInlineVideos: true
   };
 
-  constructor(public client: Client, public title: MindsTitle, public router : Router, public navigation: NavigationService, private modal : SignupModalService, private loginReferrer: LoginReferrerService){
-    this.title.setTitle("Home");
+  constructor(
+    public client: Client,
+    public title: MindsTitle,
+    public router: Router,
+    public navigation: NavigationService,
+    private modal: SignupModalService,
+    private loginReferrer: LoginReferrerService
+  ) {
+    this.title.setTitle('Home');
     this.loadStream();
     //this.loadVideos();
     //this.loadBlogs();
@@ -45,14 +52,14 @@ export class Homepage {
     }
   }
 
-  loadStream(refresh : boolean = false){
+  loadStream(refresh: boolean = false) {
     this.inProgress = true;
     this.client.get('api/v1/newsfeed/featured', { limit: 24, offset: this.offset })
-      .then((response : any) => {
+      .then((response: any) => {
         let col = 0;
-        for(let activity of response.activity){
+        for (let activity of response.activity) {
           //split stream into 3 columns
-          if(col++ >= 3)
+          if (col++ >= 3)
             col = 1;
           this.stream[col].push(activity);
         }
@@ -64,23 +71,23 @@ export class Homepage {
       });
   }
 
-  loadVideos(){
+  loadVideos() {
     this.client.get('api/v1/entities/featured/videos', { limit: 4 })
-      .then((response : any) => {
+      .then((response: any) => {
         this.videos = response.entities;
       });
   }
 
-  loadBlogs(){
+  loadBlogs() {
     this.client.get('api/v1/blog/featured', { limit: 4 })
-      .then((response : any) => {
+      .then((response: any) => {
         this.blogs = response.blogs;
       });
   }
 
-  registered(){
+  registered() {
     this.modal.setDisplay('categories').open();
-    this.loginReferrer.navigate({ 
+    this.loginReferrer.navigate({
       defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
     });
   }

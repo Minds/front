@@ -71,7 +71,7 @@ describe('ReportCreatorComponent', () => {
     const button = fixture.debugElement.query(By.css('.m-report-creator--button-submit'));
     expect(button.properties.disabled).toBe(true);
   });
-  
+
 
   it('should have a subject list with the expected items', () => {
     const subjectList = fixture.debugElement.query(By.css('.m-report-creator--subjects'));
@@ -105,7 +105,7 @@ describe('ReportCreatorComponent', () => {
   it('should show success msg after submission, calling with the expected params', fakeAsync(() => {
     clientMock.post.calls.reset();
     clientMock.response[ `api/v1/entities/report/1` ] = {
-      "status": "success",
+      'status': 'success',
       done: true,
     };
 
@@ -125,7 +125,7 @@ describe('ReportCreatorComponent', () => {
   it('should not show succes if param is not true', fakeAsync(() => {
     clientMock.post.calls.reset();
     clientMock.response[ `api/v1/entities/report/1` ] = {
-      "status": "success",
+      'status': 'success',
       done: false,
     };
 
@@ -145,7 +145,7 @@ describe('ReportCreatorComponent', () => {
   it('should show error msg after submission, calling with the expected params', fakeAsync(() => {
     clientMock.post.calls.reset();
     clientMock.response[ `api/v1/entities/report/1` ] = {
-      "status": "error",
+      'status': 'error',
       done: false,
       'message': 'error message',
     };
@@ -162,12 +162,12 @@ describe('ReportCreatorComponent', () => {
     expect(comp.success).toBe(false);
     expect(comp.inProgress).toBe(false);
   }));
-  
+
 
   it('should show error msg after submission, calling with the expected params', fakeAsync(() => {
     clientMock.post.calls.reset();
     clientMock.response[ `api/v1/entities/report/1` ] = {
-      "status": "error",
+      'status': 'error',
       done: false,
       'message': 'error message',
     };

@@ -15,13 +15,14 @@ import { AttachmentService } from '../../../../../../services/attachment';
 })
 
 export class ImageCard {
-  entity : any;
+
+  entity: any;
   session = SessionFactory.build();
   minds: {};
 
-	constructor(public client: Client, public attachment: AttachmentService){
+  constructor(public client: Client, public attachment: AttachmentService) {
     this.minds = window.Minds;
-	}
+  }
 
   set object(value: any) {
     this.entity = value;

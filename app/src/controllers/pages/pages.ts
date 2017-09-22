@@ -14,23 +14,28 @@ import { Navigation as NavigationService } from '../../services/navigation';
 
 export class Pages {
 
-  title : string = "";
-  body : string = "";
-  path : string = "";
-  header : boolean = false;
-  headerTop : number = 0;
+  title: string = '';
+  body: string = '';
+  path: string = '';
+  header: boolean = false;
+  headerTop: number = 0;
 
   pages: Array<any> = [];
   page: string = '';
 
-  constructor(public titleService: MindsTitle, public client: Client, public navigation : NavigationService, public route: ActivatedRoute){
-  }
+  paramsSubscription: Subscription;
 
-  paramsSubscription: Subscription;  
+  constructor(
+    public titleService: MindsTitle,
+    public client: Client,
+    public navigation: NavigationService,
+    public route: ActivatedRoute
+  ) { }
+
   ngOnInit() {
-    this.titleService.setTitle("...");
+    this.titleService.setTitle('...');
     this.setUpMenu();
-    
+
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['page']) {
         this.page = params['page'];
@@ -43,19 +48,19 @@ export class Pages {
     this.paramsSubscription.unsubscribe();
   }
 
-  load(){
+  load() {
     this.client.get('api/v1/admin/pages/' + this.page)
-      .then((response : any) => {
-          this.title = response.title;
-          this.body = response.body;
-          this.path = response.path;
-          this.header = response.header;
-          this.headerTop = response.headerTop;
-          this.titleService.setTitle(this.title);
+      .then((response: any) => {
+        this.title = response.title;
+        this.body = response.body;
+        this.path = response.path;
+        this.header = response.header;
+        this.headerTop = response.headerTop;
+        this.titleService.setTitle(this.title);
       });
   }
 
-  setUpMenu(){
+  setUpMenu() {
     this.pages = this.navigation.getItems('footer');
   }
 }

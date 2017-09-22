@@ -6,10 +6,11 @@ import { RichEmbedService } from '../../../services/rich-embed';
 @Component({
   moduleId: module.id,
   selector: 'minds-rich-embed',
-  inputs: [ '_src: src', '_preview: preview', 'maxheight', 'cropImage' ],
+  inputs: ['_src: src', '_preview: preview', 'maxheight', 'cropImage'],
   templateUrl: 'rich-embed.html'
 })
 export class MindsRichEmbed {
+
   type: string = '';
   src: any = {};
   preview: any = {};
@@ -17,8 +18,9 @@ export class MindsRichEmbed {
   inlineEmbed: any = null;
   embeddedInline: boolean = false;
   cropImage: boolean = false;
+  private lastInlineEmbedParsed: string;
 
-  constructor(private sanitizer: DomSanitizer, private service: RichEmbedService){
+  constructor(private sanitizer: DomSanitizer, private service: RichEmbedService) {
   }
 
   set _src(value: any) {
@@ -51,7 +53,7 @@ export class MindsRichEmbed {
       // Do not replace if ID codes are the same
       // This is needed because angular sometimes replaces the innerHTML
       // of the embedded player and restarts the videos
-      if (inlineEmbed.id == this.inlineEmbed.id) {
+      if (inlineEmbed.id === this.inlineEmbed.id) {
         return;
       }
     }
@@ -76,8 +78,6 @@ export class MindsRichEmbed {
       }
     }
   }
-
-  private lastInlineEmbedParsed: string;
 
   parseInlineEmbed(current?: any) {
     if (!this.src || !this.src.perma_url) {
@@ -139,7 +139,7 @@ export class MindsRichEmbed {
           htmlProvisioner: () => {
             return this.service.soundcloud(url, this.maxheight)
               .then((response) => {
-                return this.sanitizer.bypassSecurityTrustHtml(response.html)
+                return this.sanitizer.bypassSecurityTrustHtml(response.html);
               });
           },
           playable: true

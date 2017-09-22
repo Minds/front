@@ -12,7 +12,7 @@ export class AdSharingSettingsComponent {
   loaded: boolean = false;
   settings = {
     blogs: false
-  }
+  };
 
   constructor(private client: Client, private cd: ChangeDetectorRef) { }
 
@@ -39,14 +39,10 @@ export class AdSharingSettingsComponent {
   }
 
   save(key: string) {
-    return this.client.post(`api/v1/monetization/ads/settings`, { [key]: this.settings[key] ? 1 : 0 })
-      .then((response: any) => {
-      })
-      .catch(e => {
-      });
+    return this.client.post(`api/v1/monetization/ads/settings`, { [key]: this.settings[key] ? 1 : 0 });
   }
 
-  detectChanges(){
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }

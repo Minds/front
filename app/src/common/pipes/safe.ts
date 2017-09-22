@@ -1,5 +1,5 @@
 import { Pipe, Renderer }  from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser'
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({
   name: 'safe'

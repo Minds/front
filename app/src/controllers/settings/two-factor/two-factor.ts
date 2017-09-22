@@ -9,40 +9,40 @@ import { Client } from '../../../services/api';
   templateUrl: 'two-factor.html'
 })
 
-export class SettingsTwoFactor{
+export class SettingsTwoFactor {
 
-  minds : Minds;
-  telno : number;
+  minds: Minds;
+  telno: number;
   secret;
-  waitingForCheck : boolean = false;
+  waitingForCheck: boolean = false;
   sendingSms: boolean = false;
   object: any;
 
-  inProgress : boolean = false;
-  error : string = "";
+  inProgress: boolean = false;
+  error: string = '';
 
-  constructor(public client: Client){
+  constructor(public client: Client) {
     this.minds = window.Minds;
     this.load();
   }
 
-  load(){
+  load() {
     this.inProgress = true;
     this.client.get('api/v1/twofactor')
-      .then((response : any) => {
-        if(response.telno)
+      .then((response: any) => {
+        if (response.telno)
           this.telno = response.telno;
         this.inProgress = false;
       });
   }
 
-  setup(smsNumber : any){
+  setup(smsNumber: any) {
     this.telno = smsNumber;
     this.waitingForCheck = true;
     this.sendingSms = true;
-    this.error = "";
+    this.error = '';
     this.client.post('api/v1/twofactor/setup', { tel: smsNumber })
-      .then((response : any) => {
+      .then((response: any) => {
         this.secret = response.secret;
         this.sendingSms = false;
       })
@@ -50,34 +50,34 @@ export class SettingsTwoFactor{
         this.waitingForCheck = false;
         this.sendingSms = false;
         this.telno = null;
-        this.error = "The phone number you entered was incorrect. Please, try again.";
+        this.error = 'The phone number you entered was incorrect. Please, try again.';
       });
   }
 
-  check(code : number){
+  check(code: number) {
     this.client.post('api/v1/twofactor/check/' + this.secret, {
-        code: code,
-        telno: this.telno
-      })
-      .then((response : any) => {
+      code: code,
+      telno: this.telno
+    })
+      .then((response: any) => {
         this.waitingForCheck = false;
       })
-      .catch((response : any) => {
+      .catch((response: any) => {
         this.waitingForCheck = false;
         this.telno = null;
-        this.error = "The code was incorrect. Please, try again.";
+        this.error = 'The code was incorrect. Please, try again.';
       });
   }
 
-  retry(){
+  retry() {
     this.telno = null;
     this.waitingForCheck = false;
   }
 
-  cancel(){
+  cancel() {
     this.client.delete('api/v1/twofactor');
     this.telno = null;
-    this.error = "";
+    this.error = '';
   }
 
 }

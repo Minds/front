@@ -4,84 +4,89 @@
 import { EventEmitter, ReflectiveInjector } from '@angular/core';
 
 export class Session {
-	loggedinEmitter : EventEmitter<any> = new EventEmitter();
-	userEmitter : EventEmitter<any> = new EventEmitter();
+
+  loggedinEmitter: EventEmitter<any> = new EventEmitter();
+  userEmitter: EventEmitter<any> = new EventEmitter();
+
+  static _() {
+    return new Session();
+  }
 
 	/**
 	 * Return if loggedin, with an optional listener
 	 */
-	isLoggedIn(observe: any = null){
+  isLoggedIn(observe: any = null) {
 
-		if(observe){
-			this.loggedinEmitter.subscribe({next: (is) => {
-				if(is)
-					observe(true);
-				else
-					observe(false);
-				}
-			});
-		}
+    if (observe) {
+      this.loggedinEmitter.subscribe({
+        next: (is) => {
+          if (is)
+            observe(true);
+          else
+            observe(false);
+        }
+      });
+    }
 
-		if(window.Minds.LoggedIn)
-			return true;
+    if (window.Minds.LoggedIn)
+      return true;
 
-		return false
-	}
+    return false;
+  }
 
-	isAdmin(){
-		if(!this.isLoggedIn)
-			return false;
-		if(window.Minds.Admin)
-			return true;
+  isAdmin() {
+    if (!this.isLoggedIn)
+      return false;
+    if (window.Minds.Admin)
+      return true;
 
-		return false;
-	}
+    return false;
+  }
 
 	/**
 	 * Get the loggedin user
 	 */
-	getLoggedInUser(observe: any = null){
+  getLoggedInUser(observe: any = null) {
 
-		if(observe){
-			this.userEmitter.subscribe({next: (user) => {
-				observe(user);
-			}});
-		}
+    if (observe) {
+      this.userEmitter.subscribe({
+        next: (user) => {
+          observe(user);
+        }
+      });
+    }
 
-		if(window.Minds.user)
-			return window.Minds.user;
+    if (window.Minds.user)
+      return window.Minds.user;
 
-		return false;
-	}
+    return false;
+  }
 
 	/**
 	 * Emit login event
 	 */
-	login(user : any = null){
-		//clear stale local storage
-		window.localStorage.clear();
-		this.userEmitter.next(user);
-		window.Minds.user = user;
-		if(user.admin == true)
-			window.Minds.Admin = true;
-		window.Minds.LoggedIn = true;
-		this.loggedinEmitter.next(true);
-	}
+  login(user: any = null) {
+    //clear stale local storage
+    window.localStorage.clear();
+    this.userEmitter.next(user);
+    window.Minds.user = user;
+    if (user.admin === true)
+      window.Minds.Admin = true;
+    window.Minds.LoggedIn = true;
+    this.loggedinEmitter.next(true);
+  }
 
 	/**
 	 * Emit logout event
 	 */
-	logout(){
-		this.userEmitter.next(null);
-		delete window.Minds.user;
-		window.Minds.LoggedIn = false;
-		window.localStorage.clear();
-		this.loggedinEmitter.next(false);
+  logout() {
+    this.userEmitter.next(null);
+    delete window.Minds.user;
+    window.Minds.LoggedIn = false;
+    window.localStorage.clear();
+    this.loggedinEmitter.next(false);
   }
-  
-  static _() {
-    return new Session();
-  }
+
 }
 
 export class SessionFactory {
@@ -97,5 +102,5 @@ export class SessionFactory {
     }
 
     return SessionFactory.instance;
-	}
+  }
 }

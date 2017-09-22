@@ -1,8 +1,18 @@
-import { Component, ViewChild, Input, ComponentFactoryResolver, AfterViewInit, Type, ChangeDetectorRef, ComponentRef, ElementRef } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  Input,
+  ComponentFactoryResolver,
+  AfterViewInit,
+  Type,
+  ChangeDetectorRef,
+  ComponentRef,
+  ElementRef
+} from '@angular/core';
 
-import { DynamicHostDirective } from "../../directives/dynamic-host.directive";
+import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 
-import { BoostButton } from "../../../modules/legacy/components/buttons/boost";
+import { BoostButton } from '../../../modules/legacy/components/buttons/boost';
 
 @Component({
   selector: 'minds-button',
@@ -34,7 +44,7 @@ export class MindsButton implements AfterViewInit {
     this.object = value ? value : {};
 
     if (this.initialized) {
-      if (!this.componentInstance || this.type != oldType) {
+      if (!this.componentInstance || this.type !== oldType) {
         setTimeout(() => this.loadComponent(), 0);
       } else {
         this.updateData();
@@ -49,7 +59,7 @@ export class MindsButton implements AfterViewInit {
       this.updateClasses();
     }
   }
-  
+
   ngAfterViewInit() {
     this.loadComponent();
     this.initialized = true;

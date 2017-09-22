@@ -1,5 +1,5 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -22,7 +22,7 @@ import { ReportConsoleComponent } from './console/console.component';
     ReportConsoleComponent
   ],
   exports: [
-    ReportConsoleComponent    
+    ReportConsoleComponent
   ],
   entryComponents: [
     ReportCreatorComponent

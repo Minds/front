@@ -8,7 +8,7 @@ import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSliderMock } from '../../../../tests/material-slider.mock.spec';
-import { CommonModule as NgCommonModule } from "@angular/common";
+import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 
 @Component({
@@ -104,8 +104,23 @@ describe('AdminBoosts', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ MindsCardVideoMock, MindsCardImageMock, MindsCardBlogMock, MindsCardUserMock, MindsActivityMock, MindsCardGroupMock, RejectionReasonModalMock, MaterialMock, MaterialSliderMock, AdminBoosts ], // declare the test component
-      imports: [ RouterTestingModule, NgCommonModule, FormsModule ],
+      declarations: [
+        MindsCardVideoMock,
+        MindsCardImageMock,
+        MindsCardBlogMock,
+        MindsCardUserMock,
+        MindsActivityMock,
+        MindsCardGroupMock,
+        RejectionReasonModalMock,
+        MaterialMock,
+        MaterialSliderMock,
+        AdminBoost
+      ], // declare the test component
+      imports: [
+        RouterTestingModule,
+        NgCommonModule,
+        FormsModule
+      ],
       providers: [
         { provide: Client, useValue: clientMock }
       ]
@@ -125,71 +140,71 @@ describe('AdminBoosts', () => {
 
     clientMock.response = [];
 
-    clientMock.response[ `api/v1/admin/boosts/newsfeed` ] = {
-      "status": "success",
-      "boosts": [ {
-        "guid": "123",
-        "_id": "59ba98d3b13628293d705ff2",
-        "entity": {
-          "guid": "752893213072691218",
-          "type": "activity",
-          "time_created": "1504879730",
-          "time_updated": "1504879730",
-          "container_guid": "732337264197111809",
-          "owner_guid": "732337264197111809",
-          "access_id": "2",
-                  "message": "",
-          "ownerObj": {
-            "guid": "732337264197111809",
-            "type": "user",
-            "access_id": "2",
-            "name": "minds",
-            "username": "minds",
-            "mature": "0",
-            "boost_rating": "1"
+    clientMock.response[`api/v1/admin/boosts/newsfeed`] = {
+      'status': 'success',
+      'boosts': [{
+        'guid': '123',
+        '_id': '59ba98d3b13628293d705ff2',
+        'entity': {
+          'guid': '752893213072691218',
+          'type': 'activity',
+          'time_created': '1504879730',
+          'time_updated': '1504879730',
+          'container_guid': '732337264197111809',
+          'owner_guid': '732337264197111809',
+          'access_id': '2',
+          'message': '',
+          'ownerObj': {
+            'guid': '732337264197111809',
+            'type': 'user',
+            'access_id': '2',
+            'name': 'minds',
+            'username': 'minds',
+            'mature': '0',
+            'boost_rating': '1'
           },
         },
-        "bid": "100",
-        "bidType": "points",
-        "owner": {
-          "guid": "732337264197111809",
-          "type": "user",
-          "subtype": false,
-          "time_created": "1499978809",
-          "time_updated": false,
-          "container_guid": "0",
-          "name": "minds",
-          "username": "minds",
-          "boost_rating": "1"
+        'bid': '100',
+        'bidType': 'points',
+        'owner': {
+          'guid': '732337264197111809',
+          'type': 'user',
+          'subtype': false,
+          'time_created': '1499978809',
+          'time_updated': false,
+          'container_guid': '0',
+          'name': 'minds',
+          'username': 'minds',
+          'boost_rating': '1'
         },
-        "state": "created",
-        "transactionId": null,
-        "time_created": "1505401043",
-        "last_updated": "1505401043",
-        "type": "boost",
-        "subtype": "network",
-        "handler": "newsfeed",
-        "rating": null,
-        "quality": "75",
-        "impressions": "100",
-        "rejection_reason": "-1",
-        "boost_impressions": null,
-        "boost_id": null
-      } ],
-      "count": 4,
-      "load-next": null,
-      "newsfeed_count": 4,
-      "content_count": 2
+        'state': 'created',
+        'transactionId': null,
+        'time_created': '1505401043',
+        'last_updated': '1505401043',
+        'type': 'boost',
+        'subtype': 'network',
+        'handler': 'newsfeed',
+        'rating': null,
+        'quality': '75',
+        'impressions': '100',
+        'rejection_reason': '-1',
+        'boost_impressions': null,
+        'boost_id': null
+      }],
+      'count': 4,
+      'load-next': null,
+      'newsfeed_count': 4,
+      'content_count': 2
     };
-    clientMock.response[ `api/v1/admin/boosts/analytics/newsfeed` ] = {
-      "status": "success",
-      "reviewQueue": 4,
-      "backlog": 2,
-      "priorityBacklog": 2,
-      "impressions": 5000,
-      "avgApprovalTime": 1889603500,
-      "avgImpressions": 2500,
-      "timestamp": 1505745685
+    clientMock.response[`api/v1/admin/boosts/analytics/newsfeed`] = {
+      'status': 'success',
+      'reviewQueue': 4,
+      'backlog': 2,
+      'priorityBacklog': 2,
+      'impressions': 5000,
+      'avgApprovalTime': 1889603500,
+      'avgImpressions': 2500,
+      'timestamp': 1505745685
     };
 
     comp.type = 'newsfeed';
@@ -278,7 +293,7 @@ describe('AdminBoosts', () => {
     fixture.detectChanges();
 
     expect(comp.accept).toHaveBeenCalled();
-    expect(comp.accept.calls.mostRecent().args[ 1 ]).toBe(false);
+    expect(comp.accept.calls.mostRecent().args[1]).toBe(false);
   });
 
 
@@ -299,7 +314,7 @@ describe('AdminBoosts', () => {
     fixture.detectChanges();
 
     expect(comp.accept).toHaveBeenCalled();
-    expect(comp.accept.calls.mostRecent().args[ 1 ]).toBe(true);
+    expect(comp.accept.calls.mostRecent().args[1]).toBe(true);
   });
 
   it('boost should have an Reject button', () => {
@@ -333,7 +348,7 @@ describe('AdminBoosts', () => {
     const button: DebugElement = getETagButton();
 
     spyOn(comp, 'eTag').and.callThrough();
-    spyOn(comp,'reject').and.stub();
+    spyOn(comp, 'reject').and.stub();
 
     button.nativeElement.click();
     fixture.detectChanges();
@@ -349,37 +364,39 @@ describe('AdminBoosts', () => {
 
     clientMock.post.calls.reset();
 
-    comp.boosts[ 0 ].rejection_reason = 2;
-    comp.reject(comp.boosts[ 0 ]);
+    comp.boosts[0].rejection_reason = 2;
+    comp.reject(comp.boosts[0]);
 
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[ 0 ]).toContain('api/v1/admin/boosts/newsfeed/123/reject');
-    expect(clientMock.post.calls.mostRecent().args[ 1 ]).toEqual({ reason: 2 });
+    expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v1/admin/boosts/newsfeed/123/reject');
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ reason: 2 });
   }));
 
-  it('calling accept(boost, false) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 1 and a default quality of 75', fakeAsync(() => {
-    fixture.detectChanges();
-    tick();
+  it('calling accept(boost, false) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 1 and a default quality of 75',
+    fakeAsync(() => {
+      fixture.detectChanges();
+      tick();
 
-    clientMock.post.calls.reset();
+      clientMock.post.calls.reset();
 
-    comp.accept(comp.boosts[ 0 ], false);
+      comp.accept(comp.boosts[0], false);
 
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[ 0 ]).toContain('api/v1/admin/boosts/newsfeed/123/accept');
-    expect(clientMock.post.calls.mostRecent().args[ 1 ]).toEqual({ quality: '75', rating: 1 });
-  }));
+      expect(clientMock.post).toHaveBeenCalled();
+      expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v1/admin/boosts/newsfeed/123/accept');
+      expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ quality: '75', rating: 1 });
+    }));
 
-  it('calling accept(boost, true) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 2 and a default quality of 75', fakeAsync(() => {
-    fixture.detectChanges();
-    tick();
+  it('calling accept(boost, true) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 2 and a default quality of 75',
+    fakeAsync(() => {
+      fixture.detectChanges();
+      tick();
 
-    clientMock.post.calls.reset();
+      clientMock.post.calls.reset();
 
-    comp.accept(comp.boosts[ 0 ], true);
+      comp.accept(comp.boosts[0], true);
 
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[ 0 ]).toContain('api/v1/admin/boosts/newsfeed/123/accept');
-    expect(clientMock.post.calls.mostRecent().args[ 1 ]).toEqual({ quality: '75', rating: 2 });
-  }));
+      expect(clientMock.post).toHaveBeenCalled();
+      expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v1/admin/boosts/newsfeed/123/accept');
+      expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ quality: '75', rating: 2 });
+    }));
 });

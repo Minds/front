@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { CurrencyPipe } from "@angular/common";
+import { CurrencyPipe } from '@angular/common';
 
-import { ChartColumn } from "../../../common/components/chart/chart.component";
-import { Client } from "../../../services/api";
+import { ChartColumn } from '../../../common/components/chart/chart.component';
+import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
@@ -37,8 +37,8 @@ export class RevenueGraphComponent {
       ],
       rows: []
     };
-    for(let i = 0; i < 14; i++){
-      defaultChart.rows[i] = [ "0/0", 0 ];
+    for (let i = 0; i < 14; i++) {
+      defaultChart.rows[i] = ['0/0', 0];
     }
     this.chart = this._parseChart(defaultChart);
 
@@ -65,7 +65,7 @@ export class RevenueGraphComponent {
 
     for (let dataColumn of (data.columns || [])) {
       let column = { ...dataColumn }; // clone
-      if (column.type == 'currency') {
+      if (column.type === 'currency') {
         column.type = 'number';
       }
 
@@ -74,8 +74,8 @@ export class RevenueGraphComponent {
 
     for (let dataRow of data.rows) {
       for (let colIndex = 0; colIndex < dataRow.length; colIndex++) {
-        if (data.columns[colIndex] && data.columns[colIndex].type == 'currency') {
-          dataRow[colIndex] = { v: dataRow[colIndex], f: this.currencyPipe.transform(dataRow[colIndex], 'USD', true) }
+        if (data.columns[colIndex] && data.columns[colIndex].type === 'currency') {
+          dataRow[colIndex] = { v: dataRow[colIndex], f: this.currencyPipe.transform(dataRow[colIndex], 'USD', true) };
         }
       }
 

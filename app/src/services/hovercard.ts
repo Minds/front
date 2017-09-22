@@ -15,6 +15,10 @@ export class HovercardService {
 
   sticky: boolean = false;
 
+  static _(client: Client, cache: CacheService) {
+    return new HovercardService(client, cache);
+  }
+
   constructor(public client: Client, public cache: CacheService) {
   }
 
@@ -27,7 +31,7 @@ export class HovercardService {
     this.unstick();
     this.setAnchor(elem, anchor);
 
-    if (this.guid == guid) {
+    if (this.guid === guid) {
       return;
     }
 
@@ -51,7 +55,7 @@ export class HovercardService {
         if (response.entity) {
           this.cache.set(`hovercard-${currentGuid}`, response.entity);
 
-          if (this.guid == response.entity.guid) {
+          if (this.guid === response.entity.guid) {
             this.data = response.entity;
           }
         } else {
@@ -64,7 +68,7 @@ export class HovercardService {
   }
 
   hide(guid: any) {
-    if (this.guid != guid || this.sticky) {
+    if (this.guid !== guid || this.sticky) {
       return;
     }
 
@@ -74,7 +78,7 @@ export class HovercardService {
   }
 
   stick(guid: any) {
-    if (this.guid != guid) {
+    if (this.guid !== guid) {
       return;
     }
 
@@ -124,7 +128,4 @@ export class HovercardService {
     }
   }
 
-  static _(client: Client, cache: CacheService) {
-    return new HovercardService(client, cache);
-  }
 }

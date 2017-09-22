@@ -10,13 +10,14 @@ import { Directive, ElementRef, EventEmitter } from '@angular/core';
   }
 })
 export class ScrollLock {
-  private element: HTMLElement;
-  private body: HTMLElement;
 
   strictScrollLock: boolean = false;
   overscroll: EventEmitter<any> = new EventEmitter();
 
+  private element: HTMLElement;
+  private body: HTMLElement;
   private wheelHandler;
+
   constructor(private _element: ElementRef) {
     this.element = _element.nativeElement;
     this.wheelHandler = this._domWheelLock(this);
@@ -97,7 +98,7 @@ export class ScrollLock {
     if ('deltaX' in event) { pX = event.deltaX; }
 
     if ((pX || pY) && event.deltaMode) {
-      if (event.deltaMode == 1) {
+      if (event.deltaMode === 1) {
         pX *= LINE_HEIGHT;
         pY *= LINE_HEIGHT;
       } else {

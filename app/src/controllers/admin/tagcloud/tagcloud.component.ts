@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Client } from "../../../services/api";
+import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
@@ -8,11 +8,12 @@ import { Client } from "../../../services/api";
   templateUrl: 'tagcloud.component.html',
 })
 export class AdminTagcloud implements OnInit {
-  constructor(private client: Client) { }
 
   tags: string[] = [];
   age: number | boolean = false;
   hidden: string[] = [];
+
+  constructor(private client: Client) { }
 
   ngOnInit() {
     this.load();

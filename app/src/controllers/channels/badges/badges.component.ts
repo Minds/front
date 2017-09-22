@@ -5,12 +5,12 @@ import { Session } from '../../../services/session';
 import { KeyVal } from '../../../interfaces/entities';
 
 export interface SocialProfileMeta {
-  key: string,
-  label: string,
-  placeholder: string,
-  link: string,
-  icon: string,
-  customIcon?: boolean,
+  key: string;
+  label: string;
+  placeholder: string;
+  link: string;
+  icon: string;
+  customIcon?: boolean;
 }
 
 @Component({
@@ -23,10 +23,10 @@ export class ChannelBadgesComponent {
 
   @Input() user;
 
-  constructor(public session: Session, private client: Client){ }
+  constructor(public session: Session, private client: Client) { }
 
-  verify(){
-    if(this.user.verified)
+  verify() {
+    if (this.user.verified)
       return this.unVerify();
     this.user.verified = true;
     this.client.put('api/v1/admin/verify/' + this.user.guid)
@@ -35,7 +35,7 @@ export class ChannelBadgesComponent {
       });
   }
 
-  unVerify(){
+  unVerify() {
     this.user.verified = false;
     this.client.delete('api/v1/admin/verify/' + this.user.guid)
       .catch(() => {

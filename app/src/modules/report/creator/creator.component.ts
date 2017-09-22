@@ -1,7 +1,7 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from "@angular/core";
-import { OverlayModalService } from "../../../services/ux/overlay-modal";
-import { Client } from "../../../services/api";
-import { Session, SessionFactory } from "../../../services/session";
+import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { Client } from '../../../services/api';
+import { Session, SessionFactory } from '../../../services/session';
 import { REASONS } from '../../../services/list-options';
 
 @Component({
@@ -13,8 +13,8 @@ import { REASONS } from '../../../services/list-options';
 export class ReportCreatorComponent implements AfterViewInit {
 
   subject: number = 0;
-  note: string= '';
-  guid: string= '';
+  note: string = '';
+  guid: string = '';
 
   initialized: boolean = false;
   inProgress: boolean = false;
@@ -25,17 +25,17 @@ export class ReportCreatorComponent implements AfterViewInit {
   session: Session = SessionFactory.build();
 
   next: boolean = false;
-  
+
   @Input('object') set data(object) {
     this.guid = object ? object.guid : null;
   }
-  
+
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private client: Client,
   ) { }
-  
+
   ngAfterViewInit() {
     this._changeDetectorRef.detectChanges();
   }
@@ -76,9 +76,9 @@ export class ReportCreatorComponent implements AfterViewInit {
     }
   }
 
-  
+
   onSelectionChange(item) {
-      this.subject = item.value;
+    this.subject = item.value;
   }
 
   close() {
@@ -88,15 +88,15 @@ export class ReportCreatorComponent implements AfterViewInit {
   /**
    * Submits the report to the appropiate server endpoint using the current settings
    */
-  submit(){
+  submit() {
     let guid = this.guid;
     let subject = this.subject;
     let note = this.note;
-  
 
-    this.inProgress = true;    
 
-    this.client.post(`api/v1/entities/report/${guid}`, { subject , note })
+    this.inProgress = true;
+
+    this.client.post(`api/v1/entities/report/${guid}`, { subject, note })
       .then((response: any) => {
         this.inProgress = false;
         if (response.done) {

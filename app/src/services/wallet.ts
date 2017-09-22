@@ -1,9 +1,9 @@
 import { Inject, Injector, EventEmitter } from '@angular/core';
-import { Subscription } from "rxjs/Rx";
+import { Subscription } from 'rxjs/Rx';
 
 import { Client } from './api';
 import { SessionFactory } from './session';
-import { SocketsService } from "./sockets";
+import { SocketsService } from './sockets';
 
 export class WalletService {
 
@@ -12,8 +12,13 @@ export class WalletService {
 
   apiInProgress: boolean = false;
   private pointsEmitter: EventEmitter<{ batch, total }> = new EventEmitter<{ batch, total }>();
+  private pointsTxSubscription: Subscription;
 
-  constructor(@Inject(Client) public client : Client, @Inject(SocketsService) private sockets: SocketsService){
+  static _(client: Client, sockets: SocketsService) {
+    return new WalletService(client, sockets);
+  }
+
+  constructor( @Inject(Client) public client: Client, @Inject(SocketsService) private sockets: SocketsService) {
     this.getBalance();
 
     this.session.isLoggedIn((is) => {
@@ -48,14 +53,14 @@ export class WalletService {
   /**
    * Increment the wallet
    */
-  increment(points : number = 1){
+  increment(points: number = 1) {
     this.delta(+points);
   }
 
   /**
    * Decrement the wallet
    */
-  decrement(points : number = 1){
+  decrement(points: number = 1) {
     this.delta(-points);
   }
 
@@ -99,7 +104,6 @@ export class WalletService {
   }
 
   // real-time
-  private pointsTxSubscription: Subscription;
   listen() {
     this.pointsTxSubscription = this.sockets.subscribe('pointsTx', (points, entity_guid, description) => {
       if (this.apiInProgress) {
@@ -117,7 +121,4 @@ export class WalletService {
     }
   }
 
-  static _(client: Client, sockets: SocketsService) {
-    return new WalletService(client, sockets);
-  }
 }

@@ -11,12 +11,13 @@ import { SessionFactory } from '../../services/session';
   templateUrl: 'topbar.html'
 })
 
-export class Topbar{
+export class Topbar {
 
-	session = SessionFactory.build();
+  session = SessionFactory.build();
+  notifications: any[] = [];
 
-	constructor(public storage: Storage, public sidebar : Sidebar, public notification: NotificationService){
-	}
+  constructor(public storage: Storage, public sidebar: Sidebar, public notification: NotificationService) {
+  }
 
   ngOnInit() {
     this.listenForNotifications();
@@ -25,15 +26,13 @@ export class Topbar{
 	/**
 	 * Open the navigation
 	 */
-	openNav(){
-		this.sidebar.open();
-	}
+  openNav() {
+    this.sidebar.open();
+  }
 
   /**
    * Notifications
    */
-
-  notifications: any[] = [];
 
   listenForNotifications() {
     this.notification.onReceive.subscribe((notification: any) => {
@@ -41,16 +40,17 @@ export class Topbar{
 
       setTimeout(() => {
         this.closeNotification(notification);
-      }, 6000)
+      }, 6000);
     });
   }
 
   closeNotification(notification: any) {
     let i: any;
     for (i in this.notifications) {
-      if (this.notifications[i] == notification) {
+      if (this.notifications[i] === notification) {
         this.notifications.splice(i, 1);
       }
     }
   }
+
 }

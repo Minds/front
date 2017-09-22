@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { SessionFactory } from '../../../../services/session';
 import { Client } from '../../../../services/api';
-import { SignupModalService } from "../../../../modules/modals/signup/service";
+import { SignupModalService } from '../../../../modules/modals/signup/service';
 
 // had forwardRef(() => RemindComposerModal)
 @Component({
@@ -28,25 +28,25 @@ import { SignupModalService } from "../../../../modules/modals/signup/service";
 export class RemindButton {
 
   object;
-  showModal : boolean = false;
+  showModal: boolean = false;
   session = SessionFactory.build();
   message: string = '';
   remindOpen: boolean = false;
 
-  constructor(public client : Client, private modal : SignupModalService) {
+  constructor(public client: Client, private modal: SignupModalService) {
   }
 
-  set _object(value : any){
+  set _object(value: any) {
     this.object = value;
   }
 
-  remind(){
+  remind() {
     var self = this;
 
     if (this.object.reminded)
       return false;
 
-    if(!this.session.isLoggedIn()){
+    if (!this.session.isLoggedIn()) {
       this.modal.open();
       return false;
     }
@@ -65,10 +65,10 @@ export class RemindButton {
     this.client.post('api/v1/newsfeed/remind/' + this.object.guid, {
       message: this.message
     })
-    .catch(e => {
-      this.object.reminded = false;
-      this.object.reminds--;
-    });
+      .catch(e => {
+        this.object.reminded = false;
+        this.object.reminds--;
+      });
   }
 
 }

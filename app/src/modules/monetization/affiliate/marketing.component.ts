@@ -12,28 +12,28 @@ export class AffiliateMarketingComponent {
 
   minds = window.Minds;
   user = window.Minds.user;
-  showOnboarding : boolean = false;
-  link : string = '';
+  showOnboarding: boolean = false;
+  link: string = '';
 
-  constructor(private client : Client, private cd : ChangeDetectorRef){
-    if(this.user)
+  constructor(private client: Client, private cd: ChangeDetectorRef) {
+    if (this.user)
       this.link = this.minds.site_url + 'register;referrer=' + this.user.username;
   }
 
-  isAffiliate(){
-    if(!this.user)
+  isAffiliate() {
+    if (!this.user)
       return false;
 
-    for(let program of this.user.programs){
-      if(program == 'affiliate')
+    for (let program of this.user.programs) {
+      if (program === 'affiliate')
         return true;
     }
 
     return false;
   }
 
-  join(){
-    if(!this.user.merchant && !this.user.merchant.id){
+  join() {
+    if (!this.user.merchant && !this.user.merchant.id) {
       this.showOnboarding = true;
       return;
     }
@@ -42,7 +42,7 @@ export class AffiliateMarketingComponent {
     this.detectChanges();
   }
 
-  onboardCompleted(response){
+  onboardCompleted(response) {
 
     this.user.merchant = {
       id: response.id,
@@ -60,7 +60,7 @@ export class AffiliateMarketingComponent {
     this.detectChanges();
   }
 
-  detectChanges(){
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }

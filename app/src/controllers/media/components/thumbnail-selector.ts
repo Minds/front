@@ -4,16 +4,13 @@ import { Client } from '../../../services/api';
 
 @Component({
   selector: 'minds-media-thumbnail-selector',
-  inputs: [ '_src: src', '_thumbnailSec: thumbnailSec' ],
-  outputs: [ 'thumbnail' ],
-  host: {
-    //'(click)': 'onClick()',
-  },
+  inputs: ['_src: src', '_thumbnailSec: thumbnailSec'],
+  outputs: ['thumbnail'],
   template: `
   <div class="m-video-loading" [hidden]="!inProgress">
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
-  <video (click)="onClick()" preload="metadata" muted crossOrigin="anonymous">
+  <video preload="metadata" muted crossOrigin="anonymous">
   </video>
   <div class="m-scrubber mdl-color--blue-grey-600" (click)="seek($event)">
       <div class="m-scrubber-progress mdl-color--amber-600" [ngStyle]="{'left': (thumbnailSec / element.duration)*100  + '%'}"></div>
@@ -22,41 +19,40 @@ import { Client } from '../../../services/api';
   `
 })
 
-export class ThumbnailSelector{
+export class ThumbnailSelector {
 
-  element : any;
-  src : Array<any> = [];
-  thumbnailSec : number = 0;
-  thumbnail : EventEmitter<any> = new EventEmitter();
+  element: any;
+  src: Array<any> = [];
+  thumbnailSec: number = 0;
+  thumbnail: EventEmitter<any> = new EventEmitter();
   canvas;
-  inProgress : boolean = false;
+  inProgress: boolean = false;
 
-  constructor(private _element : ElementRef){
-
+  constructor(private _element: ElementRef) {
   }
 
-  ngOnInit(){
-    this.element = this._element.nativeElement.getElementsByTagName("video")[0];
-    if(this.src)
+  ngOnInit() {
+    this.element = this._element.nativeElement.getElementsByTagName('video')[0];
+    if (this.src)
       this.element.src = this.src;
     this.element.addEventListener('loadedmetadata', () => {
-      if(this.thumbnailSec)
+      if (this.thumbnailSec)
         this.element.currentTime = this.thumbnailSec;
       this.inProgress = false;
     });
   }
 
-  set _src(value : any){
+  set _src(value: any) {
     this.src = value[0].uri;
-    if(this.element)
+    if (this.element)
       this.element.src = this.src;
   }
 
-  set _thumbnailSec(value : number){
-    if(!this.canvas)
+  set _thumbnailSec(value: number) {
+    if (!this.canvas)
       this.inProgress = true;
     this.thumbnailSec = value;
-    if(this.element){
+    if (this.element) {
       this.element.addEventListener('loadedmetadata', () => {
         this.element.currentTime = value;
         this.inProgress = false;
@@ -64,7 +60,7 @@ export class ThumbnailSelector{
     }
   }
 
-  seek(e){
+  seek(e) {
     e.preventDefault();
     var seeker = e.target;
     var seek = e.offsetX / seeker.offsetWidth;
@@ -75,14 +71,14 @@ export class ThumbnailSelector{
     return false;
   }
 
-  seekerToSeconds(seek){
+  seekerToSeconds(seek) {
     var duration = this.element.duration;
     console.log('seeking to ', duration * seek);
     return duration * seek;
   }
 
-  createThumbnail(){
-    if(!this.canvas){
+  createThumbnail() {
+    if (!this.canvas) {
       this.canvas = document.createElement('canvas');
       this.canvas.width = 1280;
       this.canvas.height = 720;
@@ -91,10 +87,9 @@ export class ThumbnailSelector{
     this.element.addEventListener('seeked', () => {
       //console.log(this.element.videoWidth, this.canvas.toDataURL("image/jpeg"));
       this.canvas.getContext('2d').drawImage(this.element, 0, 0, this.canvas.width, this.canvas.height);
-      this.thumbnail.next([this.canvas.toDataURL("image/jpeg"), this.thumbnailSec]);
+      this.thumbnail.next([this.canvas.toDataURL('image/jpeg'), this.thumbnailSec]);
       this.inProgress = false;
     });
   }
 
-  onClick(e?) { }
 }

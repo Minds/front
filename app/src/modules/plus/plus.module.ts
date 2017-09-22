@@ -12,7 +12,7 @@ import { PlusVerifyComponent } from './verify/verify.component';
 
 const plusRoutes : Routes = [
   { path: 'plus',  component: PlusMarketingComponent }
-]
+];
 
 @NgModule({
   imports: [

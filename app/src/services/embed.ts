@@ -1,6 +1,7 @@
 export class EmbedService {
 
-  constructor() {
+  static _() {
+    return new EmbedService();
   }
 
   getIframeFromObject(object: any) {
@@ -14,7 +15,7 @@ export class EmbedService {
       return this.getIframe(object.guid);
     }
 
-    if (object.custom_type == 'video') {
+    if (object.custom_type === 'video') {
       return this.getIframe(object.custom_data.guid);
     }
 
@@ -36,7 +37,4 @@ export class EmbedService {
     return `${window.Minds.site_url}api/v1/embed/${guid}`;
   }
 
-  static _() {
-    return new EmbedService();
-  }
 }

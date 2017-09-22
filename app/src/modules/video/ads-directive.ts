@@ -5,24 +5,17 @@ import { VideoAdsService } from './ads-service';
 @Directive({
   selector: '[videoAds]'
 })
-export class VideoAdsDirective{
+export class VideoAdsDirective {
 
-  @Input() autoplay : boolean = true;
-  @Input() muted : boolean = false;
+  @Input() autoplay: boolean = true;
+  @Input() muted: boolean = false;
 
-  service : VideoAdsService = new VideoAdsService();
+  service: VideoAdsService = new VideoAdsService();
 
-  constructor(){
-
-  }
-
-  ngOnInit(){
-    if(this.autoplay && !this.muted){
+  ngOnInit() {
+    if (this.autoplay && !this.muted) {
       //load the service
     }
-
   }
-
-
 
 }

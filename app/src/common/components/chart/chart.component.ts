@@ -1,11 +1,11 @@
 import { Component, AfterViewInit, OnDestroy, OnChanges, Input, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { Observable, Subscription } from "rxjs/Rx";
+import { Observable, Subscription } from 'rxjs/Rx';
 
-import { GoogleChartsLoader } from "../../../services/third-party/google-charts-loader";
+import { GoogleChartsLoader } from '../../../services/third-party/google-charts-loader';
 
 export interface ChartColumn {
-  type?: string,
-  label: string
+  type?: string;
+  label: string;
 }
 
 @Component({
@@ -88,7 +88,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
     let data = new window.google.visualization.DataTable();
 
     for (let column of this.columns) {
-      data.addColumn(column.type || 'string', column.label)
+      data.addColumn(column.type || 'string', column.label);
     }
 
     data.addRows(this.rows);
@@ -101,7 +101,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
       axisTitlesPosition: 'none',
       axes: {
         x: {
-          0: { side: 'bottom', label: ""}
+          0: { side: 'bottom', label: ''}
         }
       },
       legend: {

@@ -1,3 +1,12 @@
+<div class="m--spam-notice mdl-shadow--8dp" *ngIf="blog?.spam || blog?.deleted">
+  <ng-container *ngIf="blog?.spam">This blog was flagged as spam.</ng-container>
+  <ng-container *ngIf="blog?.deleted">This blog was flagged as deleted.</ng-container>
+
+  <ng-container *ngIf="!session.isAdmin()">
+    If you wish to appeal, please check your <a routerLink="/settings/reported-content">Reported Content console</a>.
+  </ng-container>
+</div>
+
 <header *ngIf="blog"
 [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(blog), 'm-mature-content-shown': attachment.isForcefullyShown(blog) }"
 >
@@ -16,7 +25,7 @@
 
   <div class="mdl-grid" style="width:100%">
     <div class="mdl-cell mdl-cell--12-col">
-      <h1>{{blog.title}}</h1>
+      <h1 class="m-blog--title">{{blog.title}}</h1>
     </div>
 
     <!-- Owner box -->
@@ -24,7 +33,7 @@
 
       <div class="minds-avatar" [hovercard]="blog.ownerObj.guid">
         <a [routerLink]="['/', blog.ownerObj.username]">
-          <img src="{{minds.cdn_url}}/icon/{{blog.ownerObj.guid}}/small}}" class="mdl-shadow--2dp"/>
+          <img src="{{minds.cdn_url}}/icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
         </a>
       </div>
       <div class="minds-body">

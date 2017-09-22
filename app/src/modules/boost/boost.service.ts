@@ -1,13 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import { Client } from "../../services/api";
-import { Session, SessionFactory } from "../../services/session";
+import { Client } from '../../services/api';
+import { Session, SessionFactory } from '../../services/session';
 
 @Injectable()
 export class BoostService {
-  constructor(private client: Client) { }
 
   session: Session = SessionFactory.build();
+
+  constructor(private client: Client) { }
 
   /**
    * Returns a promise with a collection of boosts.
@@ -29,7 +30,7 @@ export class BoostService {
    * Accepts a P2P boost.
    */
   accept(boost): Promise<boolean> {
-    if (this.getBoostType(boost) != 'p2p') {
+    if (this.getBoostType(boost) !== 'p2p') {
       return Promise.resolve(false);
     }
 
@@ -49,14 +50,14 @@ export class BoostService {
    * Returns true if the boost can be accepted by the current user
    */
   canAccept(boost): boolean {
-    return boost.state == 'created' && this.getBoostType(boost) == 'p2p' && this.isIncoming(boost);
+    return boost.state === 'created' && this.getBoostType(boost) === 'p2p' && this.isIncoming(boost);
   }
 
   /**
    * Rejects a P2P boost.
    */
   reject(boost): Promise<boolean> {
-    if (this.getBoostType(boost) != 'p2p') {
+    if (this.getBoostType(boost) !== 'p2p') {
       return Promise.resolve(false);
     }
 
@@ -76,7 +77,7 @@ export class BoostService {
    * Returns true if the boost can be rejected by the current user
    */
   canReject(boost): boolean {
-    return boost.state == 'created' && this.getBoostType(boost) == 'p2p' && this.isIncoming(boost);
+    return boost.state === 'created' && this.getBoostType(boost) === 'p2p' && this.isIncoming(boost);
   }
 
   /**
@@ -85,7 +86,7 @@ export class BoostService {
   revoke(boost): Promise<boolean> {
     let revokeEndpoint;
 
-    if (this.getBoostType(boost) == 'p2p') {
+    if (this.getBoostType(boost) === 'p2p') {
       // P2P
       revokeEndpoint = `api/v1/boost/peer/${boost.guid}/revoke`;
     } else {
@@ -109,9 +110,9 @@ export class BoostService {
    * Returns true if the boost can be revoked by the current user
    */
   canRevoke(boost): boolean {
-    return boost.state == 'created' && (
-      (this.getBoostType(boost) == 'p2p' && !this.isIncoming(boost)) ||
-      (this.getBoostType(boost) != 'p2p')
+    return boost.state === 'created' && (
+      (this.getBoostType(boost) === 'p2p' && !this.isIncoming(boost)) ||
+      (this.getBoostType(boost) !== 'p2p')
     );
   }
 
@@ -131,7 +132,8 @@ export class BoostService {
   /**
    * Returns if the boost belongs to the current logged in user
    */
-  isIncoming(boost): boolean  {
-    return boost.destination.guid == this.session.getLoggedInUser().guid;
+  isIncoming(boost): boolean {
+    return boost.destination.guid === this.session.getLoggedInUser().guid;
   }
+
 }

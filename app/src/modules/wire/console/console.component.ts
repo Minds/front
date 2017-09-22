@@ -33,7 +33,11 @@ export class WireConsoleComponent {
   }
 
   getStats() {
-    this.client.get('api/v1/wire/sums/receiver/' + this.session.getLoggedInUser().guid + '/money', { advanced: true, start: Date.parse(this.startDate) / 1000 })
+    this.client.get('api/v1/wire/sums/receiver/' + this.session.getLoggedInUser().guid + '/money',
+      {
+        advanced: true,
+        start: Date.parse(this.startDate) / 1000
+      })
       .then(({ sum, count, avg }) => {
         this.stats = {
           sum: sum,

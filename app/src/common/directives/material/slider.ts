@@ -1,9 +1,9 @@
 import { AfterViewInit, Directive, ViewContainerRef } from '@angular/core';
-import { Material as MaterialService } from "../../../services/ui";
+import { Material as MaterialService } from '../../../services/ui';
 
 @Directive({
   selector: '[mdlSlider]',
-  inputs: [ 'mdlSlider', 'ngModel', 'value' ]
+  inputs: ['mdlSlider', 'ngModel', 'value']
 })
 
 export class MaterialSlider implements AfterViewInit {
@@ -19,11 +19,11 @@ export class MaterialSlider implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.element.MaterialSlider.change(this.value)
+    this.element.MaterialSlider.change(this.value);
   }
 
   set ngModel(value) {
-    if (value == Number.POSITIVE_INFINITY || value == Number.NEGATIVE_INFINITY) {
+    if (value === Number.POSITIVE_INFINITY || value === Number.NEGATIVE_INFINITY) {
       return;
     }
 

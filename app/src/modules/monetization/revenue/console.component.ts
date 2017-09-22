@@ -10,26 +10,26 @@ import { Client } from '../../../common/api/client.service';
 
 export class RevenueConsoleComponent {
 
-  currency : string = 'usd';
-  balance : number | string = 0;
-  payouts : number | string = 0;
-  net : number | string = 0;
-  ready : boolean = false;
+  currency: string = 'usd';
+  balance: number | string = 0;
+  payouts: number | string = 0;
+  net: number | string = 0;
+  ready: boolean = false;
 
-  filter : string = 'payments';
-  ledgerType : string = 'charge';
+  filter: string = 'payments';
+  ledgerType: string = 'charge';
 
-  constructor(private client : Client, private cd: ChangeDetectorRef) {
+  constructor(private client: Client, private cd: ChangeDetectorRef) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getTotals();
   }
 
-  getTotals(){
+  getTotals() {
     this.client.get('api/v1/monetization/revenue/overview')
-      .then((response : any) => {
+      .then((response: any) => {
         this.currency = response.currency;
         this.balance = response.balance;
         this.payouts = response.payouts;
@@ -42,12 +42,12 @@ export class RevenueConsoleComponent {
   }
 
   getCurrencySymbol(currency) {
-    switch(currency){
-      case "gbp":
+    switch (currency) {
+      case 'gbp':
         return '£';
-      case "eur":
+      case 'eur':
         return '€';
-      case "usd":
+      case 'usd':
       default:
         return '$';
     }

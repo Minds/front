@@ -2,8 +2,8 @@ import { Component, ChangeDetectorRef, Input } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { Client } from "../../../../services/api";
-import { Session } from "../../../../services/session";
+import { Client } from '../../../../services/api';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -25,9 +25,13 @@ export class WireConsoleSupporterComponent {
   sum: number = 0;
   inProgress: boolean = false;
 
-  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd : ChangeDetectorRef, private session: Session, private route: ActivatedRoute) {
-
-  }
+  constructor(
+    private client: Client,
+    private currencyPipe: CurrencyPipe,
+    private cd: ChangeDetectorRef,
+    private session: Session,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.load();
@@ -44,7 +48,7 @@ export class WireConsoleSupporterComponent {
       `api/v1/wire/sums/sender/${this.session.getLoggedInUser().guid}/${this.method}/${this.guid}` :
       `api/v1/wire/sums/sender/${this.guid}/${this.method}/${this.session.getLoggedInUser().guid}`;
 
-    this.client.get(endpoint, { })
+    this.client.get(endpoint, {})
       .then(({ sum }) => {
         this.inProgress = false;
 

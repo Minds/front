@@ -2,12 +2,13 @@ import { Directive, ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[mdlSwitch]',
-  inputs: [ 'mdlSwitch', 'toggled' ]
+  inputs: ['mdlSwitch', 'toggled']
 })
 
 export class MaterialSwitchMock {
-  private element: any;
+
   mdlSwitch: any;
+  private element: any;
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;

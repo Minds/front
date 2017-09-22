@@ -14,13 +14,10 @@ export class WireMarketingComponent {
   showSubscription: boolean = false;
   showVerify: boolean = false;
 
-  constructor(private client : Client, private cd : ChangeDetectorRef){
+  constructor(private client: Client, private cd: ChangeDetectorRef) {
   }
 
-  ngOnInit(){
-  }
-
-  detectChanges(){
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }

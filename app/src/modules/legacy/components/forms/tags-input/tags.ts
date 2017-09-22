@@ -8,40 +8,48 @@ import { SessionFactory } from '../../../../../services/session';
   host: {
     '(click)': 'focus()'
   },
-  inputs: [ '_tags: tags' ],
-  outputs: [ 'change: tagsChange' ],
+  inputs: ['_tags: tags'],
+  outputs: ['change: tagsChange'],
   template: `
-    <div class="m-form-tags-input-tags-tag mdl-shadow--2dp mdl-color--blue-grey-600 mdl-color-text--blue-grey-50" *ngFor="let tag of tags; let i = index" (click)="removeTag(i)">
+    <div class="m-form-tags-input-tags-tag mdl-shadow--2dp mdl-color--blue-grey-600 mdl-color-text--blue-grey-50"
+      *ngFor="let tag of tags; let i = index"
+      (click)="removeTag(i)">
       <span>{{tag}}</span>
       <i class="material-icons mdl-color-text--white">close</i>
     </div>
-    <input type="text" name="input-tags" [(ngModel)]="input" (keyup)="keyUp($event)" (blur)="blur($event)" [size]="input.length ? input.length : 1">
+    <input
+      type="text"
+      name="input-tags"
+      [(ngModel)]="input"
+      (keyup)="keyUp($event)"
+      (blur)="blur($event)"
+      [size]="input.length ? input.length : 1">
   `
 })
 
-export class TagsInput{
+export class TagsInput {
 
-	session = SessionFactory.build();
-  error : string = "";
-  inProgress : boolean = false;
+  session = SessionFactory.build();
+  error: string = '';
+  inProgress: boolean = false;
 
-  input : string = "";
-  placeholder : string = "+";
-  tags : Array<string> = [];
-  change : EventEmitter<any> = new EventEmitter();
+  input: string = '';
+  placeholder: string = '+';
+  tags: Array<string> = [];
+  change: EventEmitter<any> = new EventEmitter();
 
-	constructor(private element : ElementRef){
+  constructor(private element: ElementRef) {
 
-	}
+  }
 
-  set _tags(tags : Array<string>){
-    if(Array.isArray(tags))
+  set _tags(tags: Array<string>) {
+    if (Array.isArray(tags))
       this.tags = tags;
   }
 
-  keyUp(e){
+  keyUp(e) {
 
-    switch(e.keyCode){
+    switch (e.keyCode) {
       case 32: //space
       case 9: //tab
       case 13: //enter
@@ -63,12 +71,12 @@ export class TagsInput{
     this.push();
   }
 
-  removeTag(index : number){
-    this.tags.splice(index,1);
+  removeTag(index: number) {
+    this.tags.splice(index, 1);
     this.change.next(this.tags);
   }
 
-  focus(){
+  focus() {
     this.element.nativeElement.getElementsByTagName('input')[0].focus();
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
@@ -13,30 +13,31 @@ import { SessionFactory } from '../../services/session';
   templateUrl: 'settings.html'
 })
 
-export class Settings{
+export class Settings {
 
-  minds : Minds;
-  session =  SessionFactory.build();
-  user : any;
-  filter : string;
+  minds: Minds;
+  session = SessionFactory.build();
+  user: any;
+  filter: string;
   account_time_created: any;
-   card: string;
-
-  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle){
-  }
+  card: string;
 
   paramsSubscription: Subscription;
+
+  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+  }
+
   ngOnInit() {
-    if(!this.session.isLoggedIn()){
+    if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
     }
     this.minds = window.Minds;
 
-    this.title.setTitle("Settings");
+    this.title.setTitle('Settings');
 
     this.filter = 'general';
 
-    this.account_time_created = window.Minds.user.time_created;;
+    this.account_time_created = window.Minds.user.time_created;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
@@ -44,9 +45,9 @@ export class Settings{
       } else {
         this.filter = 'general';
       }
-       if (params[ 'card' ]) {
-         this.card = params[ 'card' ];
-       }
+      if (params['card']) {
+        this.card = params['card'];
+      }
     });
   }
 

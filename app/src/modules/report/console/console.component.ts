@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit} from '@angular/core';
 
 import { Client } from '../../../services/api/client';
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
@@ -82,7 +82,7 @@ export class ReportConsoleComponent implements OnInit {
     let reason = reasonValue;
 
     REASONS.forEach(item => {
-      if (item.value == reasonValue) {
+      if (item.value === reasonValue) {
         reason = item.label;
       }
     });

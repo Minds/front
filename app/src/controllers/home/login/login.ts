@@ -7,7 +7,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { LoginReferrerService } from "../../../services/login-referrer.service";
+import { LoginReferrerService } from '../../../services/login-referrer.service';
 
 @Component({
   moduleId: module.id,
@@ -18,27 +18,34 @@ import { LoginReferrerService } from "../../../services/login-referrer.service";
 export class Login {
 
   session = SessionFactory.build();
-  errorMessage : string = "";
-  twofactorToken : string = "";
-  hideLogin : boolean = false;
-  inProgress : boolean = false;
-  referrer : string;
+  errorMessage: string = '';
+  twofactorToken: string = '';
+  hideLogin: boolean = false;
+  inProgress: boolean = false;
+  referrer: string;
   minds = window.Minds;
 
   flags = {
     canPlayInlineVideos: true
   };
 
-  constructor(public client : Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle, private modal : SignupModalService, private loginReferrer: LoginReferrerService){
-  }
-
   paramsSubscription: Subscription;
+
+  constructor(
+    public client: Client,
+    public router: Router,
+    public route: ActivatedRoute,
+    public title: MindsTitle,
+    private modal: SignupModalService,
+    private loginReferrer: LoginReferrerService
+  ) { }
+
   ngOnInit() {
     if (this.session.isLoggedIn()) {
       this.loginReferrer.navigate();
     }
 
-    this.title.setTitle("Login");
+    this.title.setTitle('Login');
 
     this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['referrer']) {
@@ -55,16 +62,16 @@ export class Login {
     this.paramsSubscription.unsubscribe();
   }
 
-  loggedin(){
-    if(this.referrer)
+  loggedin() {
+    if (this.referrer)
       this.router.navigateByUrl(this.referrer);
     else
       this.loginReferrer.navigate();
   }
 
-  registered(){
+  registered() {
     this.modal.setDisplay('categories').open();
-    this.loginReferrer.navigate({ 
+    this.loginReferrer.navigate({
       defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
     });
   }

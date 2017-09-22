@@ -7,53 +7,50 @@ import { VideoAdsService } from './ads-service';
   template: `
   `
 })
-export class VideoAds{
+export class VideoAds {
 
-  service : VideoAdsService = new VideoAdsService();
+  service: VideoAdsService = new VideoAdsService();
 
   @Input() player;
   adContainer;
   adLoader;
   adManager;
-  initialized : boolean = false;
+  initialized: boolean = false;
 
   google = window.google;
 
-  constructor(private element : ElementRef){
+  constructor(private element: ElementRef) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.setupIMA();
     this.element.nativeElement.style.display = 'none';
   }
 
-  setupIMA(){
+  setupIMA() {
     this.adContainer = new this.google.ima.AdDisplayContainer(
-        this.element.nativeElement, this.player.element);
+      this.element.nativeElement, this.player.element);
 
     this.adLoader = new this.google.ima.AdsLoader(this.adContainer);
 
     // Listen and respond to ads loaded and error events.
     this.adLoader.addEventListener(
-        this.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
-        this.onLoaded.bind(this),
-        false);
+      this.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
+      this.onLoaded.bind(this),
+      false);
     this.adLoader.addEventListener(
-        this.google.ima.AdErrorEvent.Type.AD_ERROR,
-        this.onError.bind(this),
-        false);
+      this.google.ima.AdErrorEvent.Type.AD_ERROR,
+      this.onError.bind(this),
+      false);
 
     // Request video ads.
     var adsRequest = new this.google.ima.AdsRequest();
-    /*
-    adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?' +
-        'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&' +
-        'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&' +
-        'cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=';
-    */
-    //adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/134702932/0134-minds.com//video&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&url=www.minds.com&description_url=[description_url]&correlator=[timestamp]';
-    adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=';
+
+    adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads? '
+      + 'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&'
+      + 'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&'
+      + 'cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=';
 
     adsRequest.linearAdSlotWidth = this.player.element.clientWidth;
     adsRequest.linearAdSlotHeight = this.player.element.clientHeight;
@@ -64,52 +61,52 @@ export class VideoAds{
     this.adLoader.requestAds(adsRequest);
   }
 
-  onLoaded(e){
+  onLoaded(e) {
     let settings = new this.google.ima.AdsRenderingSettings();
     settings.restoreCustomPlaybackStateOnAdBreakComplete = true;
     // videoContent should be set to the content video element.
     this.adManager = e.getAdsManager(
-        this.player.element, settings);
+      this.player.element, settings);
 
     // Add listeners to the required events.
     this.adManager.addEventListener(
-        this.google.ima.AdErrorEvent.Type.AD_ERROR,
-        this.onError.bind(this));
+      this.google.ima.AdErrorEvent.Type.AD_ERROR,
+      this.onError.bind(this));
     this.adManager.addEventListener(
-        this.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
-        this.onPause.bind(this));
+      this.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
+      this.onPause.bind(this));
     this.adManager.addEventListener(
-        this.google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED,
-        this.onResume.bind(this));
+      this.google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED,
+      this.onResume.bind(this));
     this.adManager.addEventListener(
-        this.google.ima.AdEvent.Type.ALL_ADS_COMPLETED,
-        this.onEvent.bind(this));
+      this.google.ima.AdEvent.Type.ALL_ADS_COMPLETED,
+      this.onEvent.bind(this));
 
     // Listen to any additional events, if necessary.
     this.adManager.addEventListener(
-        this.google.ima.AdEvent.Type.LOADED,
-        this.onEvent.bind(this));
+      this.google.ima.AdEvent.Type.LOADED,
+      this.onEvent.bind(this));
     this.adManager.addEventListener(
-        this.google.ima.AdEvent.Type.STARTED,
-        this.onEvent.bind(this));
+      this.google.ima.AdEvent.Type.STARTED,
+      this.onEvent.bind(this));
     this.adManager.addEventListener(
-        this.google.ima.AdEvent.Type.COMPLETE,
-        this.onEvent.bind(this));
+      this.google.ima.AdEvent.Type.COMPLETE,
+      this.onEvent.bind(this));
 
     var initWidth = this.player.element.clientWidth;
     var initHeight = this.player.element.clientHeight;
     //this.adManagerDimensions.width = initWidth;
     //this.adsManagerDimensions.height = initHeight;
     this.adManager.init(
-        initWidth,
-        initHeight,
-        this.google.ima.ViewMode.NORMAL);
-        this.adManager.resize(
-              initWidth,
-              initHeight,
-              this.google.ima.ViewMode.NORMAL);
+      initWidth,
+      initHeight,
+      this.google.ima.ViewMode.NORMAL);
+    this.adManager.resize(
+      initWidth,
+      initHeight,
+      this.google.ima.ViewMode.NORMAL);
 
-    if(!this.player.muted){
+    if (!this.player.muted) {
       this.playAds();
     } else {
       this.player.element.addEventListener(
@@ -118,9 +115,9 @@ export class VideoAds{
     }
   }
 
-  playAds(){
+  playAds() {
 
-    if(this.initialized)
+    if (this.initialized)
       return;
 
     this.initialized = true;
@@ -137,7 +134,7 @@ export class VideoAds{
     } catch (err) {
       // An error may be thrown if there was a problem with the VAST response.
       //videoContent.play();
-      console.log(err)
+      console.log(err);
       this.element.nativeElement.style.display = 'none';
       return false;
     }
@@ -145,7 +142,7 @@ export class VideoAds{
     return true;
   }
 
-  onEvent(e){
+  onEvent(e) {
     // Retrieve the ad from the event. Some events (e.g. ALL_ADS_COMPLETED)
     // don't have ad object associated.
     var ad = e.getAd();
@@ -161,35 +158,34 @@ export class VideoAds{
         // This event indicates the ad has started - the video player
         // can adjust the UI, for example display a pause button and
         // remaining time.
-        if (ad.isLinear()) {
-
-        }
+        //if (ad.isLinear()) {
+        //}
         break;
       case this.google.ima.AdEvent.Type.COMPLETE:
-        if (ad.isLinear()) {
-        }
+        //if (ad.isLinear()) {
+        //}
         this.element.nativeElement.style.display = 'none';
         break;
     }
   }
 
-  onPause(e){
+  onPause(e) {
     this.element.nativeElement.style.display = 'block';
     this.player.element.pause();
   }
 
-  onResume(e){
+  onResume(e) {
     this.player.element.play();
     this.element.nativeElement.style.display = 'none';
   }
 
-  onError(e){
+  onError(e) {
     console.log(e.getError());
     this.adManager.destroy();
   }
 
-  ngOnDestroy(){
-    if(this.adManager)
+  ngOnDestroy() {
+    if (this.adManager)
       this.adManager.destroy();
   }
 

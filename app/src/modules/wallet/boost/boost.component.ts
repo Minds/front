@@ -1,7 +1,7 @@
 import { Component, ViewChild, ComponentFactoryResolver } from '@angular/core';
 
-import { DynamicHostDirective } from "../../../common/directives/dynamic-host.directive";
-import { BoostConsoleComponent } from "../../boost/console/console.component";
+import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
+import { BoostConsoleComponent } from '../../boost/console/console.component';
 
 @Component({
   moduleId: module.id,

@@ -2,21 +2,26 @@ import { NgZone } from '@angular/core';
 import { Client } from './api';
 
 export class ThirdPartyNetworksService {
+
   inProgress: boolean = false;
 
   private siteUrl: string = '';
-  
+
   private status: any = {};
   private integrations: any;
-  
+  private statusReady: Promise<any>;
+
+  static _(client: Client, zone: NgZone) {
+    return new ThirdPartyNetworksService(client, zone);
+  }
+
   constructor(private client: Client, private zone: NgZone) {
-    this.siteUrl = window.Minds.site_url; 
+    this.siteUrl = window.Minds.site_url;
     this.integrations = window.Minds.thirdpartynetworks;
   }
 
   // General
 
-  private statusReady: Promise<any>;
   getStatus(refresh: boolean = false): Promise<any> {
     if (!this.statusReady || refresh) {
       this.statusReady = this.client.get('api/v1/thirdpartynetworks/status')
@@ -91,6 +96,22 @@ export class ThirdPartyNetworksService {
     return this.integrations && this.integrations[network];
   }
 
+  removeFbLogin(): Promise<any> {
+    this.inProgress = true;
+
+    return this.client.delete('api/v1/thirdpartynetworks/facebook/login')
+      .then(() => {
+        this.inProgress = false;
+
+        if (window.Minds.user) {
+          window.Minds.user.signup_method = 'ex-facebook';
+        }
+      })
+      .catch(e => {
+        this.inProgress = false;
+      });
+  }
+
   // === Individual Third-Party Network Integrations
   // @todo: Encapsulate and create classes!
 
@@ -134,21 +155,6 @@ export class ThirdPartyNetworksService {
       });
   }
 
-  removeFbLogin(): Promise<any> {
-    this.inProgress = true;
-
-    return this.client.delete('api/v1/thirdpartynetworks/facebook/login')
-      .then(() => {
-        this.inProgress = false;
-
-        if (window.Minds.user) {
-            window.Minds.user.signup_method = 'ex-facebook';
-        }
-      })
-      .catch(e => {
-        this.inProgress = false;
-      });
-  }
 
   // Twitter
 
@@ -190,7 +196,4 @@ export class ThirdPartyNetworksService {
       });
   }
 
-  static _(client: Client, zone: NgZone) {
-    return new ThirdPartyNetworksService(client, zone);
-  }
 }

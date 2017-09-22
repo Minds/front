@@ -3,7 +3,13 @@ import { Client } from './api';
 import { Storage } from './storage';
 
 export class TranslationService {
+
   private defaultLanguage: string;
+  private languagesReady: Promise<any>;
+
+  static _(client: Client, storage: Storage) {
+    return new TranslationService(client, storage);
+  }
 
   constructor(
     @Inject(Client) private clientService: Client,
@@ -11,12 +17,6 @@ export class TranslationService {
   ) {
     this.defaultLanguage = 'en'; // TODO: Set to get translated names (when i18n is in place)
     this.load();
-  }
-
-  private languagesReady: Promise<any>;
-
-  private load() {
-    this.getLanguages(); // Initial caching
   }
 
   getLanguages(): Promise<any> {
@@ -41,7 +41,7 @@ export class TranslationService {
 
             return response.languages;
           })
-          .catch(e => [ ]);
+          .catch(e => []);
       }
     }
 
@@ -71,7 +71,7 @@ export class TranslationService {
         let result: string = 'Unknown';
 
         languages.forEach((language: any) => {
-          if (language.language == query) {
+          if (language.language === query) {
             result = language.name;
           }
         });
@@ -127,7 +127,8 @@ export class TranslationService {
       });
   }
 
-  static _(client: Client, storage: Storage) {
-    return new TranslationService(client, storage);
+  private load() {
+    this.getLanguages(); // Initial caching
   }
+
 }
