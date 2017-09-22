@@ -56,8 +56,7 @@ export class ReportCreatorComponent implements AfterViewInit {
    */
   canSubmit() {
     try {
-      this.validate();
-      return true;
+      return this.validate();
     } catch (e) {
       return false;
     }
