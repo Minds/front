@@ -114,7 +114,7 @@ describe('AdminBoosts', () => {
         RejectionReasonModalMock,
         MaterialMock,
         MaterialSliderMock,
-        AdminBoost
+        AdminBoosts
       ], // declare the test component
       imports: [
         RouterTestingModule,
@@ -350,6 +350,8 @@ describe('AdminBoosts', () => {
     spyOn(comp, 'eTag').and.callThrough();
     spyOn(comp, 'reject').and.stub();
 
+    comp.boosts[0].rejection_reason = 2;
+
     button.nativeElement.click();
     fixture.detectChanges();
 
@@ -383,7 +385,7 @@ describe('AdminBoosts', () => {
 
       expect(clientMock.post).toHaveBeenCalled();
       expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v1/admin/boosts/newsfeed/123/accept');
-      expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ quality: '75', rating: 1 });
+      expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ quality: '75', rating: 1, mature: 0 });
     }));
 
   it('calling accept(boost, true) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 2 and a default quality of 75',
@@ -397,6 +399,6 @@ describe('AdminBoosts', () => {
 
       expect(clientMock.post).toHaveBeenCalled();
       expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v1/admin/boosts/newsfeed/123/accept');
-      expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ quality: '75', rating: 2 });
+      expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ quality: '75', rating: 2, mature: 0 });
     }));
 });
