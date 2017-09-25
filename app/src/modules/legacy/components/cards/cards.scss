@@ -3,6 +3,9 @@
 
 minds-card-user{
   min-height: 182px !important;
+  .minds-tabs a {
+    overflow: visible;
+  }
   .m-usercard-bio{
     display:none;
   }
