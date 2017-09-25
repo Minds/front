@@ -20,7 +20,7 @@ import { Client } from '../../../../services/api';
       (dragstart)="dragstart($event)"
       (dragover)="drag($event)"
       (dragend)="dragend($event)"
-    § />
+    />
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
       <span>
