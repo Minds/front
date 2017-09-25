@@ -145,9 +145,9 @@
                 <button class="material-icons">edit</button>
               </span>
   
-              <span class="minds-button-edit" (click)="deleteToggle = true"  *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
+              <!--<span class="minds-button-edit" (click)="deleteToggle = true"  *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
                 <button class="material-icons">close</button>
-              </span>
+              </span>-->
   
               <minds-button-feature [object]="entity" *ngIf="session.isAdmin()"></minds-button-feature>
               <minds-button-monetize [object]="entity" *ngIf="session.getLoggedInUser().monetized"></minds-button-monetize>
@@ -158,11 +158,9 @@
               <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
               <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
               <minds-button-remind [object]="entity"></minds-button-remind>
-            </div>
 
-          
-
-          
+              <m-post-menu [entity]="entity" [canDelete]="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()" [options]="menuOptions" (optionSelected)="menuOptionSelected($event)"></m-post-menu>
+          </div>
 
           <div class="mdl-cell mdl-cell--12-col m-media--description" *ngIf="entity.description"
             [innerHtml]="entity.description | safe"

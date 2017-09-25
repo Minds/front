@@ -9,7 +9,6 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
-import { ReportCreatorComponent } from '../../../../report/creator/creator.component';
 
 @Component({
   moduleId: module.id,
@@ -27,7 +26,6 @@ export class Activity {
   minds = window.Minds;
 
   activity: any;
-  menuToggle: boolean = false;
   commentsToggle: boolean = false;
   shareToggle: boolean = false;
   deleteToggle: boolean = false;
@@ -46,13 +44,12 @@ export class Activity {
   commentsOpened: EventEmitter<any> = new EventEmitter();
   scroll_listener;
 
-  asyncMute: boolean = false;
-  asyncMuteInProgress: boolean = false;
-
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
 
   isTranslatable: boolean;
   canDelete: boolean = false;
+
+  menuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit'];
 
   constructor(
     public client: Client,
@@ -121,63 +118,6 @@ export class Activity {
       });
   }
 
-  mute() {
-    this.activity['is:muted'] = true;
-
-    this.client.post(`api/v1/entities/notifications/${this.activity.guid}/mute`)
-      .then((response: any) => {
-        if (response.done) {
-          this.activity['is:muted'] = true;
-          return;
-        }
-
-        throw new Error('E_NOT_DONE');
-      })
-      .catch(e => {
-        this.activity['is:muted'] = false;
-      });
-  }
-
-  unmute() {
-    this.activity['is:muted'] = false;
-
-    this.client.post(`api/v1/entities/notifications/${this.activity.guid}/unmute`)
-      .then((response: any) => {
-        if (response.done) {
-          this.activity['is:muted'] = false;
-          return;
-        }
-
-        throw new Error('E_NOT_DONE');
-      })
-      .catch(e => {
-        this.activity['is:muted'] = true;
-      });
-  }
-
-  cardMenuHandler(opened: boolean) {
-    this.asyncMuteFetch();
-  }
-
-  asyncMuteFetch() {
-    if (this.asyncMute || this.asyncMuteInProgress) {
-      return;
-    }
-
-    this.asyncMuteInProgress = true;
-
-    this.client.get(`api/v1/entities/notifications/${this.activity.guid}`)
-      .then((response: any) => {
-        this.asyncMuteInProgress = false;
-        this.asyncMute = true;
-
-        this.activity['is:muted'] = !!response['is:muted'];
-      })
-      .catch(e => {
-        this.asyncMuteInProgress = false;
-      });
-  }
-
   /*async setSpam(value: boolean) {
     this.activity['spam'] = value;
 
@@ -226,25 +166,24 @@ export class Activity {
       .present();
   }
 
-  showReport() {
-    this.overlayModal.create(ReportCreatorComponent, this.activity)
-      .present();
-  }
-
-  feature() {
-    this.activity.featured = true;
-    this.client.put('api/v1/admin/feature/' + this.activity.guid)
-      .catch(() => {
-        this.activity.featured = false;
-      });
-  }
-
-  unFeature() {
-    this.activity.featured = false;
-    this.client.delete('api/v1/admin/feature/' + this.activity.guid)
-      .catch(() => {
-        this.activity.featured = true;
-      });
+  menuOptionSelected(option: string) {
+    switch (option) {
+      case 'edit':
+        this.editing = true;
+        break;
+      case 'delete':
+        this.delete();
+        break;
+      case 'set-explicit':
+        this.setExplicit(true);
+        break;
+      case 'remove-explicit':
+        this.setExplicit(false);
+        break;
+      case 'translate':
+        this.translateToggle = true;
+        break;
+    }
   }
 
   setExplicit(value: boolean) {

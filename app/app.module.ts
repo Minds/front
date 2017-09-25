@@ -39,6 +39,7 @@ import { OnboardingModule } from './src/modules/onboarding/onboarding.module';
 
 import { GroupsModule } from './src/plugins/Groups/groups.module';
 import { BlogModule } from './src/plugins/blog/blog.module';
+import { PostMenuModule } from './src/common/components/post-menu/post-menu.module';
 
 @NgModule({
   bootstrap: [
@@ -80,6 +81,7 @@ import { BlogModule } from './src/plugins/blog/blog.module';
 
     GroupsModule,
     BlogModule,
+    PostMenuModule
   ],
   providers: [
     MindsAppRoutingProviders,

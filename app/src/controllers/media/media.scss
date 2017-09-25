@@ -314,7 +314,13 @@ minds-media-thumbnail-selector{
     align-items: center;
     flex-shrink: 0;
 
-    > * {
+    m-post-menu {
+      i {
+        color: #607d8b !important;
+      }
+    }
+
+    > *:not(m-post-menu) {
       vertical-align: middle;
       margin-left: 0.35em;
 

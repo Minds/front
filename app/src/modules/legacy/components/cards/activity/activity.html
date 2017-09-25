@@ -207,54 +207,8 @@
 </div>
 
 <div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ngIf="!hideTabs">
-    <button class="mdl-button m-translate-button mdl-button--icon" *ngIf="isTranslatable" (click)="translateToggle = true;">
-        <i class="material-icons">public</i>
-    </button>
-
-    <!-- Right aligned menu below button -->
-	<button class="mdl-button minds-more mdl-button--icon" (click)="toggle.value = !toggle.value; cardMenuHandler(toggle.value)">
-		<i class="material-icons">keyboard_arrow_down</i>
+	<button class="mdl-button m-translate-button mdl-button--icon" *ngIf="isTranslatable" (click)="translateToggle = true;">
+			<i class="material-icons">public</i>
 	</button>
-
-	<ul class="minds-dropdown-menu" [hidden]="!toggle.value">
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="editing = true; toggle.value = false" i18n>Edit</li>
-		<li class="mdl-menu__item" (click)="sharetoggle = true" i18n>Share</li>
-		<li class="mdl-menu__item" *ngIf="isTranslatable" (click)="translateToggle = true; toggle.value = false" i18n>Translate</li>
-		<!-- FEATURE -->
-		<li class="mdl-menu__item" *ngIf="!activity.featured && session.isAdmin()" (click)="feature()" i18n>Feature</li>
-		<li class="mdl-menu__item" *ngIf="activity.featured && session.isAdmin()" (click)="unFeature()" i18n>un-Feature</li>
-		<!-- DELETE -->
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true; toggle.value = false" i18n>Delete</li>
-		<!-- REPORT -->
-		<li class="mdl-menu__item" *ngIf="activity.owner_guid != session.getLoggedInUser().guid" (click)="showReport()" i18n>Report</li>
-		<!-- NOTIFICATIONS -->
-		<li class="mdl-menu__item" *ngIf="!asyncMute" disabled i18n>Mute notifications</li>
-		<li class="mdl-menu__item" *ngIf="asyncMute && !activity['is:muted']" (click)="mute(); toggle.value = false" i18n>Mute notifications</li>
-		<li class="mdl-menu__item" *ngIf="asyncMute && activity['is:muted']" (click)="unmute(); toggle.value = false" i18n>Unmute notifications</li>
-    <!-- ADMIN EDIT FLAGS -->
-		<li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="activity.mature" (click)="setExplicit(true); toggle.value = false">Set as Explicit</li>
-		<li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!activity.mature" (click)="setExplicit(false); toggle.value = false">Remove Explicit</li>
-	</ul>
-  <div class="minds-bg-overlay" (click)="toggle.value = false" [hidden]="!toggle.value"></div>
-
-  <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false; toggle.value = false;" [url]="activity.url" [embed]="activity"></m-modal-share>
-  <m-modal-confirm *ngIf="deleteToggle"
-    [open]="true"
-    [closeAfterAction]=true
-    (closed)="deleteToggle = false"
-    (actioned)="delete($event)"
-    yesButton="Delete permanently"
-    i18n-yesButton
-  >
-    <p confirm-message>
-        <!-- i18n -->Are you sure you want to delete this post? There's no UNDO.<!-- /i18n -->
-        <span *ngIf="activity.entity_guid && (activity.custom_type == 'batch' || activity.custom_type == 'video')">
-          <br><br>
-          <b i18n>This action will also delete the attached media from your gallery.</b>
-        </span>
-    </p>
-    <p confirm-success-message>
-        <!-- i18n -->The post has been deleted.<!-- /i18n -->
-    </p>
-  </m-modal-confirm>
+	<m-post-menu [entity]="activity" [canDelete]="canDelete" [isTranslatable]="isTranslatable" [options]="menuOptions" (optionSelected)="menuOptionSelected($event)"></m-post-menu>
 </div>

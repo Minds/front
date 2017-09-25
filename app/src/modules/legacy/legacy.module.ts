@@ -40,6 +40,7 @@ import { SocialIcons } from './components/social-icons/social-icons';
 import { Comments } from './controllers/comments/comments';
 import { CommentsScrollDirective } from './controllers/comments/scroll';
 import { Poster } from './controllers/newsfeed/poster/poster';
+import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { Poster } from './controllers/newsfeed/poster/poster';
     BoostModule,
     ChannelModule,
     ThirdPartyNetworksModule,
-    WireModule
+    WireModule,
+    PostMenuModule
   ],
   declarations: [
     Activity,

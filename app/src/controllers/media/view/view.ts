@@ -26,6 +26,8 @@ export class MediaView {
 
   theaterMode: boolean = false;
 
+  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report'];
+
   paramsSubscription: Subscription;
 
   constructor(
@@ -94,6 +96,16 @@ export class MediaView {
       pos = 0;
 
     return this.entity['album_children_guids'][pos];
+  }
+
+  menuOptionSelected(option: string) {
+    switch (option) {
+      case 'edit':
+        this.router.navigate(['/media/edit', this.entity.guid]);
+        break;
+      case 'delete':
+        this.delete();
+    }
   }
 
 }

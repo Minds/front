@@ -20,6 +20,7 @@ import { CommonModule } from './src/common/common.module';
 import { LegacyModule } from './src/modules/legacy/legacy.module';
 import { VideoModule } from './src/modules/video/video.module';
 import { ReportModule } from './src/modules/report/report.module';
+import { PostMenuModule } from './src/common/components/post-menu/post-menu.module';
 
 @NgModule({
   bootstrap: [
@@ -42,7 +43,8 @@ import { ReportModule } from './src/modules/report/report.module';
     CommonModule,
     LegacyModule,
     VideoModule,
-    ReportModule
+    ReportModule,
+    PostMenuModule
   ],
   providers: [
     MindsEmbedRoutingProviders,
