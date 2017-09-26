@@ -32,17 +32,23 @@
 
 
 
-  <minds-card *ngIf="appeal.entityObj.type != 'comment'"
+  <minds-card *ngIf="appeal.entityObj && appeal.entityObj.type != 'comment'"
     class="m-report-console--card"
     [object]="appeal.entityObj"
     hostClass="mdl-card"
   ></minds-card>
 
-  <div *ngIf="appeal.entityObj.type == 'comment'" class="m-comment-wrapper">
+  <div *ngIf="appeal.entityObj && appeal.entityObj.type == 'comment'" class="m-comment-wrapper">
     <div class="m-report-console--comment-note">
       <a target="_blank" [routerLink]="['/newsfeed', appeal.entityObj.parent_guid]">View parent and its comment thread</a>
     </div>
     <minds-card-comment [object]="appeal.entityObj" class="mdl-card"></minds-card-comment>
+  </div>
+
+  <div *ngIf="!appeal.entityObj" class="m-comment-wrapper">
+    <div class="m-report-console--comment-note">
+      Post not found
+    </div>
   </div>
 
 </div>
