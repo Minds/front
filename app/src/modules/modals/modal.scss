@@ -1,0 +1,218 @@
+@import "defaults.scss";
+
+m-modal-signup, m-modal-signup-on-action{
+  z-index:1000;
+
+  m-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:101;
+  }
+
+  .m-modal-container{
+    max-width: 368px;
+    min-width: 0;
+  }
+
+  .mdl-card__title{
+    flex-wrap: wrap;
+    margin-bottom: 0;
+    padding-bottom: 0;
+
+    img{
+      width: 168px;
+      margin: auto;
+    }
+    h4{
+      width: 100%;
+      font-size: 14px;
+      margin: 0;
+      text-align: center;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+  }
+
+  .m-signup-modal-feature-icons{
+    display:flex;
+    flex-flow:row nowrap;
+    align-items:center;
+
+    > div {
+      text-align:center;
+      flex:1;
+      i{
+        width:100%;
+        font-size: 42px;
+      }
+      span{
+        width:100%;
+        display:block;
+        font-size:9px;
+        text-transform:uppercase;
+      }
+    }
+  }
+
+  .m-signup-modal-feature-text{
+    padding: 0px 8px;
+    margin: 0px 8px;
+  }
+
+  .m-signup-buttons{
+    display:flex;
+    flex-flow:row nowrap;
+    width: 100%;
+    box-sizing: border-box;
+
+    button{
+
+      color: rgb(255, 255, 255);
+      font-size: 14px;
+      border: 0;
+      cursor:pointer;
+      text-transform: uppercase;
+      text-align: left;
+      padding: 0;
+      margin:2px;
+      flex: 1;
+
+      &.m-fb-login-button{
+        background: rgb(59, 89, 152);
+        .m-signup-button-text{
+          text-shadow:none;
+        }
+      }
+
+      .m-social-icons-icon-inline{
+        fill: rgb(255, 255, 255);
+        vertical-align: middle;
+        display: inline-block;
+      }
+
+      .m-signup-bulb-icon{
+        img{
+          width: 31px;
+          margin-top: -4px;
+          margin-left: 4px;
+          -webkit-filter: grayscale(0%) contrast(132%);
+          animation: glow 1.54s cubic-bezier(.36,.07,.19,.97) both infinite;
+        }
+      }
+
+      &.m-wiggle-animation {
+        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both infinite;
+        transform: translate3d(0, 0, 0);
+        backface-visibility: hidden;
+        perspective: 1000px;
+      }
+
+      @keyframes shake {
+        10%, 90% {
+          transform: translate3d(-0.5px, 0, 0);
+        }
+
+        20%, 80% {
+          transform: translate3d(0.5px, 0, 0);
+        }
+
+        30%, 50%, 70% {
+          transform: translate3d(-1px, 0, 0);
+        }
+
+        40%, 60% {
+          transform: translate3d(1px, 0, 0);
+        }
+      }
+
+      @keyframes glow {
+        10%, 90% {
+          -webkit-filter: grayscale(0%) contrast(132%);
+        }
+
+        20%, 80% {
+          -webkit-filter: grayscale(0%) contrast(148%);
+        }
+
+        30%, 50%, 70% {
+          -webkit-filter: grayscale(0%) contrast(180%);
+        }
+
+        40%, 60% {
+          -webkit-filter: grayscale(0%) contrast(152%);
+        }
+      }
+
+      .m-signup-button-text{
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 13px;
+        width: auto;
+        max-width: calc(100% - 55px);
+        letter-spacing: 0.1em;
+        padding-left: 8px;
+        text-shadow: -0.02em 0 0 #EEE;
+      }
+    }
+
+    @media screen and (max-width:$min-tablet){
+      &{
+        padding:16px 0;
+      }
+      button{
+        .m-signup-button-text{
+          font-size: 11px;
+          padding-left: 0;
+        }
+      }
+    }
+  }
+
+  .m-modal-signup-apps{
+    display:flex;
+    flex-flow:row nowrap;
+    align-items:center;
+    padding:0 40px;
+    width: 100%;
+    box-sizing: border-box;
+
+    a{
+      flex:1;
+      margin:$minds-margin/2;
+      img{
+        width:100%;
+      }
+    }
+  }
+
+  .m-modal-signup-skip{
+    cursor:pointer;
+  }
+}
+
+m-modal-share, m-modal-invite{
+  z-index:1000;
+  position:relative;
+
+  input{
+    font-size:28px;
+    padding:$minds-padding*2;
+    width: calc(100% - 34px);
+  }
+  .m-social-share-buttons{
+    padding:$minds-padding*2;
+
+    .m-social-share-twitter{
+      background:#4099FF;
+    }
+    .m-social-share-fb{
+      background:#335795;
+    }
+    .m-social-share-email{
+      color:#333 !important;
+    }
+  }
+}

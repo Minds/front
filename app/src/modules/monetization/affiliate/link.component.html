@@ -1,0 +1,31 @@
+<div class="m-affiliate--link mdl-color--white mdl-shadow--2dp">
+
+  <h2 class="m-revenue--console-product-header">Affiliate Program</h2>
+
+  <div class="mdl-card__supporting-text">
+    <p>Refer new users to Minds through your referral link, and earn 25% of the revenue they generate.</p>
+  </div>
+
+  <div class="m-affiliate--link-link">
+    <input [value]="link" #el (click)="el.select()" />
+    <span>Copy and share the link above</span>
+
+    <div class="m-affiliate--link-buttons">
+      <button class="mdl-button mdl-button--raised mdl-color-text--white m-affiliate--link-buttons-fb" (click)="openWindow('https://www.facebook.com/sharer/sharer.php?u=' + encodedLink + '&display=popup&ref=plugin&src=share_button')">
+        <!-- i18n -->Facebook<!-- /i18n -->
+      </button>
+      <button class="mdl-button mdl-button--raised mdl-color-text--white m-affiliate--link-buttons-twitter" (click)="openWindow('https://twitter.com/intent/tweet?text=Join%20me%20on%20Minds&tw_p=tweetbutton&url=' + encodedLink)">
+        <!-- i18n -->Twitter<!-- /i18n -->
+      </button>
+      <button class="mdl-button mdl-button--raised mdl-color-text--white m-affiliate--link-buttons-email" (click)="openEmail()">
+        <!-- i18n -->Email<!-- /i18n -->
+      </button>
+    </div>
+  </div>
+
+
+  <div class="mdl-card__supporting-text m-affiliate--link-footer">
+    <p><a routerLink="/affiliates">Click here</a> to find out more about the affiliate program.</p>
+  </div>
+
+</div>

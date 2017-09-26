@@ -1,45 +1,57 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
-import { Router, RouterLink, RouteParams } from "angular2/router";
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
+
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { SessionFactory } from '../../services/session';
-import { Material } from '../../directives/material';
-
-import { SettingsGeneral } from './general/general';
-import { SettingsStatistics } from './statistics/statistics';
-import { SettingsDisableChannel } from './disable/disable';
-import { SettingsTwoFactor } from './two-factor/two-factor';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-settings',
-  viewBindings: [ Client ],
-  bindings: [ MindsTitle ]
-})
-@View({
-  templateUrl: 'src/controllers/settings/settings.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, RouterLink, SettingsGeneral, SettingsStatistics, SettingsDisableChannel, SettingsTwoFactor]
+  templateUrl: 'settings.html'
 })
 
-export class Settings{
+export class Settings {
 
-  minds : Minds;
-  session =  SessionFactory.build();
-  user : any;
-  filter : string;
+  minds: Minds;
+  session = SessionFactory.build();
+  user: any;
+  filter: string;
+  account_time_created: any;
+  card: string;
 
-  constructor(public client: Client, public router: Router, public params: RouteParams, public title: MindsTitle){
-    if(!this.session.isLoggedIn()){
-      router.navigate(['/Login']);
+  paramsSubscription: Subscription;
+
+  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+  }
+
+  ngOnInit() {
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/login']);
     }
     this.minds = window.Minds;
 
-    this.title.setTitle("Settings");
+    this.title.setTitle('Settings');
 
-    if(params.params['filter'])
-      this.filter = params.params['filter'];
-    else
-      this.filter = 'general';
+    this.filter = 'general';
+
+    this.account_time_created = window.Minds.user.time_created;
+
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['filter']) {
+        this.filter = params['filter'];
+      } else {
+        this.filter = 'general';
+      }
+      if (params['card']) {
+        this.card = params['card'];
+      }
+    });
   }
 
-
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 }

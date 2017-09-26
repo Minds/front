@@ -3,7 +3,7 @@ import { Helpers } from './helpers';
 
 let h = new Helpers();
 
-describe('testing groups', () => {
+describe('testing uploader', () => {
 
   beforeEach(() => {
     h.login();
@@ -147,6 +147,8 @@ describe('testing groups', () => {
 
       browser.actions().mouseMove(elem).perform();
       elem.element(by.css('i')).click();
+      browser.switchTo().alert().accept();
+
       browser.sleep(1000);
       expect(element(by.cssContainingText('.m-album h2', 'test')).isPresent()).toEqual(false);
   });

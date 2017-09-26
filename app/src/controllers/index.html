@@ -5,11 +5,14 @@
 </minds-sidebar>
 
 <minds-body class="mdl-color--grey-100">
-  	<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </minds-body>
 
 <minds-footer></minds-footer>
+<minds-messenger *ngIf="minds.LoggedIn"></minds-messenger>
 
 
-<m-modal-signup>
-</m-modal-signup>
+<m-modal-signup></m-modal-signup>
+<m-hovercard-popup></m-hovercard-popup>
+
+<m-overlay-modal></m-overlay-modal>

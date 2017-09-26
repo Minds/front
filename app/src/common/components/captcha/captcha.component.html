@@ -1,0 +1,7 @@
+<div class="m-captcha--sum" *ngIf="type == 'sum'">
+  <div class="m-captcha--sum-question "*ngIf="question">
+    What is {{question[0]}} {{question[1]}} {{question[2]}}?
+  </div>
+
+  <input type="number" [(ngModel)]="answer" (keyup)="validate()"/>
+</div>

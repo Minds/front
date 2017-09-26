@@ -1,0 +1,7 @@
+<a class="mdl-button mdl-js-button"
+  [ngClass]="{ 'mdl-js-ripple-effect': !inProgress }"
+  (click)="action()"
+>
+  <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  <!-- i18n -->Cancel Subscription<!-- /i18n -->
+</a>

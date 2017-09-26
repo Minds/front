@@ -1,0 +1,26 @@
+<div class="m-boost-console-booster--cta mdl-color--blue-grey-800 mdl-color-text--white mdl-shadow--4dp">
+    <span>Boosting guarantees more views on your posts and content.</span>
+    <button class="mdl-button mdl-button--raised mdl-color-text--white" (click)="toggle()">Boost</button>
+</div>
+
+<div *ngIf="open" class="m-boost-console-booster--content mdl-color--blue-grey-900 mdl-color-text--white mdl-shadow--4dp">
+  <!-- Posts  -->
+  <ng-container *ngIf="type == 'newsfeed' || type == 'peer'">
+    <h3 i18n>Your recent posts</h3>
+    <minds-card [object]="object" hostClass="mdl-shadow--2dp" *ngFor="let object of posts"></minds-card>
+  </ng-container>
+
+  <!-- User and Media  -->
+  <ng-container *ngIf="type == 'content'">
+    <h3 i18n>Your channel</h3>
+    <minds-card [object]="session.getLoggedInUser()" hostClass="mdl-shadow--2dp"></minds-card>
+
+    <h3 i18n>Your recent media</h3>
+    <div class="mdl-grid m-boost-console-booster--content-grid">
+      <div class="mdl-cell mdl-cell--6-col" *ngFor="let object of media">
+        <minds-card [object]="object" hostClass="mdl-shadow--2dp"></minds-card>
+        <minds-button type="boost" [object]="object"></minds-button>
+      </div>
+    </div>
+  </ng-container>
+</div>

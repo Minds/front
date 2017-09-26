@@ -21,3 +21,22 @@
   padding: 20px 0;
   width: 200px;
 }
+
+ul.minds-settings--list {
+  list-style: none;
+  font-weight: 500;
+  color: #666;
+  margin: 0;
+  padding: 0;
+
+  li.minds-settings--list-item {
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    padding: 0 6px;
+
+    &:not(.selected):hover {
+      color: #333;
+    }
+  }
+}

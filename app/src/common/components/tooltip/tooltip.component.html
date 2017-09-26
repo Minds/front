@@ -1,0 +1,8 @@
+<div class="m-tooltip">
+  <i *ngIf="icon" class="material-icons">{{icon}}</i>
+  <ng-content select="[m-tooltip--anchor]"></ng-content>
+
+  <div class="m-tooltip--bubble" [hidden]="hidden">
+    <ng-content></ng-content>
+  </div>
+</div>

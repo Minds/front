@@ -23,3 +23,22 @@ export const ACCESS : Array<any> = [
   {value: 1, text: 'Loggedin'},
   {value: 2, text: 'Public'}
 ];
+
+export const REASONS : Array<any> = [
+  { value: 1 , label: 'Illegal' },
+  { value: 2, label: 'Should be marked as explicit' },
+  { value: 3, label: 'Encourages or incites violence' },
+  { value: 4, label: 'Threatens, harasses, bullies or encourages others to do so' },
+  { value: 5, label: 'Personal and confidential information' },
+  { value: 6, label: 'Maliciously targets users (@name, links, images or videos)' },
+  { value: 7, label: 'Impersonates someone in a misleading or deceptive manner' },
+  { value: 8, label: 'Spam' },
+  { value: 10, label: 'This infringes my copyright' },
+  { value: 11, label: 'Another reason' }
+];
+
+export const REPORT_ACTIONS = {
+  'explicit': 'Marked as Explicit',
+  'spam': 'Marked as Spam',
+  'delete': 'Deleted'
+};

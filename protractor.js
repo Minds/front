@@ -21,18 +21,20 @@ var config = {
 	baseUrl: BASE_URL,
 
 	onPrepare: function() {
+    var SpecReporter = require('jasmine-spec-reporter');
+    // add jasmine spec reporter
+    jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
+
 		browser.ignoreSynchronization = true;
-    browser.driver.get(BASE_URL);
-		if(BASE_URL == 'https://new.minds.com/')
+    //browser.driver.get(BASE_URL);
+		if(BASE_URL == 'https://new.minds.com/'){
     	browser.manage().addCookie('beta', 'angular2', '/', 'new.minds.com');
-		browser.driver.get(BASE_URL);
-		browser.wait(function() {
-			return browser.isElementPresent(By.css('minds-body'));
-		});
+		  browser.driver.get(BASE_URL);
+    }
 	},
 	specs: [
 		'./tests/e2e/helpers.js',
-		//'./tests/e2e/components/*.js',
+		//'./tests/e2e/components/signupModal.js',
 		'./tests/e2e/*.js',
 		'./tests/e2e/**/*.js'
 	],
@@ -41,10 +43,14 @@ var config = {
 		browserName: _browsers
 	},
 	framework: 'jasmine2',
-	jasmineNodeOpts: {
-		showColors: true,
-		defaultTimeoutInterval: 60000
-	}
+  jasmineNodeOpts: {
+    showTiming: true,
+    showColors: true,
+    isVerbose: false,
+    includeStackTrace: false,
+    defaultTimeoutInterval: 400000
+  },
+  useAllAngular2AppRoots: true
 };
 
 if(process.env.MINDS_E2E_LOCAL == 'TRUE'){

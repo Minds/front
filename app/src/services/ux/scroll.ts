@@ -1,38 +1,51 @@
-import { EventEmitter, Observable, Injector, provide } from 'angular2/angular2';
+import { EventEmitter, Injector } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
-export class Scroll{
-  scroll : EventEmitter<boolean> = new EventEmitter(true);
-  view : any;
+export class ScrollService {
 
-  constructor(){
-    this.view = document.getElementsByTagName('body')[0];
-    this.view.scrollTop = 0;
-    document.addEventListener('scroll', (position) => {
-      this.scroll.next({ top: this.view.scrollTop, height: this.view.clientHeight });
-    });
+  scroll;
+  view: any;
+  viewListener;
+  viewEmitter: EventEmitter<any> = new EventEmitter();
+
+  static _() {
+    return new ScrollService();
   }
 
-  fire(){
+  constructor() {
+    this.view = document.getElementsByTagName('body')[0];
+    this.view.scrollTop = 0;
+    this.scroll = Observable.fromEvent(window, 'scroll');
+  }
+
+  fire() {
     this.scroll.next({ top: this.view.scrollTop, height: this.view.clientHeight });
   }
 
-  listen(callback : Function) : any {
-    return this.scroll.subscribe({next: callback });
+  listen(callback: Function, debounce: number = 0, throttle: number = 0): any {
+    if (debounce) {
+      return this.scroll
+        .debounceTime(debounce)
+        .subscribe(callback);
+    }
+    if (throttle) {
+      return this.scroll
+        .throttleTime(throttle)
+        .subscribe(callback);
+    }
+    return this.scroll
+      .subscribe(callback);
   }
 
-  unListen(subscription : any){
+  unListen(subscription: any) {
     subscription.unsubscribe();
   }
 
-}
+  listenForView() {
+    if (!this.viewListener) {
+      this.viewListener = this.scroll.debounceTime(500).subscribe((e) => { this.viewEmitter.next(e); });
+    }
+    return this.viewEmitter;
+  }
 
-
-var injector = Injector.resolveAndCreate([
-	provide(Scroll, { useFactory: () => new Scroll() })
-]);
-
-export class ScrollFactory {
-	static build(){
-		return injector.get(Scroll);
-	}
 }

@@ -1,0 +1,55 @@
+<div class="m-rich-embed-src" *ngIf="src && type == 'src'"
+  [ngClass]="{ 'm-has-inline-embed': hasInlineContentLoaded() }"
+>
+  <a [href]="src.perma_url"
+    class="thumbnail"
+    [ngClass]="{ 'm-inline-embed': hasInlineContentLoaded() }"
+    (click)="action($event)"
+    target="_blank"
+    *ngIf="src.thumbnail_src || inlineEmbed"
+  >
+    <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate m-html-loading"
+      *ngIf="embeddedInline && (!inlineEmbed || !inlineEmbed.html)"
+    [mdl]></div>
+
+    <img
+      *ngIf="!cropImage && (src.thumbnail_src || !inlineEmbed)"
+      [hidden]="hasInlineContentLoaded()"
+      [src]="src.thumbnail_src"
+      (error)="src.thumbnail_src = null"
+    />
+    <div class="m-rich-embed-thumbnail-wrapper"
+      *ngIf="cropImage && (src.thumbnail_src || !inlineEmbed)"
+      [hidden]="hasInlineContentLoaded()"
+      [ngStyle]="{ 'background-image': 'url(' + src.thumbnail_src + ')' }"
+    ></div>
+    <div class="m-rich-embed-thumbnail-wrapper m-rich-embed-thumbnail-placeholder"
+      *ngIf="!src.thumbnail_src"
+      [hidden]="hasInlineContentLoaded()"
+    ></div>
+
+    <div *ngIf="!embeddedInline && inlineEmbed" class="m-rich-embed-action-overlay">
+      <i *ngIf="inlineEmbed.playable" class="material-icons">play_arrow</i>
+      <i *ngIf="inlineEmbed.viewable" class="material-icons">remove_red_eye</i>
+      <i *ngIf="inlineEmbed.downloadable" class="material-icons">file_download</i>
+    </div>
+
+    <div *ngIf="hasInlineContentLoaded()" [class]="inlineEmbed.className">
+        <div [outerHTML]="inlineEmbed.html"></div>
+    </div>
+  </a>
+  <a [href]="src.perma_url" target="_blank" class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src }">
+    <h2 class="mdl-card__title-text mdl-typography--font-medium" *ngIf="src.title">{{src.title}}</h2>
+    <p class="m-blurb" *ngIf="src.blurb">{{src.blurb}}</p>
+    <p class="m-url mdl-color-text--blue-grey-400">{{src.perma_url | domain}}</p>
+  </a>
+</div>
+<div class="m-rich-embed-preview" *ngIf="preview && type == 'preview'">
+  <a class="thumbnail" *ngIf="preview.thumbnail">
+    <img src="{{preview.thumbnail}}" />
+  </a>
+  <a class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-has-thumbnail': preview.thumbnail }">
+    <h2 class="mdl-card__title-text">{{preview.title}}</h2>
+    <p>{{preview.description}}</p>
+  </a>
+</div>

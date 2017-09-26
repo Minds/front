@@ -1,0 +1,25 @@
+@import "defaults";
+
+.m-checkout-confirm{
+  padding-left:$minds-padding !important;
+}
+
+.minds-purchase-card{
+  position: initial;
+}
+
+.m-checkout--secure{
+  padding-left:$minds-padding;
+
+  >i {
+    font-size: 28px;
+    cursor: default;
+  }
+  >*{
+    vertical-align: middle;
+  }
+
+  .m-tooltip i{
+    font-size: 16px;
+  }
+}

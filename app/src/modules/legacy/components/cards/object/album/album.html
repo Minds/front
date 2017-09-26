@@ -1,0 +1,37 @@
+<div class="mdl-card__title minds-media-albums-card"
+	style="height:200px; background:#333" >
+
+	<div *ngIf="entity.images" class="minds-album-tiles tiles-{{entity.images.length}}">
+		<a class=""
+			 *ngFor="let image of entity.images"
+			 [routerLink]="['/media', image]">
+			<img src="fs/v1/thumbnail/{{image}}/medium" />
+		</a>
+	</div>
+
+</div>
+
+<!-- Owner block -->
+<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block" *ngIf="entity.ownerObj && entity.ownerObj.username">
+
+		<a [routerLink]="['/media', entity.guid]" class="mdl-color-text--blue-grey-700">
+			<strong>{{ entity.title }}</strong>
+		</a>
+
+		<div class="m-inline-owner-block">
+			<a [routerLink]="['/', entity.ownerObj.username]" class="mdl-color-text--blue-grey-300">
+				<img src="/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
+				{{entity.ownerObj.username}}
+			</a>
+			<span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
+		</div>
+
+</div>
+
+<div class="mdl-card__supporting-text mdl-color--blue-grey-50 m-action-tabs">
+	<minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
+	<minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
+	<minds-button-comment [object]="entity" [routerLink]="['/media', entity.guid]"></minds-button-comment>
+	<minds-button-remind [object]="entity"></minds-button-remind>
+	<minds-button-feature [object]="entity" *ngIf="session.isAdmin()"></minds-button-feature>
+</div>

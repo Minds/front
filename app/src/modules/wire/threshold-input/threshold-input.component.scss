@@ -1,0 +1,68 @@
+minds-newsfeed-poster > .mdl-card {
+  overflow: visible;
+}
+
+m-wire-threshold-input, .m-wire-threshold-input {
+  display: inline-block;
+}
+
+.m-wire-threshold-input {
+  font-family: 'Lato', sans-serif;
+
+  .m-wire-threshold-input--toggle {
+    display: inline-block;
+    vertical-align: middle;
+    color: #455a64;
+    cursor: pointer;
+
+    &.m-wire-threshold-input--toggle-enabled {
+      color: #4690D6;
+    }
+  }
+
+  .m-wire-threshold-input--input {
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #eeeeee;
+    padding: ($minds-padding / 4) ($minds-padding / 2);
+    color: #888888;
+
+    > * {
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    .m-wire-threshold-input--symbol {
+      font-size: 24px;
+    }
+
+    .m-wire-threshold-input--type {
+      color: #4caf50;
+    }
+
+    > input {
+      appearance: none;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      margin: 0;
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      width: 2em;
+      min-width: 2em;
+      outline: none;
+    }
+
+    > .mdl-button--icon {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+    }
+
+    > .mdl-button--icon > .material-icons,
+    > .material-icons {
+      font-size: 20px;
+    }
+  }
+}

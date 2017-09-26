@@ -1,12 +1,8 @@
-import { Component, View, Inject } from 'angular2/angular2';
-import { Router } from 'angular2/router';
-import { Material } from '../../../directives/material';
+import { Component } from '@angular/core';
 
 @Component({
-})
-@View({
-  templateUrl: 'src/controllers/home/comingsoon/comingsoon.html',
-  directives: [ Material ]
+  moduleId: module.id,
+  templateUrl: 'comingsoon.html'
 })
 
 export class ComingSoon {

@@ -1,12 +1,15 @@
+<header *ngIf="header">
+  <minds-banner [src]="'fs/v1/pages/' + path" [top]="headerTop"></minds-banner>
+</header>
 
 <div class="mdl-grid m-pages" style="max-width:900px">
 
   <div class="mdl-cell mdl-cell--4-col">
     <ul class="m-content-sidebar-nav">
-      <li *ng-for="#page of pages" class="m-content-sidebar-nav-item">
+      <li *ngFor="let page of pages | listable" class="m-content-sidebar-nav-item">
         <a
-          [router-link]="['/P', {page: page.params.page }]"
-          [ng-class]="{'is-active': path == page.params.page }">
+          [routerLink]="['/' + page.path]"
+          [ngClass]="{'is-active': path == page.path }">
           {{page.title}}
         </a>
       </li>
@@ -15,7 +18,7 @@
 
   <div class="mdl-cell mdl-cell--8-col">
       <h1>{{title}}</h1>
-      <div [inner-html]="body"></div>
+      <div [innerHtml]="body"></div>
   </div>
 
 </div>

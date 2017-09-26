@@ -1,32 +1,56 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
-import { RouterLink } from 'angular2/router';
-import { Material } from '../../directives/material';
+import { Component } from '@angular/core';
+
 import { Storage } from '../../services/storage';
 import { Sidebar } from '../../services/ui/sidebar';
+import { NotificationService } from '../../services/notification';
 import { SessionFactory } from '../../services/session';
-import { SearchBar } from '../../controllers/search/bar';
-import { TopbarNavigation } from './topbar-navigation';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-topbar',
-  viewBindings: [ Storage, Sidebar ]
-})
-@View({
-  templateUrl: 'src/components/topbar/topbar.html',
-  directives: [ CORE_DIRECTIVES, RouterLink, Material, SearchBar, TopbarNavigation ]
+  templateUrl: 'topbar.html'
 })
 
-export class Topbar{
+export class Topbar {
 
-	session = SessionFactory.build();
+  session = SessionFactory.build();
+  notifications: any[] = [];
 
-	constructor(public storage: Storage, public sidebar : Sidebar){
-	}
+  constructor(public storage: Storage, public sidebar: Sidebar, public notification: NotificationService) {
+  }
+
+  ngOnInit() {
+    this.listenForNotifications();
+  }
 
 	/**
 	 * Open the navigation
 	 */
-	openNav(){
-		this.sidebar.open();
-	}
+  openNav() {
+    this.sidebar.open();
+  }
+
+  /**
+   * Notifications
+   */
+
+  listenForNotifications() {
+    this.notification.onReceive.subscribe((notification: any) => {
+      this.notifications.unshift(notification);
+
+      setTimeout(() => {
+        this.closeNotification(notification);
+      }, 6000);
+    });
+  }
+
+  closeNotification(notification: any) {
+    let i: any;
+    for (i in this.notifications) {
+      if (this.notifications[i] === notification) {
+        this.notifications.splice(i, 1);
+      }
+    }
+  }
+
 }

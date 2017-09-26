@@ -1,0 +1,109 @@
+<div class="m-revenue--console">
+
+  <div class="m-revenue--console-hero mdl-color--blue mdl-color-text--white">
+    <div class="m-revenue--console-overview mdl-grid">
+
+      <div class="m-revenue--console-volume mdl-cell mdl-cell--4-col">
+        <i>{{ getCurrencySymbol(currency) }}</i><span *ngIf="ready">{{net | number:'1.2-2'}}</span>
+        <div class="m-revenue--console-label">
+          <label>Earnings</label>
+          <m-tooltip icon="help">
+            This is your total earnings for the past 30 days, minus any fees.
+          </m-tooltip>
+        </div>
+      </div>
+
+      <div class="m-revenue--console-balance mdl-cell mdl-cell--4-col">
+        <i>{{ getCurrencySymbol(currency) }}</i><span *ngIf="ready">{{balance | number:'1.2-2'}}</span>
+        <div class="m-revenue--console-label">
+          <label>Pending</label>
+          <m-tooltip icon="help">
+            This is your earnings awaiting payout. A negative number indicates a refund or chargeback has occured.
+          </m-tooltip>
+        </div>
+      </div>
+      <div class="m-revenue--console-payouts mdl-cell mdl-cell--4-col">
+        <i>{{ getCurrencySymbol(currency) }}</i><span *ngIf="ready">{{payouts | number:'1.2-2'}}</span>
+        <div class="m-revenue--console-label">
+          <label>Paid out</label>
+          <m-tooltip icon="help">
+            This is what has been sent to your bank account
+          </m-tooltip>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-revenue--console-nav mdl-color--blue-700 mdl-color-text--white">
+    <div class="m-revenue--console-nav-item" routerLinkActive="mdl-color--blue-800" routerLink="points">Points</div>
+    <div class="m-revenue--console-nav-item" routerLinkActive="mdl-color--blue-800" routerLink="earnings">Earnings</div>
+    <div class="m-revenue--console-nav-item" routerLinkActive="mdl-color--blue-800" routerLink="payouts">Payouts</div>
+    <div class="m-revenue--console-nav-item" routerLinkActive="mdl-color--blue-800" routerLink="options">Options</div>
+  </div>
+
+  <div class="mdl-grid" style="max-width:990px;">
+
+    <div class="mdl-cell mdl-cell--4-col">
+
+      <m-wallet--points-overview></m-wallet--points-overview>
+
+      <ul class="mdl-card minds-card-navigation mdl-shadow--2dp" style="width:100%; margin-top:8px;">
+
+        <li>
+          <a class="mdl-color-text--blue-grey-500" routerLink="points/purchase" routerLinkActive="selected">
+            <i class="material-icons">shopping_cart</i>
+            <!-- i18n -->Buy Points<!-- /i18n -->
+          </a>
+        </li>
+        <li>
+          <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/boost" routerLinkActive="selected">
+            <i class="material-icons">trending_up</i>
+            <!-- i18n -->Boost<!-- /i18n -->
+          </a>
+        </li>
+        <li>
+          <a class="mdl-color-text--blue-grey-500 m-wallet--wire-link" routerLink="/wallet/revenue/wire" routerLinkActive="selected">
+            <i class="ion-icon ion-flash"></i>
+            <!-- i18n -->Wire<!-- /i18n -->
+          </a>
+        </li>
+        <li>
+          <a class="mdl-color-text--blue-grey-500" routerLink="/plus" routerLinkActive="selected">
+            <i class="material-icons">add_circle_outline</i>
+            <!-- i18n -->Minds Plus<!-- /i18n -->
+          </a>
+        </li>
+        <li>
+          <a class="mdl-color-text--blue-grey-500"
+            routerLink="affiliates"
+            routerLinkActive="selected"
+            >
+            <i class="material-icons">share</i>
+            <span i18n>Affiliate Program</span>
+          </a>
+        </li>
+        <li>
+          <a class="mdl-color-text--blue-grey-500" routerLink="ad-sharing" routerLinkActive="selected">
+            <i class="material-icons">branding_watermark</i>
+            <!-- i18n -->Ad-Revenue Sharing<!-- /i18n -->
+          </a>
+        </li>
+        <li>
+          <a class="mdl-color-text--blue-grey-500"
+            routerLink="/monetization"
+            >
+            <i class="material-icons">help</i>
+            <span i18n>About Monetization</span>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="mdl-cell mdl-cell--8-col">
+      <router-outlet></router-outlet>
+    </div>
+
+  </div>
+
+</div>

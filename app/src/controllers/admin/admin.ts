@@ -1,32 +1,51 @@
-import { Component, View, CORE_DIRECTIVES } from 'angular2/angular2';
-import { Router, RouteParams, Location, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 import { Client, Upload } from '../../services/api';
-import { Material } from '../../directives/material';
-
-import { AdminAnalytics } from './analytics/analytics';
-import { AdminBoosts } from './boosts/boosts';
-import { AdminPages } from './pages/pages';
+import { MindsTitle } from '../../services/ux/title';
+import { Session, SessionFactory } from '../../services/session';
 
 @Component({
   selector: 'minds-admin',
-  viewBindings: [ Client ]
-})
-@View({
   template: `
-    <minds-admin-analytics *ng-if="filter == 'analytics'"></minds-admin-analytics>
-    <minds-admin-boosts *ng-if="filter == 'boosts'"></minds-admin-boosts>
-    <minds-admin-pages *ng-if="filter == 'pages'"></minds-admin-pages>
-  `,
-  directives: [ CORE_DIRECTIVES, Material, ROUTER_DIRECTIVES, AdminAnalytics, AdminBoosts, AdminPages ]
+    <minds-admin-analytics *ngIf="filter == 'analytics'"></minds-admin-analytics>
+    <minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>
+    <minds-admin-pages *ngIf="filter == 'pages'"></minds-admin-pages>
+    <minds-admin-reports *ngIf="filter == 'reports' || filter == 'appeals'"></minds-admin-reports>
+    <minds-admin-monetization *ngIf="filter == 'monetization'"></minds-admin-monetization>
+    <minds-admin-programs *ngIf="filter == 'programs'"></minds-admin-programs>
+    <minds-admin-payouts *ngIf="filter == 'payouts'"></minds-admin-payouts>
+    <minds-admin-featured *ngIf="filter == 'featured'"></minds-admin-featured>
+    <minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
+    <m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
+  `
 })
 
 export class Admin {
 
-  filter : string = "";
+  filter: string = '';
+  session: Session = SessionFactory.build();
+  paramsSubscription: Subscription;
 
-  constructor(public params : RouteParams){
-    if(params.params['filter'])
-      this.filter = params.params['filter']
+  constructor(private route: ActivatedRoute, public title: MindsTitle, public router: Router) {
   }
 
+  ngOnInit() {
+
+    if (!this.session.isAdmin()) {
+      this.router.navigate(['/']);
+    }
+
+    this.title.setTitle('Admin');
+    this.paramsSubscription = this.route.params.subscribe((params: any) => {
+      if (params['filter']) {
+        this.filter = params['filter'];
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 }

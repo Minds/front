@@ -1,30 +1,58 @@
-import { Component, Inject, Injector, bind } from 'angular2/angular2';
-import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import { Component, Inject, Injector } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
-@Component({
-  directives: [ ROUTER_DIRECTIVES ]
-})
 export class AnalyticsService {
 
   //Set the analytics id of the page we want to send data
-  id : string = "UA-35146796-1";
+  id: string = 'UA-35146796-1';
 
-  constructor(public router: Router){
-    //we instantiate the google analytics service
-    window.ga('create', this.id, 'auto');
-
-    //We set the router to call onRouteChanged every time we change the page
-    this.router.subscribe(this.onRouteChanged);
-  }
-
-  onRouteChanged(path){
-    //should we send more data?
-    window.ga('send', 'pageview', { 'page' : path});
-  }
+  private defaultPrevented: boolean = false;
 
   //Manual send.
-  static send(type : string){
-    if (window.ga)
-      window.ga('send', type);
+  static send(type: string, fields: any = {}) {
+    if (window.ga) {
+      window.ga('send', type, fields);
+    }
   }
+
+  static _(router: Router) {
+    return new AnalyticsService(router);
+  }
+
+  constructor( @Inject(Router) public router: Router) {
+    this.onRouterInit();
+
+    this.router.events.subscribe((navigationState) => {
+      if (navigationState instanceof NavigationEnd) {
+        try {
+          this.onRouteChanged(navigationState.urlAfterRedirects);
+        } catch (e) {
+          console.error('Minds: router hook(AnalyticsService)', e);
+        }
+      }
+    });
+  }
+
+  onRouterInit() {
+    //we instantiate the google analytics service
+    window.ga('create', this.id, 'auto');
+  }
+
+  onRouteChanged(path) {
+    if (!this.defaultPrevented) {
+      AnalyticsService.send('pageview', { 'page': path });
+    }
+
+    this.defaultPrevented = false;
+  }
+
+  preventDefault() {
+    this.defaultPrevented = true;
+  }
+
+  wasDefaultPrevented() {
+    return this.defaultPrevented;
+  }
+
+
 }

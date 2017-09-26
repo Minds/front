@@ -1,0 +1,59 @@
+.m-paywall-button-icon{
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.m-paywall-button{
+  padding: 16px;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  button{
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    float:right;
+  }
+
+  p{
+    padding:8px 0;
+    display:inline-block;
+    margin-bottom:0;
+
+    b{
+      font-size: 26px;
+      color:#888;
+    }
+  }
+}
+
+.m-paywall-splash{
+  text-align: center;
+  //padding: 16px;
+
+  img{
+    width:100%;
+  }
+
+  i{
+    width: 100%;
+    font-size: 84px;
+  }
+}
+
+.m-paywall-amount{
+  padding: 26px;
+  text-align: center;
+  font-size: 36px;
+}
+
+.m-paywall-notice {
+  text-align: center;
+  font-size: 12px;
+  padding: $minds-padding / 2;
+}

@@ -1,0 +1,59 @@
+<div class="mdl-grid m-admin-payouts" style="max-width:600px">
+  <div class="m-note">
+    <!-- i18n -->Users can be banned for monetizing on the dropdown in their profile.<!-- /i18n -->
+  </div>
+
+  <div *ngFor="let payout of payouts; let i = index"
+    class="mdl-cell mdl-cell--12-col"
+  >
+    <div class="mdl-card mdl-shadow--4dp m-payout">
+      <div class="m-payout-meta">
+        <p class="m-user" *ngIf="payout.userObj">
+          <a [routerLink]="[ '/', payout.userObj.username ]" target="_blank">
+            <img [src]="'/icon/' + payout.userObj.guid + '/tiny/' + payout.userObj.icontime" alt="">
+            {{ payout.userObj.username }}
+          </a>
+        </p>
+        <p class="m-date">{{ payout.ts * 1000 | date:'medium' }}</p>
+      </div>
+      
+      <div class="m-payout-info">
+        <p class="m-amount">
+          <span class="m-value">{{ payout.amount | currency:'USD':true }}</span>
+          <a [routerLink]="[ '/wallet/ad-sharing/analytics', { username: payout.userObj?.username } ]" target="_blank">
+            {{ payout.start * 1000 | date:'mediumDate' }} - {{ payout.end * 1000 | date:'mediumDate' }}
+          </a>
+        </p>
+      </div>
+
+      <div class="m-payout-cta" *ngIf="reviewing !== i">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+          (click)="review(i)"
+          [disabled]="inProgress"
+          i18n
+        >Review</button>
+      </div>
+      <div class="m-payout-cta" *ngIf="reviewing === i">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green"
+          (click)="pay(i)"
+          [disabled]="inProgress"
+          i18n
+        >Pay</button>
+
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+          (click)="review(null)"
+          [disabled]="inProgress"
+          i18n
+        >Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+  </infinite-scroll>
+
+</div>

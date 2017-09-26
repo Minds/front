@@ -1,119 +1,5 @@
 @import "defaults";
 
-.minds-banner{
-  position:relative;
-  max-height:300px;
-  overflow:hidden;
-  height: 300px;
-
-  .minds-banner-img{
-    width:100%;
-    min-width:2000px;
-    position: relative;
-    height: inherit;
-    background-position: 0, 0;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-
-  @media screen and (max-width: $min-tablet){
-    &{
-      max-height: 180px;
-    }
-    .minds-banner-img{
-      min-width: 100%;
-      height: 100%;
-      background-position:0 0 !important;
-    }
-  }
-
-  img{
-    width:100%;
-    min-width:2000px;
-    position: relative;
-  }
-  .minds-banner-overlay{
-    display:block;
-    position:absolute;
-    width:100%;
-    height:100%;
-    top:0;
-    left:0;
-    background:linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8));
-  }
-
-  &.minds-banner-editing{
-    img{
-      cursor:move;
-    }
-
-    .overlay{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      color: #FFF;
-      background: rgba(0, 0, 0, 0.3);
-      /* align-items: center; */
-      /* display: flex; */
-      text-align: center;
-      padding-top: 116px;
-      cursor: pointer;
-
-      i{
-        font-size: 62px;
-        width: 100%;
-      }
-      span{
-        font-weight: 200;
-        padding: $minds-padding*2;
-        display: block;
-      }
-    }
-    .minds-banner-overlay{
-      height:60px;
-      bottom:0;
-      top:initial;
-      background:rgba(0,0,0,0.6);
-    }
-    .add-button{
-      display:none;
-    }
-    .save-bar{
-      position: absolute;
-      width: 100%;
-      bottom: 0;
-      right: 0;
-      padding:$minds-padding $minds-padding*2;
-      background-color: rgba(0,0,0,0.5);
-      @include flex-display();
-      align-items: flex-end;
-      -webkit-align-item: flex-end;
-      @include flex-direction(row);
-
-      p{
-        margin: 0;
-        padding: 4px 16px;
-        color: #FFF;
-      }
-      minds-button-edit{
-        padding:0 $minds-padding;
-      }
-
-    }
-    input[type="file"]{
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      cursor: pointer;
-    }
-  }
-}
-
 .minds-avatar{
   position: relative;
   max-width: 200px;
@@ -126,7 +12,7 @@
   img{
     max-height: 220px;
     max-width: 100%;
-    border-radius: 3px;
+    border-radius: 50%;
     flex-basis: 100%;
   }
   .overlay{
@@ -135,19 +21,26 @@
     text-align: center;
     cursor: pointer;
     width: 100%;
+    height: 100%;
     position: absolute;
-    bottom: 0;
-    padding: 8px;
-    display:flex;
-    flex-flow:row nowrap;
-    align-items: center;
+    box-sizing: border-box;
+    
+    padding: 38px 8px;
+    //display:flex;
+    //flex-flow:row nowrap;
+    //align-items: center;
 
     i{
+      font-size:30px;
       padding-right:8px;
     }
     span{
       font-weight: 300;
       display: block;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 14px;
+      font-family: 'Lato', Helvetica;
     }
   }
   input[type="file"]{
@@ -167,7 +60,7 @@
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
   border-radius: 4px;
   position: absolute;
-  z-index: 500;
+  z-index: 1000;
   top: 8px;
   right: 8px;
   background-color: #FFF;
@@ -189,10 +82,12 @@
   .video{
     height:100%;
     width:100%;
+    background: none no-repeat left center #000000;
+    background-size: cover;
+
     video{
       min-height:100%;
       min-width:100%;
-      background-image:url('assets/videos/traffic-1/traffic-1.png');
       position:absolute;
       bottom:0;
     }
@@ -221,8 +116,8 @@
     flex-direction: column;
     -webkit-flex-direction:column;
     background: linear-gradient(
-      rgba(0, 0, 0, 0),
-      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0)
     );
     color:#FFF;
@@ -255,6 +150,17 @@ minds-video{
     border-radius: 3px;
     font-weight: bold;
   }
+  .minds-video-play-icon{
+    color: #fff;
+    display: block;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 100px;
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+  }
   .minds-video-bar-full{
     display:none;
     position:absolute;
@@ -267,12 +173,12 @@ minds-video{
     padding:$minds-padding;
     text-align:center;
 
-    > span, i{
-      @include flex(1);
+    > span, i, a{
+      flex: 1;
       &.progress-bar{
-          @include flex(6);
+          flex: 6;
           position: relative;
-          bar{
+          .minds-bar{
             position: absolute;
             left: 0px;
             height: 2px;
@@ -292,8 +198,27 @@ minds-video{
         font-family: 'Lato';
         flex: 2;
       }
-      cursor:pointer;
+      &.m-play-count {
+        flex: 2;
+        text-align: right;
 
+        minds-media-view & {
+          flex: 1;
+        }
+
+        > i {
+          vertical-align: middle;
+          margin-right: 0.15em;
+        }
+
+        > span {
+          vertical-align: middle;
+          font-size: 12px;
+          font-weight: 300;
+        }
+      }
+      cursor:pointer;
+      text-decoration:none;
     }
   }
 
@@ -302,7 +227,7 @@ minds-video{
       display:none;
     }
     .minds-video-bar-full{
-      @include flex-display();
+      display: flex;
     }
   }
 }
@@ -337,7 +262,7 @@ minds-carousel{
     }
 
     .overlay{
-      opacity:0;
+    //  opacity:0;
     }
 
     .minds-banner{
@@ -453,8 +378,18 @@ minds-carousel{
     display: flex;
     align-items: center;
 
+    a {
+      cursor: pointer;
+    }
+
     i {
       padding:$minds-padding;
+      vertical-align: middle;
+    }
+
+    span {
+      vertical-align: middle;
+      padding: $minds-padding 0;
     }
   }
 }
@@ -498,6 +433,21 @@ minds-button-user-dropdown{
   }
 }
 
+.m-error-splash{
+  text-align: center;
+  text-transform: uppercase;
+
+  h3{
+    margin: auto;
+    font-weight: 600;
+    font-size: 19px;
+    margin-top: 20vh;
+  }
+  span{
+
+  }
+}
+
 minds-graph-line{
   display: block;
   margin-bottom: 16px;
@@ -520,4 +470,235 @@ minds-graph-line{
     }
   }
 
+}
+
+.minds-avatar-hovercard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: auto;
+  right: auto;
+  z-index: 999995;
+  background: #ffffff;
+  width: 330px;
+  padding-bottom: $minds-padding;
+}
+
+.m-bubble-popup {
+  position: fixed;
+  z-index: 999995;
+  user-select: none;
+}
+
+minds-emoji .m-bubble-popup {
+  max-width: 180px + ($minds-padding * 2);
+  background: #ffffff;
+  margin: $minds-padding;
+  border-radius: 3px;
+  user-select: none;
+
+  .m-emoji-selector-title {
+    width: 100%;
+    position: relative;
+    padding: ($minds-padding / 2) $minds-padding;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: bold;
+    border-bottom: 1px solid #eaeaea;
+
+    .m-emoji-selector-close {
+      position: absolute;
+      right: $minds-padding;
+      top: $minds-padding / 2;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+
+  .m-emoji-selector-list {
+    width: 100%;
+    max-height: 336px;
+    overflow-y: auto;
+    padding: $minds-padding;
+    box-sizing: border-box;
+  }
+
+  .m-emoji {
+    display: inline-block;
+    padding: $minds-padding;
+    cursor: pointer;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    vertical-align: middle;
+    font-family: minds_emoji;
+    line-height: 24px;
+  }
+}
+
+minds-tooltip .m-bubble-popup {
+  background: #000000;
+  color: #ffffff;
+  padding: ($minds-padding / 2) $minds-padding;
+  margin: $minds-padding 0;
+  font-size: 10px;
+}
+
+m-translate {
+  .m-translate-select {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    &:after {
+      font-family: 'Material Icons';
+      font-size: 14px;
+      font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      content: '\e313';
+      line-height: 1em;
+      position: absolute;
+      top: 50%;
+      right: $minds-padding;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+  }
+
+  .m-translate-select-control {
+    cursor: pointer;
+    width: 200px;
+    max-width: 100%;
+    appearance: none;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    padding: $minds-padding;
+    font-size: 12px;
+  }
+}
+
+.m-translation-wrapper {
+  .message {
+    font-size: 14px;
+    white-space: inherit !important;
+    width: calc(100% - #{$minds-padding * 4}) !important;
+    margin: 0 ($minds-padding * 2) $minds-padding;
+    padding: $minds-padding 0 $minds-padding $minds-padding;
+    border-left: 2px solid #ddd;
+
+    minds-card-comment & {
+      font-size: inherit !important;
+    }
+  }
+}
+
+.m-ribbon {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: #ffffff;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99990;
+
+  &.m-ribbon-right {
+    right: 0;
+    left: auto;
+
+    minds-card-comment & {
+      margin: ($minds-padding / 2) $minds-padding 0 0;
+      right: 90px; // 3 buttons + spacing
+    }
+  }
+}
+
+.m-ribbon--item {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  padding: 0 ($minds-padding / 2);
+  cursor: pointer;
+
+  .material-icons {
+    font-size: 20px;
+    line-height: 1;
+  }
+}
+
+.m-clickable {
+  cursor: pointer;
+}
+
+.m-custom-icon {
+  display: inline-block;
+  width: 1.28571429em;
+  height: 1em;
+  text-align: center;
+
+  &:before {
+    display: inline-block;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: none no-repeat center center transparent;
+    background-size: contain;
+  }
+
+  &.m-custom-icon-minds {
+    height: 1.2em;
+
+    &:before {
+      background-image: url('../assets/gs-icon.png');
+    }
+  }
+}
+
+.m-wallet-pop {
+  display: inline-block;
+  position: absolute;
+  top: 0.5em;
+  left: 36px;
+  min-width: 20px;
+  line-height: 1;
+  padding: 7px 2px;
+  white-space: nowrap;
+  font-size: 10px;
+  border-radius: 2em;
+  text-align: center;
+  pointer-events: none;
+}
+
+svg.m-facebook-icon{
+  cursor:pointer;
+  background-color: #3067a3;
+  fill:#FFF;
+  margin:auto;
+}
+
+.m--spam-notice {
+  display: block;
+  text-align: center;
+  padding: ($minds-padding * 2);
+  background: #ffffaa;
+  color: #000000;
+  font-size: 12px;
+  line-height: 1.25;
+  font-weight: 300;
+
+  minds-newsfeed-single & {
+    margin: 0 0 ($minds-padding / 2) 0;
+  }
+
+  m-blog-view & {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    z-index: 10;
+  }
 }

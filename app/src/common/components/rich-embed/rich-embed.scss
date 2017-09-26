@@ -1,0 +1,85 @@
+minds-rich-embed {
+  .thumbnail {
+    display: block;
+    position: relative;
+  }
+
+  .m-html-loading {
+    position: absolute;
+    top: 0;
+    z-index: 9999;
+  }
+
+  .m-rich-embed-action-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      background: transparent;
+    }
+
+    > i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+      font-size: 4em;
+      line-height: 1em;
+    }
+  }
+
+  .m-rich-embed-thumbnail-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    background: none no-repeat center center transparent;
+    background-size: cover;
+  }
+
+  .m-rich-embed-thumbnail-placeholder {
+    background-color: #000000;
+  }
+
+  .m-rich-embed-video-iframe {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+
+    > iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .m-rich-embed-image-iframe {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* 1:1 */
+    height: 0;
+
+    > iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .m-rich-embed-audio-spotify {
+    > iframe {
+      padding: 0 ($minds-padding * 2);
+      box-sizing: border-box;
+    }
+  }
+}

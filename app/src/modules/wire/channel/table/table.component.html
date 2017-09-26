@@ -1,0 +1,37 @@
+<table
+  class="m-wire-channel--rewards"
+  [ngClass]="[ 'm-wire-channel--rewards-' + type ]"
+  cellspacing="0" cellspacing="0"
+>
+  <tr *ngFor="let reward of rewards; let i = index" (click)="openWireModal(reward)">
+    <td>
+      <div class="m-wire-channel--reward-amount mdl-color-text--blue-grey-500">
+        <span *ngIf="!editing && type == 'money'">{{ (reward.amount || 0) | currency:'USD':true:'1.0-0' }}+</span>
+        <span *ngIf="!editing && type == 'points'">{{ (reward.amount || 0) | number }}+</span>
+
+        <ng-container *ngIf="editing && type=='money'">$</ng-container>
+        <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
+        <span *ngIf="editing">+</span>
+        <ng-container *ngIf="type=='points'">points</ng-container>
+
+        <div class="m-wire-channel--reward-send-wire" *ngIf="!editing">
+          <i class="ion-icon ion-flash"></i>
+        </div>
+      </div>
+
+      <div class="m-wire-channel--reward-description">
+        <p *ngIf="!editing">{{ reward.description }}</p>
+        <textarea *ngIf="editing" [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow] placeholder="Describe the reward"></textarea>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<div class="m-wire-channel--rewards--add-tier">
+  <a *ngIf="editing"
+    (click)="addTier()"
+  >
+    <i class="material-icons">playlist_add</i>
+    <span>Add Reward</span>
+  </a>
+</div>

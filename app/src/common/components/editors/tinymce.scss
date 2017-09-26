@@ -1,0 +1,22 @@
+minds-tinymce{
+  margin-left: -32px;
+  display: block;
+  width: calc(100% + 64px);
+
+  .mce-edit-area{
+    padding:16px 32px;
+  }
+
+}
+
+.mce-content-body {
+  font-family:"Lato";
+  font-weight:300;
+  line-height:30px;
+  font-size:16px;
+  color:#6a6a6a;
+
+  p{
+    padding-bottom: 8px;
+  }
+}

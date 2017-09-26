@@ -1,0 +1,18 @@
+.m-plus--verify{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 16px;
+
+  ul{
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+  }
+
+  input, textarea{
+    padding: 12px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

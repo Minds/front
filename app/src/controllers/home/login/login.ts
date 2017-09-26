@@ -1,94 +1,79 @@
-import { Component, View, Inject, CORE_DIRECTIVES, FORM_DIRECTIVES, ControlGroup, FormBuilder, Validators } from 'angular2/angular2';
-import { Router, RouteParams, RouterLink } from 'angular2/router';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
+
+import { SignupModalService } from '../../../modules/modals/signup/service';
 import { MindsTitle } from '../../../services/ux/title';
-import { Material } from '../../../directives/material';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
-import { Register } from '../register/register';
+import { LoginReferrerService } from '../../../services/login-referrer.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-login',
-  viewBindings: [ Client ],
-  bindings: [ MindsTitle ]
-})
-@View({
-  templateUrl: 'src/controllers/home/login/login.html',
-  directives: [ CORE_DIRECTIVES, FORM_DIRECTIVES, Material, Register, RouterLink]
+  templateUrl: 'login.html'
 })
 
 export class Login {
 
-	session = SessionFactory.build();
-  errorMessage : string = "";
-  twofactorToken : string = "";
-  hideLogin : boolean = false;
-  inProgress : boolean = false;
-  referrer : string;
+  session = SessionFactory.build();
+  errorMessage: string = '';
+  twofactorToken: string = '';
+  hideLogin: boolean = false;
+  inProgress: boolean = false;
+  referrer: string;
+  minds = window.Minds;
 
-  form : ControlGroup;
+  flags = {
+    canPlayInlineVideos: true
+  };
 
-	constructor(public client : Client, public router: Router, public params: RouteParams, public title: MindsTitle, fb: FormBuilder){
-		if(this.session.isLoggedIn())
-      router.navigate(['/Newsfeed']);
+  paramsSubscription: Subscription;
 
-    this.title.setTitle("Login");
+  constructor(
+    public client: Client,
+    public router: Router,
+    public route: ActivatedRoute,
+    public title: MindsTitle,
+    private modal: SignupModalService,
+    private loginReferrer: LoginReferrerService
+  ) { }
 
-    this.form = fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+  ngOnInit() {
+    if (this.session.isLoggedIn()) {
+      this.loginReferrer.navigate();
+    }
+
+    this.title.setTitle('Login');
+
+    this.paramsSubscription = this.route.params.subscribe((params) => {
+      if (params['referrer']) {
+        this.referrer = params['referrer'];
+      }
     });
 
-    if(params.params['referrer'])
-      this.referrer = params.params['referrer'];
-	}
+    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+      this.flags.canPlayInlineVideos = false;
+    }
+  }
 
-	login(){
-    if(this.inProgress)
-      return;
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 
-    this.errorMessage = "";
-    this.inProgress = true;
-		var self = this; //this <=> that for promises
-		this.client.post('api/v1/authenticate', {username: this.form.value.username, password: this.form.value.password})
-			.then((data : any) => {
-				this.form.value = null;
-        this.inProgress = false;
-				self.session.login(data.user);
-        if(this.referrer)
-          self.router.navigateByUrl(this.referrer);
-        else
-				  self.router.navigate(['/Newsfeed', {}]);
-			})
-			.catch((e) => {
+  loggedin() {
+    if (this.referrer)
+      this.router.navigateByUrl(this.referrer);
+    else
+      this.loginReferrer.navigate();
+  }
 
-        this.inProgress = false;
-        if(e.status == 'failed'){
-          //incorrect login details
-          self.errorMessage = "Incorrect username/password. Please try again.";
-          self.session.logout();
-        }
-
-        if(e.status == 'error'){
-          //two factor?
-          self.twofactorToken = e.message;
-          self.hideLogin = true;
-        }
-
-			});
-	}
-
-  twofactorAuth(code){
-    var self = this;
-    this.client.post('api/v1/authenticate/two-factor', {token: this.twofactorToken, code: code.value})
-        .then((data : any) => {
-          self.session.login(data.user);
-          self.router.navigate(['/Newsfeed', {}]);
-        })
-        .catch((e) => {
-          self.errorMessage = "Sorry, we couldn't verify your two factor code. Please try logging again.";
-          self.twofactorToken = "";
-          self.hideLogin = false;
-        });
+  registered() {
+    this.modal.setDisplay('categories').open();
+    this.loginReferrer.navigate({
+      defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
+    });
   }
 
 }

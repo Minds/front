@@ -1,116 +1,167 @@
-<div class="mdl-grid channel-grid" style="max-width:900px" *ng-if="error">
-  <h1>{{error}}</h1>
+<div class="m--spam-notice mdl-shadow--2p" *ngIf="user?.spam">
+  <ng-container *ngIf="user?.spam">This user was flagged as spam.</ng-container>
+  <ng-container *ngIf="user?.deleted">This user was flagged as deleted.</ng-container>
+
+  <ng-container *ngIf="!session.isAdmin()">
+    If you wish to appeal, please check your <a routerLink="/settings/reported-content">Reported Content console</a>.
+  </ng-container>
 </div>
 
-<div [hidden]="user" style="width:100%; text-align: center;">
-  <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+<div [hidden]="user || error" style="width:100%; text-align:center; ">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+</div>
+<div class="m-error-splash" *ngIf="error && !user">
+  <h3 class="mdl-color-text--red-300">{{error}}</h3>
+  <span class="mdl-color-text--blue-grey-300" i18n>Please check the username</span>
 </div>
 
 <header [hidden]="!isLocked"></header>
 
-<header  *ng-if="user" [ng-class]="{'isLocked': isLocked}">
-  <minds-carousel [banners]="user.carousels" [edit-mode]="editing" (done)="updateCarousels($event)" (delete)="removeCarousel($event)"></minds-carousel>
+<header  *ngIf="user" [ngClass]="{'isLocked': isLocked}">
+  <minds-carousel [banners]="user.carousels" [editMode]="editing" (done)="updateCarousels($event)" (delete)="removeCarousel($event)"></minds-carousel>
 
-  <div class="mdl-grid channel-grid channel-header-bar" style="max-width:990px">
-    <div class="mdl-cell mdl-cell--4-col minds-channel-title">
-
-      <minds-avatar [object]="user" [edit-mode]="editing" (added)="upload_avatar($event)"></minds-avatar>
-
-      <div class="body">
-        <div class="flex-bottom  mdl-color-text--blue-grey-50">
-          <h1>{{user.name}}</h1>
-          <h3>@{{user.username}}</h3>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="mdl-cell mdl-cell--8-col minds-tabs mdl-tabs__tab-bar">
-        <a [router-link]="['/Channel-Filter', {username: user.username, filter: 'feed'}]" class="mdl-tabs__tab mdl-color-text--blue-grey-50">
-          <span>Feed</span>
-          <b>{{user.activity_count}}</b>
-        </a>
-        <a [router-link]="['/Channel-Filter', {username: user.username, filter: 'subscribers'}]" class="mdl-tabs__tab mdl-color-text--blue-grey-50">
-          <span>Subscribers</span>
-          <b>{{user.subscribers_count}}</b>
-        </a>
-        <a [router-link]="['/Channel-Filter', {username: user.username, filter: 'subscriptions'}]" class="mdl-tabs__tab  mdl-color-text--blue-grey-50">
-          <span>Subscriptions</span>
-          <b>{{user.subscriptions_count}}</b>
-        </a>
-        <a class="mdl-tabs__tab  mdl-color-text--blue-grey-50">
-          <span>Views</span>
-          <b>{{user.impressions}}</b>
-        </a>
-        <div class="mdl-tabs__tab mdl-tabs__action-buttons">
-          <minds-button-subscribe [user]="user"  *ng-if="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked"></minds-button-subscribe>
-          <minds-button-user-dropdown [(user)]="user" *ng-if="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
-
-          <minds-button-edit (click)="toggleEditing()" [hidden]="editing" *ng-if="session.getLoggedInUser().guid == user.guid">
-            <button class="material-icons">edit</button>
-          </minds-button-edit>
-          <minds-button-edit (click)="toggleEditing()"  [hidden]="!editing" *ng-if="session.getLoggedInUser().guid == user.guid">
-            <button class="material-icons">done</button>
-          </minds-button-edit>
-        </div>
-    </div>
-  </div>
 </header>
 
 
-<div class="mdl-grid channel-grid channel-blocked" style="max-width:900px" *ng-if="user && user?.blocked">
-  <h3 class="mdl-color-text--blue-grey-300">You have blocked @{{user.username}}</h3>
+<div class="mdl-grid channel-grid m-channel--blocked" style="max-width:900px" *ngIf="user && user?.blocked">
+  <h3 class="mdl-color-text--blue-grey-300" i18n>You have blocked @{{user.username}}</h3>
+  <a (click)="unBlock()">Click to Unblock</a>
 </div>
 
 
-<div class="mdl-grid channel-grid" style="max-width:900px" *ng-if="user && !user?.blocked">
+<div class="mdl-grid channel-grid" style="max-width:990px" *ngIf="user && !user?.blocked">
 
-  <section class="mdl-cell mdl-cell--4-col minds-channel-sidebar">
-      <div class="mdl-card mdl-shadow--2dp minds-channel-bio">
-        <div class="mdl-card__title">
-          <h2 class="mdl-card__title-text">Bio</h2>
+  <section class="mdl-cell mdl-cell--4-col m-channel-sidebar">
+
+    <div class="mdl-card mdl-shadow--2dp minds-channel-bio m-channel--bio">
+      <minds-avatar [object]="user" [editMode]="editing" (added)="upload_avatar($event)"></minds-avatar>
+        <div class="m-channel--name">
+          <h2>{{user.name}}</h2>
+          <span class="minds-button-edit" (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
+            <button class="material-icons" [hidden]="editing">edit</button>
+            <button class="material-icons" [hidden]="!editing">done</button>
+          </span>
         </div>
+        <div class="m-channel--username">
+          <h2><span>@</span>{{user.username}}</h2>
+        </div>
+        <div class="mdl-card__supporting-text" id="bio" [hidden]="editing" style="white-space:pre-line; text-align:center;" [innerHtml]="user.briefdescription | tags"></div>
 
-        <div class="mdl-card__supporting-text" id="bio" [hidden]="editing" style="white-space:pre-line" [inner-html]="user.briefdescription | tags"></div>
-
-        <div class="minds-editable-container mdl-card__supporting-text" *ng-if="editing && isOwner()">
+        <div class="minds-editable-container mdl-card__supporting-text" *ngIf="editing && isOwner()">
           <!-- OWNER EDIT FORM -->
             <textarea
-              [auto-grow]
+              [autoGrow]
               class="mdl-textfield__input"
               type="text"
-              [(ng-model)]="user.briefdescription"
+              name="briefdescription"
+              [(ngModel)]="user.briefdescription"
             ></textarea>
         </div>
+
+        <div class="m-channel-bio-fields" [ngClass]="{'m-channel-bio-fields-flex': !editing}">
+
+          <!-- City / Location -->
+          <div class="m-channel-bio-field m-channel--city mdl-color-text--blue-grey-600" [hidden]="editing || !user.city">
+            <i class="material-icons mdl-color-text--blue-grey-300">location_on</i>
+            <span>{{user.city}}</span>
+          </div>
+
+          <div class="m-channel-bio-editor m-channel-city-editor" *ngIf="editing && isOwner()">
+            <div class="m-channel-bio-input m-channel-city-input">
+              <i class="material-icons mdl-color-text--blue-grey-300">location_on</i>
+              <input (keyup)="findCity(user.city)" name="city" [(ngModel)]="user.city" class="" placeholder="Enter your city..." i18n-placeholder />
+            </div>
+            <div class="m-discovery-cities mdl-card mdl-shadow--4dp" *ngIf="editing && cities.length > 0">
+              <p class="mdl-color-text--blue-grey-300">Select your city:</p>
+              <li (click)="setCity(c)" *ngFor="let c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
+            </div>
+          </div>
+          <!-- END City / Location -->
+
+          <minds-channel-social-profiles
+            [user]="user"
+            [editing]="editing && isOwner()"
+            (changed)="setSocialProfile($event)"
+          ></minds-channel-social-profiles>
+
+      </div>
+
+      <div class="m-channel--stats  mdl-tabs__tab-bar">
+            <a [routerLink]="['/', user.username, 'feed']" class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.activity_count">
+              <span i18n="Count of activities">Feed</span>
+              <b>{{user.activity_count | number}}</b>
+            </a>
+            <a class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.supporters_count && session.getLoggedInUser().guid != user.guid">
+              <span i18n="Count of supporters">Supporters</span>
+              <b>{{user.supporters_count | number}}</b>
+            </a>
+            <a [routerLink]="['/', user.username, 'supporters']"  class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.supporters_count && session.getLoggedInUser().guid == user.guid">
+              <span i18n="Count of supporters">Supporters</span>
+              <b>{{user.supporters_count | number}}</b>
+            </a>
+            <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab mdl-color-text--blue-grey-500">
+              <span i18n>Subscribers</span>
+              <b>{{user.subscribers_count | number}}</b>
+            </a>
+            <a class="mdl-tabs__tab  mdl-color-text--blue-grey-500">
+              <span i18n>Views</span>
+              <b>{{user.impressions | number}}</b>
+            </a>
+        </div>
+
+          <div class="m-channel--action-buttons" >
+            <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked && !user.subscribed"></minds-button-subscribe>
+            <minds-messenger-channel-button [user]="user" *ngIf="user.subscribed"></minds-messenger-channel-button>
+            <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
+            <div class="m-button m-channel--edit-button" (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
+              <button>
+                <i [hidden]="editing" class="material-icons">edit</i>
+                <i [hidden]="!editing" class="material-icons">done</i>
+                <span [hidden]="editing">Edit</span>
+                <span [hidden]="!editing">Save</span>
+              </button>
+            </div>
+            <m-channel--badges [user]="user"></m-channel--badges>
+          </div>
+
+
       </div>
 
       <div class="minds-spacer-2x"></div>
 
-      <!-- images  -->
-      <minds-channel-modules [owner]="user" type="image">
+      <m-wire-channel #wire
+        [(rewards)]="user.wire_rewards"
+        [channel]="user"
+        [editing]="editing"
+      ></m-wire-channel>
 
-        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Discovery', {filter:user.username, type:'images'}]">
-          View More
+      <div class="minds-spacer-2x"></div>
+
+      <!-- images  -->
+      <minds-channel-modules [owner]="user" type="image" [linksTo]="['/discovery', user.username, 'images']">
+
+        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', user.username, 'images']">
+          <!-- i18n -->View More<!-- /i18n -->
         </a>
       </minds-channel-modules>
 
       <div class="minds-spacer-2x"></div>
 
       <!-- videos  -->
-      <minds-channel-modules [owner]="user" type="video" limit="6">
+      <minds-channel-modules [owner]="user" type="video" limit="9" [linksTo]="['/discovery', user.username, 'videos']">
 
-        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Discovery', {filter:user.username, type:'videos'}]">
-          View More
+        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', user.username, 'videos']">
+          <!-- i18n -->View More<!-- /i18n -->
         </a>
       </minds-channel-modules>
 
       <div class="minds-spacer-2x"></div>
 
       <!-- Blogs  -->
-      <minds-channel-modules [owner]="user" type="blog" limit="3">
+      <minds-channel-modules [owner]="user" type="blog" limit="3" [linksTo]="['/blog', user.username]">
 
-        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [router-link]="['/Blog', {filter:user.username}]">
-          View More
+        <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/blog', user.username]">
+          <!-- i18n -->View More<!-- /i18n -->
         </a>
       </minds-channel-modules>
 
@@ -118,41 +169,61 @@
   </section>
 
   <!-- Feed list -->
-  <section class="mdl-cell mdl-cell--8-col" *ng-if="_filter == 'feed'">
+  <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="_filter == 'feed'">
 
-    <minds-newsfeed-poster (load)="prepend($event)" *ng-if="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"></minds-newsfeed-poster>
+    <minds-newsfeed-poster (load)="prepend($event)" *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid" #poster></minds-newsfeed-poster>
 
     <div class="minds-list">
-
-        <minds-activity *ng-for="#activity of feed" [object]="activity" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
+        <m-onboarding-feed *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"></m-onboarding-feed>        
+        <minds-activity *ngFor="let activity of feed" [object]="activity" [boostToggle]="activity.boostToggle" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
         <infinite-scroll
             distance="25%"
             (load)="loadFeed()"
-            *ng-if="moreData"
-            />
-            <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+            [moreData]="moreData"
+            [inProgress]="inProgress">
         </infinite-scroll>
-
     </div>
+    
+
+  </section>
+
+  <!-- Supporters list -->
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'supporters'">
+
+    <minds-channel-supporters [channel]="user" class="mdl-grid"></minds-channel-supporters>
 
   </section>
 
   <!-- Subscriptions list -->
-  <section class="mdl-cell mdl-cell--8-col" *ng-if="_filter == 'subscriptions'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'subscriptions'">
+
+    <div class="mdl-card mdl-shadow--2dp m-channel--subscribers-tabs">
+      <div class="mdl-tabs__tab-bar">
+        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n>Subscribers ({{user.subscribers_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n>Subscriptions ({{user.subscriptions_count}})</a>
+      </div>
+    </div>
 
     <minds-channel-subscriptions [channel]="user" class="mdl-grid"></minds-channel-subscriptions>
 
   </section>
 
   <!-- Subscriptions list -->
-  <section class="mdl-cell mdl-cell--8-col" *ng-if="_filter == 'subscribers'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'subscribers'">
+
+    <div class="mdl-card mdl-shadow--2dp  m-channel--subscribers-tabs">
+      <div class="mdl-tabs__tab-bar">
+        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n>Subscribers ({{user.subscribers_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n>Subscriptions ({{user.subscriptions_count}})</a>
+      </div>
+    </div>
 
     <minds-channel-subscribers [channel]="user" class="mdl-grid"></minds-channel-subscribers>
 
   </section>
 
   <!-- Edit Channel -->
-  <section class="mdl-cell mdl-cell--8-col" *ng-if="_filter == 'edit'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'edit'">
 
     <minds-channel-edit [channel]="user" class="mdl-grid"></minds-channel-edit>
 

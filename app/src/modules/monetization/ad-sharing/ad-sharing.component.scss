@@ -1,0 +1,29 @@
+m-ad-sharing {
+  .m-apply-switch {
+    text-align: center;
+
+    .mdl-switch {
+      width: auto;
+    }
+  }
+
+  .m-apply-more {
+    width: 100%;
+    margin-top: $minds-padding * 2;
+  }
+
+  .m-apply-message {
+    textarea {
+      width: 100%;
+      resize: none;
+      height: 8em;
+      padding: $minds-padding*2;
+      line-height:18px;
+      border:1px solid #EEE;
+    }
+  }
+
+  .m-apply-submit {
+    text-align: right;
+  }
+}

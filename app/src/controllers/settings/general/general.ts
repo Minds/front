@@ -1,90 +1,139 @@
-import { Component, View, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angular2';
-import { RouterLink, RouteParams } from "angular2/router";
+import { Component, ElementRef, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
+
 import { SessionFactory } from '../../../services/session';
 import { Client } from '../../../services/api';
-import { MDL_DIRECTIVES } from '../../../directives/material';
+import { ThirdPartyNetworksService } from '../../../services/third-party-networks';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-settings-general',
-  viewBindings: [ Client ],
-  properties: ['object']
-})
-@View({
-  templateUrl: 'src/controllers/settings/general/general.html',
-  directives: [ CORE_DIRECTIVES, MDL_DIRECTIVES, RouterLink, FORM_DIRECTIVES]
+  templateUrl: 'general.html'
 })
 
-export class SettingsGeneral{
+export class SettingsGeneral {
 
   session = SessionFactory.build();
-  minds : Minds;
-  settings : string;
+  minds: Minds;
+  settings: string;
+  @Input() object: any;
 
-  error : string = "";
-  changed : boolean = false;
-  saved : boolean = false;
-  inProgress : boolean = false;
+  @Input() card: string; // card we'll scroll to
 
-  guid : string = "";
-  name : string;
-  email : string;
+  error: string = '';
+  changed: boolean = false;
+  saved: boolean = false;
+  inProgress: boolean = false;
 
-  password : string;
-  password1 : string;
-  password2 : string;
+  guid: string = '';
+  name: string;
+  email: string;
+  mature: boolean = false;
+  enabled_mails: boolean = true;
 
+  password: string;
+  password1: string;
+  password2: string;
 
-  constructor(public client: Client, public params: RouteParams){
+  language: string = 'en';
+
+  categories: { id, label, selected }[];
+  selectedCategories: string[] = [];
+
+  paramsSubscription: Subscription;
+
+  constructor(
+    public element: ElementRef,
+    public client: Client,
+    public route: ActivatedRoute,
+    public thirdpartynetworks: ThirdPartyNetworksService
+  ) {
     this.minds = window.Minds;
-    if(params.params['guid'] && params.params['guid'] == this.session.getLoggedInUser().guid)
-      this.load(true);
-    else
-      this.load(false);
+    this.getCategories();
   }
 
-  load(remote : boolean = false){
-    if(!remote){
-      var user = this.session.getLoggedInUser();
+  ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['guid'] && params['guid'] === this.session.getLoggedInUser().guid) {
+        this.load(true);
+      } else {
+        this.load(false);
+      }
+    });
+  }
+
+  ngAfterViewInit() {
+    if (this.card && this.card !== '') {
+      const el = this.element.nativeElement.querySelector('.m-settings--' + this.card);
+      window.scrollTo(0, el.offsetTop - 64); // 64 comes from the topbar's height
+    }
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
+
+  load(remote: boolean = false) {
+    if (!remote) {
+      const user = this.session.getLoggedInUser();
       this.name = user.name;
     }
 
-    var self = this;
     this.client.get('api/v1/settings/' + this.guid)
-      .then((response : any) => {
-        self.email = response.channel.email;
+      .then((response: any) => {
+        console.log('LOAD', response.channel);
+        this.email = response.channel.email;
+        this.mature = !!parseInt(response.channel.mature, 10);
+        this.enabled_mails = !parseInt(response.channel.disabled_emails, 10);
+        this.language = response.channel.language || 'en';
+        this.selectedCategories = response.channel.categories || [];
+
+        this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
+
+        if (window.Minds.user) {
+          window.Minds.user.mature = this.mature;
+        }
+        if (this.selectedCategories.length > 0) {
+          this.selectedCategories.forEach((item, index, array) => {
+            const i: number = this.categories.findIndex(i => i.id === item);
+            if (i !== -1)
+              this.categories[i].selected = true;
+          });
+        }
       });
   }
 
   canSubmit() {
-    if(!this.changed)
+    if (!this.changed)
       return false;
 
-    if(this.password && !this.password1 || this.password && !this.password2)
+    if (this.password && !this.password1 || this.password && !this.password2)
       return false;
 
-    if(this.password1 && !this.password){
-      this.error = "You must enter your current password";
-      return false;
-    }
-
-    if(this.password1 != this.password2){
-      this.error = "Your new passwords do not match";
+    if (this.password1 && !this.password) {
+      this.error = 'You must enter your current password';
       return false;
     }
 
-    this.error = "";
+    if (this.password1 !== this.password2) {
+      this.error = 'Your new passwords do not match';
+      return false;
+    }
+
+    this.error = '';
 
     return true;
   }
 
-  change(){
+  change() {
     this.changed = true;
     this.saved = false;
   }
 
-  save(){
-    var self = this;
-    if(!this.canSubmit())
+  save() {
+    if (!this.canSubmit())
       return;
 
     this.inProgress = true;
@@ -93,18 +142,90 @@ export class SettingsGeneral{
         name: this.name,
         email: this.email,
         password: this.password,
-        new_password: this.password2
+        new_password: this.password2,
+        mature: this.mature ? 1 : 0,
+        disabled_emails: this.enabled_mails ? 0 : 1,
+        language: this.language,
+        categories: this.selectedCategories
       })
-      .then((response : any) => {
-        self.changed = false;
-        self.saved = true;
-        self.error = "";
+      .then((response: any) => {
+        this.changed = false;
+        this.saved = true;
+        this.error = '';
 
-        self.password = "";
-        self.password1 = "";
-        self.password2 = "";
+        this.password = '';
+        this.password1 = '';
+        this.password2 = '';
 
-        self.inProgress = false;
+        if (window.Minds.user) {
+          window.Minds.user.mature = this.mature ? 1 : 0;
+
+          if (window.Minds.user.name !== this.name) {
+            window.Minds.user.name = this.name;
+          }
+
+        }
+
+        if (this.language !== window.Minds['language']) {
+          window.location.reload(true);
+        }
+
+        this.inProgress = false;
       });
+  }
+
+  // Third Party Networks
+
+  connectFb() {
+    this.thirdpartynetworks.connect('facebook')
+      .then(() => {
+        this.load();
+      });
+  }
+
+  connectTw() {
+    this.thirdpartynetworks.connect('twitter')
+      .then(() => {
+        this.load();
+      });
+  }
+
+  removeFbLogin() {
+    this.thirdpartynetworks.removeFbLogin();
+  }
+
+  removeFb() {
+    this.thirdpartynetworks.disconnect('facebook');
+  }
+
+  removeTw() {
+    this.thirdpartynetworks.disconnect('twitter');
+  }
+
+  getCategories() {
+    this.categories = [];
+
+    for (let id in window.Minds.categories) {
+      this.categories.push({
+        id: id,
+        label: window.Minds.categories[id],
+        selected: false
+      });
+    }
+
+    this.categories.sort((a, b) => a.label > b.label ? 1 : -1);
+  }
+
+  onCategoryClick(category) {
+    category.selected = !category.selected;
+
+    if (category.selected) {
+      this.selectedCategories.push(category.id);
+    } else {
+      this.selectedCategories.splice(this.selectedCategories.indexOf(category.id), 1);
+    }
+
+    this.changed = true;
+    this.saved = false;
   }
 }

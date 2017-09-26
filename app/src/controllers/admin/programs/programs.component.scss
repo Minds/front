@@ -1,0 +1,63 @@
+.m-admin-programs {
+  .m-application {
+    padding: $minds-padding * 2;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .m-application-meta {
+    .m-user {
+      a {
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      img {
+        height: 1.5em;
+        border-radius: 1.5em;
+      }
+    }
+
+    .m-program {
+      display: inline-block;
+      padding: 0 0.15em;
+      font-weight: bold;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .m-date {
+      font-size: 11px;
+      color: #999999;
+    }
+  }
+
+  .m-application-info {
+    margin-top: $minds-padding;
+
+    .m-message {
+      text-decoration: none;
+      font-size: 14px;
+      color: #999999;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+
+  .m-application-cta {
+    margin-top: $minds-padding;
+    text-align: right;
+  }
+
+  .m-note {
+    width: 100%;
+    font-size: 11px;
+    color: #999999;
+    text-align: center;
+    margin-bottom: $minds-padding;
+  }
+}

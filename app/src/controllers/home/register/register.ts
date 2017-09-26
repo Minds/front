@@ -1,81 +1,64 @@
-import { Component, View, Inject, ControlGroup, FormBuilder, Validators, FORM_DIRECTIVES  } from 'angular2/angular2';
-import { Router, RouteParams } from 'angular2/router';
-import { Material } from '../../../directives/material';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
+
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
+import { SignupModalService } from '../../../modules/modals/signup/service';
+import { LoginReferrerService } from '../../../services/login-referrer.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-register',
-  viewBindings: [ Client ]
-})
-@View({
-  templateUrl: 'src/controllers/home/register/register.html',
-  directives: [ FORM_DIRECTIVES, Material ]
+  templateUrl: 'register.html'
 })
 
 export class Register {
 
-	session = SessionFactory.build();
-  errorMessage : string = "";
-  twofactorToken : string = "";
-  hideLogin : boolean = false;
-  inProgress : boolean = false;
-  referrer : string;
+  minds = window.Minds;
+  session = SessionFactory.build();
+  errorMessage: string = '';
+  twofactorToken: string = '';
+  hideLogin: boolean = false;
+  inProgress: boolean = false;
+  referrer: string;
 
-  form : ControlGroup;
+  flags = {
+    canPlayInlineVideos: true
+  };
 
-	constructor(public client : Client, public router: Router, public params: RouteParams, fb: FormBuilder){
-    this.form = fb.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      password2: ['', Validators.required]
+  paramsSubscription: Subscription;
+
+  constructor(
+    public client: Client,
+    public router: Router,
+    public route: ActivatedRoute,
+    private modal: SignupModalService,
+    private loginReferrer: LoginReferrerService
+  ) { }
+
+  ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['referrer']) {
+        this.referrer = params['referrer'];
+      }
     });
 
-    if(params.params['referrer'])
-      this.referrer = params.params['referrer'];
-	}
-
-	register(e){
-    e.preventDefault();
-    this.errorMessage = "";
-
-    if(this.form.value.password != this.form.value.password2){
-        this.errorMessage = "Passwords must match.";
-        return;
+    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+      this.flags.canPlayInlineVideos = false;
     }
+  }
 
-    this.inProgress = true;
-		var self = this; //this <=> that for promises
-		this.client.post('api/v1/register', this.form.value)
-			.then((data : any) => {
-			  this.form.value = null;
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 
-        this.inProgress = false;
-				self.session.login(data.user);
-
-        if(this.referrer)
-          self.router.navigateByUrl(this.referrer);
-        else
-				  self.router.navigate(['/Channel', {username: data.user.username}]);
-			})
-			.catch((e) => {
-        console.log(e);
-        this.inProgress = false;
-        if(e.status == 'failed'){
-          //incorrect login details
-          self.errorMessage = "Incorrect username/password. Please try again.";
-          self.session.logout();
-        }
-
-        if(e.status == 'error'){
-          //two factor?
-          self.errorMessage = e.message;
-          self.session.logout();
-        }
-
-        return;
-			});
-	}
+  registered() {
+    this.modal.setDisplay('onboarding').open();
+    this.loginReferrer.navigate({
+      defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
+    });
+  }
 
 }

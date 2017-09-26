@@ -1,0 +1,9 @@
+<div class="m-faq--question" (click)="toggleAnswer()">
+  <h4 class="mdl-color-text--blue-grey-800">{{question}}</h4>
+  <i class="material-icons" [hidden]="showAnswer">expand_more</i>
+  <i class="material-icons" [hidden]="!showAnswer">expand_less</i>
+</div>
+
+<div class="m-faq--answer" [hidden]="!showAnswer">
+  <ng-content></ng-content>
+</div>

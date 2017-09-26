@@ -1,0 +1,128 @@
+<div class="m-ad-sharing-analytics-component">
+  <div class="m-monetization-other" *ngIf="username">
+    <!-- i18n -->Ads information for @{{username}}<!-- /i18n -->
+  </div>
+
+  <div class="mdl-grid m-monetization-cta-wrapper" *ngIf="!username && isMerchant && false">
+    <div class="mdl-cell mdl-cell--9-col m-monetization-cta m-monetization-cta--left">
+        <span class="m-note" *ngIf="!payoutRequestInProgress && !isPayoutInProgress() && canPayout()">
+          <!-- i18n -->Clicking the <i>Request Payment</i> button will send {{ payouts.amount | currency:'USD':true }} for review by the Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.<!-- /i18n -->
+        </span>
+        <span class="m-note" *ngIf="!payoutRequestInProgress && !isPayoutInProgress() && !canPayout()">
+          <!-- i18n -->You don't have enough available revenue in order to request a payment.<!-- /i18n -->
+        </span>
+        <span class="m-note" *ngIf="!payoutRequestInProgress && isPayoutInProgress()">
+          <!-- i18n -->Your payment request for {{ payouts.amount | currency:'USD':true }} is currently under review by Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.<!-- /i18n -->
+        </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col m-monetization-cta m-monetization-cta--right" *ngIf="false">
+      <button class="mdl-button mdl-js-button"
+        [ngClass]="{ 'mdl-button--raised mdl-button--colored': !payoutRequestInProgress }"
+        (click)="payout()"
+        [disabled]="overviewInProgress || !canPayout()"
+      >
+        <span *ngIf="!payoutRequestInProgress && !isPayoutInProgress()" i18n>Request</span>
+        <span *ngIf="!payoutRequestInProgress && isPayoutInProgress()" i18n>Pending</span>
+        <span *ngIf="payoutRequestInProgress"
+          class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]
+        ></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="m-monetization--overview mdl-grid mdl-color--blue-grey-800 mdl-shadow--4dp">
+
+      <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
+        <div class="mdl-card" (click)="loadList(0, true)">
+          <h2 i18n>Today</h2>
+          <div class="m-value">
+            {{ overview.today | currency:'USD':true }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
+        <div class="mdl-card" (click)="loadList(7, true)">
+          <h2 i18n>Last 7 days</h2>
+          <div class="m-value">
+            {{ overview.last7 | currency:'USD':true }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
+        <div class="mdl-card" (click)="loadList(28, true)">
+          <h2 i18n>Last 28 days</h2>
+          <div class="m-value">
+            {{ overview.last28 | currency:'USD':true }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
+        <div (click)="loadList(overview.balanceDays, true)">
+          <h2 id="payouts-card-title" *ngIf="!isPayoutInProgress()" i18n>Balance</h2>
+          <h2 id="payouts-card-title" *ngIf="isPayoutInProgress()" i18n>In Review</h2>
+          <div for="payouts-card-title"
+            *ngIf="payouts.dates.start && payouts.dates.end"
+            class="m-monetization--overview-period-tip" [mdl]>
+            <!-- i18n -->{{ payouts.dates.start * 1000 | date:'mediumDate' }} to {{ payouts.dates.end * 1000 | date:'mediumDate' }}<!-- /i18n -->
+          </div>
+          <div class="m-value">
+            {{ payouts.amount | currency:'USD':true }}
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <div class="m-monetization--other" *ngIf="overviewInProgress">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+
+  <div class="m-monetization--other" *ngIf="loaded && !hasBreakdown()">
+    <!-- i18n -->Details are not yet available. Please, try again tomorrow.<!-- /i18n -->
+  </div>
+
+  <div class="m-monetization--other" *ngIf="listLoaded">
+    <!-- i18n -->Ads revenue<!-- /i18n -->
+    <span *ngIf="hasBreakdown()">
+      <!-- i18n -->from {{ breakdown.dates.start * 1000 | date:'mediumDate' }} to {{ breakdown.dates.end * 1000 | date:'mediumDate' }} - {{breakdown.period}} days<!-- /i18n -->
+    </span>
+  </div>
+
+  <div class="m-monetization--list" *ngIf="listLoaded">
+    <div class="mdl-card mdl-shadow--2dp">
+      <table class="mdl-data-table mdl-js-data-table" [mdl]>
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric m-data-title" i18n>Title</th>
+            <th i18n>Views</th>
+            <th i18n>RPM</th>
+            <th i18n>Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items">
+            <td class="mdl-data-table__cell--non-numeric">
+              <a [routerLink]="['/newsfeed/', item.entity.guid]" target="_blank">
+                {{ item.entity.title }}
+              </a>
+            </td>
+            <td>{{ item.views | number }}</td>
+            <td>{{ item.rpm | currency:'USD':true }}</td>
+            <td>{{ item.revenue | currency:'USD':true }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="loadList(breakdown.period, false)"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+    </infinite-scroll>
+  </div>
+</div>

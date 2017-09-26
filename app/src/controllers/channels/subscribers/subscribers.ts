@@ -1,32 +1,27 @@
-import { Component, View, CORE_DIRECTIVES, Inject, FORM_DIRECTIVES} from 'angular2/angular2';
-import { Router, RouteParams } from 'angular2/router';
+import { Component } from '@angular/core';
+
 import { Client } from '../../../services/api';
-import { Material } from '../../../directives/material';
 import { SessionFactory } from '../../../services/session';
-import { InfiniteScroll } from '../../../directives/infinite-scroll';
-import { UserCard } from '../../../controllers/cards/cards';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-channel-subscribers',
-  viewBindings: [ Client ],
-  properties: ['channel']
-})
-@View({
-  templateUrl: 'src/controllers/channels/subscribers/subscribers.html',
-  directives: [ CORE_DIRECTIVES, Material, InfiniteScroll, UserCard ]
+  inputs: ['channel'],
+  templateUrl: 'subscribers.html'
 })
 
 export class ChannelSubscribers {
+
   session = SessionFactory.build();
 
-  guid : string;
-  users : Array<any> = [];
+  guid: string;
+  users: Array<any> = [];
 
-  offset : string = "";
-  moreData : boolean = true;
-  inProgress : boolean = false;
+  offset: string = '';
+  moreData: boolean = true;
+  inProgress: boolean = false;
 
-  constructor(public client: Client){
+  constructor(public client: Client) {
   }
 
   set channel(value: any) {
@@ -34,14 +29,14 @@ export class ChannelSubscribers {
     this.load();
   }
 
-  load(){
-    if(this.inProgress)
+  load() {
+    if (this.inProgress)
       return;
     this.inProgress = true;
-    this.client.get('api/v1/subscribe/subscribers/' + this.guid, {  offset: this.offset  })
-      .then((response : any) => {
+    this.client.get('api/v1/subscribe/subscribers/' + this.guid, { offset: this.offset })
+      .then((response: any) => {
 
-        if(!response.users || response.users.length == 0){
+        if (!response.users || response.users.length === 0) {
           this.moreData = false;
           this.inProgress = false;
           return;

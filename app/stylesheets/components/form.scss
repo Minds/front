@@ -26,3 +26,8 @@
   border: 0;
   cursor: pointer;
 }
+
+// No step spinners on ffox
+input[type="number"] {
+  appearance: textfield;
+}

@@ -1,0 +1,25 @@
+m-revenue--graph{
+  padding: 16px;
+  max-width: 990px;
+  display: block;
+  position: relative;
+  margin:auto;
+
+  rect{
+    fill: transparent;
+  }
+  text{
+    fill:#FFF;
+    font-family: 'Lato';
+  }
+  path{
+    stroke:#FFF;
+    stroke-width:3;
+  }
+  line{
+    stroke: rgba(255,255,255,0.3);
+  }
+  circle{
+    fill:#FFF;
+  }
+}

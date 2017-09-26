@@ -1,0 +1,45 @@
+<m-modal [open]="open" (closed)="close()" class="mdl-color-text--blue-grey-700">
+  <div [hidden]="errorlevel !== null" class="m-modal-confirm-body">
+    <h5 class="m-modal-reasons--title" i18n>Specify a reason for the rejection</h5>
+
+    <ul class="m-modal-reasons--reasons mdl-list">
+      <li class="m-modal-reasons--reasons--reason mdl-list__item" [class.selected]="reason.code === boost.rejection_reason"
+        *ngFor="let reason of reasons; let i = index" (click)="selectReason(reason)">
+        <span class="mdl-list__item-primary-content">{{ reason.label }}</span>
+      </li>
+    </ul>
+
+    <div class="m-modal-confirm-buttons">
+      <button class="mdl-button mdl-color-text--white mdl-button--colored mdl-button--raised"
+        [disabled]="boost.rejection_reason == -1"
+        (click)="action()">
+        {{ yesButton }}
+      </button>
+
+      <button class="mdl-button mdl-button--raised mdl-color-text--blue-grey-700 m-modal-reasons--no-button"
+        (click)="close()" *ngIf="noButton">
+        {{ noButton }}
+      </button>
+    </div>
+  </div>
+
+  <div [hidden]="errorlevel === null || errorlevel !== 0" class="m-modal-confirm-body">
+    <ng-content select="[confirm-success-message]"></ng-content>
+
+    <div class="m-modal-confirm-buttons" *ngIf="dismissButton">
+      <button class="mdl-button mdl-button--raised mdl-color-text--blue-grey-700" (click)="close()">
+        {{ dismissButton }}
+      </button>
+    </div>
+  </div>
+
+  <div [hidden]="errorlevel === null || errorlevel === 0" class="m-modal-confirm-body">
+    <ng-content select="[confirm-error-message]"></ng-content>
+
+    <div class="m-modal-confirm-buttons" *ngIf="dismissButton">
+      <button class="mdl-button mdl-button--raised mdl-color-text--blue-grey-700" (click)="close()">
+        {{ dismissButton }}
+      </button>
+    </div>
+  </div>
+</m-modal>

@@ -1,0 +1,103 @@
+@import "defaults";
+
+.m-merchant-form{
+
+  padding:$minds-padding*2;
+
+  label{
+    display:block;
+    font-weight:bold;
+  }
+  input[type="text"], input[type="number"], input[type="email"], input[type="date"]{
+    margin:$minds-margin 0;
+    padding:$minds-padding;
+    font-size:14px;
+    width:100%;
+    font-family:inherit;
+
+    &.ng-invalid.ng-dirty{
+      border:1px solid red;
+    }
+  }
+  p{
+    margin:0;
+  }
+
+  select{
+    margin: 16px 0;
+  }
+
+  .m-merchant-form-action {
+    margin: $minds-padding;
+    text-align: right;
+  }
+}
+
+.m-merchant-legal{
+  font-size: 12px;
+  padding: 16px;
+  border: 1px solid #DDD;
+  margin: 16px 8px;
+}
+
+.m-merchant-transactions{
+
+}
+
+.m-merchant-transaction{
+  .m-merchant-transaction-tabs{
+    display: flex;
+    flex-flow:row nowrap;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+
+    > div{
+      display:flex;
+      flex:1;
+      align-items: center;
+
+      i{
+        padding-right:$minds-padding;
+      }
+    }
+
+    .m-merchant-transaction-orderId{
+      flex:2;
+    }
+  }
+}
+
+.m-merchant-plans-exclusive--inputs{
+  width: 100%;
+  box-sizing: border-box;
+
+  m-wire--lock-screen {
+    display: block;
+    border: 1px solid #ddd;
+    padding: $minds-padding;
+  }
+}
+.m-merchant-plans-exclusive--inputs > div{
+  label{
+    text-transform: uppercase;
+    display: block;
+    font-size: 12px;
+    padding: 4px 2px;
+  }
+  &.m-merchant-plans-exclusive--price input{
+    padding: 12px 12px 12px 40px;
+    font-size: 20px;
+  }
+
+  &.m-merchant-plans-exclusive--intro input{
+    padding: 12px;
+    font-size: 12px;
+    width:100%;
+  }
+  &.m-merchant-plans-exclusive--background{
+    input[type=file]{
+      width: 100%;
+    }
+  }
+}

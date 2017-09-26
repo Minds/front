@@ -1,0 +1,86 @@
+<div class="mdl-grid wallet-grid" style="max-width:990px">
+
+  <div class="mdl-cell mdl-cell--4-col">
+
+    <m-wallet--points-overview></m-wallet--points-overview>
+
+    <m-monetization--overview></m-monetization--overview>
+
+    <ul class="mdl-card minds-card-navigation mdl-shadow--2dp" style="width:100%; margin-top:8px;">
+      <li>
+        <a class="mdl-color-text--blue-grey-500" [routerLink]="['/wallet/transactions']" routerLinkActive="selected">
+          <i class="material-icons">account_balance_wallet</i>
+          <!-- i18n -->Points Ledger<!-- /i18n -->
+        </a>
+      </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500" [routerLink]="['/wallet/purchase']" routerLinkActive="selected">
+          <i class="material-icons">shopping_cart</i>
+          <!-- i18n -->Buy Points<!-- /i18n -->
+        </a>
+      </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/boost" routerLinkActive="selected">
+          <i class="material-icons">trending_up</i>
+          <!-- i18n -->Boost<!-- /i18n -->
+        </a>
+      </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500 m-wallet--wire-link" routerLink="/wallet/wire" routerLinkActive="selected">
+          <i class="ion-icon ion-flash"></i>
+          <!-- i18n -->Wire<!-- /i18n -->
+        </a>
+      </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500" routerLink="/plus" routerLinkActive="selected">
+          <i class="material-icons">add_circle_outline</i>
+          <!-- i18n -->Minds Plus<!-- /i18n -->
+        </a>
+      </li>
+      <li *ngIf="!session.getLoggedInUser().merchant">
+        <a class="mdl-color-text--blue-grey-500"
+          routerLink="/monetization"
+          >
+          <i class="material-icons">attach_money</i>
+          <span i18n>Monetize your channel</span>
+        </a>
+      </li>
+      <li *ngIf="session.getLoggedInUser().merchant">
+        <a class="mdl-color-text--blue-grey-500"
+          routerLink="/wallet/revenue"
+          routerLinkActive="selected"
+          >
+          <i class="material-icons">attach_money</i>
+          <span i18n>Revenue Console</span>
+        </a>
+      </li>
+      <li>
+        <a class="mdl-color-text--blue-grey-500"
+          routerLink="/affiliates"
+          routerLinkActive="selected"
+          >
+          <i class="material-icons">share</i>
+          <span i18n>Affiliate Program</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="mdl-card mdl-shadow--2dp m-wallet-local-settings">
+      <div class="m-wallet-local-settings">
+        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" for="wallet-animation-switch" [mdlSwitch] [toggled]="disablePointsAnimation">
+          <span class="mdl-switch__label">Disable points animation</span>
+          <input type="checkbox" class="mdl-switch__input" id="wallet-animation-switch" name="disablePointsAnimation" [ngModel]="disablePointsAnimation" (ngModelChange)="setDisablePointsAnimation($event)" [mdl]>
+        </label>
+      </div>
+    </div>
+
+    <m-ads-boost class="m-wallet--boost-ads" limit="4"></m-ads-boost>
+  </div>
+
+  <div class="mdl-cell mdl-cell--8-col">
+
+    <router-outlet></router-outlet>
+
+  </div>
+
+</div>

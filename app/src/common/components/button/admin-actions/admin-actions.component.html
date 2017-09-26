@@ -1,0 +1,20 @@
+<span class="minds-button-edit">
+  <button type="button" class="material-icons"
+    (click)="open = !open"
+  >gavel</button>
+</span>
+
+<ul class="minds-dropdown-menu" [hidden]="!open">
+  <li class="mdl-menu__item" [hidden]="isSpam()"
+    (click)="setSpam(true); open = false"
+  i18n>Mark as spam</li>
+  <li class="mdl-menu__item" [hidden]="!isSpam()"
+    (click)="setSpam(false); open = false"
+  i18n>Not spam</li>
+  <li class="mdl-menu__item" [hidden]="isDeleted()"
+    (click)="setDeleted(true); open = false"
+  i18n>Mark as spam</li>
+  <li class="mdl-menu__item" [hidden]="!isDeleted()"
+    (click)="setDeleted(false); open = false"
+  i18n>Not spam</li>
+</ul>

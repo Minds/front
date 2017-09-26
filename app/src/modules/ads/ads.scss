@@ -1,0 +1,72 @@
+.m-ad-block{
+  display:block;
+  width:100%;
+  //margin-left: -16px;
+
+  &.m-ad-block-boosts{
+    margin-left:0;
+
+    .m-ad-boost-entity{
+      padding:8px 0;
+    }
+  }
+
+  &.responsive{
+    width: 100%;
+    background: #FFF;
+    text-align: center;
+
+    ins{
+      display: block;
+      width: auto;
+      height: 90px;
+      margin: auto;
+    }
+
+    &.m-ad-block-top, &.m-ad-block-bottom{
+      margin: -8px;
+      width: calc(100% + 16px);
+    }
+  }
+  &.m-ad-block-google.square{
+      width: 360px;
+      height: 300px;
+      float: right;
+      display: block;
+      margin-top:8px;
+      margin-left: 16px;
+  }
+  &.m-ad-block-pd.square{
+      width: 300px;
+      min-height: 300px;
+      float: right;
+      display: block;
+      margin-top: 8px;
+      margin-left: 16px;
+  }
+  &.m-ad-block-pd.banner{
+      min-width: 970px;
+      text-align: center;
+      margin-left: -146px;
+      display: block;
+  }
+  &.m-ad-block-pd div[data-tpd-id="dsk-banner-ad-a"]{
+      width: 100%;
+      margin: 0 auto;
+  }
+  &.m-ad-block-pd div[data-tpd-id="mob-box-ad-a"] {
+      width: 300px;
+      margin: 0 auto;
+  }
+}
+.m-ad-boost-heading{
+  font-size: 12px;
+  text-transform: uppercase;
+  vertical-align: middle;
+  margin: 0;
+  text-align: center;
+
+  > i{
+    vertical-align: middle;
+  }
+}

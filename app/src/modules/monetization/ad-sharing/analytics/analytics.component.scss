@@ -1,0 +1,114 @@
+.m-ad-sharing-analytics-component {
+  .m-monetization--overview {
+    padding: 26px;
+    margin: 0px 0 16px;
+    cursor: pointer;
+
+    .m-monetization--overview-period {
+      //padding: $minds-padding;
+      .mdl-card{
+        background:transparent;
+      }
+
+      h2 {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.25em;
+        color: #EEE;
+        margin: 0 0 1.61em 0;
+        font-family: 'Lato';
+        letter-spacing: 0.5px;
+
+        .m-subnote {
+          font-size: 12px;
+        }
+      }
+
+      .m-value {
+        font-size: 18px;
+        font-weight: 300;
+        color: #FFF;
+        text-align: left;
+        font-family: 'Lato', Helvetica;
+        font-size: 26px;
+        letter-spacing: 2px;
+      }
+      .m-monetization--overview-period-tip{
+          color: #AAA;
+          font-family: Lato;
+          margin-top: -28px;
+          font-size: 9px;
+          letter-spacing:1px;
+          position: absolute;
+      }
+    }
+  }
+
+  .m-monetization--other {
+    font-size: 13px;
+    font-weight: 300;
+    text-align: left;
+    color: #aaa;
+    padding: 8px;
+    letter-spacing: 1px;
+    font-family: 'Lato';
+  }
+
+  .m-monetization-cta-wrapper {
+    width: 100%;
+  }
+
+  .m-monetization-cta {
+    text-align: center;
+    padding: $minds-padding;
+
+    &.m-monetization-cta--right {
+      text-align: right;
+    }
+
+    &.m-monetization-cta--left {
+      text-align: right;
+    }
+
+    .m-note {
+      font-size: 11px;
+      color: #999999;
+    }
+  }
+
+  .m-monetization--list {
+    > div {
+      //padding: $minds-padding
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      
+      th {
+        font-family: Lato;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .m-data-title {
+        width: 45%;
+      }
+
+      td {
+        font-weight: 300;
+
+        a{
+          color: #455a64;
+          text-decoration: none;
+          font-family: Helvetica;
+          letter-spacing: 1px;
+        }
+
+        &.mdl-data-table__cell--non-numeric {
+          white-space: normal;
+        }
+      }
+    }
+  }
+}

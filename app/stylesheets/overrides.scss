@@ -5,6 +5,19 @@
 
 .material-icons{
   text-rendering: optimizeLegibility;
+  text-transform: none !important;
+
+  &.m-material-icons-inline {
+    vertical-align: bottom;
+    font-size: 1.4em;
+  }
+
+  &.m-material-icons-inline-text {
+    vertical-align: bottom;
+    font-size: 1.4em;
+    position: relative;
+    top: -0.15em;
+  }
 }
 
 .mdl-progress{
@@ -26,6 +39,10 @@
 .mdl-card{
 
   z-index:initial;
+
+  .mdl-card__supporting-text{
+    -webkit-font-smoothing: antialiased;
+  }
 
   &:not(.mdl-cell){
     width:auto;

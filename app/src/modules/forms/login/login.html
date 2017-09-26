@@ -1,0 +1,83 @@
+
+<div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
+  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+    {{errorMessage}}
+  </div>
+</div>
+
+<!-- START: LOGIN -->
+<form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin">
+
+  <div class="mdl-card__supporting-text mdl-grid">
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        placeholder="Username"
+        i18n-placeholder
+        (keydown.enter)="login(); $event.preventDefault();"
+        />
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        placeholder="Password"
+        i18n-placeholder
+        (keydown.enter)="login(); $event.preventDefault();"
+        />
+    </div>
+  </div>
+
+  <div class="mdl-card__actions">
+    <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="login()" [disabled]="inProgress">
+      <!-- i18n -->Login<!-- /i18n -->
+    </button>
+    <a class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link" [routerLink]="['/forgot-password']">
+      <!-- i18n -->Forgot Password?<!-- /i18n -->
+    </a>
+
+    <button class="m-fb-login-button mdl-shadow--2dp" (click)="loginWithFb(); $event.preventDefault()">
+      <span class="m-social-icons-icon-inline">
+        <svg width="36" height="36" viewBox="-2 -2 32 32">
+          <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
+        </svg>
+      </span>
+      <span class="m-signup-button-text">
+        <!-- i18n -->Migrate from Facebook<!-- /i18n -->
+      </span>
+    </button>
+  </div>
+
+</form>
+<!-- END: LOGIN -->
+
+<!-- START: TWOFACTOR -->
+<div class="mdl-card mdl-color--blue-grey-500 mdl-shadow--2dp minds-login-box" [hidden]="!twofactorToken">
+  <div class="mdl-card__title">
+    <h2 class="mdl-card__title-text mdl-color-text--blue-grey-50" i18n>Twofactor Login</h2>
+  </div>
+
+  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+    <!-- i18n -->We just sent you a text. Enter the code below to authenticate.<!-- /i18n -->
+  </div>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-color-text--blue-grey-50" [mdl]>
+    <input class="mdl-textfield__input"
+    type="text"
+    id="code"
+    #code
+    (keydown.enter)="twofactorAuth(code)"
+    />
+    <label class="mdl-textfield__label mdl-color-text--blue-grey-50" for="code" i18n>Enter your code here</label>
+  </div>
+  <div></div>
+
+  <button class="mdl-button mdl-button--raised mdl-color--blue-grey-200" (click)="twofactorAuth(code)">
+    <!-- i18n -->Login<!-- /i18n -->
+  </button>
+</div>

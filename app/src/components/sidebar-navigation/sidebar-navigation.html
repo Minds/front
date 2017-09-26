@@ -1,30 +1,33 @@
 <nav class="minds-navigation mdl-navigation">
+  <div *ngFor="let item of navigation.getItems()">
+    <a class="mdl-navigation__link mdl-color-text--white"
+      [ngClass]="{'mdl-color--blue-grey-600' : item.active, 'mdl-color--blue-grey-800': !item.active}"
+      [routerLink]="[item.path, item.params]"
+      [title]="item.text"
+      *ngIf="(item.visibility == 2) || (item.visibility === 0 && session.isLoggedIn()) || (item.visibility === -1 && session.isAdmin())"
+    >
+      <i class="material-icons" [ngClass]="{'mdl-color-text--blue-grey-100': !item.active, 'mdl-color-text--amber-400' : item.active}">{{item.icon}}</i>
 
-  <div *ng-for="#item of navigation.getItems()">
+      <span id="{{item.name | lowercase}}-counter" class="counter mdl-badge mdl-color--amber-600" *ngIf="!item.active && item.extras && item.extras?.counter">{{item.extras?.counter}}</span>
 
-  	<a class="mdl-navigation__link mdl-color-text--white"
-  		[ng-class]="{'mdl-color--blue-grey-600' : item.active, 'mdl-color--blue-grey-800': !item.active}"
-  		[router-link]="[item.path, item.params]"
-      *ng-if="!(!session.isLoggedIn() && item.visibility < 2)"
-  		>
+      <span class="m-navigation--text"
+        [class.mdl-color-text--amber-400]="item.active"
+      >{{ item.text }}</span>
+    </a>
 
-  		<i class="material-icons" [ng-class]="{'mdl-color-text--blue-grey-100': !item.active, 'mdl-color-text--amber-400' : item.active}">{{item.icon}}</i>
-      <span id="{{item.name | lowercase}}-counter" class="counter mdl-badge mdl-color--amber-600" *ng-if="!item.active && item.extras && item.extras?.counter">{{item.extras?.counter}}</span>
-
-  	</a>
-
-    <div *ng-for="#subitem of item.submenus" [hidden]="!item.active">
+    <div *ngFor="let subitem of item.submenus" [hidden]="!item.active">
       <a class="mdl-navigation__link mdl-color-text--white subitem"
-        [ng-class]="{'mdl-color--blue-grey-500' : subitem.active, 'mdl-color--blue-grey-700': !subitem.active}"
-        [router-link]="[subitem.path, subitem.params]"
-        *ng-if="!(!session.isLoggedIn() && subitem.visibility < 2)"
-        >
+        [ngClass]="{'mdl-color--blue-grey-500' : subitem.active, 'mdl-color--blue-grey-700': !subitem.active}"
+        [routerLink]="[subitem.path, subitem.params]"
+        [title]="subitem.text"
+        *ngIf="!(!session.isLoggedIn() && subitem.visibility < 2)"
+      >
+        <i class="material-icons" [ngClass]="{'mdl-color-text--blue-grey-100': !subitem.active, 'mdl-color-text--amber-500' : subitem.active}">{{subitem.icon}}</i>
 
-        <i class="material-icons" [ng-class]="{'mdl-color-text--blue-grey-100': !subitem.active, 'mdl-color-text--amber-500' : subitem.active}">{{subitem.icon}}</i>
-        <!--{{subitem.text}}-->
-
+        <span class="m-navigation--text"
+          [class.mdl-color-text--amber-400]="subitem.active"
+        >{{ subitem.text }}</span>
       </a>
     </div>
-
   </div>
 </nav>

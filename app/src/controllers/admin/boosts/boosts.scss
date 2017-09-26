@@ -1,0 +1,59 @@
+.m-admin-boosts-container {
+  max-width: 600px;
+}
+
+.m-admin-boosts-statistics {
+  margin-top: $minds-padding * 2;
+  max-width: 600px - ($minds-padding * 2);
+
+  h3 {
+    display: block;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.25em;
+    color: #EEE;
+    margin: 0 0 0.61em 0;
+    font-family: 'Lato';
+    letter-spacing: 0.5px;
+  }
+
+  .m-value {
+    display: block;
+    font-weight: 300;
+    color: #FFF;
+    text-align: left;
+    font-family: 'Lato', Helvetica;
+    font-size: 26px;
+    letter-spacing: 2px;
+  }
+
+  .m-admin-boost-stat {
+    margin-bottom: $minds-padding * 2;
+  }
+
+  .m-admin-boost-stat-note {
+    color: #fff;
+    opacity: 0.35;
+    font-size: 11px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+}
+.m--inputs {
+  display: flex;
+
+  .mdl-slider__container {
+    flex-grow: 1;
+  }
+
+  input[type=text] {
+    width: 60px;
+  }
+}
+.m-previously-rejected-notice {
+  display: flex;
+  align-items: center;
+  margin: 16px;
+  font-family: Lato;
+  color: #f44336;
+}

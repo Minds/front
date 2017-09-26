@@ -1,52 +1,245 @@
-<section class="minds-homepage-banner m-video-banner">
-  <div class="video">
-    <video autoplay muted loop poster="assets/videos/traffic-1/traffic-1.png">
-      <source src="assets/videos/traffic-1/traffic-1.webm" type="video/webm">
-      <source src="assets/videos/traffic-1/traffic-1.mp4" type="video/mp4">
+<section class="minds-homepage-banner m-video-banner" #banner [class.m-video-banner-expand]="banner.expand">
+  <div class="video" style="background-image: url('assets/videos/earth-1/earth-1.png')">
+    <video autoplay muted loop poster="assets/videos/earth-1/earth-1.png" *ngIf="flags.canPlayInlineVideos">
+      <!--<source src="assets/videos/traffic-1/traffic-1.webm" type="video/webm">
+      <source src="assets/videos/traffic-1/traffic-1.mp4" type="video/mp4">-->
+      <source src="{{minds.cdn_url}}assets/videos/earth-1/earth-1.webm" type="video/webm">
+      <source src="{{minds.cdn_url}}assets/videos/earth-1/earth-1.mp4" type="video/mp4">
     </video>
   </div>
   <div class="overlay">
-    <img src="assets/logos/medium-white.png" class="m-logo"/>
-    <h1>Your Social Network</h1>
-    <h3>A platform for transparency, privacy, viral reach & monetization</h3>
-    <div class="m-app-links">
-      <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6" target="_blank">
-        <img src="assets/ext/appstore.png">
+    <div class="mdl-grid m-homepage-grid">
+      <div class="mdl-cell mdl-cell--12-col m-homepage-titles">
+        <h1 i18n>Your Social Network</h1>
+        <h3 [hidden]="session.isLoggedIn()" i18n>Launch a channel today</h3>
+        <h3 *ngIf="session.isLoggedIn()" i18n>Welcome {{session.getLoggedInUser().name}}</h3>
+      </div>
+      <div class="mdl-cell mdl-cell--6-col m-homepage-signup" [hidden]="session.isLoggedIn()">
+        <minds-form-register (done)="registered()" (click)="banner.expand = true"></minds-form-register>
+      </div>
+      <div class="mdl-cell mdl-cell--12-col m-app-links">
+        <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6" target="_blank">
+          <img src="assets/ext/appstore.png">
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.minds.mobile">
+          <img src="assets/ext/playstore.png">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="m-homepage-section" style="padding-top:0">
+  <h2 class="mdl-color-text--blue-grey-800">Take back your internet freedom</h2>
+  <div class="mdl-grid m-homepage-section--icons">
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+      <a href="https://minds.org" target="_blank">
+        <i class="material-icons mdl-color-text--blue-grey-800">code</i>
+        <label>Open Source</label>
       </a>
-      <a href="https://play.google.com/store/apps/details?id=com.minds.mobile">
-        <img src="assets/ext/playstore.png">
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+      <a href="https://www.minds.com/blog/view/385014724078604288" target="_blank">
+        <i class="material-icons mdl-color-text--blue-grey-800">enhanced_encryption</i>
+        <label>Encryption</label>
+      </a>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-800">speaker_notes</i>
+      <label>Free Speech</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
+      <a href="https://wefunder.com/minds" target="_blank">
+        <i class="material-icons mdl-color-text--blue-grey-800">people</i>
+        <label>Community Owned</label>
       </a>
     </div>
   </div>
 </section>
 
-<div class="mdl-grid mdl-grid--no-spacing">
+<section class="m-homepage-features mdl-color--blue-grey-900">
+  <div class="mdl-grid mdl-color-text--blue-grey-300">
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">timeline</i>
+      <h3 i18n>Newsfeed</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">person_pin</i>
+      <h3 i18n>Channels</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">thumbs_up_down</i>
+      <h3 i18n>Vote</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">comment</i>
+      <h3 i18n>Comment</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">file_upload</i>
+      <h3 i18n>Upload</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">subject</i>
+      <h3 i18n>Blog</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">chat_bubble</i>
+      <h3 i18n>Chat</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">group_work</i>
+      <h3 i18n>Groups</h3>
+    </div>
+    <div class="mdl-cell mdl-cell--1-col">
+      <i class="material-icons">account_balance</i>
+      <h3 i18n>Wallet</h3>
+    </div>
+  </div>
 
-    <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
-      <h4><a [router-link]="['/Discovery', {filter: 'featured', 'type':'videos'}]" class="mdl-color-text--blue-grey-200">Featured videos <span>More</span></a></h4>
-      <div class="m-contents mdl-grid">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ng-for="#video of videos">
-          <minds-card-video [object]="video" class="mdl-card mdl-shadow--2dp"></minds-card-video>
-        </div>
+</section>
+
+<section class="m-homepage-section">
+  <h1 class="mdl-color-text--blue-grey-800">Go viral and expand your reach</h1>
+  <div class="mdl-grid mdl-grid--no-spacing" style="max-width:700px;">
+    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600">1 point = 1 view</h4>
+    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600">$1 = 1,000 points</h4>
+  </div>
+  <div class="mdl-grid m-homepage-section--rewards">
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">create</i>
+        <span class="mdl-color-text--green">+1</span>
       </div>
+      <label>Post a text/link activity</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">chat_bubble</i>
+        <span class="mdl-color-text--green">+5</span>
+      </div>
+      <label>Receive a comment</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">person_add</i>
+        <span class="mdl-color-text--green">+5</span>
+      </div>
+      <label>Gain a subscriber</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">thumb_up</i>
+        <span class="mdl-color-text--green">+5</span>
+      </div>
+      <label>Receive an up vote</label>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">repeat</i>
+        <span class="mdl-color-text--green">+5</span>
+      </div>
+      <label>Get Reminded</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">attachment</i>
+        <span class="mdl-color-text--green">+15</span>
+      </div>
+      <label>Post a rich media activity</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">subject</i>
+        <span class="mdl-color-text--green">+15</span>
+      </div>
+      <label>Publish a blog</label>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
+      <div class="m-homepage-section--rewards-points">
+        <i class="material-icons mdl-color-text--blue-grey-800">access_alarm</i>
+        <span class="mdl-color-text--green">+50</span>
+      </div>
+      <label>Hourly Check-in</label>
+    </div>
+
+
+  </div>
+</section>
+
+<span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>
+
+<section class="m-homepage-section">
+  <h2 class="mdl-color-text--blue-grey-800">How users generate revenue</h2>
+  <div class="mdl-grid m-homepage-section--icons">
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <div class="mdl-color--green mdl-color-text--white m-homepage--feature-btn">
+          <i class="material-icons m-homepage--feature-btn--icon">vpn_key</i>
+          <span>Exclusive</span>
+      </div>
+      <label>Paid Subscriptions</label>
+      <p>Set a monthly price for your fans to pay for your exclusive content and services.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <div class="mdl-color-text--white m-homepage--feature-btn" style="background: #428EDA;">
+          <span>Boost</span>
+      </div>
+      <label>Peer-To-Peer Boost</label>
+      <p>Receive offers from other channels to share their content in exchange for points or dollars.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <img src="assets/wire-icon.png" style="display: block; margin: 20px auto; height: 60px;"/>
+      <label>Wire</label>
+      <p>Receive tips from your audience for content they enjoy in points, dollars or Bitcoin.</p>
+    </div>
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-800">insert_chart</i>
+      <label>Ad Revenue</label>
+      <p>Monetize your blog with ads.</p>
+    </div>
+  </div>
+</section>
+
+
+<span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>
+
+
+<div class="mdl-grid mdl-grid--no-spacing m-homepage-stream">
+
+    <h4 class="mdl-color-text--blue-grey-200 mdl-cell--12-col">Featured Posts</h4>
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[1]"></minds-activity>
     </section>
 
-    <section class="mdl-cell mdl-cell--12-col m-horizontal-content-carousel">
-      <h4><a [router-link]="['/Blog', {filter: 'featured'}]" class="mdl-color-text--blue-grey-200">Featured blogs <span>More</span></a></h4>
-      <div class="m-contents mdl-grid">
-        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone" *ng-for="#blog of blogs">
-          <minds-card-blog [object]="blog" class="mdl-card mdl-shadow--2dp"></minds-card-blog>
-        </div>
-      </div>
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[2]"></minds-activity>
     </section>
+
+    <section class="mdl-cell mdl-cell--4-col">
+      <minds-activity [object]="activity"  *ngFor="let activity of stream[3]"></minds-activity>
+    </section>
+
+    <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    </div>
+
+    <div class="m-homepage-fader" [hidden]="inProgress">
+      <div class="m-homepage-fader--load-more" (click)="loadStream()">Click To See more</div>
+    </div>
+</div>
+
+
+<div class="mdl-grid mdl-grid--no-spacing m-homepage-featured m-homepage-footer">
 
     <section class="mdl-cell mdl-cell--12-col m-footer mdl-color--blue-grey-900">
       <ul class="m-footer-nav m-footer-nav-inline">
-        <li *ng-for="#page of navigation.getItems('footer')" class="m-footer-nav-item ">
-          <a [router-link]="['/P', {page: page.params.page }]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+        <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item ">
+          <a *ngIf="page.path && page.path.indexOf('p/') > -1" [routerLink]="[page.path]" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
+          <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
         </li>
       </ul>
-      <span class="copyright mdl-color-text--blue-grey-700">&copy; Minds, Inc. 2015</span>
+      <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2017</span>
     </section>
 
 </div>

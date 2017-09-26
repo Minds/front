@@ -1,0 +1,29 @@
+.m-admin-tagcloud {
+  .m-admin-tagcloud-tag, .m-admin-tagcloud-hidden-tag {
+    display: inline-block;
+    font-size: 16px;
+    margin: 0 0.35em 0.35em 0;
+    padding: 2px 8px;
+    background: #ddd;
+    border-radius: 8px;
+  }
+
+  .m-admin-tagcloud-hidden-tag {
+    font-size: 14px;
+  }
+
+  .m-admin-tagcloud-tag-name {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .m-admin-tagcloud-tag-hide {
+    top: 0 !important;
+    opacity: 0.45;
+    cursor: pointer;
+  }
+
+  .m-admin-tagcloud-resync {
+    cursor: pointer;
+  }
+}

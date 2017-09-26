@@ -1,24 +1,61 @@
-<div class="mdl-grid" style="max-width:900px">
+<div class="mdl-card mdl-shadow--2dp" style="max-width:900px">
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Two Factor Authentication</h2>
+    <h2 class="mdl-card__title-text" i18n>Two Factor Authentication</h2>
   </div>
 
-  <div class="mdl-card__supporting-text">
+  <!-- OVERVIEW -->
+  <div class="mdl-card__supporting-text" *ngIf="!inProgress && telno && !waitingForCheck">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="cancel()">
+      <!-- i18n -->Remove two factor<!-- /i18n -->
+    </button>
+  </div>
+
+  <!-- SETUP -->
+  <div class="mdl-card__supporting-text" *ngIf="!inProgress && !telno">
     <div class="minds-settings-text">
-      Your SMS number
+      <!-- i18n -->Your SMS number. <b>Enter your country code too (eg. +1, +44, etc)</b><!-- /i18n -->
     </div>
     <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
       <input class="mdl-textfield__input"
       type="text"
       #smsNumber
-      id="twoFactorAuthentication"
       />
-      <label class="mdl-textfield__label" for="twoFactorAuthentication">eg. +4407999000909</label>
+      <label class="mdl-textfield__label" for="twoFactorAuthentication" i18n>eg. +44 07999 000909</label>
     </div>
-    <div >
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="send(smsNumber)">
-        Send
+    <p class="mdl-color-text--red">{{error}}</p>
+    <div>
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+        (click)="setup(smsNumber.value)"
+        [disabled]="waitingForCheck"
+      >
+        <!-- i18n -->Setup<!-- /i18n -->
       </button>
     </div>
   </div>
+
+  <!-- CHECK -->
+  <div class="mdl-card__supporting-text" *ngIf="!inProgress && telno && waitingForCheck">
+    <div class="minds-settings-text" *ngIf="!sendingSms">
+      <!-- i18n -->We sent an SMS to <b>{{telno}}</b>. Enter the code below to complete your two factor setup.<!-- /i18n -->
+    </div>
+    <div class="minds-settings-text" *ngIf="sendingSms">
+      <!-- i18n -->We are sending an SMS to <b>{{telno}}</b>. Enter the code below to complete your two factor<!-- /i18n --> setup.
+    </div>
+    <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
+      <input class="mdl-textfield__input"
+      type="text"
+      #code
+      />
+      <label class="mdl-textfield__label" for="twoFactorAuthentication" i18n>Enter your code here</label>
+    </div>
+    <div >
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" (click)="check(code.value)">
+        <!-- i18n -->Confirm<!-- /i18n -->
+      </button>
+      <button class="mdl-button mdl-js-button mdl-button--raised " (click)="check(code.value)">
+        <!-- i18n -->Retry<!-- /i18n -->
+      </button>
+    </div>
+  </div>
+
 </div>

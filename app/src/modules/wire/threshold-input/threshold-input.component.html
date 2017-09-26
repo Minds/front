@@ -1,0 +1,46 @@
+<div class="m-wire-threshold-input">
+  <a class="m-wire-threshold-input--toggle"
+    [class.m-wire-threshold-input--toggle-enabled]="enabled"
+    (click)="toggle()"
+  >
+    <m-tooltip>
+      <i m-tooltip--anchor class="ion-icon ion-flash"></i>
+      Wire
+    </m-tooltip>
+  </a>
+
+  <div *ngIf="enabled"
+    class="m-wire-threshold-input--input"
+  >
+    <ng-container *ngIf="session.getLoggedInUser()?.merchant; else nonMerchantContainer">
+      <button type="button" class="mdl-button mdl-js-button mdl-button--icon" id="poster-wire-currency-selector"
+        [mdl]
+      >
+        <i *ngIf="threshold.type == 'points'" class="material-icons m-wire-threshold-input--type">account_balance</i>
+        <i *ngIf="threshold.type == 'money'" class="material-icons m-wire-threshold-input--type">attach_money</i>
+      </button>
+
+      <ul
+        class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+        for="poster-wire-currency-selector"
+        [mdl]
+      >
+        <li *ngFor="let typeLabel of typeLabels"
+          class="mdl-menu__item"
+          (click)="setType(typeLabel.type)"
+        >{{ typeLabel.label }}</li>
+      </ul>
+    </ng-container>
+
+    <ng-template #nonMerchantContainer>
+      <i class="material-icons m-wire-threshold-input--type">account_balance</i>
+    </ng-template>
+
+    <input type="text"
+      [ngModel]="threshold.min | number"
+      (ngModelChange)="setMinAmount($event)"
+      inlineAutoGrow
+      #minAmountInput
+    />
+  </div>
+</div>

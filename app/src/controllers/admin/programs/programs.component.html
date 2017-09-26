@@ -1,0 +1,63 @@
+<div class="mdl-grid m-admin-programs" style="max-width:600px">
+  <div class="m-note">
+    <!-- i18n -->Users can be banned for monetizing on the dropdown in their profile.<!-- /i18n -->
+  </div>
+
+  <div *ngFor="let application of applications; let i = index"
+    class="mdl-cell mdl-cell--12-col"
+  >
+    <div class="mdl-card mdl-shadow--4dp m-application">
+      <div class="m-application-meta">
+        <p class="m-user" *ngIf="application.from">
+          <a [routerLink]="[ '/', application.from.username ]" target="_blank">
+            <img [src]="'/icon/' + application.from.guid + '/tiny/' + application.from.icontime" alt="">
+            {{ application.from.username }}
+          </a>
+          is applying for <span class="m-program">{{ application.program }}</span>
+        </p>
+        <p class="m-date">{{ application.time_created * 1000 | date:'medium' }}</p>
+      </div>
+      
+      <div class="m-application-info">
+        <p class="m-message">
+          {{ application.message }}
+        </p>
+      </div>
+
+      <div class="m-application-cta" *ngIf="reviewing !== i">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+          (click)="review(i)"
+          [disabled]="inProgress"
+          i18n
+        >Review</button>
+      </div>
+      <div class="m-application-cta" *ngIf="reviewing === i">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green"
+          (click)="accept(i)"
+          [disabled]="inProgress"
+          i18n
+        >Accept</button>
+
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
+          (click)="reject(i)"
+          [disabled]="inProgress"
+          i18n
+        >Reject</button>
+
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+          (click)="review(null)"
+          [disabled]="inProgress"
+          i18n
+        >Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+  </infinite-scroll>
+
+</div>

@@ -1,0 +1,148 @@
+<div class="m-monetization--marketing">
+
+  <div class="m-monetization--marketing-header">
+    <h1>Monetization</h1>
+    <h3>Start earning revenue on Minds by monetizing your channel</h3>
+
+    <div class="m-monetization--marketing-action-button">
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isMonetized()" (click)="onboard()" [hidden]="showOnboardingForm">Click to Onboard</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login">Click to Onboard</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isMonetized()" routerLink="/wallet/revenue">View Earnings</button>
+    </div>
+  </div>
+
+  <m-monetization--onboarding *ngIf="showOnboardingForm" class="mdl-shadow--4dp" (completed)="onboardCompleted($event)"></m-monetization--onboarding>
+
+  <div class="m-monetization--marketing-contents mdl-grid mdl-grid--no-spacing">
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">share</i>
+      <h2>Affiliate</h2>
+      <span>Earn 25% of the revenue Minds generates from your referrals</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">vpn_key</i>
+      <h2>Exclusive</h2>
+      <span>Earn subscription revenue from your fans with exclusive content and services</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <img src="assets/wire-icon.png" style="display: block; margin: 2px auto 20px; height: 60px;"/>
+      <h2>Wire</h2>
+      <span>Receive points, dollars, or Bitcoin directly from your fans as a reward for posting quality content</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">insert_chart</i>
+      <h2>Ad Revenue</h2>
+      <span>Place ads on your blogs and earn revenue from the traffic you drive</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">trending_up</i>
+      <h2>P2P Boost</h2>
+      <span>Receive offers of points, dollars, or Bitcoin from other channels in exchange for sharing their posts to your audience</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">bubble_chart</i>
+      <h2>Insights</h2>
+      <span>View analytics and breakdowns of your revenue</span>
+    </div>
+
+  </div>
+
+  <div class="m-monetization--marketing-faq mdl-color-text--blue-grey-600">
+    <m-faq question="Why should I monetize my channel?">
+      <p>
+        Minds believes you should be rewarded for your efforts online.
+        Monetizing your channel activates the following features that enable you to generate revenue on Minds:
+      </p>
+      <ul>
+        <li>Affiliate Program</li>
+        <li>Exclusive Content</li>
+        <li>Wire</li>
+        <li>Ad-Revenue Share</li>
+        <li>Peer-to-Peer Boost</li>
+      </ul>
+    </m-faq>
+
+    <m-faq question="What is the Affiliate Program?">
+      <p>
+        By joining the Affiliate Program, you will earn 25% of the revenue that Minds generates from users that sign up through your referral link.
+        The products that qualify for the Affiliate Program include:
+      </p>
+      <ul>
+        <li>Point Purchases</li>
+        <li>Paid Boost (coming soon)</li>
+        <li>Priority Boost (coming soon)</li>
+        <li>Minds Plus (coming soon)</li>
+      </ul>
+      <p>
+        Monitor the revenue you have earned through the Affiliate Program in your Wallet.
+        Payment processing fees will apply to all transactions and will be deducted prior to revenue distribution.
+      </p>
+    </m-faq>
+
+    <m-faq question="What is exclusive content?">
+      <p>
+        Earn subscription revenue on Minds by creating exclusive content that your fans pay to access.
+        Set a monthly subscription price in your Wallet and select the '$' sign on your content to make it exclusive.
+        These posts will display a custom paywall that prompts your fans to become monthly supporters.
+      </p>
+    </m-faq>
+
+
+    <m-faq question="What is wire?">
+      <p>
+        You will notice a lightning bolt icon below all of your posts.
+        This enables you to directly receive points, dollars, or Bitcoin from other channels as a reward for your quality content.
+      </p>
+    </m-faq>
+    <m-faq question="What is Ad-Revenue Share?">
+      <p>
+        Earn revenue with advertisements on your blogs by selecting the '$' sign when you post.
+        The amount of revenue you earn will be determined from the number of pageviews your content drives and the current RPM (revenue per thousand views).
+        The ad-revenue share is 80% for creators and 20% for Minds.
+      </p>
+    </m-faq>
+
+    <m-faq question="What is Peer-to-Peer Boost?">
+      <p>
+        <b>Send</b> offers of points, dollars or Bitcoin to other channels in exchange for a guaranteed Remind (share) of your content with their audience.
+        This enables you to target your boosted content to new, like-minded audiences outside of your own subscribers.
+      </p>
+      <p>
+        <b>Receive</b> offers of points, dollars, or Bitcoin from other channels in exchange for a guaranteed Remind (share) of their content to your audience.
+        You may optionally connect your Facebook page (and other third party sites in the future) to your account so that others can access your audience on other social media networks additionally.
+      </p>
+    </m-faq>
+    <m-faq question="What is the Wallet?">
+      <p>
+        Your Wallet keeps track of your points, payouts, and how much money you’ve earned on Minds.
+        The Wallet is located by the bank icon in the top right corner of your browser or mobile app.
+        In this console, you will see the following tabs:
+      </p>
+      <p>
+        <b>Points</b> - A real-time register of how many points you have earned, purchased, or spent on Minds.
+      </p>
+      <p>
+        <b>Earnings</b> - A real-time register of your earnings from each monetization service. View the details of each specific transaction here.
+      </p>
+      <p>
+        <b>Payouts</b> - A statement on money paid out to your bank account.
+      </p>
+      <p>
+        <b>Options</b> - Enter your bank information to enable payouts.
+      </p>
+    </m-faq>
+    <m-faq question="How do I get paid out?">
+      <p>
+        You will be paid out on monthly basis.
+        Please note that monetized users agree to our Terms and Conditions and are subject to risks from chargebacks or refunds.
+      </p>
+    </m-faq>
+  </div>
+
+  <m-monetization--terms class="mdl-shadow--2dp"></m-monetization--terms>
+
+
+</div>
+
+<m-footer></m-footer>

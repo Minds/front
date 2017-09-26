@@ -1,0 +1,18 @@
+<m-modal [open]="open" (closed)="closed.next(true)">
+  <form (submit)="submit($event)" [formGroup]="form" #f="ngForm" class="m-plus--verify">
+
+    <ul>
+      <p>Please enter two social media links, which link back to your Minds channel page</p>
+      <li><input type="text" placeholder="eg. https://youtube.com/me" formControlName="link1"></li>
+      <li><input type="text" placeholder="eg. https://twitter.com/me" formControlName="link2"></li>
+    </ul>
+
+    <ul>
+      <p>Please give a brief statement as to why you should be verified</p>
+      <li><textarea formControlName="description"></textarea></li>
+    </ul>
+
+    <button class="mdl-button mdl-button--raised" type="submit" [disabled]="inProgress || !f.form.valid">Submit</button>
+
+  </form>
+</m-modal>

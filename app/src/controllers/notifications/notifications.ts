@@ -1,72 +1,110 @@
-import { Component, View, NgFor, NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault, Inject, NgClass } from 'angular2/angular2';
-import { Router, RouterLink } from 'angular2/router';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { Subscription } from 'rxjs/Rx';
+
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
-import { Material } from '../../directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { NotificationService } from '../../services/notification';
 
 @Component({
+  moduleId: module.id,
   selector: 'minds-notifications',
-  viewBindings: [ Client, NotificationService],
-  bindings: [ MindsTitle ]
-})
-@View({
-  templateUrl: 'src/controllers/notifications/list.html',
-  directives: [ NgFor, NgIf, NgSwitch, NgSwitchWhen, NgSwitchDefault, NgClass, RouterLink, Material, InfiniteScroll ]
+  templateUrl: 'list.html'
 })
 
 export class Notifications {
 
-  notifications : Array<Object> = [];
-  moreData : boolean = true;
-  offset: string = "";
-  inProgress : boolean = false;
+  notifications: Array<Object> = [];
+  entity;
+  moreData: boolean = true;
+  offset: string = '';
+  inProgress: boolean = false;
   session = SessionFactory.build();
+  _filter: string = 'all';
+  paramsSubscription: Subscription;
 
-  constructor(public client: Client, public router: Router, public title : MindsTitle, public notificationService : NotificationService ){
-    if(!this.session.isLoggedIn()){
-      router.navigate(['/Login']);
-    } else {
-      this.load(true);
+  constructor(
+    public client: Client,
+    public router: Router,
+    public title: MindsTitle,
+    public notificationService: NotificationService,
+    public route: ActivatedRoute
+  ) { }
+
+  ngOnInit() {
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
     }
+
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['filter']) {
+        this._filter = params['filter'];
+        this.notifications = [];
+        this.load(true);
+      }
+      if (params['ts']) {
+        this.notifications = [];
+        this.load(true);
+        this.notificationService.clear();
+      }
+    });
+
+    this.load(true);
+
     this.notificationService.clear();
-    this.title.setTitle("Notifications");
+    this.title.setTitle('Notifications');
   }
 
-  load(refresh : boolean = false){
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
+
+  load(refresh: boolean = false) {
     var self = this;
 
-    if(this.inProgress) return false;
+    if (this.inProgress) return false;
 
-    if(refresh)
-      this.offset = "";
+    if (refresh)
+      this.offset = '';
 
     this.inProgress = true;
 
-    this.client.get('api/v1/notifications', {limit:12, offset:this.offset})
-      .then((data : any) => {
+    this.client.get(`api/v1/notifications/${this._filter}`, { limit: 24, offset: this.offset })
+      .then((data: any) => {
 
-        if(!data.notifications){
+        if (!data.notifications) {
           self.moreData = false;
           self.inProgress = false;
           return false;
         }
 
-        if(refresh){
+        if (refresh) {
           self.notifications = data.notifications;
-        }else{
-          if(self.offset)
-            data.notifications.shift();
-          for(let entity of data.notifications)
+        } else {
+          for (let entity of data.notifications)
             self.notifications.push(entity);
         }
 
+        if (!data['load-next'])
+          this.moreData = false;
         self.offset = data['load-next'];
         self.inProgress = false;
 
       });
+  }
+
+  loadEntity(entity) {
+    if (entity.type === 'comment') {
+      this.client.get('api/v1/entities/entity/' + entity.parent_guid)
+        .then((response: any) => {
+          this.entity = response.entity;
+        });
+    } else {
+      this.entity = entity;
+    }
   }
 
 }

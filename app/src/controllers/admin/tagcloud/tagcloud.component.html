@@ -1,0 +1,37 @@
+<div class="mdl-grid m-admin-tagcloud" style="max-width:600px">
+  <div class="mdl-cell mdl-cell--12-col">
+    <p class="mdl-color-text--blue-grey-300">
+      This is a list of currently trending hashtags. Click the hashtag to see the search results for it. Click on the X next to the tag to hide it. Hidden hashtags won't appear again.
+      <span *ngIf="age !== false">This list was generated {{ age }} minute(s) ago.</span>
+      <i class="material-icons m-material-icons-inline-text m-admin-tagcloud-resync mdl-color-text--blue-grey-200"
+        (click)="resync()"
+      >refresh</i>
+    </p>
+
+    <div class="m-admin-tagcloud-tag mdl-color-text--blue-grey-600" *ngFor="let tag of tags; let i = index">
+      <a class="m-admin-tagcloud-tag-name"
+        [routerLink]="['/search', {q: '#' + tag, type: 'activities'}]" target="_blank"
+      >#{{tag}}</a>
+
+      <i class="material-icons m-material-icons-inline-text m-admin-tagcloud-tag-hide"
+        (click)="hide(i, tag)"
+      >close</i>
+    </div>
+
+    <hr>
+
+    <p class="mdl-color-text--blue-grey-300" *ngIf="hidden.length > 0">
+      Last {{ hidden.length }} hidden tags:
+    </p>
+
+    <div class="m-admin-tagcloud-hidden-tag mdl-color-text--blue-grey-600" *ngFor="let tag of hidden; let i = index">
+      <a class="m-admin-tagcloud-tag-name"
+        [routerLink]="['/search', {q: '#' + tag, type: 'activities'}]" target="_blank"
+      >#{{tag}}</a>
+
+      <i class="material-icons m-material-icons-inline-text m-admin-tagcloud-tag-hide"
+        (click)="unhide(i, tag)"
+      >undo</i>
+    </div>
+  </div>
+</div>

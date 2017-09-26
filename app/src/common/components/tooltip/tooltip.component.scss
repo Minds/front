@@ -1,0 +1,21 @@
+m-tooltip{
+  display:inline-block;
+  cursor:pointer;
+}
+.m-tooltip--bubble{
+  position: absolute;
+  font-size: 13px;
+  background: rgba(0, 0, 0, 0.9);
+  color:#FFF;
+  padding: 12px;
+  border-radius: 3px;
+  z-index: 999;
+  font-family: 'Lato';
+  font-weight: 300;
+  letter-spacing: 1.4px;
+  max-width: 220px;
+  line-height: 18px;
+  white-space: normal;
+  text-align: left;
+  text-transform: none;
+}

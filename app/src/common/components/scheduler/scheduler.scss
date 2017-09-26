@@ -1,0 +1,18 @@
+m-scheduler{
+
+  > select.m-form-select{
+    width: auto;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 8px 16px;
+    border-radius: 0;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    -webkit-appearance: none;
+  }
+
+}

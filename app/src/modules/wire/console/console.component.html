@@ -1,0 +1,31 @@
+<div class="m-wire-console">
+
+  <div class="m-wire-console--hero mdl-color--blue mdl-color-text--white">
+
+    <div class="m-wire-console--hero-header">
+      <h2>Wire</h2>
+      <div class="m-wire-console--options-toggle">
+        <button class="mdl-button mdl-button--primary mdl-color--white mdl-color-text--blue"
+          (click)="showOptions = !showOptions"
+        >
+          <i class="material-icons" *ngIf="!showOptions">arrow_drop_down</i>
+          <i class="material-icons" *ngIf="showOptions">arrow_drop_up</i>
+          <span>Options</span>
+        </button>
+      </div>
+    </div>
+
+    <p>Wire allows you to receive money for rewards and exclusive content. You can configure your rewards on your channel page.</p>
+
+    <m-wire-console--overview></m-wire-console--overview>
+  </div>
+
+  <div class="m-wire-console--options mdl-shadow--2dp m-wire-console--options-active" *ngIf="showOptions">
+    <m-wire-console-settings
+      (saved)="showOptions = false"
+    ></m-wire-console-settings>
+  </div>
+
+  <m-wire-console--ledger></m-wire-console--ledger>
+
+</div>

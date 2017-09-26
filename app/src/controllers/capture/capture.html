@@ -1,7 +1,7 @@
 <div class="drag-animation mdl-color--blue-grey-600 mdl-color-text--blue-grey-50" [hidden]="!dragging">
   <div class="drop">
     <i class="material-icons">file_upload</i>
-    <p>Drop your files here</p>
+    <p i18n>Drop your files here</p>
   </div>
 
 </div>
@@ -13,7 +13,7 @@
       <div class="mdl-card m-albums-selector" #toggle>
         <div class="mdl-card__title">
           <h2 class="mdl-card__title-text">
-            Album
+            <!-- i18n -->Album<!-- /i18n -->
           </h2>
           <button class="mdl-button mdl-button--fab mdl-button--colored m-album-add" (click)="toggle.value = !toggle.value">
             <i class="material-icons">add</i>
@@ -21,7 +21,7 @@
         </div>
 
 
-        <div class="mdl-card m-album m-album-create mdl-color--blue-grey-500" *ng-if="toggle.value">
+        <div class="mdl-card m-album m-album-create mdl-color--blue-grey-500" *ngIf="toggle.value">
 
           <div class="mdl-card__title">
             <input
@@ -29,7 +29,7 @@
               #newalbum
 
               />
-            <button class="mdl-button mdl-button--colored mdl-color-text--white" (click)="createAlbum(newalbum); toggle.value = false">Create</button>
+            <button class="mdl-button mdl-button--colored mdl-color-text--white" (click)="createAlbum(newalbum); toggle.value = false" i18n>Create</button>
 
           </div>
 
@@ -40,12 +40,12 @@
           [hidden]="albums.length > 0 && !inProgress"
           [mdl]
           ></div>
-        <div *ng-for="#album of albums"
+        <div *ngFor="let album of albums"
           class="mdl-card m-album mdl-color--blue-grey-50 mdl-color-text--blue-grey-500"
-          [ng-class]="{'mdl-color--blue-grey-500': postMeta.album_guid == album.guid, 'mdl-color-text--blue-grey-50': postMeta.album_guid == album.guid}"
+          [ngClass]="{'mdl-color--blue-grey-500': postMeta.album_guid == album.guid, 'mdl-color-text--blue-grey-50': postMeta.album_guid == album.guid}"
           (click)="selectAlbum(album)">
 
-            <div class="mdl-card__title" [ng-class]="{'mdl-color-text--blue-grey-50': postMeta.album_guid == album.guid}">
+            <div class="mdl-card__title" [ngClass]="{'mdl-color-text--blue-grey-50': postMeta.album_guid == album.guid}">
               <h2>{{album.title}}</h2>
             </div>
             <div class="mdl-card__menu">
@@ -67,7 +67,7 @@
           <div class="upload-button">
             <button class="mdl-button mdl-button--raised">
               <i class="material-icons">attachment</i>
-              <span>Add file</span>
+              <span i18n>Add file</span>
             </button>
             <input
               type="file"
@@ -75,44 +75,64 @@
               #file
               (change)="add(file); file.value = '';"
               multiple
+              accept="image/*"
               />
           </div>
 
           <div class="mdl-layout-spacer"></div>
 
-          <select [(ng-model)]="default_license" class="mdl-color-text--blue-grey-300 m-form-select">
-              <option *ng-for="#l of licenses" [value]="l.value">{{l.text}}</option>
+          <a class="mdl-color-text--blue-grey-300 m-capture-default-maturity" (click)="default_maturity = default_maturity ? 0 : 1">
+            <i class="material-icons"
+            [ngClass]="{ 'mdl-color-text--red-500': default_maturity }"
+            title="Mature content"
+            i18n-title
+            >explicit</i>
+            <span *ngIf="default_maturity" class="mdl-color-text--red-500" i18n>Mature content</span>
+          </a>
+
+          <select name="defaultLicense" [(ngModel)]="default_license" class="mdl-color-text--blue-grey-300 m-form-select">
+              <option *ngFor="let l of licenses" [value]="l.value">{{l.text}}</option>
           </select>
 
           <button class="mdl-button mdl-button--raised mdl-button--colored m-capture-save-to-album-button" (click)="publish()" [disabled]="!uploads">
-            <span>Save to album</span>
+            <span i18n>Save to album</span>
           </button>
       </div>
     </form>
 
-    <div class="mdl-card mdl-shadow--2dp m-upload" *ng-for="#upload of uploads; #i = index">
+    <div class="mdl-card mdl-shadow--2dp m-upload" *ngFor="let upload of uploads; let i = index">
       <div class="mdl-card__title m-capture-edit-container">
         <input
           type="text"
-          [(ng-model)]="upload.title"
+          name="title"
+          [(ngModel)]="upload.title"
           (change)="modify(i)"
           />
-          <select [(ng-model)]="upload.license" (change)="modify(i)" class="mdl-color-text--blue-grey-300 m-form-select">
-              <option *ng-for="#l of licenses" [value]="l.value" >{{l.text}}</option>
+
+          <a class="mdl-color-text--blue-grey-300 m-capture-mature" (click)="upload.mature = upload.mature ? 0 : 1">
+            <i class="material-icons"
+            [ngClass]="{ 'mdl-color-text--red-500': upload.mature }"
+            title="Mature content"
+            i18n-title
+            >explicit</i>
+          </a>
+
+          <select name="license" [(ngModel)]="upload.license" (change)="modify(i)" class="mdl-color-text--blue-grey-300 m-form-select">
+              <option *ngFor="let l of licenses" [value]="l.value" >{{l.text}}</option>
           </select>
       </div>
 
       <div class="mdl-progress mdl-js-progress"
-        [mdl-upload]
+        [mdlUpload]
         [progress]="upload.progress"
-        [ng-class]="{'failed': upload.state == 'failed', 'complete': upload.state == 'complete'}"
+        [ngClass]="{'failed': upload.state == 'failed', 'complete': upload.state == 'complete'}"
         ></div>
 
     </div>
 
     <div class="m-splash">
       <i class="material-icons mdl-color-text--blue-grey-400">file_upload</i>
-      <h3 class="mdl-color-text--blue-grey-300" >Drag to upload</h3>
+      <h3 class="mdl-color-text--blue-grey-300" i18n>Drag to upload</h3>
     </div>
   </div>
 

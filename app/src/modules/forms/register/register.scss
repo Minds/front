@@ -1,0 +1,15 @@
+@import "defaults";
+
+minds-form-register{
+
+  .mdl-card__actions{
+    display:flex;
+    align-items:center;
+  }
+
+  .m-register-tac{
+    font-size:11px;
+    padding-left:$minds-padding*2;
+  }
+
+}

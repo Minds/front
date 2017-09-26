@@ -5,7 +5,7 @@
 <div class="minds-header-row">
 
     <div class="minds-logo">
-      <a [router-link]="['/Homepage']">
+      <a [routerLink]="['/']">
         <img src="/assets/logos/small.png"/>
       </a>
     </div>
@@ -14,29 +14,47 @@
 
     <div class="mdl-layout-spacer"></div>
 
+
+    <button class="mdl-button mdl-color-text--white mdl-button--colored mdl-button--raised m-boost-button-fat"
+      [routerLink]="['/wallet/boost/newsfeed', { 'toggled':true}]"
+      *ngIf="session.isLoggedIn()">
+    <!-- i18n -->Boost<!-- /i18n -->
+    </button>
+
     <minds-topbar-navigation></minds-topbar-navigation>
 
-    <div class="minds-account" *ng-if="session.isLoggedIn()">
-      <a [router-link]="['/Channel', {username: session.getLoggedInUser().username}]">
+    <div class="minds-account" *ngIf="session.isLoggedIn()">
+      <a [routerLink]="['/', session.getLoggedInUser().username]">
         <img src="/icon/{{session.getLoggedInUser().guid}}/small/{{session.getLoggedInUser().icontime}}" class="mdl-shadow--2dp" />
       </a>
     </div>
 
-    <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="header-actions" [mdl]>
-        <i class="material-icons">more_vert</i>
+    <button [hidden]="!session.isLoggedIn()"
+      class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+      id="header-actions" [mdl]
+    >
+      <i class="material-icons">more_vert</i>
     </button>
 
-
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-        for="header-actions"
-        [mdl]
-        >
-      <li class="mdl-menu__item" *ng-if="session.isLoggedIn()" [router-link]="['/Logout']">Logout</li>
-      <li class="mdl-menu__item" *ng-if="session.isLoggedIn()" [router-link]="['/Settings', {'filter': 'general'}]">Settings</li>
-      <a class="mdl-menu__item" href="https://legacy.minds.com/">Use the old Minds</a>
+    <ul
+      class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+      for="header-actions"
+      [mdl]
+    >
+      <li class="mdl-menu__item" *ngIf="session.isLoggedIn()" [routerLink]="['/settings/general']" i18n>Settings</li>
+      <li class="mdl-menu__item" *ngIf="session.isLoggedIn()" [routerLink]="['/logout']" i18n>Logout</li>
     </ul>
 
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" *ng-if="!session.isLoggedIn()" [router-link]="['/Login']">
-      Login
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" *ngIf="!session.isLoggedIn()" [routerLink]="['/login']">
+      <!-- i18n -->Login<!-- /i18n -->
     </button>
+</div>
+
+<div class="m-notifications-toaster" *ngIf="session.isLoggedIn() && notifications">
+  <minds-notification
+    *ngFor="let notification of notifications"
+    class="mdl-card mdl-shadow--4dp item"
+    [notification]="notification"
+    (click)="closeNotification(notification)"
+  ></minds-notification>
 </div>

@@ -1,0 +1,57 @@
+<div *ngIf="open" class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
+  <i class="material-icons m-material-icons-inline">public</i>
+    <!-- i18n -->Translate to:<!-- /i18n -->
+    <div class="m-translate-select">
+      <select class="m-translate-select-control"
+        (change)="select($event.target.value)"
+        [disabled]="languagesInProgress"
+      >
+        <option value="" selected i18n>Language&hellip;</option>
+
+        <optgroup label="Preferred Languages" *ngIf="preferredLanguages.length > 0">
+          <option *ngFor="let language of preferredLanguages"
+            [value]="language.language"
+          >
+            {{ language.name }} ({{ language.language }})
+          </option>
+        </optgroup>
+
+        <optgroup label="{{ preferredLanguages.length > 0 ? 'Other' : 'All Languages' }}">
+          <option *ngFor="let language of languages"
+            [value]="language.language"
+          >
+            {{ language.name }} ({{ language.language }})
+          </option>
+        </optgroup>
+      </select>
+    </div>
+</div>
+
+<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label" *ngIf="translationInProgress">
+  <i class="material-icons m-material-icons-inline">public</i>
+  <!-- i18n -->Translating<!-- /i18n --><span *ngIf="translation.target" i18n="Translation target"> to <b>{{ translation.target }}</b></span>&hellip;
+</div>
+
+<div *ngIf="translation.translated" class="m-translation-wrapper">
+  <div class="mdl-card__supporting-text message" *ngIf="translation.message">
+      <span [innerHtml]="translation.message | tags" ></span>
+  </div>
+
+  <div class="mdl-card__supporting-text message" *ngIf="translation.description">
+      <span [innerHtml]="translation.description | tags" ></span>
+  </div>
+
+  <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
+    <i class="material-icons m-material-icons-inline">public</i>
+    <!-- i18n -->Translated<!-- /i18n --><span *ngIf="translation.source" i18n="Translation source"> from <b>{{ translation.source }}</b></span>.
+    <a (click)="hideTranslation()" i18n>Hide translation</a>
+    |
+    <a (click)="changeDefaultLanguage()" i18n>Change language</a>
+  </div>
+</div>
+
+<div class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label" *ngIf="!translationInProgress && translation.error">
+  <i class="material-icons m-material-icons-inline">warning</i>
+  <!-- i18n -->There was an error when translating this content.<!-- /i18n -->
+  <a class="mdl-color-text--red-900" (click)="translation.error = false" i18n>Dismiss</a>
+</div>

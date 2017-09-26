@@ -1,4 +1,4 @@
-import { EventEmitter, Injector, bind } from 'angular2/angular2';
+import { EventEmitter, Injector } from '@angular/core';
 
 export { Sidebar } from './ui/sidebar';
 export { Material } from './ui/material';

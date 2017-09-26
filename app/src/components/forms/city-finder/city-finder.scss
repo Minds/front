@@ -1,0 +1,17 @@
+@import "defaults";
+
+minds-form-city-finder{
+
+  .m-city-finder-list{
+    position: fixed;
+    padding: 12px;
+    list-style: none;
+
+    li{
+      border-bottom: 1px solid #DDD;
+      padding: 8px;
+      cursor:pointer;
+    }
+  }
+
+}

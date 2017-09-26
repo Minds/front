@@ -4,13 +4,13 @@ minds-capture{
   height: calc(100vh - 80px);
   display:block;
 
-  
+
 }
 
 .drag-animation{
   position: fixed;
-  @include flex-display();
-  @include flex-direction(row);
+  display: flex;
+  flex-direction: row;
   align-items:center;
   -webkit-align-items:center;
 
@@ -23,8 +23,8 @@ minds-capture{
   animation: fade-animation 2s infinite alternate;
 
   .drop{
-    @include flex-display();
-    @include flex-wrap(wrap);
+    display: flex;
+    flex-wrap: wrap;
     text-align: center;
     margin:auto;
     width:50%;
@@ -54,6 +54,20 @@ minds-capture{
   .mdl-card{
     min-height:0;
     width:100%;
+  }
+
+  .m-capture-default-maturity {
+    cursor: pointer;
+    padding-top:$minds-padding;
+
+    i{
+      cursor:pointer;
+      vertical-align: middle;
+    }
+    span{
+      font-size: 11px;
+      text-transform: uppercase;
+    }
   }
 
   .m-albums-selector{
@@ -170,6 +184,20 @@ minds-capture{
   select{
     width: auto;
     flex: 1;
+  }
+
+  .m-capture-mature {
+    margin-left: $minds-padding;
+    cursor: pointer;
+
+    i{
+      cursor:pointer;
+      vertical-align: middle;
+    }
+    span{
+      font-size: 11px;
+      text-transform: uppercase;
+    }
   }
 }
 .m-capture-save-to-album-button{

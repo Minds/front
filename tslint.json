@@ -1,0 +1,32 @@
+{
+  "rules": {
+    "class-name": true,
+    "curly": false,
+    "eofline": true,
+    "indent": "spaces",
+    "max-line-length": [true, 140],
+    "member-ordering": [true,
+      "public-before-private",
+      "static-before-instance",
+      "variables-before-functions"
+    ],
+    "no-arg": true,
+    "no-construct": true,
+    "no-duplicate-variable": true,
+    "no-empty": [true, "allow-empty-catch"],
+    "no-eval": true,
+    "no-trailing-whitespace": true,
+    "no-unused-expression": true,
+    "one-line": [true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
+    "quotemark": [true, "single"],
+    "semicolon": true,
+    "trailing-comma": false,
+    "triple-equals": true,
+    "variable-name": false
+  }
+}

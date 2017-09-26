@@ -1,24 +1,20 @@
-import { Component, View, EventEmitter, CORE_DIRECTIVES} from 'angular2/angular2';
-import { RouterLink } from 'angular2/router';
+import { Component, EventEmitter } from '@angular/core';
+
 import { Client } from '../services/api';
-import { Material } from '../directives/material';
-import { MindsBanner } from './banner';
 
 @Component({
   selector: 'minds-carousel',
-  inputs: [ '_banners: banners', '_editMode: editMode'],
-  outputs: ['done_event: done', 'delete_event: delete']
-})
-@View({
+  inputs: ['_banners: banners', '_editMode: editMode'],
+  outputs: ['done_event: done', 'delete_event: delete'],
   template: `
     <i class="material-icons left" (click)="prev()" [hidden]="banners.length <= 1">keyboard_arrow_left</i>
-    <div *ng-for="#banner of banners; #i = index">
+    <div *ngFor="let banner of banners; let i = index">
       <minds-banner
         [src]="banner.src"
         [top]="banner.top_offset"
         [overlay]="true"
-        [ng-class]="{'is-hidden': i != index, 'edit-mode': editing}"
-        [edit-mode]="editing"
+        [ngClass]="{'is-hidden': i != index, 'edit-mode': editing}"
+        [editMode]="editing"
         [done]="done"
         (added)="added($event, i)"
         ></minds-banner>
@@ -28,36 +24,35 @@ import { MindsBanner } from './banner';
         </div>
       </div>
     <i class="material-icons right" (click)="next()" [hidden]="banners.length <= 1">keyboard_arrow_right</i>
-  `,
-  directives: [ CORE_DIRECTIVES, MindsBanner ]
+  `
 })
 
-export class MindsCarousel{
+export class MindsCarousel {
 
-  minds : Minds = window.Minds;
-  banners : Array<any> = [];
+  minds: Minds = window.Minds;
+  banners: Array<any> = [];
 
-  editing : boolean = false;
-  src : string = "";
-  modified : Array<any> = []; //all banners should be exported to here on the done event, and sent to parent
+  editing: boolean = false;
+  src: string = '';
+  modified: Array<any> = []; //all banners should be exported to here on the done event, and sent to parent
 
   done_event = new EventEmitter();
   delete_event = new EventEmitter();
-  done : boolean = false; //if set to true, tells the child component to return "added"
-  rotate : boolean = true; //if set to true enabled rotation
+  done: boolean = false; //if set to true, tells the child component to return "added"
+  rotate: boolean = true; //if set to true enabled rotation
   rotate_timeout; //the timeout for the rotator
-  interval : number = 3000; //the interval for each banner to stay before rotating
-  index : number = 0; //the current visible index of the carousel.
+  interval: number = 3000; //the interval for each banner to stay before rotating
+  index: number = 0; //the current visible index of the carousel.
 
-  constructor(){
+  constructor() {
     this.run();
   }
 
   /**
    * A list of banners are sent from the parent, if done are sent a blank one is entered
    */
-  set _banners(value : any){
-    if(value){
+  set _banners(value: any) {
+    if (value) {
       this.banners = value;
     } else {
       this.banners.push({
@@ -69,28 +64,28 @@ export class MindsCarousel{
   /**
    * If the parent set edit mode
    */
-  set _editMode(value : boolean){
+  set _editMode(value: boolean) {
     console.log('[carousel]: edit mode event received');
     //was in edit more, now settings not in edit more
-    if(this.editing && !value){
+    if (this.editing && !value) {
       console.log('[carousel]: edit mode ended');
       this._done();
       return;
     }
 
     this.editing = value;
-    if(!this.editing){
+    if (!this.editing) {
       return;
     }
     console.log('[carousel]: edit mode enabled');
     this.rotate = false;
     this.done = false;
     var blank_banner = false;
-    for(var i in this.banners){
-      if(!this.banners[i].src)
-        blank_banner=true;
+    for (var i in this.banners) {
+      if (!this.banners[i].src)
+        blank_banner = true;
     }
-    if(!blank_banner){
+    if (!blank_banner) {
       this.banners.push({
         src: null
       });
@@ -100,20 +95,24 @@ export class MindsCarousel{
   /**
    * Fired when the child component adds a new banner
    */
-  added(value : any, index){
+  added(value: any, index) {
     console.log(this.banners[index].guid, value.file);
-    if(!this.banners[index].guid && !value.file)
+    if (!this.banners[index].guid && !value.file)
       return; //this is our 'add new' post
 
     //detect if we have changed
     var changed = false;
-    if(value.top != this.banners[index].top)
+    if (value.top !== this.banners[index].top)
       changed = false;
-    if(value.file)
+    if (value.file)
       changed = true;
 
-    if(!changed)
+    if (!changed)
       return;
+
+    if (!this.banners[index].src) {
+      this.banners[index].src = value.file;
+    }
 
     this.modified.push({
       guid: this.banners[index].guid,
@@ -123,10 +122,10 @@ export class MindsCarousel{
     });
   }
 
-  delete(index){
+  delete(index) {
     this.delete_event.next(this.banners[index]);
     this.banners.splice(index, 1);
-    if(this.banners.length == 0){
+    if (this.banners.length === 0) {
       this.banners.push({ src: null });
     }
     this.next();
@@ -135,7 +134,7 @@ export class MindsCarousel{
   /**
    * Once we retreive all the modified banners, we fire back to the parent the new list
    */
-  _done(){
+  _done() {
     this.editing = false; //this should update each banner (I'd prefer even driven but change detection works..)
     this.done = true;
     console.log('[carousel]: received done event');
@@ -143,43 +142,54 @@ export class MindsCarousel{
     setTimeout(() => {
       this.done_event.next(this.modified);
       this.modified = [];
+
+      let blank_banner: any = false;
+      for (var i in this.banners) {
+        if (!this.banners[i].src)
+          blank_banner = i;
+      }
+
+      if (blank_banner !== false) {
+        this.banners.splice(blank_banner, 1);
+        this.next();
+      }
     }, 1000);
   }
 
-  prev(){
-    var max = this.banners.length -1;
-    if(this.index == 0)
+  prev() {
+    var max = this.banners.length - 1;
+    if (this.index === 0)
       this.index = max;
     else
       this.index--;
     this.run();//resets the carousel
   }
 
-  next(){
-    var max = this.banners.length -1;
-    if(this.index >= max)
+  next() {
+    var max = this.banners.length - 1;
+    if (this.index >= max)
       this.index = 0;
     else
       this.index++;
     this.run();//resets the carousel
   }
 
-  run(){
-    if(this.rotate_timeout)
+  run() {
+    if (this.rotate_timeout)
       clearTimeout(this.rotate_timeout);
     this.rotate_timeout = setTimeout(() => {
-      if(this.rotate){
-        var max = this.banners.length -1;
-        if(this.index >= max)
+      if (this.rotate) {
+        var max = this.banners.length - 1;
+        if (this.index >= max)
           this.index = 0;
         else
           this.index++;
       }
       this.run();
-    },this.interval);
+    }, this.interval);
   }
 
-  onDestroy(){
+  ngOnDestroy() {
     clearTimeout(this.rotate_timeout);
   }
 

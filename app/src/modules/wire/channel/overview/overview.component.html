@@ -1,0 +1,69 @@
+<div class="m-wire-channel--overview mdl-grid mdl-shadow--2dp mdl-color--blue mdl-color-text--white">
+
+  <div class="m-wire-channel--overview--overview-count mdl-cell mdl-cell--6-col">
+    <span *ngIf="ready">{{ stats.count | number:'1.0-0' }}</span>
+    <div class="m-wire-channel--overview--label">
+      <label>Wires</label>
+      <m-tooltip icon="help">
+      How many wires <span>@</span>{{channel.username}} has received in the last 30 days
+      </m-tooltip>
+    </div>
+  </div>
+
+  <div class="m-wire-channel--overview--overview-earnings mdl-cell mdl-cell--6-col"
+    *ngIf="channel.merchant"
+  >
+    <i>$</i><span *ngIf="ready">{{ stats.money | number:'1.0-0' }}</span>
+    <div class="m-wire-channel--overview--label">
+      <label>Money</label>
+      <m-tooltip icon="help">
+        This is <span>@</span>{{channel.username}}'s total volume (gross) of all money wires received in the last 30 days
+      </m-tooltip>
+    </div>
+  </div>
+
+  <div class="m-wire-channel--overview--overview-earnings mdl-cell mdl-cell--6-col">
+    <span *ngIf="ready">{{ stats.points | abbr: 0}}</span>
+    <div class="m-wire-channel--overview--label">
+      <label>Points</label>
+      <m-tooltip icon="help">
+        This is <span>@</span>{{channel.username}}'s total volume (gross) of all point wires received in the last 30 days
+      </m-tooltip>
+    </div>
+  </div>
+
+  <!-- <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col" *ngIf="session.getLoggedInUser().guid != channel.guid">
+    <i>$</i><span *ngIf="ready">{{ stats.avg | number:'1.0-0' }}</span>
+    <div class="m-wire-channel--overview--label">
+      <label>Average</label>
+      <m-tooltip icon="help">
+        This is average amount received per wire
+      </m-tooltip>
+    </div>
+  </div> -->
+
+  <div class="m-wire-channel--overview--overview-walletlink mdl-cell mdl-cell--6-col" *ngIf="session.getLoggedInUser().guid == channel.guid">
+    <div class="m-wire-channel--overview--label">
+      <label routerLink="/wallet/wire">See breakdown</label>
+      <m-tooltip icon="help">
+        See a breakdown of all your Wires in your wallet 
+      </m-tooltip>
+    </div>
+  </div> 
+
+  <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col" *ngIf="canWire()">
+    <ng-container *ngIf="channel.merchant; else sentNotAMerchant">
+      <i>$</i><span *ngIf="ready">{{ stats.sent | number:'1.0-0' }}</span>
+    </ng-container>
+    <ng-template #sentNotAMerchant>
+      <span *ngIf="ready">{{ stats.sent | abbr }}</span>
+    </ng-template>
+    <div class="m-wire-channel--overview--label">
+      <label>You Sent</label>
+      <m-tooltip icon="help">
+        This is the amount you have wired to {{channel.name}} in the last 30 days
+      </m-tooltip>
+    </div>
+  </div>
+
+</div>

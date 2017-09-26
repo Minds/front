@@ -8,6 +8,10 @@ h1{
   font-weight:300;
 }
 
+p {
+  word-wrap: break-word;
+}
+
 minds-app{
   .initial-loading{
     width:100%;
@@ -43,6 +47,7 @@ minds-topbar{
         display:flex;
         align-items:center;
         padding-right: $minds-padding;
+        position: relative;
 
         .counter{
           padding:$minds-padding/2;
@@ -56,7 +61,33 @@ minds-topbar{
     img{
       height:42px;
       max-height: 42px;
-      border-radius: 3px;
+      border-radius: 50%;
+    }
+  }
+
+  .m-notifications-toaster {
+    position: fixed;
+    top: 64px + ($minds-padding / 2);
+    right: $minds-padding * 2;
+    width: 350px;
+    max-width: 100vw;
+    max-height: 75vh;
+
+    @media screen and (max-width: $max-mobile) {
+      right: 0;
+    }
+
+    minds-notification {
+      margin-bottom: $minds-padding;
+      padding: $minds-padding;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .body {
+        font-size: 0.8em;
+      }
     }
   }
 
@@ -65,8 +96,35 @@ minds-topbar{
 @media screen and (max-width: $max-mobile){
   minds-topbar {
     .minds-logo{
-      display:none;
+      display: block;
+      position: fixed;
+      width: 75px;
+      height: 30px;
+      left: calc(50vw - 35.5px);
+      /* z-index: 1; */
+      padding: 0;
+      padding-bottom: 2px;
     }
+    minds-topbar-navigation{
+      nav a:first-of-type{
+          //display:none;
+      }
+      nav a .counter{
+        display:none;
+      }
+    }
+    .minds-account img{
+        height:28px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px){
+  minds-topbar minds-topbar-navigation nav{
+      display:none;
+  }
+  minds-topbar minds-search-bar{
+      display:none;
   }
 }
 
@@ -87,6 +145,8 @@ minds-topbar{
   }
 }
 .mdl-card__supporting-text{
+  word-wrap: break-word;
+
   textarea{
     color: rgba(0,0,0,.87);
     font-size: 13px;
@@ -108,7 +168,7 @@ minds-topbar{
     align-items: center;
     -webkit-align-items: center;
     justify-content: center;
-    @include flex-display();
+    display: flex;
     padding: 55px;
     text-transform: uppercase;
     font-weight: 100;
@@ -127,8 +187,8 @@ minds-topbar{
 
 
 .minds-block {
-  @include flex-display();
-  @include flex-direction(row);
+  display: flex;
+  flex-direction: row;
 
   .minds-avatar{
     margin-right:$minds-margin;
@@ -161,6 +221,12 @@ textarea {
    font-size: inherit;
 }
 
+.m-isomorphic-link {
+  color: inherit;
+  text-decoration: inherit;
+  font-weight: inherit;
+}
+
 blockquote { quotes: ''; }
 blockquote:before { content: '\201C'; }
 blockquote:after { content: '\201D'; }
@@ -172,3 +238,24 @@ blockquote:after { content: '\201D'; }
 @import 'controllers/*';
 
 @import 'overrides.scss';
+
+@import 'ionicons.scss';
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}

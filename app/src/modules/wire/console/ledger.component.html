@@ -1,0 +1,83 @@
+<div class="m-wire-console--ledger">
+  <div class="mdl-tabs__tab-bar">
+    <a class="mdl-tabs__tab" [class.is-active]="type == 'sent'" (click)="setType('sent')" i18n>Sent</a>
+    <a class="mdl-tabs__tab" [class.is-active]="type == 'received'" (click)="setType('received')" i18n>Received</a>
+
+    <div class="m-wire-console--ledger-filters">
+      <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
+
+      <div class="m-wire-console--ledger-method" *ngIf="canSelectMethod()">
+        <span>
+          <ng-container *ngIf="method == 'points'">Points</ng-container>
+          <ng-container *ngIf="method == 'money'">$ USD</ng-container>
+        </span>
+
+        <button id="m-wire-console-ledger-method" class="mdl-button mdl-js-button mdl-button--icon" [mdl]>
+          <i class="material-icons">more_vert</i>
+        </button>
+
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="m-wire-console-ledger-method" [mdl]>
+          <li class="mdl-menu__item"
+            (click)="setMethod('points')"
+          >Points</li>
+          <li class="mdl-menu__item"
+            (click)="setMethod('money')"
+          >$ USD</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-wire-console--ledger-table">
+    <div class="mdl-card mdl-shadow--2dp" style="overflow:visible">
+      <table class="mdl-data-table mdl-js-data-table" [mdl]>
+        <thead>
+          <tr class="m-wire-console--ledger-header">
+            <th class="mdl-data-table__cell--non-numeric m-data-title">Date</th>
+            <th class="mdl-data-table__cell--non-numeric m-data-title">Channel</th>
+            <th>Amount</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let wire of wires; let i = index">
+            <tr class="m-wire-console--ledger-row">
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-category">{{ wire.time_created * 1000 | date }}</td>
+
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-channel"
+                  *ngIf="type == 'sent'"
+                  [routerLink]="'/' + wire.to.username"><span>@</span>{{wire.to.username}}</td>
+              <td class="mdl-data-table__cell--non-numeric m-wire-console--ledger-channel"
+                  *ngIf="type == 'received'"i
+                  [routerLink]="'/' + wire.from.username"><span>@</span>{{wire.from.username}}</td>
+
+              <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'points'">{{ wire.amount }} points</td>
+              <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'money'"><i>$</i>{{ wire.amount }}</td>
+
+              <td><i class="material-icons" (click)="expand(i)">keyboard_arrow_down</i></td>
+            </tr>
+            <tr class="m-wire-console--ledger-row m-wire-console--ledger-row-expanded" *ngIf="wire.expanded">
+              <td colspan="4">
+                <m-wire-console--supporter [method]="method" [guid]="wire.to.guid" [supporter]="wire.to" *ngIf="type == 'sent'" [reverse]="true"></m-wire-console--supporter>
+                <m-wire-console--supporter [method]="method" [guid]="wire.from.guid" [supporter]="wire.from" *ngIf="type == 'received'"></m-wire-console--supporter>
+              </td>
+            </tr>
+          </ng-container>
+          <tr class="m-wire-console--ledger-row m-wire-console--ledger-row-placeholder" *ngIf="!wires || !wires.length">
+            <td colspan="4" style="text-align:center">
+              No Wires to show.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="loadList()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+    </infinite-scroll>
+  </div>
+
+</div>

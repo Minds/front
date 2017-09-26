@@ -1,0 +1,22 @@
+m--rejection-reason-modal {
+  h5.m-modal-reasons--title {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 16px 16px;
+  }
+  .m-modal-reasons--reasons {
+    list-style-type: none;
+    .m-modal-reasons--reasons--reason {
+      font-size: 14px;
+      padding: 16px;
+      min-height: 20px;
+      border-bottom: 1px solid #EEE;
+      cursor: pointer;
+      &:hover {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+  .m-modal-confirm-buttons{
+    padding:16px;
+  }
+}

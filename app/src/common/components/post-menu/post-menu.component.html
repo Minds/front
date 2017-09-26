@@ -1,0 +1,51 @@
+<button class="mdl-button minds-more mdl-button--icon" (click)="cardMenuHandler()">
+  <i class="material-icons">keyboard_arrow_down</i>
+</button>
+
+<ul class="minds-dropdown-menu" [hidden]="!opened">
+  <li class="mdl-menu__item" *ngIf="options.indexOf('edit') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="selectOption('edit')" i18n>Edit</li>
+  <li class="mdl-menu__item" *ngIf="options.indexOf('share') !== -1" (click)="share()" i18n>Share</li>
+  <li class="mdl-menu__item" *ngIf="options.indexOf('translate') !== -1  && isTranslatable" (click)="selectOption('translate')" i18n>Translate</li>
+  <!-- FEATURE -->
+  <ng-container *ngIf="options.indexOf('feature') !== -1">
+    <li class="mdl-menu__item" *ngIf="!entity.featured && session.isAdmin()" (click)="feature()" i18n>Feature</li>
+    <li class="mdl-menu__item" *ngIf="entity.featured && session.isAdmin()" (click)="unFeature()" i18n>un-Feature</li>
+  </ng-container>
+  <!-- DELETE -->
+  <li class="mdl-menu__item" *ngIf="options.indexOf('delete') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="delete()" i18n>Delete</li>
+  <!-- REPORT -->
+  <li class="mdl-menu__item" *ngIf="options.indexOf('report') !== -1 && entity.owner_guid != session.getLoggedInUser().guid" (click)="report()" i18n>Report</li>
+  <!-- NOTIFICATIONS -->
+  <ng-container *ngIf="options.indexOf('mute') !== -1">
+    <li class="mdl-menu__item" *ngIf="!asyncMute" disabled i18n>Mute notifications</li>
+    <li class="mdl-menu__item" *ngIf="asyncMute && !entity['is:muted']" (click)="mute()" i18n>Mute notifications</li>
+    <li class="mdl-menu__item" *ngIf="asyncMute && entity['is:muted']" (click)="unmute()" i18n>Unmute notifications</li>
+  </ng-container>
+  <!-- ADMIN EDIT FLAGS -->
+  <ng-container *ngIf="options.indexOf('set-explicit') !== -1">
+    <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="entity.mature" (click)="setExplicit(true)">Set as Explicit</li>
+    <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!entity.mature" (click)="setExplicit(false)">Remove Explicit</li>
+  </ng-container>
+</ul>
+<div class="minds-bg-overlay" (click)="opened = false" [hidden]="!opened"></div>
+
+<m-modal-share *ngIf="shareToggle" [open]="true" (closed)="shareToggle = false; opened = false;" [url]="entity.url" [embed]="entity"></m-modal-share>
+<m-modal-confirm *ngIf="deleteToggle"
+  [open]="true"
+  [closeAfterAction]=true
+  (closed)="deleteToggle = false"
+  (actioned)="delete($event)"
+  yesButton="Delete permanently"
+  i18n-yesButton
+>
+  <p confirm-message>
+    <!-- i18n -->Are you sure you want to delete this post? There's no UNDO.<!-- /i18n -->
+    <span *ngIf="entity.entity_guid && (entity.custom_type == 'batch' || entity.custom_type == 'video')">
+          <br><br>
+          <b i18n>This action will also delete the attached media from your gallery.</b>
+        </span>
+  </p>
+  <p confirm-success-message>
+    <!-- i18n -->The post has been deleted.<!-- /i18n -->
+  </p>
+</m-modal-confirm>

@@ -1,0 +1,117 @@
+
+.m-revenue--options{
+  max-width: 600px;
+  margin: auto;
+
+  .m-revenue--options-payout-method{
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+
+    h3{
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 24px;
+    }
+  }
+
+  .m-revenue--options-payout-method-bank{
+    p{
+      font-family:'Lato';
+      margin:0;
+    }
+    .m-revenue--options-payout-method-bank-account{
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid #CCC;
+      border-radius: 3px;
+      font-family: 'Lato';
+      letter-spacing: 1px;
+      margin: 16px 0;
+
+      .m-revenue--options-payout-method-bank--name {
+        font-weight: 600;
+        padding-right: 38px;
+      }
+      .m-revenue--options-payout-method-bank--number {
+        letter-spacing: 6px;
+        flex: 2;
+      }
+      .m-revenue--options-payout-method-bank--actions{
+        text-align: right;
+        text-transform: uppercase;
+        color: #AAA;
+        font-weight: 300;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .m-revenue--options-payout-method-setup{
+    p{
+      font-family:'Lato';
+    }
+
+    form{
+      label{
+        text-transform: uppercase;
+        font-family: 'Lato';
+        letter-spacing: 1px;
+        word-spacing: 4px;
+      }
+      input{
+        width: 100%;
+        margin: 16px 0;
+        padding: 8px;
+        font-family: 'Lato';
+        font-size: 16px;
+      }
+
+      minds-country-input{
+        width:100%;
+        display:block;
+        margin: 16px 0;
+
+        select{
+          font-size: 16px;
+          font-family:'Lato';
+          font-weight: 300;
+          color:#888;
+        }
+      }
+    }
+  }
+
+  .m-error{
+    padding: 16px;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-family: 'Lato';
+    font-weight: 300;
+    margin: 16px 0;
+    border-radius: 2px;
+  }
+
+  .m-revenue--options-cancel{
+    margin-top:32px;
+    padding:16px;
+
+    h3{
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 24px;
+    }
+    p{
+      font-family:'Lato';
+      //margin:0;
+    }
+    button{
+      width: 200px;
+    }
+  }
+
+}

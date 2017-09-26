@@ -1,0 +1,13 @@
+<div 
+  [class]="'mdl-card mdl-shadow--2dp ' + class" 
+  [routerLink]="route"  
+  *ngIf="service.shouldShow(id)"
+  (click)="service.hide(id)">
+
+  <i [class]="'material-icons ' + class">{{icon}}</i>      
+  <h3 [class]="class">{{text}}</h3>
+  <h5 [class]="class">{{subtext}}</h5>
+
+  <i [class]="'material-icons m-onboarding-card--close ' + class" (click)="close($event)">close</i> 
+
+</div>

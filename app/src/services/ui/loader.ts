@@ -1,3 +1,3 @@
-export class Loader{
+export class Loader {
 
 }

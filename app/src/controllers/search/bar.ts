@@ -1,58 +1,97 @@
-import { Component, View, NgFor, NgIf, FORM_DIRECTIVES, Inject} from 'angular2/angular2';
-import { Router, RouteParams, Location } from 'angular2/router';
+import { Component, Inject } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
+
 import { Client, Upload } from '../../services/api';
-import { Material } from '../../directives/material';
-import { InfiniteScroll } from '../../directives/infinite-scroll';
 import { MindsActivityObject } from '../../interfaces/entities';
 
 @Component({
   selector: 'minds-search-bar',
   host: {
     '(keyup)': 'keyup($event)'
-  }
-})
-@View({
+  },
   template: `
     <div class="mdl-textfield mdl-js-textfield">
         <i class="material-icons" (click)="onClick()">search</i>
-        <input class="mdl-textfield__input" type="text" id="search" [(ng-model)]="q"/>
+        <input [(ngModel)]="q"
+          name="q"
+          class="mdl-textfield__input"
+          type="text"
+          id="search"
+          autocomplete="off"
+          />
         <label class="mdl-textfield__label" for="search"></label>
-    </div>`,
-  directives: [ NgFor, NgIf, Material, FORM_DIRECTIVES ]
+        <minds-search-bar-suggestions [q]="q"></minds-search-bar-suggestions>
+    </div>
+    `
 })
 
 export class SearchBar {
 
-  q : string = "";
+  q: string;
+  routerSubscription: Subscription;
 
-  constructor(public router : Router){
+  constructor(public router: Router) {
+  }
+
+  ngOnInit() {
     this.listen();
   }
 
-  listen(){
-    this.router.subscribe((route : string) => {
-      if(route.indexOf('search') == -1){
-        this.q = "";
-      } else {
-        var r = route.substring(route.indexOf('q=')+2);
-        if(r.indexOf('&type=') > 0)
-          r = r.substring(0, r.indexOf('&type='));
-        this.q = decodeURI(r);
+  ngOnDestroy() {
+    this.unListen();
+  }
+
+  listen() {
+    this.routerSubscription = this.router.events.subscribe((navigationEvent: NavigationEnd) => {
+      try {
+        if (navigationEvent instanceof NavigationEnd) {
+          if (!navigationEvent.urlAfterRedirects) {
+            return;
+          }
+
+          let url = navigationEvent.urlAfterRedirects;
+
+          if (url.indexOf('/') === 0) {
+            url = url.substr(1);
+          }
+
+          let fragments = url.replace(/\//g, ';').split(';');
+
+          if (fragments[0] === 'search') {
+            fragments.forEach((fragment: string) => {
+              let param = fragment.split('=');
+
+              if (param[0] === 'q') {
+                this.q = decodeURIComponent(param[1]);
+              }
+            });
+          } else {
+            this.q = '';
+          }
+        }
+      } catch (e) {
+        console.error('Minds: router hook(SearchBar)', e);
       }
     });
   }
 
-  search(){
-    this.router.navigate(['/Search', {q: this.q}]);
+  unListen() {
+    this.routerSubscription.unsubscribe();
   }
 
-  keyup(e){
-    if(e.keyCode == 13)
+  search() {
+    this.router.navigate(['search', { q: this.q }]);
+  }
+
+  keyup(e) {
+    if (e.keyCode === 13)
       this.search();
   }
 
-  onClick(){
-    document.getElementById("search").focus();
+  onClick() {
+    document.getElementById('search').focus();
   }
 
 }

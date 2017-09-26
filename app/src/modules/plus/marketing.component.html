@@ -1,0 +1,129 @@
+<div class="m-plus--marketing">
+
+  <div class="m-plus--marketing-header">
+    <h1>Minds Plus</h1>
+    <h3>Opt-out of boosts, earn 1,000 monthly points, access exclusive Minds content, and more</h3>
+
+    <div class="m-plus--marketing-action-button">
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isPlus()" (click)="openSubscription()" [hidden]="showSubscription">Upgrade - $5.00/month</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login">Upgrade - $5.00/month</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="openSubscription()">Cancel Plus</button>
+    </div>
+
+    <div class="m-plus--overlay"></div>
+  </div>
+
+  <m-plus--subscription *ngIf="showSubscription"></m-plus--subscription>
+
+  <div class="m-plus--marketing-contents mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">trending_up</i>
+      <h2>Hide Boosts</h2>
+      <span>Remove all boosted content from your newsfeed and sidebars (optional) </span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <img src="assets/wire-icon.png" style="display: block; margin: 2px auto 20px; height: 60px;"/>
+      <h2>1,000 points</h2>
+      <span>Receive 1,000 monthly points to boost your own posts or share with others to support their content</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">favorite</i>
+      <h2>Exclusive</h2>
+      <span>Gain access to monthly hangouts and exclusive behind-the-scenes content with the Minds team</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">announcement</i>
+      <h2>Ad free</h2>
+      <span>Remove all ads across the site</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">verified_user</i>
+      <h2>Verified</h2>
+      <span *ngIf="!user || !user.plus">Request to verify your channel</span>
+      <span *ngIf="user && user.plus && !user.verified">
+        <a (click)="showVerify = true; detectChanges()" style="cursor:pointer">Click here</a> to request to be verified
+      </span>
+      <span *ngIf="user && user.plus && user.verified">You are verified!</span>
+    </div>
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons mdl-color-text--blue-grey-700">add_circle_outline</i>
+      <h2>Badge</h2>
+      <span>Make your channel stand out with a Minds Plus badge</span>
+    </div>
+  </div>
+
+  <div class="m-plus--marketing-faq mdl-color-text--blue-grey-600">
+    <m-faq question="What is Minds Plus?">
+      <p>
+        Minds Plus is a paid subscription that provides you with added benefits on Minds, across all mobile and web channels.
+      </p>
+      <p>The benefits include:</p>
+      <ul>
+        <li>Opt-out of all ads and boosted content on the site</li>
+        <li>Access to exclusive Minds content</li>
+        <li>Receive 1,000 monthly points</li>
+        <li>Minds Plus badge on your channel </li>
+        <li>Request to become verified</li>
+      </ul>
+    </m-faq>
+    <m-faq question="What does opting out of ads and boosts do?">
+      <p>
+        You will notice advertisements and boosted content across the entire site.
+        The purpose of the boost queue is to provide you with the ability to promote content and reach new audiences.
+        It also provides you with a way to discover new content you enjoy, outside of who you are subscribed to.
+      </p>
+      <p>
+        With Minds Plus, you are given the option to opt-out of the boost queue and all third party ads so that they do not appear on your newsfeed or blogs.
+        While we hope that you continue to use the boost queue to stay more engaged with the Minds community, we understand that many users only desire to see the content they are subscribed to.
+        Minds Plus lets you make this decision.
+      </p>
+      <p>
+        To opt out of boosted content, click on the ‘X’ above the boost rotator at the top of your newsfeed and refresh the page.
+      </p>
+    </m-faq>
+    <m-faq question="What is exclusive Minds content?">
+      <p>
+        Periodically throughout the month, the Minds team will post exclusive content for all Minds Plus users to provide a closer look at what is going on behind-the-scenes at our headquarters.
+      </p>
+      <p>
+        Access to monthly hangouts with the Minds team will also be included to provide users with the opportunity to ask questions and discuss ideas.
+      </p>
+      <p>
+        Exclusive Minds content will continue to evolve as the site continues to grow.
+      </p>
+    </m-faq>
+    <m-faq question="How do users receive their 1,000 points a month?">
+      <p>
+        Each month, we will automatically deposit 1,000 points directly into your wallet.
+        You may leverage these points to boost your content and earn more views (1 point = 1 view).
+        You may also wire these points directly to other channels you enjoy and would like to support.
+      </p>
+    </m-faq>
+    <m-faq question="What is a Plus badge?">
+      <p>
+        By signing up, you will receive a Minds Plus badge on your profile by default.
+        This is intended to make your profile stand out and allow you to show that you are a supporter of Minds.
+        You may also choose to remove this badge from your channel, if desired.
+      </p>
+    </m-faq>
+    <m-faq question="What does it mean to become verified?">
+      <p>
+        Minds Plus provides you with the option to request a verified badge.
+        When you submit a request, the Minds team will review the submission and verify that you actually are who you claim to be.
+        This helps our community confirm that you are the real channel and not an imposter.  
+      </p>
+    </m-faq>
+
+    <m-faq question="What is the cancellation policy?">
+      <p>
+        You may cancel your Plus subscription at any time.
+        Refunds and credits will not be issued for partial billing periods.
+      </p>
+    </m-faq>
+  </div>
+
+  <m-plus--verify *ngIf="showVerify" (closed)="showVerify=false; detectChanges()"></m-plus--verify>
+
+</div>
+
+<m-footer></m-footer>

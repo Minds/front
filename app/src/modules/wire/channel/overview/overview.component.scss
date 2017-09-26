@@ -1,0 +1,51 @@
+.m-wire-channel--overview{
+  border-radius: 3px;
+
+  padding: 16px;
+  margin: auto auto 16px auto;
+  display:flex;
+  align-items:center;
+  font-family: 'Lato';
+
+  @media only screen and (max-width: 400px) {
+    padding:0;
+    text-align: center;
+  }
+
+  i{
+    font-style: normal;
+    font-weight:100;
+  }
+
+  > div{
+    font-size:32px;
+    letter-spacing:2px;
+    line-height:32px;
+  }
+
+  .m-wire-channel--overview--label{
+    display:block;
+
+    > * {
+      vertical-align:middle;
+    }
+
+    label{
+      text-transform: uppercase;
+      font-family: 'Lato';
+      letter-spacing:1px;
+      font-size:14px;
+    }
+    i{
+      font-size: 16px;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+
+  .m-wire-channel--overview--overview-walletlink label {
+    font-size: 9px;
+    cursor: pointer;
+  }
+
+}

@@ -1,0 +1,155 @@
+.m-affiliate--marketing-header{
+  background: url('/assets/photos/balloon.jpg');
+  width: 100%;
+  text-align: center;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  padding: 224px 36px;
+  box-sizing: border-box;
+
+  h1, h3{
+    color: #FFF;
+
+    font-family: 'Lato';
+    text-shadow: 0 0 3px #333;
+  }
+
+  h1{
+    word-spacing: 25px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+
+  }
+  h3{
+    letter-spacing: 2px;
+    word-spacing:3px;
+    font-weight:300;
+  }
+
+  .m-affiliate--marketing-link{
+    input{
+      padding:16px;
+      font-size:22px;
+      color:#333;
+      background: rgba(255,255,255,0.5);
+      border:0;
+      border-radius: 3px;
+      max-width:825px;
+      width:100%;
+      display: block;
+      margin: 8px auto;
+      text-align: center;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+    }
+    span{
+      padding:8px;
+      letter-spacing:1px;
+      font-family: 'Lato';
+      color: #FFF;
+      font-size: 16px;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+  }
+
+  .m-affiliate--marketing-action-button{
+    margin-bottom: -80px;
+    margin-top: 32px;
+    button{
+      letter-spacing: 3px;
+      font-size: 18px;
+      line-height: 35px;
+      height: 53px;
+      padding: 0 24px;
+      font-weight: 300;
+      font-family: 'Lato';
+      color: #FFF;
+    }
+  }
+}
+
+.m-affiliate--marketing-contents{
+  max-width:990px;
+  padding:64px 0 !important;
+
+  .mdl-cell{
+    padding: 32px 16px;
+    text-align: center;
+
+    i{
+      font-size: 64px;
+    }
+    h2{
+      padding: 0;
+      margin: 24px 0;
+      text-transform: uppercase;
+      font-family: 'Lato';
+      font-weight: 300;
+      letter-spacing: 2px;
+      font-size: 38px;
+    }
+    span{
+      font-family: 'lato';
+      letter-spacing: 1px;
+    }
+  }
+}
+
+.m-affiliate--marketing-onboarding{
+  margin: -115px auto 0;
+  display: block;
+  position: relative;
+  max-width: 990px;
+  background:#FFF;
+
+  > p{
+    padding: 16px 16px 0 32px;
+    margin: 0;
+    font-size: 16px;
+    font-family: 'Lato';
+    letter-spacing: 0.5px;
+    font-weight: 300;
+  }
+
+  form{
+    padding: 16px;
+  }
+}
+
+.m-affiliate--marketing-faq {
+  max-width:690px;
+  margin: auto;
+  font-family: 'Lato';
+
+  .m-affiliate--marketing-faq-aq {
+    padding: 16px 0;
+
+    h4{
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      word-spacing: 5px;
+      font-weight: 600;
+    }
+
+    p{
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: #000;
+      font-weight: 300;
+    }
+  }
+
+}
+
+.m-affiliate--marketing m-affiliate--terms{
+  max-width: 600px;
+  margin: 16px auto;
+  display: block;
+  background: #FFF;
+  padding: 16px;
+  max-height: 600px;
+  overflow: scroll;
+}

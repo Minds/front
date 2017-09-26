@@ -1,0 +1,48 @@
+<div class="m-revenue--ledger">
+
+  <div class="m-revenue--ledger-table">
+    <div class="mdl-card mdl-shadow--2dp" style="overflow:visible">
+      <table class="mdl-data-table mdl-js-data-table" [mdl]>
+        <thead>
+          <tr class="m-revenue--ledger-header">
+            <th class="mdl-data-table__cell--non-numeric m-data-title">Date</th>
+            <th class="mdl-data-table__cell--non-numeric m-data-title" *ngIf="type == 'earnings'">Type</th>
+            <th class="mdl-data-table__cell--non-numeric m-data-title" *ngIf="type == 'payouts'">Status</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of transactions" class="m-revenue--ledger-row">
+            <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category">{{ transaction.ts * 1000 | date }}</td>
+            <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category" *ngIf="type == 'earnings'">{{ transaction.category }}</td>
+            <td class="mdl-data-table__cell--non-numeric m-revenue--ledger-category" *ngIf="type == 'payouts'">
+              {{transaction.status == 'in_transit' ? 'Sending' : transaction.status}}
+            </td>
+            <td class="m-revenue--ledger-amount mdl-color-text--green">
+              <div class="m-revenue--ledger-refunded" *ngIf="transaction.refunded">
+                <label>Refunded</label>
+                <m-tooltip icon="help">
+                  A refund was issued for this payment. Funds will be deducted from your balance or reclaimed.
+                </m-tooltip>
+              </div>
+              <div class="m-revenue--ledger-refunded" *ngIf="transaction.dispute">
+                <label>Disputed</label>
+                <m-tooltip icon="help">
+                  This payment was disputed by the card holder.
+                </m-tooltip>
+              </div>
+              <span>{{ transaction.amount | currency:transaction.currency:true }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="loadList()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+    </infinite-scroll>
+  </div>
+</div>

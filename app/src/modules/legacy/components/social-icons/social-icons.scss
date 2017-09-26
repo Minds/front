@@ -1,0 +1,56 @@
+@import 'defaults.scss';
+
+.m-social-icons{
+  position:fixed;
+  display: flex;
+  flex-direction: row;
+  bottom: 0;
+  left: calc(50% - 100px);
+  z-index:100;
+
+  @media screen and (max-width: $max-mobile){
+    flex-direction: row;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    margin-left: -100px;
+    align-items: center;
+  }
+
+  .m-social-icons-icon-inline{
+    fill: #FFF;
+    display:inline-block;
+    width:100%;
+    cursor:pointer;
+  }
+  .m-social-icons-icon--facebook .m-social-icons-icon-inline{
+    background-color: #3067a3;
+  }
+  .m-social-icons-icon--twitter .m-social-icons-icon-inline{
+    background-color: #03b3ee;
+  }
+  .m-social-icons-icon--email .m-social-icons-icon-inline{
+    background-color: #767676;
+  }
+  .m-social-icons-icon--linkedin .m-social-icons-icon-inline{
+    background-color: #0071a1;
+  }
+  .m-social-icons-icon--gplus .m-social-icons-icon-inline{
+    background-color: #e15440;
+  }
+  .m-social-icons-icon--embed .m-social-icons-icon-inline{
+    background-color: #767676;
+  }
+}
+
+m-social-icons {
+  .m-modal-container {
+    min-height: 0;
+
+    .mdl-card {
+      min-height: 0;
+      padding-bottom: 16px;
+    }
+  }
+}
