@@ -293,12 +293,12 @@ export class AttachmentService {
       return false;
     }
 
-    if (typeof object.mature !== 'undefined') {
-      return !!object.mature;
-    }
-
     if (typeof object.flags !== 'undefined') {
       return !!object.flags.mature;
+    }
+    
+    if (typeof object.mature !== 'undefined') {
+      return !!object.mature;
     }
 
     if (typeof object.custom_data !== 'undefined' && typeof object.custom_data[0] !== 'undefined') {
