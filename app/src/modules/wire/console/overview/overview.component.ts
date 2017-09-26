@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -32,7 +32,7 @@ export class WireConsoleOverviewComponent {
 
     this.getStats();
   }
-  
+
   getStats() {
     this.client.get('api/v1/wire/sums/overview/' + this.session.getLoggedInUser().guid, {
       start: Date.parse(this.startDate) / 1000

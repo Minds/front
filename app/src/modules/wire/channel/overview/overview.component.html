@@ -23,7 +23,7 @@
   </div>
 
   <div class="m-wire-channel--overview--overview-earnings mdl-cell mdl-cell--6-col">
-    <span *ngIf="ready">{{ stats.points | abbr }}</span>
+    <span *ngIf="ready">{{ stats.points | abbr: 0}}</span>
     <div class="m-wire-channel--overview--label">
       <label>Points</label>
       <m-tooltip icon="help">
@@ -41,6 +41,15 @@
       </m-tooltip>
     </div>
   </div> -->
+
+  <div class="m-wire-channel--overview--overview-walletlink mdl-cell mdl-cell--6-col" *ngIf="session.getLoggedInUser().guid == channel.guid">
+    <div class="m-wire-channel--overview--label">
+      <label routerLink="/wallet/wire">See breakdown</label>
+      <m-tooltip icon="help">
+        See a breakdown of all your Wires in your wallet 
+      </m-tooltip>
+    </div>
+  </div> 
 
   <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col" *ngIf="canWire()">
     <ng-container *ngIf="channel.merchant; else sentNotAMerchant">

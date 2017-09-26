@@ -8,9 +8,8 @@ export class AbbrPipe {
 
 	abbrev = ['k', 'm', 'b', 't'];
 
-	transform(number: number | any) {
+	transform(number: number | any, decimals: number = 2) {
 		// 2 decimal places => 100, 3 => 1000, etc
-		let decimals = 2;
 		decimals = Math.pow(10, decimals);
 
 		// Go through the array backwards, so we do the largest first

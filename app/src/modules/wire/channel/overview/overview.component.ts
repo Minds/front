@@ -52,7 +52,7 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
         this.detectChanges();
       });
 
-    if (!this.canWire()) 
+    if (!this.canWire())
       return;
 
     this.client.get('api/v1/wire/rewards/' + this.channel.guid)
@@ -68,7 +68,7 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
   }
 
   canWire() {
-    return this.session.getLoggedInUser().guid != this.channel.guid && this.session.isLoggedIn();
+    return this.session.getLoggedInUser().guid !== this.channel.guid && this.session.isLoggedIn();
   }
 
   detectChanges() {
