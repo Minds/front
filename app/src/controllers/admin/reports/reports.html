@@ -54,12 +54,17 @@
         </p>
       </div>
 
-      <minds-card [object]="report.entityObj" hostClass="mdl-card" *ngIf="report.entityObj.type != 'comment'"></minds-card>
-      <div *ngIf="report.entityObj.type == 'comment'" class="m-comment-wrapper">
+      <minds-card [object]="report.entityObj" hostClass="mdl-card" *ngIf="report.entityObj && report.entityObj.type != 'comment'"></minds-card>
+      <div *ngIf="report.entityObj && report.entityObj.type == 'comment'" class="m-comment-wrapper">
         <div class="m-admin-reports--comment-note">
           <a target="_blank" [routerLink]="['/newsfeed', report.entityObj.parent_guid]">View parent and its comment thread</a>
         </div>
         <minds-card-comment [object]="report.entityObj" class="mdl-card"></minds-card-comment>
+      </div>
+      <div *ngIf="!report.entityObj" class="m-comment-wrapper">
+        <div class="m-admin-reports--comment-note">
+          Post not found
+        </div>
       </div>
 
       <div class="mdl-card__supporting-text m-action-buttons">
@@ -80,7 +85,7 @@
             >Mark as <i class="material-icons">explicit</i></button>
 
             <button type="button"
-              *ngIf="report.entityObj.type != 'comment'"
+              *ngIf="report.entityObj && report.entityObj.type != 'comment'"
               class="mdl-button mdl-button--raised mdl-button--colored mdl-color--orange"
               (click)="spam(report, i)"
               i18n
