@@ -33,7 +33,6 @@ export class Channel {
   moreData: boolean = true;
   inProgress: boolean = false;
   editing: boolean = false;
-  editForward: boolean = false;
   error: string = '';
   openWireModal: boolean = false;
 
@@ -62,6 +61,7 @@ export class Channel {
 
     this.paramsSubscription = this.route.params.subscribe((params) => {
       let changed = false;
+      this.editing = false;
 
       if (params['username']) {
         changed = this.username !== params['username'];
@@ -78,7 +78,6 @@ export class Channel {
 
       if (params['editToggle']) {
         this.editing = true;
-        this.editForward = true;
       }
 
       if (changed) {
@@ -104,6 +103,9 @@ export class Channel {
           return false;
         }
         this.user = data.channel;
+        if (!(this.session.getLoggedInUser() && this.session.getLoggedInUser().guid === this.user.guid)) {
+          this.editing = false;
+        }
         this.title.setTitle(this.user.username);
 
         if (this.openWireModal) {
@@ -204,9 +206,6 @@ export class Channel {
     this.client.post('api/v1/channel/info', this.user)
       .then((data: any) => {
         this.editing = false;
-        if (this.editForward) {
-          //  this.router.navigate(['/Discovery', {filter: 'suggested', type:'channels'}]);
-        }
       });
   }
 
