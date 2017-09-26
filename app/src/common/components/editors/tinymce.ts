@@ -74,13 +74,13 @@ export class MindsTinymce {
       content_css: '/stylesheets/main.css',
       format: 'raw',
       menubar: false,
-      toolbar: `styleselect
-        | bold italic underline textcolor
-        | alignleft aligncenter alignright alignjustify
-        | bullist numlist
-        | link image media
-        | removeformat
-        | code`,
+      toolbar: 'styleselect'
+        + ' | bold italic underline textcolor'
+        + ' | alignleft aligncenter alignright alignjustify'
+        + ' | bullist numlist'
+        + ' | link image media'
+        + ' | removeformat'
+        + ' | code',
       statusbar: false,
       relative_urls: false,
       remove_script_host: false,
