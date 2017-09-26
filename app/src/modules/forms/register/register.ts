@@ -44,7 +44,10 @@ export class RegisterForm {
     this.errorMessage = '';
 
     if (this.form.value.password !== this.form.value.password2) {
-      this.reCaptcha.reset();
+      if (this.reCaptcha) {
+        this.reCaptcha.reset();
+      }
+
       this.errorMessage = 'Passwords must match.';
       return;
     }
@@ -65,7 +68,9 @@ export class RegisterForm {
       .catch((e) => {
         console.log(e);
         this.inProgress = false;
-        this.reCaptcha.reset();
+        if (this.reCaptcha) {
+          this.reCaptcha.reset();
+        }
 
         if (e.status === 'failed') {
           //incorrect login details
