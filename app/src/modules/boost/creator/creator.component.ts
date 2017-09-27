@@ -433,7 +433,7 @@ export class BoostCreatorComponent implements AfterViewInit {
    */
   setTarget(target, $event?) {
     if ($event) {
-      event.preventDefault();
+      $event.preventDefault();
     }
 
     this.boost.target = { ...target };
