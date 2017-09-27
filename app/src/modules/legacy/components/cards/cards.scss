@@ -221,6 +221,10 @@ minds-activity.mdl-card, minds-activity{
     word-wrap: break-word;
   }
 
+  textarea.mdl-card__supporting-text.message{
+    white-space: pre-wrap;
+  }
+
   .m-owner-block{
     position: relative;
   }
