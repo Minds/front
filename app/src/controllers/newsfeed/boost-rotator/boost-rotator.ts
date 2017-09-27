@@ -93,19 +93,32 @@ export class NewsfeedBoostRotator {
     });
   }
 
+  setExplicit(active: boolean) {
+    this.session.getLoggedInUser().mature = active;
+
+    this.load();
+    this.client.post('api/v1/settings/' + this.session.getLoggedInUser().guid, {
+      mature: active,
+      boost_rating: this.rating
+    }).catch((e) => {
+      window.Minds.user.mature = !active;
+    });
+  }
+
   setRating(rating) {
     this.rating = rating;
     this.session.getLoggedInUser().boost_rating = rating;
     this.boosts = [];
-    this.load().then(() => {
-      this.client.post('api/v1/settings/' + this.session.getLoggedInUser().guid, {
-        boost_rating : rating,
-      });
+
+    this.load();
+    this.client.post('api/v1/settings/' + this.session.getLoggedInUser().guid, {
+      mature: this.session.getLoggedInUser().mature,
+      boost_rating: rating,
     });
   }
 
   toggleRating() {
-    if (this.rating !== 1) {
+    if (this.rating != 1) {
       this.setRating(1);
     } else {
       this.setRating(2);

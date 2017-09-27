@@ -37,10 +37,10 @@
         </m-tooltip>
         <span class="m-dropdown--spacer"></span>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-explicit" [mdlSwitch] [toggled]="true" *ngIf="session.getLoggedInUser().mature">
-          <input type="checkbox" id="switch-explicit" class="mdl-switch__input" [ngModel]="session.getLoggedInUser().mature" (ngModelChange)="session.getLoggedInUser().mature = false">
+          <input type="checkbox" id="switch-explicit" class="mdl-switch__input" [ngModel]="session.getLoggedInUser().mature" (ngModelChange)="setExplicit(false)">
         </label>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-explicit" [mdlSwitch] [toggled]="false" *ngIf="!session.getLoggedInUser().mature">
-          <input type="checkbox" id="switch-explicit" class="mdl-switch__input" [ngModel]="session.getLoggedInUser().mature" (ngModelChange)="session.getLoggedInUser().mature = true">
+          <input type="checkbox" id="switch-explicit" class="mdl-switch__input" [ngModel]="session.getLoggedInUser().mature" (ngModelChange)="setExplicit(true)">
         </label>
       </li>
       <li class="mdl-menu__item" (click)="paused = !paused;" i18n>
