@@ -28,6 +28,10 @@ m-media-theatre{
   position: relative;
   height: auto;
 
+  @media screen and (max-width: $max-mobile){
+    min-height: 200px;
+  }
+  
   &:before{
     display: block;
     content: " ";
@@ -282,8 +286,26 @@ minds-media-thumbnail-selector{
       padding-left: $minds-padding * 1.5;
       flex: 1;
     }
+  
+    @media screen and (max-width: $max-mobile) {
+      flex-wrap: wrap;
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      flex-wrap: wrap;
+    }
+  
   }
 
+  h1.m-media-content--heading{
+    @media screen and (max-width: $min-tablet) {
+      font-size: 26px;
+    }
+    
+    @media screen and (max-width: $max-mobile) {
+      font-size: 16px;
+    }
+  }
 
   .m-media-content--info {
     
@@ -307,6 +329,27 @@ minds-media-thumbnail-selector{
         vertical-align: middle;
       }
     }
+
+    i.material-icons{  
+      @media screen and (max-width: $min-tablet) {
+        font-size: 22px;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        font-size: 16px;
+      }
+    }
+
+    .m-license-info, .m-media-album--backlink, .m-mature-info, .m-visibility-info, .m-media-content--play-count{
+      @media screen and (max-width: $min-tablet) {
+        font-size: 9px;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        font-size: 7px;
+      }
+    }
+  
   }
 
   .m-media-content--actions {

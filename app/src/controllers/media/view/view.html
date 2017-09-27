@@ -71,10 +71,12 @@
         <!-- Meta bar -->
         <div class="mdl-grid m-media-content--meta">
           <div class="mdl-cell mdl-cell--12-col m-media-content--title" [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(entity) }">
-            <h1>{{ entity.title | excerpt:100 }}</h1>
+            <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-phone">
+                <h1 class="m-media-content--heading">{{ entity.title | excerpt:100 }}</h1>
+            </div>
             
             <!-- Additional block -->
-            <div class="m-media-content--info">
+            <div class="m-media-content--info mdl-cell mdl-cell--4-col mdl-cell--6-col-phone">
   
               <div class="m-media-content--play-count" *ngIf="entity['play:count'] || entity['play:count'] === 0">
                 <span i18n>{{ entity['play:count'] | number }} plays</span>
