@@ -469,7 +469,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     if (this.boost.currency === 'points') {
       const charges = this.calcCharges(this.boost.currency);
 
-      if (charges > this.rates.balance) {
+      if ((this.rates.balance !== null) && (charges > this.rates.balance)) {
         throw new VisibleBoostError(`You only have ${this.rates.balance} points.`);
       }
     } else {
