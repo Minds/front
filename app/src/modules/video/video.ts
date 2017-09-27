@@ -7,7 +7,7 @@ import { VideoAdsService } from './ads-service';
 @Component({
   selector: 'minds-video',
   inputs: [
-    'src',
+    '_src: src',
     '_autoplay: autoplay',
     '_visibleplay: visibleplay',
     '_loop: loop',
@@ -94,8 +94,7 @@ export class MindsVideo {
   }
 
   ngOnInit() {
-    this.container = this._element.nativeElement;
-    this.element = this._element.nativeElement.getElementsByTagName('video')[0];
+    this.getElement();
     //this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
     //  this.isVisible();
     //});
@@ -118,10 +117,11 @@ export class MindsVideo {
     }
   }
 
-  //set _src(value : any){
-  //this.src = value[0].uri;
-  //this.element.src = this.src;
-  //}
+  set _src(src: any){
+    this.src = src;
+    this.getElement();
+    this.element.load();
+  }
 
   set _muted(value: boolean) {
     this.muted = value;
@@ -157,6 +157,11 @@ export class MindsVideo {
     this.playCount = value;
   }
 
+  getElement(){
+    this.container = this._element.nativeElement;
+    this.element = this._element.nativeElement.getElementsByTagName('video')[0];
+  }
+  
   setUp() {
     this.element.addEventListener('play', (e) => {
       this.addViewCount();
