@@ -32,7 +32,7 @@ export interface MindsUser {
 	chat ?: boolean;
 	icontime : number;
 	blocked ?: boolean;
-	carousels ?: boolean;
+	carousels ?: any[]|boolean;
 	city ?: string;
 	social_profiles ?: KeyVal[];
 	wire_rewards ?: WireRewardsStruc;
