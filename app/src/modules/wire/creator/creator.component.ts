@@ -192,6 +192,7 @@ export class WireCreatorComponent implements AfterViewInit {
       this.wire.recurring = false;
     }
 
+    this.convertCurrency(oldCurrency, currency);
     this.roundAmount();
     this.showErrors();
   }
@@ -289,6 +290,37 @@ export class WireCreatorComponent implements AfterViewInit {
     const charges = this.calcBaseCharges(type);
 
     return charges;
+  }
+
+  /**
+   * Converts the current amount when switching currencies
+   */
+  convertCurrency(from: CurrencyType | null, to: CurrencyType | null) {
+    if (!from || !to) {
+      return;
+    }
+
+    switch (from) {
+      case 'points':
+        if (to == 'money') {
+          this.wire.amount = <number>this.wire.amount / this.rates.usd;
+        } else if (to == 'btc') {
+          // TODO: BTC
+        }
+        break;
+
+      case 'money':
+        if (to == 'points') {
+          this.wire.amount = <number>this.wire.amount * this.rates.usd;
+        } else if (to == 'btc') {
+          // TODO: BTC
+        }
+        break;
+
+      case 'btc':
+        // TODO: BTC
+        break;
+    }
   }
 
   // Priority
