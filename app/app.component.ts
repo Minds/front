@@ -5,6 +5,7 @@ import { AnalyticsService } from './src/services/analytics';
 import { SocketsService } from './src/services/sockets';
 import { Session, SessionFactory } from './src/services/session';
 import { LoginReferrerService } from './src/services/login-referrer.service';
+import { ScrollToTopService } from './src/services/scroll-to-top.service';
 
 @Component({
   moduleId: module.id,
@@ -18,6 +19,7 @@ export class Minds {
 
   constructor(
     public notificationService: NotificationService,
+    public scrollToTop: ScrollToTopService, 
     public analytics: AnalyticsService,
     public sockets: SocketsService,
     public loginReferrer: LoginReferrerService
@@ -45,9 +47,12 @@ export class Minds {
         '/forgot-password',
       ])
       .listen();
+
+    this.scrollToTop.listen();
   }
 
   ngOnDestroy() {
     this.loginReferrer.unlisten();
+    this.scrollToTop.unlisten();
   }
 }
