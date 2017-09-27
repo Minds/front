@@ -302,17 +302,17 @@ export class WireCreatorComponent implements AfterViewInit {
 
     switch (from) {
       case 'points':
-        if (to == 'money') {
+        if (to === 'money') {
           this.wire.amount = <number>this.wire.amount / this.rates.usd;
-        } else if (to == 'btc') {
+        } else if (to === 'btc') {
           // TODO: BTC
         }
         break;
 
       case 'money':
-        if (to == 'points') {
+        if (to === 'points') {
           this.wire.amount = <number>this.wire.amount * this.rates.usd;
-        } else if (to == 'btc') {
+        } else if (to === 'btc') {
           // TODO: BTC
         }
         break;

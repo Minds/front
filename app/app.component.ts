@@ -19,7 +19,7 @@ export class Minds {
 
   constructor(
     public notificationService: NotificationService,
-    public scrollToTop: ScrollToTopService, 
+    public scrollToTop: ScrollToTopService,
     public analytics: AnalyticsService,
     public sockets: SocketsService,
     public loginReferrer: LoginReferrerService

@@ -157,11 +157,11 @@ export class MindsVideo {
     this.playCount = value;
   }
 
-  getElement(){
+  getElement() {
     this.container = this._element.nativeElement;
     this.element = this._element.nativeElement.getElementsByTagName('video')[0];
   }
-  
+
   setUp() {
     this.element.addEventListener('play', (e) => {
       this.addViewCount();

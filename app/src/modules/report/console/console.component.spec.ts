@@ -16,7 +16,7 @@ import { ScrollService } from '../../../services/ux/scroll';
 import {$it, $beforeAll, $beforeEach, $afterEach, $afterAll} from 'jasmine-ts-async';
 
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
-
+/* tslint:disable */
 describe('ReportConsoleComponent', () => {
   let comp: ReportConsoleComponent;
   let fixture: ComponentFixture<ReportConsoleComponent>;
