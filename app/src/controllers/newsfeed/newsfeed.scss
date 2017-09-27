@@ -11,7 +11,8 @@ minds-newsfeed {
 
   .m-newsfeed{
     max-width:1190px;
-
+    flex-wrap: nowrap;
+    
     .m-newsfeed--sidebar, .m-newsfeed--boost-sidebar{
       max-width:270px;
     }
