@@ -8,19 +8,15 @@ import { Client } from '../../../../services/api';
   outputs: ['added'],
   template: `
   <div class="minds-banner" *ngIf="!editing">
-    <div class="minds-banner-img mdl-color--blue-grey"
-      [ngStyle]="{'background-position': '0 ' + top + 'px', 'background-image': 'url(' + src + ')'}">
-    </div>
+    <div class="minds-banner-img m-banner--img-cover mdl-color--blue-grey"
+      [style.backgroundImage]="src ? 'url(' + src + ')' : null"
+    ></div>
+
     <div class="minds-banner-overlay"></div>
   </div>
-  <div *ngIf="editing" class="minds-banner minds-banner-editing">
-    <img class="mdl-color--blue-grey"
-      src="{{src}}"
-      [ngStyle]="{'top': top}"
-      (dragstart)="dragstart($event)"
-      (dragover)="drag($event)"
-      (dragend)="dragend($event)"
-    />
+  <div *ngIf="editing" class="minds-banner minds-banner-editing m-banner--img-cover"
+    [style.backgroundImage]="src ? 'url(' + src + ')' : null"
+  >
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
       <span>
@@ -36,7 +32,6 @@ import { Client } from '../../../../services/api';
 
     <div class="save-bar" [hidden]="!file">
       <div class="mdl-layout-spacer"></div>
-      <p i18n>Drag the banner vertically to change its position</p>
       <span class="minds-button-edit cancel-button" (click)="cancel()">
         <button i18n>Cancel</button>
       </span>
@@ -128,33 +123,7 @@ export class MindsBanner {
     //this.editing = false;
   }
 
-  dragstart(e) {
-    this.startY = e.target.style.top ? parseInt(e.target.style.top) : 0;
-    this.offsetY = e.clientY;
-    this.dragging = true;
-    e.dataTransfer.effectAllowed = 'none';
-  }
-
-  drag(e) {
-    e.preventDefault();
-    if (!this.dragging)
-      return false;
-
-    var target = e.target;
-    var top = this.startY + e.clientY - this.offsetY;
-    target.style.top = top + 'px';
-
-    this.top = top;
-    return false;
-  }
-
-  dragend(e) {
-    this.dragging = false;
-    console.log('stopped dragging');
-  }
-
   onClick(e) {
     e.target.parentNode.parentNode.getElementsByTagName('input')[0].click();
   }
-
 }

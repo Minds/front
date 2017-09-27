@@ -4,14 +4,23 @@
   overflow:hidden;
   height: 300px;
 
+  &.m-banner--img-cover {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
   div.minds-banner-img{
     width:100%;
-    min-width:2000px;
     position: relative;
     height: inherit;
     background-position: 0, 0;
     background-size: cover;
     background-repeat: no-repeat;
+
+    &.m-banner--img-cover {
+      background-position: center;
+    }
   }
 
   img.minds-banner-img{
