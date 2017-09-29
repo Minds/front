@@ -69,7 +69,7 @@ export class BoostConsoleCard {
 
   findReason(code: number): Reason {
     return rejectionReasons.find((item: Reason) => {
-      return item.code === code;
+      return item.code == code;
     });
   }
 
