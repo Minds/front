@@ -44,6 +44,7 @@
     "es6-module-loader": "^0.17.8",
     "es6-promise": "^3.1.2",
     "intl": "^1.0.0",
+    "jasmine-ts-async": "^1.0.0",
     "material-datetime-picker": "^2.4.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "~5.0.1",

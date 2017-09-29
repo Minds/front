@@ -26,7 +26,7 @@ import { MindsTitle } from './ux/title';
 import { CanDeactivateGuardService } from './can-deactivate-guard';
 import { OverlayModalService } from './ux/overlay-modal';
 import { LoginReferrerService } from './login-referrer.service';
-import { ScrollToTopService } from "./scroll-to-top.service";
+import { ScrollToTopService } from './scroll-to-top.service';
 
 import { GoogleChartsLoader } from './third-party/google-charts-loader';
 

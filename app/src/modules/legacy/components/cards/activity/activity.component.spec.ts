@@ -328,6 +328,15 @@ export class AutoGrowMock {
   grow() {
   }
 }
+
+@Component({
+  selector: 'm-post-menu',
+  template: '',
+  inputs: [ 'entity', 'canDelete', 'isTranslatable', 'options' ]
+})
+
+export class PostMenuMock {
+}
 // END MOCKS
 
 describe('Activity', () => {
@@ -387,6 +396,7 @@ describe('Activity', () => {
         ModalConfirmMock,
         ReadMoreButtonComponentMock,
         AutoGrowMock,
+        PostMenuMock,
         Activity
       ], // declare the test component
       imports: [

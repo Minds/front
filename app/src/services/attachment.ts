@@ -296,7 +296,7 @@ export class AttachmentService {
     if (typeof object.flags !== 'undefined') {
       return !!object.flags.mature;
     }
-    
+
     if (typeof object.mature !== 'undefined') {
       return !!object.mature;
     }

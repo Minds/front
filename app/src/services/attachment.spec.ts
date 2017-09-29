@@ -7,6 +7,8 @@ import { SessionFactory } from './session';
 
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
+/* tslint:disable */
+
 describe('Service: Attachment Service', () => {
   let service: AttachmentService;
   let mockObject;
@@ -22,36 +24,36 @@ describe('Service: Attachment Service', () => {
     service = new AttachmentService(clientMock, uploadMock);
 
     mockObject = {
-      "guid":"758019279000969217",
-      "type":"object",
-      "subtype":"video",
-      "time_created":"1506101878",
-      "time_updated":"1506101878",
-      "container_guid":"758019184876593168",
-      "owner_guid":"758019184876593168",
-      "access_id":"2",
-      "featured":false,
-      "featured_id":false,
-      "ownerObj":{
-        "guid":"758019184876593168",
-        "type":"user",
-        "name":"nicoronchiprod",
-        "username":"nicoronchiprod"
+      'guid':'758019279000969217',
+      'type':'object',
+      'subtype':'video',
+      'time_created':'1506101878',
+      'time_updated':'1506101878',
+      'container_guid':'758019184876593168',
+      'owner_guid':'758019184876593168',
+      'access_id':'2',
+      'featured':false,
+      'featured_id':false,
+      'ownerObj':{
+        'guid':'758019184876593168',
+        'type':'user',
+        'name':'nicoronchiprod',
+        'username':'nicoronchiprod'
       },
-      "category":false,
-      "flags":{"mature":true},
-      "wire_threshold":"0",
-      "thumbnail":false,
-      "cinemr_guid":"758019279000969217",
-      "license":false,
-      "monetized":false,
-      "mature":false,
-      "boost_rejection_reason":-1,
-      "thumbnail_src":"https:\/\/d3ae0shxev0cb7.cloudfront.net\/api\/v1\/media\/thumbnails\/758019279000969217",
-      "src":{"360.mp4":"https:\/\/d2isvgrdif6ua5.cloudfront.net\/cinemr_com\/758019279000969217\/360.mp4","720.mp4":"https:\/\/d2isvgrdif6ua5.cloudfront.net\/cinemr_com\/758019279000969217\/720.mp4"},
-      "play:count":6,
-      "description":''
-    }
+      'category':false,
+      'flags':{'mature':true},
+      'wire_threshold':'0',
+      'thumbnail':false,
+      'cinemr_guid':'758019279000969217',
+      'license':false,
+      'monetized':false,
+      'mature':false,
+      'boost_rejection_reason':-1,
+      'thumbnail_src':'https:\/\/d3ae0shxev0cb7.cloudfront.net\/api\/v1\/media\/thumbnails\/758019279000969217',
+      'src':{'360.mp4':'https:\/\/d2isvgrdif6ua5.cloudfront.net\/cinemr_com\/758019279000969217\/360.mp4','720.mp4':'https:\/\/d2isvgrdif6ua5.cloudfront.net\/cinemr_com\/758019279000969217\/720.mp4'},
+      'play:count':6,
+      'description':''
+    };
   }));
 
   it('parseMature should return false when undefined', () => {

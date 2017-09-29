@@ -55,7 +55,8 @@ module.exports = function (config) {
       },
       compilerOptions: {
         lib: ["ES2015", "DOM"]
-      }
+      },
+      tsconfig: "./tsconfig-karma.json",
     },
 
     // test results reporter to use

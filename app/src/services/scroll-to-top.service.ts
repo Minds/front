@@ -1,18 +1,22 @@
-import { Injectable } from "@angular/core";
-import { Router, Event, NavigationEnd } from "@angular/router";
-import { Subscription } from "rxjs/Rx";
+import { Injectable } from '@angular/core';
+import { Router, Event, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 
 @Injectable()
 export class ScrollToTopService {
 
-  constructor(private router: Router) { }
-
   private _routerListener: Subscription;
+
+  static _(router: Router) {
+    return new ScrollToTopService(router);
+  }
+
+  constructor(private router: Router) { }
 
   listen(): this {
     this._routerListener = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
       }
     });
     return this;
@@ -23,8 +27,6 @@ export class ScrollToTopService {
     return this;
   }
 
-  static _(router: Router) {
-    return new ScrollToTopService(router);
-  }
+
 
 }
