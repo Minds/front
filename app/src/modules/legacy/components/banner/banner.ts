@@ -21,7 +21,7 @@ import { Client } from '../../../../services/api';
       <i class="material-icons">camera</i>
       <span>
         <!-- i18n -->Click here to add a new banner<br>
-        <em>Recommended size: 1920&times;360</em><!-- /i18n -->
+        <em>Recommended minimum size 2000px&times;1125px (Ratio 16:9)</em><!-- /i18n -->
       </span>
     </div>
     <div class="minds-banner-overlay"></div>
