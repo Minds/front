@@ -209,7 +209,7 @@ export class AdminBoosts {
 
   findReason(value: any, field: 'code' | 'label' = 'code'): Reason {
     return rejectionReasons.find((item: Reason) => {
-      return item[field] === value;
+      return item[field] == value;
     });
   }
 

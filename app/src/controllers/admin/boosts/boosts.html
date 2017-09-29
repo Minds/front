@@ -65,7 +65,7 @@
 
       <div class="m-previously-rejected-notice" *ngIf="boost.entity.boost_rejection_reason && boost.entity.boost_rejection_reason != -1">
         <i class="material-icons">warning</i>
-        Previously rejected: {{  findReason(boost.entity.boost_rejection_reason).label }}
+        Previously rejected: {{  findReason(boost.entity.boost_rejection_reason)?.label }}
       </div>
 
       <span class="impressions">
