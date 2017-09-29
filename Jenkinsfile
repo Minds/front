@@ -6,13 +6,15 @@ node {
 		sh 'npm install' 
 		//may also need to grab plugins..  
 
-    stage 'Build'
-   		
-        sh 'npm run build-prod'
+    //stage 'Build'
+   	//	
+    //   sh 'npm run build-prod'
 
-    stage 'E2E Tests'
-
+    stage 'Code styling'
         //sh 'npm install -g protractor@latest'
-        sh 'protractor ./protractor.js'
+        sh 'tslint -c tslint.json \\"app/**/*.ts\\"'
+
+    stage 'Spec tests'
+	    sh 'npm run test'
 
 }
