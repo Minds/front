@@ -168,6 +168,7 @@ export class WireCreatorComponent implements AfterViewInit {
     } else if (this.owner.merchant) {
       this.wire.currency = 'money';
       this.wire.amount = 1;
+      this.wire.recurring = true;
     }
 
     if (this.wire.amount < 0) {

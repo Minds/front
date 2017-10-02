@@ -309,7 +309,7 @@ describe('WireCreatorComponent', () => {
     comp.setCurrency('money');
     fixture.detectChanges();
 
-    expect(comp.wire.recurring).toBe(false);
+    expect(comp.wire.recurring).toBe(true);
     const checkbox: DebugElement = getRecurringCheckbox();
 
     checkbox.nativeElement.click();
@@ -317,7 +317,7 @@ describe('WireCreatorComponent', () => {
 
     fixture.detectChanges();
 
-    expect(comp.wire.recurring).toBe(true);
+    expect(comp.wire.recurring).toBe(false);
   });
 
   it('should show creator rewards', () => {
