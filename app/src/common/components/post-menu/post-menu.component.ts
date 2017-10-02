@@ -141,7 +141,6 @@ export class PostMenuComponent {
   }
 
   delete() {
-    this.deleteToggle = true;
     this.selectOption('delete');
   }
 
@@ -161,6 +160,7 @@ export class PostMenuComponent {
 
     this.detectChanges();
   }
+
 
   detectChanges() {
     this.cd.markForCheck();

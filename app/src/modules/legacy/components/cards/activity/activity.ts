@@ -107,7 +107,6 @@ export class Activity {
           $event.inProgress.emit(false);
           $event.completed.emit(0);
         }
-
         this._delete.next(this.activity);
       })
       .catch(e => {

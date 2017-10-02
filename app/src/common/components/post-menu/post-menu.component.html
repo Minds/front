@@ -12,7 +12,7 @@
     <li class="mdl-menu__item" *ngIf="entity.featured && session.isAdmin()" (click)="unFeature()" i18n>un-Feature</li>
   </ng-container>
   <!-- DELETE -->
-  <li class="mdl-menu__item" *ngIf="options.indexOf('delete') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="delete()" i18n>Delete</li>
+  <li class="mdl-menu__item" *ngIf="options.indexOf('delete') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true" i18n>Delete</li>
   <!-- REPORT -->
   <li class="mdl-menu__item" *ngIf="options.indexOf('report') !== -1 && entity.owner_guid != session.getLoggedInUser().guid" (click)="report()" i18n>Report</li>
   <!-- NOTIFICATIONS -->
