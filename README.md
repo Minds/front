@@ -1,6 +1,8 @@
 Minds Front
 ==========
 
+[![Build Status](http://drone.minds.io/api/badges/Minds/front-internal/status.svg)](http://drone.minds.io/Minds/front-internal)
+
 Web app for Minds. Please run inside of [the minds repo](https://github.com/minds/minds).
 
 ### Building
