@@ -14,8 +14,7 @@
   </ul>
 
   <div class="m-boost-rotator-tools-tool" #toggle *ngIf="!disabled">
-    <i class="material-icons" (click)="toggle.value = !toggle.value">keyboard_arrow_down</i>
-
+    <i class="material-icons mdl-color-text--blue-grey-300" title="Boost Settings" (click)="toggle.value = !toggle.value">settings</i>
     <ul class="minds-dropdown-menu" [hidden]="!toggle.value">
       <li class="mdl-menu__item" i18n>
         <span>Open</span>
@@ -77,15 +76,6 @@
       </li>
       <li class="mdl-menu__item" routerLink="/boost" i18n>About Boost</li>
     </ul>
-  </div>
-
-  <div class="m-boost--disable" *ngIf="plus">
-    <i class="material-icons mdl-color-text--blue-grey-300" *ngIf="!disabled" (click)="disable()">close</i>
-    <i class="material-icons mdl-color-text--blue-grey-300" *ngIf="disabled" (click)="enable()">power_settings_new</i>
-  </div>
-
-  <div class="m-boost--disable" *ngIf="!plus">
-    <i class="material-icons mdl-color-text--blue-grey-300" routerLink="/plus">close</i>
   </div>
 
 </div>
