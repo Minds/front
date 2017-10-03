@@ -121,6 +121,7 @@
                 <span [hidden]="!editing">Save</span>
               </button>
             </div>
+            <minds-button-boost [object]="user" *ngIf="session.getLoggedInUser().guid == user.guid"></minds-button-boost>
             <m-channel--badges [user]="user"></m-channel--badges>
           </div>
 

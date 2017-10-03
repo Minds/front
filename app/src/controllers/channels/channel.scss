@@ -203,6 +203,12 @@ minds-channel{
    }
  }
 
+  minds-button-boost .mdl-button{
+    min-width: 80px;
+    height: 42px;
+    line-height: 42px;
+  }
+
  .m-channel--subscribers-tabs{
    margin-top:40px;
  }
