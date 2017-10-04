@@ -38,6 +38,7 @@ export interface MindsUser {
 	wire_rewards ?: WireRewardsStruc;
 	spam ?: boolean;
 	deleted ?: boolean;
+	banned ?: any;
 }
 
 export interface MindsGroup {

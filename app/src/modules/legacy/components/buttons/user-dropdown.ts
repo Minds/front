@@ -2,6 +2,8 @@ import { Component, EventEmitter } from '@angular/core';
 
 import { Client } from '../../../../services/api';
 import { SessionFactory } from '../../../../services/session';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { BanModalComponent } from '../../../ban/modal/modal.component';
 
 @Component({
   selector: 'minds-button-user-dropdown',
@@ -99,7 +101,7 @@ export class UserDropdownButton {
 
   session = SessionFactory.build();
 
-  constructor(public client: Client) {
+  constructor(public client: Client, public overlayService: OverlayModalService) {
   }
 
   block() {
@@ -141,13 +143,8 @@ export class UserDropdownButton {
 
   ban() {
     this.user.banned = 'yes';
-    this.client.put(`api/v1/admin/ban/${this.user.guid}`, {})
-      .then(() => {
-        this.user.banned = 'yes';
-      })
-      .catch(e => {
-        this.user.banned = 'no';
-      });
+    this.overlayService.create(BanModalComponent, this.user)
+      .present();
 
     this.banToggle = false;
   }

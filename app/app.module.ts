@@ -40,6 +40,7 @@ import { OnboardingModule } from './src/modules/onboarding/onboarding.module';
 import { GroupsModule } from './src/plugins/Groups/groups.module';
 import { BlogModule } from './src/plugins/blog/blog.module';
 import { PostMenuModule } from './src/common/components/post-menu/post-menu.module';
+import { BanModule } from './src/modules/ban/ban.module';
 
 @NgModule({
   bootstrap: [
@@ -68,6 +69,7 @@ import { PostMenuModule } from './src/common/components/post-menu/post-menu.modu
     BoostModule,
     WireModule,
     ReportModule,
+    BanModule,
     ThirdPartyNetworksModule,
     LegacyModule,
     TranslateModule,

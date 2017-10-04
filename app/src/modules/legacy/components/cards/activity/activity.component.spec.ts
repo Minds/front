@@ -180,6 +180,18 @@ export class VideoAdsMock {
 }
 
 @Component({
+  selector: 'm-post-menu',
+  template: ''
+})
+export class PostMenuComponentMock {
+  @Input() entity;
+  @Input() options;
+  @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Input() canDelete;
+  @Input() isTranslatable;
+}
+
+@Component({
   selector: 'minds-remind',
   template: ''
 })
