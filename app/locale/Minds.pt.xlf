@@ -35,31 +35,31 @@
         <target/>
       </trans-unit>
       <trans-unit id="0d942227e5368630c43cd95bbd491d23516673a2" datatype="html">
-        <source>This is a free and open source project. Code and policies are available for public comment at Minds.org.</source>
+        <source>Esse é um projeto livre e de código aberto. Código e políticas estão disponíveis para comentários públicos em Minds.org.</source>
         <target/>
       </trans-unit>
       <trans-unit id="d5a55f645b87c1a48a6f004cd017e7cd5c35d673" datatype="html">
-        <source>Earn Money</source>
+        <source>Ganhe Dinheiro</source>
         <target/>
       </trans-unit>
       <trans-unit id="14f874413a9babd26c472b748a1ca9e0682bc6de" datatype="html">
-        <source>Be rewarded for your energy online. Exchange money for shares with other users. It&apos;s peer-to-peer advertising.</source>
+        <source>Seja recompensado por sua energia on-line. Troque dinheiro por compartilhamentos com outros usuários. É anúncio ponto-a-ponto.</source>
         <target/>
       </trans-unit>
       <trans-unit id="f35c3d13bf4fb70617068d0d2ace21fd096eb062" datatype="html">
-        <source>Newsfeed</source>
+        <source>Novidades</source>
         <target/>
       </trans-unit>
       <trans-unit id="807cf11e6ac1cde912496f764c176bdfdd6b7e19" datatype="html">
-        <source>Channels</source>
+        <source>Canais</source>
         <target/>
       </trans-unit>
       <trans-unit id="a1d164a65ed272b85c3be260f6709237e5bcc2b8" datatype="html">
-        <source>Vote</source>
+        <source>Votação</source>
         <target/>
       </trans-unit>
       <trans-unit id="5a5d7ee2acbfa9c91ab7f41d26bda9ff0cafe42f" datatype="html">
-        <source>Comment</source>
+        <source>Comentários</source>
         <target/>
       </trans-unit>
       <trans-unit id="4b3972c3e9485218508a95f7a4ce7758e3f09ced" datatype="html">
@@ -71,23 +71,23 @@
         <target/>
       </trans-unit>
       <trans-unit id="5adf337be1ad12c915ae18012f1bfa1f2ca4628b" datatype="html">
-        <source>Chat</source>
+        <source>Bate-papo</source>
         <target/>
       </trans-unit>
       <trans-unit id="c22ba03540aa3217da059f45e7eab138b51a96e2" datatype="html">
-        <source>Groups</source>
+        <source>Grupos</source>
         <target/>
       </trans-unit>
       <trans-unit id="c0d4baf68f21ee9c4246d66f0ac828c5b73ae745" datatype="html">
-        <source>Wallet</source>
+        <source>Carteira</source>
         <target/>
       </trans-unit>
       <trans-unit id="087b4aab414d0e8555d495246c5232f38a33bd88" datatype="html">
-        <source>Find Nearby</source>
+        <source>Encontre o próximo</source>
         <target/>
       </trans-unit>
       <trans-unit id="5804187cf85f0cf73ba0e274a921b1afc29bd11e" datatype="html">
-        <source>Press coverage</source>
+        <source>Cobertura de Imprensa</source>
         <target/>
       </trans-unit>
       <trans-unit id="1655c9b6f2053562f6b6c2b685c95898c4744865" datatype="html">
@@ -95,15 +95,15 @@
         <target/>
       </trans-unit>
       <trans-unit id="9bc60b239c138dc1571fcada194e7669356fc69c" datatype="html">
-        <source>Login to Minds</source>
+        <source>Logar no Minds</source>
         <target/>
       </trans-unit>
       <trans-unit id="4c3bc5633d08f616ab8e372966359ac7c0c4db16" datatype="html">
-        <source>Not on Minds? Start a channel</source>
+        <source>Ainda não está no Minds? Crie um canal</source>
         <target/>
       </trans-unit>
       <trans-unit id="1bcf1654c2f554178322cf842bce848fcdcabc4f" datatype="html">
-        <source>To request a new password, enter your username</source>
+        <source>Para solicitar uma nova senha, introduza seu nome de usuário</source>
         <target/>
       </trans-unit>
       <trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html">
