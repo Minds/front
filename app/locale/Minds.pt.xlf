@@ -103,51 +103,51 @@
         <target/>
       </trans-unit>
       <trans-unit id="1bcf1654c2f554178322cf842bce848fcdcabc4f" datatype="html">
-        <source>Para solicitar uma nova senha, introduza seu nome de usuário</source>
+        <source>Para solicitar uma nova senha, informe seu nome de usuário</source>
         <target/>
       </trans-unit>
       <trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html">
-        <source>Username</source>
+        <source>Nome de Usuário</source>
         <target/>
       </trans-unit>
       <trans-unit id="ac10a3d9b59575640797c1a8e6aea642cf5d5e77" datatype="html">
-        <source>Continue</source>
+        <source>Continuar</source>
         <target/>
       </trans-unit>
       <trans-unit id="c602071b05ea78e4e72a8a632243ddf2475f9d2f" datatype="html">
-        <source>Coming Soon.</source>
+        <source>Em Breve.</source>
         <target/>
       </trans-unit>
       <trans-unit id="b7641aed03492978b4ec6843b1e53f30464294d9" datatype="html">
-        <source>Views</source>
+        <source>Visualizações</source>
         <target/>
       </trans-unit>
       <trans-unit id="60a8d3f747b8bffbed3bcc4cd85696c898bfc75c" datatype="html">
-        <source>Have 200 free views on us. Hit post to be boosted.</source>
+        <source>Tenha 200 visualizações grátis. Clique na postagem a ser viralizada.</source>
         <target/>
       </trans-unit>
       <trans-unit id="7367a023ee2ef3960f3b6ce26493ea2eedb689d3" datatype="html">
-        <source><x id="INTERPOLATION"/> new <x id="INTERPOLATION_1"/></source>
+        <source><x id="INTERPOLATION"/> novo <x id="INTERPOLATION_1"/></source>
         <target/>
       </trans-unit>
       <trans-unit id="9801d0104956cbb64413bf0f8f3244a81b946d69" datatype="html">
-        <source>Monetize your Channel</source>
+        <source>Monetize seu Canal</source>
         <target/>
       </trans-unit>
       <trans-unit id="5d713774c3f73b8b93bf1f4f01d37004ef4e1110" datatype="html">
-        <source>Find channels</source>
+        <source>Encontre canais</source>
         <target/>
       </trans-unit>
       <trans-unit id="3fe12fe3f2477b8ad4b1e0060c14ce2134135ac5" datatype="html">
-        <source>Invite your friends</source>
+        <source>Convide seus amigos</source>
         <target/>
       </trans-unit>
       <trans-unit id="c5e8d2e3766ce738ca112b99eeac1a611f79f8cf" datatype="html">
-        <source>Boost console</source>
+        <source>Console de viralização</source>
         <target/>
       </trans-unit>
       <trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
-        <source>Content</source>
+        <source>Conteúdo</source>
         <target/>
       </trans-unit>
       <trans-unit id="d0df56966090f0e8f753b580e7c59f3b55107cf2" datatype="html">
@@ -155,23 +155,23 @@
         <target/>
       </trans-unit>
       <trans-unit id="59ac547060c1f7343640a6f9f7a9eebbd5b42480" datatype="html">
-        <source>Buy Points</source>
+        <source>Compre Pontos</source>
         <target/>
       </trans-unit>
       <trans-unit id="eb4e61ad5282c37e3708ca12ab1d283d75b7682c" datatype="html">
-        <source>Inbox</source>
+        <source>Caixa de Entrada</source>
         <target/>
       </trans-unit>
       <trans-unit id="834f2280c8fcbd21aaf099ae5f044aab6fa0f784" datatype="html">
-        <source>Outbox</source>
+        <source>Caixa de Saída</source>
         <target/>
       </trans-unit>
       <trans-unit id="903e2a0015da1a9e00d8fad66310f8204eb09a98" datatype="html">
-        <source>Click here to become a Boost Pro</source>
+        <source>Clique aqui para se tornar um viralizador profissional.</source>
         <target/>
       </trans-unit>
       <trans-unit id="6de4853aad9428a669bfeaa9e6138a4db8c81303" datatype="html">
-        <source>Boost</source>
+        <source>Viralizar</source>
         <target/>
       </trans-unit>
       <trans-unit id="8e889a244139b31d51c55aa8ad0d121dd06327e5" datatype="html">
