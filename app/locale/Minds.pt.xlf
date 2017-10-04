@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template">
+  <file source-language="pt" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="0698be1297464bd4c7d3eea1957606b261b44e94" datatype="html">
-        <source>Your Social Network</source>
+        <source>A Sua Rede Social</source>
         <target/>
       </trans-unit>
       <trans-unit id="0caec515cd2433e2fae57a78f48956b3f30b31de" datatype="html">
-        <source>Launch a channel today</source>
+        <source>Crie um canal hoje</source>
         <target/>
       </trans-unit>
       <trans-unit id="4464996c979e87ab85697a06b1013b15ce6398bc" datatype="html">
-        <source>Welcome <x id="INTERPOLATION"/></source>
+        <source>Bem vindo <x id="INTERPOLATION"/></source>
         <target/>
       </trans-unit>
       <trans-unit id="2598a7c3e1d0572d7a654beb6a0224291a655a25" datatype="html">
