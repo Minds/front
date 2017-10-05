@@ -18,6 +18,7 @@ export interface MindsBlogResponse extends MindsResponse {
 export interface MindsBlogListResponse extends MindsResponse {
   blogs: Array<any>;
   'load-next': string;
+  pageToken?: boolean;
 }
 
 
@@ -48,6 +49,7 @@ export interface MindsGroupResponse extends MindsResponse {
 export interface MindsGroupListResponse extends MindsResponse {
   groups: Array<any>;
   'load-next': string;
+  pageToken?: boolean;
 }
 
 export interface MindsWalletResponse extends MindsResponse {
