@@ -37,7 +37,7 @@ import { VideoModule } from './src/modules/video/video.module';
 import { SettingsModule } from './src/modules/settings/settings.module';
 import { OnboardingModule } from './src/modules/onboarding/onboarding.module';
 
-import { GroupsModule } from './src/plugins/Groups/groups.module';
+import { GroupsModule } from './src/modules/groups/groups.module';
 import { BlogModule } from './src/plugins/blog/blog.module';
 import { PostMenuModule } from './src/common/components/post-menu/post-menu.module';
 import { BanModule } from './src/modules/ban/ban.module';

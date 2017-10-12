@@ -22,6 +22,8 @@ import { VideoModule } from './src/modules/video/video.module';
 import { ReportModule } from './src/modules/report/report.module';
 import { PostMenuModule } from './src/common/components/post-menu/post-menu.module';
 import { BanModule } from './src/modules/ban/ban.module';
+import { GroupsModule } from './src/modules/groups/groups.module';
+import { BlogModule } from './src/plugins/blog/blog.module';
 
 @NgModule({
   bootstrap: [
@@ -46,7 +48,9 @@ import { BanModule } from './src/modules/ban/ban.module';
     VideoModule,
     ReportModule,
     BanModule,
-    PostMenuModule
+    PostMenuModule,
+    GroupsModule,
+    BlogModule
   ],
   providers: [
     MindsEmbedRoutingProviders,

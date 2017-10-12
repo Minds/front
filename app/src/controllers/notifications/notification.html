@@ -16,14 +16,14 @@
 
   <!-- group inivite -->
   <ng-template ngSwitchCase="group_invite">
-    <a [routerLink]="['/groups/profile', notification.params.group.guid, 'activity']">
+    <a [routerLink]="['/groups/profile', notification.params.group.guid]">
         <p i18n>{{notification.params.user}} invited you to join <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span></p>
     </a>
   </ng-template>
 
   <!-- group kick -->
   <ng-template ngSwitchCase="group_kick">
-    <a [routerLink]="['/groups/profile', notification.params.group.guid, 'activity']">
+    <a [routerLink]="['/groups/profile', notification.params.group.guid]">
         <p i18n>You were kicked off from <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span></p>
     </a>
   </ng-template>
@@ -36,6 +36,37 @@
       </p>
     </a>
   </ng-template>
+
+  <!-- Group Queue-->
+
+  <!-- Add -->
+  <ng-template ngSwitchCase="group_queue_add">
+    <a [routerLink]="['/newsfeed', notification.entityObj.guid ]">
+      <p i18n>
+        Your post for <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span> is awaiting approval from group administrators.
+      </p>
+    </a>
+  </ng-template>
+
+  <!-- Approve -->
+  <ng-template ngSwitchCase="group_queue_approve">
+    <a [routerLink]="['/newsfeed', notification.entityObj.guid ]">
+      <p i18n>
+        Your post for <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span> was approved.
+      </p>
+    </a>
+  </ng-template>
+
+  <!-- Reject -->
+  <ng-template ngSwitchCase="group_queue_reject">
+    <a [routerLink]="['/newsfeed', notification.entityObj.guid ]">
+      <p i18n>
+        Your post for <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.params.group.name}}</span> was rejected.
+      </p>
+    </a>
+  </ng-template>
+
+  <!-- / Group Queue -->
 
   <!-- comment -->
   <ng-template ngSwitchCase="comment">
@@ -184,9 +215,19 @@
       <a [routerLink]="['/newsfeed', notification.entityObj.guid]" *ngIf="notification.entityObj.type != 'comment'">
         <p i18n>{{notification.fromObj.name}} tagged you in a post</p>
       </a>
-      <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.entityObj.type == 'comment'">
-        <p i18n>{{notification.fromObj.name}} tagged you in a comment</p>
-      </a>
+
+      <ng-container *ngIf="notification.entityObj.type == 'comment'">
+        <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.params?.parent?.type != 'group'">
+          <p i18n>{{notification.fromObj.name}} tagged you in a comment</p>
+        </a>
+
+        <a [routerLink]="['/groups/profile', notification.entityObj.parent_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+          <p i18n>
+            <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> tagged you in
+            <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation
+          </p>
+        </a>
+      </ng-container>
     </div>
   </ng-template>
 

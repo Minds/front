@@ -2,7 +2,7 @@
   commentsScroll
   (previous)="autoloadPrevious()"
   [emitter]="commentsScrollEmitter"
-  scrollLock
+  scrollLock [strictScrollLock]="false"
   (overscroll)="overscrollHandler($event)"
   #scrollArea
 >
@@ -15,13 +15,24 @@
       <i class="material-icons">autorenew</i> <!-- i18n -->Loading&hellip;<!-- /i18n -->
     </span>
     <span *ngIf="!inProgress && !loaded">
-      <i class="material-icons">update</i> <!-- i18n -->Load<!-- /i18n -->
+      <i class="material-icons">update</i>
+      <ng-container *ngIf="!error"><!-- i18n -->Load<!-- /i18n --></ng-container>
+      <ng-container *ngIf="error"><!-- i18n -->Try again<!-- /i18n --></ng-container>
     </span>
     <span *ngIf="!inProgress && loaded">
       <i class="material-icons">update</i> <!-- i18n -->Load earlier<!-- /i18n -->
     </span>
     
   </div>
+
+  <p class="m-comments--start-conversation-label" *ngIf="!inProgress && !error && comments?.length === 0">
+    Start the conversation!
+  </p>
+
+  <p class="m-comments--load-error-label" *ngIf="!inProgress && !!error">
+    <i class="material-icons">warning</i>
+    <span>{{ error }}</span>
+  </p>
 
   <minds-card-comment *ngFor="let comment of comments; let i = index"
     [object]="comment"
@@ -33,7 +44,7 @@
 </div>
 
 
-<div class="mdl-card minds-comment minds-comment-post minds-block">
+<div class="mdl-card minds-comment minds-comment-post minds-block" *ngIf="!readonly">
 
     <div class="minds-avatar">
       <a [routerLink]="['/', session.getLoggedInUser().username]">
@@ -52,8 +63,7 @@
                   (click)="isLoggedIn()"
                   (keyup)="getPostPreview(content)"
                   (keydown.enter)="post($event)"
-                  placeholder="Enter your comment"
-                  i18n-placeholder
+                  [placeholder]="conversation ? 'Enter your message' : 'Enter your comment'"
                 ></minds-textarea>
             </form>
 

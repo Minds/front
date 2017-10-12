@@ -26,6 +26,10 @@
     <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="entity.mature" (click)="setExplicit(true)">Set as Explicit</li>
     <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!entity.mature" (click)="setExplicit(false)">Remove Explicit</li>
   </ng-container>
+  <!-- INJECTED POST ACTIONS -->
+  <div (click)="opened = false">
+    <ng-content select="[post-menu]"></ng-content>
+  </div>
 </ul>
 <div class="minds-bg-overlay" (click)="opened = false" [hidden]="!opened"></div>
 

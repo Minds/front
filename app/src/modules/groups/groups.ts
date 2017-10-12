@@ -1,9 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
-
-import { GroupsService } from './groups-service';
 
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -51,7 +49,9 @@ export class Groups {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   load(refresh: boolean = false) {

@@ -27,6 +27,7 @@ import { CanDeactivateGuardService } from './can-deactivate-guard';
 import { OverlayModalService } from './ux/overlay-modal';
 import { LoginReferrerService } from './login-referrer.service';
 import { ScrollToTopService } from './scroll-to-top.service';
+import { GroupsService } from '../modules/groups/groups-service';
 
 import { GoogleChartsLoader } from './third-party/google-charts-loader';
 
@@ -150,5 +151,10 @@ export const MINDS_PROVIDERS : any[] = [
      provide: ScrollToTopService,
      useFactory: ScrollToTopService._,
      deps: [ Router ]
-   }
+   },
+  {
+    provide: GroupsService,
+    useFactory: GroupsService._,
+    deps: [ Client, Upload ]
+  }
 ];

@@ -27,7 +27,9 @@ export class GroupsCreator {
     description: '',
     membership: 2,
     tags: '',
-    invitees: ''
+    invitees: '',
+    moderated: 0,
+    default_view: 0
   };
   invitees: Array<any> = [];
   editing: boolean = true;

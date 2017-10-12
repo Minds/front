@@ -1,0 +1,10 @@
+<m-groups--filter-selector [group]="group" filter="conversation" *ngIf="group['is:member']"></m-groups--filter-selector>
+
+<minds-comments *ngIf="group?.guid"
+  class="m--group-chat mdl-card mdl-shadow--4dp"
+  [limit]="24"
+  [object]="group"
+  [focusOnInit]="true"
+  [conversation]="true"
+  [readonly]="!group['is:member']"
+></minds-comments>

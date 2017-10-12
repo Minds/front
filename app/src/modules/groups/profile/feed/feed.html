@@ -1,0 +1,85 @@
+<m-groups--filter-selector [group]="group" [filter]="filter" *ngIf="group['is:member']"></m-groups--filter-selector>
+
+<minds-newsfeed-poster #poster (load)="prepend($event)" [containerGuid]="group.guid" [accessId]="group.guid" *ngIf="filter == 'activity' && group['is:member']"></minds-newsfeed-poster>
+
+<div class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
+  (click)="pollingLoadNew()"
+  *ngIf="filter == 'activity' && pollingNewPosts"
+>
+  <i class="material-icons">update</i> <!-- i18n -->{{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}<!-- /i18n -->
+</div>
+
+<a class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
+  [routerLink]="['/groups/profile', group.guid, 'review']"
+  *ngIf="filter == 'activity' && group['is:owner'] && group['adminqueue:count']"
+>
+  <i class="material-icons">rate_review</i>
+  <!-- i18n -->{{ group['adminqueue:count'] }} new {{ group['adminqueue:count'] === 1 ? 'post' : 'posts' }} in review queue<!-- /i18n -->
+</a>
+
+<div class="minds-list">
+
+    <minds-activity
+      *ngFor="let a of activity; let i = index"
+      class="mdl-card mdl-shadow--2dp item"
+      [object]="a"
+      [canDelete]="group['is:owner']"
+      (delete)="delete(a)"
+      [hideTabs]="filter == 'review'"
+    >
+      <!-- Menu Actions -->
+      <li post-menu
+          class="mdl-menu__item"
+          *ngIf="group['is:owner']"
+          (click)="removePrompt(a?.ownerObj)"
+      >Remove user</li>
+
+      <!-- Review -->
+      <div bottom-content *ngIf="filter == 'review'" class="m-groups-feed--review-actions">
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500"
+          (click)="approve(a, i)"
+        >Approve</button>
+
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red-500"
+          (click)="reject(a, i)"
+        >Reject</button>
+      </div>
+
+      <!-- / -->
+    </minds-activity>
+
+    <infinite-scroll
+        distance="25%"
+        (load)="load()"
+        [moreData]="moreData"
+        [inProgress]="inProgress">
+    </infinite-scroll>
+</div>
+
+<m-modal [open]="kickPrompt" *ngIf="kickUser">
+  <div class="mdl-card__supporting-text">
+    <p i18n>Are you sure you want to remove {{ kickUser.username }} from {{ group.name }}?</p>
+    <p><input type="checkbox" #ban> <!-- i18n -->Ban permanently<!-- /i18n --></p>
+  </div>
+  <div class="minds-modal-dialog-actions">
+    <button (click)="kick(ban.checked)" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+      <!-- i18n -->Confirm<!-- /i18n -->
+    </button>
+    <button (click)="cancelRemove()" class="mdl-button mdl-js-button mdl-button--colored">
+      <!-- i18n -->Cancel<!-- /i18n -->
+    </button>
+  </div>
+</m-modal>
+
+<m-modal [open]="kickSuccess">
+  <div class="mdl-card__supporting-text">
+    <p>User was kicked from {{ group.name }}.</p>
+  </div>
+  <div class="minds-modal-dialog-actions">
+    <button (click)="kickSuccess = false" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+      <!-- i18n -->Ok<!-- /i18n -->
+    </button>
+  </div>
+</m-modal>

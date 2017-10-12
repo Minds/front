@@ -1,0 +1,36 @@
+m-groups--filter-selector {
+  position: relative;
+  width: 100%;
+  display: block;
+
+  .m-groups--filter-selector {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: $minds-padding;
+    margin-bottom: $minds-margin;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 2px;
+    font-size: 11px;
+    line-height: 1.5;
+
+    .m-groups--filter-selector-item {
+      display: inline-block;
+      padding: 0 1.5em;
+      color: #4a4a4a;
+      border-right: 1px solid rgba(151, 151, 151, 0.25);
+      font-weight: 400;
+      text-transform: uppercase;
+      text-decoration: none;
+      letter-spacing: 2px;
+
+      &:last-child {
+        border-right: none;
+      }
+
+      &:hover, &.m-groups--filter-selector-active {
+        color: #417cb2;
+      }
+    }
+  }
+}

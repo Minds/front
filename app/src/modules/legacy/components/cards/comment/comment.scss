@@ -1,0 +1,17 @@
+.minds-comment {
+  &.m-comment--error {
+    opacity: 0.65;
+  }
+
+  .m-comment--error-label {
+    color: #c00;
+
+    i.material-icons {
+      font-size: 1.2em;
+    }
+
+    > * {
+      vertical-align: middle;
+    }
+  }
+}

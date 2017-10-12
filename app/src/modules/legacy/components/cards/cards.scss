@@ -384,6 +384,13 @@ minds-activity.mdl-card, minds-activity{
     }
   }
 
+  .m-activity--pending {
+    background: #ffffdd;
+    padding: $minds-padding ($minds-padding * 2);
+    font-size: 12px;
+    font-weight: 300;
+  }
+
 }
 
 /**

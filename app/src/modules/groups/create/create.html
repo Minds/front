@@ -56,6 +56,21 @@
           </select>
       </div>
 
+      <div class="m-group-info-moderated mdl-color-text--blue-grey-300">
+          <i class="material-icons mdl-color-text--blue-grey-300">rate_review</i>
+          <select class="icon-prefix" name="moderated" [ngModel]="group.moderated" (change)="group.moderated = $event.target.value">
+            <option value="0">Anyone can post</option>
+            <option value="1">Posts are moderated</option>
+          </select>
+      </div>
+
+      <div class="m-group-info-default-view mdl-color-text--blue-grey-300">
+          <i class="material-icons mdl-color-text--blue-grey-300" title="Default view">pageview</i>
+          <select class="icon-prefix" name="default_view" [ngModel]="group.default_view" (change)="group.default_view = $event.target.value">
+            <option value="0">Default view: Feed</option>
+            <option value="1">Default view: Conversations</option>
+          </select>
+      </div>
 
       <div class="m-groups-save">
        <button class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!group.name" i18n>Create</button>

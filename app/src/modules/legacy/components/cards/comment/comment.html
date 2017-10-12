@@ -1,4 +1,6 @@
-<div class="mdl-card minds-comment minds-block">
+<div class="mdl-card minds-comment minds-block"
+  [class.m-comment--error]="comment?.error"
+>
   <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
     <a [routerLink]="['/', comment.ownerObj.username]">
       <img src="{{minds.cdn_url}}/icon/{{comment.ownerObj.guid}}/small/{{comment.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
@@ -9,7 +11,7 @@
     <span class="mdl-color-text--blue-grey-300 minds-comment-span minds-comment-bullet">{{comment.time_created * 1000 | date: 'medium'}}</span>
     <span *ngIf="comment.edited" class="mdl-color-text--blue-grey-300 minds-comment-span m-edited-text" i18n>edited</span>
 
-    <div class="mdl-card__menu mdl-color-text--blue-grey-300">
+    <div class="mdl-card__menu mdl-color-text--blue-grey-300" *ngIf="comment?.guid">
 
       <button class="mdl-button mdl-button--icon m-comment-carrot"
         [ngClass]="{ 'm-comment-carrot-collapsed': !toggle.value }"
@@ -70,6 +72,11 @@
       [innerHtml]="(comment.description || '') | tags "
       [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(comment) }"
       ></span>
+    </p>
+
+    <p class="m-comment--error-label" *ngIf="comment?.error">
+      <i class="material-icons">warning</i>
+      <span>{{ comment.error }}</span>
     </p>
 
     <m-translate

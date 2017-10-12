@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Renderer, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, EventEmitter, Renderer, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
 
 import { Client, Upload } from '../../../../services/api';
 import { SessionFactory } from '../../../../services/session';
@@ -55,6 +55,11 @@ export class Comments {
     comment: null
   };
 
+  error: string;
+
+  @Input() conversation: boolean = false;
+  @Input() readonly: boolean = false;
+
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
 
   private autoloadBlocked = false;
@@ -79,8 +84,6 @@ export class Comments {
     if (this.object.entity_guid)
       this.guid = this.object.entity_guid;
     this.parent = this.object;
-    this.load(true);
-    this.listen();
   }
 
   set _reversed(value: boolean) {
@@ -88,6 +91,11 @@ export class Comments {
       this.reversed = true;
     else
       this.reversed = false;
+  }
+
+  ngOnInit() {
+    this.load(true);
+    this.listen();
   }
 
   load(refresh = false) {
@@ -106,6 +114,7 @@ export class Comments {
       return;
     }
 
+    this.error = '';
     this.inProgress = true;
 
     this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: true })
@@ -152,6 +161,7 @@ export class Comments {
       })
       .catch((e) => {
         this.inProgress = false;
+        this.error = (e && e.message) || 'There was an error';
       });
   }
 
@@ -210,7 +220,7 @@ export class Comments {
   ngOnDestroy() {
     this.cancelOverscroll();
 
-    if (this.socketRoomName) {
+    if (this.socketRoomName && !this.conversation) {
       this.sockets.leave(this.socketRoomName);
     }
 
@@ -247,7 +257,7 @@ export class Comments {
     return !this.inProgress && this.canPost && (this.content || this.attachment.has());
   }
 
-  post(e) {
+  async post(e) {
     e.preventDefault();
 
     if (!this.content && !this.attachment.has()) {
@@ -262,18 +272,29 @@ export class Comments {
     let data = this.attachment.exportMeta();
     data['comment'] = this.content;
 
-    this.inProgress = true;
-    this.client.post('api/v1/comments/' + this.guid, data)
-      .then((response: any) => {
-        this.attachment.reset();
-        this.content = '';
-        this.comments.push(response.comment);
-        this.commentsScrollEmitter.emit('bottom');
-        this.inProgress = false;
-      })
-      .catch((e) => {
-        this.inProgress = false;
-      });
+    let newLength = this.comments.push({ // Optimistic
+      description: this.content,
+      guid: 0,
+      ownerObj: this.session.getLoggedInUser(),
+      owner_guid: this.session.getLoggedInUser().guid,
+      time_created: Date.now() / 1000,
+      type: 'comment'
+    }), currentIndex = newLength - 1;
+
+    this.attachment.reset();
+    this.content = '';
+
+    this.commentsScrollEmitter.emit('bottom');
+
+    try {
+      let response: any = await this.client.post('api/v1/comments/' + this.guid, data);
+      this.comments[currentIndex] = response.comment;
+    } catch (e) {
+      this.comments[currentIndex].error = (e && e.message) || 'There was an error';
+      console.error('Error posting', e);
+    }
+
+    this.commentsScrollEmitter.emit('bottom');
   }
 
   isLoggedIn() {

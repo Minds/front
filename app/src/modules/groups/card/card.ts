@@ -1,9 +1,6 @@
 import { Component, Inject } from '@angular/core';
 
-import { GroupsService } from '../groups-service';
-
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
 
 @Component({
   moduleId: module.id,

@@ -5,6 +5,7 @@ app/stylesheets/plugins.scss
 app/stylesheets/plugins
 public
 /tests/ng-spec
+coverage
 
 tsd_typings
 

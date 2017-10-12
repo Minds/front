@@ -14,7 +14,7 @@ import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 
 import { UserCard } from '../../../modules/legacy/components/cards/user/user';
 import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
-import { GroupsCard } from '../../../plugins/Groups/card/card';
+import { GroupsCard } from '../../../modules/groups/card/card';
 import { ImageCard } from '../../../modules/legacy/components/cards/object/image/image';
 import { VideoCard } from '../../../modules/legacy/components/cards/object/video/video';
 import { BlogCard } from '../../../plugins/blog/card/card';

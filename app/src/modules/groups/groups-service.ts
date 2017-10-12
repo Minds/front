@@ -242,4 +242,14 @@ export class GroupsService {
       });
   }
 
+  getReviewCount(guid: any): Promise<number> {
+    return this.clientService.get(`${this.base}review/${guid}/count`)
+      .then((response: any) => {
+        if (typeof response['adminqueue:count'] !== 'undefined') {
+          return parseInt(response['adminqueue:count'], 10);
+        }
+
+        throw 'E_COUNT';
+      });
+  }
 }

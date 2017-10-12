@@ -4,9 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { LegacyModule } from '../../modules/legacy/legacy.module';
-import { ChannelModule } from '../../modules/channel/channel.module';
-import { ModalsModule } from '../../modules/modals/modals.module';
+import { LegacyModule } from '../legacy/legacy.module';
+import { ChannelModule } from '../channel/channel.module';
+import { ModalsModule } from '../modals/modals.module';
 
 import { Groups, GroupsProfile, GroupsCreator } from './groups';
 import { GroupsJoinButton } from './groups-join-button';
@@ -17,6 +17,8 @@ import { GroupsSettingsButton } from './profile/groups-settings-button';
 import { GroupsProfileMembers } from './profile/members/members';
 import { GroupsProfileRequests } from './profile/requests/requests';
 import { GroupsProfileFeed } from './profile/feed/feed';
+import { GroupsProfileConversation } from './profile/conversation/conversation.component';
+import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
 
 const routes: Routes = [
   { path: 'groups/profile/:guid/:filter', component: GroupsProfile },
@@ -48,6 +50,8 @@ const routes: Routes = [
     GroupsProfileFeed,
     GroupsProfileRequests,
     GroupsSettingsButton,
+    GroupsProfileConversation,
+    GroupsProfileFilterSelector
   ],
   exports: [
     Groups,
@@ -61,6 +65,8 @@ const routes: Routes = [
     GroupsProfileFeed,
     GroupsProfileRequests,
     GroupsSettingsButton,
+    GroupsProfileConversation,
+    GroupsProfileFilterSelector
   ],
   entryComponents: [
     GroupsCard

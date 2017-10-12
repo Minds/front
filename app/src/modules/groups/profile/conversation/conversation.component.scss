@@ -1,0 +1,88 @@
+.m-group--conversation {
+  max-width: 1600px;
+
+  .m-group--sidebar {
+    max-width: 320px;
+  }
+  .mdl-cell--8-col {
+    flex: 1;
+  }
+
+}
+
+minds-groups-profile-conversation {
+  min-height: 600px !important;
+  margin-bottom: 0;
+  flex: 1;
+
+  .m--group-chat {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: $minds-padding * 2;
+    box-sizing: border-box;
+    height: calc(100vh - 180px);
+
+    .minds-comments-container {
+      max-height: none;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      .minds-avatar {
+        width: 36px;
+        height: 36px;
+      }
+
+      .m-comment-attachment .item-image {
+        img, minds-video {
+          max-width: 50%;
+        }
+      }
+    }
+
+    .minds-comment {
+      .mdl-card__menu {
+        display: none;
+      }
+
+      &:hover .mdl-card__menu {
+        display: block;
+      }
+
+      .m-comment-attachment .m-rich-embed{
+        max-width: 63%;
+        .m-blurb {
+          display: block;
+        }
+      }
+    }
+
+    .minds-comment-post {
+      flex-shrink: 0;
+    }
+
+    .post-preview {
+      width: 63%;
+      height: auto;
+
+      .attachment-preview {
+        width: 200px;
+        height: 140px;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .minds-comments-container {
+    overflow-y: visible;
+    height: auto;
+    max-height: none;
+  }
+
+  .minds-comment.minds-comment-post {
+    //position: fixed;
+   // bottom: 0;
+    //width: 612px;
+  }
+}

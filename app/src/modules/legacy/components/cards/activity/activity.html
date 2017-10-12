@@ -14,7 +14,7 @@
       <strong>{{activity.ownerObj.name}}</strong>
     </a>
     <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
-      [routerLink]="['/groups/profile', activity.containerObj.guid, 'activity']"
+      [routerLink]="['/groups/profile', activity.containerObj.guid]"
       class="mdl-color-text--blue-grey-300">
       <strong>({{activity.containerObj.name}})</strong>
     </a>
@@ -162,6 +162,8 @@
 	<minds-remind [object]="activity.remind_object" [events]="childEventsEmitter"></minds-remind>
 </div>
 
+<ng-content select="[bottom-content]"></ng-content>
+
 <div class="mdl-card__supporting-text is-boosted" *ngIf="activity.boosted">
 	<i class="material-icons">trending_up</i>
 	<a i18n>Boosted</a>
@@ -210,5 +212,12 @@
 	<button class="mdl-button m-translate-button mdl-button--icon" *ngIf="isTranslatable" (click)="translateToggle = true;">
 			<i class="material-icons">public</i>
 	</button>
-	<m-post-menu [entity]="activity" [canDelete]="canDelete" [isTranslatable]="isTranslatable" [options]="menuOptions" (optionSelected)="menuOptionSelected($event)"></m-post-menu>
+	<m-post-menu [entity]="activity" [canDelete]="canDelete" [isTranslatable]="isTranslatable" [options]="menuOptions" (optionSelected)="menuOptionSelected($event)">
+		<ng-container post-menu><ng-content select="[post-menu]"></ng-content></ng-container>
+	</m-post-menu>
+</div>
+
+<!-- Pending block -->
+<div class="mdl-card__supporting-text m-activity--pending" *ngIf="activity.pending && session.getLoggedInUser()?.guid == activity.owner_guid">
+  This post is awaiting moderation.
 </div>

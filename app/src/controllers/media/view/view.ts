@@ -74,6 +74,9 @@ export class MediaView {
     this.client.delete('api/v1/media/' + this.guid)
       .then((response: any) => {
         this.router.navigate(['/discovery/owner']);
+      })
+      .catch(e => {
+        alert((e && e.message) || 'Server error');
       });
   }
 

@@ -1,0 +1,13 @@
+<div class="m-groups--filter-selector" *ngIf="group">
+  <a
+    class="m-groups--filter-selector-item"
+    [class.m-groups--filter-selector-active]="filter == 'activity' || filter == 'review'"
+    [routerLink]="[ '/groups/profile', group.guid, 'activity' ]"
+  >Feed</a>
+
+  <a
+    class="m-groups--filter-selector-item"
+    [class.m-groups--filter-selector-active]="filter == 'conversation'"
+    [routerLink]="[ '/groups/profile', group.guid, 'conversation' ]"
+  >Conversations</a>
+</div>

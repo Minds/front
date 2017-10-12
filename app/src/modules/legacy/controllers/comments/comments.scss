@@ -362,7 +362,7 @@ minds-comments, .m-comment-wrapper{
         right: auto;
       }
 
-      img {
+      img, minds-video {
         width: auto;
         max-width: 100%;
         max-height: $mcc-height - ($minds-padding * 2) - 50px;
@@ -376,5 +376,27 @@ minds-comments, .m-comment-wrapper{
 
   .m-ribbon {
     display: none;
+  }
+}
+
+.m-comments--start-conversation-label {
+  font-size: 12px;
+  text-align: center;
+  margin: ($minds-padding * 2) 0;
+  color: #999999;
+}
+
+.m-comments--load-error-label {
+  font-size: 12px;
+  text-align: center;
+  margin: ($minds-padding * 2) 0;
+  color: #c00;
+
+  i.material-icons {
+    font-size: 1.2em;
+  }
+
+  > * {
+    vertical-align: middle;
   }
 }

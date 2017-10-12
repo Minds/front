@@ -1,5 +1,6 @@
-@import 'defaults.scss';
-
+.groups-grid {
+  max-width: 990px;
+}
 .minds-banner-card{
   minds-groups-join-button{
     position: absolute;
@@ -56,6 +57,9 @@ minds-groups-profile{
     box-sizing: content-box;
     overflow: visible;
 
+    &.m-group--conversation-view.m-group--view-mode {
+      height: 80px;
+    }
   }
 
   minds-banner {
@@ -77,6 +81,10 @@ minds-groups-profile{
         display: none !important;
       }
     }
+  }
+
+  header.m-group--conversation-view.m-group--view-mode minds-banner .minds-banner {
+    height: 200px;
   }
 
   .group-header-bar {
@@ -114,6 +122,10 @@ minds-groups-profile{
         justify-content: center;
       }
 
+      &.m-group--stats--narrow .mdl-tabs__tab {
+        padding: 0 16px;
+      }
+
       a span {
         width: 100%;
         display: block;
@@ -121,6 +133,10 @@ minds-groups-profile{
         height: 11px;
         vertical-align: middle;
         line-height: 36px;
+      }
+
+      &.m-group--stats--narrow a span {
+        font-size: 9px;
       }
 
       .mdl-tabs__action-buttons {
@@ -195,6 +211,17 @@ minds-groups-profile{
     }
   }
 
+  m-modal .m-modal-container {
+    min-height: 0;
+
+    .mdl-card {
+      min-height: 0;
+    }
+
+    .minds-modal-dialog-actions {
+      padding: 0 ($minds-padding * 2) ($minds-padding * 2);
+    }
+  }
 }
 
 minds-groups-profile-members-invite {
@@ -219,6 +246,22 @@ minds-groups-profile-members-invite {
   }
 }
 
+.m-group--conversation {
+  .m-group-info-brief-description,
+  .m-group-info-tags,
+  .m-group-info-membership,
+  .m-group-info-moderated,
+  .m-group-info-default-view,
+  .m-group-boost {
+    display: none;
+  }
+
+  .m-group-info-members,
+  .mdl-card__supporting-text{
+    display:none;
+  }
+}
+
 .m-group-info {
 
   @media screen and (max-width: $min-tablet) {
@@ -240,6 +283,8 @@ minds-groups-profile-members-invite {
   .m-group-info-brief-description,
   .m-group-info-tags,
   .m-group-info-membership,
+  .m-group-info-moderated,
+  .m-group-info-default-view,
   .m-group-boost {
     width:auto;
     min-height:0;
@@ -251,7 +296,10 @@ minds-groups-profile-members-invite {
       padding-right:$minds-padding;
     }
 
-    > div {
+    > div, > div > a {
+      color: inherit;
+      text-decoration: inherit;
+
       > span {
         vertical-align: middle;
         font-size: 11px;
@@ -291,6 +339,8 @@ minds-groups-profile-members-invite {
       span{
         white-space: pre-line;
         word-wrap: break-word;
+        max-width: 100%;
+        box-sizing: border-box;
       }
     }
 
@@ -571,7 +621,7 @@ minds-groups-card-user-actions-button {
 
     .m-modal-container {
       max-width: 480px;
-      min-width:auto;
+      min-width: 0;
       height: auto;
       min-height:0;
       margin: 0 auto;
@@ -646,4 +696,31 @@ minds-groups-create {
       }
     }
   }
+}
+
+.m-group-conversation--link {
+  b > * {
+    vertical-align: middle;
+  }
+
+  .m-group-conversation--link--new {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: green;
+    border-radius: 50%;
+  }
+}
+
+minds-groups-profile-feed {
+  z-index: 1;
+
+  .m-groups-feed--review-actions {
+    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
+    text-align: right;
+  }
+}
+
+minds-groups-profile-conversation.mdl-card {
+  overflow: visible;
 }

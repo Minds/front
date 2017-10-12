@@ -2,7 +2,6 @@ import { Component, Inject, EventEmitter } from '@angular/core';
 
 import { GroupsService } from './groups-service';
 import { SessionFactory } from '../../services/session';
-import { MindsGroupListResponse } from '../../interfaces/responses';
 
 @Component({
   selector: 'minds-groups-join-button',
@@ -22,7 +21,7 @@ import { MindsGroupListResponse } from '../../interfaces/responses';
       <button class="minds-group-join-button" (click)="decline()" i18n>Decline</button>
     </span>
     <button class="minds-group-join-button subscribed " *ngIf="group['is:member']" (click)="leave()" i18n>Leave</button>
-    <button class="minds-group-join-button" *ngIf="group['is:awaiting']" (click)="cancelRequest()" i18n>Cancel request</button>
+    <button class="minds-group-join-button awaiting" *ngIf="group['is:awaiting']" (click)="cancelRequest()" i18n>Cancel request</button>
     <m-modal-signup-on-action
       [open]="showModal"
       (closed)="showModal = false"

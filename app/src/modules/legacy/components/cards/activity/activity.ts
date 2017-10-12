@@ -38,7 +38,7 @@ export class Activity {
   visible: boolean = false;
 
   editing: boolean = false;
-  hideTabs: boolean;
+  @Input() hideTabs: boolean;
 
   _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();

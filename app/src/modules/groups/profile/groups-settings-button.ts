@@ -1,5 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
-import { Location } from '@angular/common';
+import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups-service';
