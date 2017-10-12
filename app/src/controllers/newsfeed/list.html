@@ -93,7 +93,7 @@
         <div class="minds-list">
           <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
           <minds-newsfeed-boost-rotator interval="12" *ngIf="showBoostRotator"></minds-newsfeed-boost-rotator>
-          <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" [visible]="boostFeed" (delete)="delete(activity)" (onViewed)="onViewed($event)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+          <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" (delete)="delete(activity)" (onViewed)="onViewed($event)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
           <infinite-scroll
             distance="25%"
             (load)="load()"

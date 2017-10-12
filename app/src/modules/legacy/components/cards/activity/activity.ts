@@ -33,6 +33,7 @@ export class Activity {
   translateEvent: EventEmitter<any> = new EventEmitter();
   session = SessionFactory.build();
   showBoostOptions: boolean = false;
+  @Input() boost: boolean = false;
   type: string;
   element: any;
   visible: boolean = false;
@@ -224,8 +225,13 @@ export class Activity {
         this.scroll.unListen(this.scroll_listener);
         //make visible
         this.visible = true;
-        //update the analytics
-        this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
+
+        if (this.boost) {
+          this.onViewed.emit(this.activity);
+        } else {
+          //update the analytics
+          this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
+        }
       }
     });
     //this.scroll.fire();
