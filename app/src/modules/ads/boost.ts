@@ -1,5 +1,6 @@
-import { Component, EventEmitter, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { Client } from '../../services/api';
+import { Storage } from '../../services/storage';
 
 @Component({
   selector: 'm-ads-boost',
@@ -21,9 +22,10 @@ export class BoostAds {
 
   handler: string = 'content';
   limit: number = 2;
+  offset: string = '';
   boosts: Array<any> = [];
 
-  constructor(public client: Client) {
+  constructor(public client: Client, private storage: Storage) {
   }
 
   ngOnInit() {
@@ -31,12 +33,17 @@ export class BoostAds {
   }
 
   fetch() {
-    this.client.get('api/v1/boost/fetch/' + this.handler, { limit: this.limit })
+    if (this.storage.get('boost:offset:sidebar'))
+      this.offset = this.storage.get('boost:offset:sidebar');
+    this.client.get('api/v1/boost/fetch/' + this.handler, { limit: this.limit, offset: this.offset })
       .then((response: any) => {
         if (!response.boosts) {
           return;
         }
         this.boosts = response.boosts;
+
+        if (response['load-next'])
+          this.storage.set('boost:offset:sidebar', response['load-next']);
       });
   }
 

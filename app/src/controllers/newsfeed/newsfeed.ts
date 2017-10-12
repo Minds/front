@@ -46,10 +46,21 @@ export class Newsfeed {
   pollingOffset: string = '';
   pollingNewPosts: number = 0;
 
+  boostFeed: boolean = false;
+
   @ViewChild('poster') private poster: Poster;
 
   constructor(public client: Client, public upload: Upload, public navigation: NavigationService,
     public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+
+    this.route.url.subscribe(segments => {
+      if(segments[segments.length-1].path === 'boost') {
+        this.title.setTitle('Boost Newsfeed');
+        this.boostFeed = true;
+      } else {
+        this.title.setTitle('Newsfeed');
+      }
+    });
   }
 
   ngOnInit() {
@@ -77,7 +88,6 @@ export class Newsfeed {
       }
     });
 
-    this.title.setTitle('Newsfeed');
     this.detectWidth();
   }
 
@@ -130,10 +140,53 @@ export class Newsfeed {
     this.paramsSubscription.unsubscribe();
   }
 
+  load(refresh: boolean = false) {
+    if (this.boostFeed) {
+      this.loadBoosts(refresh);
+    } else {
+      this.loadNewsfeed(refresh);
+    }
+  }
+
+  /**
+   * Load boost newsfeed
+   */
+  loadBoosts(refresh: boolean = false) {
+    if (this.inProgress) {
+      //console.log('already loading more..');
+      return false;
+    }
+
+    if (refresh) {
+      this.offset = '';
+    }
+
+    this.inProgress = true;
+
+    this.client.get('api/v1/boost/fetch/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
+      .then((data: any) => {
+        if (!data.boosts) {
+          this.moreData = false;
+          this.inProgress = false;
+          return false;
+        }
+        if (this.newsfeed && !refresh) {
+          this.newsfeed = this.newsfeed.concat(data.boosts);
+        } else {
+          this.newsfeed = data.boosts;
+        }
+        this.offset = data['load-next'];
+        this.inProgress = false;
+      })
+      .catch(function (e) {
+        this.inProgress = false;
+      });
+  }
+
   /**
    * Load newsfeed
    */
-  load(refresh: boolean = false) {
+  loadNewsfeed(refresh: boolean = false) {
     var self = this;
     if (this.inProgress) {
       //console.log('already loading more..');
@@ -198,6 +251,13 @@ export class Newsfeed {
     for (i in this.newsfeed) {
       if (this.newsfeed[i] === activity)
         this.newsfeed.splice(i, 1);
+    }
+  }
+
+
+  onViewed(activity: any) {
+    if (this.boostFeed) {
+      this.client.put('api/v1/boost/fetch/newsfeed/' + activity.boosted_guid);
     }
   }
 

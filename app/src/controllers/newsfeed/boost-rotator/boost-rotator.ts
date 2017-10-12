@@ -1,9 +1,8 @@
-import { Component, ChangeDetectorRef, ElementRef } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
 
 import { ScrollService } from '../../../services/ux/scroll';
-import { Client, Upload } from '../../../services/api';
-
+import { Client } from '../../../services/api';
+import { Storage } from '../../../services/storage';
 import { SessionFactory } from '../../../services/session';
 import { Router } from '@angular/router';
 
@@ -45,6 +44,7 @@ export class NewsfeedBoostRotator {
     public router: Router,
     public client: Client,
     public scroll: ScrollService,
+    private storage: Storage,
     public element: ElementRef,
     private cd: ChangeDetectorRef
   ) { }
@@ -67,7 +67,11 @@ export class NewsfeedBoostRotator {
       }
       this.inProgress = true;
 
-      this.client.get('api/v1/boost/fetch/newsfeed', { limit: 10, rating: this.rating })
+      if(this.storage.get('boost:offset:rotator')) {
+        this.offset = this.storage.get('boost:offset:rotator');
+      }
+
+      this.client.get('api/v1/boost/fetch/newsfeed', { limit: 10, rating: this.rating, offset: this.offset })
         .then((response: any) => {
           if (!response.boosts) {
             this.inProgress = false;
@@ -83,10 +87,12 @@ export class NewsfeedBoostRotator {
             this.start();
             this.isVisible();
           }
+          this.offset = response['load-next'];
+          this.storage.set('boost:offset:rotator', this.offset);
           this.inProgress = false;
           return resolve(true);
         })
-        .catch(function (e) {
+        .catch((e) => {
           this.inProgress = false;
           return reject();
         });
@@ -145,7 +151,7 @@ export class NewsfeedBoostRotator {
   }
 
   isVisible() {
-    var bounds = this.element.nativeElement.getBoundingClientRect();
+    const bounds = this.element.nativeElement.getBoundingClientRect();
     if (bounds.top > 0) {
       //console.log('[rotator]: in view', this.rotator);
       if (!this.running)
@@ -165,6 +171,7 @@ export class NewsfeedBoostRotator {
       this.client.put('api/v1/boost/fetch/newsfeed/' + this.boosts[position].boosted_guid);
     }
     this.lastTs = Date.now();
+    window.localStorage.setItem('boost-rotator-offset', this.boosts[position].boosted_guid);
   }
 
   active() {

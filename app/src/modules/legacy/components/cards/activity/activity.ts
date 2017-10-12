@@ -17,7 +17,7 @@ import { WireCreatorComponent } from '../../../../wire/creator/creator.component
     'class': 'mdl-card mdl-shadow--2dp'
   },
   inputs: ['object', 'commentsToggle', 'visible', 'canDelete'],
-  outputs: ['_delete: delete', 'commentsOpened'],
+  outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
   templateUrl: 'activity.html'
 })
 
@@ -45,6 +45,7 @@ export class Activity {
   scroll_listener;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
+  onViewed: EventEmitter<any> = new EventEmitter<any>();
 
   isTranslatable: boolean;
   canDelete: boolean = false;
@@ -224,6 +225,7 @@ export class Activity {
         this.visible = true;
         //update the analytics
         this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
+        this.onViewed.emit(this.activity);
       }
     });
     //this.scroll.fire();

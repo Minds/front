@@ -34,6 +34,8 @@ export const MindsAppRoutes: Routes = [
   { path: 'register', component: Register },
   { path: 'forgot-password', component: ForgotPassword },
 
+  { path: 'newsfeed/subscribed', component: Newsfeed, canDeactivate: [CanDeactivateGuardService] },
+  { path: 'newsfeed/boost', component: Newsfeed, canDeactivate: [CanDeactivateGuardService] },
   { path: 'newsfeed/:guid', component: NewsfeedSingle },
   { path: 'newsfeed', component: Newsfeed, canDeactivate: [CanDeactivateGuardService] },
   { path: 'capture', component: Capture },
