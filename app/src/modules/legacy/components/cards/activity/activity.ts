@@ -215,6 +215,7 @@ export class Activity {
 
   isVisible() {
     if (this.visible) {
+      this.onViewed.emit(this.activity);
       return true;
     }
     this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
@@ -225,7 +226,6 @@ export class Activity {
         this.visible = true;
         //update the analytics
         this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
-        this.onViewed.emit(this.activity);
       }
     });
     //this.scroll.fire();

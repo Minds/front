@@ -18,6 +18,10 @@
   font-size:32px;
   cursor: pointer;
 
+  i {
+    font-size: 18px;
+  }
+
   .minds-dropdown-menu .mdl-menu__item{
     display: flex;
     align-items: center;
@@ -44,7 +48,7 @@
 
   .m-boost-rotator-tools-tool{
     position:relative;
-    padding-left: 8px;
+    padding: 8px;
     margin-top: -14px;
 
     .minds-dropdown-menu {
@@ -57,12 +61,38 @@
   }
 }
 
+.m-boost-navigation {
+  margin:0;
+  margin-top: -14px;
+  padding:0;
+  list-style: none;
+  display:flex;
+  flex: 1;
+
+  li {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-family: 'Lato';
+    padding: 0 8px;
+    color: #777;
+    font-weight: 400;
+    cursor: pointer;
+
+    span, m-tooltip {
+      vertical-align: middle;
+    }
+    m-tooltip i {
+     font-size: 11px;
+     color: #888;
+    } 
+  }
+} 
 
 .m-boost-rotator-tabs{
   margin:0;
   padding:0;
   list-style: none;
-  flex: 1;
   display:flex;
 
   .m-boost-rotator-tabs-tab{

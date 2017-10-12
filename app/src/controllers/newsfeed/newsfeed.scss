@@ -76,6 +76,30 @@ minds-newsfeed {
   .m-invite-link{
     cursor: pointer;
   }
+
+  .m-newsfeed--boost-header {
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 3px;
+    color: #4690D6;
+    border: 1px solid #4690D6;
+
+    span {
+      vertical-align: middle;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 400;
+      font-family: 'Lato', Helvetica, Sans-serif;
+      cursor: default;
+    }
+    m-tooltip {
+      vertical-align: middle;
+      margin-left: 8px;
+      i {
+        font-size: 16px;
+      }
+    }
+  }
 }
 
 .m-newsfeed-message{

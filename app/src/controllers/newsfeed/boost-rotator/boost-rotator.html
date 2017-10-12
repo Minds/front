@@ -1,22 +1,31 @@
 <div class="m-boost-rotator-tools">
-  <ul class="m-boost-rotator-tabs" *ngIf="boosts.length == 0 || disabled"></ul>
+  <ul class="m-boost-navigation">
+    <li routerLink="/newsfeed/subscribed" routerLinkActive="selected">
+      <span>Newsfeed</span>
+      <m-tooltip icon="help">
+        Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network 
+      </m-tooltip>
+    </li>
+    <li routerLink="/newsfeed/boost" routerLinkActive="selected">
+      <span>Boostfeed</span>
+      <m-tooltip icon="help">
+        The Boostfeed only shows boosted posts from the wider network. To Boost your content, click the Boost icon on the topbar 
+      </m-tooltip>
+    </li>
+  </ul>
   <ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0 && !disabled">
     <li (click)="prev()">
       <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
-    </li>
-    <li *ngFor="let boost of boosts; let i = index"
-      [ngClass]="{'m-boost-rotator-tabs-tab': true, 'mdl-color--blue-grey-100': i != currentPosition, 'mdl-color--blue-grey-400': i == currentPosition}"
-      (click)="currentPosition = i; recordImpression(i);">
     </li>
     <li (click)="next()">
       <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
     </li>
   </ul>
 
-  <div class="m-boost-rotator-tools-tool" #toggle *ngIf="!disabled">
+  <div class="m-boost-rotator-tools-tool" #toggle>
     <i class="material-icons mdl-color-text--blue-grey-300" title="Boost Settings" (click)="toggle.value = !toggle.value">settings</i>
     <ul class="minds-dropdown-menu" [hidden]="!toggle.value">
-      <li class="mdl-menu__item" i18n>
+      <li class="mdl-menu__item" i18n *ngIf="!disabled">
         <span>Open</span>
         <m-tooltip icon="help">
           Open Boost may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.       
@@ -29,7 +38,7 @@
           <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="rating" (ngModelChange)="toggleRating()">
         </label>
       </li>
-      <li class="mdl-menu__item" i18n *ngIf="rating == 2">
+      <li class="mdl-menu__item" i18n *ngIf="rating == 2 && !disabled">
         <span>Explicit</span>
         <m-tooltip icon="help">
           By selecting Explicit mode, you acknowledge that you are 18+ years of age and are willing to see graphic content, explicit language, and nudity.
@@ -42,7 +51,7 @@
           <input type="checkbox" id="switch-explicit" class="mdl-switch__input" [ngModel]="session.getLoggedInUser().mature" (ngModelChange)="setExplicit(true)">
         </label>
       </li>
-      <li class="mdl-menu__item" (click)="paused = !paused;" i18n>
+      <li class="mdl-menu__item" (click)="paused = !paused;" i18n *ngIf="!disabled">
         <span>Auto-rotate</span>
         <m-tooltip icon="help">
           This will enable/disable the Boost box on top of your feed from self-rotating.
@@ -68,7 +77,7 @@
           Upgrade to Plus in order to turn off Boost.
         </m-tooltip>
       </li>
-      <li class="mdl-menu__item" (click)="selectCategories()" i18n>
+      <li class="mdl-menu__item" (click)="selectCategories()" i18n *ngIf="!disabled">
         <span>Select Categories</span>
         <m-tooltip icon="help">
           Select the categories of content you’d like to see more of
