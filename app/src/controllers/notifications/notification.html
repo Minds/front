@@ -135,11 +135,22 @@
           <!-- i18n -->{{notification.fromObj.name}} voted up <span class="pseudo-link mdl-color-text--blue-grey-400">your activity</span><!-- /i18n -->
         </p>
       </a>
-      <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.entityObj.type == 'comment'">
-        <p>
-          <!-- i18n -->{{notification.fromObj.name}} voted up <span class="pseudo-link mdl-color-text--blue-grey-400"> your comment </span><!-- /i18n -->
-        </p>
-      </a>
+
+      <ng-container *ngIf="notification.entityObj.type == 'comment'">
+        <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.params?.parent?.type != 'group'">
+          <p>
+            <!-- i18n -->{{notification.fromObj.name}} voted up <span class="pseudo-link mdl-color-text--blue-grey-400"> your comment </span><!-- /i18n -->
+          </p>
+        </a>
+
+        <a [routerLink]="['/groups/profile', notification.entityObj.parent_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+          <p i18n>
+            <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> voted up your message in
+            <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation
+          </p>
+        </a>
+      </ng-container>
+
       <a [routerLink]="['/newsfeed', notification.entityObj.guid]" *ngIf="!notification.entityObj">
         <p style="font-style:italic">
           <!-- i18n -->This post was deleted.<!-- /i18n -->
@@ -166,11 +177,22 @@
           <!-- i18n -->{{notification.fromObj.name}} down voted <span class="pseudo-link mdl-color-text--blue-grey-400">your activity</span><!-- /i18n -->
         </p>
       </a>
-      <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.entityObj.type == 'comment'">
-        <p>
-          <!-- i18n -->{{notification.fromObj.name}} down voted <span class="pseudo-link mdl-color-text--blue-grey-400"> your comment </span><!-- /i18n -->
-        </p>
-      </a>
+
+      <ng-container *ngIf="notification.entityObj.type == 'comment'">
+        <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.params?.parent?.type != 'group'">
+          <p>
+            <!-- i18n -->{{notification.fromObj.name}} down voted <span class="pseudo-link mdl-color-text--blue-grey-400"> your comment </span><!-- /i18n -->
+          </p>
+        </a>
+
+        <a [routerLink]="['/groups/profile', notification.entityObj.parent_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+          <p i18n>
+            <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> down voted your message in
+            <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation
+          </p>
+        </a>
+      </ng-container>
+
       <a [routerLink]="['/newsfeed', notification.entityObj.guid]" *ngIf="!notification.entityObj">
         <p style="font-style:italic">
           <!-- i18n -->This post was deleted.<!-- /i18n -->
