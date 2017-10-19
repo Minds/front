@@ -36,6 +36,7 @@ import { TranslateModule } from './src/modules/translate/translate.module';
 import { VideoModule } from './src/modules/video/video.module';
 import { SettingsModule } from './src/modules/settings/settings.module';
 import { OnboardingModule } from './src/modules/onboarding/onboarding.module';
+import { NotificationModule } from './src/modules/notifications/notification.module';
 
 import { GroupsModule } from './src/modules/groups/groups.module';
 import { BlogModule } from './src/plugins/blog/blog.module';
@@ -80,7 +81,7 @@ import { BanModule } from './src/modules/ban/ban.module';
     MindsFormsModule,
     ChannelModule,
     OnboardingModule,
-
+    NotificationModule,
     GroupsModule,
     BlogModule,
     PostMenuModule

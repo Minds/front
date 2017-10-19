@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { SessionFactory } from '../../services/session';
-import { Reason, rejectionReasons } from '../admin/boosts/rejection-reasons';
+import { Reason, rejectionReasons } from '../../controllers/admin/boosts/rejection-reasons';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-notification',
   inputs: ['_notification: notification'],
-  templateUrl: 'notification.html'
+  templateUrl: 'notification.component.html'
 })
-export class Notification {
+export class NotificationComponent {
 
   notification: any;
   session = SessionFactory.build();

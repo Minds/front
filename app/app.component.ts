@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NotificationService } from './src/services/notification';
+import { NotificationService } from './src/modules/notifications/notification.service';
 import { AnalyticsService } from './src/services/analytics';
 import { SocketsService } from './src/services/sockets';
 import { Session, SessionFactory } from './src/services/session';

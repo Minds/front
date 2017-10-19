@@ -24,6 +24,7 @@ import { PostMenuModule } from './src/common/components/post-menu/post-menu.modu
 import { BanModule } from './src/modules/ban/ban.module';
 import { GroupsModule } from './src/modules/groups/groups.module';
 import { BlogModule } from './src/plugins/blog/blog.module';
+import { NotificationModule } from './src/modules/notifications/notification.module';
 
 @NgModule({
   bootstrap: [
@@ -50,7 +51,8 @@ import { BlogModule } from './src/plugins/blog/blog.module';
     BanModule,
     PostMenuModule,
     GroupsModule,
-    BlogModule
+    BlogModule,
+    NotificationModule 
   ],
   providers: [
     MindsEmbedRoutingProviders,

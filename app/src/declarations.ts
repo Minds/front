@@ -14,7 +14,6 @@ import {MindsTooltip} from './components/tooltip/tooltip';
 import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 
 import {SearchBar} from './controllers/search/bar';
-import {Notification} from './controllers/notifications/notification';
 import {AdminAnalytics} from './controllers/admin/analytics/analytics';
 import {AdminBoosts} from './controllers/admin/boosts/boosts';
 import {AdminPages} from './controllers/admin/pages/pages';
@@ -62,7 +61,6 @@ export const MINDS_DECLARATIONS: any[] = [
 
   // Controllers; Controller-based directives
   SearchBar,
-  Notification,
   AdminAnalytics,
   RejectionReasonModalComponent,
   AdminBoosts,

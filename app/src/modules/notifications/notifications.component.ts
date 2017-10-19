@@ -1,21 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
 import { MindsTitle } from '../../services/ux/title';
-import { Client } from '../../services/api';
+import { Client } from '../../services/api/client';
 import { SessionFactory } from '../../services/session';
-import { NotificationService } from '../../services/notification';
+import { NotificationService } from './notification.service';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-notifications',
-  templateUrl: 'list.html'
+  templateUrl: 'notifications.component.html'
 })
 
-export class Notifications {
-
+export class NotificationsComponent {
+  @Input() params: any;
   notifications: Array<Object> = [];
   entity;
   moreData: boolean = true;
@@ -107,4 +107,9 @@ export class Notifications {
     }
   }
 
+  changeFilter(filter) {
+      this._filter = filter;
+      this.notifications = [];
+      this.load(true);
+  }
 }

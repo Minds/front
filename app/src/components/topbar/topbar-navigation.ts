@@ -6,6 +6,8 @@ import { WalletService } from '../../services/wallet';
 import { SessionFactory } from '../../services/session';
 import { Storage } from '../../services/storage';
 
+import { NotificationsTopbarToggleComponent } from '../../modules/notifications/toggle.component';
+
 import { animations } from '../../animations';
 
 @Component({
@@ -18,7 +20,6 @@ export class TopbarNavigation implements AfterViewInit, OnDestroy {
 
   user;
   session = SessionFactory.build();
-
   walletPopContent: string = '';
   walletPopState: any;
 
@@ -89,4 +90,5 @@ export class TopbarNavigation implements AfterViewInit, OnDestroy {
     this.walletPopContent = `+${points}`;
     this.walletPopState = Date.now();
   }
+
 }

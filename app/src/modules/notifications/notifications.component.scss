@@ -1,57 +1,62 @@
 minds-notification.mdl-card{
-    width:100%;
-    min-height:0;
-    padding:$minds-padding * 2;
-    margin-bottom:$minds-margin*2;
+  width:100%;
+  min-height:0;
+  padding:$minds-padding * 2;
+  margin-bottom:$minds-margin*2;
 
+  display: flex;
+  flex-direction: row;
+
+  .avatar{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
-    .avatar{
-      display: flex;
-      flex-direction: column;
-
-      img{
-          border-radius: 3px;
-         max-height:50px;
-       }
-    }
-
-    .body{
-       padding:0 $minds-padding*2;
-
-
-        a{
-          color:#333;
-          text-decoration: none;
-        }
-
-        .pseudo-link{
-          font-weight:bold;
-        }
-
-        p{
-          padding:0;
-          margin:0;
-        }
-
-        .ts{
-          font-size:11px;
-        }
+    img{
+      border-radius: 50%;
+      max-height:50px;
     }
   }
 
+  .body{
+    padding:0 $minds-padding*2;
+
+
+    a{
+      color:#333;
+      text-decoration: none;
+    }
+
+    .pseudo-link{
+      font-weight:bold;
+    }
+
+    p{
+      padding:0;
+      margin:0;
+    }
+
+    .ts{
+      font-size:11px;
+    }
+  }
+}
+
 minds-notifications {
   .mdl-tabs__tab {
+
+    overflow: visible;
+    flex: 1;
+
     .m-full-label {
       display: inline-block;
     }
 
-    .m-icon {
+    .m-icon, .material-icons {
       line-height: 2em;
       margin-left: 0.35em;
       vertical-align: middle;
       opacity: 0.45;
+      cursor: pointer;
     }
 
     @media only screen and (max-width: $min-desktop) {
@@ -78,5 +83,18 @@ minds-notifications {
 
   .notifications-grid{
     // Styles for notifications page list
+  }
+}
+
+m-notifications--topbar-toggle{
+  i { cursor: pointer }
+  .counter { cursor: default }
+
+  .m-notifications--topbar-toggle-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
   }
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { Storage } from '../../services/storage';
 import { Sidebar } from '../../services/ui/sidebar';
-import { NotificationService } from '../../services/notification';
+import { NotificationService } from '../../modules/notifications/notification.service';
 import { SessionFactory } from '../../services/session';
 
 @Component({

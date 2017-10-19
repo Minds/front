@@ -1,0 +1,14 @@
+<a class="mdl-color-text--blue-grey-500" (click)="toggle($event)">
+  <i class="material-icons" 
+    [ngClass]="{'mdl-color-text--amber-300' : item.extras?.counter > 0 && item.name == 'Notifications'}">
+    {{item.icon}}
+  </i>
+  <span id="{{item.name | lowercase}}-counter" 
+    class="counter mdl-color-text--green-400" 
+    *ngIf="item.extras">
+    {{item.extras?.counter | abbr}}
+  </span>
+</a>
+
+<div class="m-notifications--topbar-toggle-overlay" (click)="toggle($event)" *ngIf="toggled"></div>
+<m-notifications--flyout (close)="toggle($event)" *ngIf="toggled" [item]="item"></m-notifications--flyout>

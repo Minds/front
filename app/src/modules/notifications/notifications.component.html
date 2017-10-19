@@ -1,50 +1,44 @@
 <div class="mdl-tabs__tab-bar">
-  <a [routerLink]="['/notifications/all']" class="mdl-tabs__tab"
+  <a (click)="changeFilter('all')" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'all' || !_filter }"
   >
-    <i class="material-icons m-icon">notifications</i>
+    <m-tooltip icon="notifications">All</m-tooltip>  
     <span class="m-full-label" i18n>All</span>
   </a>
-  <a [routerLink]="['/notifications/tags']" class="mdl-tabs__tab"
+  <a (click)="changeFilter('tags')" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'tags' }"
   >
-    <i class="material-icons m-icon">face</i>
+    <m-tooltip icon="face">tags</m-tooltip>
     <span class="m-full-label" i18n>Tags</span>
   </a>
-  <a [routerLink]="['/notifications/comments']" class="mdl-tabs__tab"
+  <a (click)="changeFilter('comments')" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'comments' }"
   >
-    <i class="material-icons m-icon">chat_bubble</i>
+    <m-tooltip icon="chat_bubble">Comments</m-tooltip>  
     <span class="m-full-label" i18n>Comments</span>
   </a>
-  <a [routerLink]="['/notifications/boosts']" class="mdl-tabs__tab"
-    [ngClass]="{ 'is-active': _filter == 'boosts' }"
-  >
-    <i class="material-icons m-icon">trending_up</i>
-    <span class="m-full-label" i18n>Boosts</span>
-  </a>
-  <a [routerLink]="['/notifications/groups']" class="mdl-tabs__tab"
+  <a (click)="changeFilter('groups')" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'groups' }"
   >
-    <i class="material-icons m-icon">group_work</i>
+    <m-tooltip icon="group_work">Groups</m-tooltip>  
     <span class="m-full-label" i18n>Groups</span>
   </a>
-  <a [routerLink]="['/notifications/subscriptions']" class="mdl-tabs__tab"
+  <a (click)="changeFilter('subscriptions')" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'subscriptions' }"
   >
-    <i class="material-icons m-icon">people</i>
+    <m-tooltip icon="people">Subscriptions</m-tooltip>  
     <span class="m-full-label" i18n>Subscriptions</span>
   </a>
-  <a [routerLink]="['/notifications/votes']" class="mdl-tabs__tab"
+  <a (click)="changeFilter('votes')" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'votes' }"
   >
-    <i class="material-icons m-icon">thumbs_up_down</i>
+    <m-tooltip icon="thumbs_up_down">Votes</m-tooltip>  
     <span class="m-full-label" i18n>Votes</span>
   </a>
-  <a [routerLink]="['/notifications/reminds']" class="mdl-tabs__tab"
+  <a (click)="changeFilter('reminds')" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'reminds' }"
   >
-    <i class="material-icons m-icon">repeat</i>
+    <m-tooltip icon="repeat">Reminds</m-tooltip>  
     <span class="m-full-label" i18n>Reminds</span>
   </a>
 </div>

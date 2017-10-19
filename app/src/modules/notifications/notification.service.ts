@@ -1,8 +1,8 @@
 import { EventEmitter } from '@angular/core';
-import { Client } from './api';
-import { SocketsService } from './sockets';
-import { SessionFactory } from './session';
-import { MindsTitle } from './ux/title';
+import { Client } from '../../services/api';
+import { SocketsService } from '../../services/sockets';
+import { SessionFactory } from '../../services/session';
+import { MindsTitle } from '../../services/ux/title';
 
 export class NotificationService {
   session = SessionFactory.build();
