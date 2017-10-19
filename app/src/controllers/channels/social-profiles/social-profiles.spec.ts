@@ -145,6 +145,10 @@ describe('ChannelSocialProfiles', () => {
       {
         key: 'other',
         value: 'foobar.com'
+      },
+      {
+        key: 'soundcloud',
+        value: 'https://soundcloud.com/teamsesh'
       }
     ]);
     fixture.detectChanges();
@@ -158,6 +162,26 @@ describe('ChannelSocialProfiles', () => {
     expect(profiles[2].key).toBe('other');
     expect(profiles[2].value).toBe('foobar.com');
 
+    expect(profiles[3].key).toBe('soundcloud');
+    expect(profiles[3].value).toBe('https://soundcloud.com/teamsesh');
+
+  }));
+
+  it('should support https social links', fakeAsync(() => {
+    comp.editing = false;
+    let profiles = comp.polyfillLegacy([
+      {
+        key: 'soundcloud',
+        value: 'https://soundcloud.com/teamsesh'
+      }
+    ]);
+    fixture.detectChanges();
+
+    expect(profiles[0].key).toBe('soundcloud');
+    expect(profiles[0].value).toBe('https://soundcloud.com/teamsesh');
+
+    let profileUrl = comp.getSocialProfileURL('https://soundcloud.com/teamsesh');
+    expect(profileUrl).toBe('https://soundcloud.com/teamsesh');
   }));
 
 });

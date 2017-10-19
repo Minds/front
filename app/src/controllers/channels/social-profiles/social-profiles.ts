@@ -170,7 +170,7 @@ export class ChannelSocialProfiles {
   }
 
   getSocialProfileURL(url: string) {
-    if (this.url.includes('http://') || this.url.includes('https://')) {
+    if (url.includes('http://') || url.includes('https://')) {
       return url;
     } else {
       return 'http://' + url;
