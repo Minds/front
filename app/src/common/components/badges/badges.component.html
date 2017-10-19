@@ -1,15 +1,15 @@
 <ul class="m-channel--badges">
-  <li *ngIf="user.plus" routerLink="/plus">
+    <li *ngIf="user.plus && badges.indexOf('plus') > -1" routerLink="/plus">
     <i class="material-icons selected">add_circle_outline</i>
     <span>Plus</span>
   </li>
 
-  <li *ngIf="user.verified || session.isAdmin()" (click)="verify()">
+  <li *ngIf="(user.verified || session.isAdmin()) && badges.indexOf('verified') > -1" (click)="verify($event)">
     <i class="material-icons mdl-color-text--blue-grey-800" [class.selected]="user.verified">verified_user</i>
     <span>Verified</span>
   </li>
 
-  <li *ngIf="user.founder">
+  <li *ngIf="user.founder && badges.indexOf('founder') > -1">
     <i class="material-icons selected">flight_takeoff</i>
     <span>Founder</span>
   </li>

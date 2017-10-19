@@ -150,8 +150,20 @@ minds-card-image, minds-card-video {
         text-overflow: ellipsis
       }
 
+      strong {
+        vertical-align: middle;
+        letter-spacing: 0.5px;
+        font-family: 'Lato';
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
       .permalink {
         text-decoration: none;
+        font-family: 'Lato';
+        text-transform: uppercase;
+        letter-spacing: 0.75px;
+        text-rendering: optimizeLegibility;
 
         &:hover {
           text-decoration: underline;
@@ -298,6 +310,22 @@ minds-activity.mdl-card, minds-activity{
           display:inline-block;
       }
     }
+    .minds-block .minds-body a {
+      span {
+        vertical-align: middle;
+        font-family: 'Lato';
+        text-rendering: optimizeLegibility;
+        letter-spacing: 0.75px;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 800;
+      }
+      .minds-comment-span {
+        top: 0;
+        font-weight: 300;
+        text-transform: uppercase;
+      }
+    }
+
   }
 
   .minds-more{

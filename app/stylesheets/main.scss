@@ -227,6 +227,10 @@ textarea {
   font-weight: inherit;
 }
 
+.mdl-color--grey-100 {
+  background-color: rgba(252,252,252,1) !important;
+}
+
 blockquote { quotes: ''; }
 blockquote:before { content: '\201C'; }
 blockquote:after { content: '\201D'; }

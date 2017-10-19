@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -22,10 +23,15 @@ export interface SocialProfileMeta {
 export class ChannelBadgesComponent {
 
   @Input() user;
+  @Input() badges: Array<string> = [ 'verified', 'plus', 'founder' ];
 
-  constructor(public session: Session, private client: Client) { }
+  constructor(public session: Session, private client: Client, private router: Router) { }
 
-  verify() {
+  verify(e) {
+    if (!this.session.isAdmin()) {
+      e.preventDefault();
+      return this.router.navigate(['/plus']);
+    }
     if (this.user.verified)
       return this.unVerify();
     this.user.verified = true;

@@ -13,6 +13,7 @@ import { DateInputComponent } from './components/forms/date-input/date-input.com
 import { StateInputComponent } from './components/forms/state-input/state-input.component';
 import { ReadMoreDirective } from './read-more/read-more.directive';
 import { ReadMoreButtonComponent } from './read-more/button.component';
+import { ChannelBadgesComponent } from './components/badges/badges.component';
 
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
@@ -60,6 +61,7 @@ import { AdminActionsButtonComponent } from './components/button/admin-actions/a
     Modal,
     ReadMoreDirective,
     ReadMoreButtonComponent,
+    ChannelBadgesComponent,
     MindsRichEmbed,
 
     AutoGrow,
@@ -99,6 +101,7 @@ import { AdminActionsButtonComponent } from './components/button/admin-actions/a
     Modal,
     ReadMoreDirective,
     ReadMoreButtonComponent,
+    ChannelBadgesComponent,
     MindsRichEmbed,
 
     AutoGrow,

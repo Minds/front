@@ -12,6 +12,7 @@
   <div class="body">
     <a [routerLink]="['/', activity.ownerObj.username]">
       <strong>{{activity.ownerObj.name}}</strong>
+      <m-channel--badges class="m-channel--badges-activity" [user]="activity.ownerObj" badges="[ 'verified' ]"></m-channel--badges>
     </a>
     <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
       [routerLink]="['/groups/profile', activity.containerObj.guid]"

@@ -7,7 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../../../../tests/client-mock.spec';
+import { sessionMock } from '../../../../../../tests/session-mock.spec';
 import { Client } from '../../../../../services/api/client';
+import { Session } from '../../../../../services/session';
 import { MaterialMock } from '../../../../../../tests/material-mock.spec';
 import { scrollServiceMock } from '../../../../../../tests/scroll-service-mock.spec';
 import { ScrollService } from '../../../../../services/ux/scroll';
@@ -21,7 +23,7 @@ import { TagsPipe } from '../../../../../common/pipes/tags';
 import { MindsRichEmbed } from '../../../../../common/components/rich-embed/rich-embed';
 import { DomainPipe } from '../../../../../common/pipes/domain';
 import { AbbrPipe } from '../../../../../common/pipes/abbr';
-
+import { ChannelBadgesComponent } from '../../../../../common/components/badges/badges.component';
 /* tslint:disable */
 // START MOCKS
 @Component({
@@ -388,6 +390,7 @@ describe('Activity', () => {
         DomainPipe,
         AbbrPipe,
         MindsRichEmbed,
+        ChannelBadgesComponent,
         MaterialMock,
         HovercardMock,
         WireLockScreenComponentMock,
@@ -417,6 +420,7 @@ describe('Activity', () => {
       ],
       providers: [
         { provide: Client, useValue: clientMock },
+        { provide: Session, useValue: sessionMock },
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: TranslationService, useValue: translationServiceMock },
