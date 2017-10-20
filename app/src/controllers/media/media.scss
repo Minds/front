@@ -298,6 +298,8 @@ minds-media-thumbnail-selector{
   }
 
   h1.m-media-content--heading{
+    word-break: break-all;
+    
     @media screen and (max-width: $min-tablet) {
       font-size: 26px;
     }
