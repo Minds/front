@@ -74,7 +74,7 @@ export class GroupsProfileFeed {
           }
 
           this.pollingNewPosts += response.count;
-          this.pollingOffset = response['load-next'];
+          this.pollingOffset = response['load-previous'];
         })
         .catch(e => { console.error('Newsfeed polling', e); });
     }, 60000);
