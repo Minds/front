@@ -7,7 +7,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
 import { MindsBlogListResponse } from '../../interfaces/responses';
-import { ContextService } from '../../../services/context.service';
+import { ContextService } from '../../services/context.service';
 
 @Component({
   moduleId: module.id,
