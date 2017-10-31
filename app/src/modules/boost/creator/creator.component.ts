@@ -6,7 +6,7 @@ import { Client } from '../../../services/api';
 import { Session, SessionFactory } from '../../../services/session';
 
 type CurrencyType = 'points' | 'usd' | 'btc';
-type BoostType = 'p2p' | 'newsfeed' | 'content';
+export type BoostType = 'p2p' | 'newsfeed' | 'content';
 
 interface BoostStruc {
   amount: number | '';
@@ -441,8 +441,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   }
 
   // Boost Pro
-
-  tooglePostToFacebook() {
+  togglePostToFacebook() {
     this.boost.postToFacebook = !this.boost.postToFacebook;
   }
 

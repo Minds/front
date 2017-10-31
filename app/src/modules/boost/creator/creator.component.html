@@ -11,7 +11,7 @@
   </div>
 
   <!-- Type -->
-  <section class="m-boost--creator-section">
+  <section class="m-boost--creator-section m-boost--creator-section-type">
     <h3 class="m-boost--creator-section-title--small">Boost Type</h3>
 
     <ul class="m-boost--creator-selector"
@@ -47,7 +47,7 @@
   </section>
 
   <!-- Amount -->
-  <section class="m-boost--creator-section">
+  <section class="m-boost--creator-section m-boost--creator-section-amount">
     <h3 class="m-boost--creator-section-title--small">
       <ng-container *ngIf="boost.type != 'p2p'">How many views do you want?</ng-container>
       <ng-container *ngIf="boost.type == 'p2p'">What's your offer?</ng-container>
@@ -78,7 +78,7 @@
   </section>
 
   <!-- Payment Method -->
-  <section class="m-boost--creator-section">
+  <section class="m-boost--creator-section m-boost--creator-section-payment">
     <h3 class="m-boost--creator-section-title--small">Payment Method</h3>
 
     <ul class="m-boost--creator-selector"
@@ -123,7 +123,7 @@
   <!-- Boost Settings -->
   <!-- General -->
   <ng-container *ngIf="boost.type && (boost.type != 'p2p')">
-    <section class="m-boost--creator-section">
+    <section class="m-boost--creator-section m-boost--creator-section-categories">
       <h3>
         Target
         <span class="m-boost--creator-section--title-context">Select the categories which you want your boost to be targeted to ({{ rates.maxCategories }} max).</span>
@@ -140,7 +140,7 @@
       </div>
     </section>
 
-    <section class="m-boost--creator-section" *ngIf="boost.currency == 'usd'">
+    <section class="m-boost--creator-section m-boost--creator-section-priority" *ngIf="boost.currency == 'usd'">
       <h3>
         Priority
         <span class="m-boost--creator-section--title-context">Priority content goes to the front of the line, but costs at least twice the price of a regular boost.</span>
@@ -161,7 +161,7 @@
   </ng-container>
   <!-- P2P -->
   <ng-container *ngIf="boost.type && (boost.type == 'p2p')">
-    <section class="m-boost--creator-section">
+    <section class="m-boost--creator-section m-boost--creator-section-target">
       <h3>
         Target
         <span class="m-boost--creator-section--title-context">Search for the channel you want to boost to.</span>
@@ -203,7 +203,7 @@
       >
         <div class="m-boost--creator-toggle m-boost--creator-toggle--target-facebook"
           [class.m-boost--creator-toggle--highlight]="boost.postToFacebook"
-          (click)="tooglePostToFacebook()"
+          (click)="togglePostToFacebook()"
         >
           <span class="m-boost--creator-toggle--select">Select</span>
           <span class="m-boost--creator-toggle--selected">Selected</span>
@@ -223,7 +223,7 @@
   <!-- / -->
 
   <!-- Submit -->
-  <section class="m-boost--creator-section"
+  <section class="m-boost--creator-section m-boost--creator-section-submit"
     (mouseenter)="showErrors()"
   >
 
