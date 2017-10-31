@@ -32,9 +32,9 @@
     <li class="mdl-menu__item" *ngIf="asyncMute && entity['is:muted']" (click)="unmute()" i18n>Unmute notifications</li>
   </ng-container>
   <!-- ADMIN EDIT FLAGS -->
-  <ng-container *ngIf="options.indexOf('set-explicit') !== -1">
-    <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="entity.mature" (click)="setExplicit(true)">Set as Explicit</li>
-    <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="!entity.mature" (click)="setExplicit(false)">Remove Explicit</li>
+  <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && (entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin())">
+    <li class="mdl-menu__item" [hidden]="entity.mature" (click)="setExplicit(true)">Set as Explicit</li>
+    <li class="mdl-menu__item" [hidden]="!entity.mature" (click)="setExplicit(false)">Remove Explicit</li>
   </ng-container>
   <!-- INJECTED POST ACTIONS -->
   <div (click)="opened = false">
