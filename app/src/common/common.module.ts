@@ -43,6 +43,7 @@ import { DateSelectorComponent } from './components/date-selector/date-selector.
 import { AdminActionsButtonComponent } from './components/button/admin-actions/admin-actions.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from "../services/attachment";
+import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 
 @NgModule({
   imports: [
@@ -89,7 +90,9 @@ import { AttachmentService } from "../services/attachment";
     ChartComponent,
     OverlayModalComponent,
 
-    AdminActionsButtonComponent
+    AdminActionsButtonComponent,
+
+    MaterialBoundSwitchComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -130,7 +133,9 @@ import { AttachmentService } from "../services/attachment";
     ChartComponent,
     OverlayModalComponent,
 
-    AdminActionsButtonComponent
+    AdminActionsButtonComponent,
+
+    MaterialBoundSwitchComponent,
   ],
   providers: [AttachmentService],
   entryComponents: [ ]

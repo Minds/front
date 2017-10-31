@@ -7,6 +7,7 @@ import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { SessionFactory } from '../../services/session';
 import { MindsGroupListResponse } from '../../interfaces/responses';
+import { ContextService } from '../../services/context.service';
 
 @Component({
   moduleId: module.id,
@@ -27,11 +28,12 @@ export class Groups {
   _filter: string = 'featured';
   paramsSubscription: Subscription;
 
-  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle) {
+  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle, private context: ContextService) {
   }
 
   ngOnInit() {
     this.title.setTitle('Groups');
+    this.context.set('group');
     this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {

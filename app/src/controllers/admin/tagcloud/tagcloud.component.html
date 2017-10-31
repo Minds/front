@@ -10,7 +10,7 @@
 
     <div class="m-admin-tagcloud-tag mdl-color-text--blue-grey-600" *ngFor="let tag of tags; let i = index">
       <a class="m-admin-tagcloud-tag-name"
-        [routerLink]="['/search', {q: '#' + tag, type: 'activities'}]" target="_blank"
+        [routerLink]="['/search', { q: '#' + tag, ref: 'hashtag' }]" target="_blank"
       >#{{tag}}</a>
 
       <i class="material-icons m-material-icons-inline-text m-admin-tagcloud-tag-hide"
@@ -26,7 +26,7 @@
 
     <div class="m-admin-tagcloud-hidden-tag mdl-color-text--blue-grey-600" *ngFor="let tag of hidden; let i = index">
       <a class="m-admin-tagcloud-tag-name"
-        [routerLink]="['/search', {q: '#' + tag, type: 'activities'}]" target="_blank"
+        [routerLink]="['/search', { q: '#' + tag, ref: 'hashtag' }]" target="_blank"
       >#{{tag}}</a>
 
       <i class="material-icons m-material-icons-inline-text m-admin-tagcloud-tag-hide"

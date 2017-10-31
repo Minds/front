@@ -1,0 +1,73 @@
+<div class="m-search--list">
+  <div class="m-search--list-section" *ngIf="entities?.user?.length">
+    <h3 class="m-search--list-title">Channels</h3>
+
+    <div class="mdl-grid m-search--list-entities">
+      <minds-card *ngFor="let entity of entities.user"
+        class="mdl-cell mdl-cell--4-col"
+        hostClass="mdl-card mdl-color--white mdl-shadow--2dp m-search--entity"
+        [object]="entity"
+      ></minds-card>
+    </div>
+  </div>
+
+  <div class="m-search--list-section" *ngIf="entities?.group?.length">
+    <h3 class="m-search--list-title">Groups</h3>
+
+    <div class="mdl-grid m-search--list-entities">
+      <minds-card *ngFor="let entity of entities.group"
+        class="mdl-cell mdl-cell--4-col"
+        hostClass="mdl-card mdl-color--white mdl-shadow--2dp m-search--entity"
+        [object]="entity"
+      ></minds-card>
+    </div>
+  </div>
+
+  <div class="m-search--list-section" *ngIf="entities && entities['object:video']?.length">
+    <h3 class="m-search--list-title">Videos</h3>
+
+    <div class="mdl-grid m-search--list-entities">
+      <minds-card *ngFor="let entity of entities['object:video']"
+        class="mdl-cell mdl-cell--3-col"
+        hostClass="mdl-card mdl-color--white mdl-shadow--2dp m-search--entity"
+        [object]="entity"
+      ></minds-card>
+    </div>
+  </div>
+
+  <div class="m-search--list-section" *ngIf="entities && entities['object:image']?.length">
+    <h3 class="m-search--list-title">Images</h3>
+
+    <div class="mdl-grid m-search--list-entities">
+      <minds-card *ngFor="let entity of entities['object:image']"
+        class="mdl-cell mdl-cell--3-col"
+        hostClass="mdl-card mdl-color--white mdl-shadow--2dp m-search--entity"
+        [object]="entity"
+      ></minds-card>
+    </div>
+  </div>
+
+  <div class="m-search--list-section" *ngIf="entities && entities['object:blog']?.length">
+    <h3 class="m-search--list-title">Blogs</h3>
+
+    <div class="mdl-grid m-search--list-entities">
+      <minds-card *ngFor="let entity of entities['object:blog']"
+        class="mdl-cell mdl-cell--4-col"
+        hostClass="mdl-card mdl-color--white mdl-shadow--2dp m-search--entity"
+        [object]="entity"
+      ></minds-card>
+    </div>
+  </div>
+
+  <div class="m-search--list-section" *ngIf="entities?.activity?.length">
+    <h3 class="m-search--list-title">Posts</h3>
+
+    <div class="mdl-grid m-search--list-entities">
+      <minds-card *ngFor="let entity of entities.activity"
+        class="mdl-cell mdl-cell--8-col"
+        hostClass="mdl-card mdl-color--white mdl-shadow--2dp m-search--entity"
+        [object]="entity"
+      ></minds-card>
+    </div>
+  </div>
+</div>

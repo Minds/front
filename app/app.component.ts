@@ -6,6 +6,7 @@ import { SocketsService } from './src/services/sockets';
 import { Session, SessionFactory } from './src/services/session';
 import { LoginReferrerService } from './src/services/login-referrer.service';
 import { ScrollToTopService } from './src/services/scroll-to-top.service';
+import { ContextService } from './src/services/context.service';
 
 @Component({
   moduleId: module.id,
@@ -22,7 +23,8 @@ export class Minds {
     public scrollToTop: ScrollToTopService,
     public analytics: AnalyticsService,
     public sockets: SocketsService,
-    public loginReferrer: LoginReferrerService
+    public loginReferrer: LoginReferrerService,
+    public context: ContextService
   ) {
     this.name = 'Minds';
   }
@@ -49,6 +51,8 @@ export class Minds {
       .listen();
 
     this.scrollToTop.listen();
+
+    this.context.listen();
   }
 
   ngOnDestroy() {

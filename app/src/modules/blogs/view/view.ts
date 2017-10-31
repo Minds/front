@@ -9,6 +9,7 @@ import { AnalyticsService } from '../../../services/analytics';
 import { MindsBlogEntity } from '../../../interfaces/entities';
 
 import { AttachmentService } from '../../../services/attachment';
+import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
 import { WireService } from '../../wire/wire.service';
 
@@ -46,14 +47,17 @@ export class BlogView {
   @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
 
 
-  constructor(public client: Client,
-              public router: Router,
-              _element: ElementRef,
-              public scroll: ScrollService,
-              public title: MindsTitle,
-              public attachment: AttachmentService,
-              public analytics: AnalyticsService,
-              public wireService: WireService) {
+  constructor(
+    public client: Client,
+    public router: Router,
+    _element: ElementRef,
+    public scroll: ScrollService,
+    public title: MindsTitle,
+    public attachment: AttachmentService,
+    private context: ContextService,
+    public analytics: AnalyticsService,
+    public wireService: WireService
+  ) {
     this.minds = window.Minds;
     this.element = _element.nativeElement;
     optimizedResize.add(this.onResize.bind(this));
@@ -68,6 +72,7 @@ export class BlogView {
         'dimension1': this.blog.ownerObj.guid
       }, this.blog.guid);
     });
+    this.context.set('object:blog');
   }
 
   isVisible() {

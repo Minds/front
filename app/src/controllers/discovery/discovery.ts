@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
+import { ContextService } from '../../services/context.service';
 
 @Component({
   moduleId: module.id,
@@ -33,8 +34,8 @@ export class Discovery {
   paramsSubscription: Subscription;
   searching;
 
-  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
-  }
+  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle,
+    private context: ContextService) { }
 
   ngOnInit() {
     this.title.setTitle('Discovery');
@@ -75,6 +76,21 @@ export class Discovery {
 
       if (params['type']) {
         this._type = params['type'];
+      }
+
+      switch (this._type) {
+        case 'videos':
+          this.context.set('object:video');
+          break;
+        case 'images':
+          this.context.set('object:image');
+          break;
+        case 'channels':
+          this.context.set('user');
+          break;
+
+        default:
+          this.context.reset();
       }
 
       this.inProgress = false;

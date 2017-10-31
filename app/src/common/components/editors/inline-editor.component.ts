@@ -63,6 +63,8 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
   propagateChange = (_: any) => {
   };
 
+  private first: boolean = true;
+
   constructor(el: ElementRef, private cd: ChangeDetectorRef, private attachment: AttachmentService) {
     this.el = el;
   }
@@ -172,6 +174,12 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
     if (this.editor) {
       if (value && value !== '') {
         this.editor.setContent(value);
+      }
+      if (this.first) {
+        const p = this.el.nativeElement.querySelector('.medium-editor-element p'); 
+        if(p) 
+          p.click();
+        this.first = false;
       }
     }
   }

@@ -409,13 +409,11 @@ export class BoostCreatorComponent implements AfterViewInit {
       return;
     }
 
-    // TODO: Use /suggest?
     this._searchThrottle = setTimeout(() => {
-      this.client.get(`api/v1/search`, {
+      this.client.get(`api/v2/search/suggest/user`, {
         q: query,
-        type: 'user',
-        view: 'json',
-        limit: 8
+        limit: 8,
+        hydrate: 1
       })
         .then(({ entities }) => {
           if (!entities) {

@@ -12,7 +12,6 @@ import {Newsfeed, NewsfeedSingle} from '../controllers/newsfeed/newsfeed';
 import {Capture} from '../controllers/capture/capture';
 import {Discovery} from '../controllers/discovery/discovery';
 import {Channel, ChannelSubscribers, ChannelSubscriptions} from '../controllers/channels/channel';
-import {Search} from '../controllers/search/search';
 import {Settings} from '../controllers/settings/settings';
 import {Admin} from '../controllers/admin/admin';
 import {Pages} from '../controllers/pages/pages';
@@ -52,8 +51,6 @@ export const MindsAppRoutes: Routes = [
   { path: 'archive/edit/:guid', component: MediaEdit },
   /* /Legacy routes */
 
-  { path: 'search', component: Search },
-
   { path: 'settings/:filter/:card', component: Settings },
   { path: 'settings/:filter', component: Settings },
 
@@ -79,7 +76,6 @@ export const MINDS_APP_ROUTING_DECLARATIONS: any[] = [
   Discovery,
   MediaView,
   MediaEdit,
-  Search,
   Settings,
   Admin,
   Pages,

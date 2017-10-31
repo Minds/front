@@ -13,7 +13,6 @@ import {MindsEmoji} from './components/emoji/emoji';
 import {MindsTooltip} from './components/tooltip/tooltip';
 import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 
-import {SearchBar} from './controllers/search/bar';
 import {AdminAnalytics} from './controllers/admin/analytics/analytics';
 import {AdminBoosts} from './controllers/admin/boosts/boosts';
 import {AdminPages} from './controllers/admin/pages/pages';
@@ -34,7 +33,6 @@ import {SettingsStatistics} from './controllers/settings/statistics/statistics';
 import {SettingsDisableChannel} from './controllers/settings/disable/disable';
 import {SettingsTwoFactor} from './controllers/settings/two-factor/two-factor';
 import {SettingsSubscriptions} from './controllers/settings/subscriptions/subscriptions.component';
-import {SearchBarSuggestions} from './controllers/search/suggestions/suggestions';
 import { ComingSoon } from './controllers/home/comingsoon/comingsoon';
 import {MediaTheatre} from './controllers/media/view/views/theatre';
 import {MediaGrid} from './controllers/media/view/views/grid';
@@ -60,7 +58,6 @@ export const MINDS_DECLARATIONS: any[] = [
   TagcloudComponent,
 
   // Controllers; Controller-based directives
-  SearchBar,
   AdminAnalytics,
   RejectionReasonModalComponent,
   AdminBoosts,
@@ -82,7 +79,6 @@ export const MINDS_DECLARATIONS: any[] = [
   SettingsDisableChannel,
   SettingsTwoFactor,
   SettingsSubscriptions,
-  SearchBarSuggestions,
   ComingSoon,
   MediaTheatre,
   MediaGrid,

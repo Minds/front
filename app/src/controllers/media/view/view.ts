@@ -7,6 +7,7 @@ import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 
 import { AttachmentService } from '../../../services/attachment';
+import { ContextService } from '../../../services/context.service';
 
 @Component({
   moduleId: module.id,
@@ -34,7 +35,8 @@ export class MediaView {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public attachment: AttachmentService
+    public attachment: AttachmentService,
+    public context: ContextService
   ) { }
 
   ngOnInit() {
@@ -60,8 +62,22 @@ export class MediaView {
         if (response.entity.type !== 'object') {
           return;
         }
-        if (response.entity)
+        if (response.entity) {
           this.entity = response.entity;
+
+          switch (this.entity.subtype) {
+            case 'video':
+              this.context.set('object:video');
+              break;
+
+            case 'image':
+              this.context.set('object:image');
+              break;
+
+            default:
+              this.context.reset();
+          }
+        }
 
       })
       .catch((e) => {

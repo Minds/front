@@ -1,0 +1,25 @@
+<div class="mdl-textfield mdl-js-textfield"
+  [class.m-search-bar--has-context]="hasSearchContext"
+>
+  <i class="material-icons" (click)="setFocus()">search</i>
+
+  <span class="m-search-bar--context" *ngIf="hasSearchContext"
+    (click)="setFocus()"
+  >
+    Search {{ searchContext | async }}:
+  </span>
+
+  <input [(ngModel)]="q"
+    (focus)="focus()"
+    (blur)="blur()"
+    name="q"
+    class="mdl-textfield__input"
+    type="text"
+    id="search"
+    autocomplete="off"
+    #searchInput
+  />
+  <label class="mdl-textfield__label" for="search"></label>
+
+  <m-search--bar-suggestions [q]="q" [active]="active" [disabled]="suggestionsDisabled"></m-search--bar-suggestions>
+</div>

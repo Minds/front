@@ -7,12 +7,14 @@ import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { SessionFactory } from '../../services/session';
 import { ScrollService } from '../../services/ux/scroll';
+import { RecentService } from '../../services/ux/recent';
 
 import { MindsActivityObject } from '../../interfaces/entities';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
 import { Poster } from '../../modules/legacy/controllers/newsfeed/poster/poster';
 import { WireChannelComponent } from '../../modules/wire/channel/channel.component';
+import { ContextService } from '../../services/context.service';
 
 @Component({
   moduleId: module.id,
@@ -52,11 +54,14 @@ export class Channel {
     public upload: Upload,
     private route: ActivatedRoute,
     public title: MindsTitle,
-    public scroll: ScrollService
+    public scroll: ScrollService,
+    private recent: RecentService,
+    private context: ContextService
   ) { }
 
   ngOnInit() {
     this.title.setTitle('Channel');
+    this.context.set('activity');
     this.onScroll();
 
     this.paramsSubscription = this.route.params.subscribe((params) => {
@@ -116,6 +121,11 @@ export class Channel {
 
         if (this._filter === 'feed')
           this.loadFeed(true);
+
+        this.context.set('activity', { label: `@${this.user.username} posts`, nameLabel: `@${this.user.username}`, id: this.user.guid });
+        if(this.session.getLoggedInUser()){
+          this.addRecent();
+        }
       })
       .catch((e) => {
         if (e.status === 0) {
@@ -283,6 +293,16 @@ export class Channel {
     }
 
     return true;
+  }
+
+  addRecent() {
+    if (!this.user) {
+      return;
+    }
+
+    this.recent
+      .store('recent', this.user, (entry) => entry.guid == this.user.guid)
+      .splice('recent', 50);
   }
 }
 

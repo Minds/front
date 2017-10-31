@@ -9,6 +9,7 @@ import { Navigation as NavigationService } from '../../services/navigation';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { SessionFactory } from '../../services/session';
 import { Poster } from '../../modules/legacy/controllers/newsfeed/poster/poster';
+import { ContextService } from '../../services/context.service';
 
 @Component({
   selector: 'minds-newsfeed',
@@ -51,7 +52,7 @@ export class Newsfeed {
   @ViewChild('poster') private poster: Poster;
 
   constructor(public client: Client, public upload: Upload, public navigation: NavigationService,
-    public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+    public router: Router, public route: ActivatedRoute, public title: MindsTitle, private context: ContextService) {
 
     this.route.url.subscribe(segments => {
       if(segments[segments.length-1].path === 'boost') {
@@ -88,6 +89,7 @@ export class Newsfeed {
       }
     });
 
+    this.context.set('activity');
     this.detectWidth();
   }
 

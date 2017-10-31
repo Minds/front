@@ -702,3 +702,34 @@ svg.m-facebook-icon{
     z-index: 10;
   }
 }
+
+// Q4 2017 Tab bar
+
+.m-tab-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: $minds-padding * 2;
+  color: #4a4a4a;
+
+  .m-tab-bar--tab {
+    position: relative;
+    color: inherit;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .m-tab-bar--more {
+    color: rgba(74, 74, 74, 0.58);
+    margin-left: 5%;
+  }
+
+  .m-tab-bar--active-tab {
+    color: #2196f3;
+  }
+}

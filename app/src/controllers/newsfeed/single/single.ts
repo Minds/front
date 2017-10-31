@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Client, Upload } from '../../../services/api';
 import { MindsActivityObject } from '../../../interfaces/entities';
 import { SessionFactory } from '../../../services/session';
+import { ContextService } from '../../../services/context.service';
 
 @Component({
   moduleId: module.id,
@@ -22,10 +23,12 @@ export class NewsfeedSingle {
   error: string = '';
   paramsSubscription: Subscription;
 
-  constructor(public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute) {
+  constructor(public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute, public context: ContextService) {
   }
 
   ngOnInit() {
+    this.context.set('activity');
+
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
         this.activity = void 0;
@@ -42,6 +45,8 @@ export class NewsfeedSingle {
 	 * Load newsfeed
 	 */
   load(guid: string) {
+    this.context.set('activity');
+
     this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
       .then((data: any) => {
 
@@ -56,6 +61,21 @@ export class NewsfeedSingle {
           case 'blog':
             this.router.navigate(['/blog/view', this.activity.guid], { replaceUrl: true });
             break;
+        }
+
+        if (this.activity.ownerObj) {
+          this.context.set('activity', {
+            label: `@${this.activity.ownerObj.username} posts`,
+            nameLabel: `@${this.activity.ownerObj.username}`,
+            id: this.activity.ownerObj.guid
+          });
+        } else if (this.activity.owner_guid) {
+          this.context.set('activity', {
+            label: `this user's posts`,
+            id: this.activity.owner_guid
+          });
+        } else {
+          this.context.reset();
         }
       })
       .catch(e => {

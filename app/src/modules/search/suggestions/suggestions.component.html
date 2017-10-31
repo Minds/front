@@ -1,0 +1,42 @@
+<div class="m-search-bar-suggestions-list" [hidden]="disabled || (!active && !q)">
+  <ng-container *ngIf="active && !q">
+    <ng-container *ngFor="let suggestion of recent">
+      <a class="m-search-bar-suggestions-suggestion"
+        *ngIf="suggestion.type == 'user'"
+        [routerLink]="['/', suggestion.username]">
+        <img src="icon/{{suggestion.guid}}/small"/> @{{suggestion.username}}
+      </a>
+      <a class="m-search-bar-suggestions-suggestion"
+        *ngIf="suggestion.type == 'group'"
+        [routerLink]="['/groups/profile/', suggestion.guid]">
+        <img src="fs/v1/avatars/{{suggestion.guid}}/small"/> {{suggestion.name}}
+      </a>
+    </ng-container>
+  </ng-container>
+
+  <a class="m-search-bar-suggestions-suggestion"
+    *ngFor="let suggestion of suggestions"
+    [routerLink]="['/', suggestion.username]">
+    <img src="icon/{{suggestion.guid}}/small"/> @{{suggestion.username}}
+  </a>
+
+  <ng-container *ngIf="q && currentContext">
+    <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.entity"
+      [routerLink]="[ '/search', { q: q, ref: 'top-suggestion-id', type: currentContext.product, id: currentContext.entity.id } ]"
+    >
+      <b>Search {{ currentContext.entity.label }}:</b> <span>{{ q }}</span>
+    </a>
+
+    <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.product"
+      [routerLink]="[ '/search', { q: q, ref: 'top-suggestion', type: currentContext.product } ]"
+    >
+      <b>Search {{ currentContext.label }}:</b> <span>{{ q }}</span>
+    </a>
+  </ng-container>
+
+  <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="q"
+    [routerLink]="[ '/search', { q: q, ref: 'top' } ]"
+  >
+    <b>Search Minds:</b> <span>{{ q }}</span>
+  </a>
+</div>

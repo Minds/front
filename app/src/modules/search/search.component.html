@@ -1,0 +1,135 @@
+<div class="m-tab-bar">
+  <ng-container *ngIf="!container; else containerNav">
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == ''"
+      [routerLink]="['/search', { q: q, type: '', ref: ref }]"
+    >Top</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'latest'"
+      [routerLink]="['/search', { q: q, type: 'latest', ref: ref }]"
+    >Latest</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'user'"
+      [routerLink]="['/search', { q: q, type: 'user', ref: ref }]"
+    >Channels</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'activity'"
+      [routerLink]="['/search', { q: q, type: 'activity', ref: ref }]"
+    >Posts</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'object:video'"
+      [routerLink]="['/search', { q: q, type: 'object:video', ref: ref }]"
+    >Videos</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'object:image'"
+      [routerLink]="['/search', { q: q, type: 'object:image', ref: ref }]"
+    >Images</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'object:blog'"
+      [routerLink]="['/search', { q: q, type: 'object:blog', ref: ref }]"
+    >Blogs</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'group'"
+      [routerLink]="['/search', { q: q, type: 'group', ref: ref }]"
+    >Groups</a>
+  </ng-container>
+
+  <ng-template #containerNav>
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == ''"
+      [routerLink]="['/search', { q: q, type: '', id: container, ref: ref }]"
+    >Top</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'latest'"
+      [routerLink]="['/search', { q: q, type: 'latest', id: container, ref: ref }]"
+    >Latest</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'activity'"
+      [routerLink]="['/search', { q: q, type: 'activity', id: container, ref: ref }]"
+    >Posts</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'object:video'"
+      [routerLink]="['/search', { q: q, type: 'object:video', id: container, ref: ref }]"
+    >Videos</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'object:image'"
+      [routerLink]="['/search', { q: q, type: 'object:image', id: container, ref: ref }]"
+    >Images</a>
+
+    <a class="m-tab-bar--tab"
+      [class.m-tab-bar--active-tab]="type == 'object:blog'"
+      [routerLink]="['/search', { q: q, type: 'object:blog', id: container, ref: ref }]"
+    >Blogs</a>
+  </ng-template>
+
+  <div class="m-tab-bar--tab m-tab-bar--more"
+    (click)="toggleOptions(); $event.stopPropagation()"
+  >
+    Options
+
+    <ul class="minds-dropdown-menu" [hidden]="!optionsToggle">
+      <li class="mdl-menu__item">
+        <span>Explicit</span>
+
+        <m-tooltip icon="help">
+          Include explicit content (+18) search results
+        </m-tooltip>
+
+        <span class="m-dropdown--spacer"></span>
+
+        <m-material--bound-switch
+          [toggled]="mature"
+          [disabled]="inProgress"
+          (change)="toggleMature()"
+        ></m-material--bound-switch>
+      </li>
+
+      <li class="mdl-menu__item">
+        <span>Exclusive</span>
+
+        <m-tooltip icon="help">
+          Include exclusive content in search results
+        </m-tooltip>
+
+        <span class="m-dropdown--spacer"></span>
+
+        <m-material--bound-switch
+          [toggled]="paywall"
+          [disabled]="inProgress"
+          (change)="togglePaywall()"
+        ></m-material--bound-switch>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<ng-container *ngIf="searchType == 'hybrid'; else simpleList">
+  <m-search--hybrid-list
+    [entities]="hybridEntities"
+  ></m-search--hybrid-list>
+</ng-container>
+
+<ng-template #simpleList>
+  <m-search--simple-list
+    [entities]="entities"
+  ></m-search--simple-list>
+</ng-template>
+
+<infinite-scroll
+  distance="25%"
+  (load)="search(false)"
+  [moreData]="moreData"
+  [inProgress]="inProgress"
+></infinite-scroll>

@@ -14,6 +14,8 @@ import { MindsTitle } from '../../services/ux/title';
 import { GroupsCardMock } from '../../mocks/modules/groups/card/card';
 import { InfiniteScrollMock } from '../../mocks/common/components/infinite-scroll/infinite-scroll';
 import { Groups } from './groups';
+import { ContextService } from '../../services/context.service';
+import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 
 describe('Groups', () => {
   let fixture: ComponentFixture<Groups>;
@@ -50,6 +52,7 @@ describe('Groups', () => {
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: MindsTitle, useClass: Title, deps: [ Title ] },
+        { provide: ContextService, useValue: contextServiceMock },
       ]
     }).compileComponents();
   }));

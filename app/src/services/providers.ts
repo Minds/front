@@ -29,6 +29,8 @@ import { ScrollToTopService } from './scroll-to-top.service';
 import { GroupsService } from '../modules/groups/groups-service';
 
 import { GoogleChartsLoader } from './third-party/google-charts-loader';
+import { RecentService } from './ux/recent';
+import { ContextService } from './context.service';
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -150,5 +152,15 @@ export const MINDS_PROVIDERS : any[] = [
     provide: GroupsService,
     useFactory: GroupsService._,
     deps: [ Client, Upload ]
+  },
+  {
+    provide: RecentService,
+    useFactory: RecentService._,
+    deps: [ Storage ]
+  },
+  {
+    provide: ContextService,
+    useFactory: ContextService._,
+    deps: [ Router, Storage, Client ]
   }
 ];

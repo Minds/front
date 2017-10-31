@@ -5,11 +5,13 @@ import { Subscription } from 'rxjs/Rx';
 
 import { GroupsService } from '../groups-service';
 
+import { RecentService } from '../../../services/ux/recent';
 import { MindsTitle } from '../../../services/ux/title';
 import { SessionFactory } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 
 import { GroupsProfileFeed } from './feed/feed';
+import { ContextService } from '../../../services/context.service';
 
 @Component({
   moduleId: module.id,
@@ -45,9 +47,17 @@ export class GroupsProfile {
   private reviewCountInterval: any;
   private socketSubscription: any;
 
-  constructor(public service: GroupsService, public route: ActivatedRoute, public title: MindsTitle, private sockets: SocketsService) { }
+  constructor(
+    public service: GroupsService, 
+    public route: ActivatedRoute, 
+    public title: MindsTitle, 
+    private sockets: SocketsService,
+    private context: ContextService,
+    private recent: RecentService
+  ) { }
 
   ngOnInit() {
+    this.context.set('activity');
     this.listenForNewMessages();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -99,6 +109,10 @@ export class GroupsProfile {
         this.group = group;
         this.joinCommentsSocketRoom();
         this.title.setTitle(this.group.name);
+        this.context.set('activity', { label: this.group.name, nameLabel: this.group.name, id: this.group.guid });
+        if(this.session.getLoggedInUser()){
+          this.addRecent();
+        }
       });
   }
 
@@ -114,6 +128,15 @@ export class GroupsProfile {
     } catch (e) { }
 
     this.group['adminqueue:count'] = count;
+  }
+
+  addRecent() {
+    if (!this.group) {
+      return;
+    }
+    this.recent
+      .store('recent', this.group, (entry) => entry.guid == this.group.guid)
+      .splice('recent', 50);
   }
 
   filterToDefaultView() {
