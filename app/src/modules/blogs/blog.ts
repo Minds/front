@@ -7,7 +7,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
 import { MindsBlogListResponse } from '../../interfaces/responses';
-
+import { ContextService } from '../../../services/context.service';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +28,7 @@ export class Blog {
   _filter2: string = '';
   paramsSubscription: Subscription;
 
-  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle) {
+  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle, private context: ContextService) {
   }
 
   ngOnInit() {
@@ -61,6 +61,7 @@ export class Blog {
 
       this.load();
     });
+    this.context.set('object:blog');
   }
 
   ngOnDestroy() {
