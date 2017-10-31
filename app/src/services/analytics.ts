@@ -1,5 +1,6 @@
 import { Component, Inject, Injector } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { Client } from './api/client';
 
 export class AnalyticsService {
 
@@ -15,11 +16,11 @@ export class AnalyticsService {
     }
   }
 
-  static _(router: Router) {
-    return new AnalyticsService(router);
+  static _(router: Router, client: Client) {
+    return new AnalyticsService(router, client);
   }
 
-  constructor( @Inject(Router) public router: Router) {
+  constructor(@Inject(Router) public router: Router, @Inject(Client) public client: Client) {
     this.onRouterInit();
 
     this.router.events.subscribe((navigationState) => {
@@ -31,6 +32,13 @@ export class AnalyticsService {
         }
       }
     });
+  }
+
+  send(type: string, fields: any = {}, entityGuid: string) {
+    if (window.ga) {
+      window.ga('send', type, fields);
+    }
+    this.client.post('api/v1/analytics', { type, fields, entityGuid });
   }
 
   onRouterInit() {

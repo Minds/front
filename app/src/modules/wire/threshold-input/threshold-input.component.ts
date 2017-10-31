@@ -25,6 +25,7 @@ export class WireThresholdInputComponent implements OnInit {
       };
     }
   }
+  @Input('disabled') disabled: boolean = false;
 
   @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<WireThresholdStruc> = new EventEmitter<WireThresholdStruc>();
   @Output('validThreshold') validThresholdEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -60,12 +61,12 @@ export class WireThresholdInputComponent implements OnInit {
   setMinAmount(value: string) {
     const cleanValue = Math.floor(parseFloat(value.replace(/,/g, '')));
 
-    this.threshold.min = !isNaN(cleanValue) ? cleanValue : 0;
+    this.threshold.min = !isNaN(cleanValue) ? cleanValue: 0;
     this._emitChange();
   }
 
   validate(): boolean {
-    if (!this.enabled) {
+    if (!this.enabled || this.disabled) {
       return true;
     }
 
@@ -83,7 +84,7 @@ export class WireThresholdInputComponent implements OnInit {
   // Internal
 
   private _emitChange() {
-    this.thresholdChangeEmitter.emit(this.enabled ? this.threshold : null);
+    this.thresholdChangeEmitter.emit(this.enabled ? this.threshold: null);
     this.validThresholdEmitter.emit(this.validate());
   }
 }

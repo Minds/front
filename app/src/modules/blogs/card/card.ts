@@ -1,8 +1,5 @@
-import { Component, Inject } from '@angular/core';
-
-import { Client } from '../../../services/api';
+import { Component } from '@angular/core';
 import { SessionFactory } from '../../../services/session';
-import { MindsBlogListResponse } from '../../../interfaces/responses';
 import { AttachmentService } from '../../../services/attachment';
 import { ACCESS } from '../../../services/list-options';
 
@@ -27,6 +24,8 @@ export class BlogCard {
   }
 
   set _blog(value: any) {
+    if (!value.thumbnail_src || !value.header_bg)
+      value.thumbnail_src = 'assets/videos/earth-1/earth-1.png';
     this.blog = value;
   }
 

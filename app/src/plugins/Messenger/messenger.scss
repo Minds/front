@@ -374,6 +374,19 @@ minds-messenger{
     }
   }
 
+  .m-messenger-delete-conversation{
+    vertical-align: middle;
+    float: right;
+    padding-top: 10px;
+    font-size: 16px;
+    opacity: 0.5;
+
+    &:hover{
+      opacity: 1;
+    }
+
+  }
+
   minds-messenger-dockpane{
     position: absolute;
     bottom: 0;
@@ -383,6 +396,7 @@ minds-messenger{
       right: 0 !important;
     }
   }
+
 }
 
 minds-messenger-channel-button{

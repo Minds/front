@@ -1,0 +1,11 @@
+@import 'defaults.scss';
+
+@media screen and (max-width: $max-mobile) {
+  .m-blog--title {
+    font-size: 32px;
+  }
+  .medium-insert-embeds {
+    max-width: 100%;
+    margin: 0;
+  }
+}

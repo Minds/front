@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../../services/api';
+import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
 
 @Component({
   moduleId: module.id,
@@ -28,6 +29,7 @@ export class AdminPages {
   status: string = 'saved';
   headerFile: File;
   paramsSubscription: Subscription;
+  @ViewChild('inlineEditor') private editor: InlineEditorComponent;
 
   constructor(public client: Client, public upload: Upload, private route: ActivatedRoute) {
   }
@@ -52,19 +54,21 @@ export class AdminPages {
 
   save(page, allowHeaderUpload = true) {
     this.status = 'saving';
-    this.client.post('api/v1/admin/pages', {
-      title: page.title,
-      body: page.body,
-      path: page.path,
-      menuContainer: page.menuContainer,
-      subtype: page.subtype
-    })
-      .then((response: any) => {
-        if (allowHeaderUpload) {
-          this.uploadHeader(page);
-        }
-        this.status = 'saved';
-      });
+    this.editor.prepareForSave().then(() => {
+      this.client.post('api/v1/admin/pages', {
+        title: page.title,
+        body: page.body,
+        path: page.path,
+        menuContainer: page.menuContainer,
+        subtype: page.subtype
+      })
+        .then((response: any) => {
+          if (allowHeaderUpload) {
+            this.uploadHeader(page);
+          }
+          this.status = 'saved';
+        });
+    });
   }
 
   delete(page) {
@@ -107,13 +111,14 @@ export class AdminPages {
   newPage() {
     this.page = {
       title: 'New Page',
-      body: '',
+      body: '<p><br></p>',
       path: 'new',
       menuContainer: 'footer',
       header: false,
       headerTop: 0,
       subtype: 'page'
     };
+    this.editor.reset();
     this.pages.push(this.page);
   }
 
@@ -127,6 +132,7 @@ export class AdminPages {
       headerTop: 0,
       subtype: 'link'
     };
+    this.editor.reset();
     this.pages.push(this.page);
   }
 

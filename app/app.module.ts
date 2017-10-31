@@ -39,9 +39,9 @@ import { OnboardingModule } from './src/modules/onboarding/onboarding.module';
 import { NotificationModule } from './src/modules/notifications/notification.module';
 
 import { GroupsModule } from './src/modules/groups/groups.module';
-import { BlogModule } from './src/plugins/blog/blog.module';
 import { PostMenuModule } from './src/common/components/post-menu/post-menu.module';
 import { BanModule } from './src/modules/ban/ban.module';
+import { BlogModule } from './src/modules/blogs/blog.module';
 
 @NgModule({
   bootstrap: [

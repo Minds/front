@@ -36,13 +36,14 @@
       <div class="m-admin-pages-path">
       /p/<input type="text" class="m-form-input" name="path" [(ngModel)]="page.path"/>
       </div>
-      <minds-tinymce [(content)]="page.body" [reset]="page.path"></minds-tinymce>
+      <!--<minds-tinymce [(content)]="page.body" [reset]="page.path"></minds-tinymce>-->
+      <m-inline-editor name="description" [(ngModel)]="page.body" placeholder="Go ahead and write some content!" #inlineEditor></m-inline-editor>
 
       <div class="m-form-actions">
-        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page)" [hidden]="status == 'saving'" i18n>Save & Publish</button>
-        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="false" [hidden]="status != 'saving'" i18n>Saving</button>
+        <button class="m-button m-button--submit" (click)="save(page)" [hidden]="status == 'saving'" i18n>Save & Publish</button>
+        <button class="m-button m-button--submit" (click)="false" [hidden]="status != 'saving'" i18n>Saving</button>
 
-        <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="delete(page)" i18n>Delete</button>
+        <button class="m-button m-button--delete" (click)="delete(page)" i18n>Delete</button>
       </div>
   </div>
 

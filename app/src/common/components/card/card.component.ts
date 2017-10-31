@@ -17,8 +17,8 @@ import { Activity } from '../../../modules/legacy/components/cards/activity/acti
 import { GroupsCard } from '../../../modules/groups/card/card';
 import { ImageCard } from '../../../modules/legacy/components/cards/object/image/image';
 import { VideoCard } from '../../../modules/legacy/components/cards/object/video/video';
-import { BlogCard } from '../../../plugins/blog/card/card';
 import { AlbumCard } from '../../../modules/legacy/components/cards/object/album/album';
+import { BlogCard } from '../../../modules/blogs/card/card';
 
 @Component({
   selector: 'minds-card',

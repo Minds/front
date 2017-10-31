@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
@@ -22,6 +22,7 @@ export class Pages {
 
   pages: Array<any> = [];
   page: string = '';
+  @ViewChild('body', {read: ElementRef}) bodyElement:ElementRef;
 
   paramsSubscription: Subscription;
 
@@ -57,6 +58,7 @@ export class Pages {
         this.header = response.header;
         this.headerTop = response.headerTop;
         this.titleService.setTitle(this.title);
+        this.bodyElement.nativeElement.innerHTML = this.body;
       });
   }
 

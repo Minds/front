@@ -1,5 +1,5 @@
-import { Component, Inject, ApplicationRef, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ApplicationRef, ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
@@ -33,8 +33,8 @@ export class BlogViewInfinite {
 
   paramsSubscription: Subscription;
 
-  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle,
-    private applicationRef: ApplicationRef, private cd: ChangeDetectorRef, private analytics: AnalyticsService) {
+  constructor(public client: Client, public route: ActivatedRoute, public router: Router, public title: MindsTitle,
+              private applicationRef: ApplicationRef, private cd: ChangeDetectorRef, private analytics: AnalyticsService) {
   }
 
   ngOnInit() {
@@ -70,7 +70,10 @@ export class BlogViewInfinite {
         if (response.blog) {
           this.blogs = [response.blog];
           this.title.setTitle(response.blog.title);
-          AnalyticsService.send('pageview', { 'page': '/blog/view/' + response.blog.guid, 'dimension1': response.blog.ownerObj.guid });
+          this.analytics.send('pageview', {
+            'page': '/blog/view/' + response.blog.guid,
+            'dimension1': response.blog.ownerObj.guid
+          }, response.blog.guid);
         } else if (this.blogs.length === 0) {
           this.error = 'Sorry, we couldn\'t load the blog';
         }

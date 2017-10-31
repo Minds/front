@@ -16,12 +16,14 @@
       <span i18n>Click to confirm your are 18+</span>
     </span>
   </div>
-  <minds-banner-fat [object]="blog"*ngIf="blog.header_bg"></minds-banner-fat>
+  <minds-banner [object]="blog" *ngIf="blog.header_bg"></minds-banner>
 </header>
 
-<div class="mdl-grid m-blog-container blogs-grid mdl-color--white mdl-shadow--4dp" style="max-width:660px" *ngIf="blog.guid">
+<div class="mdl-grid m-blog-container blogs-grid mdl-color--white" style="max-width:740px" *ngIf="blog.guid">
 
-  <google-ad *ngIf="!session.getLoggedInUser().plus && blog.monetized && index == 0" type="responsive" location="top"></google-ad>
+  <ng-container *ngIf="false">
+    <google-ad *ngIf="!session.getLoggedInUser().plus && blog.monetized && index == 0" type="responsive" location="top"></google-ad>
+  </ng-container>
 
   <div class="mdl-grid" style="width:100%">
     <div class="mdl-cell mdl-cell--12-col">
@@ -30,7 +32,6 @@
 
     <!-- Owner box -->
     <div class="mdl-cell mdl-cell--5-col minds-blog-ownerblock">
-
       <div class="minds-avatar" [hovercard]="blog.ownerObj.guid">
         <a [routerLink]="['/', blog.ownerObj.username]">
           <img src="{{minds.cdn_url}}/icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
@@ -42,44 +43,21 @@
       </div>
     </div>
     <div class="mdl-cell mdl-cell--7-col m-actions-block">
-      <minds-button-subscribe [user]="blog.ownerObj" *ngIf="blog.ownerObj.guid != session.getLoggedInUser().guid" [ngClass]="{'m-button-icon-only': session.isAdmin()}"></minds-button-subscribe>
-      <span class="minds-button-edit" [routerLink]="['/blog/edit', blog.guid]" *ngIf="blog.ownerObj.guid == session.getLoggedInUser().guid || blog.canEdit || session.isAdmin()">
-        <button class="material-icons">edit</button>
-      </span>
-      <span class="minds-button-edit" (click)="deleteToggle = true"  *ngIf="blog.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
-        <button class="material-icons">close</button>
-      </span>
-      <minds-button-feature [object]="blog" *ngIf="session.isAdmin()"></minds-button-feature>
-      <minds-button-monetize [object]="blog" *ngIf="session.isAdmin()"></minds-button-monetize>
-
       <div class="mdl-layout-spacer"></div>
+      <m-post-menu [entity]="blog" [user]="blog.ownerObj" [askForCategoriesWhenFeaturing]="true" [canDelete]="blog.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()" [options]="menuOptions" (optionSelected)="menuOptionSelected($event)"></m-post-menu>
       <minds-button-remind [object]="blog"></minds-button-remind>
       <minds-button-thumbs-up [object]="blog"></minds-button-thumbs-up>
       <minds-button-thumbs-down [object]="blog"></minds-button-thumbs-down>
-      <m-post-menu [entity]="blog" [canDelete]="blog.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()" [options]="menuOptions" (optionSelected)="menuOptionSelected($event)"></m-post-menu>
     </div>
 
   </div>
 
   <div style="width:100%; padding:8px; position:relative;">
-    <!-- START: Google adsense block -->
-    <google-ad *ngIf="!session.getLoggedInUser().plus && blog.monetized && index == 0"></google-ad>
-    <!-- END: Google adsense block -->
-
     <div class="mdl-cell mdl-cell--12-col minds-blog-body"
     [innerHtml]="blog.description | safe"
     [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(blog) }"
+    [hidden]="!blog.description"
     ></div>
-  </div>
-
-  <!-- START: Google adsense block -->
-  <google-ad *ngIf="!session.getLoggedInUser().plus && blog.monetized && index == 0" type="responsive" location="bottom"></google-ad>
-  <!-- END: Google adsense block -->
-
-  <div style="width:100%; padding:8px;">
-    <!-- START: RevContent block -->
-    <revcontent *ngIf="!session.getLoggedInUser().plus && blog.monetized"></revcontent>
-    <!-- END: RevContent block -->
   </div>
 
   <!-- Additional block -->
@@ -104,6 +82,8 @@
   </div>
 
 </div>
+
+<m-wire--lock-screen [(entity)]="blog" *ngIf="blog.paywall" #lockScreen></m-wire--lock-screen>
 
 <m-social-icons [url]="minds.site_url + 'blog/view/' + blog.guid" [title]="blog.title" *ngIf="visible"></m-social-icons>
 

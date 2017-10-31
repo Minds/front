@@ -3,6 +3,8 @@ import { Session, SessionFactory } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
+import { MindsUser } from '../../../interfaces/entities';
+import { SignupModalService } from '../../../modules/modals/signup/service';
 
 
 type Option =
@@ -16,7 +18,11 @@ type Option =
   | 'delete'
   | 'report'
   | 'set-explicit'
-  | 'remove-explicit';
+  | 'remove-explicit'
+  | 'monetize'
+  | 'unmonetize'
+  | 'subscribe'
+  | 'unsubscribe';
 
 @Component({
   moduleId: module.id,
@@ -31,6 +37,10 @@ export class PostMenuComponent {
   @Output() optionSelected: EventEmitter<Option> = new EventEmitter<Option>();
   @Input() canDelete: boolean = false;
   @Input() isTranslatable: boolean = false;
+  @Input() askForCategoriesWhenFeaturing: boolean = false;
+  @Input() user: any;
+
+  featuredCategory: string = 'not-selected';
 
   asyncMute: boolean = false;
   asyncMuteInProgress: boolean = false;
@@ -41,8 +51,21 @@ export class PostMenuComponent {
 
   shareToggle: boolean = false;
   deleteToggle: boolean = false;
+  featureToggle: boolean = false;
 
-  constructor(private client: Client, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService) {
+  categories: Array<any> = [];
+
+  constructor(private client: Client, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService, public signupModal: SignupModalService) {
+    this.initCategories();
+  }
+
+  initCategories() {
+    this.categories = Object.keys(window.Minds.categories).map(function (key) {
+      return {
+        id: key,
+        label: window.Minds.categories[key]
+      };
+    });
   }
 
   cardMenuHandler() {
@@ -119,9 +142,13 @@ export class PostMenuComponent {
   }
 
   feature() {
+    if(this.askForCategoriesWhenFeaturing && !this.featureToggle) {
+      this.featureToggle = true;
+      return;
+    }
     this.entity.featured = true;
 
-    this.client.put('api/v1/admin/feature/' + this.entity.guid)
+    this.client.put('api/v1/admin/feature/' + this.entity.guid + '/' + this.featuredCategory)
       .catch(() => {
         this.entity.featured = false;
         this.detectChanges();
@@ -145,6 +172,7 @@ export class PostMenuComponent {
   }
 
   report() {
+    console.warn(this.user, this.entity, this.session.getLoggedInUser().guid, this.entity.ownerObj.guid);
     this.overlayModal.create(ReportCreatorComponent, this.entity)
       .present();
     this.selectOption('report');
@@ -154,11 +182,67 @@ export class PostMenuComponent {
     this.selectOption(explicit ? 'set-explicit' : 'remove-explicit');
   }
 
+  monetize() {
+    if (this.entity.monetized)
+      return this.unMonetize();
+
+    this.entity.monetized = true;
+
+    this.client.put('api/v1/monetize/' + this.entity.guid, {})
+      .catch((e) => {
+        this.entity.monetized = false;
+      });
+  }
+
+  unMonetize() {
+    this.entity.monetized = false;
+    this.client.delete('api/v1/monetize/' + this.entity.guid, {})
+      .catch((e) => {
+        this.entity.monetized = true;
+      });
+  }
+
+  subscribe() {
+    if (!this.session.isLoggedIn()) {
+      this.signupModal.setSubtitle('You need to have a channel in order to subscribe').open();
+      return false;
+    }
+
+    this.user.subscribed = true;
+    this.client.post('api/v1/subscribe/' + this.user.guid, {})
+      .then((response: any) => {
+        if (response && response.error) {
+          throw 'error';
+        }
+
+        this.user.subscribed = true;
+      })
+      .catch((e) => {
+        this.user.subscribed = false;
+        alert('You can\'t subscribe to this user.');
+      });
+  }
+
+  unSubscribe() {
+    this.user.subscribed = false;
+    this.client.delete('api/v1/subscribe/' + this.user.guid, {})
+      .then((response: any) => {
+        this.user.subscribed = false;
+      })
+      .catch((e) => {
+        this.user.subscribed = true;
+      });
+  }
+
   selectOption(option: Option) {
     this.optionSelected.emit(option);
     this.opened = false;
 
     this.detectChanges();
+  }
+
+  onModalClose() {
+    this.featureToggle = false;
   }
 
 

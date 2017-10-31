@@ -14,6 +14,8 @@ export interface MindsBlogEntity {
     ownerObj : any;
     spam ?: boolean;
     deleted ?: boolean;
+    paywall ?: boolean;
+    wire_threshold ?: any;
 }
 
 export interface Message {

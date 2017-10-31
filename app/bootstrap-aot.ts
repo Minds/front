@@ -1,3 +1,4 @@
+/// <reference path="typings/medium-editor.d.ts" />
 /// <reference path="typings/minds.d.ts" />
 /// <reference path="../tools/typings/tsd/index.d.ts" />
 

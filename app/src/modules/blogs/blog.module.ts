@@ -4,15 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { ModalsModule } from '../../modules/modals/modals.module';
-import { AdsModule } from '../../modules/ads/ads.module';
-import { LegacyModule } from '../../modules/legacy/legacy.module';
+import { ModalsModule } from '../modals/modals.module';
+import { AdsModule } from '../ads/ads.module';
+import { LegacyModule } from '../legacy/legacy.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
 
-import { Blog, BlogViewInfinite, BlogEdit } from './blog';
+import { Blog, BlogEdit, BlogViewInfinite } from './blog';
 import { BlogCard } from './card/card';
 import { BlogView } from './view/view';
+import { WireModule } from '../wire/wire.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -31,7 +32,8 @@ const routes: Routes = [
     ModalsModule,
     AdsModule,
     LegacyModule,
-    PostMenuModule
+    PostMenuModule,
+    WireModule
   ],
   declarations: [
     BlogView,

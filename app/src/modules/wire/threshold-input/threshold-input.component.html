@@ -15,6 +15,7 @@
     <ng-container *ngIf="session.getLoggedInUser()?.merchant; else nonMerchantContainer">
       <button type="button" class="mdl-button mdl-js-button mdl-button--icon" id="poster-wire-currency-selector"
         [mdl]
+        [disabled]="disabled"
       >
         <i *ngIf="threshold.type == 'points'" class="material-icons m-wire-threshold-input--type">account_balance</i>
         <i *ngIf="threshold.type == 'money'" class="material-icons m-wire-threshold-input--type">attach_money</i>
@@ -39,6 +40,7 @@
     <input type="text"
       [ngModel]="threshold.min | number"
       (ngModelChange)="setMinAmount($event)"
+      [disabled]="disabled"
       inlineAutoGrow
       #minAmountInput
     />

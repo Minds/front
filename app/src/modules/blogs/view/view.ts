@@ -1,4 +1,4 @@
-import { Component, Inject, ElementRef } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
@@ -6,16 +6,16 @@ import { SessionFactory } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { ScrollService } from '../../../services/ux/scroll';
 import { AnalyticsService } from '../../../services/analytics';
-
-import { MindsBlogResponse } from '../../../interfaces/responses';
 import { MindsBlogEntity } from '../../../interfaces/entities';
 
 import { AttachmentService } from '../../../services/attachment';
+import { optimizedResize } from '../../../utils/optimized-resize';
+import { WireService } from '../../wire/wire.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-blog-view',
-  inputs: ['blog', '_index: index'],
+  inputs: ['_blog: blog', '_index: index'],
   host: {
     'class': 'm-blog'
   },
@@ -41,42 +41,61 @@ export class BlogView {
 
   scroll_listener;
 
-  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report'];
+  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report', 'subscribe'];
+
+  @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
 
 
-  constructor(
-    public client: Client,
-    public router: Router,
-    _element: ElementRef,
-    public scroll: ScrollService,
-    public title: MindsTitle,
-    public attachment: AttachmentService
-  ) {
+  constructor(public client: Client,
+              public router: Router,
+              _element: ElementRef,
+              public scroll: ScrollService,
+              public title: MindsTitle,
+              public attachment: AttachmentService,
+              public analytics: AnalyticsService,
+              public wireService: WireService) {
     this.minds = window.Minds;
     this.element = _element.nativeElement;
+    optimizedResize.add(this.onResize.bind(this));
   }
 
 
   ngOnInit() {
     this.isVisible();
+    this.wireService.wireSent.subscribe(()=> {
+      this.analytics.send('wire', {
+        'page': '/blog/view/' + this.blog.guid,
+        'dimension1': this.blog.ownerObj.guid
+      }, this.blog.guid);
+    });
   }
 
   isVisible() {
     //listens every 0.6 seconds
     this.scroll_listener = this.scroll.listen((e) => {
-      var bounds = this.element.getBoundingClientRect();
+      const bounds = this.element.getBoundingClientRect();
       if (bounds.top < this.scroll.view.clientHeight && bounds.top + bounds.height > this.scroll.view.clientHeight) {
-        var url = this.minds.site_url + 'blog/view/' + this.blog.guid;
+        const url = this.minds.site_url + 'blog/view/' + this.blog.guid;
         if (!this.visible) {
           window.history.pushState(null, this.blog.title, url);
           this.title.setTitle(this.blog.title);
-          AnalyticsService.send('pageview', { 'page': '/blog/view/' + this.blog.guid, 'dimension1': this.blog.ownerObj.guid });
+          AnalyticsService.send('pageview', {
+            'page': '/blog/view/' + this.blog.guid,
+            'dimension1': this.blog.ownerObj.guid
+          });
         }
         this.visible = true;
       } else {
         this.visible = false;
       }
     }, 0, 300);
+  }
+
+  set _blog(value: MindsBlogEntity) {
+    this.blog = value;
+    setTimeout(() => {
+      this.calculateLockScreenHeight();
+    });
   }
 
   set _index(value: number) {
@@ -109,4 +128,22 @@ export class BlogView {
     }
   }
 
+  calculateLockScreenHeight() {
+    if (!this.lockScreen) 
+      return;
+    const lockScreenOverlay = this.lockScreen.nativeElement.querySelector('.m-wire--lock-screen');
+    if (lockScreenOverlay) {
+      const rect = lockScreenOverlay.getBoundingClientRect();
+
+      lockScreenOverlay.style.height = `calc(100vh - ${rect.top}px)`;
+    }
+  }
+
+  /**
+   * called when the window resizes
+   * @param {Event} event
+   */
+  onResize(event: Event) {
+    this.calculateLockScreenHeight();
+  }
 }

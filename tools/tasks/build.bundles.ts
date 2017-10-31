@@ -22,9 +22,9 @@ export = function bundles(gulp, plugins) {
     function bundleShims() {
       return gulp.src(getShims())
       // Strip comments and sourcemaps
-      .pipe(plugins.uglify({
-        mangle: false
-      }))
+       .pipe(plugins.uglify({
+         mangle: false
+       }))
       .pipe(plugins.concat(JS_PROD_SHIMS_BUNDLE))
       .pipe(gulp.dest(JS_DEST));
     }

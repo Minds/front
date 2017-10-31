@@ -11,6 +11,16 @@
     <li class="mdl-menu__item" *ngIf="!entity.featured && session.isAdmin()" (click)="feature()" i18n>Feature</li>
     <li class="mdl-menu__item" *ngIf="entity.featured && session.isAdmin()" (click)="unFeature()" i18n>un-Feature</li>
   </ng-container>
+  <!-- MONETIZE -->
+  <ng-container *ngIf="options.indexOf('monetize') !== -1">
+    <li class="mdl-menu__item" *ngIf="!entity.monetized && session.isAdmin()" (click)="monetize()" i18n>Monetize</li>
+    <li class="mdl-menu__item" *ngIf="entity.monetized && session.isAdmin()" (click)="unMonetize()" i18n>un-Monetize</li>
+  </ng-container>
+  <!-- SUBSCRIBE -->
+  <ng-container *ngIf="options.indexOf('subscribe') !== -1">
+    <li class="mdl-menu__item" *ngIf="((entity.type === 'user' && !entity.subscribed && session.getLoggedInUser().guid !== entity.guid) || (entity.type !== 'user' && !entity.ownerObj.subscribed && entity.ownerObj.guid !== session.getLoggedInUser().guid))" (click)="subscribe()" i18n>Subscribe</li>
+    <li class="mdl-menu__item" *ngIf="((entity.type === 'user' && entity.subscribed && session.getLoggedInUser().guid !== entity.guid) || (entity.type !== 'user' && entity.ownerObj.subscribed && entity.ownerObj.guid !== session.getLoggedInUser().guid))" (click)="unSubscribe()" i18n>un-Subscribe</li>
+  </ng-container>
   <!-- DELETE -->
   <li class="mdl-menu__item" *ngIf="options.indexOf('delete') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true" i18n>Delete</li>
   <!-- REPORT -->
@@ -53,3 +63,14 @@
     <!-- i18n -->The post has been deleted.<!-- /i18n -->
   </p>
 </m-modal-confirm>
+
+<m-modal [open]="true" (closed)="onModalClose($event)" *ngIf="featureToggle">
+  <div class="m-button-feature-modal">
+    <select [(ngModel)]="category">
+      <option value="not-selected">-- SELECT A CATEGORY --</option>
+      <option *ngFor="let category of categories" [value]="category.id">{{category.label}}</option>
+    </select>
+
+    <button class="mdl-button mdl-button--colored" (click)="feature()">Feature</button>
+  </div>
+</m-modal>

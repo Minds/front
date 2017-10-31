@@ -93,7 +93,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: AnalyticsService,
      useFactory: AnalyticsService._,
-     deps: [ Router ]
+     deps: [ Router, Client ]
    },
    {
      provide: Navigation,

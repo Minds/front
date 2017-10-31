@@ -41,6 +41,8 @@ import { FaqComponent } from './components/faq/faq.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { AdminActionsButtonComponent } from './components/button/admin-actions/admin-actions.component';
+import { InlineEditorComponent } from './components/editors/inline-editor.component';
+import { AttachmentService } from "../services/attachment";
 
 @NgModule({
   imports: [
@@ -77,6 +79,7 @@ import { AdminActionsButtonComponent } from './components/button/admin-actions/a
     CaptchaComponent,
     Textarea,
     MindsTinymce,
+    InlineEditorComponent,
 
     DynamicHostDirective,
     MindsCard,
@@ -117,6 +120,7 @@ import { AdminActionsButtonComponent } from './components/button/admin-actions/a
     CaptchaComponent,
     Textarea,
     MindsTinymce,
+    InlineEditorComponent,
 
     DynamicHostDirective,
     MindsCard,
@@ -128,6 +132,7 @@ import { AdminActionsButtonComponent } from './components/button/admin-actions/a
 
     AdminActionsButtonComponent
   ],
+  providers: [AttachmentService],
   entryComponents: [ ]
 })
 

@@ -23,7 +23,7 @@ import { ReportModule } from './src/modules/report/report.module';
 import { PostMenuModule } from './src/common/components/post-menu/post-menu.module';
 import { BanModule } from './src/modules/ban/ban.module';
 import { GroupsModule } from './src/modules/groups/groups.module';
-import { BlogModule } from './src/plugins/blog/blog.module';
+import { BlogModule } from './src/modules/blogs/blog.module';
 import { NotificationModule } from './src/modules/notifications/notification.module';
 
 @NgModule({
