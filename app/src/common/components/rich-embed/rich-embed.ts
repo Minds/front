@@ -20,7 +20,7 @@ export class MindsRichEmbed {
   cropImage: boolean = false;
   private lastInlineEmbedParsed: string;
 
-  constructor(private sanitizer: DomSanitizer, private service: RichEmbedService) {
+  constructor(private sanitizer: DomSanitizer, private service: RichEmbedService, private cd: ChangeDetectorRef) {
   }
 
   set _src(value: any) {
@@ -72,6 +72,7 @@ export class MindsRichEmbed {
         this.inlineEmbed.htmlProvisioner()
           .then((html) => {
             this.inlineEmbed.html = html;
+            this.detectChanges();
           });
 
         // @todo: catch any error here and forcefully window.open to destination
@@ -192,5 +193,10 @@ export class MindsRichEmbed {
 
   hasInlineContentLoaded() {
     return this.embeddedInline && this.inlineEmbed && this.inlineEmbed.html;
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }
