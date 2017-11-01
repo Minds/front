@@ -1,7 +1,13 @@
 .tabs .m-wire-button{
   transform: scale(0.8) translateY(-4px);
 }
+.m-pin-button {
+  overflow: visible;
 
+  .m-tooltip--bubble {
+    width:100px;
+  }
+}
 .m-activity--metrics{
 
   position: absolute;

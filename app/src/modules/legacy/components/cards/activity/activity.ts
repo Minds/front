@@ -152,6 +152,23 @@ export class Activity {
     this.commentsOpened.emit(this.commentsToggle);
   }
 
+  togglePin(){
+    
+    if(this.session.getLoggedInUser().guid != this.activity.owner_guid){
+      return;
+    }
+
+    let action = 'pin';
+    if(this.activity.pinned){
+      action = 'unpin';
+    }
+    this.activity.pinned = !this.activity.pinned;
+    this.client.post(`api/v1/newsfeed/${action}/${this.activity.guid}`)
+      .catch((response: any) => {
+        this.activity.pinned = !this.activity.pinned;
+      });
+  }
+
   showBoost() {
     const boostModal = this.overlayModal.create(BoostCreatorComponent, this.activity);
 

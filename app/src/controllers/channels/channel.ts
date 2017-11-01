@@ -31,6 +31,7 @@ export class Channel {
   username: string;
   user: MindsUser;
   feed: Array<Object> = [];
+  pinned: Array<Object> = [];
   offset: string = '';
   moreData: boolean = true;
   inProgress: boolean = false;
@@ -147,9 +148,20 @@ export class Channel {
       this.offset = '';
     }
 
+    let params: any = {
+      limit: 12,
+      offset: ''
+    }
+
+    if(!this.offset && this.user.pinned_posts.length > 0){
+      params.pinned = this.user.pinned_posts;
+    }
+
     this.inProgress = true;
 
-    this.client.get('api/v1/newsfeed/personal/' + this.user.guid, { limit: 12, offset: this.offset }, { cache: true })
+    params.offset = this.offset;
+    
+    this.client.get('api/v1/newsfeed/personal/' + this.user.guid, params, { cache: true })
       .then((data: MindsActivityObject) => {
         if (!data.activity) {
           this.moreData = false;
@@ -160,7 +172,8 @@ export class Channel {
           for (let activity of data.activity)
             this.feed.push(activity);
         } else {
-          this.feed = data.activity;
+          this.feed = this.filterPinned(data.activity);
+          this.pinned = data.pinned;
         }
         this.offset = data['load-next'];
         this.inProgress = false;
@@ -172,6 +185,16 @@ export class Channel {
 
   isOwner() {
     return this.session.getLoggedInUser().guid === this.user.guid;
+  }
+
+  filterPinned(activities){
+    return activities.filter( (activity) => {
+      if (this.user.pinned_posts.indexOf(activity.guid) >= 0) {
+        activity.pinned = true;
+      } else {
+        return activity;
+      }
+    }).filter(x=>!!x);
   }
 
   toggleEditing() {

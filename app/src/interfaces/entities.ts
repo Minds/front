@@ -5,6 +5,7 @@ import { WireRewardsStruc } from '../modules/wire/interfaces/wire.interfaces';
 
 export interface MindsActivityObject {
 	activity : Array<any>;
+	pinned : Array<any>;
 }
 
 export interface MindsBlogEntity {
@@ -41,6 +42,7 @@ export interface MindsUser {
 	spam ?: boolean;
 	deleted ?: boolean;
 	banned ?: any;
+	pinned_posts ?: Array<string>
 }
 
 export interface MindsGroup {

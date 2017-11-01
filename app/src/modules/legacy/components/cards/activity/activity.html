@@ -48,7 +48,6 @@
   <m-read-more--button></m-read-more--button>
 </div>
 
-
 <m-translate
   [open]="translateToggle"
   [entity]="activity"
@@ -210,6 +209,10 @@
 </div>
 
 <div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ngIf="!hideTabs">
+    <button class="mdl-button m-pin-button mdl-button--icon" (click)="togglePin()">
+        <m-tooltip icon="turned_in" *ngIf="activity.pinned">This post is pinned</m-tooltip>
+        <m-tooltip icon="turned_in_not" *ngIf="session.getLoggedInUser().guid == activity.owner_guid && !activity.pinned">Click to pin this post to the top of your channel feed</m-tooltip>
+	</button>
 	<button class="mdl-button m-translate-button mdl-button--icon" *ngIf="isTranslatable" (click)="translateToggle = true;">
 			<i class="material-icons">public</i>
 	</button>
