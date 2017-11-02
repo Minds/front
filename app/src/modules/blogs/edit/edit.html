@@ -41,10 +41,10 @@
   </div>
 
   <div class="mdl-cell mdl-cell--12-col">
-    <button type="submit" class="m-button m-button--draft"
+    <button type="submit" class="m-button m-button--text m-button--draft"
       *ngIf="!blog.published" [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold">Save draft
     </button>
-    <button type="submit" class="m-button m-button--submit" (click)="blog.published = 1" [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold" i18n>Publish</button>
+    <button type="submit" class="m-button m-button--text m-button--submit" (click)="blog.published = 1" [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold" i18n>Publish</button>
   </div>
 
   <div class="mdl-cell mdl-cell--12-col m-additional-block mdl-color-text--blue-grey-200">
