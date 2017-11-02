@@ -8,6 +8,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { SessionFactory } from '../../services/session';
+import { Storage } from '../../services/storage';
 import { Poster } from '../../modules/legacy/controllers/newsfeed/poster/poster';
 import { ContextService } from '../../services/context.service';
 
@@ -51,8 +52,16 @@ export class Newsfeed {
 
   @ViewChild('poster') private poster: Poster;
 
-  constructor(public client: Client, public upload: Upload, public navigation: NavigationService,
-    public router: Router, public route: ActivatedRoute, public title: MindsTitle, private context: ContextService) {
+  constructor(
+    public client: Client,
+    public upload: Upload,
+    public navigation: NavigationService,
+    public router: Router,
+    public route: ActivatedRoute,
+    public title: MindsTitle,
+    private storage: Storage,
+    private context: ContextService
+  ) {
 
     this.route.url.subscribe(segments => {
       if(segments[segments.length-1].path === 'boost') {
@@ -163,6 +172,10 @@ export class Newsfeed {
       this.offset = '';
     }
 
+    if (this.storage.get('boost:offset:boostfeed')) {
+      this.offset = this.storage.get('boost:offset:boostfeed');
+    }
+
     this.inProgress = true;
 
     this.client.get('api/v1/boost/fetch/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
@@ -178,6 +191,7 @@ export class Newsfeed {
           this.newsfeed = data.boosts;
         }
         this.offset = data['load-next'];
+        this.storage.set('boost:offset:boostfeed', this.offset);
         this.inProgress = false;
       })
       .catch(function (e) {
