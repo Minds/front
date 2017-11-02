@@ -9,7 +9,7 @@
   </ng-container>
 </div>
 
-<ng-container *ngIf="(!entity.paywalled || entity.ownerObj.guid == session.getLoggedInUser().guid); else isPaywalled">
+<ng-container *ngIf="entity && (!entity.paywalled || entity.ownerObj.guid == session.getLoggedInUser().guid); else isPaywalled">
   <minds-media-theatre [object]="entity"
     *ngIf="entity.subtype != 'album'"
     [hidden]="!entity.subtype || entity.subtype == 'album'"
@@ -32,7 +32,7 @@
   <span class="mdl-color-text--blue-grey-300" i18n>The post may not exist</span>
 </div>
 
-<div class="m-media-wrapper" *ngIf="entity.guid">
+<div class="m-media-wrapper" *ngIf="entity && entity.guid">
   <div class="m-media-content"
     [class.media--content--has-recommended]="!theaterMode && entity.guid && entity.subtype != 'album'"
   >
@@ -205,7 +205,7 @@
 <m-social-icons [url]="minds.site_url + 'media/' + entity.guid"
   [title]="entity.title || ''"
   [embed]="entity"
-  *ngIf="!attachment.shouldBeBlurred(entity)"
+  *ngIf="entity && !attachment.shouldBeBlurred(entity)"
 ></m-social-icons>
 
 <m-modal-confirm *ngIf="deleteToggle"

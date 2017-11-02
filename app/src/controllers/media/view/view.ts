@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
@@ -36,7 +36,8 @@ export class MediaView {
     public router: Router,
     public route: ActivatedRoute,
     public attachment: AttachmentService,
-    public context: ContextService
+    public context: ContextService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -45,7 +46,7 @@ export class MediaView {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
         this.guid = params['guid'];
-        this.load();
+        this.load(true);
       }
     });
   }
@@ -55,6 +56,10 @@ export class MediaView {
   }
 
   load(refresh: boolean = false) {
+    if (refresh) {
+      this.entity = {};
+      this.detectChanges();
+    }
     this.inProgress = true;
     this.client.get('api/v1/media/' + this.guid, { children: false })
       .then((response: any) => {
@@ -79,6 +84,7 @@ export class MediaView {
           }
         }
 
+        this.detectChanges();
       })
       .catch((e) => {
         this.inProgress = false;
@@ -125,6 +131,11 @@ export class MediaView {
       case 'delete':
         this.delete();
     }
+  }
+
+  private detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
 }
