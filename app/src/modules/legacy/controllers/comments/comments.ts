@@ -81,8 +81,14 @@ export class Comments {
   set _object(value: any) {
     this.object = value;
     this.guid = this.object.guid;
-    if (this.object.entity_guid)
+
+    if (this.object.entity_guid){
       this.guid = this.object.entity_guid;
+    }
+
+    this.unlisten();
+    this.load(true);
+    this.listen();
     this.parent = this.object;
   }
 
@@ -224,6 +230,10 @@ export class Comments {
       this.sockets.leave(this.socketRoomName);
     }
 
+    this.unlisten();
+  }
+
+  unlisten(){
     for (let sub in this.socketSubscriptions) {
       if (this.socketSubscriptions[sub]) {
         this.socketSubscriptions[sub].unsubscribe();
