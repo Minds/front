@@ -30,7 +30,8 @@ export class WireThresholdInputComponent implements OnInit {
   @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<WireThresholdStruc> = new EventEmitter<WireThresholdStruc>();
   @Output('validThreshold') validThresholdEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  enabled: boolean = false;
+  @Input('enabled') enabled: boolean = false;
+  @Output('enabledChange') enabledChangeEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   typeLabels = WireTypeLabels;
   session: Session = SessionFactory.build();
@@ -85,6 +86,7 @@ export class WireThresholdInputComponent implements OnInit {
 
   private _emitChange() {
     this.thresholdChangeEmitter.emit(this.enabled ? this.threshold: null);
+    this.enabledChangeEmitter.emit(this.enabled);
     this.validThresholdEmitter.emit(this.validate());
   }
 }
