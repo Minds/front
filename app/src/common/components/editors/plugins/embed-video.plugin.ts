@@ -149,7 +149,7 @@ export class EmbedVideo {
     this.parseUrl(url);
   }
 
-  public parseUrl(url, pasted = null) {
+  public async parseUrl(url, pasted = null) {
     let html;
     url = url.replace(/\n?/g, '');
 
@@ -158,6 +158,14 @@ export class EmbedVideo {
       .replace(/^https?:\/\/instagram\.com\/p\/(.+)\/?$/, '<span class="instagram"><iframe src="//instagram.com/p/$1/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe></span>')
       .replace(/^https?:\/\/www\.minds\.com\/media\/([0-9]+)\/?$/, `<span class="minds"><iframe src="https://www.minds.com/api/v1/embed/$1" width="720" height="320" frameborder="0" scrolling="no" allowtransparency="true"></video></iframe></span>`)
       .replace(/^https?:\/\/www\.minds\.com\/api\/v1\/embed\/([0-9]+)\/?$/, `<span class="minds"><iframe src="https://www.minds.com/api/v1/embed/$1" width="720" height="320" frameborder="0" scrolling="no" allowtransparency="true"></video></iframe></span>`);
+
+    if (url.match(/^(https?:\/\/)?(www\.)?(m\.)?soundcloud\.com\/[\w\-\.]+(\/)+[\w\-\.]+\/?$/g)) {
+      try {
+        html = await this.getSoundcloudEmbed(url);
+      } catch (e) {
+        html = url;
+      }
+    }
 
     if (html === url) {
       return false;
@@ -190,5 +198,51 @@ export class EmbedVideo {
     }
 
     this.insertHTML(html);
+  }
+
+  private getSoundcloudEmbed(url: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      JSONP.send(`http://soundcloud.com/oembed?format=js&url=${url}&callback=getSoundcloudEmbed`, {
+        callbackName: 'getSoundcloudEmbed',
+        onSuccess: function (json) {
+          resolve(json.html);
+        },
+        onTimeout: function () {
+          reject();
+        },
+        timeout: 10
+      });
+    });
+  }
+}
+
+class JSONP {
+  public static send(src, options) {
+    var callback_name = options.callbackName || 'callback',
+      on_success = options.onSuccess || function () {
+      },
+      on_timeout = options.onTimeout || function () {
+      },
+      timeout = options.timeout || 10; // sec
+
+    var timeout_trigger = window.setTimeout(function () {
+      window[callback_name] = function () {
+      };
+      on_timeout();
+      document.getElementsByTagName('head')[0].removeChild(script);
+    }, timeout * 1000);
+
+    window[callback_name] = function (data) {
+      window.clearTimeout(timeout_trigger);
+      on_success(data);
+      document.getElementsByTagName('head')[0].removeChild(script);
+    };
+
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = src;
+
+    document.getElementsByTagName('head')[0].appendChild(script);
   }
 }
