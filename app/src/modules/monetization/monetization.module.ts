@@ -17,9 +17,6 @@ import { RevenueConsoleComponent } from './revenue/console.component';
 import { RevenueGraphComponent } from './revenue/graph.component';
 import { RevenueLedgerComponent } from './revenue/ledger.component';
 import { RevenueOptionsComponent } from './revenue/options.component';
-import { AdSharingComponent } from './ad-sharing/ad-sharing.component';
-import { AdSharingAnalyticsComponent } from './ad-sharing/analytics/analytics.component';
-import { AdSharingSettingsComponent } from './ad-sharing/settings/settings.component';
 import { WalletWireComponent } from '../wallet/wire/wire.component';
 
 
@@ -35,8 +32,6 @@ const monetizationRoutes : Routes = [
       { path: 'payouts', component: RevenueLedgerComponent },
       { path: 'options', component: RevenueOptionsComponent },
       { path: 'affiliates', component: AffiliateLinkComponent },
-      { path: 'ad-sharing', component: AdSharingComponent },
-      { path: 'ad-sharing', component: AdSharingComponent },
       { path: 'wire', component: WalletWireComponent }
     ]
   }
@@ -63,9 +58,6 @@ const monetizationRoutes : Routes = [
     RevenueGraphComponent,
     RevenueLedgerComponent,
     RevenueOptionsComponent,
-    AdSharingComponent,
-    AdSharingSettingsComponent,
-    AdSharingAnalyticsComponent
   ],
   exports: [
     MonetizationMarketingComponent,
@@ -83,8 +75,7 @@ const monetizationRoutes : Routes = [
     MonetizationMarketingComponent,
     AffiliateMarketingComponent,
     AffiliateLinkComponent,
-    RevenueConsoleComponent,
-    AdSharingComponent
+    RevenueConsoleComponent
   ]
 })
 

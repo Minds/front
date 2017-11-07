@@ -17,15 +17,6 @@
         <p class="m-date">{{ payout.ts * 1000 | date:'medium' }}</p>
       </div>
       
-      <div class="m-payout-info">
-        <p class="m-amount">
-          <span class="m-value">{{ payout.amount | currency:'USD':true }}</span>
-          <a [routerLink]="[ '/wallet/ad-sharing/analytics', { username: payout.userObj?.username } ]" target="_blank">
-            {{ payout.start * 1000 | date:'mediumDate' }} - {{ payout.end * 1000 | date:'mediumDate' }}
-          </a>
-        </p>
-      </div>
-
       <div class="m-payout-cta" *ngIf="reviewing !== i">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
           (click)="review(i)"
