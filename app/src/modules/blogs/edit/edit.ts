@@ -38,7 +38,12 @@ export class BlogEdit {
     mature: 0,
     monetized: 0,
     published: 0,
-    wire_threshold: null
+    wire_threshold: null,
+    custom_meta: {
+      title: '',
+      description: '',
+      author: ''
+    }
   };
   banner: any;
   banner_top: number = 0;
@@ -94,7 +99,12 @@ export class BlogEdit {
           mature: 0,
           monetized: 0,
           published: 0,
-          wire_threshold: null
+          wire_threshold: null,
+          custom_meta: {
+            title: '',
+            description: '',
+            author: ''
+          }
         };
 
         this.banner = void 0;

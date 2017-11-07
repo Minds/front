@@ -357,6 +357,7 @@ minds-blog-edit {
 .m-blog-edit--metadata {
   font-family: Lato, sans-serif;
   font-weight: 300;
+  letter-spacing: 1px;
   padding: $minds-padding;
 
   .m-blog-edit--toggle-wrapper {
@@ -364,13 +365,14 @@ minds-blog-edit {
   }
 
   .m-blog-edit--toggle {
+    letter-spacing: 1.5px;
     text-transform: uppercase;
     cursor: pointer;
   }
 
   .m-blog-edit--fields {
     border: 1px solid #eee;
-    padding: $minds-padding;
+    padding: $minds-padding * 2;
   }
 
   .m-blog-edit--field {
@@ -379,14 +381,18 @@ minds-blog-edit {
     label {
       display: block;
       text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 1.5px;
     }
 
     input, textarea {
       width: 100%;
-      padding: $minds-padding / 2;
+      padding: $minds-padding;
       border: 1px solid #eee;
       color: #333 !important;
+      font-family: inherit;
       font-size: 14px;
+      letter-spacing: inherit;
     }
   }
 }
