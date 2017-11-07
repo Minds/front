@@ -58,7 +58,7 @@
     </div>
 
     <div class="m-group--action-buttons">
-      <minds-groups-join-button [group]="group" (membership)="change_membership($event)" *ngIf="!group['is:creator'] && (!group['is:invited'] || group['is:member'])"></minds-groups-join-button>
+      <minds-groups-join-button [group]="group" (membership)="change_membership($event)" *ngIf="(!group['is:creator'] || session.isAdmin()) && (!group['is:invited'] || group['is:member'])"></minds-groups-join-button>
 
       <span class="minds-button-edit" (click)="toggleEdit()" [hidden]="editing" *ngIf="group['is:owner']">
         <button class="material-icons">mode_edit</button>
