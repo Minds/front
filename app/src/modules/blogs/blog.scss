@@ -353,3 +353,40 @@ minds-blog-edit {
     background-color: rgb(255,215,64);
   }
 }
+
+.m-blog-edit--metadata {
+  font-family: Lato, sans-serif;
+  font-weight: 300;
+  padding: $minds-padding;
+
+  .m-blog-edit--toggle-wrapper {
+    padding: 0 0 $minds-padding;
+  }
+
+  .m-blog-edit--toggle {
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .m-blog-edit--fields {
+    border: 1px solid #eee;
+    padding: $minds-padding;
+  }
+
+  .m-blog-edit--field {
+    margin-bottom: $minds-padding;
+
+    label {
+      display: block;
+      text-transform: uppercase;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: $minds-padding / 2;
+      border: 1px solid #eee;
+      color: #333 !important;
+      font-size: 14px;
+    }
+  }
+}

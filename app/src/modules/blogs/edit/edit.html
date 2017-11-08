@@ -88,4 +88,38 @@
     ></m-wire-threshold-input>
   </div>
 
+  <div class="mdl-cell mdl-cell--12-col m-blog-edit--metadata mdl-color-text--blue-grey-200" *ngIf="blog.custom_meta">
+    <div class="m-blog-edit--toggle-wrapper">
+      <span
+        class="m-blog-edit--toggle"
+        (click)="toggle.value = !toggle.value"
+        #toggle
+      >
+        Metadata
+        <i class="material-icons m-material-icons-inline" *ngIf="!toggle.value">arrow_drop_down</i>
+        <i class="material-icons m-material-icons-inline" *ngIf="toggle.value">arrow_drop_up</i>
+      </span>
+    </div>
+
+    <div class="m-blog-edit--fields" [hidden]="!toggle.value">
+      <div class="m-blog-edit--field">
+        <label>Meta Title</label>
+
+        <input type="text" name="custom_meta_title" [(ngModel)]="blog.custom_meta.title">
+      </div>
+
+      <div class="m-blog-edit--field">
+        <label>Meta Description</label>
+
+        <textarea name="custom_meta_description" [(ngModel)]="blog.custom_meta.description"></textarea>
+      </div>
+
+      <div class="m-blog-edit--field">
+        <label>Meta Author</label>
+
+        <input type="text" name="custom_meta_author" [(ngModel)]="blog.custom_meta.author">
+      </div>
+    </div>
+  </div>
+
 </form>
