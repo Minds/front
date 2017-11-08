@@ -17,6 +17,7 @@ interface Minds {
   stripe_key?: any;
   recaptchaKey?: string;
   max_video_length?: number;
+  features?: any;
 }
 
 interface MindsNavigation {

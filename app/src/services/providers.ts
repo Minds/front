@@ -31,6 +31,7 @@ import { GroupsService } from '../modules/groups/groups-service';
 import { GoogleChartsLoader } from './third-party/google-charts-loader';
 import { RecentService } from './ux/recent';
 import { ContextService } from './context.service';
+import { FeaturesService } from './features.service';
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -162,5 +163,10 @@ export const MINDS_PROVIDERS : any[] = [
     provide: ContextService,
     useFactory: ContextService._,
     deps: [ Router, Storage, Client ]
+  },
+  {
+    provide: FeaturesService,
+    useFactory: FeaturesService._,
+    deps: [ Router ]
   }
 ];

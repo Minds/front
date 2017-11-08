@@ -133,7 +133,8 @@
               "categories" => Minds\Core\Config::_()->get('categories') ?: [],
               "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
               "recaptchaKey" => Minds\Core\Config::_()->get('google')['recaptcha']['site_key'],
-              "max_video_length" => Minds\Core\Config::_()->get('max_video_length')
+              "max_video_length" => Minds\Core\Config::_()->get('max_video_length'),
+              "features" => (object) (Minds\Core\Config::_()->get('features') ?: []),
           ];
 
           if(Minds\Core\Session::isLoggedIn()){

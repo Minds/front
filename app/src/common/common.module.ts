@@ -44,6 +44,7 @@ import { AdminActionsButtonComponent } from './components/button/admin-actions/a
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
 import { AttachmentService } from "../services/attachment";
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
+import { IfFeatureDirective } from './directives/if-feature.directive';
 
 @NgModule({
   imports: [
@@ -93,6 +94,8 @@ import { MaterialBoundSwitchComponent } from './components/material/bound-switch
     AdminActionsButtonComponent,
 
     MaterialBoundSwitchComponent,
+
+    IfFeatureDirective
   ],
   exports: [
     MINDS_PIPES,
@@ -136,6 +139,8 @@ import { MaterialBoundSwitchComponent } from './components/material/bound-switch
     AdminActionsButtonComponent,
 
     MaterialBoundSwitchComponent,
+
+    IfFeatureDirective
   ],
   providers: [AttachmentService],
   entryComponents: [ ]
