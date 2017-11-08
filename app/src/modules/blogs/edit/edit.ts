@@ -45,6 +45,7 @@ export class BlogEdit {
   banner_prompt: boolean = false;
   editing: boolean = true;
   canSave: boolean = true;
+  inProgress: boolean = false;
   validThreshold: boolean = true;
   error: string = '';
   pendingUploads: string[] = [];
@@ -166,16 +167,18 @@ export class BlogEdit {
       blog.mature = blog.mature ? 1: 0;
       blog.monetization = blog.monetization ? 1: 0;
       blog.monetized = blog.monetized ? 1: 0;
-
+      this.inProgress = true;
       this.canSave = false;
       this.check_for_banner().then(() => {
         this.upload.post('api/v1/blog/' + this.guid, [this.banner], blog)
           .then((response: any) => {
             this.router.navigate(['/blog/view', response.guid]);
             this.canSave = true;
+            this.inProgress = false;
           })
           .catch((e) => {
             this.canSave = true;
+            this.inProgress = false;
           });
       })
         .catch(() => {
@@ -184,10 +187,11 @@ export class BlogEdit {
               if (response.guid) {
                 this.router.navigate(['/blog/view', response.guid]);
               }
-
+              this.inProgress = false;
               this.canSave = true;
             })
             .catch((e) => {
+              this.inProgress = false;
               this.canSave = true;
             });
         });
