@@ -90,7 +90,7 @@
       <div *ngIf="notification.entityObj.type == 'object'">
 
         <div *ngIf="notification.entityObj.subtype == 'blog'">
-          <a [routerLink]="['/blog/view', notification.entityObj.guid]">
+          <a [routerLink]="notification.entityObj.route ? [ '/' + notification.entityObj.route ] : ['/blog/view', notification.entityObj.guid]">
             <p i18n>{{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.entityObj.title | excerpt}}</span></p>
           </a>
         </div>

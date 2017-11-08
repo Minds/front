@@ -41,8 +41,23 @@ export class BlogViewInfinite {
     this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
+      let load = false;
+
       if (params['guid']) {
         this.guid = params['guid'];
+
+        load = true;
+      } else if (params['slugid']) {
+        const slugParts = params['slugid'].split('-');
+
+        this.guid = slugParts[slugParts.length - 1];
+
+        if (this.guid) {
+          load = true;
+        }
+      }
+
+      if (load) {
         this.load();
       }
     });

@@ -80,7 +80,12 @@ export class BlogView {
     this.scroll_listener = this.scroll.listen((e) => {
       const bounds = this.element.getBoundingClientRect();
       if (bounds.top < this.scroll.view.clientHeight && bounds.top + bounds.height > this.scroll.view.clientHeight) {
-        const url = this.minds.site_url + 'blog/view/' + this.blog.guid;
+        let url = `${this.minds.site_url}blog/view/${this.blog.guid}`;
+
+        if (this.blog.route) {
+          url = `${this.minds.site_url}${this.blog.route}`;
+        }
+
         if (!this.visible) {
           window.history.pushState(null, this.blog.title, url);
           this.title.setTitle(this.blog.title);

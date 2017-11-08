@@ -16,10 +16,11 @@ import { BlogView } from './view/view';
 import { WireModule } from '../wire/wire.module';
 
 const routes: Routes = [
-  { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
+  { path: 'blog/view/:slug/:guid', component: BlogViewInfinite },
   { path: 'blog/view/:guid', component: BlogViewInfinite },
   { path: 'blog/edit/:guid', component: BlogEdit },
   { path: 'blog/:filter', component: Blog },
+  { path: ':username/blog/:slugid', component: BlogViewInfinite },
 ];
 
 @NgModule({

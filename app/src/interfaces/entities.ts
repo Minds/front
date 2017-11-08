@@ -18,6 +18,8 @@ export interface MindsBlogEntity {
     paywall ?: boolean;
     wire_threshold ?: any;
     mature?: boolean;
+    slug ?: string;
+    route ?: string;
 }
 
 export interface Message {

@@ -168,7 +168,7 @@ export class BlogEdit {
       this.check_for_banner().then(() => {
         this.upload.post('api/v1/blog/' + this.guid, [this.banner], blog)
           .then((response: any) => {
-            this.router.navigate(['/blog/view', response.guid]);
+            this.router.navigate(response.route ? [ '/' + response.route ] : [ '/blog/view', response.guid ]);
             this.canSave = true;
             this.inProgress = false;
           })
@@ -181,7 +181,7 @@ export class BlogEdit {
           this.client.post('api/v1/blog/' + this.guid, this.blog)
             .then((response: any) => {
               if (response.guid) {
-                this.router.navigate(['/blog/view', response.guid]);
+                this.router.navigate(response.route ? [ '/' + response.route ] : [ '/blog/view', response.guid ]);
               }
               this.inProgress = false;
               this.canSave = true;
