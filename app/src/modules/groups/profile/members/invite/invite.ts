@@ -82,7 +82,7 @@ export class GroupsProfileMembersInvite {
     this.timeout = setTimeout(() => {
       this.client.get('api/v1/search', {
         q: query,
-        type: 'user',
+        type: 'channels',
         view: 'json',
         limit: 5
       })
