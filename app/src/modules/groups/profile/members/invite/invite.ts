@@ -80,11 +80,10 @@ export class GroupsProfileMembersInvite {
     }
 
     this.timeout = setTimeout(() => {
-      this.client.get('api/v1/search', {
+      this.client.get(`api/v2/search/suggest/user`, {
         q: query,
-        type: 'channels',
-        view: 'json',
-        limit: 5
+        limit: 5,
+        hydrate: 1
       })
         .then((success: any) => {
           if (success.entities) {
