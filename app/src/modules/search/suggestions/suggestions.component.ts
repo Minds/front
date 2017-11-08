@@ -66,8 +66,8 @@ export class SearchBarSuggestionsComponent {
   }
 
   loadRecent() {
-    if(this.session.getLoggedInUser()){
-      this.recent = this.recentService.fetch('recent');
+    if (this.session.getLoggedInUser()) {
+      this.recent = this.recentService.fetch('recent', 6);
     } 
   }
 }

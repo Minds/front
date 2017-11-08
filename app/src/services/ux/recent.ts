@@ -24,7 +24,7 @@ export class RecentService {
     let data = this.read(key);
 
     if (limit) {
-      data.splice(0, limit);
+      data.splice(0, data.length - limit);
     }
 
     return data;
