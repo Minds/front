@@ -184,6 +184,16 @@ m-search {
       &.m-tab-bar--more {
         font-weight: 400;
       }
+
+      @media screen and (max-width: $max-mobile){
+        padding-left: 10px;
+      }
+    }
+
+    .m-tab--type-filter{
+      @media screen and (max-width: $max-mobile){
+        display: none;
+      }
     }
   }
 
@@ -212,6 +222,10 @@ m-search {
           color:#888;
         }
       }
+    }
+
+    @media screen and (max-width: $max-mobile){
+      flex: 1;
     }
   }
 }

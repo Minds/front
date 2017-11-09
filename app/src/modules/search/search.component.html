@@ -10,32 +10,32 @@
       [routerLink]="['/search', { q: q, type: 'latest', ref: ref }]"
     >Latest</a>
 
-    <a class="m-tab-bar--tab"
+    <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'user'"
       [routerLink]="['/search', { q: q, type: 'user', ref: ref }]"
     >Channels</a>
 
-    <a class="m-tab-bar--tab"
+    <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'activity'"
       [routerLink]="['/search', { q: q, type: 'activity', ref: ref }]"
     >Posts</a>
 
-    <a class="m-tab-bar--tab"
+    <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'object:video'"
       [routerLink]="['/search', { q: q, type: 'object:video', ref: ref }]"
     >Videos</a>
 
-    <a class="m-tab-bar--tab"
+    <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'object:image'"
       [routerLink]="['/search', { q: q, type: 'object:image', ref: ref }]"
     >Images</a>
 
-    <a class="m-tab-bar--tab"
+    <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'object:blog'"
       [routerLink]="['/search', { q: q, type: 'object:blog', ref: ref }]"
     >Blogs</a>
 
-    <a class="m-tab-bar--tab"
+    <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'group'"
       [routerLink]="['/search', { q: q, type: 'group', ref: ref }]"
     >Groups</a>
