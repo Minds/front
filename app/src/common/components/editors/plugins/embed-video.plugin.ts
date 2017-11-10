@@ -32,14 +32,16 @@ export class EmbedVideo {
       this.updated = true;
       const $embeds = this.$element.querySelectorAll('.medium-insert-embeds');
 
-      $embeds.forEach((item, index, list) => {
+      for (let i: number = 0; i < $embeds.length; ++i) {
+        const item = $embeds[i];
+
         item.setAttribute('contenteditable', false);
         if (!item.querySelector('.medium-insert-embeds-overlay')) {
           const div = document.createElement('div');
           div.classList.add('medium-insert-embeds-overlay');
           item.appendChild(div);
         }
-      });
+      }
     });
 
     this.events();
@@ -129,14 +131,16 @@ export class EmbedVideo {
   public prepare() {
     let elements = this.$element.querySelectorAll('.medium-insert-embeds-overlay');
 
-    elements.forEach((item, index, list) => {
+    for (let i: number = 0; i < elements.length; ++i) {
+      const item = elements[i];
       item.remove();
-    });
+    }
 
     elements = this.$element.querySelectorAll('.medium-insert-embeds');
-    elements.forEach((item, index, list) => {
+    for (let i: number = 0; i < elements.length; ++i) {
+      const item = elements[i];
       item.setAttribute('contenteditable', 'false');
-    });
+    }
   }
 
   public processLink(src) {

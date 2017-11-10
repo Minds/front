@@ -79,7 +79,9 @@ export class ButtonsPlugin {
     const ul = document.createElement('ul');
     ul.classList.add('medium-insert-buttons-addons');
 
-    keys.forEach((item) => {
+    for (let i: number = 0; i < keys.length; ++i) {
+      const item = keys[i];
+
       const li = document.createElement('li');
       const button2 = document.createElement('button');
       button2.setAttribute('data-addon', item);
@@ -91,7 +93,7 @@ export class ButtonsPlugin {
       li.appendChild(button2);
 
       ul.appendChild(li);
-    });
+    }
     div.appendChild(ul);
 
     const fileInput: HTMLInputElement = document.createElement('input');
@@ -141,11 +143,12 @@ export class ButtonsPlugin {
       }
     }
 
-    $text.forEach((item) => {
+    for (let i: number = 0; i < $text.length; ++i) {
+      const item = $text[i];
       this.wrap(item, document.createElement('p'));
 
       this.moveCaret(item.parentNode, item.textContent.length);
-    });
+    }
 
     this.addButtons();
 
@@ -267,7 +270,9 @@ export class ButtonsPlugin {
       }
 
       const addons = Object.keys(this.options.addons);
-      addons.forEach((addon) => {
+      for (let i: number = 0; i < addons.length; ++i) {
+        const addon = addons[i];
+
         if (this.closestByClass($el, '.medium-insert-' + addon)) {
           $current = $el;
         }
@@ -277,7 +282,7 @@ export class ButtonsPlugin {
           activeAddon = addon;
           return;
         }
-      });
+      }
 
       if ($p && (($p.innerText.trim() === '' && !activeAddon) || activeAddon === 'images')) {
         $p.classList.add('medium-insert-active');
@@ -491,9 +496,9 @@ export class ButtonsPlugin {
 
   public prepare() {
     let buttons = this.$element.querySelectorAll('.medium-insert-buttons');
-    buttons.forEach((item, index, list) => {
-      item.parentNode.removeChild(item);
-    });
+    for (let i: number = 0; i < buttons.length; ++i) {
+      buttons[i].parentNode.removeChild(buttons[i]);
+    }
   }
 
 }

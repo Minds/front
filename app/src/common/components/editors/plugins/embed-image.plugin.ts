@@ -191,13 +191,16 @@ export class EmbedImage {
   public editorSerialize() {
     const data = this._serializePreImages();
 
-    data.forEach((key) => {
+
+    for (let i: number = 0; i < data.length; ++i) {
+      const key = data[i];
+
       let $data: HTMLDivElement = document.createElement('div');
       $data.innerHTML = data[key].value;
 
       $data.querySelector('.medium-insert-images').querySelector('figcaption, figure').removeAttribute('contenteditable');
       data[key].value = $data.innerHTML;
-    });
+    }
 
     return data;
   }
@@ -291,12 +294,23 @@ export class EmbedImage {
   public prepare() {
     let elements = this.$element.querySelectorAll('.m-blog--image');
 
-    elements.forEach((item, index, list) => {
+    for (let i: number = 0; i < elements.length; ++i) {
+      const item = elements[i];
+
       item.setAttribute('contenteditable', 'false');
       const caption = item.querySelector('.m-blog--image-caption');
       if (caption.textContent === this.options.placeholder) {
         caption.textContent = '';
       }
-    });
+    }
+
+    for (let i: number = 0; i < elements.length; ++i) {
+      const item = elements[i];
+      item.setAttribute('contenteditable', 'false');
+      const caption = item.querySelector('.m-blog--image-caption');
+      if (caption.textContent === this.options.placeholder) {
+        caption.textContent = '';
+      }
+    }
   }
 }
