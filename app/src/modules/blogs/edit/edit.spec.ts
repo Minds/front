@@ -6,7 +6,7 @@ import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Directive, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
 import { Hovercard } from '../../../common/directives/hovercard';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { Upload } from '../../../services/api/upload';
@@ -79,6 +79,11 @@ export class MindsBannerMock {
   }
 }
 
+@Directive({
+  selector: '[mdl]',
+  inputs: ['mdl']
+})
+export class MDLMock {}
 
 @Component({
   selector: 'minds-textarea',
@@ -217,7 +222,8 @@ describe('BlogEdit', () => {
         TextareaMock,
         InlineEditorComponentMock,
         WireThresholdInputComponentMock,
-        BlogEdit
+        BlogEdit,
+        MDLMock
       ], // declare the test component
       imports: [
         RouterTestingModule,
