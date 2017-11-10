@@ -1,13 +1,28 @@
 pipeline:
 
-  frontend:
-    image: node:8
+  test:
+    image: markharding/minds-front-base
     commands:
-      - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-      - sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-      - apt-get update
-      - apt-get install -y google-chrome-stable
-      - npm install && npm install -g typescript tslint
+      - npm install && npm install -g typescript tslint gulp
       - npm test
-      - tslint -c tslint.json 'app/**/*.ts'
+      #- tslint -c tslint.json 'app/**/*.ts'
 
+  build:
+    image: markharding/minds-front-base
+    commands:
+      - npm install -g gulp
+      - npm run build-prod
+      - gulp build.index --env prod
+    when:
+      branch: [ 'master', 'test/codebuild' ]
+  
+  deploy:
+    image: plugins/s3-sync:latest
+    bucket: minds-repo
+    secrets: [ aws_access_key_id, aws_secret_access_key ]
+    region: us-east-1
+    source: public
+    target: front/public
+    delete: false
+    when:
+      branch: [ 'master', 'test/codebuild' ]

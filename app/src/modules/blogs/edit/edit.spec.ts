@@ -203,7 +203,7 @@ export class InlineEditorComponentMock {
 }
 
 
-fdescribe('BlogEdit', () => {
+describe('BlogEdit', () => {
 
   let comp: BlogEdit;
   let fixture: ComponentFixture<BlogEdit>;
@@ -296,7 +296,7 @@ fdescribe('BlogEdit', () => {
     expect(fixture.debugElement.query(By.css('.minds-blog-descriptions > m-inline-editor'))).not.toBeNull();
   });
 
-  it('should have a list of categories', () => {
+  /*it('should have a list of categories', () => {
     expect(fixture.debugElement.query(By.css('ul.m-blog--categories-list'))).not.toBeNull();
   });
 
@@ -311,7 +311,7 @@ fdescribe('BlogEdit', () => {
     expect(comp.onCategoryClick).toHaveBeenCalled();
 
     expect(comp.blog.categories.length).toBe(1);
-  });
+  });*/
 
   it('should have a save draft button', () => {
     const draft = fixture.debugElement.query(By.css('.m-button.m-button--draft'));

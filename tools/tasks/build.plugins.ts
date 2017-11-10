@@ -6,6 +6,12 @@ import {APP_SRC, APP_DEST, PLUGINS_DIR, AUTOPREFIXER_BROWSERS} from '../config';
 
 export = function buildPlugins(gulp, _plugins, option) {
   return function (cb) {
+
+    if (!existsSync(PLUGINS_DIR)) {
+      cb();
+      return;
+    }
+
     var plugins = readdirSync(PLUGINS_DIR);
 
     plugins.map((plugin, i) => {

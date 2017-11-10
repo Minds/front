@@ -85,18 +85,27 @@ export class TranslateMock {
 export class WireThresholdInputComponentMock {
   threshold: any;
 
+  @Input('enabled') enabled: boolean = false;
+
   @Input('threshold')
   set _threshold(threshold: any) {
   }
 
   @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<any> = new EventEmitter<any>();
-  enabled: boolean = false;
 
   toggle() {
   }
 
   setType(type: any) {
   }
+}
+
+@Component({
+  selector: 'm-tooltip',
+  template: ''
+})
+export class MToolTipMock {
+  @Input() icon: string;
 }
 
 @Component({
@@ -412,7 +421,8 @@ describe('Activity', () => {
         ReadMoreButtonComponentMock,
         AutoGrowMock,
         PostMenuMock,
-        Activity
+        Activity,
+        MToolTipMock
       ], // declare the test component
       imports: [
         RouterTestingModule,
