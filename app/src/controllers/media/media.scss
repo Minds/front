@@ -298,7 +298,7 @@ minds-media-thumbnail-selector{
   }
 
   h1.m-media-content--heading{
-    word-break: break-all;
+    word-break: break-word;
     
     @media screen and (max-width: $min-tablet) {
       font-size: 26px;
