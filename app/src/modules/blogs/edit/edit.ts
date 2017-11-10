@@ -43,7 +43,8 @@ export class BlogEdit {
       title: '',
       description: '',
       author: ''
-    }
+    },
+    slug: ''
   };
   banner: any;
   banner_top: number = 0;
@@ -104,7 +105,8 @@ export class BlogEdit {
             title: '',
             description: '',
             author: ''
-          }
+          },
+          slug: ''
         };
 
         this.banner = void 0;

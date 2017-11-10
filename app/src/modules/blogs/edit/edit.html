@@ -103,6 +103,12 @@
 
     <div class="m-blog-edit--fields" [hidden]="!toggle.value">
       <div class="m-blog-edit--field">
+        <label>URL Slug</label>
+
+        <input type="text" name="slug" [(ngModel)]="blog.slug">
+      </div>
+
+      <div class="m-blog-edit--field">
         <label>Meta Title</label>
 
         <input type="text" name="custom_meta_title" [(ngModel)]="blog.custom_meta.title">
