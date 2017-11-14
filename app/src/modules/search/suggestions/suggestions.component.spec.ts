@@ -84,4 +84,21 @@ describe('SearchBarSuggestionsComponent', () => {
     expect(comp.recent).toEqual(recentResults);
   });
 
+  it('should hide suggestions when not active', () => {
+    let el = fixture.debugElement.query(By.css('.m-search-bar-suggestions-list'));
+    comp.active = false;
+    comp.q = "hello world";
+
+    fixture.detectChanges();
+    expect(el.nativeElement.hidden).toBeTruthy();
+  });
+
+  it('should be visible when active', () => {
+    let el = fixture.debugElement.query(By.css('.m-search-bar-suggestions-list'));
+    comp.active = true;
+
+    fixture.detectChanges();
+    expect(el.nativeElement.hidden).toBeFalsy();
+  });
+
 });

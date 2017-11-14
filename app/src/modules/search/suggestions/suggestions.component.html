@@ -1,5 +1,5 @@
-<div class="m-search-bar-suggestions-list" [hidden]="disabled || (!active && !q)">
-  <ng-container *ngIf="active && !q">
+<div class="m-search-bar-suggestions-list" [hidden]="disabled || !active">
+  <ng-container *ngIf="!q">
     <ng-container *ngFor="let suggestion of recent">
       <a class="m-search-bar-suggestions-suggestion"
         *ngIf="suggestion.type == 'user'"
@@ -14,11 +14,13 @@
     </ng-container>
   </ng-container>
 
-  <a class="m-search-bar-suggestions-suggestion"
-    *ngFor="let suggestion of suggestions"
-    [routerLink]="['/', suggestion.username]">
-    <img src="icon/{{suggestion.guid}}/small"/> @{{suggestion.username}}
-  </a>
+  <ng-container *ngIf="q">
+    <a class="m-search-bar-suggestions-suggestion"
+      *ngFor="let suggestion of suggestions"
+      [routerLink]="['/', suggestion.username]">
+      <img src="icon/{{suggestion.guid}}/small"/> @{{suggestion.username}}
+    </a>
+  </ng-container>
 
   <ng-container *ngIf="q && currentContext">
     <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.entity"
