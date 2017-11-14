@@ -6,7 +6,6 @@ import { ReportCreatorComponent } from '../../../modules/report/creator/creator.
 import { MindsUser } from '../../../interfaces/entities';
 import { SignupModalService } from '../../../modules/modals/signup/service';
 
-
 type Option =
   'edit'
   | 'translate'
@@ -22,6 +21,7 @@ type Option =
   | 'monetize'
   | 'unmonetize'
   | 'subscribe'
+  | 'block'
   | 'unsubscribe';
 
 @Component({
@@ -44,6 +44,8 @@ export class PostMenuComponent {
 
   asyncMute: boolean = false;
   asyncMuteInProgress: boolean = false;
+  asyncBlockInProgress: boolean = false;
+  asyncBlock: boolean = false;
 
   opened: boolean = false;
 
@@ -71,6 +73,7 @@ export class PostMenuComponent {
   cardMenuHandler() {
     this.opened = !this.opened;
     this.asyncMuteFetch();
+    this.asyncBlockFetch();
   }
 
   asyncMuteFetch() {
@@ -134,6 +137,53 @@ export class PostMenuComponent {
         this.detectChanges();
       });
     this.selectOption('unmute');
+  }
+
+  asyncBlockFetch() {
+    if (this.asyncBlock || this.asyncBlockInProgress) {
+      return;
+    }
+
+    this.asyncBlockInProgress = true;
+    this.detectChanges();
+
+    //Owner
+    this.client.get(`api/v1/block/${this.entity.ownerObj.guid}`)
+      .then((response: any) => {
+        this.asyncBlockInProgress = false;
+        this.asyncBlock = response.blocked;
+        this.detectChanges();
+      })
+      .catch(e => {
+        this.asyncBlockInProgress = false;
+        this.detectChanges();
+      });
+  }
+
+  unBlock() {
+    this.client.delete('api/v1/block/' + this.entity.ownerObj.guid, {})
+      .then((response: any) => {
+        this.asyncBlock = false;
+        this.detectChanges();
+      })
+      .catch((e) => {
+        this.asyncBlock = true;
+        this.detectChanges();
+      });
+    this.selectOption('block');
+  }
+
+  block() {
+    this.client.put('api/v1/block/' + this.entity.ownerObj.guid, {})
+      .then((response: any) => {
+        this.asyncBlock = true;
+        this.detectChanges();
+      })
+      .catch((e) => {
+        this.asyncBlock = false;
+        this.detectChanges();
+      });
+    this.selectOption('block');
   }
 
   share() {

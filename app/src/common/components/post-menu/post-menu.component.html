@@ -31,6 +31,12 @@
     <li class="mdl-menu__item" *ngIf="asyncMute && !entity['is:muted']" (click)="mute()" i18n>Mute notifications</li>
     <li class="mdl-menu__item" *ngIf="asyncMute && entity['is:muted']" (click)="unmute()" i18n>Unmute notifications</li>
   </ng-container>
+  <!-- BLOCK -->
+  <ng-container *ngIf="options.indexOf('block') !== -1 && entity.ownerObj.guid != session.getLoggedInUser().guid ">
+    <li class="mdl-menu__item"  *ngIf="asyncBlockInProgress" disabled>Block/Unblock</li>
+    <li class="mdl-menu__item" *ngIf="!asyncBlockInProgress && !asyncBlock" (click)="block()" i18n>Block user</li>
+    <li class="mdl-menu__item" *ngIf="!asyncBlockInProgress && asyncBlock" (click)="unBlock()" i18n>Unblock user</li>
+  </ng-container>
   <!-- ADMIN EDIT FLAGS -->
   <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && (entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin())">
     <li class="mdl-menu__item" [hidden]="entity.mature" (click)="setExplicit(true)">Set as Explicit</li>

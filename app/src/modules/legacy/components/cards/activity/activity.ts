@@ -51,7 +51,7 @@ export class Activity {
   isTranslatable: boolean;
   canDelete: boolean = false;
 
-  menuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit'];
+  menuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block'];
 
   constructor(
     public client: Client,
