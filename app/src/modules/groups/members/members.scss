@@ -1,0 +1,10 @@
+m-group--members-module {
+  > .mdl-card__title[href] {
+    cursor: pointer;
+  }
+
+  .minds-group-sidebar-loader {
+    margin-left: $minds-margin*2;
+  }
+
+}

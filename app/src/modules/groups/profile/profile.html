@@ -183,30 +183,13 @@
 
     </div>
 
+  <!-- members -->
+  <m-group--members-module [group]="group" *ngIf="filter != 'conversation'">
 
-    <div class="mdl-card mdl-shadow--2dp">
-
-      <!-- Members -->
-      <div class="m-group-info-members">
-        <div class="mdl-card__title">
-          <h2 class="mdl-card__title-text" i18n>Members</h2>
-          <a [routerLink]="['/groups/profile', group.guid, 'members']" class="mdl-color-text--blue-grey-400" i18n>Invite</a>
-        </div>
-
-        <!-- Avatars of latest users -->
-        <div class="mdl-card__supporting-text mdl-color-text--grey-600 members-grid">
-          <a *ngFor="let member of group.members"
-          [routerLink]="['/', member.username]"
-          [hovercard]="member.guid" [hovercardAnchor]="['left', 'bottom']"
-          >
-            <img src="/icon/{{member.guid}}/small/{{member.icontime}}"/>
-          </a>
-        </div>
-      </div>
-      <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/groups/profile', group.guid, 'members']">
-        <!-- i18n -->View More<!-- /i18n -->
-      </a>
-    </div>
+    <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/groups/profile', group.guid, 'members']">
+      <!-- i18n -->View More<!-- /i18n -->
+    </a>
+  </m-group--members-module>
 
     <!-- images  -->
    <minds-channel-modules [container]="group" type="image" *ngIf="filter != 'conversation'">

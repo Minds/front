@@ -19,6 +19,7 @@ import { GroupsProfileRequests } from './profile/requests/requests';
 import { GroupsProfileFeed } from './profile/feed/feed';
 import { GroupsProfileConversation } from './profile/conversation/conversation.component';
 import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
+import { GroupsMembersModuleComponent } from './members/members';
 
 const routes: Routes = [
   { path: 'groups/profile/:guid/:filter', component: GroupsProfile },
@@ -51,7 +52,8 @@ const routes: Routes = [
     GroupsProfileRequests,
     GroupsSettingsButton,
     GroupsProfileConversation,
-    GroupsProfileFilterSelector
+    GroupsProfileFilterSelector,
+    GroupsMembersModuleComponent
   ],
   exports: [
     Groups,
@@ -66,7 +68,8 @@ const routes: Routes = [
     GroupsProfileRequests,
     GroupsSettingsButton,
     GroupsProfileConversation,
-    GroupsProfileFilterSelector
+    GroupsProfileFilterSelector,
+    GroupsMembersModuleComponent
   ],
   entryComponents: [
     GroupsCard
