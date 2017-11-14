@@ -164,6 +164,7 @@ minds-channel{
        }
      }
      .m-channel--name{
+       word-break: break-word;
        text-align: center;
        > * {
          display:inline-block;
