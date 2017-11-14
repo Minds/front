@@ -52,25 +52,6 @@
       margin: 0 0 8px;
     }
 
-    .m-wire-creator--subtext {
-      letter-spacing: 1px;
-      font-weight: 400;
-      margin-bottom: $minds-margin * 2;
-    }
-
-    @media screen and (max-height: 750px) {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-
-      .m-wire-creator--subtext {
-        font-size: 11px;
-        line-height: 15px;
-        padding: 0 36px;
-        margin: 0;
-      }
-    }
-
     .m-wire-creator--header-svg {
       display: flex;
       align-items: center;
@@ -80,6 +61,30 @@
         color: #4690D6;
         margin-right: $minds-padding;
         font-size: 36px;
+      }
+    }
+
+    .m-wire--creator--header-text {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .m-wire--avatar {
+        display: flex;
+        flex-direction: column;
+
+        img {
+          border-radius: 50%;
+          max-height: 42px;
+        }
+      }
+
+      .m-wire-creator--subtext {
+        letter-spacing: 1px;
+        font-weight: 400;
+        margin-bottom: 0;
+        padding-left: $minds-margin * 2;
+        line-height: 16px;
       }
     }
 

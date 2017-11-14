@@ -2,13 +2,20 @@
   <div class="m-wire--creator--header">
     <h2 class="m-wire-creator--header-svg">
       <i class="ion-icon ion-flash"></i>
-
       <span>Wire</span>
     </h2>
 
-    <p class="m-wire-creator--subtext">
-      Support <span>@</span>{{owner.username}} by sending them dollars, points or Bitcoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
-    </p>
+    <div class="m-wire--creator--header-text">
+      <div class="m-wire--avatar">
+        <a [routerLink]="['/', owner.username]">
+          <img [src]="minds.cdn_url + '/icon/' + owner.guid + '/medium/' + owner.icontime" class="mdl-shadow--2dp"/>
+        </a>
+      </div>
+
+      <p class="m-wire-creator--subtext">
+        Support <span>@</span>{{owner.username}} by sending them dollars, points or Bitcoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
+      </p>
+    </div>
 
     <div class="m-wire--creator--wallet" *ngIf="false">
       <i class="material-icons m--middle">account_balance</i>

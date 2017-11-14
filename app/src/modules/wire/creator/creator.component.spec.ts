@@ -1,18 +1,19 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { VisibleWireError, WireCreatorComponent } from './creator.component';
 import { Client } from '../../../services/api/client';
-import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { AbbrPipe } from '../../../common/pipes/abbr';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
-import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
-import { WireService } from '../wire.service';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { WireService } from '../wire.service';
 
 /* tslint:disable */
 @Component({
@@ -128,8 +129,14 @@ describe('WireCreatorComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ MaterialMock, MaterialSwitchMock, AbbrPipe, WireCreatorRewardsComponentMock, StripeCheckoutMock, WireCreatorComponent ], // declare the test component
-      imports: [ FormsModule ],
+      declarations: [
+        MaterialMock,
+        MaterialSwitchMock,
+        AbbrPipe,
+        WireCreatorRewardsComponentMock,
+        StripeCheckoutMock,
+        WireCreatorComponent ], // declare the test component
+      imports: [ FormsModule, RouterTestingModule ],
       providers: [
         { provide: Client, useValue: clientMock },
         WireService,
@@ -207,6 +214,19 @@ describe('WireCreatorComponent', () => {
     const title = fixture.debugElement.query(By.css('.m-wire--creator--header span'));
     expect(title).not.toBeNull();
     expect(title.nativeElement.textContent).toContain('Wire');
+  });
+
+  it('should have the target user\'s avatar', () => {
+    const avatar = fixture.debugElement.query(By.css('.m-wire--creator--header-text .avatar'));
+    expect(avatar).not.toBeNull();
+
+    const avatarAnchor = avatar.query(By.css('a'));
+    expect(avatarAnchor).not.toBeNull();
+    expect(avatarAnchor.nativeElement.href).toContain('/' + comp.owner.username);
+
+    const avatarImage = avatarAnchor.query(By.css('img'));
+    expect(avatarImage).not.toBeNull();
+    expect(avatarImage.nativeElement.src).toContain('/icon/' + comp.owner.guid);
   });
 
   it('should have subtext', () => {

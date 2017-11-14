@@ -28,6 +28,8 @@ export interface WireStruc {
 })
 export class WireCreatorComponent implements AfterViewInit {
 
+  minds = window.Minds;
+
   wire: WireStruc = {
     amount: 1000,
     currency: 'points',
