@@ -217,7 +217,7 @@ describe('WireCreatorComponent', () => {
   });
 
   it('should have the target user\'s avatar', () => {
-    const avatar = fixture.debugElement.query(By.css('.m-wire--creator--header-text .avatar'));
+    const avatar = fixture.debugElement.query(By.css('.m-wire--creator--header-text .m-wire--avatar'));
     expect(avatar).not.toBeNull();
 
     const avatarAnchor = avatar.query(By.css('a'));
