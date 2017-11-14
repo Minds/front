@@ -17,6 +17,7 @@ export interface MindsBlogEntity {
     deleted ?: boolean;
     paywall ?: boolean;
     wire_threshold ?: any;
+    mature?: boolean;
 }
 
 export interface Message {

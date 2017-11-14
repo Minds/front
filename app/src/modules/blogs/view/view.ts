@@ -42,7 +42,7 @@ export class BlogView {
 
   scroll_listener;
 
-  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report', 'subscribe'];
+  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report', 'subscribe', 'set-explicit', 'remove-explicit'];
 
   @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
 
@@ -130,7 +130,22 @@ export class BlogView {
       case 'delete':
         this.delete();
         break;
+      case 'set-explicit':
+        this.setExplicit(true);
+        break;
+      case 'remove-explicit':
+        this.setExplicit(false);
+        break;
     }
+  }
+
+  setExplicit(value: boolean) {
+    this.blog.mature = value;
+
+    this.client.post(`api/v1/entities/explicit/${this.blog.guid}`, { value: value ? '1' : '0' })
+      .catch(e => {
+        this.blog.mature = this.blog.mature;
+      });
   }
 
   calculateLockScreenHeight() {

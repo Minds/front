@@ -27,7 +27,7 @@ export class MediaView {
 
   theaterMode: boolean = false;
 
-  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report'];
+  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'remove-explicit'];
 
   paramsSubscription: Subscription;
 
@@ -130,7 +130,27 @@ export class MediaView {
         break;
       case 'delete':
         this.delete();
+        break;
+      case 'set-explicit':
+        this.setExplicit(true);
+        break;
+      case 'remove-explicit':
+        this.setExplicit(false);
+        break;
+
     }
+  }
+
+  setExplicit(value: boolean) {
+
+    this.entity.mature = value;
+    this.detectChanges();
+
+    this.client.post(`api/v1/entities/explicit/${this.entity.guid}`, { value: value ? '1' : '0' })
+      .catch(e => {
+        this.entity.mature = !!this.entity.mature;
+        this.detectChanges();
+      });
   }
 
   private detectChanges() {

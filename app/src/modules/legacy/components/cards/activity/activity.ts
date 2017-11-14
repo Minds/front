@@ -218,7 +218,7 @@ export class Activity {
       this.activity.custom_data.mature = value;
     }
 
-    this.client.post(`api/v1/admin/activity/${this.activity.guid}/mature`, { value: value ? '1' : '0' })
+    this.client.post(`api/v1/entities/explicit/${this.activity.guid}`, { value: value ? '1' : '0' })
       .catch(e => {
         this.activity.mature = oldValue;
         this.activity.mature_visibility = oldMatureVisibility;

@@ -288,7 +288,6 @@ export class AttachmentService {
   }
 
   parseMaturity(object: any) {
-
     if (typeof object === 'undefined') {
       return false;
     }
