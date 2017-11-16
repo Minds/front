@@ -82,6 +82,7 @@
     </div>
     <m-wire-threshold-input
       [(threshold)]="blog.wire_threshold"
+      [(enabled)]="blog.paywall"
       (validThreshold)="validThreshold = $event"
       #thresholdInput
     ></m-wire-threshold-input>

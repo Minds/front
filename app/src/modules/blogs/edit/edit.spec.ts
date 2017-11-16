@@ -355,5 +355,6 @@ describe('BlogEdit', () => {
   it('should have a m-wire-threshold-input', () => {
     const threshold = fixture.debugElement.query(By.css('m-wire-threshold-input'));
     expect(threshold).not.toBeNull();
+    expect(threshold.nativeElement.disabled).toBeFalsy();
   });
 });

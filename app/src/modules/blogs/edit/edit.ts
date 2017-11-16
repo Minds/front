@@ -138,10 +138,6 @@ export class BlogEdit {
           this.guid = response.blog.guid;
           this.title.setTitle(this.blog.title);
 
-          if (this.blog.wire_threshold !== null || (this.blog.wire_threshold && this.blog.wire_threshold.min > 0)) {
-            this.thresholdInput.disabled = true;
-          }
-
           // draft
           if (!this.blog.published && response.blog.draft_access_id) {
             this.blog.access_id = response.blog.draft_access_id;
