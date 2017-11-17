@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, Input, ChangeDetectorRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { SessionFactory } from '../../../services/session';
 import { Client, Upload } from '../../../services/api';
@@ -8,10 +8,6 @@ import { ContextService, ContextServiceResponse } from '../../../services/contex
 
 @Component({
   selector: 'm-search--bar-suggestions',
-  // host: {
-  //   // '(window:click)': 'onWindowClick($event)',
-  //   '(window:keydown)': 'onKey($event)'
-  // },
   templateUrl: 'suggestions.component.html'
 })
 
@@ -27,7 +23,13 @@ export class SearchBarSuggestionsComponent {
 
   private searchTimeout;
 
-  constructor(public client: Client, public location: Location, public recentService: RecentService, private context: ContextService) { }
+  constructor(
+    public client: Client,
+    public location: Location,
+    public recentService: RecentService,
+    private context: ContextService,
+    private cd: ChangeDetectorRef
+  ) { }
 
   @Input('q') set _q(value: string) {
     if (this.searchTimeout) {
@@ -70,4 +72,19 @@ export class SearchBarSuggestionsComponent {
       this.recent = this.recentService.fetch('recent', 6);
     } 
   }
+
+  mousedown(e) {
+    e.preventDefault();
+
+    setTimeout(() => {
+      this.active = false;
+      this.detectChanges();
+    }, 300); 
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
 }
