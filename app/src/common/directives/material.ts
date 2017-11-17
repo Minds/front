@@ -6,6 +6,7 @@ import { MaterialUpload } from './material/upload';
 import { MaterialSwitch } from './material/switch';
 import { MaterialDateTimePickerDirective } from './material/datetimepicker.directive';
 import { MaterialSlider } from './material/slider';
+import { MaterialRadio } from './material/radio/radio';
 
 @Directive({
   selector: '[mdl]',
@@ -32,5 +33,6 @@ export const MDL_DIRECTIVES: any[] = [
   MaterialUpload,
   MaterialSwitch,
   MaterialDateTimePickerDirective,
-  MaterialSlider
+  MaterialSlider,
+  MaterialRadio
 ];

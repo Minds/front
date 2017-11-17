@@ -7,12 +7,21 @@
   </div>
 
   <div *ngIf="!inProgress && !success && !next" class="m-report-creator--subjects">
-    <div *ngFor="let item of subjects" class="m-report-creator--subjects-subject mdl-color-text--blue-grey-700">
-      <label [mdl] class="mdl-radio mdl-js-radio mdl-js-ripple-effect" [for]="'report-modal-reason-' + item.value" (click)="onSelectionChange(item)">
+    <div class="m-report-creator--subjects-subject mdl-color-text--blue-grey-700"
+      *ngFor="let item of subjects"
+    >
+      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect"
+        [mdlRadio]
+        [mdlRadioValue]="item.value"
+        #materialRadioButton
+        [checked]="subject"
+        [for]="'report-modal-reason-' + item.value"
+        (click)="onSelectionChange(item)"
+      >
         <input type="radio"
           class="mdl-radio__button"
           [disabled]="inProgress"
-          [checked]="item.value === subject"
+          [checked]="subject == item.value"
           name="subject"
           value="{{ item.value }}"
           [id]="'report-modal-reason-' + item.value"
