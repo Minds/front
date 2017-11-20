@@ -125,9 +125,9 @@ export class WireThresholdInputComponentMock {
   }
 
   @Input('disabled') disabled: boolean = false;
+  @Input('enabled') enabled: boolean = false;
 
   @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<any> = new EventEmitter<any>();
-  enabled: boolean = false;
 
   toggle() {
   }

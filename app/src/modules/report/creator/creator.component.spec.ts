@@ -1,6 +1,6 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Directive, DebugElement, EventEmitter, Input, Output } from '@angular/core';
 
 import { ReportCreatorComponent } from './creator.component';
 import { Client } from '../../../services/api/client';
@@ -15,10 +15,18 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 import { REASONS } from '../../../services/list-options';
 
+/* tslint:disable */
+@Directive({
+  selector: '[mdlRadio]',
+  inputs: ['mdlRadio', 'checked', 'mdlRadioValue']
+})
+export class MdlRadioMock {
+  
+}
+
 describe('ReportCreatorComponent', () => {
   let comp: ReportCreatorComponent;
   let fixture: ComponentFixture<ReportCreatorComponent>;
-
 
   function getSubjectItem(i: number): DebugElement {
     return fixture.debugElement.queryAll(By.css(`.mdl-radio__button`))[i];
@@ -27,7 +35,7 @@ describe('ReportCreatorComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ MaterialMock, MaterialSwitchMock, AbbrPipe, ReportCreatorComponent ], // declare the test component
+      declarations: [ MaterialMock, MdlRadioMock, MaterialSwitchMock, AbbrPipe, ReportCreatorComponent ], // declare the test component
       imports: [ FormsModule ],
       providers: [
         { provide: Client, useValue: clientMock },
