@@ -1,10 +1,10 @@
 <div class="m-media-loading mdl-progress mdl-js-progress mdl-progress__indeterminate" [mdl] [hidden]="!inProgress"></div>
 
 <div class="m--spam-notice mdl-shadow--2dp" *ngIf="entity?.flags?.spam">
-  <ng-container *ngIf="entity?.flags?.spam">This media was flagged as spam.</ng-container>
-  <ng-container *ngIf="entity?.flags?.deleted">This media was flagged as deleted.</ng-container>
+  <ng-container *ngIf="entity?.flags?.spam" i18n="@@MINDS__MEDIA__ENTITY_FLAGGED_AS_SPAM">This media was flagged as spam.</ng-container>
+  <ng-container *ngIf="entity?.flags?.deleted" i18n="@@MINDS__MEDIA__ENTITY_FLAGGED_AS_DELETED">This media was flagged as deleted.</ng-container>
 
-  <ng-container *ngIf="!session.isAdmin()">
+  <ng-container *ngIf="!session.isAdmin()" i18n="@@M__ACTION__APPEAL_MARK">
     If you wish to appeal, please check your <a routerLink="/settings/reported-content">Reported Content console</a>.
   </ng-container>
 </div>
@@ -17,8 +17,8 @@
   >
     <div class="m-mature-overlay" (click)="entity.mature_visibility = !entity.mature_visibility">
         <span class="m-mature-overlay-note">
-          <i class="material-icons" title="Mature content" i18n-title>explicit</i>
-          <span i18n>Click to confirm your are 18+</span>
+          <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
+          <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
         </span>
     </div>
   </minds-media-theatre>
@@ -29,7 +29,7 @@
 
 <div class="m-error-splash" *ngIf="error && !inProgress">
   <h3 class="mdl-color-text--red-300">{{error}}</h3>
-  <span class="mdl-color-text--blue-grey-300" i18n>The post may not exist</span>
+  <span class="mdl-color-text--blue-grey-300" i18n="@@MINDS__MEDIA__ENTITY_NOT_EXISTS">The post may not exist</span>
 </div>
 
 <div class="m-media-wrapper" *ngIf="entity && entity.guid">
@@ -46,8 +46,8 @@
       >
         <div class="m-mature-overlay" (click)="entity.mature_visibility = !entity.mature_visibility">
           <span class="m-mature-overlay-note">
-            <i class="material-icons" title="Mature content" i18n-title>explicit</i>
-            <span i18n>Click to confirm your are 18+</span>
+            <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
+            <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
           </span>
         </div>
 
@@ -79,35 +79,35 @@
             <div class="m-media-content--info mdl-cell mdl-cell--4-col mdl-cell--6-col-phone">
   
               <div class="m-media-content--play-count" *ngIf="entity['play:count'] || entity['play:count'] === 0">
-                <span i18n>{{ entity['play:count'] | number }} plays</span>
+                <span i18n="@@MINDS__MEDIA__PLAYS_COUNTER">{{ entity['play:count'] | number }} plays</span>
               </div>
   
               <div class="m-media-content--play-count" *ngIf="entity['impressions'] || entity['impressions'] === 0">
-                <span i18n>{{ entity['impressions'] | number }} views</span>
+                <span i18n="@@M__COMMON__VIEWS_WITH_COUNT">{{ entity['impressions'] | number }} views</span>
               </div>
   
               <div class="m-visibility-info" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
                 <i class="material-icons">visibility</i>
-                <span [hidden]="entity.access_id != 2" i18n>Public</span>
-                <span [hidden]="entity.access_id != 0" i18n>Unlisted</span>
+                <span [hidden]="entity.access_id != 2" i18n="@@M__COMMON__VISIBILITY_PUBLIC">Public</span>
+                <span [hidden]="entity.access_id != 0" i18n="@@M__COMMON__VISIBILITY_UNLISTED">Unlisted</span>
               </div>
   
               <div class="m-mature-info" *ngIf="entity.flags && entity.flags.mature">
                 <i class="material-icons">explicit</i>
-                <span i18n>Mature content</span>
+                <span i18n="@@M__COMMON__MATURE_CONTENT">Mature content</span>
               </div>
   
               <div class="m-license-info">
                 <i class="material-icons">public</i>
                 <span [hidden]="!entity.license">{{entity.license}}</span>
-                <span [hidden]="entity.license" i18n>All Rights Reserved</span>
+                <span [hidden]="entity.license" i18n="@@M__COMMON__LICENSE_ALL_RIGHT_RESERVED">All Rights Reserved</span>
               </div>
   
               <a class="m-media-album--backlink"
                 [routerLink]="['/media', entity.container_guid]"
                 [hidden]="entity.subtype == 'album' || entity.container_guid == entity.owner_guid"
               >
-                <i class="material-icons">photo_album</i> <!-- i18n -->Back to album<!-- /i18n -->
+                <i class="material-icons">photo_album</i> <!-- i18n: @@MINDS__MEDIA__BACK_TO_ALBUM_ACTION -->Back to album<!-- /i18n -->
               </a>
             </div>
           </div>
@@ -125,7 +125,7 @@
               </div>
 
               <div class="m-media-content--owner-info">
-                <span i18n>{{ entity.time_created * 1000 | date: 'medium'}}</span>
+                <span>{{ entity.time_created * 1000 | date: 'medium'}}</span>
               </div>
             </div>
 
@@ -214,12 +214,12 @@
   (closed)="deleteToggle = false"
   (actioned)="delete($event)"
   yesButton="Delete permanently"
-  i18n-yesButton
+  i18n-yesButton="@@M__COMMON__DELETE_PERMANENTLY"
 >
   <p confirm-message>
-      <!-- i18n -->Are you sure you want to delete this?<br><br>There's no UNDO!<!-- /i18n -->
+      <!-- i18n: @@MINDS__MEDIA__CONFIRM_DELETION -->Are you sure you want to delete this?<br><br>There's no UNDO!<!-- /i18n -->
   </p>
   <p confirm-success-message>
-      <!-- i18n -->The media has been deleted.<!-- /i18n -->
+      <!-- i18n: @@MINDS__MEDIA__DELETION_CONFIRMATION -->The media has been deleted.<!-- /i18n -->
   </p>
 </m-modal-confirm>

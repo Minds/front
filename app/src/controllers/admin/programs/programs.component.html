@@ -1,6 +1,6 @@
 <div class="mdl-grid m-admin-programs" style="max-width:600px">
   <div class="m-note">
-    <!-- i18n -->Users can be banned for monetizing on the dropdown in their profile.<!-- /i18n -->
+    <!-- i18n: @@M__COMMON__BAN_MONETIZATION_NOTICE -->Users can be banned for monetizing on the dropdown in their profile.<!-- /i18n -->
   </div>
 
   <div *ngFor="let application of applications; let i = index"
@@ -8,7 +8,7 @@
   >
     <div class="mdl-card mdl-shadow--4dp m-application">
       <div class="m-application-meta">
-        <p class="m-user" *ngIf="application.from">
+        <p class="m-user" *ngIf="application.from" i18n="@@MINDS__ADMIN__PROGRAMS__APPLICATION_DESCRIPTOR">
           <a [routerLink]="[ '/', application.from.username ]" target="_blank">
             <img [src]="'/icon/' + application.from.guid + '/tiny/' + application.from.icontime" alt="">
             {{ application.from.username }}
@@ -28,26 +28,26 @@
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
           (click)="review(i)"
           [disabled]="inProgress"
-          i18n
+          i18n="verb|@@M__COMMON__REVIEW"
         >Review</button>
       </div>
       <div class="m-application-cta" *ngIf="reviewing === i">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green"
           (click)="accept(i)"
           [disabled]="inProgress"
-          i18n
+          i18n="@@M__ACTION__ACCEPT"
         >Accept</button>
 
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
           (click)="reject(i)"
           [disabled]="inProgress"
-          i18n
+          i18n="@@M__ACTION__REJECT"
         >Reject</button>
 
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
           (click)="review(null)"
           [disabled]="inProgress"
-          i18n
+          i18n="@@M__ACTION__CANCEL"
         >Cancel</button>
       </div>
     </div>

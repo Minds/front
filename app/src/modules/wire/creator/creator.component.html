@@ -2,7 +2,7 @@
   <div class="m-wire--creator--header">
     <h2 class="m-wire-creator--header-svg">
       <i class="ion-icon ion-flash"></i>
-      <span>Wire</span>
+      <span i18n="@@M__FEATURE__WIRE">Wire</span>
     </h2>
 
     <div class="m-wire--creator--header-text">
@@ -12,7 +12,7 @@
         </a>
       </div>
 
-      <p class="m-wire-creator--subtext">
+      <p class="m-wire-creator--subtext" i18n="@@WIRE__CREATOR__WIRE_NOTICE">
         Support <span>@</span>{{owner.username}} by sending them dollars, points or Bitcoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
       </p>
     </div>
@@ -26,7 +26,7 @@
 
   <!-- Payment Method -->
   <section class="m-wire--creator-section m-wire--creator-payment-section">
-    <h3 class="m-wire--creator-section-title--small">Wire Type</h3>
+    <h3 class="m-wire--creator-section-title--small" i18n="@@WIRE__CREATOR__WIRE_TYPE_TITLE">Wire Type</h3>
 
     <ul class="m-wire--creator-selector"
       [class.m-wire--creator-selector--has-selection]="wire.currency"
@@ -37,10 +37,10 @@
       >
         <div class="m-wire--creator-selector-type">
           <i class="material-icons">account_balance</i>
-          <h4>Points</h4>
+          <h4 i18n="@@M__FEATURE__POINTS">Points</h4>
         </div>
-        <span class="m-wire--creator-selector--cta">Select Points</span>
-        <span class="m-wire--creator-selector--selected-label">Selected</span>
+        <span class="m-wire--creator-selector--cta" i18n="@@M__COMMON__SELECT_POINTS">Select Points</span>
+        <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
       </li>
 
       <li
@@ -50,19 +50,19 @@
       >
         <div class="m-wire--creator-selector-type">
           <i class="material-icons">attach_money</i>
-          <h4>USD</h4>
+          <h4 i18n="@@M__COMMON__USD">USD</h4>
         </div>
-        <span class="m-wire--creator-selector--cta" *ngIf="owner?.merchant">Select Money</span>
-        <span class="m-wire--creator-selector--cta" *ngIf="!owner?.merchant">Cannot receive USD</span>
-        <span class="m-wire--creator-selector--selected-label">Selected</span>
+        <span class="m-wire--creator-selector--cta" *ngIf="owner?.merchant" i18n="@@M__COMMON__SELECT_MONEY">Select Money</span>
+        <span class="m-wire--creator-selector--cta" *ngIf="!owner?.merchant" i18n="@@WIRE__CREATOR__USD_ITEM_CTA_DISABLED">Cannot receive USD</span>
+        <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
       </li>
 
       <li class="m-wire--creator-selector--disabled">
         <div class="m-wire--creator-selector-type">
           <i class="ion-icon ion-social-bitcoin"></i>
-          <h4>Bitcoin</h4>
+          <h4 i18n="@@WIRE__CREATOR__BTC_ITEM">Bitcoin</h4>
         </div>
-        <span class="m-wire--creator-selector--cta">Coming soon</span>
+        <span class="m-wire--creator-selector--cta" i18n="@@WIRE__CREATOR__COMING_SOON">Coming soon</span>
       </li>
 
       <!-- TODO: BTC selector functionality -->
@@ -75,7 +75,7 @@
       ></minds-payments-stripe-checkout>
       <div class="m-wire--creator-payment-attached" *ngIf="wire.payload">
         <i class="material-icons">check_circle</i>
-        <span>Your payment is attached. <b (click)="wire.payload = null">Change</b></span>
+        <span><!-- i18n: @@M__COMMON__PAYMENT_ATTACHED -->Your payment is attached.<!-- /i18n --> <b (click)="wire.payload = null" i18n="@@M__ACTION__CHANGE">Change</b></span>
       </div>
     </div>
   </section>
@@ -83,11 +83,11 @@
   <!-- Amount -->
   <section class="m-wire--creator-section">
     <h3 class="m-wire--creator-section-title--small">
-      How
-      <ng-container *ngIf="wire.currency == 'money'">much money</ng-container>
-      <ng-container *ngIf="wire.currency == 'points'">many points</ng-container>
+      <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_HOW_PART -->How<!-- /i18n -->
+      <ng-container *ngIf="wire.currency == 'money'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MUCH_MONEY_PART">much money</ng-container>
+      <ng-container *ngIf="wire.currency == 'points'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MANY_POINTS_PART">many points</ng-container>
       <!-- TODO: BTC -->
-      do you want to send?
+      <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_DO YOU WANT_PART -->do you want to send?<!-- /i18n -->
     </h3>
 
     <div class="m-wire--creator-wide-input m-wire--creator--amount"
@@ -106,8 +106,8 @@
       <span class="m-wire--creator-wide-input--label"
         (click)="amountEditorFocus()"
       >
-        <ng-container *ngIf="wire.currency == 'points'">points</ng-container>
-        <ng-container *ngIf="wire.currency == 'money'">USD</ng-container>
+        <ng-container *ngIf="wire.currency == 'points'" i18n="points input|@@M__COMMON__POINTS_INPUT">points</ng-container>
+        <ng-container *ngIf="wire.currency == 'money'" i18n="usd input|@@M__COMMON__USD_INPUT">USD</ng-container>
         <!-- TODO: BTC -->
       </span>
     </div>
@@ -120,7 +120,7 @@
           (ngModelChange)="wire.recurring = !wire.recurring"
         >
 
-        <span class="mdl-checkbox__label">Repeat this transaction monthly.</span>
+        <span class="mdl-checkbox__label" i18n="@@WIRE__CREATOR__REPEAT_TRANSACTION_MONTHLY">Repeat this transaction monthly.</span>
       </label>
     </div>
   </section>
@@ -143,13 +143,14 @@
       <button class="m-wire--creator-button"
         [disabled]="!canSubmit() || inProgress || success || criticalError"
         (click)="submit()"
+        i18n="@@WIRE__CREATOR__SEND_ACTION"
       >SEND</button>
 
       <div *ngIf="inProgress" class="m-wire--creator--submit-label mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 
       <div *ngIf="!inProgress && success" class="m-wire--creator--submit-label">
         <i class="material-icons">check</i>
-        <span>Wired!</span>
+        <span i18n="@@WIRE__CREATOR__WIRED_NOTICE">Wired!</span>
       </div>
 
       <div *ngIf="!inProgress && !!error" class="m-wire--creator--submit-error">

@@ -1,12 +1,23 @@
 <?php
+    $language = '';
+    $language = Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en';
+?>
+
+<% if (ENV === 'prod' && !LOCALE) { %>
+<!-- LOCALE: <?= $language ?> -->
+<?php
+    $index = __DIR__ . DIRECTORY_SEPARATOR . "<%= LOCALE_AOT_INDEX_FILE_NAME %>.{$language}.php";
+
+    if (is_readable($index)) {
+        include($index);
+        return;
+    }
+?>
+<% } %>
+
+<?php
     if (!defined('__MINDS_CONTEXT__')) {
         define('__MINDS_CONTEXT__', 'app');
-    }
-
-    $aotPrefix = '';
-    $language = Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en';
-    if(in_array($language, [ 'en', 'es'])){
-        $aotPrefix = $language === 'en' ? '' : '.' . $language;
     }
 ?>
 <html>
@@ -151,14 +162,14 @@
 
     <% if (ENV !== 'prod') { %>
     <!-- inject:js -->
-  	<!-- endinject -->
+    <!-- endinject -->
     <% } else { %>
     <script src="<%= APP_CDN %>/js/shims.js?v=<%= VERSION %>"></script>
 
     <?php if (__MINDS_CONTEXT__ === 'embed'): ?>
-    <script src="<%= APP_CDN %>/js/build-embed-aot.js?v=<%= VERSION %>"></script>
+    <script src="<%= APP_CDN %>/js/build-embed-aot.<%= VERSION %>.js"></script>
     <?php else: ?>
-    <script src="<%= APP_CDN %>/js/build-aot<?= $aotPrefix ?>.js?v=<%= VERSION %>"></script>
+    <script src="<%= APP_CDN %>/js/build-aot.<%= LOCALE ? LOCALE + '.' : '' %><%= VERSION %>.js"></script>
     <?php endif; ?>
     <% } %>
 

@@ -12,12 +12,12 @@ import { ActivityPreview } from '../../legacy/components/cards/activity/preview'
     <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
 
       <div class="m-modal-remind-composer">
-        <h3 class="m-modal-remind-title" i18n>Remind</h3>
+        <h3 class="m-modal-remind-title" i18n="@@MODALS__REMIND_COMPOSER__REMIND_TITLE">Remind</h3>
 
         <textarea name="message"
           [(ngModel)]="message"
           placeholder="Enter your remind status here (optional)"
-          i18n-placeholder
+          i18n-placeholder="@@MODALS__REMIND_COMPOSER__PLACEHOLDER"
           [autoGrow]
           ></textarea>
 

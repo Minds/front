@@ -3,19 +3,19 @@
   <div class="m-wire-console--hero mdl-color--blue mdl-color-text--white">
 
     <div class="m-wire-console--hero-header">
-      <h2>Wire</h2>
+      <h2 i18n="@@M__FEATURE__WIRE">Wire</h2>
       <div class="m-wire-console--options-toggle">
         <button class="mdl-button mdl-button--primary mdl-color--white mdl-color-text--blue"
           (click)="showOptions = !showOptions"
         >
           <i class="material-icons" *ngIf="!showOptions">arrow_drop_down</i>
           <i class="material-icons" *ngIf="showOptions">arrow_drop_up</i>
-          <span>Options</span>
+          <span i18n="@@M__COMMON__OPTIONS">Options</span>
         </button>
       </div>
     </div>
 
-    <p>Wire allows you to receive money for rewards and exclusive content. You can configure your rewards on your channel page.</p>
+    <p i18n="@@WIRE__CONSOLE__WIRE_DESC">Wire allows you to receive money for rewards and exclusive content. You can configure your rewards on your channel page.</p>
 
     <m-wire-console--overview></m-wire-console--overview>
   </div>

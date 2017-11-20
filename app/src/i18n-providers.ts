@@ -12,8 +12,8 @@ export function getTranslationProviders(): Promise<Object[]> {
     return Promise.resolve(noProviders);
   }
 
-  // Ex: 'locale/Minds.fr.xlf`
-  const translationFile = `./locale/Minds.${locale}.xlf`;
+  // Ex: 'locale/Minds.es.xliff`
+  const translationFile = `./locale/Minds.${locale}.xliff`;
 
   return getTranslationsWithSystemJs(translationFile)
     .then((translations: string) => [

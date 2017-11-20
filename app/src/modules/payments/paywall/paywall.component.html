@@ -1,9 +1,9 @@
 <div class="m-paywall-button m-paywall-button-owner" (click)="checkout()" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid">
   <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white">
     <i class="mdl-color-text--white material-icons">vpn_key</i>
-    <!-- i18n -->Exclusive<!-- /i18n -->
+    <!-- i18n: @@M__FEATURE__EXCLUSIVE -->Exclusive<!-- /i18n -->
   </button>
-  <p class="mdl-color-text--grey-800">Only paid subscribers can see this post</p>
+  <p class="mdl-color-text--grey-800" i18n="@@PAYMENTS__PAYWALL__EXCLUSIVE_DESC">Only paid subscribers can see this post</p>
 </div>
 
 
@@ -11,13 +11,13 @@
   <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white"
     *ngIf="!showCheckout">
     <i class="mdl-color-text--white material-icons">vpn_key</i>
-    <!-- i18n -->View<!-- /i18n -->
+    <!-- i18n: @@PAYMENTS__PAYWALL__VIEW_ACTION -->View<!-- /i18n -->
   </button>
   <p class="mdl-color-text--grey-800" *ngIf="entity.ownerObj.merchant?.exclusive?.intro">
     <b>&ldquo;</b> {{entity.ownerObj?.merchant?.exclusive?.intro}} <b>&rdquo;</b>
   </p>
   <p class="mdl-color-text--grey-800" *ngIf="!entity.ownerObj.merchant?.exclusive?.intro">
-    <b>&ldquo;</b> This post is only available to supporters. <b>&rdquo;</b>
+    <b>&ldquo;</b> <!-- i18n: @@PAYMENTS__PAYWALL__SUPPORTERS_ONLY -->This post is only available to supporters.<!-- /i18n --> <b>&rdquo;</b>
   </p>
 </div>
 
@@ -30,7 +30,7 @@
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
 </div>
 
-<div class="m-paywall-amount mdl-color-text--green" *ngIf="showCheckout">
+<div class="m-paywall-amount mdl-color-text--green" *ngIf="showCheckout" i18n="@@PAYMENTS__PAYWALL__USD_PER_MONTH">
   $ {{ amount }} / month
 </div>
 

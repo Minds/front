@@ -5,7 +5,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   selector: 'minds-country-input',
   template: `
     <select [ngModel]="country" (ngModelChange)="country = $event; countryChange.next($event)">
-      <option value="" disabled hidden><i>Country</i></option>
+      <option value="" disabled hidden><i i18n="@@M__COMMON__COUNTRY">Country</i></option>
       <option *ngFor="let country of filteredCountries"
         [value]="country.code"
       >{{ country.name }}</option>

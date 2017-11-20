@@ -1,11 +1,11 @@
 <div class="mdl-tabs__tab-bar m-boost-console--tab-bar">
-  <a routerLink="/wallet/boost/newsfeed" class="mdl-tabs__tab" [class.is-active]="type == 'newsfeed'" i18n>Newsfeeds</a>
-  <a routerLink="/wallet/boost/content" class="mdl-tabs__tab" [class.is-active]="type == 'content'" i18n>Sidebars</a>
-  <a routerLink="/wallet/boost/peer" class="mdl-tabs__tab" [class.is-active]="type == 'peer'" i18n>Channels</a>
+  <a routerLink="/wallet/boost/newsfeed" class="mdl-tabs__tab" [class.is-active]="type == 'newsfeed'" i18n="@@M__FEATURE__NEWSFEED_PLURAL">Newsfeeds</a>
+  <a routerLink="/wallet/boost/content" class="mdl-tabs__tab" [class.is-active]="type == 'content'" i18n="@@M__FEATURE__SIDEBAR_PLURAL">Sidebars</a>
+  <a routerLink="/wallet/boost/peer" class="mdl-tabs__tab" [class.is-active]="type == 'peer'" i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</a>
 
   <ng-container *ngIf="type == 'peer'">
-    <a routerLink="/wallet/boost/peer" class="mdl-tabs__tab m-boost-console--first-filter-tab" [class.is-active]="filter == 'inbox'" i18n>Inbox</a>
-    <a routerLink="/wallet/boost/peer/outbox" class="mdl-tabs__tab" [class.is-active]="filter == 'outbox'" i18n>Outbox</a>
+    <a routerLink="/wallet/boost/peer" class="mdl-tabs__tab m-boost-console--first-filter-tab" [class.is-active]="filter == 'inbox'" i18n="@@BOOST__CONSOLE__INBOX_TAB">Inbox</a>
+    <a routerLink="/wallet/boost/peer/outbox" class="mdl-tabs__tab" [class.is-active]="filter == 'outbox'" i18n="@@BOOST__CONSOLE__OUTBOX_TAB">Outbox</a>
   </ng-container>
 </div>
 
@@ -14,14 +14,14 @@
 <div *ngIf="type == 'peer' && !session.getLoggedInUser().merchant"
   class="m-boost-console--merchant mdl-color--blue-500 mdl-color-text--white mdl-shadow--4dp"
 >
-  <span>Monetize your channel to generate revenue through Peer-to-Peer boosts.</span>
-  <a routerLink="/monetization">Become a Boost Pro</a>
+  <span i18n="@@BOOST__CONSOLE__P2P_MONETIATION_CTA">Monetize your channel to generate revenue through Peer-to-Peer boosts.</span>
+  <a routerLink="/monetization" i18n="@@BOOST__CONSOLE__MONETIZATION_CTA_LINK">Become a Boost Pro</a>
 </div>
 
 <div *ngIf="type == 'peer' && filter == 'inbox' && session.getLoggedInUser().merchant"
   class="m-boost-console--third-party-network"
 >
-  <span>Expand your audience by allowing incoming Peer-to-Peer boosts to be posted on your Facebook Page.</span>
+  <span i18n="@@BOOST__CONSOLE__P2P_FACEBOOK_CONNECT_CTA">Expand your audience by allowing incoming Peer-to-Peer boosts to be posted on your Facebook Page.</span>
   <m-third-party-networks-facebook></m-third-party-networks-facebook>
 </div>
 

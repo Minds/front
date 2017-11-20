@@ -7,7 +7,7 @@ import { SessionFactory } from '../../../services/session';
   inputs: ['open', 'action'],
   outputs: ['closed'],
   template: `
-    <m-modal-signup open="true" subtitle="You need to have a channel in order to {{action}}" i18n-subtitle *ngIf="open"></m-modal-signup>
+    <m-modal-signup open="true" subtitle="You need to have a channel in order to {{action}}" i18n-subtitle="@@MODALS__SIGNUP__ON_ACTION_SUBTITLE" *ngIf="open"></m-modal-signup>
   `
 })
 

@@ -1,8 +1,8 @@
 <div class="m--spam-notice mdl-shadow--2p" *ngIf="user?.spam">
-  <ng-container *ngIf="user?.spam">This user was flagged as spam.</ng-container>
-  <ng-container *ngIf="user?.deleted">This user was flagged as deleted.</ng-container>
+  <ng-container *ngIf="user?.spam" i18n="@@MINDS__CHANNELS__FLAGGED_AS_SPAM">This user was flagged as spam.</ng-container>
+  <ng-container *ngIf="user?.deleted" i18n="@@MINDS__CHANNELS__FLAGGED_AS_DELETED">This user was flagged as deleted.</ng-container>
 
-  <ng-container *ngIf="!session.isAdmin()">
+  <ng-container *ngIf="!session.isAdmin()" i18n="@@M__ACTION__APPEAL_MARK">
     If you wish to appeal, please check your <a routerLink="/settings/reported-content">Reported Content console</a>.
   </ng-container>
 </div>
@@ -12,7 +12,7 @@
 </div>
 <div class="m-error-splash" *ngIf="error && !user">
   <h3 class="mdl-color-text--red-300">{{error}}</h3>
-  <span class="mdl-color-text--blue-grey-300" i18n>Please check the username</span>
+  <span class="mdl-color-text--blue-grey-300" i18n="@@MINDS__CHANNELS__ERROR_CHECK_USERNAME">Please check the username</span>
 </div>
 
 <header [hidden]="!isLocked"></header>
@@ -24,8 +24,8 @@
 
 
 <div class="mdl-grid channel-grid m-channel--blocked" style="max-width:900px" *ngIf="user && user?.blocked">
-  <h3 class="mdl-color-text--blue-grey-300" i18n>You have blocked @{{user.username}}</h3>
-  <a (click)="unBlock()">Click to Unblock</a>
+  <h3 class="mdl-color-text--blue-grey-300" i18n="@@MINDS__CHANNELS__BLOCKED_NOTICE">You have blocked @{{user.username}}</h3>
+  <a (click)="unBlock()" i18n="@@MINDS__CHANNELS__UNBLOCK_ACTION">Click to Unblock</a>
 </div>
 
 
@@ -69,10 +69,10 @@
           <div class="m-channel-bio-editor m-channel-city-editor" *ngIf="editing && isOwner()">
             <div class="m-channel-bio-input m-channel-city-input">
               <i class="material-icons mdl-color-text--blue-grey-300">location_on</i>
-              <input (keyup)="findCity(user.city)" name="city" [(ngModel)]="user.city" class="" placeholder="Enter your city..." i18n-placeholder />
+              <input (keyup)="findCity(user.city)" name="city" [(ngModel)]="user.city" class="" placeholder="Enter your city..." i18n-placeholder="@@M__COMMON__ENTER_CITY" />
             </div>
             <div class="m-discovery-cities mdl-card mdl-shadow--4dp" *ngIf="editing && cities.length > 0">
-              <p class="mdl-color-text--blue-grey-300">Select your city:</p>
+              <p class="mdl-color-text--blue-grey-300" i18n="@@M__COMMON__SELECT_CITY">Select your city:</p>
               <li (click)="setCity(c)" *ngFor="let c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
             </div>
           </div>
@@ -88,23 +88,23 @@
 
       <div class="m-channel--stats  mdl-tabs__tab-bar">
             <a [routerLink]="['/', user.username, 'feed']" class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.activity_count">
-              <span i18n="Count of activities">Feed</span>
+              <span i18n="Count of activities@@M__COMMON__FEED_COUNT">Feed</span>
               <b>{{user.activity_count | number}}</b>
             </a>
             <a class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.supporters_count && session.getLoggedInUser().guid != user.guid">
-              <span i18n="Count of supporters">Supporters</span>
+              <span i18n="Count of supporters@@MINDS__CHANNELS__SUPPORTERS">Supporters</span>
               <b>{{user.supporters_count | number}}</b>
             </a>
             <a [routerLink]="['/', user.username, 'supporters']"  class="mdl-tabs__tab mdl-color-text--blue-grey-500" *ngIf="user.supporters_count && session.getLoggedInUser().guid == user.guid">
-              <span i18n="Count of supporters">Supporters</span>
+              <span i18n="Count of supporters@@MINDS__CHANNELS__SUPPORTERS">Supporters</span>
               <b>{{user.supporters_count | number}}</b>
             </a>
             <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab mdl-color-text--blue-grey-500">
-              <span i18n>Subscribers</span>
+              <span i18n="@@M__COMMON__SUBSCRIBERS">Subscribers</span>
               <b>{{user.subscribers_count | number}}</b>
             </a>
             <a class="mdl-tabs__tab  mdl-color-text--blue-grey-500">
-              <span i18n>Views</span>
+              <span i18n="@@M__COMMON__VIEWS">Views</span>
               <b>{{user.impressions | number}}</b>
             </a>
         </div>
@@ -117,8 +117,8 @@
               <button>
                 <i [hidden]="editing" class="material-icons">edit</i>
                 <i [hidden]="!editing" class="material-icons">done</i>
-                <span [hidden]="editing">Edit</span>
-                <span [hidden]="!editing">Save</span>
+                <span [hidden]="editing" i18n="@@M__ACTION__EDIT">Edit</span>
+                <span [hidden]="!editing" i18n="@@M__ACTION__SAVE">Save</span>
               </button>
             </div>
             <minds-button-boost [object]="user" *ngIf="session.getLoggedInUser().guid == user.guid"></minds-button-boost>
@@ -142,7 +142,7 @@
       <minds-channel-modules [owner]="user" type="image" [linksTo]="['/discovery', user.username, 'images']">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', user.username, 'images']">
-          <!-- i18n -->View More<!-- /i18n -->
+          <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
         </a>
       </minds-channel-modules>
 
@@ -152,7 +152,7 @@
       <minds-channel-modules [owner]="user" type="video" limit="9" [linksTo]="['/discovery', user.username, 'videos']">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', user.username, 'videos']">
-          <!-- i18n -->View More<!-- /i18n -->
+          <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
         </a>
       </minds-channel-modules>
 
@@ -162,7 +162,7 @@
       <minds-channel-modules [owner]="user" type="blog" limit="3" [linksTo]="['/blog', user.username]">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/blog', user.username]">
-          <!-- i18n -->View More<!-- /i18n -->
+          <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
         </a>
       </minds-channel-modules>
 
@@ -201,8 +201,8 @@
 
     <div class="mdl-card mdl-shadow--2dp m-channel--subscribers-tabs">
       <div class="mdl-tabs__tab-bar">
-        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n>Subscribers ({{user.subscribers_count}})</a>
-        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n>Subscriptions ({{user.subscriptions_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">Subscribers ({{user.subscribers_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">Subscriptions ({{user.subscriptions_count}})</a>
       </div>
     </div>
 
@@ -215,8 +215,8 @@
 
     <div class="mdl-card mdl-shadow--2dp  m-channel--subscribers-tabs">
       <div class="mdl-tabs__tab-bar">
-        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n>Subscribers ({{user.subscribers_count}})</a>
-        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n>Subscriptions ({{user.subscriptions_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">Subscribers ({{user.subscribers_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">Subscriptions ({{user.subscriptions_count}})</a>
       </div>
     </div>
 

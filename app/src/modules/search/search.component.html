@@ -3,41 +3,49 @@
     <a class="m-tab-bar--tab"
       [class.m-tab-bar--active-tab]="type == ''"
       [routerLink]="['/search', { q: q, type: '', ref: ref }]"
+      i18n="@@SEARCH__TOP_TAB"
     >Top</a>
 
     <a class="m-tab-bar--tab"
       [class.m-tab-bar--active-tab]="type == 'latest'"
       [routerLink]="['/search', { q: q, type: 'latest', ref: ref }]"
+      i18n="@@SEARCH__LATEST_TAB"
     >Latest</a>
 
     <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'user'"
       [routerLink]="['/search', { q: q, type: 'user', ref: ref }]"
+      i18n="@@M__FEATURE__CHANNEL__PLURAL"
     >Channels</a>
 
     <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'activity'"
       [routerLink]="['/search', { q: q, type: 'activity', ref: ref }]"
+      i18n="@@M__FEATURE__POST_PLURAL"
     >Posts</a>
 
     <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'object:video'"
       [routerLink]="['/search', { q: q, type: 'object:video', ref: ref }]"
+      i18n="@@M__FEATURE__VIDEO_PLURAL"
     >Videos</a>
 
     <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'object:image'"
       [routerLink]="['/search', { q: q, type: 'object:image', ref: ref }]"
+      i18n="@@M__FEATURE__IMAGE_PLURAL"
     >Images</a>
 
     <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'object:blog'"
       [routerLink]="['/search', { q: q, type: 'object:blog', ref: ref }]"
+      i18n="@@M__FEATURE__BLOG_PLURAL"
     >Blogs</a>
 
     <a class="m-tab-bar--tab m-tab--type-filter"
       [class.m-tab-bar--active-tab]="type == 'group'"
       [routerLink]="['/search', { q: q, type: 'group', ref: ref }]"
+      i18n="@@M__FEATURE__GROUP__PLURAL"
     >Groups</a>
   </ng-container>
 
@@ -45,44 +53,50 @@
     <a class="m-tab-bar--tab"
       [class.m-tab-bar--active-tab]="type == ''"
       [routerLink]="['/search', { q: q, type: '', id: container, ref: ref }]"
+      i18n="@@SEARCH__TOP_TAB"
     >Top</a>
 
     <a class="m-tab-bar--tab"
       [class.m-tab-bar--active-tab]="type == 'latest'"
       [routerLink]="['/search', { q: q, type: 'latest', id: container, ref: ref }]"
+      i18n="@@SEARCH__LATEST_TAB"
     >Latest</a>
 
     <a class="m-tab-bar--tab"
       [class.m-tab-bar--active-tab]="type == 'activity'"
       [routerLink]="['/search', { q: q, type: 'activity', id: container, ref: ref }]"
+      i18n="@@M__FEATURE__POST_PLURAL"
     >Posts</a>
 
     <a class="m-tab-bar--tab"
       [class.m-tab-bar--active-tab]="type == 'object:video'"
       [routerLink]="['/search', { q: q, type: 'object:video', id: container, ref: ref }]"
+      i18n="@@M__FEATURE__VIDEO_PLURAL"
     >Videos</a>
 
     <a class="m-tab-bar--tab"
       [class.m-tab-bar--active-tab]="type == 'object:image'"
       [routerLink]="['/search', { q: q, type: 'object:image', id: container, ref: ref }]"
+      i18n="@@M__FEATURE__IMAGE_PLURAL"
     >Images</a>
 
     <a class="m-tab-bar--tab"
       [class.m-tab-bar--active-tab]="type == 'object:blog'"
       [routerLink]="['/search', { q: q, type: 'object:blog', id: container, ref: ref }]"
+      i18n="@@M__FEATURE__BLOG_PLURAL"
     >Blogs</a>
   </ng-template>
 
   <div class="m-tab-bar--tab m-tab-bar--more"
     (click)="toggleOptions(); $event.stopPropagation()"
   >
-    Options
+    <!-- i18n: @@M__COMMON__OPTIONS -->Options<!-- /i18n -->
 
     <ul class="minds-dropdown-menu" [hidden]="!optionsToggle">
       <li class="mdl-menu__item">
-        <span>Explicit</span>
+        <span i18n="@@M__COMMON__EXPLICIT">Explicit</span>
 
-        <m-tooltip icon="help">
+        <m-tooltip icon="help" i18n="@@SEARCH__EXPLICIT_TOOLTIP">
           Include explicit content (+18) search results
         </m-tooltip>
 
@@ -96,9 +110,9 @@
       </li>
 
       <li class="mdl-menu__item">
-        <span>Exclusive</span>
+        <span i18n="@@M__FEATURE__EXCLUSIVE">Exclusive</span>
 
-        <m-tooltip icon="help">
+        <m-tooltip icon="help" i18n="@@SEARCH__EXCLUSIVE_TOOLTIP">
           Include exclusive content in search results
         </m-tooltip>
 

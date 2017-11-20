@@ -2,17 +2,17 @@
   <form (submit)="submit($event)" [formGroup]="form" #f="ngForm" class="m-plus--verify">
 
     <ul>
-      <p>Please enter two social media links, which link back to your Minds channel page</p>
-      <li><input type="text" placeholder="eg. https://youtube.com/me" formControlName="link1"></li>
-      <li><input type="text" placeholder="eg. https://twitter.com/me" formControlName="link2"></li>
+      <p i18n="@@PLUS__VERIFY__LINKS_INPUT_LABEL">Please enter two social media links, which link back to your Minds channel page</p>
+      <li><input type="text" placeholder="eg. https://youtube.com/me" i18n="@@PLUS__VERIFY__LINK1_PLACEHOLDER" formControlName="link1"></li>
+      <li><input type="text" placeholder="eg. https://twitter.com/me" i18n="@@PLUS__VERIFY__LINK2_PLACEHOLDER" formControlName="link2"></li>
     </ul>
 
     <ul>
-      <p>Please give a brief statement as to why you should be verified</p>
+      <p i18n="@@PLUS__VERIFY__DESCRIPTION_LABEL">Please give a brief statement as to why you should be verified</p>
       <li><textarea formControlName="description"></textarea></li>
     </ul>
 
-    <button class="mdl-button mdl-button--raised" type="submit" [disabled]="inProgress || !f.form.valid">Submit</button>
+    <button class="mdl-button mdl-button--raised" type="submit" [disabled]="inProgress || !f.form.valid" i18n="@@PLUS__VERIFY__SUBMIT_ACTION">Submit</button>
 
   </form>
 </m-modal>

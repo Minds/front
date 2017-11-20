@@ -10,11 +10,11 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
   template: `
     <button class="minds-subscribe-button" *ngIf="!_user.subscribed" (click)="subscribe()">
       <i class="material-icons">person_add</i>
-      <!-- i18n -->Subscribe<!-- /i18n -->
+      <!-- i18n: @@M__ACTION__SUBSCRIBE -->Subscribe<!-- /i18n -->
     </button>
     <button class="minds-subscribe-button subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">
       <i class="material-icons">person_add</i>
-      <!-- i18n -->Subscribed<!-- /i18n -->
+      <!-- i18n: @@MINDS__BUTTONS__SUBSCRIBE__SUBSCRIBED_LABEL -->Subscribed<!-- /i18n -->
     </button>
   `
 })

@@ -13,25 +13,25 @@ import { GroupsService } from '../groups-service';
   <ul class="minds-dropdown-menu" [hidden]="!showMenu">
     <li class="mdl-menu__item"
       *ngIf="group['is:owner'] && !user['is:owner'] && user['is:member']"
-      (click)="removePrompt()" i18n>
+      (click)="removePrompt()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_FROM_GROUP">
       Remove from Group
     </li>
     <li class="mdl-menu__item"
       *ngIf="group['is:owner'] && !user['is:member'] && !wasReInvited"
-      (click)="reInvite()" i18n>
+      (click)="reInvite()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REINVITE">
       Re-invite to Group
     </li>
     <li class="mdl-menu__item" *ngIf="group['is:owner'] && wasReInvited">
-      <span class="minds-menu-info-item" i18n>Invited</span>
+      <span class="minds-menu-info-item" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__INVITED">Invited</span>
     </li>
     <li class="mdl-menu__item"
       *ngIf="group['is:owner'] && !user['is:owner'] && user['is:member']"
-      (click)="grantOwnership()" i18n>
+      (click)="grantOwnership()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_ADMIN">
       Make Admin
     </li>
     <li class="mdl-menu__item"
       *ngIf="group['is:owner'] && user['is:owner'] && user['is:member']"
-      (click)="revokeOwnership()" i18n>
+      (click)="revokeOwnership()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_ADMIN">
       Remove as Admin
     </li>
   </ul>
@@ -39,15 +39,15 @@ import { GroupsService } from '../groups-service';
 
   <m-modal [open]="kickPrompt">
       <div class="mdl-card__supporting-text">
-        <p i18n>Are you sure you want to remove {{ user.username }} from {{ group.name }}?</p>
-        <p><input type="checkbox" #ban> <!-- i18n -->Ban permanently<!-- /i18n --></p>
+        <p i18n="@@GROUPS__REMOVE_X_FROM_Y_CONFIRM">Are you sure you want to remove {{ user.username }} from {{ group.name }}?</p>
+        <p><input type="checkbox" #ban> <!-- i18n: @@M__COMMON__BAN_PERMANENTLY -->Ban permanently<!-- /i18n --></p>
       </div>
       <div class="minds-modal-dialog-actions">
         <button (click)="kick(ban.checked)" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-          <!-- i18n -->Confirm<!-- /i18n -->
+          <!-- i18n: @@M__ACTION__CONFIRM -->Confirm<!-- /i18n -->
         </button>
         <button (click)="cancelRemove()" class="mdl-button mdl-js-button mdl-button--colored">
-          <!-- i18n -->Cancel<!-- /i18n -->
+          <!-- i18n: @@M__ACTION__CANCEL -->Cancel<!-- /i18n -->
         </button>
       </div>
   </m-modal>

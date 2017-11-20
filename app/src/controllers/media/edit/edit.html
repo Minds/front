@@ -16,7 +16,7 @@
       [(ngModel)]="entity.title"
       [autoGrow]
       placeholder="Title..."
-      i18n-placeholder
+      i18n-placeholder="@@MINDS__MEDIA__TITLE_INPUT_PLACEHOLDER"
      ></textarea>
     <label class="mdl-textfield__label" for="name">{{entity.title}}</label>
   </div>
@@ -39,10 +39,13 @@
         <i class="material-icons"
         [ngClass]="{ 'mdl-color-text--red-500': entity.mature }"
         title="Mature content"
-        i18n-title
+        i18n-title="@@M__COMMON__MATURE_CONTENT"
         >explicit</i>
         
-        <span [ngClass]="{ 'mdl-color-text--red-500': entity.mature }">{{ entity.mature ? 'Mature content' : 'Anyone' }}</span>
+        <span [ngClass]="{ 'mdl-color-text--red-500': entity.mature }">
+          <ng-container *ngIf="entity.mature" i18n="@@M__COMMON__MATURE_CONTENT">Mature Content</ng-container>
+          <ng-container *ngIf="!entity.mature" i18n="@@MINDS__MEDIA__ANYONE_LABEL">Anyone</ng-container>
+        </span>
       </a>
     </div>
   </div>
@@ -52,7 +55,7 @@
   </div>
 
   <div class="mdl-cell mdl-cell--12-col">
-   <button class="mdl-button mdl-button--raised mdl-button--colored" i18n>Save</button>
+   <button class="mdl-button mdl-button--raised mdl-button--colored" i18n="@@M__ACTION__SAVE">Save</button>
   </div>
 
 </form>

@@ -8,7 +8,7 @@
 
 <div class="m-plus--subscription mdl-card mdl-shadow--4dp" *ngIf="!inProgress && active">
 
-  <p class="mdl-card__supporting-text">
+  <p class="mdl-card__supporting-text" i18n="@@PLUS__SUBSCRIPTION__CURRENTLY_MEMBER">
     You are a currently a Plus member.
   </p>
 
@@ -16,6 +16,7 @@
     (click)="cancel()"
     class="mdl-button mdl-button--colored mdl-button--raised"
     style="width:200px; margin: 0 16px 16px;"
+    i18n="@@PLUS__SUBSCRIPTION__CANCEL_PLUS_ACTION"
     >
     Cancel Plus
   </button>
@@ -25,7 +26,7 @@
 
 <div class="m-plus--subscription mdl-card mdl-shadow--4dp" *ngIf="!inProgress && completed">
 
-  <p class="mdl-card__supporting-text">
+  <p class="mdl-card__supporting-text" i18n="@@PLUS__SUBSCRIPTION__CONGRATULATE_PLUS">
     Congratulations, you are now a Minds Plus member!
   </p>
 
@@ -33,7 +34,7 @@
 
 <div class="mdl-card mdl-shadow--2dp" [hidden]="!inProgress">
   <div class="mdl-card__supporting-text">
-    <!-- i18n -->Please wait...<!-- /i18n -->
+    <!-- i18n: @@M__COMMON__PLEASE_WAIT -->Please wait...<!-- /i18n -->
   </div>
   <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" [mdl]></div>
 </div>

@@ -10,9 +10,9 @@
   <div class="overlay">
     <div class="mdl-grid m-homepage-grid">
       <div class="mdl-cell mdl-cell--12-col m-homepage-titles">
-        <h1 i18n>Your Social Network</h1>
-        <h3 [hidden]="session.isLoggedIn()" i18n>Launch a channel today</h3>
-        <h3 *ngIf="session.isLoggedIn()" i18n>Welcome {{session.getLoggedInUser().name}}</h3>
+        <h1 i18n="@@M__SOCIAL_NETWORK_SLOGAN">Your Social Network</h1>
+        <h3 [hidden]="session.isLoggedIn()" i18n="@@MINDS__HOME__HOMEPAGE__LAUNCH_CTA">Launch a channel today</h3>
+        <h3 *ngIf="session.isLoggedIn()" i18n="@@MINDS__HOME__HOMEPAGE__WELCOME_LABEL">Welcome {{session.getLoggedInUser().name}}</h3>
       </div>
       <div class="mdl-cell mdl-cell--6-col m-homepage-signup" [hidden]="session.isLoggedIn()">
         <minds-form-register (done)="registered()" (click)="banner.expand = true"></minds-form-register>
@@ -30,28 +30,28 @@
 </section>
 
 <section class="m-homepage-section" style="padding-top:0">
-  <h2 class="mdl-color-text--blue-grey-800">Take back your internet freedom</h2>
+  <h2 class="mdl-color-text--blue-grey-800" i18n="@@MINDS__HOME__HOMEPAGE__TAKE_BACK_TITLE">Take back your internet freedom</h2>
   <div class="mdl-grid m-homepage-section--icons">
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
       <a href="https://minds.org" target="_blank">
         <i class="material-icons mdl-color-text--blue-grey-800">code</i>
-        <label>Open Source</label>
+        <label i18n="@@MINDS__HOME__HOMEPAGE__OPEN_SOURCE_ITEM">Open Source</label>
       </a>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
       <a href="https://www.minds.com/blog/view/385014724078604288" target="_blank">
         <i class="material-icons mdl-color-text--blue-grey-800">enhanced_encryption</i>
-        <label>Encryption</label>
+        <label i18n="@@MINDS__HOME__HOMEPAGE__ENCRYPTION_ITEM">Encryption</label>
       </a>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
       <i class="material-icons mdl-color-text--blue-grey-800">speaker_notes</i>
-      <label>Free Speech</label>
+      <label i18n="@@MINDS__HOME__HOMEPAGE__FREE_SPECH_ITEM">Free Speech</label>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
       <a href="https://wefunder.com/minds" target="_blank">
         <i class="material-icons mdl-color-text--blue-grey-800">people</i>
-        <label>Community Owned</label>
+        <label i18n="@@MINDS__HOME__HOMEPAGE__COMMUNITY_OWNED_ITEM">Community Owned</label>
       </a>
     </div>
   </div>
@@ -61,49 +61,49 @@
   <div class="mdl-grid mdl-color-text--blue-grey-300">
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">timeline</i>
-      <h3 i18n>Newsfeed</h3>
+      <h3 i18n="@@M__FEATURE__NEWSFEED">Newsfeed</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">person_pin</i>
-      <h3 i18n>Channels</h3>
+      <h3 i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">thumbs_up_down</i>
-      <h3 i18n>Vote</h3>
+      <h3 i18n="@@MINDS__HOME__HOMEPAGE__VOTE_ITEM">Vote</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">comment</i>
-      <h3 i18n>Comment</h3>
+      <h3 i18n="@@MINDS__HOME__HOMEPAGE__COMMENT_ITEM">Comment</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">file_upload</i>
-      <h3 i18n>Upload</h3>
+      <h3 i18n="@@M__ACTION__UPLOAD">Upload</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">subject</i>
-      <h3 i18n>Blog</h3>
+      <h3 i18n="@@MINDS__HOME__HOMEPAGE__BLOG_ITEM">Blog</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">chat_bubble</i>
-      <h3 i18n>Chat</h3>
+      <h3 i18n="@@MINDS__HOME__HOMEPAGE__CHAT_ITEM">Chat</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">group_work</i>
-      <h3 i18n>Groups</h3>
+      <h3 i18n="@@M__FEATURE__GROUP__PLURAL">Groups</h3>
     </div>
     <div class="mdl-cell mdl-cell--1-col">
       <i class="material-icons">account_balance</i>
-      <h3 i18n>Wallet</h3>
+      <h3 i18n="@@MINDS__HOME__HOMEPAGE__WALLET_ITEM">Wallet</h3>
     </div>
   </div>
 
 </section>
 
 <section class="m-homepage-section">
-  <h1 class="mdl-color-text--blue-grey-800">Go viral and expand your reach</h1>
+  <h1 class="mdl-color-text--blue-grey-800" i18n="@@MINDS__HOME__HOMEPAGE__GO_VIRAL_TITLE">Go viral and expand your reach</h1>
   <div class="mdl-grid mdl-grid--no-spacing" style="max-width:700px;">
-    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600">1 point = 1 view</h4>
-    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600">$1 = 1,000 points</h4>
+    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600" i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__POINT_EQUALS_VIEW_ITEM">1 point = 1 view</h4>
+    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600" i18n="@@MINDS__HOME__HOMEPAGE__USD_EQUALS_1000_POINTS_ITEM">$1 = 1,000 points</h4>
   </div>
   <div class="mdl-grid m-homepage-section--rewards">
     <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
@@ -111,28 +111,28 @@
         <i class="material-icons mdl-color-text--blue-grey-800">create</i>
         <span class="mdl-color-text--green">+1</span>
       </div>
-      <label>Post a text/link activity</label>
+      <label i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__POST_ACTIVITY_ITEM">Post a text/link activity</label>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
       <div class="m-homepage-section--rewards-points">
         <i class="material-icons mdl-color-text--blue-grey-800">chat_bubble</i>
         <span class="mdl-color-text--green">+5</span>
       </div>
-      <label>Receive a comment</label>
+      <label i18n="@@MINDS__HOME__HOMEPAGE__RECEIVE_A_COMMENT_ITEM">Receive a comment</label>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
       <div class="m-homepage-section--rewards-points">
         <i class="material-icons mdl-color-text--blue-grey-800">person_add</i>
         <span class="mdl-color-text--green">+5</span>
       </div>
-      <label>Gain a subscriber</label>
+      <label i18n="@@MINDS__HOME__HOMEPAGE__GAIN_A_SUBSCRIBER_ITEM">Gain a subscriber</label>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
       <div class="m-homepage-section--rewards-points">
         <i class="material-icons mdl-color-text--blue-grey-800">thumb_up</i>
         <span class="mdl-color-text--green">+5</span>
       </div>
-      <label>Receive an up vote</label>
+      <label i18n="@@MINDS__HOME__HOMEPAGE__RECEIVE_AN_UPVOTE_ITEM">Receive an up vote</label>
     </div>
 
     <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
@@ -140,28 +140,28 @@
         <i class="material-icons mdl-color-text--blue-grey-800">repeat</i>
         <span class="mdl-color-text--green">+5</span>
       </div>
-      <label>Get Reminded</label>
+      <label i18n="@@MINDS__HOME__HOMEPAGE__GET_REMINDED_ITEM">Get Reminded</label>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
       <div class="m-homepage-section--rewards-points">
         <i class="material-icons mdl-color-text--blue-grey-800">attachment</i>
         <span class="mdl-color-text--green">+15</span>
       </div>
-      <label>Post a rich media activity</label>
+      <label i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__POST_RICH_MEDIA_ITEM">Post a rich media activity</label>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
       <div class="m-homepage-section--rewards-points">
         <i class="material-icons mdl-color-text--blue-grey-800">subject</i>
         <span class="mdl-color-text--green">+15</span>
       </div>
-      <label>Publish a blog</label>
+      <label i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__PUBLISH_A_BLOG">Publish a blog</label>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
       <div class="m-homepage-section--rewards-points">
         <i class="material-icons mdl-color-text--blue-grey-800">access_alarm</i>
         <span class="mdl-color-text--green">+50</span>
       </div>
-      <label>Hourly Check-in</label>
+      <label i18n="@@MINDS__HOME__HOMEPAGE__HOURLY_CHECKIN_ITEM">Hourly Check-in</label>
     </div>
 
 
@@ -171,32 +171,32 @@
 <span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>
 
 <section class="m-homepage-section">
-  <h2 class="mdl-color-text--blue-grey-800">How users generate revenue</h2>
+  <h2 class="mdl-color-text--blue-grey-800" i18n="@@MINDS__HOME__HOMEPAGE__HOW_USERS_GENERATE_TITLE">How users generate revenue</h2>
   <div class="mdl-grid m-homepage-section--icons">
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
       <div class="mdl-color--green mdl-color-text--white m-homepage--feature-btn">
           <i class="material-icons m-homepage--feature-btn--icon">vpn_key</i>
-          <span>Exclusive</span>
+          <span i18n="@@M__FEATURE__EXCLUSIVE">Exclusive</span>
       </div>
-      <label>Paid Subscriptions</label>
-      <p>Set a monthly price for your fans to pay for your exclusive content and services.</p>
+      <label i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__PAID_SUBSCRIPTION_SUBITEM">Paid Subscriptions</label>
+      <p i18n="@@MINDS__HOME__HOMEPAGE__PAID_SUBSCRIPTION_SUBITEM_DESC">Set a monthly price for your fans to pay for your exclusive content and services.</p>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
       <div class="mdl-color-text--white m-homepage--feature-btn" style="background: #428EDA;">
-          <span>Boost</span>
+          <span i18n="@@M__FEATURE__BOOST">Boost</span>
       </div>
-      <label>Peer-To-Peer Boost</label>
-      <p>Receive offers from other channels to share their content in exchange for points or dollars.</p>
+      <label i18n="@@MINDS__HOME__HOMEPAGE__P2P_BOOST_SUBITEM">Peer-To-Peer Boost</label>
+      <p i18n="@@MINDS__HOME__HOMEPAGE__P2P_BOOST_SUBITEM_DESC">Receive offers from other channels to share their content in exchange for points or dollars.</p>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
       <img src="assets/wire-icon.png" style="display: block; margin: 20px auto; height: 60px;"/>
-      <label>Wire</label>
-      <p>Receive tips from your audience for content they enjoy in points, dollars or Bitcoin.</p>
+      <label i18n="@@M__FEATURE__WIRE">Wire</label>
+      <p i18n="@@MINDS__HOME__HOMEPAGE__WIRE_ITEM_DESC">Receive tips from your audience for content they enjoy in points, dollars or Bitcoin.</p>
     </div>
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
       <i class="material-icons mdl-color-text--blue-grey-800">insert_chart</i>
-      <label>Ad Revenue</label>
-      <p>Monetize your blog with ads.</p>
+      <label i18n="@@MINDS__HOME__HOMEPAGE__AD_REVENUE_ITEM">Ad Revenue</label>
+      <p i18n="@@MINDS__HOME__HOMEPAGE__AD_REVENUE_ITEM_DESC">Monetize your blog with ads.</p>
     </div>
   </div>
 </section>
@@ -225,7 +225,7 @@
     </div>
 
     <div class="m-homepage-fader" [hidden]="inProgress">
-      <div class="m-homepage-fader--load-more" (click)="loadStream()">Click To See more</div>
+      <div class="m-homepage-fader--load-more" (click)="loadStream()" i18n="@@MINDS__HOME__HOMEPAGE__SEE_MORE_ACTION">Click To See more</div>
     </div>
 </div>
 
@@ -239,7 +239,7 @@
           <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank" class="mdl-color-text--blue-grey-100">{{page.title}}</a>
         </li>
       </ul>
-      <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2017</span>
+      <span class="copyright mdl-color-text--blue-grey-700" i18n="@@M__COMMON__COPYRIGHT_2017">&#169; Minds 2017</span>
     </section>
 
 </div>

@@ -33,11 +33,11 @@ interface CreditCard {
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
       style="margin:auto; display:block;" [mdl]>
       </div>
-      <p>One moment please...</p>
+      <p i18n="@@CHECKOUT__WAITING_LABEL">One moment please...</p>
     </div>
 
     <div class="m-payments--saved-cards" *ngIf="cards.length">
-      <div class="m-payments-saved--title">Select a card to use</div>
+      <div class="m-payments-saved--title" i18n="@@CHECKOUT__SAVED_CARDS_TITLE">Select a card to use</div>
       <ul>
         <li *ngFor="let card of cards"
           class="m-payments--saved-card-item"
@@ -46,11 +46,11 @@ interface CreditCard {
           <span class="m-payments--saved-card-item-type">{{card.brand}}</span>
           <span class="m-payments--saved-card-item-number">**** {{card.last4}}</span>
           <span class="m-payments--saved-card-item-expiry">{{card.exp_month}} / {{card.exp_year}}</span>
-          <span class="m-payments--saved-card-item-select">Select</span>
+          <span class="m-payments--saved-card-item-select" i18n="@@M__ACTION__SELECT">Select</span>
         </li>
         <li class="m-payments--saved-card-item m-payments-saved--item-new" (click)="cards = []">
-          <span class="m-payments--saved-card-item-type">Use a new card</span>
-          <span class="m-payments--saved-card-item-select">Select</span>
+          <span class="m-payments--saved-card-item-type" i18n="@@CHECKOUT__USE_NEW_CARD">Use a new card</span>
+          <span class="m-payments--saved-card-item-select" i18n="@@M__ACTION__SELECT">Select</span>
         </li>
       </ul>
     </div>
@@ -63,7 +63,7 @@ interface CreditCard {
     </minds-checkout-card-input>
     <div [hidden]="!inProgress" class="m-checkout-loading">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
-      <p>Capturing card details...</p>
+      <p i18n="@@CHECKOUT__CAPTURING_DETAILS">Capturing card details...</p>
     </div>
   `
 })

@@ -7,7 +7,7 @@
     <i class="ion-icon ion-flash"></i>
 
     <span class="m-wire-channel--cta-label">
-      <span>Wire me</span>
+      <span i18n="@@WIRE__CHANNEL__WIRE_ME_ACTION">Wire me</span>
     </span>
   </button>
 </div>
@@ -18,7 +18,7 @@
   class="mdl-card mdl-shadow--2dp"
 >
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text">Rewards</h2>
+    <h2 class="mdl-card__title-text" i18n="@@WIRE__CHANNEL__REWARDS_TITLE">Rewards</h2>
 
     <span *ngIf="session.getLoggedInUser().guid == channel.guid"
       class="m-wire-channel--edit-button"
@@ -40,6 +40,7 @@
       [(ngModel)]="rewards.description"
       [autoGrow]
       placeholder="About your offerings. eg. Describe what your supporters will receive…"
+      i18n-placeholder="@@WIRE__CHANNEL__REWARD_DESCRIPTION_PLACEHOLDER"
     ></textarea>
 
     <m-wire-channel-table type="money"
@@ -56,7 +57,7 @@
       [channel]="channel"
     ></m-wire-channel-table>
 
-    <p class="m-wire-channel--disclaimer" *ngIf="false">
+    <p class="m-wire-channel--disclaimer" *ngIf="false" i18n="@@WIRE__CHANNEL__REWARD_CHANGE_NOTICE">
       <span>@</span>{{channel.username}} reserves the right to change rewards at anytime without notice
     </p>
   </div>

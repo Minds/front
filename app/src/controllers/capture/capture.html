@@ -1,7 +1,7 @@
 <div class="drag-animation mdl-color--blue-grey-600 mdl-color-text--blue-grey-50" [hidden]="!dragging">
   <div class="drop">
     <i class="material-icons">file_upload</i>
-    <p i18n>Drop your files here</p>
+    <p i18n="@@MINDS__CAPTURE__DROP_AREA">Drop your files here</p>
   </div>
 
 </div>
@@ -13,7 +13,7 @@
       <div class="mdl-card m-albums-selector" #toggle>
         <div class="mdl-card__title">
           <h2 class="mdl-card__title-text">
-            <!-- i18n -->Album<!-- /i18n -->
+            <!-- i18n: @@MINDS__CAPTURE__ALBUM_LABEL -->Album<!-- /i18n -->
           </h2>
           <button class="mdl-button mdl-button--fab mdl-button--colored m-album-add" (click)="toggle.value = !toggle.value">
             <i class="material-icons">add</i>
@@ -29,7 +29,7 @@
               #newalbum
 
               />
-            <button class="mdl-button mdl-button--colored mdl-color-text--white" (click)="createAlbum(newalbum); toggle.value = false" i18n>Create</button>
+            <button class="mdl-button mdl-button--colored mdl-color-text--white" (click)="createAlbum(newalbum); toggle.value = false" i18n="@@M__ACTION__CREATE">Create</button>
 
           </div>
 
@@ -67,7 +67,7 @@
           <div class="upload-button">
             <button class="mdl-button mdl-button--raised">
               <i class="material-icons">attachment</i>
-              <span i18n>Add file</span>
+              <span i18n="@@MINDS__CAPTURE__ADD_FILE_ACTION">Add file</span>
             </button>
             <input
               type="file"
@@ -85,9 +85,9 @@
             <i class="material-icons"
             [ngClass]="{ 'mdl-color-text--red-500': default_maturity }"
             title="Mature content"
-            i18n-title
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
             >explicit</i>
-            <span *ngIf="default_maturity" class="mdl-color-text--red-500" i18n>Mature content</span>
+            <span *ngIf="default_maturity" class="mdl-color-text--red-500" i18n="@@M__COMMON__MATURE_CONTENT">Mature content</span>
           </a>
 
           <select name="defaultLicense" [(ngModel)]="default_license" class="mdl-color-text--blue-grey-300 m-form-select">
@@ -95,7 +95,7 @@
           </select>
 
           <button class="mdl-button mdl-button--raised mdl-button--colored m-capture-save-to-album-button" (click)="publish()" [disabled]="!uploads">
-            <span i18n>Save to album</span>
+            <span i18n="@@MINDS__CAPTURE__SAVE_TO_ALBUM">Save to album</span>
           </button>
       </div>
     </form>
@@ -113,7 +113,7 @@
             <i class="material-icons"
             [ngClass]="{ 'mdl-color-text--red-500': upload.mature }"
             title="Mature content"
-            i18n-title
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
             >explicit</i>
           </a>
 
@@ -132,7 +132,7 @@
 
     <div class="m-splash">
       <i class="material-icons mdl-color-text--blue-grey-400">file_upload</i>
-      <h3 class="mdl-color-text--blue-grey-300" i18n>Drag to upload</h3>
+      <h3 class="mdl-color-text--blue-grey-300" i18n="@@MINDS__CAPTURE__DRAG_TO_UPLOAD">Drag to upload</h3>
     </div>
   </div>
 

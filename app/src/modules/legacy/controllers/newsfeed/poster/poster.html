@@ -19,7 +19,7 @@
               [(ngModel)]="meta.message"
               (keyup)="getPostPreview(message)"
               placeholder="Speak your mind..."
-              i18n-placeholder
+              i18n-placeholder="@@MINDS__POSTER__SPEAK_YOUR_MIND"
               [autoGrow]
             ></textarea>
 
@@ -37,10 +37,10 @@
            [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
            (click)="attachment.toggleMature()"
            title="Mature content"
-           i18n-title
+           i18n-title="@@M__COMMON__MATURE_CONTENT"
         >
           <i class="material-icons">explicit</i>
-          <span *ngIf="attachment.isMature()" i18n>Mature content</span>
+          <span *ngIf="attachment.isMature()" i18n="@@M__COMMON__MATURE_CONTENT">Mature content</span>
         </a>
 
         <m-wire-threshold-input
@@ -53,7 +53,7 @@
           class="mdl-button mdl-button--colored"
           [disabled]="!canPost || !validThreshold || inProgress"
         >
-          <!-- i18n: Action of posting -->Post<!-- /i18n --> <i class="material-icons">send</i>
+          <!-- i18n: Action of posting@@MINDS__POSTER__POST_ACTION -->Post<!-- /i18n --> <i class="material-icons">send</i>
         </button>
       </div>
 

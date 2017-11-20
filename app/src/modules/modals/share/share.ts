@@ -18,17 +18,17 @@ import { EmbedService } from '../../../services/embed';
       <div class="m-social-share-buttons">
         <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-fb"
           (click)="openWindow('https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl + '&display=popup&ref=plugin&src=share_button')">
-          <!-- i18n -->Share on Facebook<!-- /i18n -->
+          <!-- i18n: @@MODALS__SHARE__ON_FACEBOOK -->Share on Facebook<!-- /i18n -->
         </button>
         <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-twitter"
           (click)="openWindow('https://twitter.com/intent/tweet?text=Shared%20via%20Minds.com&tw_p=tweetbutton&url=' + encodedUrl)">
-          <!-- i18n -->Share on Twitter<!-- /i18n -->
+          <!-- i18n: @@MODALS__SHARE__ON_TWITTER -->Share on Twitter<!-- /i18n -->
         </button>
       </div>
 
       <div class="m-modal-share-embed" *ngIf="embedCode">
         <span class="m-modal-share-embed__label mdl-color-text--blue-grey-300">
-          <!-- i18n -->Embed into your website:<!-- /i18n -->
+          <!-- i18n: @@M__COMMON__EMBED_INTO_WEBSITE -->Embed into your website:<!-- /i18n -->
         </span>
         <div>
           <textarea (click)="copy($event)" readonly>{{ embedCode }}</textarea>

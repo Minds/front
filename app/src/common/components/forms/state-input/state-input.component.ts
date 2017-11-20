@@ -5,7 +5,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   selector: 'minds-state-input',
   template: `
     <select [ngModel]="state" (ngModelChange)="state = $event; stateChange.next($event)" [disabled]="disabled">
-      <option value="" disabled hidden><i>State</i></option>
+      <option value="" disabled hidden><i i18n="State as a country entity@@M__COMMON__COUNTRY_STATE">State</i></option>
       <option *ngFor="let state of states"
         [value]="state.code"
       >{{ state.name }}</option>

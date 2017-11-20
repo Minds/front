@@ -14,7 +14,7 @@ import { Client } from '../../../../services/api';
     <img [src]="src" class="minds-banner-img"/>
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
-      <span i18n>Click here to add a new banner</span>
+      <span i18n="@@MINDS__BANNER__ADD_NEW_BANNER">Click here to add a new banner</span>
     </div>
 
     <button class="add-button mdl-button mdl-button--raised mdl-button--colored material-icons" (click)="onClick($event)">

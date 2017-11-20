@@ -20,8 +20,8 @@ import { Client } from '../../../../services/api';
     <div class="overlay" [hidden]="file">
       <i class="material-icons">camera</i>
       <span>
-        <!-- i18n -->Click here to add a new banner<br>
-        <em>Recommended minimum size 2000px&times;1125px (Ratio 16:9)</em><!-- /i18n -->
+        <!-- i18n: @@MINDS__BANNER__ADD_NEW_BANNER_W_RECOMMENDATION -->Click here to add a new banner<br>
+        <em>Recommended minimum size 2000px &times; 1125px (Ratio 16:9)</em><!-- /i18n -->
       </span>
     </div>
     <div class="minds-banner-overlay"></div>
@@ -33,10 +33,10 @@ import { Client } from '../../../../services/api';
     <div class="save-bar" [hidden]="!file">
       <div class="mdl-layout-spacer"></div>
       <span class="minds-button-edit cancel-button" (click)="cancel()">
-        <button i18n>Cancel</button>
+        <button i18n="@@M__ACTION__CANCEL">Cancel</button>
       </span>
       <span class="minds-button-edit save-button" (click)="done()">
-        <button i18n>Save</button>
+        <button i18n="@@M__ACTION__SAVE">Save</button>
       </span>
     </div>
     <input type="file" id="file" (change)="add($event)" [hidden]="file" />

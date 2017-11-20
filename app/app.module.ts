@@ -21,6 +21,7 @@ import { MonetizationModule } from './src/modules/monetization/monetization.modu
 import { WalletModule } from './src/modules/wallet/wallet.module';
 import { CheckoutModule } from './src/modules/checkout/checkout.module';
 import { PlusModule } from './src/modules/plus/plus.module';
+import { I18nModule } from './src/modules/i18n/i18n.module';
 
 import { AdsModule } from './src/modules/ads/ads.module';
 import { BoostModule } from './src/modules/boost/boost.module';
@@ -71,6 +72,7 @@ import { SearchModule } from './src/modules/search/search.module';
     BoostModule,
     WireModule,
     ReportModule,
+    I18nModule,
     BanModule,
     ThirdPartyNetworksModule,
     LegacyModule,

@@ -31,7 +31,7 @@ interface CreditCard {
     </minds-checkout-card-input>
     <div [hidden]="!inProgress" class="m-checkout-loading">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" style="margin:auto; display:block;" [mdl]></div>
-      <p>Capturing card details...</p>
+      <p i18n="@@CHECKOUT__CAPTURING_DETAILS">Capturing card details...</p>
     </div>
 
   `

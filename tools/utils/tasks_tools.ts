@@ -14,6 +14,8 @@ export function task(taskname: string, option?: string) {
   return require(join('..', 'tasks', taskname))(gulp, gulpLoadPlugins(), option);
 }
 
+(<any> _runSequence).options.ignoreUndefinedTasks = true;
+
 export function runSequence(...sequence: any[]) {
   let tasks = [];
   let _sequence = sequence.slice(0);
@@ -22,7 +24,15 @@ export function runSequence(...sequence: any[]) {
   scanDir(TASKS_PATH, taskname => tasks.push(taskname));
 
   sequence.forEach(task => {
-    if (tasks.indexOf(task) > -1) { registerTask(task); }
+    if (task instanceof Array) {
+      task.forEach(task => {
+        if (task && tasks.indexOf(task) > -1) { registerTask(task); }
+      });
+
+      return;
+    }
+
+    if (task && tasks.indexOf(task) > -1) { registerTask(task); }
   });
 
   return _runSequence(..._sequence);

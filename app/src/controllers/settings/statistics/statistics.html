@@ -1,12 +1,12 @@
 <div class="mdl-grid" style="max-width:900px">
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n>Your details</h2>
+    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__YOUR_DETAILS_TITLE">Your details</h2>
   </div>
   <div class="mdl-card__supporting-text">
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n -->Full Name<!-- /i18n -->
+        <!-- i18n: @@MINDS__SETTINGS__FULL_NAME_LABEL -->Full Name<!-- /i18n -->
       </div>
       <div class="minds-settings-data-text">
         {{data.fullname}}
@@ -14,7 +14,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n -->Email<!-- /i18n -->
+        <!-- i18n: @@M__COMMON__EMAIL -->Email<!-- /i18n -->
       </div>
       <div class="minds-settings-data-text">
         {{data.email}}
@@ -22,7 +22,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n -->Member since<!-- /i18n -->
+        <!-- i18n: @@MINDS__SETTINGS__MEMBER_SINCE_LABEL -->Member since<!-- /i18n -->
       </div>
       <div class="minds-settings-data-text">
         {{data.memberSince * 1000 | date:'shortTime'}} - {{data.memberSince * 1000 | date:'longDate'}}
@@ -30,7 +30,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n -->Last logged in<!-- /i18n -->
+        <!-- i18n: @@MINDS__SETTINGS__LAST_LOGGED_IN_LABEL -->Last logged in<!-- /i18n -->
       </div>
       <div class="minds-settings-data-text">
         {{data.lastLogin * 1000 | date:'shortTime'}} - {{data.lastLogin * 1000 | date:'longDate'}}
@@ -40,18 +40,18 @@
   </div>
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n>Your content</h2>
+    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__YOUR_CONTENT_TITLE">Your content</h2>
   </div>
   <div class="mdl-card__supporting-text">
   </div>
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n>Your usage</h2>
+    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__YOUR_USAGE_TITLE">Your usage</h2>
   </div>
   <div class="mdl-card__supporting-text">
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n -->Storage<!-- /i18n -->
+        <!-- i18n: @@MINDS__SETTINGS__STORAGE_LABEL -->Storage<!-- /i18n -->
       </div>
       <div class="minds-settings-data-text">
         {{data.storage}}
@@ -59,7 +59,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n -->Bandwidth<!-- /i18n -->
+        <!-- i18n: @@MINDS__SETTINGS__BANDWIDTH_LABEL -->Bandwidth<!-- /i18n -->
       </div>
       <div class="minds-settings-data-text">
         {{data.bandwidth}}
@@ -68,12 +68,12 @@
   </div>
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n>Referrals</h2>
+    <h2 class="mdl-card__title-text" i18n="@@M__COMMON__REFERRALS">Referrals</h2>
   </div>
   <div class="mdl-card__supporting-text">
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n -->Referrals<!-- /i18n -->
+        <!-- i18n: @@M__COMMON__REFERRALS -->Referrals<!-- /i18n -->
       </div>
       <div class="minds-settings-data-text">
         {{data.referrals}}
@@ -81,7 +81,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n -->Earnings<!-- /i18n -->
+        <!-- i18n: @@M__COMMON__EARNINGS -->Earnings<!-- /i18n -->
       </div>
       <div class="minds-settings-data-text">
         {{data.earnings}}

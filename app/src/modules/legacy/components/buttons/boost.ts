@@ -13,7 +13,7 @@ import { BoostCreatorComponent } from '../../../boost/creator/creator.component'
   template: `
     <button class="mdl-button mdl-color-text--white mdl-button--colored mdl-button--raised m-boost-button-fat"
       (click)="boost()">
-    <!-- i18n -->Boost<!-- /i18n -->
+    <!-- i18n: verb|@@M__ACTION__BOOST -->Boost<!-- /i18n -->
     </button>
   `
 })

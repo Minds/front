@@ -12,7 +12,7 @@
         <ng-container *ngIf="editing && type=='money'">$</ng-container>
         <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
         <span *ngIf="editing">+</span>
-        <ng-container *ngIf="type=='points'">points</ng-container>
+        <ng-container *ngIf="type=='points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</ng-container>
 
         <div class="m-wire-channel--reward-send-wire" *ngIf="!editing">
           <i class="ion-icon ion-flash"></i>
@@ -21,7 +21,7 @@
 
       <div class="m-wire-channel--reward-description">
         <p *ngIf="!editing">{{ reward.description }}</p>
-        <textarea *ngIf="editing" [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow] placeholder="Describe the reward"></textarea>
+        <textarea *ngIf="editing" [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow] placeholder="Describe the reward" i18n-placeholder="@@WIRE__CHANNEL__TABLE__REWARD_PLACEHOLDER"></textarea>
       </div>
     </td>
   </tr>
@@ -32,6 +32,6 @@
     (click)="addTier()"
   >
     <i class="material-icons">playlist_add</i>
-    <span>Add Reward</span>
+    <span i18n="@@WIRE__CHANNEL__TABLE__ADD_REWARD_ACTION">Add Reward</span>
   </a>
 </div>

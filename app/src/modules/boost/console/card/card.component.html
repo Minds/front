@@ -18,7 +18,7 @@
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">remove_red_eye</i>
-    <!-- i18n -->{{ boost.impressions | number }} views<!-- /i18n -->
+    <!-- i18n: @@M__COMMON__VIEWS_WITH_COUNT -->{{ boost.impressions | number }} views<!-- /i18n -->
   </div>
 
   <!-- USD bid, if applicable -->
@@ -26,7 +26,7 @@
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">attach_money</i>
-    <!-- i18n -->{{ boost.bid / 100 | currency:'USD':true }} USD<!-- /i18n -->
+    <!-- i18n: @@BOOST__CONSOLE__CARD__USD_VALUE -->{{ boost.bid / 100 | currency:'USD':true }} USD<!-- /i18n -->
   </div>
 
   <!-- Points bid, if applicable -->
@@ -34,7 +34,7 @@
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">account_balance</i>
-    <!-- i18n -->{{ boost.bid | number }} views<!-- /i18n -->
+    <!-- i18n: @@M__COMMON__VIEWS_WITH_COUNT -->{{ boost.bid | number }} views<!-- /i18n -->
   </div>
 
   <!-- TODO: BTC  -->
@@ -78,23 +78,24 @@
     <button *ngIf="canRevoke()"
       class="mdl-button mdl-button--raised mdl-color--red-600 mdl-color-text--white"
       (click)="revoke()"
-      i18n
+      i18n="@@BOOST__CONSOLE__CARD__REVOKE_ACTION"
     >Revoke</button>
 
     <button *ngIf="canReject()"
       class="mdl-button mdl-button--raised mdl-color--red-600 mdl-color-text--white"
       (click)="reject()"
-      i18n
+      i18n="@@M__ACTION__REJECT"
     >Reject</button>
 
     <button *ngIf="canAccept()"
       class="mdl-button mdl-button--raised mdl-color--green-400 mdl-color-text--white"
       (click)="accept()"
-      i18n
+      i18n="@@M__ACTION__ACCEPT"
     >Accept</button>
   </div>
 </div>
 
 <div class="m-boost-card--rejection-reason" *ngIf="boost.rejection_reason && boost.rejection_reason != -1">
-  <i class="material-icons">warning</i> Your boost was rejected: {{ findReason(boost.rejection_reason)?.label }}
+  <i class="material-icons">warning</i>
+  <!--i18n: @@BOOST__CONSOLE__CARD__PREVIOUS_REJECTION -->Your boost was rejected: {{ findReason(boost.rejection_reason)?.label }}<!-- /i18n -->
 </div>

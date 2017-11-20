@@ -16,7 +16,7 @@
         id="username"
         formControlName="username"
         placeholder="Username"
-        i18n-placeholder
+        i18n-placeholder="@@M__COMMON__USERNAME"
         />
     </div>
 
@@ -26,7 +26,7 @@
         id="email"
         formControlName="email"
         placeholder="Email"
-        i18n-placeholder
+        i18n-placeholder="email placeholder|@@FORMS__REGISTER__EMAIL_PLACEHOLDER"
         />
     </div>
 
@@ -36,7 +36,7 @@
         id="password"
         formControlName="password"
         placeholder="Password"
-        i18n-placeholder
+        i18n-placeholder="@@M__COMMON__PASSWORD"
         />
     </div>
 
@@ -46,7 +46,7 @@
         id="password2"
         formControlName="password2"
         placeholder="Confirm your password"
-        i18n-placeholder
+        i18n-placeholder="@@FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER"
         (keydown.enter)="register($event)"
         />
     </div>
@@ -58,9 +58,9 @@
 
   <div class="mdl-card__actions">
     <button class="mdl-button mdl-button--raised mdl-button--colored m-register-btn" (click)="register($event)" [disabled]="inProgress">
-      <!-- i18n -->Signup<!-- /i18n -->
+      <!-- i18n: @@FORMS__REGISTER__SIGNUP_ACTION -->Signup<!-- /i18n -->
     </button>
-    <span routerLink="/p/terms" class="m-register-tac" i18n>By creating an account you agree to the Terms & Conditions</span>
+    <span routerLink="/p/terms" class="m-register-tac" i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL">By creating an account you agree to the Terms & Conditions</span>
   </div>
 
 </form>

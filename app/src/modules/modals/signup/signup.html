@@ -1,14 +1,14 @@
 <m-modal [open]="open" (closed)="onClose($event)" *ngIf="!session.isLoggedIn() || display != 'initial'">
     <div class="mdl-card__title" [hidden]="display == 'onboarding' || display == 'categories'">
         <img src="/assets/logos/small.png" (click)="close()"/>
-        <h4 class="mdl-color-text--grey-600" i18n>Your Social Network</h4>
+        <h4 class="mdl-color-text--grey-600" i18n="@@M__SOCIAL_NETWORK_SLOGAN">Your Social Network</h4>
     </div>
 
     <!-- Initial Display -->
     <div *ngIf="display == 'initial'">
 
         <div class="m-signup-modal-feature-text mdl-card__supporting-text">
-        <!-- i18n -->An open-source, community-owned <b>social network</b> providing tools for revenue, reach, privacy and Internet freedom. <!-- /i18n -->
+        <!-- i18n: @@MODALS__SIGNUP__SUBTITLE -->An open-source, community-owned <b>social network</b> providing tools for revenue, reach, privacy and Internet freedom. <!-- /i18n -->
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
@@ -19,13 +19,13 @@
             </svg>
             </span>
             <span class="m-signup-button-text">
-            <!-- i18n -->Signin with Facebook<!-- /i18n -->
+            <!-- i18n: @@MODALS__SIGNUP__WITH_FACEBOOK -->Signin with Facebook<!-- /i18n -->
             </span>
         </button>
         <button class="mdl-color--amber" (click)="do('register')">
             <span class="m-signup-bulb-icon m-wiggle-animation"><img src="/assets/icon.png"></span>
             <span class="m-signup-button-text">
-            <!-- i18n -->Signin with Minds<!-- /i18n -->
+            <!-- i18n: @@MODALS__SIGNUP__WITH_MINDS -->Signin with Minds<!-- /i18n -->
             </span>
         </button>
         </div>
@@ -35,18 +35,18 @@
             <img src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg">
         </a>
         <a href="https://play.google.com/store/apps/details?id=com.minds.mobile" align="center">
-            <img alt="Android app on Google Play" src="{{minds.cdn_url}}assets/ext/playstore.png">
+            <img alt="Android app on Google Play" i18n-alt="@@MODALS__SIGNUP__ANDROID_APP_ALT" src="{{minds.cdn_url}}assets/ext/playstore.png">
         </a>
         </div>
 
         <div class="mdl-card__supporting-text">
-        <span class="m-modal-signup-skip" (click)="close()" i18n>Maybe later</span>
+        <span class="m-modal-signup-skip" (click)="close()" i18n="@@MODALS__SIGNUP__MAYBE_LATER">Maybe later</span>
         </div>
     </div>
     <!-- Login Display -->
     <minds-form-login (done)="done('login')" (doneRegistered)="display = 'fb-complete'" (canceled)="close()" *ngIf="display == 'login'"></minds-form-login>
     <!-- Register Display -->
-    <span style="font-weight: bold;text-align:center;font-size: 13px;margin-bottom: -14px;cursor: pointer;" class="mdl-color-text--blue-grey" *ngIf="display == 'register'" (click)="do('login')" i18n>Already have a channel? Click here.</span>
+    <span style="font-weight: bold;text-align:center;font-size: 13px;margin-bottom: -14px;cursor: pointer;" class="mdl-color-text--blue-grey" *ngIf="display == 'register'" (click)="do('login')" i18n="@@MODALS__SIGNUP__ALREADY_HAVE_CHANNEL">Already have a channel? Click here.</span>
     <minds-form-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'register'"></minds-form-register>
     <!-- FB Signin final phase -->
     <minds-form-fb-register (done)="done('register')" (canceled)="close()" *ngIf="display == 'fb-complete'"></minds-form-fb-register>

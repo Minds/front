@@ -15,7 +15,7 @@ import { Client } from '../../../services/api';
   <div class="m-scrubber mdl-color--blue-grey-600" (click)="seek($event)">
       <div class="m-scrubber-progress mdl-color--amber-600" [ngStyle]="{'left': (thumbnailSec / element.duration)*100  + '%'}"></div>
   </div>
-  <span class="m-scrubber-tip" i18n>Click on this bar to change the thumbnail</span>
+  <span class="m-scrubber-tip" i18n="@@MINDS__MEDIA__CHANGE_THUMBNAIL_INFO">Click on this bar to change the thumbnail</span>
   `
 })
 

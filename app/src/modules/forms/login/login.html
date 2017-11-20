@@ -16,7 +16,7 @@
         id="username"
         formControlName="username"
         placeholder="Username"
-        i18n-placeholder
+        i18n-placeholder="@@M__COMMON__USERNAME"
         (keydown.enter)="login(); $event.preventDefault();"
         />
     </div>
@@ -27,7 +27,7 @@
         id="password"
         formControlName="password"
         placeholder="Password"
-        i18n-placeholder
+        i18n-placeholder="@@M__COMMON__PASSWORD"
         (keydown.enter)="login(); $event.preventDefault();"
         />
     </div>
@@ -35,10 +35,10 @@
 
   <div class="mdl-card__actions">
     <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="login()" [disabled]="inProgress">
-      <!-- i18n -->Login<!-- /i18n -->
+      <!-- i18n: @@M__ACTION__LOGIN -->Login<!-- /i18n -->
     </button>
     <a class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link" [routerLink]="['/forgot-password']">
-      <!-- i18n -->Forgot Password?<!-- /i18n -->
+      <!-- i18n: @@FORMS__LOGIN__FORGOT_PASSWORD_LINK -->Forgot Password?<!-- /i18n -->
     </a>
 
     <button class="m-fb-login-button mdl-shadow--2dp" (click)="loginWithFb(); $event.preventDefault()">
@@ -48,7 +48,7 @@
         </svg>
       </span>
       <span class="m-signup-button-text">
-        <!-- i18n -->Migrate from Facebook<!-- /i18n -->
+        <!-- i18n: @@FORMS__LOGIN__MIGRATE_FROM_FACEBOOK_ACTION -->Migrate from Facebook<!-- /i18n -->
       </span>
     </button>
   </div>
@@ -59,11 +59,11 @@
 <!-- START: TWOFACTOR -->
 <div class="mdl-card mdl-color--blue-grey-500 mdl-shadow--2dp minds-login-box" [hidden]="!twofactorToken">
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text mdl-color-text--blue-grey-50" i18n>Twofactor Login</h2>
+    <h2 class="mdl-card__title-text mdl-color-text--blue-grey-50" i18n="@@FORMS__LOGIN__2FA_LOGIN_TITLE">Twofactor Login</h2>
   </div>
 
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-    <!-- i18n -->We just sent you a text. Enter the code below to authenticate.<!-- /i18n -->
+    <!-- i18n: @@FORMS__LOGIN__2FA_LOGIN_SMS_SENT -->We just sent you a text. Enter the code below to authenticate.<!-- /i18n -->
   </div>
 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-color-text--blue-grey-50" [mdl]>
@@ -73,11 +73,11 @@
     #code
     (keydown.enter)="twofactorAuth(code)"
     />
-    <label class="mdl-textfield__label mdl-color-text--blue-grey-50" for="code" i18n>Enter your code here</label>
+    <label class="mdl-textfield__label mdl-color-text--blue-grey-50" for="code" i18n="@@M__COMMON__ENTER_2FA_CODE">Enter your code here</label>
   </div>
   <div></div>
 
   <button class="mdl-button mdl-button--raised mdl-color--blue-grey-200" (click)="twofactorAuth(code)">
-    <!-- i18n -->Login<!-- /i18n -->
+    <!-- i18n: @@M__ACTION__LOGIN -->Login<!-- /i18n -->
   </button>
 </div>

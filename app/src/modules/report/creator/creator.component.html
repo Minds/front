@@ -2,7 +2,7 @@
 
   <div class="m-report-creator--header">
     <h2>
-      <span>Report</span>
+      <span i18n="Report as flag something@@M__COMMON__REPORT">Report</span>
     </h2>
   </div>
 
@@ -33,12 +33,12 @@
 
   <div class="m-report-creator--appeals" *ngIf="next && !success && subject === 11">
     <div class="m-report-creator--note">
-      <textarea [(ngModel)]="note" placeholder="Please explain why you think this content should not be on Minds."></textarea>
+      <textarea [(ngModel)]="note" placeholder="Please explain why you think this content should not be on Minds." i18n-placeholder="@@REPORT__CREATOR__REPORT_NOTE_PLACEHOLDER"></textarea>
     </div>
   </div>
 
   <div class="m-report-creator--copyright" *ngIf="next && subject === 10">
-    <p>
+    <p i18n="@@REPORT__CREATOR__DMCA_NOTICE">
       Please submit a DMCA notice to copyright@minds.com.
     </p>
   </div>
@@ -53,6 +53,7 @@
           class="m-report-creator--button m-report-creator--button-submit"
           [disabled]="!canSubmit() || inProgress || success"
           (click)="submit()"
+          i18n="@@REPORT__CREATOR__SUBMIT_ACTION"
         >
           SUBMIT
         </button>
@@ -75,6 +76,7 @@
             class="m-report-creator--button m-report-creator--button-next"
           [disabled]="!canSubmit() || inProgress || success"
           (click)="next = true"
+          i18n="@@REPORT__CREATOR__NEXT_ACTION"
         >
           NEXT
         </button>
@@ -84,17 +86,17 @@
 
   <div *ngIf="!inProgress && success" class="m-report-creator--success">
     <p>
-      <!-- i18n -->Thanks for letting us know! We appreciate your effort to keep Minds safe and secure.<!-- /i18n -->
+      <!-- i18n: @@M__COMMON__THANKS_LET_US_KNOW_KEEP_MINDS_SAFE -->Thanks for letting us know! We appreciate your effort to keep Minds safe and secure.<!-- /i18n -->
     </p>
 
     <p>
-      <!-- i18n -->We will review your report as soon as possible.<!-- /i18n -->
+      <!-- i18n: @@M__COMMON__REVIEW_REPORT_ASAP -->We will review your report as soon as possible.<!-- /i18n -->
     </p>
   </div>
 
   <div class="m-report-creator--close" *ngIf="success || (next && subject === 10)">
     <button class="m-report-creator--button" (click)="close()">
-    <!-- i18n -->CLOSE<!-- /i18n -->
+    <!-- i18n: @@M__ACTION__CLOSE__CAPS -->CLOSE<!-- /i18n -->
     </button>
   </div>
 

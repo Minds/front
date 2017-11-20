@@ -13,42 +13,47 @@ import { BanModalComponent } from '../../../ban/modal/modal.component';
     <button class="material-icons" (click)="toggleMenu($event)">settings</button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
-      <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n>Block @{{user.username}}</li>
-      <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n>Un-Block @{{user.username}}</li>
-      <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n>Un-subscribe</li>
+      <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BLOCK">Block @{{user.username}}</li>
+      <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBLOCK">Un-Block @{{user.username}}</li>
+      <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNSUBSCRIBE">Un-subscribe</li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
         [hidden]="user.banned === 'yes'"
-        (click)="banToggle = true; showMenu = false" i18n
+        (click)="banToggle = true; showMenu = false"
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_GLOBALLY"
         >
         Ban globally
       </li>
-      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n>Un-ban globally</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_GLOBALLY">Un-ban globally</li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
         [hidden]="user.ban_monetization === 'yes'"
-        (click)="banMonetizationToggle = true; showMenu = false" i18n
+        (click)="banMonetizationToggle = true; showMenu = false"
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_FROM_MONETIZATION"
         >
         Ban from Monetization
       </li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
         [hidden]="user.ban_monetization !== 'yes'"
-        (click)="unBanMonetization()" i18n
+        (click)="unBanMonetization()"
+        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_FROM_MONETIZATION"
         >
         Un-ban from Monetization
       </li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
         [hidden]="user.spam"
-        (click)="setSpam(true); showMenu = false" i18n
+        (click)="setSpam(true); showMenu = false"
+        i18n="@@M__ACTION__MARK_SPAM"
         >
         Mark as spam
       </li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
         [hidden]="!user.spam"
-        (click)="setSpam(false); showMenu = false" i18n
+        (click)="setSpam(false); showMenu = false"
+        i18n="@@M__ACTION__NOT_SPAM"
         >
         Not spam
       </li>
@@ -61,12 +66,13 @@ import { BanModalComponent } from '../../../ban/modal/modal.component';
       (closed)="banToggle = false"
       (actioned)="ban($event)"
       yesButton="Ban user"
+      i18n-yesButton="@@M__ACTION__BAN_USER"
     >
-      <p confirm-message>
+      <p confirm-message i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_USER_CONFIRM_MESSAGE">
           Are you sure you want to ban this user?<br><br>
           This will close all open sessions and lock him/her out from Minds.
       </p>
-      <p confirm-success-message>
+      <p confirm-success-message i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_USER_SUCCESS_MESSAGE">
           User has been banned.
       </p>
     </m-modal-confirm>
@@ -76,13 +82,14 @@ import { BanModalComponent } from '../../../ban/modal/modal.component';
       (closed)="banMonetizationToggle = false"
       (actioned)="banMonetization($event)"
       yesButton="Ban user"
+      i18n-yesButton="@@M__ACTION__BAN_USER"
     >
-      <p confirm-message>
+      <p confirm-message i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_MONETIZATION_CONFIRM_MESSAGE">
           Are you sure you want to ban this user from monetization?<br><br>
           This will close all open sessions and decline pending payments.<br>
           There's no UNDO. This will NOT ban the user from Minds.
       </p>
-      <p confirm-success-message>
+      <p confirm-success-message i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_MONETIZATION_SUCCESS_MESSAGE">
           User has been banned from monetization.
       </p>
     </m-modal-confirm>

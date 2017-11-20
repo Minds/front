@@ -13,22 +13,22 @@ import { GroupsService } from '../groups-service';
     </button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
-      <li class="mdl-menu__item" [hidden]="group['is:muted']" (click)="mute()" i18n>Disable Notifications</li>
-      <li class="mdl-menu__item" [hidden]="!group['is:muted']" (click)="unmute()" i18n>Enable Notifications</li>
-      <li class="mdl-menu__item" *ngIf="group['is:creator']" [hidden]="group.deleted" (click)="deletePrompt()" i18n>Delete Group</li>
+      <li class="mdl-menu__item" [hidden]="group['is:muted']" (click)="mute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS">Disable Notifications</li>
+      <li class="mdl-menu__item" [hidden]="!group['is:muted']" (click)="unmute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS">Enable Notifications</li>
+      <li class="mdl-menu__item" *ngIf="group['is:creator']" [hidden]="group.deleted" (click)="deletePrompt()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP">Delete Group</li>
     </ul>
     <div class="minds-bg-overlay" (click)="toggleMenu($event)" [hidden]="!showMenu"></div>
 
     <m-modal [open]="group['is:owner'] && isGoingToBeDeleted">
       <div class="mdl-card__supporting-text">
-        <p i18n>Are you sure you want to delete {{ group.name }}? This action cannot be undone.</p>
+        <p i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP_CONFIRM">Are you sure you want to delete {{ group.name }}? This action cannot be undone.</p>
       </div>
       <div class="mdl-card__actions">
         <button (click)="delete()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-          <!-- i18n -->Confirm<!-- /i18n -->
+          <!-- i18n: @@M__ACTION__CONFIRM -->Confirm<!-- /i18n -->
         </button>
         <button (click)="cancelDelete()" class="mdl-button mdl-js-button mdl-button--colored">
-          <!-- i18n -->Cancel<!-- /i18n -->
+          <!-- i18n: @@M__ACTION__CANCEL -->Cancel<!-- /i18n -->
         </button>
       </div>
     </m-modal>

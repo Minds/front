@@ -1,8 +1,8 @@
 <div class="mdl-grid m-admin-tagcloud" style="max-width:600px">
   <div class="mdl-cell mdl-cell--12-col">
     <p class="mdl-color-text--blue-grey-300">
-      This is a list of currently trending hashtags. Click the hashtag to see the search results for it. Click on the X next to the tag to hide it. Hidden hashtags won't appear again.
-      <span *ngIf="age !== false">This list was generated {{ age }} minute(s) ago.</span>
+      <!-- i18n: @@MINDS__ADMIN__TAGCLOUD__HELP_LABEL -->This is a list of currently trending hashtags. Click the hashtag to see the search results for it. Click on the X next to the tag to hide it. Hidden hashtags won't appear again.<!-- /i18n -->
+      <span *ngIf="age !== false" i18n="@@MINDS__ADMIN__TAGCLOUD__GENERATION_TIMESTAMP_LABEL">This list was generated {{ age }} minute(s) ago.</span>
       <i class="material-icons m-material-icons-inline-text m-admin-tagcloud-resync mdl-color-text--blue-grey-200"
         (click)="resync()"
       >refresh</i>
@@ -20,7 +20,7 @@
 
     <hr>
 
-    <p class="mdl-color-text--blue-grey-300" *ngIf="hidden.length > 0">
+    <p class="mdl-color-text--blue-grey-300" *ngIf="hidden.length > 0" i18n="@@MINDS__ADMIN__TAGCLOUD__LAST_HIDDEN_LABEL">
       Last {{ hidden.length }} hidden tags:
     </p>
 

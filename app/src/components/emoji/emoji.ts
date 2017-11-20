@@ -12,7 +12,7 @@ import { Emoji as EmojiDirective } from '../../common/directives/emoji';
     [ngStyle]="localDirective.style"
     >
       <div class="m-emoji-selector-title">
-        <!-- i18n -->Emoji<!-- /i18n -->
+        <!-- i18n: @@MINDS__EMOJI__LABEL -->Emoji<!-- /i18n -->
         <i class="material-icons m-emoji-selector-close"
         (click)="hide()"
         >close</i>

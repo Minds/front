@@ -13,12 +13,12 @@
       <ul class="m-content-sidebar-nav">
           <li class="m-content-sidebar-nav-item">
             <a (click)="newPage()" [ngClass]="{'is-active': !page.path && page.subtype !== 'link' }">
-              <!-- i18n -->Add a new page<!-- /i18n -->
+              <!-- i18n: @@MINDS__ADMIN__PAGES__ADD_PAGE -->Add a new page<!-- /i18n -->
             </a>
           </li>
           <li class="m-content-sidebar-nav-item">
             <a (click)="newLink()">
-              <!-- i18n -->Add a new link<!-- /i18n -->
+              <!-- i18n: @@MINDS__ADMIN__PAGES__ADD_LINK -->Add a new link<!-- /i18n -->
             </a>
           </li>
           <li class="m-content-sidebar-nav-item" *ngFor="let p of pages">
@@ -40,10 +40,10 @@
       <m-inline-editor name="description" [(ngModel)]="page.body" placeholder="Go ahead and write some content!" #inlineEditor></m-inline-editor>
 
       <div class="m-form-actions">
-        <button class="m-button m-button--submit" (click)="save(page)" [hidden]="status == 'saving'" i18n>Save & Publish</button>
-        <button class="m-button m-button--submit" (click)="false" [hidden]="status != 'saving'" i18n>Saving</button>
+        <button class="m-button m-button--submit" (click)="save(page)" [hidden]="status == 'saving'" i18n="@@MINDS__ADMIN__PAGES__SAVE_AND_PUBLISH_ACTION">Save &amp; Publish</button>
+        <button class="m-button m-button--submit" (click)="false" [hidden]="status != 'saving'" i18n="@@MINDS__ADMIN__PAGES__SAVING">Saving</button>
 
-        <button class="m-button m-button--delete" (click)="delete(page)" i18n>Delete</button>
+        <button class="m-button m-button--delete" (click)="delete(page)" i18n="@@M__ACTION__DELETE">Delete</button>
       </div>
   </div>
 
@@ -51,15 +51,15 @@
       <input type="text" class="m-h1-input" name="title" [(ngModel)]="page.title"/>
 
       <div class="m-admin-pages-link-path">
-        <label for="" i18n>URL (relative or absolute):</label>
+        <label for="" i18n="@@MINDS__ADMIN__PAGES__LINK_URL_LABEL">URL (relative or absolute):</label>
         <input type="text" class="m-form-input" name="path" [(ngModel)]="page.path"/>
       </div>
 
       <div class="m-form-actions">
-        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page, false)" [hidden]="status == 'saving'" i18n>Save & Publish</button>
-        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="false" [hidden]="status != 'saving'" i18n>Saving</button>
+        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page, false)" [hidden]="status == 'saving'" i18n="@@MINDS__ADMIN__PAGES__SAVE_AND_PUBLISH_ACTION">Save & Publish</button>
+        <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="false" [hidden]="status != 'saving'" i18n="@@MINDS__ADMIN__PAGES__SAVING">Saving</button>
 
-        <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="delete(page)" i18n>Delete</button>
+        <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="delete(page)" i18n="@@M__ACTION__DELETE">Delete</button>
       </div>
   </div>
 

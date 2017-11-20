@@ -1,14 +1,14 @@
 <div class="m-revenue--options">
 
   <div class="m-revenue--options-payout-method mdl-card mdl-shadow--2dp">
-    <h3 class="mdl-color-text--blue-grey-600">Payout Method</h3>
+    <h3 class="mdl-color-text--blue-grey-600" i18n="@@MONETIZATION__REVENUE__OPTIONS__PAYOUT_METHOD_TITLE">Payout Method</h3>
 
     <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
     </div>
 
     <div class="m-revenue--options-payout-method-bank" *ngIf="!inProgress && !editing && payoutMethod.account">
-      <p>Payouts will be sent to the bank account below. If you wish to add a new bank account, you can edit the account information below.</p>
+      <p i18n="@@MONETIZATION__REVENUE__OPTIONS__BANK_DETAILS_LABEL">Payouts will be sent to the bank account below. If you wish to add a new bank account, you can edit the account information below.</p>
 
       <div class="m-revenue--options-payout-method-bank-account">
         <div class="m-revenue--options-payout-method-bank--name">{{payoutMethod.account.bank}}</div>
@@ -16,15 +16,16 @@
 
         <div class="m-revenue--options-payout-method-bank--actions"
           (click)="edit()"
+          i18n="@@M__ACTION__CHANGE"
         >Change</div>
       </div>
 
     </div>
 
     <div class="m-revenue--options-payout-method-setup " *ngIf="!inProgress && (!payoutMethod.account || editing)">
-      <p *ngIf="!editing; else editingCaption">You haven't setup your bank account yet. In order to receive payouts you will need to link your bank account.</p>
+      <p *ngIf="!editing; else editingCaption" i18n="@@MONETIZATION__REVENUE__OPTIONS__NO_BANK_DETAILS_LABEL">You haven't setup your bank account yet. In order to receive payouts you will need to link your bank account.</p>
       <ng-template #editingCaption>
-        <p>Enter your new bank account details below.</p>
+        <p i18n="@@MONETIZATION__REVENUE__OPTIONS__ENTER_BANK_DETAILS_BELOW_LABEL">Enter your new bank account details below.</p>
       </ng-template>
 
       <form (submit)="addBankAccount()" [formGroup]="form" #f="ngForm" class="m-form mdl-color--white mdl-color-text--blue-grey-500">
@@ -38,17 +39,17 @@
           </div>
 
           <div class="mdl-cell mdl-cell--12-col">
-            <label i18n>Account Number / IBAN</label>
-            <input formControlName="accountNumber" type="text" i18n-placeholder>
+            <label i18n="@@MONETIZATION__REVENUE__OPTIONS__ACCOUNT_NUMBER_IBAN_LABEL">Account Number / IBAN</label>
+            <input formControlName="accountNumber" type="text">
           </div>
 
           <div class="mdl-cell mdl-cell--12-col">
-            <label i18n>Routing Number / Sort Code</label>
-            <input formControlName="routingNumber" type="text" placeholder="9 digit routing number" i18n-placeholder>
+            <label i18n="@@MONETIZATION__REVENUE__OPTIONS__ROUTING_NUMBER_SORT_CODE_LABEL">Routing Number / Sort Code</label>
+            <input formControlName="routingNumber" type="text">
           </div>
 
           <div class="mdl-cell mdl-cell--12-col">
-            <label>Country</label>
+            <label i18n="@@M__COMMON__COUNTRY">Country</label>
             <minds-country-input [allowed]="['AT','AU','BE','CA','CH','DE','DK','ES','FI','FR','GB','HK','IE','IT','LU','NL','NO','NZ','PT','SE','SG','US']"
               [country]="form.controls.country.value" (countryChange)="form.controls.country.setValue($event)"></minds-country-input>
           </div>
@@ -61,14 +62,15 @@
               [class.mdl-color--green]="f.form.valid"
               [class.mdl-color-text--white]="f.form.valid"
             >
-              <ng-container *ngIf="!editing">Add account</ng-container>
-              <ng-container *ngIf="editing">Apply</ng-container>
+              <ng-container *ngIf="!editing" i18n="@@MONETIZATION__REVENUE__OPTIONS__ADD_ACCOUNT_ACTION">Add account</ng-container>
+              <ng-container *ngIf="editing" i18n="@@MONETIZATION__REVENUE__OPTIONS__APPLY_ACTION">Apply</ng-container>
             </button>
 
             <button type="button"
               class="mdl-button mdl-button--colored"
               *ngIf="editing"
               (click)="cancelEditing()"
+              i18n="@@M__ACTION__CANCEL"
             >Cancel</button>
           </div>
         </div>
@@ -79,13 +81,14 @@
   </div>
 
   <div class="m-revenue--options-cancel mdl-card mdl-shadow--2dp">
-    <h3 class="mdl-color-text--blue-grey-600">Cancel Monetization</h3>
+    <h3 class="mdl-color-text--blue-grey-600" i18n="@@M__ACTION__CANCEL_MONETIZATION">Cancel Monetization</h3>
 
-    <p>Click below to leave the monetization program. You will <b>not</b> be able to rejoin in the future.</p>
+    <p i18n="@@MONETIZATION__REVENUE__OPTIONS__CANCEL_MONETIZATION_LABEL">Click below to leave the monetization program. You will <b>not</b> be able to rejoin in the future.</p>
     <button
       (click)="leave()"
       [disabled]="leaving"
       class="mdl-button mdl-button--colored mdl-button--raised"
+      i18n="@@M__ACTION__CANCEL_MONETIZATION"
       >
       Cancel Monetization
     </button>

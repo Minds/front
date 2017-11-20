@@ -12,7 +12,7 @@
       <m-channel--badges class="m-channel--badges-activity" [user]="comment.ownerObj" badges="[ 'verified' ]"></m-channel--badges>
     </a>
     <span class="mdl-color-text--blue-grey-300 minds-comment-span minds-comment-bullet">{{comment.time_created * 1000 | date: 'medium'}}</span>
-    <span *ngIf="comment.edited" class="mdl-color-text--blue-grey-300 minds-comment-span m-edited-text" i18n>edited</span>
+    <span *ngIf="comment.edited" class="mdl-color-text--blue-grey-300 minds-comment-span m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
 
     <div class="mdl-card__menu mdl-color-text--blue-grey-300" *ngIf="comment?.guid">
 
@@ -28,25 +28,25 @@
           *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()"
           (click)="editing = !editing; toggle.value = false"
           title="Edit"
-          i18n-title
+          i18n-title="@@M__ACTION__EDIT"
         ><i class="material-icons">edit</i></li>
         <li class="m-ribbon--item"
           *ngIf="isTranslatable && !editing"
           (click)="translateToggle = true; toggle.value = false"
           title="Translate"
-          i18n-title
+          i18n-title="@@M__ACTION__TRANSLATE"
         ><i class="material-icons">public</i></li>
         <li class="m-ribbon--item"
           *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid"
           (click)="delete(i); toggle.value = false"
           title="Delete"
-          i18n-title
+          i18n-title="@@M__ACTION__DELETE"
         ><i class="material-icons">delete</i></li>
         <li class="m-ribbon--item"
           *ngIf="!editing && comment.owner_guid != session.getLoggedInUser()?.guid"
           (click)="showReport()"
           title="Report"
-          i18n-title
+          i18n-title="verb|@@M__ACTION__REPORT"
         ><i class="material-icons">flag</i></li>
       </ul>
       <div class="minds-bg-overlay" (click)="toggle.value = false" [hidden]="!toggle.value"></div>
@@ -98,8 +98,8 @@
       >
         <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
           <span class="m-mature-overlay-note m-mature-overlay-note-smaller">
-            <i class="material-icons" title="Mature content" i18n-title>explicit</i>
-            <span i18n>Click to confirm your are 18+</span>
+            <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
+            <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
           </span>
         </div>
 
@@ -117,8 +117,8 @@
       >
           <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
             <span class="m-mature-overlay-note">
-              <i class="material-icons" title="Mature content" i18n-title>explicit</i>
-              <span i18n>Click to confirm your are 18+</span>
+              <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
+              <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
             </span>
           </div>
 
@@ -146,8 +146,8 @@
       >
         <div class="m-mature-overlay" (click)="comment.mature_visibility = !comment.mature_visibility">
           <span class="m-mature-overlay-note">
-            <i class="material-icons" title="Mature content" i18n-title>explicit</i>
-            <span i18n>Click to confirm your are 18+</span>
+            <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
+            <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
           </span>
         </div>
         <a target="_blank" [routerLink]="['/media', comment.attachment_guid]" *ngIf="comment.attachment_guid">
@@ -172,9 +172,9 @@
         (keyup)="getPostPreview(edit)"
         [disabled]="inProgress"
         ></textarea>
-      <span class="minds-comment-span" *ngIf="canPost" i18n>Press ESC to cancel</span>
+      <span class="minds-comment-span" *ngIf="canPost" i18n="@@MINDS__CARDS__COMMENT__PRESS_ESC_TO_CANCEL">Press ESC to cancel</span>
       <div class="minds-comment-span mdl-color-text--red-500" *ngIf="!canPost && triedToPost">
-        <!-- i18n -->Please wait until the upload is complete.<!-- /i18n -->
+        <!-- i18n: @@M__COMMON__WAIT_UPLOAD -->Please wait until the upload is complete.<!-- /i18n -->
       </div>
 
       <div class="mdl-card__actions">
@@ -188,7 +188,7 @@
         [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
         (click)="attachment.toggleMature()"
         title="Mature content"
-        i18n-title
+        i18n-title="@@M__COMMON__MATURE_CONTENT"
         >
           <i class="material-icons">explicit</i>
         </a>

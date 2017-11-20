@@ -7,40 +7,40 @@
       <a [routerLink]="['/wallet/purchase']" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link" *ngIf="session.getLoggedInUser().plus">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">favorite</i>
-          Buy Points
-          <span class="m-buypoints-tag">1 point = 1 view</span>
+          <!-- i18n: @@M__ACTION__BUY_POINTS -->Buy Points<!-- /i18n -->
+          <span class="m-buypoints-tag" i18n="@@MINDS__NEWSFEED__1_BY_1_CONVERSION">1 point = 1 view</span>
         </div>
       </a>
 
       <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link"  *ngIf="!session.getLoggedInUser().plus">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">add_circle</i>
-          Upgrade to Plus
+          <!-- i18n: @@MINDS__NEWSFEED__UPGRADE_TO_PLUS_ACTION -->Upgrade to Plus<!-- /i18n -->
         </div>
       </a>
 
       <a routerLink="/monetization" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">account_balance</i>
-          <!-- i18n -->Monetize your Channel<!-- /i18n -->
+          <!-- i18n: @@MINDS__NEWSFEED__MONETIZE_CHANNEL_ACTION -->Monetize your Channel<!-- /i18n -->
         </div>
       </a>
 
       <a routerLink="/affiliates" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button" *ngIf="session.isLoggedIn() && session.getLoggedInUser().programs.indexOf('affiliate') <= -1" >
           <i class="material-icons">share</i>
-          <!-- i18n -->Become an Affiliate<!-- /i18n -->
+          <!-- i18n: @@MINDS__NEWSFEED__BECOME_AFFILIATE_ACTION -->Become an Affiliate<!-- /i18n -->
         </div>
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button" *ngIf="session.isLoggedIn() && session.getLoggedInUser().programs.indexOf('affiliate') > -1" >
           <i class="material-icons">share</i>
-          <!-- i18n -->Affiliate Program<!-- /i18n -->
+          <!-- i18n: @@M__FEATURE__AFFILIATE_PROGRAM -->Affiliate Program<!-- /i18n -->
         </div>
       </a>
 
       <a [routerLink]="['/discovery/trending/channels']" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-suggested-channels-link" *ngIf="false">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">search</i>
-          <!-- i18n -->Find channels<!-- /i18n -->
+          <!-- i18n: @@MINDS__NEWSFEED__FIND_CHANNELS_ACTION -->Find channels<!-- /i18n -->
         </div>
       </a>
 
@@ -48,7 +48,7 @@
       <a (click)="invite.open = true" class="mdl-card mdl-color--amber mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-invite-link" *ngIf="session.isLoggedIn() && session.getLoggedInUser().programs.indexOf('affiliate') <= -1">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">email</i>
-          <!-- i18n -->Invite your friends<!-- /i18n -->
+          <!-- i18n: @@M__ACTION__INVITE_FRIENDS -->Invite your friends<!-- /i18n -->
         </div>
       </a>
 
@@ -71,7 +71,7 @@
               <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
             </li>
           </ul>
-          <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2016</span>
+          <span class="copyright mdl-color-text--blue-grey-700" i18n="@@MINDS__NEWSFEED__COPYRIGHT_FOOTER">&#169; Minds 2016</span>
         </div>
       </div>
     </div>
@@ -79,7 +79,7 @@
     <div class="mdl-cell mdl-cell--8-col m-newsfeed--feed">
 
         <div class="mdl-shadow--4dp mdl-color--green mdl-color-text--white m-newsfeed-boost-promo" *ngIf="newUserPromo">
-          <i class="material-icons">trending_up</i> <!-- i18n -->Have 200 free views on us. Hit post to be boosted.<!-- /i18n -->
+          <i class="material-icons">trending_up</i> <!-- i18n: @@MINDS__NEWSFEED__200_FREE_VIEWS -->Have 200 free views on us. Hit post to be boosted.<!-- /i18n -->
         </div>
         <minds-newsfeed-poster (load)="prepend($event)" [message]="message" #poster></minds-newsfeed-poster>
 
@@ -87,7 +87,7 @@
           (click)="pollingLoadNew()"
           *ngIf="pollingNewPosts"
         >
-          <i class="material-icons">update</i> <!-- i18n -->{{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}<!-- /i18n -->
+          <i class="material-icons">update</i> <!-- i18n: @@MINDS__NEWSFEED__NEW_POSTS_POLL -->{{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}<!-- /i18n -->
         </div>
 
         <div class="minds-list">
@@ -116,7 +116,7 @@
             <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
           </li>
         </ul>
-        <span class="copyright mdl-color-text--blue-grey-700" i18n>&#169; Minds 2016</span>
+        <span class="copyright mdl-color-text--blue-grey-700" i18n="@@MINDS__NEWSFEED__COPYRIGHT_FOOTER">&#169; Minds 2016</span>
       </div>
     </div>
 

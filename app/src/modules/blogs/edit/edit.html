@@ -19,6 +19,7 @@
         [(mModel)]="blog.title"
         class="m-h1-input"
         placeholder="Your title"
+        i18n-placeholder="@@BLOGS__EDIT__TITLE_PLACEHOLDER"
        ></minds-textarea>
      </div>
      <!-- Owner box -->
@@ -37,14 +38,14 @@
   </div>
 
   <div class="mdl-cell mdl-cell--12-col minds-blog-descriptions" >
-    <m-inline-editor name="description" [(ngModel)]="blog.description" placeholder="Go ahead and write some content!" #inlineEditor></m-inline-editor>
+    <m-inline-editor name="description" [(ngModel)]="blog.description" placeholder="Go ahead and write some content!" i18n-placeholder="@@BLOGS__EDIT__INLINE_EDITOR_PLACEHOLDER" #inlineEditor></m-inline-editor>
   </div>
 
   <div class="mdl-cell mdl-cell--12-col">
     <button type="submit" class="m-button m-button--text m-button--draft"
-      *ngIf="!blog.published" [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold">Save draft
+      *ngIf="!blog.published" [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold" i18n="@@BLOGS__EDIT__SAVE_DRAFT_ACTION">Save draft
     </button>
-    <button type="submit" class="m-button m-button--text m-button--submit" (click)="blog.published = 1" [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold" i18n>Publish</button>
+    <button type="submit" class="m-button m-button--text m-button--submit" (click)="blog.published = 1" [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold" i18n="@@BLOGS__EDIT__PUBLISH_ACTION">Publish</button>
     <div *ngIf="inProgress" class="m-wire--creator--submit-label mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
 
@@ -53,14 +54,14 @@
     <div class="m-license-info">
       <i class="material-icons">public</i>
       <select name="license" [ngModel]="blog.license" (change)="blog.license = $event.target.value" class="mdl-color-text--blue-grey-300 m-form-select" style="max-width:128px">
-          <option value="">-- License --</option>
+          <option value="" i18n="@@BLOGS__EDIT__LICENCE_PLACEHOLDER">-- License --</option>
           <option *ngFor="let l of licenses" [value]="l.value">{{l.text}}</option>
       </select>
     </div>
     <div class="m-category-info">
       <i class="material-icons">label</i>
       <select name="category" [ngModel]="blog.category" (change)="blog.category = $event.target.value" class="mdl-color-text--blue-grey-300 m-form-select">
-          <option value="">-- Category --</option>
+          <option value="" i18n="@@M__COMMON__CATEGORY_PLACEHOLDER">-- Category --</option>
           <option *ngFor="let c of categories" [value]="c.id">{{c.label}}</option>
       </select>
     </div>
@@ -75,7 +76,7 @@
         <i class="material-icons"
         [ngClass]="{ 'mdl-color-text--red-500': blog.mature }"
         title="Mature content"
-        i18n-title
+        i18n-title="@@M__COMMON__MATURE_CONTENT"
         >explicit</i>
         <span [ngClass]="{ 'mdl-color-text--red-500': blog.mature }">{{ blog.mature ? 'Mature content' : 'Anyone' }}</span>
       </a>

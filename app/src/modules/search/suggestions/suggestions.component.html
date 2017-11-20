@@ -26,19 +26,19 @@
     <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.entity"
       [routerLink]="[ '/search', { q: q, ref: 'top-suggestion-id', type: currentContext.product, id: currentContext.entity.id } ]"
     >
-      <b>Search {{ currentContext.entity.label }}:</b> <span>{{ q }}</span>
+      <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.entity.label }}:</b> <span>{{ q }}</span>
     </a>
 
     <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.product"
       [routerLink]="[ '/search', { q: q, ref: 'top-suggestion', type: currentContext.product } ]"
     >
-      <b>Search {{ currentContext.label }}:</b> <span>{{ q }}</span>
+      <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.label }}:</b> <span>{{ q }}</span>
     </a>
   </ng-container>
 
   <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="q"
     [routerLink]="[ '/search', { q: q, ref: 'top' } ]"
   >
-    <b>Search Minds:</b> <span>{{ q }}</span>
+    <b i18n="@@SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL">Search Minds:</b> <span>{{ q }}</span>
   </a>
 </div>

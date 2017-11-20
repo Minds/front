@@ -13,7 +13,7 @@
           />
       </div>
       <div>
-        <label class="mdl-color-text--blue-grey-300" i18n>Points</label>
+        <label class="mdl-color-text--blue-grey-300" i18n="@@M__FEATURE__POINTS">Points</label>
       </div>
     </div>
 
@@ -30,12 +30,12 @@
           />
       </div>
       <div>
-        <label class="mdl-color-text--blue-grey-300" i18n>USD</label>
+        <label class="mdl-color-text--blue-grey-300" i18n="@@M__COMMON__USD">USD</label>
       </div>
     </div>
 
     <div class="" [hidden]="toggled">
-      <button class="mdl-button mdl-button--raised mdl-color--blue-grey-500 mdl-color-text--white" style="display: block; position: relative; margin: 16px 16px 0 0; padding: 0;" (click)="buy()" i18n>BUY!</button>
+      <button class="mdl-button mdl-button--raised mdl-color--blue-grey-500 mdl-color-text--white" style="display: block; position: relative; margin: 16px 16px 0 0; padding: 0;" (click)="buy()" i18n="@@WALLET__PURCHASE__BUY_ACTION">BUY!</button>
     </div>
 
   </div>
@@ -46,17 +46,17 @@
     <div class="minds-purchase-recurring-option">
       <input type="checkbox" name="recurring" [(ngModel)]="recurring">
       <label class="mdl-color-text--blue-grey-600" (click)="recurring = !recurring">
-        <!-- i18n -->Repeat this transaction every month and get <b>10%</b> more points<!-- /i18n -->
+        <!-- i18n: @@WALLET__PURCHASE__RECURRING_10PCT_LABEL -->Repeat this transaction every month and get <b>10%</b> more points<!-- /i18n -->
       </label>
 
-      <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription" (click)="cancelSubscription()" i18n>Cancel recurring (<i>$</i>{{subscription.price}})</span>
+      <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription" (click)="cancelSubscription()" i18n="@@WALLET__PURCHASE__CANCEL_RECURRING_ACTION">Cancel recurring (<i>$</i>{{subscription.price}})</span>
     </div>
 
     <p *ngIf="error" class="mdl-color-text--red" style="padding-left:16px">{{error}}</p>
 
     <div class="m-purchase-points--coupon" [hidden]="!recurring || !toggled">
-      <label>Coupon code</label>
-      <m-tooltip icon="help">
+      <label i18n="@@WALLET__PURCHASE__COUPON_CODE_LABEL">Coupon code</label>
+      <m-tooltip icon="help" i18n="@@WALLET__PURCHASE__COUPON_CODE_TOOLTIP">
         If you have a discount / coupon code, please apply it here (only for subscriptions)
       </m-tooltip>
       <input type="text" [(ngModel)]="coupon" />
@@ -68,15 +68,15 @@
 
   <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!inProgress">
     <div class="mdl-card__supporting-text">
-      <!-- i18n -->Please wait...<!-- /i18n -->
+      <!-- i18n: @@M__COMMON__PLEASE_WAIT -->Please wait...<!-- /i18n -->
     </div>
     <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
   </div>
 
   <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!confirmation">
     <div class="mdl-card__supporting-text">
-      <b i18n>Great, you now have {{wallet.points}} points!</b>
-      <b (click)="reset()" class="mdl-color-text--blue-grey-400" style="cursor:pointer;" i18n>Click here to BUY more.</b>
+      <b i18n="@@WALLET__PURCHASE__SUCCESS_NOTICE">Great, you now have {{wallet.points}} points!</b>
+      <b (click)="reset()" class="mdl-color-text--blue-grey-400" style="cursor:pointer;" i18n="@@WALLET__PURCHASE__BUY_MORE_ACTION">Click here to BUY more.</b>
     </div>
   </div>
 

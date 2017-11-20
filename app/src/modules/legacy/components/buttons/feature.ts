@@ -12,11 +12,11 @@ import { Client } from '../../../../services/api';
     <m-modal [open]="open" (closed)="onModalClose($event)">
       <div class="m-button-feature-modal">
         <select [(ngModel)]="category">
-          <option value="not-selected">-- SELECT A CATEGORY --</option>
+          <option value="not-selected" i18n="@@MINDS__BUTTONS__FEATURE__CATEGORY_PLACEHOLDER">-- SELECT A CATEGORY --</option>
           <option *ngFor="let category of categories" [value]="category.id">{{category.label}}</option>
         </select>
 
-        <button class="mdl-button mdl-button--colored" (click)="feature()">Feature</button>
+        <button class="mdl-button mdl-button--colored" (click)="feature()" i18n="@@M__ACTION__FEATURE">Feature</button>
       </div>
     </m-modal>
   `

@@ -1,7 +1,7 @@
 <div class="m-settings--billing-subscriptions mdl-card mdl-shadow--2dp">
 
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n>Recurring Payments</h2>
+    <h2 class="mdl-card__title-text" i18n="@@SETTINGS__SUBSCRIPTIONS__TITLE">Recurring Payments</h2>
   </div>
 
   <div [hidden]="!inProgress" style="width:100%; text-align:center;">
@@ -17,7 +17,7 @@
         <span *ngIf="subscription.entity && subscription.entity.type == 'user'"><i style="text-style:normal">@</i>{{subscription.entity.username}}</span>
         <span *ngIf="subscription.entity && subscription.entity.type != 'user'"><i style="text-style:normal">@</i>{{subscription.entity.ownerObj.username}}</span>
         <span class="m-settings--billing-subscriptions--subscription-item-amount">{{subscription.amount | currency:'USD':true:'1.0-0' }}</span>
-        <span class="m-settings--billing-subscriptions--subscription-item-select" (click)="cancel(i)">Cancel</span>
+        <span class="m-settings--billing-subscriptions--subscription-item-select" (click)="cancel(i)" i18n="@@M__ACTION__CANCEL">Cancel</span>
       </li>
     </ul>
   </div>

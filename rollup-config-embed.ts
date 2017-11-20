@@ -8,6 +8,7 @@ export default {
   dest: 'public/js/build-embed-aot.js', // output a single application bundle
   sourceMap: false,
   format: 'iife',
+  context: 'window',
   plugins: [
       nodeResolve({jsnext: true, module: true}),
       commonjs({

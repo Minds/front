@@ -7,9 +7,9 @@
 
   <div class="mdl-card__actions mdl-card--border m-ledger-details">
     <p>
-      <span *ngIf="entry.status == 'inprogress'" i18n>In Progress</span>
-      <span *ngIf="entry.status == 'paid'" i18n>Paid</span>
-      <span *ngIf="entry.status == 'cancelled'" i18n>Cancelled</span>
+      <span *ngIf="entry.status == 'inprogress'" i18n="@@WALLET__TRANSACTION__MONEY__IN_PROGRESS_LABEL">In Progress</span>
+      <span *ngIf="entry.status == 'paid'" i18n="@@WALLET__TRANSACTION__MONEY__PAID_LABEL">Paid</span>
+      <span *ngIf="entry.status == 'cancelled'" i18n="@@WALLET__TRANSACTION__MONEY__CANCELLED_LABEL">Cancelled</span>
     </p>
 
     <div class="mdl-layout-spacer"></div>
