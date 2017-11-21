@@ -14,6 +14,9 @@ gulp.task('build', done => {
   } else if (argv.aot && argv.shims) {
     // Production vendor bundles (--aot --shims)
     return runSequence('build.bundles', done);
+  } else if (argv.aot && argv.index) {
+    // Production indexes only (--aot --index)
+    return runSequence('build.index', done);
   } else if (argv.aot) {
     // Production build (--aot)
     let tasks = [
