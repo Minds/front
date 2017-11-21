@@ -44,6 +44,7 @@ import { PostMenuModule } from './src/common/components/post-menu/post-menu.modu
 import { BanModule } from './src/modules/ban/ban.module';
 import { BlogModule } from './src/modules/blogs/blog.module';
 import { SearchModule } from './src/modules/search/search.module';
+import { MessengerModule } from './src/modules/messenger/messenger.module';
 
 @NgModule({
   bootstrap: [
@@ -88,7 +89,8 @@ import { SearchModule } from './src/modules/search/search.module';
     GroupsModule,
     BlogModule,
     PostMenuModule,
-    SearchModule
+    SearchModule,
+    MessengerModule
   ],
   providers: [
     MindsAppRoutingProviders,

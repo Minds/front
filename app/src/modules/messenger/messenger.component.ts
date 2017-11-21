@@ -5,18 +5,18 @@ import { Storage } from '../../services/storage';
 import { Client } from '../../services/api';
 import { SessionFactory } from '../../services/session';
 
-import { MessengerConversationDockpanesService } from './conversation-dockpanes/conversation-dockpanes';
-import { MessengerEncryptionService } from './encryption/service';
+import { MessengerConversationDockpanesService } from './dockpanes/dockpanes.component';
+import { MessengerEncryptionService } from './encryption/encryption.service';
 import { MessengerSounds } from './sounds/service';
 
-import { MessengerUserlist } from './userlist/userlist';
-import { MessengerSetupChat } from './setup-chat/setup-chat';
+import { MessengerUserlist } from './userlist/userlist.component';
+import { MessengerSetupChat } from './setup/setup.component';
 
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-messenger',
-  templateUrl: 'messenger.html'
+  selector: 'm-messenger',
+  templateUrl: 'messenger.component.html'
 })
 
 export class Messenger {
@@ -61,4 +61,4 @@ export class Messenger {
   }
 
 }
-export { MessengerConversation } from './conversation/conversation';
+export { MessengerConversation } from './conversation/conversation.component';

@@ -1,0 +1,162 @@
+@import 'defaults.scss';
+
+.m-messenger--dockpane{
+  margin: 0 $minds-margin;
+  width: 228px;
+
+  .m-messenger--dockpane-container{
+    display:none;
+  }
+
+  &.m-messenger--dockpane-open{
+    .m-messenger--dockpane-container{
+      display: block;
+      width: 100%;
+      //height: 99px;
+      display: block;
+      position: relative;
+      background: rgba(255,255,255,1);
+    }
+    .m-messenger--dockpane-tab{
+      border-bottom: 1px solid #EAEAEA;
+    }
+  }
+
+  .m-messenger--dockpane-tab{
+    background: #455a64;
+    border-radius: 3px 3px 0 0;
+    height: 28px;
+    width: 100%;
+    display: block;
+    cursor: pointer;
+
+    .m-messenger--dockpane-tab-title{
+      padding: 5px 12px;
+      display: inline-block;
+
+      text-overflow: ellipsis;
+      max-width: 140px;
+      overflow: hidden;
+
+      > i {
+        vertical-align: middle;
+        font-size: 17px;
+        padding: 0 8px 0 0;
+      }
+      > span {
+        vertical-align: middle;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 11px;
+        font-weight:bold;
+      }
+    }
+
+    .m-messenger--dockpane-tab-actions{
+      display: inline-block;
+      text-align: right;
+      vertical-align: middle;
+      float: right;
+      padding-right: $minds-padding;
+
+      > i{
+        font-size: 14px;
+        padding: 8px 2px;
+        line-height: 12px;
+        border-radius: 0 3px 0 0;
+
+        &:hover,
+        &.m-status-active{
+          //color:#455a64 !important;
+          color:#fff !important;
+        }
+      }
+    }
+
+    > i{
+      float: right;
+      margin: 6px 8px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+  } //[end] .m-messenger--dockpane-tab
+
+  .m-messenger--dockpane-tab-ribbon{
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    text-align: left;
+    vertical-align: middle;
+    padding: 0 $minds-padding;
+    border-bottom: 1px solid #EAEAEA;
+    z-index:1;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .m-messenger--dockpane-tab-icon{
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 8px;
+      line-height: 8px;
+      padding-bottom: 8px;
+      cursor: pointer;
+
+      > i{
+        width: 100%;
+        font-size: 16px;
+        padding: 8px 2px;
+        line-height: 12px;
+        border-radius: 0 3px 0 0;
+        cursor: pointer;
+
+        &:hover{
+          color:#455a64 !important;
+        }
+      }
+    }
+  }
+
+  .m-conversation-online{
+    position: absolute;
+    display: block;
+    vertical-align: middle;
+    right: 8px;
+    top: 50%;
+    top: calc(50% - 4px);
+    width:8px;
+    height:8px;
+    background:blue;
+    border-radius:50%;
+  }
+
+  .m-conversation-new{
+    position: absolute;
+    display: block;
+    vertical-align: middle;
+    right: 20px;
+    top: 50%;
+    top: calc(50% - 4px);
+    width:8px;
+    height:8px;
+    background:green;
+    border-radius:50%;
+  }
+
+} 
+
+
+m-messenger--dockpane{
+  position: absolute;
+  bottom: 0;
+
+  @media screen and (max-width:420px){
+    position: relative;
+    right: 0 !important;
+  }
+}

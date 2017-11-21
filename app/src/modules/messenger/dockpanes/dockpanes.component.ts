@@ -4,13 +4,12 @@ import { SocketsService } from '../../../services/sockets';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
 
-import { MessengerConversationDockpanesService } from './service';
+import { MessengerConversationDockpanesService } from './dockpanes.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-messenger-conversation-dockpanes',
-  //inputs: [ 'conversations' ],
-  templateUrl: 'conversation-dockpanes.html'
+  selector: 'm-messenger--conversation-dockpanes',
+  templateUrl: 'dockpanes.component.html'
 })
 
 export class MessengerConversationDockpanes {
@@ -24,4 +23,4 @@ export class MessengerConversationDockpanes {
 
 }
 
-export { MessengerConversationDockpanesService } from './service';
+export { MessengerConversationDockpanesService } from './dockpanes.service';

@@ -4,12 +4,12 @@ import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 
-import { MessengerConversationDockpanesService } from '../conversation-dockpanes/service';
+import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-messenger-channel-button',
-  templateUrl: 'channel-button.html',
+  selector: 'm-messenger--channel-button',
+  templateUrl: 'channel-button.component.html',
   inputs: ['user']
 })
 

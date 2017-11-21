@@ -6,15 +6,15 @@ import { Storage } from '../../../services/storage';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 
-import { MessengerConversationDockpanesService } from '../conversation-dockpanes/conversation-dockpanes';
-import { MessengerEncryptionService } from '../encryption/service';
+import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.component';
+import { MessengerEncryptionService } from '../encryption/encryption.service';
 import { MessengerSounds } from '../sounds/service';
-import { MessengerEncryption } from '../encryption/encryption';
+import { MessengerEncryption } from '../encryption/encryption.component';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-messenger-userlist',
-  templateUrl: 'userlist.html'
+  selector: 'm-messenger--userlist',
+  templateUrl: 'userlist.component.html'
 })
 
 export class MessengerUserlist {
@@ -211,4 +211,4 @@ export class MessengerUserlist {
   }
 
 }
-export { MessengerConversation } from '../conversation/conversation';
+export { MessengerConversation } from '../conversation/conversation.component';

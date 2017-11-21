@@ -20,7 +20,6 @@ import {MediaView, MediaEdit} from '../controllers/media/media';
 /**
  * TODO: Load these automagically from gulp
  */
-import {Messenger} from '../plugins/Messenger/messenger';
 
 import {CanDeactivateGuardService} from '../services/can-deactivate-guard';
 

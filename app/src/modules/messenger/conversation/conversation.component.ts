@@ -5,20 +5,20 @@ import { SessionFactory } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { SocketsService } from '../../../services/sockets';
 
-import { MessengerEncryptionService } from '../encryption/service';
+import { MessengerEncryptionService } from '../encryption/encryption.service';
 
-import { MessengerConversationDockpanesService } from '../conversation-dockpanes/service';
+import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
 import { MessengerSounds } from '../sounds/service';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-messenger-conversation',
+  selector: 'm-messenger--conversation',
   host: {
     '(window:focus)': 'onFocus($event)',
     '(window:blur)': 'onBlur($event)'
   },
   inputs: ['conversation'],
-  templateUrl: 'conversation.html'
+  templateUrl: 'conversation.component.html'
 })
 
 export class MessengerConversation {

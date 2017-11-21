@@ -1,13 +1,13 @@
 import { Component, Injector } from '@angular/core';
 
-import { MessengerEncryptionService } from '../encryption/service';
+import { MessengerEncryptionService } from '../encryption/encryption.service';
 import { animations } from '../animations';
 import { SessionFactory } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-messenger-setup-chat',
-  templateUrl: 'setup-chat.html',
+  selector: 'm-messenger--setup',
+  templateUrl: 'setup.component.html',
   animations: animations,
   })
 

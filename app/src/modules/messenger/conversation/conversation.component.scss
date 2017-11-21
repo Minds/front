@@ -1,0 +1,108 @@
+@import 'defaults.scss';
+
+.m-messenger--conversation{
+
+  .m-messenger--conversation-messages{
+    max-height:240px;
+    overflow:scroll;
+    overflow-x:hidden;
+
+    &.m-messenger--ribbon-open {
+      min-height: 29px;
+    }
+
+    .m-messenger--conversation-message-bubble {
+      display: inline-block;
+      padding: $minds-padding;
+      background: #EEE;
+      border-radius: 3px;
+      font-size: 12px;
+      margin: $minds-margin/2 $minds-margin;
+      font-weight: 400;
+      max-width:160px;
+      box-sizing: border-box;
+      line-height: 14px;
+      text-align:left;
+      word-wrap: break-word;
+      cursor:pointer;
+    }
+    .m-messenger--conversation-messages-message{
+      text-align:right;
+
+      img{
+        border-radius: 50%;
+        width: 18px;
+        margin-right: $minds-margin;
+        cursor:pointer;
+      }
+
+      &.odd{
+        text-align:left;
+        .m-messenger--conversation-message-bubble{
+          background:#cfd8dc !important;
+          //color:#FFF !important;
+        }
+        img{
+          margin-right:0;
+          margin-left: $minds-margin;
+        }
+      }
+
+      &.m-optimistic-guess {
+        opacity: 0.6;
+      }
+
+      .m-messenger--conversations-ts{
+        display: block;
+        font-size: 8px;
+        padding: 0px 40px;
+      }
+    }
+
+    .m-messenger--conversation-messages-notice{
+      text-align: center;
+      margin: $minds-padding 0;
+      font-size: 0.7em;
+
+      >span {
+        display: inline-block;
+        padding: 0 $minds-padding;
+      }
+    }
+
+    .m-messenger--conversation-messages-invite {
+      padding: ($minds-padding * 2) $minds-padding 0;
+
+      p {
+        text-align: center;
+        margin-bottom: $minds-padding * 2;
+        line-height: 1.35;
+      }
+    }
+  }
+  .m-messenger--conversation-composer{
+    position: relative;
+    bottom: 0;
+    max-width:100%;
+
+    textarea{
+      outline: none;
+      -webkit-appearance: none;
+      border: 0;
+      resize: none;
+      width: 170px;
+      font-size: 12px;
+      vertical-align: middle;
+      padding: 8px;
+      font-family: minds_emoji;
+      line-height: 1em;
+    }
+    i{
+      width: 24px;
+      font-size: 18px;
+      vertical-align: middle;
+      cursor:pointer;
+      overflow:hidden;
+    }
+  }
+}

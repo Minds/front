@@ -5,16 +5,16 @@ import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 
-import { MessengerEncryptionService } from './service';
+import { MessengerEncryptionService } from './encryption.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-messenger-encryption',
+  selector: 'm-messenger--encryption',
   host: {
-    'class': 'm-messenger-encryption'
+    'class': 'm-messenger--encryption'
   },
   outputs: ['on'],
-  templateUrl: 'encryption.html'
+  templateUrl: 'encryption.component.html'
 })
 
 export class MessengerEncryption implements OnInit {
@@ -42,6 +42,7 @@ export class MessengerEncryption implements OnInit {
     this.error = '';
     this.encryption.unlock(password.value)
       .then(() => {
+        password.value = '';        
         this.on.next(true);
         this.inProgress = false;
       })
@@ -49,7 +50,6 @@ export class MessengerEncryption implements OnInit {
         this.error = 'Wrong password. Please try again.';
         this.inProgress = false;
       });
-    password.value = '';
   }
 
   setup(password, password2) {
@@ -61,6 +61,8 @@ export class MessengerEncryption implements OnInit {
     this.error = '';
     this.encryption.doSetup(password.value)
       .then(() => {
+        password.value = '';
+        password2.value = '';
         this.on.next(true);
         this.inProgress = false;
       })
@@ -68,8 +70,6 @@ export class MessengerEncryption implements OnInit {
         this.error = 'Sorry, there was a problem.';
         this.inProgress = false;
       });
-    password.value = '';
-    password2.value = '';
   }
 
   rekey(password, password2) {
@@ -81,6 +81,8 @@ export class MessengerEncryption implements OnInit {
     this.inProgress = true;
     this.encryption.rekey(password.value)
       .then(() => {
+        password.value = '';
+        password2.value = '';
         this.on.next(true);
         this.inProgress = false;
       })
@@ -88,8 +90,6 @@ export class MessengerEncryption implements OnInit {
         this.error = 'Sorry, there was a problem';
         this.inProgress = false;
       });
-    password.value = '';
-    password2.value = '';
   }
 
 }

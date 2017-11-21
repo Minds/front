@@ -1,0 +1,46 @@
+@import 'defaults.scss';
+
+.m-messenger--encryption{
+  input{
+    -webkit-appearance: none;
+    outline: none;
+    border: 0;
+    margin: 0;
+    padding: 12px;
+    width: 132px;
+  }
+  .mdl-button, button{
+    padding:0;
+    font-size: 12px;
+  }
+  p.m-messenger--error{
+    font-size: 11px;
+    margin: 0;
+    padding: 8px;
+    font-weight: bold;
+  }
+  .m-messenger--encryption-setup-note {
+    font-size: 11px;
+    line-height: 1.35;
+    margin: 0;
+    padding: $minds-padding;
+  }
+  .m-messenger--encryption-setup-help {
+    color: #455a64;
+    font-size: 11px;
+    line-height: 1.35;
+    margin: 0;
+    padding: $minds-padding;
+  }
+  .m-messenger--encryption-rekey{
+    p {
+      line-height: 11px;
+      font-size: 10px;
+      margin: 0;
+      padding: $minds-padding;
+    }
+    a {
+      cursor:pointer;
+    }
+  }
+}
