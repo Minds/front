@@ -11,8 +11,7 @@ pipeline:
     image: markharding/minds-front-base
     commands:
       - npm install -g gulp
-      - npm run build-prod
-      - gulp build.index --env prod
+      - gulp build --aot --useCdn
     when:
       branch: [ 'master', 'test/codebuild' ]
   
