@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
@@ -24,6 +24,7 @@ export class Login {
   inProgress: boolean = false;
   referrer: string;
   minds = window.Minds;
+  private redirectTo: string;
 
   flags = {
     canPlayInlineVideos: true
@@ -46,6 +47,7 @@ export class Login {
     }
 
     this.title.setTitle('Login');
+    this.redirectTo = localStorage.getItem('redirect');
 
     this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['referrer']) {
@@ -65,15 +67,21 @@ export class Login {
   loggedin() {
     if (this.referrer)
       this.router.navigateByUrl(this.referrer);
+    else if (this.redirectTo)
+      this.router.navigate([this.redirectTo]);
     else
       this.loginReferrer.navigate();
   }
 
   registered() {
-    this.modal.setDisplay('categories').open();
-    this.loginReferrer.navigate({
-      defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
-    });
+    if (this.redirectTo)
+        this.router.navigate([this.redirectTo]);
+    else {
+	this.modal.setDisplay('categories').open();
+        this.loginReferrer.navigate({
+            defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
+        });
+    }
   }
 
 }

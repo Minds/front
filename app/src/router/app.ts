@@ -22,6 +22,7 @@ import {MediaView, MediaEdit} from '../controllers/media/media';
  */
 
 import {CanDeactivateGuardService} from '../services/can-deactivate-guard';
+import { RewardsComponent } from '../controllers/rewards/rewards';
 
 export const MindsAppRoutes: Routes = [
   { path: '', component: Homepage },
@@ -58,6 +59,8 @@ export const MindsAppRoutes: Routes = [
 
   { path: 'p/:page', component: Pages },
 
+  { path: 'claim-rewards/:uuid', component: RewardsComponent },
+
   { path: ':username/:filter', component: Channel },
   { path: ':username', component: Channel, canDeactivate: [CanDeactivateGuardService]},
 ];
@@ -79,4 +82,5 @@ export const MINDS_APP_ROUTING_DECLARATIONS: any[] = [
   Admin,
   Pages,
   Channel,
+  RewardsComponent,
 ];
