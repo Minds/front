@@ -22,6 +22,7 @@ export class RewardsComponent {
   private cellPhoneNumber: string;
   address: string;
   loading: boolean = true;
+  inProgress: boolean = false;
 
   tshirtSizes: Array<string> = [
     'Small',
@@ -66,6 +67,9 @@ export class RewardsComponent {
   }
 
   onClaim() {
+    if (this.inProgress)
+      return;
+    this.inProgress = true;
     const options = {
       'uuid': this.uuid,
       'user_guid': this.session.getLoggedInUser().guid,
@@ -76,6 +80,7 @@ export class RewardsComponent {
       alert('Thank you. Your rewards have been claimed.');
       this.router.navigate(['/newsfeed']);
     }).catch(error => {
+      this.inProgress = false;
       console.error('error! ', error);
     });
   }

@@ -92,7 +92,7 @@
             >
           <button type="submit" 
               class="mdl-button mdl-button--colored mdl-color--green"
-              [disabled]="!claimForm.form.valid"
+              [disabled]="!claimForm.form.valid || inProgress"
               [ngStyle]="{'margin': !(requiresPostalAddress || requiresCellPhone) ? '16px auto': '16px'}"
               >
             Claim my rewards 
