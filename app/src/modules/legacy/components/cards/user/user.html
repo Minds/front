@@ -33,7 +33,7 @@
 	<ng-content select="[buttons]"></ng-content>
 </div>
 
-<div class="minds-tabs mdl-tabs__tab-bar">
+<div class="minds-tabs mdl-tabs__tab-bar" *ngIf="false">
 		<a class="mdl-tabs__tab mdl-color-text--blue-grey-500 1" [routerLink]="['/', user.username, 'subscribers']">
 			<span i18n="@@M__COMMON__SUBSCRIBERS">Subscribers</span>
 			<b>{{user.subscribers_count | abbr:0}}</b>
