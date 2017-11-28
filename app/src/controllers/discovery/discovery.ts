@@ -118,7 +118,7 @@ export class Discovery {
       filter = 'owner';
 
     this.client.get('api/v1/entities/' + filter + '/' + this._type + '/' + this._owner, {
-      limit: 12,
+      limit: 24,
       offset: this.offset,
       skip: 0,
       nearby: this.nearby,
