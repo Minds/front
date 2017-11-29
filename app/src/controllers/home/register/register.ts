@@ -39,6 +39,10 @@ export class Register {
   ) { }
 
   ngOnInit() {
+    if (this.session.isLoggedIn()) {
+      this.loginReferrer.navigate();
+    }
+    
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
