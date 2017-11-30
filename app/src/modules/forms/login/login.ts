@@ -75,16 +75,15 @@ export class LoginForm {
   }
 
   twofactorAuth(code) {
-    var self = this;
-    this.client.post('api/v1/authenticate/two-factor', { token: this.twofactorToken, code: code.value })
+    this.client.post('api/v1/twofactor/authenticate', { token: this.twofactorToken, code: code.value })
       .then((data: any) => {
-        self.session.login(data.user);
+        this.session.login(data.user);
         this.done.next(data.user);
       })
       .catch((e) => {
-        self.errorMessage = 'Sorry, we couldn\'t verify your two factor code. Please try logging again.';
-        self.twofactorToken = '';
-        self.hideLogin = false;
+        this.errorMessage = 'Sorry, we couldn\'t verify your two factor code. Please try logging again.';
+        this.twofactorToken = '';
+        this.hideLogin = false;
       });
   }
 
