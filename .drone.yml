@@ -15,7 +15,7 @@ pipeline:
     when:
       branch: [ 'master', 'test/codebuild' ]
   
-  deploy:
+  cp:
     image: plugins/s3-sync:latest
     bucket: minds-repo
     secrets: [ aws_access_key_id, aws_secret_access_key ]
@@ -24,4 +24,13 @@ pipeline:
     target: front/public
     delete: false
     when:
+      branch: [ 'master', 'test/codebuild' ]
+
+  deploy:
+    image: minds/ecs-update:latest
+    cluster: minds
+    region: us-east-1
+    service: front-cp
+    secrets: [ aws_access_key_id, aws_secret_access_key ]
+    when: 
       branch: [ 'master', 'test/codebuild' ]
