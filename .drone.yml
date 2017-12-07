@@ -13,7 +13,8 @@ pipeline:
       - npm install -g gulp
       - gulp build --aot --useCdn
     when:
-      branch: [ 'master', 'test/codebuild' ]
+      event: [ push, tag, deployment ]
+      branch: [ master, test/codebuild ]
   
   cp:
     image: plugins/s3-sync:latest
@@ -24,7 +25,8 @@ pipeline:
     target: front/public
     delete: false
     when:
-      branch: [ 'master', 'test/codebuild' ]
+      event: [ push, tag, deployment ]
+      branch: [ master, test/codebuild ]
 
   deploy:
     image: minds/ecs-update:latest
@@ -32,5 +34,6 @@ pipeline:
     region: us-east-1
     service: front-cp
     secrets: [ aws_access_key_id, aws_secret_access_key ]
-    when: 
-      branch: [ 'master', 'test/codebuild' ]
+    when:
+      event: [ push, tag, deployment ]
+      branch: [ master, test/codebuild ]
