@@ -20,15 +20,13 @@ export class Upload {
 	 * Return a POST request
 	 */
   post(endpoint: string, files: Array<any> = [], data: any = {}, progress: Function = () => { return; }) {
-    var self = this;
-
-    var formData = new FormData();
+    const formData = new FormData();
     if (!data.filekey) {
       data.filekey = 'file';
     }
 
     if (files.length > 1) {
-      for (var file of files)
+      for (let file of files)
         formData.append(data.filekey + '[]', file);
     } else {
       formData.append(data.filekey, files[0]);
@@ -36,13 +34,15 @@ export class Upload {
 
     delete data.filekey;
 
-    for (var key in data) {
-      formData.append(key, data[key]);
+    for (let key in data) {
+      if (data[key] !== null) {
+        formData.append(key, data[key]);
+      }
     }
 
     return new Promise((resolve, reject) => {
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', self.base + endpoint, true);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', this.base + endpoint, true);
       xhr.upload.addEventListener('progress', function (e: any) {
         progress(e.loaded / e.total * 100);
       });
@@ -56,7 +56,7 @@ export class Upload {
       xhr.onreadystatechange = function () {
         //console.log(this);
       };
-      var XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
+      const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
       xhr.setRequestHeader('X-XSRF-TOKEN', XSRF_TOKEN);
       xhr.send(formData);
     });
