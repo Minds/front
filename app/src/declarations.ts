@@ -9,7 +9,6 @@ import {TopbarNavigation} from './components/topbar/topbar-navigation';
 import {FORM_COMPONENTS} from './components/forms/forms';
 import {MindsCarousel} from './components/carousel';
 import {AnalyticsImpressions} from './components/analytics/impressions';
-import {MindsEmoji} from './components/emoji/emoji';
 import {MindsTooltip} from './components/tooltip/tooltip';
 import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 
@@ -53,7 +52,6 @@ export const MINDS_DECLARATIONS: any[] = [
   FORM_COMPONENTS,
   MindsCarousel,
   AnalyticsImpressions,
-  MindsEmoji,
   MindsTooltip,
   TagcloudComponent,
 

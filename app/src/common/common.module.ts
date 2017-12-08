@@ -45,6 +45,7 @@ import { InlineEditorComponent } from './components/editors/inline-editor.compon
 import { AttachmentService } from "../services/attachment";
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 import { IfFeatureDirective } from './directives/if-feature.directive';
+import { MindsEmoji } from './components/emoji/emoji';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { IfFeatureDirective } from './directives/if-feature.directive';
     AutoGrow,
     InlineAutoGrow,
     Emoji,
+    MindsEmoji,
     Hovercard,
     ScrollLock,
     TagsLinks,
@@ -115,6 +117,7 @@ import { IfFeatureDirective } from './directives/if-feature.directive';
 
     AutoGrow,
     InlineAutoGrow,
+    MindsEmoji,
     Emoji,
     Hovercard,
     ScrollLock,
