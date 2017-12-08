@@ -226,7 +226,7 @@ describe('WireCreatorComponent', () => {
 
     const avatarImage = avatarAnchor.query(By.css('img'));
     expect(avatarImage).not.toBeNull();
-    expect(avatarImage.nativeElement.src).toContain('/icon/' + comp.owner.guid);
+    expect(avatarImage.nativeElement.src).toContain('icon/' + comp.owner.guid);
   });
 
   it('should have subtext', () => {
