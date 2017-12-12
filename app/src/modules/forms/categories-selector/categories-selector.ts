@@ -28,13 +28,13 @@ export class OnboardingCategoriesSelector {
 
   initCategories() {
     delete window.Minds.categories.other;
-    this.categories = Object.keys(window.Minds.categories).map(function (key) {
-      return {
-        id: key,
-        label: window.Minds.categories[key],
-        selected: false
-      };
-    });
+    for (let category of window.Minds.categories) {
+      this.categories.push({
+        'id': category.id,
+        'label': category.label,
+        'selected': false
+      });
+    }
   }
 
   saveCategories() {

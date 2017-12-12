@@ -37,6 +37,13 @@
         </div>
       </a>
 
+      <a routerLink="/wallet/boost/newsfeed" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button" *ngIf="session.isLoggedIn() && !session.getLoggedInUser().show_boosts" >
+          <i class="material-icons">trending_up</i>
+          <!-- i18n -->Become a Publisher<!-- /i18n -->
+        </div>
+      </a>
+
       <a [routerLink]="['/discovery/trending/channels']" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-suggested-channels-link" *ngIf="false">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">search</i>
@@ -93,7 +100,7 @@
         <div class="minds-list">
           <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
           <minds-newsfeed-boost-rotator interval="12" *ngIf="showBoostRotator"></minds-newsfeed-boost-rotator>
-          <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" (delete)="delete(activity)" (onViewed)="onViewed($event)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+          <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" [showBoostMenuOptions]="boostFeed" (delete)="delete(activity)" (onViewed)="onViewed($event)" class="mdl-card mdl-shadow--2dp item"></minds-activity>
           <infinite-scroll
             distance="25%"
             (load)="load()"

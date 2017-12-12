@@ -16,6 +16,8 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { WireService } from '../wire.service';
 import { WireContractService } from '../../blockchain/contracts/wire-contract.service';
 import { wireContractServiceMock } from '../../../../tests/wire-contract-service-mock.spec';
+import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
+import { tokenContractServiceMock } from '../../../../tests/token-contract-service-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -157,7 +159,8 @@ describe('WireCreatorComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: WireContractService, useValue: wireContractServiceMock },
         WireService,
-        { provide: OverlayModalService, useValue: overlayModalServiceMock }
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: TokenContractService, useValue: tokenContractServiceMock }
       ]
     })
       .compileComponents();  // compile template and css

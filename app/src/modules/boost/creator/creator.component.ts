@@ -57,9 +57,10 @@ export class BoostCreatorComponent implements AfterViewInit {
     nonce: null
   };
 
-  allowedTypes: { newsfeed?, p2p?, content?} = {};
+  allowedTypes: { newsfeed?, p2p?, content? } = {};
 
   categories: { id, label }[] = [];
+  selectedCategories: Array<any>;
 
   rates = {
     balance: null,
@@ -72,6 +73,8 @@ export class BoostCreatorComponent implements AfterViewInit {
     priority: 1,
     maxCategories: 3
   };
+
+  estimatedTime: number = -1;
 
   editingAmount: boolean = false;
   editingTarget: boolean = false;
@@ -125,14 +128,14 @@ export class BoostCreatorComponent implements AfterViewInit {
   loadCategories() {
     this.categories = [];
 
-    for (let id in window.Minds.categories) {
+    for (let category of window.Minds.categories) {
       this.categories.push({
-        id: id,
-        label: window.Minds.categories[id]
+        'id': category.id,
+        'label': category.label,
       });
     }
 
-    this.categories.sort((a, b) => a.label > b.label ? 1 : -1);
+    this.categories.sort((a, b) => a.label > b.label ? 1: -1);
   }
 
   /**
@@ -152,6 +155,7 @@ export class BoostCreatorComponent implements AfterViewInit {
           maxCategories: 3,
           ...this.rates
         };
+        this.calcEstimatedCompletionTime();
         //
       })
       .catch(e => {
@@ -197,6 +201,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   setBoostType(type: BoostType | null) {
     this.boost.type = type;
     this.roundAmount();
+    this.calcEstimatedCompletionTime();
     this.showErrors();
   }
 
@@ -204,7 +209,11 @@ export class BoostCreatorComponent implements AfterViewInit {
    * Sets the boost currency, and rounds the amount if necessary
    */
   setBoostCurrency(currency: CurrencyType | null) {
+    if (this.boost.currency === currency) {
+      return;
+    }
     this.boost.currency = currency;
+    this.boost.nonce = null;
     this.roundAmount();
     this.showErrors();
   }
@@ -243,6 +252,8 @@ export class BoostCreatorComponent implements AfterViewInit {
     }
     amount = amount.replace(/,/g, '');
     this.boost.amount = parseInt(amount);
+
+    this.calcEstimatedCompletionTime(true);
   }
 
   /**
@@ -273,6 +284,21 @@ export class BoostCreatorComponent implements AfterViewInit {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 10000) / 10000;
     } else {
       this.boost.amount = Math.floor(<number>this.boost.amount);
+    }
+  }
+
+  /**
+   * Calculates estimated completion time based on the current boosts backlog and the inputted amount
+   */
+  calcEstimatedCompletionTime(refresh: boolean = false) {
+    if (this.boost.type !== 'p2p') {
+      if (this.estimatedTime === -1 || refresh) {
+        this.client.get('api/v1/boost/estimated', { impressions: this.boost.amount }).then((res: any) => {
+          this.estimatedTime = res.average || -1;
+        })
+      }
+    } else {
+      this.estimatedTime = -1;
     }
   }
 
@@ -624,5 +650,15 @@ export class BoostCreatorComponent implements AfterViewInit {
 
         return response.guid;
       })
+  }
+
+  onSelectedCategoriesChange(categories) {
+    if (categories.length >= this.rates.maxCategories) {
+      return;
+    }
+    this.selectedCategories = categories;
+    this.boost.categories = this.selectedCategories.map((value) => {
+      return value.id;
+    });
   }
 }

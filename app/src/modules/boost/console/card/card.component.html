@@ -21,6 +21,13 @@
     <!-- i18n: @@M__COMMON__VIEWS_WITH_COUNT -->{{ boost.impressions | number }} views<!-- /i18n -->
   </div>
 
+  <div *ngIf="boost.impressions"
+    class="m-boost-card--manager-item"
+  >
+    <i class="material-icons">done</i>
+    <!-- i18n -->{{ boost.met_impressions | number }} views so far<!-- /i18n -->
+  </div>
+
   <!-- USD bid, if applicable -->
   <div *ngIf="boost.bidType == 'pro' || boost.bidType == 'usd'"
     class="m-boost-card--manager-item"

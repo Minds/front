@@ -1,4 +1,5 @@
 .m-overlay-modal {
+  //overflow: visible;
   position: fixed;
   top: 8vh;
   right: 2vw;
@@ -18,7 +19,7 @@
   outline: 0;
   border-radius: 3px;
 
-  overflow-y: auto;
+  overflow-y: visible;
   -webkit-overflow-scrolling: touch;
 
   font-family: 'Lato', sans-serif;
@@ -40,6 +41,9 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+.m-overlay-modal--overflow {
+  overflow: visible;
 }
 
 .m-overlay-modal--close {

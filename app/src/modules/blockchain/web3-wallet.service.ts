@@ -96,8 +96,8 @@ export class Web3WalletService {
 
   // Web3 methods promise wrapper
   web3Promise(method, ...args) {
-    return new Promise(function(resolve, reject) {
-      args.push(function(error, result) {
+    return new Promise(function (resolve, reject) {
+      args.push(function (error, result) {
         if (error) {
           reject(error);
           return;
@@ -108,6 +108,27 @@ export class Web3WalletService {
 
       method.apply(null, args);
     });
+  }
+
+  getProviderName() {
+    let providerName = 'UNKNOWN';
+
+    if (window.web3.currentProvider.constructor.name === 'MetamaskInpageProvider') {
+      providerName = 'Metamask';
+    }
+    else if (window.web3.currentProvider.constructor.name === 'EthereumProvider') {
+      providerName = 'Mist';
+    }
+    else if (window.web3.currentProvider.constructor.name === 'o') {
+      providerName = 'Parity';
+    }
+    else if (window.web3.currentProvider.host.indexOf('infura') !== -1) {
+      providerName = 'Infura';
+    }
+    else if (window.web3.currentProvider.host.indexOf('localhost') !== -1) {
+      providerName = 'localhost';
+    }
+    return providerName;
   }
 
   // Service provider

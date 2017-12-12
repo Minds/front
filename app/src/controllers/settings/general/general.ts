@@ -205,10 +205,10 @@ export class SettingsGeneral {
   getCategories() {
     this.categories = [];
 
-    for (let id in window.Minds.categories) {
+    for (let category of window.Minds.categories) {
       this.categories.push({
-        id: id,
-        label: window.Minds.categories[id],
+        id: category.id,
+        label: category.label,
         selected: false
       });
     }

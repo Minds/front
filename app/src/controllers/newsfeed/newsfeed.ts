@@ -271,9 +271,13 @@ export class Newsfeed {
   }
 
 
-  onViewed(activity: any) {
+  onViewed(event: {activity, visible}) {
     if (this.boostFeed) {
-      this.client.put('api/v1/boost/fetch/newsfeed/' + activity.boosted_guid);
+      if(event.visible){
+        this.client.put('api/v1/boost/fetch/newsfeed/' + event.activity.boosted_guid);
+      }else {
+        this.client.put('api/v1/boost/fetch/newsfeed/' + event.activity.boosted_guid + '/stop');
+      }
     }
   }
 

@@ -52,7 +52,7 @@ export class TokenContractService {
   // Token allowance
 
   async increaseApproval(address: string, amount: number) {
-    return (await this.token()).increaseApproval(address, this.tokenToUnit(amount));
+    return (await this.token()).approve(address, this.tokenToUnit(amount));
   }
 
   tokenToUnit(amount: number) {

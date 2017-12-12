@@ -1,12 +1,10 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement, Directive, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
-import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
-import { MindsUser } from '../../../interfaces/entities';
 import { SignupModalService } from '../../../modules/modals/signup/service';
 import { By } from '@angular/platform-browser';
 import { PostMenuComponent } from './post-menu.component';
@@ -91,7 +89,7 @@ describe('PostMenuComponent', () => {
         FormsModule
       ],
       providers: [
-        { provide: SignupModalService, useValue: scrollServiceMock},
+        { provide: SignupModalService, useValue: scrollServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock }
@@ -105,10 +103,11 @@ describe('PostMenuComponent', () => {
     fixture = TestBed.createComponent(PostMenuComponent);
 
     comp = fixture.componentInstance;
-    comp.options = ["edit", "translate", "share", "mute", "unmute", "feature", "unfeature", "delete", "report", "block" ];
+    comp.options = ["edit", "translate", "share", "mute", "unmute", "feature", "unfeature", "delete", "report", "block"];
     comp.entity = {};
-    comp.opened = true;
-    comp.entity.ownerObj = { guid : '1'}
+    // comp.opened = true;
+    comp.entity.ownerObj = { guid: '1' };
+     comp.cardMenuHandler();
     fixture.detectChanges();
   });
 
@@ -117,22 +116,16 @@ describe('PostMenuComponent', () => {
   });
 
   it('should check if owner is blocked when opening dropdown', () => {
-    comp.cardMenuHandler();
-    fixture.detectChanges();
     expect(clientMock.get.calls.mostRecent().args[0]).toEqual('api/v1/block/1');
   });
 
   it('should put to owner when blocking', () => {
-    comp.cardMenuHandler();
-    fixture.detectChanges();
     comp.block();
     fixture.detectChanges();
     expect(clientMock.put.calls.mostRecent().args[0]).toEqual('api/v1/block/1');
   });
 
   it('should delete to owner when unblocking', () => {
-    comp.cardMenuHandler();
-    fixture.detectChanges();
     comp.unBlock();
     fixture.detectChanges();
     expect(clientMock.delete.calls.mostRecent().args[0]).toEqual('api/v1/block/1');

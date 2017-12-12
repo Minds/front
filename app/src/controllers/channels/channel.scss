@@ -217,6 +217,12 @@ minds-channel{
  .m-channel-feed{
    margin-top: 8px;
    display: block;
+
+   minds-newsfeed-boost-rotator {
+     ul {
+       z-index: 900;
+     }
+   }
  }
 
  .m-channel-bio-fields{

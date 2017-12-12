@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenContractService } from './token-contract.service';
+import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';
 
 @Injectable()
 export class WireContractService {
   protected instance: any;
 
-  constructor(protected web3Wallet: Web3WalletService, protected tokenContract: TokenContractService) {
+  constructor(
+    protected web3Wallet: Web3WalletService,
+    protected tokenContract: TokenContractService,
+    protected overlayService: TransactionOverlayService
+  ) {
     this.load();
   }
 
@@ -38,16 +43,20 @@ export class WireContractService {
   // Wire
 
   async create(receiver: string, amount: number) {
-    return (await this.tokenContract.token()).approveAndCall(
-      this.instance.address,
-      this.tokenContract.tokenToUnit(amount),
-      this.tokenContract.encodeParams([{ type: 'address', value: receiver }])
-    );
+    return await this.overlayService.showAndRun(
+      async () => {
+        return (await this.tokenContract.token()).approveAndCall(
+          this.instance.address,
+          this.tokenContract.tokenToUnit(amount),
+          this.tokenContract.encodeParams([{ type: 'address', value: receiver }])
+        );
+      }
+    ,"You're about to wire someone");
   }
 
   // Service provider
 
-  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService) {
-    return new WireContractService(web3Wallet, tokenContract);
+  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService, blockchainOverlayService: TransactionOverlayService) {
+    return new WireContractService(web3Wallet, tokenContract, blockchainOverlayService);
   }
 }

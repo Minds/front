@@ -45,7 +45,9 @@ export interface MindsUser {
 	spam ?: boolean;
 	deleted ?: boolean;
 	banned ?: any;
-	pinned_posts ?: Array<string>
+	pinned_posts ?: Array<string>;
+	show_boosts ?: boolean;
+  merchant ?: any;
 }
 
 export interface MindsGroup {

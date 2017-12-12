@@ -192,6 +192,8 @@ export class WireCreatorComponent implements AfterViewInit {
       this.wire.recurring = false;
     }
 
+    this.wire.payload = null;
+
     this.convertCurrency(oldCurrency, currency);
     this.roundAmount();
     this.showErrors();
@@ -362,6 +364,12 @@ export class WireCreatorComponent implements AfterViewInit {
     } else {
       if (!this.wire.payload) {
         throw new Error('Payment method not processed.');
+      }
+    }
+
+    if (this.wire.currency === 'tokens') {
+      if (this.wire.payload.nonce.address === this.wire.payload.nonce.receiver) {
+        throw new VisibleWireError(`The wallet you selected is the same as @${this.owner.username}'s wallet`);
       }
     }
 

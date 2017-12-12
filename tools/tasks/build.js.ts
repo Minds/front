@@ -12,7 +12,8 @@ export = function buildJS(gulp, plugins) {
       'tools/manual_typings/**/*.d.ts',
       'tools/typings/tsd/index.d.ts',
       join(APP_SRC, '**/*.ts'),
-      '!' + join(APP_SRC, '**/*_spec.ts')
+      '!' + join(APP_SRC, '**/*_spec.ts'),
+      '!' + join(APP_SRC, '**/*.spec.ts')
     ];
 
     let result = gulp.src(src)

@@ -37,6 +37,7 @@ import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
 import { TokenContractService } from '../modules/blockchain/contracts/token-contract.service';
 import { WireContractService } from '../modules/blockchain/contracts/wire-contract.service';
 import { BoostContractService } from "../modules/blockchain/contracts/boost-contract.service";
+import { TransactionOverlayService } from '../modules/blockchain/transaction-overlay/transaction-overlay.service';
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -196,6 +197,6 @@ export const MINDS_PROVIDERS : any[] = [
   {
     provide: BoostContractService,
     useFactory: BoostContractService._,
-    deps: [ Web3WalletService, TokenContractService ]
+    deps: [ Web3WalletService, TokenContractService, TransactionOverlayService ]
   }
 ];

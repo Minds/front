@@ -1,5 +1,5 @@
 <div class="m-boost-rotator-tools">
-  <ul class="m-boost-navigation">
+  <ul class="m-boost-navigation" [style.visibility]="channel ? 'hidden' : 'visible'">
     <li routerLink="/newsfeed/subscribed" routerLinkActive="selected">
       <span i18n="@@M__FEATURE__NEWSFEED">Newsfeed</span>
       <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__NEWSFEED_TOOLTIP">
@@ -97,5 +97,6 @@
   [class]="'mdl-card mdl-shadow--2dp item m-boost-rotator-item m-boost-rotator-item-' + i"
   visible="true"
   [hidden]="i != currentPosition"
+  [showBoostMenuOptions]="true"
   (commentsOpened)="setSticky($event)"
   ></minds-activity>

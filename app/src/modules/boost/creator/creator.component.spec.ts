@@ -1,8 +1,8 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick, flushMicrotasks } from '@angular/core/testing';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import { Component, DebugElement, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
@@ -15,6 +15,7 @@ import { Scheduler } from '../../../common/components/scheduler/scheduler';
 
 import { VisibleBoostError, BoostCreatorComponent, BoostType } from './creator.component';
 import { BoostService } from '../boost.service';
+import { SELECTED_CATEGORIES_VALUE_ACCESSOR } from '../../../common/components/categories/selected/selected-categories.component';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { tokenContractServiceMock } from '../../../../tests/token-contract-service-mock.spec';
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
@@ -38,6 +39,70 @@ export class StripeCheckoutMock {
 
   @Input() useCreditCard: boolean = true;
   @Input() useBitcoin: boolean = false;
+}
+
+@Component({
+  selector: 'm--categories-selector',
+  outputs: [ 'inputed', 'done' ],
+  template: ''
+})
+export class CategoriesSelectorMock {
+  inputed: EventEmitter<any> = new EventEmitter;
+  done: EventEmitter<any> = new EventEmitter;
+
+  @Input() amount: number = 0;
+  @Input() merchant_guid;
+  @Input() gateway: string = 'merchants';
+
+  @Input('useMDLStyling') useMDLStyling: boolean = true;
+
+  @Input() useCreditCard: boolean = true;
+  @Input() useBitcoin: boolean = false;
+}
+
+
+export const SELECTED_CATEGORIES_MOCK_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => SelectedCategoriesMock),
+  multi: true
+};
+@Component({
+  selector: 'm--selected-categories',
+  outputs: [ 'inputed', 'done' ],
+  template: '',
+  host: {
+    'change': 'propagateChange($event.target.value)'
+  },
+  providers: [SELECTED_CATEGORIES_MOCK_VALUE_ACCESSOR]
+})
+export class SelectedCategoriesMock {
+  private selectedCategories: Array<any>;
+
+  unselectCategory(category: any) {
+    const index: number = this.selectedCategories.findIndex((value) => {
+      return value.id === category.id
+    });
+    this.selectedCategories.splice(index, 1);
+    this.selectedCategories = this.selectedCategories.slice();
+  }
+
+
+  propagateChange = (_: any) => {
+  };
+
+  ngOnChanges(changes: any) {
+    this.propagateChange(changes);
+  }
+
+  writeValue(value: any[]) {
+    this.selectedCategories = value;
+  }
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+  }
 }
 
 @Component({
@@ -197,6 +262,8 @@ describe('BoostCreatorComponent', () => {
         AbbrPipe,
         Scheduler,
         StripeCheckoutMock,
+        CategoriesSelectorMock,
+        SelectedCategoriesMock,
         CryptoTokenSymbolMock,
         BlockchainCheckoutMock,
         BoostCreatorComponent
@@ -300,7 +367,7 @@ describe('BoostCreatorComponent', () => {
     const availableBoostTypes = getBoostTypesList();
     expect(availableBoostTypes).not.toBeNull();
     expect(availableBoostTypes.nativeElement.children.length).toBe(2);
-    expect(getBoostTypeItem(1).query(By.css('h4')).nativeElement.textContent).toContain('Newsfeeds');
+    expect(getBoostTypeItem(1).query(By.css('h4')).nativeElement.textContent).toContain('Feeds');
     expect(getBoostTypeItem(2).query(By.css('h4')).nativeElement.textContent).toContain('Channels');
   });
 
@@ -522,7 +589,7 @@ describe('BoostCreatorComponent', () => {
       fixture.detectChanges();
       boostTargetSearchInput.nativeElement.dispatchEvent(new Event('input')); // NB: Need BOTH of these!
       boostTargetSearchInput.nativeElement.dispatchEvent(new Event('keyup')); // NB: Need BOTH of these!
-      jasmine.clock().tick(10);
+      jasmine.clock().tick(1000);
 
       expect(boostComponent.searchTarget).toHaveBeenCalled();
       expect(clientMock.get).toHaveBeenCalled();
@@ -631,9 +698,11 @@ describe('BoostCreatorComponent', () => {
       const categoriesSection = fixture.debugElement.query(By.css('section.m-boost--creator-section-categories'));
       expect(categoriesSection).not.toBeNull();
 
-      const categories = fixture.debugElement.query(By.css('.m-boost--creator--categories'));
-      expect(categories).not.toBeNull();
-      expect(categories.nativeElement.children.length).toBeGreaterThan(0);
+      const categoriesSelector = fixture.debugElement.query(By.css('m--categories-selector'));
+      expect(categoriesSelector).not.toBeNull();
+
+      const selectedCategories = fixture.debugElement.query(By.css('m--selected-categories'));
+      expect(selectedCategories).not.toBeNull();
     });
 
     it('should not allow more than the maximum allowed categories to be chosen', () => {
@@ -643,21 +712,18 @@ describe('BoostCreatorComponent', () => {
       boostComponent.syncAllowedTypes();
       fixture.detectChanges();
 
-      const categoriesSection = fixture.debugElement.query(By.css('section.m-boost--creator-section-categories'));
-      expect(categoriesSection).not.toBeNull();
-
-      const categories = fixture.debugElement.query(By.css('.m-boost--creator--categories'));
-      expect(categories).not.toBeNull();
-      expect(categories.nativeElement.children.length).toBeGreaterThan(0);
-
-      for (i=0; i < boostComponent.rates.maxCategories+1; i++) {
-        const category = fixture.debugElement.query(By.css(`.m-boost--creator--categories > .m-boost--creator-clickable:nth-child(${i+1})`));
-        category.nativeElement.click();
-        selectedCategories.push(category);
-      }
+      let categories: any[] = [];
       fixture.detectChanges();
 
-      expect(boostComponent.boost.categories.length).toEqual(boostComponent.rates.maxCategories);
+      for (i=0; i < boostComponent.rates.maxCategories+1; i++) {
+
+        categories.push({'id': 'a'+i, 'label': 'a'+i});
+
+      }
+      boostComponent.onSelectedCategoriesChange(categories);
+      fixture.detectChanges();
+
+      expect(boostComponent.boost.categories.length).toEqual(0);
     });
   });
 
@@ -684,12 +750,10 @@ describe('BoostCreatorComponent', () => {
     amountInput.nativeElement.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    const firstCategory = fixture.debugElement.query(By.css('.m-boost--creator--categories > .m-boost--creator-clickable:first-child'));
-    const secondCategory = fixture.debugElement.query(By.css('.m-boost--creator--categories > .m-boost--creator-clickable:nth-child(2)'));
-    const thirdCategory = fixture.debugElement.query(By.css('.m-boost--creator--categories > .m-boost--creator-clickable:nth-child(3)'));
-    firstCategory.nativeElement.click();
-    secondCategory.nativeElement.click();
-    thirdCategory.nativeElement.click();
+    const firstCategory = {'id': 'a', 'label': 'a'};
+    const secondCategory = {'id': 'b', 'label': 'b'};
+    boostComponent.onSelectedCategoriesChange([firstCategory, secondCategory]);
+
     fixture.detectChanges();
 
     clientMock.post.calls.reset();
@@ -708,9 +772,8 @@ describe('BoostCreatorComponent', () => {
       bidType: 'points',
       impressions: 10,
       categories: [
-        firstCategory.nativeElement.textContent.trim().toLowerCase(),
-        secondCategory.nativeElement.textContent.trim().toLowerCase(),
-        thirdCategory.nativeElement.textContent.trim().toLowerCase()
+        firstCategory.id,
+        secondCategory.id
       ],
       priority: null,
       paymentMethod: null
@@ -740,12 +803,10 @@ describe('BoostCreatorComponent', () => {
     amountInput.nativeElement.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    const firstCategory = fixture.debugElement.query(By.css('.m-boost--creator--categories > .m-boost--creator-clickable:first-child'));
-    const secondCategory = fixture.debugElement.query(By.css('.m-boost--creator--categories > .m-boost--creator-clickable:nth-child(2)'));
-    const thirdCategory = fixture.debugElement.query(By.css('.m-boost--creator--categories > .m-boost--creator-clickable:nth-child(3)'));
-    firstCategory.nativeElement.click();
-    secondCategory.nativeElement.click();
-    thirdCategory.nativeElement.click();
+    const firstCategory = {'id': 'a', 'label': 'a'};
+    const secondCategory = {'id': 'b', 'label': 'b'};
+    boostComponent.onSelectedCategoriesChange([firstCategory, secondCategory]);
+
     fixture.detectChanges();
 
     clientMock.post.calls.reset();
@@ -765,9 +826,8 @@ describe('BoostCreatorComponent', () => {
       bidType: 'points',
       impressions: 10,
       categories: [
-        firstCategory.nativeElement.textContent.trim().toLowerCase(),
-        secondCategory.nativeElement.textContent.trim().toLowerCase(),
-        thirdCategory.nativeElement.textContent.trim().toLowerCase()
+        firstCategory.id,
+        secondCategory.id
       ],
       priority: null,
       paymentMethod: null

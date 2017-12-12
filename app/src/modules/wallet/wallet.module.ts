@@ -15,6 +15,9 @@ import { WalletPointsTransactionsComponent } from './transactions/points.compone
 import { WalletPurchaseComponent } from './purchase/purchase.component';
 import { WalletBoostComponent } from './boost/boost.component';
 import { WalletWireComponent } from './wire/wire.component';
+import { WalletFlyoutComponent } from './flyout/flyout.component';
+import { WalletTopbarToggleComponent } from './toggle/toggle.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 const walletRoutes : Routes = [
@@ -34,6 +37,7 @@ const walletRoutes : Routes = [
 @NgModule({
   imports: [
     NgCommonModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -49,7 +53,9 @@ const walletRoutes : Routes = [
     WalletPointsTransactionsComponent,
     WalletPurchaseComponent,
     WalletBoostComponent,
-    WalletWireComponent
+    WalletWireComponent,
+    WalletTopbarToggleComponent,
+    WalletFlyoutComponent,
   ],
   exports: [
     WalletComponent,
@@ -58,7 +64,9 @@ const walletRoutes : Routes = [
     WalletPointsTransactionsComponent,
     WalletPurchaseComponent,
     WalletBoostComponent,
-    WalletWireComponent
+    WalletWireComponent,
+    WalletTopbarToggleComponent,
+    WalletFlyoutComponent,
   ],
   entryComponents: [ WalletComponent ]
 })

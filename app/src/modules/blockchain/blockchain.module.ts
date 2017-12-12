@@ -9,6 +9,8 @@ import { BlockchainConsoleComponent } from './console/console.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockchainWalletSelector } from './wallet-selector/wallet-selector.component';
 import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice/wallet-address-notice.component';
+import { TransactionOverlayComponent } from './transaction-overlay/transaction-overlay.component';
+import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 
 const cryptoRoutes: Routes = [
   {
@@ -32,11 +34,16 @@ const cryptoRoutes: Routes = [
   declarations: [
     BlockchainConsoleComponent,
     BlockchainWalletSelector,
-    BlockchainWalletAddressNoticeComponent
+    BlockchainWalletAddressNoticeComponent,
+    TransactionOverlayComponent,
+  ],
+  providers: [
+    TransactionOverlayService,
   ],
   exports: [
     BlockchainWalletSelector,
-    BlockchainWalletAddressNoticeComponent
+    BlockchainWalletAddressNoticeComponent,
+    TransactionOverlayComponent,
   ],
   entryComponents: []
 })

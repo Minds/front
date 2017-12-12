@@ -21,7 +21,7 @@
         (click)="setBoostType('newsfeed')"
         [class.m-boost--creator-selector--highlight]="!boost.type || boost.type == 'newsfeed'"
       >
-        <h4 i18n="@@M__FEATURE__NEWSFEED_PLURAL">Newsfeeds</h4>
+        <h4 i18n="@@M__FEATURE__NEWSFEED_PLURAL">Feeds</h4>
         <span class="m-boost--creator-selector--description" i18n="@@BOOST__CREATOR__NEWSFEEDS_SELECTOR_DESC">Your content will appear on newsfeeds across the site.</span>
         <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
       </li>
@@ -75,6 +75,9 @@
         <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'tokens'" i18n="usd input|@@M__COMMON__MINDSCOIN_INPUT">MindsCoin</ng-container>
       </span>
     </div>
+    <span class="m-boost--creator-wide-input--estimation" *ngIf="estimatedTime !== -1">
+        Estimated completion time: {{ estimatedTime }} hours
+    </span>
   </section>
 
   <!-- Payment Method -->
@@ -149,15 +152,8 @@
         </span>
       </h3>
 
-      <div class="m-boost--creator--categories">
-        <span *ngFor="let category of categories"
-          class="m-boost--creator-clickable"
-          [class.m-boost--creator-clickable--highlight]="hasCategory(category.id)"
-          (click)="toggleCategory(category.id)"
-        >
-          {{ category.label }}
-        </span>
-      </div>
+      <m--categories-selector (selectedCategoriesChange)="onSelectedCategoriesChange($event)"></m--categories-selector>
+      <m--selected-categories [(ngModel)]="selectedCategories"></m--selected-categories>
     </section>
 
     <section class="m-boost--creator-section m-boost--creator-section-priority" *ngIf="boost.currency == 'usd' || boost.currency == 'tokens'">

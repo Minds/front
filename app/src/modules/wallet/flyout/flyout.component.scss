@@ -1,0 +1,111 @@
+m-wallet--flyout {
+
+  font-family: 'Lato';
+  z-index: 1000;
+  background-color: lightgray;
+  width: 320px;
+  position: absolute;
+  top: 60px;
+  right: 28px;
+
+  .m-wallet--flyout-announcement {
+    max-height: 112px;
+    padding: 16px;
+    background-color: #4690D6;
+    color: white;
+    text-align: left;
+    word-wrap: break-word;
+    cursor: pointer;
+
+    .m-wallet--flyout-announcement--close {
+      cursor: pointer;
+      padding: 12px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      i {
+        color: #FFF;
+      }
+    }
+  }
+
+  .m-wallet--flyout-label {
+    display: flex;
+    align-items: center;
+    label {
+      text-transform: uppercase;
+      font-family: 'Lato';
+      letter-spacing: 1px;
+      font-size: 14px;
+      display: inline-block;
+    }
+  }
+
+  .m-tooltip {
+    font-size: 14px;
+    line-height: 14px;
+    i {
+      font-size: inherit;
+      line-height: inherit;
+    }
+  }
+
+  .m-wallet--flyout--wrapper {
+    max-height: calc(95vh - 60px);
+    overflow: visible;
+
+    .m-wallet--flyout-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 20px;
+
+      & > div {
+        font-size: 20px;
+        letter-spacing: 2px;
+        line-height: 20px;
+        flex: 1;
+        //padding: 8px 16px;
+      }
+      .m-wallet--flyout-volume {
+
+      }
+
+      .m-wallet--flyout-coin {
+
+      }
+
+      .m-wallet--flyout-balance {
+
+      }
+    }
+  }
+
+  .wallet-grid {
+    max-height: calc(95vh - 200px);
+    overflow-y: scroll;
+    padding: 0;
+
+    .mdl-cell--12-col {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  .m-wallet--flyout--bottom-container {
+    text-transform: uppercase;
+    font-family: 'Lato';
+    letter-spacing: 2.5px;
+    text-rendering: optimizeLegibility;
+    font-size: 12px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 600;
+    padding: 8px;
+    text-align: center;
+
+    a {
+      display: block;
+    }
+  }
+}

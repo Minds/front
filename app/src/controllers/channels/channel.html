@@ -176,6 +176,7 @@
 
     <div class="minds-list">
         <m-onboarding-feed *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"></m-onboarding-feed>
+        <minds-newsfeed-boost-rotator [channel]="user" interval="12" *ngIf="user.guid !== session.getLoggedInUser().guid && user.show_boosts"></minds-newsfeed-boost-rotator>
         <minds-activity *ngFor="let activity of pinned" [object]="activity" [boostToggle]="activity.boostToggle" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
         <minds-activity *ngFor="let activity of feed" [object]="activity" [boostToggle]="activity.boostToggle" class="mdl-card mdl-shadow--4dp item" (delete)="delete(activity)"></minds-activity>
         <infinite-scroll

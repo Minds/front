@@ -5,6 +5,7 @@ import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
 import { SessionFactory } from '../../../services/session';
 import { Router } from '@angular/router';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   moduleId: module.id,
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
     '(mouseover)': 'mouseOver()',
     '(mouseout)': 'mouseOut()'
   },
-  inputs: ['interval'],
+  inputs: ['interval', 'channel'],
   templateUrl: 'boost-rotator.html'
 })
 
@@ -30,6 +31,7 @@ export class NewsfeedBoostRotator {
   running: boolean = false;
   paused: boolean = false;
   interval: number = 5;
+  channel: MindsUser;
   currentPosition: number = 0;
   lastTs: number = Date.now();
   minds;
@@ -71,7 +73,12 @@ export class NewsfeedBoostRotator {
         this.offset = this.storage.get('boost:offset:rotator');
       }
 
-      this.client.get('api/v1/boost/fetch/newsfeed', { limit: 10, rating: this.rating, offset: this.offset })
+      let show = 'all';
+      if (!this.channel || !this.channel.merchant) {
+        show = 'points';
+      }
+
+      this.client.get('api/v1/boost/fetch/newsfeed', { limit: 10, rating: this.rating, offset: this.offset, show: show })
         .then((response: any) => {
           if (!response.boosts) {
             this.inProgress = false;
@@ -168,7 +175,10 @@ export class NewsfeedBoostRotator {
   recordImpression(position: number, force: boolean) {
     //ensure was seen for at least 1 second
     if ((Date.now() > this.lastTs + 1000 || force) && this.boosts[position].boosted_guid) {
-      this.client.put('api/v1/boost/fetch/newsfeed/' + this.boosts[position].boosted_guid);
+      let url: string = `api/v1/boost/fetch/newsfeed/${this.boosts[position].boosted_guid}/view`;
+      if(this.channel)
+        url += `/${this.channel.guid}`;
+      this.client.put(url);
     }
     this.lastTs = Date.now();
     window.localStorage.setItem('boost-rotator-offset', this.boosts[position].boosted_guid);

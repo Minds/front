@@ -24,6 +24,7 @@ import { MindsRichEmbed } from '../../../../../common/components/rich-embed/rich
 import { DomainPipe } from '../../../../../common/pipes/domain';
 import { AbbrPipe } from '../../../../../common/pipes/abbr';
 import { ChannelBadgesComponent } from '../../../../../common/components/badges/badges.component';
+import { TooltipComponentMock } from '../../../../../mocks/common/components/tooltip/tooltip.component';
 /* tslint:disable */
 // START MOCKS
 @Component({
@@ -98,14 +99,6 @@ export class WireThresholdInputComponentMock {
 
   setType(type: any) {
   }
-}
-
-@Component({
-  selector: 'm-tooltip',
-  template: ''
-})
-export class MToolTipMock {
-  @Input() icon: string;
 }
 
 @Component({
@@ -428,9 +421,9 @@ describe('Activity', () => {
         ReadMoreButtonComponentMock,
         AutoGrowMock,
         PostMenuMock,
+        TooltipComponentMock,
         CryptoTokenSymbolMock,
-        Activity,
-        MToolTipMock
+        Activity
       ], // declare the test component
       imports: [
         RouterTestingModule,

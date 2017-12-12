@@ -6,6 +6,7 @@ import { ReportCreatorComponent } from '../../../modules/report/creator/creator.
 import { MindsUser } from '../../../interfaces/entities';
 import { SignupModalService } from '../../../modules/modals/signup/service';
 
+
 type Option =
   'edit'
   | 'translate'
@@ -21,8 +22,10 @@ type Option =
   | 'monetize'
   | 'unmonetize'
   | 'subscribe'
-  | 'block'
-  | 'unsubscribe';
+  | 'unsubscribe'
+  | 'see-more-like-this'
+  | 'see-less-like-this'
+  | 'block';
 
 @Component({
   moduleId: module.id,
@@ -62,12 +65,12 @@ export class PostMenuComponent {
   }
 
   initCategories() {
-    this.categories = Object.keys(window.Minds.categories).map(function (key) {
-      return {
-        id: key,
-        label: window.Minds.categories[key]
-      };
-    });
+    for (let category of window.Minds.categories) {
+      this.categories.push({
+        'id': category.id,
+        'label': category.label,
+      });
+    }
   }
 
   cardMenuHandler() {
@@ -192,7 +195,7 @@ export class PostMenuComponent {
   }
 
   feature() {
-    if(this.askForCategoriesWhenFeaturing && !this.featureToggle) {
+    if (this.askForCategoriesWhenFeaturing && !this.featureToggle) {
       this.featureToggle = true;
       return;
     }
@@ -229,7 +232,7 @@ export class PostMenuComponent {
   }
 
   setExplicit(explicit: boolean) {
-    this.selectOption(explicit ? 'set-explicit' : 'remove-explicit');
+    this.selectOption(explicit ? 'set-explicit': 'remove-explicit');
   }
 
   monetize() {
@@ -298,7 +301,26 @@ export class PostMenuComponent {
 
   detectChanges() {
     this.cd.markForCheck();
-    this.cd.detectChanges();
+  }
+
+  seeMore() {
+    this.client.put(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {})
+      .then((response: any) => {
+        // this.user.subscribed = false;
+      })
+      .catch((e) => {
+        // this.user.subscribed = true;
+      });
+  }
+
+  seeLess() {
+    this.client.delete(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {})
+      .then((response: any) => {
+        // this.user.subscribed = false;
+      })
+      .catch((e) => {
+        // this.user.subscribed = true;
+      });
   }
 
 }

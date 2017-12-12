@@ -40,12 +40,12 @@ export class FeatureButton {
   }
 
   initCategories() {
-    this.categories = Object.keys(window.Minds.categories).map(function (key) {
-      return {
-        id: key,
-        label: window.Minds.categories[key]
-      };
-    });
+    for (let category of window.Minds.categories) {
+      this.categories.push({
+        'id': category.id,
+        'label': category.label,
+      });
+    }
   }
 
   set _object(value: any) {

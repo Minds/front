@@ -34,6 +34,19 @@ export class Activity {
   session = SessionFactory.build();
   showBoostOptions: boolean = false;
   @Input() boost: boolean = false;
+  private _showBoostMenuOptions: boolean = false;
+
+  @Input()
+  set showBoostMenuOptions(value: boolean) {
+    this._showBoostMenuOptions = value;
+
+    if (value) {
+      this.menuOptions.push('see-more-like-this');
+    } else {
+      this.menuOptions = this.defaultMenuOptions;
+    }
+    this.menuOptions = this.menuOptions.slice();
+  }
   type: string;
   element: any;
   visible: boolean = false;
@@ -46,11 +59,12 @@ export class Activity {
   scroll_listener;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
-  onViewed: EventEmitter<any> = new EventEmitter<any>();
+  onViewed: EventEmitter<{activity, visible}> = new EventEmitter<{activity, visible}>();
 
   isTranslatable: boolean;
   canDelete: boolean = false;
 
+  private defaultMenuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block'];
   menuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block'];
 
   constructor(
@@ -231,24 +245,31 @@ export class Activity {
       });
   }
 
+  private viewed:boolean = false;
+
   isVisible() {
     if (this.visible) {
-      this.onViewed.emit(this.activity);
+      this.onViewed.emit({activity: this.activity, visible: true});
       return true;
     }
     this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
       if (this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible) {
-        //stop listening
-        this.scroll.unListen(this.scroll_listener);
+        this.viewed = true;
         //make visible
         this.visible = true;
 
         if (this.boost) {
-          this.onViewed.emit(this.activity);
+          this.onViewed.emit({activity: this.activity, visible: true});
         } else {
           //update the analytics
           this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
         }
+      } else if(this.viewed) {
+        this.viewed = false;
+        //stop listening
+        this.scroll.unListen(this.scroll_listener);
+
+        this.onViewed.emit({activity: this.activity, visible: false});
       }
     });
     //this.scroll.fire();
