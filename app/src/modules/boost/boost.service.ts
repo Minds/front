@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { Client } from '../../services/api';
 import { Session, SessionFactory } from '../../services/session';
+import { BoostContractService } from '../blockchain/contracts/boost-contract.service';
 
 @Injectable()
 export class BoostService {
 
   session: Session = SessionFactory.build();
 
-  constructor(private client: Client) { }
+  constructor(private client: Client, private boostContractService: BoostContractService) { }
 
   /**
    * Returns a promise with a collection of boosts.
@@ -29,21 +30,28 @@ export class BoostService {
   /**
    * Accepts a P2P boost.
    */
-  accept(boost): Promise<boolean> {
+  async accept(boost): Promise<boolean> {
     if (this.getBoostType(boost) !== 'p2p') {
-      return Promise.resolve(false);
+      return false;
     }
 
-    boost.state = 'accepted';
+    try {
+      if (boost.currency == 'tokens') {
+        let tx = await this.boostContractService.accept(boost.guid);
 
-    return this.client.put(`api/v1/boost/peer/${boost.guid}`)
-      .then(() => {
-        return true;
-      })
-      .catch(e => {
-        boost.state = 'created';
-        return false;
-      });
+        if (!tx) {
+          return false;
+        }
+      }
+
+      boost.state = 'accepted';
+
+      await this.client.put(`api/v1/boost/peer/${boost.guid}`);
+      return true;
+    } catch (e) {
+      boost.state = 'created';
+      return false;
+    }
   }
 
   /**
@@ -56,21 +64,28 @@ export class BoostService {
   /**
    * Rejects a P2P boost.
    */
-  reject(boost): Promise<boolean> {
+  async reject(boost): Promise<boolean> {
     if (this.getBoostType(boost) !== 'p2p') {
-      return Promise.resolve(false);
+      return false;
     }
 
-    boost.state = 'rejected';
+    try {
+      if (boost.currency == 'tokens') {
+        let tx = await this.boostContractService.reject(boost.guid);
 
-    return this.client.delete(`api/v1/boost/peer/${boost.guid}`)
-      .then(() => {
-        return true;
-      })
-      .catch(e => {
-        boost.state = 'created';
-        return false;
-      });
+        if (!tx) {
+          return false;
+        }
+      }
+
+      boost.state = 'rejected';
+
+      await this.client.delete(`api/v1/boost/peer/${boost.guid}`);
+      return true;
+    } catch (e) {
+      boost.state = 'created';
+      return false;
+    }
   }
 
   /**
@@ -83,7 +98,7 @@ export class BoostService {
   /**
    * Revokes a boost.
    */
-  revoke(boost): Promise<boolean> {
+  async revoke(boost): Promise<boolean> {
     let revokeEndpoint;
 
     if (this.getBoostType(boost) === 'p2p') {
@@ -94,16 +109,22 @@ export class BoostService {
       revokeEndpoint = `api/v1/boost/${boost.handler}/${boost.guid}/revoke`;
     }
 
-    boost.state = 'revoked';
+    try {
+      if (boost.currency == 'tokens') {
+        let tx = await this.boostContractService.revoke(boost.guid);
 
-    return this.client.delete(revokeEndpoint)
-      .then(() => {
-        return true;
-      })
-      .catch(e => {
-        boost.state = 'created';
-        return false;
-      });
+        if (!tx) {
+          return false;
+        }
+      }
+
+      boost.state = 'revoked';
+      await this.client.delete(revokeEndpoint);
+      return true;
+    } catch (e) {
+      boost.state = 'created';
+      return false;
+    }
   }
 
   /**

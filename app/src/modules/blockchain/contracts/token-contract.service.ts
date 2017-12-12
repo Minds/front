@@ -1,0 +1,91 @@
+import { Injectable } from '@angular/core';
+import { Web3WalletService } from '../web3-wallet.service';
+
+declare const BN;
+
+export interface TokenApproveAndCallParam {
+  type: string;
+  value: any;
+}
+
+export type TokenApproveAndCallParams = TokenApproveAndCallParam[];
+
+@Injectable()
+export class TokenContractService {
+  protected instance: any;
+
+  constructor(protected web3Wallet: Web3WalletService) {
+    this.load();
+  }
+
+  async load() {
+    await this.web3Wallet.ready();
+
+    this.instance = this.web3Wallet.eth.contract(this.web3Wallet.config.token.abi, '0x')
+      .at(this.web3Wallet.config.token.address);
+
+    this.token(); // Refresh default account
+  }
+
+  async token(gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1) {
+    if (!this.instance) {
+      throw new Error('No token instance');
+    }
+
+    if (!this.instance.defaultTxObject) {
+      this.instance.defaultTxObject = {};
+    }
+
+    // Refresh default account due a bug in Metamask
+    this.instance.defaultTxObject.from = await this.web3Wallet.eth.coinbase();
+    this.instance.defaultTxObject.gasPrice = this.web3Wallet.web3.toWei(gasPriceGwei, 'Gwei');
+
+    return this.instance;
+  }
+
+  // Direct Minds payments
+
+  async payment(amount: number) {
+    return (await this.token()).transfer(this.web3Wallet.config.wallet_address, this.tokenToUnit(amount));
+  }
+
+  // Token allowance
+
+  async increaseApproval(address: string, amount: number) {
+    return (await this.token()).increaseApproval(address, this.tokenToUnit(amount));
+  }
+
+  tokenToUnit(amount: number) {
+    const precision = 5;
+
+    if (amount === 0) {
+      return 0;
+    }
+
+    const value = (new BN(10))
+      .pow(new BN(this.web3Wallet.config.token.decimals - precision))
+      .mul(new BN(Math.round(amount * (10 ** precision))));
+
+    return value.toString();
+  }
+
+  // Token approveAndCall parameters. Adds 80 + 40 padding
+
+  encodeParams(params: TokenApproveAndCallParams): string {
+    const types = [ 'uint256', 'uint256' ],
+      values = [ 0x80, 0x40 ];
+
+    for (let param of params) {
+      types.push(param.type);
+      values.push(param.value);
+    }
+
+    return this.web3Wallet.eth.constructor.abi.encodeParams(types, values);
+  }
+
+  // Service provider
+
+  static _(web3Wallet: Web3WalletService) {
+    return new TokenContractService(web3Wallet);
+  }
+}

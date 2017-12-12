@@ -347,7 +347,7 @@ minds-carousel{
      padding:$minds-padding *2;
      text-decoration: none;
 
-     i{
+     i, m--crypto-token-symbol{
        margin-right:$minds-margin;
      }
    }
@@ -732,4 +732,49 @@ svg.m-facebook-icon{
   .m-tab-bar--active-tab {
     color: #2196f3;
   }
+}
+
+
+.m-crypto-token-icon {
+  // TODO: Create an SVG version of the icon
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  min-height: 1em;
+
+  &:after {
+    content: 'M';
+
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    text-decoration: line-through;
+    font-style: normal;
+    font-size: 1.35em;
+    line-height: 1;
+    letter-spacing: normal;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &.m-crypto-token-icon-light {
+    width: 1em;
+    font-size: 24px;
+
+    &:after {
+      font-weight: 300;
+    }
+  }
+}
+
+.m-invisible {
+  visibility: hidden;
 }

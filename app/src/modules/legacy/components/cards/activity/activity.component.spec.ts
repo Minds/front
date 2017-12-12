@@ -330,6 +330,12 @@ export class HovercardMock {
 export class ReadMoreButtonComponentMock {
 }
 
+@Component({
+  selector: 'm--crypto-token-symbol',
+  template: ''
+})
+class CryptoTokenSymbolMock { }
+
 @Directive({
   selector: '[autoGrow]',
   inputs: ['autoGrow', '_model: ngModel'],
@@ -376,7 +382,8 @@ describe('Activity', () => {
     },
     wire_totals: {
       points: 10,
-      money: 3
+      money: 3,
+      tokens: 1
     },
     impressions: 100,
     paywall: true,
@@ -421,6 +428,7 @@ describe('Activity', () => {
         ReadMoreButtonComponentMock,
         AutoGrowMock,
         PostMenuMock,
+        CryptoTokenSymbolMock,
         Activity,
         MToolTipMock
       ], // declare the test component
@@ -464,7 +472,8 @@ describe('Activity', () => {
       },
       wire_totals: {
         points: 10,
-        money: 3
+        money: 3,
+        tokens: 1
       },
       impressions: 100,
       paywall: false,
@@ -489,8 +498,13 @@ describe('Activity', () => {
     expect(moneyMetric).not.toBeNull();
     expect(moneyMetric.nativeElement.textContent).toContain(3);
   });
+  it('activity metrics should have token metric', () => {
+    let tokens = getActivityMetric(3);
+    expect(tokens).not.toBeNull();
+    expect(tokens.nativeElement.textContent).toContain(1);
+  });
   it('activity metrics should have views metric', () => {
-    let views = getActivityMetric(3);
+    let views = getActivityMetric(4);
     expect(views).not.toBeNull();
     expect(views.nativeElement.textContent).toContain(100);
   });

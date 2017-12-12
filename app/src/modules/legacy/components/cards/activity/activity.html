@@ -195,6 +195,10 @@
   		<i class="material-icons" style="width:10px">attach_money</i>
       <span *ngIf="activity.wire_totals">{{ activity.wire_totals.money | abbr }}</span>
   	</div>
+  	<div class="m-activity--metrics-metric" (click)="showWire()">
+  		<m--crypto-token-symbol></m--crypto-token-symbol>
+      <span *ngIf="activity.wire_totals">{{ activity.wire_totals.tokens | abbr }}</span>
+  	</div>
   	<div class="m-activity--metrics-metric">
   		<i class="material-icons">remove_red_eye</i>
       <span>{{ activity.impressions | number }}</span>

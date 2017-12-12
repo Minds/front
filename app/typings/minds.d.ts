@@ -18,6 +18,7 @@ interface Minds {
   recaptchaKey?: string;
   max_video_length?: number;
   features?: any;
+  blockchain?: any;
 }
 
 interface MindsNavigation {
@@ -36,6 +37,7 @@ interface Window {
   io?: any;
   google?: any;
   twoOhSix?: any;
+  web3?: any;
 }
 declare var window: Window;
 

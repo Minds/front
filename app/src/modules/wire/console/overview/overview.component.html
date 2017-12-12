@@ -72,4 +72,41 @@
       </div>
     </div>
   </div>
+
+  <!-- Tokens -->
+  <div class="m-wire-console--overview-stat-label" *ngIf="hasWallet()" i18n="@@M__FEATURE__POINTS">
+    MindsCoin
+  </div>
+
+  <div class="mdl-grid m-wire-console--overview-stat-type">
+    <div class="m-wire-console--overview-count mdl-cell mdl-cell--4-col">
+      <span>{{ stats.tokens_count | number }}</span>
+      <div class="m-wire-console--label">
+        <label i18n="@@M__FEATURE__WIRE_PLURAL">Wires</label>
+        <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__MINDSCOIN_WIRES_TOOLTIP">
+          How many MindsCoin wires you have received in the last 30 days
+        </m-tooltip>
+      </div>
+    </div>
+
+    <div class="m-wire-console--overview-earnings mdl-cell mdl-cell--4-col">
+      <span>{{ stats.tokens | number:'1.0-4' }}</span>
+      <div class="m-wire-console--label">
+        <label i18n="@@M__COMMON__EARNINGS">Earnings</label>
+        <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__MINDSCOIN_EARNINGS_TOOLTIP">
+          This is your total volume (gross) of all MindsCoin wires you have received in the last 30 days
+        </m-tooltip>
+      </div>
+    </div>
+
+    <div class="m-wire-console--overview-average mdl-cell mdl-cell--4-col">
+      <span>{{ stats.tokens_avg | number:'1.0-4' }}</span>
+      <div class="m-wire-console--label">
+        <label i18n="@@WIRE__CONSOLE__OVERVIEW__AVERAGE_TITLE">Average</label>
+        <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__MINDSCOIN_AVERAGE_TOOLTIP">
+          This is average amount received per MindsCoin wire
+        </m-tooltip>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,18 @@
+m--crypto-token-symbol {
+  display: inline-block;
+  font-size: 1em;
+
+  &.m--crypto-token-symbol--thin {
+    .m--crypto-token-symbol--stroke {
+      stroke-width: 8px;
+    }
+  }
+
+  .m--crypto-token-symbol--stroke {
+    stroke: #ffffff;
+  }
+
+  .m--crypto-token-symbol--fill {
+    fill: #ffffff;
+  }
+}

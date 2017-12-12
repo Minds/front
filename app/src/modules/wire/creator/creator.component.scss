@@ -153,9 +153,19 @@
           vertical-align: middle;
           display: inline-block;
         }
-        i {
+        i, m--crypto-token-symbol {
           margin-right: 8px;
           font-size: 28px;
+        }
+
+        m--crypto-token-symbol {
+          .m--crypto-token-symbol--stroke {
+            stroke: #555;
+          }
+
+          .m--crypto-token-symbol--fill {
+            fill: #555;
+          }
         }
       }
 

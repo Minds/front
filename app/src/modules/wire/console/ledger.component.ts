@@ -43,6 +43,8 @@ export class WireConsoleLedgerComponent {
 
       if (window.Minds.user.merchant) {
         this.method = 'money';
+      } else if (window.Minds.user.eth_wallet) {
+          this.method = 'tokens';
       }
     }
 

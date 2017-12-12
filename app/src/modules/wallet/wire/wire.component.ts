@@ -20,11 +20,7 @@ export class WalletWireComponent {
 
   constructor(private _componentFactoryResolver: ComponentFactoryResolver, private router: Router, private session: Session) { }
 
-  ngOnInit() {
-    if (this.session.getLoggedInUser().merchant) {
-      this.router.navigate(['/wallet/revenue/wire']);
-    }
-  }
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.loadComponent();

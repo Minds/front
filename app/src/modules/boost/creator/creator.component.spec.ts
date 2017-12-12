@@ -15,6 +15,10 @@ import { Scheduler } from '../../../common/components/scheduler/scheduler';
 
 import { VisibleBoostError, BoostCreatorComponent, BoostType } from './creator.component';
 import { BoostService } from '../boost.service';
+import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
+import { tokenContractServiceMock } from '../../../../tests/token-contract-service-mock.spec';
+import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
+import { peerBoostContractServiceMock } from '../../../../tests/peer-boost-contract-service-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -35,6 +39,18 @@ export class StripeCheckoutMock {
   @Input() useCreditCard: boolean = true;
   @Input() useBitcoin: boolean = false;
 }
+
+@Component({
+  selector: 'm--crypto-token-symbol',
+  template: ''
+})
+class CryptoTokenSymbolMock { }
+
+@Component({
+  selector: 'm-checkout--blockchain',
+  template: ''
+})
+class BlockchainCheckoutMock { }
 
 describe('BoostCreatorComponent', () => {
   let boostComponent: BoostCreatorComponent;
@@ -181,13 +197,17 @@ describe('BoostCreatorComponent', () => {
         AbbrPipe,
         Scheduler,
         StripeCheckoutMock,
+        CryptoTokenSymbolMock,
+        BlockchainCheckoutMock,
         BoostCreatorComponent
       ],
       imports: [ FormsModule ],
       providers: [
         { provide: Client, useValue: clientMock },
         BoostService,
-        { provide: OverlayModalService, useValue: overlayModalServiceMock }
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: TokenContractService, useValue: tokenContractServiceMock },
+        { provide: BoostContractService, useValue: peerBoostContractServiceMock }
       ]
     }).compileComponents();
   }));
@@ -307,12 +327,13 @@ describe('BoostCreatorComponent', () => {
     expect(paymentTitle.nativeElement.textContent).toContain('Payment Method');
   });
 
-  it('should have payment method list (usd, points)', () => {
+  it('should have payment method list (usd, points, mindscoin)', () => {
     const methods = fixture.debugElement.query(By.css('section.m-boost--creator-section-payment > ul.m-boost--creator-selector'));
     expect(methods).not.toBeNull();
-    expect(methods.nativeElement.children.length).toBe(2);
+    expect(methods.nativeElement.children.length).toBe(3);
     expect(fixture.debugElement.query(By.css('.m-boost--creator-selector > li:first-child > h4')).nativeElement.textContent).toContain('USD');
     expect(fixture.debugElement.query(By.css('.m-boost--creator-selector > li:nth-child(2) > h4')).nativeElement.textContent).toContain('points');
+    // MindsCoin uses symbol
   });
 
   it('clicking on a payment option should highlight it', fakeAsync(() => {
@@ -589,12 +610,14 @@ describe('BoostCreatorComponent', () => {
       const args = clientMock.post.calls.mostRecent().args;
       expect(args[0]).toBe(`api/v1/boost/peer/${boostActivity.guid}/${boostActivity.owner_guid}`);
       expect(args[1]).toEqual({
+        guid: null,
         type: 'points',
+        currency: 'points',
         bid: 10,
         destination: boostTargetUser.guid,
         scheduledTs: null,
         postToFacebook: null,
-        nonce: ''
+        nonce: null
       });
     }));
   });
@@ -681,6 +704,7 @@ describe('BoostCreatorComponent', () => {
     const args = clientMock.post.calls.mostRecent().args;
     expect(args[0]).toBe(`api/v1/boost/${boostActivity.type}/${boostActivity.guid}/${boostActivity.owner_guid}`);
     expect(args[1]).toEqual({
+      guid: null,
       bidType: 'points',
       impressions: 10,
       categories: [
@@ -689,7 +713,7 @@ describe('BoostCreatorComponent', () => {
         thirdCategory.nativeElement.textContent.trim().toLowerCase()
       ],
       priority: null,
-      paymentMethod: ''
+      paymentMethod: null
     });
   }));
 
@@ -737,6 +761,7 @@ describe('BoostCreatorComponent', () => {
     const args = clientMock.post.calls.mostRecent().args;
     expect(args[0]).toBe(`api/v1/boost/${boostBlog.type}/${boostBlog.guid}/${boostBlog.owner_guid}`);
     expect(args[1]).toEqual({
+      guid: null,
       bidType: 'points',
       impressions: 10,
       categories: [
@@ -745,7 +770,7 @@ describe('BoostCreatorComponent', () => {
         thirdCategory.nativeElement.textContent.trim().toLowerCase()
       ],
       priority: null,
-      paymentMethod: ''
+      paymentMethod: null
     });
   }));
 });

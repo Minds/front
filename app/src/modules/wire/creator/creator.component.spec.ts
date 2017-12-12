@@ -14,6 +14,8 @@ import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec'
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { WireService } from '../wire.service';
+import { WireContractService } from '../../blockchain/contracts/wire-contract.service';
+import { wireContractServiceMock } from '../../../../tests/wire-contract-service-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -50,6 +52,18 @@ export class StripeCheckoutMock {
   @Input() useCreditCard: boolean = true;
   @Input() useBitcoin: boolean = false;
 }
+
+@Component({
+  selector: 'm--crypto-token-symbol',
+  template: ''
+})
+class WireCreatorCryptoTokenSymbolMock { }
+
+@Component({
+  selector: 'm-checkout--blockchain',
+  template: ''
+})
+class WireCreatorBlockchainCheckoutMock { }
 
 describe('WireCreatorComponent', () => {
 
@@ -135,10 +149,13 @@ describe('WireCreatorComponent', () => {
         AbbrPipe,
         WireCreatorRewardsComponentMock,
         StripeCheckoutMock,
+        WireCreatorCryptoTokenSymbolMock,
+        WireCreatorBlockchainCheckoutMock,
         WireCreatorComponent ], // declare the test component
       imports: [ FormsModule, RouterTestingModule ],
       providers: [
         { provide: Client, useValue: clientMock },
+        { provide: WireContractService, useValue: wireContractServiceMock },
         WireService,
         { provide: OverlayModalService, useValue: overlayModalServiceMock }
       ]
@@ -233,7 +250,7 @@ describe('WireCreatorComponent', () => {
     const subtitle = fixture.debugElement.query(By.css('.m-wire-creator--subtext'));
     expect(subtitle).not.toBeNull();
 
-    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars, points or Bitcoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
+    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars, points or MindsCoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
   });
 
   it('should have a payment section', () => {
@@ -255,7 +272,7 @@ describe('WireCreatorComponent', () => {
 
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:first-child > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('Points');
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(2) > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('USD');
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:last-child > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('Bitcoin');
+    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:last-child > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('MindsCoin');
   });
 
   it('usd payment option should only be available if the user\'s a merchant', fakeAsync(() => {

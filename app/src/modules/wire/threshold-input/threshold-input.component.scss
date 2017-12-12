@@ -38,6 +38,14 @@ m-wire-threshold-input, .m-wire-threshold-input {
 
     .m-wire-threshold-input--type {
       color: #4caf50;
+
+      .m--crypto-token-symbol--stroke {
+        stroke: #4caf50;
+      }
+
+      .m--crypto-token-symbol--fill {
+        fill: #4caf50;
+      }
     }
 
     > input {

@@ -1,0 +1,32 @@
+m-blockchain--wallet-selector {
+  display: block;
+}
+
+.m-blockchain--wallet-selector--info {
+  border: 1px solid #eeeeee;
+  padding: $minds-padding * 2;
+  font-size: 14px;
+}
+
+.m-blockchain--wallet-selector--list {
+  list-style: none;
+  padding: 0;
+
+  .m-blockchain--wallet-selector--item {
+    border: 1px solid #eeeeee;
+    padding: $minds-padding * 2;
+    cursor: pointer;
+
+    &.m-blockchain--wallet-selector--item-active {
+      color: #cccccc;
+      cursor: default;
+    }
+
+    .material-icons {
+      vertical-align: text-top;
+      font-size: 1em;
+      position: relative;
+      top: 0.15em;
+    }
+  }
+}

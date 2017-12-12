@@ -7,6 +7,8 @@ import { CommonModule } from '../../common/common.module';
 import { CardInput } from './card/card';
 import { Checkout } from './braintree-checkout';
 import { StripeCheckout } from './stripe-checkout';
+import { BlockchainModule } from '../blockchain/blockchain.module';
+import { BlockchainCheckoutComponent } from './blockchain-checkout.component';
 
 @NgModule({
   imports: [
@@ -14,16 +16,19 @@ import { StripeCheckout } from './stripe-checkout';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
+    BlockchainModule,
   ],
   declarations: [
     CardInput,
     Checkout,
-    StripeCheckout
+    StripeCheckout,
+    BlockchainCheckoutComponent
   ],
   exports: [
     CardInput,
     Checkout,
-    StripeCheckout
+    StripeCheckout,
+    BlockchainCheckoutComponent
   ]
 })
 export class CheckoutModule {

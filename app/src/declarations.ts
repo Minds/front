@@ -1,4 +1,3 @@
-import {AnnouncementComponent} from './components/announcements/announcement.component';
 import {Topbar} from './components/topbar/topbar';
 import {SidebarNavigation} from './components/sidebar-navigation/sidebar-navigation';
 import {HovercardPopup} from './components/hovercard-popup/hovercard-popup';
@@ -41,7 +40,6 @@ import { RejectionReasonModalComponent } from './controllers/admin/boosts/modal/
 
 export const MINDS_DECLARATIONS: any[] = [
   // Components
-  AnnouncementComponent,
   Topbar,
   SidebarNavigation,
   HovercardPopup,

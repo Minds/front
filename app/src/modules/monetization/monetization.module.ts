@@ -13,17 +13,18 @@ import { MonetizationOnboardingComponent } from './onboarding/onboarding.compone
 import { AffiliateMarketingComponent } from './affiliate/marketing.component';
 import { AffiliateLinkComponent } from './affiliate/link.component';
 import { AffiliateTermsComponent } from './affiliate/terms.component';
-import { RevenueConsoleComponent } from './revenue/console.component';
 import { RevenueGraphComponent } from './revenue/graph.component';
 import { RevenueLedgerComponent } from './revenue/ledger.component';
 import { RevenueOptionsComponent } from './revenue/options.component';
 import { WalletWireComponent } from '../wallet/wire/wire.component';
 
+// external
+import { WalletComponent } from '../wallet/wallet.component';
 
 const monetizationRoutes : Routes = [
   { path: 'affiliates',  component: AffiliateMarketingComponent },
   { path: 'monetization', component: MonetizationMarketingComponent },
-  { path: 'wallet/revenue', component: RevenueConsoleComponent,
+  { path: 'wallet/revenue', component: WalletComponent,
     children: [
       { path: '', redirectTo: 'earnings', pathMatch: 'full' },
       { path: 'points', component: WalletTransactionsComponent },
@@ -32,7 +33,6 @@ const monetizationRoutes : Routes = [
       { path: 'payouts', component: RevenueLedgerComponent },
       { path: 'options', component: RevenueOptionsComponent },
       { path: 'affiliates', component: AffiliateLinkComponent },
-      { path: 'wire', component: WalletWireComponent }
     ]
   }
 ];
@@ -54,7 +54,6 @@ const monetizationRoutes : Routes = [
     AffiliateMarketingComponent,
     AffiliateLinkComponent,
     AffiliateTermsComponent,
-    RevenueConsoleComponent,
     RevenueGraphComponent,
     RevenueLedgerComponent,
     RevenueOptionsComponent,
@@ -65,7 +64,6 @@ const monetizationRoutes : Routes = [
     MonetizationOnboardingComponent,
     AffiliateMarketingComponent,
     AffiliateTermsComponent,
-    RevenueConsoleComponent,
     RevenueGraphComponent,
     RevenueLedgerComponent,
     RevenueOptionsComponent,
@@ -74,8 +72,7 @@ const monetizationRoutes : Routes = [
   entryComponents: [
     MonetizationMarketingComponent,
     AffiliateMarketingComponent,
-    AffiliateLinkComponent,
-    RevenueConsoleComponent
+    AffiliateLinkComponent
   ]
 })
 

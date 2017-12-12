@@ -51,6 +51,8 @@ export class WireChannelComponent {
 
     if (this.shouldShow('money')) {
       this.display = 'money';
+    } else if (this.shouldShow('tokens')) {
+      this.display = 'tokens';
     }
   }
 
@@ -67,7 +69,8 @@ export class WireChannelComponent {
       description: '',
       rewards: {
         points: [],
-        money: []
+        money: [],
+        tokens: []
       }
     };
   }
@@ -75,6 +78,7 @@ export class WireChannelComponent {
   save() {
     this.rewards.rewards.points = this._cleanAndSortRewards(this.rewards.rewards.points);
     this.rewards.rewards.money = this._cleanAndSortRewards(this.rewards.rewards.money);
+    this.rewards.rewards.tokens = this._cleanAndSortRewards(this.rewards.rewards.tokens);
 
     this.client.post('api/v1/wire/rewards', {
       rewards: this.rewards
@@ -107,12 +111,19 @@ export class WireChannelComponent {
     const isOwner = this.isOwner();
 
     if (!type) {
-      return isOwner || (this.rewards.description || this.rewards.rewards.points.length || this.rewards.rewards.money.length);
+      return isOwner || (
+        this.rewards.description ||
+        (this.rewards.rewards.points && this.rewards.rewards.points.length) ||
+        (this.rewards.rewards.money && this.rewards.rewards.money.length) ||
+        (this.rewards.rewards.tokens && this.rewards.rewards.tokens.length)
+      );
     }
 
-    const canShow = (type === 'points') || this.channel.merchant;
+    const canShow = (type === 'points') ||
+      (type === 'money' && this.channel.merchant) ||
+      (type === 'tokens' && this.channel.eth_wallet);
 
-    return canShow && (isOwner || this.rewards.rewards[type].length);
+    return canShow && (isOwner || (this.rewards.rewards[type] && this.rewards.rewards[type].length));
   }
 
   getCurrentTypeLabel() {

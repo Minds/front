@@ -19,6 +19,7 @@
       >
         <i *ngIf="threshold.type == 'points'" class="material-icons m-wire-threshold-input--type">account_balance</i>
         <i *ngIf="threshold.type == 'money'" class="material-icons m-wire-threshold-input--type">attach_money</i>
+        <m--crypto-token-symbol *ngIf="threshold.type == 'tokens'" class="m-wire-threshold-input--type"></m--crypto-token-symbol>
       </button>
 
       <ul

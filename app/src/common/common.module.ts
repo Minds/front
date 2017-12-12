@@ -46,6 +46,8 @@ import { AttachmentService } from "../services/attachment";
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 import { IfFeatureDirective } from './directives/if-feature.directive';
 import { MindsEmoji } from './components/emoji/emoji';
+import { AnnouncementComponent } from './components/announcements/announcement.component';
+import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.component';
 
 @NgModule({
   imports: [
@@ -97,7 +99,10 @@ import { MindsEmoji } from './components/emoji/emoji';
 
     MaterialBoundSwitchComponent,
 
-    IfFeatureDirective
+    IfFeatureDirective,
+
+    AnnouncementComponent,
+    MindsTokenSymbolComponent
   ],
   exports: [
     MINDS_PIPES,
@@ -143,7 +148,10 @@ import { MindsEmoji } from './components/emoji/emoji';
 
     MaterialBoundSwitchComponent,
 
-    IfFeatureDirective
+    IfFeatureDirective,
+
+    AnnouncementComponent,
+    MindsTokenSymbolComponent
   ],
   providers: [AttachmentService],
   entryComponents: [ ]

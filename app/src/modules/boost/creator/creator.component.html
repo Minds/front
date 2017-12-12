@@ -31,7 +31,7 @@
         [class.m-boost--creator-selector--highlight]="!boost.type || boost.type == 'p2p'"
       >
         <h4 i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</h4>
-        <span class="m-boost--creator-selector--description" i18n="@@BOOST__CREATOR__CHANNELS_SELECTOR_DESC">Your content will be shared to a specific channel in exchange for USD or points.</span>
+        <span class="m-boost--creator-selector--description" i18n="@@BOOST__CREATOR__CHANNELS_SELECTOR_DESC">Your content will be shared to a specific channel in exchange for USD, MindsCoin or points.</span>
         <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
       </li>
 
@@ -72,7 +72,7 @@
         <ng-container *ngIf="boost.type != 'p2p'" i18n="@@BOOST__CREATOR__VIEWS_INPUT_LABEL">views</ng-container>
         <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'points'" i18n="points input|@@M__COMMON__POINTS_INPUT">points</ng-container>
         <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'usd'" i18n="usd input|@@M__COMMON__USD_INPUT">USD</ng-container>
-        <!-- TODO: BTC -->
+        <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'tokens'" i18n="usd input|@@M__COMMON__MINDSCOIN_INPUT">MindsCoin</ng-container>
       </span>
     </div>
   </section>
@@ -105,14 +105,29 @@
         <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
       </li>
 
-      <!-- TODO: BTC -->
+      <li
+        (click)="setBoostCurrency('tokens')"
+        [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'tokens'"
+      >
+        <h4 i18n="@@BOOST__CREATOR__MINDSCOIN_SELECTOR">
+          <b *ngIf="boost.amount">{{ calcCharges('tokens') | number }}</b>
+          <m--crypto-token-symbol></m--crypto-token-symbol>
+        </h4>
+        <span class="m-boost--creator-selector--cta" i18n="@@M__COMMON__SELECT_MINDSCOIN">Select MindsCoin</span>
+        <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
+      </li>
     </ul>
 
-    <div class="m-boost--creator-payment" *ngIf="boost.currency == 'usd'">
-      <minds-payments-stripe-checkout *ngIf="!boost.nonce"
+    <div class="m-boost--creator-payment" *ngIf="boost.currency == 'usd' || boost.currency == 'tokens'">
+      <minds-payments-stripe-checkout *ngIf="boost.currency == 'usd' && !boost.nonce"
         (inputed)="setBoostNonce($event)"
         [useMDLStyling]="false"
       ></minds-payments-stripe-checkout>
+
+      <m-checkout--blockchain *ngIf="boost.currency == 'tokens' && !boost.nonce"
+        (inputed)="setBoostNonce({ address: $event })"
+      ></m-checkout--blockchain>
+
       <div class="m-boost--creator-payment-attached" *ngIf="boost.nonce">
         <i class="material-icons">check_circle</i>
         <span>
@@ -145,7 +160,7 @@
       </div>
     </section>
 
-    <section class="m-boost--creator-section m-boost--creator-section-priority" *ngIf="boost.currency == 'usd'">
+    <section class="m-boost--creator-section m-boost--creator-section-priority" *ngIf="boost.currency == 'usd' || boost.currency == 'tokens'">
       <h3>
         <!-- i18n: @@BOOST__CREATOR__PRIORITY_TITLE -->Priority<!-- /i18n -->
         <span class="m-boost--creator-section--title-context" i18n="@@BOOST__CREATOR__PRIORITY_TITLE_CTX">
@@ -166,7 +181,9 @@
         <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'points'" i18n="@@BOOST__CREATOR__POINTS_PRIORITY_FEE">
           + <b>{{ calcPriorityChargesPreview('points') | number }} points</b>
         </span>
-        <!-- TODO: BTC -->
+        <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'tokens'" i18n="@@BOOST__CREATOR__MINDSCOIN_PRIORITY_FEE">
+          + <b>{{ calcPriorityChargesPreview('tokens') | number }} coins</b>
+        </span>
       </span>
     </section>
   </ng-container>
@@ -203,6 +220,7 @@
           <div class="m-boost--creator-autocomplete--result-content">
             @{{ target.username }}
             <ng-container *ngIf="target.merchant"><i class="material-icons material-icons--inline">attach_money</i></ng-container>
+            <ng-container *ngIf="target.eth_wallet"><m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol></ng-container>
           </div>
 
           <div class="m-boost--creator-autocomplete--result-label">

@@ -7,6 +7,8 @@ import { Session, SessionFactory } from './src/services/session';
 import { LoginReferrerService } from './src/services/login-referrer.service';
 import { ScrollToTopService } from './src/services/scroll-to-top.service';
 import { ContextService } from './src/services/context.service';
+import { BlockchainService } from './src/modules/blockchain/blockchain.service';
+import { Web3WalletService } from './src/modules/blockchain/web3-wallet.service';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +26,8 @@ export class Minds {
     public analytics: AnalyticsService,
     public sockets: SocketsService,
     public loginReferrer: LoginReferrerService,
-    public context: ContextService
+    public context: ContextService,
+    public web3Wallet: Web3WalletService
   ) {
     this.name = 'Minds';
   }
@@ -53,6 +56,8 @@ export class Minds {
     this.scrollToTop.listen();
 
     this.context.listen();
+
+    this.web3Wallet.setUp();
   }
 
   ngOnDestroy() {

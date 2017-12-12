@@ -1,7 +1,7 @@
 export type WireRewardsType =
   'points' |
-  'money';
-  // 'bitcoin';
+  'money' |
+  'tokens';
 
 export type WireRewardsTier = {
   amount: number | '',

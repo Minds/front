@@ -32,6 +32,11 @@ import { GoogleChartsLoader } from './third-party/google-charts-loader';
 import { RecentService } from './ux/recent';
 import { ContextService } from './context.service';
 import { FeaturesService } from './features.service';
+import { BlockchainService } from '../modules/blockchain/blockchain.service';
+import { Web3WalletService } from '../modules/blockchain/web3-wallet.service';
+import { TokenContractService } from '../modules/blockchain/contracts/token-contract.service';
+import { WireContractService } from '../modules/blockchain/contracts/wire-contract.service';
+import { BoostContractService } from "../modules/blockchain/contracts/boost-contract.service";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -168,5 +173,29 @@ export const MINDS_PROVIDERS : any[] = [
     provide: FeaturesService,
     useFactory: FeaturesService._,
     deps: [ Router ]
+  },
+  {
+    provide: BlockchainService,
+    useFactory: BlockchainService._,
+    deps: [ Client ]
+  },
+  {
+    provide: Web3WalletService,
+    useFactory: Web3WalletService._
+  },
+  {
+    provide: TokenContractService,
+    useFactory: TokenContractService._,
+    deps: [ Web3WalletService ]
+  },
+  {
+    provide: WireContractService,
+    useFactory: WireContractService._,
+    deps: [ Web3WalletService, TokenContractService ]
+  },
+  {
+    provide: BoostContractService,
+    useFactory: BoostContractService._,
+    deps: [ Web3WalletService, TokenContractService ]
   }
 ];

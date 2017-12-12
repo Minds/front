@@ -57,6 +57,13 @@
       [channel]="channel"
     ></m-wire-channel-table>
 
+    <m-wire-channel-table type="tokens"
+      *ngIf="shouldShow('tokens')"
+      [(rewards)]="rewards.rewards.tokens"
+      [editing]="editing"
+      [channel]="channel"
+    ></m-wire-channel-table>
+
     <p class="m-wire-channel--disclaimer" *ngIf="false" i18n="@@WIRE__CHANNEL__REWARD_CHANGE_NOTICE">
       <span>@</span>{{channel.username}} reserves the right to change rewards at anytime without notice
     </p>

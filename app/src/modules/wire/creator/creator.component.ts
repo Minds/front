@@ -6,7 +6,7 @@ import { Client } from '../../../services/api';
 import { Session, SessionFactory } from '../../../services/session';
 import { WireService } from '../wire.service';
 
-export type CurrencyType = 'points' | 'money' | 'btc';
+export type CurrencyType = 'points' | 'money' | 'tokens';
 
 export class VisibleWireError extends Error {
   visible: boolean = true;
@@ -50,7 +50,7 @@ export class WireCreatorComponent implements AfterViewInit {
     min: 250,
     cap: 5000,
     usd: 1,
-    btc: 0,
+    tokens: 1,
     minUsd: 1,
   };
 
@@ -128,14 +128,6 @@ export class WireCreatorComponent implements AfterViewInit {
       .then((rates: any) => {
         this.inProgress = false;
         this.rates = rates;
-
-        // TODO: Implement in backend and remove below
-        this.rates = {
-          btc: 0,
-
-          ...this.rates
-        };
-        //
       })
       .catch(e => {
         this.inProgress = false;
@@ -150,8 +142,9 @@ export class WireCreatorComponent implements AfterViewInit {
     }
 
     this.client.get(`api/v1/wire/rewards/${this.owner.guid}`)
-      .then(({ merchant, wire_rewards, sums }) => {
+      .then(({ merchant, eth_wallet, wire_rewards, sums }) => {
         this.owner.merchant = merchant;
+        this.owner.eth_wallet = eth_wallet;
         this.owner.wire_rewards = wire_rewards;
         this.sums = sums;
 
@@ -184,14 +177,18 @@ export class WireCreatorComponent implements AfterViewInit {
    * Sets the wire currency, and rounds the amount if necessary
    */
   setCurrency(currency: CurrencyType | null) {
-    if ((!this.owner || !this.owner.merchant) && (currency !== 'points')) {
+    if (
+      !this.owner ||
+      (!this.owner.merchant && currency === 'money') ||
+      (!this.owner.eth_wallet && currency === 'tokens')
+    ) {
       return;
     }
 
     let oldCurrency = this.wire.currency;
     this.wire.currency = currency;
 
-    if (currency === 'points') {
+    if (currency !== 'money' && currency !== 'tokens') {
       this.wire.recurring = false;
     }
 
@@ -261,11 +258,13 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   /**
-  * Round by 2 decimals if currency is unset or not points. If not, round down to an integer.
+  * Round by 2 decimals if currency is unset or not points, if tokens are selected round by 4, else round down to an integer.
   */
   roundAmount() {
-    if (!this.wire.currency || this.wire.currency !== 'points') {
+    if (!this.wire.currency || this.wire.currency === 'money') {
       this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 100) / 100;
+    } else if (this.wire.currency === 'tokens') {
+      this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
     } else {
       this.wire.amount = Math.floor(<number>this.wire.amount);
     }
@@ -307,21 +306,25 @@ export class WireCreatorComponent implements AfterViewInit {
       case 'points':
         if (to === 'money') {
           this.wire.amount = <number>this.wire.amount / this.rates.usd;
-        } else if (to === 'btc') {
-          // TODO: BTC
+        } else if (to === 'tokens') {
+          this.wire.amount = <number>this.wire.amount / this.rates.tokens;
         }
         break;
 
       case 'money':
         if (to === 'points') {
           this.wire.amount = <number>this.wire.amount * this.rates.usd;
-        } else if (to === 'btc') {
-          // TODO: BTC
+        } else if (to === 'tokens') {
+          this.wire.amount = <number>this.wire.amount * this.rates.tokens;
         }
         break;
 
-      case 'btc':
-        // TODO: BTC
+      case 'tokens':
+        if (to === 'points') {
+          this.wire.amount = <number>this.wire.amount * this.rates.tokens;
+        } else if (to === 'money') {
+          this.wire.amount = <number>this.wire.amount / this.rates.tokens;
+        }
         break;
     }
   }

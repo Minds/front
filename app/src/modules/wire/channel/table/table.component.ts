@@ -69,6 +69,10 @@ export class WireChannelTableComponent {
       case 'money':
         placeholder = '5';
         break;
+
+      case 'tokens':
+        placeholder = '1';
+        break;
     }
 
     return placeholder;

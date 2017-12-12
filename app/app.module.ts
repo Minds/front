@@ -45,6 +45,7 @@ import { BanModule } from './src/modules/ban/ban.module';
 import { BlogModule } from './src/modules/blogs/blog.module';
 import { SearchModule } from './src/modules/search/search.module';
 import { MessengerModule } from './src/modules/messenger/messenger.module';
+import { BlockchainModule } from './src/modules/blockchain/blockchain.module';
 
 @NgModule({
   bootstrap: [
@@ -90,7 +91,8 @@ import { MessengerModule } from './src/modules/messenger/messenger.module';
     BlogModule,
     PostMenuModule,
     SearchModule,
-    MessengerModule
+    MessengerModule,
+    BlockchainModule,
   ],
   providers: [
     MindsAppRoutingProviders,

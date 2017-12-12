@@ -10,8 +10,12 @@
       {{ sums.points | number }} points
     </b>
 
-    <b *ngIf="type == 'money'" i18n="@@WIRE__CREATOR__REWARDS__USD_VALUE">
+    <b *ngIf="type == 'money'">
       {{ sums.money | currency:'USD':true:'1.0-0' }}
+    </b>
+
+    <b *ngIf="type == 'tokens'">
+      {{ sums.tokens | number:'1.0-4' }}
     </b>
 
     <!-- i18n: @@WIRE__CREATOR__REWARDS__IN_THE_LAST_MONTH -->in the last month.<!-- /i18n -->
@@ -27,6 +31,7 @@
         <div class="m-wire--creator-rewards--amount">
           <span *ngIf="type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</span>
           <span *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_WITH_VALUE">{{ reward.amount | number }} points</span>
+          <span *ngIf="type == 'tokens'" i18n="@@M__COMMON__MINDSCOIN_WITH_VALUE">M {{ reward.amount | number }}</span>
         </div>
         <div class="m-wire--creator-rewards--description"> 
           <p>{{ reward.description }}</p>

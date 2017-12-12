@@ -257,6 +257,20 @@
         color: #000;
         font-weight: 400;
       }
+
+      m--crypto-token-symbol {
+        position: relative;
+        top: -0.15em;
+        margin-left: 0.15em;
+
+        .m--crypto-token-symbol--stroke {
+          stroke: #555;
+        }
+
+        .m--crypto-token-symbol--fill {
+          fill: #555;
+        }
+      }
     }
   }
 
@@ -324,14 +338,15 @@
 
   // Credit Card Input
   .m-boost--creator-payment {
-    position: absolute;
+    //position: absolute;
     border: 1px solid #DDD;
     background: rgba(0,0,0,0.1);
     border-radius: 3px;
     min-width: 440px;
     max-width: 560px;
     padding: 0px;
-    margin: -252px 400px;
+    //margin: -252px 400px;
+    margin: $minds-padding 0 0;
     min-width: 440px;
 
     @media screen and (max-width: $max-mobile) {
@@ -476,6 +491,21 @@
 
     &.m-boost--creator-selector--highlight {
       opacity: 1;
+    }
+
+    h4 {
+      m--crypto-token-symbol {
+        margin-left: 8px;
+        font-size: 28px;
+
+        .m--crypto-token-symbol--stroke {
+          stroke: #555;
+        }
+
+        .m--crypto-token-symbol--fill {
+          fill: #555;
+        }
+      }
     }
 
     .m-boost--creator-selector--cta {

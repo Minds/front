@@ -55,7 +55,7 @@
       <minds-activity [object]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'activity'"></minds-activity>
       <minds-card-group [group]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'group'"></minds-card-group>
 
-      <div class="mdl-card__supporting-text quality-slider">
+      <div class="mdl-card__supporting-text quality-slider" *ngIf="boost.state == 'review'">
         <!-- i18n: @@MINDS__ADMIN__BOOSTS__QUALITY_SLIDER_LABEL -->Quality: <!-- /i18n -->
         <div class="m--inputs">
           <input type="range" class="mdl-slider mdl-js-slider" [(ngModel)]="boost.quality" min="0" max="100" step="5" [mdlSlider]>
@@ -68,14 +68,19 @@
         <!-- i18n: @@MINDS__ADMIN__BOOSTS__PREVIOUSLY_REJECTED_LABEL -->Previously rejected: {{  findReason(boost.entity.boost_rejection_reason)?.label }}<!-- /i18n -->
       </div>
 
-      <span class="impressions">
+      <span class="mdl-card__supporting-text impressions">
         <span *ngIf="boost.impressions" i18n="@@M__COMMON__VIEWS_WITH_COUNT">{{ boost.impressions | number }} views</span>
         |
         <span *ngIf="boost.bidType == 'points'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_POINTS_LABEL">Bid: {{ boost.bid | number }} points</span>
         <span *ngIf="boost.bidType == 'usd'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_USD_LABEL">Bid: {{ boost.bid / 100 | currency:'USD':true }} USD </span>
+        <span *ngIf="boost.bidType == 'tokens'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_TOKENS_LABEL">Bid: {{ boost.bid  | number:'1.0-4' }} MindsCoin</span>
       </span>
 
-      <div class="mdl-card__supporting-text action-buttons">
+      <div class="mdl-card__supporting-text action-buttons" *ngIf="boost.state != 'review'" i18n="@@MINDS__ADMIN__BOOSTS__NOT_REVIEW_STATE">
+        This boost is in {{ boost.state }} state.
+      </div>
+
+      <div class="mdl-card__supporting-text action-buttons" *ngIf="boost.state == 'review'">
         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-300 m-admin-boosts--accept-button" (click)="accept(boost, false)" i18n="@@M__ACTION__ACCEPT">Accept</button>
         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500 m-admin-boosts--open-button" (click)="accept(boost, true)" i18n="safe boost|Open as a safe boost@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN">Open</button>
         <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500 m-admin-boosts--e-tag-button-accept" (click)="accept(boost, true, { mature: 1 })" i18n="Open as an explicit boost@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN_EXPLICIT">Open (E-tag)</button>

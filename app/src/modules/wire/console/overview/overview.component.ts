@@ -14,13 +14,16 @@ export class WireConsoleOverviewComponent {
   startDate: string;
 
   ready: boolean = true;
-  stats: { points, points_count, points_avg, money, money_count, money_avg } = {
+  stats: { points, points_count, points_avg, money, money_count, money_avg, tokens, tokens_count, tokens_avg } = {
     points: 0,
     points_count: 0,
     points_avg: 0,
     money: 0,
     money_count: 0,
-    money_avg: 0
+    money_avg: 0,
+    tokens: 0,
+    tokens_count: 0,
+    tokens_avg: 0
   };
 
   constructor(private client: Client, private session: Session, private cd: ChangeDetectorRef) { }
@@ -37,14 +40,17 @@ export class WireConsoleOverviewComponent {
     this.client.get('api/v1/wire/sums/overview/' + this.session.getLoggedInUser().guid, {
       start: Date.parse(this.startDate) / 1000
     })
-      .then(({ points = 0, points_count = 0, points_avg = 0, money = 0, money_count = 0, money_avg = 0 }) => {
+      .then(({ points = 0, points_count = 0, points_avg = 0, money = 0, money_count = 0, money_avg = 0, tokens = 0, tokens_count = 0, tokens_avg = 0 }) => {
         this.stats = {
           points,
           points_count,
           points_avg,
           money,
           money_count,
-          money_avg
+          money_avg,
+          tokens,
+          tokens_count,
+          tokens_avg
         };
 
         this.detectChanges();
@@ -54,6 +60,11 @@ export class WireConsoleOverviewComponent {
   isMerchant() {
     const user = this.session.getLoggedInUser();
     return user && user.merchant;
+  }
+
+  hasWallet() {
+    const user = this.session.getLoggedInUser();
+    return user && user.eth_wallet;
   }
 
   detectChanges() {

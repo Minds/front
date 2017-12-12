@@ -13,10 +13,11 @@ import { WireService } from '../../wire.service';
 export class WireChannelOverviewComponent implements OnInit, OnDestroy {
 
   ready: boolean = true;
-  stats: { count, money, points, sent? } = {
+  stats: { count, money, points, tokens, sent? } = {
     count: 0,
     money: 0,
     points: 0,
+    tokens: 0,
     sent: 0
   };
   sentSubscription;
@@ -42,11 +43,12 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
     this.client.get('api/v1/wire/sums/overview/' + this.channel.guid, {
       merchant: this.channel.merchant ? 1 : 0
     })
-      .then(({ count, money, points }) => {
+      .then(({ count, money, points, tokens }) => {
         this.stats = {
           count,
           money,
           points,
+          tokens,
           sent: this.stats.sent
         };
         this.detectChanges();

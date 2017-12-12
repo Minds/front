@@ -32,6 +32,16 @@
     </div>
   </div>
 
+  <div class="m-wire-channel--overview--overview-earnings mdl-cell mdl-cell--6-col">
+    <span *ngIf="ready">{{ stats.tokens | number:'1.0-4' }}</span>
+    <div class="m-wire-channel--overview--label">
+      <label i18n="@@M__FEATURE__MINDSCOIN">MindsCoin</label>
+      <m-tooltip icon="help" i18n="@@WIRE__CHANNEL__OVERVIEW__POINTS_CARD_TOOLTIP">
+        This is <span>@</span>{{channel.username}}'s total volume (gross) of all MindsCoin wires received in the last 30 days
+      </m-tooltip>
+    </div>
+  </div>
+
   <!-- <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col" *ngIf="session.getLoggedInUser().guid != channel.guid">
     <i>$</i><span *ngIf="ready">{{ stats.avg | number:'1.0-0' }}</span>
     <div class="m-wire-channel--overview--label">

@@ -4,8 +4,10 @@ import { CurrencyPipe } from '@angular/common';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session, SessionFactory } from '../../../services/session';
+import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
+import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 
-type CurrencyType = 'points' | 'usd' | 'btc';
+type CurrencyType = 'points' | 'usd' | 'tokens';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
 
 interface BoostStruc {
@@ -20,7 +22,7 @@ interface BoostStruc {
   scheduledTs: number;
   postToFacebook: boolean;
 
-  nonce: string;
+  nonce: any;
 }
 
 export class VisibleBoostError extends Error {
@@ -52,7 +54,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     scheduledTs: null,
 
     // Payment
-    nonce: ''
+    nonce: null
   };
 
   allowedTypes: { newsfeed?, p2p?, content?} = {};
@@ -65,7 +67,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     min: 250,
     cap: 5000,
     usd: 1000,
-    btc: 0,
+    tokens: 1000,
     minUsd: 1,
     priority: 1,
     maxCategories: 3
@@ -78,6 +80,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   targetResults: any[] = [];
 
   inProgress: boolean = false;
+  initialized: boolean = false;
 
   success: boolean = false;
   criticalError: boolean = false;
@@ -98,11 +101,14 @@ export class BoostCreatorComponent implements AfterViewInit {
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private client: Client,
-    private currency: CurrencyPipe
+    private currency: CurrencyPipe,
+    private tokensContract: TokenContractService,
+    private boostContract: BoostContractService,
   ) { }
 
   ngOnInit() {
     this.loadCategories();
+
     this.load();
   }
 
@@ -143,9 +149,7 @@ export class BoostCreatorComponent implements AfterViewInit {
 
         // TODO: Implement in backend and remove below
         this.rates = {
-          btc: 0,
           maxCategories: 3,
-
           ...this.rates
         };
         //
@@ -208,7 +212,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   /**
    * Sets the boost payment nonce
    */
-  setBoostNonce(nonce: string | null) {
+  setBoostNonce(nonce: any) {
     this.boost.nonce = nonce;
     this.showErrors();
   }
@@ -263,8 +267,10 @@ export class BoostCreatorComponent implements AfterViewInit {
    * Round by 2 decimals if P2P and currency is unset or not points. If not, round down to an integer.
    */
   roundAmount() {
-    if ((this.boost.type === 'p2p') && (!this.boost.currency || (this.boost.currency !== 'points'))) {
+    if ((this.boost.type === 'p2p') && (!this.boost.currency || (this.boost.currency === 'usd'))) {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 100) / 100;
+    } else if (this.boost.currency === 'tokens') {
+      this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 10000) / 10000;
     } else {
       this.boost.amount = Math.floor(<number>this.boost.amount);
     }
@@ -295,8 +301,9 @@ export class BoostCreatorComponent implements AfterViewInit {
       case 'points':
         return Math.floor(<number>this.boost.amount / this.rates.rate);
 
-      case 'btc':
-        return 0; // TODO: Implement BTC
+      case 'tokens':
+        const tokensFixRate = this.rates.tokens / 10000;
+        return Math.ceil(<number>this.boost.amount / tokensFixRate) / 10000;
     }
 
     throw new Error('Unknown currency');
@@ -484,9 +491,12 @@ export class BoostCreatorComponent implements AfterViewInit {
         throw new VisibleBoostError('You cannot boost to yourself.');
       }
 
-      if (this.boost.target && !this.boost.target.merchant && (this.boost.currency !== 'points')) {
-        // TODO: Implement BTC (in message)
+      if (this.boost.target && !this.boost.target.merchant && (this.boost.currency === 'usd')) {
         throw new VisibleBoostError('User cannot receive USD.');
+      }
+
+      if (this.boost.target && !this.boost.target.eth_wallet && (this.boost.currency === 'tokens')) {
+        throw new VisibleBoostError('User cannot receive MindsCoin.');
       }
     } else {
       if (this.boost.amount < this.rates.min || this.boost.amount > this.rates.cap) {
@@ -537,7 +547,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   /**
    * Submits the boost to the appropiate server endpoint using the current settings
    */
-  submit() {
+  async submit() {
     if (this.inProgress) {
       return;
     }
@@ -549,53 +559,70 @@ export class BoostCreatorComponent implements AfterViewInit {
 
     this.inProgress = true;
 
-    let request: Promise<any>;
+    let guid = null;
 
-    if (this.boost.type !== 'p2p') {
-      request = this.client.post(`api/v1/boost/${this.object.type}/${this.object.guid}/${this.object.owner_guid}`, {
-        bidType: this.boost.currency,
-        impressions: this.boost.amount,
-        categories: this.boost.categories,
-        priority: this.boost.priority ? 1 : null,
-        paymentMethod: this.boost.nonce
-      })
-        .then(response => {
-          return { done: true };
-        });
-    } else {
-      request = this.client.post(`api/v1/boost/peer/${this.object.guid}/${this.object.owner_guid}`, {
-        type: this.boost.currency === 'points' ? 'points' : 'pro', // TODO: BTC
-        bid: this.boost.amount,
-        destination: this.boost.target.guid,
-        scheduledTs: this.boost.scheduledTs,
-        postToFacebook: this.boost.postToFacebook ? 1 : null,
-        nonce: this.boost.nonce
-      })
-        .then(response => {
-          return { done: true };
-        })
-        .catch(e => {
-          if (e && e.stage === 'transaction') {
-            throw new Error('Sorry, your payment failed. Please, try again or use another card');
-          }
-        });
-    }
+    try {
+      if (this.boost.currency === 'tokens') {
+        guid = await this.generateGuid();
+      }
 
-    request
-      .then(({ done }) => {
-        this.inProgress = false;
+      if (this.boost.type !== 'p2p') {
+        if (this.boost.currency === 'tokens') {
+          const tokensFixRate = this.rates.tokens / 10000;
+          let amount = Math.ceil(<number>this.boost.amount / tokensFixRate) / 10000;
 
-        if (done) {
-          this.success = true;
-
-          setTimeout(() => {
-            this.overlayModal.dismiss();
-          }, 2500);
+          this.boost.nonce.txHash = await this.boostContract.create(guid, amount);
         }
-      })
-      .catch(e => {
-        this.inProgress = false;
+
+        await this.client.post(`api/v1/boost/${this.object.type}/${this.object.guid}/${this.object.owner_guid}`, {
+          guid,
+          bidType: this.boost.currency,
+          impressions: this.boost.amount,
+          categories: this.boost.categories,
+          priority: this.boost.priority ? 1 : null,
+          paymentMethod: this.boost.nonce
+        });
+      } else {
+        if (this.boost.currency === 'tokens') {
+          this.boost.nonce.txHash = await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount);
+        }
+
+        await this.client.post(`api/v1/boost/peer/${this.object.guid}/${this.object.owner_guid}`, {
+          guid,
+          type: this.boost.currency === 'points' ? 'points' : 'pro',
+          currency: this.boost.currency,
+          bid: this.boost.amount,
+          destination: this.boost.target.guid,
+          scheduledTs: this.boost.scheduledTs,
+          postToFacebook: this.boost.postToFacebook ? 1 : null,
+          nonce: this.boost.nonce
+        });
+      }
+
+      this.success = true;
+
+      setTimeout(() => {
+        this.overlayModal.dismiss();
+      }, 2500);
+    } catch (e) {
+      if (e && e.stage === 'transaction') {
+        throw new Error('Sorry, your payment failed. Please, try again, use another card or wallet.');
+      } else {
         this.error = (e && e.message) || 'Sorry, something went wrong';
-      });
+      }
+    } finally {
+      this.inProgress = false;
+    }
+  }
+
+  generateGuid() {
+    return this.client.get('api/v1/guid')
+      .then((response: any) => {
+        if (!response || !response.guid) {
+          throw new Error('Cannot generate GUID');
+        }
+
+        return response.guid;
+      })
   }
 }
