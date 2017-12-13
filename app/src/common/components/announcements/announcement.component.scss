@@ -17,7 +17,6 @@ m-announcement{
     display:flex;
     flex-direction: row;
     align-items:center;
-    width: calc(100% - 80px);
 
     @media screen and (max-width: 770px){
         width: 100%;
@@ -30,7 +29,9 @@ m-announcement{
     color: #FFF;
     letter-spacing: 1.2px;
     font-weight: 300;
-    font-family: Lato;
+    font-family: Roboto;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
     font-size: 16px;
     flex: 1;
 
