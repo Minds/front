@@ -27,7 +27,7 @@ import { AdsModule } from './src/modules/ads/ads.module';
 import { BoostModule } from './src/modules/boost/boost.module';
 import { WireModule } from './src/modules/wire/wire.module';
 import { ReportModule } from './src/modules/report/report.module';
-import { ChannelModule } from './src/modules/channel/channel.module';
+import { ChannelsModule } from './src/modules/channels/channels.module';
 import { MindsFormsModule } from './src/modules/forms/forms.module';
 import { LegacyModule } from './src/modules/legacy/legacy.module';
 import { ModalsModule } from './src/modules/modals/modals.module';
@@ -45,6 +45,10 @@ import { BanModule } from './src/modules/ban/ban.module';
 import { BlogModule } from './src/modules/blogs/blog.module';
 import { SearchModule } from './src/modules/search/search.module';
 import { MessengerModule } from './src/modules/messenger/messenger.module';
+import { HomepageModule } from './src/modules/homepage/homepage.module';
+import { NewsfeedModule } from './src/modules/newsfeed/newsfeed.module';
+import { MediaModule } from './src/modules/media/media.module';
+import { AuthModule } from './src/modules/auth/auth.module';
 import { BlockchainModule } from './src/modules/blockchain/blockchain.module';
 
 @NgModule({
@@ -84,7 +88,6 @@ import { BlockchainModule } from './src/modules/blockchain/blockchain.module';
     ModalsModule,
     PaymentsModule,
     MindsFormsModule,
-    ChannelModule,
     OnboardingModule,
     NotificationModule,
     GroupsModule,
@@ -92,7 +95,14 @@ import { BlockchainModule } from './src/modules/blockchain/blockchain.module';
     PostMenuModule,
     SearchModule,
     MessengerModule,
-    BlockchainModule,
+    HomepageModule,
+    NewsfeedModule,
+    MediaModule,
+    AuthModule,
+    BlockchainModule,    
+
+    //last due to :username route
+    ChannelsModule,    
   ],
   providers: [
     MindsAppRoutingProviders,

@@ -1,0 +1,47 @@
+<div class="m-toolbar">
+  <div class="m-topbar--row">
+    <div class="m-topbar--navigation">
+      <a class="m-topbar--navigation--item"
+        routerLink="/blog/top"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Top</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/blog/my"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>My Blogs</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/blog/edit/new"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Write a new blog</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="m-blog--list">
+
+  <div class="m-blog--list--column m-blog--list--column-0">
+    <m-blog--tile *ngFor="let entity of entities_0" [entity]="entity">
+    </m-blog--tile>
+  </div>
+
+  <div class="m-blog--list--column m-blog--list--column-1">
+    <m-blog--tile *ngFor="let entity of entities_1" [entity]="entity">
+    </m-blog--tile>
+  </div>
+
+
+
+  <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+  </infinite-scroll>
+
+</div>

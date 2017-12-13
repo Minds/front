@@ -2,7 +2,9 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:100,200,300,400,700,900,300italic,700italic|Indie+Flower);
 
 h1,h2,h3,h4{
-  font-family:'Lato';
+  font-family:'Roboto';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 h1{
   font-weight:300;
@@ -12,14 +14,14 @@ p {
   word-wrap: break-word;
 }
 
-minds-app{
-  .initial-loading{
-    width:100%;
-  }
+
+.m-noshadow{
+  box-shadow:0 0 0 !important;
 }
 
-.minds-noshadow{
-  box-shadow:0 0 0 !important;
+.m-border {
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
 }
 
 minds-topbar{

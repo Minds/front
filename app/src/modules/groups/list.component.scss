@@ -1,0 +1,21 @@
+.m-groups--list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: row;
+  flex-flow: row wrap;
+  //background: #FFF;
+  max-width: 1280px;
+  margin: auto;
+
+  m-groups--tile {
+    //flex: auto;
+    flex-basis: calc(25% - 16px);
+
+    //1:1 ration default (square)
+    max-width: calc(25% - 16px);
+
+    margin: 8px;
+
+    overflow: hidden;
+  }
+}

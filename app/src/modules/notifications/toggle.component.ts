@@ -10,8 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class NotificationsTopbarToggleComponent {
 
   toggled: boolean = false;
-  
-  @Input() item: any;
+  count: number = 0;
 
   toggle(e){
     this.toggled = !this.toggled;

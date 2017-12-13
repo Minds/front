@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
-import { ChannelModule } from '../channel/channel.module';
 import { ModalsModule } from '../modals/modals.module';
 
 import { Messenger } from './messenger.component';
@@ -29,7 +28,6 @@ import { MessengerEncryptionService } from './encryption/encryption.service';
     ReactiveFormsModule,
     CommonModule,
     //LegacyModule,
-    //ChannelModule,
     //ModalsModule
   ],
   declarations: [

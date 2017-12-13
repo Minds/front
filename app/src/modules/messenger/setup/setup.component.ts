@@ -13,7 +13,7 @@ import { SessionFactory } from '../../../services/session';
 
 export class MessengerSetupChat {
 
-  open: boolean = true;
+  open: boolean = false;
   attentionNeededTrigger: any;
   encryption = this.injector.get(MessengerEncryptionService);
 

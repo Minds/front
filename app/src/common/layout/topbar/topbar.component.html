@@ -1,0 +1,69 @@
+<div class="m-topbar--row">
+
+  <a class="m-topbar--logo" routerLink="/">
+    <img src="assets/logos/bulb.svg" />
+  </a>  
+
+  <ng-content select="[search]"></ng-content>
+
+  <m-topbar--navigation></m-topbar--navigation>
+
+  <div class="m-layout--spacer"></div>
+
+  <div class="m-topbar--icons" *ngIf="session.isLoggedIn()">
+    <ng-content select="[icons]"></ng-content>
+  </div>
+
+  <button class="m-btn m-btn--action m-btn--slim"
+    [routerLink]="['/wallet/boost/newsfeed', { 'toggled':true}]"
+    *ngIf="session.isLoggedIn()">
+    <!-- i18n: verb|@@M__ACTION__BOOST -->Boost<!-- /i18n -->
+  </button>
+
+  <div class="m-topbar--account" *ngIf="session.isLoggedIn()" #menu>
+    <a (click)="menu.value = !menu.value">
+      <img src="/icon/{{session.getLoggedInUser().guid}}/small/{{session.getLoggedInUser().icontime}}" />
+    </a>
+    <ul class="minds-dropdown-menu m-dropdown--menu" [hidden]="!menu.value">
+      <li class="mdl-menu__item" 
+        *ngIf="session.isLoggedIn()"
+        [routerLink]="['/', session.getLoggedInUser().username]"
+        i18n="@@MINDS__TOPBAR__SETTINGS"
+        (click)="menu.value = false"
+        >
+        View Channel
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isLoggedIn()"
+        [routerLink]="['/settings/general']"
+        i18n="@@MINDS__TOPBAR__SETTINGS"
+        (click)="menu.value = false"
+        >
+        Settings
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isLoggedIn()"
+        [routerLink]="['/logout']"
+        i18n="@@MINDS__TOPBAR__LOGOUT"
+        (click)="menu.value = false"
+        >
+        Logout
+      </li>
+    </ul>
+  </div>
+
+  
+
+  <button class="m-btn m-btn--action m-btn--login m-btn--slim" *ngIf="!session.isLoggedIn()" [routerLink]="['/login']">
+    <!-- i18n: @@M__ACTION__LOGIN -->Login<!-- /i18n -->
+  </button>
+</div>
+
+<!--<div class="m-notifications--toaster" *ngIf="session.isLoggedIn() && notifications">
+  <minds-notification
+    *ngFor="let notification of notifications"
+    class="mdl-card mdl-shadow--4dp item"
+    [notification]="notification"
+    (click)="closeNotification(notification)"
+  ></minds-notification>
+</div>-->

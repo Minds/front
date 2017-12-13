@@ -1,0 +1,26 @@
+m-sidebar--navigation {
+  padding-top: 8px !important;
+  background: #222;
+}
+
+.m-sidebar--navigation--item {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(150,150,150);
+  text-decoration: none;
+  font-family: 'Roboto';
+  padding: 8px 0;
+
+  &.m-sidebar-navigation--item-active {
+    color: #FFF;
+  }
+
+  span {
+    text-transform: uppercase;
+    font-size: 8px;
+    letter-spacing: 1.25px;
+    padding-top: 4px;
+  }
+}

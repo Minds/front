@@ -8,13 +8,17 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
   selector: 'minds-button-subscribe',
   inputs: ['user'],
   template: `
-    <button class="minds-subscribe-button" *ngIf="!_user.subscribed" (click)="subscribe()">
+    <button class="m-btn m-btn--with-icon m-btn--subscribe" *ngIf="!_user.subscribed" (click)="subscribe()">
       <i class="material-icons">person_add</i>
-      <!-- i18n: @@M__ACTION__SUBSCRIBE -->Subscribe<!-- /i18n -->
+      <span>
+        <!-- i18n: @@M__ACTION__SUBSCRIBE -->Subscribe<!-- /i18n -->
+      </span>
     </button>
-    <button class="minds-subscribe-button subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">
-      <i class="material-icons">person_add</i>
-      <!-- i18n: @@MINDS__BUTTONS__SUBSCRIBE__SUBSCRIBED_LABEL -->Subscribed<!-- /i18n -->
+    <button class="m-btn m-btn--with-icon m-btn--subscribe subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">
+      <i class="material-icons">close</i>
+      <span>
+        <!-- i18n: @@MINDS__BUTTONS__SUBSCRIBE__SUBSCRIBED_LABEL -->Un-subscribe<!-- /i18n -->
+      </span>
     </button>
   `
 })

@@ -15,8 +15,8 @@ import { WalletPointsTransactionsComponent } from './transactions/points.compone
 import { WalletPurchaseComponent } from './purchase/purchase.component';
 import { WalletBoostComponent } from './boost/boost.component';
 import { WalletWireComponent } from './wire/wire.component';
+import { WalletToggleComponent } from './toggle.component';
 import { WalletFlyoutComponent } from './flyout/flyout.component';
-import { WalletTopbarToggleComponent } from './toggle/toggle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -54,7 +54,7 @@ const walletRoutes : Routes = [
     WalletPurchaseComponent,
     WalletBoostComponent,
     WalletWireComponent,
-    WalletTopbarToggleComponent,
+    WalletToggleComponent,
     WalletFlyoutComponent,
   ],
   exports: [
@@ -65,7 +65,7 @@ const walletRoutes : Routes = [
     WalletPurchaseComponent,
     WalletBoostComponent,
     WalletWireComponent,
-    WalletTopbarToggleComponent,
+    WalletToggleComponent,
     WalletFlyoutComponent,
   ],
   entryComponents: [ WalletComponent ]

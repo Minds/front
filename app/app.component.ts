@@ -12,8 +12,8 @@ import { Web3WalletService } from './src/modules/blockchain/web3-wallet.service'
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-app',
-  templateUrl: 'src/controllers/index.html'
+  selector: 'm-app',
+  templateUrl: 'app.component.html'
 })
 export class Minds {
   name: string;

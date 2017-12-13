@@ -1,0 +1,29 @@
+<div class="m-toolbar">
+  <div class="m-topbar--row">
+    <div class="m-topbar--navigation">
+      <a class="m-topbar--navigation--item"
+        routerLink="/media/images/top"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Top</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/media/images/my"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>My Images</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/media/images/upload"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Upload</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="m-media--images--list">
+  <m-media--images--tile *ngFor="let entity of entities" [entity]="entity">
+  </m-media--images--tile>
+</div>

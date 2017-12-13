@@ -11,7 +11,7 @@ import { Client } from '../../../../services/api';
     'class': 'm-button'
   },
   template: `
-    <button class="material-icons" [ngClass]="{'selected': isMonetized }">
+    <button class="m-btn m-btn--with-icon" [ngClass]="{'selected': isMonetized }">
       <i class="material-icons">attach_money</i>
     </button>
   `

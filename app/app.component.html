@@ -1,0 +1,22 @@
+<m-topbar class="m-noshadow mdl-color--white mdl-color-text--grey-600">
+  <ng-container search>
+    <m-search--bar></m-search--bar>
+  </ng-container>
+  <ng-container icons>
+    <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
+    <m-wallet--topbar-toggle></m-wallet--topbar-toggle>
+  </ng-container>
+</m-topbar>
+
+<m-body class="mdl-color--grey-100">
+  <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
+  <router-outlet></router-outlet>
+</m-body>
+
+<m-messenger *ngIf="minds.LoggedIn"></m-messenger>
+
+<m-modal-signup></m-modal-signup>
+<m-hovercard-popup></m-hovercard-popup>
+
+<m-overlay-modal></m-overlay-modal>
+<m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>

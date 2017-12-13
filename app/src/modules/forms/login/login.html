@@ -1,5 +1,5 @@
 
-<div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
+<div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50 m-error-box mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
     {{errorMessage}}
   </div>
@@ -34,7 +34,7 @@
   </div>
 
   <div class="mdl-card__actions">
-    <button class="mdl-button mdl-button--raised mdl-button--colored" (click)="login()" [disabled]="inProgress">
+    <button class="m-btn m-btn--action m-btn--login" (click)="login()" [disabled]="inProgress">
       <!-- i18n: @@M__ACTION__LOGIN -->Login<!-- /i18n -->
     </button>
     <a class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link" [routerLink]="['/forgot-password']">
@@ -77,7 +77,7 @@
   </div>
   <div></div>
 
-  <button class="mdl-button mdl-button--raised mdl-color--blue-grey-200" (click)="twofactorAuth(code)">
+  <button class="m-btn m-btn--action" (click)="twofactorAuth(code)">
     <!-- i18n: @@M__ACTION__LOGIN -->Login<!-- /i18n -->
   </button>
 </div>

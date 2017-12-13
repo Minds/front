@@ -1,0 +1,450 @@
+@import "defaults";
+
+/**
+ * Channel profile pages
+ */
+m-channel{
+
+  header{
+    display:flex;
+    align-items: flex-end;
+    height:360px;
+    box-sizing:content-box;
+    position:relative;
+    overflow:visible;
+
+    minds-carousel{
+      height:440px;
+      .minds-banner .minds-banner-overlay{
+          display:none;
+      }
+    }
+
+    .channel-grid{
+      align-items:flex-end;
+      -webkit-align-items: flex-end;
+      padding:0;
+      width:100%;
+    }
+
+    .channel-header-bar{
+      z-index:2;
+      pointer-events: none
+    }
+
+
+      &.isLocked{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:124px;
+        z-index:999;
+        overflow:hidden;
+
+        .minds-channel-title > div h1{
+          font-size:18px !important;
+        }
+        .minds-channel-title .minds-avatar{
+          margin:8px 8px 0 8px;
+          img{
+            max-height: 52px;
+          }
+        }
+      }
+    }
+
+  .m-channel--stats{
+    border:0;
+    pointer-events: all;
+
+    a {
+      flex:auto;
+      span {
+        width: 100%;
+        display: block;
+        font-size:11px;
+        height: 11px;
+        vertical-align: middle;
+        line-height: 36px;
+      }
+    }
+
+    .mdl-tabs__action-buttons{
+      padding-top: 12px;
+      display: flex;
+      flex-flow: row nowrap;
+      overflow:visible;
+
+      > * {
+        margin-right: 4px;
+        button{
+          color:#eceff1;
+          border:1px solid #eceff1;
+        }
+      }
+    }
+    .minds-button-edit > button, minds-button-user-dropdown > button{
+      padding: 6px;
+      font-size: 18px;
+  //    margin: 0px 30px;
+    }
+
+  }
+
+  .m-channel--city{
+    //margin:auto;
+  }
+
+  .m-channel--blocked{
+    margin: 100px auto;
+    h3{
+      font-size: 26px;
+      text-align: center;
+      width: 100%;
+      margin:0;
+      font-weight: bolder;
+    }
+    a{
+      text-align: center;
+      width: 100%;
+      text-transform: uppercase;
+      text-decoration: none;
+      letter-spacing: 1px;
+      font-weight: 400;
+      margin: 16px;
+      cursor: pointer;
+    }
+ }
+
+
+ .m-channel--action-buttons{
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    margin: 16px auto 0;
+
+    > * {
+     flex: auto;
+     margin: auto;
+     margin-right: 8px;
+   }
+
+   .minds-button-edit > button, minds-button-user-dropdown > button{
+     font-size: 16px;
+     border:0;
+   }
+
+ }
+
+ .minds-channel-sidebar, .m-channel-sidebar{
+   margin-top: 72px;
+   .mdl-card, .m-channel--bio{
+     width:100%;
+     overflow:visible;
+     min-height:0;
+
+     minds-avatar{
+       margin:-75px auto 0;
+       .minds-avatar{
+           margin:auto;
+           border-radius:50%;
+           width:150px;
+           height:150px;
+           display:flex;
+           flex-direction: row;
+           align-items:center;
+           background-size: cover;
+           background-position: center center;
+           img{
+             display:none;
+           }
+       }
+     }
+     .m-channel--name{
+       word-break: break-word;
+       text-align: center;
+       > * {
+         display:inline-block;
+         vertical-align:middle;
+       }
+       h2{
+         letter-spacing: 0.25px;
+         font-weight: 800;
+         text-rending: optimizeLegibilty;
+         -webkit-font-smoothing: antialiased;
+         font-size: 28px;
+         margin: 0;
+       }
+       button{
+          border:0;
+          font-size:16px;
+          margin-right:-26px;
+       }
+     }
+     .m-channel--username{
+       h2{
+         margin: 0;
+         padding: 0;
+         line-height: 14px;
+         font-size: 14px;
+         text-align: center;
+         letter-spacing: 1px;
+         color: #777;
+       }
+     }
+     textarea{
+       text-align:center;
+     }
+   }
+ }
+
+ .m-channel--edit-button{
+   span, i{
+     vertical-align: middle;
+   }
+ }
+
+  minds-button-boost .mdl-button{
+    min-width: 80px;
+    height: 42px;
+    line-height: 42px;
+  }
+
+ .m-channel--subscribers-tabs{
+   margin-top:40px;
+ }
+
+ .m-channel-feed{
+   margin-top: 8px;
+   display: block;
+
+   minds-newsfeed-boost-rotator {
+     ul {
+       z-index: 900;
+     }
+   }
+ }
+
+ .m-channel-bio-fields{
+
+   &.m-channel-bio-fields-flex{
+     display:flex;
+     flex-flow:row wrap;
+     align-items: center;
+     margin:auto;
+     justify-content: center;
+   }
+
+   minds-channel-social-profiles {
+     display: block;
+     //width: 100%;
+     text-align:center;
+   }
+
+   .m-channel-bio-field{
+     display:flex;
+     flex-flow:row nowrap;
+     align-items: center;
+     padding:$minds-padding $minds-padding*2;
+     font-size:12px;
+     text-transform: uppercase;
+
+     i{
+       padding:0 $minds-padding;
+     }
+     span{
+       flex:1;
+     }
+
+     &.m-channel-social-profiles {
+       display: block;
+       width: 100%;
+       font-size: 20px;
+       border-top: 1px solid #eeeeee;
+       box-sizing:border-box;
+
+       .m-channel-social-profile > a {
+         display: inline-block;
+         vertical-align: middle;
+       }
+
+       .m-channel-social-profile-minds > a {
+         margin-top: -0.25em;
+       }
+     }
+   }
+
+   //START: BIO Editor
+   .m-channel-bio-editor{
+     padding:$minds-padding;
+
+     .m-channel-bio-input{
+       display:flex;
+       flex-flow:row nowrap;
+       align-items: center;
+
+       i{
+         padding-right:$minds-padding;
+       }
+       input{
+         flex:1;
+         padding:$minds-padding;
+         border: 1px solid #EEE;
+         border-radius: 3px;
+         background: transparent;
+         font-size: 12px;
+         font-family: inherit;
+       }
+
+       &.m-channel-gender-input{
+         a {
+           flex:1;
+           color:#AAA;
+           text-align:center;
+           cursor:pointer;
+         }
+       }
+
+       &.m-channel-social-profile-input {
+          display: block;
+          padding: $minds-padding;
+          border: 1px solid #eee;
+          margin-top: $minds-padding;
+
+          &:first-child {
+            margin-top: 0;
+          }
+
+          > select, > input[type="text"], > a {
+            display: block;
+            width: 100%;
+            margin-bottom: 8px;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+
+          > a {
+            text-align: right;
+            font-size: 12px;
+            cursor: pointer;
+
+            &.m-social-profile-add {
+              text-align: left;
+            }
+
+            > i {
+              padding: 0;
+            }
+          }
+       }
+     }
+
+     &.m-channel-city-editor{
+
+       .m-discovery-cities{
+         width: 246px;
+         text-align: left;
+         margin: 16px auto;
+         padding: 16px;
+
+         p{
+           margin:0;
+           padding:0;
+           font-size:12px;
+         }
+
+         li{
+           list-style: none;
+           padding: 12px 0;
+           cursor: pointer;
+           border-bottom: 1px solid #EEE;
+         }
+
+       }
+     }
+   } // END: Bio editor
+ } //END : Bio fields
+
+
+ .minds-channel-edit-avatar{
+   max-height: 180px;
+   max-width: 100%;
+   border-radius: 3px;
+  }
+
+  .minds-channel-edit-upload-separator{
+    border-left: 1px solid #ccc;
+
+    input{
+      padding: 16px;
+    }
+
+    button{
+      margin-left: 16px;
+    }
+  }
+
+  .minds-channel-media-sidebard{
+    display: flex;
+    flex-wrap: wrap;
+    padding:0;
+    width:100%;
+  }
+
+  .minds-channel-blog-sidebar-blogs{
+    padding: $minds-padding;
+    padding-left: $minds-margin*2;
+
+    a{
+      text-decoration: none;
+      display:block;
+    }
+    a:hover{
+      text-decoration: underline;
+    }
+  }
+
+  minds-channel-modules{
+    a.mdl-card__supporting-text{
+      text-decoration:none;
+    }
+  }
+
+  .minds-channel-sidebar-loader{
+    margin-left: $minds-margin*2;
+  }
+
+  @media screen and (max-width: 720px){
+
+    header {
+      &.isLocked{
+        height: 120px;
+      }
+      .channel-grid{
+        width: 100%;
+        .minds-channel-title{
+          width: 100% !important;
+
+          h1{
+            margin:0;
+            line-height:30px;
+            font-size:14px;
+          }
+        }
+        .minds-tabs{
+          width: 100%;
+          .mdl-tabs__tab{
+            padding:0 $minds-padding;
+          }
+
+        }
+      }
+    }
+
+  }
+}

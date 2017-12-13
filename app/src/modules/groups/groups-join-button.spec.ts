@@ -30,19 +30,19 @@ describe('GroupsJoinButton', () => {
   }
 
   function getJoinButtons(): DebugElement[] {
-    return fixture.debugElement.queryAll(By.css('.minds-group-join-button'));
+    return fixture.debugElement.queryAll(By.css('.m-btn--join-group'));
   }
 
   function getAcceptAndDeclineButtons(): DebugElement[] {
-    return fixture.debugElement.queryAll(By.css('span > .minds-group-join-button'));
+    return fixture.debugElement.queryAll(By.css('span > .m-btn'));
   }
 
   function getLeaveButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.minds-group-join-button.subscribed'));
+    return fixture.debugElement.query(By.css('.m-btn.subscribed'));
   }
 
   function getCancelRequestButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.minds-group-join-button.awaiting'));
+    return fixture.debugElement.query(By.css('.m-btn.awaiting'));
   }
 
   /** /Helpers */

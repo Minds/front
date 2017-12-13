@@ -2,13 +2,14 @@
 
 
 m-search--bar{
-  width:60%;
+  width:200px;
 
   .mdl-textfield {
     width:100%;
     .material-icons{
       position:absolute;
       margin:6px;
+      font-size: 20px;
     }
     input{
       background: #ffffff;
@@ -47,12 +48,15 @@ m-search--bar{
   }
 
   .mdl-textfield .mdl-textfield__input {
-    height: 38px;
+    height: 32px;
+    border-radius: 3px;
 
-    font-family: 'Lato', sans-serif;
+    text-indent: 22px;
+
+    font-family: 'Roboto', sans-serif;
     font-size: 14px;
-    letter-spacing: 1.25px;
-    font-weight: bold;
+    letter-spacing: 0.5px;
+    font-weight: 600;
     line-height: 38px;
 
     text-rendering: optimizeLegibility;
@@ -69,10 +73,11 @@ m-search--bar{
         align-self: center;
 
         max-width: 25em;
-        height: 38px;
+        height: 32px;
+        border-radius: 3px;
         padding: 0 0 0 32px;
 
-        font-family: Lato, sans-serif;
+        font-family: Roboto, sans-serif;
         font-size: 12px;
         letter-spacing: 1.25px;        
         line-height: 38px;
@@ -85,14 +90,14 @@ m-search--bar{
         box-sizing: border-box;
 
         text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: antialiased;
+    iebkit-font-smoothing: antialiased;
       }
 
       .mdl-textfield__input {
         padding: 0 $minds-padding;
 
         border: 1px solid rgba(0, 0, 0, 0.12);
-        border-left: none;
+        //border-left: none;
         box-sizing: border-box;
 
         appearance: none;
@@ -112,7 +117,7 @@ m-search--bar-suggestions{
     position: absolute;
     z-index: 5000;
     box-sizing: border-box;
-    width: 100%;
+    width: 200%;
 
     .m-search-bar-suggestions-suggestion{
       cursor:pointer;
@@ -120,10 +125,19 @@ m-search--bar-suggestions{
       border-bottom: 1px solid #EEE;
       display:block;
       text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      letter-spacing: 0.5px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
 
       img{
         border-radius: 50%;
         margin: 0 8px 0 4px;
+        width: 36px;
+        height: 36px;
+        background: #444;
       }
     }
   }
@@ -161,43 +175,21 @@ m-search {
   background: rgba(252,252,252,1);
   padding-top: 42px;
 
-  .m-tab-bar {
-    max-width: 972px;
-    width:100%;
-    position:fixed;
-    top: 64px;
-    background: rgba(252,252,252,1);
-    z-index: 999;
-    margin: 0 0 ($minds-padding * 2) 60px;
-    box-sizing: border-box;
-    justify-content: space-between;
-    color: #777;
-
-    .m-tab-bar--tab {
-      font-weight: 400;
-      font-size: 14px;
-      font-family: 'Lato';
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-
-      &.m-tab-bar--active-tab,
-      &.m-tab-bar--more {
-        font-weight: 400;
-      }
-
-      @media screen and (max-width: $max-mobile){
-        padding-left: 10px;
-      }
-    }
-
-    .m-tab--type-filter{
-      @media screen and (max-width: $max-mobile){
-        display: none;
-      }
-    }
+  .m-toolbar {
+    position: fixed;
+    top: 0;
+    position: fixed;
+    top: 50px;
+    width: 100%;
+    background: rgb(252,252,252);
+    z-index: 9999;
   }
 
-  .m-tab-bar--more {
+  .m-topbar--navigation--more {
+
+    position: relative;
+    cursor: pointer;
+
     .minds-dropdown-menu {
       width: auto;
       max-width: 300px;
@@ -233,9 +225,9 @@ m-search {
 // Search Lists
 
 .m-search--list {
-  max-width: 1060px;
+  max-width: 1280px;
   padding: $minds-padding * 2;
-  margin: 0 0 0 42px;
+  margin: auto;
 
   .m-search--list-section {
     margin-bottom: $minds-padding * 3;
@@ -248,9 +240,9 @@ m-search {
   .m-search--list-title {
     margin: 0;
     padding: 0 $minds-padding * 2;
-    color: rgba(74, 74, 74, 0.44);
-    font-size: 16px;
-    font-weight: 300;
+    color: rgba(0,0,0, 0.6);
+    font-size: 14px;
+    font-weight: 600;
     line-height: 1.25;
     letter-spacing: 2px;
     text-transform: uppercase;

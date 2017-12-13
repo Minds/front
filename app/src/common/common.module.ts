@@ -5,6 +5,10 @@ import { FormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
 
+import { TopbarComponent } from './layout/topbar/topbar.component';
+import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
+import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
+
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
@@ -31,6 +35,7 @@ import { MindsAvatar } from './components/avatar/avatar';
 import { CaptchaComponent } from './components/captcha/captcha.component';
 import { Textarea } from './components/editors/textarea.component';
 import { MindsTinymce } from './components/editors/tinymce';
+import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
@@ -61,6 +66,10 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
   declarations: [
     MINDS_PIPES,
 
+    TopbarComponent,
+    TopbarNavigationComponent,
+    SidebarNavigationComponent,
+
     TooltipComponent,
     FooterComponent,
     InfiniteScroll,
@@ -73,6 +82,7 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
     ReadMoreButtonComponent,
     ChannelBadgesComponent,
     MindsRichEmbed,
+    TagcloudComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -114,6 +124,9 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
   exports: [
     MINDS_PIPES,
 
+    TopbarComponent,
+    SidebarNavigationComponent,
+
     TooltipComponent,
     FooterComponent,
     InfiniteScroll,
@@ -126,6 +139,7 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
     ReadMoreButtonComponent,
     ChannelBadgesComponent,
     MindsRichEmbed,
+    TagcloudComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -164,8 +178,9 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
     AnnouncementComponent,
     MindsTokenSymbolComponent,
   ],
-  providers: [AttachmentService],
-  entryComponents: [ ]
+  providers: [
+    AttachmentService
+  ],
 })
 
 export class CommonModule {}

@@ -1,0 +1,27 @@
+<nav class="m-sidebar--navigation">
+  <div *ngFor="let item of navigation.getItems()">
+    <a class="m-sidebar--navigation--item"
+      [ngClass]="{'m-sidebar--navigation--item-active' : item.active }"
+      [routerLink]="[item.path, item.params]"
+      [title]="item.text"
+      *ngIf="(item.visibility == 2) || (item.visibility === 0 && session.isLoggedIn()) || (item.visibility === -1 && session.isAdmin())"
+    >
+      <i class="material-icons">{{item.icon}}</i>
+
+      <span class="m-sidebar--navigation--text">{{ item.text }}</span>
+    </a>
+
+    <div *ngFor="let subitem of item.submenus" [hidden]="!item.active">
+      <a class="m-sidebar--navigation--item subitem"
+        [ngClass]="{'m-sidebar--navigation--item-active' : subitem.active}"
+        [routerLink]="[subitem.path, subitem.params]"
+        [title]="subitem.text"
+        *ngIf="!(!session.isLoggedIn() && subitem.visibility < 2)"
+      >
+        <i class="material-icons">{{subitem.icon}}</i>
+
+        <span class="m-sidebar--navigation--text">{{ subitem.text }}</span>
+      </a>
+    </div>
+  </div>
+</nav>

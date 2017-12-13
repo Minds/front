@@ -13,13 +13,14 @@
     flex-wrap: wrap;
     display: flex;
     width: 100%;
+    padding: 0;
     box-sizing: border-box;
-    padding-bottom:0;
 
     .minds-avatar{
-      margin-right:$minds-margin;
+      margin: 16px 0 16px 16px;
       img{
-        width: 50px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
       }
     }
@@ -30,10 +31,9 @@
 
       .mdl-textfield__input{
         width:100%;
-        padding-top:0;
         border:0;
         font-size: 13px;
-        padding: 8px;
+        padding: 22px 16px;
       }
       .mdl-textfield__input:focus{
         outline:none;

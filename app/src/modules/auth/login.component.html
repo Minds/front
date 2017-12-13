@@ -1,0 +1,13 @@
+
+<div class="m-login">
+  <div>
+    <h3 i18n="@@MINDS__HOME__LOGIN__LOGIN">Login to Minds</h3>
+    <minds-form-login (done)="loggedin()" (doneRegistered)="registered()"></minds-form-login>
+  </div>
+
+  <div>
+    <h3 i18n="@@M__COMMON__START_A_CHANNEL">Not on Minds? Start a channel</h3>
+    <minds-form-register [referrer]="referrer" (done)="registered()"></minds-form-register>
+  </div>
+</div>
+

@@ -8,7 +8,7 @@ import { Client } from '../../../../services/api';
   outputs: ['added'],
   template: `
   <div class="minds-banner" *ngIf="!editing">
-    <div class="minds-banner-img m-banner--img-cover mdl-color--blue-grey"
+    <div class="minds-banner-img m-banner--img-cover"
       [style.backgroundImage]="src ? 'url(' + src + ')' : null"
     ></div>
 

@@ -1,0 +1,37 @@
+<div class="m-toolbar">
+  <div class="m-topbar--row">
+    <div class="m-topbar--navigation">
+      <a class="m-topbar--navigation--item"
+        routerLink="/groups/top"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Top</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/groups/member"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>My Groups</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/groups/create"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Start a new group</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="m-groups--list">
+
+  <m-groups--tile *ngFor="let entity of entities" [entity]="entity"></m-groups--tile>
+
+  <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+  </infinite-scroll>
+
+</div>

@@ -1,0 +1,152 @@
+@import "defaults";
+
+$layout-header-height: 52px;
+$layout-sidebar-width: 80px;
+
+m-topbar{
+  position:fixed;
+  top:0;
+  left:0;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  flex-shrink: 0;
+
+  width: 100%;
+  min-width:$min-mobile;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid #EEE;
+  min-height: $layout-header-height;
+  max-height: 1000px;
+  z-index: 3;
+
+  transform: translateZ(0);
+
+  background: #FFF;
+
+  .m-topbar--row {
+    margin: auto;
+    max-width: 1280px;
+  }
+
+  .m-topbar--logo {
+    background: #FFF;
+    width: 52px;
+    height: 100%;
+    //margin-right: 16px;
+    text-align: center;
+    
+    img {
+      max-height: 30px;
+      margin-top: 12px;
+      //opacity: 0.4;
+    }
+  }
+
+  .m-menu--button {
+    display:none;
+
+    i{
+     padding:16px 0;
+    }
+  }
+
+  .m-topbar--row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    align-self: stretch;
+    align-items: center;
+    height: $layout-header-height;
+    margin: auto;
+    width: 100%;
+    padding-right:$minds-padding * 2;
+
+    @media screen and (max-width: $min-tablet){
+      padding-left:56px;
+    }
+
+    @media screen and (max-width: 1280px){
+      .m-boost-button-fat{
+        display: none;
+      }
+    }
+  
+    .m-boost-button-fat{
+      background: #FFF !important;
+      border: 1px solid #4690D6;
+      color: #4690D6 !important;
+      box-shadow: none;
+      margin-right: 16px;
+    }
+  }
+
+  @media screen and (max-width: $min-tablet){
+    .minds-menu-button {
+      display:block;
+    }
+  }
+
+  .m-topbar--account{
+    margin-left: 8px;
+    cursor: pointer;
+    position: relative;
+
+    img {
+      border-radius: 50%;
+      border: 1px solid #EEE;
+      max-height: 30px;
+    }
+
+    .m-dropdown--menu {
+      margin-top: 28px;
+    }
+  }
+
+  .m-topbar--icons{
+    align-items: center;
+    display: flex;
+    margin-right: 8px;
+
+    > * {
+      padding: 0 4px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+    span {
+      vertical-align: middle;
+    }
+    i {
+      font-size: 20px;
+      vertical-align: middle;
+      color: #555;
+    }
+    m-notifications--topbar-toggle {
+     padding-top: 1px;
+     position: relative;
+    }
+  }
+
+  .m-btn--login{
+
+  }
+}
+
+.m-toolbar {
+  .m-topbar--row {
+    max-width: 1280px;
+    margin: auto;
+  }
+  .m-topbar--navigation--item {
+    border: 0;
+  }
+}

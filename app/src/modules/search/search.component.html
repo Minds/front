@@ -1,131 +1,163 @@
-<div class="m-tab-bar">
-  <ng-container *ngIf="!container; else containerNav">
-    <a class="m-tab-bar--tab"
-      [class.m-tab-bar--active-tab]="type == ''"
-      [routerLink]="['/search', { q: q, type: '', ref: ref }]"
-      i18n="@@SEARCH__TOP_TAB"
-    >Top</a>
+<div class="m-toolbar">
+  <div class="m-topbar--row">
+    <div class="m-topbar--navigation">
 
-    <a class="m-tab-bar--tab"
-      [class.m-tab-bar--active-tab]="type == 'latest'"
-      [routerLink]="['/search', { q: q, type: 'latest', ref: ref }]"
-      i18n="@@SEARCH__LATEST_TAB"
-    >Latest</a>
+      <ng-container *ngIf="!container; else containerNav">  
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == ''"
+          [routerLink]="['/search', { q: q, type: '', ref: ref }]"
+          i18n="@@SEARCH__TOP_TAB"
+        >
+          <span>Top</span>
+        </a>
 
-    <a class="m-tab-bar--tab m-tab--type-filter"
-      [class.m-tab-bar--active-tab]="type == 'user'"
-      [routerLink]="['/search', { q: q, type: 'user', ref: ref }]"
-      i18n="@@M__FEATURE__CHANNEL__PLURAL"
-    >Channels</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'latest'"
+          [routerLink]="['/search', { q: q, type: 'latest', ref: ref }]"
+          i18n="@@SEARCH__LATEST_TAB"
+        >
+          <span>Latest</span>
+        </a>
 
-    <a class="m-tab-bar--tab m-tab--type-filter"
-      [class.m-tab-bar--active-tab]="type == 'activity'"
-      [routerLink]="['/search', { q: q, type: 'activity', ref: ref }]"
-      i18n="@@M__FEATURE__POST_PLURAL"
-    >Posts</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'user'"
+          [routerLink]="['/search', { q: q, type: 'user', ref: ref }]"
+          i18n="@@M__FEATURE__CHANNEL__PLURAL"
+        >
+          <span>Channels</span>
+        </a>
 
-    <a class="m-tab-bar--tab m-tab--type-filter"
-      [class.m-tab-bar--active-tab]="type == 'object:video'"
-      [routerLink]="['/search', { q: q, type: 'object:video', ref: ref }]"
-      i18n="@@M__FEATURE__VIDEO_PLURAL"
-    >Videos</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'activity'"
+          [routerLink]="['/search', { q: q, type: 'activity', ref: ref }]"
+          i18n="@@M__FEATURE__POST_PLURAL"
+        >
+          <span>Posts</span>
+        </a>
 
-    <a class="m-tab-bar--tab m-tab--type-filter"
-      [class.m-tab-bar--active-tab]="type == 'object:image'"
-      [routerLink]="['/search', { q: q, type: 'object:image', ref: ref }]"
-      i18n="@@M__FEATURE__IMAGE_PLURAL"
-    >Images</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'object:video'"
+          [routerLink]="['/search', { q: q, type: 'object:video', ref: ref }]"
+          i18n="@@M__FEATURE__VIDEO_PLURAL"
+        >
+          <span>Videos</span>
+        </a>
 
-    <a class="m-tab-bar--tab m-tab--type-filter"
-      [class.m-tab-bar--active-tab]="type == 'object:blog'"
-      [routerLink]="['/search', { q: q, type: 'object:blog', ref: ref }]"
-      i18n="@@M__FEATURE__BLOG_PLURAL"
-    >Blogs</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'object:image'"
+          [routerLink]="['/search', { q: q, type: 'object:image', ref: ref }]"
+          i18n="@@M__FEATURE__IMAGE_PLURAL"
+        >
+          <span>Images</span>
+        </a>
 
-    <a class="m-tab-bar--tab m-tab--type-filter"
-      [class.m-tab-bar--active-tab]="type == 'group'"
-      [routerLink]="['/search', { q: q, type: 'group', ref: ref }]"
-      i18n="@@M__FEATURE__GROUP__PLURAL"
-    >Groups</a>
-  </ng-container>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'object:blog'"
+          [routerLink]="['/search', { q: q, type: 'object:blog', ref: ref }]"
+          i18n="@@M__FEATURE__BLOG_PLURAL"
+        >
+          <span>Blogs</span>
+        </a>
 
-  <ng-template #containerNav>
-    <a class="m-tab-bar--tab"
-      [class.m-tab-bar--active-tab]="type == ''"
-      [routerLink]="['/search', { q: q, type: '', id: container, ref: ref }]"
-      i18n="@@SEARCH__TOP_TAB"
-    >Top</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'group'"
+          [routerLink]="['/search', { q: q, type: 'group', ref: ref }]"
+          i18n="@@M__FEATURE__GROUP__PLURAL"
+        >
+          <span>Groups</span>
+        </a>
+      </ng-container>
 
-    <a class="m-tab-bar--tab"
-      [class.m-tab-bar--active-tab]="type == 'latest'"
-      [routerLink]="['/search', { q: q, type: 'latest', id: container, ref: ref }]"
-      i18n="@@SEARCH__LATEST_TAB"
-    >Latest</a>
+      <ng-template #containerNav>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == ''"
+          [routerLink]="['/search', { q: q, type: '', id: container, ref: ref }]"
+          i18n="@@SEARCH__TOP_TAB"
+        >
+          <span>Top</span>
+        </a>
 
-    <a class="m-tab-bar--tab"
-      [class.m-tab-bar--active-tab]="type == 'activity'"
-      [routerLink]="['/search', { q: q, type: 'activity', id: container, ref: ref }]"
-      i18n="@@M__FEATURE__POST_PLURAL"
-    >Posts</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'latest'"
+          [routerLink]="['/search', { q: q, type: 'latest', id: container, ref: ref }]"
+          i18n="@@SEARCH__LATEST_TAB"
+        >
+          <span>Latest</span>
+        </a>
 
-    <a class="m-tab-bar--tab"
-      [class.m-tab-bar--active-tab]="type == 'object:video'"
-      [routerLink]="['/search', { q: q, type: 'object:video', id: container, ref: ref }]"
-      i18n="@@M__FEATURE__VIDEO_PLURAL"
-    >Videos</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'activity'"
+          [routerLink]="['/search', { q: q, type: 'activity', id: container, ref: ref }]"
+          i18n="@@M__FEATURE__POST_PLURAL"
+        >
+          <span>Posts</span>
+        </a>
 
-    <a class="m-tab-bar--tab"
-      [class.m-tab-bar--active-tab]="type == 'object:image'"
-      [routerLink]="['/search', { q: q, type: 'object:image', id: container, ref: ref }]"
-      i18n="@@M__FEATURE__IMAGE_PLURAL"
-    >Images</a>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'object:video'"
+          [routerLink]="['/search', { q: q, type: 'object:video', id: container, ref: ref }]"
+          i18n="@@M__FEATURE__VIDEO_PLURAL"
+        >
+          <span>Videos</span>
+        </a>
 
-    <a class="m-tab-bar--tab"
-      [class.m-tab-bar--active-tab]="type == 'object:blog'"
-      [routerLink]="['/search', { q: q, type: 'object:blog', id: container, ref: ref }]"
-      i18n="@@M__FEATURE__BLOG_PLURAL"
-    >Blogs</a>
-  </ng-template>
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'object:image'"
+          [routerLink]="['/search', { q: q, type: 'object:image', id: container, ref: ref }]"
+          i18n="@@M__FEATURE__IMAGE_PLURAL"
+        >
+          <span>Images</span>
+        </a>
 
-  <div class="m-tab-bar--tab m-tab-bar--more"
-    (click)="toggleOptions(); $event.stopPropagation()"
-  >
-    <!-- i18n: @@M__COMMON__OPTIONS -->Options<!-- /i18n -->
+        <a class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="type == 'object:blog'"
+          [routerLink]="['/search', { q: q, type: 'object:blog', id: container, ref: ref }]"
+          i18n="@@M__FEATURE__BLOG_PLURAL"
+        >
+          <span>Blogs</span>
+        </a>
+      </ng-template>
 
-    <ul class="minds-dropdown-menu" [hidden]="!optionsToggle">
-      <li class="mdl-menu__item">
-        <span i18n="@@M__COMMON__EXPLICIT">Explicit</span>
+      <div class="m-topbar--navigation--item m-topbar--navigation--more" (click)="toggleOptions(); $event.stopPropagation()">
+        <span><!-- i18n: @@M__COMMON__OPTIONS -->Options<!-- /i18n --></span>
 
-        <m-tooltip icon="help" i18n="@@SEARCH__EXPLICIT_TOOLTIP">
-          Include explicit content (+18) search results
-        </m-tooltip>
+        <ul class="minds-dropdown-menu" [hidden]="!optionsToggle">
+          <li class="mdl-menu__item">
+            <span i18n="@@M__COMMON__EXPLICIT">Explicit</span>
 
-        <span class="m-dropdown--spacer"></span>
+            <m-tooltip icon="help" i18n="@@SEARCH__EXPLICIT_TOOLTIP">
+              Include explicit content (+18) search results
+            </m-tooltip>
 
-        <m-material--bound-switch
-          [toggled]="mature"
-          [disabled]="inProgress"
-          (change)="toggleMature()"
-        ></m-material--bound-switch>
-      </li>
+            <span class="m-dropdown--spacer"></span>
 
-      <li class="mdl-menu__item">
-        <span i18n="@@M__FEATURE__EXCLUSIVE">Exclusive</span>
+            <m-material--bound-switch
+              [toggled]="mature"
+              [disabled]="inProgress"
+              (change)="toggleMature()"
+            ></m-material--bound-switch>
+          </li>
 
-        <m-tooltip icon="help" i18n="@@SEARCH__EXCLUSIVE_TOOLTIP">
-          Include exclusive content in search results
-        </m-tooltip>
+          <li class="mdl-menu__item">
+            <span i18n="@@M__FEATURE__EXCLUSIVE">Exclusive</span>
 
-        <span class="m-dropdown--spacer"></span>
+            <m-tooltip icon="help" i18n="@@SEARCH__EXCLUSIVE_TOOLTIP">
+              Include exclusive content in search results
+            </m-tooltip>
 
-        <m-material--bound-switch
-          [toggled]="paywall"
-          [disabled]="inProgress"
-          (change)="togglePaywall()"
-        ></m-material--bound-switch>
-      </li>
-    </ul>
+            <span class="m-dropdown--spacer"></span>
 
+            <m-material--bound-switch
+              [toggled]="paywall"
+              [disabled]="inProgress"
+              (change)="togglePaywall()"
+            ></m-material--bound-switch>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
   </div>
 </div>
 

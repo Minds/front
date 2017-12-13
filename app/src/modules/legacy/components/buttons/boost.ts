@@ -11,7 +11,7 @@ import { BoostCreatorComponent } from '../../../boost/creator/creator.component'
   selector: 'minds-button-boost',
   inputs: ['object'],
   template: `
-    <button class="mdl-button mdl-color-text--white mdl-button--colored mdl-button--raised m-boost-button-fat"
+    <button class="m-btn m-btn--action m-btn--slim"
       (click)="boost()">
     <!-- i18n: verb|@@M__ACTION__BOOST -->Boost<!-- /i18n -->
     </button>

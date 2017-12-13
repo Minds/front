@@ -3,12 +3,12 @@
 >
   <i class="material-icons" (click)="setFocus()">search</i>
 
-  <span class="m-search-bar--context" *ngIf="hasSearchContext"
+  <!--<span class="m-search-bar--context" *ngIf="hasSearchContext"
     (click)="setFocus()"
     i18n="@@SEARCH_CONTEXT_COLON"
   >
     Search {{ searchContext | async }}:
-  </span>
+  </span>-->
 
   <input [(ngModel)]="q"
     (focus)="focus()"

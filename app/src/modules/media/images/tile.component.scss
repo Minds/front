@@ -1,0 +1,17 @@
+.m-media--images--tile{
+
+  //padding: 4px;
+
+  a {
+    background-color:#444;
+    background-position: center center; 
+    background-size:cover;
+
+    display: block;
+
+    //1:1 ratio (square)
+    height: 320px;
+    width: 100%;
+  }
+
+}

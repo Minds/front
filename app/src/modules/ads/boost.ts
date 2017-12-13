@@ -10,7 +10,7 @@ import { Storage } from '../../services/storage';
       <i class="material-icons">trending_up</i> <!-- i18n: @@ADS__BOOSTED_CONTENT -->Boosted content<!-- /i18n -->
     </h3>
     <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
-      <minds-card [object]="entity" hostClass="mdl-card mdl-shadow--8dp"></minds-card>
+      <minds-card [object]="entity" hostClass="mdl-card m-border"></minds-card>
     </div>
   `,
   host: {

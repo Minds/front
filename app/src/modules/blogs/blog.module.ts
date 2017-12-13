@@ -10,16 +10,18 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
 
-import { Blog, BlogEdit, BlogViewInfinite } from './blog';
+import { BlogListComponent, BlogEdit, BlogViewInfinite } from './list.component';
 import { BlogCard } from './card/card';
 import { BlogView } from './view/view';
+import { BlogTileComponent } from './tile/tile.component';
 import { WireModule } from '../wire/wire.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
   { path: 'blog/view/:guid', component: BlogViewInfinite },
   { path: 'blog/edit/:guid', component: BlogEdit },
-  { path: 'blog/:filter', component: Blog },
+  { path: 'blog/:filter', component: BlogListComponent },
+  { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },
   { path: ':username/blog/:slugid', component: BlogViewInfinite },
 ];
 
@@ -41,14 +43,15 @@ const routes: Routes = [
     BlogCard,
     BlogViewInfinite,
     BlogEdit,
-    Blog,
+    BlogListComponent,
+    BlogTileComponent,
   ],
   exports: [
     BlogView,
     BlogCard,
     BlogViewInfinite,
     BlogEdit,
-    Blog,
+    BlogListComponent,
   ],
   entryComponents: [
     BlogCard

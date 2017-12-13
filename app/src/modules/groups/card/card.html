@@ -1,6 +1,9 @@
 <div class="minds-banner-card mdl-card mdl-shadow--2dp m-group-card">
-  <div class="minds-usercard-banner mdl-color--blue-grey">
-    <img src="{{minds.cdn_url}}fs/v1/banners/{{group.guid}}"/>
+
+  <div class="m-card--user--banner">
+    <div class="m-card--user--banner--img"
+      [ngStyle]="{'background-image': 'url(' + minds.cdn_url + 'fs/v1/banners/' + group.guid + ')'}"
+    ></div>
     <div class="minds-banner-overlay"></div>
   </div>
 

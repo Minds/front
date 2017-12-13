@@ -1,0 +1,40 @@
+m-sidebar{
+  background: #222;
+  border: 0;
+  position: fixed;
+  margin-top: 52px;
+  height: calc(100% - 52px);
+
+  width:$layout-sidebar-width;
+  transform: translateX(0px);
+  box-shadow:0;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  max-height: 100%;
+  top: 0;
+  left: 0;
+
+  box-sizing: border-box;
+
+  transform: translateX(-250px);
+  transform-style: preserve-3d;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-property: transform;
+  color: #424242;
+  overflow: hidden;
+  z-index: 5;
+
+  @media screen and (min-width: $min-tablet){
+    transform: translateX(0);
+  }
+  &.is-visible{
+    transform: translateX(0);
+  }
+
+  nav{
+      width:$layout-sidebar-width;
+  }
+}

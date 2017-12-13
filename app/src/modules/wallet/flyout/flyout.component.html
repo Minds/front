@@ -1,4 +1,4 @@
-<div class="m-wallet--flyout--wrapper mdl-card mdl-shadow--3dp">
+<div class="m-wallet--flyout-wrapper mdl-card mdl-shadow--3dp">
   <div class="m-wallet--flyout-announcement" *ngIf="address && showAnnouncement" (click)="setUpCryptoWallet()">
     <span>Hey, do you want to setup your MindsCoin wallet using <b>{{ address }}</b>?</span>
     <div class="m-wallet--flyout-announcement--close" (click)="closeMessage()">
@@ -13,7 +13,8 @@
   </m-announcement>-->
   <div class="m-wallet--flyout-grid">
     <div class="m-wallet--flyout-volume mdl-cell mdl-cell--4-col">
-      <span>{{ balance.points | abbr }}</span>
+      <span *ngIf="balance.points > -1">{{ balance.points | abbr }}</span>
+      <span *ngIf="balance.points < 0">...</span>
       <div class="m-wallet--flyout-label">
         <label i18n>Points</label>
         <m-tooltip icon="help" i18n>
@@ -23,8 +24,9 @@
     </div>
 
     <div class="m-wallet--flyout-coin mdl-cell mdl-cell--4-col">
-      <m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol>
-      <span>{{ balance.tokens | number }}</span>
+      <!--<m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol>-->
+      <span *ngIf="balance.tokens > -1">{{ balance.tokens | number }}</span>
+      <span *ngIf="balance.tokens < 0">...</span>
       <div class="m-wallet--flyout-label">
         <label i18n>Coins</label>
         <m-tooltip icon="help" i18n>
@@ -34,7 +36,9 @@
     </div>
 
     <div class="m-wallet--flyout-balance mdl-cell mdl-cell--4-col">
-      <i>$</i><span>{{balance.money | number:'1.2-2'}}</span>
+      <i>$</i>
+      <span *ngIf="balance.money > -1">{{balance.money | number:'1.2-2'}}</span>
+      <span *ngIf="balance.money < 0">...</span>
       <div class="m-wallet--flyout-label">
         <label i18n>Money</label>
         <m-tooltip icon="help" i18n>

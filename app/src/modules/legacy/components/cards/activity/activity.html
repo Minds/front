@@ -186,7 +186,7 @@
 </div>
 
 <div class="impressions-tag m-activity--metrics" [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid" *ngIf="!hideTabs">
-  <div class="m-activity--metrics-inner">
+  <div class="m-activity--metrics-inner m-border">
     <div class="m-activity--metrics-metric" (click)="showWire()">
   		<i class="material-icons">account_balance</i>
       <span *ngIf="activity.wire_totals">{{ activity.wire_totals.points | abbr }}</span>

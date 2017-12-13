@@ -6,7 +6,7 @@ import { Client } from '../../../../services/api';
   selector: 'minds-button-feature',
   inputs: ['_object: object'],
   template: `
-    <button class="" [ngClass]="{'selected': isFeatured }" (click)="isFeatured ? feature() : (open = true)">
+    <button class="m-btn m-btn--with-icon" [ngClass]="{'selected': isFeatured }" (click)="isFeatured ? feature() : (open = true)">
       <i class="material-icons">star</i>
     </button>
     <m-modal [open]="open" (closed)="onModalClose($event)">

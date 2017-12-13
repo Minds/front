@@ -14,7 +14,7 @@ import { WireCreatorComponent } from '../../../../wire/creator/creator.component
   moduleId: module.id,
   selector: 'minds-activity',
   host: {
-    'class': 'mdl-card mdl-shadow--2dp'
+    'class': 'mdl-card m-border'
   },
   inputs: ['object', 'commentsToggle', 'visible', 'canDelete'],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
@@ -34,6 +34,7 @@ export class Activity {
   session = SessionFactory.build();
   showBoostOptions: boolean = false;
   @Input() boost: boolean = false;
+  @Input('boost-toggle')
   private _showBoostMenuOptions: boolean = false;
 
   @Input()

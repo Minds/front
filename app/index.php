@@ -72,7 +72,7 @@
         <minds-embed></minds-embed>
     <?php else: ?>
         <!-- The app component created in app.ts -->
-        <minds-app class="">
+        <m-app class="">
           <div class="mdl-progress mdl-progress__indeterminate initial-loading is-upgraded">
             <div class="progressbar bar bar1" style="width: 0%;"></div>
             <div class="bufferbar bar bar2" style="width: 100%;"></div>
@@ -103,7 +103,7 @@
               </div>
             </div>
           </div>
-        </minds-app>
+        </m-app>
     <?php endif; ?>
 
 

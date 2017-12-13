@@ -1,10 +1,11 @@
-<div class="mdl-card mdl-shadow--4dp post" *ngIf="session.isLoggedIn()">
+<div class="mdl-card m-border post" *ngIf="session.isLoggedIn()">
   <div class="mdl-card__supporting-text">
     <div class="minds-avatar">
       <a [routerLink]="['/', session.getLoggedInUser().username]">
         <img
           src="{{minds.cdn_url}}icon/{{session.getLoggedInUser().guid}}/medium/{{session.getLoggedInUser().icontime}}/"
-          class="mdl-shadow--2dp"/>
+          class="m-border"
+          />
       </a>
     </div>
 

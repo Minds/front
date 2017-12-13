@@ -17,17 +17,18 @@ minds-card-user{
 minds-card-user, .minds-banner-card{
 
   display:block !important;
-  .minds-usercard-banner{
+  .m-card--user--banner{
     width: 100%;
     height: 84px;
     overflow: hidden;
     position:relative;
 
-    .minds-card-banner {
+    .m-card--user--banner--img {
       width: 100%;
       height: 100%;
       background: none no-repeat center center transparent;
       background-size: cover;
+      background-color: #444;
     }
 
     .minds-banner-overlay{
@@ -47,6 +48,10 @@ minds-card-user, .minds-banner-card{
     display:flex;
     text-decoration: none;
     color:$minds-white;
+
+    img { 
+      border: 1px solid #EEE;
+    }
 
     .body{
       flex:1;
@@ -71,8 +76,8 @@ minds-card-user, .minds-banner-card{
 
   minds-button-subscribe, minds-button-boost{
     position: absolute;
-    margin: -38px 130px;
-    z-index:999;
+    margin: -38px 0 0 130px;
+    //z-index:999;
   }
 
   minds-button-feature{
@@ -152,8 +157,8 @@ minds-card-image, minds-card-video {
 
       strong {
         vertical-align: middle;
-        letter-spacing: 0.5px;
-        font-family: 'Lato';
+        letter-spacing: 0.25px;
+        font-family: 'Roboto';
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
       }
@@ -222,7 +227,10 @@ minds-activity.mdl-card, minds-activity{
   .mdl-card__supporting-text{
     width:100%;
     box-sizing: border-box;
-    color: initial;
+    font-family: Roboto;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    color: rgba(0,0,0,0.8);
 
     a{
       text-decoration: none;

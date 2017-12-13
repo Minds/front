@@ -1,6 +1,6 @@
 
-<div class="m-messenger--userlist m-messenger--dockpane mdl-shadow--4dp" [class.m-messenger--dockpane-open]="userListToggle">
-  <div class="m-messenger--dockpane-tab mdl-color--blue-grey-700  mdl-color-text--blue-grey-100" (click)="toggle()">
+<div class="m-messenger--userlist m-messenger--dockpane" [class.m-messenger--dockpane-open]="userListToggle">
+  <div class="m-messenger--dockpane-tab" (click)="toggle()">
     <div class="m-messenger--dockpane-tab-title"><i class="material-icons">chat_bubble</i><span i18n>Messenger</span></div>
     <div class="m-messenger--dockpane-tab-actions" (click)="$event.stopPropagation()">
       <i class="material-icons"
@@ -10,7 +10,7 @@
       </i>
     </div>
   </div>
-  <div class="m-messenger--dockpane-container mdl-shadow--2dp">
+  <div class="m-messenger--dockpane-container">
 
     <div class="m-messenger--dockpane-tab-ribbon mdl-color-text--blue-grey-300" #ribbon [hidden]="!ribbon.open">
       <div class="m-messenger--dockpane-tab-icon" (click)="logout(); ribbon.open = false" [hidden]="!encryption.isOn()">

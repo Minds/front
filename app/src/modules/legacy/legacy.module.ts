@@ -9,7 +9,6 @@ import { VideoModule } from '../video/video.module';
 import { ModalsModule } from '../modals/modals.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { BoostModule } from '../boost/boost.module';
-import { ChannelModule } from '../channel/channel.module';
 import { ThirdPartyNetworksModule } from '../third-party-networks/third-party-networks.module';
 import { WireModule } from '../wire/wire.module';
 
@@ -42,6 +41,8 @@ import { CommentsScrollDirective } from './controllers/comments/scroll';
 import { Poster } from './controllers/newsfeed/poster/poster';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
+import { CarouselComponent } from './components/carousel.component';
+
 @NgModule({
   imports: [
     NgCommonModule,
@@ -54,7 +55,6 @@ import { PostMenuModule } from '../../common/components/post-menu/post-menu.modu
     PaymentsModule,
     ModalsModule,
     BoostModule,
-    ChannelModule,
     ThirdPartyNetworksModule,
     WireModule,
     PostMenuModule
@@ -87,7 +87,8 @@ import { PostMenuModule } from '../../common/components/post-menu/post-menu.modu
     Comments,
     CommentsScrollDirective,
 
-    Poster
+    Poster,
+    CarouselComponent,
   ],
   exports: [
     Activity,
@@ -117,7 +118,8 @@ import { PostMenuModule } from '../../common/components/post-menu/post-menu.modu
     Comments,
     CommentsScrollDirective,
 
-    Poster
+    Poster,
+    CarouselComponent,
   ],
   entryComponents: [
     Activity,
@@ -129,7 +131,7 @@ import { PostMenuModule } from '../../common/components/post-menu/post-menu.modu
     Remind,
     UserCard,
 
-    BoostButton
+    BoostButton,
   ]
 })
 export class LegacyModule {

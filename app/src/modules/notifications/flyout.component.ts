@@ -11,7 +11,6 @@ import { NotificationsComponent } from './notifications.component';
 
 export class NotificationsFlyoutComponent {
 
-  @Input() item: any;
   @Output('close') closeEvt: EventEmitter<any> = new EventEmitter();
 
   close() {

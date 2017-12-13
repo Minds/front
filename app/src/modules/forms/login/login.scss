@@ -20,7 +20,14 @@
     font-size:16px;
     width:100%;
     -webkit-appearance:none;
-    border: 1px solid #CCC;
+    border: 1px solid #ececec;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-weight: 800;
+
+    &::placeholder {
+      font-weight: 800;
+    }
   }
 
   .m-reset-password-link{

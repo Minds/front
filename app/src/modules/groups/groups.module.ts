@@ -5,10 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
-import { ChannelModule } from '../channel/channel.module';
+import { ChannelsModule } from '../channels/channels.module';
 import { ModalsModule } from '../modals/modals.module';
 
-import { Groups, GroupsProfile, GroupsCreator } from './groups';
+import { GroupsListComponent, GroupsProfile, GroupsCreator } from './list.component';
 import { GroupsJoinButton } from './groups-join-button';
 import { GroupsProfileMembersInvite } from './profile/members/invite/invite';
 import { GroupsCard } from './card/card';
@@ -20,12 +20,14 @@ import { GroupsProfileFeed } from './profile/feed/feed';
 import { GroupsProfileConversation } from './profile/conversation/conversation.component';
 import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
 import { GroupsMembersModuleComponent } from './members/members';
+import { GroupsTileComponent } from './tile/tile.component';
 
 const routes: Routes = [
   { path: 'groups/profile/:guid/:filter', component: GroupsProfile },
   { path: 'groups/profile/:guid', component: GroupsProfile },
   { path: 'groups/create', component: GroupsCreator },
-  { path: 'groups/:filter', component: Groups },
+  { path: 'groups/:filter', component: GroupsListComponent },
+  { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -36,11 +38,11 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     LegacyModule,
-    ChannelModule,
+    ChannelsModule,
     ModalsModule
   ],
   declarations: [
-    Groups,
+    GroupsListComponent,
     GroupsProfile,
     GroupsCreator,
     GroupsJoinButton,
@@ -53,10 +55,11 @@ const routes: Routes = [
     GroupsSettingsButton,
     GroupsProfileConversation,
     GroupsProfileFilterSelector,
-    GroupsMembersModuleComponent
+    GroupsMembersModuleComponent,
+    GroupsTileComponent,
   ],
   exports: [
-    Groups,
+    GroupsListComponent,
     GroupsProfile,
     GroupsCreator,
     GroupsJoinButton,

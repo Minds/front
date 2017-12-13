@@ -30,6 +30,4 @@
 	<minds-button-thumbs-up [object]="blog"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="blog"></minds-button-thumbs-down>
 	<minds-button-comment [object]="blog" [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]"></minds-button-comment>
-	<minds-button-remind [object]="blog"></minds-button-remind>
-	<minds-button-feature [object]="blog" *ngIf="session.isAdmin()"></minds-button-feature>
 </div>

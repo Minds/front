@@ -1,0 +1,453 @@
+@import "defaults";
+
+.m-homepage--hero{
+  position:relative;
+
+  background-image: url(/assets/photos/circles.png);
+  background-size: cover;
+  background-position: center center;
+
+  .m-homepage--hero--inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 100px 52px;
+    margin: auto;
+    max-width: 1280px;
+  }
+
+  .m-homepage--hero--overlay {
+    position: absolute;
+    //background: rgba(0,0,0,0.2);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .m-homepage--hero--slogans{
+    flex: 2;
+    h1, h3, h4 {
+      color: #FFF;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+    }
+  
+    h1 {
+      font-size: 78px;
+      font-weight: 800;
+      letter-spacing: 1.25px;
+      //color: rgba(255,255,255,0.85);
+      //color: rgba(0,0,0,0.85);
+    }
+
+    h3 {
+      font-size: 18px;
+      //color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+      letter-spacing: 1px;
+      line-height: 24px;
+      padding-right: 70px;
+    }
+    z-index: 2;
+  }
+  
+  .m-homepage--signup{
+    flex: 1;
+
+    minds-form-register{
+      .mdl-card{
+        background:transparent;
+        padding:0;
+      }
+      .mdl-card__title{
+        //color: #FFF !important;
+        display:none;
+      }
+      .m-login-box input{
+        border:0;
+        border-radius:3px;
+        background:rgba(255,255,255,0.9);
+        color:#444;
+        border:1px solid rgba(255,255,255,0.25);
+        font-weight: 600;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        font-family: Roboto;
+        letter-spacing: 1px;
+        //box-shadow: 0 0 6px rgba(255,255,255,0.22);
+        &::placeholder{
+          color: #444;
+        }
+      }
+      .m-btn--action {
+        color: #FFF !important;
+        border: 1px solid #FFF;
+      }
+      .mdl-card__actions{
+        flex-direction:row-reverse;;
+        .m-register-tac{
+          padding-right:16px;
+          color: rgba(255,255,255,0.8);
+          font-family: Roboto;
+        }
+      }
+      .m-register-btn {
+        font-family: Roboto;
+        letter-spacing: 1.25px;
+        background: transparent;
+        border: 1px solid #EEE;
+        font-size: 12px;
+        box-shadow: none !important;
+      }
+    }
+    z-index: 2;
+  }
+
+  @media (max-width: $max-mobile){
+    .m-homepage--grid{
+      .m-homepage--titles{
+        h1{
+          font-size: 32px;
+          line-height:32px;
+          //font-weight: 200;
+          //margin:16px;
+          padding:0;
+          padding:0 $minds-padding*2;
+        }
+        h3{
+          font-size:16px;
+          //font-weight: 200;
+          line-height:16px;
+          padding:16px 16px 0;
+        }
+      }
+    }
+    .m-homepage--titles {
+      //display:none;
+    }
+    .m-app-links {
+      //max-width:60%;
+      margin:$minds-margin;
+      a{
+        flex:auto;
+      }
+    }
+  }
+
+}
+
+m-homepage {
+  section {
+    
+  }
+
+  .m-homepage--section{
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    //text-transform: uppercase;
+    font-weight: 100;
+    font-size: 41px;
+
+    display: block;
+    text-align: center;
+    padding: 80px 0;
+    height:auto;
+
+    h1{
+      font-size: 56px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+    }
+
+    h2{
+      text-transform: uppercase;
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: 4px;
+    }
+
+    h4{
+      font-weight: 300;
+      font-size: 32px;
+      letter-spacing: 4px;
+
+      @media screen and (max-width: 1250px){
+        font-size: 24px;
+      }
+      .m-break--8spaces{
+            padding-left: 60px;
+      }
+    }
+
+    .m-homepage--section--icons{
+      max-width:990px;
+
+      > div {
+        a{
+          text-decoration:none;
+        }
+        i{
+          width: 100%;
+          font-size: 69px;
+          margin: 16px 0;
+        }
+        label{
+          font-size: 18px;
+          font-family: 'Lato';
+          font-weight: 400;
+          color:#4A4A4A;
+          letter-spacing:2px;
+          text-transform: uppercase;
+        }
+        p{
+          font-family: lato;
+          line-height: 18px;
+          font-size: 14px;
+          margin: 24px 0;
+          color: #666;
+          font-weight: 300;
+        }
+      }
+    }
+
+    .m-homepage--section--rewards{
+      max-width: 800px;
+      padding: 32px 0;
+
+      .m-homepage--section--rewards-points{
+        padding: 28px;
+
+        i{
+          font-size: 30px;
+          vertical-align: middle;
+        }
+        span{
+          font-size: 28px;
+        }
+      }
+      label{
+        font-size: 18px;
+        font-family: lato;
+        font-weight: 300;
+        letter-spacing: 2px;
+        color: #333;
+      }
+    }
+  }
+
+  .m-homepage--stream{
+    max-width:1100px;
+    padding:$minds-padding !important;
+    h4{
+      text-transform: uppercase;
+      margin: 0 auto 0;
+      font-size: 14px;
+      max-width: 1280px;
+      text-indent: 16px;
+    }
+    section{
+      display:block;
+      padding:$minds-padding*1.5;
+      height:auto;
+
+      minds-activity{
+        width:100%;
+
+        .tabs > * {
+          .minds-counter {
+            display: block;
+          }
+          .m-wire-button{
+            transform: scale(1.2) translateY(5px);
+          }
+        }
+      }
+    }
+  }
+
+  .m-homepage--facts{
+    height:auto;
+    .mdl-grid{
+      max-width:990px;
+
+      .mdl-cell{
+        padding: 0 $minds-padding*2;
+        text-align: center;
+      }
+    }
+    h3{
+      text-transform: uppercase;
+      margin:8px 0;
+      font-size: 22px;
+      line-height: 24px;
+    }
+    i{
+      font-size:94px;
+    }
+  }
+
+  .m-homepage--features{
+    min-height: 186px;
+    height:auto;
+    padding: 26px 0;
+
+    .mdl-grid{
+      width:90%;
+    }
+
+    .mdl-cell{
+      text-align: center;
+      margin:16px auto;
+      cursor: pointer;
+
+      i{
+        font-size:42px;
+      }
+      h3{
+        font-size:12px;
+        margin:8px 0;
+        line-height:14px;
+      }
+    }
+
+  }
+
+  .m-homepage-press {
+    height: auto;
+
+    .m-contents{
+      margin: auto;
+      text-align:center;
+
+
+      div {
+        display: inline-block;
+
+        img {
+          box-sizing: border-box;
+          max-width: 100px;
+          padding: 8px;
+          filter:grayscale(91%) contrast(50%);
+          transition: filter 0.5s linear;
+          &:hover{
+            filter:none;
+          }
+
+        }
+      }
+    }
+  }
+
+}
+
+@media screen and (max-height: 750px ) and (min-width: $max-mobile){
+  .m-app-links{
+      display: none !important;
+  }
+}
+
+
+.m-app-links{
+
+  padding:28px 0;
+  height:auto;
+  display: flex;
+  flex-flow: row wrap;
+  align-items:center;
+  justify-content: center;
+
+  a{
+    flex:1;
+    padding:8px;
+    max-width: 132px;
+
+    img{
+      width:100%;
+    }
+  }
+
+}
+
+.m-footer{
+  background:#333;
+  padding:28px;
+  height:150px;
+  position:relative;
+//  justify-content:flex-end;
+
+  .copyright{
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    //right:35px;
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    font-weight:bold;
+  }
+
+}
+
+.m-homepage--feature-btn{
+  border: 0;
+  padding: 12px;
+  margin: 26px auto;
+  border-radius: 5px;
+  height:25px;
+  width:136px;
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  text-align:center;
+
+  i, .m-homepage--feature-btn--icon{
+    width: auto !important;
+    font-size: 22px !important;
+    padding-right:12px;
+    margin: 0 !important;
+    vertical-align: middle;
+  }
+
+  span{
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    flex:1;
+    font-family: lato;
+    font-weight: 300;
+  }
+}
+
+.m-homepage--fader{
+
+  width: 100%;
+  height: 500px;
+  margin-top: -500px;
+  background: linear-gradient(rgba(255,255,255,0), rgb(245, 245, 245));
+  /* position: absolute; */
+  /* bottom: 0; */
+  z-index: 9999;
+  position: relative;
+  pointer-events: none;
+
+  .m-homepage--fader--load-more{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 36px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: Lato;
+    cursor: pointer;
+    pointer-events: all;
+  }
+}

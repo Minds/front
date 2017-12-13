@@ -1,0 +1,19 @@
+.m-media--videos--list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: row;
+  flex-flow: row wrap;
+  //background: #FFF;
+  max-width: 1280px;
+  margin: auto;
+
+  m-media--videos--tile {
+    //flex: auto;
+    flex-basis: 33%;
+
+    //1:1 ration default (square)
+    max-width: 33%;
+    max-height: 320px;
+    overflow: hidden;
+  }
+}
