@@ -1,5 +1,5 @@
 .m-affiliate--marketing-header{
-  background: url('/assets/photos/balloon.jpg');
+  background: url('<%= APP_CDN %>/assets/photos/balloon.jpg');
   width: 100%;
   text-align: center;
   display: flex;

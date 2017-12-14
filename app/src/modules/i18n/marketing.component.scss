@@ -1,5 +1,5 @@
 .m-i18n--marketing-header{
-    background: url('/assets/photos/satellite.jpg');
+    background: url('<%= APP_CDN %>/assets/photos/satellite.jpg');
     background-position: -100px center;
     width: 100%;
     height: calc(100% - 200px);

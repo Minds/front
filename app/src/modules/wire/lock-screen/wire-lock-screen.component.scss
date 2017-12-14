@@ -8,7 +8,7 @@ m-wire--lock-screen{
   align-items: center;
   letter-spacing: 2px;
   padding: 10px 10px 20px 10px;
-  background-image: url("/assets/photos/andromeda-galaxy.jpg");
+  background-image: url("<%= APP_CDN %>/assets/photos/andromeda-galaxy.jpg");
   background-size: cover;
   color: white;
   text-align: center;

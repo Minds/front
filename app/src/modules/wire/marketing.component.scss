@@ -1,5 +1,5 @@
 .m-wire--marketing-header{
-  background: url('/assets/photos/blown-bulb.jpg') center;
+  background: url('<%= APP_CDN %>/assets/photos/blown-bulb.jpg') center;
   width: 100%;
   text-align: center;
   display: flex;

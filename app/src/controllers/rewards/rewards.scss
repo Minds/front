@@ -1,7 +1,7 @@
 @import "defaults";
 
 .m-rewards--marketing-header{
-  background: url('/assets/photos/galaxy.jpg');
+  background: url('<%= APP_CDN %>/assets/photos/galaxy.jpg');
   width: 100%;
   text-align: center;
   display: flex;
