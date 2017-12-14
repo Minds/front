@@ -151,10 +151,10 @@
           </span>
         </div>
         <a target="_blank" [routerLink]="['/media', comment.attachment_guid]" *ngIf="comment.attachment_guid">
-          <img [src]="comment.custom_data[0].src" class="mdl-shadow--2dp" (error)="comment.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
+          <img [src]="comment.custom_data[0].src" class="mdl-shadow--2dp" (error)="comment.custom_data[0].src = minds.cdn_assets_url + 'assets/logos/medium.png'">
         </a>
 
-        <img *ngIf="!comment.attachment_guid" [src]="comment.custom_data[0].src" (error)="comment.custom_data[0].src = 'https://www.minds.com/assets/logos/medium.png'">
+        <img *ngIf="!comment.attachment_guid" [src]="comment.custom_data[0].src" (error)="comment.custom_data[0].src = minds.cdn_assets_url + 'assets/logos/medium.png'">
       </div>
     </div>
 

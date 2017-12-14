@@ -31,7 +31,7 @@ export const BOOTSTRAP_MODULE     = 'bootstrap';
 export const APP_TITLE            = 'Minds App';
 
 export const APP_SRC              = 'app';
-export const APP_CDN              = argv['useCdn'] ? '//d3ae0shxev0cb7.cloudfront.net' : '';
+export const APP_CDN              = argv['useCdn'] ? '//d15u56mvtglc6v.cloudfront.net/front/public' : '';
 export const ASSETS_SRC           = `${APP_SRC}/assets_`;
 
 export const TOOLS_DIR            = 'tools';

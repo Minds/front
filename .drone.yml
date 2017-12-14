@@ -12,6 +12,7 @@ pipeline:
     commands:
       - npm install -g gulp
       - gulp build --aot --useCdn
+      - gulp build --aot --shims
     when:
       event: [ push, tag, deployment ]
       branch: [ master, test/codebuild ]

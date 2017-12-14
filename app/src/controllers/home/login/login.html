@@ -1,10 +1,10 @@
 <section class="m-video-banner">
-  <div class="video" style="background-image: url('assets/videos/earth-1/earth-1.png')">
-    <video autoplay muted loop poster="assets/videos/earth-1/earth-1.png" *ngIf="flags.canPlayInlineVideos">
+  <div class="video" style="background-image: url('{{minds.cdn_assets_url}}assets/videos/earth-1/earth-1.png')">
+    <video autoplay muted loop poster="{{minds.cdn_assets_url}}assets/videos/earth-1/earth-1.png" *ngIf="flags.canPlayInlineVideos">
       <!--<source src="assets/videos/traffic-1/traffic-1.webm" type="video/webm">
       <source src="assets/videos/traffic-1/traffic-1.mp4" type="video/mp4">-->
-      <source src="{{minds.cdn_url}}assets/videos/earth-1/earth-1.webm" type="video/webm">
-      <source src="{{minds.cdn_url}}assets/videos/earth-1/earth-1.mp4" type="video/mp4">
+      <source src="{{minds.cdn_assets_url}}assets/videos/earth-1/earth-1.webm" type="video/webm">
+      <source src="{{minds.cdn_assets_url}}assets/videos/earth-1/earth-1.mp4" type="video/mp4">
     </video>
   </div>
   <div class="overlay overlay--0.6">

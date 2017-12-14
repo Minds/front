@@ -8,6 +8,7 @@ interface Minds {
   wallet: any;
   navigation: MindsNavigation | any;
   cdn_url: string;
+  cdn_assets_url: string;
   site_url: string;
   notifications_count: number;
   socket_server: string;

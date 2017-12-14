@@ -25,7 +25,7 @@
     <base href="/" />
 
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="/assets/icon.png" />
+    <link rel="icon" type="image/png" href="<%= APP_CDN %>/assets/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 
     <?php
@@ -136,6 +136,7 @@
               "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
               "Admin" => Minds\Core\Session::isAdmin() ? true : false,
               "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
+              "cdn_assets_url" => "<%= APP_CDN %>/",
               "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
               "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
               "navigation" => Minds\Core\Navigation\Manager::export(),

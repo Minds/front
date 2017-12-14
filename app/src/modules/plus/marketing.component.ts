@@ -11,6 +11,7 @@ import { Client } from '../../common/api/client.service';
 export class PlusMarketingComponent {
 
   user = window.Minds.user;
+  minds = window.Minds;
   showSubscription: boolean = false;
   showVerify: boolean = false;
 
