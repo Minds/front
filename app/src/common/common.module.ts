@@ -51,8 +51,8 @@ import { AttachmentService } from "../services/attachment";
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 import { IfFeatureDirective } from './directives/if-feature.directive';
 import { MindsEmoji } from './components/emoji/emoji';
-import { CategoriesSelectorComponent } from './components/categories/selector/categories-selector.component';
-import { SelectedCategoriesComponent } from './components/categories/selected/selected-categories.component';
+import { CategoriesSelectorComponent } from './components/categories/selector/selector.component';
+import { CategoriesSelectedComponent } from './components/categories/selected/selected.component';
 import { TreeComponent } from './components/tree/tree.component';
 import { AnnouncementComponent } from './components/announcements/announcement.component';
 import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.component';
@@ -115,7 +115,7 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
     IfFeatureDirective,
 
     CategoriesSelectorComponent,
-    SelectedCategoriesComponent,
+    CategoriesSelectedComponent,
     TreeComponent,
 
     AnnouncementComponent,
@@ -172,7 +172,7 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
     IfFeatureDirective,
 
     CategoriesSelectorComponent,
-    SelectedCategoriesComponent,
+    CategoriesSelectedComponent,
     TreeComponent,
 
     AnnouncementComponent,

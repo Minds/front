@@ -1,0 +1,4 @@
+<input #input type="text" placeholder="select a category" class="m-categories--selector--input" [ngModel]="q" (click)="openMenu()" (ngModelChange)="search($event)">
+<div #list class="m-categories--selector--suggestions-list" [hidden]="!menuOpened" (blur)="closeMenu()">
+  <m--tree [collection]="categories" [filter]="q" (itemClicked)="select($event)"></m--tree>
+</div>

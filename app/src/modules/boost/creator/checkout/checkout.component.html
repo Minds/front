@@ -1,0 +1,18 @@
+<div class="m-boost--creator-payment" *ngIf="boost.currency == 'usd' || boost.currency == 'tokens'">
+  <minds-payments-stripe-checkout *ngIf="boost.currency == 'usd' && !boost.nonce"
+    (inputed)="setBoostNonce($event)"
+    [useMDLStyling]="false"
+  ></minds-payments-stripe-checkout>
+
+  <m-checkout--blockchain *ngIf="boost.currency == 'tokens' && !boost.nonce"
+    (inputed)="setBoostNonce({ address: $event })"
+  ></m-checkout--blockchain>
+
+  <div class="m-boost--creator-payment-attached" *ngIf="boost.nonce">
+    <i class="material-icons">check_circle</i>
+    <span>
+      <!-- i18n: @@M__COMMON__PAYMENT_ATTACHED -->Your payment is attached.<!-- /i18n -->
+      <b (click)="boost.nonce = null" i18n="@@M__ACTION__CHANGE">Change</b>
+    </span>
+  </div>
+</div>

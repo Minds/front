@@ -9,6 +9,10 @@ import { ThirdPartyNetworksModule } from '../third-party-networks/third-party-ne
 import { AdsModule } from '../ads/ads.module';
 
 import { BoostCreatorComponent } from './creator/creator.component';
+import { BoostCreatorPaymentMethodsComponent } from './creator/payment-methods/payment-methods.component';
+import { BoostCreatorCheckoutComponent } from './creator/checkout/checkout.component';
+import { BoostCreatorP2PSearchComponent } from './creator/p2p-search/p2p-search.component';
+import { BoostCreatorCategoriesComponent } from './creator/categories/categories.component';
 
 import { BoostConsoleComponent } from './console/console.component';
 import { BoostConsoleNetworkListComponent } from './console/list/network.component';
@@ -40,7 +44,11 @@ const boostRoutes: Routes = [
     BoostConsoleP2PListComponent,
     BoostConsoleCard,
     BoostConsoleBooster,
-    BoostMarketingComponent
+    BoostMarketingComponent,
+    BoostCreatorPaymentMethodsComponent,
+    BoostCreatorCheckoutComponent,
+    BoostCreatorP2PSearchComponent,
+    BoostCreatorCategoriesComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,

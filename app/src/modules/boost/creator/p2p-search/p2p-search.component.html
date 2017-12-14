@@ -1,0 +1,53 @@
+<div class="m-boost--creator-wide-input m-boost--creator--target">
+  <input type="text"
+    class="m-boost--creator-wide-input--edit"
+    [(ngModel)]="query"
+    (blur)="onBlur()"
+    (keydown.esc)="onBlur()"
+    (keyup)="search()"
+    placeholder="@channel"
+    i18n-placeholder="@@BOOST__CREATOR__TARGET_INPUT_PLACEHOLDER"
+    #input
+  />
+</div>
+
+<div *ngIf="results.length > 0"
+  class="m-boost--creator-autocomplete--results"
+>
+  <div *ngFor="let target of results"
+    class="m-boost--creator-autocomplete--result"
+    (mousedown)="setTarget(target, $event); onBlur()"
+  >
+    <div class="m-boost--creator-autocomplete--result-content">
+      @{{ target.username }}
+      <ng-container *ngIf="target.merchant"><i class="material-icons material-icons--inline">attach_money</i></ng-container>
+      <ng-container *ngIf="target.eth_wallet"><m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol></ng-container>
+    </div>
+
+    <div class="m-boost--creator-autocomplete--result-label">
+      <ng-container *ngIf="target.subscribers_count">{{ target.subscribers_count | abbr }} <i class="material-icons material-icons--inline">people</i></ng-container>
+      <ng-container *ngIf="target.impressions">{{ target.impressions | abbr }} <i class="material-icons material-icons--inline">remove_red_eye</i></ng-container>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="boost.target && boost.target.boostProPlus"
+  class="m-boost--creator--target-facebook"
+>
+  <div class="m-boost--creator-toggle m-boost--creator-toggle--target-facebook"
+    [class.m-boost--creator-toggle--highlight]="boost.postToFacebook"
+    (click)="togglePostToFacebook()"
+  >
+    <span class="m-boost--creator-toggle--select" i18n="@@M__ACTION__SELECT">Select</span>
+    <span class="m-boost--creator-toggle--selected" i18n="@@M__COMMON__SELECTED">Selected</span>
+
+    <span i18n="Post to [page]@@BOOST__CREATOR__POST_TO_FACEBOOK_LABEL">Post to {{ boost.target.fb.name }}</span>
+    <img [src]="'https://graph.facebook.com/' + boost.target.fb.uuid + '/picture'" />
+  </div>
+
+  <div [hidden]="!boost.postToFacebook"
+    class="m-boost--creator--target-facebook-scheduler"
+  >
+    <m-scheduler (ts)="boost.scheduledTs = ($event / 1000)"></m-scheduler>
+  </div>
+</div>

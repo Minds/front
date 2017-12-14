@@ -5,37 +5,39 @@ type Category = { id: string, label: string };
 
 @Component({
   moduleId: module.id,
-  selector: 'm--categories-selector',
-  templateUrl: 'categories-selector.component.html'
+  selector: 'm-categories--selector',
+  templateUrl: 'selector.component.html'
 })
 
 export class CategoriesSelectorComponent {
-  selectedCategories: Array<any> = [];
+
+  selected: Array<any> = [];
   categories: Array<Category> = [];
   menuOpened: boolean = false;
   q: string = '';
   @ViewChild('input', { read: ElementRef }) input: ElementRef;
   @ViewChild('list', { read: ElementRef }) list: ElementRef;
 
-  @Output() selectedCategoriesChange: EventEmitter<Array<Category>> = new EventEmitter<Array<Category>>();
+  @Output('selected') onSelected: EventEmitter<Array<Category>> = new EventEmitter<Array<Category>>();
 
   constructor() {
     this.categories = window.Minds.categories;
   }
 
-  suggestCategories(value: string) {
+  search(value: string) {
     this.q = value;
     this.openMenu();
   }
 
-  selectCategory(item: TreeNode) {
-    const index: number = this.selectedCategories.findIndex((selected) => {
+  select(item: TreeNode) {
+    const index: number = this.selected.findIndex((selected) => {
       return selected === item.original
     });
     if (index === -1) {
-      this.selectedCategories.push(item.original);
+      this.selected.push(item.original);
     }
-    this.selectedCategoriesChange.emit(this.selectedCategories);
+
+    this.onSelected.emit(this.selected);
 
     this.closeMenu();
   }

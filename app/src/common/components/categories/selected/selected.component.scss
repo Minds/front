@@ -1,0 +1,20 @@
+m-categories--selected {
+  display: flex;
+  margin-top:20px;
+
+  .m-categories--selected--categories {
+    //flex-grow: 1;
+
+    .m-categories--selected--category {
+      display: inline-flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.15);
+      border: 1px solid transparent;
+      border-radius: 5px;
+      box-sizing: border-box;
+      margin: 0 1px;
+      color: black;
+    }
+  }
+}

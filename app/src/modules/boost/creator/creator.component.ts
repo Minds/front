@@ -74,13 +74,12 @@ export class BoostCreatorComponent implements AfterViewInit {
     maxCategories: 3
   };
 
+  step: number = 0; 
+
   estimatedTime: number = -1;
 
   editingAmount: boolean = false;
   editingTarget: boolean = false;
-
-  targetQuery: string = '';
-  targetResults: any[] = [];
 
   inProgress: boolean = false;
   initialized: boolean = false;
@@ -95,10 +94,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     this.object = object;
   }
 
-  private _searchThrottle;
-
   @ViewChild('amountEditor') private _amountEditor: ElementRef;
-  @ViewChild('targetEditor') private _targetEditor: ElementRef;
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
@@ -110,8 +106,6 @@ export class BoostCreatorComponent implements AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.loadCategories();
-
     this.load();
   }
 
@@ -121,22 +115,6 @@ export class BoostCreatorComponent implements AfterViewInit {
   }
 
   // Load settings
-
-  /**
-   * Loads and parses categories from global variable
-   */
-  loadCategories() {
-    this.categories = [];
-
-    for (let category of window.Minds.categories) {
-      this.categories.push({
-        'id': category.id,
-        'label': category.label,
-      });
-    }
-
-    this.categories.sort((a, b) => a.label > b.label ? 1: -1);
-  }
 
   /**
    * Loads boost settings from server
@@ -399,85 +377,6 @@ export class BoostCreatorComponent implements AfterViewInit {
 
   // Read and edit target
 
-  /**
-   * Activates and sets focus on the target editor
-   */
-  targetEditorFocus() {
-    this.editingTarget = true;
-    this._changeDetectorRef.detectChanges();
-
-    if (this._targetEditor.nativeElement) {
-      setTimeout(() => (<HTMLInputElement>this._targetEditor.nativeElement).focus(), 100);
-    }
-  }
-
-  /**
-   * Deactivates the target editor
-   */
-  targetEditorBlur() {
-    this.editingTarget = false;
-    this.showErrors();
-  }
-
-  /**
-   * Searches the current target query on the server
-   */
-  searchTarget() {
-    if (this._searchThrottle) {
-      clearTimeout(this._searchThrottle);
-      this._searchThrottle = void 0;
-    }
-
-    if (this.targetQuery.charAt(0) !== '@') {
-      this.targetQuery = '@' + this.targetQuery;
-    }
-
-    let query = this.targetQuery;
-    if (query.charAt(0) === '@') {
-      query = query.substr(1);
-    }
-
-    if (!query || query.length <= 2) {
-      this.targetResults = [];
-      return;
-    }
-
-    this._searchThrottle = setTimeout(() => {
-      this.client.get(`api/v2/search/suggest/user`, {
-        q: query,
-        limit: 8,
-        hydrate: 1
-      })
-        .then(({ entities }) => {
-          if (!entities) {
-            return;
-          }
-
-          this.targetResults = entities;
-        })
-        .catch(e => console.error('Cannot load results', e));
-    });
-  }
-
-  /**
-   * Sets the current target for a P2P boost
-   */
-  setTarget(target, $event?) {
-    if ($event) {
-      $event.preventDefault();
-    }
-
-    this.boost.target = { ...target };
-    this.targetResults = [];
-    this.targetQuery = '@' + target.username;
-    this.showErrors();
-  }
-
-  // Boost Pro
-  togglePostToFacebook() {
-    this.boost.postToFacebook = !this.boost.postToFacebook;
-  }
-
   // Submit
 
   /**
@@ -570,6 +469,14 @@ export class BoostCreatorComponent implements AfterViewInit {
     }
   }
 
+  next() {
+    this.step++;
+  }
+
+  back() { 
+    this.step--;
+  }
+
   /**
    * Submits the boost to the appropiate server endpoint using the current settings
    */
@@ -652,13 +559,4 @@ export class BoostCreatorComponent implements AfterViewInit {
       })
   }
 
-  onSelectedCategoriesChange(categories) {
-    if (categories.length >= this.rates.maxCategories) {
-      return;
-    }
-    this.selectedCategories = categories;
-    this.boost.categories = this.selectedCategories.map((value) => {
-      return value.id;
-    });
-  }
 }

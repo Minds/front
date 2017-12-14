@@ -1,5 +1,5 @@
-m--categories-selector {
-  font-family: Lato, Helvetica, Arial, sans-serif;
+m-categories--selector {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   position: relative;
 
   input {
@@ -20,7 +20,7 @@ m--categories-selector {
     margin: 0;
   }
 
-  .m-categories-selector--suggestions-list {
+  .m-categories--selector--suggestions-list {
     position: absolute;
     z-index: 5000;
     background-color: white;
