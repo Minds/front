@@ -29,4 +29,8 @@ export class BoostCreatorCheckoutComponent {
     private _changeDetectorRef: ChangeDetectorRef,
   ) { }
 
+  setNonce(nonce) {
+    this.boost.nonce = nonce;
+    this.boostChanged.next(this.boost);
+  }
 }
