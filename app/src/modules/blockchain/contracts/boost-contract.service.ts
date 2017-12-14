@@ -52,7 +52,7 @@ export class BoostContractService {
           value: this.web3Wallet.config.boost_wallet_address
         }, { type: 'uint256', value: guid }])
       );
-    }, "You're creating a boost");
+    }, "You're creating a boost", amount);
   }
 
   async createPeer(receiver: string, guid: string, amount: number) {
@@ -62,19 +62,19 @@ export class BoostContractService {
         this.tokenContract.tokenToUnit(amount),
         this.tokenContract.encodeParams([{ type: 'address', value: receiver }, { type: 'uint256', value: guid }])
       )
-    }, "You're creating a boost");
+    }, "You're creating a boost", amount);
   }
 
   async accept(guid: string) {
-    return await this.overlayService.showAndRun(async () => (await this.boost()).accept(guid), "You're about to accept a boost", false);
+    return await this.overlayService.showAndRun(async () => (await this.boost()).accept(guid), "You're about to accept a boost");
   }
 
   async reject(guid: string) {
-    return await this.overlayService.showAndRun(async () => (await this.boost()).reject(guid), "You're about to reject a boost", false);
+    return await this.overlayService.showAndRun(async () => (await this.boost()).reject(guid), "You're about to reject a boost");
   }
 
   async revoke(guid: string) {
-    return await this.overlayService.showAndRun(async () => (await this.boost()).revoke(guid), "You're about to revoke a boost", false);
+    return await this.overlayService.showAndRun(async () => (await this.boost()).revoke(guid), "You're about to revoke a boost");
   }
 
   // Service provider

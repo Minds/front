@@ -12,8 +12,8 @@ export class TransactionOverlayService {
     this.comp = comp;
   }
 
-  async showAndRun(fn: Function, title: string, showNotes: boolean = true) {
-    this.comp.show(title, showNotes);
+  async showAndRun(fn: Function, title: string, amount: number = 0) {
+    this.comp.show(title, amount);
     let result = null;
     try {
       let result = await fn();

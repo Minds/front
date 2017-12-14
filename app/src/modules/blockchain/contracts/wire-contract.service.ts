@@ -51,12 +51,12 @@ export class WireContractService {
           this.tokenContract.encodeParams([{ type: 'address', value: receiver }])
         );
       }
-    ,"You're about to wire someone");
+    ,"You're about to wire someone", amount);
   }
 
   // Service provider
 
-  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService, blockchainOverlayService: TransactionOverlayService) {
-    return new WireContractService(web3Wallet, tokenContract, blockchainOverlayService);
+  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService, overlayService: TransactionOverlayService) {
+    return new WireContractService(web3Wallet, tokenContract, overlayService);
   }
 }
