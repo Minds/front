@@ -13,7 +13,7 @@
       </div>
 
       <p class="m-wire-creator--subtext" i18n="@@WIRE__CREATOR__WIRE_NOTICE_W_MC">
-        Support <span>@</span>{{owner.username}} by sending them dollars, points or MindsCoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
+        Support <span>@</span>{{owner.username}} by sending them dollars, points or tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
       </p>
     </div>
 
@@ -64,10 +64,10 @@
       >
         <div class="m-wire--creator-selector-type">
           <m--crypto-token-symbol></m--crypto-token-symbol>
-          <h4 i18n="@@WIRE__CREATOR__MC_ITEM">MindsCoin</h4>
+          <h4 i18n="@@WIRE__CREATOR__TOKEN_ITEM">Token</h4>
         </div>
-        <span class="m-wire--creator-selector--cta" *ngIf="owner?.eth_wallet" i18n="@@M__COMMON__SELECT_MC">Select MindsCoin</span>
-        <span class="m-wire--creator-selector--cta" *ngIf="!owner?.eth_wallet" i18n="@@WIRE__CREATOR__MC_ITEM_CTA_DISABLED">Cannot receive coins</span>
+        <span class="m-wire--creator-selector--cta" *ngIf="owner?.eth_wallet" i18n="@@M__COMMON__SELECT_TOKENS">Select Tokens</span>
+        <span class="m-wire--creator-selector--cta" *ngIf="!owner?.eth_wallet" i18n="@@WIRE__CREATOR__TOKEN_ITEM_CTA_DISABLED">Cannot receive Tokens</span>
         <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
       </li>
     </ul>
@@ -96,7 +96,7 @@
       <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_HOW_PART -->How<!-- /i18n -->
       <ng-container *ngIf="wire.currency == 'money'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MUCH_MONEY_PART">much money</ng-container>
       <ng-container *ngIf="wire.currency == 'points'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MANY_POINTS_PART">many points</ng-container>
-      <ng-container *ngIf="wire.currency == 'tokens'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MANY_MC_PART">many coins</ng-container>
+      <ng-container *ngIf="wire.currency == 'tokens'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MANY_TOKENS_PART">many tokens</ng-container>
       <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_DO YOU WANT_PART -->do you want to send?<!-- /i18n -->
     </h3>
 
@@ -118,7 +118,7 @@
       >
         <ng-container *ngIf="wire.currency == 'points'" i18n="points input|@@M__COMMON__POINTS_INPUT">points</ng-container>
         <ng-container *ngIf="wire.currency == 'money'" i18n="usd input|@@M__COMMON__USD_INPUT">USD</ng-container>
-        <ng-container *ngIf="wire.currency == 'tokens'" i18n="usd input|@@M__COMMON__MC_INPUT">coins</ng-container>
+        <ng-container *ngIf="wire.currency == 'tokens'" i18n="usd input|@@M__COMMON__TOKENS_INPUT">Tokens</ng-container>
       </span>
     </div>
 

@@ -253,7 +253,7 @@ describe('WireCreatorComponent', () => {
     const subtitle = fixture.debugElement.query(By.css('.m-wire-creator--subtext'));
     expect(subtitle).not.toBeNull();
 
-    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars, points or MindsCoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
+    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars, points or Tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
   });
 
   it('should have a payment section', () => {
@@ -267,7 +267,7 @@ describe('WireCreatorComponent', () => {
     expect(title.nativeElement.textContent).toContain('Wire Type');
   });
 
-  it('should have payment method list (points, usd and bitcoin)', () => {
+  it('should have payment method list (points, usd and tokens)', () => {
     const list = fixture.debugElement.query(By.css('section.m-wire--creator-payment-section > ul.m-wire--creator-selector'));
     expect(list).not.toBeNull();
 
@@ -275,7 +275,7 @@ describe('WireCreatorComponent', () => {
 
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:first-child > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('Points');
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(2) > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('USD');
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:last-child > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('MindsCoin');
+    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:last-child > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('Tokens');
   });
 
   it('usd payment option should only be available if the user\'s a merchant', fakeAsync(() => {

@@ -25,7 +25,7 @@ export class WireService {
 
         payload.nonce.txHash = await this.wireContract.create(payload.nonce.receiver, wire.amount);
       } catch (e) {
-        console.error('[Wire/MindsCoin]', e);
+        console.error('[Wire/Token]', e);
         throw new Error('Either you cancelled the approval, or there was an error processing it');
       }
     }

@@ -10,7 +10,7 @@
         <span>
           <ng-container *ngIf="method == 'points'" i18n="@@M__FEATURE__POINTS">Points</ng-container>
           <ng-container *ngIf="method == 'money'" i18n="@@M__COMMON__SYMBOL_AND_USD">$ USD</ng-container>
-          <ng-container *ngIf="method == 'tokens'" i18n="@@M__COMMON__MINDSCOIN">MindsCoin</ng-container>
+          <ng-container *ngIf="method == 'tokens'" i18n="@@M__COMMON__TOKEN">Token</ng-container>
         </span>
 
         <button id="m-wire-console-ledger-method" class="mdl-button mdl-js-button mdl-button--icon" [mdl]>
@@ -28,8 +28,8 @@
           >$ USD</li>
           <li class="mdl-menu__item"
             (click)="setMethod('tokens')"
-            i18n="@@M__COMMON__MINDSCOIN"
-          >MindsCoin</li>
+            i18n="@@M__COMMON__TOKEN"
+          >Token</li>
         </ul>
       </div>
     </div>
@@ -60,7 +60,7 @@
 
               <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'points'" i18n="@@M__COMMON__POINTS_WITH_VALUE">{{ wire.amount }} points</td>
               <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'money'" i18n="@@WIRE__CONSOLE__LEDGER__AMOUNT_USD_CELL_VALUE"><i>$</i>{{ wire.amount }}</td>
-              <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'tokens'" i18n="@@WIRE__CONSOLE__LEDGER__AMOUNT_MINDSCOIN_CELL_VALUE"><i>M</i>{{ wire.amount }}</td>
+              <td class="m-wire-console--ledger-amount mdl-color-text--green" *ngIf="wire.method == 'tokens'" i18n="@@WIRE__CONSOLE__LEDGER__AMOUNT_TOKEN_CELL_VALUE"><i>M</i>{{ wire.amount }}</td>
 
               <td><i class="material-icons" (click)="expand(i)">keyboard_arrow_down</i></td>
             </tr>

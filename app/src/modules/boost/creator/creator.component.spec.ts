@@ -394,13 +394,13 @@ describe('BoostCreatorComponent', () => {
     expect(paymentTitle.nativeElement.textContent).toContain('Payment Method');
   });
 
-  it('should have payment method list (usd, points, mindscoin)', () => {
+  it('should have payment method list (usd, points, tokens)', () => {
     const methods = fixture.debugElement.query(By.css('section.m-boost--creator-section-payment > ul.m-boost--creator-selector'));
     expect(methods).not.toBeNull();
     expect(methods.nativeElement.children.length).toBe(3);
     expect(fixture.debugElement.query(By.css('.m-boost--creator-selector > li:first-child > h4')).nativeElement.textContent).toContain('USD');
     expect(fixture.debugElement.query(By.css('.m-boost--creator-selector > li:nth-child(2) > h4')).nativeElement.textContent).toContain('points');
-    // MindsCoin uses symbol
+    // Tokens use symbol
   });
 
   it('clicking on a payment option should highlight it', fakeAsync(() => {

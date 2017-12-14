@@ -5,5 +5,5 @@ type WireTypeLabelsStruc = Array<{ type: WireRewardsType, label: string }>;
 export const WireTypeLabels: WireTypeLabelsStruc = [
   { type: 'points', label: 'Points' },
   { type: 'money', label: '$ USD' },
-  { type: 'tokens', label: 'MindsCoin' },
+  { type: 'tokens', label: 'Token' },
 ];

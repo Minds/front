@@ -32,7 +32,7 @@
           [class.m-boost--creator-selector--highlight]="!boost.type || boost.type == 'p2p'"
         >
           <h4 i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</h4>
-          <span class="m-boost--creator-selector--description" i18n="@@BOOST__CREATOR__CHANNELS_SELECTOR_DESC">Your content will be shared to a specific channel in exchange for USD, MindsCoin or points.</span>
+          <span class="m-boost--creator-selector--description" i18n="@@BOOST__CREATOR__CHANNELS_SELECTOR_DESC">Your content will be shared to a specific channel in exchange for USD, tokens or points.</span>
           <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
         </li>
 
@@ -74,7 +74,7 @@
             <ng-container *ngIf="boost.type != 'p2p'" i18n="@@BOOST__CREATOR__VIEWS_INPUT_LABEL">views</ng-container>
             <!--<ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'points'" i18n="points input|@@M__COMMON__POINTS_INPUT">points</ng-container>
             <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'usd'" i18n="usd input|@@M__COMMON__USD_INPUT">USD</ng-container>
-            <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'tokens'" i18n="usd input|@@M__COMMON__MINDSCOIN_INPUT">MindsCoin</ng-container>-->
+            <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'tokens'" i18n="usd input|@@M__COMMON__TOKENS_INPUT">Tokens</ng-container>-->
           </span>
         </div>
         <span class="m-boost--creator-wide-input--estimation" *ngIf="estimatedTime !== -1">
@@ -113,8 +113,8 @@
           <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'points'" i18n="@@BOOST__CREATOR__POINTS_PRIORITY_FEE">
             + <b>{{ calcPriorityChargesPreview('points') | number }} points</b>
           </span>
-          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'tokens'" i18n="@@BOOST__CREATOR__MINDSCOIN_PRIORITY_FEE">
-            + <b>{{ calcPriorityChargesPreview('tokens') | number }} coins</b>
+          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'tokens'" i18n="@@BOOST__CREATOR__TOKENS_PRIORITY_FEE">
+            + <b>{{ calcPriorityChargesPreview('tokens') | number }} tokens</b>
           </span>
         </span>
       </section>

@@ -11,8 +11,8 @@
         {{ entity.wire_threshold.min | number }} points/month
       </ng-container>
 
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__MINDSCOIN_PER_MONTH">
-        {{ entity.wire_threshold.min | number:'1.0-4' }} MindsCoin/month
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
+        {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
       </ng-container>
 
       <!-- i18n: @@WIRE__LOCK_SCREEN__WILL_SEE_TITLE_PART -->will see this post.<!-- /i18n -->
@@ -45,8 +45,8 @@
           {{ entity.wire_threshold.min | number }} points/month
         </ng-container>
 
-        <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__MINDSCOIN_PER_MONTH">
-          {{ entity.wire_threshold.min | number:'1.0-4' }} MindsCoin/month
+        <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
+          {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
         </ng-container>
 
         <!-- i18n: @@WIRE__LOCK_SCREEN__TO_SEE_TITLE_PART -->to see this post.<!-- /i18n -->
@@ -81,8 +81,8 @@
         {{ entity.wire_threshold.min | number }} points/month
       </ng-container>
 
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__MINDSCOIN_PER_MONTH">
-        {{ entity.wire_threshold.min | number:'1.0-4' }} MindsCoin/month
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
+        {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
       </ng-container>
     </span>
   </h2>
@@ -98,8 +98,8 @@
       over {{ entity.wire_threshold.min | number }} points/month
     </ng-container>
 
-    <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__OVER_MINDSCOIN_PER_MONTH">
-      over {{ entity.wire_threshold.min | number }} MindsCoin/month
+    <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__OVER_TOKENS_PER_MONTH">
+      over {{ entity.wire_threshold.min | number }} Tokens/month
     </ng-container>
 
     <ng-container *ngIf="entity?.ownerObj?.username" i18n="@@WIRE__LOCK_SCREEN__TO_USERNAME_PART">

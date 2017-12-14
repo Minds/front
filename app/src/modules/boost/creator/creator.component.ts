@@ -421,7 +421,7 @@ export class BoostCreatorComponent implements AfterViewInit {
       }
 
       if (this.boost.target && !this.boost.target.eth_wallet && (this.boost.currency === 'tokens')) {
-        throw new VisibleBoostError('User cannot receive MindsCoin.');
+        throw new VisibleBoostError('User cannot receive Tokens.');
       }
     } else {
       if (this.boost.amount < this.rates.min || this.boost.amount > this.rates.cap) {
