@@ -1,4 +1,4 @@
-<a (click)="toggle($event)">
+<a (click)="toggle()">
   <i class="material-icons">account_balance</i>
   <span id="wallet-counter" class="counter mdl-color-text--green-400">{{balance | abbr}}</span>
   <span class="mdl-color--blue-grey-500 mdl-color-text--white m-wallet-pop"
@@ -11,5 +11,5 @@
 </a>
 
 <div class="m-wallet--topbar-toggle-overlay" (click)="toggle()" *ngIf="toggled"></div>
-<m-wallet--flyout (close)="toggle($event)" *ngIf="toggled"></m-wallet--flyout>
+<m-wallet--flyout (close)="toggle()" *ngIf="toggled"></m-wallet--flyout>
 

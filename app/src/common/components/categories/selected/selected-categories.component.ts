@@ -29,7 +29,7 @@ type Category = { id: string, label: string, children?: string };
 
 export class SelectedCategoriesComponent implements ControlValueAccessor, OnChanges {
 
-  private selectedCategories: Array<Category>;
+  selectedCategories: Array<Category>;
 
   unselectCategory(category: Category) {
     const index: number = this.selectedCategories.findIndex((value) => {

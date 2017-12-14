@@ -25,7 +25,7 @@ export class TransactionOverlayComponent implements OnInit {
   @Input() title: string;
   @HostBinding('hidden') _isHidden: boolean = true;
   // @HostBinding('class.m--blockchain--transaction-overlay--visible') private _isVisible: boolean = false;
-  private showSubtitle: boolean = true;
+  showSubtitle: boolean = true;
 
   minds: Minds = window.Minds;
 

@@ -52,7 +52,7 @@ export class WalletFlyoutComponent {
   loadBalances() {
     //TODO: return in one request?
     let requests = [
-      this.client.get('api/v1/monetization/revenue/overview').catch(() => false),
+    //this.client.get('api/v1/monetization/revenue/overview').catch(() => false),
       this.wallet.getBalance(true).catch(() => false),
       this.blockchain.getBalance(true).catch(() => false)
     ];
@@ -63,7 +63,7 @@ export class WalletFlyoutComponent {
           this.balance.points = results[0].balance;
         }
 
-        if (results[2] !== false) {
+        if (results[1] !== false) {
           this.balance.tokens = results[2];
         }
 

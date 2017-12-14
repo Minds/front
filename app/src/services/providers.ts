@@ -192,7 +192,7 @@ export const MINDS_PROVIDERS : any[] = [
   {
     provide: WireContractService,
     useFactory: WireContractService._,
-    deps: [ Web3WalletService, TokenContractService ]
+    deps: [ Web3WalletService, TokenContractService, TransactionOverlayService ]
   },
   {
     provide: BoostContractService,
