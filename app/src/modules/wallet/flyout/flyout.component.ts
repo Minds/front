@@ -64,7 +64,7 @@ export class WalletFlyoutComponent {
         }
 
         if (results[1] !== false) {
-          this.balance.tokens = results[2];
+          this.balance.tokens = results[1];
         }
 
         this.balance.points = this.wallet.points;
