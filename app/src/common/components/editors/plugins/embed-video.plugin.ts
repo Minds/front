@@ -157,7 +157,7 @@ export class EmbedVideo {
     let html;
     url = url.replace(/\n?/g, '');
 
-    html = url.replace(/^((http(s)?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|v\/)?)([a-zA-Z0-9\-_]+)(.*)?$/, '<div class="video video-youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/$7" frameborder="0" allowfullscreen></iframe></div>')
+    html = url.replace(/^((http(s)?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|v\/)?)([a-zA-Z0-9\-_]+)(.*)?$/, '<div class="video video-youtube"><iframe width="892" height="520" src="//www.youtube.com/embed/$7" frameborder="0" allowfullscreen></iframe></div>')
       .replace(/^https?:\/\/vimeo\.com(\/.+)?\/([0-9]+)$/, '<div class="video video-vimeo"><iframe src="//player.vimeo.com/video/$2" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>')
       .replace(/^https?:\/\/instagram\.com\/p\/(.+)\/?$/, '<span class="instagram"><iframe src="//instagram.com/p/$1/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe></span>')
       .replace(/^https?:\/\/www\.minds\.com\/media\/([0-9]+)\/?$/, `<span class="minds"><iframe src="https://www.minds.com/api/v1/embed/$1" width="720" height="320" frameborder="0" scrolling="no" allowtransparency="true"></video></iframe></span>`)
