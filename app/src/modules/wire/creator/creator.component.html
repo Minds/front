@@ -80,6 +80,7 @@
 
       <m-checkout--blockchain *ngIf="wire.currency == 'tokens' && !wire?.payload?.nonce"
         (inputed)="setNoncePayload({ address: $event, receiver: owner.eth_wallet })"
+        [(autoselect)]="autoselectWallet"
       ></m-checkout--blockchain>
 
       <div class="m-wire--creator-payment-attached" *ngIf="wire.payload">

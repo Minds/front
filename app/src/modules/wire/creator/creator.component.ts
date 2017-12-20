@@ -62,6 +62,7 @@ export class WireCreatorComponent implements AfterViewInit {
   success: boolean = false;
   criticalError: boolean = false;
   error: string = '';
+  autoselectWallet: boolean = true;
 
   session: Session = SessionFactory.build();
 

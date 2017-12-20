@@ -12,4 +12,6 @@
   class="m-checkout--blockchain--wallet-selector"
   (select)="setValue($event)"
   #walletSelector="BlockchainWalletSelector"
+  [autoselect]="autoselect"
+  (autoselectChange)="onAutoSelectChange($event)"
 ></m-blockchain--wallet-selector>

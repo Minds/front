@@ -18,6 +18,9 @@ export class BlockchainWalletSelector {
 
   _lockedWeb3CheckTimer: any;
 
+  @Input() autoselect: boolean;
+  @Output() autoselectChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(
     protected web3Wallet: Web3WalletService,
     protected cd: ChangeDetectorRef
@@ -46,6 +49,11 @@ export class BlockchainWalletSelector {
     this.web3Unavailable = false;
     this.web3Locked = false;
     this.web3Wallets = wallets;
+    if (this.autoselect && this.web3Wallets.length > 0) {
+      this.setWallet(this.web3Wallets[0]);
+      this.autoselect = false;
+      this.autoselectChange.emit(false);
+    }
     this.detectChanges();
   }
 

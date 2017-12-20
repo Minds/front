@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -7,8 +7,16 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class BlockchainCheckoutComponent {
   @Output('inputed') inputtedEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Input('autoselect') autoselect: boolean = true;
+  @Output() autoselectChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   setValue(wallet) {
+    this.autoselect = false;
+    this.autoselectChange.emit(false);
     this.inputtedEventEmitter.emit(wallet);
+  }
+
+  onAutoSelectChange(value: boolean) {
+    this.autoselectChange.emit(value);
   }
 }
