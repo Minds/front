@@ -7,13 +7,13 @@
     <div class="m-plus--marketing-action-button">
       <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isPlus()" (click)="openSubscription()" [hidden]="showSubscription">Upgrade - $5.00/month</button>
       <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login">Upgrade - $5.00/month</button>
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="openSubscription()">Cancel Plus</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="cancelSubscription()">Cancel Plus</button>
     </div>
 
     <div class="m-plus--overlay"></div>
   </div>
 
-  <m-plus--subscription *ngIf="showSubscription"></m-plus--subscription>
+  <m-plus--subscription #subscription [hidden]="!showSubscription"></m-plus--subscription>
 
   <div class="m-plus--marketing-contents mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
