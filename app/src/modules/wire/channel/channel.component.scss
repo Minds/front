@@ -221,4 +221,14 @@ m-wire-channel {
       font-weight: 500;
     }
   }
+
+  m--crypto-token-symbol {
+    .m--crypto-token-symbol--stroke {
+      stroke: #607d8b;
+    }
+
+    .m--crypto-token-symbol--fill {
+      fill: #607d8b;
+    }
+  }
 }

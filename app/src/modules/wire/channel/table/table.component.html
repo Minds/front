@@ -8,10 +8,14 @@
       <div class="m-wire-channel--reward-amount mdl-color-text--blue-grey-500">
         <span *ngIf="!editing && type == 'money'">{{ (reward.amount || 0) | currency:'USD':true:'1.0-0' }}+</span>
         <span *ngIf="!editing && type == 'points'">{{ (reward.amount || 0) | number }}+</span>
-        <span *ngIf="!editing && type == 'tokens'">{{ (reward.amount || 0) | number:'1.0-4' }}+</span>
+
+        <ng-container *ngIf="!editing && type == 'tokens'">
+          <m--crypto-token-symbol ></m--crypto-token-symbol>
+          <span>{{ (reward.amount || 0) | number:'1.0-4' }}+</span>
+        </ng-container>
 
         <ng-container *ngIf="editing && type=='money'">$</ng-container>
-        <ng-container *ngIf="editing && type=='tokens'">M</ng-container>
+        <ng-container *ngIf="editing && type=='tokens'"><m--crypto-token-symbol></m--crypto-token-symbol></ng-container>
         <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
         <span *ngIf="editing">+</span>
         <ng-container *ngIf="type=='points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</ng-container>
