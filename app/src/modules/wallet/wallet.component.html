@@ -1,4 +1,51 @@
 <div class="m-revenue--console">
+  <div class="m-toolbar">
+    <div class="m-topbar--row">
+      <div class="m-topbar--navigation">
+        <a class="m-topbar--navigation--item"
+          routerLink="/wallet/transactions"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@WALLET__POINTS_LEDGER_NAV">Points Ledger</span>
+        </a>
+        <a class="m-topbar--navigation--item"
+          routerLink="/wallet/revenue"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@WALLET__REVENUE_CONSOLE_NAV">Revenue Console</span>
+        </a>
+
+        <a class="m-topbar--navigation--item"
+          routerLink="/wallet/purchase"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@M__ACTION__BUY_POINTS">Buy Points</span>
+        </a>
+
+        <a class="m-topbar--navigation--item"
+          routerLink="/wallet/boost"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@M__FEATURE__BOOST">Boost</span>
+        </a>
+
+        <a class="m-topbar--navigation--item"
+          routerLink="/wallet/wire"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@M__FEATURE__WIRE">Wire</span>
+        </a>
+
+        <a class="m-topbar--navigation--item"
+          routerLink="/plus"
+          routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@M__FEATURE__MINDS_PLUS ">Minds Plus</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
 
   <div class="m-revenue--console-hero mdl-color--blue mdl-color-text--white">
     <div class="m-revenue--console-overview mdl-grid">
@@ -13,10 +60,10 @@
         </div>
       </div>
 
-      <div class="m-wallet--coin mdl-cell mdl-cell--4-col">
+      <div class="m-wallet--token mdl-cell mdl-cell--4-col">
         <m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol><span *ngIf="ready">{{ tokens | number }}</span>
         <div class="m-revenue--console-label">
-          <label i18n>Coins</label>
+          <label i18n>Tokens</label>
           <m-tooltip icon="help" i18n>
             Your MindsCoin balance
           </m-tooltip>
@@ -44,118 +91,7 @@
 
   <div class="mdl-grid" style="max-width:990px;">
 
-    <div class="mdl-cell mdl-cell--4-col">
-
-      <ul class="mdl-card minds-card-navigation mdl-shadow--2dp" style="width:100%; margin-top:8px;">
-        <!-- Non-merchant -->
-        <ng-container *ngIf="!session.getLoggedInUser().merchant; else topMerchantNav">
-          <li>
-            <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/transactions" routerLinkActive="selected">
-              <i class="material-icons">account_balance_wallet</i>
-              <!-- i18n: @@WALLET__POINTS_LEDGER_NAV -->Points Ledger<!-- /i18n -->
-            </a>
-          </li>
-        </ng-container>
-        <!-- Merchant -->
-        <ng-template #topMerchantNav>
-          <li>
-            <a class="mdl-color-text--blue-grey-500"
-              routerLink="/wallet/revenue"
-              routerLinkActive="selected"
-            >
-              <i class="material-icons">attach_money</i>
-              <span i18n="@@WALLET__REVENUE_CONSOLE_NAV">Revenue Console</span>
-            </a>
-          </li>
-        </ng-template>
-
-        <li>
-          <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/purchase" routerLinkActive="selected">
-            <i class="material-icons">shopping_cart</i>
-            <!-- i18n: @@M__ACTION__BUY_POINTS -->Buy Points<!-- /i18n -->
-          </a>
-        </li>
-        <li>
-          <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/boost" routerLinkActive="selected">
-            <i class="material-icons">trending_up</i>
-            <!-- i18n: @@M__FEATURE__BOOST -->Boost<!-- /i18n -->
-          </a>
-        </li>
-        <li>
-          <a class="mdl-color-text--blue-grey-500 m-wallet--wire-link" routerLink="/wallet/wire" routerLinkActive="selected">
-            <i class="ion-icon ion-flash"></i>
-            <!-- i18n: @@M__FEATURE__WIRE -->Wire<!-- /i18n -->
-          </a>
-        </li>
-        <li>
-          <a class="mdl-color-text--blue-grey-500" routerLink="/plus" routerLinkActive="selected">
-            <i class="material-icons">add_circle_outline</i>
-            <!-- i18n: @@M__FEATURE__MINDS_PLUS -->Minds Plus<!-- /i18n -->
-          </a>
-        </li>
-
-        <!-- Non-merchant -->
-        <ng-container *ngIf="!session.getLoggedInUser().merchant; else merchantNav">
-          <li>
-            <a class="mdl-color-text--blue-grey-500"
-              routerLink="/affiliates"
-              routerLinkActive="selected"
-            >
-              <i class="material-icons">share</i>
-              <span i18n="@@M__FEATURE__AFFILIATE_PROGRAM">Affiliate Program</span>
-            </a>
-          </li>
-          <li>
-            <a class="mdl-color-text--blue-grey-500"
-              routerLink="/monetization"
-            >
-              <i class="material-icons">attach_money</i>
-              <span i18n="@@WALLET__MONETIZE_CHANNEL_NAV">Monetize your channel</span>
-            </a>
-          </li>
-        </ng-container>
-        <!-- Merchant -->
-        <ng-template #merchantNav>
-          <li>
-            <a class="mdl-color-text--blue-grey-500"
-              routerLink="/wallet/revenue/affiliates"
-              routerLinkActive="selected"
-            >
-              <i class="material-icons">share</i>
-              <span i18n="@@M__FEATURE__AFFILIATE_PROGRAM">Affiliate Program</span>
-            </a>
-          </li>
-          <li>
-            <a class="mdl-color-text--blue-grey-500"
-              routerLink="/monetization"
-            >
-              <i class="material-icons">help</i>
-              <span i18n="@@MONETIZATION__REVENUE__CONSOLE__ABOUT_MONETIZATION_NAV">About Monetization</span>
-            </a>
-          </li>
-        </ng-template>
-
-        <li>
-          <a class="mdl-color-text--blue-grey-500" routerLink="/wallet/crypto" routerLinkActive="selected">
-            <m--crypto-token-symbol></m--crypto-token-symbol>
-            <!-- i18n: @@M__FEATURE__CRYPTO -->MindsCoin Configuration<!-- /i18n -->
-          </a>
-        </li>
-      </ul>
-
-      <div class="mdl-card mdl-shadow--2dp m-wallet-local-settings">
-        <div class="m-wallet-local-settings">
-          <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" for="wallet-animation-switch" [mdlSwitch] [toggled]="disablePointsAnimation">
-            <span class="mdl-switch__label" i18n="@@WALLET__DISABLE_POINTS_ANIMATION">Disable points animation</span>
-            <input type="checkbox" class="mdl-switch__input" id="wallet-animation-switch" name="disablePointsAnimation" [ngModel]="disablePointsAnimation" (ngModelChange)="setDisablePointsAnimation($event)" [mdl]>
-          </label>
-        </div>
-      </div>
-
-      <m-ads-boost class="m-wallet--boost-ads" limit="4"></m-ads-boost>
-    </div>
-
-    <div class="mdl-cell mdl-cell--8-col">
+    <div class="mdl-cell mdl-cell--12-col">
       <router-outlet></router-outlet>
     </div>
 

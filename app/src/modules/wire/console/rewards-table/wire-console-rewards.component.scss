@@ -1,0 +1,71 @@
+.m-wire-console--rewards {
+  .m-wire-console--rewards--money, .m-wire-console--rewards--points, .m-wire-console--rewards--tokens {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; //
+    flex-wrap: wrap;
+    justify-items: auto;
+    margin-bottom: 30px;
+
+    m--crypto-token-symbol {
+      .m--crypto-token-symbol--stroke {
+        stroke: #607d8b;
+      }
+
+      .m--crypto-token-symbol--fill {
+        fill: #607d8b;
+      }
+    }
+
+    .m-wire-console--rewards--reward {
+      margin: 5px 0;
+      width: 210px;
+      .m-wire-console--rewards-amount {
+        font-size: 32px;
+        letter-spacing: 1px;
+        color: #607d8b;
+        display: flex;
+        align-items: center;
+
+        .m-wire-console--rewards-amount--currency {
+          flex-shrink:0;
+          width: 22px;
+        }
+
+        input {
+          //margin-left: 0;
+          //margin-right: 12px;
+          width: 150px;
+          padding: 4px;
+          //margin-left: 12px;
+          font-family: inherit;
+          font-size: inherit;
+          font-weight: inherit;
+          text-align: inherit;
+        }
+      }
+
+      .m-wire-console--rewards-description {
+        padding: 8px 0;
+        font-weight: 400;
+        margin-left: 22px;
+        width: 150px;
+
+        textarea {
+          height: 40px;
+          width: 100%;
+        }
+      }
+    }
+  }
+  .m-wire-console--rewards--points {
+    &>.m-wire-console--rewards--reward {
+      width: 270px;
+    }
+  }
+  .m-wire-console--rewards--add-tier a {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+}

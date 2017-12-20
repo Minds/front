@@ -1,0 +1,23 @@
+<div [ngClass]="[ 'm-wire-console--rewards--' + type ]">
+  <div class="m-wire-console--rewards--reward" *ngFor="let reward of rewards; let i = index">
+    <div class="m-wire-console--rewards-amount">
+      <span class="m-wire-console--rewards-amount--currency">
+        <ng-container *ngIf="type=='money'">$</ng-container>
+        <ng-container *ngIf="type=='tokens'"><m--crypto-token-symbol></m--crypto-token-symbol></ng-container>
+      </span>
+      <input type="number" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
+      <span>+</span>
+      <ng-container *ngIf="type=='points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</ng-container>
+    </div>
+    <div class="m-wire-console--rewards-description">
+      <textarea [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow] placeholder="Describe the reward" i18n-placeholder="@@WIRE__CHANNEL__TABLE__REWARD_PLACEHOLDER"></textarea>
+    </div>
+  </div>
+
+  <div class="m-wire-console--rewards--add-tier">
+    <a (click)="addTier()">
+      <i class="material-icons">playlist_add</i>
+      <span i18n="@@WIRE__CHANNEL__TABLE__ADD_REWARD_ACTION">Add Reward</span>
+    </a>
+  </div>
+</div>
