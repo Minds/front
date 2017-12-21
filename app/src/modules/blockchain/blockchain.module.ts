@@ -11,6 +11,10 @@ import { BlockchainWalletSelector } from './wallet-selector/wallet-selector.comp
 import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice/wallet-address-notice.component';
 import { TransactionOverlayComponent } from './transaction-overlay/transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
+import { Web3WalletService } from './web3-wallet.service';
+import { TokenContractService } from './contracts/token-contract.service';
+import { BoostContractService } from './contracts/boost-contract.service';
+import { WireContractService } from './contracts/wire-contract.service';
 
 const cryptoRoutes: Routes = [
   {
@@ -39,6 +43,25 @@ const cryptoRoutes: Routes = [
   ],
   providers: [
     TransactionOverlayService,
+    {
+      provide: Web3WalletService,
+      useFactory: Web3WalletService._
+    },
+    {
+      provide: TokenContractService,
+      useFactory: TokenContractService._,
+      deps: [ Web3WalletService ]
+    },
+    {
+      provide: WireContractService,
+      useFactory: WireContractService._,
+      deps: [ Web3WalletService, TokenContractService, TransactionOverlayService ]
+    },
+    {
+      provide: BoostContractService,
+      useFactory: BoostContractService._,
+      deps: [ Web3WalletService, TokenContractService, TransactionOverlayService ]
+    },
   ],
   exports: [
     BlockchainWalletSelector,
