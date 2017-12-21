@@ -22,10 +22,11 @@ m-modal-remind-composer {
 
     textarea {
       display: block;
-      width: 100%;
+      width: calc(100% - 40px);
       height: 4em;
       border: 1px solid #ddd;
-      box-sizing: border-box;
+      max-height: 150px;
+      box-sizing: content-box;
       padding: $minds-padding (24px + $minds-padding) $minds-padding $minds-padding;
     }
 
