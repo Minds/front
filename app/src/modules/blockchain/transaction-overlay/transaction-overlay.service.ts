@@ -16,7 +16,7 @@ export class TransactionOverlayService {
     this.comp.show(title, amount);
     let result = null;
     try {
-      let result = await fn();
+      result = await fn();
     }
     catch (e) {
       throw e;
