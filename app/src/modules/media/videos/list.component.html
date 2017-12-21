@@ -26,4 +26,11 @@
 <div class="m-media--videos--list">
   <m-media--videos--tile *ngFor="let entity of entities" [entity]="entity">
   </m-media--videos--tile>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress">
+  </infinite-scroll>
 </div>
