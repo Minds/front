@@ -169,7 +169,7 @@
 	<a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
 </div>
 
-<div class="mdl-card__supporting-text mdl-color--white tabs" *ngIf="!hideTabs">
+<div class="tabs" *ngIf="!hideTabs">
 	<minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
   <m-wire-button *ngIf="session.getLoggedInUser().guid != (activity.remind_object ? activity.remind_object.owner_guid : activity.owner_guid)"
