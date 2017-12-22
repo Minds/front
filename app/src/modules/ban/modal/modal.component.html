@@ -28,14 +28,8 @@
     </div>
   </div>
 
-  <div class="m-report-creator--copyright" *ngIf="next && subject === 10">
-    <p>
-      Please submit a DMCA notice to copyright@minds.com.
-    </p>
-  </div>
-
   <!-- Submit or Next -->
-  <div *ngIf="!success && ( (next && subject === 11) || (!next && subject < 10) )">
+  <div *ngIf="!success && ( (next && subject === 11) || (!next && subject <= 10) )">
     <section class="m-report-creator--section m-report-creator--section--last"
       (mouseenter)="showErrors()"
     >
@@ -59,7 +53,7 @@
   </div>
 
   <!-- SHOW FOR MORE OR COPYRIGHT -->
-  <div *ngIf="!success && !next && (subject === 11 || subject === 10)">
+  <div *ngIf="!success && !next && (subject === 11)">
     <section class="m-report-creator--section m-report-creator--section--last">
       <div class="m-report-creator--submit">
         <button type="button" 

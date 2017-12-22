@@ -179,18 +179,11 @@ describe('BanModalComponent', () => {
     expect(comp.inProgress).toBe(false);
   }));
 
-  it('once an item is clicked if it\'s the copyright one, next button should appear, and 2nd step should allow closing the modal', () => {
+  it('once an item is clicked if it\'s the copyright one, next button shouldnt appear', () => {
     const item = getSubjectItem(8);
     item.nativeElement.click();
     fixture.detectChanges();
     const next = fixture.debugElement.query(By.css('.m-report-creator--button-next'));
-    expect(next).not.toBeNull();
-    next.nativeElement.click();
-    expect(comp.subject).toEqual(10);
-    expect(comp.next).toBe(true);
-    fixture.detectChanges();
-    const button = fixture.debugElement.query(By.css('.m-report-creator--close button'));
-    expect(button).not.toBeNull();
-    button.nativeElement.click();
+    expect(next).toBeNull();
   });
 });
