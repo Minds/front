@@ -1,5 +1,9 @@
 @import "defaults";
 
+.m-wallet--wrapper {
+  max-width: 1280px;
+}
+
 .minds-wallet-points{
   width: auto;
   min-height: 0;
@@ -171,20 +175,20 @@ minds-wallet-transactions {
   }
 }
 
-.m-revenue--console-hero{
+.m-wire--overview-hero{
   padding-bottom: 32px;
 
   @media only screen and (max-width: 400px) {
     padding-bottom:0;
   }
 }
-.m-revenue--console-overview{
-  padding: 64px 16px 32px 140px;
+.m-wire--overview-overview{
+  padding: 100px 16px 75px 140px;
   margin: auto;
   max-width:990px;
   display:flex;
   align-items:center;
-  font-family: 'Lato';
+  font-family: 'Roboto';
 
   @media only screen and (max-width: 400px) {
     padding:0;
@@ -214,7 +218,7 @@ minds-wallet-transactions {
     padding:8px 16px;
   }
 
-  .m-revenue--console-label{
+  .m-wire--overview-label{
     display:block;
 
     > * {
@@ -234,7 +238,7 @@ minds-wallet-transactions {
     }
   }
 
-  .m-revenue--console-breakdown{
+  .m-wire--overview-breakdown{
     flex: 1;
     letter-spacing: 2px;
     font-size: 16px;
@@ -249,7 +253,7 @@ m-monetization--graph{
   margin-bottom:32px;
 }
 
-.m-revenue--console-nav{
+.m-wire--overview-nav{
   padding: 0;
   text-align: center;
   text-transform: uppercase;
@@ -262,7 +266,7 @@ m-monetization--graph{
     flex-wrap: wrap;
   }
 
-  .m-revenue--console-nav-item {
+  .m-wire--overview-nav-item {
     padding: 16px 32px;
     font-family: 'Lato';
     font-weight: 300;
@@ -275,7 +279,7 @@ m-monetization--graph{
   }
 }
 
-.m-revenue--console{
+.m-wire--overview{
 
   m-revenue--ledger{
     display: block;
@@ -311,7 +315,7 @@ m-monetization--graph{
     }
   }
 }
-h2.m-revenue--console-product-header{
+h2.m-wire--overview-product-header{
   margin: 0;
   padding: 16px 16px 0;
   text-transform: uppercase;

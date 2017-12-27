@@ -1,100 +1,58 @@
-<div class="m-revenue--console">
-  <div class="m-toolbar">
-    <div class="m-topbar--row">
-      <div class="m-topbar--navigation">
-        <a class="m-topbar--navigation--item"
-          routerLink="/wallet/transactions"
-          routerLinkActive="m-topbar--navigation--item-active"
-        >
-          <span i18n="@@WALLET__POINTS_LEDGER_NAV">Points Ledger</span>
-        </a>
-        <a class="m-topbar--navigation--item"
-          routerLink="/wallet/revenue"
-          routerLinkActive="m-topbar--navigation--item-active"
-        >
-          <span i18n="@@WALLET__REVENUE_CONSOLE_NAV">Revenue Console</span>
-        </a>
+<div class="m-toolbar">
+  <div class="m-topbar--row">
+    <div class="m-topbar--navigation">
+      <a class="m-topbar--navigation--item"
+        routerLink="/wallet/overview"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@WALLET__OVERVIEW_NAV">Overview</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/wallet/tokens"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@WALLET__TOKENS_NAV">Tokens</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/wallet/revenue"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@WALLET__REVENUE_CONSOLE_NAV">Payouts</span>
+      </a>
 
-        <a class="m-topbar--navigation--item"
-          routerLink="/wallet/purchase"
-          routerLinkActive="m-topbar--navigation--item-active"
-        >
-          <span i18n="@@M__ACTION__BUY_POINTS">Buy Points</span>
-        </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/wallet/purchase"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__ACTION__BUY_POINTS">Buy Points</span>
+      </a>
 
-        <a class="m-topbar--navigation--item"
-          routerLink="/wallet/boost"
-          routerLinkActive="m-topbar--navigation--item-active"
-        >
-          <span i18n="@@M__FEATURE__BOOST">Boost</span>
-        </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/wallet/boost"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__BOOST">Boost</span>
+      </a>
 
-        <a class="m-topbar--navigation--item"
-          routerLink="/wallet/wire"
-          routerLinkActive="m-topbar--navigation--item-active"
-        >
-          <span i18n="@@M__FEATURE__WIRE">Wire</span>
-        </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/wallet/wire"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__WIRE">Wire</span>
+      </a>
 
-        <a class="m-topbar--navigation--item"
-          routerLink="/plus"
-          routerLinkActive="m-topbar--navigation--item-active"
-        >
-          <span i18n="@@M__FEATURE__MINDS_PLUS ">Minds Plus</span>
-        </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/plus"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__MINDS_PLUS ">Minds Plus</span>
+      </a>
 
-      </div>
     </div>
   </div>
+</div>
 
-  <div class="m-revenue--console-hero mdl-color--blue mdl-color-text--white">
-    <div class="m-revenue--console-overview mdl-grid">
 
-      <div class="m-revenue--console-volume mdl-cell mdl-cell--4-col">
-        <span *ngIf="ready">{{ wallet.points | abbr }}</span>
-        <div class="m-revenue--console-label">
-          <label i18n>Points</label>
-          <m-tooltip icon="help" i18n>
-            Your points balance
-          </m-tooltip>
-        </div>
-      </div>
-
-      <div class="m-wallet--token mdl-cell mdl-cell--4-col">
-        <m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol><span *ngIf="ready">{{ tokens | number }}</span>
-        <div class="m-revenue--console-label">
-          <label i18n>Tokens</label>
-          <m-tooltip icon="help" i18n>
-            Your MindsCoin balance
-          </m-tooltip>
-        </div>
-      </div>
-
-      <div class="m-revenue--console-balance mdl-cell mdl-cell--4-col">
-        <i>{{ getCurrencySymbol(currency) }}</i><span *ngIf="ready">{{balance | number:'1.2-2'}}</span>
-        <div class="m-revenue--console-label">
-          <label i18n>Money</label>
-          <m-tooltip icon="help" i18n>
-            Your USD balance, pending payout
-          </m-tooltip>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="m-revenue--console-nav mdl-color--blue-700 mdl-color-text--white" *ngIf="session.getLoggedInUser().merchant">
-    <div class="m-revenue--console-nav-item" routerLinkActive="mdl-color--blue-800" routerLink="/wallet/revenue/points" i18n="@@M__FEATURE__POINTS">Points</div>
-    <div class="m-revenue--console-nav-item" routerLinkActive="mdl-color--blue-800" routerLink="/wallet/revenue/earnings" i18n="@@M__COMMON__EARNINGS">Earnings</div>
-    <div class="m-revenue--console-nav-item" routerLinkActive="mdl-color--blue-800" routerLink="/wallet/revenue/payouts" i18n="@@MONETIZATION__REVENUE__CONSOLE__PAYOUTS_NAV">Payouts</div>
-    <div class="m-revenue--console-nav-item" routerLinkActive="mdl-color--blue-800" routerLink="/wallet/revenue/options" i18n="@@M__COMMON__OPTIONS">Options</div>
-  </div>
-
-  <div class="mdl-grid" style="max-width:990px;">
-
-    <div class="mdl-cell mdl-cell--12-col">
-      <router-outlet></router-outlet>
-    </div>
-
-  </div>
-
+<div class="m-wallet--wrapper">
+  <router-outlet></router-outlet>
 </div>

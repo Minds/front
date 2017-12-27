@@ -1,17 +1,18 @@
 .m-overlay-modal {
-  //overflow: visible;
   position: fixed;
-  top: 8vh;
   right: 2vw;
   left: 2vw;
   margin: auto;
   z-index: 9999999;
 
+  top: 50%;
+  max-height: 98vh;
+  transform: translateY(-50%);
+
   display: block;
   box-sizing: border-box;
   width: 100%;
   max-width: 990px;
-  max-height: 84vh;
   padding: ($minds-padding * 4) ($minds-padding * 8);
 
   background: none rgba(248, 248, 248, 0.975);
@@ -19,7 +20,7 @@
   outline: 0;
   border-radius: 3px;
 
-  overflow-y: visible;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 
   font-family: 'Roboto', sans-serif;
@@ -29,12 +30,10 @@
   }
 
   @media screen and (max-height: 850px) {
-    top: 2vh;
     max-height: 96vh;
   }
 
   @media screen and (max-height: 750px) {
-    top: 1vh;
     max-height: 98vh;
   }
 

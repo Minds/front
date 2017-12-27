@@ -10,6 +10,7 @@ import { AdsModule } from '../ads/ads.module';
 
 import { WalletComponent } from './wallet.component';
 import { PointsOverviewComponent } from './points-overview.component';
+import { WalletOverviewComponent } from './overview/overview.component';
 import { WalletTransactionsComponent } from './transactions/transactions.component';
 import { WalletPointsTransactionsComponent } from './transactions/points.component';
 import { WalletPurchaseComponent } from './purchase/purchase.component';
@@ -17,6 +18,7 @@ import { WalletBoostComponent } from './boost/boost.component';
 import { WalletWireComponent } from './wire/wire.component';
 import { WalletToggleComponent } from './toggle.component';
 import { WalletFlyoutComponent } from './flyout/flyout.component';
+import { WalletTokensComponent } from './tokens/tokens.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -24,12 +26,14 @@ const walletRoutes : Routes = [
   { path: 'wallet', component: WalletComponent,
     children: [
       { path: '', redirectTo: 'transactions', pathMatch: 'full' },
-      { path: 'transactions', component: WalletTransactionsComponent },
-      { path: 'purchase', component: WalletTransactionsComponent },
+      { path: 'overview', component: WalletOverviewComponent },
+      { path: 'tokens', component: WalletTokensComponent },
       { path: 'boost/:type/:filter', component: WalletBoostComponent },
       { path: 'boost/:type', component: WalletBoostComponent },
       { path: 'boost', component: WalletBoostComponent },
-      { path: 'wire', component: WalletWireComponent }
+      { path: 'wire', component: WalletWireComponent },
+
+      { path: '**', component: WalletOverviewComponent },      
     ]
   }
 ];
@@ -49,6 +53,7 @@ const walletRoutes : Routes = [
   declarations: [
     WalletComponent,
     PointsOverviewComponent,
+    WalletOverviewComponent,
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
     WalletPurchaseComponent,
@@ -56,6 +61,7 @@ const walletRoutes : Routes = [
     WalletWireComponent,
     WalletToggleComponent,
     WalletFlyoutComponent,
+    WalletTokensComponent,
   ],
   exports: [
     WalletComponent,

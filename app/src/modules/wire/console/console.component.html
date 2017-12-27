@@ -37,7 +37,6 @@
       <m-wire-console--rewards type="tokens" [channel]="minds.user" [rewards]="rewards.rewards.tokens" (rewardsChange)="onRewardsChange($event, 'tokens')"></m-wire-console--rewards>
 
       <button class="mdl-button mdl-button--colored"
-        [ngClass]="{'mdl-button--raised': changed}"
         [hidden]="rewardsSaved"
         (click)="saveRewards()"
       >

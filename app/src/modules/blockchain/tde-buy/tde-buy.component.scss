@@ -1,0 +1,92 @@
+.m-blockchain--tde-buy {
+
+  h2 {
+    font-size: 36px;
+  }
+
+  p, h2 {
+    margin: 0 0 ($minds-padding * 4);
+  }
+}
+
+.m-blockchain--tde-buy--action {
+  .material-icons {
+    font-size: 16px;
+    vertical-align: text-top;
+  }
+
+  font-weight: 200;
+}
+
+.m-blockchain--tde-buy--error {
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+.m-blockchain--tde-buy--form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: $minds-padding * 4;
+
+  .m-blockchain--tde-buy--field {
+    flex: 1;
+
+    > span,
+    > input {
+      display: inline-block;
+      font-family: Roboto, sans-serif;
+      font-size: 24px;
+      color: #333;
+      padding: 16px;
+      line-height: 1.2;
+      font-weight: 300;
+    }
+
+    > input {
+      width: auto;
+      border: none;
+      text-align: right;
+      font-weight: 400;
+      appearance: none;
+      border-radius: 3px;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    m--crypto-token-symbol {
+      font-size: 1.2em;
+
+      .m--crypto-token-symbol--stroke {
+        stroke: #333;
+      }
+
+      .m--crypto-token-symbol--fill {
+        fill: #333;
+      }
+    }
+  }
+}
+
+.m-blockchain--tde-buy-button {
+  letter-spacing: 2.33px;
+  appearance: none;
+  padding: 8px 32px;
+  background: none;
+  border: 1px solid #555;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: uppercase;
+  color: #555;
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.35;
+  }
+}
+
+.m-blockchain--tde-buy--error {
+  color: #c00;
+}

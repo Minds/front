@@ -39,7 +39,7 @@ export class Web3WalletService {
 
   async isSameNetwork() {
     // assume main network
-    return (await this.web3Promise(this.web3.version.getNetwork) || 1) == window.Minds.blockchain.client_network;
+    return (await this.web3Promise(this.web3.version.getNetwork) || 1) == this.config.client_network;
   }
 
   // Bootstrap

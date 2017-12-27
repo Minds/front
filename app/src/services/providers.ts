@@ -174,5 +174,5 @@ export const MINDS_PROVIDERS : any[] = [
     provide: BlockchainService,
     useFactory: BlockchainService._,
     deps: [ Client ]
-  },
+  }
 ];

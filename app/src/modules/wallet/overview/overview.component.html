@@ -1,0 +1,38 @@
+<div class="m-wire--overview">      
+    <div class="m-wire--overview-hero mdl-color--blue mdl-color-text--white">
+        <div class="m-wire--overview-overview mdl-grid">
+
+        <div class="m-wire--overview-volume mdl-cell mdl-cell--4-col">
+            <span *ngIf="ready">{{ wallet.points | abbr }}</span>
+            <div class="m-wire--overview-label">
+            <label i18n>Points</label>
+            <m-tooltip icon="help" i18n>
+                Your points balance
+            </m-tooltip>
+            </div>
+        </div>
+
+        <div class="m-wallet--token mdl-cell mdl-cell--4-col">
+            <m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol><span *ngIf="ready">{{ tokens | number }}</span>
+            <div class="m-wire--overview-label">
+            <label i18n>Tokens</label>
+            <m-tooltip icon="help" i18n>
+                Your MindsCoin balance
+            </m-tooltip>
+            </div>
+        </div>
+
+        <div class="m-wire--overview-balance mdl-cell mdl-cell--4-col">
+            <i>{{ getCurrencySymbol(currency) }}</i><span *ngIf="ready">{{balance | number:'1.2-2'}}</span>
+            <div class="m-wire--overview-label">
+            <label i18n>Money</label>
+            <m-tooltip icon="help" i18n>
+                Your USD balance, pending payout
+            </m-tooltip>
+            </div>
+        </div>
+        </div>
+    </div>
+</div> 
+
+<m-wallet-transactions-points></m-wallet-transactions-points>

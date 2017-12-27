@@ -1,0 +1,448 @@
+<div class="m-marketing--marketing">
+
+  <div class="m-marketing--marketing-header">
+    <div class="m-marketing--background-video">
+      <video autoplay muted loop>
+        <source [src]="minds.cdn_url + '/assets/videos/space-1/space-1.mp4'" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="m-marketing--marketing-header-inner">
+
+      <h1>The Minds Cryptocurrency</h1>
+      <h3>An autonomous platform for payments, subscriptions and advertising. Your Social Network.</h3>
+
+      <div class="m-marketing--marketing-action-button">
+        <button class="mdl-button mdl-button--colored mdl-color--green"
+          (click)="showPreRegister()"
+        >Pre-Register</button>
+
+        <button class="mdl-button mdl-button--colored mdl-color--green"
+          (click)="showBuy()"
+          style="margin-left: 8px;"
+        >Buy</button>
+      </div>
+    </div>
+
+    <div class="m-marketing--overlay"></div>
+  </div>
+
+  <div class="mdl-grid mdl-grid--no-spacing m-marketing--marketing-contents m-blockchain--marketing-tde-stats"
+    *ngIf="tdeStats"
+  >
+    <div class="mdl-cell mdl-cell--4-col">
+      <div class="m-blockchain--marketing-stats-cell">
+        <span class="m-blockchain--marketing-value">{{ tdeStats.tokens | number }}</span>
+        <span class="m-blockchain--marketing-label">Tokens</span>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col">
+      <div class="m-blockchain--marketing-stats-cell">
+        <span class="m-blockchain--marketing-value">{{ tdeStats.raised | number }} ETH</span>
+        <span class="m-blockchain--marketing-label">Raised</span>
+      </div>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col">
+      <div class="m-blockchain--marketing-stats-cell">
+        <span class="m-blockchain--marketing-value">{{ tdeStats.remaining | number }} hours</span>
+        <span class="m-blockchain--marketing-label">Remaining</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--12-col">
+      <h2>Documents</h2>
+
+      <p>
+        Whitepaper – <a href="#">Download</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+    <div class="m-marketing--marketing-responsive-video m-marketing--marketing-responsive-video-21-9">
+      <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?rel=0&amp;showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing m-marketing--marketing-contents--middle">
+    <div class="mdl-cell mdl-cell--6-col">
+      <h2>Vision</h2>
+
+      <p>
+        Minds is building the world’s largest free and open source social network, where the users who contribute the
+        most to the network will be rewarded for their efforts in cryptocurrency.
+      </p>
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col">
+      <img [src]="minds.cdn_url + '/assets/marketing/3d-lightbulb.png'" alt="">
+    </div>
+  </div>
+
+  <div class="m-marketing--marketing-responsive-hero-image m-marketing--marketing-responsive-hero-image--bottom">
+    <img [src]="minds.cdn_url + '/assets/marketing/rocket-1245696_1920.jpg'" alt="">
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--12-col">
+      <h2>It’s here now.</h2>
+
+      <p>
+        The tech is live behind-the-scenes and will be immediately usable throughout the Minds network after the token
+        distribution event.
+      </p>
+    </div>
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <i class="ion-icon ion-flash mdl-color-text--blue-grey-700"></i>
+
+      <h2>Wire</h2>
+
+      <span>
+        The peer-to-peer payment system empowers you to receive one-time or recurring revenue from your supporters as
+        tips or in exchange for customized premium subscriptions and services.
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <i class="material-icons mdl-color-text--blue-grey-700">trending_up</i>
+
+      <h2>Boost</h2>
+
+      <span>
+        The surveillance-free ad network allows you to exchange your tokens for expanded reach and targeted promotion
+        across the Minds network.
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <i class="material-icons mdl-color-text--blue-grey-700">monetization_on</i>
+
+      <h2>Rewards</h2>
+
+      <span>
+        The reward system enables you to earn tokens for your daily contributions to the network. Tokens can be used
+        throughout the network or traded for other currencies on third-party exchanges.
+      </span>
+    </div>
+  </div>
+
+  <div class="m-marketing--marketing-responsive-hero-image">
+    <img [src]="minds.cdn_url + '/assets/marketing/witch-head-1771758_1920.jpg'" alt="">
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--12-col m-blockchain--value-logos">
+      <img [src]="minds.cdn_url + '/assets/marketing/ethereum_logo.png'" alt="">
+
+      <img [src]="minds.cdn_url + '/assets/marketing/minds_logo.png'" alt="">
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <h2>Value</h2>
+
+      <p>
+        Minds tokens are platform agnostic and leverage the Ethereum blockchain to reduce fees, improve transparency
+        and provide autonomy for digital content creators.
+      </p>
+    </div>
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <i class="material-icons mdl-color-text--blue-grey-700">people</i>
+
+      <h2>P2P</h2>
+
+      <span>
+        Leveraging Minds tokens to limit fees to third-party payment providers and creates a truly peer-to-peer
+        digital economy.
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <i class="material-icons mdl-color-text--blue-grey-700">lock</i>
+
+      <h2>Hyper-Transparency</h2>
+
+      <span>
+        All transactions will be stored in blockchain-based smart contracts to provide extreme transparency and an
+        unbreakable ledger.
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <i class="material-icons mdl-color-text--blue-grey-700">account_balance_wallet</i>
+
+      <h2>Autonomy</h2>
+
+      <span>
+        Smart contracts allow you to autonomously own the relationships with your supporters and advertisers and bring
+        them anywhere on the Internet.
+      </span>
+    </div>
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing m-marketing--marketing-contents--middle">
+    <div class="mdl-cell mdl-cell--12-col">
+      <h2>The Press</h2>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet m-blockchain--marketing--press-logo">
+      <a href="#">
+        <img [src]="minds.cdn_url + '/assets/marketing/cryptobriefing_logo.png'" alt="">
+      </a>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet m-blockchain--marketing--press-logo">
+      <a href="#">
+        <img [src]="minds.cdn_url + '/assets/marketing/sfc_logo.png'" alt="">
+      </a>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet m-blockchain--marketing--press-logo">
+      <a href="#">
+        <img [src]="minds.cdn_url + '/assets/marketing/observer_logo.png'" alt="">
+      </a>
+    </div>
+  </div>
+
+  <div class="m-marketing--marketing-responsive-hero-image m-marketing--marketing-responsive-hero-image--bottom">
+    <img [src]="minds.cdn_url + '/assets/marketing/international-space-station-1776401_1920.jpg'" alt="">
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people">
+    <div class="mdl-cell mdl-cell--12-col">
+      <h2>Team</h2>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+      <div class="m-blockchain--marketing-person-image" 
+        style="background-image: url('https://minds.com/icon/100000000000000341/large')"
+      ></div>
+
+      <span class="m-blockchain--marketing-person-name">
+        Bill Ottman
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Co-founder &amp; CEO
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+      <div class="m-blockchain--marketing-person-image" 
+        style="background-image: url('https://minds.com/icon/100000000000000063/large')"
+      ></div>
+
+      <span class="m-blockchain--marketing-person-name">
+        Mark Harding
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Co-founder &amp; CTO
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+      <div class="m-blockchain--marketing-person-image" 
+        style="background-image: url('https://minds.com/icon/100000000000000134/large')"
+      ></div>
+
+      <span class="m-blockchain--marketing-person-name">
+        John Ottman
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Co-founder &amp; Chairman
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+      <div class="m-blockchain--marketing-person-image" 
+        style="background-image: url('https://minds.com/icon/100000000000001111/large')"
+      ></div>
+
+      <span class="m-blockchain--marketing-person-name">
+        Jack Ottman
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        COO
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+      <div class="m-blockchain--marketing-person-image" 
+        style="background-image: url('https://minds.com/icon/458262421140672512/large')"
+      ></div>
+
+      <span class="m-blockchain--marketing-person-name">
+        Peter Schwartz
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        CFO
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+      <div class="m-blockchain--marketing-person-image" 
+        style="background-image: url('https://minds.com/icon/100000000000000793/large')"
+      ></div>
+
+      <span class="m-blockchain--marketing-person-name">
+        Ian Crossland
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Media Director
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+      <div class="m-blockchain--marketing-person-image" 
+        style="background-image: url('https://minds.com/icon/508276211659579407/large')"
+      ></div>
+
+      <span class="m-blockchain--marketing-person-name">
+        Emiliano Balbuena
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Senior Developer
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet">
+      <div class="m-blockchain--marketing-person-image" 
+        style="background-image: url('https://minds.com/icon/270962885465739264/large')"
+      ></div>
+
+      <span class="m-blockchain--marketing-person-name">
+        Andy Culp
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Finance manager
+      </span>
+    </div>
+
+  </div>
+
+  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people">
+    <div class="mdl-cell mdl-cell--12-col">
+      <h2>Advisory Board</h2>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        César Cerrudo
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        CTO, <a href="https://ioactive.com" target="_blank">ioactive</a>
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Gabriel Abed
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        CEO, <a href="https://bitt.com" target="_blank">bitt</a>
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Fereshteh Forough
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Founder, <a href="http://codetoinspire.org/" target="_blank">Code To Inspire</a>
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Tuan Anh Nguyen
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Founder, <a href="http://bostonglobalforum.org/" target="_blank">Boston Global Forum</a>
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Daniel Pinchbeck
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Author, <a href="http://www.pinchbeck.io/" target="_blank">Pinchbeck.io</a>
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Roya Mahboob
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        CEO, <a href="http://digitalcitizenfund.org" target="_blank">Digital Citizen Fund</a>, Time Top 100 Most Influential People
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Terrence Koeman
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Chairman, <a href="https://openinternetfoundation.net" target="_blank">Open Internet Foundation</a>
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Faizan Khan
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Managing Director, <a href="https://visary.capital" target="_blank">Visary Capital</a>
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Douglas Rushkoff
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Media Theorist, <a href="http://www.rushkoff.com/" target="_blank">Rushkoff.com</a>
+      </span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
+      <span class="m-blockchain--marketing-person-name">
+        Lori Fena
+      </span>
+
+      <span class="m-blockchain--marketing-person-title">
+        Former Director, <a href="https://eff.org" target="_blank">EFF</a>
+      </span>
+    </div>
+  </div>
+
+</div>
+
+<m-footer></m-footer>

@@ -11,10 +11,14 @@ import { BlockchainWalletSelector } from './wallet-selector/wallet-selector.comp
 import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice/wallet-address-notice.component';
 import { TransactionOverlayComponent } from './transaction-overlay/transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
+import { BlockchainMarketingComponent } from './marketing/marketing.component';
+import { BlockchainTdeBuyComponent } from './tde-buy/tde-buy.component';
+import { BlockchainPreRegisterComponent } from './pre-register/pre-register.component';
 import { Web3WalletService } from './web3-wallet.service';
 import { TokenContractService } from './contracts/token-contract.service';
 import { BoostContractService } from './contracts/boost-contract.service';
 import { WireContractService } from './contracts/wire-contract.service';
+import { TokenDistributionEventService } from './contracts/token-distribution-event.service';
 
 const cryptoRoutes: Routes = [
   {
@@ -24,6 +28,10 @@ const cryptoRoutes: Routes = [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: BlockchainConsoleComponent }
     ]
+  },
+  {
+    path: 'token',
+    component: BlockchainMarketingComponent,
   }
 ];
 
@@ -40,6 +48,9 @@ const cryptoRoutes: Routes = [
     BlockchainWalletSelector,
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
+    BlockchainMarketingComponent,
+    BlockchainTdeBuyComponent,
+    BlockchainPreRegisterComponent,
   ],
   providers: [
     TransactionOverlayService,
@@ -62,12 +73,21 @@ const cryptoRoutes: Routes = [
       useFactory: BoostContractService._,
       deps: [ Web3WalletService, TokenContractService, TransactionOverlayService ]
     },
+    {
+      provide: TokenDistributionEventService,
+      useFactory: TokenDistributionEventService._,
+      deps: [ Web3WalletService ]
+    }
   ],
   exports: [
     BlockchainWalletSelector,
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
+    BlockchainTdeBuyComponent
   ],
-  entryComponents: []
+  entryComponents: [
+    BlockchainPreRegisterComponent,
+    BlockchainTdeBuyComponent,
+  ]
 })
 export class BlockchainModule { }

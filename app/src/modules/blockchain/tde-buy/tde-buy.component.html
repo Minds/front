@@ -1,0 +1,54 @@
+<div class="m-blockchain--tde-buy">
+  <h2>Token Distribution Event</h2>
+
+  <div class="m-blockchain--tde-buy--form">
+    <div class="m-blockchain--tde-buy--field">
+      <input type="text"
+        [ngModel]="model.tokens"
+        (ngModelChange)="setTokens($event)"
+        [disabled]="!tokensRate"
+      />
+      <span>
+        Tokens
+      </span>
+    </div>
+
+    <div class="m-blockchain--tde-buy--field">
+      <input type="text"
+        [ngModel]="model.eth"
+        (ngModelChange)="setEth($event)"
+        [disabled]="!tokensRate"
+      />
+      <span>ETH</span>
+    </div>
+  </div>
+
+  <p>
+    Minds Tokens are available to be purchased during the Token Distribution Event period. 
+    If you have a pre-approved (whitelisted) address to send over 5ETH then please make sure you send the funds using that wallet address.
+  </p>
+
+  <p *ngIf="error" class="m-blockchain--tde-buy--error">
+    Error: {{ error }}
+  </p>
+
+  <div class="m-blockchain--tde-buy--action">
+    <button class="m-blockchain--tde-buy-button"
+      [disabled]="model.eth <= 0"
+      [hidden]="inProgress || success || metamaskError"
+      (click)="buy()"
+    >Buy</button>
+
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+
+    <ng-container *ngIf="success">
+      <i class="material-icons">check</i>
+      <span i18n>Bought</span>
+    </ng-container>
+
+    <div class="m-blockchain--tde-buy--error" *ngIf="metamaskError">
+      <i class="material-icons">close</i>
+      <span>{{ metamaskError }}</span>
+    </div>
+  </div>
+</div>
