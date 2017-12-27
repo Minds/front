@@ -22,5 +22,5 @@
   />
   <label class="mdl-textfield__label" for="search"></label>
 
-  <m-search--bar-suggestions [q]="q" [active]="active" [disabled]="suggestionsDisabled"></m-search--bar-suggestions>
+  <m-search--bar-suggestions (click)="unsetFocus()" [q]="q" [active]="active" [disabled]="suggestionsDisabled"></m-search--bar-suggestions>
 </div>
