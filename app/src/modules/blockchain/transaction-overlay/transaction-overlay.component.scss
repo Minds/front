@@ -8,8 +8,8 @@ m--blockchain--transaction-overlay {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  background: rgba(255, 255, 255, 0.85);
+  color: #333333;
   user-select: none;
 
   .m--blockchain--transaction-overlay--content {
@@ -30,13 +30,13 @@ m--blockchain--transaction-overlay {
       text-transform: uppercase;
     }
     .m--blockchain--transaction-overlay--note {
-      color: #aaaaaa;
+      color: #888888;
     }
     .m--blockchain--transaction-overlay--help {
       display: flex;
       align-items: center;
       min-height: 200px;
-      color: #828282;
+      color: #aaaaaa;
       text-transform: uppercase;
       a {
         cursor: pointer;

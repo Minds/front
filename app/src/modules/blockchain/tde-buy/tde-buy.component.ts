@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
 import { Client } from '../../../services/api/client';
 import { Web3WalletService } from '../web3-wallet.service';
+import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +29,8 @@ export class BlockchainTdeBuyComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     protected tokenDistributionEvent: TokenDistributionEventService,
     protected client: Client,
-    protected web3Wallet: Web3WalletService
+    protected web3Wallet: Web3WalletService,
+    protected overlayService: TransactionOverlayService
   ) { }
 
   ngOnInit() {
@@ -121,7 +123,10 @@ export class BlockchainTdeBuyComponent implements OnInit {
     this.detectChanges();
 
     try {
-      let bought = await this.tokenDistributionEvent.buy(this.model.eth);
+      let bought = await this.overlayService.showAndRun(
+        async () => await this.tokenDistributionEvent.buy(this.model.eth),
+        "Buy Minds Tokens"
+      );
 
       if (bought) {
         this.success = true;
