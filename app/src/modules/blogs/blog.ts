@@ -82,10 +82,13 @@ export class Blog {
           return false;
         }
 
+        if (!response['load-next']) 
+            this.moreData = false;
+
         if (refresh) {
           self.blogs = response.blogs;
         } else {
-          if (self.offset)
+          if (self.offset && this._filter != 'trending')
             response.blogs.shift();
           for (let blog of response.blogs)
             self.blogs.push(blog);
