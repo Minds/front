@@ -19,6 +19,7 @@ import { WalletWireComponent } from './wire/wire.component';
 import { WalletToggleComponent } from './toggle.component';
 import { WalletFlyoutComponent } from './flyout/flyout.component';
 import { WalletTokensComponent } from './tokens/tokens.component';
+import { WalletPointsComponent } from './points/points.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -27,6 +28,8 @@ const walletRoutes : Routes = [
     children: [
       { path: '', redirectTo: 'transactions', pathMatch: 'full' },
       { path: 'overview', component: WalletOverviewComponent },
+      { path: 'points', component: WalletPointsComponent },
+      { path: 'points/purchase', component: WalletPurchaseComponent },
       { path: 'tokens', component: WalletTokensComponent },
       { path: 'boost/:type/:filter', component: WalletBoostComponent },
       { path: 'boost/:type', component: WalletBoostComponent },
@@ -62,6 +65,7 @@ const walletRoutes : Routes = [
     WalletToggleComponent,
     WalletFlyoutComponent,
     WalletTokensComponent,
+    WalletPointsComponent,
   ],
   exports: [
     WalletComponent,

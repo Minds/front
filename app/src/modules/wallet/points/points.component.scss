@@ -1,0 +1,41 @@
+.m-wallet--points--transaction {
+  background: #FFF;
+  padding: 16px;
+  margin-bottom: 8px;
+
+  .m-wallet--points--transaction-points {
+    font-size: 36px;
+    line-height: 40px;
+    font-weight: 800;
+
+    .positive {
+      color: green;
+    }
+    .negative {
+      color: red;
+    }
+  }
+
+  .m-wallet--points--transaction-details {
+    display: flex;
+    align-items: center;
+    color: #444;
+
+    p {
+      padding: 0;
+      margin: 0;
+    }
+
+    i {
+      font-size: 14px;
+      margin-right: 8px;
+    }
+    .ts {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 400;
+      font-family: Roboto;
+      color: #444;
+    }
+  }
+}

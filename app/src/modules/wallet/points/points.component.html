@@ -1,0 +1,33 @@
+<div class="m-page">
+  <div class="m-page--sidebar">
+    <m-wallet--points-overview></m-wallet--points-overview>
+  </div>
+  <div class="m-page--main">
+    <div class="m-wallet--points--transaction m-border" *ngFor="let transaction of transactions">
+      <div class="m-wallet--points--transaction-points">
+        <span [hidden]="transaction.points < 0" class="positive">
+          + {{transaction.points}}
+        </span>
+        <span [hidden]="transaction.points >= 0" class="negative">
+          {{transaction.points}}
+        </span>
+
+      </div>
+      <div class="m-wallet--points--transaction-details">
+        <p>
+          {{transaction.description}}
+        </p>
+        <div class="mdl-layout-spacer"></div>
+        <i class="material-icons">access_time</i>
+        <p class="ts">{{transaction.time_created * 1000 | date:'medium'}}</p>
+      </div>
+    </div>
+
+    <infinite-scroll
+        distance="25%"
+        (load)="load()"
+        [moreData]="moreData"
+        [inProgress]="inProgress">
+    </infinite-scroll>
+  </div>
+</div>

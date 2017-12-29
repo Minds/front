@@ -30,7 +30,7 @@ export class WalletPurchaseComponent {
   coupon: string = '';
   error: string = '';
 
-  toggled: boolean = false;
+  toggled: boolean = true;
 
   constructor(public client: Client, public wallet: WalletService, private cd: ChangeDetectorRef) {
     this.getRate();

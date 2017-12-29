@@ -49,3 +49,17 @@ m-app {
     font-family: 'Roboto';
   }
 }
+
+.m-page {
+  display: flex;
+
+  .m-page--main {
+    padding: 16px;
+    flex: 1;
+  }
+
+  .m-page--sidebar {
+    padding: 16px 0 16px 16px;
+    width: 300px;
+  }
+}
