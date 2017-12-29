@@ -6,11 +6,11 @@ import { TransactionOverlayService } from './transaction-overlay.service';
   selector: 'm--blockchain--transaction-overlay',
   template: `
     <div class="m--blockchain--transaction-overlay--content">
-      <div class="m--blockchain--transaction-overlay--title">
+      <h2 class="m--blockchain--transaction-overlay--title">
         {{ title }}
-      </div>
+      </h2>
       <div class="m--blockchain--transaction-overlay--subtitle">
-        Please open your Metamask client to complete the transaction
+        Please open your Metamask client to complete the transaction.
       </div>
       <div class="m--blockchain--transaction-overlay--note" *ngIf="amount !== 0">
         NOTE: Your client will show 0 ETH as we use the Ethereum network, but {{ amount }} Minds tokens will be sent.

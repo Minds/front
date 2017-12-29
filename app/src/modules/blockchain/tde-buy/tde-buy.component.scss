@@ -31,6 +31,7 @@
 
   .m-blockchain--tde-buy--field {
     flex: 1;
+    display: flex;
 
     > span,
     > input {
@@ -51,6 +52,7 @@
       appearance: none;
       border-radius: 3px;
       background: rgba(0, 0, 0, 0.1);
+      flex: 1;
     }
 
     m--crypto-token-symbol {
