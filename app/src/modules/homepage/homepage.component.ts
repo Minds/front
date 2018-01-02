@@ -49,6 +49,13 @@ export class HomepageComponent {
     }
   }
 
+  ngOnInit() {
+    if (this.session.isLoggedIn()) {
+      this.router.navigate(['/newsfeed']);
+      return;
+    }
+  }
+
   loadStream(refresh: boolean = false) {
     this.inProgress = true;
     this.client.get('api/v1/newsfeed/featured', { limit: 24, offset: this.offset })
