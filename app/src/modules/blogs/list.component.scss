@@ -10,6 +10,12 @@
     flex-basis: 50%;
     max-width: 50%;
     flex-flow: row wrap;
+
+    @media screen and (max-width: 720px){
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
   }
 
   m-blog--tile {
@@ -17,6 +23,12 @@
     width: 50%;
     height: 300px;
     flex-basis: calc(50% - 12px);
+
+    @media screen and (max-width: 990px){
+      flex-basis: calc(100% - 12px);
+      max-width: calc(100% - 12px);
+    }
+
   }
 
   .m-blog--list--column-0 {

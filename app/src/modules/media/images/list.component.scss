@@ -10,11 +10,29 @@
   m-media--images--tile {
     //flex: auto;
     margin: 2px;
-    flex-basis: 316px;
+    flex-basis: calc(25% - 4px);
 
     //1:1 ration default (square)
-    max-width: 316px;
+    max-width: calc(25% - 4px);
     max-height: 316px;
     overflow: hidden;
+
+    @media screen and (max-width: 990px){
+      flex-basis: calc(33% - 4px);
+      max-width: calc(33% - 4px);
+      max-height: 280px;
+    }
+
+    @media screen and (max-width: 720px){
+      flex-basis: calc(50% - 4px);
+      max-width: calc(50% - 4px);
+      max-heigh: 225px;
+    }
+
+    @media screen and (max-width: 500px){
+      flex-basis: calc(100% - 4px);
+      max-width: calc(100% - 4px);
+    }
+
   }
 }
