@@ -5,30 +5,7 @@
         <h2 class="mdl-card__title-text" i18n="@@WIRE__CHANNEL__REWARDS_TITLE">Rewards</h2>
       </div>
 
-      <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-wire-channel--rewards">
-        <p *ngIf="rewards && rewards.description"
-          class="m-wire-channel--description"
-          [innerText]="rewards.description"
-        ></p>
-
-        <ng-container *ngIf="rewards">
-          <m-wire-console--rewards type="money" [channel]="minds.user" [rewards]="rewards.rewards.money" (rewardsChange)="onRewardsChange($event, 'money')"></m-wire-console--rewards>
-          <m-wire-console--rewards type="points" [channel]="minds.user" [rewards]="rewards.rewards.points" (rewardsChange)="onRewardsChange($event, 'points')"></m-wire-console--rewards>
-          <m-wire-console--rewards type="tokens" [channel]="minds.user" [rewards]="rewards.rewards.tokens" (rewardsChange)="onRewardsChange($event, 'tokens')"></m-wire-console--rewards>
-        </ng-container>
-
-        <button class="mdl-button mdl-button--colored"
-          [hidden]="rewardsSaved"
-          (click)="saveRewards()"
-        >
-          <!-- i18n: @@M__ACTION__SAVE -->Save<!-- /i18n -->
-        </button>
-        <button class="mdl-button mdl-button--colored"
-          [hidden]="!rewardsSaved"
-        >
-          <!-- i18n: @@M__COMMON__SAVED -->Saved<!-- /i18n -->
-        </button>
-      </div>
+      <m-wire-console--rewards--container></m-wire-console--rewards--container>
 
     </div>
   </div>

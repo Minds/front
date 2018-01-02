@@ -21,7 +21,8 @@ import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.componen
 import { WireService } from './wire.service';
 import { WireMarketingComponent } from './marketing.component';
 import { WireConsoleOverviewComponent } from './console/overview/overview.component';
-import { WireConsoleRewardsComponent } from './console/rewards-table/wire-console-rewards.component';
+import { WireConsoleRewardsInputsComponent } from './console/rewards-table/inputs/wire-console-rewards-inputs.component';
+import { WireConsoleRewardsComponent } from './console/rewards-table/rewards.component';
 
 const wireRoutes : Routes = [
   { path: 'wire', component: WireMarketingComponent }
@@ -45,12 +46,13 @@ const wireRoutes : Routes = [
     WireChannelOverviewComponent,
     WireCreatorRewardsComponent,
     WireThresholdInputComponent,
+    WireConsoleRewardsInputsComponent,
+    WireConsoleRewardsComponent,
     WireConsoleComponent,
     WireConsoleLedgerComponent,
     WireConsoleSupporterComponent,
     WireConsoleSettingsComponent,
     WireMarketingComponent,
-    WireConsoleRewardsComponent,
     WireConsoleOverviewComponent
   ],
   providers: [
@@ -64,6 +66,7 @@ const wireRoutes : Routes = [
     WireThresholdInputComponent,
     WireConsoleLedgerComponent,
     WireConsoleSupporterComponent,
+    WireConsoleRewardsInputsComponent,
     WireConsoleRewardsComponent,
     WireConsoleSettingsComponent
   ],

@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { WireRewardsTiers, WireRewardsType } from '../../interfaces/wire.interfaces';
-import { Session, SessionFactory } from '../../../../services/session';
+import { WireRewardsTiers, WireRewardsType } from '../../../interfaces/wire.interfaces';
+import { Session, SessionFactory } from '../../../../../services/session';
 
 @Component({
-  selector: 'm-wire-console--rewards',
-  templateUrl: 'wire-console-rewards.component.html'
+  moduleId: module.id,
+  selector: 'm-wire-console--rewards--inputs',
+  templateUrl: 'wire-console-rewards-inputs.component.html'
 })
 
-export class WireConsoleRewardsComponent {
+export class WireConsoleRewardsInputsComponent {
   @Input() type: WireRewardsType;
   @Input() channel;
 
