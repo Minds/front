@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
+import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';
 
 declare const BN;
 
@@ -14,7 +15,7 @@ export type TokenApproveAndCallParams = TokenApproveAndCallParam[];
 export class TokenContractService {
   protected instance: any;
 
-  constructor(protected web3Wallet: Web3WalletService) {
+  constructor(protected web3Wallet: Web3WalletService, protected overlayService: TransactionOverlayService) {
     this.load();
   }
 
@@ -52,7 +53,11 @@ export class TokenContractService {
   // Token allowance
 
   async increaseApproval(address: string, amount: number) {
-    return (await this.token()).approve(address, this.tokenToUnit(amount));
+    return await this.overlayService.showAndRun(
+      async () => {
+        return (await this.token()).approve(address, this.tokenToUnit(amount));
+      }
+      ,"You're about to approve a recurring Wire", `NOTE: We first need you to pre-approve the recurring wire transactions.`);
   }
 
   tokenToUnit(amount: number) {
@@ -85,7 +90,7 @@ export class TokenContractService {
 
   // Service provider
 
-  static _(web3Wallet: Web3WalletService) {
-    return new TokenContractService(web3Wallet);
+  static _(web3Wallet: Web3WalletService, overlayService: TransactionOverlayService) {
+    return new TokenContractService(web3Wallet, overlayService);
   }
 }

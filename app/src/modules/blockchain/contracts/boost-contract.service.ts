@@ -52,7 +52,7 @@ export class BoostContractService {
           value: this.web3Wallet.config.boost_wallet_address
         }, { type: 'uint256', value: guid }])
       );
-    }, "You're creating a boost", amount);
+    }, "You're creating a boost", `NOTE: Your client will show 0 ETH as we use the Ethereum network, but ${amount} Minds tokens will be sent.`);
   }
 
   async createPeer(receiver: string, guid: string, amount: number) {
@@ -62,7 +62,7 @@ export class BoostContractService {
         this.tokenContract.tokenToUnit(amount),
         this.tokenContract.encodeParams([{ type: 'address', value: receiver }, { type: 'uint256', value: guid }])
       )
-    }, "You're creating a boost", amount);
+    }, "You're creating a boost", `NOTE: Your client will show 0 ETH as we use the Ethereum network, but ${amount} Minds tokens will be sent.`);
   }
 
   async accept(guid: string) {

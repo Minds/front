@@ -61,7 +61,7 @@ const cryptoRoutes: Routes = [
     {
       provide: TokenContractService,
       useFactory: TokenContractService._,
-      deps: [ Web3WalletService ]
+      deps: [ Web3WalletService, TransactionOverlayService ]
     },
     {
       provide: WireContractService,

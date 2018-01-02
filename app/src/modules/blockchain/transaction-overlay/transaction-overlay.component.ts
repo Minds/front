@@ -12,8 +12,8 @@ import { TransactionOverlayService } from './transaction-overlay.service';
       <div class="m--blockchain--transaction-overlay--subtitle">
         Please open your Metamask client to complete the transaction.
       </div>
-      <div class="m--blockchain--transaction-overlay--note" *ngIf="amount !== 0">
-        NOTE: Your client will show 0 ETH as we use the Ethereum network, but {{ amount }} Minds tokens will be sent.
+      <div class="m--blockchain--transaction-overlay--note" *ngIf="notes">
+        {{ notes }}
       </div>
 
       <div class="m--blockchain--transaction-overlay--help"><a [href]="minds.site_url + 'coin'" target="_blank">Having issues?</a></div>
@@ -25,7 +25,7 @@ export class TransactionOverlayComponent implements OnInit {
   @Input() title: string;
   @HostBinding('hidden') _isHidden: boolean = true;
   // @HostBinding('class.m--blockchain--transaction-overlay--visible') private _isVisible: boolean = false;
-  amount: number = 0;
+  notes: string;
 
   minds: Minds = window.Minds;
 
@@ -40,10 +40,10 @@ export class TransactionOverlayComponent implements OnInit {
     return this._isHidden;
   }
 
-  show(title: string, amount: number = 0) {
+  show(title: string, notes: string) {
     this.title = title;
     this._isHidden = false;
-    this.amount = amount;
+    this.notes = notes;
   }
 
   hide() {

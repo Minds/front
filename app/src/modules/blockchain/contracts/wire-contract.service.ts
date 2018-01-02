@@ -51,7 +51,7 @@ export class WireContractService {
           this.tokenContract.encodeParams([{ type: 'address', value: receiver }])
         );
       }
-    ,"You're about to wire someone", amount);
+    ,"You're about to wire someone", `NOTE: Your client will show 0 ETH as we use the Ethereum network, but ${amount} Minds tokens will be sent.`);
   }
 
   // Service provider
