@@ -42,7 +42,6 @@ import { MindsCard } from './components/card/card.component';
 import { MindsButton } from './components/button/button.component';
 import { OverlayModalComponent } from './components/overlay-modal/overlay-modal.component';
 
-import { FaqComponent } from './components/faq/faq.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { AdminActionsButtonComponent } from './components/button/admin-actions/admin-actions.component';
@@ -104,7 +103,6 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
     MindsCard,
     MindsButton,
 
-    FaqComponent,
     ChartComponent,
     OverlayModalComponent,
 
@@ -161,7 +159,6 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
     MindsCard,
     MindsButton,
 
-    FaqComponent,
     ChartComponent,
     OverlayModalComponent,
 

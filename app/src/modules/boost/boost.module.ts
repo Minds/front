@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { ThirdPartyNetworksModule } from '../third-party-networks/third-party-networks.module';
 import { AdsModule } from '../ads/ads.module';
+import { FaqModule } from '../faq/faq.module';
 
 import { BoostCreatorComponent } from './creator/creator.component';
 import { BoostCreatorPaymentMethodsComponent } from './creator/payment-methods/payment-methods.component';
@@ -36,6 +37,7 @@ const boostRoutes: Routes = [
     CheckoutModule,
     ThirdPartyNetworksModule,
     AdsModule,
+    FaqModule,
   ],
   declarations: [
     BoostCreatorComponent,

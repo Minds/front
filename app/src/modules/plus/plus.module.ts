@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { CheckoutModule } from '../checkout/checkout.module';
+import { FaqModule } from '../faq/faq.module';
 import { PlusMarketingComponent } from './marketing.component';
 import { PlusSubscriptionComponent } from './subscription.component';
 import { PlusVerifyComponent } from './verify/verify.component';
@@ -21,6 +22,7 @@ const plusRoutes : Routes = [
     ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
+    FaqModule,
     RouterModule.forChild(plusRoutes)
   ],
   declarations: [

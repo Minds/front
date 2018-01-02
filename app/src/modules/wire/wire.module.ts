@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutModule } from '../checkout/checkout.module';
+import { FaqModule } from '../faq/faq.module';
 
 import { WireCreatorComponent } from './creator/creator.component';
 import { WireButtonComponent } from './button/button.component';
@@ -35,7 +36,8 @@ const wireRoutes : Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(wireRoutes),
     CommonModule,
-    CheckoutModule
+    CheckoutModule,
+    FaqModule,
   ],
   declarations: [
     WireLockScreenComponent,

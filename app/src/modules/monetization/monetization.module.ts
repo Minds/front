@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { WalletModule } from '../wallet/wallet.module';
+import { FaqModule } from '../faq/faq.module';
 import { MonetizationOverviewModule } from './monetization.overview.module';
 import { WalletTransactionsComponent } from '../wallet/transactions/transactions.component';
 import { MonetizationMarketingComponent } from './marketing.component';
@@ -44,6 +45,7 @@ const monetizationRoutes : Routes = [
     ReactiveFormsModule,
     CommonModule,
     WalletModule,
+    FaqModule,
     MonetizationOverviewModule,
     RouterModule.forChild(monetizationRoutes)
   ],

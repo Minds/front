@@ -1,0 +1,19 @@
+m-faq--page {
+  //background: #FFF;
+  width: 100%;
+  min-height: 100%;
+  display: block;
+}
+.m-faq--page {
+  max-width: 1280px;
+  margin: auto;
+  padding: 16px;
+
+  h2 {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color: #444;
+    padding-bottom: 16px;
+    font-weight: 600;
+  }
+}
