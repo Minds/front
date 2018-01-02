@@ -43,7 +43,7 @@ export class ChannelsListComponent {
           case 'all':
             break;
           case 'top':
-            this.filter = 'featured';
+            this.filter = 'trending';
             break;
         }
       }

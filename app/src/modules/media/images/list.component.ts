@@ -51,7 +51,7 @@ export class MediaImagesListComponent {
           case 'all':
             break;
           case 'top':
-            this.filter = 'featured';
+            this.filter = 'trending';
             break;
           case 'my':
             this.filter = 'owner';

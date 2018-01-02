@@ -49,7 +49,7 @@ export class BlogListComponent {
           this.title.setTitle('Trending Blogs');
           break;
         case 'top':
-          this.filter = 'featured';
+          this.filter = 'trending';
         case 'featured':
           this.title.setTitle('Featured Blogs');
           break;
