@@ -125,30 +125,36 @@
     }
   }
 
+  .m-conversation-icons {
+    height: 8px;
+    width: 24px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    justify-self: flex-end;
+    display: inline-flex;
+    position: relative;
+    margin-right: 5px;
+  }
+
   .m-conversation-online{
+    width: 8px;
+    height: 8px;
+    background-color: blue;
+    border-radius: 50%;
+    justify-self: flex-end;
+    flex-shrink: 0;
     position: absolute;
-    display: block;
-    vertical-align: middle;
-    right: 8px;
-    top: 50%;
-    top: calc(50% - 4px);
-    width:8px;
-    height:8px;
-    background:blue;
-    border-radius:50%;
+    right: 0;
   }
 
   .m-conversation-new{
+    width: 8px;
+    height: 8px;
+    background-color: green;
+    border-radius: 50%;
+    justify-self: flex-end;
+    flex-shrink: 0;
     position: absolute;
-    display: block;
-    vertical-align: middle;
-    right: 20px;
-    top: 50%;
-    top: calc(50% - 4px);
-    width:8px;
-    height:8px;
-    background:green;
-    border-radius:50%;
   }
 
 } 

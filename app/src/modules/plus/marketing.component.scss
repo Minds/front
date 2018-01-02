@@ -1,5 +1,5 @@
 .m-plus--marketing-header{
-  background: url('/assets/photos/fractal.jpg');
+  background: url('<%= APP_CDN %>/assets/photos/fractal.jpg');
   width: 100%;
   text-align: center;
   display: flex;

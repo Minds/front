@@ -77,7 +77,7 @@ export class PlusSubscriptionComponent {
     this.inProgress = true;
     this.error = '';
     this.detectChanges();
-    this.client.delete('api/v1/plus/subscription')
+    return this.client.delete('api/v1/plus/subscription')
       .then((response: any) => {
         this.inProgress = false;
         this.user.plus = false;

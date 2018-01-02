@@ -12,6 +12,7 @@ pipeline:
     commands:
       - npm install -g gulp
       - gulp build --aot --useCdn
+      - gulp build --aot --shims
     when:
       event: [ push, tag, deployment ]
       branch: [ master, test/codebuild ]
@@ -32,7 +33,7 @@ pipeline:
     image: minds/ecs-update:latest
     cluster: minds
     region: us-east-1
-    service: front-cp
+    service: app
     secrets: [ aws_access_key_id, aws_secret_access_key ]
     when:
       event: [ push, tag, deployment ]

@@ -37,11 +37,13 @@
 
   .m-messenger--userlist-conversations-item{
     cursor:pointer;
-    position:relative;
+    display: flex;
+    align-items: center;
 
     img{
       width: 24px;
       margin: 8px;
+      flex-shrink: 0;
     }
     span{
       font-weight: bold;
@@ -54,6 +56,9 @@
       max-width: 132px;
       vertical-align: middle;
       display: inline-block;
+    }
+    span.m-conversation-label {
+      flex-grow: 1;
     }
   }
 }

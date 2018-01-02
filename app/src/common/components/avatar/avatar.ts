@@ -8,7 +8,7 @@ import { Client } from '../../../services/api';
   outputs: ['added'],
   template: `
   <div class="minds-avatar" [style.background-image]="'url(' + src + ')'">
-    <img *ngIf="!src" src="/assets/avatars/blue/default-large.png" class="mdl-shadow--4dp" />
+    <img *ngIf="!src" src="{{minds.cdn_assets_url}}assets/avatars/blue/default-large.png" class="mdl-shadow--4dp" />
     <div *ngIf="editing" class="overlay">
       <i class="material-icons">camera</i>
       <span *ngIf="src" i18n="@@COMMON__AVATAR__CHANGE">Change avatar</span>

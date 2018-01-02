@@ -653,7 +653,7 @@ m-translate {
     height: 1.2em;
 
     &:before {
-      background-image: url('../assets/gs-icon.png');
+      background-image: url('<%= APP_CDN %>/assets/gs-icon.png');
     }
   }
 }

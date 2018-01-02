@@ -1,6 +1,6 @@
 <m-modal [open]="open" (closed)="onClose($event)" *ngIf="!session.isLoggedIn() || display != 'initial'">
     <div class="mdl-card__title" [hidden]="display == 'onboarding' || display == 'categories'">
-        <img src="/assets/logos/small.png" (click)="close()"/>
+        <img src="{{minds.cdn_assets_url}}assets/logos/small.png" (click)="close()"/>
         <h4 class="mdl-color-text--grey-600" i18n="@@M__SOCIAL_NETWORK_SLOGAN">Your Social Network</h4>
     </div>
 
@@ -23,7 +23,7 @@
             </span>
         </button>
         <button class="mdl-color--amber" (click)="do('register')">
-            <span class="m-signup-bulb-icon m-wiggle-animation"><img src="/assets/icon.png"></span>
+            <span class="m-signup-bulb-icon m-wiggle-animation"><img src="{{minds.cdn_assets_url}}assets/icon.png"></span>
             <span class="m-signup-button-text">
             <!-- i18n: @@MODALS__SIGNUP__WITH_MINDS -->Signin with Minds<!-- /i18n -->
             </span>

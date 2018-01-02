@@ -1,5 +1,5 @@
 .m-monetization--marketing-header{
-  background: url('/assets/photos/sunset.jpg');
+  background: url('<%= APP_CDN %>/assets/photos/sunset.jpg');
   width: 100%;
   text-align: center;
   display: flex;

@@ -7,13 +7,13 @@
     <div class="m-plus--marketing-action-button">
       <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isPlus()" (click)="openSubscription()" [hidden]="showSubscription">Upgrade - $5.00/month</button>
       <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login">Upgrade - $5.00/month</button>
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="openSubscription()">Cancel Plus</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="cancelSubscription()">Cancel Plus</button>
     </div>
 
     <div class="m-plus--overlay"></div>
   </div>
 
-  <m-plus--subscription *ngIf="showSubscription"></m-plus--subscription>
+  <m-plus--subscription #subscription [hidden]="!showSubscription"></m-plus--subscription>
 
   <div class="m-plus--marketing-contents mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
@@ -22,7 +22,7 @@
       <span>Remove all boosted content from your newsfeed and sidebars (optional) </span>
     </div>
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <img src="assets/wire-icon.png" style="display: block; margin: 2px auto 20px; height: 60px;"/>
+      <img src="{{minds.cdn_assets_url}}assets/wire-icon.png" style="display: block; margin: 2px auto 20px; height: 60px;"/>
       <h2>1,000 points</h2>
       <span>Receive 1,000 monthly points to boost your own posts or share with others to support their content</span>
     </div>

@@ -15,6 +15,7 @@ export class TopbarComponent {
 
   session = SessionFactory.build();
   notifications: any[] = [];
+  minds = window.Minds;
 
   constructor(public storage: Storage, public sidebar: Sidebar, public notification: NotificationService) {
   }

@@ -152,7 +152,7 @@ m-blog-view, minds-blog-edit {
   img.m--img-not-found {
     width: 500px !important;
     height: 300px !important;
-    background-image: url('../assets/image-not-found.png');
+    background-image: url('<%= APP_CDN %>/assets/image-not-found.png');
   }
 
   ul.m-blog--categories-list {

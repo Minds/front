@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 
+import { PlusSubscriptionComponent } from './subscription.component';
 import { Client } from '../../common/api/client.service';
 
 @Component({
@@ -9,11 +10,13 @@ import { Client } from '../../common/api/client.service';
 })
 
 export class PlusMarketingComponent {
+  @ViewChild('subscription') private subscription: PlusSubscriptionComponent;
 
   user = window.Minds.user;
+  minds = window.Minds;
   showSubscription: boolean = false;
   showVerify: boolean = false;
-
+  active: boolean = false;
   constructor(private client: Client, private cd: ChangeDetectorRef) {
   }
 
@@ -24,7 +27,8 @@ export class PlusMarketingComponent {
   load(): Promise<any> {
     return this.client.get('api/v1/plus')
       .then((response: any) => {
-        console.log(response);
+        this.active = response.active;
+        this.detectChanges();
         return response;
       })
       .catch(e => {
@@ -33,9 +37,17 @@ export class PlusMarketingComponent {
   }
 
   isPlus() {
-    if (this.user && this.user.plus)
+    if (this.active || this.user && this.user.plus)
       return true;
     return false;
+  }
+
+  cancelSubscription() {
+    this.subscription.cancel().then((response: any) => {
+      this.user.plus = false;
+      this.active = false;
+      this.detectChanges();
+    });
   }
 
   openSubscription() {
