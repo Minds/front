@@ -42,6 +42,13 @@
         Settings
       </li>
       <li class="mdl-menu__item"
+        [routerLink]="['/faq']"
+        i18n="@@MINDS__TOPBAR__FAQ"
+        (click)="menu.value = false"
+        >
+        FAQ 
+      </li>
+      <li class="mdl-menu__item"
         *ngIf="session.isLoggedIn()"
         [routerLink]="['/logout']"
         i18n="@@MINDS__TOPBAR__LOGOUT"
