@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
 import { CommonModule } from '../../common/common.module';
+import { FaqModule } from '../faq/faq.module';
 
 import { WalletComponent } from '../wallet/wallet.component';
 import { BlockchainConsoleComponent } from './console/console.component';
@@ -41,7 +42,8 @@ const cryptoRoutes: Routes = [
     NgCommonModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FaqModule,
   ],
   declarations: [
     BlockchainConsoleComponent,
