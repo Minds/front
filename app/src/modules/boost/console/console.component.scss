@@ -1,213 +1,218 @@
 m-boost-console {
+  .m-boost-console--content {
+    max-width: 1280px;
+    margin: auto;
+    height: 100%;
 
-  .m-boost-console--hero{
-    border-radius: 3px;
-    padding-bottom: 10px;
+    .m-boost-console--hero {
+      border-radius: 3px;
+      padding-bottom: 10px;
 
-    .m-boost-console--hero-header{
-      display: flex;
-      flex-direction:row;
-      align-items: center;
-      padding-right: 32px;
-    }
-
-    .m-boost-console--filters {
-      flex-grow: 1;
-
-      m-date-selector {
-        margin: 0;
-
-        label {
-          color: white;
-            font-size:14px;
-        }
-        input {
-          font-size: 16px;
-          width: auto;
-        }
-      }
-    }
-
-    h2 {
-      margin: 0;
-      padding: 16px 32px;
-      font-weight: 300;
-      flex: 1;
-    }
-    p{
-      margin:0;
-      padding: 0 32px;
-      font-family: 'Lato';
-    }
-
-    m-date-selector {
-      color: white;
-      font-size: 25px;
-      justify-content: flex-end;
-      margin: 0px 30px;
-      display: flex;
-      div {
-        background-color: rgba(255, 255, 255, 0.1);
-        border: none;
-        color: white;
-      }
-      input {
-        color: white;
-        font-size: 25px;
-        width: 250px;
-      }
-    }
-
-    .m-boost-console--overview {
-      padding: 16px;
-      margin: auto;
-      font-family: 'Lato';
-
-      @media only screen and (max-width: 400px) {
-        padding:0;
-        text-align: center;
+      .m-boost-console--hero-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-right: 32px;
       }
 
-      .m-boost-console--overview-stat-type {
-        display:flex;
-        align-items:center;
-      }
+      .m-boost-console--filters {
+        flex-grow: 1;
 
-      .m-boost-console--overview-stat-label {
-        padding: 0;
-        margin: ($minds-padding * 2) ($minds-padding * 3) 0;
-        line-height: 1;
-        font-size: 14px;
-        font-weight: normal;
-        text-transform: uppercase;
-        color: rgb(177,218,251);
-        m-tooltip {
-          i {
-            font-size: 16px;
-            opacity: 0.5;
-            cursor: pointer;
+        m-date-selector {
+          margin: 0;
+
+          label {
             color: white;
+            font-size: 14px;
+          }
+          input {
+            font-size: 16px;
+            width: auto;
           }
         }
       }
 
-      i{
-        font-style: normal;
-        font-weight:100;
-        &.material-icons {
-          font-size: 34px;
+      h2 {
+        margin: 0;
+        padding: 16px 32px;
+        font-weight: 300;
+        flex: 1;
+      }
+      p {
+        margin: 0;
+        padding: 0 32px;
+        font-family: 'Lato';
+      }
+
+      m-date-selector {
+        color: white;
+        font-size: 25px;
+        justify-content: flex-end;
+        margin: 0px 30px;
+        display: flex;
+        div {
+          background-color: rgba(255, 255, 255, 0.1);
+          border: none;
+          color: white;
+        }
+        input {
+          color: white;
+          font-size: 25px;
+          width: 250px;
         }
       }
 
-      > div{
-        font-size:48px;
-        letter-spacing:2px;
-        line-height:48px;
-        flex:auto;
-        width:auto;
-        padding:8px 16px;
-      }
+      .m-boost-console--overview {
+        padding: 16px;
+        margin: auto;
+        font-family: 'Lato';
 
-      .m-boost-console--label{
-        display:block;
-
-        > * {
-          vertical-align:middle;
+        @media only screen and (max-width: 400px) {
+          padding: 0;
+          text-align: center;
         }
 
-        label{
+        .m-boost-console--overview-stat-type {
+          display: flex;
+          align-items: center;
+        }
+
+        .m-boost-console--overview-stat-label {
+          padding: 0;
+          margin: ($minds-padding * 2) ($minds-padding * 3) 0;
+          line-height: 1;
+          font-size: 14px;
+          font-weight: normal;
           text-transform: uppercase;
-          font-family: 'Lato';
-          letter-spacing:1px;
-          font-size:14px;
+          color: rgb(177, 218, 251);
+          m-tooltip {
+            i {
+              font-size: 16px;
+              opacity: 0.5;
+              cursor: pointer;
+              color: white;
+            }
+          }
         }
-        i{
-          font-size: 16px;
-          opacity: 0.5;
-          cursor: pointer;
+
+        i {
+          font-style: normal;
+          font-weight: 100;
+          &.material-icons {
+            font-size: 34px;
+          }
         }
+
+        > div {
+          font-size: 48px;
+          letter-spacing: 2px;
+          line-height: 48px;
+          flex: auto;
+          width: auto;
+          padding: 8px 16px;
+        }
+
+        .m-boost-console--label {
+          display: block;
+
+          > * {
+            vertical-align: middle;
+          }
+
+          label {
+            text-transform: uppercase;
+            font-family: 'Lato';
+            letter-spacing: 1px;
+            font-size: 14px;
+          }
+          i {
+            font-size: 16px;
+            opacity: 0.5;
+            cursor: pointer;
+          }
+        }
+      }
+
+    }
+
+    .m-boost-console--tab-bar {
+      justify-content: flex-start;
+    }
+
+    .m-boost-console--first-filter-tab {
+      margin-left: 1em;
+    }
+
+    .m-boost-console--merchant {
+      display: flex;
+      justify-content: space-between;
+      padding: $minds-padding * 2;
+      margin-top: $minds-padding;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+
+      > a {
+        text-transform: uppercase;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 400;
       }
     }
 
-  }
-
-  .m-boost-console--tab-bar {
-    justify-content: flex-start;
-  }
-
-  .m-boost-console--first-filter-tab {
-    margin-left: 1em;
-  }
-
-  .m-boost-console--merchant {
-    display: flex;
-    justify-content: space-between;
-    padding: $minds-padding * 2;
-    margin-top: $minds-padding;
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-
-    > a {
-      text-transform: uppercase;
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 400;
-    }
-  }
-
-  .m-boost-console--empty {
-    text-align: center;
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-    opacity: 0.65;
-  }
-
-  .m-boost-console--third-party-network {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: $minds-padding * 2;
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
-
-    @media screen and (max-width: $max-mobile) {
-      display: block;
-      margin: ($minds-padding * 2) 0;
-    }
-
-    > span {
-      margin-right: $minds-padding;
+    .m-boost-console--empty {
+      text-align: center;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
       opacity: 0.65;
+    }
+
+    .m-boost-console--third-party-network {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: $minds-padding * 2;
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
 
       @media screen and (max-width: $max-mobile) {
         display: block;
-        margin-right: 0;
-        margin-bottom: $minds-padding;
-      }
-    }
-
-    m-third-party-networks-facebook {
-      display: block;
-      min-width: 320px;
-
-      @media screen and (max-width: $max-mobile) {
-        min-width: 0;
+        margin: ($minds-padding * 2) 0;
       }
 
-      .m-avatar img {
-        height: 46px;
-        width: auto;
+      > span {
+        margin-right: $minds-padding;
+        opacity: 0.65;
+
+        @media screen and (max-width: $max-mobile) {
+          display: block;
+          margin-right: 0;
+          margin-bottom: $minds-padding;
+        }
+      }
+
+      m-third-party-networks-facebook {
+        display: block;
+        min-width: 320px;
+
+        @media screen and (max-width: $max-mobile) {
+          min-width: 0;
+        }
+
+        .m-avatar img {
+          height: 46px;
+          width: auto;
+        }
       }
     }
   }
-}
 
-m-boost-console-network,
-m-boost-console-p2p {
-  display: block;
-  margin-top: $minds-padding * 2;
+  m-boost-console-network,
+  m-boost-console-p2p {
+    display: block;
+    margin-top: $minds-padding * 2;
 
-  > m-boost-console-card {
-    margin-bottom: $minds-padding * 2;
+    > m-boost-console-card {
+      margin-bottom: $minds-padding * 2;
+    }
   }
 }

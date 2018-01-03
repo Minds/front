@@ -55,4 +55,18 @@ m-boost-console-card {
       font-weight: 400;
     }
   }
+  m--crypto-token-symbol {
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .m--crypto-token-symbol--stroke {
+      stroke: #607d8b;
+    }
+
+    .m--crypto-token-symbol--fill {
+      fill: #607d8b;
+    }
+  }
 }

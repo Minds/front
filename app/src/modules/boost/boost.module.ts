@@ -21,8 +21,12 @@ import { BoostConsoleP2PListComponent } from './console/list/p2p.component';
 import { BoostConsoleCard } from './console/card/card.component';
 import { BoostConsoleBooster } from './console/booster/booster.component';
 import { BoostMarketingComponent } from './marketing.component';
+import { BoostPublisherComponent } from './publisher/publisher.component';
 
 const boostRoutes: Routes = [
+  { path: 'boost/console/:type/:filter', component: BoostConsoleComponent },
+  { path: 'boost/console/:type', component: BoostConsoleComponent },
+  { path: 'boost/console', component: BoostConsoleComponent },
   { path: 'boost', component: BoostMarketingComponent }
 ];
 
@@ -41,6 +45,7 @@ const boostRoutes: Routes = [
   ],
   declarations: [
     BoostCreatorComponent,
+    BoostPublisherComponent,
     BoostConsoleComponent,
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,

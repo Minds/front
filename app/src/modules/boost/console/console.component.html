@@ -1,98 +1,126 @@
-<div class="m-boost-console--hero mdl-color--blue mdl-color-text--white">
-  <div class="m-boost-console--hero-header">
-    <h2>Boost</h2>
-    <div class="m-boost-console--options-toggle" *ngIf="!minds.user.show_boosts">
-      <button class="mdl-button mdl-button--primary mdl-color--white mdl-color-text--blue"
-        (click)="becomeAPublisher()">
-        <span>Become a publisher</span>
-      </button>
-    </div>
-    <div class="m-boost-console--filters" *ngIf="minds.user.show_boosts">
-      <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
+<div class="m-toolbar">
+  <div class="m-topbar--row">
+    <div class="m-topbar--navigation">
+      <a class="m-topbar--navigation--item"
+        routerLink="/boost/console/publisher/earnings"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__PUBLISHER">Publisher</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/boost/console/newsfeed"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__NEWSFEED_PLURAL">Newsfeeds</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/boost/console/content"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__SIDEBAR_PLURAL">Sidebars</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/boost/console/peer/history-inbox"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</span>
+      </a>
     </div>
   </div>
-  <p *ngIf="!minds.user.show_boosts">Being a publisher allows you to earn points and/or money by showing boosts on your channel page.</p>
-
-  <div class="m-boost-console--overview" *ngIf="minds.user.show_boosts">
-
-    <div class="m-boost-console--overview-stat-label">
-      Points
-    </div>
-    <div class="mdl-grid m-boost-console--overview-stat-type">
-      <div class="m-boost-console--overview-points-count mdl-cell mdl-cell--4-col">
-        <span>{{ stats.points_count | number:'1.0-0' }}</span>
-        <div class="m-boost-console--label">
-          <label>Shown</label>
-          <m-tooltip icon="help">
-            How many points boosts other users have seen on your channel page in the selected period
-          </m-tooltip>
-        </div>
-      </div>
-
-      <div class="m-boost-console--overview-point-earnings mdl-cell mdl-cell--4-col">
-        <i class="material-icons">account_balance</i> <span>{{ stats.points_earnings | number:'1.0-0' }}</span>
-        <div class="m-boost-console--label">
-          <label>Earnings</label>
-          <m-tooltip icon="help">
-            This is how much you've earned in points from all the boosts you have shown in the selected period
-          </m-tooltip>
-        </div>
-      </div>
-    </div>
-
-    <div class="m-boost-console--overview-stat-label">
-      Money
-    </div>
-    <div class="mdl-grid m-boost-console--overview-stat-type">
-      <div class="m-boost-console--overview-usd-count mdl-cell mdl-cell--4-col">
-        <span>{{ stats.usd_count | number:'1.0-0' }}</span>
-        <div class="m-boost-console--label">
-          <label>Shown</label>
-          <m-tooltip icon="help">
-            How many usd boosts other users have seen on your channel page in the selected period
-          </m-tooltip>
-        </div>
-      </div>
-
-      <div class="m-boost-console--overview-usd-earnings mdl-cell mdl-cell--4-col" *ngIf="isMerchant()">
-        <i>$</i><span>{{ stats.usd_earnings | number:'1.0-0' }}</span>
-        <div class="m-boost-console--label">
-          <label>Earnings</label>
-          <m-tooltip icon="help">
-            This is how much you've earned in usd from all the boosts you have shown in the selected period
-          </m-tooltip>
-        </div>
-      </div>
+  <div class="m-topbar--row" *ngIf="type == 'peer'">
+    <div class="m-topbar--navigation">
+      <a class="m-topbar--navigation--item"
+        routerLink="/boost/console/peer/history-inbox"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@BOOST__CONSOLE__INBOX_TAB">Inbox</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/boost/console/peer/history-outbox"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@BOOST__CONSOLE__OUTBOX_TAB">Outbox</span>
+      </a>
     </div>
   </div>
 </div>
 
-<div class="mdl-tabs__tab-bar m-boost-console--tab-bar">
-  <a routerLink="/wallet/boost/newsfeed" class="mdl-tabs__tab" [class.is-active]="type == 'newsfeed'" i18n="@@M__FEATURE__NEWSFEED_PLURAL">Newsfeeds</a>
-  <a routerLink="/wallet/boost/content" class="mdl-tabs__tab" [class.is-active]="type == 'content'" i18n="@@M__FEATURE__SIDEBAR_PLURAL">Sidebars</a>
-  <a routerLink="/wallet/boost/peer" class="mdl-tabs__tab" [class.is-active]="type == 'peer'" i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</a>
+<div class="m-boost-console--content mdl-grid">
+  <div class="m-boost-console--sidebar mdl-cell mdl-cell--4-col">
 
-  <ng-container *ngIf="type == 'peer'">
-    <a routerLink="/wallet/boost/peer" class="mdl-tabs__tab m-boost-console--first-filter-tab" [class.is-active]="filter == 'inbox'" i18n="@@BOOST__CONSOLE__INBOX_TAB">Inbox</a>
-    <a routerLink="/wallet/boost/peer/outbox" class="mdl-tabs__tab" [class.is-active]="filter == 'outbox'" i18n="@@BOOST__CONSOLE__OUTBOX_TAB">Outbox</a>
-  </ng-container>
+    <ng-container *ngIf="type !== 'publisher'; else boostPublisherSidebarBlock">
+      <a class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"
+        [routerLink]="'/boost/console/' + type + '/history' + (type === 'peer' ? '-inbox' : '')">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">history</i>
+          History
+        </div>
+      </a>
+
+      <a class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link"
+        [routerLink]="'/boost/console/' + type + '/create'">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">add_circle</i>
+          Create a Boost
+        </div>
+      </a>
+    </ng-container>
+
+    <ng-template #boostPublisherSidebarBlock>
+      <a class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"
+        routerLink="/boost/console/publisher/earnings">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">attach_money</i>
+          Earnings
+        </div>
+      </a>
+
+      <a class="mdl-card mdl-color--red mdl-color-text--white m-boost-console-link"
+        routerLink="/boost/console/publisher/payouts">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">payment</i>
+          Payouts
+        </div>
+      </a>
+
+      <a class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link"
+        routerLink="/boost/console/publisher/settings">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">settings</i>
+          Settings
+        </div>
+      </a>
+    </ng-template>
+
+  </div>
+
+  <div class="mdl-cell mdl-cell--8-col m-boost-console--middle">
+    <ng-container *ngIf="type !== 'publisher'; else boostPublisherBlock">
+      <m-boost-console-booster *ngIf="filter ==='create'" [type]="type"></m-boost-console-booster>
+
+      <div *ngIf="type == 'peer' && !session.getLoggedInUser().merchant"
+        class="m-boost-console--merchant mdl-color--blue-500 mdl-color-text--white mdl-shadow--4dp"
+      >
+        <span i18n="@@BOOST__CONSOLE__P2P_MONETIATION_CTA">Monetize your channel to generate revenue through Peer-to-Peer boosts.</span>
+        <a routerLink="/monetization" i18n="@@BOOST__CONSOLE__MONETIZATION_CTA_LINK">Become a Boost Pro</a>
+      </div>
+
+      <div *ngIf="type == 'peer' && filter == 'inbox' && session.getLoggedInUser().merchant"
+        class="m-boost-console--third-party-network"
+      >
+        <span i18n="@@BOOST__CONSOLE__P2P_FACEBOOK_CONNECT_CTA">Expand your audience by allowing incoming Peer-to-Peer boosts to be posted on your Facebook Page.</span>
+        <m-third-party-networks-facebook></m-third-party-networks-facebook>
+      </div>
+
+      <ng-container *ngIf="filter.includes('history')">
+        <m-boost-console-network *ngIf="type != 'peer'" [type]="type"></m-boost-console-network>
+        <m-boost-console-p2p *ngIf="type == 'peer'" [filter]="filter"></m-boost-console-p2p>
+      </ng-container>
+
+    </ng-container>
+
+    <ng-template #boostPublisherBlock>
+      <m-boost-publisher *ngIf="type === 'publisher'" [filter]="filter"></m-boost-publisher>
+    </ng-template>
+  </div>
 </div>
-
-<m-boost-console-booster [type]="type" [toggled]="toggled"></m-boost-console-booster>
-
-<div *ngIf="type == 'peer' && !session.getLoggedInUser().merchant"
-  class="m-boost-console--merchant mdl-color--blue-500 mdl-color-text--white mdl-shadow--4dp"
->
-  <span i18n="@@BOOST__CONSOLE__P2P_MONETIATION_CTA">Monetize your channel to generate revenue through Peer-to-Peer boosts.</span>
-  <a routerLink="/monetization" i18n="@@BOOST__CONSOLE__MONETIZATION_CTA_LINK">Become a Boost Pro</a>
-</div>
-
-<div *ngIf="type == 'peer' && filter == 'inbox' && session.getLoggedInUser().merchant"
-  class="m-boost-console--third-party-network"
->
-  <span i18n="@@BOOST__CONSOLE__P2P_FACEBOOK_CONNECT_CTA">Expand your audience by allowing incoming Peer-to-Peer boosts to be posted on your Facebook Page.</span>
-  <m-third-party-networks-facebook></m-third-party-networks-facebook>
-</div>
-
-<m-boost-console-network *ngIf="type != 'peer'" [type]="type"></m-boost-console-network>
-<m-boost-console-p2p *ngIf="type == 'peer'" [filter]="filter"></m-boost-console-p2p>

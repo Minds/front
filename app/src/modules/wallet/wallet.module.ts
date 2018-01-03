@@ -14,7 +14,6 @@ import { WalletOverviewComponent } from './overview/overview.component';
 import { WalletTransactionsComponent } from './transactions/transactions.component';
 import { WalletPointsTransactionsComponent } from './transactions/points.component';
 import { WalletPurchaseComponent } from './purchase/purchase.component';
-import { WalletBoostComponent } from './boost/boost.component';
 import { WalletWireComponent } from './wire/wire.component';
 import { WalletToggleComponent } from './toggle.component';
 import { WalletFlyoutComponent } from './flyout/flyout.component';
@@ -31,9 +30,7 @@ const walletRoutes : Routes = [
       { path: 'points', component: WalletPointsComponent },
       { path: 'points/purchase', component: WalletPurchaseComponent },
       { path: 'tokens', component: WalletTokensComponent },
-      { path: 'boost/:type/:filter', component: WalletBoostComponent },
-      { path: 'boost/:type', component: WalletBoostComponent },
-      { path: 'boost', component: WalletBoostComponent },
+
       { path: 'wire', component: WalletWireComponent },
 
       { path: '**', component: WalletOverviewComponent },      
@@ -60,7 +57,6 @@ const walletRoutes : Routes = [
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
     WalletPurchaseComponent,
-    WalletBoostComponent,
     WalletWireComponent,
     WalletToggleComponent,
     WalletFlyoutComponent,
@@ -73,7 +69,6 @@ const walletRoutes : Routes = [
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
     WalletPurchaseComponent,
-    WalletBoostComponent,
     WalletWireComponent,
     WalletToggleComponent,
     WalletFlyoutComponent,

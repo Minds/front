@@ -13,7 +13,6 @@ export class BoostConsoleBooster {
 
   inProgress: boolean = false;
   loaded: boolean = false;
-  @Input('toggled') open: boolean = false;
 
   posts: any[] = [];
   media: any[] = [];
@@ -57,13 +56,4 @@ export class BoostConsoleBooster {
         return false;
       });
   }
-
-  toggle() {
-    this.open = !this.open;
-
-    if (this.open) {
-      this.load();
-    }
-  }
-
 }

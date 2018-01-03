@@ -30,14 +30,9 @@ export class DateSelectorComponentMock {
   template: ''
 })
 export class BoostConsoleBoosterMock {
-  @Input('toggled') open: boolean = false;
   @Input('type') type: BoostConsoleType;
 
   load(refresh?: boolean) {
-
-  }
-
-  toggle() {
 
   }
 }
@@ -75,6 +70,23 @@ export class BoostConsoleP2PListMock {
   }
 }
 
+@Component({
+  selector: 'm-boost-publisher',
+  template: ''
+})
+export class BoostConsolePublisherMock {
+  @Input() filter: BoostConsoleFilter;
+
+
+  load(refresh?: boolean) {
+
+  }
+
+  toggle() {
+
+  }
+}
+
 describe('BoostConsoleComponent', () => {
   let comp: BoostConsoleComponent;
   let fixture: ComponentFixture<BoostConsoleComponent>;
@@ -108,6 +120,7 @@ describe('BoostConsoleComponent', () => {
         ThirdPartyNetworksFacebookMock,
         BoostConsoleNetworkListMock,
         BoostConsoleP2PListMock,
+        BoostConsolePublisherMock,
         BoostConsoleComponent
       ],
       imports: [RouterTestingModule],
@@ -177,12 +190,6 @@ describe('BoostConsoleComponent', () => {
 
     // Set up mock HTTP client
     clientMock.response = {};
-    clientMock.response['api/v1/boost/sums'] = {
-      points_count: 3,
-      points_earnings: 2,
-      usd_count: 2,
-      usd_earnings: 27
-    };
 
     fixture.detectChanges();
 
@@ -198,75 +205,6 @@ describe('BoostConsoleComponent', () => {
   afterEach(() => {
     // reset jasmine clock after each test
     jasmine.clock().uninstall();
-  });
-
-  it('should have a \'become a publisher\' banner', () => {
-    expect(fixture.debugElement.query(By.css('.m-boost-console--hero'))).not.toBeNull();
-  });
-  it('should have a \'Boost\' heading', () => {
-    const heading: DebugElement = fixture.debugElement.query(By.css('.m-boost-console--hero-header > h2'));
-    expect(heading).not.toBeNull();
-    expect(heading.nativeElement.textContent.trim()).toBe('Boost');
-  });
-  it('should have a \'become a publisher\' banner', () => {
-    expect(fixture.debugElement.query(By.css('.m-boost-console--hero'))).not.toBeNull();
-  });
-  it('should have a \'Become a publisher\' button', () => {
-    expect(getBecomeAPublisher()).not.toBeNull();
-  });
-  it('clicking on \'Become a Publisher\' should call api/v1/settings and then the button should disappear', fakeAsync(() => {
-    const button = getBecomeAPublisher();
-    clientMock.response['api/v1/settings/732337264197111809'] = { 'status': 'success' };
-
-    spyOn(comp, 'becomeAPublisher').and.callThrough();
-    spyOn(comp, 'getStatistics').and.callThrough();
-    button.nativeElement.click();
-
-    fixture.detectChanges();
-    tick();
-
-    expect(comp.becomeAPublisher).toHaveBeenCalled();
-    expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ 'show_boosts': true });
-    expect(comp.getStatistics).toHaveBeenCalled();
-
-    expect(getBecomeAPublisher()).toBeNull();
-  }));
-  it('if the user\'s a publisher, then statistics should be shown instead of the button', () => {
-    window.Minds.user.show_boosts = true;
-    fixture.detectChanges();
-
-    expect(getBecomeAPublisher()).toBeNull();
-
-    expect(fixture.debugElement.query(By.css('.m-boost-console--overview'))).not.toBeNull();
-  });
-  it('should be three stats: amount of boosts shown, point earnings and usd earnings', fakeAsync(() => {
-    getBecomeAPublisher().nativeElement.click();
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
-
-    const pointsCount = getPointsCount();
-    const pointEarnings = getPointEarnings();
-    const usdCount = getUSDCount();
-    const usdEarnings = getUSDEarnings();
-
-    expect(pointsCount).not.toBeNull();
-    expect(pointsCount.nativeElement.textContent).toBe('3');
-    expect(pointEarnings).not.toBeNull();
-    expect(pointEarnings.nativeElement.textContent).toBe('2');
-
-    expect(usdCount).not.toBeNull();
-    expect(usdCount.nativeElement.textContent).toBe('2');
-    expect(usdEarnings).not.toBeNull();
-    expect(usdEarnings.nativeElement.textContent).toBe('27');
-  }));
-  it('usd earnings shouldn\'t appear if the user isn\'t a merchant', () => {
-    window.Minds.user.show_boosts = true;
-    window.Minds.user.merchant = null;
-    fixture.detectChanges();
-
-    expect(getUSDEarnings()).toBeNull();
   });
 
 });

@@ -24,7 +24,7 @@ export class BoostConsoleP2PListComponent {
   constructor(public service: BoostService) { }
 
   @Input('filter') set _filter(filter: BoostConsoleFilter) {
-    this.filter = filter;
+    this.filter = filter.includes('inbox') ? 'inbox' : 'outbox';
 
     if (this.initialized) {
       this.load(true);

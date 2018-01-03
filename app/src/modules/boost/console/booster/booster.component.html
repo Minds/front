@@ -1,9 +1,9 @@
 <div class="m-boost-console-booster--cta mdl-color--blue-grey-800 mdl-color-text--white mdl-shadow--4dp">
     <span i18n="@@BOOST__CONSOLE__BOOSTER__CTA">Boosting guarantees more views on your posts and content.</span>
-    <button class="mdl-button mdl-button--raised mdl-color-text--white" (click)="toggle()" i18n="verb|@@M__ACTION__BOOST">Boost</button>
+    <!--<button class="mdl-button mdl-button&#45;&#45;raised mdl-color-text&#45;&#45;white" (click)="toggle()" i18n="verb|@@M__ACTION__BOOST">Boost</button>-->
 </div>
 
-<div *ngIf="open" class="m-boost-console-booster--content mdl-color--blue-grey-900 mdl-color-text--white mdl-shadow--4dp">
+<div class="m-boost-console-booster--content mdl-color--blue-grey-900 mdl-color-text--white mdl-shadow--4dp">
   <!-- Posts  -->
   <ng-container *ngIf="type == 'newsfeed' || type == 'peer'">
     <h3 i18n="@@BOOST__CONSOLE__BOOSTER__RECENT_POSTS_TITLE">Your recent posts</h3>
