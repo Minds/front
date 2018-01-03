@@ -45,6 +45,11 @@ m-topbar{
       max-height: 30px;
       margin-top: 12px;
       //opacity: 0.4;
+
+      @media screen and (max-width: $max-mobile){
+        max-height: 20px;
+        margin-top: 16px;
+      }
     }
   }
 
@@ -68,29 +73,19 @@ m-topbar{
     margin: auto;
     width: 100%;
     padding-right:$minds-padding * 2;
-
-    @media screen and (max-width: $min-tablet){
-      padding-left:56px;
-    }
-
-    @media screen and (max-width: 1280px){
-      .m-boost-button-fat{
-        display: none;
-      }
-    }
-  
-    .m-boost-button-fat{
-      background: #FFF !important;
-      border: 1px solid #4690D6;
-      color: #4690D6 !important;
-      box-shadow: none;
-      margin-right: 16px;
-    }
   }
 
   @media screen and (max-width: $min-tablet){
     .minds-menu-button {
       display:block;
+    }
+    m-search--bar {
+      display: none;
+    }
+
+    //notification/wallet counters
+    .counter {
+      display: none;
     }
   }
 
@@ -148,5 +143,11 @@ m-topbar{
   }
   .m-topbar--navigation--item {
     border: 0;
+  }
+}
+
+@media screen and (max-width: $max-mobile){
+  .m-btn--boost {
+    display:none;
   }
 }

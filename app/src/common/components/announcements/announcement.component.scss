@@ -36,11 +36,11 @@ m-announcement{
     flex: 1;
 
     @media screen and (max-width:770px){
-        font-size:13px;
+        font-size:10px;
         padding-right: 50px;
     }
 
-    a{
+    a {
       text-decoration:none;
       color:#FFF;
       display:block;

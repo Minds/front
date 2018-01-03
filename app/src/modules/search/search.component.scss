@@ -21,6 +21,10 @@ m-search--bar{
     }
   }
 
+  @media screen and (max-width: 1080px){
+    width: 180px;
+  }
+
   @media screen and (max-width: $min-desktop){
     width:45%;
   }

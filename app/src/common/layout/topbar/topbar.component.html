@@ -14,7 +14,7 @@
     <ng-content select="[icons]"></ng-content>
   </div>
 
-  <button class="m-btn m-btn--action m-btn--slim"
+  <button class="m-btn m-btn--action m-btn--slim m-btn--boost"
     [routerLink]="['/wallet/boost/newsfeed', { 'toggled':true}]"
     *ngIf="session.isLoggedIn()">
     <!-- i18n: verb|@@M__ACTION__BOOST -->Boost<!-- /i18n -->
