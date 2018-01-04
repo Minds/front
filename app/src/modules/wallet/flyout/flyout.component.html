@@ -1,6 +1,6 @@
 <div class="m-wallet--flyout-wrapper mdl-card mdl-shadow--3dp">
   <div class="m-wallet--flyout-announcement" *ngIf="address && showAnnouncement" (click)="setUpCryptoWallet()">
-    <span>Hey, do you want to setup your MindsCoin wallet using <b>{{ address }}</b>?</span>
+    <span>Hey, do you want to setup your Token wallet using <b>{{ address }}</b>?</span>
     <div class="m-wallet--flyout-announcement--close" (click)="closeMessage()">
       <i class="material-icons">close</i>
     </div>
@@ -9,7 +9,7 @@
     <span class="m-blockchain&#45;&#45;wallet-address-notice&#45;&#45;action"
       (click)="navigate()"
       i18n="@@BLOCKCHAIN__WALLET_ADDRESS_NOTICE"
-    >Hey, do you want to setup your MindsCoin wallet using <b>{{ address }}</b>?</span>
+    >Hey, do you want to setup your Tokens wallet using <b>{{ address }}</b>?</span>
   </m-announcement>-->
   <div class="m-wallet--flyout-grid">
     <div class="m-wallet--flyout-volume mdl-cell mdl-cell--4-col">
@@ -28,9 +28,9 @@
       <span *ngIf="balance.tokens > -1">{{ balance.tokens | number }}</span>
       <span *ngIf="balance.tokens < 0">...</span>
       <div class="m-wallet--flyout-label">
-        <label i18n>Coins</label>
+        <label i18n>Tokens</label>
         <m-tooltip icon="help" i18n>
-          Your MindsCoin balance
+          Your Tokens balance
         </m-tooltip>
       </div>
     </div>

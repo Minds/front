@@ -26,11 +26,11 @@
     (click)="setBoostCurrency('tokens')"
     [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'tokens'"
   >
-    <h4 i18n="@@BOOST__CREATOR__MINDSCOIN_SELECTOR">
+    <h4 i18n="@@BOOST__CREATOR__TOKENS_SELECTOR">
       <b *ngIf="boost.amount">{{ calcCharges('tokens') | number }}</b>
       <m--crypto-token-symbol></m--crypto-token-symbol>
     </h4>
-    <span class="m-boost--creator-selector--cta" i18n="@@M__COMMON__SELECT_MINDSCOIN">Select MindsCoin</span>
+    <span class="m-boost--creator-selector--cta" i18n="@@M__COMMON__SELECT_TOKENS">Select Tokens</span>
   <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
   </li>
 </ul>
