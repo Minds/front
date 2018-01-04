@@ -1,0 +1,20 @@
+.m-boost-publisher--ledger{
+  table {
+    width: 100%;
+  }
+}
+
+.m-boost-publisher--ledger-filters {
+  display: flex;
+  text-align: right;
+  justify-content: flex-end;
+  padding: 8px;
+  margin-bottom: 8px;
+  background: #FFF;
+
+  m-date-selector {
+    margin-left: 8px;
+    display: flex;
+  }
+
+}

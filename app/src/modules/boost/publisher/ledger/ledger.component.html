@@ -1,0 +1,32 @@
+<div class="m-boost-publisher--ledger">
+
+  <div class="m-boost-publisher--ledger-filters m-border">
+    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
+    <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)"></m-date-selector>
+  </div>
+
+  <table class="mdl-data-table mdl-js-data-table m-border" [mdl]>
+    <thead>
+      <tr class="m-boost-publisher--ledger-header">
+        <th class="mdl-data-table__cell--non-numeric m-data-title" i18n="@@M__COMMON__DATE">Date</th>
+        <th class="mdl-data-table__cell--non-numeric m-data-title" i18n="@@BOOST__CONSOLE__PUBLISHER_LEDGER__VIEWS_COLUMN">Views</th>
+        <th i18n="@@M__COMMON__COLUMN">Earnings</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let row of rows; let i = index">
+        <tr class="m-boost-publisher--ledger-row">
+          <td class="mdl-data-table__cell--non-numeric m-boost-publisher--ledger-category">{{ row.ts * 1000 | date }}</td>
+          <td class="mdl-data-table__cell--non-numeric m-boost-publisher--ledger-category">{{ row.views }}</td>
+          <td class="mdl-data-table__cell--non-numeric m-boost-publisher--ledger-category">{{ row.earnings }}</td>
+        </tr>
+      </ng-container>
+      <tr class="m-boost-publisher--ledger-row m-wire-console--ledger-row-placeholder" *ngIf="!rows || !rows.length">
+        <td colspan="4" style="text-align:center" i18n="@@BOOST__CONSOLE__PUBLISHER_LEDGER__NO_EASRNINGS_NOTICE">
+          No earnings to show.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

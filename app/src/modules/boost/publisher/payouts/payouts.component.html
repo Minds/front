@@ -1,0 +1,9 @@
+<div class="m-boost-console--overview-usd-earnings mdl-cell mdl-cell--4-col">
+  <button class="mdl-button mdl-button--raised mdl-color--red-600 mdl-color-text--white" (click)="requestPayout()" [mdl]>
+  <span *ngIf="payoutRequestInProgress"
+    class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]></span>
+
+    <span *ngIf="!payoutRequestInProgress">Request a payout</span>
+    <span *ngIf="payoutRequestInProgress">Requesting a payout</span>
+  </button>
+</div>

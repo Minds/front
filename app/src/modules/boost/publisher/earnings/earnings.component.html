@@ -1,0 +1,30 @@
+<div class="m-boost-publisher--earnings m-border">
+
+  <div class="m-boost-publisher--earnings-overview">
+
+    <div class="m-boost-publisher--earnings-overview--total">
+      <span>{{ stats.total_count | number:'1.0-0' }}</span>
+      <div class="m-boost-publisher--earnings-overview--label">
+        <label>Shown</label>
+        <m-tooltip icon="help">
+          How many boosts you have shown in total
+        </m-tooltip>
+      </div>
+    </div>
+
+    <div class="m-boost-publisher--earnings-overview--total">
+      <span>{{ stats.total_earnings | number:'1.0-0' }}</span>
+      <div class="m-boost-publisher--earnings-overview--label">
+        <label>Earnings</label>
+        <m-tooltip icon="help">
+          How much you've earned (in tokens) in total from all the boosts you have shown
+        </m-tooltip>
+      </div>
+    </div>
+     
+  </div>
+</div>
+
+<div class="m-boost-publisher--earnings--ledger">
+  <m-boost-publisher--ledger></m-boost-publisher--ledger>
+</div>

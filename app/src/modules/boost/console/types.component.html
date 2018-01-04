@@ -3,25 +3,26 @@
   <div class="m-page--sidebar">
     <div class="m-page--sidebar--navigation">
       <a class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"
-        routerLink="/boost/console/publisher">
+        [routerLink]="'/boost/console/' + type + '/history' + (type === 'peer' ? '-inbox' : '')">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">history</i>
-          Earnings
+          History
         </div>
       </a>
 
       <a class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link"
-        routerLink="/boost/console/publisher/settings">
+        [routerLink]="'/boost/console/' + type + '/create'">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
-          <i class="material-icons">settings</i>
-          Settings
+          <i class="material-icons">add_circle</i>
+          Create a Boost
         </div>
       </a>
     </div>
   </div>
+
   <div class="m-page--main">
+
     <router-outlet></router-outlet>
+
   </div>
 </div>
-
-

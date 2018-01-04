@@ -16,20 +16,44 @@ import { BoostCreatorP2PSearchComponent } from './creator/p2p-search/p2p-search.
 import { BoostCreatorCategoriesComponent } from './creator/categories/categories.component';
 
 import { BoostConsoleComponent } from './console/console.component';
+import { BoostConsoleTypesComponent } from './console/types.component';
+import { BoostConsoleHistoryComponent } from './console/history.component';
 import { BoostConsoleNetworkListComponent } from './console/list/network.component';
 import { BoostConsoleP2PListComponent } from './console/list/p2p.component';
 import { BoostConsoleCard } from './console/card/card.component';
 import { BoostConsoleBooster } from './console/booster/booster.component';
 import { BoostMarketingComponent } from './marketing.component';
 import { BoostPublisherComponent } from './publisher/publisher.component';
+import { BoostPublisherEarningsComponent } from './publisher/earnings/earnings.component';
+import { BoostPublisherPayoutsComponent } from './publisher/payouts/payouts.component';
+import { BoostPublisherSettingsComponent } from './publisher/settings/settings.component';
+import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
 
 const boostRoutes: Routes = [
-  { path: 'boost/console/:type/:filter', component: BoostConsoleComponent },
-  { path: 'boost/console/:type', component: BoostConsoleComponent },
-  { path: 'boost/console', component: BoostConsoleComponent },
+  { path: 'boost/console', component: BoostConsoleComponent,
+    children: [
+      { path: '', redirectTo: 'newsfeed/history', pathMatch: 'full' },
+      { path: 'publisher', component: BoostPublisherComponent,
+        children: [
+          { path: '', redirectTo: 'earnings', pathMatch: 'full' },
+          { path: 'earnings', component: BoostPublisherEarningsComponent },
+          { path: 'payouts', component: BoostPublisherPayoutsComponent },
+          { path: 'settings', component: BoostPublisherSettingsComponent },
+        ] 
+      },
+      { path: 'publisher/:filter', component: BoostPublisherComponent },
+      { path: ':type', component: BoostConsoleTypesComponent,
+        children: [
+          { path: '', redirectTo: 'history', pathMatch: 'full' },
+          { path: 'create', component: BoostConsoleBooster },
+          { path: 'history', component: BoostConsoleHistoryComponent },
+          { path: 'history/:filter', component: BoostConsoleHistoryComponent },
+        ] 
+      }, 
+    ]
+  },
   { path: 'boost', component: BoostMarketingComponent }
 ];
-
 
 @NgModule({
   imports: [
@@ -56,6 +80,12 @@ const boostRoutes: Routes = [
     BoostCreatorCheckoutComponent,
     BoostCreatorP2PSearchComponent,
     BoostCreatorCategoriesComponent,
+    BoostConsoleTypesComponent,
+    BoostConsoleHistoryComponent,
+    BoostPublisherEarningsComponent,
+    BoostPublisherPayoutsComponent,
+    BoostPublisherSettingsComponent,
+    BoostPublisherLedgerComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,

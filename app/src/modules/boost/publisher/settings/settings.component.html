@@ -1,0 +1,35 @@
+<div class="m-boost-publisher--settings m-border">
+        
+  <h2 i18n="@@BOOST_CONSOLE_PUBLISHER__SETTINGS__TITLE">Publisher Settings</h2>
+
+  <div class="m-boost-publisher--settings--loader" [hidden]="!inProgress">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+
+  <div class="m-boost-publisher--settings--setup">
+    <p i18n="@@BOOST_CONSOLE_PUBLISHER__SETTINGS__DESCRIPTION">
+      Being a publisher allows you to earn points and/or money by showing boosts on your channel page.
+    </p>
+
+    <button
+      *ngIf="!session.getLoggedInUser().show_boosts"
+      class="m-btn m-btn--action"
+      i18n="@@BOOST_CONSOLE_PUBLISHER__SETTINGS__BECOME_A_PUBLISHER"
+      (click)="submit(true)"
+      [disabled]="inProgress"
+    >
+      Become a Publisher
+    </button>
+
+    <button
+      *ngIf="session.getLoggedInUser().show_boosts"
+      class="m-btn m-btn--action"
+      i18n="@@BOOST_CONSOLE_PUBLISHER__OPTIONS__STOP_BEING_A_PUBLISHER"
+      (click)="submit(false)"
+      [disabled]="inProgress"
+    >
+      Stop Being a Publisher
+    </button>
+  </div>
+
+</div>

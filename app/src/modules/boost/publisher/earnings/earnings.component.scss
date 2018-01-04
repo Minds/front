@@ -1,0 +1,36 @@
+.m-boost-publisher--earnings{
+  background: #FFF;
+  padding: 16px;
+}
+
+.m-boost-publisher--earnings--ledger {
+  margin-top: 8px;
+}
+
+.m-boost-publisher--earnings-overview {
+  display: flex;
+
+  .m-boost-publisher--earnings-overview--total {
+    flex: 1;
+    color: #444;
+    text-align: center;
+
+    > span {
+      font-size: 56px;
+      line-height: 56px;
+      font-weight: 600;
+    }
+
+    .m-boost-publisher--earnings-overview--label {
+      text-transform: uppercase;
+      color: #666;
+
+      label, m-tooltip {
+        vertical-align: middle;
+      }
+      m-tooltip i {
+        font-size: 11px;
+      }
+    }
+  }
+}
