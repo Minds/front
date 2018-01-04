@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { BoostConsoleType } from '../console.component';
 import { Client } from '../../../../services/api';
@@ -17,14 +18,19 @@ export class BoostConsoleBooster {
   posts: any[] = [];
   media: any[] = [];
 
-  session: Session = SessionFactory.build();
-
   @Input('type') type: BoostConsoleType;
 
-  constructor(public client: Client) { }
+  constructor(
+    public client: Client,
+    public session: Session,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
-    this.load();
+    this.route.parent.url.subscribe(segments => {
+      this.type = <BoostConsoleType>segments[0].path;
+      this.load();
+    }); 
   }
 
   load(refresh?: boolean) {

@@ -26,19 +26,19 @@ export class PointsOverviewComponent {
 
     let requests = [
       this.wallet.getBalance(true).catch(() => false),
-      this.blockchain.getBalance(true).catch(() => false)
+      //      this.blockchain.getBalance(true).catch(() => false)
     ];
 
     Promise.all(requests)
-      .then((results) => {
+      .then((results : any) => {
         this.isLoading = false;
 
         if (results[1]) {
           this.currency = 'tokens';
-          this.amount = results[1]
+          this.amount = results[1];
         } else {
           this.currency = 'points';
-          this.amount = results[0]; // not used
+          //this.amount = results[0]; // not used
         }
 
         this.detectChanges();

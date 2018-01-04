@@ -17,6 +17,7 @@ import { ContextService } from '../../services/context.service';
 export class ChannelsListComponent {
 
   filter: string = 'top';
+  uri: string = 'entities/trending/channels';
   entities: Array<Object> = [];
   moreData: boolean = true;
   offset: string | number = '';
@@ -44,6 +45,13 @@ export class ChannelsListComponent {
             break;
           case 'top':
             this.filter = 'trending';
+            this.uri = 'entities/trending/channels';
+            break;
+          case 'subscribers':
+            this.uri = 'subscribe/subscribers/' + this.session.getLoggedInUser().guid;
+            break;
+          case 'subscriptions':
+            this.uri = 'subscribe/subscriptions/' + this.session.getLoggedInUser().guid;
             break;
         }
       }
@@ -60,7 +68,7 @@ export class ChannelsListComponent {
 
   load(refresh: boolean = false) {
 
-    if (this.inProgress)
+    if (this.inProgress || !this.moreData)
       return false;
 
     if (refresh)
@@ -68,11 +76,13 @@ export class ChannelsListComponent {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/entities/' + this.filter + '/channels', {
+    this.client.get('api/v1/' + this.uri, {
         limit: 24,
         offset: this.offset
       })
       .then((data: any) => {
+        if (data.users)
+          data.entities = data.users;
         if (!data.entities) {
           this.moreData = false;
           this.inProgress = false;

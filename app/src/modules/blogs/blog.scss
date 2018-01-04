@@ -19,12 +19,12 @@
       display: block;
       text-decoration: none;
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       letter-spacing: 1.25px;
     }
     span {
       font-size: 11px;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       text-transform: uppercase;
       letter-spacing: 1.25px;
       cursor: default;
@@ -58,7 +58,7 @@
       font-weight: 600;
       font-size: 42px;
       letter-spacing: 1.5px;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
@@ -140,7 +140,7 @@ minds-blog-view, m-blog-view {
   }
 
   a {
-    color: #607d8b;
+    color: #111; 
   }
   img {
     max-width: 100%;
@@ -188,7 +188,7 @@ m-blog-view, minds-blog-edit {
 
   br, p, ul, ol {
     font-size: 16px;
-    font-family: Lato, Helvetica, Arial, sans-serif;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
     color: #6a6a6a;
     font-weight: 400;
     line-height: 30px;
@@ -202,11 +202,15 @@ m-blog-view, minds-blog-edit {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     color: rgba(0,0,0,.84);
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+  }
+
+  h1,h2,h3,h4,h5 {
+    font-weight: 600;
   }
 
   ul, ol {
@@ -277,7 +281,7 @@ minds-blog-edit {
     font-weight: 600;
     font-size: 42px;
     letter-spacing: 1.5px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     line-height: 1.2em;
@@ -286,7 +290,7 @@ minds-blog-edit {
   h1,h2,h3,h4 {
     font-weight: 600;
     letter-spacing: 1.5px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -298,7 +302,7 @@ minds-blog-edit {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     color: rgba(0,0,0,.84);
     margin-top: 29px;
     text-rendering: optimizeLegibility;
@@ -355,7 +359,7 @@ minds-blog-edit {
 }
 
 .m-blog-edit--metadata {
-  font-family: Lato, sans-serif;
+  font-family: Roboto, sans-serif;
   font-weight: 300;
   letter-spacing: 1px;
   padding: $minds-padding;
