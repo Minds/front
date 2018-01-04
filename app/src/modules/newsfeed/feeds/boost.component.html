@@ -1,0 +1,10 @@
+<div class="minds-list">
+  <m-newsfeed--boost-rotator interval="12" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
+  <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" [showBoostMenuOptions]="boostFeed" (delete)="delete(activity)" (onViewed)="onViewed($event)" class="mdl-card m-border item"></minds-activity>
+  <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress">
+  </infinite-scroll>
+</div>

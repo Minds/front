@@ -13,12 +13,20 @@ import { AdsModule } from '../ads/ads.module';
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
 import { NewsfeedBoostRotatorComponent } from './boost-rotator/boost-rotator.component';
+import { NewsfeedTopComponent } from './feeds/top.component';
+import { NewsfeedSubscribedComponent } from './feeds/subscribed.component';
+import { NewsfeedBoostComponent } from './feeds/boost.component';
 
 const routes: Routes = [
-  { path: 'newsfeed/subscribed', component: NewsfeedComponent, canDeactivate: [CanDeactivateGuardService] },
-  { path: 'newsfeed/boost', component: NewsfeedComponent, canDeactivate: [CanDeactivateGuardService] },
-  { path: 'newsfeed/:guid', component: NewsfeedSingleComponent },
-  { path: 'newsfeed', component: NewsfeedComponent, canDeactivate: [CanDeactivateGuardService] },
+  { path: 'newsfeed', component: NewsfeedComponent,
+    children: [
+      { path: '', redirectTo: 'subscribed', pathMatch: 'full' },
+      { path: 'top', component: NewsfeedTopComponent },
+      { path: 'subscribed', component: NewsfeedSubscribedComponent, canDeactivate: [CanDeactivateGuardService] },
+      { path: 'boost', component: NewsfeedBoostComponent, canDeactivate: [CanDeactivateGuardService] },
+      { path: ':guid', component: NewsfeedSingleComponent },
+    ] 
+  },
 ];
 
 @NgModule({
@@ -37,6 +45,9 @@ const routes: Routes = [
     NewsfeedComponent,
     NewsfeedSingleComponent,
     NewsfeedBoostRotatorComponent,
+    NewsfeedTopComponent,
+    NewsfeedSubscribedComponent,
+    NewsfeedBoostComponent,
   ],
   exports: [
     NewsfeedBoostRotatorComponent,

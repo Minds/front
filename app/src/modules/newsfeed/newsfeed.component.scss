@@ -10,6 +10,11 @@
 .m-newsfeed{
   max-width:1280px;
   flex-wrap: nowrap;
+  padding-top: 0;
+
+  .mdl-cell {
+    margin-top: 0;
+  }
   
   .m-newsfeed--sidebar, .m-newsfeed--boost-sidebar{
     max-width:270px;

@@ -1,3 +1,28 @@
+<div class="m-toolbar">
+  <div class="m-topbar--row">
+    <div class="m-topbar--navigation">
+      <a class="m-topbar--navigation--item"
+        routerLink="/newsfeed/subscribed"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__NEWSFEED_PLURAL">Subscribed</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/newsfeed/top"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__SIDEBAR_PLURAL">Top</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/newsfeed/boost"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__FEATURE__CHANNEL__PLURAL">BoostFeed</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 <div class="mdl-grid m-newsfeed" >
 
     <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar">
@@ -85,30 +110,7 @@
 
     <div class="mdl-cell mdl-cell--8-col m-newsfeed--feed">
 
-        <div class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo" *ngIf="newUserPromo">
-          <i class="material-icons">trending_up</i> <!-- i18n: @@MINDS__NEWSFEED__200_FREE_VIEWS -->Have 200 free views on us. Hit post to be boosted.<!-- /i18n -->
-        </div>
-        <minds-newsfeed-poster (load)="prepend($event)" [message]="message" #poster></minds-newsfeed-poster>
-
-        <div class="m-border mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
-          (click)="pollingLoadNew()"
-          *ngIf="pollingNewPosts"
-        >
-          <i class="material-icons">update</i> <!-- i18n: @@MINDS__NEWSFEED__NEW_POSTS_POLL -->{{ pollingNewPosts }} new {{ pollingNewPosts === 1 ? 'post' : 'posts' }}<!-- /i18n -->
-        </div>
-
-        <div class="minds-list">
-          <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card m-border item"></minds-activity>
-          <m-newsfeed--boost-rotator interval="12" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
-          <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" [showBoostMenuOptions]="boostFeed" (delete)="delete(activity)" (onViewed)="onViewed($event)" class="mdl-card m-border item"></minds-activity>
-          <infinite-scroll
-            distance="25%"
-            (load)="load()"
-            [moreData]="moreData"
-            [inProgress]="inProgress">
-          </infinite-scroll>
-
-        </div>
+      <router-outlet></router-outlet>
 
     </div>
 
