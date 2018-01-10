@@ -1,0 +1,27 @@
+m-wallet--tokens--balance-overview {
+  display: block;
+}
+
+.m-wallet--tokens--balance-overview {
+  width: auto;
+  min-height: 0;
+
+  h2 {
+    color: #ffffff;
+  }
+}
+
+.m-wallet--tokens--balance-overview--balance {
+  padding: ($minds-padding * 4) $minds-padding;
+  text-align: center;
+
+  i {
+    width: 100%;
+    font-size: 100px;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+  }
+}

@@ -20,6 +20,10 @@ import { WalletFlyoutComponent } from './flyout/flyout.component';
 import { WalletTokensComponent } from './tokens/tokens.component';
 import { WalletPointsComponent } from './points/points.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WalletTokenSettingsComponent } from './tokens/settings/settings.component';
+import { WalletTokenRewardsComponent } from './tokens/rewards/rewards.component';
+import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
+import { WalletTokenBalanceOverviewComponent } from './tokens/balance-overview/balance-overview.component';
 
 
 const walletRoutes : Routes = [
@@ -29,7 +33,12 @@ const walletRoutes : Routes = [
       { path: 'overview', component: WalletOverviewComponent },
       { path: 'points', component: WalletPointsComponent },
       { path: 'points/purchase', component: WalletPurchaseComponent },
-      { path: 'tokens', component: WalletTokensComponent },
+      { path: 'tokens', component: WalletTokensComponent, children: [
+          { path: '', redirectTo: 'rewards', pathMatch: 'full' },
+          { path: 'rewards', component: WalletTokenRewardsComponent },
+          { path: 'contributions', component: WalletTokenContributionsComponent },
+          { path: 'settings', component: WalletTokenSettingsComponent },
+        ] },
 
       { path: 'wire', component: WalletWireComponent },
 
@@ -60,6 +69,10 @@ const walletRoutes : Routes = [
     WalletWireComponent,
     WalletToggleComponent,
     WalletFlyoutComponent,
+    WalletTokenRewardsComponent,
+    WalletTokenContributionsComponent,
+    WalletTokenSettingsComponent,
+    WalletTokenBalanceOverviewComponent,
     WalletTokensComponent,
     WalletPointsComponent,
   ],

@@ -1,0 +1,35 @@
+<div class="m-page">
+  <div class="m-page--sidebar">
+    <m-wallet--tokens--balance-overview></m-wallet--tokens--balance-overview>
+
+    <div class="m-page--sidebar--navigation">
+      <a class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link"
+        routerLink="/wallet/tokens/rewards">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">stars</i>
+          Rewards
+        </div>
+      </a>
+
+      <a class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link"
+        routerLink="/wallet/tokens/contributions">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">history</i>
+          Contributions
+        </div>
+      </a>
+
+      <a class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link"
+        routerLink="/wallet/tokens/settings">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <i class="material-icons">settings</i>
+          Settings
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="m-page--main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

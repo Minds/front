@@ -1,0 +1,32 @@
+<div class="m-token-rewards--ledger">
+  <div class="m-token-contributions--ledger-filters m-border">
+    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
+    <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)"></m-date-selector>
+  </div>
+
+  <div class="m-token-rewards--ledger--reward m-border" *ngFor="let reward of rewards">
+    <div class="m-token-rewards--ledger--reward-amount">
+      <span>
+        + {{ reward.amount | number }}
+      </span>
+    </div>
+
+    <div class="m-token-rewards--ledger--reward-details">
+      <p>
+        {{ reward.type?.toUpperCase() }}
+      </p>
+
+      <div class="mdl-layout-spacer"></div>
+
+      <i class="material-icons">access_time</i>
+      <p class="ts">{{ reward.timestamp | date: 'mediumDate' }}</p>
+    </div>
+  </div>
+</div>
+
+<infinite-scroll
+  distance="25%"
+  (load)="load()"
+  [moreData]="moreData"
+  [inProgress]="inProgress">
+</infinite-scroll>
