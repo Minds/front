@@ -9,6 +9,10 @@ m-login {
   max-width: 990px;
   flex-direction: row;
 
+  @media screen and (max-width: $max-mobile) {
+    flex-direction: column;
+  }
+
   > div {
     margin: 16px;
     flex: 1;
