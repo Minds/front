@@ -60,7 +60,7 @@
     <button class="m-btn m-btn--action" (click)="register($event)" [disabled]="inProgress">
       <!-- i18n: @@FORMS__REGISTER__SIGNUP_ACTION -->Signup<!-- /i18n -->
     </button>
-    <span routerLink="/p/terms" class="m-register-tac" i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL">By creating an account you agree to the Terms & Conditions</span>
+    <span routerLink="/p/terms" class="m-register-tac" i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL">By creating an account you agree to the <a routerLink="/p/terms"> Terms & Conditions </a> </span>
   </div>
 
 </form>
