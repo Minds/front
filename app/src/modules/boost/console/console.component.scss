@@ -209,10 +209,15 @@ m-boost-console {
   m-boost-console-network,
   m-boost-console-p2p {
     display: block;
-    margin-top: $minds-padding * 2;
+    //margin-top: $minds-padding * 2;
 
     > m-boost-console-card {
       margin-bottom: $minds-padding * 2;
     }
   }
+}
+
+.m-boost-console--wrapper {
+  max-width: 1280px;
+  margin: auto;
 }

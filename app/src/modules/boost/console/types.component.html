@@ -2,20 +2,20 @@
 <div class="m-page">
   <div class="m-page--sidebar">
     <div class="m-page--sidebar--navigation">
-      <a class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"
-        [routerLink]="'/boost/console/' + type + '/history' + (type === 'peer' ? '/inbox' : '')">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
-          <i class="material-icons">history</i>
-          History
-        </div>
+      <a class="m-page--sidebar--navigation--item"
+        [routerLink]="'/boost/console/' + type + '/history' + (type === 'peer' ? '/inbox' : '')"
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+        >
+        <i class="material-icons">history</i>
+        <span>History</span>
       </a>
 
-      <a class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link"
-        [routerLink]="'/boost/console/' + type + '/create'">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+      <a class="m-page--sidebar--navigation--item"
+        [routerLink]="'/boost/console/' + type + '/create'"
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+        >
           <i class="material-icons">add_circle</i>
-          Create a Boost
-        </div>
+          <span>Create a Boost</span>
       </a>
     </div>
   </div>
