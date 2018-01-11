@@ -1,24 +1,24 @@
 <div class="m-page">
   <div class="m-page--sidebar">
-    <m-wallet--balance-rewards></m-wallet--balance-rewards>
+    <m-wallet--balance-usd></m-wallet--balance-usd>
 
     <div class="m-page--sidebar--navigation">
       <a class="m-page--sidebar--navigation--item"
-        routerLink="/wallet/tokens/rewards"
-        routerLinkActive="m-page--sidebar--navigation--item-active">
-        <i class="material-icons">stars</i>
-        <span>Rewards</span>
-      </a>
-
-      <a class="m-page--sidebar--navigation--item"
-        routerLink="/wallet/tokens/contributions"
+        routerLink="/wallet/usd/earnings"
         routerLinkActive="m-page--sidebar--navigation--item-active">
         <i class="material-icons">history</i>
-        <span>Contributions</span>
+        <span>Earnings</span>
       </a>
 
       <a class="m-page--sidebar--navigation--item"
-        routerLink="/wallet/tokens/settings"
+        routerLink="/wallet/usd/payouts"
+        routerLinkActive="m-page--sidebar--navigation--item-active">
+        <i class="material-icons">history</i>
+        <span>Payouts</span>
+      </a>
+
+      <a class="m-page--sidebar--navigation--item"
+        routerLink="/wallet/usd/settings"
         routerLinkActive="m-page--sidebar--navigation--item-active">
         <i class="material-icons">settings</i>
         <span>Settings</span>
@@ -30,3 +30,4 @@
     <router-outlet></router-outlet>
   </div>
 </div>
+  

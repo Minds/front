@@ -18,6 +18,7 @@ import { RevenueGraphComponent } from './revenue/graph.component';
 import { RevenueLedgerComponent } from './revenue/ledger.component';
 import { RevenueOptionsComponent } from './revenue/options.component';
 import { WalletWireComponent } from '../wallet/wire/wire.component';
+import { RevenueConsoleComponent } from './revenue/console.component';
 
 // external
 import { WalletComponent } from '../wallet/wallet.component';
@@ -59,6 +60,7 @@ const monetizationRoutes : Routes = [
     RevenueGraphComponent,
     RevenueLedgerComponent,
     RevenueOptionsComponent,
+    RevenueConsoleComponent,
   ],
   exports: [
     MonetizationMarketingComponent,
@@ -74,7 +76,8 @@ const monetizationRoutes : Routes = [
   entryComponents: [
     MonetizationMarketingComponent,
     AffiliateMarketingComponent,
-    AffiliateLinkComponent
+    AffiliateLinkComponent,
+    RevenueConsoleComponent,
   ]
 })
 

@@ -1,0 +1,38 @@
+.m-wallet--overview-balances {
+  display: flex;
+
+  > * {
+    flex: 1;
+    width: calc(30% - 8px);
+    margin: 4px;
+
+  }
+
+  
+}
+
+.m-wallet--overview-wire {
+  width: 66%;
+  margin: 4px;
+  .m-wire-console--overview {
+    border-radius: 3px;
+    width: 100%;
+    padding: 56px 32px;
+    box-sizing: border-box;
+  }
+}
+
+.m-wallet--overview-row {
+  display: flex;
+}
+
+.m-wallet--overview-plus {
+  width: calc(30% - 8px);
+  margin: 4px;
+  padding: 16px;
+  background: #FFF;
+
+  h3 {
+    font-weight: 600;
+  }
+}

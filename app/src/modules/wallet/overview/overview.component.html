@@ -1,38 +1,21 @@
-<div class="m-wire--overview">      
-    <div class="m-wire--overview-hero mdl-color--blue mdl-color-text--white">
-        <div class="m-wire--overview-overview mdl-grid">
+<div class="m-wallet--overview">      
+  <div class="m-wallet--overview-balances">
+    <m-wallet--balance-tokens></m-wallet--balance-tokens>
+    <m-wallet--balance-rewards></m-wallet--balance-rewards>
+    <m-wallet--balance-usd></m-wallet--balance-usd>
+  </div>
 
-        <div class="m-wire--overview-volume mdl-cell mdl-cell--4-col">
-            <span *ngIf="ready">{{ wallet.points | abbr }}</span>
-            <div class="m-wire--overview-label">
-            <label i18n>Points</label>
-            <m-tooltip icon="help" i18n>
-                Your points balance
-            </m-tooltip>
-            </div>
-        </div>
-
-        <div class="m-wallet--token mdl-cell mdl-cell--4-col">
-            <m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol><span *ngIf="ready">{{ tokens | number }}</span>
-            <div class="m-wire--overview-label">
-            <label i18n>Tokens</label>
-            <m-tooltip icon="help" i18n>
-                Your Tokens balance
-            </m-tooltip>
-            </div>
-        </div>
-
-        <div class="m-wire--overview-balance mdl-cell mdl-cell--4-col">
-            <i>{{ getCurrencySymbol(currency) }}</i><span *ngIf="ready">{{balance | number:'1.2-2'}}</span>
-            <div class="m-wire--overview-label">
-            <label i18n>Money</label>
-            <m-tooltip icon="help" i18n>
-                Your USD balance, pending payout
-            </m-tooltip>
-            </div>
-        </div>
-        </div>
+  <div class="m-wallet--overview-row">
+    <div class="m-wallet--overview-wire">
+      <m-wire-console--overview></m-wire-console--overview>
     </div>
-</div> 
+  
+    <div class="m-card m-border m-wallet--overview-plus">
+      <h3>Join Minds Plus</h3>
+      <p>Opt-out of boosts, earn 1,000 monthly points, access exclusive Minds content, and more</p>
 
-<m-wallet--points></m-wallet--points>
+      <button class="m-btn m-btn--action m-btn--slim">Join Plus</button>
+    </div>
+  </div>
+
+</div> 

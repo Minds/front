@@ -1,82 +1,36 @@
 <div class="m-wire-console--overview">
-  <!-- Money -->
-  <div class="m-wire-console--overview-stat-label" *ngIf="isMerchant()" i18n="@@M__COMMON__MONEY">
-    Money
-  </div>
+ 
 
-  <div class="mdl-grid m-wire-console--overview-stat-type" *ngIf="isMerchant()">
-    <div class="m-wire-console--overview-count mdl-cell mdl-cell--4-col">
-      <span>{{ stats.money_count | number:'1.0-0' }}</span>
+  <div class="mdl-grid m-wire-console--overview-stat-type">
+    <div class="m-wire-console--overview-count m-wire-console--overview-stat">
+      <span>{{ stats.count | number:'1.0-0' }}</span>
       <div class="m-wire-console--label">
         <label i18n="@@M__FEATURE__WIRE_PLURAL">Wires</label>
         <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__MONEY_WIRES_TOOLTIP">
-          How many money wires you have received in the last 30 days
+          How many wires you have receives
         </m-tooltip>
       </div>
     </div>
   
-    <div class="m-wire-console--overview-earnings mdl-cell mdl-cell--4-col">
+    <div class="m-wire-console--overview-earnings m-wire-console--overview-stat">
+      <span>{{ stats.tokens | number:'1.0-6' }}</span>
+      <div class="m-wire-console--label">
+        <label i18n="@@M__COMMON__EARNINGS">Tokens</label>
+        <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__TOKENS_EARNINGS_TOOLTIP">
+          The total in Tokens you have earned
+        </m-tooltip>
+      </div>
+    </div>
+
+    <div class="m-wire-console--overview-earnings m-wire-console--overview-stat">
       <i>$</i><span>{{ stats.money | number:'1.0-0' }}</span>
       <div class="m-wire-console--label">
-        <label i18n="@@M__COMMON__EARNINGS">Earnings</label>
+        <label i18n="@@M__COMMON__EARNINGS">USD</label>
         <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__MONEY_EARNINGS_TOOLTIP">
-          This is your total volume (gross) of all money wires you have received in the last 30 days
+          The total in USD you have eanred
         </m-tooltip>
       </div>
     </div>
   </div>
 
-  <!-- Points -->
-  <div class="m-wire-console--overview-stat-label" *ngIf="isMerchant()" i18n="@@M__FEATURE__POINTS">
-    Points
-  </div>
-
-  <div class="mdl-grid m-wire-console--overview-stat-type">
-    <div class="m-wire-console--overview-count mdl-cell mdl-cell--4-col">
-      <span>{{ stats.points_count | number:'1.0-0' }}</span>
-      <div class="m-wire-console--label">
-        <label i18n="@@M__FEATURE__WIRE_PLURAL">Wires</label>
-        <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__POINTS_WIRES_TOOLTIP">
-          How many point wires you have received in the last 30 days
-        </m-tooltip>
-      </div>
-    </div>
-
-    <div class="m-wire-console--overview-earnings mdl-cell mdl-cell--4-col">
-      <span>{{ stats.points | number:'1.0-0' }}</span>
-      <div class="m-wire-console--label">
-        <label i18n="@@M__COMMON__EARNINGS">Earnings</label>
-        <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__POINTS_EARNINGS_TOOLTIP">
-          This is your total volume (gross) of all point wires you have received in the last 30 days
-        </m-tooltip>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tokens -->
-  <div class="m-wire-console--overview-stat-label" *ngIf="hasWallet()" i18n="@@M__FEATURE__TOKENS">
-    Tokens
-  </div>
-
-  <div class="mdl-grid m-wire-console--overview-stat-type">
-    <div class="m-wire-console--overview-count mdl-cell mdl-cell--4-col">
-      <span>{{ stats.tokens_count | number }}</span>
-      <div class="m-wire-console--label">
-        <label i18n="@@M__FEATURE__WIRE_PLURAL">Wires</label>
-        <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__TOKEN_WIRES_TOOLTIP">
-          How many Token wires you have received in the last 30 days
-        </m-tooltip>
-      </div>
-    </div>
-
-    <div class="m-wire-console--overview-earnings mdl-cell mdl-cell--4-col">
-      <span>{{ stats.tokens | number:'1.0-4' }}</span>
-      <div class="m-wire-console--label">
-        <label i18n="@@M__COMMON__EARNINGS">Earnings</label>
-        <m-tooltip icon="help" i18n="@@WIRE__CONSOLE__OVERVIEW__TOKEN_EARNINGS_TOOLTIP">
-          This is your total volume (gross) of all Token wires you have received in the last 30 days
-        </m-tooltip>
-      </div>
-    </div>
-  </div>
 </div>

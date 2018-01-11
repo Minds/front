@@ -1,7 +1,7 @@
-<div class="m-revenue--options">
+<div class="m-revenue--options m-border">
 
-  <div class="m-revenue--options-payout-method mdl-card mdl-shadow--2dp">
-    <h3 class="mdl-color-text--blue-grey-600" i18n="@@MONETIZATION__REVENUE__OPTIONS__PAYOUT_METHOD_TITLE">Payout Method</h3>
+  <div class="m-revenue--options-payout-method">
+    <h3 i18n="@@MONETIZATION__REVENUE__OPTIONS__PAYOUT_METHOD_TITLE">Payout Method</h3>
 
     <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
@@ -22,7 +22,7 @@
 
     </div>
 
-    <div class="m-revenue--options-payout-method-setup " *ngIf="!inProgress && (!payoutMethod.account || editing)">
+    <div class="m-revenue--options-payout-method-setup" *ngIf="!inProgress && (!payoutMethod.account || editing)">
       <p *ngIf="!editing; else editingCaption" i18n="@@MONETIZATION__REVENUE__OPTIONS__NO_BANK_DETAILS_LABEL">You haven't setup your bank account yet. In order to receive payouts you will need to link your bank account.</p>
       <ng-template #editingCaption>
         <p i18n="@@MONETIZATION__REVENUE__OPTIONS__ENTER_BANK_DETAILS_BELOW_LABEL">Enter your new bank account details below.</p>
@@ -80,8 +80,8 @@
 
   </div>
 
-  <div class="m-revenue--options-cancel mdl-card mdl-shadow--2dp">
-    <h3 class="mdl-color-text--blue-grey-600" i18n="@@M__ACTION__CANCEL_MONETIZATION">Cancel Monetization</h3>
+  <div class="m-revenue--options-cancel">
+    <h3 i18n="@@M__ACTION__CANCEL_MONETIZATION">Cancel Monetization</h3>
 
     <p i18n="@@MONETIZATION__REVENUE__OPTIONS__CANCEL_MONETIZATION_LABEL">Click below to leave the monetization program. You will <b>not</b> be able to rejoin in the future.</p>
     <button

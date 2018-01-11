@@ -1,0 +1,31 @@
+m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
+  display: block;
+}
+
+.m-wallet--balance {
+  width: auto;
+  min-height: 0;
+  padding: ($minds-padding * 4) $minds-padding;
+  text-align: center;
+  background: #FFF;
+
+  h3 {
+    font-weight: 600;
+    color: #444;
+  }
+  i {
+    color: #444 !important;
+  }
+
+  i {
+    width: 100%;
+    font-size: 100px;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: 600;
+    color: #4690DF;
+  }
+}

@@ -1,0 +1,13 @@
+<div class="m-wallet--balance m-border">
+  <i class="material-icons mdl-color-text--white">attach_money</i>
+    
+  <ng-container *ngIf="!inProgress; else loading">
+    <h2>{{ balance | number }}</h2>
+  </ng-container>
+
+  <ng-template #loading>
+    <h2>...</h2>
+  </ng-template>
+
+  <h3>USD</h3>
+</div>

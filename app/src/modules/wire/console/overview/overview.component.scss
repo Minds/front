@@ -1,11 +1,17 @@
 .m-wire-console--overview {
   padding: 16px;
   margin: auto;
-  font-family: 'Lato';
+  font-family: 'Roboto';
+  background: #4690DF;
+  color: #FFF;
 
   @media only screen and (max-width: 400px) {
     padding:0;
     text-align: center;
+  }
+
+  .m-wire-console--overview-stat {
+    flex: auto;
   }
 
   .m-wire-console--overview-stat-type {
@@ -46,9 +52,10 @@
 
     label{
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       letter-spacing:1px;
       font-size:14px;
+      font-weight: 600;
     }
     i{
       font-size: 16px;

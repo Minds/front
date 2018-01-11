@@ -7,6 +7,7 @@ import { CommonModule } from '../../common/common.module';
 import { MonetizationOverviewModule } from '../monetization/monetization.overview.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { AdsModule } from '../ads/ads.module';
+import { WireModule } from '../wire/wire.module';
 
 import { WalletComponent } from './wallet.component';
 import { PointsOverviewComponent } from './points-overview.component';
@@ -24,24 +25,38 @@ import { WalletTokenSettingsComponent } from './tokens/settings/settings.compone
 import { WalletTokenRewardsComponent } from './tokens/rewards/rewards.component';
 import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
 import { WalletTokenBalanceOverviewComponent } from './tokens/balance-overview/balance-overview.component';
-
+import { WalletBalanceUSDComponent } from './balances/usd/balance.component';
+import { WalletBalanceTokensComponent } from './balances/tokens/balance.component';
+import { WalletBalanceRewardsComponent } from './balances/rewards/balance.component';
+import { WalletUSDComponent } from './usd/usd.component';
+import { WalletUSDEarningsComponent } from './usd/earnings.component';
+import { WalletUSDPayoutsComponent } from './usd/payouts.component';
+import { WalletUSDSettingsComponent } from './usd/settings.component';
 
 const walletRoutes : Routes = [
   { path: 'wallet', component: WalletComponent,
     children: [
-      { path: '', redirectTo: 'transactions', pathMatch: 'full' },
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: WalletOverviewComponent },
       { path: 'points', component: WalletPointsComponent },
       { path: 'points/purchase', component: WalletPurchaseComponent },
-      { path: 'tokens', component: WalletTokensComponent, children: [
+      { path: 'tokens', component: WalletTokensComponent, 
+        children: [
           { path: '', redirectTo: 'rewards', pathMatch: 'full' },
           { path: 'rewards', component: WalletTokenRewardsComponent },
           { path: 'contributions', component: WalletTokenContributionsComponent },
           { path: 'settings', component: WalletTokenSettingsComponent },
-        ] },
-
+        ] 
+      },
+      { path: 'usd', component: WalletUSDComponent, 
+        children: [
+          { path: '', redirectTo: 'earnings', pathMatch: 'full' },
+          { path: 'earnings', component: WalletUSDEarningsComponent },
+          { path: 'payouts', component: WalletUSDPayoutsComponent },
+          { path: 'settings', component: WalletUSDSettingsComponent },
+        ] 
+      },
       { path: 'wire', component: WalletWireComponent },
-
       { path: '**', component: WalletOverviewComponent },      
     ]
   }
@@ -57,7 +72,8 @@ const walletRoutes : Routes = [
     CheckoutModule,
     MonetizationOverviewModule,
     RouterModule.forChild(walletRoutes),
-    AdsModule
+    AdsModule,
+    WireModule,
   ],
   declarations: [
     WalletComponent,
@@ -75,6 +91,13 @@ const walletRoutes : Routes = [
     WalletTokenBalanceOverviewComponent,
     WalletTokensComponent,
     WalletPointsComponent,
+    WalletBalanceUSDComponent,
+    WalletBalanceTokensComponent,
+    WalletBalanceRewardsComponent,
+    WalletUSDComponent,
+    WalletUSDEarningsComponent,
+    WalletUSDPayoutsComponent,
+    WalletUSDSettingsComponent,
   ],
   exports: [
     WalletComponent,
@@ -85,6 +108,7 @@ const walletRoutes : Routes = [
     WalletWireComponent,
     WalletToggleComponent,
     WalletFlyoutComponent,
+    WalletBalanceUSDComponent,
   ],
   entryComponents: [ WalletComponent ]
 })
