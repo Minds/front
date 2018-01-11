@@ -51,6 +51,9 @@
     }
 
     .m-boost--creator--wallet {
+      @media screen and (max-width: $max-mobile) {
+        position: initial;
+      }
       position: absolute;
       right: $minds-padding + 64px;
       top: 28px;
@@ -68,11 +71,13 @@
   }
 
   .m-boost--creator-section-row {
-    display: flex;
-    flex-direction: row;
+    @media screen and (min-width: $min-tablet) {
+      display: flex;
+      flex-direction: row;
 
-    > section {
-      flex: 1;
+      > section {
+        flex: 1;
+      }
     }
   }
 
