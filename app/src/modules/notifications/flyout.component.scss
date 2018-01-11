@@ -7,6 +7,13 @@ m-notifications--flyout{
   top: 24px;
   right: -160px;
   
+  @media screen and (max-width: $min-desktop){
+    right: -70px;
+  }
+
+  @media screen and (max-width: $min-tablet){
+    right: -0px;
+  }
 
   minds-notifications{
     
