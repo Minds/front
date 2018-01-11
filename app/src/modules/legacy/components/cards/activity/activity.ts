@@ -195,9 +195,11 @@ export class Activity {
   }
 
   showWire() {
-    this.overlayModal.create(WireCreatorComponent,
-      this.activity.remind_object ? this.activity.remind_object : this.activity)
-        .present();
+    if(this.session.getLoggedInUser().guid !== this.activity.owner_guid) {
+      this.overlayModal.create(WireCreatorComponent,
+        this.activity.remind_object ? this.activity.remind_object : this.activity)
+          .present();
+    }
   }
 
   menuOptionSelected(option: string) {

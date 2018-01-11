@@ -24,7 +24,7 @@ import { VideoAdsService } from './ads-service';
   },
   //changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <video (click)="onClick()" preload="none" [poster]="poster" allowfullscreen [muted]="muted" [loop]="loop">
+    <video (click)="onClick()" preload="none" [poster]="poster" allowfullscreen [muted]="false" [loop]="loop">
       <source [src]="s.uri" *ngFor="let s of src">
     </video>
     <i *ngIf="element.paused" class="material-icons minds-video-play-icon" (click)="onClick()">play_circle_outline</i>

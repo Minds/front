@@ -142,14 +142,15 @@ export class Discovery {
         if (refresh) {
           this.entities = data.entities;
         } else {
-          if (this.offset)
+          if (this.offset && filter != 'trending')
             data.entities.shift();
           this.entities = this.entities.concat(data.entities);
         }
 
         this.offset = data['load-next'];
         this.inProgress = false;
-
+        if (!this.offset) 
+          this.moreData = false;
       })
       .catch((e) => {
         this.inProgress = false;

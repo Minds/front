@@ -10,6 +10,7 @@ import { Client } from '../../common/api/client.service';
 
 export class MonetizationMarketingComponent {
 
+  minds: Minds = window.Minds;
   user = window.Minds.user;
   showOnboardingForm: boolean = false;
 
