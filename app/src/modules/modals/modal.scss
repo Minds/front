@@ -215,4 +215,11 @@ m-modal-share, m-modal-invite{
       color:#333 !important;
     }
   }
+
+  .mdl-card__supporting-text{
+    @media screen and (max-width: 720px){
+      width: calc(90% - 20px);
+    }
+  }
+  
 }
