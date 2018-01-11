@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Session, SessionFactory } from '../../../services/session';
-import { Client } from '../../../services/api/client';
+import { MindsTitle } from '../../../services/ux/title';
 
 export type BoostConsoleType = 'newsfeed' | 'content' | 'peer' | 'publisher';
 export type BoostConsoleFilter = 'create' | 'history' | 'earnings' | 'payouts' | 'settings' | 'inbox' | 'outbox';
@@ -17,7 +16,8 @@ export class BoostConsoleComponent {
   type: BoostConsoleType;
   minds: Minds = window.Minds;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, public title: MindsTitle) {
+    this.title.setTitle('Boost Console');
   }
 
   ngOnInit() {
