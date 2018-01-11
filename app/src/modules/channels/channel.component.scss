@@ -13,10 +13,18 @@ m-channel{
     position:relative;
     overflow:visible;
 
+    @media screen and (max-width: 720px){
+      height: 160px;
+    }
+
     minds-carousel{
       height:440px;
       .minds-banner .minds-banner-overlay{
           display:none;
+      }
+
+      @media screen and (max-width: 720px){
+        height: 240px;
       }
     }
 

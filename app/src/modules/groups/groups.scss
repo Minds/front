@@ -57,6 +57,10 @@ minds-groups-profile{
     box-sizing: content-box;
     overflow: visible;
 
+    @media screen and (max-width: 720px){
+      height: 160px;
+    }
+
     &.m-group--conversation-view.m-group--view-mode {
       height: 80px;
     }
@@ -73,6 +77,10 @@ minds-groups-profile{
     .minds-banner{
       max-height:440px;
       height:440px;
+
+      @media screen and (max-width: 720px){
+        height: 240px;
+      }
     }
 
     .save-bar {

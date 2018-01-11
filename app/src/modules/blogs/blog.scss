@@ -49,8 +49,13 @@
       .minds-banner {
         max-height: 60vh;
         height: 60vh;
+
+        @media screen and (max-width: 720px){
+          height: 25vh;
+        }
       }
     }
+
   }
 
   .m-blog-container {
