@@ -62,4 +62,29 @@ m-app {
     padding: 16px 0 16px 16px;
     width: 300px;
   }
+
+  .m-page--sidebar--navigation--item {
+    display: block;
+    border: 1px solid #EEE;
+    margin: 4px 0;
+    background: #FFF;
+    border-radius: 3px;
+    padding: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: 13px;
+
+    &.m-page--sidebar--navigation--item-active {
+      color: #4690DF;
+    }
+
+    i, span {
+      vertical-align: middle;
+    }
+
+    span {
+      padding-left: 8px;
+    }
+  }
 }
