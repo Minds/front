@@ -75,12 +75,19 @@ m-topbar{
     padding-right:$minds-padding * 2;
   }
 
-  @media screen and (max-width: $min-desktop){
+  @media screen and (max-width: 1080px){
     m-search--bar {
-      max-width: 200px;
+      max-width: 150px;
+    }
+
+
+    //notification/wallet counters
+    .counter {
+      display: none;
     }
   }
-  @media screen and (max-width: $min-tablet){
+
+  @media screen and (max-width: $min-mobile){
     .minds-menu-button {
       display:block;
     }
@@ -88,11 +95,6 @@ m-topbar{
       display: none;
     }
 
-    //notification/wallet counters
-    .counter {
-      display: none;
-    }
-    
   }
 
   .m-topbar--account{
