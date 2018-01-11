@@ -34,10 +34,6 @@ export class WalletTransactionsComponent {
     this.route.url.subscribe(url => {
       if (url[0].path === 'purchase')
         this.togglePurchase = true;
-
-      if (url[0].path === 'transactions' && this.session.getLoggedInUser().merchant) {
-        this.router.navigate(['/wallet/revenue']);
-      }
     });
   }
 
