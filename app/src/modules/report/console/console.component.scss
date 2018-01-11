@@ -1,7 +1,16 @@
 .m-report-console--tabs {
   margin-bottom: $minds-padding * 2;
-  a {
+  a.mdl-tabs__tab {
     cursor: pointer;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    @media screen and (max-width: $max-mobile) {
+      line-height: 20px;
+      padding: 0 12px;
+    }
   }
 }
 
