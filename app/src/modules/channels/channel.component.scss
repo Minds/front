@@ -132,6 +132,10 @@ m-channel{
      margin-right: 8px;
    }
 
+   .m-channel--edit-button-wrapper {
+     flex-shrink: 0;
+   }
+
    .minds-button-edit > button, minds-button-user-dropdown > button{
      font-size: 16px;
      border:0;

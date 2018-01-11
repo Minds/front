@@ -113,7 +113,7 @@
             <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked && !user.subscribed"></minds-button-subscribe>
             <m-messenger--channel-button [user]="user" *ngIf="user.subscribed && session.getLoggedInUser().guid != user.guid"></m-messenger--channel-button>
             <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
-            <div  (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
+            <div class="m-channel--edit-button-wrapper"  (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
               <button class="m-btn m-btn--with-icon m-btn--slim">
                 <i [hidden]="editing" class="material-icons">edit</i>
                 <i [hidden]="!editing" class="material-icons">done</i>
