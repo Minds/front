@@ -49,7 +49,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 
-    @media screen and (max-width: 600px){
+    @media screen and (max-width: $min-desktop){
       display: none; 
     }
   }

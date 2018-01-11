@@ -7,6 +7,10 @@ m-wallet--flyout {
   top: 24px;
   right: -120px;
 
+  @media screen and (max-width: $max-mobile){
+    right: -50px;
+  }
+
   .m-wallet--flyout-wrapper {
     max-height: calc(95vh - 60px);
     overflow: visible;

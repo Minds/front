@@ -75,6 +75,11 @@ m-topbar{
     padding-right:$minds-padding * 2;
   }
 
+  @media screen and (max-width: $min-desktop){
+    m-search--bar {
+      max-width: 200px;
+    }
+  }
   @media screen and (max-width: $min-tablet){
     .minds-menu-button {
       display:block;
@@ -87,6 +92,7 @@ m-topbar{
     .counter {
       display: none;
     }
+    
   }
 
   .m-topbar--account{
