@@ -7,12 +7,8 @@ m-notifications--flyout{
   top: 24px;
   right: -160px;
   
-  @media screen and (max-width: $min-desktop){
-    right: -70px;
-  }
-
-  @media screen and (max-width: $min-tablet){
-    right: -0px;
+  @media screen and (max-width: $max-mobile){
+    right: -80px;
   }
 
   minds-notifications{
@@ -42,10 +38,6 @@ m-notifications--flyout{
     max-height: calc(95vh - 60px);
     overflow: visible;
   }
-
-  //.m-notifications--flyout--scrollable-container{
-  // 
-  //}
 
   .notifications-grid {
     max-height: calc(95vh - 200px);
