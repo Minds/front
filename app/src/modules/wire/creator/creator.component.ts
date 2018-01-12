@@ -189,10 +189,6 @@ export class WireCreatorComponent implements AfterViewInit {
     let oldCurrency = this.wire.currency;
     this.wire.currency = currency;
 
-    if (currency !== 'money' && currency !== 'tokens') {
-      this.wire.recurring = false;
-    }
-
     this.wire.payload = null;
 
     this.convertCurrency(oldCurrency, currency);
