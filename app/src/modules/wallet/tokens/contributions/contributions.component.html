@@ -10,14 +10,16 @@
         <th class="mdl-data-table__cell--non-numeric m-data-title">Date</th>
         <th class="mdl-data-table__cell--non-numeric m-data-title">Metric</th>
         <th class="mdl-data-table__cell--non-numeric m-data-title">Amount</th>
+        <th class="mdl-data-table__cell--non-numeric m-data-title">Score</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let contribution of contributions; let i = index" class="m-token-contributions--ledger-row">
-        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.timestamp | date:'mediumDate' }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.timestamp | date:'mediumDate':'UTC' }}</td>
         <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metric | uppercase }}</td>
-        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.amount | token: 18 | number }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.amount | number }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.score | token: 18 | number }}</td>
       </tr>
 
       <tr *ngIf="!contributions || !contributions.length" class="m-token-contributions--ledger-row m-wire-console--ledger-row-placeholder">
