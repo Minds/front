@@ -24,9 +24,9 @@ const routes: Routes = [
       { path: 'top', component: NewsfeedTopComponent },
       { path: 'subscribed', component: NewsfeedSubscribedComponent, canDeactivate: [CanDeactivateGuardService] },
       { path: 'boost', component: NewsfeedBoostComponent, canDeactivate: [CanDeactivateGuardService] },
-      { path: ':guid', component: NewsfeedSingleComponent },
-    ] 
+    ],
   },
+  { path: 'newsfeed/:guid', component: NewsfeedSingleComponent }, 
 ];
 
 @NgModule({
