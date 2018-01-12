@@ -43,13 +43,17 @@ export class SettingsBillingSubscriptionsComponent {
   }
 
   cancel(i: number) {
+    if (!confirm('Are you sure you want to cancel this subscription?')) {
+      return;
+    }
+
     this.inProgress = true;
     this.cd.detectChanges();
 
     let subscription = this.subscriptions[i];
     this.client.delete(`api/v1/payments/subscriptions/${subscription.id}`)
       .then(() => {
-        this.subscriptions.splice(i, 0);
+        this.subscriptions.splice(i, 1);
         this.inProgress = false;
         this.cd.detectChanges();
       })
