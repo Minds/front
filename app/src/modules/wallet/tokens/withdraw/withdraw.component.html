@@ -1,0 +1,35 @@
+<div class="m-border mdl-color--white m-token-withdraw">
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci aliquam aliquid aspernatur debitis
+    deserunt earum enim facilis hic magni nihil officia praesentium qui, repellendus, ullam vitae voluptatem voluptates,
+    voluptatibus.
+  </p>
+
+  <div class="m-token-withdraw--form">
+    <input type="text" class="m-token-withdraw--input"
+      [disabled]="inProgress"
+      [ngModel]="amount | number"
+      (ngModelChange)="setAmount($event)"
+    />
+
+    <button class="m-token-withdraw--submit-button"
+      [disabled]="!canWithdraw()"
+      (click)="withdraw()"
+    >
+      Withdraw
+    </button>
+
+    <div *ngIf="inProgress"
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+    ></div>
+  </div>
+
+  <p class="m-token-withdraw--error" *ngIf="!!error">
+    {{ error }}
+  </p>
+</div>
+
+<m-wallet-token--rewards
+  [preview]="true"
+></m-wallet-token--rewards>

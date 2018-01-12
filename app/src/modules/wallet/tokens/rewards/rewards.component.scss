@@ -9,8 +9,12 @@
       line-height: 40px;
       font-weight: 800;
 
-      span {
+      .m-token-rewards--ledger--reward-amount--positive {
         color: green;
+      }
+
+      .m-token-rewards--ledger--reward-amount--negative {
+        color: red;
       }
     }
 
@@ -53,4 +57,12 @@
     display: flex;
   }
 
+  &.m-token-rewards--ledger-filters--preview {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
+  }
 }

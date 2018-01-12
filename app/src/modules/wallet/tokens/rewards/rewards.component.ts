@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 
 @Component({
@@ -16,15 +16,19 @@ export class WalletTokenRewardsComponent {
   offset: string;
   moreData: boolean = true;
 
+  @Input() preview: boolean = false; // Preview mode
+
   constructor(protected client: Client, protected cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     const d = new Date();
-    d.setMonth(d.getMonth() - 1);
-    this.startDate = d.toISOString();
 
-    d.setMonth(d.getMonth() + 1);
+    d.setHours(23, 59, 59);
     this.endDate = d.toISOString();
+
+    d.setMonth(d.getMonth() - 1);
+    d.setHours(0, 0, 0);
+    this.startDate = d.toISOString();
 
     this.load(true);
   }
@@ -45,9 +49,15 @@ export class WalletTokenRewardsComponent {
     this.detectChanges();
 
     try {
+      let startDate = new Date(this.startDate),
+        endDate = new Date(this.endDate);
+
+      startDate.setHours(0, 0, 0);
+      endDate.setHours(23, 59, 59);
+
       let response: any = await this.client.get(`api/v1/blockchain/rewards/ledger`, {
-        from: Math.ceil(+Date.parse(this.startDate) / 1000),
-        to: Math.ceil(+Date.parse(this.endDate) / 1000),
+        from: Math.floor(+startDate / 1000),
+        to: Math.floor(+endDate / 1000),
         offset: this.offset
       });
 

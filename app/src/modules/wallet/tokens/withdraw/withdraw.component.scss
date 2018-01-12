@@ -1,0 +1,59 @@
+.m-token-withdraw {
+  margin-bottom: $minds-padding;
+  padding: $minds-padding * 2;
+
+  .m-token-withdraw--form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $minds-padding;
+
+    .m-token-withdraw--input,
+    .m-token-withdraw--submit-button {
+      appearance: none;
+      font-size: 14px;
+      border-radius: 0;
+    }
+
+    .m-token-withdraw--input {
+      padding: $minds-padding;
+      border: 1px solid #EEE;
+      font-weight: 500;
+      letter-spacing: 1px;
+      line-height: 1.35;
+      width: 15em;
+      text-align: right;
+    }
+
+    .m-token-withdraw--submit-button {
+      margin-left: $minds-padding;
+      padding: $minds-padding ($minds-padding * 4);
+      background: none;
+      border: 1px solid #555;
+      font-family: inherit;
+      font-weight: 300;
+      letter-spacing: 2.33px;
+      text-transform: uppercase;
+      color: #555;
+      cursor: pointer;
+
+      &[disabled] {
+        cursor: default;
+        opacity: 0.35;
+      }
+    }
+
+    .mdl-spinner {
+      margin-left: $minds-padding;
+    }
+  }
+
+  .m-token-withdraw--error {
+    color: red;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

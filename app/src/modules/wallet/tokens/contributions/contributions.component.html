@@ -1,7 +1,7 @@
 <div class="m-token-contributions--ledger">
   <div class="m-token-contributions--ledger-filters m-border">
-    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
-    <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)"></m-date-selector>
+    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
+    <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
   </div>
 
   <table class="mdl-data-table mdl-js-data-table m-border" [mdl]>
@@ -16,8 +16,8 @@
     <tbody>
       <tr *ngFor="let contribution of contributions; let i = index" class="m-token-contributions--ledger-row">
         <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.timestamp | date:'mediumDate' }}</td>
-        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metric?.toUpperCase() }}</td>
-        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.amount | number }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metric | uppercase }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.amount | token: 18 | number }}</td>
       </tr>
 
       <tr *ngIf="!contributions || !contributions.length" class="m-token-contributions--ledger-row m-wire-console--ledger-row-placeholder">

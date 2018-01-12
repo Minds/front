@@ -24,7 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletTokenSettingsComponent } from './tokens/settings/settings.component';
 import { WalletTokenRewardsComponent } from './tokens/rewards/rewards.component';
 import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
-import { WalletTokenBalanceOverviewComponent } from './tokens/balance-overview/balance-overview.component';
+import { WalletTokenWithdrawComponent } from './tokens/withdraw/withdraw.component';
 import { WalletBalanceUSDComponent } from './balances/usd/balance.component';
 import { WalletBalanceTokensComponent } from './balances/tokens/balance.component';
 import { WalletBalanceRewardsComponent } from './balances/rewards/balance.component';
@@ -43,6 +43,7 @@ const walletRoutes : Routes = [
       { path: 'tokens', component: WalletTokensComponent, 
         children: [
           { path: '', redirectTo: 'rewards', pathMatch: 'full' },
+          { path: 'withdraw', component: WalletTokenWithdrawComponent },
           { path: 'rewards', component: WalletTokenRewardsComponent },
           { path: 'contributions', component: WalletTokenContributionsComponent },
           { path: 'settings', component: WalletTokenSettingsComponent },
@@ -88,7 +89,7 @@ const walletRoutes : Routes = [
     WalletTokenRewardsComponent,
     WalletTokenContributionsComponent,
     WalletTokenSettingsComponent,
-    WalletTokenBalanceOverviewComponent,
+    WalletTokenWithdrawComponent,
     WalletTokensComponent,
     WalletPointsComponent,
     WalletBalanceUSDComponent,

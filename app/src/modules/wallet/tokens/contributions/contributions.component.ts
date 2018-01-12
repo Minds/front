@@ -19,11 +19,13 @@ export class WalletTokenContributionsComponent {
 
   ngOnInit() {
     const d = new Date();
-    d.setMonth(d.getMonth() - 1);
-    this.startDate = d.toISOString();
 
-    d.setMonth(d.getMonth() + 1);
+    d.setHours(23, 59, 59);
     this.endDate = d.toISOString();
+
+    d.setMonth(d.getMonth() - 1);
+    d.setHours(0, 0, 0);
+    this.startDate = d.toISOString();
 
     this.load(true);
   }
@@ -44,9 +46,15 @@ export class WalletTokenContributionsComponent {
     this.detectChanges();
 
     try {
+      let startDate = new Date(this.startDate),
+        endDate = new Date(this.endDate);
+
+      startDate.setHours(0, 0, 0);
+      endDate.setHours(23, 59, 59);
+
       let response: any = await this.client.get(`api/v1/blockchain/contributions`, {
-        from: Math.ceil(+Date.parse(this.startDate) / 1000),
-        to: Math.ceil(+Date.parse(this.endDate) / 1000),
+        from: Math.floor(+startDate / 1000),
+        to: Math.floor(+endDate / 1000),
         offset: this.offset
       });
 
