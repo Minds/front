@@ -19,6 +19,7 @@ import { Web3WalletService } from './web3-wallet.service';
 import { TokenContractService } from './contracts/token-contract.service';
 import { BoostContractService } from './contracts/boost-contract.service';
 import { WireContractService } from './contracts/wire-contract.service';
+import { WithdrawContractService } from './contracts/withdraw-contract.service';
 import { TokenDistributionEventService } from './contracts/token-distribution-event.service';
 
 const cryptoRoutes: Routes = [
@@ -68,6 +69,11 @@ const cryptoRoutes: Routes = [
     {
       provide: WireContractService,
       useFactory: WireContractService._,
+      deps: [ Web3WalletService, TokenContractService, TransactionOverlayService ]
+    },
+    {
+      provide: WithdrawContractService,
+      useFactory: WithdrawContractService._,
       deps: [ Web3WalletService, TokenContractService, TransactionOverlayService ]
     },
     {

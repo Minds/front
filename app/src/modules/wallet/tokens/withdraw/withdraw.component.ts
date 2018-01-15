@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { WalletTokenRewardsComponent } from '../rewards/rewards.component';
+import { WithdrawContractService } from '../../../blockchain/contracts/withdraw-contract.service';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +20,12 @@ export class WalletTokenWithdrawComponent {
   @ViewChild(WalletTokenRewardsComponent)
   protected rewardsComponent: WalletTokenRewardsComponent;
 
-  constructor (protected client: Client, protected cd: ChangeDetectorRef) { }
+  constructor (
+    protected client: Client,
+    protected cd: ChangeDetectorRef,
+    protected session: Session,
+    protected contract: WithdrawContractService,
+  ) { }
 
   ngOnInit() {
     this.load();
@@ -72,19 +79,20 @@ export class WalletTokenWithdrawComponent {
     this.detectChanges();
 
     try {
-      let tx = null;
-      // TODO: Metamask payment
 
-      let response: any = await this.client.post(`api/v1/blockchain/rewards/withdraw`, {
-        amount: this.amount * Math.pow(10, 18),
-        tx
-      });
-
-      if (response && response.done) {
+      let result: { address, guid, amount, gas, tx} = await this.contract.request(
+        this.session.getLoggedInUser().guid, 
+        this.amount * Math.pow(10, 18)
+      );
+  
+      let response: any = await this.client.post(`api/v1/blockchain/rewards/withdraw`, result);
+  
+      if (response.done) {
         this.refresh();
       } else {
         this.error = 'Server error';
       }
+
     } catch (e) {
       console.error(e);
       this.error = (e && e.message) || 'Server error';
@@ -93,7 +101,7 @@ export class WalletTokenWithdrawComponent {
       this.detectChanges();
     }
   }
-
+  
   refresh() {
     this.load();
 
