@@ -42,6 +42,22 @@ minds-notification.mdl-card{
 }
 
 minds-notifications {
+  .m-notifications--load-new {
+    text-transform: uppercase;
+    font-family: 'Lato';
+    letter-spacing: 2.5px;
+    text-rendering: optimizeLegibility;
+    font-size: 12px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 600;
+    padding: 8px;
+    text-align: center;
+
+    a {
+      margin: 0 auto;
+    }
+  }
+
   .mdl-tabs__tab {
 
     overflow: visible;

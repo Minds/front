@@ -16,6 +16,7 @@ import { NotificationService } from './notification.service';
 
 export class NotificationsComponent {
   @Input() params: any;
+  @Input() count: number;
   notifications: Array<Object> = [];
   entity;
   moreData: boolean = true;
@@ -23,6 +24,8 @@ export class NotificationsComponent {
   inProgress: boolean = false;
   session = SessionFactory.build();
   _filter: string = 'all';
+
+  minds: any = window.Minds;
   paramsSubscription: Subscription;
 
   constructor(
@@ -92,7 +95,7 @@ export class NotificationsComponent {
           this.moreData = false;
         self.offset = data['load-next'];
         self.inProgress = false;
-
+        self.minds.notifications_count = 0;
       });
   }
 
