@@ -28,10 +28,18 @@
       <li class="mdl-menu__item" 
         *ngIf="session.isLoggedIn()"
         [routerLink]="['/', session.getLoggedInUser().username]"
-        i18n="@@MINDS__TOPBAR__SETTINGS"
+        i18n="@@MINDS__TOPBAR__VIEW_CHANNEL"
         (click)="menu.value = false"
         >
         View Channel
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isLoggedIn() && session.isAdmin()"
+        [routerLink]="['/admin/analytics']"
+        i18n="@@MINDS__TOPBAR__ADMIN"
+        (click)="menu.value = false"
+        >
+        Admin
       </li>
       <li class="mdl-menu__item"
         *ngIf="session.isLoggedIn()"

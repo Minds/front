@@ -1,0 +1,64 @@
+<div class="m-toolbar">
+  <div class="m-topbar--row">
+    <div class="m-topbar--navigation">
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/boosts"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Boosts</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/pages"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Pages</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/appeals"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Appeals</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/monetization"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Monetization</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/programs"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Programs</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/payouts"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Payouts</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/tagcloud"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Tag Cloud</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/verify"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Verify</span>
+      </a>
+    </div>
+  </div>
+</div>
+<minds-admin-analytics *ngIf="filter == 'analytics'"></minds-admin-analytics>
+<minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>
+<minds-admin-pages *ngIf="filter == 'pages'"></minds-admin-pages>
+<minds-admin-reports *ngIf="filter == 'reports' || filter == 'appeals'"></minds-admin-reports>
+<minds-admin-monetization *ngIf="filter == 'monetization'"></minds-admin-monetization>
+<minds-admin-programs *ngIf="filter == 'programs'"></minds-admin-programs>
+<minds-admin-payouts *ngIf="filter == 'payouts'"></minds-admin-payouts>
+<minds-admin-featured *ngIf="filter == 'featured'"></minds-admin-featured>
+<minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
+<m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
