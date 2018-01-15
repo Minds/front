@@ -1,7 +1,7 @@
 import { Component, Input, Output, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
-type CurrencyType = 'points' | 'usd' | 'tokens';
+type CurrencyType = 'rewards' | 'usd' | 'tokens';
 
 @Component({
   providers: [ CurrencyPipe ],
@@ -14,7 +14,7 @@ export class BoostCreatorPaymentMethodsComponent {
   @Output() boostChanged: EventEmitter<any> = new EventEmitter();
 
   @Input() rates = {
-    balance: null,
+    rewardsBalance: null,
     rate: 1,
     min: 250,
     cap: 5000,
@@ -42,15 +42,13 @@ export class BoostCreatorPaymentMethodsComponent {
   }
 
   /**
-   * Round by 2 decimals if P2P and currency is unset or not points. If not, round down to an integer.
+   * Round by 2 decimals if P2P and currency is unset or usd. If not, round by 4 decimals.
    */
   roundAmount() {
     if ((this.boost.type === 'p2p') && (!this.boost.currency || (this.boost.currency === 'usd'))) {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 100) / 100;
-    } else if (this.boost.currency === 'tokens') {
+    } else if (this.boost.currency === 'tokens' || this.boost.currency === 'rewards') {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 10000) / 10000;
-    } else {
-      this.boost.amount = Math.floor(<number>this.boost.amount);
     }
   }
 
@@ -62,13 +60,10 @@ export class BoostCreatorPaymentMethodsComponent {
   calcBaseCharges(type: string): number {
     // P2P should just round down amount points. It's bid based.
     if (this.boost.type === 'p2p') {
-      switch (type) {
-        case 'points':
-          return Math.floor(<number>this.boost.amount);
-      }
-
       return <number>this.boost.amount;
     }
+
+    const tokensFixRate = this.rates.tokens / 10000;
 
     // Non-P2P should do the views <-> currency conversion
     switch (type) {
@@ -76,11 +71,8 @@ export class BoostCreatorPaymentMethodsComponent {
         const usdFixRate = this.rates.usd / 100;
         return Math.ceil(<number>this.boost.amount / usdFixRate) / 100;
 
-      case 'points':
-        return Math.floor(<number>this.boost.amount / this.rates.rate);
-
+      case 'rewards':
       case 'tokens':
-        const tokensFixRate = this.rates.tokens / 10000;
         return Math.ceil(<number>this.boost.amount / tokensFixRate) / 10000;
     }
 

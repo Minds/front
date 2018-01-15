@@ -1,12 +1,8 @@
-<div class="m-boost--creator-payment" *ngIf="boost.currency == 'usd' || boost.currency == 'tokens'">
-  <minds-payments-stripe-checkout *ngIf="boost.currency == 'usd' && !boost.nonce"
+<div class="m-boost--creator-payment" *ngIf="boost.currency == 'usd'">
+  <minds-payments-stripe-checkout *ngIf="!boost.nonce"
     (inputed)="setNonce($event)"
     [useMDLStyling]="false"
   ></minds-payments-stripe-checkout>
-
-  <m-checkout--blockchain *ngIf="boost.currency == 'tokens' && !boost.nonce"
-    (inputed)="setNonce({ address: $event })"
-  ></m-checkout--blockchain>
 
   <div class="m-boost--creator-payment-attached" *ngIf="boost.nonce">
     <i class="material-icons">check_circle</i>

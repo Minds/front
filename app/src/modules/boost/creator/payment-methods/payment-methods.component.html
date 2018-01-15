@@ -2,6 +2,18 @@
   [class.m-boost--creator-selector--has-selection]="boost.currency"
 >
   <li
+    (click)="setBoostCurrency('tokens')"
+    [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'tokens'"
+  >
+    <h4 i18n="@@BOOST__CREATOR__TOKENS_SELECTOR">
+      <b *ngIf="boost.amount">{{ calcCharges('tokens') | number }}</b>
+      <m--crypto-token-symbol></m--crypto-token-symbol>
+    </h4>
+    <span class="m-boost--creator-selector--cta" i18n="@@M__COMMON__SELECT_TOKENS">Select Tokens</span>
+    <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
+  </li>
+
+  <li
     (click)="setBoostCurrency('usd')"
     [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'usd'"
   >
@@ -11,26 +23,14 @@
   </li>
 
   <li
-    (click)="setBoostCurrency('points')"
-    [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'points'"
+    (click)="setBoostCurrency('rewards')"
+    [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'rewards'"
   >
   <h4>
-    <b *ngIf="boost.amount">{{ calcCharges('points') | number }}</b>
-    {{ boost.amount ? 'points' : 'Points' }}
+    <b *ngIf="boost.amount">{{ calcCharges('rewards') | number }}</b>
+    {{ boost.amount ? 'rewards' : 'Rewards' }}
   </h4>
-    <span class="m-boost--creator-selector--cta" i18n="@@M__COMMON__SELECT_POINTS">Select Points</span>
+    <span class="m-boost--creator-selector--cta" i18n="@@M__COMMON__SELECT_POINTS">Select Rewards</span>
     <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
-  </li>
-
-  <li
-    (click)="setBoostCurrency('tokens')"
-    [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'tokens'"
-  >
-    <h4 i18n="@@BOOST__CREATOR__TOKENS_SELECTOR">
-      <b *ngIf="boost.amount">{{ calcCharges('tokens') | number }}</b>
-      <m--crypto-token-symbol></m--crypto-token-symbol>
-    </h4>
-    <span class="m-boost--creator-selector--cta" i18n="@@M__COMMON__SELECT_TOKENS">Select Tokens</span>
-  <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
   </li>
 </ul>

@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { WireContractService } from '../blockchain/contracts/wire-contract.service';
 import { TokenContractService } from '../blockchain/contracts/token-contract.service';
+import { Web3WalletService } from '../blockchain/web3-wallet.service';
 
 @Injectable()
 export class WireService {
@@ -10,13 +11,28 @@ export class WireService {
   constructor(
     private client: Client,
     private wireContract: WireContractService,
-    private tokenContract: TokenContractService
+    private tokenContract: TokenContractService,
+    private web3Wallet: Web3WalletService
   ) { }
 
   async submitWire(wire) {
     let payload = wire.payload;
 
     if (wire.currency == 'tokens') {
+      await this.web3Wallet.ready();
+
+      if (this.web3Wallet.isUnavailable()) {
+        throw new Error('No Ethereum wallets available on your browser.');
+      } else if (await this.web3Wallet.isLocked()) {
+        throw new Error('Your Ethereum wallet is locked or connected to another network.');
+      }
+
+      const wallets = await this.web3Wallet.getWallets();
+
+      if (payload.nonce.receiver == wallets[0]) {
+        throw new Error('You cannot wire yourself.');
+      }
+
       try {
         if (wire.recurring) {
           await this.tokenContract.increaseApproval((await this.wireContract.wire()).address, wire.amount * 11);
@@ -26,7 +42,7 @@ export class WireService {
         payload.nonce.txHash = await this.wireContract.create(payload.nonce.receiver, wire.amount);
       } catch (e) {
         console.error('[Wire/Token]', e);
-        throw new Error('Either you cancelled the approval, or there was an error processing it');
+        throw new Error('Either you cancelled the approval, or there was an error processing it.');
       }
     }
 
