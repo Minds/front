@@ -49,11 +49,11 @@ describe('TransactionOverlayComponent', () => {
     expect(subtitle).not.toBeNull();
     expect(subtitle.nativeElement.textContent.trim()).toContain('Please open your Metamask client to complete the transaction');
   });
-  it('should have a note', () => {
-    const note: DebugElement = fixture.debugElement.query(By.css('.m--blockchain--transaction-overlay--note'));
-    expect(note).not.toBeNull();
-    expect(note.nativeElement.textContent.trim()).toBe('NOTE: Your client will show 0 ETH as we use the Ethereum network, but XXXX Minds tokens will be sent.');
-  });
+  //it('should have a note', () => {
+  //  const note: DebugElement = fixture.debugElement.query(By.css('.m--blockchain--transaction-overlay--note'));
+  //  expect(note).not.toBeNull();
+  //  expect(note.nativeElement.textContent.trim()).toBe('NOTE: Your client will show 0 ETH as we use the Ethereum network, but XXXX Minds tokens will be sent.');
+  //});
   it('should have a link that says \'Having Issues?\' that redirects to /coin page', () => {
     const havingIssues: DebugElement = fixture.debugElement.query(By.css('.m--blockchain--transaction-overlay--help > a'));
     expect(havingIssues).not.toBeNull();

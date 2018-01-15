@@ -65,7 +65,9 @@ class WireCreatorCryptoTokenSymbolMock { }
   selector: 'm-checkout--blockchain',
   template: ''
 })
-class WireCreatorBlockchainCheckoutMock { }
+class WireCreatorBlockchainCheckoutMock {
+  @Input() autoselect;
+}
 
 describe('WireCreatorComponent', () => {
 
@@ -253,7 +255,7 @@ describe('WireCreatorComponent', () => {
     const subtitle = fixture.debugElement.query(By.css('.m-wire-creator--subtext'));
     expect(subtitle).not.toBeNull();
 
-    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars, points or Tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
+    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars, points or tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
   });
 
   it('should have a payment section', () => {
@@ -468,7 +470,7 @@ describe('WireCreatorComponent', () => {
       payload: null,
       method: 'points',
       amount: 10,
-      recurring: false
+      recurring: true
     });
   }));
 });

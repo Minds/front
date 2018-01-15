@@ -3,6 +3,7 @@
   font-family: 'Roboto';
   color: #444;
 
+
   .m-faq--body {
     flex: 1;
   }
@@ -24,6 +25,10 @@
     }
     li {
       cursor: pointer;
+    }
+
+    @media screen and (max-width:500px){
+      display:none;
     }
     
   }
@@ -66,7 +71,7 @@
   margin-bottom: 32px;
 
   .m-faq--tiles--category {
-    width: calc(25% - 8px);
+    width: calc(50% - 8px);
     margin: 4px;
     max-height: 200px;
     background: #FFF;
