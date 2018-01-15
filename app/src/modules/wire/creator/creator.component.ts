@@ -31,8 +31,8 @@ export class WireCreatorComponent implements AfterViewInit {
   minds = window.Minds;
 
   wire: WireStruc = {
-    amount: 1000,
-    currency: 'points',
+    amount: 1,
+    currency: 'tokens',
     guid: null,
     recurring: false,
 
@@ -62,9 +62,10 @@ export class WireCreatorComponent implements AfterViewInit {
   success: boolean = false;
   criticalError: boolean = false;
   error: string = '';
-  autoselectWallet: boolean = true;
 
   session: Session = SessionFactory.build();
+
+  protected submitted: boolean;
 
   @Input('object') set data(object) {
     this.wire.guid = object ? object.guid : null;
@@ -161,9 +162,18 @@ export class WireCreatorComponent implements AfterViewInit {
       if (!this._opts.disableThresholdCheck && this.sums && this.sums[this._opts.default.type]) {
         this.wire.amount = <number>this.wire.amount - Math.ceil(this.sums[this._opts.default.type]);
       }
-    } else if (this.owner.merchant) {
-      this.wire.currency = 'money';
+    } else if (this.owner.eth_wallet) {
+      this.setCurrency('tokens');
       this.wire.amount = 1;
+      this.wire.recurring = true;
+    } else if (this.owner.merchant) {
+      this.setCurrency('money');
+      this.wire.amount = 1;
+      this.wire.recurring = true;
+    } else {
+      // TODO: Refactor to `rewards`
+      this.setCurrency('points');
+      this.wire.amount = 1000;
       this.wire.recurring = true;
     }
 
@@ -191,6 +201,10 @@ export class WireCreatorComponent implements AfterViewInit {
 
     this.wire.payload = null;
 
+    if (currency === 'tokens') {
+      this.setNoncePayload({ receiver: this.owner.eth_wallet })
+    }
+
     this.convertCurrency(oldCurrency, currency);
     this.roundAmount();
     this.showErrors();
@@ -199,7 +213,7 @@ export class WireCreatorComponent implements AfterViewInit {
   /**
    * Sets the wire payment nonce
    */
-  setNoncePayload(nonce: string | null) {
+  setNoncePayload(nonce: any) {
     this.wire.payload = { nonce };
     this.showErrors();
   }
@@ -352,34 +366,28 @@ export class WireCreatorComponent implements AfterViewInit {
       throw new Error('You should select a currency.');
     }
 
-    if (this.wire.currency === 'points') {
-      const charges = this.calcCharges(this.wire.currency);
+    switch (this.wire.currency) {
+      case 'points':
+        const charges = this.calcCharges(this.wire.currency);
 
-      if ((this.rates.balance !== null) && (charges > this.rates.balance)) {
-        throw new VisibleWireError(`You only have ${this.rates.balance} points.`);
-      }
-    } else {
-      if (!this.wire.payload) {
-        throw new Error('Payment method not processed.');
-      }
-    }
+        if ((this.rates.balance !== null) && (charges > this.rates.balance)) {
+          throw new VisibleWireError(`You only have ${this.rates.balance} points.`);
+        }
+        break;
 
-    if (this.wire.currency === 'tokens') {
-      if (this.wire.payload.nonce.address === this.wire.payload.nonce.receiver) {
-        throw new VisibleWireError(`The wallet you selected is the same as @${this.owner.username}'s wallet`);
-      }
+      case 'money':
+        if (!this.wire.payload) {
+          throw new Error('Payment method not processed.');
+        }
+
+        if (this.calcCharges(this.wire.currency) < this.rates.minUsd) {
+          throw new VisibleWireError(`You must spend at least ${this.currency.transform(this.rates.minUsd, 'USD', true)} USD`);
+        }
+        break;
     }
 
     if (!this.wire.guid) {
       throw new Error('You cannot wire this.');
-    }
-
-    // TODO: Maybe fetch wire's owner to check merchant status
-
-    if (this.wire.currency === 'money') {
-      if (this.calcCharges(this.wire.currency) < this.rates.minUsd) {
-        throw new VisibleWireError(`You must spend at least ${this.currency.transform(this.rates.minUsd, 'USD', true)} USD`);
-      }
     }
   }
 
@@ -401,7 +409,9 @@ export class WireCreatorComponent implements AfterViewInit {
    * Shows visible wire errors
    */
   showErrors() {
-    this.error = '';
+    if (!this.submitted) {
+      this.error = '';
+    }
 
     try {
       this.validate();
@@ -429,6 +439,8 @@ export class WireCreatorComponent implements AfterViewInit {
 
     let request: Promise<any> = this.wireService.submitWire(this.wire);
 
+    this.submitted = true;
+    this.error = '';
     request
       .then(({ done }) => {
         this.inProgress = false;

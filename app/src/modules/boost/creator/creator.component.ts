@@ -6,8 +6,9 @@ import { Client } from '../../../services/api';
 import { Session, SessionFactory } from '../../../services/session';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
+import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 
-type CurrencyType = 'points' | 'usd' | 'tokens';
+type CurrencyType = 'rewards' | 'usd' | 'tokens';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
 
 interface BoostStruc {
@@ -41,7 +42,7 @@ export class BoostCreatorComponent implements AfterViewInit {
 
   boost: BoostStruc = {
     amount: 1000,
-    currency: 'points',
+    currency: 'tokens',
     type: null,
 
     // General
@@ -64,6 +65,7 @@ export class BoostCreatorComponent implements AfterViewInit {
 
   rates = {
     balance: null,
+    rewardsBalance: null,
     rate: 1,
     min: 250,
     cap: 5000,
@@ -103,6 +105,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     private currency: CurrencyPipe,
     private tokensContract: TokenContractService,
     private boostContract: BoostContractService,
+    private web3Wallet: Web3WalletService
   ) { }
 
   ngOnInit() {
@@ -253,15 +256,13 @@ export class BoostCreatorComponent implements AfterViewInit {
   }
 
   /**
-   * Round by 2 decimals if P2P and currency is unset or not points. If not, round down to an integer.
+   * Round by 2 decimals if P2P and currency is unset or usd. If not, round by 4 decimals.
    */
   roundAmount() {
     if ((this.boost.type === 'p2p') && (!this.boost.currency || (this.boost.currency === 'usd'))) {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 100) / 100;
-    } else if (this.boost.currency === 'tokens') {
+    } else if (this.boost.currency === 'tokens' || this.boost.currency === 'rewards') {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 10000) / 10000;
-    } else {
-      this.boost.amount = Math.floor(<number>this.boost.amount);
     }
   }
 
@@ -286,13 +287,8 @@ export class BoostCreatorComponent implements AfterViewInit {
    * Calculates base charges (not including priority or any other % based fee)
    */
   calcBaseCharges(type: string): number {
-    // P2P should just round down amount points. It's bid based.
+    // P2P is bid based.
     if (this.boost.type === 'p2p') {
-      switch (type) {
-        case 'points':
-          return Math.floor(<number>this.boost.amount);
-      }
-
       return <number>this.boost.amount;
     }
 
@@ -302,9 +298,7 @@ export class BoostCreatorComponent implements AfterViewInit {
         const usdFixRate = this.rates.usd / 100;
         return Math.ceil(<number>this.boost.amount / usdFixRate) / 100;
 
-      case 'points':
-        return Math.floor(<number>this.boost.amount / this.rates.rate);
-
+      case 'rewards':
       case 'tokens':
         const tokensFixRate = this.rates.tokens / 10000;
         return Math.ceil(<number>this.boost.amount / tokensFixRate) / 10000;
@@ -395,16 +389,24 @@ export class BoostCreatorComponent implements AfterViewInit {
       throw new Error('You should select a type.');
     }
 
-    if (this.boost.currency === 'points') {
-      const charges = this.calcCharges(this.boost.currency);
+    switch (this.boost.currency) {
+      case 'rewards':
+        const charges = this.calcCharges(this.boost.currency);
 
-      if ((this.rates.balance !== null) && (charges > this.rates.balance)) {
-        throw new VisibleBoostError(`You only have ${this.rates.balance} points.`);
-      }
-    } else {
-      if (!this.boost.nonce) {
-        throw new Error('Payment method not processed.');
-      }
+        if ((this.rates.rewardsBalance !== null) && (charges > this.rates.rewardsBalance / Math.pow(10, 18))) {
+          throw new VisibleBoostError(`You only have ${this.rates.rewardsBalance / Math.pow(10, 18)} rewards.`);
+        }
+        break;
+
+      case 'usd':
+        if (!this.boost.nonce) {
+          throw new Error('Payment method not processed.');
+        }
+
+        if (this.calcCharges(this.boost.currency) < this.rates.minUsd) {
+          throw new VisibleBoostError(`You must spend at least ${this.currency.transform(this.rates.minUsd, 'USD', true)} USD`);
+        }
+        break;
     }
 
     if (this.boost.type === 'p2p') {
@@ -431,12 +433,6 @@ export class BoostCreatorComponent implements AfterViewInit {
       //if (!this.boost.categories.length) {
       //  throw new Error('You should select a category.');
       //}
-    }
-
-    if (this.boost.currency === 'usd') {
-      if (this.calcCharges(this.boost.currency) < this.rates.minUsd) {
-        throw new VisibleBoostError(`You must spend at least ${this.currency.transform(this.rates.minUsd, 'USD', true)} USD`);
-      }
     }
   }
 
@@ -501,10 +497,23 @@ export class BoostCreatorComponent implements AfterViewInit {
 
       if (this.boost.type !== 'p2p') {
         if (this.boost.currency === 'tokens') {
+          await this.web3Wallet.ready();
+
           const tokensFixRate = this.rates.tokens / 10000;
           let amount = Math.ceil(<number>this.boost.amount / tokensFixRate) / 10000;
 
-          this.boost.nonce.txHash = await this.boostContract.create(guid, amount);
+          if (this.web3Wallet.isUnavailable()) {
+            throw new Error('No Ethereum wallets available on your browser.');
+          } else if (await this.web3Wallet.isLocked()) {
+            throw new Error('Your Ethereum wallet is locked or connected to another network.');
+          }
+
+          const wallets = await this.web3Wallet.getWallets();
+
+          this.boost.nonce = {
+            txHash: await this.boostContract.create(guid, amount),
+            address: wallets[0]
+          };
         }
 
         await this.client.post(`api/v1/boost/${this.object.type}/${this.object.guid}/${this.object.owner_guid}`, {
@@ -517,12 +526,25 @@ export class BoostCreatorComponent implements AfterViewInit {
         });
       } else {
         if (this.boost.currency === 'tokens') {
-          this.boost.nonce.txHash = await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount);
+          await this.web3Wallet.ready();
+
+          if (this.web3Wallet.isUnavailable()) {
+            throw new Error('No Ethereum wallets available on your browser.');
+          } else if (await this.web3Wallet.isLocked()) {
+            throw new Error('Your Ethereum wallet is locked or connected to another network.');
+          }
+
+          const wallets = await this.web3Wallet.getWallets();
+
+          this.boost.nonce = {
+            txHash: await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount),
+            address: wallets[0]
+          };
         }
 
         await this.client.post(`api/v1/boost/peer/${this.object.guid}/${this.object.owner_guid}`, {
           guid,
-          type: this.boost.currency === 'points' ? 'points' : 'pro',
+          type: 'pro',
           currency: this.boost.currency,
           bid: this.boost.amount,
           destination: this.boost.target.guid,

@@ -4,9 +4,9 @@
     <h2 i18n="@@M__FEATURE__BOOST">Boost</h2>
 
     <div class="m-boost--creator--wallet">
-      <i class="material-icons m--middle">account_balance</i>
-      <span *ngIf="rates.balance !== null" class="m--middle" i18n="@@BOOST__CREATOR__WALLET_BALANCE_COUNT">{{ rates.balance | number }} Points</span>
-      <span *ngIf="rates.balance === null" class="m--middle">…</span>
+      <i class="material-icons m--middle">stars</i>
+      <span *ngIf="rates.rewardsBalance !== null" class="m--middle" i18n="@@BOOST__CREATOR__WALLET_REWARDS_BALANCE_COUNT">{{ rates.rewardsBalance | token:18 | number }} Rewards</span>
+      <span *ngIf="rates.rewardsBalance === null" class="m--middle">…</span>
     </div>
   </div>
 
@@ -72,9 +72,6 @@
             (click)="amountEditorFocus()"
           >
             <ng-container *ngIf="boost.type != 'p2p'" i18n="@@BOOST__CREATOR__VIEWS_INPUT_LABEL">views</ng-container>
-            <!--<ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'points'" i18n="points input|@@M__COMMON__POINTS_INPUT">points</ng-container>
-            <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'usd'" i18n="usd input|@@M__COMMON__USD_INPUT">USD</ng-container>
-            <ng-container *ngIf="boost.type == 'p2p' && boost.currency == 'tokens'" i18n="usd input|@@M__COMMON__TOKENS_INPUT">Tokens</ng-container>-->
           </span>
         </div>
         <span class="m-boost--creator-wide-input--estimation" *ngIf="estimatedTime !== -1">
@@ -92,7 +89,7 @@
     <!-- Boost Settings -->
     <!-- General -->
     <ng-container *ngIf="boost.type && (boost.type != 'p2p')">
-      <section class="m-boost--creator-section m-boost--creator-section-priority" *ngIf="boost.currency == 'usd' || boost.currency == 'tokens'">
+      <section class="m-boost--creator-section m-boost--creator-section-priority">
         <h3>
           <!-- i18n: @@BOOST__CREATOR__PRIORITY_TITLE -->Priority<!-- /i18n -->
           <span class="m-boost--creator-section--title-context" i18n="@@BOOST__CREATOR__PRIORITY_TITLE_CTX">
@@ -110,8 +107,8 @@
           <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'usd'" i18n="@@BOOST__CREATOR__USD_PRIORITY_FEE">
             + <b>{{ calcPriorityChargesPreview('usd') | currency:'USD':true }} USD</b>
           </span>
-          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'points'" i18n="@@BOOST__CREATOR__POINTS_PRIORITY_FEE">
-            + <b>{{ calcPriorityChargesPreview('points') | number }} points</b>
+          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'rewards'" i18n="@@BOOST__CREATOR__REWARDS_PRIORITY_FEE">
+            + <b>{{ calcPriorityChargesPreview('rewards') | number }} rewards</b>
           </span>
           <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'tokens'" i18n="@@BOOST__CREATOR__TOKENS_PRIORITY_FEE">
             + <b>{{ calcPriorityChargesPreview('tokens') | number }} tokens</b>
@@ -157,7 +154,7 @@
   <!-- Next -->
   <section class="m-boost--creator-section m-boost--creator-section-submit"
     (mouseenter)="showErrors()"
-    *ngIf="step < 1 && boost.currency != 'points'"
+    *ngIf="step < 1 && boost.currency == 'usd'"
   >
     <div class="m-boost--creator--submit">
       <button class="m-boost--creator-button"
@@ -170,7 +167,7 @@
   <!-- Submit -->
   <section class="m-boost--creator-section m-boost--creator-section-submit"
     (mouseenter)="showErrors()"
-    *ngIf="step >= 1 || boost.currency == 'points'"
+    *ngIf="step >= 1 || boost.currency != 'usd'"
   >
 
     <div class="m-boost--creator--submit">
@@ -178,7 +175,7 @@
       <button class="m-boost--creator-button m-boost--creator-button-back"
         (click)="back()"
         i18n="verb|@@M__ACTION__BOOST_BACK"
-        *ngIf="boost.currency != 'points'"
+        *ngIf="boost.currency == 'usd'"
       >Back</button>
 
       <button class="m-boost--creator-button"
