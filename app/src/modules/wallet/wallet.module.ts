@@ -8,6 +8,7 @@ import { MonetizationOverviewModule } from '../monetization/monetization.overvie
 import { CheckoutModule } from '../checkout/checkout.module';
 import { AdsModule } from '../ads/ads.module';
 import { WireModule } from '../wire/wire.module';
+import { BlockchainModule } from '../blockchain/blockchain.module';
 
 import { WalletComponent } from './wallet.component';
 import { PointsOverviewComponent } from './points-overview.component';
@@ -75,6 +76,7 @@ const walletRoutes : Routes = [
     RouterModule.forChild(walletRoutes),
     AdsModule,
     WireModule,
+    BlockchainModule,
   ],
   declarations: [
     WalletComponent,
