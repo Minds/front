@@ -7,11 +7,13 @@ import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { AbbrPipe } from '../../../common/pipes/abbr';
+import { TokenPipe } from '../../../common/pipes/token.pipe';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Scheduler } from '../../../common/components/scheduler/scheduler';
+import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 
 import { VisibleBoostError, BoostCreatorComponent, BoostType } from './creator.component';
 import { BoostService } from '../boost.service';
@@ -296,6 +298,7 @@ describe('BoostCreatorComponent', () => {
         MaterialSwitchMock,
         AbbrPipe,
         Scheduler,
+        TokenPipe,
         StripeCheckoutMock,
         CategoriesSelectorMock,
         SelectedCategoriesMock,
@@ -311,6 +314,7 @@ describe('BoostCreatorComponent', () => {
       providers: [
         { provide: Client, useValue: clientMock },
         BoostService,
+        Web3WalletService,
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: TokenContractService, useValue: tokenContractServiceMock },
         { provide: BoostContractService, useValue: peerBoostContractServiceMock }
