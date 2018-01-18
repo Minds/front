@@ -29,7 +29,7 @@
   </div>
 
   <!-- USD bid, if applicable -->
-  <div *ngIf="boost.bidType == 'pro' || boost.bidType == 'usd'"
+  <div *ngIf="boost.method == 'usd'"
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">attach_money</i>
@@ -37,14 +37,14 @@
   </div>
 
   <!-- Points bid, if applicable -->
-  <div *ngIf="boost.bidType == 'points'"
+  <div *ngIf="boost.method == 'points'"
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">account_balance</i>
     <!-- i18n: @@BOOST__CONSOLE__CARD__POINTS_VALUE -->{{ boost.bid | number }} points<!-- /i18n -->
   </div>
 
-  <div *ngIf="boost.bidType == 'tokens'"
+  <div *ngIf="boost.method == 'tokens'"
     class="m-boost-card--manager-item"
   >
     <m--crypto-token-symbol ></m--crypto-token-symbol>
