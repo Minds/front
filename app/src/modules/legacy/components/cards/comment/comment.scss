@@ -14,4 +14,12 @@
       vertical-align: middle;
     }
   }
+
+  .m-comment--username-wrapper {
+    min-width: 150px;
+    overflow-x: hidden;
+    width: calc(100% - 100px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
