@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="tile.component.scss">
 <div class="m-channels--tile m-border">
 
   <div class="m-channels--tile-banner">
@@ -9,8 +10,7 @@
   </div>
   
   <a [routerLink]="['/', entity.username]" class="m-channels--tile-block">
-    <div class="avatar">
-      <img src="icon/{{entity.guid}}/large/{{entity.icontime}}"/>
+    <div class="avatar" [ngStyle]="{ 'background-image': 'url(icon/' + entity.guid + '/large/'+ entity.icontime +')' }">
     </div>
     <div class="body">
       <h3>{{entity.name}}</h3>

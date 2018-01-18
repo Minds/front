@@ -39,8 +39,13 @@
       color: #666;
     }
   }
+
+  .avatar {
+    margin: 0 auto;
+    background-size: cover;
+  }
   
-  img {
+  img, .avatar {
     width: 150px;
     height: 150px;
     border-radius: 50%;
