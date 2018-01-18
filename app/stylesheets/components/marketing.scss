@@ -208,7 +208,9 @@
 
 .m-marketing--marketing-responsive-hero-image {
   width: 100%;
-  height: calc(100vh - 52px);
+  @media screen and (min-width: $min-tablet) {
+    height: calc(100vh - 52px);
+  }
 
   > img {
     width: 100%;
