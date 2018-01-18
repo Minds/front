@@ -211,6 +211,11 @@ m-channel{
        text-align:center;
      }
    }
+   minds-channel-modules {
+     @media screen and (max-width: $min-tablet - 1) {
+       display: none;
+     }
+   }
  }
 
  .m-channel--edit-button{
