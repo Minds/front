@@ -27,7 +27,7 @@ export class MediaViewComponent {
 
   theaterMode: boolean = false;
 
-  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'subscribe', 'remove-explicit'];
+  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'subscribe', 'remove-explicit', 'rating'];
 
   paramsSubscription: Subscription;
 

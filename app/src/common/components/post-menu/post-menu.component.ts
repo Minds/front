@@ -25,6 +25,7 @@ type Option =
   | 'unsubscribe'
   | 'see-more-like-this'
   | 'see-less-like-this'
+  | 'rating'
   | 'block';
 
 @Component({
@@ -323,4 +324,12 @@ export class PostMenuComponent {
       });
   }
 
+  setRating(rating: number) {
+    this.client.post(`api/v1/admin/rating/${this.entity.guid}/${rating}`, {})
+      .then((response: any) => {
+        this.entity.rating = rating;
+        this.detectChanges();
+      });
+    this.selectOption('rating');
+  }
 }
