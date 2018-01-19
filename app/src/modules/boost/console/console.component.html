@@ -14,10 +14,10 @@
         <span i18n="@@M__FEATURE__SIDEBAR_PLURAL">Sidebar</span>
       </a>
       <a class="m-topbar--navigation--item"
-        routerLink="/boost/console/peer/history/inbox"
+        routerLink="/boost/console/offers"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</span>
+        <span i18n="@@M__FEATURE__OFFER__PLURAL">Offers</span>
       </a>
 
       <a class="m-topbar--navigation--item"
@@ -27,15 +27,15 @@
         <span i18n="@@M__FEATURE__PUBLISHER">Publisher</span>
       </a>
 
-      <ng-container *ngIf="type == 'peer'">
+      <ng-container *ngIf="type === 'offers'">
         <a class="m-topbar--navigation--item"
-          routerLink="/boost/console/peer/history/inbox"
+          routerLink="/boost/console/offers/history/inbox"
           routerLinkActive="m-topbar--navigation--item-active"
         >
           <span i18n="@@BOOST__CONSOLE__INBOX_TAB">Inbox</span>
         </a>
         <a class="m-topbar--navigation--item"
-          routerLink="/boost/console/peer/history/outbox"
+          routerLink="/boost/console/offers/history/outbox"
           routerLinkActive="m-topbar--navigation--item-active"
         >
           <span i18n="@@BOOST__CONSOLE__OUTBOX_TAB">Outbox</span>

@@ -49,7 +49,9 @@ export class BoostConsoleNetworkListComponent {
       this.moreData = true;
     }
 
-    this.service.load(this.type, '', {
+    const type: string = this.type === 'offers' ? 'peer' : this.type;
+
+    this.service.load(type, '', {
       offset: this.offset
     })
       .then(({ boosts, loadNext }) => {

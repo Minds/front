@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MindsTitle } from '../../../services/ux/title';
 
-export type BoostConsoleType = 'newsfeed' | 'content' | 'peer' | 'publisher';
+export type BoostConsoleType = 'newsfeed' | 'content' | 'offers' | 'publisher';
 export type BoostConsoleFilter = 'create' | 'history' | 'earnings' | 'payouts' | 'settings' | 'inbox' | 'outbox';
 
 @Component({

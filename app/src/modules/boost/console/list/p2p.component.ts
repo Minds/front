@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { BoostConsoleFilter } from '../console.component';
 
 import { BoostService } from '../../boost.service';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -21,10 +22,13 @@ export class BoostConsoleP2PListComponent {
 
   error: string = '';
 
-  constructor(public service: BoostService) { }
+  constructor(public service: BoostService, public router: Router) { }
 
   @Input('filter') set _filter(filter: BoostConsoleFilter) {
-    this.filter = filter.includes('inbox') ? 'inbox' : 'outbox';
+    if (filter !== 'inbox' && filter !== 'outbox') {
+      this.router.navigate(['/boost/console/offers/history/inbox']);
+    }
+    this.filter = filter;
 
     if (this.initialized) {
       this.load(true);
