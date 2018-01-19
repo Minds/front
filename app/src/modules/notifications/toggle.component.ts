@@ -1,4 +1,4 @@
-import { Component, Input, HostListener } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,10 +11,14 @@ export class NotificationsTopbarToggleComponent {
 
   toggled: boolean = false;
   minds: any = window.Minds;
+  @ViewChild('notificationsFlyout') flyout: any;
+  
 
   toggle(e){
     this.toggled = !this.toggled;
-    console.log(this.toggled)
+    if (this.toggled) {
+      this.flyout.toggleLoad();
+    }
   }
 
 }

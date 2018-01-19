@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { NotificationsComponent } from './notifications.component';
@@ -13,8 +13,13 @@ export class NotificationsFlyoutComponent {
 
   @Output('close') closeEvt: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild('notifications') notificationList: any
+
   close() {
     this.closeEvt.emit(true);
   }
 
+  toggleLoad() {
+    this.notificationList.onVisible();
+  }
 }

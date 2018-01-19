@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
@@ -17,6 +17,8 @@ import { NotificationService } from './notification.service';
 export class NotificationsComponent {
   @Input() params: any;
   @Input() count: number;
+  @Input() loadOnDemand: boolean;
+  @ViewChild('notificationGrid') notificationList: ElementRef;
   notifications: Array<Object> = [];
   entity;
   moreData: boolean = true;
@@ -33,7 +35,8 @@ export class NotificationsComponent {
     public router: Router,
     public title: MindsTitle,
     public notificationService: NotificationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public el: ElementRef,
   ) { }
 
   ngOnInit() {
@@ -55,12 +58,26 @@ export class NotificationsComponent {
       }
     });
 
-    this.load(true);
+    if (!this.loadOnDemand) {
+      this.load(true);
+    }
 
     this.notificationService.clear();
     this.title.setTitle('Notifications');
   }
 
+  onVisible() {
+    if (this.notifications.length === 0 ) {
+      this.load(true);
+    } else {
+      setTimeout(() => {
+        if (this.minds.notifications_count > 0 && this.notificationList.nativeElement.scrollTop === 0) {
+          this.load(true);
+        }
+      }, 200);
+    }
+  }
+  
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
@@ -96,6 +113,7 @@ export class NotificationsComponent {
         self.offset = data['load-next'];
         self.inProgress = false;
         self.minds.notifications_count = 0;
+        self.notificationList.nativeElement.scrollTop = 0;
       });
   }
 

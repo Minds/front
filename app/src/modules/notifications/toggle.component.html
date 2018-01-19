@@ -10,4 +10,4 @@
 </a>
 
 <div class="m-notifications--topbar-toggle-overlay" (click)="toggle($event)" *ngIf="toggled"></div>
-<m-notifications--flyout (close)="toggle($event)" [hidden]="!toggled"></m-notifications--flyout>
+<m-notifications--flyout #notificationsFlyout (close)="toggle($event)" [hidden]="!toggled"></m-notifications--flyout>
