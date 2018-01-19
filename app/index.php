@@ -152,7 +152,7 @@
 
           if(Minds\Core\Session::isLoggedIn()){
               $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
-              $minds['user']['phone_number_hash'] = $minds['user']->getPhoneNumberHash();
+              $minds['user']['phone_number_hash'] = Minds\Core\Session::getLoggedinUser()->getPhoneNumberHash();
               $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
           }
 
