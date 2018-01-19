@@ -26,6 +26,7 @@ import { WalletTokenSettingsComponent } from './tokens/settings/settings.compone
 import { WalletTokenRewardsComponent } from './tokens/rewards/rewards.component';
 import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
 import { WalletTokenWithdrawComponent } from './tokens/withdraw/withdraw.component';
+import { WalletTokenJoinComponent } from './tokens/join/join.component';
 import { WalletBalanceUSDComponent } from './balances/usd/balance.component';
 import { WalletBalanceTokensComponent } from './balances/tokens/balance.component';
 import { WalletBalanceRewardsComponent } from './balances/rewards/balance.component';
@@ -45,6 +46,7 @@ const walletRoutes : Routes = [
         children: [
           { path: '', redirectTo: 'rewards', pathMatch: 'full' },
           { path: 'withdraw', component: WalletTokenWithdrawComponent },
+          { path: 'rewards/join', component: WalletTokenJoinComponent },          
           { path: 'rewards', component: WalletTokenRewardsComponent },
           { path: 'contributions', component: WalletTokenContributionsComponent },
           { path: 'settings', component: WalletTokenSettingsComponent },
@@ -92,6 +94,7 @@ const walletRoutes : Routes = [
     WalletTokenContributionsComponent,
     WalletTokenSettingsComponent,
     WalletTokenWithdrawComponent,
+    WalletTokenJoinComponent,
     WalletTokensComponent,
     WalletPointsComponent,
     WalletBalanceUSDComponent,

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
 
@@ -55,12 +55,15 @@ import { CategoriesSelectedComponent } from './components/categories/selected/se
 import { TreeComponent } from './components/tree/tree.component';
 import { AnnouncementComponent } from './components/announcements/announcement.component';
 import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.component';
+import { PhoneInputComponent } from './components/phone-input/phone-input.component';
+import { PhoneInputCountryComponent } from './components/phone-input/country.component';
 
 @NgModule({
   imports: [
     NgCommonModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     MINDS_PIPES,
@@ -118,6 +121,8 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
 
     AnnouncementComponent,
     MindsTokenSymbolComponent,
+    PhoneInputComponent,
+    PhoneInputCountryComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -174,6 +179,7 @@ import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.compo
 
     AnnouncementComponent,
     MindsTokenSymbolComponent,
+    PhoneInputComponent,
   ],
   providers: [
     AttachmentService

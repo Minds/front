@@ -1,0 +1,16 @@
+<div class="m-phone-input--wrapper m-border">
+  <m-phone-input--country (country)="selectedCountry = $event; onPhoneNumberChange();"></m-phone-input--country>
+
+  <input type="tel" 
+    id="phone" 
+    autocomplete="off" 
+    placeholder="916-555-5555"
+    (keypress)="onInputKeyPress($event)"
+    [(ngModel)]="phoneNumber"
+    (ngModelChange)="onPhoneNumberChange()"
+    [placeholder]="selectedCountry.placeHolder" 
+    #input
+    required
+    >
+
+</div>

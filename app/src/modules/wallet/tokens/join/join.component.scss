@@ -1,0 +1,42 @@
+.m-token-join{
+  background: #FFF;
+  padding: 16px;
+
+  h2 { 
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .m-token-join--form--input-wrapper {
+    margin-bottom: 16px;
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .m-token-join--form--input-input {
+      font-size: 16px;
+      padding: 8px;
+    }
+
+    m-tooltip i {
+      font-size: 16px;
+    }
+  }
+
+  .m-token-join--form--inprogress {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+  }
+
+  .m-token-join--form--error {
+    color: #f44336 !important;
+    font-weight: 600;
+    padding: 8px;
+    margin: 16px 0;
+    border-radius: 3px;
+    text-transform: capitalize;
+  }
+}

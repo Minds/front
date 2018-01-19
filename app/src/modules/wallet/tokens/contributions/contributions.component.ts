@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Client } from '../../../../services/api/client';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -15,9 +18,21 @@ export class WalletTokenContributionsComponent {
   offset: string;
   moreData: boolean = true;
 
-  constructor(protected client: Client, protected cd: ChangeDetectorRef) { }
+  constructor(
+    protected client: Client,
+    protected cd: ChangeDetectorRef,
+    protected session: Session,
+    protected router: Router,
+  ) {
+
+  }
 
   ngOnInit() {
+
+    if (!this.session.getLoggedInUser().phone_number_hash) {
+      this.router.navigate(['/wallet/tokens/rewards/join']);
+    }
+
     const d = new Date();
 
     d.setHours(23, 59, 59);

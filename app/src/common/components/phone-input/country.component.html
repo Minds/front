@@ -1,0 +1,15 @@
+<div class="m-phone-input--selected-flag" (click)="toggleDropdown()" (keyup)="searchList($event)" tabindex="1">
+  <div class="m-phone-input--flag" [ngClass]="selectedCountry.flagClass"></div>
+  <div class="m-phone-input--dial-code">+{{selectedCountry.dialCode}}</div>
+  <div class="m-phone-input--arrow" [ngClass]="{'up': showDropdownMenu}"></div>
+</div>
+
+<ul class="m-phone-input--country-list dropdown-menu" #dropdownMenu [hidden]="!showDropdownMenu">
+  <li class="m-phone-input--country" *ngFor="let country of countries" (click)="onCountrySelect(country)">
+    <div class="m-phone-input--flag-box">
+      <div class="m-phone-input--flag" [ngClass]="country.flagClass"></div>
+    </div>
+    <span class="m-phone-input--country-name">{{country.name}}</span>
+    <span class="m-phone-input--dial-code">+{{country.dialCode}}</span>
+  </li>
+</ul>
