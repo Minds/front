@@ -32,7 +32,7 @@
     </div>
 
     <div class="m-messenger--conversation-encryption-lock" *ngIf="!showMessages">
-      <minds-messenger-encryption (on)="initialLoad(); showMessages = true;"></minds-messenger-encryption>
+      <m-messenger--encryption (on)="initialLoad(); showMessages = true;"></m-messenger--encryption>
     </div>
 
     <div class="m-messenger--conversation-messages" *ngIf="showMessages"

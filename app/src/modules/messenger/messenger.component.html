@@ -3,8 +3,7 @@
     <m-messenger--conversation-dockpanes>
 
       <m-messenger--dockpane [style.right]="0">
-        <m-messenger--userlist #userList *ngIf="encryption.isOn()"></m-messenger--userlist>
-        <m-messenger--setup #setupChat *ngIf="!encryption.isOn()"></m-messenger--setup>
+        <m-messenger--userlist #userList ></m-messenger--userlist>
       </m-messenger--dockpane>
 
     </m-messenger--conversation-dockpanes>
