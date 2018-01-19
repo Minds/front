@@ -25,8 +25,8 @@ export class WalletBalanceTokensComponent implements OnInit {
     try {
       let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
 
-      if (response && typeof response.balance !== 'undefined') {
-        this.balance = response.balance;
+      if (response && typeof response.wallet !== 'undefined') {
+        this.balance = response.wallet.balance;
       } else {
         console.error('No data');
         this.balance = 0;
