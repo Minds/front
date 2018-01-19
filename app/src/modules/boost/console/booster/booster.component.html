@@ -5,7 +5,7 @@
 
 <div class="m-boost-console-booster--content mdl-color--blue-grey-900 mdl-color-text--white mdl-shadow--4dp">
   <!-- Posts  -->
-  <ng-container *ngIf="type == 'newsfeed' || type == 'peer'">
+  <ng-container *ngIf="type == 'newsfeed' || type == 'offers'">
     <h3 i18n="@@BOOST__CONSOLE__BOOSTER__RECENT_POSTS_TITLE">Your recent posts</h3>
     <minds-card [object]="object" hostClass="mdl-shadow--2dp" *ngFor="let object of posts"></minds-card>
   </ng-container>
