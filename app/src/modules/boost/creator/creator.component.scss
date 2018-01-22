@@ -81,6 +81,32 @@
     }
   }
 
+  .m-boost--creator--target-avatar {
+    padding: 12px;
+    font-weight: 400;
+    letter-spacing: 3px;
+
+    appearance: none;
+    background: rgba(0, 0, 0, 0.15);
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    border: none;
+    border-radius: $minds-padding / 2;
+    margin: 0;
+
+    .m-boost--creator-wide-input--edit {
+      background: rgba(0, 0, 0, 0);
+      max-width: calc(90% - 60px) !important;
+    }
+
+    .m-boost--creator-autocomplete--suggestion-avatar {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
   .m-boost--creator--amount, .m-boost--creator--target {
     margin-top: 16px;
     letter-spacing: 2.5px;
@@ -243,6 +269,19 @@
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  .m-boost--creator-autocomplete--suggestion-username {
+    vertical-align: middle;
+  }
+
+  .m-boost--creator-autocomplete--suggestion-avatar {
+    border-radius: 50%;
+    margin: 0 0 0 4px;
+    width: 36px;
+    height: 36px;
+    vertical-align: middle;
+    background: #444;
   }
 
   .m-boost--creator-autocomplete--results {

@@ -1,4 +1,5 @@
-<div class="m-boost--creator-wide-input m-boost--creator--target">
+<div class="m-boost--creator-wide-input m-boost--creator--target m-boost--creator--target-avatar">
+  <img *ngIf="boost.target" class="m-boost--creator-autocomplete--suggestion-avatar" src="icon/{{boost.target.guid}}/small"/>
   <input type="text"
     class="m-boost--creator-wide-input--edit"
     [(ngModel)]="query"
@@ -19,7 +20,8 @@
     (mousedown)="setTarget(target, $event); onBlur()"
   >
     <div class="m-boost--creator-autocomplete--result-content">
-      @{{ target.username }}
+      <img class="m-boost--creator-autocomplete--suggestion-avatar" src="icon/{{target.guid}}/small"/>
+      <span class="m-boost--creator-autocomplete--suggestion-username"> @{{ target.username }} </span>
       <ng-container *ngIf="target.merchant"><i class="material-icons material-icons--inline">attach_money</i></ng-container>
       <ng-container *ngIf="target.eth_wallet"><m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol></ng-container>
     </div>
