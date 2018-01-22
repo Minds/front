@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ElementRef, Input } from '@angular/core';
+import { Component, EventEmitter, ElementRef, Input, ViewChild } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { SessionFactory } from '../../../../../services/session';
@@ -9,6 +9,7 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { ChannelBadgesComponent } from '../../../../../common/components/badges/badges.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
+import { MindsVideo } from '../../../../video/video';
 
 @Component({
   moduleId: module.id,
@@ -52,6 +53,8 @@ export class Activity {
   canDelete: boolean = false;
 
   menuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block'];
+
+  @ViewChild('player') player: MindsVideo;
 
   constructor(
     public client: Client,
@@ -266,6 +269,13 @@ export class Activity {
         action: 'translate',
         args: [$event]
       });
+    }
+  }
+
+  hide() {
+    if (this.player) {
+      console.warn('player: ', this.player);
+      this.player.pause();
     }
   }
 }

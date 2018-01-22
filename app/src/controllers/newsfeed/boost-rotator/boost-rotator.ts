@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
 import { SessionFactory } from '../../../services/session';
 import { Router } from '@angular/router';
+import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 
 @Component({
   moduleId: module.id,
@@ -39,6 +40,8 @@ export class NewsfeedBoostRotator {
   ratingMenuToggle: boolean = false;
   plus: boolean = false;
   disabled: boolean = false;
+
+  @ViewChildren('activities') activities: QueryList<Activity>;
 
   constructor(
     public router: Router,
@@ -206,6 +209,7 @@ export class NewsfeedBoostRotator {
   }
 
   next() {
+    this.activities.toArray()[this.currentPosition].hide();
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       //this.currentPosition = 0;
       this.load()

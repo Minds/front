@@ -326,6 +326,12 @@ export class MindsVideo {
       this.scroll.unListen(this.scroll_listener);
   }
 
+  pause() {
+    if (this.element.paused === false) {
+      this.element.pause();
+    }
+  }
+
 }
 
 export { VideoAds } from './ads';
