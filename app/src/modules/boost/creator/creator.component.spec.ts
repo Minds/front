@@ -411,7 +411,7 @@ describe('BoostCreatorComponent', () => {
     expect(availableBoostTypes).not.toBeNull();
     expect(availableBoostTypes.nativeElement.children.length).toBe(2);
     expect(getBoostTypeItem(1).query(By.css('h4')).nativeElement.textContent).toContain('Feeds');
-    expect(getBoostTypeItem(2).query(By.css('h4')).nativeElement.textContent).toContain('Channels');
+    expect(getBoostTypeItem(2).query(By.css('h4')).nativeElement.textContent).toContain('Offers');
   });
 
   it('should have an amount of views section, with an input and label', () => {
