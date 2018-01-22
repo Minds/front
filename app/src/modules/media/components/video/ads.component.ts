@@ -1,6 +1,6 @@
 import { Component, Input, ElementRef } from '@angular/core';
 
-import { VideoAdsService } from './ads-service';
+import { VideoAdsService } from './ads.service';
 
 @Component({
   selector: 'video-ads',

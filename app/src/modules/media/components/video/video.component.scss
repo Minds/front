@@ -1,0 +1,75 @@
+
+/**
+ * Minds video components
+ */
+ m-video{
+  position: relative;
+  display:block;
+
+  video{
+    width:100%;
+  }
+  .minds-video-bar-min{
+    position: absolute;
+    background-color: rgba(0,0,0,0.4);
+    bottom: 8px;
+    left: 8px;
+    width: auto;
+    color: #FFF;
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+  .minds-video-bar-top{
+    position:absolute;
+    background-color: rgba(0,0,0,0.4);
+    color:#FFF;
+    top:0;
+    left:0;
+    width:100%;
+    box-sizing:border-box;
+    padding:$minds-padding;
+    text-align:center;
+  }
+  .minds-video-play-icon{
+    color: #fff;
+    display: block;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 100px;
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+  }
+  .minds-video-bar-full{
+    display: none;
+    position: absolute;
+    background-color: rgba(0,0,0,0.4);
+    color:#FFF;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    //padding: $minds-padding;
+    text-align: center;
+
+    > m-video--quality-selector, > a, > i {
+      cursor: pointer;
+      text-decoration: none;
+      padding: 12px;
+    }
+  }
+
+  &:hover{
+    .minds-video-bar-min{
+      display: none;
+    }
+    .minds-video-bar-full{
+      display: flex;
+    }
+  }
+
+
+}

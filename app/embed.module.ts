@@ -18,7 +18,7 @@ import { MINDS_PLUGIN_PROVIDERS } from './src/plugin-providers';
 import { CaptchaModule } from './src/modules/captcha/captcha.module';
 import { CommonModule } from './src/common/common.module';
 import { LegacyModule } from './src/modules/legacy/legacy.module';
-import { VideoModule } from './src/modules/video/video.module';
+import { VideoModule } from './src/modules/media/components/video/video.module';
 import { ReportModule } from './src/modules/report/report.module';
 import { PostMenuModule } from './src/common/components/post-menu/post-menu.module';
 import { BanModule } from './src/modules/ban/ban.module';

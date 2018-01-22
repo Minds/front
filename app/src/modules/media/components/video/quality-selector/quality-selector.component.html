@@ -1,0 +1,6 @@
+<span *ngIf="qualityOptions.length > 1" class="m-video--quality-control-wrapper" title="Video quality">
+  <i class="material-icons">high_quality</i>
+  <ul class="m-video--quality-control">
+    <li *ngFor="let qualityOption of qualityOptions" (click)="selectQuality(qualityOption)" [ngClass]="{'m-video--selected-quality' : selected.id === qualityOption.id}">{{qualityOption.id}}</li>
+  </ul>
+</span>

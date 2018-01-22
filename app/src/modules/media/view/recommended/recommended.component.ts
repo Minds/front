@@ -1,4 +1,7 @@
 import { Component, Input } from '@angular/core';
+
+import { RecommendedService } from '../../components/video/recommended.service';
+
 import { Client } from '../../../../services/api';
 
 @Component({
@@ -30,7 +33,7 @@ export class MediaViewRecommendedComponent {
   private initialized: boolean = false;
   private loaded: boolean = false;
 
-  constructor(private client: Client) { }
+  constructor(private service: RecommendedService) { }
 
   ngOnInit() {
     this.initialized = true;
@@ -44,18 +47,17 @@ export class MediaViewRecommendedComponent {
 
     this.loaded = true;
 
-    this.client.get(`api/v1/media/recommended/${this.type}/${this.channel}`, {
-      current: this.current,
-      next: this.next,
-      limit: this.limit
-    })
-      .then(({ entities }) => {
+    this.service.getRecommended(this.type, this.channel, {
+        current: this.current,
+        next: this.next,
+        limit: this.limit
+      }).then((entities) => {
         if (!entities) {
           this.entities = [];
           return;
         }
-
         this.entities = entities;
       });
+      
   }
 }

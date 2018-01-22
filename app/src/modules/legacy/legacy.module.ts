@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { TranslateModule } from '../translate/translate.module';
-import { VideoModule } from '../video/video.module';
+import { VideoModule } from '../media/components/video/video.module';
 import { ModalsModule } from '../modals/modals.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { BoostModule } from '../boost/boost.module';

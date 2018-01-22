@@ -131,7 +131,7 @@ export class PosterMock {
 }
 
 @Component({
-  selector: 'minds-video',
+  selector: 'm-video',
   template: ''
 })
 export class VideoComponentMock {

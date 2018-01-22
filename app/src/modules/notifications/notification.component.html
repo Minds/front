@@ -526,6 +526,14 @@
       </a>
   </ng-template>
 
+  <!-- Transcoding -->
+  <ng-template ngSwitchCase="video_transcoded">
+    <a href="#">
+      <p>
+        <!-- i18n --> Your <a [routerLink]="['/media', notification.params.entity.guid]" class="pseudo-link mdl-color-text--blue-grey-400">video</a> is ready to be viewed!<!-- /i18n -->
+      </p>
+    </a>
+  </ng-template>
   <!-- Messenger -->
   <ng-template ngSwitchCase="messenger_invite">
     <a href="#" (click)="openMessengerWindow($event)">

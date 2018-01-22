@@ -1,0 +1,29 @@
+
+  .m-video--quality-control-wrapper{
+    position: relative;
+  }
+  
+  .m-video--quality-control:hover {
+    display: block;
+  }
+      
+  .m-video--quality-control-wrapper:hover .m-video--quality-control {
+    display: block;
+  }
+
+  .m-video--quality-control{
+    display: none;
+    bottom: 24px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+    position: absolute;
+    margin: 0;
+    list-style: none;
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  .m-video--selected-quality{
+    font-weight: bold;
+  }

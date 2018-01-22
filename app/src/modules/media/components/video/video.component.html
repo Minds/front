@@ -1,0 +1,23 @@
+<video (click)="onClick()" (error)="onError()" preload="none" [poster]="poster" allowfullscreen [muted]="muted" >
+  <source [src]="s.uri" *ngFor="let s of src">
+</video>
+<i *ngIf="element.paused" class="material-icons minds-video-play-icon" (click)="onClick()">play_circle_outline</i>
+<ng-content></ng-content>
+<div *ngIf="transcoding" class="minds-video-bar-top">
+  <span> The video is being transcoded </span>
+</div>
+<div class="minds-video-bar-full">
+  <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
+  <i class="material-icons" [hidden]="element.paused" (click)="onClick()">pause</i>
+  <m-video--progress-bar #progressBar [element]="element"></m-video--progress-bar>
+  <m-video--volume-slider [element]="element"></m-video--volume-slider>
+  <a class="material-icons m-video-full-page mdl-color-text--white minds-video--open-new"
+    *ngIf="guid"
+    [routerLink]="['/media', guid]"
+    target="_blank"
+    (click)="element.pause()">
+    lightbulb_outline
+  </a>
+  <m-video--quality-selector *ngIf="src.length > 1" [src]="src" (selectedQuality)="selectedQuality($event)"></m-video--quality-selector>
+  <i class="material-icons" (click)="openFullScreen($event)">tv</i>
+</div>

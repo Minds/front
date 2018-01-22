@@ -34,7 +34,6 @@ import { ModalsModule } from './src/modules/modals/modals.module';
 import { PaymentsModule } from './src/modules/payments/payments.module';
 import { ThirdPartyNetworksModule } from './src/modules/third-party-networks/third-party-networks.module';
 import { TranslateModule } from './src/modules/translate/translate.module';
-import { VideoModule } from './src/modules/video/video.module';
 import { SettingsModule } from './src/modules/settings/settings.module';
 import { OnboardingModule } from './src/modules/onboarding/onboarding.module';
 import { NotificationModule } from './src/modules/notifications/notification.module';
@@ -83,7 +82,6 @@ import { BlockchainModule } from './src/modules/blockchain/blockchain.module';
     ThirdPartyNetworksModule,
     LegacyModule,
     TranslateModule,
-    VideoModule,
     SettingsModule,
     ModalsModule,
     PaymentsModule,

@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {Observable} from 'rxjs/Rx';
+import {Subscription} from "rxjs";
 
 import { Client } from '../../../../services/api';
 import { SessionFactory } from '../../../../services/session';
+
+import { RecommendedService } from '../../components/video/recommended.service';
 
 @Component({
   selector: 'm-media--theatre',
@@ -21,16 +25,21 @@ import { SessionFactory } from '../../../../services/session';
     <div class="m-media-stage" *ngIf="object.subtype == 'video'"
       [class.m-media-stage--has-nav]="isAlbum()"
     >
-      <minds-video
+      <div *ngIf="counterSeconds > 0" class="m-media-theatre--next-countdown">
+        <span> Loading the next video in <strong>{{counterLimit - counterSeconds}}</strong> seconds. <a (click)="cancelCountdown()"><strong>Cancel</strong></a>.</span>
+      </div>
+      <m-video
       [poster]="object.thumbnail_src"
 	    [autoplay]="!object.monetized"
-	    [muted]="false"
+      [muted]="false"
+      (finished)="loadNext()"
 	    [src]="[{ 'uri': object.src['720.mp4'] }, { 'uri': object.src['360.mp4'] }]"
         [log]="object.guid"
         [playCount]="false"
         #player>
         <video-ads [player]="player" *ngIf="object.monetized"></video-ads>
-      </minds-video>
+      
+      </m-video>
 
     </div>
     <i class="material-icons right"
@@ -46,8 +55,17 @@ export class MediaTheatreComponent {
 
   object: any = {};
   session = SessionFactory.build();
+  nextVideo: any = {};
+  ticks: number;
+  timerSubscribe: Subscription;
+  counterSeconds: number = 0;
+  counterLimit: number = 10;
 
-  constructor(public client: Client, public router: Router) {
+  constructor(
+    public client: Client, 
+    public router: Router,
+    private recommended: RecommendedService
+  ) {
   }
 
   set _object(value: any) {
@@ -82,6 +100,33 @@ export class MediaTheatreComponent {
     return this.object.container_guid !== this.object.owner_guid
       && this.object.album_children_guids
       && this.object.album_children_guids.length > 1;
+  }
+
+  loadNext() {
+    this.nextVideo = this.recommended.getFirstRecommended();
+    let timer = Observable.timer(2000,1000);
+    this.timerSubscribe = timer.subscribe(t => this.tickerFunc(t));
+  }
+
+  tickerFunc(t) {
+    this.ticks = parseInt(t);
+    if (this.counterSeconds >= this.counterLimit) {
+      this.cancelCountdown();
+      this.router.navigate(['/media', this.nextVideo.guid]);
+    } else {
+      this.counterSeconds = this.counterSeconds + 1;
+    }
+  }
+
+  cancelCountdown() {
+    this.counterSeconds = 0;
+    this.timerSubscribe.unsubscribe();
+  }
+
+  ngOnDestroy() {
+    if (this.timerSubscribe) {
+      this.timerSubscribe.unsubscribe();
+    }
   }
 
 }

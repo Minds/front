@@ -10,7 +10,7 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { WireModule } from '../wire/wire.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
-import { VideoModule } from '../video/video.module';
+import { VideoModule } from './components/video/video.module';
 
 import { MediaVideosListComponent } from './videos/list.component';
 import { MediaVideosTileComponent } from './videos/tile.component';

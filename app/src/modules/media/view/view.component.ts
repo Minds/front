@@ -6,13 +6,19 @@ import { Subscription } from 'rxjs/Rx';
 import { Client } from '../../../services/api';
 import { SessionFactory } from '../../../services/session';
 
+import { RecommendedService } from '../components/video/recommended.service';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-media--view',
-  templateUrl: 'view.component.html'
+  templateUrl: 'view.component.html',
+  providers: [{
+    provide: RecommendedService,
+    useFactory: RecommendedService._,
+    deps: [Client]
+  }],
 })
 
 export class MediaViewComponent {
@@ -157,5 +163,4 @@ export class MediaViewComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

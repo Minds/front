@@ -85,7 +85,7 @@ m-media--theatre{
       max-width:100%;
       height:100%;
     }
-    minds-video{
+    m-video{
       background:#000;
       video{
         max-width:100%;
@@ -515,6 +515,18 @@ minds-media-thumbnail-selector{
   .m-media-content--recommended {
     padding-top: $minds-padding * 2;
   }
+}
+
+.m-media-theatre--next-countdown{
+  z-index: 9999;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  background-color: black;
+  opacity: .8;
+  padding: 16px 0 16px 0;
 }
 
 .m-media-theater--toggle {
