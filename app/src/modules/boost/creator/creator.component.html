@@ -2,12 +2,6 @@
 
   <div class="m-boost--creator--header">
     <h2 i18n="@@M__FEATURE__BOOST">Boost</h2>
-
-    <div class="m-boost--creator--wallet">
-      <i class="material-icons m--middle">stars</i>
-      <span *ngIf="rates.rewardsBalance !== null" class="m--middle" i18n="@@BOOST__CREATOR__WALLET_REWARDS_BALANCE_COUNT">{{ rates.rewardsBalance | token:18 | number }} Rewards</span>
-      <span *ngIf="rates.rewardsBalance === null" class="m--middle">…</span>
-    </div>
   </div>
 
   <ng-container *ngIf="step === 0">
