@@ -23,6 +23,7 @@
   </li>
 
   <li
+    *ngIf="boost.type !== 'p2p'"
     (click)="setBoostCurrency('rewards')"
     [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'rewards'"
   >

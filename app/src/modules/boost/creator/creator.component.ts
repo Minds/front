@@ -184,6 +184,10 @@ export class BoostCreatorComponent implements AfterViewInit {
     this.roundAmount();
     this.calcEstimatedCompletionTime();
     this.showErrors();
+
+    if (type === 'p2p' && this.boost.currency === 'rewards') {
+      this.setBoostCurrency('tokens');
+    }
   }
 
   /**
