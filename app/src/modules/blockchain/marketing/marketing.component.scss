@@ -31,6 +31,9 @@
     line-height: 1.5;
     text-transform: uppercase;
     color: #888;
+    @media screen and (max-width: $max-mobile) {
+      text-align: center;
+    }
   }
 }
 
