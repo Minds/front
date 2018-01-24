@@ -1,0 +1,42 @@
+<div class="m-token-rewards--ledger">
+  <div class="m-token-rewards--ledger-filters m-border" *ngIf="!preview; else previewHeader">
+    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"
+      dateFormat="shortDate"></m-date-selector>
+    <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)"
+      dateFormat="shortDate"></m-date-selector>
+  </div>
+  <ng-template #previewHeader>
+    <div class="m-token-rewards--ledger-filters m-token-rewards--ledger-filters--preview m-border">
+      Last month
+    </div>
+  </ng-template>
+
+  <div class="m-token-rewards--ledger--reward m-border" *ngFor="let withdrawal of withdrawals">
+    <div class="m-token-rewards--ledger--reward-amount">
+        <span class="m-token-rewards--ledger--reward-amount--positive">
+          {{ withdrawal.amount | token:18 | number }}
+        </span>
+    </div>
+
+    <div class="m-token-rewards--ledger--reward-details">
+      <p *ngIf="withdrawal.completed; else withdrawPending">
+        COMPLETED
+      </p>
+      <ng-template #withdrawPending>
+        PENDING
+      </ng-template>
+
+      <div class="mdl-layout-spacer"></div>
+
+      <i class="material-icons">access_time</i>
+      <p class="ts">{{ withdrawal.timestamp | date: 'mediumDate':'UTC' }}</p>
+    </div>
+  </div>
+</div>
+
+<infinite-scroll
+  distance="25%"
+  (load)="load(false)"
+  [moreData]="moreData"
+  [inProgress]="inProgress">
+</infinite-scroll>

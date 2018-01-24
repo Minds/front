@@ -34,6 +34,7 @@ import { WalletUSDComponent } from './usd/usd.component';
 import { WalletUSDEarningsComponent } from './usd/earnings.component';
 import { WalletUSDPayoutsComponent } from './usd/payouts.component';
 import { WalletUSDSettingsComponent } from './usd/settings.component';
+import { WalletTokenWithdrawLedgerComponent } from './tokens/withdraw/ledger/ledger.component';
 
 const walletRoutes : Routes = [
   { path: 'wallet', component: WalletComponent,
@@ -93,6 +94,7 @@ const walletRoutes : Routes = [
     WalletTokenRewardsComponent,
     WalletTokenContributionsComponent,
     WalletTokenSettingsComponent,
+    WalletTokenWithdrawLedgerComponent,
     WalletTokenWithdrawComponent,
     WalletTokenJoinComponent,
     WalletTokensComponent,
