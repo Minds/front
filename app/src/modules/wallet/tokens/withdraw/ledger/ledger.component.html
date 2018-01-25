@@ -29,7 +29,7 @@
       <div class="mdl-layout-spacer"></div>
 
       <i class="material-icons">access_time</i>
-      <p class="ts">{{ withdrawal.timestamp | utcDate | date: 'mediumDate' }}</p>
+      <p class="ts">{{ withdrawal.timestamp * 1000 | utcDate | date: 'mediumDate' }}</p>
     </div>
   </div>
 </div>
