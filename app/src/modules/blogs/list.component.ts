@@ -89,18 +89,18 @@ export class BlogListComponent {
     this.client.get('api/v1/blog/' + this.filter + '/' + this._filter2, { limit: 12, offset: this.offset })
       .then((response: MindsBlogListResponse) => {
 
-        if (!response.blogs) {
+        if (!response.entities) {
           this.moreData = false;
           this.inProgress = false;
           return false;
         }
 
         if (refresh) {
-          this.pushToColumns(response.blogs);
+          this.pushToColumns(response.entities);
         } else {
           if (this.offset)
-            response.blogs.shift();
-          this.pushToColumns(response.blogs);
+            response.entities.shift();
+          this.pushToColumns(response.entities);
         }
 
         this.offset = response['load-next'];
