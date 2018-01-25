@@ -64,9 +64,6 @@ export class ChannelModulesComponent {
         if (!(response.entities || response.blogs))
           return false;
 
-        if (this.type === 'blog')
-          this.items = response.blogs;
-        else
           this.items = response.entities;
         this.inProgress = false;
       })
