@@ -78,7 +78,7 @@ export class BlockchainTdeBuyComponent implements OnInit {
 
     if (this.web3Wallet.isUnavailable()) {
       metamaskError = 'There are no Ethereum wallet clients available.';
-    } else if (await this.web3Wallet.isLocked()) {
+    } else if (!(await this.web3Wallet.unlock())) {
       metamaskError = 'There are no local wallets available, the wallet manager is locked, or you\'re connected to a different network.';
     }
 
@@ -123,10 +123,7 @@ export class BlockchainTdeBuyComponent implements OnInit {
     this.detectChanges();
 
     try {
-      let bought = await this.overlayService.showAndRun(
-        async () => await this.tokenDistributionEvent.buy(this.model.eth),
-        "Buy Minds Tokens"
-      );
+      let bought = await await this.tokenDistributionEvent.buy(this.model.eth);
 
       if (bought) {
         this.success = true;

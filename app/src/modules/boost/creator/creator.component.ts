@@ -508,15 +508,13 @@ export class BoostCreatorComponent implements AfterViewInit {
 
           if (this.web3Wallet.isUnavailable()) {
             throw new Error('No Ethereum wallets available on your browser.');
-          } else if (await this.web3Wallet.isLocked()) {
+          } else if (!(await this.web3Wallet.unlock())) {
             throw new Error('Your Ethereum wallet is locked or connected to another network.');
           }
 
-          const wallets = await this.web3Wallet.getWallets();
-
           this.boost.nonce = {
             txHash: await this.boostContract.create(guid, amount),
-            address: wallets[0]
+            address: await this.web3Wallet.getCurrentWallet()
           };
         }
 
@@ -534,15 +532,13 @@ export class BoostCreatorComponent implements AfterViewInit {
 
           if (this.web3Wallet.isUnavailable()) {
             throw new Error('No Ethereum wallets available on your browser.');
-          } else if (await this.web3Wallet.isLocked()) {
+          } else if (!(await this.web3Wallet.unlock())) {
             throw new Error('Your Ethereum wallet is locked or connected to another network.');
           }
 
-          const wallets = await this.web3Wallet.getWallets();
-
           this.boost.nonce = {
             txHash: await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount),
-            address: wallets[0]
+            address: await this.web3Wallet.getCurrentWallet()
           };
         }
 

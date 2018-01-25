@@ -11,22 +11,22 @@ export class TokenDistributionEventService {
 
   // Buy tokens
 
-  async buy(ethAmount: number, gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1) {
+  async buy(ethAmount: number, gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1, message: string = '') {
     await this.web3Wallet.ready();
 
-    let wallets = await this.web3Wallet.getWallets();
+    let wallet = await this.web3Wallet.getCurrentWallet();
 
-    if (!wallets) {
+    if (!wallet) {
       throw new Error('Client is locked, there are no wallets available, or you\'re on a different network');
     }
 
-    return this.web3Wallet.eth.sendTransaction({
-      from: wallets[0],
+    return this.web3Wallet.sendTransaction({
+      from: wallet,
       to: this.web3Wallet.config.token_distribution_event_address,
-      value: this.web3Wallet.web3.toWei(ethAmount, 'ether'),
-      gasPrice: this.web3Wallet.web3.toWei(gasPriceGwei, 'Gwei'),
+      value: this.web3Wallet.EthJS.toWei(ethAmount, 'ether'),
+      gasPrice: this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei'),
       data: '0x'
-    });
+    }, `Buy ${ethAmount} ETH worth of Minds Tokens. ${message}`.trim());
   }
 
   // Service provider

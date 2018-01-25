@@ -33,9 +33,6 @@ m--blockchain--transaction-overlay {
       -webkit-font-smoothing: antialiased;
       font-size: 16px;
     }
-    .m--blockchain--transaction-overlay--note {
-      color: #888888;
-    }
     .m--blockchain--transaction-overlay--help {
       display: flex;
       align-items: center;
@@ -47,5 +44,114 @@ m--blockchain--transaction-overlay {
         text-decoration: none;
       }
     }
+  }
+}
+
+.m--blockchain--transaction-overlay--field {
+  margin: ($minds-padding * 2) 0;
+
+  .mdl-checkbox {
+    $cb-color: rgba(0, 0, 0, 0.15);
+
+    .mdl-checkbox__label {
+      font-size: inherit;
+    }
+
+    .mdl-checkbox__box-outline {
+      border-color: $cb-color;
+      background-color: $cb-color;
+    }
+
+    &.is-checked .mdl-checkbox__tick-outline {
+      background-color: $cb-color;
+      mask: none;
+    }
+
+    .mdl-checkbox__ripple-container .mdl-ripple {
+      background-color: $cb-color;
+    }
+  }
+}
+
+.m--blockchain--transaction-overlay--note,
+.m--blockchain--transaction-overlay--warning,
+.m--blockchain--transaction-overlay--info{
+  max-width: 600px;
+  //margin: ($minds-padding * 2) 0;
+  letter-spacing: 0.25px;
+}
+
+.m--blockchain--transaction-overlay--note {
+  color: #444;
+}
+
+.m--blockchain--transaction-overlay--info {
+  color: #00c;
+}
+
+.m--blockchain--transaction-overlay--warning {
+  color: #c00;
+  font-size: 13px;
+}
+
+.m--blockchain--transaction-overlay--field-label,
+.m--blockchain--transaction-overlay--checkbox-label {
+  text-transform: uppercase;
+  color: #444;
+  letter-spacing: 1px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: #444;
+  font-weight: 600;
+}
+
+.m--blockchain--transaction-overlay--field-label {
+  
+  display: block;
+  margin-bottom: $minds-padding;
+}
+
+.m--blockchain--transaction-overlay--field-input-lg,
+.m--blockchain--transaction-overlay--field-input {
+  padding: $minds-padding * 2;
+  -webkit-appearance: none;
+  border: 1px solid #ececec;
+  background: #FFF;
+  border-radius: 4px;
+  font-size: 18px;
+  color: #444;
+
+  &.m--blockchain--transaction-overlay--dropping {
+    box-shadow: inset 0 0 10px #00c;
+  }
+}
+
+.m--blockchain--transaction-overlay--field-input-lg {
+  width: 600px;
+  max-width: 90vw;
+}
+
+.m--blockchain--transaction-overlay--field-input {
+  width: 300px;
+  max-width: 90vw;
+}
+
+.m--blockchain--transaction-overlay--button {
+  letter-spacing: 2.33px;
+  appearance: none;
+  padding: $minds-padding ($minds-padding * 4);
+  background: none;
+  border: 1px solid #555;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: uppercase;
+  color: #555;
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: default !important;
+    opacity: 0.65;
   }
 }

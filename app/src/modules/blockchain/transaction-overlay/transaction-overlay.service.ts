@@ -1,29 +1,59 @@
 import { Injectable } from '@angular/core';
 import { TransactionOverlayComponent } from './transaction-overlay.component';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class TransactionOverlayService {
   private comp: TransactionOverlayComponent;
 
-  constructor() {
-  }
-
   setComponent(comp: TransactionOverlayComponent) {
     this.comp = comp;
   }
 
-  async showAndRun(fn: Function, title: string, notes: string = '') {
-    this.comp.show(title, notes);
+  waitForAccountUnlock(): Promise<{ privateKey, account, secureMode }> {
+    let compEventEmitter = this.comp.show(this.comp.COMP_UNLOCK);
+
+    return new Promise((resolve, reject) => {
+      let subscription: Subscription = compEventEmitter.subscribe(data => {
+        subscription.unsubscribe();
+
+        if (data) {
+          resolve(data);
+        } else {
+          reject('User cancelled');
+        }
+      });
+    });
+  }
+
+  waitForLocalTxObject(defaultTxObject: Object = {}, message: string = ''): Promise<any> {
+    let compEventEmitter = this.comp.show(this.comp.COMP_LOCAL, message, defaultTxObject);
+
+    return new Promise((resolve, reject) => {
+      let subscription: Subscription = compEventEmitter.subscribe(data => {
+        subscription.unsubscribe();
+
+        if (data) {
+          resolve(data);
+        } else {
+          reject('User cancelled');
+        }
+      });
+    });
+  }
+
+  async waitForExternalTx(fn: Function, message: string = ''): Promise<string> {
+    this.comp.show(this.comp.COMP_METAMASK, message);
+
     let result = null;
+
     try {
       result = await fn();
-    }
-    catch (e) {
+    } catch (e) {
       throw e;
     } finally {
       this.comp.hide();
     }
-
 
     return result;
   }

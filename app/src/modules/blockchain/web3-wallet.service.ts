@@ -1,18 +1,28 @@
 import { Injectable } from '@angular/core';
+import { LocalWalletService } from './local-wallet.service';
+
+import callbackToPromise from '../../helpers/callback-to-promise';
+import asyncSleep from '../../helpers/async-sleep';
+import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 
 declare const Eth;
+declare const SignerProvider;
 
 @Injectable()
 export class Web3WalletService {
   eth: any;
-  web3: any;
+  EthJS: any;
 
   config = window.Minds.blockchain;
 
   protected unavailable: boolean = false;
-
+  protected local: boolean = false;
   protected _ready: Promise<any>;
   protected _web3LoadAttempt: number = 0;
+
+  //
+
+  constructor(protected localWallet: LocalWalletService, protected transactionOverlay: TransactionOverlayService) { }
 
   // Wallet
 
@@ -30,16 +40,43 @@ export class Web3WalletService {
     }
   }
 
+  async getCurrentWallet(): Promise<string | false> {
+    let wallets = await this.getWallets();
+
+    if (!wallets || !wallets.length) {
+      return false;
+    }
+
+    return wallets[0];
+  }
+
   async isLocked() {
-    const wallets = await this.getWallets();
-    return !wallets || !wallets.length;
+    return !(await this.getCurrentWallet());
+  }
+
+  async isLocal() {
+    await this.ready();
+    return this.local;
+  }
+
+  async unlock() {
+    if ((await this.isLocal()) && (await this.isLocked())) {
+      await this.localWallet.unlock();
+    }
+
+    return !(await this.isLocked());
   }
 
   // Network
 
   async isSameNetwork() {
+    if (await this.isLocal()) {
+      // Using local provider means we're on the same network
+      return true;
+    }
+
     // assume main network
-    return (await this.web3Promise(this.web3.version.getNetwork) || 1) == this.config.client_network;
+    return (await callbackToPromise(window.web3.version.getNetwork) || 1) == this.config.client_network;
   }
 
   // Bootstrap
@@ -55,7 +92,7 @@ export class Web3WalletService {
     if (!this._ready) {
       this._ready = new Promise((resolve, reject) => {
         if (typeof window.web3 !== 'undefined') {
-          this.load();
+          this.loadFromWeb3();
           return resolve(true);
         }
 
@@ -69,15 +106,14 @@ export class Web3WalletService {
   private waitForWeb3(resolve, reject) {
     this._web3LoadAttempt++;
 
-    if (this._web3LoadAttempt > 10) {
-      this.unavailable = true;
-
-      return reject('Web3 is unavailable');
+    if (this._web3LoadAttempt > 3) {
+      this.loadLocal();
+      return resolve(true);
     }
 
     setTimeout(() => {
       if (typeof window.web3 !== 'undefined') {
-        this.load();
+        this.loadFromWeb3();
         return resolve(true);
       }
 
@@ -85,55 +121,102 @@ export class Web3WalletService {
     }, 1000);
   }
 
-  private load() {
-    this.web3 = window.web3;
-    this.eth = new Eth(this.web3.currentProvider);
+  private loadFromWeb3() {
+    this.EthJS = Eth;
+
+    // MetaMask found
+    this.eth = new Eth(window.web3.currentProvider);
+    this.local = false;
+  }
+
+  private loadLocal() {
+    this.EthJS = Eth;
+
+    // Non-metamask
+    this.eth = new Eth(new SignerProvider(this.config.network_address, {
+      signTransaction: (rawTx, cb) => this.localWallet.signTransaction(rawTx, cb),
+      accounts: cb => this.localWallet.accounts(cb)
+    }));
+    this.local = true;
   }
 
   isUnavailable() {
     return this.unavailable;
   }
 
-  // Web3 methods promise wrapper
-  web3Promise(method, ...args) {
-    return new Promise(function (resolve, reject) {
-      args.push(function (error, result) {
-        if (error) {
-          reject(error);
-          return;
-        }
+  // Contract Methods
 
-        resolve(result);
-      });
+  async sendSignedContractMethodWithValue(contract: any, method: string, params: any[], value: number | string, message: string = ''): Promise<string> {
+    let txHash;
 
-      method.apply(null, args);
-    });
+    if (await this.isLocal()) {
+      await this.localWallet.unlock();
+
+      let passedTxObject = { value, ...contract.defaultTxObject };
+
+      if (!passedTxObject.gas) {
+        passedTxObject.gas = 200000; // TODO: estimate gas
+      }
+
+      let txObject = await this.transactionOverlay.waitForLocalTxObject(
+        passedTxObject,
+        message
+      );
+
+      txHash = await contract[method](...params, txObject);
+
+      this.localWallet.prune();
+    } else {
+      txHash = await this.transactionOverlay.waitForExternalTx(
+        () => contract[method](...params, { value }),
+        message
+      );
+    }
+
+    await asyncSleep(this.isLocal() ? 250 : 1000); // Modals "cooldown"
+
+    return txHash;
   }
 
-  getProviderName() {
-    let providerName = 'UNKNOWN';
+  async sendSignedContractMethod(contract: any, method: string, params: any[], message: string = ''): Promise<string> {
+    return await this.sendSignedContractMethodWithValue(contract, method, params, 0, message);
+  }
 
-    if (window.web3.currentProvider.constructor.name === 'MetamaskInpageProvider') {
-      providerName = 'Metamask';
+  // Normal Transactions
+
+  async sendTransaction(originalTxObject: any, message: string = ''): Promise<string> {
+    let txHash;
+
+    if (await this.isLocal()) {
+      await this.localWallet.unlock();
+
+      if (!originalTxObject.gas) {
+        originalTxObject.gas = 300000; // TODO: estimate gas
+      }
+
+      let txObject = await this.transactionOverlay.waitForLocalTxObject(
+        originalTxObject,
+        message
+      );
+
+      txHash = await this.eth.sendTransaction(txObject);
+
+      this.localWallet.prune();
+    } else {
+      txHash = await this.transactionOverlay.waitForExternalTx(
+        () => this.eth.sendTransaction(originalTxObject),
+        message
+      );
     }
-    else if (window.web3.currentProvider.constructor.name === 'EthereumProvider') {
-      providerName = 'Mist';
-    }
-    else if (window.web3.currentProvider.constructor.name === 'o') {
-      providerName = 'Parity';
-    }
-    else if (window.web3.currentProvider.host.indexOf('infura') !== -1) {
-      providerName = 'Infura';
-    }
-    else if (window.web3.currentProvider.host.indexOf('localhost') !== -1) {
-      providerName = 'localhost';
-    }
-    return providerName;
+
+    await asyncSleep(this.isLocal() ? 250 : 1000); // Modals "cooldown"
+
+    return txHash;
   }
 
   // Service provider
 
-  static _() {
-    return new Web3WalletService();
+  static _(localWallet: LocalWalletService, transactionOverlay: TransactionOverlayService) {
+    return new Web3WalletService(localWallet, transactionOverlay);
   }
 }

@@ -27,10 +27,10 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
   async load() {
     await this.web3Wallet.ready();
 
-    let coinbase = await this.web3Wallet.getWallets();
+    let wallet = await this.web3Wallet.getCurrentWallet();
 
-    if (coinbase && coinbase.length && !await this.blockchain.getWallet()) {
-      this.address = coinbase[0];
+    if (wallet && !await this.blockchain.getWallet()) {
+      this.address = wallet;
       this.detectChanges();
     }
   }

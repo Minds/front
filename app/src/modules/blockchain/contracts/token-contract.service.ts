@@ -38,8 +38,8 @@ export class TokenContractService {
     }
 
     // Refresh default account due a bug in Metamask
-    this.instance.defaultTxObject.from = await this.web3Wallet.eth.coinbase();
-    this.instance.defaultTxObject.gasPrice = this.web3Wallet.web3.toWei(gasPriceGwei, 'Gwei');
+    this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
+    this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei');
 
     return this.instance;
   }
@@ -52,12 +52,16 @@ export class TokenContractService {
 
   // Token allowance
 
-  async increaseApproval(address: string, amount: number) {
-    return await this.overlayService.showAndRun(
-      async () => {
-        return (await this.token()).approve(address, this.tokenToUnit(amount));
-      }
-      ,"You're about to approve a recurring Wire", `NOTE: We first need you to pre-approve the recurring wire transactions.`);
+  async increaseApproval(address: string, amount: number, message: string = '') {
+    return await this.web3Wallet.sendSignedContractMethod(
+      await this.token(),
+      'approve',
+      [
+        address,
+        this.tokenToUnit(amount)
+      ],
+      `Approve ${address} to spend ${amount} Minds Tokens in the future. ${message}`.trim()
+    );
   }
 
   tokenToUnit(amount: number) {

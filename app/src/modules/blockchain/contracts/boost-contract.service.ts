@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenContractService } from './token-contract.service';
-import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';
 
 @Injectable()
 export class BoostContractService {
@@ -9,8 +8,7 @@ export class BoostContractService {
 
   constructor(
     protected web3Wallet: Web3WalletService,
-    protected tokenContract: TokenContractService,
-    protected overlayService: TransactionOverlayService
+    protected tokenContract: TokenContractService
   ) {
     this.load();
   }
@@ -34,52 +32,94 @@ export class BoostContractService {
     }
 
     // Refresh default account due a bug in Metamask
-    this.instance.defaultTxObject.from = await this.web3Wallet.eth.coinbase();
-    this.instance.defaultTxObject.gasPrice = this.web3Wallet.web3.toWei(gasPriceGwei, 'Gwei');
+    this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
+    this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei');
 
     return this.instance;
   }
 
   // Boost
 
-  async create(guid: string, amount: number) {
-    return await this.overlayService.showAndRun(async () => {
-      return (await this.tokenContract.token()).approveAndCall(
+  async create(guid: string, amount: number, message: string = '') {
+    return await this.web3Wallet.sendSignedContractMethod(
+      await this.tokenContract.token(),
+      'approveAndCall',
+      [
         this.instance.address,
         this.tokenContract.tokenToUnit(amount),
-        this.tokenContract.encodeParams([{
-          type: 'address',
-          value: this.web3Wallet.config.boost_wallet_address
-        }, { type: 'uint256', value: guid }])
-      );
-    }, "You're creating a boost", `NOTE: Your client will show 0 ETH as we use the Ethereum network, but ${amount} Minds tokens will be sent.`);
+        this.tokenContract.encodeParams([
+          {
+            type: 'address',
+            value: this.web3Wallet.config.boost_wallet_address
+          },
+          {
+            type: 'uint256',
+            value: guid
+          }
+        ])
+      ],
+      `Network Boost for ${amount} Minds Tokens. ${message}`.trim()
+    );
   }
 
-  async createPeer(receiver: string, guid: string, amount: number) {
-    return await this.overlayService.showAndRun(async () => {
-      return (await this.tokenContract.token()).approveAndCall(
+  async createPeer(receiver: string, guid: string, amount: number, message: string = '') {
+    return await this.web3Wallet.sendSignedContractMethod(
+      await this.tokenContract.token(),
+      'approveAndCall',
+      [
         this.instance.address,
         this.tokenContract.tokenToUnit(amount),
-        this.tokenContract.encodeParams([{ type: 'address', value: receiver }, { type: 'uint256', value: guid }])
-      )
-    }, "You're creating a boost", `NOTE: Your client will show 0 ETH as we use the Ethereum network, but ${amount} Minds tokens will be sent.`);
+        this.tokenContract.encodeParams([
+          {
+            type: 'address',
+            value: receiver
+          },
+          {
+            type: 'uint256',
+            value: guid
+          }
+        ])
+      ],
+      `Channel Boost for ${amount} Minds Tokens to ${receiver}. ${message}`.trim()
+    );
   }
 
-  async accept(guid: string) {
-    return await this.overlayService.showAndRun(async () => (await this.boost()).accept(guid), "You're about to accept a boost");
+  async accept(guid: string, message: string = '') {
+    return await this.web3Wallet.sendSignedContractMethod(
+      await this.boost(),
+      'accept',
+      [
+        guid
+      ],
+      `Accept a Channel Boost. ${message}`.trim()
+    );
   }
 
-  async reject(guid: string) {
-    return await this.overlayService.showAndRun(async () => (await this.boost()).reject(guid), "You're about to reject a boost");
+  async reject(guid: string, message: string = '') {
+    return await this.web3Wallet.sendSignedContractMethod(
+      await this.boost(),
+      'reject',
+      [
+        guid
+      ],
+      `Reject a Channel Boost. ${message}`.trim()
+    );
   }
 
-  async revoke(guid: string) {
-    return await this.overlayService.showAndRun(async () => (await this.boost()).revoke(guid), "You're about to revoke a boost");
+  async revoke(guid: string, message: string = '') {
+    return await this.web3Wallet.sendSignedContractMethod(
+      await this.boost(),
+      'revoke',
+      [
+        guid
+      ],
+      `Revoke a Boost. ${message}`.trim()
+    );
   }
 
   // Service provider
 
-  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService, blockchainOverlayService: TransactionOverlayService) {
-    return new BoostContractService(web3Wallet, tokenContract, blockchainOverlayService);
+  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService) {
+    return new BoostContractService(web3Wallet, tokenContract);
   }
 }

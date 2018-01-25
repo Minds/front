@@ -23,20 +23,21 @@ export class WireService {
 
       if (this.web3Wallet.isUnavailable()) {
         throw new Error('No Ethereum wallets available on your browser.');
-      } else if (await this.web3Wallet.isLocked()) {
+      } else if (!(await this.web3Wallet.unlock())) {
         throw new Error('Your Ethereum wallet is locked or connected to another network.');
       }
 
-      const wallets = await this.web3Wallet.getWallets();
-
-      if (payload.nonce.receiver == wallets[0]) {
+      if (payload.nonce.receiver == await this.web3Wallet.getCurrentWallet()) {
         throw new Error('You cannot wire yourself.');
       }
 
       try {
         if (wire.recurring) {
-          await this.tokenContract.increaseApproval((await this.wireContract.wire()).address, wire.amount * 11);
-          await new Promise(r => setTimeout(r, 1000)); // Metamask has a "cooldown"
+          await this.tokenContract.increaseApproval(
+            (await this.wireContract.wire()).address,
+            wire.amount * 11,
+            `We need you to pre-approve Minds Wire wallet for the recurring wire transactions.`
+          );
         }
 
         payload.nonce.txHash = await this.wireContract.create(payload.nonce.receiver, wire.amount);

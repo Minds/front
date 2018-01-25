@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenContractService } from './token-contract.service';
-import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';
 
 @Injectable()
 export class WireContractService {
@@ -9,8 +8,7 @@ export class WireContractService {
 
   constructor(
     protected web3Wallet: Web3WalletService,
-    protected tokenContract: TokenContractService,
-    protected overlayService: TransactionOverlayService
+    protected tokenContract: TokenContractService
   ) {
     this.load();
   }
@@ -34,29 +32,35 @@ export class WireContractService {
     }
 
     // Refresh default account due a bug in Metamask
-    this.instance.defaultTxObject.from = await this.web3Wallet.eth.coinbase();
-    this.instance.defaultTxObject.gasPrice = this.web3Wallet.web3.toWei(gasPriceGwei, 'Gwei');
+    this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
+    this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei');
 
     return this.instance;
   }
 
   // Wire
 
-  async create(receiver: string, amount: number) {
-    return await this.overlayService.showAndRun(
-      async () => {
-        return (await this.tokenContract.token()).approveAndCall(
-          this.instance.address,
-          this.tokenContract.tokenToUnit(amount),
-          this.tokenContract.encodeParams([{ type: 'address', value: receiver }])
-        );
-      }
-    ,"You're about to wire someone", `NOTE: Your client will show 0 ETH as we use the Ethereum network, but ${amount} Minds tokens will be sent.`);
+  async create(receiver: string, amount: number, message: string = '') {
+    return await this.web3Wallet.sendSignedContractMethod(
+      await this.tokenContract.token(),
+      'approveAndCall',
+      [
+        this.instance.address,
+        this.tokenContract.tokenToUnit(amount),
+        this.tokenContract.encodeParams([
+          {
+            type: 'address',
+            value: receiver
+          }
+        ])
+      ],
+      `Send ${amount} Minds Tokens to ${receiver}. ${message}`.trim()
+    );
   }
 
   // Service provider
 
-  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService, overlayService: TransactionOverlayService) {
-    return new WireContractService(web3Wallet, tokenContract, overlayService);
+  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService) {
+    return new WireContractService(web3Wallet, tokenContract);
   }
 }

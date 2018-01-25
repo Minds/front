@@ -42,10 +42,10 @@ export class BlockchainConsoleComponent implements OnInit {
       } else if (this.route.snapshot.params.auto) {
         await this.web3Wallet.ready();
 
-        let localWallets = await this.web3Wallet.getWallets();
+        let localWallet = await this.web3Wallet.getCurrentWallet();
 
-        if (localWallets && localWallets.length) {
-          this.form.controls.address.setValue(localWallets[0]);
+        if (localWallet) {
+          this.form.controls.address.setValue(localWallet);
         }
       }
     } catch (e) {

@@ -89,6 +89,9 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
   { src: 'moment/min/moment.min.js', inject: 'libs', dest: JS_DEST },
   { src: 'material-datetime-picker/dist/material-datetime-picker.js', inject: 'libs', dest: JS_DEST },
   { src: 'ethjs/dist/ethjs.min.js', inject: 'shims', dest: JS_DEST },
+  { src: 'ethjs-provider-signer/dist/ethjs-provider-signer.min.js', inject: 'shims', dest: JS_DEST },
+  { src: 'ethjs-signer/dist/ethjs-signer.min.js', inject: 'shims', dest: JS_DEST },
+  { src: 'ethjs-account/dist/ethjs-account.min.js', inject: 'shims', dest: JS_DEST },
   { src: 'bn.js/lib/bn.js', inject: 'shims', dest: JS_DEST },
 
   // async
@@ -103,6 +106,9 @@ export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependenci
   { src: 'material-datetime-picker/dist/material-datetime-picker.js', inject: 'libs', dest: JS_DEST },
   { src: 'medium-editor/dist/js/medium-editor.min.js', inject: 'libs', dest: JS_DEST },
   { src: 'ethjs/dist/ethjs.min.js', inject: 'shims', dest: JS_DEST },
+  { src: 'ethjs-provider-signer/dist/ethjs-provider-signer.min.js', inject: 'shims', dest: JS_DEST },
+  { src: 'ethjs-signer/dist/ethjs-signer.min.js', inject: 'shims', dest: JS_DEST },
+  { src: 'ethjs-account/dist/ethjs-account.min.js', inject: 'shims', dest: JS_DEST },
   { src: 'bn.js/lib/bn.js', inject: 'shims', dest: JS_DEST },
 
   { src: 'systemjs/dist/system-polyfills.src.js', inject: 'shims' },
