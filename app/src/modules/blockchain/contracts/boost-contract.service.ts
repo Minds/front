@@ -58,7 +58,7 @@ export class BoostContractService {
           }
         ])
       ],
-      `Network Boost for ${amount} Minds Tokens. ${message}`.trim()
+      `Network Boost for ${amount} Tokens. ${message}`.trim()
     );
   }
 
@@ -80,7 +80,7 @@ export class BoostContractService {
           }
         ])
       ],
-      `Channel Boost for ${amount} Minds Tokens to ${receiver}. ${message}`.trim()
+      `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim()
     );
   }
 

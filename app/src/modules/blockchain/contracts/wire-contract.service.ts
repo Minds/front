@@ -54,7 +54,7 @@ export class WireContractService {
           }
         ])
       ],
-      `Send ${amount} Minds Tokens to ${receiver}. ${message}`.trim()
+      `Send ${amount} Tokens to ${receiver}. ${message}`.trim()
     );
   }
 

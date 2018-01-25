@@ -60,7 +60,7 @@ export class TokenContractService {
         address,
         this.tokenToUnit(amount)
       ],
-      `Approve ${address} to spend ${amount} Minds Tokens in the future. ${message}`.trim()
+      `${message}`.trim()
     );
   }
 

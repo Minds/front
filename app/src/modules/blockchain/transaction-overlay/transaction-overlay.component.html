@@ -8,9 +8,9 @@
     Please open your Metamask client to complete the transaction.
   </div>
 
-  <div class="m--blockchain--transaction-overlay--note" *ngIf="comp !== COMP_UNLOCK && !!message">
+  <p class="m--blockchain--transaction-overlay--note" *ngIf="comp !== COMP_UNLOCK && !!message">
     {{ message }}
-  </div>
+  </p>
 
   <p class="m--blockchain--transaction-overlay--note" *ngIf="comp === COMP_UNLOCK">
     Please enter your Ethereum account's private key below in order to unlock your account. You can also drag and drop
