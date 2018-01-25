@@ -32,7 +32,7 @@
       <div class="mdl-layout-spacer"></div>
 
       <i class="material-icons">access_time</i>
-      <p class="ts">{{ reward.timestamp | date: 'mediumDate':'UTC' }}</p>
+      <p class="ts">{{ reward.timestamp | utcDate | date: 'mediumDate' }}</p>
     </div>
   </div>
 </div>
