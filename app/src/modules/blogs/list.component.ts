@@ -87,7 +87,7 @@ export class BlogListComponent {
 
     this.inProgress = true;
     this.client.get('api/v1/blog/' + this.filter + '/' + this._filter2, { limit: 12, offset: this.offset })
-      .then((response: MindsBlogListResponse) => {
+      .then((response: any) => {
 
         if (!response.entities) {
           this.moreData = false;

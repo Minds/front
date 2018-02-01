@@ -19,6 +19,10 @@ import { wireContractServiceMock } from '../../../../tests/wire-contract-service
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { tokenContractServiceMock } from '../../../../tests/token-contract-service-mock.spec';
+import { LocalWalletService } from '../../blockchain/local-wallet.service';
+import { localWalletServiceMock } from '../../../../tests/local-wallet-service-mock.spec';
+import { TransactionOverlayService } from '../../blockchain/transaction-overlay/transaction-overlay.service';
+import { transactionOverlayServiceMock } from '../../../../tests/transaction-overlay-service-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -164,7 +168,9 @@ describe('WireCreatorComponent', () => {
         WireService,
         Web3WalletService,
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: TokenContractService, useValue: tokenContractServiceMock }
+        { provide: TokenContractService, useValue: tokenContractServiceMock },
+        { provide: LocalWalletService, useValue: localWalletServiceMock },
+        { provide: TransactionOverlayService, useValue: transactionOverlayServiceMock },
       ]
     })
       .compileComponents();  // compile template and css
