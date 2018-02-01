@@ -1,24 +1,24 @@
-.m-token-rewards--ledger {
-  .m-token-rewards--ledger--reward {
+.m-token--ledger {
+  .m-token--ledger--reward {
     background: #FFF;
     padding: 16px;
     margin-bottom: 8px;
 
-    .m-token-rewards--ledger--reward-amount {
+    .m-token--ledger--reward-amount {
       font-size: 36px;
       line-height: 40px;
       font-weight: 800;
 
-      .m-token-rewards--ledger--reward-amount--positive {
+      .m-token--ledger--reward-amount--positive {
         color: green;
       }
 
-      .m-token-rewards--ledger--reward-amount--negative {
+      .m-token--ledger--reward-amount--negative {
         color: red;
       }
     }
 
-    .m-token-rewards--ledger--reward-details {
+    .m-token--ledger--reward-details {
       display: flex;
       align-items: center;
       color: #444;
@@ -44,7 +44,7 @@
   }
 }
 
-.m-token-rewards--ledger-filters {
+.m-token--ledger-filters {
   display: flex;
   text-align: right;
   justify-content: flex-end;
@@ -57,7 +57,7 @@
     display: flex;
   }
 
-  &.m-token-rewards--ledger-filters--preview {
+  &.m-token--ledger-filters--preview {
     font-family: 'Lato', sans-serif;
     font-weight: 300;
     font-size: 12px;

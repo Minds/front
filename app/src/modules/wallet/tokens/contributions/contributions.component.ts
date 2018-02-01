@@ -30,7 +30,7 @@ export class WalletTokenContributionsComponent {
   ngOnInit() {
 
     if (!this.session.getLoggedInUser().phone_number_hash) {
-      this.router.navigate(['/wallet/tokens/rewards/join']);
+      this.router.navigate(['/wallet/tokens/contributions/join']);
     }
 
     const d = new Date();

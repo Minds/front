@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { Client } from '../../../../services/api/client';
-import { WalletTokenRewardsComponent } from '../rewards/rewards.component';
 import { WithdrawContractService } from '../../../blockchain/contracts/withdraw-contract.service';
 import { Session } from '../../../../services/session';
 import { WalletTokenWithdrawLedgerComponent } from './ledger/ledger.component';
@@ -17,9 +16,6 @@ export class WalletTokenWithdrawComponent {
   amount: number = 0;
 
   error: string = '';
-
-  @ViewChild(WalletTokenRewardsComponent)
-  protected rewardsComponent: WalletTokenRewardsComponent;
 
   @ViewChild(WalletTokenWithdrawLedgerComponent)
   protected ledgerComponent: WalletTokenWithdrawLedgerComponent;
@@ -89,7 +85,7 @@ export class WalletTokenWithdrawComponent {
         this.amount * Math.pow(10, 18)
       );
   
-      let response: any = await this.client.post(`api/v1/blockchain/rewards/withdraw`, result);
+      let response: any = await this.client.post(`api/v1/blockchain/transactions/withdraw`, result);
   
       if (response.done) {
         this.refresh();
@@ -109,10 +105,6 @@ export class WalletTokenWithdrawComponent {
   
   refresh() {
     this.load();
-
-    if (this.rewardsComponent) {
-      this.rewardsComponent.load(true);
-    }
   }
 
   detectChanges() {

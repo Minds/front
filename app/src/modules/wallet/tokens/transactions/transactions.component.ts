@@ -6,17 +6,17 @@ import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
-  selector: 'm-wallet-token--rewards',
-  templateUrl: 'rewards.component.html',
+  selector: 'm-wallet-token--transactions',
+  templateUrl: 'transactions.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class WalletTokenRewardsComponent {
+export class WalletTokenTransactionsComponent {
 
   startDate: string;
   endDate: string;
   inProgress: boolean = false;
-  rewards: any[] = [];
+  transactions: any[] = [];
   offset: string;
   moreData: boolean = true;
 
@@ -33,9 +33,9 @@ export class WalletTokenRewardsComponent {
 
   ngOnInit() {
 
-    if (!this.session.getLoggedInUser().phone_number_hash) {
-      this.router.navigate(['/wallet/tokens/rewards/join']);
-    }
+    //if (!this.session.getLoggedInUser().phone_number_hash) {
+    //  this.router.navigate(['/wallet/tokens/rewards/join']);
+    //}
 
     const d = new Date();
 
@@ -55,7 +55,7 @@ export class WalletTokenRewardsComponent {
     }
 
     if (refresh) {
-      this.rewards = [];
+      this.transactions = [];
       this.offset = '';
       this.moreData = true;
     }
@@ -71,18 +71,18 @@ export class WalletTokenRewardsComponent {
       startDate.setHours(0, 0, 0);
       endDate.setHours(23, 59, 59);
 
-      let response: any = await this.client.get(`api/v1/blockchain/rewards/ledger`, {
+      let response: any = await this.client.get(`api/v1/blockchain/transactions/ledger`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
         offset: this.offset
       });
 
       if (refresh) {
-        this.rewards = [];
+        this.transactions = [];
       }
 
       if (response) {
-        this.rewards.push(...(response.rewards || []));
+        this.transactions.push(...(response.transactions || []));
 
         if (response['load-next']) {
           this.offset = response['load-next'];

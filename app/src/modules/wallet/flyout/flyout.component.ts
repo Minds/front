@@ -49,32 +49,12 @@ export class WalletFlyoutComponent {
     this.closeEvt.emit(true);
   }
 
-  loadBalances() {
+  async loadBalances() {
     //TODO: return in one request?
-    let requests = [
     //this.client.get('api/v1/monetization/revenue/overview').catch(() => false),
-      this.wallet.getBalance(true).catch(() => false),
-      this.blockchain.getBalance(true).catch(() => false)
-    ];
-
-    Promise.all(requests)
-      .then((results: Array<any>) => {
-        if (results[0]) {
-          this.balance.points = results[0].balance;
-        }
-
-        if (results[1] !== false) {
-          this.balance.tokens = results[1];
-        }
-
-        this.balance.points = this.wallet.points;
-
-        this.balance = Object.assign({}, this.balance);
-
-        // this.hasMoney = results[0] !== false;
-        // this.hasTokens = results[2] !== false;
-        // this.ready = true;
-      });
+    //this.wallet.getBalance(true).catch(() => false),
+    const tokens = await this.blockchain.getBalance(true);
+    this.balance.tokens = tokens;
   }
 
 }

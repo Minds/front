@@ -43,13 +43,9 @@ export class BlockchainService {
     try {
       let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
 
-      if (!response.wallet) {
-        return false;
-      }
+      this.serverBalanceCache = response.balance;
 
-      this.serverBalanceCache = response.wallet.balance;
-
-      return response.wallet.balance;
+      return response.balance;
     } catch (e) {
       return false;
     }

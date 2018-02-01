@@ -29,3 +29,36 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
     color: #4690DF;
   }
 }
+
+.m-wallet--balance--addresses {
+  padding: 0 8px;
+  .m-wallet--balance--addresses-address {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .m-wallet--balance--addresses-address-label {
+      font-weight: 600;
+      font-family: 'Roboto';
+      letter-spacing: 0.25px;
+      color: #444;
+    }
+    .m-wallet--balance--addresses-address-address {
+      font-size: 10px;
+      color: #888;
+      font-weight: 300;
+    }
+    * {
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    .m-wallet--balance--addresses-address-balance: {
+      font-size: 16px;
+      font-weight: 600;
+      color: #4690DF;
+    }
+  }
+  .m-wallet--balance--addresses-address-col {
+    text-align: left;
+  }
+}

@@ -9,8 +9,10 @@ import { Client } from '../../../../services/api/client';
 })
 
 export class WalletBalanceTokensComponent implements OnInit {
+
   inProgress: boolean = false;
   balance: number = 0;
+  addresses: Array<any> = [];
 
   constructor(protected client: Client, protected cd: ChangeDetectorRef) { }
 
@@ -25,8 +27,9 @@ export class WalletBalanceTokensComponent implements OnInit {
     try {
       let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
 
-      if (response && typeof response.wallet !== 'undefined') {
-        this.balance = response.wallet.balance;
+      if (response) {
+        this.balance = response.balance;
+        this.addresses = response.addresses;
       } else {
         console.error('No data');
         this.balance = 0;

@@ -23,7 +23,7 @@ import { WalletTokensComponent } from './tokens/tokens.component';
 import { WalletPointsComponent } from './points/points.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletTokenSettingsComponent } from './tokens/settings/settings.component';
-import { WalletTokenRewardsComponent } from './tokens/rewards/rewards.component';
+import { WalletTokenTransactionsComponent } from './tokens/transactions/transactions.component';
 import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
 import { WalletTokenWithdrawComponent } from './tokens/withdraw/withdraw.component';
 import { WalletTokenJoinComponent } from './tokens/join/join.component';
@@ -39,18 +39,19 @@ import { WalletTokenWithdrawLedgerComponent } from './tokens/withdraw/ledger/led
 const walletRoutes : Routes = [
   { path: 'wallet', component: WalletComponent,
     children: [
-      { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'overview', component: WalletOverviewComponent },
-      { path: 'points', component: WalletPointsComponent },
-      { path: 'points/purchase', component: WalletPurchaseComponent },
+      { path: '', redirectTo: 'tokens', pathMatch: 'full' },
+      { path: 'overview', redirectTo: 'tokens', pathMatch: 'full' },
+      //{ path: 'overview', component: WalletOverviewComponent },
+      //{ path: 'points', component: WalletPointsComponent },
+      //{ path: 'points/purchase', component: WalletPurchaseComponent },
       { path: 'tokens', component: WalletTokensComponent, 
         children: [
-          { path: '', redirectTo: 'rewards', pathMatch: 'full' },
+          { path: '', redirectTo: 'transactions', pathMatch: 'full' },
+          { path: 'transactions', component: WalletTokenTransactionsComponent },
           { path: 'withdraw', component: WalletTokenWithdrawComponent },
-          { path: 'rewards/join', component: WalletTokenJoinComponent },          
-          { path: 'rewards', component: WalletTokenRewardsComponent },
+          { path: 'contributions/join', component: WalletTokenJoinComponent },  
           { path: 'contributions', component: WalletTokenContributionsComponent },
-          { path: 'settings', component: WalletTokenSettingsComponent },
+          { path: 'addresses', component: WalletTokenSettingsComponent },
         ] 
       },
       { path: 'usd', component: WalletUSDComponent, 
@@ -91,7 +92,7 @@ const walletRoutes : Routes = [
     WalletWireComponent,
     WalletToggleComponent,
     WalletFlyoutComponent,
-    WalletTokenRewardsComponent,
+    WalletTokenTransactionsComponent,
     WalletTokenContributionsComponent,
     WalletTokenSettingsComponent,
     WalletTokenWithdrawLedgerComponent,
