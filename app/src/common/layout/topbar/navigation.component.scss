@@ -9,6 +9,12 @@
   @media screen and (max-width: $min-tablet){
     padding-left: 0;
   }
+
+  &:not(.m-topbar--navigation--text-only) .m-topbar--navigation--item span {
+    @media screen and (max-width: 840px){
+      display: none;
+    }
+  }
 }
 
 .m-topbar--navigation--item {
@@ -48,9 +54,5 @@
     padding-left: 4px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-
-    @media screen and (max-width: 840px){
-      display: none; 
-    }
   }
 }
