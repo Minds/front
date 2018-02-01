@@ -23,7 +23,7 @@ m-topbar{
   border-bottom: 1px solid #EEE;
   min-height: $layout-header-height;
   max-height: 1000px;
-  z-index: 3;
+  z-index: 9999;
 
   transform: translateZ(0);
 
@@ -151,6 +151,7 @@ m-topbar{
   }
   .m-topbar--navigation--item {
     border: 0;
+    cursor: pointer;
   }
 }
 
