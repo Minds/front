@@ -3,6 +3,7 @@ import { Client } from '../../../../services/api/client';
 import { WalletTokenRewardsComponent } from '../rewards/rewards.component';
 import { WithdrawContractService } from '../../../blockchain/contracts/withdraw-contract.service';
 import { Session } from '../../../../services/session';
+import { WalletTokenWithdrawLedgerComponent } from './ledger/ledger.component';
 
 @Component({
   moduleId: module.id,
@@ -19,6 +20,9 @@ export class WalletTokenWithdrawComponent {
 
   @ViewChild(WalletTokenRewardsComponent)
   protected rewardsComponent: WalletTokenRewardsComponent;
+
+  @ViewChild(WalletTokenWithdrawLedgerComponent)
+  protected ledgerComponent: WalletTokenWithdrawLedgerComponent;
 
   constructor (
     protected client: Client,
@@ -89,6 +93,7 @@ export class WalletTokenWithdrawComponent {
   
       if (response.done) {
         this.refresh();
+        this.ledgerComponent.prepend(response.entity);
       } else {
         this.error = 'Server error';
       }

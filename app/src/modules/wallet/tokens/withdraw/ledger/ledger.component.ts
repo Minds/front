@@ -103,6 +103,11 @@ export class WalletTokenWithdrawLedgerComponent implements OnInit {
     }
   }
 
+  prepend(request) {
+    this.withdrawals.unshift(request);
+    this.detectChanges();
+  }
+
   onStartDateChange(newDate) {
     this.startDate = newDate;
     this.load(true);
