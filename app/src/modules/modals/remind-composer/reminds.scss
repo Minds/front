@@ -46,39 +46,41 @@ m-modal-remind-composer {
     cursor: default;
     overflow: auto !important;
     max-height: 40vh;
-
-    > * {
-      pointer-events: none;
-    }
-
+  //
+  //  > * {
+  //    pointer-events: none;
+  //  }
+  //
     .m-owner-block {
-      padding: ($minds-padding * 2) !important;
+      position: relative !important;
+      //padding: ($minds-padding * 2) !important;
     }
-
-    .m-mature-overlay {
-      display: none !important;
-    }
-
-    .mdl-card__supporting-text {
-      padding: ($minds-padding * 2) !important;
-    }
-
-    .m-rich-embed {
-      padding: 0 ($minds-padding * 2) ($minds-padding * 2);
-    }
-
-    .item-image {
-      padding: 0 ($minds-padding * 2) ($minds-padding * 2);
-    }
-
-    .item-image-video {
-      minds-video {
-        background: transparent !important;
-
-        .minds-video-bar-full {
-          display: none !important;
-        }
-      }
-    }
+  //
+  //  .m-mature-overlay {
+  //    display: none !important;
+  //  }
+  //
+  //  .mdl-card__supporting-text {
+  //    padding: ($minds-padding * 2) !important;
+  //  }
+  //
+  //  .m-rich-embed {
+  //    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
+  //  }
+  //
+  //  .item-image {
+  //    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
+  //  }
+  //
+  //  .item-image-video {
+  //    minds-video {
+  //      background: transparent !important;
+  //
+  //      .minds-video-bar-full {
+  //        display: none !important;
+  //      }
+  //    }
+  //  }
   }
+
 }
