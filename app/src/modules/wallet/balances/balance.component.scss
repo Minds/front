@@ -9,18 +9,13 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
   text-align: center;
   background: #FFF;
 
+  .m-wallet--balance--logo {
+    width: 100px;
+  }
+
   h3 {
     font-weight: 600;
     color: #444;
-  }
-  i {
-    color: #444 !important;
-  }
-
-  i {
-    width: 100%;
-    font-size: 100px;
-    text-align: center;
   }
 
   h2 {
@@ -43,6 +38,14 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
       font-family: 'Roboto';
       letter-spacing: 0.25px;
       color: #444;
+
+      m-tooltip { 
+        vertical-align: middle;
+        i {
+          font-size: 12px;
+          color: #777 !important;
+        }
+      }
     }
     .m-wallet--balance--addresses-address-address {
       font-size: 10px;

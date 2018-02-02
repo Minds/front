@@ -1,5 +1,5 @@
 <div class="m-wallet--balance m-border">
-  <i class="material-icons mdl-color-text--white">lightbulb_outline</i>
+  <img src="assets/logos/crypto.svg" class="m-wallet--balance--logo" />
 
   <ng-container *ngIf="!inProgress; else loading">
     <h2>{{ balance | token: 18 | number }}</h2>
@@ -16,7 +16,13 @@
       
       <div class="m-wallet--balance--addresses-address-col">
         <label class="m-wallet--balance--addresses-address-label">
-          {{address.label}}
+          <span>{{address.label}}</span>
+          <m-tooltip icon="help" *ngIf="address.label == 'Receiver'">
+            This is your public address which will receive Boost & Wire transactions.You can change this in Addresses.
+          </m-tooltip>
+          <m-tooltip icon="help" *ngIf="address.label == 'OffChain'">
+            This is your offchain address where your rewards are deposited. These transaction will not appear on the blockchain.
+          </m-tooltip>
         </label>
         <span class="m-wallet--balance--addresses-address-address">
           {{address.address}}
