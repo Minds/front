@@ -335,7 +335,7 @@ export class AttachmentService {
       if (
         user &&
         this.parseMaturity(object) &&
-        (user.mature || user.guid === object.owner_guid)
+        (user.mature)
       ) {
         object.mature_visibility = true;
       }
