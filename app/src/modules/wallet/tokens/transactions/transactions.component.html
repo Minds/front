@@ -19,7 +19,7 @@
 
       <ng-template #negativeRewardAmount>
         <span class="m-token--ledger--reward-amount--negative">
-          - {{ -transaction.amount * | token:18 | number }}
+          - {{ -transaction.amount | token:18 | number }}
         </span>
       </ng-template>
     </div>

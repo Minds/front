@@ -36,6 +36,7 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 16px;
 
     .m-wallet--balance--addresses-address-label {
       font-weight: 600;
@@ -48,17 +49,23 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
       color: #888;
       font-weight: 300;
     }
-    * {
+    > * {
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
-    .m-wallet--balance--addresses-address-balance: {
+    .m-wallet--balance--addresses-address-balance {
       font-size: 16px;
       font-weight: 600;
       color: #4690DF;
+      text-align: right;
     }
   }
   .m-wallet--balance--addresses-address-col {
     text-align: left;
+    flex: 1;
+    max-width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 }

@@ -25,7 +25,7 @@
 
     <div class="m-wallet--flyout-coin mdl-cell mdl-cell--4-col">
       <!--<m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol>-->
-      <span *ngIf="balance.tokens > -1">{{ balance.tokens | number }}</span>
+      <span *ngIf="balance.tokens > -1">{{ balance.tokens | token: 18 | number }}</span>
       <span *ngIf="balance.tokens < 0">...</span>
       <div class="m-wallet--flyout-label">
         <label i18n>Tokens</label>

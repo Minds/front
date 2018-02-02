@@ -37,10 +37,10 @@ export class WalletTokenWithdrawComponent {
     this.detectChanges();
 
     try {
-      let response: any = await this.client.get(`api/v1/blockchain/rewards/balance`);
+      let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
 
-      if (response && typeof response.balance !== 'undefined') {
-        this.balance = response.balance / Math.pow(10, 18);
+      if (response && typeof response.addresses !== 'undefined') {
+        this.balance = response.addresses[1].balance / Math.pow(10, 18);
         this.setAmount(this.balance);
       } else {
         this.error = 'Server error';

@@ -1,4 +1,4 @@
-<div class="m-token-rewards--ledger">
+<div class="m-token--ledger">
   <div class="m-token-rewards--ledger-filters m-border" *ngIf="!preview; else previewHeader">
     <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"
       dateFormat="shortDate"></m-date-selector>
@@ -6,19 +6,19 @@
       dateFormat="shortDate"></m-date-selector>
   </div>
   <ng-template #previewHeader>
-    <div class="m-token-rewards--ledger-filters m-token-rewards--ledger-filters--preview m-border">
+    <div class="m-token--ledger-filters m-token--ledger-filters--preview m-border">
       Last month
     </div>
   </ng-template>
 
-  <div class="m-token-rewards--ledger--reward m-border" *ngFor="let withdrawal of withdrawals">
-    <div class="m-token-rewards--ledger--reward-amount">
-        <span class="m-token-rewards--ledger--reward-amount--positive">
+  <div class="m-token--ledger--reward m-border" *ngFor="let withdrawal of withdrawals">
+    <div class="m-token--ledger--reward-amount">
+        <span class="m-token--ledger--reward-amount--positive">
           {{ withdrawal.amount | token:18 | number }}
         </span>
     </div>
 
-    <div class="m-token-rewards--ledger--reward-details">
+    <div class="m-token--ledger--reward-details">
       <p *ngIf="withdrawal.completed; else withdrawPending">
         COMPLETED
       </p>
