@@ -25,9 +25,12 @@
     </div>
 
     <div class="m-token--ledger--reward-details">
-      <p>
-        {{ transaction.contract | uppercase }} |  {{ transaction.wallet_address}} 
-      </p>
+      <div class="m-token--ledger--reward-details--meta">
+        <span>{{ (transaction.contract.indexOf('offchain:') > -1 ? transaction.contract.substr(9) : transaction.contract)  | uppercase }}</span>
+      </div>
+      <div class="m-token--ledger--reward-details--meta">
+        <span>{{ transaction.wallet_address }}</span>
+      </div>
 
       <div class="mdl-layout-spacer"></div>
 

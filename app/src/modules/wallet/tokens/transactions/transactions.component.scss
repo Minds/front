@@ -23,6 +23,21 @@
       align-items: center;
       color: #444;
 
+      .m-token--ledger--reward-details--meta {
+        margin-right: 8px;
+        padding-right: 8px;
+        border-right: 1px solid #ececec;
+        > * {
+          color: #777;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+        }
+      }
+
+      > div:last-of-type {
+        border-right: 0 !important;
+      }
+
       p {
         padding: 0;
         margin: 0;
