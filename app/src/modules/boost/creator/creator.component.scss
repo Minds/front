@@ -214,7 +214,8 @@
       height: $fs-mobile + $minds-padding;
 
       .m-boost--creator-wide-input--edit {
-        height: $fs-mobile + $minds-padding;
+        height: auto;
+        padding: $minds-padding;
         line-height: $fs-mobile;
       }
     }
