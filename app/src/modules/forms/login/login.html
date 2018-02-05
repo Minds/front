@@ -57,23 +57,23 @@
 <!-- END: LOGIN -->
 
 <!-- START: TWOFACTOR -->
-<div class="mdl-card mdl-color--blue-grey-500 mdl-shadow--2dp minds-login-box" [hidden]="!twofactorToken">
+<div class="mdl-card mdl-shadow--2dp minds-login-box" [hidden]="!twofactorToken">
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text mdl-color-text--blue-grey-50" i18n="@@FORMS__LOGIN__2FA_LOGIN_TITLE">Twofactor Login</h2>
+    <h2 class="mdl-card__title-text" i18n="@@FORMS__LOGIN__2FA_LOGIN_TITLE">Twofactor Login</h2>
   </div>
 
-  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+  <div class="mdl-card__supporting-text">
     <!-- i18n: @@FORMS__LOGIN__2FA_LOGIN_SMS_SENT -->We just sent you a text. Enter the code below to authenticate.<!-- /i18n -->
   </div>
 
-  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-color-text--blue-grey-50" [mdl]>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdl]>
     <input class="mdl-textfield__input"
     type="text"
     id="code"
     #code
     (keydown.enter)="twofactorAuth(code)"
     />
-    <label class="mdl-textfield__label mdl-color-text--blue-grey-50" for="code" i18n="@@M__COMMON__ENTER_2FA_CODE">Enter your code here</label>
+    <label class="mdl-textfield__label" for="code" i18n="@@M__COMMON__ENTER_2FA_CODE">Enter your code here</label>
   </div>
   <div></div>
 
