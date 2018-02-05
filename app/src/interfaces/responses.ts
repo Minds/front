@@ -17,6 +17,7 @@ export interface MindsBlogResponse extends MindsResponse {
 
 export interface MindsBlogListResponse extends MindsResponse {
   blogs: Array<any>;
+  entities: Array<any>
   'load-next': string;
   pageToken?: boolean;
 }

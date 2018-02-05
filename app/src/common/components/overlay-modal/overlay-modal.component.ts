@@ -8,7 +8,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
   selector: 'm-overlay-modal',
   template: `
     <div class="m-overlay-modal--backdrop" [hidden]="hidden" (click)="dismiss()"></div>
-    <div class="m-overlay-modal" [hidden]="hidden">
+    <div class="m-overlay-modal {{class}}" [hidden]="hidden">
       <a class="m-overlay-modal--close" (click)="dismiss()"><i class="material-icons">close</i></a>
       <ng-template dynamic-host></ng-template>
     </div>
@@ -17,6 +17,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 export class OverlayModalComponent implements AfterViewInit {
 
   hidden: boolean = true;
+  class: string = '';
 
   @ViewChild(DynamicHostDirective)
   private host: DynamicHostDirective;
@@ -33,8 +34,14 @@ export class OverlayModalComponent implements AfterViewInit {
     this.service.setContainer(this);
   }
 
-  create(componentClass) {
+  create(componentClass, opts?) {
     this.dismiss();
+
+    opts = { ...{
+      class: '',
+    }, ...opts };
+
+    this.class = opts.class;
 
     if (!componentClass) {
       throw new Error('Unknown component class');

@@ -7,6 +7,9 @@ import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+
+import { Poster } from '../../legacy/controllers/newsfeed/poster/poster';
 
 @Component({
   moduleId: module.id,
@@ -37,7 +40,8 @@ export class MediaImagesListComponent {
     public route: ActivatedRoute,
     public title: MindsTitle,
     private context: ContextService,
-    public session: Session
+    public session: Session,
+    private overlayModal: OverlayModalService
   ) { }
 
   ngOnInit() {
@@ -74,6 +78,13 @@ export class MediaImagesListComponent {
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+  }
+
+  showPoster() {
+    const creator = this.overlayModal.create(Poster, {}, { 
+      class: 'm-overlay-modal--no-padding m-overlay-modal--top m-overlay-modal--medium' 
+    });
+    creator.present();
   }
 
   load(refresh: boolean = false) {

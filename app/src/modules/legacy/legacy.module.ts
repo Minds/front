@@ -130,7 +130,7 @@ import { CarouselComponent } from './components/carousel.component';
     VideoCard,
     Remind,
     UserCard,
-
+    Poster,
     BoostButton,
   ]
 })

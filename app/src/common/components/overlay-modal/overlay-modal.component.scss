@@ -25,6 +25,30 @@
 
   font-family: 'Roboto', sans-serif;
 
+  &.m-overlay-modal--large {
+    max-width: 990px;
+  }
+
+  &.m-overlay-modal--medium {
+    max-width: 600px;
+  }
+
+  &.m-overlay-modal--small {
+    max-width: 480px;
+  }
+
+  &.m-overlay-modal--no-padding {
+    padding: 0px;
+
+    .post {
+      margin: 0px;
+    }
+  }
+
+  &.m-overlay-modal--top {
+    top: 150px;
+  }
+
   @media screen and (max-width: $max-mobile) {
     padding: ($minds-padding * 2) ($minds-padding * 4);
   }

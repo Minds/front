@@ -4,7 +4,7 @@
 ></m-boost-console-card>
 
 <div class="m-boost-console--empty" [hidden]="(boosts && boosts.length) || inProgress" i18n="@@BOOST__CONSOLE__LIST__EMPTY_BOOSTS">
-  You have no boosts.
+  You have no boosted posts. <a (click)="showPoster()"> Create one</a>
 </div>
 
 <infinite-scroll

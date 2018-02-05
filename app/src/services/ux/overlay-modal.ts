@@ -25,7 +25,7 @@ export class OverlayModalService {
 
     this._onDidDismissFn = void 0;
 
-    this.container.create(component);
+    this.container.create(component, opts);
     this.container.setData(data);
 
     if (opts) {

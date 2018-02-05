@@ -164,6 +164,10 @@ m-boost-console {
       font-family: 'Lato', sans-serif;
       font-weight: 300;
       opacity: 0.65;
+
+      a {
+        cursor: pointer;
+      }
     }
 
     .m-boost-console--third-party-network {

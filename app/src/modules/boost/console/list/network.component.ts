@@ -2,6 +2,9 @@ import { Component, Input } from '@angular/core';
 import { BoostConsoleType } from '../console.component';
 
 import { BoostService } from '../../boost.service';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+
+import { Poster } from '../../../legacy/controllers/newsfeed/poster/poster';
 
 @Component({
   moduleId: module.id,
@@ -21,7 +24,10 @@ export class BoostConsoleNetworkListComponent {
 
   error: string = '';
 
-  constructor(public service: BoostService) { }
+  constructor(
+    public service: BoostService, 
+    private overlayModal: OverlayModalService,
+  ) { }
 
   @Input('type') set _type(type: BoostConsoleType) {
     this.type = type;
@@ -34,6 +40,13 @@ export class BoostConsoleNetworkListComponent {
   ngOnInit() {
     this.load(true);
     this.initialized = true;
+  }
+
+  showPoster() {
+    const creator = this.overlayModal.create(Poster, {}, { 
+      class: 'm-overlay-modal--no-padding m-overlay-modal--top m-overlay-modal--medium'
+    });
+    creator.present();
   }
 
   load(refresh?: boolean) {
