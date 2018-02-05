@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit,
+  ViewChild
+} from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { MindsTitle } from '../../../services/ux/title';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
@@ -22,6 +25,8 @@ export class BlockchainMarketingComponent implements OnInit, OnDestroy {
   minds = window.Minds;
 
   private _pollTimer;
+
+  videoError: boolean = false;
 
   constructor(
     protected client: Client,
@@ -71,5 +76,12 @@ export class BlockchainMarketingComponent implements OnInit, OnDestroy {
   showBuy() {
     const creator = this.overlayModal.create(BlockchainTdeBuyComponent);
     creator.present();
+  }
+
+  /**
+   * When the video source's got an error
+   */
+  onSourceError() {
+    this.videoError = true;
   }
 }

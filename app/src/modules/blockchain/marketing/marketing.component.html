@@ -2,9 +2,12 @@
 
   <div class="m-marketing--marketing-header">
     <div class="m-marketing--background-video">
-      <video autoplay muted loop>
-        <source [src]="minds.cdn_url + '/assets/videos/space-1/space-1.mp4'" type="video/mp4">
+      <video autoplay muted loop *ngIf="!videoError; else spaceImage">
+        <source [src]="minds.cdn_url + '/assets/videos/space-1/space-1.mp4'" type="video/mp4" (error)="onSourceError()">
       </video>
+      <ng-template #spaceImage>
+        <img [src]="minds.cdn_url + '/assets/marketing/space-1.png'">
+      </ng-template>
     </div>
 
     <div class="m-marketing--marketing-header-inner">
