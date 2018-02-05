@@ -100,6 +100,12 @@ minds-groups-profile{
   }
 
   .m-group--sidebar{
+    @media screen and (max-width: 840px) {
+      margin: 0 auto;
+    }
+    @media screen and (max-width: 650px) {
+      width: calc(85% - 16px);
+    }
     .mdl-card{
       padding:0;
       overflow:visible;

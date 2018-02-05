@@ -1,8 +1,14 @@
 .m-group--conversation {
   max-width: 1600px;
 
+  
   .m-group--sidebar {
-    max-width: 320px;
+    @media screen and (max-width: $min-tablet) {
+      margin: 0 auto;
+    }
+    @media screen and (max-width: 650px) {
+      width: calc(85% - 16px);
+    }
   }
   .mdl-cell--8-col {
     flex: 1;
