@@ -152,7 +152,7 @@ export class TransactionOverlayComponent implements OnInit {
   }
 
   @HostListener('dragover', ['$event'])
-  keyDragOver(e: DragEvent) {
+  keyDragOver(e: Event) {
     if (this.comp !== this.COMP_UNLOCK) {
       return;
     }
@@ -162,7 +162,7 @@ export class TransactionOverlayComponent implements OnInit {
   }
 
   @HostListener('dragleave', ['$event'])
-  keyDragLeave(e: DragEvent) {
+  keyDragLeave(e: Event) {
     if (this.comp !== this.COMP_UNLOCK) {
       return;
     }
@@ -175,7 +175,7 @@ export class TransactionOverlayComponent implements OnInit {
   }
 
   @HostListener('drop', ['$event'])
-  keyDropFile(e: DragEvent) {
+  keyDropFile(e: Event) {
     if (this.comp !== this.COMP_UNLOCK) {
       return;
     }
