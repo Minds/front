@@ -598,7 +598,16 @@
       </a>
     </div> 
   </ng-template>
-    
+
+  <ng-template ngSwitchCase="contributions">
+    <a target="_blank"
+      routerLink="/wallet/tokens/contributions">
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__CONTRIBUTIONS__YOU_HAVE_RECEIVED_X_TOKENS">
+        You have received {{notification.params.amount}} tokens.
+      </p>
+    </a>
+  </ng-template>
+
   <!-- Default -->
   <ng-template ngSwitchDefault>
     <i i18n="@@NOTIFICATIONS__NOTIFICATION__GENERAL_ERROR_VIEWING">Sorry, there was an error viewing this notification</i>
