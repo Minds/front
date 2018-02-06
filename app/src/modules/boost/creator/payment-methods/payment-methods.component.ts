@@ -1,7 +1,10 @@
 import { Component, Input, Output, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
+import { Client } from '../../../../services/api/client';
+import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
 
-type CurrencyType = 'rewards' | 'usd' | 'tokens';
+type CurrencyType = 'offchain' | 'usd' | 'tokens';
 
 @Component({
   providers: [ CurrencyPipe ],
@@ -14,7 +17,6 @@ export class BoostCreatorPaymentMethodsComponent {
   @Output() boostChanged: EventEmitter<any> = new EventEmitter();
 
   @Input() rates = {
-    rewardsBalance: null,
     rate: 1,
     min: 250,
     cap: 5000,
@@ -25,9 +27,63 @@ export class BoostCreatorPaymentMethodsComponent {
     maxCategories: 3
   };
 
+  balances = {
+    onchain: null,
+    offchain: null,
+    onChainAddress: '',
+    isReceiverOnchain: false,
+  };
+
+
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
+    private web3Wallet: Web3WalletService,
+    private client: Client,
+    private tokenContract: TokenContractService
   ) { }
+
+  ngOnInit() {
+    this.loadBalances();
+  }
+
+  async loadBalances() {
+    try {
+      let currentWallet = await this.web3Wallet.getCurrentWallet();
+
+      if (currentWallet) {
+        this.loadCurrentWalletBalance(currentWallet);
+      }
+
+      let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
+
+      if (!response) {
+        return;
+      }
+
+      this.balances.offchain = response.addresses[1].balance;
+
+      if (!currentWallet) {
+        this.balances.onchain = response.addresses[0].balance;
+        this.balances.onChainAddress = response.addresses[0].address;
+        this.balances.isReceiverOnchain = true;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async loadCurrentWalletBalance(address) {
+    try {
+      this.balances.onChainAddress = address;
+      this.balances.isReceiverOnchain = false;
+
+      const balance = await this.tokenContract.balanceOf(address);
+
+      this.balances.onchain = balance[0].toString();
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   /**
    * Sets the boost currency, and rounds the amount if necessary
@@ -47,7 +103,7 @@ export class BoostCreatorPaymentMethodsComponent {
   roundAmount() {
     if ((this.boost.type === 'p2p') && (!this.boost.currency || (this.boost.currency === 'usd'))) {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 100) / 100;
-    } else if (this.boost.currency === 'tokens' || this.boost.currency === 'rewards') {
+    } else if (this.boost.currency === 'tokens' || this.boost.currency === 'offchain') {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 10000) / 10000;
     }
   }
@@ -71,7 +127,7 @@ export class BoostCreatorPaymentMethodsComponent {
         const usdFixRate = this.rates.usd / 100;
         return Math.ceil(<number>this.boost.amount / usdFixRate) / 100;
 
-      case 'rewards':
+      case 'offchain':
       case 'tokens':
         return Math.ceil(<number>this.boost.amount / tokensFixRate) / 10000;
     }
@@ -107,4 +163,7 @@ export class BoostCreatorPaymentMethodsComponent {
     return 0;
   }
 
+  getOnChainInterfaceLabel() {
+    return this.web3Wallet.getOnChainInterfaceLabel();
+  }
 }

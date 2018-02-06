@@ -1,10 +1,10 @@
 .m-boost--creator {
-  font-weight: 300;
+  font-weight: 400;
   max-width: 900px;
   margin: auto;
 
-  h2, h3, h4 {
-    font-weight: 300;
+  h2, h3, h4, h5 {
+    font-weight: 400;
   }
 
   h3 {
@@ -67,7 +67,7 @@
 
   .m-boost--creator-section {
     padding: 16px 0;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   .m-boost--creator-section-row {
@@ -149,9 +149,9 @@
 
   .m-boost--creator-selector {
     > li {
-      h4, span {
+      h4, h5, span {
         margin: 0;
-        font-weight: 300;
+        font-weight: 400;
       }
 
       b {
@@ -186,6 +186,13 @@
         line-height: 1.3;
         max-width: 300px;
         color: rgba(0,0,0,0.75);
+
+        &.m-boost--creator-selector--description--small {
+          font-size: 12px;
+          line-height: 1.2;
+          letter-spacing: 0.35px;
+          margin-bottom: $minds-padding;
+        }
       }
     }
   }
@@ -530,7 +537,7 @@
   .m-payments-saved {
     .m-payments-saved--item {
       text-transform: uppercase;
-      font-weight: 300;
+      font-weight: 400;
       padding: $minds-padding / 2;
       padding-left: $minds-padding * 2;
 
@@ -569,28 +576,8 @@
       opacity: 1;
     }
 
-    h4 {
-      m--crypto-token-symbol {
-        margin-left: 8px;
-        font-size: 28px;
-
-        .m--crypto-token-symbol--stroke {
-          stroke: #555;
-        }
-
-        .m--crypto-token-symbol--fill {
-          fill: #555;
-        }
-      }
-    }
-
-    .m-boost--creator-selector--cta {
-      visibility: visible;
-    }
-
     .m-boost--creator-selector--selected-label {
       visibility: hidden;
-      height: 0;
     }
   }
 
@@ -603,7 +590,6 @@
 
       .m-boost--creator-selector--selected-label {
         visibility: visible;
-        height: auto;
       }
     }
   }
@@ -742,5 +728,53 @@
         color: #000000;
       }
     }
+  }
+}
+
+m-boost--creator-payment-methods {
+  display: block;
+}
+
+.m-boost--creator-selector--hoverable {
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.25);
+}
+
+.m-boost--creator-wide-input--cost {
+  display: flex;
+  align-items: center;
+  margin-top: $minds-padding;
+
+  .m-boost--creator-wide-input--cost-label-value {
+    min-width: 180px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .m-boost--creator-wide-input--cost-label {
+    flex-grow: 1;
+    flex-basis: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .m-boost--creator-wide-input--cost-value {
+    flex-grow: 1;
+    flex-basis: 0;
+    background: rgba(0, 0, 0, 0.10);
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: right;
+
+    > span {
+      margin: 0 ($minds-padding * 2);
+    }
+  }
+
+  .m-boost--creator-wide-input--cost-currency {
+    margin-left: 1em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #999;
   }
 }

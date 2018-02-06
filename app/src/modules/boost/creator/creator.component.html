@@ -4,7 +4,7 @@
     <h2 i18n="@@M__FEATURE__BOOST">Boost</h2>
   </div>
 
-  <ng-container *ngIf="step === 0">
+  <span *ngIf="step === 0">
     <!-- Type -->
     <section class="m-boost--creator-section m-boost--creator-section-type">
       <h3 class="m-boost--creator-section-title--small" i18n="@@BOOST__CREATOR__BOOST_TYPE_TITLE">Boost Type</h3>
@@ -26,7 +26,7 @@
           [class.m-boost--creator-selector--highlight]="!boost.type || boost.type == 'p2p'"
         >
           <h4 i18n="@@M__FEATURE__OFFER__PLURAL">Offers</h4>
-          <span class="m-boost--creator-selector--description" i18n="@@BOOST__CREATOR__OFFERS_SELECTOR_DESC">Your content will be shared to a specific channel in exchange for USD, tokens or points.</span>
+          <span class="m-boost--creator-selector--description" i18n="@@BOOST__CREATOR__OFFERS_SELECTOR_DESC">Your content will be shared to a specific channel in exchange for USD or tokens.</span>
           <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
         </li>
 
@@ -68,6 +68,23 @@
             <ng-container *ngIf="boost.type != 'p2p'" i18n="@@BOOST__CREATOR__VIEWS_INPUT_LABEL">views</ng-container>
           </span>
         </div>
+
+        <div class="m-boost--creator-wide-input--cost">
+          <span class="m-boost--creator-wide-input--cost-label-value">
+            <span class="m-boost--creator-wide-input--cost-label">Cost</span>
+
+            <span class="m-boost--creator-wide-input--cost-value">
+              <span *ngIf="boost.currency === 'usd'">{{ calcCharges(boost.currency) | currency:'USD':true }}</span>
+              <span *ngIf="boost.currency === 'tokens' || boost.currency === 'offchain'">{{ calcCharges(boost.currency) | number:'1.0-4' }}</span>
+            </span>
+          </span>
+
+          <span class="m-boost--creator-wide-input--cost-currency">
+            <ng-container *ngIf="boost.currency === 'usd'">USD</ng-container>
+            <ng-container *ngIf="boost.currency === 'tokens' || boost.currency === 'offchain'">Tokens</ng-container>
+          </span>
+        </div>
+
         <span class="m-boost--creator-wide-input--estimation" *ngIf="estimatedTime !== -1">
             Estimated completion time: {{ estimatedTime }} hours
         </span>
@@ -75,7 +92,7 @@
 
       <!-- Payment Method -->
       <section class="m-boost--creator-section m-boost--creator-section-payment">
-        <h3 class="m-boost--creator-section-title--small" i18n="@@BOOST__CREATOR__PAYMENT_METHOD_TITLE">Payment Method</h3>
+        <h3 class="m-boost--creator-section-title--small" i18n="@@BOOST__CREATOR__PAYMENT_METHOD_CRYPTO_TITLE">PAYMENT METHOD</h3>
         <m-boost--creator-payment-methods [(boost)]="boost" [rates]="rates"></m-boost--creator-payment-methods>
       </section>
     </section>
@@ -101,11 +118,8 @@
           <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'usd'" i18n="@@BOOST__CREATOR__USD_PRIORITY_FEE">
             + <b>{{ calcPriorityChargesPreview('usd') | currency:'USD':true }} USD</b>
           </span>
-          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'rewards'" i18n="@@BOOST__CREATOR__REWARDS_PRIORITY_FEE">
-            + <b>{{ calcPriorityChargesPreview('rewards') | number }} rewards</b>
-          </span>
-          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'tokens'" i18n="@@BOOST__CREATOR__TOKENS_PRIORITY_FEE">
-            + <b>{{ calcPriorityChargesPreview('tokens') | number }} tokens</b>
+          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'tokens' || boost.currency == 'offchain'" i18n="@@BOOST__CREATOR__TOKENS_PRIORITY_FEE">
+            + <b>{{ calcPriorityChargesPreview(boost.currency) | number }} tokens</b>
           </span>
         </span>
       </section>
@@ -136,7 +150,7 @@
       </section>
     </ng-container>
     <!-- / -->
-  </ng-container>
+  </span>
 
   <ng-container *ngIf="step == 1">
     <section class="m-boost--creator-section m-boost--creator-section-checkout">

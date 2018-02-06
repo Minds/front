@@ -13,7 +13,8 @@
 
   h3 {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 1;
     text-transform: uppercase;
     letter-spacing: 1.2px;
@@ -45,6 +46,7 @@
 
   .m-wire--creator--header{
     position: relative;
+    margin-bottom: 16px;
 
     h2 {
       font-size: 36px;
@@ -100,6 +102,15 @@
     }
   }
 
+  .m-wire--creator-section-row {
+    display: flex;
+    flex-direction: row;
+
+    > .m-wire--creator-section {
+      flex: 1;
+    }
+  }
+
   .m-wire--creator-section {
     padding: 16px 0;
     font-weight: 400;
@@ -120,7 +131,7 @@
       width: 6em;
       max-width: 229px;
       padding: 12px;
-      font-weight: 300;
+      font-weight: 400;
       letter-spacing: 5px;
       text-align: right;
 
@@ -141,32 +152,62 @@
   }
 
   .m-wire--creator-selector {
+  
     > li {
+      flex-basis: 0;
+      flex-grow: 1;
+      cursor: pointer;
+  
       h4, span {
         margin: 0;
         font-weight: 400;
       }
 
+      h5 {
+        margin: 8px 0 2px !important;
+        font-size: 14px;
+        font-weight: 400;
+    
+        > * {
+          vertical-align: middle;
+        }
+    
+        .m-tooltip {
+          .material-icons {
+            font-size: 16px;
+            line-height: 1.1;
+          }
+        }
+    
+        > span {
+          font-weight: bold !important;
+          font-size: 18px;
+          -webkit-font-smoothing: antialiased;
+          text-rendering: optimizeLegibility;
+        }
+      }
+
       .m-wire--creator-selector-type {
-        padding: $minds-padding 0;
+        padding: 0;
+        margin-bottom: $minds-margin;
+  
         > * {
           vertical-align: middle;
           display: inline-block;
         }
-        i, m--crypto-token-symbol {
-          margin-right: 8px;
-          font-size: 28px;
+        > i {
+          font-size: 42px;
+          display: block;
         }
+      }
 
-        m--crypto-token-symbol {
-          .m--crypto-token-symbol--stroke {
-            stroke: #555;
-          }
-
-          .m--crypto-token-symbol--fill {
-            fill: #555;
-          }
-        }
+      .m-wire--creator-selector-subtext {
+        display: block;
+        font-size: 12px;
+        line-height: 1.1;
+        color: #aaa;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
       }
 
       b {
@@ -202,8 +243,6 @@
       }
     }
   }
-
-
 
   .m-wire--creator-wide-input {
     $fs: 32px;
@@ -527,10 +566,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  max-width: 352px;
 
   > li {
     opacity: 0.5;
-    padding: $minds-padding ($minds-padding * 3);
+    padding: ($minds-padding);
     cursor: pointer;
     user-select: none;
 

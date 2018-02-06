@@ -5,8 +5,10 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session, SessionFactory } from '../../../services/session';
 import { WireService } from '../wire.service';
+import { Web3WalletService } from '../../blockchain/web3-wallet.service';
+import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 
-export type CurrencyType = 'points' | 'money' | 'tokens';
+export type CurrencyType = 'money' | 'tokens';
 
 export class VisibleWireError extends Error {
   visible: boolean = true;
@@ -97,12 +99,21 @@ export class WireCreatorComponent implements AfterViewInit {
 
   @ViewChild('amountEditor') private _amountEditor: ElementRef;
 
+  balances = {
+    onchain: null,
+    offchain: null,
+    onChainAddress: '',
+    isReceiverOnchain: false,
+  };
+
   constructor(
     private wireService: WireService,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private client: Client,
-    private currency: CurrencyPipe
+    private currency: CurrencyPipe,
+    private web3Wallet: Web3WalletService,
+    private tokenContract: TokenContractService,
   ) { }
 
   ngOnInit() {
@@ -111,10 +122,50 @@ export class WireCreatorComponent implements AfterViewInit {
         this.initialized = true;
         this.syncOwner();
       });
+    this.loadBalances();
   }
 
   ngAfterViewInit() {
     this.amountEditorFocus();
+  }
+
+  async loadBalances() {
+    try {
+      let currentWallet = await this.web3Wallet.getCurrentWallet();
+
+      if (currentWallet) {
+        this.loadCurrentWalletBalance(currentWallet);
+      }
+
+      let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
+
+      if (!response) {
+        return;
+      }
+
+      this.balances.offchain = response.addresses[1].balance;
+
+      if (!currentWallet) {
+        this.balances.onchain = response.addresses[0].balance;
+        this.balances.onChainAddress = response.addresses[0].address;
+        this.balances.isReceiverOnchain = true;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async loadCurrentWalletBalance(address) {
+    try {
+      this.balances.onChainAddress = address;
+      this.balances.isReceiverOnchain = false;
+
+      const balance = await this.tokenContract.balanceOf(address);
+
+      this.balances.onchain = balance[0].toString();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   // Load settings
@@ -171,10 +222,7 @@ export class WireCreatorComponent implements AfterViewInit {
       this.wire.amount = 1;
       this.wire.recurring = true;
     } else {
-      // TODO: Refactor to `rewards`
-      this.setCurrency('points');
-      this.wire.amount = 1000;
-      this.wire.recurring = true;
+      // TODO: Throw an error
     }
 
     if (this.wire.amount < 0) {
@@ -188,13 +236,13 @@ export class WireCreatorComponent implements AfterViewInit {
    * Sets the wire currency, and rounds the amount if necessary
    */
   setCurrency(currency: CurrencyType | null) {
-    if (
+    /*if (
       !this.owner ||
       (!this.owner.merchant && currency === 'money') ||
       (!this.owner.eth_wallet && currency === 'tokens')
     ) {
       return;
-    }
+    }*/
 
     let oldCurrency = this.wire.currency;
     this.wire.currency = currency;
@@ -202,7 +250,7 @@ export class WireCreatorComponent implements AfterViewInit {
     this.wire.payload = null;
 
     if (currency === 'tokens') {
-      this.setNoncePayload({ receiver: this.owner.eth_wallet })
+      this.setTokensNoncePayload('');
     }
 
     this.convertCurrency(oldCurrency, currency);
@@ -218,6 +266,13 @@ export class WireCreatorComponent implements AfterViewInit {
     this.showErrors();
   }
 
+  /**
+   * Sets the tokens specific wire payment nonce
+   */
+  setTokensNoncePayload(address: string) {
+    return this.setNoncePayload({ receiver: this.owner.eth_wallet, address })
+  }
+
   // Read and edit amount
 
   /**
@@ -231,10 +286,6 @@ export class WireCreatorComponent implements AfterViewInit {
     }
 
     this._changeDetectorRef.detectChanges();
-
-    //if (this._amountEditor.nativeElement) {
-    //  setTimeout(() => (<HTMLInputElement>this._amountEditor.nativeElement).focus(), 100);
-    //}
   }
 
   setAmount(amount: string) {
@@ -271,15 +322,13 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   /**
-  * Round by 2 decimals if currency is unset or not points, if tokens are selected round by 4, else round down to an integer.
+  * Round by 4 if tokens, 2 on other currencies (money)
   */
   roundAmount() {
-    if (!this.wire.currency || this.wire.currency === 'money') {
-      this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 100) / 100;
-    } else if (this.wire.currency === 'tokens') {
+    if (this.wire.currency === 'tokens') {
       this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
     } else {
-      this.wire.amount = Math.floor(<number>this.wire.amount);
+      this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 100) / 100;
     }
   }
 
@@ -289,22 +338,16 @@ export class WireCreatorComponent implements AfterViewInit {
    * Calculates base charges (any other % based fee)
    */
   calcBaseCharges(type: string): number {
-    switch (type) {
-      case 'points':
-        return Math.floor(<number>this.wire.amount);
-    }
-
+    // NOTE: Can be used to calculate fees
     return <number>this.wire.amount;
   }
 
-  // TODO: Might be used later for recurring bonuses
   /**
    * Calculate charges including priority
    */
   calcCharges(type: string): number {
-    const charges = this.calcBaseCharges(type);
-
-    return charges;
+    // NOTE: Can be used to calculate bonuses
+    return this.calcBaseCharges(type);
   }
 
   /**
@@ -316,26 +359,14 @@ export class WireCreatorComponent implements AfterViewInit {
     }
 
     switch (from) {
-      case 'points':
-        if (to === 'money') {
-          this.wire.amount = <number>this.wire.amount / this.rates.usd;
-        } else if (to === 'tokens') {
-          this.wire.amount = <number>this.wire.amount / this.rates.tokens;
-        }
-        break;
-
       case 'money':
-        if (to === 'points') {
-          this.wire.amount = <number>this.wire.amount * this.rates.usd;
-        } else if (to === 'tokens') {
+        if (to === 'tokens') {
           this.wire.amount = <number>this.wire.amount * this.rates.tokens;
         }
         break;
 
       case 'tokens':
-        if (to === 'points') {
-          this.wire.amount = <number>this.wire.amount * this.rates.tokens;
-        } else if (to === 'money') {
+        if (to === 'money') {
           this.wire.amount = <number>this.wire.amount / this.rates.tokens;
         }
         break;
@@ -367,14 +398,6 @@ export class WireCreatorComponent implements AfterViewInit {
     }
 
     switch (this.wire.currency) {
-      case 'points':
-        const charges = this.calcCharges(this.wire.currency);
-
-        if ((this.rates.balance !== null) && (charges > this.rates.balance)) {
-          throw new VisibleWireError(`You only have ${this.rates.balance} points.`);
-        }
-        break;
-
       case 'money':
         if (!this.wire.payload) {
           throw new Error('Payment method not processed.');
@@ -423,9 +446,9 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   /**
-   * Submits the wire to the appropiate server endpoint using the current settings
+   * Submits the wire
    */
-  submit() {
+  async submit() {
     if (this.inProgress) {
       return;
     }
@@ -435,35 +458,34 @@ export class WireCreatorComponent implements AfterViewInit {
       return;
     }
 
-    this.inProgress = true;
+    try {
+      this.inProgress = true;
+      this.submitted = true;
+      this.error = '';
 
-    let request: Promise<any> = this.wireService.submitWire(this.wire);
+      let { done } = await this.wireService.submitWire(this.wire);
 
-    this.submitted = true;
-    this.error = '';
-    request
-      .then(({ done }) => {
-        this.inProgress = false;
+      if (done) {
+        this.success = true;
 
-        if (done) {
-          this.success = true;
-
-          if (this._opts && this._opts.onComplete) {
-            this._opts.onComplete(this.wire);
-          }
-
-          setTimeout(() => {
-            this.overlayModal.dismiss();
-          }, 2500);
+        if (this._opts && this._opts.onComplete) {
+          this._opts.onComplete(this.wire);
         }
-      })
-      .catch(e => {
-        this.inProgress = false;
-        if (e && e.message) {
-          this.error = e.message;
-        } else {
-          this.error = 'Sorry, something went wrong';
-        }
-      });
+
+        setTimeout(() => {
+          this.overlayModal.dismiss();
+        }, 2500);
+      }
+    } catch (e) {
+      this.error = (e && e.message) || 'Sorry, something went wrong';
+    } finally {
+      this.inProgress = false;
+    }
+  }
+
+  //
+
+  getOnChainInterfaceLabel() {
+    return this.web3Wallet.getOnChainInterfaceLabel();
   }
 }

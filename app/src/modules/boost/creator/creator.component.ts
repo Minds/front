@@ -7,8 +7,9 @@ import { Session, SessionFactory } from '../../../services/session';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
+import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
 
-type CurrencyType = 'rewards' | 'usd' | 'tokens';
+type CurrencyType = 'offchain' | 'usd' | 'tokens';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
 
 interface BoostStruc {
@@ -65,7 +66,6 @@ export class BoostCreatorComponent implements AfterViewInit {
 
   rates = {
     balance: null,
-    rewardsBalance: null,
     rate: 1,
     min: 250,
     cap: 5000,
@@ -105,7 +105,8 @@ export class BoostCreatorComponent implements AfterViewInit {
     private currency: CurrencyPipe,
     private tokensContract: TokenContractService,
     private boostContract: BoostContractService,
-    private web3Wallet: Web3WalletService
+    private web3Wallet: Web3WalletService,
+    private offchainPayment: OffchainPaymentService
   ) { }
 
   ngOnInit() {
@@ -185,7 +186,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     this.calcEstimatedCompletionTime();
     this.showErrors();
 
-    if (type === 'p2p' && this.boost.currency === 'rewards') {
+    if (type === 'p2p' && this.boost.currency === 'offchain') {
       this.setBoostCurrency('tokens');
     }
   }
@@ -265,7 +266,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   roundAmount() {
     if ((this.boost.type === 'p2p') && (!this.boost.currency || (this.boost.currency === 'usd'))) {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 100) / 100;
-    } else if (this.boost.currency === 'tokens' || this.boost.currency === 'rewards') {
+    } else if (this.boost.currency === 'tokens' || this.boost.currency === 'offchain') {
       this.boost.amount = Math.round(parseFloat(`${this.boost.amount}`) * 10000) / 10000;
     }
   }
@@ -302,7 +303,7 @@ export class BoostCreatorComponent implements AfterViewInit {
         const usdFixRate = this.rates.usd / 100;
         return Math.ceil(<number>this.boost.amount / usdFixRate) / 100;
 
-      case 'rewards':
+      case 'offchain':
       case 'tokens':
         const tokensFixRate = this.rates.tokens / 10000;
         return Math.ceil(<number>this.boost.amount / tokensFixRate) / 10000;
@@ -394,13 +395,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     }
 
     switch (this.boost.currency) {
-      case 'rewards':
-        const charges = this.calcCharges(this.boost.currency);
-
-        if ((this.rates.rewardsBalance !== null) && (charges > this.rates.rewardsBalance / Math.pow(10, 18))) {
-          throw new VisibleBoostError(`You only have ${this.rates.rewardsBalance / Math.pow(10, 18)} rewards.`);
-        }
-        break;
+      // TODO: Check offchain balance
 
       case 'usd':
         if (!this.boost.nonce) {

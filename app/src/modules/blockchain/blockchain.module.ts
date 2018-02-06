@@ -22,6 +22,8 @@ import { WireContractService } from './contracts/wire-contract.service';
 import { WithdrawContractService } from './contracts/withdraw-contract.service';
 import { TokenDistributionEventService } from './contracts/token-distribution-event.service';
 import { LocalWalletService } from './local-wallet.service';
+import { OffchainPaymentService } from './offchain-payment.service';
+import { Client } from '../../services/api/client';
 
 const cryptoRoutes: Routes = [
   {
@@ -92,6 +94,11 @@ const cryptoRoutes: Routes = [
       provide: TokenDistributionEventService,
       useFactory: TokenDistributionEventService._,
       deps: [ Web3WalletService ]
+    },
+    {
+      provide: OffchainPaymentService,
+      useFactory: OffchainPaymentService._,
+      deps: [ Client ]
     }
   ],
   exports: [

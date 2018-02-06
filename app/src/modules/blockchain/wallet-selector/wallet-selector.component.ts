@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 
+type Wallet = { address: string, label: string };
+
 @Component({
   moduleId: module.id,
   selector: 'm-blockchain--wallet-selector',
@@ -10,16 +12,17 @@ import { Web3WalletService } from '../web3-wallet.service';
 })
 export class BlockchainWalletSelector {
   @Input() current: string;
+  @Input() autoselect: boolean;
+  @Input() allowOffchain: boolean = false;
+
   @Output('select') selectEventEmitter: EventEmitter<string> = new EventEmitter<string>();
+  @Output('autoselectChange') autoselectChangeEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   web3Unavailable: boolean = false;
   web3Locked: boolean = false;
-  web3Wallets: string[] = [];
+  web3Wallets: Wallet[] = [];
 
   _lockedWeb3CheckTimer: any;
-
-  @Input() autoselect: boolean;
-  @Output() autoselectChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     protected web3Wallet: Web3WalletService,
@@ -31,7 +34,21 @@ export class BlockchainWalletSelector {
   }
 
   refresh() {
+    this.setWeb3Wallets([]);
+    this.detectChanges();
+
     this.getWallets();
+  }
+
+  setWeb3Wallets(wallets: Wallet[] = []) {
+    if (this.allowOffchain) {
+      wallets.push({
+        address: 'offchain',
+        label: 'Offchain Wallet',
+      });
+    }
+
+    this.web3Wallets = wallets;
   }
 
   async getWallets() {
@@ -44,15 +61,16 @@ export class BlockchainWalletSelector {
       return;
     }
 
-    let wallets = await this.web3Wallet.getWallets();
+    let wallets = (await this.web3Wallet.getWallets())
+      .map(address => ({ address, label: address }));
 
     this.web3Unavailable = false;
     this.web3Locked = false;
-    this.web3Wallets = wallets;
+    this.setWeb3Wallets(wallets);
     if (this.autoselect && this.web3Wallets.length > 0) {
-      this.setWallet(this.web3Wallets[0]);
+      this.setWallet(this.web3Wallets[0].address);
       this.autoselect = false;
-      this.autoselectChange.emit(false);
+      this.autoselectChangeEmitter.emit(false);
     }
     this.detectChanges();
   }

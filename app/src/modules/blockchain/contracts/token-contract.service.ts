@@ -50,6 +50,12 @@ export class TokenContractService {
     return (await this.token()).transfer(this.web3Wallet.config.wallet_address, this.tokenToUnit(amount));
   }
 
+  // Balances
+
+  async balanceOf(address: string) {
+    return (await this.token()).balanceOf(address);
+  }
+
   // Token allowance
 
   async increaseApproval(address: string, amount: number, message: string = '') {

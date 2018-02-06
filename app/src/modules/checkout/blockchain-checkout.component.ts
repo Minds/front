@@ -6,17 +6,19 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: 'blockchain-checkout.component.html'
 })
 export class BlockchainCheckoutComponent {
+  @Input() autoselect: boolean = true;
+  @Input() allowOffchain: boolean = false;
+
   @Output('inputed') inputtedEventEmitter: EventEmitter<any> = new EventEmitter<any>();
-  @Input('autoselect') autoselect: boolean = true;
-  @Output() autoselectChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output('autoselectChange') autoselectChangeEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   setValue(wallet) {
     this.autoselect = false;
-    this.autoselectChange.emit(false);
+    this.autoselectChangeEmitter.emit(false);
     this.inputtedEventEmitter.emit(wallet);
   }
 
   onAutoSelectChange(value: boolean) {
-    this.autoselectChange.emit(value);
+    this.autoselectChangeEmitter.emit(value);
   }
 }

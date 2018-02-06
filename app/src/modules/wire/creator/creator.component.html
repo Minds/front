@@ -13,121 +13,140 @@
       </div>
 
       <p class="m-wire-creator--subtext" i18n="@@WIRE__CREATOR__WIRE_NOTICE_W_MC">
-        Support <span>@</span>{{owner.username}} by sending them dollars, points or tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
+        Support <span>@</span>{{owner.username}} by sending them dollars or tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
       </p>
-    </div>
-
-    <div class="m-wire--creator--wallet" *ngIf="false">
-      <i class="material-icons m--middle">account_balance</i>
-      <span *ngIf="rates.balance !== null" class="m--middle">{{ rates.balance | abbr }}</span>
-      <span *ngIf="rates.balance === null" class="m--middle">…</span>
     </div>
   </div>
 
-  <!-- Payment Method -->
-  <section class="m-wire--creator-section m-wire--creator-payment-section">
-    <h3 class="m-wire--creator-section-title--small" i18n="@@WIRE__CREATOR__WIRE_TYPE_TITLE">Wire Type</h3>
+  <section class="m-wire--creator-section-row">
+    <!-- Amount -->
+    <section class="m-wire--creator-section">
+      <h3 class="m-wire--creator-section-title--small">
+        <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_HOW_PART -->How<!-- /i18n -->
+        <ng-container *ngIf="wire.currency == 'tokens'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MANY_TOKENS_PART">many tokens</ng-container>
+        <ng-container *ngIf="wire.currency == 'money'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MUCH_MONEY_PART">much money</ng-container>
+        <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_DO YOU WANT_PART -->do you want to send?<!-- /i18n -->
+      </h3>
 
-    <ul class="m-wire--creator-selector"
-      [class.m-wire--creator-selector--has-selection]="wire.currency"
-    >
-      <li
-        (click)="setCurrency('tokens')"
-        [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'tokens'"
-        [class.m-wire--creator-selector--disabled]="!owner?.eth_wallet"
+      <div class="m-wire--creator-wide-input m-wire--creator--amount"
+        [class.m-wire--creator-wide-input--reading]="!editingAmount"
       >
-        <div class="m-wire--creator-selector-type">
-          <m--crypto-token-symbol></m--crypto-token-symbol>
-          <h4 i18n="@@WIRE__CREATOR__TOKEN_ITEM">Tokens</h4>
-        </div>
-        <span class="m-wire--creator-selector--cta" *ngIf="owner?.eth_wallet" i18n="@@M__COMMON__SELECT_TOKENS">Select Tokens</span>
-        <span class="m-wire--creator-selector--cta" *ngIf="!owner?.eth_wallet" i18n="@@WIRE__CREATOR__TOKEN_ITEM_CTA_DISABLED">Cannot receive Tokens</span>
-        <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
-      </li>
+        <input type="text"
+          class="m-wire--creator-wide-input--edit"
+          [ngModel]="wire.amount | number"
+          (ngModelChange)="setAmount($event)"
+          (blur)="amountEditorBlur()"
+          (keydown.enter)="amountEditorBlur()"
+          (keydown.esc)="amountEditorBlur()"
+          #amountEditor
+        />
 
-      <li
-        (click)="setCurrency('points')"
-        [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'points'"
-      >
-        <div class="m-wire--creator-selector-type">
-          <i class="material-icons">account_balance</i>
-          <h4 i18n="@@M__FEATURE__POINTS">Points</h4>
-        </div>
-        <span class="m-wire--creator-selector--cta" i18n="@@M__COMMON__SELECT_POINTS">Select Points</span>
-        <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
-      </li>
-
-      <li
-        (click)="setCurrency('money')"
-        [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'money'"
-        [class.m-wire--creator-selector--disabled]="!owner?.merchant"
-      >
-        <div class="m-wire--creator-selector-type">
-          <i class="material-icons">attach_money</i>
-          <h4 i18n="@@M__COMMON__USD">USD</h4>
-        </div>
-        <span class="m-wire--creator-selector--cta" *ngIf="owner?.merchant" i18n="@@M__COMMON__SELECT_MONEY">Select Money</span>
-        <span class="m-wire--creator-selector--cta" *ngIf="!owner?.merchant" i18n="@@WIRE__CREATOR__USD_ITEM_CTA_DISABLED">Cannot receive USD</span>
-        <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
-      </li>
-    </ul>
-
-    <div class="m-wire--creator-payment" *ngIf="wire.currency == 'money'">
-      <minds-payments-stripe-checkout *ngIf="!wire?.payload?.nonce"
-        (inputed)="setNoncePayload($event)"
-        [useMDLStyling]="false"
-      ></minds-payments-stripe-checkout>
-
-      <div class="m-wire--creator-payment-attached" *ngIf="wire.payload">
-        <i class="material-icons">check_circle</i>
-        <span><!-- i18n: @@M__COMMON__PAYMENT_ATTACHED -->Your payment is attached.<!-- /i18n --> <b (click)="wire.payload = null" i18n="@@M__ACTION__CHANGE">Change</b></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Amount -->
-  <section class="m-wire--creator-section">
-    <h3 class="m-wire--creator-section-title--small">
-      <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_HOW_PART -->How<!-- /i18n -->
-      <ng-container *ngIf="wire.currency == 'tokens'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MANY_TOKENS_PART">many tokens</ng-container>
-      <ng-container *ngIf="wire.currency == 'points'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MANY_POINTS_PART">many points</ng-container>
-      <ng-container *ngIf="wire.currency == 'money'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MUCH_MONEY_PART">much money</ng-container>
-      <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_DO YOU WANT_PART -->do you want to send?<!-- /i18n -->
-    </h3>
-
-    <div class="m-wire--creator-wide-input m-wire--creator--amount"
-      [class.m-wire--creator-wide-input--reading]="!editingAmount"
-    >
-      <input type="text"
-        class="m-wire--creator-wide-input--edit"
-        [ngModel]="wire.amount | number"
-        (ngModelChange)="setAmount($event)"
-        (blur)="amountEditorBlur()"
-        (keydown.enter)="amountEditorBlur()"
-        (keydown.esc)="amountEditorBlur()"
-        #amountEditor
-      />
-
-      <span class="m-wire--creator-wide-input--label"
-        (click)="amountEditorFocus()"
-      >
-        <ng-container *ngIf="wire.currency == 'tokens'" i18n="usd input|@@M__COMMON__TOKENS_INPUT">Tokens</ng-container>
-        <ng-container *ngIf="wire.currency == 'points'" i18n="points input|@@M__COMMON__POINTS_INPUT">points</ng-container>
-        <ng-container *ngIf="wire.currency == 'money'" i18n="usd input|@@M__COMMON__USD_INPUT">USD</ng-container>
-      </span>
-    </div>
-
-    <div class="m-wire--creator--recurring">
-      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="wire-recurring-1" [mdlSwitch] [toggled]="wire.recurring">
-        <input
-          type="checkbox" id="wire-recurring-1" class="mdl-checkbox__input"
-          [ngModel]="wire.recurring"
-          (ngModelChange)="wire.recurring = !wire.recurring"
+        <span class="m-wire--creator-wide-input--label"
+          (click)="amountEditorFocus()"
         >
+          <ng-container *ngIf="wire.currency == 'tokens'" i18n="usd input|@@M__COMMON__TOKENS_INPUT">Tokens</ng-container>
+          <ng-container *ngIf="wire.currency == 'money'" i18n="usd input|@@M__COMMON__USD_INPUT">USD</ng-container>
+        </span>
+      </div>
 
-        <span class="mdl-checkbox__label" i18n="@@WIRE__CREATOR__REPEAT_TRANSACTION_MONTHLY">Repeat this transaction monthly.</span>
-      </label>
-    </div>
+      <div class="m-wire--creator--recurring">
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="wire-recurring-1" [mdlSwitch] [toggled]="wire.recurring">
+          <input
+            type="checkbox" id="wire-recurring-1" class="mdl-checkbox__input"
+            [ngModel]="wire.recurring"
+            (ngModelChange)="wire.recurring = !wire.recurring"
+          >
+
+          <span class="mdl-checkbox__label" i18n="@@WIRE__CREATOR__REPEAT_TRANSACTION_MONTHLY">Repeat this transaction monthly.</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Payment Method -->
+    <section class="m-wire--creator-section m-wire--creator-payment-section">
+      <h3 class="m-wire--creator-section-title--small" i18n="@@WIRE__CREATOR__WIRE_TYPE_TITLE">Payment Method</h3>
+
+      <ul class="m-wire--creator-selector"
+        [class.m-wire--creator-selector--has-selection]="wire.currency"
+      >
+        <li
+          (click)="setCurrency('tokens')"
+          [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'tokens'"
+        >
+          <div class="m-wire--creator-selector-type">
+            <i class="material-icons">check_circle</i>
+            <h5>
+              <span>OnChain</span>
+              <m-tooltip icon="help">
+                Onchain payments will be published to the public Ethereum blockchain. You may utilize Metamask or another address. These purchases require a Gas fee.
+              </m-tooltip>
+            </h5>
+    
+            <span class="m-wire--creator-selector-subtext" i18n="@@M__COMMON__BALANCE_VALUE">
+              <m-tooltip anchor="left">
+                <span m-tooltip--anchor class="m-boost--creator-selector--hoverable">Balance</span>
+
+                <ng-container *ngIf="!balances.isReceiverOnchain; else receiverOnchainTooltip">
+                  This balance is for the {{ balances.onChainAddress | addressExcerpt:true }} wallet that is
+                  currently active in your Ethereum interface.
+                </ng-container>
+                <ng-template #receiverOnchainTooltip>
+                  This balance is for the {{ balances.onChainAddress | addressExcerpt:true }} wallet that is
+                  currently set up as the receiver wallet for your channel.
+                </ng-template>
+              </m-tooltip>:
+
+              <ng-container>
+                <ng-container *ngIf="balances.onchain !== null; else loadingOnchainBalance">
+                  {{ balances.onchain | token:18 | number }}
+                </ng-container>
+
+                <ng-template #loadingOnchainBalance>&hellip;</ng-template>
+              </ng-container>
+            </span>
+
+          </div>
+          <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
+        </li>
+
+        <li
+          (click)="setCurrency('money')"
+          [class.m-wire--creator-selector--highlight]="!wire.currency || wire.currency == 'money'"
+        >
+          <div class="m-wire--creator-selector-type">
+            <i class="material-icons">credit_card</i>
+            <h5 i18n="@@M__COMMON__USD">
+              <span>Credit Card</span>
+              <m-tooltip icon="help">
+                Credit cards may be used to wire, though we recommend first purchasing tokens in order to access a discount.
+                Recipients will receive the token value.
+              </m-tooltip>
+            </h5>
+
+            <span class="m-wire--creator-selector-subtext" i18n="@@M__COMMON__SELECT_MONEY">
+              Don't have Tokens? No problem.
+            </span>
+          </div>
+          <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
+        </li>
+      </ul>
+
+      <div class="m-wire--creator-payment" *ngIf="wire?.currency && wire?.currency !== 'tokens'">
+        <ng-container *ngIf="!wire?.payload?.nonce; else paymentAttached">
+          <minds-payments-stripe-checkout *ngIf="wire.currency === 'money'"
+            (inputed)="setNoncePayload($event)"
+            [useMDLStyling]="false"
+          ></minds-payments-stripe-checkout>
+        </ng-container>
+        <ng-template #paymentAttached>
+          <div class="m-wire--creator-payment-attached">
+            <i class="material-icons">check_circle</i>
+            <span><!-- i18n: @@M__COMMON__PAYMENT_ATTACHED -->Your payment is attached.<!-- /i18n --> <b (click)="wire.payload = null" i18n="@@M__ACTION__CHANGE">Change</b></span>
+          </div>
+        </ng-template>
+      </div>
+    </section>
+
   </section>
 
   <m-wire--creator-rewards

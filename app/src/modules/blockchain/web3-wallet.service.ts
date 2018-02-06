@@ -214,6 +214,24 @@ export class Web3WalletService {
     return txHash;
   }
 
+  // Provider
+
+  getOnChainInterfaceLabel() {
+    if (this.local) {
+      return 'Private Key';
+    }
+
+    if (window.web3.currentProvider.constructor.name === 'MetamaskInpageProvider') {
+      return 'Metamask';
+    } else if (window.web3.currentProvider.constructor.name === 'EthereumProvider') {
+      return 'Mist';
+    } else if (window.web3.currentProvider.constructor.name === 'o') {
+      return 'Parity';
+    }
+
+    return 'Ethereum';
+  }
+
   // Service provider
 
   static _(localWallet: LocalWalletService, transactionOverlay: TransactionOverlayService) {

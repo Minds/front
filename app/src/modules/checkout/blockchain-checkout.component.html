@@ -13,5 +13,6 @@
   (select)="setValue($event)"
   #walletSelector="BlockchainWalletSelector"
   [autoselect]="autoselect"
-  (autoselectChange)="onAutoSelectChange($event)"
+  (autoselectChangeEmitter)="onAutoSelectChange($event)"
+  [allowOffchain]="allowOffchain"
 ></m-blockchain--wallet-selector>
