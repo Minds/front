@@ -35,12 +35,12 @@
       padding-right:8px;
     }
     span{
-      font-weight: 300;
+      font-weight: 400;
       display: block;
       text-transform: uppercase;
       letter-spacing: 4px;
       font-size: 14px;
-      font-family: 'Lato', Helvetica;
+      font-family: 'Roboto', Helvetica;
     }
   }
   input[type="file"]{
@@ -585,7 +585,7 @@ svg.m-facebook-icon{
   color: #000000;
   font-size: 12px;
   line-height: 1.25;
-  font-weight: 300;
+  font-weight: 400;
 
   minds-newsfeed-single & {
     margin: 0 0 ($minds-padding / 2) 0;
@@ -667,7 +667,7 @@ svg.m-facebook-icon{
     font-size: 24px;
 
     &:after {
-      font-weight: 300;
+      font-weight: 400;
     }
   }
 }

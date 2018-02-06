@@ -332,7 +332,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
       }
       .minds-comment-span {
         top: 0;
-        font-weight: 300;
+        font-weight: 400;
         text-transform: uppercase;
       }
     }
@@ -427,7 +427,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     background: #ffffdd;
     padding: $minds-padding ($minds-padding * 2);
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
   }
 
 }
@@ -488,7 +488,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   }
   h3{
     text-transform: uppercase;
-    font-weight:300;
+    font-weight:400;
     font-size:24px;
   }
 }
@@ -511,8 +511,8 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
 }
 
 .m-activity--boost-notice {
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
   text-align: center;
   font-size: 16px;
 }
