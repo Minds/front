@@ -25,7 +25,7 @@ export class WalletBalanceTokensComponent implements OnInit {
     this.detectChanges();
 
     try {
-      let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
+      let response: any = await this.client.get(`api/v2/blockchain/wallet/balance`);
 
       if (response) {
         this.balance = response.balance;

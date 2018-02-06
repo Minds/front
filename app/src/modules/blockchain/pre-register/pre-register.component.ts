@@ -23,7 +23,7 @@ export class BlockchainPreRegisterComponent implements OnInit {
     this.detectChanges();
 
     try {
-      let result: any = await this.client.get(`api/v1/blockchain/tde/pre-register`);
+      let result: any = await this.client.get(`api/v2/blockchain/tde/pre-register`);
 
       if (!result || typeof result.registered === 'undefined') {
         this.error = 'There was a server error';
@@ -47,7 +47,7 @@ export class BlockchainPreRegisterComponent implements OnInit {
     this.inProgress = true;
 
     try {
-      await this.client.post(`api/v1/blockchain/tde/pre-register`);
+      await this.client.post(`api/v2/blockchain/tde/pre-register`);
 
       this.success = true;
     } catch (e) {

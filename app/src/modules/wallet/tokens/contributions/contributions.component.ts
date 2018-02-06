@@ -67,7 +67,7 @@ export class WalletTokenContributionsComponent {
       startDate.setHours(0, 0, 0);
       endDate.setHours(23, 59, 59);
 
-      let response: any = await this.client.get(`api/v1/blockchain/contributions`, {
+      let response: any = await this.client.get(`api/v2/blockchain/contributions`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
         offset: this.offset

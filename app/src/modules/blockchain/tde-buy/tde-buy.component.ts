@@ -48,7 +48,7 @@ export class BlockchainTdeBuyComponent implements OnInit {
     this.detectChanges();
 
     try {
-      let response: any = await this.client.get(`api/v1/blockchain/tde/rates`);
+      let response: any = await this.client.get(`api/v2/blockchain/tde/rates`);
 
       if (!response || !response.rates) {
         this.error = 'There was an error reading token rates';

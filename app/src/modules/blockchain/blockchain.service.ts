@@ -17,7 +17,7 @@ export class BlockchainService {
 
     this.serverWalletAddressCache = void 0;
 
-    let response: any = await this.client.get(`api/v1/blockchain/wallet/address`);
+    let response: any = await this.client.get(`api/v2/blockchain/wallet/address`);
 
     if (response.wallet) {
       this.serverWalletAddressCache = response.wallet.address;
@@ -28,7 +28,7 @@ export class BlockchainService {
   }
 
   async setWallet(data) {
-    await this.client.post(`api/v1/blockchain/wallet`, data);
+    await this.client.post(`api/v2/blockchain/wallet`, data);
 
     this.serverWalletAddressCache = data.address;
   }
@@ -41,7 +41,7 @@ export class BlockchainService {
     this.serverBalanceCache = void 0;
 
     try {
-      let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
+      let response: any = await this.client.get(`api/v2/blockchain/wallet/balance`);
 
       this.serverBalanceCache = response.balance;
 

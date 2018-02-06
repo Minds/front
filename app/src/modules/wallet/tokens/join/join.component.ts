@@ -39,7 +39,7 @@ export class WalletTokenJoinComponent {
     this.inProgress = true;
     this.error = null;
     try {
-      let response: any = await this.client.post('api/v1/blockchain/rewards/verify', {
+      let response: any = await this.client.post('api/v2/blockchain/rewards/verify', {
           number: this.number,
         });
       this.secret = response.secret;
@@ -65,7 +65,7 @@ export class WalletTokenJoinComponent {
     this.inProgress = true;
     this.error = null;
     try {
-      let response: any = await this.client.post('api/v1/blockchain/rewards/confirm', {
+      let response: any = await this.client.post('api/v2/blockchain/rewards/confirm', {
           number: this.number,
           code: this.code,
           secret: this.secret,

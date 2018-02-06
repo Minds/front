@@ -37,7 +37,7 @@ export class WalletTokenWithdrawComponent {
     this.detectChanges();
 
     try {
-      let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
+      let response: any = await this.client.get(`api/v2/blockchain/wallet/balance`);
 
       if (response && typeof response.addresses !== 'undefined') {
         this.balance = response.addresses[1].balance / Math.pow(10, 18);
@@ -85,7 +85,7 @@ export class WalletTokenWithdrawComponent {
         this.amount * Math.pow(10, 18)
       );
   
-      let response: any = await this.client.post(`api/v1/blockchain/transactions/withdraw`, result);
+      let response: any = await this.client.post(`api/v2/blockchain/transactions/withdraw`, result);
   
       if (response.done) {
         this.refresh();

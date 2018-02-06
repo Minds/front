@@ -44,7 +44,7 @@ export class BlockchainMarketingComponent implements OnInit, OnDestroy {
   async poll() {
     const update = async () => {
       try {
-        let result: any = await this.client.get(`api/v1/blockchain/tde/stats`);
+        let result: any = await this.client.get(`api/v2/blockchain/tde/stats`);
 
         this.tdeStats = result.stats;
         this.detectChanges();

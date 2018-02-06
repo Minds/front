@@ -22,7 +22,7 @@ export class WalletBalanceRewardsComponent implements OnInit {
     this.detectChanges();
 
     try {
-      let response: any = await this.client.get(`api/v1/blockchain/rewards/balance`);
+      let response: any = await this.client.get(`api/v2/blockchain/rewards/balance`);
 
       if (response && typeof response.balance !== 'undefined') {
         this.balance = response.balance;
