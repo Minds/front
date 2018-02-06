@@ -1,24 +1,29 @@
 <div *ngIf="rewards?.rewards[type]?.length"
   class="m-wire--creator-rewards"
 >
-  <h2 *ngIf="channel?.username" class="m-wire--creator-rewards--title" i18n="@@WIRE__CREATOR__REWARDS__TITLE">{{ channel.username }}'s rewards</h2>
 
-  <div *ngIf="sums" class="m-wire--creator-rewards--sums">
-    <!-- i18n: @@WIRE__CREATOR__REWARDS__YOU_SENT_LABEL -->You have sent<!-- /i18n -->
+  <div class="m-wire--creator-rewards--title">
+    <h3 *ngIf="channel?.username" class="m-wire--creator-section-title--small" i18n="@@WIRE__CREATOR__REWARDS__TITLE">
+      {{ channel.username }}'s rewards
+    </h3>
 
-    <b *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_WITH_VALUE">
-      {{ sums.points | number }} points
-    </b>
+    <div *ngIf="sums" class="m-wire--creator-rewards--sums">
+      <!-- i18n: @@WIRE__CREATOR__REWARDS__YOU_SENT_LABEL -->You have sent<!-- /i18n -->
 
-    <b *ngIf="type == 'money'">
-      {{ sums.money | currency:'USD':true:'1.0-0' }}
-    </b>
+      <b *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_WITH_VALUE">
+        {{ sums.points | number }} points
+      </b>
 
-    <b *ngIf="type == 'tokens'">
-      {{ sums.tokens | number:'1.0-4' }}
-    </b>
+      <b *ngIf="type == 'money'">
+        {{ sums.money | currency:'USD':true:'1.0-0' }}
+      </b>
 
-    <!-- i18n: @@WIRE__CREATOR__REWARDS__IN_THE_LAST_MONTH -->in the last month.<!-- /i18n -->
+      <b *ngIf="type == 'tokens'">
+        {{ sums.tokens | number:'1.0-4' }}
+      </b>
+
+      <!-- i18n: @@WIRE__CREATOR__REWARDS__IN_THE_LAST_MONTH -->in the last month.<!-- /i18n -->
+    </div>
   </div>
 
   <ul class="m-wire--creator-rewards--list">

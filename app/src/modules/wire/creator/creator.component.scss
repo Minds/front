@@ -743,13 +743,9 @@
 // Creator Rewards component
 
 .m-wire--creator-rewards {
-  position: absolute;
-  left: 510px;
-  top: 92px;
-  max-width: 330px;
   display: block;
-  border-left: 1px solid rgba(0, 0, 0, 0.2);
-  padding: ($minds-padding * 3) 0 ($minds-padding * 3) 60px;
+  //border-left: 1px solid rgba(0, 0, 0, 0.2);
+  //padding: ($minds-padding * 3) 0 ($minds-padding * 3) 60px;
   color: #555;
   font-family: inherit;
   font-weight: 200;
@@ -763,22 +759,18 @@
   }
 
   .m-wire--creator-rewards--title {
-    margin: 0 0 ($minds-padding * 2);
-    padding: 0;
-    font-size: 24px;
-    font-weight: 400;
-    letter-spacing: 2.5px;
-    line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 
   .m-wire--creator-rewards--sums {
-    margin: $minds-padding 0;
-    font-size: 14px;
+    margin: 0 0 8px 8px;
+    font-size: 12px;
     font-weight: 400;
     letter-spacing: 0.5px;
     line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
+    color: #777;
 
     b {
       font-weight: 400;
@@ -786,15 +778,18 @@
   }
 
   .m-wire--creator-rewards--list {
-    max-width: 360px;
+    //max-width: 360px;
+    display: flex;
+    flex-direction: row;
     list-style: none;
     margin: 0;
     padding: 0;
     color: rgba(0, 0, 0, 0.35);
 
     .m-wire--creator-rewards--threshold {
-      padding: 8px 0;
+      padding: 8px;
       cursor: pointer;
+      max-width: 156px;
     }
 
     .m-wire--creator-rewards--above-threshold {
@@ -813,11 +808,12 @@
     }
 
     .m-wire--creator-rewards--description p {
-      font-family: 'Lato';
-      padding: 8px 0;
-      font-size: 14px;
+      font-family: 'Roboto';
+      padding: 0;
+      margin: 4px 0;
+      line-height: 1.1;
+      font-size: 12px;
       font-weight: 400;
-      margin: 0;
     }
   }
 }

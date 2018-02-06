@@ -18,6 +18,15 @@
     </div>
   </div>
 
+  <m-wire--creator-rewards
+    [rewards]="owner?.wire_rewards"
+    [type]="wire.currency"
+    [amount]="wire.amount"
+    (selectAmount)="setAmount($event)"
+    [channel]="owner"
+    [sums]="sums"
+  ></m-wire--creator-rewards>
+
   <section class="m-wire--creator-section-row">
     <!-- Amount -->
     <section class="m-wire--creator-section">
@@ -148,15 +157,6 @@
     </section>
 
   </section>
-
-  <m-wire--creator-rewards
-    [rewards]="owner?.wire_rewards"
-    [type]="wire.currency"
-    [amount]="wire.amount"
-    (selectAmount)="setAmount($event)"
-    [channel]="owner"
-    [sums]="sums"
-  ></m-wire--creator-rewards>
 
   <!-- Submit -->
   <section class="m-wire--creator-section m-wire--creator-section--last"
