@@ -23,6 +23,9 @@ import { LocalWalletService } from '../../blockchain/local-wallet.service';
 import { localWalletServiceMock } from '../../../../tests/local-wallet-service-mock.spec';
 import { TransactionOverlayService } from '../../blockchain/transaction-overlay/transaction-overlay.service';
 import { transactionOverlayServiceMock } from '../../../../tests/transaction-overlay-service-mock.spec';
+import { TooltipComponent } from '../../../common/components/tooltip/tooltip.component';
+import { AddressExcerptPipe } from '../../../common/pipes/address-excerpt';
+import { TokenPipe } from '../../../common/pipes/token.pipe';
 
 /* tslint:disable */
 @Component({
@@ -160,7 +163,11 @@ describe('WireCreatorComponent', () => {
         StripeCheckoutMock,
         WireCreatorCryptoTokenSymbolMock,
         WireCreatorBlockchainCheckoutMock,
-        WireCreatorComponent ], // declare the test component
+        WireCreatorComponent,
+        TooltipComponent,
+        AddressExcerptPipe,
+        TokenPipe,
+      ], // declare the test component
       imports: [ FormsModule, RouterTestingModule ],
       providers: [
         { provide: Client, useValue: clientMock },
@@ -260,10 +267,10 @@ describe('WireCreatorComponent', () => {
   });
 
   it('should have subtext', () => {
-    const subtitle = fixture.debugElement.query(By.css('.m-wire-creator--subtext'));
+    const subtitle = fixture.debugElement.query(By.css('.m-wire--creator--header .m-wire-creator--subtext'));
     expect(subtitle).not.toBeNull();
 
-    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars, points or tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
+    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars or tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
   });
 
   it('should have a payment section', () => {
@@ -271,35 +278,25 @@ describe('WireCreatorComponent', () => {
     expect(section).not.toBeNull();
   });
 
-  it('payment section should have a title that says \'Wire Type\'', () => {
+  it('payment section should have a title that says \'Payment Method\'', () => {
     const title = fixture.debugElement.query(By.css('section.m-wire--creator-payment-section > .m-wire--creator-section-title--small'));
     expect(title).not.toBeNull();
-    expect(title.nativeElement.textContent).toContain('Wire Type');
+    expect(title.nativeElement.textContent).toContain('Payment Method');
   });
 
   it('should have payment method list (tokens, usd and rewardss)', () => {
     const list = fixture.debugElement.query(By.css('section.m-wire--creator-payment-section > ul.m-wire--creator-selector'));
     expect(list).not.toBeNull();
 
-    expect(list.nativeElement.children.length).toBe(3);
+    expect(list.nativeElement.children.length).toBe(2);
 
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:first-child > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('Tokens');
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(2) > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('Points');
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:last-child > .m-wire--creator-selector-type > h4')).nativeElement.textContent).toContain('USD');
+    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:first-child > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('OnChain');
+    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(2) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('Credit Card');
   });
-
-  it('usd payment option should only be available if the user\'s a merchant', fakeAsync(() => {
-    comp.owner.merchant = undefined;
-    fixture.detectChanges();
-
-    const moneyOption = getPaymentMethodItem(3);
-
-    expect(moneyOption.nativeElement.classList.contains('m-wire--creator-selector--disabled')).toBeTruthy();
-  }));
 
   it('clicking on a payment option should highlight it', fakeAsync(() => {
     tick();
-    const moneyOption = getPaymentMethodItem(3);
+    const moneyOption = getPaymentMethodItem(2);
 
     expect(moneyOption.nativeElement.classList.contains('m-wire--creator-selector--highlight')).toBeFalsy();
     moneyOption.nativeElement.click();
@@ -440,12 +437,12 @@ describe('WireCreatorComponent', () => {
     expect(comp.submit).toHaveBeenCalled();
   });
 
-  it('send a correct wire', fakeAsync(() => {
+  xit('send a correct wire', fakeAsync(() => {
     spyOn(comp, 'submit').and.callThrough();
     spyOn(comp, 'canSubmit').and.returnValue(true);
 
-    const pointsOption = getPaymentMethodItem(2);
-    pointsOption.nativeElement.click();
+    const selectTokens = getPaymentMethodItem(1);
+    selectTokens.nativeElement.click();
 
     fixture.detectChanges();
 
@@ -476,7 +473,7 @@ describe('WireCreatorComponent', () => {
 
     expect(args[ 1 ]).toEqual({
       payload: null,
-      method: 'points',
+      method: 'tokens',
       amount: 10,
       recurring: true
     });

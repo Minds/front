@@ -14,6 +14,7 @@ import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Scheduler } from '../../../common/components/scheduler/scheduler';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
+import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
 
 import { VisibleBoostError, BoostCreatorComponent, BoostType } from './creator.component';
 import { BoostService } from '../boost.service';
@@ -319,6 +320,7 @@ describe('BoostCreatorComponent', () => {
         { provide: Client, useValue: clientMock },
         BoostService,
         Web3WalletService,
+        OffchainPaymentService,
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: TokenContractService, useValue: tokenContractServiceMock },
         { provide: BoostContractService, useValue: peerBoostContractServiceMock },
