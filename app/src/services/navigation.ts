@@ -19,7 +19,8 @@ export class Navigation {
 
 		var path = this.location.path();
 		for (var item of items) {
-			if (path === item.path || (path && path.indexOf(item.path.toLowerCase()) > -1)) {
+			let itemIndex = path.indexOf(item.path.toLowerCase());
+			if (path === item.path || (path && itemIndex > -1 && itemIndex < 2)) {
 				item.active = true;
 				item.params = { ts: Date.now() };
 			} else
