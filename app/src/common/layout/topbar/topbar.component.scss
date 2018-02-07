@@ -152,6 +152,12 @@ m-topbar{
   .m-topbar--navigation--item {
     border: 0;
     cursor: pointer;
+    m-tooltip {
+      i {
+        font-size: 11px;
+        color: #888;
+      }
+    }
   }
 }
 

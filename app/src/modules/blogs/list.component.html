@@ -6,6 +6,9 @@
         routerLinkActive="m-topbar--navigation--item-active"
         >
           <span>Top</span>
+          <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
+            Top displays the top content on Minds
+          </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/blog/my"
@@ -13,6 +16,9 @@
         *ngIf="session.isLoggedIn()"
         >
           <span>My Blogs</span>
+          <m-tooltip icon="help" i18n="@@MINDS__BLOGS__TOPBAR__YOUR_BLOGS_TOOLTIP">
+            Your blogs
+          </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/blog/edit/new"
@@ -20,6 +26,9 @@
         *ngIf="session.isLoggedIn()"
         >
           <span>Write a new blog</span>
+          <m-tooltip icon="help" i18n="@@MINDS__BLOGS__TOPBAR__WRITE_A_NEW_BLOG_TOOLTIP">
+            Write a new Blog
+          </m-tooltip>
       </a>
     </div>
   </div>

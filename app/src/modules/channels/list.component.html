@@ -5,19 +5,30 @@
         routerLink="/channels/top"
         routerLinkActive="m-topbar--navigation--item-active"
         >
-        <span>Top</span>
+        <span>
+          Top
+        </span>
+        <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
+          Top displays the top content on Minds
+        </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/channels/subscriptions"
         routerLinkActive="m-topbar--navigation--item-active"
         >
         <span>Subscriptions</span>
+        <m-tooltip icon="help" i18n="@@MINDS__CHANNELS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+          Channels you are subscribed to
+        </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/channels/subscribers"
         routerLinkActive="m-topbar--navigation--item-active"
         >
         <span>Subscribers</span>
+        <m-tooltip icon="help" i18n="@@MINDS__CHANNELS__TOPBAR__SUBSCRIBERS_TOOLTIP">
+          Channels who are subscribed to you
+        </m-tooltip>
       </a>
     </div>
   </div>

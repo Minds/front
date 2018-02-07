@@ -6,6 +6,9 @@
         routerLinkActive="m-topbar--navigation--item-active"
         >
         <span>Top</span>
+        <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
+          Top displays the top content on Minds
+        </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/media/videos/my"
@@ -13,12 +16,18 @@
         *ngIf="session.isLoggedIn()"
         >
         <span>My Videos</span>
+        <m-tooltip icon="help" i18n="@@MINDS__VIDEOS__TOPBAR__YOUR_VIDEOS_TOOLTIP">
+          Your Videos
+        </m-tooltip>
       </a>
       <span class="m-topbar--navigation--item"
         (click)="showPoster()"
         *ngIf="session.isLoggedIn()"
         >
         <span>Upload</span>
+        <m-tooltip icon="help" i18n="@@MINDS__VIDEOS__TOPBAR__UPLOAD_TOOLTIP">
+          Upload a new Video
+        </m-tooltip>
       </span>
     </div>
   </div>

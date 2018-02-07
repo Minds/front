@@ -6,18 +6,27 @@
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span i18n="@@M__FEATURE__SIDEBAR_PLURAL">Top</span>
+        <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
+          Top displays the top content on Minds
+        </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/newsfeed/subscribed"
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span i18n="@@M__FEATURE__NEWSFEED_PLURAL">Subscribed</span>
+        <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIBED_TOOLTIP">
+          Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network
+        </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/newsfeed/boost"
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span i18n="@@M__FEATURE__CHANNEL__PLURAL">BoostFeed</span>
+        <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__TOPBAR__BOOSTFEED_TOOLTIP">
+          The Boostfeed only shows boosted posts from the wider network. To Boost your content, click the Boost icon on the topbar
+        </m-tooltip>
       </a>
     </div>
   </div>
