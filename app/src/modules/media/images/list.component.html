@@ -10,11 +10,13 @@
       <a class="m-topbar--navigation--item"
         routerLink="/media/images/my"
         routerLinkActive="m-topbar--navigation--item-active"
+        *ngIf="session.isLoggedIn()"
         >
           <span>My Images</span>
       </a>
       <a class="m-topbar--navigation--item"
         (click)="showPoster()"
+        *ngIf="session.isLoggedIn()"
         >
           <span>Upload</span>
       </a>

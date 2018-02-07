@@ -10,12 +10,14 @@
       <a class="m-topbar--navigation--item"
         routerLink="/groups/member"
         routerLinkActive="m-topbar--navigation--item-active"
+        *ngIf="session.isLoggedIn()"
         >
           <span>My Groups</span>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/groups/create"
         routerLinkActive="m-topbar--navigation--item-active"
+        *ngIf="session.isLoggedIn()"
         >
           <span>Start a new group</span>
       </a>

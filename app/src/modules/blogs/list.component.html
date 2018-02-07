@@ -10,12 +10,14 @@
       <a class="m-topbar--navigation--item"
         routerLink="/blog/my"
         routerLinkActive="m-topbar--navigation--item-active"
+        *ngIf="session.isLoggedIn()"
         >
           <span>My Blogs</span>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/blog/edit/new"
         routerLinkActive="m-topbar--navigation--item-active"
+        *ngIf="session.isLoggedIn()"
         >
           <span>Write a new blog</span>
       </a>
