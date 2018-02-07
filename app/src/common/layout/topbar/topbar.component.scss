@@ -152,10 +152,17 @@ m-topbar{
   .m-topbar--navigation--item {
     border: 0;
     cursor: pointer;
+    line-height: 15px;
+
+    > * {
+      vertical-align: middle;
+    }
+
     m-tooltip {
+      margin-left: 4px;
       i {
         font-size: 11px;
-        color: #888;
+        color: #777;
       }
     }
   }
