@@ -238,11 +238,13 @@ export class Channel {
       this.client.delete('api/v1/channel/carousel/' + value.guid);
   }
 
-  update() {
-    this.client.post('api/v1/channel/info', this.user)
-      .then((data: any) => {
-        this.editing = false;
-      });
+  async update() {
+    try {
+      await this.client.post('api/v1/channel/info', this.user);
+    } catch (e) {
+      alert(e.message);
+    }
+    this.editing = false;
   }
 
   delete(activity) {
