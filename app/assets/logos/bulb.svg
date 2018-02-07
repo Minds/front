@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="360px" height="399px" viewBox="0 0 360 399" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="213px" height="346px" viewBox="0 0 213 346" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
-    <title>Slice 6</title>
+    <title>Slice 11</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <path d="M296,121 L344,121 L344,121 C348.418278,121 352,117.418278 352,113 L352,113 L352,113 C352,108.581722 348.418278,105 344,105 L296,105" id="Line-5" stroke="#FFCC01" stroke-width="16" stroke-linecap="square"></path>
-        <g id="bulb" transform="translate(78.000000, 16.000000)" stroke-width="32">
-            <path d="M47.671875,318 C47.671875,292.395242 47.671875,283.689885 47.671875,251.883929 C47.671875,204.174995 16.90625,179.223214 2.921875,123.330357 C-11.0625,67.4375 30.890625,0.366071429 100.8125,0.366071429 C170.734375,0.366071429 212.6875,67.4375 198.703125,123.330357 C184.71875,179.223214 153.953125,204.174995 153.953125,251.883929 C153.953125,283.689885 153.953125,292.395242 153.953125,318" id="Path" stroke="#FFCC01"></path>
-            <path d="M47.671875,283 L47.671875,331 C47.671875,355 65.3854167,367 100.8125,367 C153.953125,367 153.953125,331 153.953125,331 C153.953125,331 153.953125,315 153.953125,283" id="Path-4" stroke="#666666" fill="#666666"></path>
+        <g id="bulb" transform="translate(-49.000000, -26.000000)">
+            <g id="Group-3">
+                <polygon id="Triangle-3" fill="#FED12F" points="117 101 223 145 147 206"></polygon>
+                <g id="Group-5" transform="translate(107.000000, 290.000000)">
+                    <polygon id="Triangle-3" fill="#656565" points="-2.84217094e-14 63 18 55 23 72"></polygon>
+                    <polygon id="Triangle-3" fill="#656565" points="23 72 62 36 49 82"></polygon>
+                    <polygon id="Triangle-3" fill="#787778" points="0 0 0 63 18 55"></polygon>
+                    <polygon id="Triangle-3" fill="#5C5C5C" points="62 36 49 82 101 62"></polygon>
+                    <polygon id="Triangle-3" fill="#787778" points="101 62 47 26 101 0"></polygon>
+                    <polygon id="Triangle-3" fill="#4A4A4A" points="0 0 101 0 23 72"></polygon>
+                </g>
+                <polygon id="Triangle-3" fill="#FED12F" points="196 27 258 89 223 145"></polygon>
+                <polygon id="Triangle-3" fill="#FED12F" points="107 290 217 258 208 290"></polygon>
+                <polygon id="Triangle-3" fill="#FED12F" points="90 258 147 206 107 290"></polygon>
+                <polygon id="Triangle-3" fill="#FED12F" points="49 89 117 26 117 101"></polygon>
+                <polygon id="Triangle-3" fill="#FFF3CB" points="147 206 217 258 223 145"></polygon>
+                <polygon id="Triangle-3" fill="#FFF3CB" transform="translate(94.068947, 202.884205) rotate(140.000000) translate(-94.068947, -202.884205) " points="55.5242029 166.473943 119.669169 242.489885 132.613692 163.278526"></polygon>
+                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(193.467772, 91.857214) rotate(-53.000000) translate(-193.467772, -91.857214) " points="140.146565 36.2896019 246.788979 54.8474955 168.798995 147.424827"></polygon>
+                <polygon id="Triangle-3" fill="#FFEDAC" transform="translate(117.800400, 171.223982) rotate(-53.000000) translate(-117.800400, -171.223982) " points="62.1987265 126.975414 173.402073 128.322907 107.599795 215.47255"></polygon>
+                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(154.569878, 268.401001) rotate(-53.000000) translate(-154.569878, -268.401001) " points="108.691884 243.40861 199.849867 224.801568 200.447872 312.000435"></polygon>
+                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(220.000000, 201.500000) rotate(-53.000000) translate(-220.000000, -201.500000) " points="173.071649 233.106642 266.928351 169.893358 255.259175 227.520004"></polygon>
+                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(58.968458, 126.890934) rotate(-53.000000) translate(-58.968458, -126.890934) " points="3.36678437 156.307939 83.2303354 96.1264364 114.570131 157.655431"></polygon>
+                <polygon id="Triangle-3" fill="#FEE382" transform="translate(260.000000, 139.000000) rotate(-53.000000) translate(-260.000000, -139.000000) " points="232.941031 113.061376 298.728145 107.311978 221.271855 170.688022"></polygon>
+                <polygon id="Triangle-3" fill="#FEF1C0" transform="translate(151.718681, 50.863434) rotate(160.000000) translate(-151.718681, -50.863434) " points="101.946077 58.1426229 201.491285 15.6249603 175.839774 86.1019069"></polygon>
+            </g>
         </g>
-        <path d="M284,171 L332,171 L332,171 C336.418278,171 340,167.418278 340,163 L340,163 L340,163 C340,158.581722 336.418278,155 332,155 L284,155" id="Line-5" stroke="#FFCC01" stroke-width="16" stroke-linecap="square"></path>
-        <path d="M8,121 L56,121 L56,121 C60.418278,121 64,117.418278 64,113 L64,113 L64,113 C64,108.581722 60.418278,105 56,105 L8,105" id="Line-5" stroke="#FFCC01" stroke-width="16" stroke-linecap="square" transform="translate(36.000000, 113.000000) rotate(180.000000) translate(-36.000000, -113.000000) "></path>
-        <path d="M20,171 L68,171 L68,171 C72.418278,171 76,167.418278 76,163 L76,163 L76,163 C76,158.581722 72.418278,155 68,155 L20,155" id="Line-5" stroke="#FFCC01" stroke-width="16" stroke-linecap="square" transform="translate(48.000000, 163.000000) rotate(180.000000) translate(-48.000000, -163.000000) "></path>
     </g>
 </svg>
