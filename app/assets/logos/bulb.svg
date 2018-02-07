@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="213px" height="346px" viewBox="0 0 213 346" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="212px" height="345px" viewBox="0 0 212 345" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
     <title>Slice 11</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="bulb" transform="translate(-49.000000, -26.000000)">
-            <g id="Group-3">
-                <polygon id="Triangle-3" fill="#FED12F" points="117 101 223 145 147 206"></polygon>
-                <g id="Group-5" transform="translate(107.000000, 290.000000)">
-                    <polygon id="Triangle-3" fill="#656565" points="-2.84217094e-14 63 18 55 23 72"></polygon>
-                    <polygon id="Triangle-3" fill="#656565" points="23 72 62 36 49 82"></polygon>
-                    <polygon id="Triangle-3" fill="#787778" points="0 0 0 63 18 55"></polygon>
-                    <polygon id="Triangle-3" fill="#5C5C5C" points="62 36 49 82 101 62"></polygon>
-                    <polygon id="Triangle-3" fill="#787778" points="101 62 47 26 101 0"></polygon>
-                    <polygon id="Triangle-3" fill="#4A4A4A" points="0 0 101 0 23 72"></polygon>
-                </g>
-                <polygon id="Triangle-3" fill="#FED12F" points="196 27 258 89 223 145"></polygon>
-                <polygon id="Triangle-3" fill="#FED12F" points="107 290 217 258 208 290"></polygon>
-                <polygon id="Triangle-3" fill="#FED12F" points="90 258 147 206 107 290"></polygon>
-                <polygon id="Triangle-3" fill="#FED12F" points="49 89 117 26 117 101"></polygon>
-                <polygon id="Triangle-3" fill="#FFF3CB" points="147 206 217 258 223 145"></polygon>
-                <polygon id="Triangle-3" fill="#FFF3CB" transform="translate(94.068947, 202.884205) rotate(140.000000) translate(-94.068947, -202.884205) " points="55.5242029 166.473943 119.669169 242.489885 132.613692 163.278526"></polygon>
-                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(193.467772, 91.857214) rotate(-53.000000) translate(-193.467772, -91.857214) " points="140.146565 36.2896019 246.788979 54.8474955 168.798995 147.424827"></polygon>
-                <polygon id="Triangle-3" fill="#FFEDAC" transform="translate(117.800400, 171.223982) rotate(-53.000000) translate(-117.800400, -171.223982) " points="62.1987265 126.975414 173.402073 128.322907 107.599795 215.47255"></polygon>
-                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(154.569878, 268.401001) rotate(-53.000000) translate(-154.569878, -268.401001) " points="108.691884 243.40861 199.849867 224.801568 200.447872 312.000435"></polygon>
-                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(220.000000, 201.500000) rotate(-53.000000) translate(-220.000000, -201.500000) " points="173.071649 233.106642 266.928351 169.893358 255.259175 227.520004"></polygon>
-                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(58.968458, 126.890934) rotate(-53.000000) translate(-58.968458, -126.890934) " points="3.36678437 156.307939 83.2303354 96.1264364 114.570131 157.655431"></polygon>
-                <polygon id="Triangle-3" fill="#FEE382" transform="translate(260.000000, 139.000000) rotate(-53.000000) translate(-260.000000, -139.000000) " points="232.941031 113.061376 298.728145 107.311978 221.271855 170.688022"></polygon>
-                <polygon id="Triangle-3" fill="#FEF1C0" transform="translate(151.718681, 50.863434) rotate(160.000000) translate(-151.718681, -50.863434) " points="101.946077 58.1426229 201.491285 15.6249603 175.839774 86.1019069"></polygon>
+        <g id="bulb" transform="translate(-51.000000, -27.000000)">
+            <g id="Group-5" transform="translate(107.000000, 290.000000)">
+                <path d="M24.7524752,43 L22.7722772,72 L24.7524752,43 Z" id="Triangle-3" fill="#656565"></path>
+                <polygon id="Triangle-3" fill="#656565" points="0 62 25 41 50 82"></polygon>
+                <polygon id="Triangle-3" fill="#787778" points="0 0 0 62 25 41"></polygon>
+                <polygon id="Triangle-3" fill="#5C5C5C" points="75 41 50 82 100 62"></polygon>
+                <polygon id="Triangle-3" fill="#787778" points="100 62 75 41 100 0"></polygon>
+                <polygon id="Triangle-3" fill="#4A4A4A" points="0 0 100 0 50 82"></polygon>
+            </g>
+            <g id="Group" transform="translate(6.000000, 1.000000)">
+                <polygon id="Triangle-3" fill="#FED12F" points="111 100 217 144 141 205"></polygon>
+                <polygon id="Triangle-3" fill="#FED12F" points="191 26 251 88 217 144"></polygon>
+                <polygon id="Triangle-3" fill="#FED12F" points="101 289 211 257 201 289"></polygon>
+                <polygon id="Triangle-3" fill="#FED12F" points="91 257 141 205 101 289"></polygon>
+                <polygon id="Triangle-3" fill="#FED12F" points="51 88 111 26 111 100"></polygon>
+                <polygon id="Triangle-3" fill="#FFF3CB" points="141 205 211 257 217 144"></polygon>
+                <polygon id="Triangle-3" fill="#FFF3CB" transform="translate(91.982123, 202.376609) rotate(140.000000) translate(-91.982123, -202.376609) " points="56.1185344 168.858891 118.731412 243.589257 127.845712 161.163961"></polygon>
+                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(187.648863, 90.616899) rotate(-53.000000) translate(-187.648863, -90.616899) " points="134.026748 35.0492865 241.270978 54.4058156 162.679178 146.184512"></polygon>
+                <polygon id="Triangle-3" fill="#FFEDAC" transform="translate(112.700659, 170.148822) rotate(-53.000000) translate(-112.700659, -170.148822) " points="57.7008005 126.823779 167.700517 126.574001 101.898239 213.723643"></polygon>
+                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(148.569878, 267.401001) rotate(-53.000000) translate(-148.569878, -267.401001) " points="102.691884 242.40861 193.849867 223.801568 194.447872 311.000435"></polygon>
+                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(214.000000, 200.500000) rotate(-53.000000) translate(-214.000000, -200.500000) " points="167.071649 232.106642 260.928351 168.893358 249.86099 227.318639"></polygon>
+                <polygon id="Triangle-3" fill="#FFDD63" transform="translate(55.981655, 127.407987) rotate(-53.000000) translate(-55.981655, -127.407987) " points="0.981796369 155.102831 84.4562375 99.713142 110.981513 154.853053"></polygon>
+                <polygon id="Triangle-3" fill="#FEE382" transform="translate(254.000000, 138.000000) rotate(-53.000000) translate(-254.000000, -138.000000) " points="226.941031 112.061376 292.12633 105.513342 215.87367 170.486658"></polygon>
+                <polygon id="Triangle-3" fill="#FEF1C0" transform="translate(146.320889, 50.144248) rotate(160.000000) translate(-146.320889, -50.144248) " points="96.0784387 57.5512633 196.563339 15.3756208 171.253848 84.9128748"></polygon>
             </g>
         </g>
     </g>
