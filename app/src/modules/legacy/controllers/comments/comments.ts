@@ -247,8 +247,14 @@ export class Comments {
             return;
           }
 
+          // if the list is scrolled to the bottom
+          let scrolledToBottom = this.scrollView.nativeElement.scrollTop + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
+
           this.comments.push(response.comments[0]);
-          this.commentsScrollEmitter.emit('bottom');
+
+          if (scrolledToBottom) {
+            this.commentsScrollEmitter.emit('bottom');
+          }
         });
     });
   }
