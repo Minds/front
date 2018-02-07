@@ -18,7 +18,6 @@ export class ForgotPasswordComponent {
   error: string = '';
   inProgress: boolean = false;
   step: number = 1;
-
   username: string = '';
   code: string = '';
 
@@ -84,23 +83,32 @@ export class ForgotPasswordComponent {
     this.code = code;
   }
 
-  reset(password) {
-    var self = this;
-    this.client.post('api/v1/forgotpassword/reset', {
-      password: password.value,
-      code: this.code,
-      username: this.username
-    })
-      .then((response: any) => {
-        self.session.login(response.user);
-        self.router.navigate(['/newsfeed']);
-      })
-      .catch((e) => {
-        self.error = e.message;
-        setTimeout(() => {
-          self.router.navigate(['/login']);
-        }, 2000);
-      });
+  validatePassword(password) {
+    if (/@/.test(password.value)) {
+      this.error = '@ is not allowed';
+    } else {
+      this.error = null;
+    }
   }
 
+  reset(password) {
+    if (!this.error){
+      var self = this;
+      this.client.post('api/v1/forgotpassword/reset', {
+        password: password.value,
+        code: this.code,
+        username: this.username
+      })
+        .then((response: any) => {
+          self.session.login(response.user);
+          self.router.navigate(['/newsfeed']);
+        })
+        .catch((e) => {
+          self.error = e.message;
+          setTimeout(() => {
+            self.router.navigate(['/login']);
+          }, 2000);
+        });
+    }
+  }
 }
