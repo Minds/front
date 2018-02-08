@@ -10,28 +10,6 @@
     </div>
   </div>
 
-  <div class="m-wire-channel--overview--overview-earnings mdl-cell mdl-cell--6-col"
-    *ngIf="channel.merchant"
-  >
-    <i>$</i><span *ngIf="ready">{{ stats.money | number:'1.0-0' }}</span>
-    <div class="m-wire-channel--overview--label">
-      <label i18n="@@M__COMMON__MONEY">Money</label>
-      <m-tooltip icon="help" i18n="@@WIRE__CHANNEL__OVERVIEW__MONEY_CARD_TOOLTIP">
-        This is <span>@</span>{{channel.username}}'s total volume (gross) of all money wires received in the last 30 days
-      </m-tooltip>
-    </div>
-  </div>
-
-  <div class="m-wire-channel--overview--overview-earnings mdl-cell mdl-cell--6-col">
-    <span *ngIf="ready">{{ stats.points | abbr: 0}}</span>
-    <div class="m-wire-channel--overview--label">
-      <label i18n="@@M__FEATURE__POINTS">Points</label>
-      <m-tooltip icon="help" i18n="@@WIRE__CHANNEL__OVERVIEW__POINTS_CARD_TOOLTIP">
-        This is <span>@</span>{{channel.username}}'s total volume (gross) of all point wires received in the last 30 days
-      </m-tooltip>
-    </div>
-  </div>
-
   <div class="m-wire-channel--overview--overview-earnings mdl-cell mdl-cell--6-col">
     <span *ngIf="ready">{{ stats.tokens | number:'1.0-4' }}</span>
     <div class="m-wire-channel--overview--label">
@@ -59,15 +37,11 @@
         See a breakdown of all your Wires in your wallet 
       </m-tooltip>
     </div>
-  </div> 
+  </div>
 
   <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col" *ngIf="canWire()">
-    <ng-container *ngIf="channel.merchant; else sentNotAMerchant">
-      <i>$</i><span *ngIf="ready">{{ stats.sent | number:'1.0-0' }}</span>
-    </ng-container>
-    <ng-template #sentNotAMerchant>
-      <span *ngIf="ready">{{ stats.sent | abbr }}</span>
-    </ng-template>
+    <m--crypto-token-symbol ></m--crypto-token-symbol><span *ngIf="ready">{{ stats.sent | number:'1.0-0' }}</span>
+
     <div class="m-wire-channel--overview--label">
       <label i18n="@@WIRE__CHANNEL__OVERVIEW__YOU_SENT_CARD_LABEL">You Sent</label>
       <m-tooltip icon="help" i18n="@@WIRE__CHANNEL__OVERVIEW__YOU_SENT_CARD_TOOLTIP">

@@ -13,10 +13,8 @@ import { WireService } from '../../wire.service';
 export class WireChannelOverviewComponent implements OnInit, OnDestroy {
 
   ready: boolean = true;
-  stats: { count, money, points, tokens, sent? } = {
+  stats: { count, tokens, sent? } = {
     count: 0,
-    money: 0,
-    points: 0,
     tokens: 0,
     sent: 0
   };
@@ -43,11 +41,9 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
     this.client.get('api/v1/wire/sums/overview/' + this.channel.guid, {
       merchant: this.channel.merchant ? 1 : 0
     })
-      .then(({ count, money, points, tokens }) => {
+      .then(({ count, tokens }) => {
         this.stats = {
           count,
-          money,
-          points,
           tokens,
           sent: this.stats.sent
         };
@@ -59,11 +55,7 @@ export class WireChannelOverviewComponent implements OnInit, OnDestroy {
 
     this.client.get('api/v1/wire/rewards/' + this.channel.guid)
       .then(({ sums }) => {
-        if (this.channel.merchant) {
-          this.stats.sent = sums.money;
-        } else {
-          this.stats.sent = sums.points;
-        }
+        this.stats.sent = sums.tokens;
 
         this.detectChanges();
       });
