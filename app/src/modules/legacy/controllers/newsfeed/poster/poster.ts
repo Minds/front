@@ -83,6 +83,7 @@ export class Poster {
       })
       .catch(function (e) {
         this.inProgress = false;
+        alert(e.message);
       });
   }
 
