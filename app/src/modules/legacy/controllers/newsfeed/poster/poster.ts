@@ -81,7 +81,7 @@ export class Poster {
         this.meta = { wire_threshold: null };
         this.inProgress = false;
       })
-      .catch(function (e) {
+      .catch((e) => {
         this.inProgress = false;
         alert(e.message);
       });
