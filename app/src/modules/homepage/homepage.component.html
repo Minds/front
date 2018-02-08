@@ -5,8 +5,12 @@
     <div class="m-homepage--hero--overlay"></div>
 
     <div class="m-homepage--hero--slogans">
-      <h1 i18n="@@M__SOCIAL_NETWORK_SLOGAN">Your Social Network</h1>
-      <h3 i18n="@@MINDS__HOME__HOMEPAGE__LAUNCH_CTA">Launch your channel today and free your minds. Join the largest free & open source social network on the planet.</h3>
+      <h1 i18n="@@M__SOCIAL_NETWORK_SLOGAN">Minds, the blockchain social network</h1>
+      <h3 i18n="@@MINDS__HOME__HOMEPAGE__LAUNCH_CTA">
+        We are an open source and decentralized platform 
+        for Internet freedom. Get paid in crypto for your contributions
+        to the community.
+      </h3>
     </div>
 
     <div class="m-homepage--signup" [hidden]="session.isLoggedIn()">
@@ -17,8 +21,18 @@
 
 </section>
 
-<section class="m-homepage--section" style="padding-top:0">
-  <h2 class="mdl-color-text--blue-grey-800" i18n="@@MINDS__HOME__HOMEPAGE__TAKE_BACK_TITLE">Take back your internet freedom</h2>
+<section class="m-homepage--section  m-homepage--section-margin" style="padding-top:100px; text-align: left">
+  <h2 class="mdl-color-text--blue-grey-800 m-hompeage--wide-letters" i18n="@@MINDS__HOME__HOMEPAGE__AUDIENCE">
+    Artists. Musicians. Writers. Brands. 
+    Comedians. Gamers. Academics. 
+    Models. Activists. Technologists.
+    Misfits. Athletes. Entertainers.
+      Designers. Visionaries. Public Figures.  
+    Thought Leaders. <b>YOU</b>.
+  </h2>
+</section>
+ 
+<!--<section class="m-homepage--section" style="padding-top:36px">
   <div class="mdl-grid m-homepage--section--icons">
     <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--2-col-phone">
       <a href="https://minds.org" target="_blank">
@@ -43,7 +57,7 @@
       </a>
     </div>
   </div>
-</section>
+</section>-->
 
 <!--<section class="m-homepage--section m-homepage--features">
   <div class="mdl-grid mdl-color-text--blue-grey-300">
@@ -87,111 +101,125 @@
 
 </section>-->
 
-<section class="m-homepage--section">
-  <h1 class="mdl-color-text--blue-grey-800" i18n="@@MINDS__HOME__HOMEPAGE__GO_VIRAL_TITLE">Go viral and expand your reach</h1>
-  <div class="mdl-grid mdl-grid--no-spacing" style="max-width:700px;" *ngIf="false">
-    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600" i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__POINT_EQUALS_VIEW_ITEM">1 point = 1 view</h4>
-    <h4 class="mdl-cell mdl-cell--6-col mdl-color-text--grey-600" i18n="@@MINDS__HOME__HOMEPAGE__USD_EQUALS_1000_POINTS_ITEM">$1 = 1,000 points</h4>
+<section class="m-homepage--section" style="background-color: #FFF">
+  <h1 class="" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">How the economy works</h1>
+
+  <div class="m-homepage--section--subsection"> 
+    <div class="m-homepage--section--subsection-container">
+      <div class="m-homepage--section--subsection-left m-homepage--section--subsection-image">
+        <img src="/assets/screenshots/post.jpg" />
+      </div>
+      <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
+        <h2>Contribute</h2>
+        <p>
+            Create popular original content that receives upvotes, comments and reminds.
+            Gain new subscribers.
+            Refer your friends.
+            Check-in.
+            Develop code.  
+        </p>
+      </div>
+    </div>
   </div>
-  <div class="mdl-grid m-homepage--section--rewards">
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-      <div class="m-homepage--section--rewards-points">
-        <i class="material-icons mdl-color-text--blue-grey-800">create</i>
-        <span class="mdl-color-text--green">+1</span>
-      </div>
-      <label i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__POST_ACTIVITY_ITEM">Post a text/link activity</label>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-      <div class="m-homepage--section--rewards-points">
-        <i class="material-icons mdl-color-text--blue-grey-800">chat_bubble</i>
-        <span class="mdl-color-text--green">+5</span>
-      </div>
-      <label i18n="@@MINDS__HOME__HOMEPAGE__RECEIVE_A_COMMENT_ITEM">Receive a comment</label>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-      <div class="m-homepage--section--rewards-points">
-        <i class="material-icons mdl-color-text--blue-grey-800">person_add</i>
-        <span class="mdl-color-text--green">+5</span>
-      </div>
-      <label i18n="@@MINDS__HOME__HOMEPAGE__GAIN_A_SUBSCRIBER_ITEM">Gain a subscriber</label>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-      <div class="m-homepage--section--rewards-points">
-        <i class="material-icons mdl-color-text--blue-grey-800">thumb_up</i>
-        <span class="mdl-color-text--green">+5</span>
-      </div>
-      <label i18n="@@MINDS__HOME__HOMEPAGE__RECEIVE_AN_UPVOTE_ITEM">Receive an up vote</label>
-    </div>
 
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-      <div class="m-homepage--section--rewards-points">
-        <i class="material-icons mdl-color-text--blue-grey-800">repeat</i>
-        <span class="mdl-color-text--green">+5</span>
+  <div class="m-homepage--section--subsection">
+    <div class="m-homepage--section--subsection-container">
+      <div class="m-homepage--section--subsection-left m-homepage--section--subsection-text">
+        <h2>Earn Crypto</h2>
+        <p>
+            Each day we measure your contribution relative to the community.
+            Your percentage determines your share of the Daily Reward Pool of tokens.
+        </p>
       </div>
-      <label i18n="@@MINDS__HOME__HOMEPAGE__GET_REMINDED_ITEM">Get Reminded</label>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-      <div class="m-homepage--section--rewards-points">
-        <i class="material-icons mdl-color-text--blue-grey-800">attachment</i>
-        <span class="mdl-color-text--green">+15</span>
+      <div class="m-homepage--section--subsection-right m-homepage--section--subsection-image">
+        <img src="/assets/screenshots/wallet.jpg" />
       </div>
-      <label i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__POST_RICH_MEDIA_ITEM">Post a rich media activity</label>
     </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-      <div class="m-homepage--section--rewards-points">
-        <i class="material-icons mdl-color-text--blue-grey-800">subject</i>
-        <span class="mdl-color-text--green">+15</span>
-      </div>
-      <label i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__PUBLISH_A_BLOG">Publish a blog</label>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--2-col-phone">
-      <div class="m-homepage--section--rewards-points">
-        <i class="material-icons mdl-color-text--blue-grey-800">access_alarm</i>
-        <span class="mdl-color-text--green">+50</span>
-      </div>
-      <label i18n="@@MINDS__HOME__HOMEPAGE__HOURLY_CHECKIN_ITEM">Hourly Check-in</label>
-    </div>
-
-
   </div>
+
+  <div class="m-homepage--section--subsection">
+    <div class="m-homepage--section--subsection-container">
+      <div class="m-homepage--section--subsection-left m-homepage--section--subsection-image">
+        <img src="/assets/screenshots/boost.jpg" />
+      </div>
+      <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
+        <h2>Get Views</h2>
+        <p>
+            Exchange your tokens for views on your content and increase your chances of earning rewards.
+            The Boost ad network is fully transparent without any unwanted surveillance.
+            No algorithms.
+            100% organic reach.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-homepage--section--subsection" style="background-color: #f8f8f8">
+    <div class="m-homepage--section--subsection-container">
+      <div class="m-homepage--section--subsection-left m-homepage--section--subsection-text">
+        <h2>Sell Digital Services</h2>
+        <p>
+            Earn tokens on a one-time or recurring basis from selling exclusive digital content or premium subscriptions with custom rewards to your supporters.
+            The Wire peer-to-peer payment system is fully autonomous on the blockchain.
+        </p>
+      </div>
+      <div class="m-homepage--section--subsection-right m-homepage--section--subsection-image">
+        <img src="/assets/screenshots/wire.jpg" />
+      </div>
+    </div>
+  </div>
+
+  <div class="m-homepage--section--subsection">
+    <div class="m-homepage--section--subsection-container">
+      <div class="m-homepage--section--subsection-left m-homepage--section--subsection-image">
+        <img src="/assets/screenshots/wire-send.jpg" />
+      </div>
+      <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
+        <h2>Support Creators</h2>
+        <p>
+          Send your tokens to your favorite channels as a tip for quality content or to subscribe to their exlclusive content and rewards.
+          Help them continue to do what they love. 
+        </p>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>
 
-<section class="m-homepage--section">
-  <h2 class="mdl-color-text--blue-grey-800" i18n="@@MINDS__HOME__HOMEPAGE__HOW_USERS_GENERATE_TITLE">How users generate revenue</h2>
-  <div class="mdl-grid m-homepage--section--icons">
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <div class="mdl-color--green mdl-color-text--white m-homepage--feature-btn">
-          <i class="material-icons m-homepage--feature-btn--icon">vpn_key</i>
-          <span i18n="@@M__FEATURE__EXCLUSIVE">Exclusive</span>
+<section class="m-homepage--section m-homepage--section--with-video">
+  <h2 class="mdl-color-text--blue-grey-800" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">What we are building</h2>
+
+  <div class="m-homepage--section--video--overlay">
+    <div class="m-homepage--section--grid">
+      <div class="m-homepage--section--grid-col">
+        <h4 class="mdl-color-text--blue-grey-800">
+          A nonpartisan (r)evolution of ideas and <b>global consciousness.</b>
+        </h4>
       </div>
-      <label i18n="homepage copy|@@MINDS__HOME__HOMEPAGE__PAID_SUBSCRIPTION_SUBITEM">Paid Subscriptions</label>
-      <p i18n="@@MINDS__HOME__HOMEPAGE__PAID_SUBSCRIPTION_SUBITEM_DESC">Set a monthly price for your fans to pay for your exclusive content and services.</p>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <div class="mdl-color-text--white m-homepage--feature-btn" style="background: #428EDA;">
-          <span i18n="@@M__FEATURE__BOOST">Boost</span>
+      <div class="m-homepage--section--grid-col">
+        <h4 class="mdl-color-text--blue-grey-800">
+            Transparency.
+            Privacy. <b>Free speech.</b>
+            Real world solutions.           
+        </h4>
       </div>
-      <label i18n="@@MINDS__HOME__HOMEPAGE__P2P_BOOST_SUBITEM">Peer-To-Peer Boost</label>
-      <p i18n="@@MINDS__HOME__HOMEPAGE__P2P_BOOST_SUBITEM_DESC">Receive offers from other channels to share their content in exchange for points or dollars.</p>
+      <div class="m-homepage--section--grid-col">
+        <h4 class="mdl-color-text--blue-grey-800">
+          Cooperate. <b>Question.</b>
+          Respect. Coexist.
+        </h4>
+      </div>
     </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <img src="{{minds.cdn_assets_url}}assets/wire-icon.png" style="display: block; margin: 20px auto; height: 60px;"/>
-      <label i18n="@@M__FEATURE__WIRE">Wire</label>
-      <p i18n="@@MINDS__HOME__HOMEPAGE__WIRE_ITEM_DESC">Receive tips from your audience for content they enjoy in points, dollars or Tokens.</p>
-    </div>
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <i class="material-icons mdl-color-text--blue-grey-800">insert_chart</i>
-      <label i18n="@@MINDS__HOME__HOMEPAGE__AD_REVENUE_ITEM">Ad Revenue</label>
-      <p i18n="@@MINDS__HOME__HOMEPAGE__AD_REVENUE_ITEM_DESC">Monetize your blog with ads.</p>
-    </div>
+  </div>
+
+  <div class="m-homepage--section--video">
+    <video src="assets/videos/crowd-1/crowd-1.mp4" autoplay loop></video>
   </div>
 </section>
 
-
 <span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>
-
 
 <div class="mdl-grid mdl-grid--no-spacing m-homepage--stream">
 
@@ -212,7 +240,7 @@
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
     </div>
 
-    <div class="m-homepage--fader" [hidden]="inProgress">
+    <div class="m-homepage--fader" [hidden]="inProgress" *ngIf="false">
       <div class="m-homepage--fader--load-more" (click)="loadStream()" i18n="@@MINDS__HOME__HOMEPAGE__SEE_MORE_ACTION">Click To See more</div>
     </div>
 </div>

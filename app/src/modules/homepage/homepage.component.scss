@@ -3,7 +3,8 @@
 .m-homepage--hero{
   position:relative;
 
-  background-image: url(/assets/photos/circles.png);
+  //background-image: url(/assets/photos/circles.png);
+  background-image: url(/assets/photos/night-sky.jpg);
   background-size: cover;
   background-position: center center;
 
@@ -11,13 +12,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 100px 52px;
+    padding: 200px 52px;
     margin: auto;
     max-width: 1280px;
 
-    @media screen and (max-width: 720px){
-      padding: 30px 12px;
-      text-align: center;
+    @media screen and (max-width: 1000px){
+      padding: 120px 16px;
     }
   }
 
@@ -44,6 +44,7 @@
       font-size: 78px;
       font-weight: 800;
       letter-spacing: 1.25px;
+      line-height: 1;
       //color: rgba(255,255,255,0.85);
       //color: rgba(0,0,0,0.85);
 
@@ -56,12 +57,13 @@
       font-size: 18px;
       //color: rgba(255, 255, 255, 0.8);
       font-weight: 600;
-      letter-spacing: 1px;
-      line-height: 24px;
+      letter-spacing: 0.25px;
+      line-height: 1;
       padding-right: 70px;
 
       @media screen and (max-width: 720px){
         padding-right: 8px;
+        font-size: 13px;
       }
     }
     z-index: 2;
@@ -69,8 +71,9 @@
   
   .m-homepage--signup{
     flex: 1;
+    margin-left: 16px;
 
-    @media screen and (max-width: 720px){
+    @media screen and (max-width: 1000px){
       display:none;
     }
     minds-form-register{
@@ -156,11 +159,8 @@
 }
 
 m-homepage {
-  section {
-    
-  }
-
-  .m-homepage--section{
+ 
+  .m-homepage--section {
     height: 300px;
     align-items: center;
     justify-content: center;
@@ -174,11 +174,23 @@ m-homepage {
     padding: 80px 0;
     height:auto;
 
+    &.m-homepage--section-margin {
+      max-width: 1280px;
+      margin: auto;
+
+      @media screen and (max-width: 1320px) {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+
     h1{
       font-size: 56px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 5px;
+      margin-left: 8px;
+      margin-right: 8px;
 
       @media screen and (max-width: 1250px){
         font-size: 36px;
@@ -189,10 +201,14 @@ m-homepage {
       text-transform: uppercase;
       font-size: 32px;
       font-weight: 400;
-      letter-spacing: 4px;
+      letter-spacing: 1.25px;
 
       @media screen and (max-width: 1250px){
         font-size: 22px;
+      }
+
+      &.m-hompeage--wide-letters {
+        letter-spacing: 4px;
       }
     }
 
@@ -261,6 +277,118 @@ m-homepage {
         font-weight: 400;
         letter-spacing: 2px;
         color: #333;
+      }
+    }
+  }
+
+  .m-homepage--section--subsection {
+    
+    .m-homepage--section--subsection-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      padding: 100px 0;
+      max-width: 1400px;
+      margin: auto;
+      width: calc(100% - 64px);
+
+      @media screen and (max-width: $max-mobile) {
+        flex-direction: column;
+        width: 100%;
+        padding: 25px 0;
+      }
+    }
+
+    .m-homepage--section--subsection-left, .m-homepage--section--subsection-right {
+      flex: 1;
+      padding-left: 16px;
+      padding-right: 16px;
+      margin-left: 4%;
+      max-width: 40%;
+
+      @media screen and (max-width: $max-mobile) {
+        max-width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    .m-homepage--section--subsection-text {
+      h2, p {
+        color: #444;
+        margin: 0;
+      }
+
+      p {
+        font-size: 16px;
+      }
+    }
+
+    .m-homepage--section--subsection-image {
+      img { 
+        max-width: 100%;
+      }
+    }
+
+  }
+
+  .m-homepage--section--with-video {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 0;
+
+    .m-homepage--section--video {
+      //margin-top: -220px;
+
+      @media screen and (max-width: $max-mobile) {
+        //display: none;
+      }
+    }
+    .m-homepage--section--video--overlay {
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+    }
+  }
+
+  .m-homepage--section--video {
+    overflow: hidden;
+    min-width: 100%;
+    min-height: 100%;
+    position: relative;
+
+    video {
+      min-width: 100%;
+      min-height: 100%;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      position: absolute;
+    }
+  }
+
+  .m-homepage--section--grid {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    //margin-top: 100px;
+    display: flex;
+    flex-direction: row;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+    }
+
+    .m-homepage--section--grid-col {
+      flex: 1;
+      padding: 0 16px;
+      margin: 16px;
+      text-align: left;
+      h4 {
+        letter-spacing: 0.25px;
+        font-weight: 300;
+        font-size: 28px;
+        color: #FFF;
       }
     }
   }

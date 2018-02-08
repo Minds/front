@@ -87,7 +87,7 @@ m-topbar{
     }
   }
 
-  @media screen and (max-width: $min-mobile){
+  @media screen and (max-width: $max-mobile){
     .minds-menu-button {
       display:block;
     }
@@ -95,6 +95,12 @@ m-topbar{
       display: none;
     }
 
+  }
+
+  @media screen and (max-width: 350px){
+    .m-topbar--logo {
+      display: none;
+    }
   }
 
   .m-topbar--account{

@@ -79,7 +79,7 @@
             <div class="auxbar bar bar3" style="width: 0%;"></div>
           </div>
 
-          <div class="m-initial-loading-centred" style="width:100%; text-align:center; margin: auto;">
+          <div class="m-initial-loading-centred" style="width:100%; text-align:center; margin: 100px auto;">
             <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active is-upgraded" style="width: 64px;height: 64px;" data-upgraded=",MaterialSpinner">
               <div class="mdl-spinner__layer mdl-spinner__layer-1">
                 <div class="mdl-spinner__circle-clipper mdl-spinner__left">
