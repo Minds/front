@@ -28,6 +28,8 @@ import { BoostPublisherEarningsComponent } from './publisher/earnings/earnings.c
 import { BoostPublisherPayoutsComponent } from './publisher/payouts/payouts.component';
 import { BoostPublisherSettingsComponent } from './publisher/settings/settings.component';
 import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
+import { LegacyModule } from '../legacy/legacy.module';
+import { Poster } from '../legacy/controllers/newsfeed/poster/poster';
 
 const boostRoutes: Routes = [
   { path: 'boost/console', component: BoostConsoleComponent,
@@ -39,7 +41,7 @@ const boostRoutes: Routes = [
           { path: 'earnings', component: BoostPublisherEarningsComponent },
           { path: 'payouts', component: BoostPublisherPayoutsComponent },
           { path: 'settings', component: BoostPublisherSettingsComponent },
-        ] 
+        ]
       },
       { path: 'publisher/:filter', component: BoostPublisherComponent },
       { path: ':type', component: BoostConsoleTypesComponent,
@@ -48,8 +50,8 @@ const boostRoutes: Routes = [
           { path: 'create', component: BoostConsoleBooster },
           { path: 'history', component: BoostConsoleHistoryComponent },
           { path: 'history/:filter', component: BoostConsoleHistoryComponent },
-        ] 
-      }, 
+        ]
+      },
     ]
   },
   { path: 'boost', component: BoostMarketingComponent }
@@ -65,7 +67,7 @@ const boostRoutes: Routes = [
     CheckoutModule,
     ThirdPartyNetworksModule,
     AdsModule,
-    FaqModule,
+    FaqModule
   ],
   declarations: [
     BoostCreatorComponent,
@@ -96,7 +98,8 @@ const boostRoutes: Routes = [
   entryComponents: [
     BoostCreatorComponent,
     BoostConsoleComponent,
-    BoostMarketingComponent
+    BoostMarketingComponent,
+    Poster,
   ]
 })
 export class BoostModule {

@@ -1,13 +1,23 @@
-<div class="m-boost-console-booster--cta mdl-color--blue-grey-800 mdl-color-text--white mdl-shadow--4dp">
-    <span i18n="@@BOOST__CONSOLE__BOOSTER__CTA">Boosting guarantees more views on your posts and content.</span>
-    <!--<button class="mdl-button mdl-button&#45;&#45;raised mdl-color-text&#45;&#45;white" (click)="toggle()" i18n="verb|@@M__ACTION__BOOST">Boost</button>-->
+<div class="m-boost-console-booster--cta">
+  <span i18n="@@BOOST__CONSOLE__BOOSTER__CTA">Boosting guarantees more views on your posts and content.</span>
+  <!--<button class="mdl-button mdl-button&#45;&#45;raised mdl-color-text&#45;&#45;white" (click)="toggle()" i18n="verb|@@M__ACTION__BOOST">Boost</button>-->
 </div>
 
-<div class="m-boost-console-booster--content mdl-color--blue-grey-900 mdl-color-text--white mdl-shadow--4dp">
+<div class="m-boost-console-booster--content">
   <!-- Posts  -->
   <ng-container *ngIf="type == 'newsfeed' || type == 'offers'">
-    <h3 i18n="@@BOOST__CONSOLE__BOOSTER__RECENT_POSTS_TITLE">Your recent posts</h3>
-    <minds-card [object]="object" hostClass="mdl-shadow--2dp" *ngFor="let object of posts"></minds-card>
+    <ng-container *ngIf="posts && posts.length > 0">
+      <h3 i18n="@@BOOST__CONSOLE__BOOSTER__RECENT_POSTS_TITLE">Your recent posts</h3>
+      <div class="m-boost-console--booster--posts-list m-border">
+          <minds-card [object]="object" hostClass="mdl-shadow--2dp" *ngFor="let object of posts"></minds-card>
+      </div>
+    </ng-container>
+
+    <h3 [hidden]="!inProgress && posts.length > 0" i18n="@@BOOST__CONSOLE__BOOSTER__POST_SOMETHING">You have no content yet. Why don't you post
+      something?</h3>
+    <div #poster [hidden]="!inProgress && posts.length > 0">
+
+    </div>
   </ng-container>
 
   <!-- User and Media  -->
@@ -15,12 +25,21 @@
     <h3 i18n="@@BOOST__CONSOLE__BOOSTER__YOUR_CHANNEL_TITLE">Your channel</h3>
     <minds-card [object]="session.getLoggedInUser()" hostClass="mdl-shadow--2dp"></minds-card>
 
-    <h3 i18n="@@BOOST__CONSOLE__BOOSTER__YOUR_RECENT_MEDIA_TITLE">Your recent media</h3>
-    <div class="mdl-grid m-boost-console-booster--content-grid">
-      <div class="mdl-cell mdl-cell--6-col" *ngFor="let object of media">
-        <minds-card [object]="object" hostClass="mdl-shadow--2dp"></minds-card>
-        <minds-button type="boost" [object]="object"></minds-button>
+    <ng-container *ngIf="media.length > 0">
+      <h3 i18n="@@BOOST__CONSOLE__BOOSTER__YOUR_RECENT_MEDIA_TITLE">Your recent media</h3>
+      <div class="mdl-grid m-boost-console-booster--content-grid">
+        <div class="mdl-cell mdl-cell--6-col" *ngFor="let object of media">
+          <minds-card [object]="object" hostClass="mdl-shadow--2dp"></minds-card>
+          <minds-button type="boost" [object]="object"></minds-button>
+        </div>
       </div>
+    </ng-container>
+
+    <h3 [hidden]="!inProgress && media.length > 0" i18n="@@BOOST__CONSOLE__BOOSTER__POST_SOMETHING">You have no content yet. Why don't you post
+      something?</h3>
+    <div #poster [hidden]="!inProgress && media.length > 0">
+
     </div>
+
   </ng-container>
 </div>

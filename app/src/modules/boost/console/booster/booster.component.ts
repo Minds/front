@@ -1,9 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { BoostConsoleType } from '../console.component';
 import { Client } from '../../../../services/api';
 import { Session, SessionFactory } from '../../../../services/session';
+import { RevenueLedgerComponent } from '../../../monetization/revenue/ledger.component';
+import { Poster } from '../../../legacy/controllers/newsfeed/poster/poster';
 
 @Component({
   moduleId: module.id,
@@ -20,17 +22,22 @@ export class BoostConsoleBooster {
 
   @Input('type') type: BoostConsoleType;
 
-  constructor(
-    public client: Client,
-    public session: Session,
-    private route: ActivatedRoute,
-  ) { }
+  componentRef;
+  componentInstance: Poster;
+
+  @ViewChild('poster', { read: ViewContainerRef }) poster: ViewContainerRef;
+
+  constructor(public client: Client,
+              public session: Session,
+              private route: ActivatedRoute,
+              private _componentFactoryResolver: ComponentFactoryResolver,) {
+  }
 
   ngOnInit() {
     this.route.parent.url.subscribe(segments => {
       this.type = <BoostConsoleType>segments[0].path;
       this.load();
-    }); 
+    });
   }
 
   load(refresh?: boolean) {
@@ -56,10 +63,31 @@ export class BoostConsoleBooster {
 
         this.posts = responses[0].activity || [];
         this.media = responses[1].entities || [];
+        // this.posts = [];
+        // this.media = [];
+        this.loadComponent();
       })
       .catch(e => {
         this.inProgress = false;
         return false;
       });
+  }
+
+  loadComponent() {
+    this.poster.clear();
+    if (
+      ((this.type === 'peer' || this.type === 'newsfeed') && this.posts.length === 0)
+      || (this.type === 'content' && this.media.length === 0)) {
+
+
+      const componentFactory = this._componentFactoryResolver.resolveComponentFactory(Poster);
+
+      this.componentRef = this.poster.createComponent(componentFactory);
+      this.componentInstance = this.componentRef.instance;
+
+      this.componentInstance.load.subscribe(()=> {
+        this.load();
+      });
+    }
   }
 }

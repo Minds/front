@@ -1,12 +1,17 @@
 m-boost-console-booster {
+  border: 1px solid #e8e8e8;
+  border-radius: 3px;
+  display: block;
+
   .m-boost-console-booster--cta {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: $minds-padding * 2;
     margin-top: $minds-padding;
-    font-family: 'Lato', sans-serif;
-    font-weight: 300;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 16px;
 
     > button {
       flex-shrink: 0;
@@ -23,10 +28,14 @@ m-boost-console-booster {
     > h3 {
       margin: 0.65em 0;
       text-transform: uppercase;
-      font-family: 'Lato', sans-serif;
-      font-size: 14px;
-      font-weight: 300;
+      font-family: 'Roboto';
+      font-size: 16px;
+      font-weight: 500;
       line-height: 1;
+    }
+
+    .m-boost-console--booster--posts-list {
+      padding: 1px;
     }
 
     minds-card {

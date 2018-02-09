@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 
 import { Client, Upload } from '../../../../../services/api';
 import { MindsActivityObject } from '../../../../../interfaces/entities';
