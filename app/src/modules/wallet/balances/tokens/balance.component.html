@@ -12,16 +12,26 @@
   <h3>Tokens</h3>
 
   <div class="m-wallet--balance--addresses">
+
+    <span *ngIf="addresses.length">Breakdown</span>
+
     <div class="m-wallet--balance--addresses-address" *ngFor="let address of addresses">
       
       <div class="m-wallet--balance--addresses-address-col">
         <label class="m-wallet--balance--addresses-address-label">
-          <span>{{address.label}}</span>
+          <span>{{address.label}} Address</span>
           <m-tooltip icon="help" *ngIf="address.label == 'Receiver'">
-            This is your public address which will receive Boost & Wire transactions.You can change this in Addresses.
+            This is your public address which will receive Boost & Wire transactions via the blockchain.
+            You can change this in Addresses.
           </m-tooltip>
           <m-tooltip icon="help" *ngIf="address.label == 'OffChain'">
             This is your offchain address where your rewards are deposited. These transaction will not appear on the blockchain.
+          </m-tooltip>
+          <m-tooltip icon="help" *ngIf="address.label == 'OnChain'">
+            This is your currently active Web3/Metamask wallet. This address differs from what you have configured to receive Boost & Wires via the blockchain.
+          </m-tooltip>
+          <m-tooltip icon="help" *ngIf="address.label == 'OnChain & Receiver'">
+            This is your currently active Web3/Metamask wallet and is also configured to receive Boost & Wires via the blockchain.
           </m-tooltip>
         </label>
         <span class="m-wallet--balance--addresses-address-address">

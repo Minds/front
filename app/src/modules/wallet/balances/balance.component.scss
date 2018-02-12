@@ -5,12 +5,13 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
 .m-wallet--balance {
   width: auto;
   min-height: 0;
-  padding: ($minds-padding * 4) $minds-padding;
+  padding: ($minds-padding * 2) $minds-padding;
   text-align: center;
   background: #FFF;
 
   .m-wallet--balance--logo {
     width: 100px;
+    margin-top: 24px;
   }
 
   h3 {
@@ -27,6 +28,20 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
 
 .m-wallet--balance--addresses {
   padding: 0 8px;
+
+  > span {
+    text-align: left;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+  }
+
+  > div:nth-of-type(1) {
+    margin-top: 0 !important;
+  }
+
   .m-wallet--balance--addresses-address {
     display: flex;
     flex-direction: row;
