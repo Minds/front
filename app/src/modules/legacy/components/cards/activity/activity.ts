@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ElementRef, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, ElementRef, Input } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { SessionFactory } from '../../../../../services/session';
@@ -18,7 +18,8 @@ import { WireCreatorComponent } from '../../../../wire/creator/creator.component
   },
   inputs: ['object', 'commentsToggle', 'visible', 'canDelete'],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
-  templateUrl: 'activity.html'
+  templateUrl: 'activity.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class Activity {

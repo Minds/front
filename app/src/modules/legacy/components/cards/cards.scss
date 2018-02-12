@@ -143,7 +143,7 @@ minds-card-image, minds-card-video {
 
 .mdl-card{
   .m-owner-block{
-    padding: 16px;
+    padding: 16px 16px 0;
     display: flex;
     position: absolute;
     bottom: 0;
@@ -271,7 +271,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
 
   .m-activity--message-remind{
     padding-top:0;
-    padding-bottom: 24px;
+    padding-bottom: 8px;
   }
 
   .m-translate-button i{
@@ -436,7 +436,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
  * Action tabs
  */
 .tabs, .m-action-tabs{
-  padding:$minds-padding+2 $minds-padding*2;
+  padding:0 $minds-padding*2 $minds-padding*1.5;
   display:flex;
   box-sizing:border-box;
   width:100%;

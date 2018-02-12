@@ -189,19 +189,11 @@
   <div class="m-activity--metrics-inner m-border">
     <div class="m-activity--metrics-metric" (click)="showWire()">
   		<i class="material-icons">account_balance</i>
-      <span *ngIf="activity.wire_totals">{{ activity.wire_totals.points | abbr }}</span>
-  	</div>
-  	<div class="m-activity--metrics-metric" (click)="showWire()">
-  		<i class="material-icons" style="width:10px">attach_money</i>
-      <span *ngIf="activity.wire_totals">{{ activity.wire_totals.money | abbr }}</span>
-  	</div>
-  	<div class="m-activity--metrics-metric" (click)="showWire()">
-  		<m--crypto-token-symbol></m--crypto-token-symbol>
-      <span *ngIf="activity.wire_totals">{{ activity.wire_totals.tokens | abbr }}</span>
+        <span *ngIf="activity.wire_totals">{{ activity.wire_totals.tokens | abbr }}</span>
   	</div>
   	<div class="m-activity--metrics-metric">
   		<i class="material-icons">remove_red_eye</i>
-      <span>{{ activity.impressions | number }}</span>
+        <span>{{ activity.impressions | number }}</span>
   	</div>
   </div>
 </div>
