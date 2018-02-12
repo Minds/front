@@ -50,6 +50,7 @@ export class MediaImagesListComponent {
     this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['filter']) {
         this.filter = params['filter'];
+        this.owner = '';
 
         switch (this.filter) {
           case 'all':
