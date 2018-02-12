@@ -50,6 +50,18 @@ export class Web3WalletService {
     return wallets[0];
   }
 
+  async getBalance(address): Promise<string | false> {
+    return new Promise<string | false>((resolve, reject) => {
+      this.eth.getBalance(address, (error, result) => {
+        if (error) {
+          console.log(error);
+          return reject(false);
+        }
+        resolve(result.toNumber());
+      });
+    });
+  }
+
   async isLocked() {
     return !(await this.getCurrentWallet());
   }

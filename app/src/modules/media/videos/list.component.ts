@@ -68,7 +68,7 @@ export class MediaVideosListComponent {
         }
       }
    
-      this.context.set('object:image');
+      this.context.set('object:video');
 
       this.inProgress = false;
       this.entities = [];
