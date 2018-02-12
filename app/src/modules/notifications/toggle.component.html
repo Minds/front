@@ -3,10 +3,6 @@
     [ngClass]="{'mdl-color-text--amber-300' : minds.notifications_count > 0 }">
     notifications
   </i>
-  <span id="notifications-counter" 
-    class="counter mdl-color-text--green-400">
-    {{ minds.notifications_count | abbr}}
-  </span>
 </a>
 
 <div class="m-notifications--topbar-toggle-overlay" (click)="toggle($event)" *ngIf="toggled"></div>
