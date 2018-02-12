@@ -137,7 +137,7 @@ export class WireCreatorComponent implements AfterViewInit {
         this.loadCurrentWalletBalance(currentWallet);
       }
 
-      let response: any = await this.client.get(`api/v1/blockchain/wallet/balance`);
+      let response: any = await this.client.get(`api/v2/blockchain/wallet/balance`);
 
       if (!response) {
         return;
@@ -206,24 +206,24 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   setDefaults() {
-    if (this._opts && this._opts.default && typeof this._opts.default === 'object') {
+    /*if (this._opts && this._opts.default && typeof this._opts.default === 'object') {
       this.wire.currency = this._opts.default.type;
       this.wire.amount = this._opts.default.min;
 
       if (!this._opts.disableThresholdCheck && this.sums && this.sums[this._opts.default.type]) {
         this.wire.amount = <number>this.wire.amount - Math.ceil(this.sums[this._opts.default.type]);
       }
-    } else if (this.owner.eth_wallet) {
+    } else if (this.owner.eth_wallet) {*/
       this.setCurrency('tokens');
       this.wire.amount = 1;
       this.wire.recurring = true;
-    } else if (this.owner.merchant) {
+    /*} else if (this.owner.merchant) {
       this.setCurrency('money');
       this.wire.amount = 1;
       this.wire.recurring = true;
     } else {
       // TODO: Throw an error
-    }
+    }*/
 
     if (this.wire.amount < 0) {
       this.wire.amount = 0;
@@ -262,7 +262,7 @@ export class WireCreatorComponent implements AfterViewInit {
    * Sets the wire payment nonce
    */
   setNoncePayload(nonce: any) {
-    this.wire.payload = { nonce };
+    this.wire.payload = nonce;
     this.showErrors();
   }
 
