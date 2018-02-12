@@ -112,28 +112,24 @@ export class BlogListComponent {
   }
 
   pushToColumns(blogs) {
+    let listLength = this.entities_0.length + this.entities_1.length;
+
     for (let i = 0; i < blogs.length; i++) {
-
-      //0, 3, 4 takes column 0
-      if (i == 0 || i == 3 || i == 4) {
-        this.entities_0.push(blogs[i]);
+      let index = i + listLength;
+      if (index <= 5) {
+        if (index == 0 || index == 3 || index == 4) {
+          this.entities_0.push(blogs[i]);
+        } else {
+          this.entities_1.push(blogs[i]);
+        }
+      } else {
+        //even numbers take column 0
+        if (index % 2 == 0) {
+          this.entities_0.push(blogs[i]);
+        } else {
+          this.entities_1.push(blogs[i]);
+        } 
       }
-
-      //1, 2, 6 takes column 1
-      if (i == 1 || i == 2 || i == 5) {
-        this.entities_1.push(blogs[i]);
-      }
-
-      //even numbers take column 0
-      if (i > 5 && i % 2 === 0) {
-        this.entities_0.push(blogs[i]);
-      }
-
-      //odd numbers take column 1
-      if (i > 5 && i % 2 !== 0) {
-        this.entities_1.push(blogs[i]);
-      } 
-
     }
   }
 
