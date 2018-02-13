@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { ScrollService } from '../../../services/ux/scroll';
 import { AnalyticsService } from '../../../services/analytics';
 
@@ -15,7 +15,6 @@ import { AnalyticsService } from '../../../services/analytics';
 
 export class SignupOnScrollModal {
   open: boolean = false;
-  session = SessionFactory.build();
   route: string = '';
   scroll_listener;
   minds = window.Minds;
@@ -24,7 +23,7 @@ export class SignupOnScrollModal {
 
   routerSubscription: Subscription;
 
-  constructor(public router: Router, public scroll: ScrollService) {
+  constructor(public session: Session, public router: Router, public scroll: ScrollService) {
   }
 
   ngOnInit() {

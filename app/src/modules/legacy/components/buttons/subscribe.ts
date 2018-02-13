@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { SignupModalService } from '../../../../modules/modals/signup/service';
 
@@ -11,13 +11,13 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
     <button class="m-btn m-btn--with-icon m-btn--subscribe" *ngIf="!_user.subscribed" (click)="subscribe()">
       <i class="material-icons">person_add</i>
       <span>
-        <!-- i18n: @@M__ACTION__SUBSCRIBE -->Subscribe<!-- /i18n -->
+        <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
       </span>
     </button>
     <button class="m-btn m-btn--with-icon m-btn--subscribe subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">
       <i class="material-icons">close</i>
       <span>
-        <!-- i18n: @@MINDS__BUTTONS__SUBSCRIBE__SUBSCRIBED_LABEL -->Un-subscribe<!-- /i18n -->
+        <ng-container i18n="@@MINDS__BUTTONS__SUBSCRIBE__SUBSCRIBED_LABEL">Un-subscribe</ng-container>
       </span>
     </button>
   `
@@ -32,9 +32,8 @@ export class SubscribeButton {
   _content: any;
   _listener: Function;
   showModal: boolean = false;
-  session = SessionFactory.build();
 
-  constructor(public client: Client, public modal: SignupModalService) {
+  constructor(public session: Session, public client: Client, public modal: SignupModalService) {
   }
 
   set user(value: any) {

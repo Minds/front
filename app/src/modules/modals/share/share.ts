@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { EmbedService } from '../../../services/embed';
 
 @Component({
@@ -18,17 +18,17 @@ import { EmbedService } from '../../../services/embed';
       <div class="m-social-share-buttons">
         <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-fb"
           (click)="openWindow('https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl + '&display=popup&ref=plugin&src=share_button')">
-          <!-- i18n: @@MODALS__SHARE__ON_FACEBOOK -->Share on Facebook<!-- /i18n -->
+          <ng-container i18n="@@MODALS__SHARE__ON_FACEBOOK">Share on Facebook</ng-container>
         </button>
         <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-twitter"
           (click)="openWindow('https://twitter.com/intent/tweet?text=Shared%20via%20Minds.com&tw_p=tweetbutton&url=' + encodedUrl)">
-          <!-- i18n: @@MODALS__SHARE__ON_TWITTER -->Share on Twitter<!-- /i18n -->
+          <ng-container i18n="@@MODALS__SHARE__ON_TWITTER">Share on Twitter</ng-container>
         </button>
       </div>
 
       <div class="m-modal-share-embed" *ngIf="embedCode">
         <span class="m-modal-share-embed__label mdl-color-text--blue-grey-300">
-          <!-- i18n: @@M__COMMON__EMBED_INTO_WEBSITE -->Embed into your website:<!-- /i18n -->
+          <ng-container i18n="@@M__COMMON__EMBED_INTO_WEBSITE">Embed into your website:</ng-container>
         </span>
         <div>
           <textarea (click)="copy($event)" readonly>{{ embedCode }}</textarea>
@@ -47,9 +47,7 @@ export class ShareModal {
   encodedUrl: string = '';
   embedCode: string = '';
 
-  session = SessionFactory.build();
-
-  constructor(public embed: EmbedService) {
+  constructor(public session: Session, public embed: EmbedService) {
   }
 
   set _url(value: string) {

@@ -42,7 +42,7 @@
     <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [hidden]="boosts.length > 0 || !inProgress"></div>
 
     <div class="mdl-card__supporting-text" [hidden]="inProgress || moreData">
-      <!-- i18n: @@MINDS__ADMIN__BOOSTS__NO_MORE_BOOSTS -->There are no more boosts to approve<!-- /i18n -->
+      <ng-container i18n="@@MINDS__ADMIN__BOOSTS__NO_MORE_BOOSTS">There are no more boosts to approve</ng-container>
     </div>
 
     <div class="mdl-card mdl-shadow--4dp boost" *ngFor="let boost of boosts; let i = index">
@@ -56,7 +56,7 @@
       <minds-card-group [group]="boost.entity" class="mdl-card mdl-shadow--8dp" *ngIf="boost.entity.type == 'group'"></minds-card-group>
 
       <div class="mdl-card__supporting-text quality-slider" *ngIf="boost.state == 'created'">
-        <!-- i18n: @@MINDS__ADMIN__BOOSTS__QUALITY_SLIDER_LABEL -->Quality: <!-- /i18n -->
+        <ng-container i18n="@@MINDS__ADMIN__BOOSTS__QUALITY_SLIDER_LABEL">Quality: </ng-container>
         <div class="m--inputs">
           <input type="range" class="mdl-slider mdl-js-slider" [(ngModel)]="boost.quality" min="0" max="100" step="5" [mdlSlider]>
           <input type="number" min="0" max="100" step="5" [(ngModel)]="boost.quality">
@@ -65,7 +65,7 @@
 
       <div class="m-previously-rejected-notice" *ngIf="boost.entity.boost_rejection_reason && boost.entity.boost_rejection_reason != -1">
         <i class="material-icons">warning</i>
-        <!-- i18n: @@MINDS__ADMIN__BOOSTS__PREVIOUSLY_REJECTED_LABEL -->Previously rejected: {{  findReason(boost.entity.boost_rejection_reason)?.label }}<!-- /i18n -->
+        <ng-container i18n="@@MINDS__ADMIN__BOOSTS__PREVIOUSLY_REJECTED_LABEL">Previously rejected: {{  findReason(boost.entity.boost_rejection_reason)?.label }}</ng-container>
       </div>
 
       <span class="mdl-card__supporting-text impressions">

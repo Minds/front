@@ -2,7 +2,7 @@ import { Component, EventEmitter, NgZone } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 
 @Component({
@@ -14,7 +14,6 @@ import { SessionFactory } from '../../../services/session';
 
 export class LoginForm {
 
-  session = SessionFactory.build();
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
@@ -27,7 +26,7 @@ export class LoginForm {
   done: EventEmitter<any> = new EventEmitter();
   doneRegistered: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, fb: FormBuilder, private zone: NgZone) {
+  constructor(public session: Session, public client: Client, fb: FormBuilder, private zone: NgZone) {
 
     this.form = fb.group({
       username: ['', Validators.required],

@@ -14,6 +14,8 @@ import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 import { REASONS } from '../../../services/list-options';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
 
 /* tslint:disable */
 @Directive({
@@ -38,6 +40,7 @@ describe('ReportCreatorComponent', () => {
       declarations: [ MaterialMock, MdlRadioMock, MaterialSwitchMock, AbbrPipe, ReportCreatorComponent ], // declare the test component
       imports: [ FormsModule ],
       providers: [
+        { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock }
       ]

@@ -51,7 +51,7 @@
       <div class="minds-purchase-recurring-option">
         <input type="checkbox" name="recurring" [(ngModel)]="recurring">
         <label class="mdl-color-text--blue-grey-600" (click)="recurring = !recurring">
-          <!-- i18n: @@WALLET__PURCHASE__RECURRING_10PCT_LABEL -->Repeat this transaction every month and get <b>10%</b> more points<!-- /i18n -->
+          <ng-container i18n="@@WALLET__PURCHASE__RECURRING_10PCT_LABEL">Repeat this transaction every month and get <b>10%</b> more points</ng-container>
         </label>
 
         <span class="minds-purchase-recurring-cancel mdl-color-text--blue-grey-300" *ngIf="subscription" (click)="cancelSubscription()" i18n="@@WALLET__PURCHASE__CANCEL_RECURRING_ACTION">Cancel recurring (<i>$</i>{{subscription.price}})</span>
@@ -73,7 +73,7 @@
 
     <div class="mdl-card mdl-shadow--2dp minds-purchase-card" [hidden]="!inProgress">
       <div class="mdl-card__supporting-text">
-        <!-- i18n: @@M__COMMON__PLEASE_WAIT -->Please wait...<!-- /i18n -->
+        <ng-container i18n="@@M__COMMON__PLEASE_WAIT">Please wait...</ng-container>
       </div>
       <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
     </div>

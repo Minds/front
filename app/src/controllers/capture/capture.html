@@ -13,7 +13,7 @@
       <div class="mdl-card m-albums-selector" #toggle>
         <div class="mdl-card__title">
           <h2 class="mdl-card__title-text">
-            <!-- i18n: @@MINDS__CAPTURE__ALBUM_LABEL -->Album<!-- /i18n -->
+            <ng-container i18n="@@MINDS__CAPTURE__ALBUM_LABEL">Album</ng-container>
           </h2>
           <button class="mdl-button mdl-button--fab mdl-button--colored m-album-add" (click)="toggle.value = !toggle.value">
             <i class="material-icons">add</i>

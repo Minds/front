@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Storage } from '../../../services/storage';
 import { Sidebar } from '../../../services/ui/sidebar';
 import { NotificationService } from '../../../modules/notifications/notification.service';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -13,11 +13,10 @@ import { SessionFactory } from '../../../services/session';
 
 export class TopbarComponent {
 
-  session = SessionFactory.build();
   notifications: any[] = [];
   minds = window.Minds;
 
-  constructor(public storage: Storage, public sidebar: Sidebar, public notification: NotificationService) {
+  constructor(public session: Session, public storage: Storage, public sidebar: Sidebar, public notification: NotificationService) {
   }
 
   ngOnInit() {

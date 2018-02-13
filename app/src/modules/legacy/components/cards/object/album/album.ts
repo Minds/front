@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Client } from '../../../../../../services/api';
-import { SessionFactory } from '../../../../../../services/session';
+import { Session } from '../../../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -16,10 +16,9 @@ import { SessionFactory } from '../../../../../../services/session';
 export class AlbumCard {
 
   entity: any;
-  session = SessionFactory.build();
   minds: {};
 
-  constructor(public client: Client) {
+  constructor(public session: Session, public client: Client) {
     this.minds = window.Minds;
   }
 

@@ -3,7 +3,7 @@ import { Component, Injector, ViewChild } from '@angular/core';
 import { SocketsService } from '../../services/sockets';
 import { Storage } from '../../services/storage';
 import { Client } from '../../services/api';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 
 import { MessengerConversationDockpanesService } from './dockpanes/dockpanes.component';
 import { MessengerEncryptionService } from './encryption/encryption.service';
@@ -21,7 +21,6 @@ import { MessengerSetupChat } from './setup/setup.component';
 
 export class Messenger {
 
-  session = SessionFactory.build();
   encryption = this.injector.get(MessengerEncryptionService);
   sounds = new MessengerSounds();
 
@@ -34,6 +33,7 @@ export class Messenger {
   @ViewChild('setupChat') setupChat: MessengerSetupChat;
 
   constructor(
+    public session: Session,
     public client: Client,
     public sockets: SocketsService,
     private injector: Injector

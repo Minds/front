@@ -2,8 +2,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
-
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -16,7 +15,6 @@ export class FbRegisterForm {
 
   minds = window.Minds;
 
-  session = SessionFactory.build();
   errorMessage: string = '';
 
   inProgress: boolean = false;
@@ -26,7 +24,7 @@ export class FbRegisterForm {
 
   done: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, fb: FormBuilder) {
+  constructor(public session: Session, public client: Client, fb: FormBuilder) {
     this.form = fb.group({
       username: [this.session.getLoggedInUser().username, Validators.required]
     });

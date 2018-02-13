@@ -13,12 +13,12 @@ import { ScrollService } from '../../../services/ux/scroll';
       [hidden]="inProgress || !moreData"
       (click)="manualLoad()"
       *ngIf="!hideManual">
-      <!-- i18n: @@COMMON__INFINITE_SCROLL__LOAD_MORE -->Click to load more<!-- /i18n -->
+      <ng-container i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE">Click to load more</ng-container>
     </div>
     <div class="m-infinite-scroll-manual mdl-color--blue-grey-200 mdl-color-text--blue-grey-500"
       [hidden]="moreData"
       *ngIf="!hideManual">
-      <!-- i18n: @@COMMON__INFINITE_SCROLL__NOTHING_MORE -->Nothing more to load<!-- /i18n -->
+      <ng-container i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE">Nothing more to load</ng-container>
     </div>
   `
 })

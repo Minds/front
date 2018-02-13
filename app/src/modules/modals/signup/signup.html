@@ -8,7 +8,7 @@
     <div *ngIf="display == 'initial'">
 
         <div class="m-signup-modal-feature-text mdl-card__supporting-text">
-        <!-- i18n: @@MODALS__SIGNUP__SUBTITLE -->An open-source, community-owned <b>social network</b> providing tools for revenue, reach, privacy and Internet freedom. <!-- /i18n -->
+        <ng-container i18n="@@MODALS__SIGNUP__SUBTITLE">An open-source, community-owned <b>social network</b> providing tools for revenue, reach, privacy and Internet freedom. </ng-container>
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
@@ -19,13 +19,13 @@
             </svg>
             </span>
             <span class="m-signup-button-text">
-            <!-- i18n: @@MODALS__SIGNUP__WITH_FACEBOOK -->Signin with Facebook<!-- /i18n -->
+            <ng-container i18n="@@MODALS__SIGNUP__WITH_FACEBOOK">Signin with Facebook</ng-container>
             </span>
         </button>
         <button class="mdl-color--amber" (click)="do('register')">
             <span class="m-signup-bulb-icon m-wiggle-animation"><img src="{{minds.cdn_assets_url}}assets/icon.png"></span>
             <span class="m-signup-button-text">
-            <!-- i18n: @@MODALS__SIGNUP__WITH_MINDS -->Signin with Minds<!-- /i18n -->
+            <ng-container i18n="@@MODALS__SIGNUP__WITH_MINDS">Signin with Minds</ng-container>
             </span>
         </button>
         </div>

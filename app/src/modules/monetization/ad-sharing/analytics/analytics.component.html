@@ -1,18 +1,18 @@
 <div class="m-ad-sharing-analytics-component">
   <div class="m-monetization-other" *ngIf="username">
-    <!-- i18n: @@MONETIZATION__AD_SHARING__ANALYTICS__USERNAME_TITLE -->Ads information for @{{username}}<!-- /i18n -->
+    <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__USERNAME_TITLE">Ads information for @{{username}}</ng-container>
   </div>
 
   <div class="mdl-grid m-monetization-cta-wrapper" *ngIf="!username && isMerchant && false">
     <div class="mdl-cell mdl-cell--9-col m-monetization-cta m-monetization-cta--left">
         <span class="m-note" *ngIf="!payoutRequestInProgress && !isPayoutInProgress() && canPayout()">
-          <!-- i18n: @@MONETIZATION__AD_SHARING__ANALYTICS__REQUEST_PAYMENT_LABEL -->Clicking the <i>Request Payment</i> button will send {{ payouts.amount | currency:'USD':true }} for review by the Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.<!-- /i18n -->
+          <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__REQUEST_PAYMENT_LABEL">Clicking the <i>Request Payment</i> button will send {{ payouts.amount | currency:'USD':true }} for review by the Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.</ng-container>
         </span>
         <span class="m-note" *ngIf="!payoutRequestInProgress && !isPayoutInProgress() && !canPayout()">
-          <!-- i18n: @@MONETIZATION__AD_SHARING__ANALYTICS__NO_PAYOUT_LABEL -->You don't have enough available revenue in order to request a payment.<!-- /i18n -->
+          <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__NO_PAYOUT_LABEL">You don't have enough available revenue in order to request a payment.</ng-container>
         </span>
         <span class="m-note" *ngIf="!payoutRequestInProgress && isPayoutInProgress()">
-          <!-- i18n: @@MONETIZATION__AD_SHARING__ANALYTICS__PAYOUT_UNDER_REVIEW_LABEL -->Your payment request for {{ payouts.amount | currency:'USD':true }} is currently under review by Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.<!-- /i18n -->
+          <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__PAYOUT_UNDER_REVIEW_LABEL">Your payment request for {{ payouts.amount | currency:'USD':true }} is currently under review by Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.</ng-container>
         </span>
     </div>
 
@@ -67,7 +67,7 @@
           <div for="payouts-card-title"
             *ngIf="payouts.dates.start && payouts.dates.end"
             class="m-monetization--overview-period-tip" [mdl]>
-            <!-- i18n: @@MONETIZATION__AD_SHARING__ANALYTICS__DATE_RANGE_CARD_TITLE -->{{ payouts.dates.start * 1000 | date:'mediumDate' }} to {{ payouts.dates.end * 1000 | date:'mediumDate' }}<!-- /i18n -->
+            <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DATE_RANGE_CARD_TITLE">{{ payouts.dates.start * 1000 | date:'mediumDate' }} to {{ payouts.dates.end * 1000 | date:'mediumDate' }}</ng-container>
           </div>
           <div class="m-value">
             {{ payouts.amount | currency:'USD':true }}
@@ -82,13 +82,13 @@
   </div>
 
   <div class="m-monetization--other" *ngIf="loaded && !hasBreakdown()">
-    <!-- i18n: @@MONETIZATION__AD_SHARING__ANALYTICS__DETAILS_NOT_AVAILABLE -->Details are not yet available. Please, try again tomorrow.<!-- /i18n -->
+    <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DETAILS_NOT_AVAILABLE">Details are not yet available. Please, try again tomorrow.</ng-container>
   </div>
 
   <div class="m-monetization--other" *ngIf="listLoaded">
-    <!-- i18n: @@MONETIZATION__AD_SHARING__ANALYTICS__ADS_REVENUE_TITLE -->Ads revenue<!-- /i18n -->
+    <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__ADS_REVENUE_TITLE">Ads revenue</ng-container>
     <span *ngIf="hasBreakdown()">
-      <!-- i18n: @@MONETIZATION__AD_SHARING__ANALYTICS__DATE_RANGE_FROM_TITLE -->from {{ breakdown.dates.start * 1000 | date:'mediumDate' }} to {{ breakdown.dates.end * 1000 | date:'mediumDate' }} - {{breakdown.period}} days<!-- /i18n -->
+      <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DATE_RANGE_FROM_TITLE">from {{ breakdown.dates.start * 1000 | date:'mediumDate' }} to {{ breakdown.dates.end * 1000 | date:'mediumDate' }} - {{breakdown.period}} days</ng-container>
     </span>
   </div>
 

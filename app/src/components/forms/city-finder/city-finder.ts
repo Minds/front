@@ -1,7 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 
 import { Client, Upload } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -12,7 +12,6 @@ import { SessionFactory } from '../../../services/session';
 
 export class CityFinderForm {
 
-  session = SessionFactory.build();
   error: string = '';
   inProgress: boolean = false;
 
@@ -23,7 +22,7 @@ export class CityFinderForm {
 
   searching;
 
-  constructor(public client: Client, public upload: Upload) {
+  constructor(public session: Session, public client: Client, public upload: Upload) {
 
   }
 

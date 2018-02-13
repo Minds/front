@@ -49,11 +49,11 @@
   </div>
 </div>
 
-<m-modal [open]="embedModalOpen" (closed)="embedModalClose($event)" *ngIf="embedCode">
+<m-modal [open]="embedModalOpen" (closed)="embedModalClose()" *ngIf="embedCode">
 
   <div class="m-modal-share-embed m-modal-share-embed--first">
     <span class="m-modal-share-embed__label mdl-color-text--blue-grey-300">
-      <!-- i18n: @@M__COMMON__EMBED_INTO_WEBSITE -->Embed into your website:<!-- /i18n -->
+      <ng-container i18n="@@M__COMMON__EMBED_INTO_WEBSITE">Embed into your website:</ng-container>
     </span>
     <div>
       <textarea (click)="copy($event)" readonly>{{ embedCode }}</textarea>

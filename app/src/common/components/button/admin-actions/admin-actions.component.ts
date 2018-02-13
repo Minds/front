@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 
 @Component({
@@ -12,11 +12,9 @@ export class AdminActionsButtonComponent {
 
   @Input() object: any;
 
-  session = SessionFactory.build();
-
   open: boolean = false;
 
-  constructor(public client: Client) { }
+  constructor(public session: Session, public client: Client) { }
 
   isSpam() {
     if (typeof this.object['spam'] !== 'undefined') {

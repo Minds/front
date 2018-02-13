@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WireRewardsTiers, WireRewardsType } from '../../../interfaces/wire.interfaces';
-import { Session, SessionFactory } from '../../../../../services/session';
+import { Session } from '../../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -27,11 +27,7 @@ export class WireConsoleRewardsInputsComponent {
 
   editing: boolean = false;
 
-  private session: Session;
-
-  constructor() {
-    this.session = SessionFactory.build();
-  }
+  constructor(private session: Session) { }
 
   addTier() {
     this.rewards.push({

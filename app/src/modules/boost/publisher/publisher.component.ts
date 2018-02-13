@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Client } from '../../../services/api/client';
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { BoostConsoleFilter } from '../console/console.component';
 
 @Component({
@@ -12,8 +12,6 @@ export class BoostPublisherComponent {
   _filter: BoostConsoleFilter;
 
   minds: Minds = window.Minds;
-
-  session: Session = SessionFactory.build();
 
   startDate: string;
   inProgress: boolean = false;
@@ -37,7 +35,7 @@ export class BoostPublisherComponent {
     }
   }
 
-  constructor(private client: Client) {
+  constructor(public session: Session, private client: Client) {
     const d = new Date();
     d.setMonth(d.getMonth() - 1);
     this.startDate = d.toISOString();

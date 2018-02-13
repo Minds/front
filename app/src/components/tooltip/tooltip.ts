@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'minds-tooltip',
@@ -12,5 +12,5 @@ import { Component } from '@angular/core';
   `
 })
 export class MindsTooltip {
-
+  @Input() properties: any = {};
 }

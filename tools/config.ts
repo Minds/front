@@ -119,8 +119,8 @@ export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependenci
   // { src: 'angular2/bundles/angular2-polyfills.min.js', inject: 'libs' },
   { src: 'socket.io-client/dist/socket.io.js', inject: 'libs' },
   // { src: 'angular2/es6/dev/src/testing/shims_for_IE.js', inject: 'shims' },
-  { src: 'intl/dist/Intl.min.js', inject: 'shims' },
-  { src: 'intl/locale-data/jsonp/en.js', inject: 'shims' },
+  // { src: 'intl/dist/Intl.min.js', inject: 'shims' },
+  // { src: 'intl/locale-data/jsonp/en.js', inject: 'shims' },
 ]);
 
 // Declare local files that needs to be injected
@@ -133,8 +133,8 @@ export const DEV_DEPENDENCIES = DEV_NPM_DEPENDENCIES.concat(APP_ASSETS);
 export const PROD_DEPENDENCIES = PROD_NPM_DEPENDENCIES.concat(APP_ASSETS);
 
 export const AUTOPREFIXER_BROWSERS = [
-  'ie >= 10',
-  'ie_mob >= 10',
+  'ie >= 11',
+  'ie_mob >= 11',
   'ff >= 30',
   'chrome >= 34',
   'safari >= 7',

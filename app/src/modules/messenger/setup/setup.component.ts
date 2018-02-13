@@ -2,7 +2,6 @@ import { Component, Injector } from '@angular/core';
 
 import { MessengerEncryptionService } from '../encryption/encryption.service';
 import { animations } from '../animations';
-import { SessionFactory } from '../../../services/session';
 
 @Component({
   moduleId: module.id,

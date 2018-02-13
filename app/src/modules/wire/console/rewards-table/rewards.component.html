@@ -14,11 +14,11 @@
     [hidden]="rewardsSaved"
     (click)="saveRewards()"
   >
-    <!-- i18n: @@M__ACTION__SAVE -->Save<!-- /i18n -->
+    <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
   </button>
   <button class="mdl-button mdl-button--colored"
     [hidden]="!rewardsSaved"
   >
-    <!-- i18n: @@M__COMMON__SAVED -->Saved<!-- /i18n -->
+    <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
   </button>
 </div>

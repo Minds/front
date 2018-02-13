@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -12,8 +12,6 @@ import { SessionFactory } from '../../../services/session';
 
 export class ChannelSupporters {
 
-  session = SessionFactory.build();
-
   guid: string;
   users: Array<any> = [];
 
@@ -21,7 +19,7 @@ export class ChannelSupporters {
   moreData: boolean = true;
   inProgress: boolean = false;
 
-  constructor(public client: Client) {
+  constructor(public session: Session, public client: Client) {
   }
 
   set channel(value: any) {

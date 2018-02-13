@@ -1,7 +1,7 @@
 import { Component, ElementRef, ChangeDetectorRef, EventEmitter, Renderer, ViewChild, Injector } from '@angular/core';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { SocketsService } from '../../../services/sockets';
 
@@ -23,7 +23,6 @@ import { MessengerSounds } from '../sounds/service';
 
 export class MessengerConversation {
   minds: Minds = window.Minds;
-  session = SessionFactory.build();
 
   encryption = this.injector.get(MessengerEncryptionService);
   dockpanes = this.injector.get(MessengerConversationDockpanesService);
@@ -67,6 +66,7 @@ export class MessengerConversation {
   invited: boolean = false;
 
   constructor(
+    public session: Session,
     public client: Client,
     public sockets: SocketsService,
     public cd: ChangeDetectorRef,

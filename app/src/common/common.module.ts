@@ -57,6 +57,8 @@ import { AnnouncementComponent } from './components/announcements/announcement.c
 import { MindsTokenSymbolComponent } from './components/cypto/token-symbol.component';
 import { PhoneInputComponent } from './components/phone-input/phone-input.component';
 import { PhoneInputCountryComponent } from './components/phone-input/country.component';
+import { Session } from '../services/session';
+import { Client, Upload } from '../services/api';
 
 @NgModule({
   imports: [
@@ -182,7 +184,11 @@ import { PhoneInputCountryComponent } from './components/phone-input/country.com
     PhoneInputComponent,
   ],
   providers: [
-    AttachmentService
+    {
+      provide: AttachmentService,
+      useFactory: AttachmentService._,
+      deps: [Session, Client, Upload]
+    }
   ],
 })
 

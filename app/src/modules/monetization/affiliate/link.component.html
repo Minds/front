@@ -12,13 +12,13 @@
 
     <div class="m-affiliate--link-buttons">
       <button class="mdl-button mdl-button--raised mdl-color-text--white m-affiliate--link-buttons-fb" (click)="openWindow('https://www.facebook.com/sharer/sharer.php?u=' + encodedLink + '&display=popup&ref=plugin&src=share_button')">
-        <!-- i18n: @@M__NAMES__FACEBOOK -->Facebook<!-- /i18n -->
+        <ng-container i18n="@@M__NAMES__FACEBOOK">Facebook</ng-container>
       </button>
       <button class="mdl-button mdl-button--raised mdl-color-text--white m-affiliate--link-buttons-twitter" (click)="openWindow('https://twitter.com/intent/tweet?text=Join%20me%20on%20Minds&tw_p=tweetbutton&url=' + encodedLink)">
-        <!-- i18n: @@M__NAMES__TWITTER -->Twitter<!-- /i18n -->
+        <ng-container i18n="@@M__NAMES__TWITTER">Twitter</ng-container>
       </button>
       <button class="mdl-button mdl-button--raised mdl-color-text--white m-affiliate--link-buttons-email" (click)="openEmail()">
-        <!-- i18n: @@M__COMMON__EMAIL -->Email<!-- /i18n -->
+        <ng-container i18n="@@M__COMMON__EMAIL">Email</ng-container>
       </button>
     </div>
   </div>

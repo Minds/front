@@ -39,7 +39,7 @@
 
     <div class="mdl-cell mdl-cell--6-col" *ngIf="isCountry(['CA', 'HK', 'SG'])">
       <label>
-        <!-- i18n: @@MONETIZATION__ONBOARDING__PERSONAL_ID_LABEL -->Personal ID<!-- /i18n -->
+        <ng-container i18n="@@MONETIZATION__ONBOARDING__PERSONAL_ID_LABEL">Personal ID</ng-container>
 
         <m-tooltip *ngIf="isCountry(['CA'])" icon="help" style="vertical-align: middle;" i18n="@@MONETIZATION__ONBOARDING__CA_PERSONAL_ID_TOOLTIP">
             Social Insurance Number (SIN).
@@ -91,7 +91,7 @@
   <div class="m-merchant-legal mdl-color--grey-50 mdl-color-text--grey-600">
     <p>
       <input formControlName="stripeAgree" type="checkbox" value="1">
-      <!-- i18n: @@MONETIZATION__ONBOARDING__AGREE_TERMS_LABEL -->I have read and agree to the <a routerLink="/monetization">Monetization Terms & Conditions</a>.<!-- /i18n -->
+      <ng-container i18n="@@MONETIZATION__ONBOARDING__AGREE_TERMS_LABEL">I have read and agree to the <a routerLink="/monetization">Monetization Terms & Conditions</a>.</ng-container>
     </p>
   </div>
 

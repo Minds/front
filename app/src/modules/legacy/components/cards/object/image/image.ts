@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Client } from '../../../../../../services/api';
-import { SessionFactory } from '../../../../../../services/session';
+import { Session } from '../../../../../../services/session';
 import { AttachmentService } from '../../../../../../services/attachment';
 
 @Component({
@@ -17,10 +17,9 @@ import { AttachmentService } from '../../../../../../services/attachment';
 export class ImageCard {
 
   entity: any;
-  session = SessionFactory.build();
   minds: {};
 
-  constructor(public client: Client, public attachment: AttachmentService) {
+  constructor(public session: Session, public client: Client, public attachment: AttachmentService) {
     this.minds = window.Minds;
   }
 

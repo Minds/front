@@ -157,5 +157,9 @@ export class NewsfeedSubscribedComponent {
     return true;
   }
 
+  onViewed(e?) {
+    // TODO: TBD
+  }
+
 }
 

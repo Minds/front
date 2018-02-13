@@ -26,6 +26,8 @@ import { transactionOverlayServiceMock } from '../../../../tests/transaction-ove
 import { TooltipComponent } from '../../../common/components/tooltip/tooltip.component';
 import { AddressExcerptPipe } from '../../../common/pipes/address-excerpt';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -170,6 +172,7 @@ describe('WireCreatorComponent', () => {
       ], // declare the test component
       imports: [ FormsModule, RouterTestingModule ],
       providers: [
+        { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: WireContractService, useValue: wireContractServiceMock },
         WireService,

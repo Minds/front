@@ -102,7 +102,7 @@
     <ng-container *ngIf="boost.type && (boost.type != 'p2p')">
       <section class="m-boost--creator-section m-boost--creator-section-priority">
         <h3>
-          <!-- i18n: @@BOOST__CREATOR__PRIORITY_TITLE -->Priority<!-- /i18n -->
+          <ng-container i18n="@@BOOST__CREATOR__PRIORITY_TITLE">Priority</ng-container>
           <span class="m-boost--creator-section--title-context" i18n="@@BOOST__CREATOR__PRIORITY_TITLE_CTX">
             Priority content goes to the front of the line, but costs at least twice the price of a regular boost.
           </span>
@@ -126,7 +126,7 @@
 
       <section class="m-boost--creator-section m-boost--creator-section-categories" *ngIf="false">
         <h3>
-          <!-- i18n: @@BOOST__CREATOR__TARGET_TITLE -->Target<!-- /i18n -->
+          <ng-container i18n="@@BOOST__CREATOR__TARGET_TITLE">Target</ng-container>
           <span class="m-boost--creator-section--title-context" i18n="@@BOOST__CREATOR__CATEGORIES_TARGET_TITLE_CTX">
             Select the categories which you want your boost to be targeted to ({{ rates.maxCategories }} max).
           </span>
@@ -140,7 +140,7 @@
     <ng-container *ngIf="boost.type && (boost.type == 'p2p')">
       <section class="m-boost--creator-section m-boost--creator-section-target">
         <h3>
-          <!-- i18n: @@BOOST__CREATOR__TARGET_TITLE -->Target<!-- /i18n -->
+          <ng-container i18n="@@BOOST__CREATOR__TARGET_TITLE">Target</ng-container>
           <span class="m-boost--creator-section--title-context" i18n="@@BOOST__CREATOR__TARGET_TITLE_CTX">
             Search for the channel you want to boost to.
           </span>

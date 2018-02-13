@@ -19,15 +19,15 @@
     <div class="m-messenger--dockpane-tab-ribbon" #ribbon [hidden]="!ribbon.open">
       <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="deleteHistory(); ribbon.open = false" *ngIf="showMessages">
         <i class="material-icons mdl-color-text--blue-grey-100" title="Delete chat history" i18n-title>delete</i>
-        <!-- i18n -->Destroy<!-- /i18n -->
+        <ng-container i18n>Destroy</ng-container>
       </div>
       <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="block(); ribbon.open = false" *ngIf="!blocked">
         <i class="material-icons mdl-color-text--blue-grey-100" title="Block participants" i18n-title>block</i>
-        <!-- i18n -->Block<!-- /i18n -->
+        <ng-container i18n>Block</ng-container>
       </div>
       <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="block(); ribbon.open = false" *ngIf="blocked">
         <i class="material-icons mdl-color-text--blue-grey-100" title="Un-block chat" i18n-title>restore</i>
-        <!-- i18n -->Un-block<!-- /i18n -->
+        <ng-container i18n>Un-block</ng-container>
       </div>
     </div>
 
@@ -65,13 +65,13 @@
           <div
             class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
             *ngIf="message.subtype == 'call_ended'">
-            <!-- i18n -->Call Ended<!-- /i18n -->
+            <ng-container i18n>Call Ended</ng-container>
           </div>
           <!-- Call missed -->
           <div
             class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
             *ngIf="message.subtype == 'call_missed'">
-            <!-- i18n -->Missed Call<!-- /i18n -->
+            <ng-container i18n>Missed Call</ng-container>
           </div>
           <img [src]="minds.cdn_url + 'icon/' + message.owner.guid + '/small'"
             *ngIf="message.owner.guid != session.getLoggedInUser().guid"

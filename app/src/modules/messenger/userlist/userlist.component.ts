@@ -4,7 +4,7 @@ import { SocketsService } from '../../../services/sockets';
 
 import { Storage } from '../../../services/storage';
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.component';
 import { MessengerEncryptionService } from '../encryption/encryption.service';
@@ -19,7 +19,6 @@ import { MessengerEncryption } from '../encryption/encryption.component';
 
 export class MessengerUserlist {
 
-  session = SessionFactory.build();
   encryption = this.injector.get(MessengerEncryptionService);
   sounds = new MessengerSounds();
 
@@ -43,7 +42,7 @@ export class MessengerUserlist {
 
   search_timeout;
 
-  constructor(public client: Client, public sockets: SocketsService, private injector: Injector) {
+  constructor(public session: Session, public client: Client, public sockets: SocketsService, private injector: Injector) {
   }
 
   ngOnInit() {

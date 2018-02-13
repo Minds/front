@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { WalletService } from '../../../../services/wallet';
 import { SignupModalService } from '../../../../modules/modals/signup/service';
@@ -25,10 +25,9 @@ export class ThumbsUpButton {
     'owner_guid': null,
     'thumbs:up:user_guids': []
   };
-  session = SessionFactory.build();
   showModal: boolean = false;
 
-  constructor(public client: Client, public wallet: WalletService, private modal: SignupModalService) {
+  constructor(public session: Session, public client: Client, public wallet: WalletService, private modal: SignupModalService) {
   }
 
   set _object(value: any) {

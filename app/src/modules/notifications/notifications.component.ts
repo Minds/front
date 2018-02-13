@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api/client';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { NotificationService } from './notification.service';
 
 @Component({
@@ -24,13 +24,13 @@ export class NotificationsComponent {
   moreData: boolean = true;
   offset: string = '';
   inProgress: boolean = false;
-  session = SessionFactory.build();
   _filter: string = 'all';
 
   minds: any = window.Minds;
   paramsSubscription: Subscription;
 
   constructor(
+    public session: Session,
     public client: Client,
     public router: Router,
     public title: MindsTitle,

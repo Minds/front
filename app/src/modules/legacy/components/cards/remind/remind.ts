@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
-import { SessionFactory } from '../../../../../services/session';
+import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
 
 @Component({
@@ -18,7 +18,6 @@ export class Remind {
 
   activity: any;
   hideTabs: boolean;
-  session = SessionFactory.build();
 
   events: EventEmitter<any>;
   eventsSubscription: any;
@@ -28,8 +27,13 @@ export class Remind {
   showBoostOptions: boolean = false;
   translateToggle: any;
   translateEvent: EventEmitter<any> = new EventEmitter();
+  childEventsEmitter: EventEmitter<any> = new EventEmitter();
+  isTranslatable: boolean = false;
+  menuOptions: any = [];
+  canDelete: boolean = false;
 
   constructor(
+    public session: Session,
     public client: Client,
     public attachment: AttachmentService,
     private changeDetectorRef: ChangeDetectorRef
@@ -76,4 +80,16 @@ export class Remind {
   propagateTranslation(e?) {
     return;
   }
+
+  save() { /* NOOP */ }
+
+  openComments() { /* NOOP */ }
+
+  showBoost() { /* NOOP */ }
+
+  showWire() { /* NOOP */ }
+
+  togglePin() { /* NOOP */ }
+
+  menuOptionSelected(e) { /* NOOP */ }
 }

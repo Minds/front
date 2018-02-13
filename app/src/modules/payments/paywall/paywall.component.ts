@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output, ChangeDetectorRef, ChangeDetect
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -22,13 +22,12 @@ export class PayWall {
   amount: number;
   nonce: string = '';
   showSignupModal: boolean = false;
-  session = SessionFactory.build();
 
   @Output('entityChange') update: EventEmitter<any> = new EventEmitter;
 
   @Input() entity;
 
-  constructor(public client: Client, public cd: ChangeDetectorRef) {
+  constructor(public session: Session, public client: Client, public cd: ChangeDetectorRef) {
   }
 
   checkout() {

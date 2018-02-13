@@ -1,7 +1,7 @@
 import { Component, ElementRef, ChangeDetectorRef, EventEmitter, Injector } from '@angular/core';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
@@ -16,13 +16,12 @@ import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.se
 export class MessengerChannelButton {
 
   minds: Minds = window.Minds;
-  session = SessionFactory.build();
 
   user: any;
 
   dockpanes = this.injector.get(MessengerConversationDockpanesService);
 
-  constructor(public client: Client, private injector: Injector) {
+  constructor(public session: Session, public client: Client, private injector: Injector) {
   }
 
   chat() {

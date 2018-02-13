@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 import { Client, Upload } from '../../../../../services/api';
-import { SessionFactory } from '../../../../../services/session';
+import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 
@@ -22,7 +22,7 @@ import { ReportCreatorComponent } from '../../../../report/creator/creator.compo
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [Client, Upload]
+      deps: [Session, Client, Upload]
     }
   ]
 })
@@ -32,7 +32,6 @@ export class CommentCard {
   comment: any;
   editing: boolean = false;
   minds = window.Minds;
-  session = SessionFactory.build();
 
   canPost: boolean = true;
   triedToPost: boolean = false;
@@ -59,6 +58,7 @@ export class CommentCard {
 
 
   constructor(
+    public session: Session,
     public client: Client,
     public attachment: AttachmentService,
     public translationService: TranslationService,

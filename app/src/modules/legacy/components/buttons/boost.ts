@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { WalletService } from '../../../../services/wallet';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
@@ -13,7 +13,7 @@ import { BoostCreatorComponent } from '../../../boost/creator/creator.component'
   template: `
     <button class="m-btn m-btn--action m-btn--slim"
       (click)="boost()">
-    <!-- i18n: verb|@@M__ACTION__BOOST -->Boost<!-- /i18n -->
+    <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
     </button>
   `
 })
@@ -23,10 +23,9 @@ export class BoostButton {
   object = {
     'guid': null
   };
-  session = SessionFactory.build();
   showModal: boolean = false;
 
-  constructor(private overlayModal: OverlayModalService) {
+  constructor(public session: Session, private overlayModal: OverlayModalService) {
   }
 
   boost() {

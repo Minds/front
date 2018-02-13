@@ -43,7 +43,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: SocketsService,
      useFactory: SocketsService._,
-     deps: [ NgZone ]
+     deps: [ Session, NgZone ]
    },
    {
      provide: Client,
@@ -107,12 +107,12 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: WalletService,
      useFactory: WalletService._,
-     deps: [ Client, SocketsService ]
+     deps: [ Session, Client, SocketsService ]
    },
    {
      provide: AttachmentService,
      useFactory: AttachmentService._,
-     deps: [ Client, Upload ]
+     deps: [ Session, Client, Upload ]
    },
    {
      provide: Sidebar,
@@ -143,7 +143,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: LoginReferrerService,
      useFactory: LoginReferrerService._,
-     deps: [ Router ]
+     deps: [ Session, Router ]
    },
    {
      provide: ScrollToTopService,
@@ -168,7 +168,7 @@ export const MINDS_PROVIDERS : any[] = [
   {
     provide: FeaturesService,
     useFactory: FeaturesService._,
-    deps: [ Router ]
+    deps: [ Session, Router ]
   },
   {
     provide: BlockchainService,

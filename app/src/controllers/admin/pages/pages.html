@@ -13,12 +13,12 @@
       <ul class="m-content-sidebar-nav">
           <li class="m-content-sidebar-nav-item">
             <a (click)="newPage()" [ngClass]="{'is-active': !page.path && page.subtype !== 'link' }">
-              <!-- i18n: @@MINDS__ADMIN__PAGES__ADD_PAGE -->Add a new page<!-- /i18n -->
+              <ng-container i18n="@@MINDS__ADMIN__PAGES__ADD_PAGE">Add a new page</ng-container>
             </a>
           </li>
           <li class="m-content-sidebar-nav-item">
             <a (click)="newLink()">
-              <!-- i18n: @@MINDS__ADMIN__PAGES__ADD_LINK -->Add a new link<!-- /i18n -->
+              <ng-container i18n="@@MINDS__ADMIN__PAGES__ADD_LINK">Add a new link</ng-container>
             </a>
           </li>
           <li class="m-content-sidebar-nav-item" *ngFor="let p of pages">

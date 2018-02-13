@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-modal-signup-on-action',
@@ -15,9 +15,10 @@ export class SignupOnActionModal {
 
   open: boolean = false;
   action: string = '';
-  session = SessionFactory.build();
   closed: EventEmitter<any> = new EventEmitter();
   minds = window.Minds;
+
+  constructor(public session: Session) { }
 
   close() {
     this.open = false;

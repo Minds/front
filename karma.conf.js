@@ -33,8 +33,7 @@ module.exports = function (config) {
     exclude: [
       'tools',
       'aot',
-      './app/bootstrap-aot.ts',
-      './app/bootstrap-embed-aot.ts'
+      './app/bootstrap*-aot.ts'
     ],
 
     // preprocess matching files before serving them to the browser
@@ -102,6 +101,6 @@ module.exports = function (config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
+    singleRun: false
   })
 };

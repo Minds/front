@@ -181,7 +181,7 @@
     *ngIf ="session.getLoggedInUser().guid == activity.owner_guid"
     id="boost-actions"
     (click)="showBoost()">
-    <!-- i18n: verb|@@M__ACTION__BOOST -->Boost<!-- /i18n -->
+    <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
   </a>
 </div>
 

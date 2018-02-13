@@ -63,25 +63,25 @@
   [open]="true"
   [closeAfterAction]=true
   (closed)="deleteToggle = false"
-  (actioned)="delete($event)"
+  (actioned)="delete()"
   yesButton="Delete permanently"
   i18n-yesButton="@@M__COMMON__DELETE_PERMANENTLY"
 >
   <p confirm-message>
-    <!-- i18n: @@COMMON__POST_MENU__DELETE_MODAL_MESSAGE -->Are you sure you want to delete this post? There's no UNDO.<!-- /i18n -->
+    <ng-container i18n="@@COMMON__POST_MENU__DELETE_MODAL_MESSAGE">Are you sure you want to delete this post? There's no UNDO.</ng-container>
     <span *ngIf="entity.entity_guid && (entity.custom_type == 'batch' || entity.custom_type == 'video')">
       <br><br>
       <b i18n="@@COMMON__POST_MENU__DELETE_MODAL_ATTACHMENT_MESSAGE">This action will also delete the attached media from your gallery.</b>
     </span>
   </p>
   <p confirm-success-message>
-    <!-- i18n: @@COMMON__POST_MENU__DELETE_CONFIRMATION_MESSAGE -->The post has been deleted.<!-- /i18n -->
+    <ng-container i18n="@@COMMON__POST_MENU__DELETE_CONFIRMATION_MESSAGE">The post has been deleted.</ng-container>
   </p>
 </m-modal-confirm>
 
-<m-modal [open]="true" (closed)="onModalClose($event)" *ngIf="featureToggle">
+<m-modal [open]="true" (closed)="onModalClose()" *ngIf="featureToggle">
   <div class="m-button-feature-modal">
-    <select [(ngModel)]="category">
+    <select [(ngModel)]="featuredCategory">
       <option value="not-selected">-- SELECT A CATEGORY --</option>
       <option *ngFor="let category of categories" [value]="category.id">{{category.label}}</option>
     </select>

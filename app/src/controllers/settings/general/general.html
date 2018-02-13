@@ -11,13 +11,13 @@
       (click)="save()"
       style="float:right"
       >
-      <!-- i18n: @@M__ACTION__SAVE -->Save<!-- /i18n -->
+      <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
     </button>
     <button class="mdl-button mdl-button--colored"
       [hidden]="!saved"
       style="float:right"
       >
-      <!-- i18n: @@M__COMMON__SAVED -->Saved<!-- /i18n -->
+      <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
     </button>
   </div>
   <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" [hidden]="!inProgress"></div>
@@ -106,7 +106,7 @@
       />
       <i class="material-icons m-material-icons-inline mdl-color-text--red-500">explicit</i>
       <label for="flag_mature">
-          <!-- i18n: @@MINDS__SETTINGS__MATURE_CONTENT_LABEL -->Always show mature content (18+)<!-- /i18n -->
+          <ng-container i18n="@@MINDS__SETTINGS__MATURE_CONTENT_LABEL">Always show mature content (18+)</ng-container>
       </label>
   </div>
 
@@ -136,7 +136,7 @@
       />
       <i class="material-icons m-material-icons-inline mdl-color-text--red-500">email</i>
       <label for="flag_mature">
-          <!-- i18n: @@MINDS__SETTINGS__RECEIVE_EMAILS_LABEL -->Receive emails<!-- /i18n -->
+          <ng-container i18n="@@MINDS__SETTINGS__RECEIVE_EMAILS_LABEL">Receive emails</ng-container>
       </label>
   </div>
 
@@ -150,17 +150,17 @@
   </div>
   <div class="mdl-card__supporting-text" *ngIf="minds.user.signup_method == 'facebook'">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeFbLogin()" [disabled]="thirdpartynetworks.inProgress">
-      <!-- i18n: @@MINDS__SETTINGS__REVOKE_FACEBOOK_ACTION -->Revoke Facebook Login<!-- /i18n -->
+      <ng-container i18n="@@MINDS__SETTINGS__REVOKE_FACEBOOK_ACTION">Revoke Facebook Login</ng-container>
     </button>
   </div>
   <div class="mdl-card__supporting-text" *ngIf="thirdpartynetworks.isConnected('facebook')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeFb()" [disabled]="thirdpartynetworks.inProgress">
-      <!-- i18n: @@MINDS__SETTINGS__DISCONNECT_FACEBOOK_ACTION -->Disconnect from Facebook<!-- /i18n -->
+      <ng-container i18n="@@MINDS__SETTINGS__DISCONNECT_FACEBOOK_ACTION">Disconnect from Facebook</ng-container>
     </button>
   </div>
   <div class="mdl-card__supporting-text" *ngIf="!thirdpartynetworks.isConnected('facebook')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="connectFb()" [disabled]="thirdpartynetworks.inProgress">
-      <!-- i18n: @@MINDS__SETTINGS__CONNECT_FACEBOOK_ACTION -->Connect with Facebook<!-- /i18n -->
+      <ng-container i18n="@@MINDS__SETTINGS__CONNECT_FACEBOOK_ACTION">Connect with Facebook</ng-container>
     </button>
   </div>
 </div>
@@ -173,13 +173,13 @@
   </div>
   <div class="mdl-card__supporting-text" *ngIf="thirdpartynetworks.isConnected('twitter')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeTw()" [disabled]="thirdpartynetworks.inProgress">
-      <!-- i18n: @@MINDS__SETTINGS__DISCONNECT_TWITTER_ACTION -->Disconnect from Twitter<!-- /i18n -->
+      <ng-container i18n="@@MINDS__SETTINGS__DISCONNECT_TWITTER_ACTION">Disconnect from Twitter</ng-container>
     </button>
-    <!-- i18n: @@MINDS__SETTINGS__CONNECTED_AS_TWITTER_LABEL -->Connected as @{{ thirdpartynetworks.getStatusKey('twitter', 'username') }}<!-- /i18n -->
+    <ng-container i18n="@@MINDS__SETTINGS__CONNECTED_AS_TWITTER_LABEL">Connected as @{{ thirdpartynetworks.getStatusKey('twitter', 'username') }}</ng-container>
   </div>
   <div class="mdl-card__supporting-text" *ngIf="!thirdpartynetworks.isConnected('twitter')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="connectTw()" [disabled]="thirdpartynetworks.inProgress">
-      <!-- i18n: @@MINDS__SETTINGS__CONNECT_TWITTER_ACTION -->Connect with Twitter<!-- /i18n -->
+      <ng-container i18n="@@MINDS__SETTINGS__CONNECT_TWITTER_ACTION">Connect with Twitter</ng-container>
     </button>
   </div>
 </div>
@@ -193,7 +193,7 @@
   </div>
 
   <div class="mdl-card__supporting-text">
-    <!-- i18n: @@MINDS__SETTINGS__SITE_LANGUAGE_LABEL -->Site language:<!-- /i18n -->
+    <ng-container i18n="@@MINDS__SETTINGS__SITE_LANGUAGE_LABEL">Site language:</ng-container>
     <select name="language" [ngModel]="language" (ngModelChange)="language = $event; change()">
       <option value="en">English</option>
       <option value="es">Español</option>

@@ -3,7 +3,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { GroupsService } from '../../groups-service';
 
 import { Client } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { Poster } from '../../../legacy/controllers/newsfeed/poster/poster';
 
 interface MindsGroupResponse {
@@ -29,8 +29,6 @@ export class GroupsProfileFeed {
 
   filter: 'activity' | 'review' = 'activity';
 
-  session = SessionFactory.build();
-
   activity: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
@@ -47,7 +45,7 @@ export class GroupsProfileFeed {
 
   @ViewChild('poster') private poster: Poster;
 
-  constructor(public client: Client, public service: GroupsService) { }
+  constructor(public session: Session, public client: Client, public service: GroupsService) { }
 
   @Input('group') set _group(value: any) {
     this.group = value;

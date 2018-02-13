@@ -6,7 +6,7 @@
 
 <div class="m-root-other" *ngIf="!isMerchant && !remote && !inProgress && loaded && canBecomeMerchant">
   <p>
-    <!-- i18n: @@MONETIZATION__AD_SHARING__NO_MERCHANT_TITLE -->You need to be a Minds Merchant in order to apply for Ad Sharing program.<!-- /i18n -->
+    <ng-container i18n="@@MONETIZATION__AD_SHARING__NO_MERCHANT_TITLE">You need to be a Minds Merchant in order to apply for Ad Sharing program.</ng-container>
   </p>
 
   <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
@@ -16,7 +16,7 @@
 </div>
 
 <div class="m-root-other" *ngIf="!isMerchant && !remote && !inProgress && loaded && !canBecomeMerchant">
-  <!-- i18n: @@MONETIZATION__AD_SHARING__MERCHANT_NOT_ELIGIBLE -->You are not elegible to become a Merchant. Please contact us at info@minds.com<!-- /i18n -->
+  <ng-container i18n="@@MONETIZATION__AD_SHARING__MERCHANT_NOT_ELIGIBLE">You are not elegible to become a Merchant. Please contact us at info@minds.com</ng-container>
 </div>
 
 <div *ngIf="isMerchant && !remote && !inProgress && loaded && !enabled && !applied">
@@ -46,7 +46,7 @@
 
 <div class="m-root-other" *ngIf="!remote && !inProgress && loaded && !enabled && applied">
   <h2 class="m-revenue--console-product-header" i18n="@@MONETIZATION__AD_SHARING__APPLICATION_TITLE">Ad-Revenue Sharing</h2>
-  <p><!-- i18n: @@MONETIZATION__AD_SHARING__APPLICATION_UNDER_REVIEW_LABEL -->You have applied for the Minds Ad Sharing program. Your application is currently under review. This may take up to 7 days.<!-- /i18n --></p>
+  <p><ng-container i18n="@@MONETIZATION__AD_SHARING__APPLICATION_UNDER_REVIEW_LABEL">You have applied for the Minds Ad Sharing program. Your application is currently under review. This may take up to 7 days.</ng-container></p>
 </div>
 
 <div *ngIf="!remote && !inProgress && isMerchant && loaded && enabled">

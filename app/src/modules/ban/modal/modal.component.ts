@@ -1,7 +1,7 @@
 import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { REASONS } from '../../../services/list-options';
 import { MindsUser } from '../../../interfaces/entities';
 
@@ -24,7 +24,6 @@ export class BanModalComponent implements AfterViewInit {
   success: boolean = false;
   error: string = '';
   subjects = REASONS;
-  session: Session = SessionFactory.build();
 
   next: boolean = false;
 
@@ -34,6 +33,7 @@ export class BanModalComponent implements AfterViewInit {
   }
 
   constructor(
+    public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private client: Client,

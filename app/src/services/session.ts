@@ -1,7 +1,7 @@
 /**
  * Sesions
  */
-import { EventEmitter, ReflectiveInjector } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 export class Session {
 
@@ -85,22 +85,5 @@ export class Session {
     window.Minds.LoggedIn = false;
     window.localStorage.clear();
     this.loggedinEmitter.next(false);
-  }
-
-}
-
-export class SessionFactory {
-  // @todo: migrate to regular Angular DI
-  static instance;
-
-  static build() {
-    if (!SessionFactory.instance) {
-      let providers = ReflectiveInjector.resolve([Session]),
-        injector = ReflectiveInjector.fromResolvedProviders(providers);
-
-      SessionFactory.instance = injector.get(Session);
-    }
-
-    return SessionFactory.instance;
   }
 }

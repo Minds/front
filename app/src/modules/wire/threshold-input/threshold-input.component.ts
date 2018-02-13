@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnInit }
 
 import { WireThresholdStruc, WireRewardsType } from '../interfaces/wire.interfaces';
 import { WireTypeLabels } from '../wire';
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-wire-threshold-input',
@@ -34,9 +34,10 @@ export class WireThresholdInputComponent implements OnInit {
   @Output('enabledChange') enabledChangeEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   typeLabels = WireTypeLabels;
-  session: Session = SessionFactory.build();
 
   @ViewChild('minAmountInput') minAmountInput: ElementRef;
+
+  constructor(public session: Session) { }
 
   ngOnInit() {
     this.validThresholdEmitter.emit(this.validate());

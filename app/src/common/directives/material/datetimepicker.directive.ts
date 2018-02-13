@@ -3,7 +3,6 @@ import { DatePipe } from '@angular/common';
 
 @Directive({
   selector: '[mdl-datetime-picker]',
-  inputs: [ 'mdl-datetime-picker' ],
   providers: [ DatePipe ]
 })
 export class MaterialDateTimePickerDirective {
@@ -12,10 +11,9 @@ export class MaterialDateTimePickerDirective {
   private open: boolean = false;
   private picker;
 
-  constructor(private datePipe: DatePipe) {
-  }
+  constructor(public datePipe: DatePipe) { }
 
-  @HostListener('click', [ '$event.target' ])
+  @HostListener('click')
   onHostClick() {
     if (!this.open) {
       this.picker = new MaterialDatetimePicker()

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Client } from '../../services/api';
-import { Session, SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 
 @Injectable()
 export class FaqService {

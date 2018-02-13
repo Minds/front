@@ -1,6 +1,6 @@
 import { Component, Inject, Input, ChangeDetectorRef } from '@angular/core';
 import { Location } from '@angular/common';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { Client, Upload } from '../../../services/api';
 import { RecentService } from '../../../services/ux/recent';
 import { ContextService, ContextServiceResponse } from '../../../services/context.service';
@@ -17,13 +17,13 @@ export class SearchBarSuggestionsComponent {
   recent: any[];
   q: string = '';
   currentContext: ContextServiceResponse;
-  session = SessionFactory.build();
   @Input() active: boolean;
   @Input() disabled: boolean = false;
 
   private searchTimeout;
 
   constructor(
+    public session: Session,
     public client: Client,
     public location: Location,
     public recentService: RecentService,

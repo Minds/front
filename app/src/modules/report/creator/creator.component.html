@@ -86,17 +86,17 @@
 
   <div *ngIf="!inProgress && success" class="m-report-creator--success">
     <p>
-      <!-- i18n: @@M__COMMON__THANKS_LET_US_KNOW_KEEP_MINDS_SAFE -->Thanks for letting us know! We appreciate your effort to keep Minds safe and secure.<!-- /i18n -->
+      <ng-container i18n="@@M__COMMON__THANKS_LET_US_KNOW_KEEP_MINDS_SAFE">Thanks for letting us know! We appreciate your effort to keep Minds safe and secure.</ng-container>
     </p>
 
     <p>
-      <!-- i18n: @@M__COMMON__REVIEW_REPORT_ASAP -->We will review your report as soon as possible.<!-- /i18n -->
+      <ng-container i18n="@@M__COMMON__REVIEW_REPORT_ASAP">We will review your report as soon as possible.</ng-container>
     </p>
   </div>
 
   <div class="m-report-creator--close" *ngIf="success || (next && subject === 10)">
     <button class="m-report-creator--button" (click)="close()">
-    <!-- i18n: @@M__ACTION__CLOSE__CAPS -->CLOSE<!-- /i18n -->
+    <ng-container i18n="@@M__ACTION__CLOSE__CAPS">CLOSE</ng-container>
     </button>
   </div>
 

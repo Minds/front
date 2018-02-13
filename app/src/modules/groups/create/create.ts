@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { GroupsService } from '../groups-service';
 
 import { MindsTitle } from '../../../services/ux/title';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -19,7 +19,6 @@ export class GroupsCreator {
 
   minds = window.Minds;
 
-  session = SessionFactory.build();
   banner: any = false;
   avatar: any = false;
   group: any = {
@@ -36,7 +35,7 @@ export class GroupsCreator {
   editDone: boolean = false;
   inProgress: boolean = false;
 
-  constructor(public service: GroupsService, public router: Router, public title: MindsTitle) {
+  constructor(public session: Session, public service: GroupsService, public router: Router, public title: MindsTitle) {
     this.title.setTitle('Create Group');
   }
 

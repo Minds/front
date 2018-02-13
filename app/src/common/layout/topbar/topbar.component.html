@@ -17,7 +17,7 @@
   <button class="m-btn m-btn--action m-btn--slim m-btn--boost"
     [routerLink]="['/boost/console/newsfeed/history', { 'toggled':true}]"
     *ngIf="session.isLoggedIn()">
-    <!-- i18n: verb|@@M__ACTION__BOOST -->Boost<!-- /i18n -->
+    <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
   </button>
 
   <div class="m-topbar--account" *ngIf="session.isLoggedIn()" #menu>
@@ -70,7 +70,7 @@
   
 
   <button class="m-btn m-btn--action m-btn--login m-btn--slim" *ngIf="!session.isLoggedIn()" [routerLink]="['/login']">
-    <!-- i18n: @@M__ACTION__LOGIN -->Login<!-- /i18n -->
+    <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
   </button>
 </div>
 

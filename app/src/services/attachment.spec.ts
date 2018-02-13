@@ -1,9 +1,10 @@
 import { AttachmentService } from './attachment';
 import { Inject } from '@angular/core';
 import { Client, Upload } from './api';
+import { Session } from './session';
 import { clientMock } from '../../tests/client-mock.spec';
 import { uploadMock } from '../../tests/upload-mock.spec';
-import { SessionFactory } from './session';
+import { sessionMock } from '../../tests/session-mock.spec';
 
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
@@ -16,12 +17,13 @@ describe('Service: Attachment Service', () => {
     TestBed.configureTestingModule({
       declarations: [ AttachmentService ],
       providers: [
+        { provide: Session, useValue: uploadMock },
         { provide: Upload, useValue: uploadMock },
-        { provide: Client, useValue: clientMock }
+        { provide: Client, useValue: sessionMock }
       ]
     });
 
-    service = new AttachmentService(clientMock, uploadMock);
+    service = new AttachmentService(sessionMock, clientMock, uploadMock);
 
     mockObject = {
       'guid':'758019279000969217',

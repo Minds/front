@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { MindsTitle } from '../../services/ux/title';
 
 import { CommonModule } from '../../common/common.module';
@@ -37,7 +37,7 @@ import { NotificationService } from './notification.service';
     {
       provide: NotificationService,
       useFactory: NotificationService._,
-      deps: [ Client, SocketsService, MindsTitle ]
+      deps: [ Session, Client, SocketsService, MindsTitle ]
     }
   ],
   exports: [

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Renderer, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
 
 import { Client, Upload } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { SignupModalService } from '../../../../modules/modals/signup/service';
 
 import { AttachmentService } from '../../../../services/attachment';
@@ -18,7 +18,7 @@ import { Textarea } from '../../../../common/components/editors/textarea.compone
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [Client, Upload]
+      deps: [Session, Client, Upload]
     }
   ]
 })
@@ -32,7 +32,6 @@ export class Comments {
   comments: Array<any> = [];
   content = '';
   reversed: boolean = false;
-  session = SessionFactory.build();
 
   focusOnInit: boolean = false;
   @ViewChild('message') textareaControl: Textarea;
@@ -68,6 +67,7 @@ export class Comments {
   private overscrollAmount = 0;
 
   constructor(
+    public session: Session,
     public client: Client,
     public attachment: AttachmentService,
     private modal: SignupModalService,

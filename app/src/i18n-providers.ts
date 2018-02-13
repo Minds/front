@@ -1,11 +1,11 @@
-import { TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID } from '@angular/core';
+import { TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID, StaticProvider } from '@angular/core';
 
-export function getTranslationProviders(): Promise<Object[]> {
+export function getTranslationProviders(): Promise<StaticProvider[]> {
   // Get the locale id from the global
   const locale = window.Minds['language'] as string;
 
   // return no providers if fail to get translation file for locale
-  const noProviders: Object[] = [];
+  const noProviders: StaticProvider[] = [];
 
   // No locale or U.S. English: no translation providers
   if (!locale || locale === 'en') {

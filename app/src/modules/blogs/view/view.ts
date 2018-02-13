@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/
 import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { ScrollService } from '../../../services/ux/scroll';
 import { AnalyticsService } from '../../../services/analytics';
@@ -28,7 +28,6 @@ export class BlogView {
   minds;
   guid: string;
   blog: MindsBlogEntity;
-  session = SessionFactory.build();
   sharetoggle: boolean = false;
   deleteToggle: boolean = false;
   element;
@@ -48,6 +47,7 @@ export class BlogView {
 
 
   constructor(
+    public session: Session,
     public client: Client,
     public router: Router,
     _element: ElementRef,

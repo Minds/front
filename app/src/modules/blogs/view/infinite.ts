@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { AnalyticsService } from '../../../services/analytics';
 
@@ -23,7 +23,6 @@ export class BlogViewInfinite {
   minds;
   guid: string;
   blogs: Array<Object> = [];
-  session = SessionFactory.build();
   sharetoggle: boolean = false;
 
   inProgress: boolean = false;
@@ -33,7 +32,7 @@ export class BlogViewInfinite {
 
   paramsSubscription: Subscription;
 
-  constructor(public client: Client, public route: ActivatedRoute, public router: Router, public title: MindsTitle,
+  constructor(public session: Session, public client: Client, public route: ActivatedRoute, public router: Router, public title: MindsTitle,
               private applicationRef: ApplicationRef, private cd: ChangeDetectorRef, private analytics: AnalyticsService) {
   }
 

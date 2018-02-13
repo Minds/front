@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { OnboardingService } from './onboarding.service';
-import { Session, SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 
 @Component({
   moduleId: module.id,

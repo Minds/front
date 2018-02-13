@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, ElementRef, Input, ViewChild } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
-import { SessionFactory } from '../../../../../services/session';
+import { Session } from '../../../../../services/session';
 import { ScrollService } from '../../../../../services/ux/scroll';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
@@ -33,7 +33,6 @@ export class Activity {
   deleteToggle: boolean = false;
   translateToggle: boolean = false;
   translateEvent: EventEmitter<any> = new EventEmitter();
-  session = SessionFactory.build();
   showBoostOptions: boolean = false;
   @Input() boost: boolean = false;
   @Input('boost-toggle')
@@ -73,12 +72,14 @@ export class Activity {
   @ViewChild('player') player: MindsVideoComponent;
 
   constructor(
+    public session: Session,
     public client: Client,
     public scroll: ScrollService,
     _element: ElementRef,
     public attachment: AttachmentService,
     public translationService: TranslationService,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    private cd: ChangeDetectorRef
   ) {
 
     this.element = _element.nativeElement;
@@ -255,7 +256,7 @@ export class Activity {
   private viewed:boolean = false;
 
   isVisible() {
-    if (this.visible) {
+    if (this.visible && this.onViewed) {
       this.onViewed.emit({activity: this.activity, visible: true});
       return true;
     }
@@ -265,7 +266,7 @@ export class Activity {
         //make visible
         this.visible = true;
 
-        if (this.boost) {
+        if (this.boost && this.onViewed) {
           this.onViewed.emit({activity: this.activity, visible: true});
         } else {
           //update the analytics
@@ -276,7 +277,8 @@ export class Activity {
         //stop listening
         this.scroll.unListen(this.scroll_listener);
 
-        this.onViewed.emit({activity: this.activity, visible: false});
+        if (this.onViewed)
+          this.onViewed.emit({activity: this.activity, visible: false});
       }
     });
     //this.scroll.fire();
@@ -300,5 +302,10 @@ export class Activity {
       console.warn('player: ', this.player);
       this.player.pause();
     }
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
-import { Session, SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'minds-admin',
@@ -14,10 +14,9 @@ import { Session, SessionFactory } from '../../services/session';
 export class Admin {
 
   filter: string = '';
-  session: Session = SessionFactory.build();
   paramsSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, public title: MindsTitle, public router: Router) {
+  constructor(public session: Session, private route: ActivatedRoute, public title: MindsTitle, public router: Router) {
   }
 
   ngOnInit() {

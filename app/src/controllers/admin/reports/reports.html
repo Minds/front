@@ -20,7 +20,7 @@
     <!--<div class="mdl-spinner mdl-spinner&#45;&#45;single-color mdl-js-spinner is-active" [hidden]="reports.length > 0 || !inProgress"></div>-->
 
     <div class="mdl-card__supporting-text m-no-reports" [hidden]="inProgress || moreData || reports.length > 0">
-      <!-- i18n: @@MINDS__ADMIN__REPORTS__EMPTY_FILTER_LABEL -->There are no {{ filter }}.<!-- /i18n -->
+      <ng-container i18n="@@MINDS__ADMIN__REPORTS__EMPTY_FILTER_LABEL">There are no {{ filter }}.</ng-container>
     </div>
 
     <div class="mdl-card mdl-shadow--4dp m-report" *ngFor="let report of reports; let i = index">

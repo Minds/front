@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
@@ -53,15 +53,13 @@ export class PostMenuComponent {
 
   opened: boolean = false;
 
-  session: Session = SessionFactory.build();
-
   shareToggle: boolean = false;
   deleteToggle: boolean = false;
   featureToggle: boolean = false;
 
   categories: Array<any> = [];
 
-  constructor(private client: Client, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService, public signupModal: SignupModalService) {
+  constructor(public session: Session, private client: Client, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService, public signupModal: SignupModalService) {
     this.initCategories();
   }
 

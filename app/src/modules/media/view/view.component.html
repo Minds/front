@@ -89,7 +89,7 @@
                 [routerLink]="['/media', entity.container_guid]"
                 [hidden]="entity.subtype == 'album' || entity.container_guid == entity.owner_guid"
               >
-                <i class="material-icons">photo_album</i> <!-- i18n: @@MINDS__MEDIA__BACK_TO_ALBUM_ACTION -->Back to album<!-- /i18n -->
+                <i class="material-icons">photo_album</i> <ng-container i18n="@@MINDS__MEDIA__BACK_TO_ALBUM_ACTION">Back to album</ng-container>
               </a>
             </div>
           </div>
@@ -192,14 +192,14 @@
   [open]="true"
   [closeAfterAction]=true
   (closed)="deleteToggle = false"
-  (actioned)="delete($event)"
+  (actioned)="delete()"
   yesButton="Delete permanently"
   i18n-yesButton="@@M__COMMON__DELETE_PERMANENTLY"
 >
   <p confirm-message>
-      <!-- i18n: @@MINDS__MEDIA__CONFIRM_DELETION -->Are you sure you want to delete this?<br><br>There's no UNDO!<!-- /i18n -->
+      <ng-container i18n="@@MINDS__MEDIA__CONFIRM_DELETION">Are you sure you want to delete this?<br><br>There's no UNDO!</ng-container>
   </p>
   <p confirm-success-message>
-      <!-- i18n: @@MINDS__MEDIA__DELETION_CONFIRMATION -->The media has been deleted.<!-- /i18n -->
+      <ng-container i18n="@@MINDS__MEDIA__DELETION_CONFIRMATION">The media has been deleted.</ng-container>
   </p>
 </m-modal-confirm>

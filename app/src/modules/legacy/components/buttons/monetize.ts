@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 
 @Component({
@@ -20,10 +20,9 @@ import { Client } from '../../../../services/api';
 export class MonetizeButton {
 
   object;
-  session = SessionFactory.build();
   isMonetized = false;
 
-  constructor(public client: Client) {
+  constructor(public session: Session, public client: Client) {
   }
 
   set _object(value: any) {

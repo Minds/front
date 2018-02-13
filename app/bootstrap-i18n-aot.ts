@@ -2,9 +2,15 @@
 /// <reference path="typings/minds.d.ts" />
 /// <reference path="../tools/typings/tsd/index.d.ts" />
 
+import { registerLocaleData } from '@angular/common';
 import { enableProdMode } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
-import { EmbedModuleNgFactory } from './embed.module.ngfactory';
+import { MindsModuleNgFactory } from './app.module.ngfactory';
+
+import localeEs from '@angular/common/locales/es';
 
 enableProdMode();
-platformBrowser().bootstrapModuleFactory(EmbedModuleNgFactory);
+
+registerLocaleData(localeEs);
+
+platformBrowser().bootstrapModuleFactory(MindsModuleNgFactory);

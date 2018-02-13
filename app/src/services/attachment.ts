@@ -1,10 +1,8 @@
 import { Inject } from '@angular/core';
 import { Client, Upload } from './api';
-import { SessionFactory } from './session';
+import { Session } from './session';
 
 export class AttachmentService {
-
-  public session = SessionFactory.build();
 
   private meta: any = {};
   private attachment: any = {};
@@ -14,11 +12,11 @@ export class AttachmentService {
 
   private previewTimeout: any = null;
 
-  static _(client: Client, upload: Upload) {
-    return new AttachmentService(client, upload);
+  static _(session: Session, client: Client, upload: Upload) {
+    return new AttachmentService(session, client, upload);
   }
 
-  constructor( @Inject(Client) public clientService: Client, @Inject(Upload) public uploadService: Upload) {
+  constructor(@Inject(Session) public session: Session, @Inject(Client) public clientService: Client, @Inject(Upload) public uploadService: Upload) {
     this.reset();
   }
 

@@ -12,15 +12,15 @@
     *ngIf="moreData || !loaded"
   >
     <span *ngIf="inProgress">
-      <i class="material-icons">autorenew</i> <!-- i18n: @@MINDS__COMMENTS__LOADING_ELLIPSIS -->Loading&hellip;<!-- /i18n -->
+      <i class="material-icons">autorenew</i> <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS">Loading&hellip;</ng-container>
     </span>
     <span *ngIf="!inProgress && !loaded">
       <i class="material-icons">update</i>
-      <ng-container *ngIf="!error"><!-- i18n: @@MINDS__COMMENTS__LOAD_ACTION -->Load<!-- /i18n --></ng-container>
-      <ng-container *ngIf="error"><!-- i18n: @@MINDS__COMMENTS__TRY_AGAIN_ACTION -->Try again<!-- /i18n --></ng-container>
+      <ng-container *ngIf="!error"><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION">Load</ng-container></ng-container>
+      <ng-container *ngIf="error"><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION">Try again</ng-container></ng-container>
     </span>
     <span *ngIf="!inProgress && loaded">
-      <i class="material-icons">update</i> <!-- i18n: @@MINDS__COMMENTS__LOAD_EARLIER_ACTION -->Load earlier<!-- /i18n -->
+      <i class="material-icons">update</i> <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION">Load earlier</ng-container>
     </span>
     
   </div>
@@ -68,7 +68,7 @@
             </form>
 
             <div class="minds-comment-span mdl-color-text--red-500" *ngIf="!canPost && triedToPost">
-              <!-- i18n: @@M__COMMON__WAIT_UPLOAD -->Please wait until the upload is complete.<!-- /i18n -->
+              <ng-container i18n="@@M__COMMON__WAIT_UPLOAD">Please wait until the upload is complete.</ng-container>
             </div>
 
             <div class="mdl-card__actions">

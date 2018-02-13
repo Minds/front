@@ -3,7 +3,7 @@ import { CurrencyPipe } from '@angular/common';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
@@ -90,8 +90,6 @@ export class BoostCreatorComponent implements AfterViewInit {
   criticalError: boolean = false;
   error: string = '';
 
-  session: Session = SessionFactory.build();
-
   @Input('object') set data(object) {
     this.object = object;
   }
@@ -99,6 +97,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   @ViewChild('amountEditor') private _amountEditor: ElementRef;
 
   constructor(
+    public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private client: Client,

@@ -3,7 +3,7 @@ import { ChangeDetectorRef, Component, ElementRef, QueryList, ViewChildren } fro
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
@@ -23,7 +23,6 @@ import { Activity } from '../../../modules/legacy/components/cards/activity/acti
 
 export class NewsfeedBoostRotatorComponent {
 
-  session = SessionFactory.build();
   boosts: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
@@ -46,6 +45,7 @@ export class NewsfeedBoostRotatorComponent {
   @ViewChildren('activities') activities: QueryList<Activity>;
 
   constructor(
+    public session: Session,
     public router: Router,
     public client: Client,
     public scroll: ScrollService,

@@ -25,6 +25,8 @@ import { BanModule } from './src/modules/ban/ban.module';
 import { GroupsModule } from './src/modules/groups/groups.module';
 import { BlogModule } from './src/modules/blogs/blog.module';
 import { NotificationModule } from './src/modules/notifications/notification.module';
+import { WalletModule } from './src/modules/wallet/wallet.module';
+import { MonetizationModule } from './src/modules/monetization/monetization.module';
 
 @NgModule({
   bootstrap: [
@@ -52,7 +54,9 @@ import { NotificationModule } from './src/modules/notifications/notification.mod
     PostMenuModule,
     GroupsModule,
     BlogModule,
-    NotificationModule 
+    NotificationModule,
+    WalletModule,
+    MonetizationModule,
   ],
   providers: [
     MindsEmbedRoutingProviders,

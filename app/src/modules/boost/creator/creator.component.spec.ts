@@ -26,6 +26,8 @@ import { transactionOverlayServiceMock } from '../../../../tests/transaction-ove
 import { LocalWalletService } from '../../blockchain/local-wallet.service';
 import { TransactionOverlayService } from '../../blockchain/transaction-overlay/transaction-overlay.service';
 import { localWalletServiceMock } from '../../../../tests/local-wallet-service-mock.spec';
+import { sessionMock } from '../../../../tests/session-mock.spec';
+import { Session } from '../../../services/session';
 
 /* tslint:disable */
 @Component({
@@ -317,6 +319,7 @@ describe('BoostCreatorComponent', () => {
       ],
       imports: [ FormsModule ],
       providers: [
+        { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         BoostService,
         Web3WalletService,

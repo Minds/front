@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { ThirdPartyNetworksService } from '../../../services/third-party-networks';
 
@@ -15,7 +15,6 @@ import { ThirdPartyNetworksService } from '../../../services/third-party-network
 
 export class SettingsGeneral {
 
-  session = SessionFactory.build();
   minds: Minds;
   settings: string;
   @Input() object: any;
@@ -45,6 +44,7 @@ export class SettingsGeneral {
   paramsSubscription: Subscription;
 
   constructor(
+    public session: Session,
     public element: ElementRef,
     public client: Client,
     public route: ActivatedRoute,

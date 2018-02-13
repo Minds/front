@@ -2,7 +2,7 @@ import { Component, EventEmitter, ViewChild, Input, Output } from '@angular/core
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 
 
@@ -14,7 +14,6 @@ import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha
 
 export class RegisterForm {
 
-  session = SessionFactory.build();
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
@@ -29,7 +28,7 @@ export class RegisterForm {
 
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
 
-  constructor(public client: Client, fb: FormBuilder) {
+  constructor(public session: Session, public client: Client, fb: FormBuilder) {
     this.form = fb.group({
       username: ['', Validators.required],
       email: ['', Validators.required],

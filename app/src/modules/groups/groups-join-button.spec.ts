@@ -11,6 +11,8 @@ import { uploadMock } from '../../../tests/upload-mock.spec';
 
 import { GroupsJoinButton } from './groups-join-button';
 import { GroupsService } from './groups-service';
+import { Session } from '../../services/session';
+import { sessionMock } from '../../../tests/session-mock.spec';
 
 describe('GroupsJoinButton', () => {
   let fixture: ComponentFixture<GroupsJoinButton>;
@@ -55,6 +57,7 @@ describe('GroupsJoinButton', () => {
       ],
       imports: [],
       providers: [
+        { provide: Session, useValue: sessionMock },
         { provide: GroupsService, deps: [ clientMock, uploadMock ] },
       ]
     }).compileComponents();

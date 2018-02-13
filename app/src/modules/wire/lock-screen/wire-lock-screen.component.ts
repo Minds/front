@@ -3,7 +3,7 @@ import {
   Output
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { WireCreatorComponent } from '../creator/creator.component';
 import { SignupModalService } from '../../modals/signup/service';
@@ -24,9 +24,8 @@ export class WireLockScreenComponent {
 
   inProgress: boolean = false;
 
-  session: Session = SessionFactory.build();
-
   constructor(
+    public session: Session,
     private client: Client,
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,

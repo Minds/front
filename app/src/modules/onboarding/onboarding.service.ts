@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Client } from '../../services/api';
-import { Session, SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 
 @Injectable()

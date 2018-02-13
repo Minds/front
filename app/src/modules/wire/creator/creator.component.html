@@ -31,10 +31,10 @@
     <!-- Amount -->
     <section class="m-wire--creator-section">
       <h3 class="m-wire--creator-section-title--small">
-        <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_HOW_PART -->How<!-- /i18n -->
+        <ng-container i18n="@@WIRE__CREATOR__AMOUNT_TITLE_HOW_PART">How</ng-container>
         <ng-container *ngIf="wire.currency == 'tokens'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MANY_TOKENS_PART">many tokens</ng-container>
         <ng-container *ngIf="wire.currency == 'money'" i18n="@@WIRE__CREATOR__AMOUNT_TITLE_MUCH_MONEY_PART">much money</ng-container>
-        <!-- i18n: @@WIRE__CREATOR__AMOUNT_TITLE_DO YOU WANT_PART -->do you want to send?<!-- /i18n -->
+        <ng-container i18n="@@WIRE__CREATOR__AMOUNT_TITLE_DO YOU WANT_PART">do you want to send?</ng-container>
       </h3>
 
       <div class="m-wire--creator-wide-input m-wire--creator--amount"
@@ -150,7 +150,7 @@
         <ng-template #paymentAttached>
           <div class="m-wire--creator-payment-attached">
             <i class="material-icons">check_circle</i>
-            <span><!-- i18n: @@M__COMMON__PAYMENT_ATTACHED -->Your payment is attached.<!-- /i18n --> <b (click)="wire.payload = null" i18n="@@M__ACTION__CHANGE">Change</b></span>
+            <span><ng-container i18n="@@M__COMMON__PAYMENT_ATTACHED">Your payment is attached.</ng-container> <b (click)="wire.payload = null" i18n="@@M__ACTION__CHANGE">Change</b></span>
           </div>
         </ng-template>
       </div>

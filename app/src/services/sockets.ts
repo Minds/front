@@ -1,23 +1,21 @@
 import { EventEmitter, Inject, NgZone } from '@angular/core';
-import { SessionFactory } from './session';
+import { Session } from './session';
 
 export class SocketsService {
 
   SOCKET_IO_SERVER = window.Minds.socket_server;
   LIVE_ROOM_NAME = 'live';
 
-  session = SessionFactory.build();
-
   socket: any;
   registered: boolean = false;
   subscriptions: any = {};
   rooms: string[] = [];
 
-  static _(nz: NgZone) {
-    return new SocketsService(nz);
+  static _(session: Session, nz: NgZone) {
+    return new SocketsService(session, nz);
   }
 
-  constructor(private nz: NgZone) {
+  constructor(public session: Session, private nz: NgZone) {
     nz.runOutsideAngular(() => {
       this.setUp();
     });

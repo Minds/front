@@ -18,7 +18,7 @@
         "tools",
         "aot",
         ".tmp.aot",
-        "app/bootstrap-aot.ts"
+        "app/bootstrap*-aot.ts"
     ],
     "compileOnSave": false
 }

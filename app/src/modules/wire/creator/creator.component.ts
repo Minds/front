@@ -3,7 +3,7 @@ import { CurrencyPipe } from '@angular/common';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { WireService } from '../wire.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
@@ -65,8 +65,6 @@ export class WireCreatorComponent implements AfterViewInit {
   criticalError: boolean = false;
   error: string = '';
 
-  session: Session = SessionFactory.build();
-
   protected submitted: boolean;
 
   @Input('object') set data(object) {
@@ -107,6 +105,7 @@ export class WireCreatorComponent implements AfterViewInit {
   };
 
   constructor(
+    public session: Session,
     private wireService: WireService,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,

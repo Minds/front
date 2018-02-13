@@ -3,7 +3,7 @@ import { Component, Inject } from '@angular/core';
 import { GroupsService } from '../../groups-service';
 
 import { Client } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -16,14 +16,13 @@ export class GroupsProfileRequests {
 
   minds;
   group: any;
-  session = SessionFactory.build();
 
   users: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
 
-  constructor(public client: Client, public service: GroupsService) {
+  constructor(public session: Session, public client: Client, public service: GroupsService) {
 
   }
 

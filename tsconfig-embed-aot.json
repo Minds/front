@@ -19,6 +19,9 @@
     ],
     "angularCompilerOptions": {
         "genDir": ".tmp.aot",
-        "skipMetadataEmit" : true
+        "skipMetadataEmit" : true,
+        "strictInjectionParameters": true,
+        "fullTemplateTypeCheck": true,
+        "preserveWhitespaces": false
     }
 }

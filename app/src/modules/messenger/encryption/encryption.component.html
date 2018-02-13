@@ -19,7 +19,7 @@
 
 <div class="m-messenger--encryption-setup m-messenger--encryption-rekey" *ngIf="encryption.reKeying">
   <p class="mdl-color-text--grey-400 m-messenger-encryption-setup-note">
-    <!-- i18n -->Changing your encryption password will cause your previous messages to be unreadable.<!-- /i18n -->
+    <ng-container i18n>Changing your encryption password will cause your previous messages to be unreadable.</ng-container>
     <a class="mdl-color-text--blue-grey-300" (click)="encryption.reKeying = false" i18n>Cancel</a>
   </p>
   <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">{{error}}</p>

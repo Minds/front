@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Injector, Input, OnInit } from '@a
 
 import { SocketsService } from '../../../services/sockets';
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 
 import { MessengerEncryptionService } from './encryption.service';
@@ -20,7 +20,6 @@ import { MessengerEncryptionService } from './encryption.service';
 export class MessengerEncryption implements OnInit {
 
   minds: Minds;
-  session = SessionFactory.build();
   on: EventEmitter<any> = new EventEmitter(true);
 
   encryption = this.injector.get(MessengerEncryptionService);
@@ -29,7 +28,7 @@ export class MessengerEncryption implements OnInit {
 
   username: string = '';
 
-  constructor(public client: Client, private injector: Injector) {
+  constructor(public session: Session, public client: Client, private injector: Injector) {
 
   }
 

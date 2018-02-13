@@ -17,7 +17,7 @@
       <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="encryption.reKeying = !encryption.reKeying; ribbon.open = false">
         <i class="material-icons mdl-color-text--blue-grey-100"
           title="Change your encryption password" i18n-title>vpn_key</i>
-          <!-- i18n -->Re-key<!-- /i18n -->
+          <ng-container i18n>Re-key</ng-container>
       </div>
     </div>
     <m-messenger--encryption></m-messenger--encryption>

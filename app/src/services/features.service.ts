@@ -1,18 +1,17 @@
 import { Injectable, isDevMode } from '@angular/core';
-import { Session, SessionFactory } from './session';
+import { Session } from './session';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class FeaturesService {
   protected _features: any;
-  protected session: Session = SessionFactory.build();
 
-  constructor(private router: Router) {
+  constructor(private session: Session, private router: Router) {
     this._features = window.Minds.features || {};
   }
 
-  static _(router: Router) {
-    return new FeaturesService(router);
+  static _(session: Session, router: Router) {
+    return new FeaturesService(session, router);
   }
 
   has(feature: string) {

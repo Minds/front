@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 import { RecommendedService } from '../components/video/recommended.service';
 import { AttachmentService } from '../../../services/attachment';
@@ -26,7 +26,6 @@ export class MediaViewComponent {
   minds;
   guid: string;
   entity: any = {};
-  session = SessionFactory.build();
   inProgress: boolean = true;
   error: string = '';
   deleteToggle: boolean = false;
@@ -38,6 +37,7 @@ export class MediaViewComponent {
   paramsSubscription: Subscription;
 
   constructor(
+    public session: Session,
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,

@@ -19,6 +19,7 @@ import { MessengerSetupChat } from './setup/setup.component';
 import { Client } from '../../common/api/client.service';
 import { MessengerConversationDockpanesService } from './dockpanes/dockpanes.service';
 import { MessengerEncryptionService } from './encryption/encryption.service';
+import { Storage } from '../../services/storage';
 
 @NgModule({
   imports: [
@@ -58,7 +59,7 @@ import { MessengerEncryptionService } from './encryption/encryption.service';
     {
       provide: MessengerEncryptionService,
       useFactory: MessengerEncryptionService._,
-      deps: [ Client ]
+      deps: [ Client, Storage ]
     }
   ],
   schemas: [

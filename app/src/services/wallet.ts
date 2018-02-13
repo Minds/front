@@ -2,23 +2,22 @@ import { Inject, Injector, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { Client } from './api';
-import { SessionFactory } from './session';
+import { Session } from './session';
 import { SocketsService } from './sockets';
 
 export class WalletService {
 
   points: number | null = null;
-  session = SessionFactory.build();
 
   apiInProgress: boolean = false;
   private pointsEmitter: EventEmitter<{ batch, total }> = new EventEmitter<{ batch, total }>();
   private pointsTxSubscription: Subscription;
 
-  static _(client: Client, sockets: SocketsService) {
-    return new WalletService(client, sockets);
+  static _(session: Session, client: Client, sockets: SocketsService) {
+    return new WalletService(session, client, sockets);
   }
 
-  constructor( @Inject(Client) public client: Client, @Inject(SocketsService) private sockets: SocketsService) {
+  constructor(@Inject(Session) public session: Session, @Inject(Client) public client: Client, @Inject(SocketsService) private sockets: SocketsService) {
     this.getBalance();
 
     this.session.isLoggedIn((is) => {
@@ -90,6 +89,8 @@ export class WalletService {
 
           this.points = null;
           this.sync();
+
+          return null;
         });
     } else if (this.points === null) {
       this.points = window.Minds.wallet.balance;

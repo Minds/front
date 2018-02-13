@@ -3,7 +3,7 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
-import { Session, SessionFactory } from './session';
+import { Session } from './session';
 
 type NavigateOptions = {
   extraParams?: string,
@@ -16,14 +16,13 @@ export class LoginReferrerService {
   private url: string;
   private exceptions: string[] = [];
 
-  private session: Session = SessionFactory.build();
   private _routerListener: Subscription;
 
-  static _(router: Router) {
-    return new LoginReferrerService(router);
+  static _(session: Session, router: Router) {
+    return new LoginReferrerService(session, router);
   }
 
-  constructor(private router: Router) { }
+  constructor(private session: Session, private router: Router) { }
 
   listen(): this {
     this._routerListener = this.router.events.subscribe((event: Event) => {

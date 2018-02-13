@@ -15,7 +15,7 @@
     },
     "files": [
         "app/app.module.ts",
-        "app/bootstrap-aot.ts"
+        "app/bootstrap-i18n-aot.ts"
     ],
     "angularCompilerOptions": {
         "genDir": ".tmp.aot",

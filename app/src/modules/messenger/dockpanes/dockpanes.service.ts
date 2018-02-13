@@ -1,4 +1,3 @@
-import { ReflectiveInjector } from '@angular/core';
 import { Storage } from '../../../services/storage';
 
 export class MessengerConversationDockpanesService {

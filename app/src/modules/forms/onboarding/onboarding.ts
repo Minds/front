@@ -2,7 +2,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client, Upload } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 
 @Component({
@@ -14,7 +14,6 @@ import { SessionFactory } from '../../../services/session';
 
 export class OnboardingForm {
 
-  session = SessionFactory.build();
   error: string = '';
   inProgress: boolean = false;
   referrer: string;
@@ -25,7 +24,7 @@ export class OnboardingForm {
 
   done: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client, public upload: Upload, fb: FormBuilder) {
+  constructor(public session: Session, public client: Client, public upload: Upload, fb: FormBuilder) {
     this.form = fb.group({
       briefdescription: [''],
       dob: [''],

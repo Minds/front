@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { MindsTitle } from '../../../services/ux/title';
 import { ACCESS, LICENSES } from '../../../services/list-options';
 import { Client, Upload } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
 import { WireThresholdInputComponent } from '../../wire/threshold-input/threshold-input.component';
 
@@ -23,7 +23,6 @@ import { WireThresholdInputComponent } from '../../wire/threshold-input/threshol
 export class BlogEdit {
 
   minds = window.Minds;
-  session = SessionFactory.build();
 
   guid: string;
   blog: any = {
@@ -64,7 +63,7 @@ export class BlogEdit {
   @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
   @ViewChild('thresholdInput') thresholdInput: WireThresholdInputComponent;
 
-  constructor(public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+  constructor(public session: Session, public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
     this.getCategories();
 
     window.addEventListener('attachment-preview-loaded', (event: CustomEvent) => {

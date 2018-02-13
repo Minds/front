@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { NotificationService } from './src/modules/notifications/notification.service';
 import { AnalyticsService } from './src/services/analytics';
 import { SocketsService } from './src/services/sockets';
-import { Session, SessionFactory } from './src/services/session';
+import { Session } from './src/services/session';
 import { LoginReferrerService } from './src/services/login-referrer.service';
 import { ScrollToTopService } from './src/services/scroll-to-top.service';
 import { ContextService } from './src/services/context.service';
@@ -18,9 +18,9 @@ import { Web3WalletService } from './src/modules/blockchain/web3-wallet.service'
 export class Minds {
   name: string;
   minds = window.Minds;
-  session: Session = SessionFactory.build();
 
   constructor(
+    public session: Session,
     public notificationService: NotificationService,
     public scrollToTop: ScrollToTopService,
     public analytics: AnalyticsService,

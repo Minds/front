@@ -95,14 +95,14 @@
   [open]="true"
   [closeAfterAction]=true
   (closed)="deleteToggle = false"
-  (actioned)="delete($event)"
+  (actioned)="delete()"
   yesButton="Delete permanently"
   i18n-yesButton="@@M__COMMON__DELETE_PERMANENTLY"
 >
   <p confirm-message>
-      <!-- i18n: @@BLOGS__VIEW__CONFIRM_DELETION -->Are you sure you want to delete this blog?<br><br>There's no UNDO!<!-- /i18n -->
+      <ng-container i18n="@@BLOGS__VIEW__CONFIRM_DELETION">Are you sure you want to delete this blog?<br><br>There's no UNDO!</ng-container>
   </p>
   <p confirm-success-message>
-      <!-- i18n: @@BLOGS__VIEW__DELETION_CONFIRMATION -->The blog has been deleted.<!-- /i18n -->
+      <ng-container i18n="@@BLOGS__VIEW__DELETION_CONFIRMATION">The blog has been deleted.</ng-container>
   </p>
 </m-modal-confirm>

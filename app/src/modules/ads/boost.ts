@@ -7,7 +7,7 @@ import { Storage } from '../../services/storage';
   inputs: ['handler', 'limit'],
   template: `
     <h3 class="m-ad-boost-heading mdl-color-text--blue-grey-300">
-      <i class="material-icons">trending_up</i> <!-- i18n: @@ADS__BOOSTED_CONTENT -->Boosted content<!-- /i18n -->
+      <i class="material-icons">trending_up</i> <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
     </h3>
     <div class="m-ad-boost-entity" *ngFor="let entity of boosts">
       <minds-card [object]="entity" hostClass="mdl-card m-border"></minds-card>

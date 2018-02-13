@@ -19,7 +19,7 @@ export class ReadMoreDirective {
   ngAfterViewInit() {
     this.realHeight = this._element.clientHeight;
 
-    if (this.button)
+    if (this.button && !this.button.content)
       this.button.content = this;
 
     if (this.realHeight > this.maxHeightAllowed) {

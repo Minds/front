@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WireRewardsTiers, WireRewardsType } from '../../interfaces/wire.interfaces';
 import { WireCreatorComponent } from '../../creator/creator.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { Session, SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -37,11 +37,7 @@ export class WireChannelTableComponent {
     }
   }
 
-  private session: Session;
-
-  constructor(private overlayModal: OverlayModalService) {
-    this.session = SessionFactory.build();
-  }
+  constructor(private session: Session, private overlayModal: OverlayModalService) { }
 
   addTier() {
     this.rewards.push({

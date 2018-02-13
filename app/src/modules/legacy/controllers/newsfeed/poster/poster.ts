@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 
 import { Client, Upload } from '../../../../../services/api';
 import { MindsActivityObject } from '../../../../../interfaces/entities';
-import { SessionFactory } from '../../../../../services/session';
+import { Session } from '../../../../../services/session';
 
 import { AttachmentService } from '../../../../../services/attachment';
 import { ThirdPartyNetworksSelector } from '../../../../../modules/third-party-networks/selector';
@@ -16,7 +16,7 @@ import { ThirdPartyNetworksSelector } from '../../../../../modules/third-party-n
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [ Client, Upload ]
+      deps: [ Session, Client, Upload ]
     }
   ],
   templateUrl: 'poster.html'
@@ -28,7 +28,6 @@ export class Poster {
   meta: any = {
     wire_threshold: null
   };
-  session = SessionFactory.build();
   minds;
   load: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
@@ -40,7 +39,7 @@ export class Poster {
 
   @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
 
-  constructor(public client: Client, public upload: Upload, public attachment: AttachmentService) {
+  constructor(public session: Session, public client: Client, public upload: Upload, public attachment: AttachmentService) {
     this.minds = window.Minds;
   }
 

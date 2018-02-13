@@ -3,10 +3,10 @@ import commonjs    from 'rollup-plugin-commonjs';
 import uglify      from 'rollup-plugin-uglify'
 
 export default {
-  input: '.tmp/app/bootstrap-aot.js',
+  input: '.tmp/app/bootstrap-i18n-aot.js',
   output: {
     format: 'iife',
-    file: 'public/js/build-aot.js', // output a single application bundle
+    file: 'public/js/build-i18n-aot.js', // output a single application bundle
     sourcemap: false,
   },
   context: 'window',

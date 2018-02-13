@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { AttachmentService } from '../../../services/attachment';
 import { ACCESS } from '../../../services/list-options';
 
@@ -16,10 +16,9 @@ export class BlogCard {
 
   minds;
   blog;
-  session = SessionFactory.build();
   access = ACCESS;
 
-  constructor(public attachment: AttachmentService) {
+  constructor(public session: Session, public attachment: AttachmentService) {
     this.minds = window.Minds;
   }
 

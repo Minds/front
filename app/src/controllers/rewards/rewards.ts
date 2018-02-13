@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Title } from '@angular/platform-browser';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'minds-rewards-component',
@@ -12,13 +12,12 @@ import { SessionFactory } from '../../services/session';
 export class RewardsComponent {
   paramsSubscription: Subscription;
   uuid: string;
-  private session = SessionFactory.build();
-  private requiresTShirtSize: boolean;
-  private requiresCellPhone: boolean;
+  requiresTShirtSize: boolean;
+  requiresCellPhone: boolean;
   rewards: any;
   name: string;
   loggedIn: boolean;
-  private tshirtSize: string;
+  tshirtSize: string;
   private cellPhoneNumber: string;
   address: string;
   loading: boolean = true;
@@ -31,7 +30,7 @@ export class RewardsComponent {
     'Extra Large'
   ];
 
-  constructor(private client: Client, private route: ActivatedRoute, private router: Router, private title: Title) {
+  constructor(private session: Session, private client: Client, private route: ActivatedRoute, private router: Router, private title: Title) {
     if (localStorage.getItem('redirect'))
       localStorage.removeItem('redirect');
 

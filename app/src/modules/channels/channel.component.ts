@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { ScrollService } from '../../services/ux/scroll';
 import { RecentService } from '../../services/ux/recent';
 
@@ -24,8 +24,7 @@ import { ContextService } from '../../services/context.service';
 
 export class ChannelComponent {
 
-  _filter: string = 'feed';
-  session = SessionFactory.build();
+  filter: any = 'feed';
   isLocked: boolean = false;
 
   username: string;
@@ -51,6 +50,7 @@ export class ChannelComponent {
   @ViewChild('wire') private wire: WireChannelComponent;
 
   constructor(
+    public session: Session,
     public client: Client,
     public upload: Upload,
     private route: ActivatedRoute,
@@ -78,7 +78,7 @@ export class ChannelComponent {
         if (params['filter'] === 'wire') {
           this.openWireModal = true;
         } else {
-          this._filter = params['filter'];
+          this.filter = params['filter'];
         }
       }
 
@@ -120,7 +120,7 @@ export class ChannelComponent {
           });
         }
 
-        if (this._filter === 'feed')
+        if (this.filter === 'feed')
           this.loadFeed(true);
 
         this.context.set('activity', { label: `@${this.user.username} posts`, nameLabel: `@${this.user.username}`, id: this.user.guid });

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { LICENSES, ACCESS } from '../../services/list-options';
 import { MindsTitle } from '../../services/ux/title';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { Upload } from '../../services/api/upload';
 import { Client } from '../../services/api/client';
 
@@ -20,7 +20,6 @@ import { Client } from '../../services/api/client';
 
 export class Capture {
 
-  session = SessionFactory.build();
   uploads: Array<any> = [];
 
   postMeta: any = {}; //TODO: make this object
@@ -37,7 +36,7 @@ export class Capture {
   default_license: string = 'all-rights-reserved';
   licenses = LICENSES;
   access = ACCESS;
-  constructor(public _upload: Upload, public client: Client, public router: Router, public title: MindsTitle) {
+  constructor(public session: Session, public _upload: Upload, public client: Client, public router: Router, public title: MindsTitle) {
   }
 
   ngOnInit() {

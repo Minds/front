@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 // import { GroupsService } from '../../groups-service';
 
 import { Client } from '../../../../services/api';
-import { Session, SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -14,9 +14,7 @@ import { Session, SessionFactory } from '../../../../services/session';
 export class GroupsProfileConversation {
   @Input() group: any;
 
-  session: Session = SessionFactory.build();
-
-  constructor(private router: Router) { }
+  constructor(public session: Session, private router: Router) { }
 
   ngOnInit() {
     if (!this.group['is:member'] && this.group.membership != 2) {

@@ -449,12 +449,13 @@ describe('Activity', () => {
     comp.activity = defaultActivity;
 
     fixture.detectChanges();
+    comp.detectChanges();
   });
 
-  it('should show m-wire--lock-screen if activity.paywal == true', () => {
+  it('should show m-wire--lock-screen if activity.paywall == true', () => {
     expect(fixture.debugElement.query(By.css('m-wire--lock-screen'))).not.toBeNull();
   });
-  it('shouldn\'t show m-wire--lock-screen if activity.paywal == false', () => {
+  it('shouldn\'t show m-wire--lock-screen if activity.paywall == false', () => {
     const activity = {
       ownerObj: {
         username: 'minds'
@@ -474,6 +475,8 @@ describe('Activity', () => {
     comp.activity = activity;
 
     fixture.detectChanges();
+    comp.detectChanges();
+
     expect(fixture.debugElement.query(By.css('m-wire--lock-screen'))).toBeNull();
   });
 
@@ -481,23 +484,13 @@ describe('Activity', () => {
     expect(getActivityMetrics()).toBeDefined();
   });
 
-  it('activity metrics should have points metric', () => {
-    let pointsMetric = getActivityMetric(1);
-    expect(pointsMetric).not.toBeNull();
-    expect(pointsMetric.nativeElement.textContent).toContain(10);
-  });
-  it('activity metrics should have money metric', () => {
-    let moneyMetric = getActivityMetric(2);
-    expect(moneyMetric).not.toBeNull();
-    expect(moneyMetric.nativeElement.textContent).toContain(3);
-  });
   it('activity metrics should have token metric', () => {
-    let tokens = getActivityMetric(3);
+    let tokens = getActivityMetric(1);
     expect(tokens).not.toBeNull();
     expect(tokens.nativeElement.textContent).toContain(1);
   });
   it('activity metrics should have views metric', () => {
-    let views = getActivityMetric(4);
+    let views = getActivityMetric(2);
     expect(views).not.toBeNull();
     expect(views.nativeElement.textContent).toContain(100);
   });

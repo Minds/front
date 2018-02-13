@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -11,14 +11,12 @@ import { SessionFactory } from '../../../services/session';
 
 export class WalletPointsTransactionsComponent {
 
-  session = SessionFactory.build();
-
   transactions: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
 
-  constructor(public client: Client, private cd: ChangeDetectorRef) {
+  constructor(public session: Session, public client: Client, private cd: ChangeDetectorRef) {
     this.load();
   }
 

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -14,10 +14,9 @@ export class WalletTransactionsComponent {
 
   type: string = '';
   togglePurchase: boolean = false;
-  session = SessionFactory.build();
   paramsSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router, ) { }
+  constructor(public session: Session, private route: ActivatedRoute, private router: Router, ) { }
 
   ngOnInit() {
     this.type = 'points';

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Client } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { AttachmentService } from '../../../../services/attachment';
 
 @Component({
@@ -29,14 +29,13 @@ import { AttachmentService } from '../../../../services/attachment';
 export class MediaGridComponent {
 
   object: any = {};
-  session = SessionFactory.build();
 
   items: Array<any> = [];
   inProgress: boolean = false;
   moreData: boolean = true;
   offset: string = '';
 
-  constructor(public client: Client, public attachment: AttachmentService) {
+  constructor(public session: Session, public client: Client, public attachment: AttachmentService) {
   }
 
   set _object(value: any) {

@@ -134,9 +134,9 @@
           <a [routerLink]="['/groups/profile', group.guid, 'review']">
             <i class="material-icons mdl-color-text--blue-grey-300">rate_review</i>
             <span>
-              <!-- i18n: @@GROUPS__POSTS_ARE_MODERATED -->Posts are moderated<!-- /i18n -->
+              <ng-container i18n="@@GROUPS__POSTS_ARE_MODERATED">Posts are moderated</ng-container>
               <b *ngIf="group['adminqueue:count']">
-                (<!-- i18n: @@GROUPS__PROFILE__ADMINQUEUE_COUNT -->{{ group['adminqueue:count'] }} new<!-- /i18n -->)
+                (<ng-container i18n="@@GROUPS__PROFILE__ADMINQUEUE_COUNT">{{ group['adminqueue:count'] }} new</ng-container>)
               </b>
             </span>
           </a>
@@ -187,7 +187,7 @@
   <m-group--members-module [group]="group" *ngIf="filter != 'conversation'">
 
     <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/groups/profile', group.guid, 'members']">
-      <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
+      <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
     </a>
   </m-group--members-module>
 
@@ -195,7 +195,7 @@
    <minds-channel-modules [container]="group" type="image" *ngIf="filter != 'conversation'">
 
       <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', 'container:' + group.guid, 'images']">
-        <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
+        <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
       </a>
     </minds-channel-modules>
 
@@ -205,7 +205,7 @@
     <minds-channel-modules [container]="group" type="video" limit="6" *ngIf="filter != 'conversation'">
 
       <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', 'container:' + group.guid, 'videos']">
-        <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
+        <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
       </a>
     </minds-channel-modules>
 

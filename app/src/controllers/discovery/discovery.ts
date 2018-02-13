@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { ContextService } from '../../services/context.service';
 
 @Component({
@@ -15,8 +15,6 @@ import { ContextService } from '../../services/context.service';
 })
 
 export class Discovery {
-
-  session = SessionFactory.build();
 
   _filter: string = 'featured';
   _owner: string = '';
@@ -34,7 +32,7 @@ export class Discovery {
   paramsSubscription: Subscription;
   searching;
 
-  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle,
+  constructor(public session: Session, public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle,
     private context: ContextService) { }
 
   ngOnInit() {

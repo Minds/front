@@ -8,7 +8,7 @@
 
   <div class="mdl-cell mdl-cell--8-col">
     <div class="m--spam-notice mdl-shadow--2dp" *ngIf="activity?.spam">
-      <!-- i18n: @@MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM -->This activity is flagged as spam.<!-- /i18n -->
+      <ng-container i18n="@@MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM">This activity is flagged as spam.</ng-container>
       <ng-container *ngIf="!session.isAdmin()" i18n="@@MINDS__NEWSFEED__SINGLE__APPEAL_FLAG_NOTE">
         If you wish to appeal, please contact us at info@minds.com.
       </ng-container>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { Reason, rejectionReasons } from '../../controllers/admin/boosts/rejection-reasons';
 
 @Component({
@@ -11,7 +11,8 @@ import { Reason, rejectionReasons } from '../../controllers/admin/boosts/rejecti
 export class NotificationComponent {
 
   notification: any;
-  session = SessionFactory.build();
+
+  constructor(public session: Session) { }
 
   set _notification(value: any) {
     this.notification = value;

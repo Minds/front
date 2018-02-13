@@ -1,7 +1,5 @@
-import { ReflectiveInjector, Injectable, Inject } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
-import { MINDS_PROVIDERS } from '../../../services/providers';
 
 export class MessengerEncryptionService {
 

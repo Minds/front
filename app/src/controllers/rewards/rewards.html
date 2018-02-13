@@ -64,7 +64,7 @@
         (submit)="onClaim()"
         class="mdl-grid" 
         *ngIf="loggedIn">
-        <h6 class="mdl-cell mdl-cell--12-col" *ngIf="requiresPostalAddress || requiresCellPhone">
+        <h6 class="mdl-cell mdl-cell--12-col" *ngIf="requiresCellPhone">
           We need more data before we can proceed
         </h6>
 
@@ -87,13 +87,13 @@
         </div>
 
         <div class="m-rewards--form-action mdl-cell" 
-            [class.mdl-cell--6-col]="requiresPostalAddress || requiresCellPhone"
-            [class.mdl-cell--12-col]="!(requiresPostalAddress || requiresCellPhone)"
+            [class.mdl-cell--6-col]="requiresCellPhone"
+            [class.mdl-cell--12-col]="!requiresCellPhone"
             >
           <button type="submit" 
               class="mdl-button mdl-button--colored mdl-color--green"
               [disabled]="!claimForm.form.valid || inProgress"
-              [ngStyle]="{'margin': !(requiresPostalAddress || requiresCellPhone) ? '16px auto': '16px'}"
+              [ngStyle]="{'margin': !requiresCellPhone ? '16px auto': '16px'}"
               >
             Claim my rewards 
           </button>

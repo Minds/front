@@ -1,12 +1,12 @@
 <div class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo" *ngIf="newUserPromo">
-    <i class="material-icons">trending_up</i> <!-- i18n: @@MINDS__NEWSFEED__200_FREE_VIEWS -->Have 200 free views on us. Hit post to be boosted.<!-- /i18n -->
+    <i class="material-icons">trending_up</i> <ng-container i18n="@@MINDS__NEWSFEED__200_FREE_VIEWS">Have 200 free views on us. Hit post to be boosted.</ng-container>
 </div>
 <minds-newsfeed-poster (load)="prepend($event)" [message]="message" #poster></minds-newsfeed-poster>
 
 <div class="minds-list">
   <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" class="mdl-card m-border item"></minds-activity>
   <m-newsfeed--boost-rotator interval="12" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
-  <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" [showBoostMenuOptions]="boostFeed" (delete)="delete(activity)" (onViewed)="onViewed($event)" class="mdl-card m-border item"></minds-activity>
+  <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" (delete)="delete(activity)" (onViewed)="onViewed($event)" class="mdl-card m-border item"></minds-activity>
   <infinite-scroll
     distance="25%"
     (load)="load()"

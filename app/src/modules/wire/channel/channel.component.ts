@@ -1,6 +1,6 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { WireCreatorComponent } from '../creator/creator.component';
 import { Client } from '../../../services/api';
@@ -33,9 +33,7 @@ export class WireChannelComponent {
   display: WireRewardsType;
   typeLabels = WireTypeLabels;
 
-  session: Session = SessionFactory.build();
-
-  constructor(private overlayModal: OverlayModalService, private client: Client, private signupModal: SignupModalService) { }
+  constructor(public session: Session, private overlayModal: OverlayModalService, private client: Client, private signupModal: SignupModalService) { }
 
   ngOnInit() {
     if (!this.rewards) {

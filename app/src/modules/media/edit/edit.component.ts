@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../../services/api';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { LICENSES, ACCESS } from '../../../services/list-options';
 
 @Component({
@@ -16,7 +16,6 @@ import { LICENSES, ACCESS } from '../../../services/list-options';
 export class MediaEditComponent {
 
   minds;
-  session = SessionFactory.build();
   guid: string;
   entity: any = {
     title: '',
@@ -34,6 +33,7 @@ export class MediaEditComponent {
   paramsSubscription: Subscription;
 
   constructor(
+    public session: Session,
     public client: Client,
     public upload: Upload,
     public router: Router,

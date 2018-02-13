@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { Client } from '../../../services/api/client';
 
 export type BoostConsoleType = 'newsfeed' | 'content' | 'offers' | 'publisher';
@@ -16,11 +16,9 @@ export class BoostConsoleHistoryComponent {
   type: BoostConsoleType = 'newsfeed';
   filter: BoostConsoleFilter;
 
-  session: Session = SessionFactory.build();
-
   minds: Minds = window.Minds;
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(public session: Session, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

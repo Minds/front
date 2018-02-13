@@ -23,10 +23,10 @@
         <!-- only show if locating is on -->
         <span *ngIf="nearby || (!nearby && !hasNearby)" class="m-discovery-suggested-location-options">
           <select (change)="distance = dist.value; load(true)" #dist class="mdl-color-text--blue-grey-600">
-            <option value="5">5 <!-- i18n: @@MINDS__DISCOVERY__MILES_UNIT -->miles<!-- /i18n --></option>
-            <option value="25">25 <!-- i18n: @@MINDS__DISCOVERY__MILES_UNIT -->miles<!-- /i18n --></option>
-            <option value="50">50 <!-- i18n: @@MINDS__DISCOVERY__MILES_UNIT -->miles<!-- /i18n --></option>
-            <option value="100">100 <!-- i18n: @@MINDS__DISCOVERY__MILES_UNIT -->miles<!-- /i18n --></option>
+            <option value="5">5 <ng-container i18n="@@MINDS__DISCOVERY__MILES_UNIT">miles</ng-container></option>
+            <option value="25">25 <ng-container i18n="@@MINDS__DISCOVERY__MILES_UNIT">miles</ng-container></option>
+            <option value="50">50 <ng-container i18n="@@MINDS__DISCOVERY__MILES_UNIT">miles</ng-container></option>
+            <option value="100">100 <ng-container i18n="@@MINDS__DISCOVERY__MILES_UNIT">miles</ng-container></option>
           </select>
           <m-18n i18n="Distance from a city@@MINDS__DISCOVERY__OF_WORD">of</m-18n>
           <input (keyup)="findCity(city)" name="city" [(ngModel)]="city" class="mdl-color--blue-grey-300 mdl-color-text--white" placeholder="Enter your city..." i18n-placeholder="@@M__COMMON__ENTER_CITY" />

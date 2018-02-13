@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { SignupModalService } from '../../modals/signup/service';
 import { WireCreatorComponent } from '../creator/creator.component';
-import { Session, SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-wire-button',
@@ -16,9 +16,7 @@ import { Session, SessionFactory } from '../../../services/session';
 export class WireButtonComponent {
   @Input() object: any;
 
-  session: Session = SessionFactory.build();
-
-  constructor(private overlayModal: OverlayModalService, private modal: SignupModalService) { }
+  constructor(public session: Session, private overlayModal: OverlayModalService, private modal: SignupModalService) { }
 
   wire() {
     if (!this.session.isLoggedIn()) {

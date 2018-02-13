@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { SignupModalService } from './service';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 
@@ -17,7 +17,6 @@ import { LoginReferrerService } from '../../../services/login-referrer.service';
 export class SignupModal {
 
   open: boolean = false;
-  session = SessionFactory.build();
   route: string = '';
   minds = window.Minds;
 
@@ -25,6 +24,7 @@ export class SignupModal {
   display: string = 'initial';
 
   constructor(
+    public session: Session,
     private router: Router,
     private location: Location,
     private service: SignupModalService,

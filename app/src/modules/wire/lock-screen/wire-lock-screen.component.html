@@ -1,7 +1,7 @@
 <div class="m-wire--lock-screen--button m-wire--lock-screen--button-owner" *ngIf="!preview && (entity.ownerObj.guid == session.getLoggedInUser().guid)">
   <div class="m-wire--lock-screen-introduction">
     <p class="mdl-color-text--grey-800">
-      <!-- i18n: @@WIRE__LOCK_SCREEN__ONLY_SUPPORTERS_TITLE_PART -->Only supporters who wire you over<!-- /i18n -->
+      <ng-container i18n="@@WIRE__LOCK_SCREEN__ONLY_SUPPORTERS_TITLE_PART">Only supporters who wire you over</ng-container>
 
       <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH">
         {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
@@ -15,12 +15,12 @@
         {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
       </ng-container>
 
-      <!-- i18n: @@WIRE__LOCK_SCREEN__WILL_SEE_TITLE_PART -->will see this post.<!-- /i18n -->
+      <ng-container i18n="@@WIRE__LOCK_SCREEN__WILL_SEE_TITLE_PART">will see this post.</ng-container>
     </p>
   </div>
   <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white">
     <i class="mdl-color-text--white ion-icon ion-flash"></i>
-    <span><!-- i18n: @@WIRE__LOCK_SCREEN__LOCKED_LABEL -->Locked<!-- /i18n --></span>
+    <span><ng-container i18n="@@WIRE__LOCK_SCREEN__LOCKED_LABEL">Locked</ng-container></span>
   </button>
 </div>
 
@@ -35,7 +35,7 @@
       </ng-container>
 
       <ng-template #notHasIntro>
-        <!-- i18n: @@WIRE__LOCK_SCREEN__WIRE_ME_OVER_PART -->Wire me over<!-- /i18n -->
+        <ng-container i18n="@@WIRE__LOCK_SCREEN__WIRE_ME_OVER_PART">Wire me over</ng-container>
 
         <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH">
           {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
@@ -49,7 +49,7 @@
           {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
         </ng-container>
 
-        <!-- i18n: @@WIRE__LOCK_SCREEN__TO_SEE_TITLE_PART -->to see this post.<!-- /i18n -->
+        <ng-container i18n="@@WIRE__LOCK_SCREEN__TO_SEE_TITLE_PART">to see this post.</ng-container>
       </ng-template>
 
       <b>&rdquo;</b>
@@ -57,7 +57,7 @@
   </div>
   <button class="m-unlock-button mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white" (click)="unlock()">
     <i class="mdl-color-text--white ion-icon ion-flash"></i>
-    <span><!-- i18n: @@WIRE__LOCK_SCREEN__UNLOCK_ACTION -->Unlock<!-- /i18n --></span>
+    <span><ng-container i18n="@@WIRE__LOCK_SCREEN__UNLOCK_ACTION">Unlock</ng-container></span>
     <div [hidden]="!inProgress" class="m-spinner">
       <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]></div>
     </div>
@@ -88,7 +88,7 @@
   </h2>
 
   <h5 class="m-wire--lock-screen--message">
-    <!-- i18n: @@WIRE__LOCK_SCREEN__CAN_ONLY_BE_SEEN_TITLE_PART -->This post can only be seen by supporters who wire<!-- /i18n -->
+    <ng-container i18n="@@WIRE__LOCK_SCREEN__CAN_ONLY_BE_SEEN_TITLE_PART">This post can only be seen by supporters who wire</ng-container>
 
     <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__OVER_USD_PER_MONTH">
         over {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month

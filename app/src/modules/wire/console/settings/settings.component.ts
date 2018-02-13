@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef, Output, EventEmitter } from '@angular/cor
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Client, Upload } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { WalletService } from '../../../../services/wallet';
 import { Storage } from '../../../../services/storage';
 
@@ -16,7 +16,6 @@ export class WireConsoleSettingsComponent {
 
   @Output('saved') savedEmitter: EventEmitter<any> = new EventEmitter<any>();
 
-  session = SessionFactory.build();
   ts: number = Date.now();
 
   user = window.Minds.user;
@@ -34,7 +33,7 @@ export class WireConsoleSettingsComponent {
   previewEntity: any = false;
   preview: any = {};
 
-  constructor(public client: Client, public upload: Upload, private cd: ChangeDetectorRef) { }
+  constructor(public session: Session, public client: Client, public upload: Upload, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.setUp();

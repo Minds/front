@@ -15,8 +15,8 @@ export = (gulp, plugins) => cb => {
 
   statSync(join(APP_SRC, 'locale', `Minds.${locale}.xliff`));
 
-  run(`node_modules/.bin/ngc -p tsconfig-aot.json --i18nFile=./app/locale/Minds.${locale}.xliff --locale=${locale} --i18nFormat=xlf`, {}, false);
-  run(`node_modules/.bin/rollup -c rollup-config.ts -o public/js/build-aot.${locale}.${VERSION}.js`, {}, false);
+  run(`node_modules/.bin/ngc -p tsconfig-i18n-aot.json --i18nFile=./app/locale/Minds.${locale}.xliff --locale=${locale} --i18nFormat=xlf`, {}, false);
+  run(`node_modules/.bin/rollup -c rollup-config-i18n.ts -o public/js/build-aot.${locale}.${VERSION}.js`, {}, false);
 
   cb();
 };

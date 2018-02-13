@@ -15,6 +15,8 @@ import { mindsTitleMock } from '../../../../tests/minds-title-service-mock.spec'
 import { HovercardService } from '../../../services/hovercard';
 import { hovercardServiceMock } from '../../../mocks/services/hovercard-mock.spec';
 import { By } from '@angular/platform-browser';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
 
 @Component({
   selector: 'minds-banner',
@@ -231,6 +233,7 @@ describe('BlogEdit', () => {
         FormsModule
       ],
       providers: [
+        { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: MindsTitle, useValue: mindsTitleMock },

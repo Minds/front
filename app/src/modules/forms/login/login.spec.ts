@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
+import { sessionMock } from '../../../../tests/session-mock.spec';
 
 describe('LoginForm', () => {
 
@@ -67,6 +68,7 @@ describe('LoginForm', () => {
       declarations: [MaterialMock, LoginForm], // declare the test component
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
+        { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock }
       ]
     })

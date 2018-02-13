@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Rx';
 import {Subscription} from "rxjs";
 
 import { Client } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 
 import { RecommendedService } from '../../components/video/recommended.service';
 
@@ -54,7 +54,6 @@ import { RecommendedService } from '../../components/video/recommended.service';
 export class MediaTheatreComponent {
 
   object: any = {};
-  session = SessionFactory.build();
   nextVideo: any = {};
   ticks: number;
   timerSubscribe: Subscription;
@@ -62,6 +61,7 @@ export class MediaTheatreComponent {
   counterLimit: number = 10;
 
   constructor(
+    public session: Session,
     public client: Client, 
     public router: Router,
     private recommended: RecommendedService

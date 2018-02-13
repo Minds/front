@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { Client } from '../../services/api';
-import { Session, SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { BoostContractService } from '../blockchain/contracts/boost-contract.service';
 
 @Injectable()
 export class BoostService {
 
-  session: Session = SessionFactory.build();
-
-  constructor(private client: Client, private boostContractService: BoostContractService) { }
+  constructor(public session: Session, private client: Client, private boostContractService: BoostContractService) { }
 
   /**
    * Returns a promise with a collection of boosts.

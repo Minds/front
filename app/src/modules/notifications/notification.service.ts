@@ -1,21 +1,20 @@
 import { EventEmitter } from '@angular/core';
 import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { MindsTitle } from '../../services/ux/title';
 
 export class NotificationService {
-  session = SessionFactory.build();
   socketSubscriptions: any = {
     notification: null
   };
   onReceive: EventEmitter<any> = new EventEmitter();
 
-  static _(client: Client, sockets: SocketsService, title: MindsTitle) {
-    return new NotificationService(client, sockets, title);
+  static _(session: Session, client: Client, sockets: SocketsService, title: MindsTitle) {
+    return new NotificationService(session, client, sockets, title);
   }
 
-  constructor(public client: Client, public sockets: SocketsService, public title: MindsTitle) {
+  constructor(public session: Session, public client: Client, public sockets: SocketsService, public title: MindsTitle) {
     if (!window.Minds.notifications_count)
       window.Minds.notifications_count = 0;
 

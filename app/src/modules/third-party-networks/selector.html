@@ -16,7 +16,7 @@
 >
   <m-tooltip>
     <i m-tooltip--anchor [hidden]="inProgress" class="material-icons m-overgrown-material-icon">share</i>
-    <!-- i18n: @@M__ACTION__SHARE -->Share<!-- /i18n -->
+    <ng-container i18n="@@M__ACTION__SHARE">Share</ng-container>
   </m-tooltip>
   <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </a>

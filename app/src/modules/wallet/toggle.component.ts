@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Navigation as NavigationService } from '../../services/navigation';
 import { WalletService } from './wallet.service';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 
 import { animations } from '../../animations';
@@ -17,7 +17,6 @@ import { animations } from '../../animations';
 export class WalletToggleComponent implements AfterViewInit, OnDestroy {
 
   user;
-  session = SessionFactory.build();
   walletPopContent: string = '';
   walletPopState: any;
   balance: number = 0;
@@ -30,7 +29,7 @@ export class WalletToggleComponent implements AfterViewInit, OnDestroy {
   private queueWalletAnimationTimer;
   private queueWalletAnimationPoints: number = 0;
 
-  constructor(public wallet: WalletService, public storage: Storage) { }
+  constructor(public session: Session, public wallet: WalletService, public storage: Storage) { }
 
   ngAfterViewInit() {
     this.walletListen();

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { BoostConsoleType } from '../console.component';
 import { Client } from '../../../../services/api';
-import { Session, SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { RevenueLedgerComponent } from '../../../monetization/revenue/ledger.component';
 import { Poster } from '../../../legacy/controllers/newsfeed/poster/poster';
 
@@ -76,7 +76,7 @@ export class BoostConsoleBooster {
   loadComponent() {
     this.poster.clear();
     if (
-      ((this.type === 'peer' || this.type === 'newsfeed') && this.posts.length === 0)
+      ((this.type === 'offers' || this.type === 'newsfeed') && this.posts.length === 0)
       || (this.type === 'content' && this.media.length === 0)) {
 
 

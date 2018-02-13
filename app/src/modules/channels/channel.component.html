@@ -142,7 +142,7 @@
       <minds-channel-modules [owner]="user" type="image" [linksTo]="['/discovery', user.username, 'images']">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', user.username, 'images']">
-          <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
+          <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
         </a>
       </minds-channel-modules>
 
@@ -152,7 +152,7 @@
       <minds-channel-modules [owner]="user" type="video" limit="9" [linksTo]="['/discovery', user.username, 'videos']">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', user.username, 'videos']">
-          <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
+          <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
         </a>
       </minds-channel-modules>
 
@@ -162,7 +162,7 @@
       <minds-channel-modules [owner]="user" type="blog" limit="3" [linksTo]="['/blog', user.username]">
 
         <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/blog', user.username]">
-          <!-- i18n: @@M__COMMON__VIEW_MORE -->View More<!-- /i18n -->
+          <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
         </a>
       </minds-channel-modules>
 
@@ -170,7 +170,7 @@
   </section>
 
   <!-- Feed list -->
-  <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="_filter == 'feed'">
+  <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="filter == 'feed'">
 
     <minds-newsfeed-poster (load)="prepend($event)" *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid" #poster></minds-newsfeed-poster>
 
@@ -191,19 +191,19 @@
   </section>
 
   <!-- Supporters list -->
-  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'supporters'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'supporters'">
 
     <minds-channel-supporters [channel]="user" class="mdl-grid"></minds-channel-supporters>
 
   </section>
 
   <!-- Subscriptions list -->
-  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'subscriptions'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'subscriptions'">
 
     <div class="mdl-card m-channel--subscribers-tabs">
       <div class="mdl-tabs__tab-bar">
-        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">Subscribers ({{user.subscribers_count}})</a>
-        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">Subscriptions ({{user.subscriptions_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter === 'subscribers' }" i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">Subscribers ({{user.subscribers_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter === 'subscriptions' }" i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">Subscriptions ({{user.subscriptions_count}})</a>
       </div>
     </div>
 
@@ -212,12 +212,12 @@
   </section>
 
   <!-- Subscriptions list -->
-  <section class="mdl-cell mdl-cell--8-col" *ngIf="_filter == 'subscribers'">
+  <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'subscribers'">
 
     <div class="mdl-card m-channel--subscribers-tabs">
       <div class="mdl-tabs__tab-bar">
-        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscribers' }" i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">Subscribers ({{user.subscribers_count}})</a>
-        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': _filter == 'subscriptions' }" i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">Subscriptions ({{user.subscriptions_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter === 'subscribers' }" i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">Subscribers ({{user.subscribers_count}})</a>
+        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter === 'subscriptions' }" i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">Subscriptions ({{user.subscriptions_count}})</a>
       </div>
     </div>
 

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { GroupsService } from '../../groups-service';
 
 import { Client } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -18,7 +18,6 @@ export class GroupsProfileMembers {
   minds = window.Minds;
 
   group: any;
-  session = SessionFactory.build();
 
   invitees: any = [];
   members: Array<any> = [];
@@ -32,7 +31,7 @@ export class GroupsProfileMembers {
   private lastQuery;
   private searchDelayTimer;
 
-  constructor(public client: Client, public service: GroupsService) {
+  constructor(public session: Session, public client: Client, public service: GroupsService) {
 
   }
 

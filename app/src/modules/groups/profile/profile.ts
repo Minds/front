@@ -7,7 +7,7 @@ import { GroupsService } from '../groups-service';
 
 import { RecentService } from '../../../services/ux/recent';
 import { MindsTitle } from '../../../services/ux/title';
-import { SessionFactory } from '../../../services/session';
+import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 
 import { GroupsProfileFeed } from './feed/feed';
@@ -30,7 +30,6 @@ export class GroupsProfile {
   };
   editing: boolean = false;
   editDone: boolean = false;
-  session = SessionFactory.build();
   minds = window.Minds;
 
   activity: Array<any> = [];
@@ -48,6 +47,7 @@ export class GroupsProfile {
   private socketSubscription: any;
 
   constructor(
+    public session: Session,
     public service: GroupsService, 
     public route: ActivatedRoute, 
     public title: MindsTitle, 

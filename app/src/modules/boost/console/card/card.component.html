@@ -18,14 +18,14 @@
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">remove_red_eye</i>
-    <!-- i18n: @@M__COMMON__VIEWS_WITH_COUNT -->{{ boost.impressions | number }} views<!-- /i18n -->
+    <ng-container i18n="@@M__COMMON__VIEWS_WITH_COUNT">{{ boost.impressions | number }} views</ng-container>
   </div>
 
   <div *ngIf="boost.impressions"
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">done</i>
-    <!-- i18n -->{{ boost.met_impressions | number }} views so far<!-- /i18n -->
+    <ng-container i18n>{{ boost.met_impressions | number }} views so far</ng-container>
   </div>
 
   <!-- USD bid, if applicable -->
@@ -33,7 +33,7 @@
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">attach_money</i>
-    <!-- i18n: @@BOOST__CONSOLE__CARD__USD_VALUE -->{{ boost.bid / 100 | currency:'USD':true }} USD<!-- /i18n -->
+    <ng-container i18n="@@BOOST__CONSOLE__CARD__USD_VALUE">{{ boost.bid / 100 | currency:'USD':true }} USD</ng-container>
   </div>
 
   <!-- Points bid, if applicable -->
@@ -41,14 +41,14 @@
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">account_balance</i>
-    <!-- i18n: @@BOOST__CONSOLE__CARD__POINTS_VALUE -->{{ boost.bid | number }} points<!-- /i18n -->
+    <ng-container i18n="@@BOOST__CONSOLE__CARD__POINTS_VALUE">{{ boost.bid | number }} points</ng-container>
   </div>
 
   <div *ngIf="boost.method == 'tokens'"
     class="m-boost-card--manager-item"
   >
     <m--crypto-token-symbol ></m--crypto-token-symbol>
-    <!-- i18n: @@BOOST__CONSOLE__CARD__TOKENS_VALUE -->{{ boost.bid | number }} Tokens<!-- /i18n -->
+    <ng-container i18n="@@BOOST__CONSOLE__CARD__TOKENS_VALUE">{{ boost.bid | number }} Tokens</ng-container>
   </div>
 
   <!-- State (non-P2P or incoming P2P) -->
@@ -109,5 +109,5 @@
 
 <div class="m-boost-card--rejection-reason" *ngIf="boost.rejection_reason && boost.rejection_reason != -1">
   <i class="material-icons">warning</i>
-  <!--i18n: @@BOOST__CONSOLE__CARD__PREVIOUS_REJECTION -->Your boost was rejected: {{ findReason(boost.rejection_reason)?.label }}<!-- /i18n -->
+  <ng-container i18n="@@BOOST__CONSOLE__CARD__PREVIOUS_REJECTION">Your boost was rejected: {{ findReason(boost.rejection_reason)?.label }}</ng-container>
 </div>

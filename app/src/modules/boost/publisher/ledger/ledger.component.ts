@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Client } from '../../../../services/api/client';
-import { Session, SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { BoostConsoleFilter } from '../../console/console.component';
 
 @Component({

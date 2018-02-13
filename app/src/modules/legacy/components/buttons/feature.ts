@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 
 @Component({
@@ -25,14 +25,13 @@ import { Client } from '../../../../services/api';
 export class FeatureButton {
 
   object;
-  session = SessionFactory.build();
   isFeatured: boolean = false;
 
   open: boolean = false;
   category: string = 'not-selected';
   categories: Array<any> = [];
 
-  constructor(public client: Client) {
+  constructor(public session: Session, public client: Client) {
   }
 
   ngOnInit() {

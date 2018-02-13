@@ -8,13 +8,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class UtcDatePipe implements PipeTransform {
 
-  transform(value: string): any {
+  transform(value: string | number): any {
 
     if (!value) {
       return '';
     }
 
-    const dateValue = new Date(value);
+    const dateValue = new Date(<string>value);
 
     const dateWithNoTimezone = new Date(
       dateValue.getUTCFullYear(),

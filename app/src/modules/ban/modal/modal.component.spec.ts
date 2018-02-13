@@ -12,6 +12,8 @@ import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec'
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BanModalComponent } from './modal.component';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
 
 describe('BanModalComponent', () => {
   let comp: BanModalComponent;
@@ -28,6 +30,7 @@ describe('BanModalComponent', () => {
       declarations: [MaterialMock, MaterialSwitchMock, AbbrPipe, BanModalComponent], // declare the test component
       imports: [FormsModule],
       providers: [
+        { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock }
       ]

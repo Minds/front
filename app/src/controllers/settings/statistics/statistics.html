@@ -6,7 +6,7 @@
   <div class="mdl-card__supporting-text">
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n: @@MINDS__SETTINGS__FULL_NAME_LABEL -->Full Name<!-- /i18n -->
+        <ng-container i18n="@@MINDS__SETTINGS__FULL_NAME_LABEL">Full Name</ng-container>
       </div>
       <div class="minds-settings-data-text">
         {{data.fullname}}
@@ -14,7 +14,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n: @@M__COMMON__EMAIL -->Email<!-- /i18n -->
+        <ng-container i18n="@@M__COMMON__EMAIL">Email</ng-container>
       </div>
       <div class="minds-settings-data-text">
         {{data.email}}
@@ -22,7 +22,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n: @@MINDS__SETTINGS__MEMBER_SINCE_LABEL -->Member since<!-- /i18n -->
+        <ng-container i18n="@@MINDS__SETTINGS__MEMBER_SINCE_LABEL">Member since</ng-container>
       </div>
       <div class="minds-settings-data-text">
         {{data.memberSince * 1000 | date:'shortTime'}} - {{data.memberSince * 1000 | date:'longDate'}}
@@ -30,7 +30,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n: @@MINDS__SETTINGS__LAST_LOGGED_IN_LABEL -->Last logged in<!-- /i18n -->
+        <ng-container i18n="@@MINDS__SETTINGS__LAST_LOGGED_IN_LABEL">Last logged in</ng-container>
       </div>
       <div class="minds-settings-data-text">
         {{data.lastLogin * 1000 | date:'shortTime'}} - {{data.lastLogin * 1000 | date:'longDate'}}
@@ -51,7 +51,7 @@
   <div class="mdl-card__supporting-text">
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n: @@MINDS__SETTINGS__STORAGE_LABEL -->Storage<!-- /i18n -->
+        <ng-container i18n="@@MINDS__SETTINGS__STORAGE_LABEL">Storage</ng-container>
       </div>
       <div class="minds-settings-data-text">
         {{data.storage}}
@@ -59,7 +59,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n: @@MINDS__SETTINGS__BANDWIDTH_LABEL -->Bandwidth<!-- /i18n -->
+        <ng-container i18n="@@MINDS__SETTINGS__BANDWIDTH_LABEL">Bandwidth</ng-container>
       </div>
       <div class="minds-settings-data-text">
         {{data.bandwidth}}
@@ -73,7 +73,7 @@
   <div class="mdl-card__supporting-text">
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n: @@M__COMMON__REFERRALS -->Referrals<!-- /i18n -->
+        <ng-container i18n="@@M__COMMON__REFERRALS">Referrals</ng-container>
       </div>
       <div class="minds-settings-data-text">
         {{data.referrals}}
@@ -81,7 +81,7 @@
     </div>
     <div class="minds-settings-data-text-container">
       <div class="minds-settings-data-text">
-        <!-- i18n: @@M__COMMON__EARNINGS -->Earnings<!-- /i18n -->
+        <ng-container i18n="@@M__COMMON__EARNINGS">Earnings</ng-container>
       </div>
       <div class="minds-settings-data-text">
         {{data.earnings}}

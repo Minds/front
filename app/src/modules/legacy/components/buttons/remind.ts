@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { SignupModalService } from '../../../../modules/modals/signup/service';
 
@@ -29,11 +29,10 @@ export class RemindButton {
 
   object;
   showModal: boolean = false;
-  session = SessionFactory.build();
   message: string = '';
   remindOpen: boolean = false;
 
-  constructor(public client: Client, private modal: SignupModalService) {
+  constructor(public session: Session, public client: Client, private modal: SignupModalService) {
   }
 
   set _object(value: any) {

@@ -40,14 +40,14 @@ import { GroupsService } from '../groups-service';
   <m-modal [open]="kickPrompt">
       <div class="mdl-card__supporting-text">
         <p i18n="@@GROUPS__REMOVE_X_FROM_Y_CONFIRM">Are you sure you want to remove {{ user.username }} from {{ group.name }}?</p>
-        <p><input type="checkbox" #ban> <!-- i18n: @@M__COMMON__BAN_PERMANENTLY -->Ban permanently<!-- /i18n --></p>
+        <p><input type="checkbox" #ban> <ng-container i18n="@@M__COMMON__BAN_PERMANENTLY">Ban permanently</ng-container></p>
       </div>
       <div class="minds-modal-dialog-actions">
         <button (click)="kick(ban.checked)" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-          <!-- i18n: @@M__ACTION__CONFIRM -->Confirm<!-- /i18n -->
+          <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
         </button>
         <button (click)="cancelRemove()" class="mdl-button mdl-js-button mdl-button--colored">
-          <!-- i18n: @@M__ACTION__CANCEL -->Cancel<!-- /i18n -->
+          <ng-container i18n="@@M__ACTION__CANCEL">Cancel</ng-container>
         </button>
       </div>
   </m-modal>

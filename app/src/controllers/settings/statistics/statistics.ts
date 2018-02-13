@@ -17,8 +17,8 @@ export class SettingsStatistics {
   data = {
     fullname: 'minds',
     email: 'minds@minds.com',
-    memberSince: new Date(),
-    lastLogin: new Date(),
+    memberSince: Date.now(),
+    lastLogin: Date.now(),
     storage: '0 GB\'s',
     bandwidth: '0 GB\'s',
     referrals: 500,

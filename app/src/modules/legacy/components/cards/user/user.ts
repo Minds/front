@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SessionFactory } from '../../../../../services/session';
+import { Session } from '../../../../../services/session';
 import { Client } from '../../../../../services/api';
 
 @Component({
@@ -13,12 +13,11 @@ import { Client } from '../../../../../services/api';
 export class UserCard {
 
   user: any;
-  session = SessionFactory.build();
   minds = window.Minds;
   avatarSize: string = 'medium';
   bannerSrc: string;
 
-  constructor(public client: Client) {
+  constructor(public session: Session, public client: Client) {
   }
 
   set object(value: any) {

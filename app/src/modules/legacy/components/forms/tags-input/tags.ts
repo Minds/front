@@ -1,7 +1,7 @@
 import { Component, EventEmitter, ElementRef } from '@angular/core';
 
 import { Client, Upload } from '../../../../../services/api';
-import { SessionFactory } from '../../../../../services/session';
+import { Session } from '../../../../../services/session';
 
 @Component({
   selector: 'minds-form-tags-input',
@@ -29,7 +29,6 @@ import { SessionFactory } from '../../../../../services/session';
 
 export class TagsInput {
 
-  session = SessionFactory.build();
   error: string = '';
   inProgress: boolean = false;
 
@@ -38,7 +37,7 @@ export class TagsInput {
   tags: Array<string> = [];
   change: EventEmitter<any> = new EventEmitter();
 
-  constructor(private element: ElementRef) {
+  constructor(public session: Session, private element: ElementRef) {
 
   }
 

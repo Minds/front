@@ -1,7 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 
 import { Client } from '../../../../services/api';
-import { SessionFactory } from '../../../../services/session';
+import { Session } from '../../../../services/session';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { BanModalComponent } from '../../../ban/modal/modal.component';
 
@@ -64,7 +64,7 @@ import { BanModalComponent } from '../../../ban/modal/modal.component';
       [open]="true"
       [closeAfterAction]="true"
       (closed)="banToggle = false"
-      (actioned)="ban($event)"
+      (actioned)="ban()"
       yesButton="Ban user"
       i18n-yesButton="@@M__ACTION__BAN_USER"
     >
@@ -80,7 +80,7 @@ import { BanModalComponent } from '../../../ban/modal/modal.component';
       [open]="true"
       [closeAfterAction]="true"
       (closed)="banMonetizationToggle = false"
-      (actioned)="banMonetization($event)"
+      (actioned)="banMonetization()"
       yesButton="Ban user"
       i18n-yesButton="@@M__ACTION__BAN_USER"
     >
@@ -106,9 +106,7 @@ export class UserDropdownButton {
   banToggle: boolean = false;
   banMonetizationToggle: boolean = false;
 
-  session = SessionFactory.build();
-
-  constructor(public client: Client, public overlayService: OverlayModalService) {
+  constructor(public session: Session, public client: Client, public overlayService: OverlayModalService) {
   }
 
   block() {

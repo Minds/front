@@ -15,6 +15,8 @@ import { recentServiceMock } from '../../../mocks/services/ux/recent-mock.spec';
 import { ContextService, ContextServiceResponse } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
 import { SearchBarSuggestionsComponent } from './suggestions.component';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
 
 /* tslint:disable */
 
@@ -43,6 +45,7 @@ describe('SearchBarSuggestionsComponent', () => {
         ReactiveFormsModule
       ],
       providers: [
+        { provide: Session, useValue: sessionMock},
         { provide: Client, useValue: clientMock },
         { provide: RecentService, useValue: recentServiceMock },
         { provide: ContextService, useValue: contextServiceMock }

@@ -7,7 +7,7 @@ import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { MindsActivityObject } from '../../interfaces/entities';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Poster } from '../../modules/legacy/controllers/newsfeed/poster/poster';
 import { ContextService } from '../../services/context.service';
@@ -25,7 +25,6 @@ export class NewsfeedComponent {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  session = SessionFactory.build();
   showRightSidebar: boolean = true;
   minds;
 
@@ -53,6 +52,7 @@ export class NewsfeedComponent {
   @ViewChild('poster') private poster: Poster;
 
   constructor(
+    public session: Session,
     public client: Client,
     public upload: Upload,
     public navigation: NavigationService,

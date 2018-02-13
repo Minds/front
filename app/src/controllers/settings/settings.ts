@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Rx';
 
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -16,7 +16,6 @@ import { SessionFactory } from '../../services/session';
 export class Settings {
 
   minds: Minds;
-  session = SessionFactory.build();
   user: any;
   filter: string;
   account_time_created: any;
@@ -24,7 +23,7 @@ export class Settings {
 
   paramsSubscription: Subscription;
 
-  constructor(public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+  constructor(public session: Session, public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
   }
 
   ngOnInit() {

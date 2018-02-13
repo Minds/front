@@ -7,4 +7,18 @@ export let sessionMock = new function () {
   this.isAdmin = () => {
       return true;
   };
+
+  this.getLoggedInUser = () => {
+    return {
+      guid: '1000',
+    }
+  };
+
+  this.isLoggedIn = (fn) => {
+    return true;
+  };
+
+  this.login = () => { }
+
+  this.logout = () => { }
 };

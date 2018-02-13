@@ -1,7 +1,7 @@
 import { Component, Inject, EventEmitter } from '@angular/core';
 
 import { GroupsService } from './groups-service';
-import { SessionFactory } from '../../services/session';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'minds-groups-join-button',
@@ -37,11 +37,10 @@ export class GroupsJoinButton {
   minds;
   showModal: boolean = false;
   group: any;
-  session = SessionFactory.build();
   membership: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(public service: GroupsService) {
+  constructor(public session: Session, public service: GroupsService) {
     this.minds = window.Minds;
   }
 
