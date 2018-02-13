@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, ElementRef, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, ElementRef, Input, ViewChild } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { SessionFactory } from '../../../../../services/session';
@@ -9,6 +9,7 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { ChannelBadgesComponent } from '../../../../../common/components/badges/badges.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
+import { MindsVideoComponent } from '../../../../media/components/video/video.component';
 
 @Component({
   moduleId: module.id,
@@ -68,6 +69,8 @@ export class Activity {
 
   private defaultMenuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
   menuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
+
+  @ViewChild('player') player: MindsVideoComponent;
 
   constructor(
     public client: Client,
@@ -289,6 +292,13 @@ export class Activity {
         action: 'translate',
         args: [$event]
       });
+    }
+  }
+
+  hide() {
+    if (this.player) {
+      console.warn('player: ', this.player);
+      this.player.pause();
     }
   }
 }

@@ -206,6 +206,12 @@ export class MindsVideoComponent {
     }
   }
 
+  pause() {
+    if (this.element.paused === false) {
+      this.element.pause();
+    }
+  }
+
   ngOnDestroy() {
     if (this.scroll_listener)
       this.scroll.unListen(this.scroll_listener);
