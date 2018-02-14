@@ -60,6 +60,9 @@ export class NewsfeedBoostRotatorComponent {
     this.disabled = this.session.getLoggedInUser().plus && this.session.getLoggedInUser().disabled_boost;
     this.load();
     this.scroll_listener = this.scroll.listenForView().subscribe(() => this.isVisible());
+
+    const paused = localStorage.getItem('boost:rotator:autorotate:paused');
+    this.paused = paused === 'true';
   }
 
   /**
@@ -205,8 +208,12 @@ export class NewsfeedBoostRotatorComponent {
     this.isVisible();
   }
 
-  pause() {
-    this.paused = true;
+  togglePause(forceValue?: boolean) {
+    if (forceValue) {
+      this.paused = forceValue;
+    }
+    this.paused = !this.paused;
+    localStorage.setItem('boost:rotator:autorotate:paused', this.paused.toString());
   }
 
   prev() {

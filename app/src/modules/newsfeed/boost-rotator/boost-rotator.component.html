@@ -51,17 +51,17 @@
           <input type="checkbox" id="switch-explicit" class="mdl-switch__input" [ngModel]="session.getLoggedInUser().mature" (ngModelChange)="setExplicit(true)">
         </label>
       </li>
-      <li class="mdl-menu__item" (click)="paused = !paused;" *ngIf="!disabled">
+      <li class="mdl-menu__item" (click)="togglePause()" *ngIf="!disabled">
         <span i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__AUTO_ROTATE_ITEM">Auto-rotate</span>
         <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__AUTO_ROTATE_ITEM_TOOLTIP">
           This will enable/disable the Boost box on top of your feed from self-rotating.
         </m-tooltip>
         <span class="m-dropdown--spacer"></span>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2" [mdlSwitch] [toggled]="true" *ngIf="!paused">
-          <input type="checkbox" id="switch-2" class="mdl-switch__input" [ngModel]="!paused" (ngModelChange)="paused = !paused">
+          <input type="checkbox" id="switch-2" class="mdl-switch__input" [ngModel]="!paused" (ngModelChange)="togglePause()">
         </label>
         <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2" [mdlSwitch] [toggled]="false" *ngIf="paused">
-          <input type="checkbox" id="switch-2" class="mdl-switch__input" [ngModel]="paused" (ngModelChange)="paused = !paused">
+          <input type="checkbox" id="switch-2" class="mdl-switch__input" [ngModel]="paused" (ngModelChange)="togglePause()">
         </label>
       </li>
       <li class="mdl-menu__item" *ngIf="plus">
