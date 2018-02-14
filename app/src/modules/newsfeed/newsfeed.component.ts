@@ -74,8 +74,9 @@ export class NewsfeedComponent {
   }
 
   ngOnInit() {
+
     if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/newsfeed/top']);
     } else {
       this.load();
       //this.setUpPoll();

@@ -13,6 +13,7 @@
       <a class="m-topbar--navigation--item"
         routerLink="/newsfeed/subscribed"
         routerLinkActive="m-topbar--navigation--item-active"
+        *ngIf="session.isLoggedIn()"
       >
         <span i18n="@@M__FEATURE__NEWSFEED_PLURAL">Subscribed</span>
         <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIBED_TOOLTIP">
@@ -32,13 +33,13 @@
   </div>
 </div>
 
-<div class="mdl-grid m-newsfeed" >
+<div class="mdl-grid m-newsfeed">
 
-    <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar">
+    <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar" >
 
-      <minds-card-user [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
+      <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
 
-      <a [routerLink]="['/wallet/purchase']" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link" *ngIf="session.getLoggedInUser().plus">
+      <a [routerLink]="['/wallet/purchase']" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link" *ngIf="session.isLoggedIn() && session.getLoggedInUser().plus">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">favorite</i>
           <ng-container i18n="@@M__ACTION__BUY_POINTS">Buy Points</ng-container>
@@ -46,14 +47,14 @@
         </div>
       </a>
 
-      <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"  *ngIf="!session.getLoggedInUser().plus">
+      <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"  *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">add_circle</i>
           <ng-container i18n="@@MINDS__NEWSFEED__UPGRADE_TO_PLUS_ACTION">Upgrade to Plus</ng-container>
         </div>
       </a>
 
-      <a routerLink="/monetization" *ngIf="!session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link">
+      <a routerLink="/monetization" *ngIf="session.isLoggedIn() && !session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">account_balance</i>
           <ng-container i18n="@@MINDS__NEWSFEED__MONETIZE_CHANNEL_ACTION">Monetize your Channel</ng-container>
@@ -93,6 +94,12 @@
         </div>
       </a>
 
+      <a routerLink="/login" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link" *ngIf="!session.isLoggedIn()">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
+          <!-- i18n: @@M__ACTION__LOGIN -->Login<!-- /i18n -->
+        </div>
+      </a>
+
       <div class="minds-spacer minds-spacer-2x"></div>
 
       <div class="mdl-card mdl-color--white m-border">
@@ -117,7 +124,7 @@
       </div>
     </div>
 
-    <div class="mdl-cell mdl-cell--8-col m-newsfeed--feed">
+    <div class="mdl-cell mdl-cell--8-col m-newsfeed--feed"  [ngClass]="{ 'm-newsfeed--logged-out' : !session.getLoggedInUser()}">
 
       <router-outlet></router-outlet>
 

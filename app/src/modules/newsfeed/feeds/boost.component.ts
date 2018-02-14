@@ -131,7 +131,10 @@ export class NewsfeedBoostComponent {
   }
 
   onViewed(event: {activity, visible}) {
-    if(event.visible){
+    if (!this.session.isLoggedIn())
+      return;
+
+    if (event.visible) {
       this.client.put('api/v1/boost/fetch/newsfeed/' + event.activity.boosted_guid);
     }else {
       this.client.put('api/v1/boost/fetch/newsfeed/' + event.activity.boosted_guid + '/stop');
