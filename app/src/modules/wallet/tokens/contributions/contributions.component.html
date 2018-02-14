@@ -8,8 +8,11 @@
     <thead>
       <tr class="m-token-contributions--ledger-header">
         <th class="mdl-data-table__cell--non-numeric m-data-title">Date</th>
-        <th class="mdl-data-table__cell--non-numeric m-data-title">Metric</th>
-        <th class="mdl-data-table__cell--non-numeric m-data-title">Amount</th>
+        <th class="mdl-data-table__cell--non-numeric m-data-title">Checkins</th>
+        <th class="mdl-data-table__cell--non-numeric m-data-title">Votes</th>
+        <th class="mdl-data-table__cell--non-numeric m-data-title">Comments</th>
+        <th class="mdl-data-table__cell--non-numeric m-data-title">Reminds</th>
+        <th class="mdl-data-table__cell--non-numeric m-data-title">Subscribers</th>
         <th class="mdl-data-table__cell--non-numeric m-data-title">Score</th>
       </tr>
     </thead>
@@ -17,13 +20,16 @@
     <tbody>
       <tr *ngFor="let contribution of contributions; let i = index" class="m-token-contributions--ledger-row">
         <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.timestamp | date:'mediumDate':'+0000' }}</td>
-        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metric | uppercase }}</td>
-        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.amount | number }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metrics.checkins | number }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metrics.votes | number }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metrics.comments | number }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metrics.reminds | number }}</td>
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.metrics.subscribers | number }}</td>
         <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.score | number }}</td>
       </tr>
 
       <tr *ngIf="!contributions || !contributions.length" class="m-token-contributions--ledger-row m-wire-console--ledger-row-placeholder">
-        <td colspan="4" class="m-token-contributions--ledger-row-notice">
+        <td colspan="7" class="m-token-contributions--ledger-row-notice">
           No contributions to show.
         </td>
       </tr>
