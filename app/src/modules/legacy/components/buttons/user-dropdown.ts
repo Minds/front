@@ -4,6 +4,7 @@ import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { BanModalComponent } from '../../../ban/modal/modal.component';
+import { ReportCreatorComponent } from '../../../report/creator/creator.component';
 
 @Component({
   selector: 'minds-button-user-dropdown',
@@ -40,6 +41,12 @@ import { BanModalComponent } from '../../../ban/modal/modal.component';
         i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_FROM_MONETIZATION"
         >
         Un-ban from Monetization
+      </li>
+      <li class="mdl-menu__item"
+        (click)="report(); showMenu = false"
+        i18n="@@M__ACTION__REPORT"
+      >
+        Report
       </li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
@@ -215,6 +222,11 @@ export class UserDropdownButton {
           }
         });
     }
+  }
+
+  report() {
+    this.overlayService.create(ReportCreatorComponent, this.user)
+      .present();
   }
 
   async setSpam(value: boolean) {
