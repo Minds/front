@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
+import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 
 @Component({
   moduleId: module.id,
@@ -15,15 +16,22 @@ export class WalletTokenTransactionsComponent {
 
   startDate: string;
   endDate: string;
+  addresses: Array<{label: string, address?: string, selected: boolean}> = [];
   inProgress: boolean = false;
   transactions: any[] = [];
   offset: string;
   moreData: boolean = true;
+  selectedContract: string | null = null;
+  contracts: string[] = ['withdraw', 'wire', 'plus', 'token'];
+
+  contractsToggle: boolean = false;
+  addressesToggle: boolean = false;
 
   @Input() preview: boolean = false; // Preview mode
 
   constructor(
     protected client: Client,
+    protected web3Wallet: Web3WalletService,
     protected cd: ChangeDetectorRef,
     protected router: Router,
     protected session: Session,
@@ -31,7 +39,7 @@ export class WalletTokenTransactionsComponent {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     //if (!this.session.getLoggedInUser().phone_number_hash) {
     //  this.router.navigate(['/wallet/tokens/rewards/join']);
@@ -46,7 +54,46 @@ export class WalletTokenTransactionsComponent {
     d.setHours(0, 0, 0);
     this.startDate = d.toISOString();
 
+    await this.getAddresses();
     this.load(true);
+  }
+
+  async getAddresses() {
+    this.inProgress = true;
+    let receiverAddress: string = this.session.getLoggedInUser().eth_wallet;
+    this.addresses = [
+      {
+        address: receiverAddress,
+        label: 'Receiver',
+        selected: true
+      },
+      {
+        label: 'OffChain',
+        address: 'offchain',
+        selected: true
+      }
+    ];
+
+    try {
+      const onchainAddress = await this.web3Wallet.getCurrentWallet();
+      if (!onchainAddress)
+        return;
+
+      if (this.addresses[0].address == onchainAddress) {
+        this.addresses[0].label = 'OnChain & Receiver';
+        this.detectChanges();
+        return; //no need to count twice
+      }
+
+      this.addresses.unshift({
+        'label': "OnChain",
+        'address': onchainAddress,
+        'selected': true
+      });
+      this.detectChanges();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async load(refresh: boolean) {
@@ -71,11 +118,25 @@ export class WalletTokenTransactionsComponent {
       startDate.setHours(0, 0, 0);
       endDate.setHours(23, 59, 59);
 
-      let response: any = await this.client.get(`api/v2/blockchain/transactions/ledger`, {
+      let addresses = this.addresses.filter((item) => {
+          return item.selected;
+        })
+        .map((item) => {
+          return item.address
+        })
+        .join(',');
+
+      let opts: any = {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
+        addresses: addresses,
         offset: this.offset
-      });
+      };
+
+      if (this.selectedContract)
+        opts.contract = this.selectedContract;
+
+      let response: any = await this.client.get(`api/v2/blockchain/transactions/ledger`, opts);
 
       if (refresh) {
         this.transactions = [];
@@ -111,6 +172,41 @@ export class WalletTokenTransactionsComponent {
 
   onEndDateChange(newDate) {
     this.endDate = newDate;
+    this.load(true);
+  }
+
+  toggleContractsMenu(forceValue?: boolean) {
+    if (typeof forceValue !== 'undefined') {
+      this.contractsToggle = forceValue;
+      return;
+    }
+
+    this.contractsToggle = !this.contractsToggle;
+  }
+
+  toggleAddressesMenu(forceValue?: boolean) {
+    if (typeof forceValue !== 'undefined') {
+      this.addressesToggle = forceValue;
+      return;
+    }
+
+    this.addressesToggle = !this.addressesToggle;
+  }
+
+  toggleContract(contract) {
+    if (this.selectedContract === contract) {
+      this.selectedContract = null;
+    } else {
+      this.selectedContract = contract;
+    }
+
+    this.detectChanges();
+    this.load(true);
+  }
+
+  toggleAddress(address) {
+    address.selected = !address.selected;
+    this.detectChanges();
     this.load(true);
   }
 

@@ -1,5 +1,53 @@
 <div class="m-token--ledger">
   <div class="m-token--ledger-filters m-border" *ngIf="!preview; else previewHeader">
+    
+    <m-dropdown class="m-token--ledger-filters--addresses">
+      <label class="m-token--ledger-filters--label">
+        <span>Addresses</span>
+        <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
+        <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
+      </label>
+
+      <ul class="m-dropdown--list">
+        <li class="m-dropdown--list--item" *ngFor="let address of addresses" (click)="toggleAddress(address)">
+          
+          <span>
+            <ng-container *ngIf="address.address !== 'offchain'; else offchainSpan">
+              {{ address.label }} ({{ address.address | addressExcerpt }})
+            </ng-container>
+            <ng-template #offchainSpan>
+              <span>{{ address.label }}</span>
+            </ng-template>
+          </span>
+
+          <div class="m-layout--spacer"></div>
+
+          <i class="material-icons m-token--ledger-filters--check" [class.selected]="address.selected">check</i>
+        </li>
+      </ul>
+    </m-dropdown>
+
+    <m-dropdown class="m-token--ledger-filters--addresses">
+      <label class="m-token--ledger-filters--label">
+        <span>Contracts</span>
+        <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
+        <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
+      </label>
+      <ul class="m-dropdown--list">
+        <li class="m-dropdown--list--item" (click)="toggleContract(null)">
+            <span style="text-transform: capitalize">All contracts</span>
+            <div class="m-layout--spacer"></div>
+            <i class="material-icons m-token--ledger-filters--check selected" *ngIf="!selectedContract">check</i>
+          </li>
+        <li class="m-dropdown--list--item" *ngFor="let contract of contracts" (click)="toggleContract(contract)">
+          <span style="text-transform: capitalize">{{ contract }}</span>
+          <div class="m-layout--spacer"></div>
+          <i class="material-icons m-token--ledger-filters--check selected" *ngIf="selectedContract == contract">check</i>
+        </li>
+      </ul>
+    </m-dropdown>
+
+    <div class="m-layout--spacer"></div>
     <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
     <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
   </div>

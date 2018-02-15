@@ -1,4 +1,9 @@
 .m-token--ledger {
+  .minds-dropdown-menu {
+    .mdl-menu__item.selected {
+      background-color: #eee;
+    }
+  }
   .m-token--ledger--reward {
     background: #FFF;
     padding: 16px;
@@ -67,9 +72,75 @@
   margin-bottom: 8px;
   background: #FFF;
 
+  label.m-token--ledger-filters--label {
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+    align-self: center;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .m-token--ledger-filters--check {
+    font-size: 18px;
+    vertical-align: middle;
+    color: #eee;
+  }
+
+  input, select {
+    border: 1px solid #DEDEDE;
+  }
+
   m-date-selector {
     margin-left: 8px;
     display: flex;
+  }
+
+  .m-token--ledger-filters--addresses {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0 10px;
+
+    & > label {
+      cursor: pointer;
+
+      i {
+        font-size: 16px;
+      }
+    }
+
+    .minds-dropdown-menu {
+      width: auto;
+      max-width: 300px;
+
+      .mdl-menu__item {
+        display: flex;
+        align-items: center;
+        overflow: visible;
+        font-size: 12px;
+
+        .mdl-checkbox {
+          width: initial;
+        }
+
+        > label.mdl-switch {
+          width: 36px;
+        }
+
+        .m-tooltip {
+          i {
+            font-size: 16px;
+            margin: 0 8px;
+            color:#888;
+          }
+          .m-tooltip--bubble {
+            max-width: initial;
+          }
+        }
+
+      }
+    }
   }
 
   &.m-token--ledger-filters--preview {

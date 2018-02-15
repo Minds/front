@@ -36,6 +36,7 @@ import { CaptchaComponent } from './components/captcha/captcha.component';
 import { Textarea } from './components/editors/textarea.component';
 import { MindsTinymce } from './components/editors/tinymce';
 import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 import { DynamicHostDirective } from './directives/dynamic-host.directive';
 import { MindsCard } from './components/card/card.component';
@@ -87,6 +88,7 @@ import { Client, Upload } from '../services/api';
     ChannelBadgesComponent,
     MindsRichEmbed,
     TagcloudComponent,
+    DropdownComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -145,6 +147,7 @@ import { Client, Upload } from '../services/api';
     ChannelBadgesComponent,
     MindsRichEmbed,
     TagcloudComponent,
+    DropdownComponent,
 
     AutoGrow,
     InlineAutoGrow,
