@@ -1,5 +1,5 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick, flushMicrotasks } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { Component, DebugElement, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -16,7 +16,7 @@ import { Scheduler } from '../../../common/components/scheduler/scheduler';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
 
-import { VisibleBoostError, BoostCreatorComponent, BoostType } from './creator.component';
+import { BoostCreatorComponent } from './creator.component';
 import { BoostService } from '../boost.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { tokenContractServiceMock } from '../../../../tests/token-contract-service-mock.spec';
@@ -32,7 +32,7 @@ import { Session } from '../../../services/session';
 /* tslint:disable */
 @Component({
   selector: 'minds-payments-stripe-checkout',
-  outputs: [ 'inputed', 'done' ],
+  outputs: ['inputed', 'done'],
   template: ''
 })
 export class StripeCheckoutMock {
@@ -51,7 +51,7 @@ export class StripeCheckoutMock {
 
 @Component({
   selector: 'm--categories-selector',
-  outputs: [ 'inputed', 'done' ],
+  outputs: ['inputed', 'done'],
   template: ''
 })
 export class CategoriesSelectorMock {
@@ -105,14 +105,49 @@ export class BoostCheckoutMock {
   @Output() boostChange = new EventEmitter();
 }
 
+let web3WalletServiceMock = new function () {
+  this.wallets = ['0x123', '0x1234'];
+  this.balance = 127000000000000000000;
+  this.onChainInterfaceLabel = 'Metamask';
+  this.unavailable = false;
+  this.locked = false;
+
+  this.isUnavailable = jasmine.createSpy('isUnavailable').and.callFake(async () => {
+    return this.unavailable;
+  });
+
+  this.unlock = jasmine.createSpy('unlock').and.callFake(async () => {
+    return this.locked;
+  });
+
+  this.ready = jasmine.createSpy('ready').and.callFake(async () => {
+    return true;
+  });
+
+  this.getWallets = jasmine.createSpy('getWallets').and.callFake(async () => {
+    return this.wallets;
+  });
+  this.getCurrentWallet = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
+    return this.wallets[0]
+  });
+  this.getBalance = jasmine.createSpy('getBalance').and.callFake(async () => {
+    return this.balance;
+  });
+
+  this.getOnChainInterfaceLabel = jasmine.createSpy('getOnChainInterfaceLabel').and.callFake(() => {
+    return this.onChainInterfaceLabel ? this.onChainInterfaceLabel: 'Metamask';
+  });
+};
+
 export const SELECTED_CATEGORIES_MOCK_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SelectedCategoriesMock),
   multi: true
 };
+
 @Component({
   selector: 'm--selected-categories',
-  outputs: [ 'inputed', 'done' ],
+  outputs: ['inputed', 'done'],
   template: '',
   host: {
     'change': 'propagateChange($event.target.value)'
@@ -141,6 +176,7 @@ export class SelectedCategoriesMock {
   writeValue(value: any[]) {
     this.selectedCategories = value;
   }
+
   registerOnChange(fn: any) {
     this.propagateChange = fn;
   }
@@ -153,15 +189,17 @@ export class SelectedCategoriesMock {
   selector: 'm--crypto-token-symbol',
   template: ''
 })
-class CryptoTokenSymbolMock { }
+class CryptoTokenSymbolMock {
+}
 
 @Component({
   selector: 'm-checkout--blockchain',
   template: ''
 })
-class BlockchainCheckoutMock { }
+class BlockchainCheckoutMock {
+}
 
-describe('BoostCreatorComponent', () => {
+fdescribe('BoostCreatorComponent', () => {
   let boostComponent: BoostCreatorComponent;
   let fixture: ComponentFixture<BoostCreatorComponent>;
   let submitSection: DebugElement;
@@ -169,25 +207,25 @@ describe('BoostCreatorComponent', () => {
   let loadCategoriesSpy: jasmine.Spy;
 
   window.Minds.categories = {
-    "art":"Art",
-    "animals":"Animals",
-    "music":"Music",
-    "science":"Science",
-    "technology":"Technology",
-    "gaming":"Gaming",
-    "history":"History",
-    "nature":"Nature",
-    "news":"News",
-    "politics":"Politics",
-    "comedy":"Comedy",
-    "film":"Film ",
-    "education":"Education",
-    "sports":"Sports",
-    "food":"Food",
-    "modeling":"Modeling",
-    "spirituality":"Spirituality ",
-    "travel":"Travel",
-    "health":"Health"
+    "art": "Art",
+    "animals": "Animals",
+    "music": "Music",
+    "science": "Science",
+    "technology": "Technology",
+    "gaming": "Gaming",
+    "history": "History",
+    "nature": "Nature",
+    "news": "News",
+    "politics": "Politics",
+    "comedy": "Comedy",
+    "film": "Film ",
+    "education": "Education",
+    "sports": "Sports",
+    "food": "Food",
+    "modeling": "Modeling",
+    "spirituality": "Spirituality ",
+    "travel": "Travel",
+    "health": "Health"
   };
 
   const boostUser = {
@@ -224,11 +262,11 @@ describe('BoostCreatorComponent', () => {
     'signup_method': false,
     'social_profiles': [],
     'feature_flags': false,
-    'programs': [ 'affiliate' ],
+    'programs': ['affiliate'],
     'plus': false,
     'verified': false,
     'disabled_boost': false,
-    'categories': [ 'news', 'film', 'spirituality' ],
+    'categories': ['news', 'film', 'spirituality'],
     'wire_rewards': null,
     'subscribed': false,
     'subscriber': false,
@@ -294,8 +332,22 @@ describe('BoostCreatorComponent', () => {
   function getBoostTypesList(): DebugElement {
     return fixture.debugElement.query(By.css('section.m-boost--creator-section-type > ul.m-boost--creator-selector'));
   }
+
   function getBoostTypeItem(i: number) {
     return fixture.debugElement.query(By.css(`section.m-boost--creator-section-type > ul.m-boost--creator-selector > li:nth-child(${i})`));
+  }
+
+  function togglePriority() {
+    fixture.debugElement.query(By.css('section.m-boost--creator-section-priority .m-boost--creator-toggle')).nativeElement.click();
+    fixture.detectChanges();
+  }
+
+  function getSubmitButton(): DebugElement {
+    return fixture.debugElement.query(By.css('.m-boost--creator--submit .m-boost--creator-button'));
+  }
+
+  function getNextButton(): DebugElement {
+    return fixture.debugElement.query(By.css('.m-boost--creator-section-submit .m-boost--creator--submit button.m-boost--creator-button'));
   }
 
   beforeEach(async(() => {
@@ -317,12 +369,12 @@ describe('BoostCreatorComponent', () => {
         BoostP2PSearchMock,
         BoostCheckoutMock,
       ],
-      imports: [ FormsModule ],
+      imports: [FormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         BoostService,
-        Web3WalletService,
+        { provide: Web3WalletService, useValue: web3WalletServiceMock },
         OffchainPaymentService,
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: TokenContractService, useValue: tokenContractServiceMock },
@@ -339,9 +391,10 @@ describe('BoostCreatorComponent', () => {
     jasmine.clock().install();
     fixture = TestBed.createComponent(BoostCreatorComponent);
     boostComponent = fixture.componentInstance;
-    
+
     // Set up mock HTTP client
     clientMock.response = {};
+    clientMock.response['api/v1/guid'] = { 'status': 'success', 'guid': '123' };
     // send a boost - POST `api/v1/boost/${boostType}/${this.object.guid}/${this.object.owner_guid}`
     //clientMock.response[`api/v1/boost/peer/${boostActivity.guid}/${boostActivity.owner_guid}`] = { 'status': 'success' };
 
@@ -353,7 +406,7 @@ describe('BoostCreatorComponent', () => {
     // Network DELETE `api/v1/boost/${boost.handler}/${boost.guid}/revoke`
 
     // boost.component -> GET `api/v1/boost/rates`
-    clientMock.response[ `api/v1/boost/rates` ] = {
+    clientMock.response[`api/v1/boost/rates`] = {
       'status': 'success',
       'balance': 28540,
       'hasPaymentMethod': false,
@@ -362,7 +415,8 @@ describe('BoostCreatorComponent', () => {
       'min': 500,
       'priority': 1,
       'usd': 1000,
-      'minUsd': 1
+      'minUsd': 1,
+      'tokens': 1000,
     };
     // boost.component -> GET `api/v1/search`
 
@@ -406,7 +460,7 @@ describe('BoostCreatorComponent', () => {
     boostComponent.object = boostUser;
     boostComponent.syncAllowedTypes();
     fixture.detectChanges();
-    
+
     const availableBoostTypes = getBoostTypesList();
     expect(availableBoostTypes).not.toBeNull();
     expect(availableBoostTypes.nativeElement.children.length).toBe(1);
@@ -448,28 +502,53 @@ describe('BoostCreatorComponent', () => {
     expect(paymentTitle.nativeElement.textContent).toContain('Payment Method');
   });
 
-  /*it('should have payment method list (usd, points, tokens)', () => {
-    const methods = fixture.debugElement.query(By.css('section.m-boost--creator-section-payment > ul.m-boost--creator-selector'));
-    expect(methods).not.toBeNull();
-    expect(methods.nativeElement.children.length).toBe(3);
-    expect(fixture.debugElement.query(By.css('.m-boost--creator-selector > li:first-child > h4')).nativeElement.textContent).toContain('USD');
-    expect(fixture.debugElement.query(By.css('.m-boost--creator-selector > li:nth-child(2) > h4')).nativeElement.textContent).toContain('points');
-    // Tokens use symbol
+  it('should have an instance of m-boost--creator-payment-methods', () => {
+    const paymentMethods = fixture.debugElement.query(By.css('section.m-boost--creator-section-payment m-boost--creator-payment-methods'));
+    expect(paymentMethods).not.toBeNull();
   });
 
-  it('clicking on a payment option should highlight it', fakeAsync(() => {
-    tick();
-
-    const moneyOption = getPaymentMethodItem(1);
-
-    expect(moneyOption.nativeElement.classList.contains('m-boost--creator-selector--highlight')).toBeFalsy();
-    moneyOption.nativeElement.click();
-
+  it('should have a priority section', () => {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.syncAllowedTypes();
     fixture.detectChanges();
-    tick();
 
-    expect(moneyOption.nativeElement.classList.contains('m-boost--creator-selector--highlight')).toBeTruthy();
-  }));
+    expect(fixture.debugElement.query(By.css('section.m-boost--creator-section-priority'))).not.toBeNull();
+  });
+
+  it('toggling the priority should affect the boost entity', () => {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.syncAllowedTypes();
+    fixture.detectChanges();
+
+    expect(boostComponent.boost.priority).toBeFalsy();
+    togglePriority();
+    expect(boostComponent.boost.priority).toBeTruthy();
+  });
+
+  it('when selecting credit card \'next\' button should appear', ()=> {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency='usd';
+    fixture.detectChanges();
+
+    expect(getNextButton()).not.toBeNull();
+  });
+
+  it('clicking on the \'next\' button should show the stripe checkout component', ()=> {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency='usd';
+    fixture.detectChanges();
+
+    getNextButton().nativeElement.click();
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.query(By.css('.m-boost--creator-section-checkout m-boost--creator-checkout'))).not.toBeNull();
+  });
+
+  /*
 
   describe('when selected payment method is usd', () => {
     it('then a card selector should appear', fakeAsync(() => {
@@ -649,7 +728,7 @@ describe('BoostCreatorComponent', () => {
       expect(clientMock.get).toHaveBeenCalled();
 
       tick();
-      
+
       expect(boostComponent.targetResults.length).toBeGreaterThan(0);
       expect(boostComponent.targetResults[0]).toEqual(boostTargetUser);
 
@@ -668,7 +747,7 @@ describe('BoostCreatorComponent', () => {
     }));
 
     describe('if the boost target is a boost pro plus subscriber', () => {
-      
+
       beforeEach(() => {
         boostComponent.setTarget(boostTargetUser);
         fixture.detectChanges();
@@ -678,7 +757,7 @@ describe('BoostCreatorComponent', () => {
         spyOn(boostComponent, 'togglePostToFacebook').and.callThrough();
 
         const fbToggle = fixture.debugElement.query(By.css('.m-boost--creator-toggle--target-facebook'));
-        
+
         expect(fbToggle.nativeElement.classList.contains('m-boost--creator-toggle--highlight')).toBeFalsy();
 
         fbToggle.nativeElement.click();
