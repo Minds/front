@@ -199,7 +199,7 @@ class CryptoTokenSymbolMock {
 class BlockchainCheckoutMock {
 }
 
-fdescribe('BoostCreatorComponent', () => {
+describe('BoostCreatorComponent', () => {
   let boostComponent: BoostCreatorComponent;
   let fixture: ComponentFixture<BoostCreatorComponent>;
   let submitSection: DebugElement;
