@@ -16,6 +16,7 @@ export class WalletTokenWithdrawComponent {
   amount: number = 0;
 
   error: string = '';
+  hasWithdrawnToday: boolean = false;
 
   @ViewChild(WalletTokenWithdrawLedgerComponent)
   protected ledgerComponent: WalletTokenWithdrawLedgerComponent;
@@ -29,6 +30,11 @@ export class WalletTokenWithdrawComponent {
 
   ngOnInit() {
     this.load();
+    try {
+      this.checkPreviousWithdrawals();
+    } catch (e) {
+      this.error = 'You can only withdraw once a day';
+    }
   }
 
   async load() {
@@ -54,6 +60,14 @@ export class WalletTokenWithdrawComponent {
     }
   }
 
+  async checkPreviousWithdrawals() {
+    let response: any = await this.client.post('api/v2/blockchain/transactions/can-withdraw');
+    if (!response.canWithdraw) {
+      this.hasWithdrawnToday = true;
+      throw new Error('You can only withdraw once a day');
+    }
+  }
+
   setAmount(amount: number | string) {
     if (!amount) {
       this.amount = 0;
@@ -70,7 +84,7 @@ export class WalletTokenWithdrawComponent {
   }
 
   canWithdraw() {
-    return !this.inProgress && !this.error && this.amount > 0 && this.amount <= this.balance;
+    return !this.hasWithdrawnToday && !this.inProgress && !this.error && this.amount > 0 && this.amount <= this.balance;
   }
 
   async withdraw() {
@@ -79,6 +93,7 @@ export class WalletTokenWithdrawComponent {
     this.detectChanges();
 
     try {
+      this.checkPreviousWithdrawals();
 
       let result: { address, guid, amount, gas, tx} = await this.contract.request(
         this.session.getLoggedInUser().guid, 
