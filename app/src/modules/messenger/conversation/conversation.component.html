@@ -1,5 +1,5 @@
 <div class="m-messenger--conversation m-messenger--dockpane mdl-shadow--4dp" [class.m-messenger--dockpane-open]="conversation.open">
-  <div class="m-messenger--dockpane-tab mdl-color-text--blue-grey-100"
+  <div class="m-messenger--dockpane-tab"
     [class.mdl-color--amber]="conversation.unread"
     (click)="dockpanes.toggle(conversation); initialLoad()">
     <div class="m-messenger--dockpane-tab-title">
@@ -7,11 +7,11 @@
     </div>
     <div class="m-messenger--dockpane-tab-actions" (click)="$event.stopPropagation()">
       <i class="material-icons mdl-color-text--blue-grey-100" [hidden]="live">sync_problem</i>
-      <i class="material-icons mdl-color-text--blue-grey-300"
+      <i class="material-icons"
       (click)="ribbon.open = !ribbon.open"
       [ngClass]="{ 'm-status-active': ribbon.open }"
       >more_vert</i>
-      <i class="material-icons mdl-color-text--blue-grey-300" (click)="dockpanes.close(conversation)">close</i>
+      <i class="material-icons" (click)="dockpanes.close(conversation)">close</i>
     </div>
   </div>
 
