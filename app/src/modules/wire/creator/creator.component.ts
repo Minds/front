@@ -44,6 +44,7 @@ export class WireCreatorComponent implements AfterViewInit {
 
   owner: any;
 
+  tokens: number;
   sums: any;
 
   rates = {

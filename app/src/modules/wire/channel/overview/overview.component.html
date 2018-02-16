@@ -40,8 +40,7 @@
   </div>
 
   <div class="m-wire-channel--overview--overview-average mdl-cell mdl-cell--6-col" *ngIf="canWire()">
-    <m--crypto-token-symbol ></m--crypto-token-symbol><span *ngIf="ready">{{ stats.sent | number:'1.0-0' }}</span>
-
+    <span *ngIf="ready">{{ stats.sent | number:'1.0-0' }}</span>
     <div class="m-wire-channel--overview--label">
       <label i18n="@@WIRE__CHANNEL__OVERVIEW__YOU_SENT_CARD_LABEL">You Sent</label>
       <m-tooltip icon="help" i18n="@@WIRE__CHANNEL__OVERVIEW__YOU_SENT_CARD_TOOLTIP">
