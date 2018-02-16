@@ -1,4 +1,4 @@
-<video (click)="onClick()" (error)="onError()" preload="none" [poster]="poster" allowfullscreen [muted]="muted" >
+<video (click)="onClick()" (error)="onError()" preload="none" [poster]="poster" allowfullscreen [muted]="false" >
   <source [src]="s.uri" *ngFor="let s of src">
 </video>
 <i *ngIf="element.paused" class="material-icons minds-video-play-icon" (click)="onClick()">play_circle_outline</i>
