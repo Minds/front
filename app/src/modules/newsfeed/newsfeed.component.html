@@ -39,58 +39,10 @@
 
       <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
 
-      <a [routerLink]="['/wallet/purchase']" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link" *ngIf="session.isLoggedIn() && session.getLoggedInUser().plus">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
-          <i class="material-icons">favorite</i>
-          <ng-container i18n="@@M__ACTION__BUY_POINTS">Buy Points</ng-container>
-          <span class="m-buypoints-tag" i18n="@@MINDS__NEWSFEED__1_BY_1_CONVERSION">1 point = 1 view</span>
-        </div>
-      </a>
-
       <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"  *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">add_circle</i>
           <ng-container i18n="@@MINDS__NEWSFEED__UPGRADE_TO_PLUS_ACTION">Upgrade to Plus</ng-container>
-        </div>
-      </a>
-
-      <a routerLink="/monetization" *ngIf="session.isLoggedIn() && !session.getLoggedInUser().merchant" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
-          <i class="material-icons">account_balance</i>
-          <ng-container i18n="@@MINDS__NEWSFEED__MONETIZE_CHANNEL_ACTION">Monetize your Channel</ng-container>
-        </div>
-      </a>
-
-      <a routerLink="/affiliates" class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button" *ngIf="session.isLoggedIn() && session.getLoggedInUser().programs.indexOf('affiliate') <= -1" >
-          <i class="material-icons">share</i>
-          <ng-container i18n="@@MINDS__NEWSFEED__BECOME_AFFILIATE_ACTION">Become an Affiliate</ng-container>
-        </div>
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button" *ngIf="session.isLoggedIn() && session.getLoggedInUser().programs.indexOf('affiliate') > -1" >
-          <i class="material-icons">share</i>
-          <ng-container i18n="@@M__FEATURE__AFFILIATE_PROGRAM">Affiliate Program</ng-container>
-        </div>
-      </a>
-
-      <a routerLink="/boost/console/newsfeed" class="mdl-card mdl-color--blue mdl-color-text--white m-boost-console-link">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button" *ngIf="session.isLoggedIn() && !session.getLoggedInUser().show_boosts" >
-          <i class="material-icons">trending_up</i>
-          <ng-container i18n>Become a Boost Publisher</ng-container>
-        </div>
-      </a>
-
-      <a [routerLink]="['/discovery/trending/channels']" class="mdl-card mdl-color--blue mdl-color-text--white mdl-shadow--8dp m-boost-console-link m-suggested-channels-link" *ngIf="false">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
-          <i class="material-icons">search</i>
-          <ng-container i18n="@@MINDS__NEWSFEED__FIND_CHANNELS_ACTION">Find channels</ng-container>
-        </div>
-      </a>
-
-      <m-modal-invite #invite [open]="invite.open" (closed)="invite.open = false"></m-modal-invite>
-      <a (click)="invite.open = true" class="mdl-card mdl-color--amber mdl-color-text--white m-boost-console-link m-invite-link" *ngIf="session.isLoggedIn() && session.getLoggedInUser().programs.indexOf('affiliate') <= -1">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
-          <i class="material-icons">email</i>
-          <ng-container i18n="@@M__ACTION__INVITE_FRIENDS">Invite your friends</ng-container>
         </div>
       </a>
 
