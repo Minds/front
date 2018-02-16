@@ -71,14 +71,14 @@ export class WalletService {
       this.points = null;
       this.apiInProgress = true;
 
-      return this.client.get(`api/v1/wallet/count`)
-        .then(({ count }) => {
+      return this.client.get(`api/v1/blockchain/wallet/balance`)
+        .then(({ balance }) => {
           this.apiInProgress = false;
 
-          if (typeof count === 'undefined') {
+          if (typeof balance === 'undefined') {
             this.points = null;
           } else {
-            this.points = count;
+            this.points = balance;
           }
 
           this.sync();
