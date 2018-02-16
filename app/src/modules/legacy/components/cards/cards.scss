@@ -147,7 +147,7 @@ minds-card-image, minds-card-video {
 
 .mdl-card{
   .m-owner-block{
-    padding: 16px 16px 0;
+    padding: 16px;
     display: flex;
     position: absolute;
     bottom: 0;
@@ -246,6 +246,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   .mdl-card__supporting-text.message{
     white-space: pre-line;
     word-wrap: break-word;
+    padding-top: 0;
   }
 
   textarea.mdl-card__supporting-text.message{
@@ -365,7 +366,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     }
 
     .meta{
-      padding:$minds-padding*2;
+      padding: $minds-padding*2 $minds-padding*2 0;
       display:block;
       text-decoration: none;
       width: calc(100% - 32px);
@@ -440,7 +441,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
  * Action tabs
  */
 .tabs, .m-action-tabs{
-  padding:0 $minds-padding*2 $minds-padding*1.5;
+  padding: $minds-padding*1.5 $minds-padding*2 $minds-padding*1.5;
   display:flex;
   box-sizing:border-box;
   width:100%;

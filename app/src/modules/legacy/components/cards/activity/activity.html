@@ -96,7 +96,7 @@
 	<button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.title = titleEdit.value; save();" i18n="@@M__ACTION__SAVE">Save</button>
 </div>
 
-<div class="item item-image item-image-video"
+<div class="item item-image item-image-video m-activity--video"
   [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
   *ngIf="activity.custom_type == 'video'">
 		<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
@@ -123,7 +123,7 @@
  </div>
 
 <!-- Images -->
-<div class="item item-image allow-select"
+<div class="item item-image allow-select m-activity--image"
  [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
  *ngIf="activity.thumbnail_src && !activity.perma_url">
 	<div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
