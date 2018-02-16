@@ -8,7 +8,7 @@ import { WireService } from '../wire.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 
-export type CurrencyType = 'money' | 'tokens';
+export type PayloadType = 'onchain' | 'offchain' | 'creditcard';
 
 export class VisibleWireError extends Error {
   visible: boolean = true;
@@ -16,7 +16,7 @@ export class VisibleWireError extends Error {
 
 export interface WireStruc {
   amount: number | '';
-  currency: CurrencyType | null;
+  payloadType: PayloadType | null;
   guid: any;
   recurring: boolean;
   payload: any;
@@ -34,7 +34,7 @@ export class WireCreatorComponent implements AfterViewInit {
 
   wire: WireStruc = {
     amount: 1,
-    currency: 'tokens',
+    payloadType: null,
     guid: null,
     recurring: false,
 
@@ -64,6 +64,8 @@ export class WireCreatorComponent implements AfterViewInit {
   success: boolean = false;
   criticalError: boolean = false;
   error: string = '';
+
+  tokenRate: number;
 
   protected submitted: boolean;
 
@@ -102,12 +104,13 @@ export class WireCreatorComponent implements AfterViewInit {
     offchain: null,
     onChainAddress: '',
     isReceiverOnchain: false,
+    wireCap: 100
   };
 
   constructor(
     public session: Session,
     private wireService: WireService,
-    private _changeDetectorRef: ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private client: Client,
     private currency: CurrencyPipe,
@@ -122,6 +125,7 @@ export class WireCreatorComponent implements AfterViewInit {
         this.syncOwner();
       });
     this.loadBalances();
+    this.loadTokenRate();
   }
 
   ngAfterViewInit() {
@@ -141,6 +145,8 @@ export class WireCreatorComponent implements AfterViewInit {
       if (!response) {
         return;
       }
+
+      this.balances.wireCap = response.wireCap;
 
       this.balances.offchain = response.addresses[1].balance;
 
@@ -164,6 +170,14 @@ export class WireCreatorComponent implements AfterViewInit {
       this.balances.onchain = balance[0].toString();
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  async loadTokenRate() {
+    let response: any = await this.client.get(`api/v2/blockchain/rate/tokens`);
+
+    if (response && response.rate) {
+      this.tokenRate = response.rate;
     }
   }
 
@@ -205,54 +219,24 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   setDefaults() {
-    /*if (this._opts && this._opts.default && typeof this._opts.default === 'object') {
-      this.wire.currency = this._opts.default.type;
-      this.wire.amount = this._opts.default.min;
-
-      if (!this._opts.disableThresholdCheck && this.sums && this.sums[this._opts.default.type]) {
-        this.wire.amount = <number>this.wire.amount - Math.ceil(this.sums[this._opts.default.type]);
-      }
-    } else if (this.owner.eth_wallet) {*/
-      this.setCurrency('tokens');
-      this.wire.amount = 1;
-      this.wire.recurring = true;
-    /*} else if (this.owner.merchant) {
-      this.setCurrency('money');
-      this.wire.amount = 1;
-      this.wire.recurring = true;
-    } else {
-      // TODO: Throw an error
-    }*/
-
-    if (this.wire.amount < 0) {
-      this.wire.amount = 0;
-    }
+    this.wire.amount = 1;
+    this.wire.recurring = true;
   }
 
   // General
 
   /**
-   * Sets the wire currency, and rounds the amount if necessary
+   * Sets the wire currency
    */
-  setCurrency(currency: CurrencyType | null) {
-    /*if (
-      !this.owner ||
-      (!this.owner.merchant && currency === 'money') ||
-      (!this.owner.eth_wallet && currency === 'tokens')
-    ) {
-      return;
-    }*/
-
-    let oldCurrency = this.wire.currency;
-    this.wire.currency = currency;
+  setPayloadType(payloadType: PayloadType | null) {
+    this.wire.payloadType = payloadType;
 
     this.wire.payload = null;
 
-    if (currency === 'tokens') {
-      this.setTokensNoncePayload('');
+    if (payloadType === 'onchain') {
+      this.setOnchainNoncePayload('');
     }
 
-    this.convertCurrency(oldCurrency, currency);
     this.roundAmount();
     this.showErrors();
   }
@@ -266,10 +250,17 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   /**
-   * Sets the tokens specific wire payment nonce
+   * Sets the onchain specific wire payment nonce
    */
-  setTokensNoncePayload(address: string) {
+  setOnchainNoncePayload(address: string) {
     return this.setNoncePayload({ receiver: this.owner.eth_wallet, address })
+  }
+
+  /**
+   * Sets the creditcard specific wire payment nonce
+   */
+  setCreditCardNoncePayload(token: string) {
+    return this.setNoncePayload({ token, address: 'offchain' })
   }
 
   // Read and edit amount
@@ -284,7 +275,7 @@ export class WireCreatorComponent implements AfterViewInit {
       this.wire.amount = 0;
     }
 
-    this._changeDetectorRef.detectChanges();
+    this.cd.detectChanges();
   }
 
   setAmount(amount: string) {
@@ -321,14 +312,10 @@ export class WireCreatorComponent implements AfterViewInit {
   }
 
   /**
-  * Round by 4 if tokens, 2 on other currencies (money)
+  * Round by 4
   */
   roundAmount() {
-    if (this.wire.currency === 'tokens') {
-      this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
-    } else {
-      this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 100) / 100;
-    }
+    this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
   }
 
   // Charge and rates
@@ -349,27 +336,14 @@ export class WireCreatorComponent implements AfterViewInit {
     return this.calcBaseCharges(type);
   }
 
-  /**
-   * Converts the current amount when switching currencies
-   */
-  convertCurrency(from: CurrencyType | null, to: CurrencyType | null) {
-    if (!from || !to) {
-      return;
+  // Rate preview
+
+  getTokenAmountRate(amount) {
+    if (!this.tokenRate) {
+      return 0;
     }
 
-    switch (from) {
-      case 'money':
-        if (to === 'tokens') {
-          this.wire.amount = <number>this.wire.amount * this.rates.tokens;
-        }
-        break;
-
-      case 'tokens':
-        if (to === 'money') {
-          this.wire.amount = <number>this.wire.amount / this.rates.tokens;
-        }
-        break;
-    }
+    return amount * this.tokenRate;
   }
 
   // Priority
@@ -392,18 +366,31 @@ export class WireCreatorComponent implements AfterViewInit {
       throw new Error('Amount should be greater than zero.');
     }
 
-    if (!this.wire.currency) {
-      throw new Error('You should select a currency.');
+    if (!this.wire.payloadType) {
+      throw new Error('You should select a payment method.');
     }
 
-    switch (this.wire.currency) {
-      case 'money':
+    switch (this.wire.payloadType) {
+      case 'onchain':
+        if (!this.wire.payload && !this.wire.payload.receiver) {
+          throw new Error('Invalid receiver.');
+        }
+        break;
+
+      case 'offchain':
+        const wireCap = this.balances.wireCap / Math.pow(10, 18),
+          balance = this.balances.offchain / Math.pow(10, 18);
+
+        if (this.wire.amount > wireCap) {
+          throw new VisibleWireError(`You cannot spend more than ${wireCap} tokens today.`)
+        } else if (this.wire.amount > balance) {
+          throw new VisibleWireError(`You cannot spend more than ${balance} tokens.`)
+        }
+        break;
+
+      case 'creditcard':
         if (!this.wire.payload) {
           throw new Error('Payment method not processed.');
-        }
-
-        if (this.calcCharges(this.wire.currency) < this.rates.minUsd) {
-          throw new VisibleWireError(`You must spend at least ${this.currency.transform(this.rates.minUsd, 'USD', true)} USD`);
         }
         break;
     }
@@ -480,11 +467,5 @@ export class WireCreatorComponent implements AfterViewInit {
     } finally {
       this.inProgress = false;
     }
-  }
-
-  //
-
-  getOnChainInterfaceLabel() {
-    return this.web3Wallet.getOnChainInterfaceLabel();
   }
 }

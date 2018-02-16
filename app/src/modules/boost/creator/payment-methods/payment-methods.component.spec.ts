@@ -139,7 +139,7 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     clientMock.response['api/v2/blockchain/wallet/balance'] = {
       'status': 'success',
       'addresses': [
-        { 'address': '0xonchain', 'balance': 10000000000000000000 }, // onchain
+        { 'address': '0xonchain', 'balance': 500000000000000000000 }, // onchain
         { 'address': '0xoffchain', 'balance': 7000000000000000000 } // offchain
       ]
     };
@@ -217,7 +217,7 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
 
   it('both the onchain and the offchain payment option should show the current balance', () => {
     fixture.detectChanges();
-    expect(getPaymentOptionBalance(1).nativeElement.textContent).toContain(10);
+    expect(getPaymentOptionBalance(1).nativeElement.textContent).toContain(500);
     expect(getPaymentOptionBalance(2).nativeElement.textContent).toContain(7);
   });
 

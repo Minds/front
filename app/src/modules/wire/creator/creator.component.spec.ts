@@ -28,6 +28,7 @@ import { AddressExcerptPipe } from '../../../common/pipes/address-excerpt';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
+import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -177,6 +178,7 @@ describe('WireCreatorComponent', () => {
         { provide: WireContractService, useValue: wireContractServiceMock },
         WireService,
         Web3WalletService,
+        { provide: Web3WalletService, useValue: web3WalletServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: TokenContractService, useValue: tokenContractServiceMock },
         { provide: LocalWalletService, useValue: localWalletServiceMock },
@@ -228,6 +230,19 @@ describe('WireCreatorComponent', () => {
         'exclusive': { 'background': 1502474954, 'intro': 'Support me!' }
       },
       'sums': { 'points': '40', 'money': '3096' }
+    };
+    clientMock.response[`api/v2/blockchain/wallet/balance`] = {
+      status: 'success',
+      addresses: [
+        { address: '0xMOCK', balance: 500 * Math.pow(10, 18), label: 'Receiver' },
+        { address: 'offchain', balance: 500 * Math.pow(10, 18), label: 'OffChain' },
+      ],
+      balance: 1000 * Math.pow(10, 18),
+      wireCap: 100 * Math.pow(10, 18)
+    };
+    clientMock.response[`api/v2/blockchain/rate/tokens`] = {
+      status: 'success',
+      rate: 10
     };
 
     submitSection = fixture.debugElement.query(By.css('.m-wire--creator-section--last'));
@@ -287,32 +302,37 @@ describe('WireCreatorComponent', () => {
     expect(title.nativeElement.textContent).toContain('Payment Method');
   });
 
-  it('should have payment method list (tokens, usd and rewardss)', () => {
+  it('should have payment method list (onchain, offchain, credit card)', () => {
     const list = fixture.debugElement.query(By.css('section.m-wire--creator-payment-section > ul.m-wire--creator-selector'));
     expect(list).not.toBeNull();
 
-    expect(list.nativeElement.children.length).toBe(2);
+    expect(list.nativeElement.children.length).toBe(3);
 
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:first-child > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('OnChain');
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(2) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('Credit Card');
+    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(2) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('OffChain');
+    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(3) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('Credit Card');
   });
 
   it('clicking on a payment option should highlight it', fakeAsync(() => {
-    tick();
-    const moneyOption = getPaymentMethodItem(2);
-
-    expect(moneyOption.nativeElement.classList.contains('m-wire--creator-selector--highlight')).toBeFalsy();
-    moneyOption.nativeElement.click();
+    comp.setPayloadType('offchain'); // Select other
 
     fixture.detectChanges();
     tick();
 
-    expect(moneyOption.nativeElement.classList.contains('m-wire--creator-selector--highlight')).toBeTruthy();
+    const onchainOption = getPaymentMethodItem(1);
+
+    expect(onchainOption.nativeElement.classList.contains('m-wire--creator-selector--highlight')).toBeFalsy();
+    onchainOption.nativeElement.click();
+
+    fixture.detectChanges();
+    tick();
+
+    expect(onchainOption.nativeElement.classList.contains('m-wire--creator-selector--highlight')).toBeTruthy();
   }));
 
-  it('if selected payment method is usd, then a card selector should appear', fakeAsync(() => {
+  it('if selected payment method is credit card, then a card selector should appear', fakeAsync(() => {
     tick();
-    comp.setCurrency('money');
+    comp.setPayloadType('creditcard');
     fixture.detectChanges();
 
     expect(fixture.debugElement.query(By.css('.m-wire--creator-payment'))).not.toBeNull();
@@ -328,7 +348,7 @@ describe('WireCreatorComponent', () => {
     expect(getAmountLabel()).not.toBeNull();
   });
 
-  it('changing amount input should change the wire\'s amount', () => {
+  it(`changing amount input should change the wire's amount`, () => {
     const amountInput: DebugElement = getAmountInput();
 
     amountInput.nativeElement.value = '10';
@@ -339,24 +359,47 @@ describe('WireCreatorComponent', () => {
     expect(comp.wire.amount).toBe(10);
   });
 
-  it('changing currency should change amount label', () => {
-    const label: DebugElement = getAmountLabel();
-    expect(label.nativeElement.textContent).toContain('Tokens');
+  it(`changing amount input should change the wire's cost`, () => {
+    const amountInput: DebugElement = getAmountInput();
 
-    comp.setCurrency('money');
+    amountInput.nativeElement.value = '10';
+    amountInput.nativeElement.dispatchEvent(new Event('input'));
+
     fixture.detectChanges();
-    expect(label.nativeElement.textContent).toContain('USD');
+
+    expect(fixture.debugElement.query(By.css('.m-wire--creator-wide-input--cost-value')).nativeElement.textContent.replace(/[^0-9.,]/g, ''))
+      .toBe('100.00');
+  });
+
+  it(`should have OnChain balance`, () => {
+    fixture.detectChanges();
+
+    const onchainOption = getPaymentMethodItem(1),
+      subtext = onchainOption.query(By.css('.m-wire--creator-selector-subtext')).nativeElement.textContent.trim(),
+      balance = subtext.substr(subtext.lastIndexOf(' ')).trim();
+
+    expect(balance).toBe('500');
+  });
+
+  it(`should have OffChain balance`, () => {
+    fixture.detectChanges();
+
+    const onchainOption = getPaymentMethodItem(2),
+      subtext = onchainOption.query(By.css('.m-wire--creator-selector-subtext')).nativeElement.textContent.trim(),
+      balance = subtext.substr(subtext.lastIndexOf(' ')).trim();
+
+    expect(balance).toBe('500');
   });
 
   it('should have a recurring checkbox', () => {
-    comp.setCurrency('money');
+    comp.setPayloadType('onchain');
     fixture.detectChanges();
     expect(getRecurringCheckbox()).not.toBeNull();
   });
 
-  it('recurring checkbox should toggle wire\'s recurring property', () => {
+  it(`recurring checkbox should toggle wire's recurring property`, () => {
 
-    comp.setCurrency('money');
+    comp.setPayloadType('onchain');
     fixture.detectChanges();
 
     expect(comp.wire.recurring).toBe(true);

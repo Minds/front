@@ -128,8 +128,7 @@
     margin-top: 16px;
     letter-spacing: 2.5px;
     input {
-      width: 6em;
-      max-width: 229px;
+      width: 192px;
       padding: 12px;
       font-weight: 400;
       letter-spacing: 5px;
@@ -566,7 +565,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  max-width: 352px;
+  max-width: 410px;
 
   > li {
     opacity: 0.5;
@@ -815,5 +814,45 @@
       font-size: 12px;
       font-weight: 400;
     }
+  }
+}
+
+.m-wire--creator-wide-input--cost {
+  display: flex;
+  align-items: center;
+  margin-top: $minds-padding;
+
+  .m-wire--creator-wide-input--cost-label-value {
+    min-width: 192px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .m-wire--creator-wide-input--cost-label {
+    flex-grow: 1;
+    flex-basis: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .m-wire--creator-wide-input--cost-value {
+    flex-grow: 1;
+    flex-basis: 0;
+    background: rgba(0, 0, 0, 0.10);
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: right;
+
+    > span {
+      margin: 0 ($minds-padding * 2);
+    }
+  }
+
+  .m-wire--creator-wide-input--cost-currency {
+    margin-left: 1em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #999;
   }
 }

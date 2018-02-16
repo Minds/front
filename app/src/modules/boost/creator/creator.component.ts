@@ -415,14 +415,6 @@ export class BoostCreatorComponent implements AfterViewInit {
       if (this.boost.target && (this.boost.target.guid === this.session.getLoggedInUser().guid)) {
         throw new VisibleBoostError('You cannot boost to yourself.');
       }
-
-      if (this.boost.target && !this.boost.target.merchant && (this.boost.currency === 'usd')) {
-        throw new VisibleBoostError('User cannot receive USD.');
-      }
-
-      if (this.boost.target && !this.boost.target.eth_wallet && (this.boost.currency === 'tokens')) {
-        throw new VisibleBoostError('User cannot receive Tokens.');
-      }
     } else {
       if (this.boost.amount < this.rates.min || this.boost.amount > this.rates.cap) {
         throw new VisibleBoostError(`You must boost between ${this.rates.min} and ${this.rates.cap} views.`);
