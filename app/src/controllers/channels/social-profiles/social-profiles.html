@@ -2,7 +2,7 @@
   <span *ngFor="let profile of socialProfiles" class="m-channel-social-profile" [ngClass]="[ 'm-channel-social-profile-' + profile.key ]">
     <a *ngIf="profile.key && profile.value"
       [href]="getSocialProfileURL(profile.value)"
-      rel="noopener"
+      rel="noopener nofollow"
       target="_blank"
     ><i [ngClass]="[ getSocialProfileIconClass(profile) ]"></i></a>
   </span>

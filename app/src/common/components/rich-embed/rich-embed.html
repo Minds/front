@@ -6,6 +6,7 @@
     [ngClass]="{ 'm-inline-embed': hasInlineContentLoaded() }"
     (click)="action($event)"
     target="_blank"
+    rel="noopener nofollow"
     *ngIf="src.thumbnail_src || inlineEmbed"
   >
     <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate m-html-loading"
