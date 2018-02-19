@@ -1,0 +1,49 @@
+<div class="m-token--onboarding--slide m-border">
+  <div class="m-token--onboarding--column">
+    <h2>Rewards</h2>
+
+    <p class="m-token--onboarding--subtext">
+      You can earn tokens for your contributions to the Minds network. The more interactions on your content, the greater your share of the daily token reward pool to your OffChain address.
+    </p>
+    <p class="m-token--onboarding--subtext">
+      To start earning rewards, you will need to enter a unique phone number. 
+    </p>
+
+    <div class="m-token--onboarding--rewards-input" *ngIf="!confirming">
+      <m-phone-input [(ngModel)]="number"></m-phone-input>
+      <m-tooltip icon="help">Please enter your phone number in order to join the rewards program</m-tooltip>
+      <button class="m-btn m-btn--slim m-btn--action" (click)="verify()" [disabled]="inProgress">Join</button>
+      <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </div>
+    
+    <div class="m-token--onboarding--rewards-input" *ngIf="confirming">
+      <input 
+        type="number"
+        [(ngModel)]="code"
+        placeholder="eg. 198349" 
+        class="m-token-join--form--input-input m-border"
+        />
+      <m-tooltip icon="help">Please enter the code we just sent you, to verify that your number is correct</m-tooltip>
+
+      <button class="m-btn m-btn--slim m-btn--action" (click)="confirm()" [disabled]="inProgress">Confirm</button>
+      <button class="m-btn m-btn--slim" (click)="cancel()">Go Back</button>
+
+      <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </div>
+
+
+    <p class="m-token-join--form--error" *ngIf="error">
+      {{error}}
+    </p>
+
+  </div>
+
+  <div class="m-token--onboarding--column">
+    <div class="m-token--onboarding--video m-border"></div>
+
+    <div class="m-layout--row">
+      <div class="m-layout--spacer"></div>
+      <button class="m-btn m-btn--slim" (click)="next.next()">Skip. I don't want to earn tokens</button>
+    </div>
+  </div>
+</div>

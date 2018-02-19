@@ -1,0 +1,49 @@
+<div class="m-token--onboarding--slide m-border">
+  <div class="m-token--onboarding--column">
+    <h2>Setup your OnChain address</h2>
+
+    <p class="m-token--onboarding--subtext">
+      To receive OnChain payments from other channels (eg, from a Wire or a Boost), you will will need to let us know which address to direct these tokens to.
+    </p>
+    <p class="m-token--onboarding--subtext">
+      This address will be listed in your wallet as your Receiver Address and can be changed at any time.
+    </p>
+
+    <ul class="m-token--onboarding--onchain-selections">
+      <li>
+        <img class="metamask" src="assets/ext/metamask.png" />
+        <h4>MetaMask</h4>
+        <p>Minds recommends using MetaMask for the most seamless user experience</p>
+
+        <div class="m-token--onboarding--onchain-selections--buttons">
+          <button class="m-btn m-btn--slim m-btn--action">Use MetaMask</button>  
+        </div>
+      </li>
+
+      <li>
+        <i class="material-icons">vpn_key</i>
+        <h4>Don't want to use MetaMask?</h4>
+        <p>You can either create a new address here or let us know your existing address.</p>
+
+        <div class="m-token--onboarding--onchain-selections--buttons">
+          <button class="m-btn m-btn--slim m-btn--action">Create Address</button>
+          <span>or</span>
+          <button class="m-btn m-btn--slim m-btn--action">Provide Address</button>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="m-token--onboarding--column m-layout--column">
+    <div class="m-token--onboarding--video m-border"></div>
+    <div class="m-layout--spacer"></div>
+  
+    <div class="m-layout--row">
+      <div class="m-layout--spacer"></div>
+      <button class="m-btn m-btn--slim" (click)="next.next()">Skip. I'm not interested</button>
+    </div>
+  </div>
+
+
+</div>

@@ -1,5 +1,15 @@
 @import "defaults";
 
+.m-layout--row {
+  display: flex;
+  flex-direction: row;
+}
+
+.m-layout--column {
+  display: flex;
+  flex-direction: column;
+}
+
 .m-layout--spacer{
   flex: 1;
 }

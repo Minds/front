@@ -15,7 +15,7 @@
       <m-phone-input [(ngModel)]="number"></m-phone-input>
       <m-tooltip icon="help">Please enter your phone number in order to join the rewards program</m-tooltip>
     </div>
-    <button class="m-btn m-btn--action" (click)="verify()" [disabled]="inProgress">Join Rewards</button>
+    <button class="m-btn m-btn--action" (click)="verify()" [disabled]="inProgress">Join</button>
 
     <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   
