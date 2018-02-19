@@ -48,7 +48,7 @@ describe('TransactionOverlayComponent', () => {
     expect(note.nativeElement.textContent.trim()).toContain('Testing');
   });
 
-  it('should have a link that says \'Having Issues?\' that redirects to /coin page', () => {
+  xit('should have a link that says \'Having Issues?\' that redirects to /coin page', () => {
     const havingIssues: DebugElement = fixture.debugElement.query(By.css('.m--blockchain--transaction-overlay--help > a'));
     expect(havingIssues).not.toBeNull();
     expect(havingIssues.nativeElement.href).toMatch(/https?:\/\/.*\/token/);
