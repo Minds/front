@@ -4,7 +4,6 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import {Capture} from '../controllers/capture/capture';
 import {Discovery} from '../controllers/discovery/discovery';
-import {Settings} from '../controllers/settings/settings';
 import {Admin} from '../controllers/admin/admin';
 import {Pages} from '../controllers/pages/pages';
 
@@ -25,9 +24,6 @@ export const MindsAppRoutes: Routes = [
 
   /* /Legacy routes */
 
-  { path: 'settings/:filter/:card', component: Settings },
-  { path: 'settings/:filter', component: Settings },
-
   { path: 'admin/:filter/:type', component: Admin },
   { path: 'admin/:filter', component: Admin },
 
@@ -43,7 +39,6 @@ export const MindsAppRoutingProviders: any[] = [{ provide: APP_BASE_HREF, useVal
 export const MINDS_APP_ROUTING_DECLARATIONS: any[] = [
   Capture,
   Discovery,
-  Settings,
   Admin,
   Pages,
   RewardsComponent,

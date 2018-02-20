@@ -9,11 +9,11 @@ import { ThirdPartyNetworksService } from '../../../services/third-party-network
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-settings-general',
-  templateUrl: 'general.html'
+  selector: 'm-settings--general',
+  templateUrl: 'general.component.html'
 })
 
-export class SettingsGeneral {
+export class SettingsGeneralComponent {
 
   minds: Minds;
   settings: string;

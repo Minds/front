@@ -4,10 +4,10 @@ import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-settings-subscriptions',
+  selector: 'm-settings--subscriptions',
   templateUrl: 'subscriptions.component.html'
 })
-export class SettingsSubscriptions {
+export class SettingsSubscriptionsComponent {
   subscriptions: any[] = [];
 
   inProgress: boolean = false;

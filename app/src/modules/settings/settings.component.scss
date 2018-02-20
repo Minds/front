@@ -1,5 +1,21 @@
 @import 'defaults';
 
+.m-settings--wrapper {
+  max-width: 1280px;
+  margin: auto;
+}
+
+.m-settings--section {
+  background: #FFF;
+  margin-bottom: 8px;
+  padding: 16px;
+
+  h4 {
+    margin: 0;
+    margin-bottom: 8px;
+  }
+}
+
 .minds-settings-content{
   .mdl-card{
     margin-bottom:$minds-margin *2;
@@ -39,4 +55,9 @@ ul.minds-settings--list {
       color: #333;
     }
   }
+}
+
+.m-settings--created-date {
+  color: #888;
+  padding: 8px;
 }

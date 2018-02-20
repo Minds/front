@@ -6,12 +6,12 @@ import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-settings-disable-channel',
+  selector: 'm-settings--disable-channel',
   inputs: ['object'],
-  templateUrl: 'disable.html'
+  templateUrl: 'disable.component.html'
 })
 
-export class SettingsDisableChannel {
+export class SettingsDisableChannelComponent {
 
   minds: Minds;
   user: any;

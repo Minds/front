@@ -1,0 +1,32 @@
+m-settings--emails {
+
+  ul.m-settings--emails-campaigns {
+    list-style: none;
+    cursor: default;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 8px;
+
+    li.m-settings--emails-campaigns--campaign {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      letter-spacing: 0.25px;
+      font-family: 'Roboto';
+      padding: 4px 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      select {
+        margin-left: 24px;
+      }
+
+      label {
+        margin-left: 8px;
+      }
+    }
+  }
+
+}

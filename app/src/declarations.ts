@@ -16,11 +16,6 @@ import {AdminPayouts} from './controllers/admin/payouts/payouts.component';
 import {AdminFeatured} from './controllers/admin/featured/featured';
 import {AdminTagcloud} from './controllers/admin/tagcloud/tagcloud.component';
 import {AdminVerify} from './controllers/admin/verify/verify.component';
-import {SettingsGeneral} from './controllers/settings/general/general';
-import {SettingsStatistics} from './controllers/settings/statistics/statistics';
-import {SettingsDisableChannel} from './controllers/settings/disable/disable';
-import {SettingsTwoFactor} from './controllers/settings/two-factor/two-factor';
-import {SettingsSubscriptions} from './controllers/settings/subscriptions/subscriptions.component';
 import { RejectionReasonModalComponent } from './controllers/admin/boosts/modal/rejection-reason-modal.component';
 
 export const MINDS_DECLARATIONS: any[] = [
@@ -45,9 +40,4 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminFeatured,
   AdminTagcloud,
   AdminVerify,
-  SettingsGeneral,
-  SettingsStatistics,
-  SettingsDisableChannel,
-  SettingsTwoFactor,
-  SettingsSubscriptions,
 ];

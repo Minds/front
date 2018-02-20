@@ -4,12 +4,12 @@ import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-settings-two-factor',
+  selector: 'm-settings--two-factor',
   inputs: ['object'],
-  templateUrl: 'two-factor.html'
+  templateUrl: 'two-factor.component.html'
 })
 
-export class SettingsTwoFactor {
+export class SettingsTwoFactorComponent {
 
   minds: Minds;
   telno: number;

@@ -8,12 +8,11 @@ import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 
 @Component({
-  moduleId: module.id,
-  selector: 'minds-settings',
-  templateUrl: 'settings.html'
+  selector: 'm-settings',
+  templateUrl: 'settings.component.html'
 })
 
-export class Settings {
+export class SettingsComponent {
 
   minds: Minds;
   user: any;
@@ -23,7 +22,13 @@ export class Settings {
 
   paramsSubscription: Subscription;
 
-  constructor(public session: Session, public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public router: Router,
+    public route: ActivatedRoute,
+    public title: MindsTitle
+  ) {
   }
 
   ngOnInit() {
@@ -53,4 +58,5 @@ export class Settings {
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
+
 }

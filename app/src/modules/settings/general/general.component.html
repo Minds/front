@@ -1,55 +1,43 @@
 <!-- START: Actions -->
-<div class="mdl-card mdl-shadow--2dp">
+<div class="m-settings--section m-layout--row m-border">
 
-  <div class="mdl-card__actions">
-    <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">{{error}}</div>
+  <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">{{error}}</div>
+  <div class="m-layout--spacer"></div>
 
-    <button class="mdl-button mdl-button--colored"
-      [ngClass]="{'mdl-button--raised': changed}"
-      [disabled]="!canSubmit()"
-      [hidden]="saved"
-      (click)="save()"
-      style="float:right"
-      >
-      <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
-    </button>
-    <button class="mdl-button mdl-button--colored"
-      [hidden]="!saved"
-      style="float:right"
-      >
-      <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
-    </button>
-  </div>
+  <button class="m-btn m-btn--slim m-btn--action"
+    [disabled]="!canSubmit()"
+    [hidden]="saved"
+    (click)="save()"
+    >
+    <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
+  </button>
+  <button class="m-btn  m-btn--slim"
+    [hidden]="!saved"
+    >
+    <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
+  </button>
   <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" [hidden]="!inProgress"></div>
 </div>
 
 <!-- START: NAME -->
-<div class="mdl-card mdl-shadow--2dp m-settings--name">
-
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__DISPLAY_NAME_TITLE">Display Name</h2>
-  </div>
-
+<div class="m-settings--section m-border m-settings--name">
+  <h4 i18n="@@MINDS__SETTINGS__DISPLAY_NAME_TITLE">Display Name</h4>
   <div class="mdl-card__supporting-text">
-
-      <input class="m-input"
-        type="name"
-        id="name"
-        name="name"
-        [(ngModel)]="name"
-        (keyup)="change()"
-        />
-
+    <input class="m-input"
+      type="name"
+      id="name"
+      name="name"
+      [(ngModel)]="name"
+      (keyup)="change()"
+      />
   </div>
 </div>
 <!-- END: NAME -->
 
 <!-- START: PASSWORD -->
-<div class="mdl-card mdl-shadow--2dp m-settings--password">
+<div class="m-settings--section m-border m-settings--password">
 
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__ACCOUNT_PASSWORD_TITLE">Account Password</h2>
-  </div>
+  <h4 i18n="@@MINDS__SETTINGS__ACCOUNT_PASSWORD_TITLE">Account Password</h4>
 
   <div class="mdl-card__supporting-text">
 
@@ -92,11 +80,8 @@
 <!-- END: PASSWORD -->
 
 <!-- START: MATURE CONTENT -->
-<div class="mdl-card mdl-shadow--2dp m-settings--mature">
-
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__MATURE_CONTENT_TITLE">Mature Content</h2>
-  </div>
+<div class="m-settings--section m-border m-settings--mature">
+  <h4 i18n="@@MINDS__SETTINGS__MATURE_CONTENT_TITLE">Mature Content</h4>
   <div class="mdl-card__supporting-text">
     <input type="checkbox"
       id="flag_mature"
@@ -113,41 +98,9 @@
 </div>
 <!-- END: MATURE CONTENT -->
 
-<!-- START: EMAIL -->
-<div class="mdl-card mdl-shadow--2dp m-settings--email">
-
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__EMAIL_SETTINGS_TITLE">Email Settings</h2>
-  </div>
-  <div class="mdl-card__supporting-text">
-    <input class="m-input"
-      type="email"
-      id="email"
-      [(ngModel)]="email"
-      (keyup)="change()"
-      />
-  </div>
-  <div class="mdl-card__supporting-text">
-    <input type="checkbox"
-      id="flag_mails"
-      (click)="change()"
-      name="enabled_emails"
-      [(ngModel)]="enabled_mails"
-      />
-      <i class="material-icons m-material-icons-inline mdl-color-text--red-500">email</i>
-      <label for="flag_mature">
-          <ng-container i18n="@@MINDS__SETTINGS__RECEIVE_EMAILS_LABEL">Receive emails</ng-container>
-      </label>
-  </div>
-
-</div>
-<!-- END: EMAIL -->
-
 <!-- START: FB connect -->
-<div class="mdl-card mdl-shadow--2dp m-settings--facebook" *ngIf="thirdpartynetworks.hasIntegration('facebook')">
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@M__NAMES__FACEBOOK">Facebook</h2>
-  </div>
+<div class="m-settings--section m-border m-settings--facebook" *ngIf="thirdpartynetworks.hasIntegration('facebook')">
+  <h4 class="mdl-card__title-text" i18n="@@M__NAMES__FACEBOOK">Facebook</h4>
   <div class="mdl-card__supporting-text" *ngIf="minds.user.signup_method == 'facebook'">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeFbLogin()" [disabled]="thirdpartynetworks.inProgress">
       <ng-container i18n="@@MINDS__SETTINGS__REVOKE_FACEBOOK_ACTION">Revoke Facebook Login</ng-container>
@@ -167,10 +120,8 @@
 <!-- END: FB connect -->
 
 <!-- START: Tw connect -->
-<div class="mdl-card mdl-shadow--2dp m-settings--twitter" *ngIf="thirdpartynetworks.hasIntegration('twitter')">
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@M__NAMES__TWITTER">Twitter</h2>
-  </div>
+<div class="m-settings--section m-border m-settings--twitter" *ngIf="thirdpartynetworks.hasIntegration('twitter')">
+  <h4 i18n="@@M__NAMES__TWITTER">Twitter</h4>
   <div class="mdl-card__supporting-text" *ngIf="thirdpartynetworks.isConnected('twitter')">
     <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeTw()" [disabled]="thirdpartynetworks.inProgress">
       <ng-container i18n="@@MINDS__SETTINGS__DISCONNECT_TWITTER_ACTION">Disconnect from Twitter</ng-container>
@@ -186,12 +137,8 @@
 <!-- END: Tw connect -->
 
 <!-- START: LANGUAGE -->
-<div class="mdl-card mdl-shadow--2dp m-settings--language">
-
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__LANGUAGE_SETTINGS_TITLE">Language Settings</h2>
-  </div>
-
+<div class="m-settings--section m-border m-settings--language">
+  <h4 i18n="@@MINDS__SETTINGS__LANGUAGE_SETTINGS_TITLE">Language Settings</h4>
   <div class="mdl-card__supporting-text">
     <ng-container i18n="@@MINDS__SETTINGS__SITE_LANGUAGE_LABEL">Site language:</ng-container>
     <select name="language" [ngModel]="language" (ngModelChange)="language = $event; change()">
@@ -204,12 +151,8 @@
 <!-- END: LANGUAGE -->
 
 <!-- START: CATEGORIES -->
-<div class="mdl-card mdl-shadow--2dp m-settings--categories">
-
-  <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__CATEGORIES_TITLE">Categories</h2>
-  </div>
-
+<div class="m-settings--section m-border m-settings--categories">
+  <h4 i18n="@@MINDS__SETTINGS__CATEGORIES_TITLE">Categories</h4>
   <div class="mdl-card__supporting-text">
     <ul name="categories" class="minds-settings--list">
       <li class="minds-settings--list-item"
