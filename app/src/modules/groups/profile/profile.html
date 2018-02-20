@@ -71,18 +71,19 @@
 
     </div>
 
-      <!-- Brief description -->
-      <div class="m-group-info-brief-description mdl-color-text--blue-grey-600">
+    <!-- Brief description -->
+    <div class="m-group-info-brief-description mdl-card__supporting-text" style="white-space: pre-line" [hidden]="editing || !group.briefdescription"  [innerHtml]="group.briefdescription | tags">
+    </div>
 
-        <div [hidden]="editing || !group.briefdescription">
-          <span [innerHtml]="group.briefdescription | tags"></span>
-        </div>
-
-        <div *ngIf="editing && group['is:owner']">
-          <textarea name="briefdescription" [(ngModel)]="group.briefdescription" placeholder="Enter a brief description" i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"></textarea>
-        </div>
-
-      </div>
+    <div class="m-group-info-brief-description mdl-card__supporting-text" *ngIf="editing && group['is:owner']">
+      <textarea
+        name="briefdescription" 
+        [autoGrow]
+        [(ngModel)]="group.briefdescription"
+        placeholder="Enter a brief description"
+        i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
+      ></textarea>
+    </div>
 
       <!-- Tags -->
       <div class="m-group-info-tags mdl-color-text--blue-grey-300">
