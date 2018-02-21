@@ -92,6 +92,7 @@
   .mdl-cell {
     padding: 32px 16px;
     text-align: center;
+    color: #444;
 
     i{
       font-size: 64px;
@@ -107,10 +108,10 @@
     p {
       font-size: 16px;
       font-weight: 400;
-      letter-spacing: 1px;
+      letter-spacing: 0.25px;
     }
     span{
-      letter-spacing: 1px;
+      letter-spacing: 0.25px;
     }
   }
 
@@ -151,6 +152,16 @@
 
   form{
     padding: 16px;
+  }
+}
+
+.m-marketing--statement {
+  h2 {
+    color: #444;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.25px;
   }
 }
 

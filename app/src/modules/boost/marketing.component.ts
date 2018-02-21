@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 export class BoostMarketingComponent {
 
+  minds = window.Minds;
   user = window.Minds.user;
 
 }

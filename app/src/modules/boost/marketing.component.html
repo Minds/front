@@ -1,41 +1,84 @@
-<div class="m-boost--marketing">
+<div class="m-marketing">
 
-  <div class="m-boost--marketing-header">
-    <h1>Boost</h1>
-    <h3>Boost your channel or content to gain more views and reach new audiences</h3>
+  <div class="m-marketing--header">
+    <div class="m-marketing--background-video">
+      <img [src]="minds.cdn_assets_url + 'assets/photos/rocket.jpg'">
+    </div>
 
-    <div class="m-boost--overlay"></div>
+    <div class="m-marketing--header-inner">
+      <h1>Boost</h1>
+      <h3>Promote your channel and content. Expand your reach.</h3>
+
+      <div class="m-marketing--action-button">
+        <a class="mdl-button mdl-button--colored mdl-color--green mdl-color-text--white"
+          routerLink="/boost/console/newsfeed/create"
+        >
+        Create a boost
+      </a>
+      </div>
+    </div>
+    <div class="m-marketing--overlay"></div>
   </div>
 
-  <div class="m-boost--marketing-contents mdl-grid mdl-grid--no-spacing mdl-color-text--blue-grey-600" *ngIf="false">
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--6-col-tablet mdl-cell--6-col-phone">
-      <h2>BOOST</h2>
-      <span>Boost your content across the Minds network for expanded reach and gain more views in exchange for dollars, points, or Tokens. Target your boosts by category to locate like minded consumers.</span>
+  <div class="m-marketing--contents m-layout--row">
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons">create</i>
+      <h2>Create</h2>
+      <span>Post your best videos, images, blogs or statuses to your channel.</span>
     </div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <h2>PRIORITY BOOST</h2>
-      <span>Send your Boost to the front of the line with Priority Boost, but the cost per view is at least twice (surge pricing may be in effect). Priority boost is available for cash purchase only.</span>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons">trending_up</i>
+      <h2>Boost</h2>
+      <span>Target your audience. Select how many views you want.</span>
     </div>
-  </div>
-  <div class="m-boost--marketing-contents m-boost--marketing-contents--breakdown mdl-grid mdl-grid--no-spacing mdl-color-text--blue-grey-600" *ngIf="false">
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <h2>Newsfeed Boost</h2>
-      <span>Boost your content across the Minds network for expanded reach and gain more views in exchange for dollars, points, or Tokens. Target your boosts by category to locate like minded consumers.</span>
-    </div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <h2>SIDEBAR BOOST</h2>
-      <span>Boost your channel, video, image or blog to the sidebar with points, USD, or Tokens.  Your content will display on sidebars across Minds for all channels to see. Sidebar boosts are launched from the boost button on the content page or your channel card. Sidebar views are not counted on the post view counter.</span>
-    </div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <h2>CHANNEL BOOST</h2>
-      <span>Boost your content peer to peer and target specific channel communities with your content. Send or receive offers for a guaranteed Remind in exchange for points, USD, or Tokens.</span>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons">refresh</i>
+      <h2>Grow</h2>
+      <span>Gain subscribers. Receive engagement. Increase your contribution.</span>
     </div>
   </div>
 
-  <div class="m-boost--marketing-faq mdl-color-text--blue-grey-600">
+  <div class="m-marketing--statement">
+    <h2>
+      No restrictive algorithms. Grow your audience. <br/>
+      Go viral.
+    </h2>
+  </div>
+
+  <div class="m-marketing--contents m-layout--row">
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons">home</i>
+      <h2>Newsfeed</h2>
+      <span>Promote your content in the newsfeeds of the full network</span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons">dashboard</i>
+      <h2>Sidebar</h2>
+      <span>Promote your channel, group, or media into the sidebars of the full network.</span>
+    </div>
+
+    <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone">
+      <i class="material-icons">people</i>
+      <h2>Offers</h2>
+      <span>Send offers to other channels and target their audience.</span>
+    </div>
+  </div>
+
+  <div class="m-marketing--hero">
+    <div class="m-marketing--background-video">
+      <img [src]="minds.cdn_assets_url + 'assets/photos/lizard.jpg'">
+    </div>
+
+    <div class="m-marketing--hero-inner">
+      <h2>Give yourself the best chance to earn.</h2>
+    </div>
+  </div>
+
+  <div class="m-marketing--faq">
     <m-faq category="boost"></m-faq>
   </div>
-
-</div>
 
 <m-footer></m-footer>
