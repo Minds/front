@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Rx';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { LICENSES, ACCESS } from '../../../services/list-options';
+import { ThumbnailEvent } from '../components/thumbnail-selector.component';
 
 @Component({
   moduleId: module.id,
@@ -86,10 +87,10 @@ export class MediaEditComponent {
       });
   }
 
-  setThumbnail(file) {
+  setThumbnail(file: ThumbnailEvent){
     console.log(file);
-    this.entity.file = file[0];
-    this.entity.thumbnail = file[1];
+    this.entity.file = file.source;
+    this.entity.thumbnail = file.seconds;
   }
 
 }
