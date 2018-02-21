@@ -1,6 +1,6 @@
-<div class="m-marketing--marketing">
+<div class="m-marketing">
 
-  <div class="m-marketing--marketing-header">
+  <div class="m-marketing--header">
     <div class="m-marketing--background-video">
       <video autoplay muted loop *ngIf="!videoError; else spaceImage">
         <source [src]="minds.cdn_url + '/assets/videos/space-1/space-1.mp4'" type="video/mp4" (error)="onSourceError()">
@@ -10,12 +10,12 @@
       </ng-template>
     </div>
 
-    <div class="m-marketing--marketing-header-inner">
+    <div class="m-marketing--header-inner">
 
       <h1>The Minds Cryptocurrency</h1>
       <h3>An autonomous platform for payments, subscriptions and advertising. Your Social Network.</h3>
 
-      <div class="m-marketing--marketing-action-button">
+      <div class="m-marketing--action-button">
         <button class="mdl-button mdl-button--colored mdl-color--green"
           (click)="showPreRegister()"
         >Pre-Register</button>
@@ -30,7 +30,7 @@
     <div class="m-marketing--overlay"></div>
   </div>
 
-  <div class="mdl-grid mdl-grid--no-spacing m-marketing--marketing-contents m-blockchain--marketing-tde-stats"
+  <div class="mdl-grid mdl-grid--no-spacing m-marketing--contents m-blockchain--marketing-tde-stats"
     *ngIf="tdeStats"
   >
     <div class="mdl-cell mdl-cell--4-col">
@@ -56,7 +56,7 @@
   </div>
 
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--12-col">
       <h2>Documents</h2>
 
@@ -66,13 +66,13 @@
     </div>
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
-    <div class="m-marketing--marketing-responsive-video m-marketing--marketing-responsive-video-21-9">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing">
+    <div class="m-marketing--responsive-video m-marketing--responsive-video-21-9">
       <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?rel=0&amp;showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
     </div>
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing m-marketing--marketing-contents--middle">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-marketing--contents--middle">
     <div class="mdl-cell mdl-cell--6-col">
       <h2>Vision</h2>
 
@@ -87,11 +87,11 @@
     </div>
   </div>
 
-  <div class="m-marketing--marketing-responsive-hero-image m-marketing--marketing-responsive-hero-image--bottom">
+  <div class="m-marketing--responsive-hero-image m-marketing--responsive-hero-image--bottom">
     <img [src]="minds.cdn_url + '/assets/marketing/rocket-1245696_1920.jpg'" alt="">
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--12-col">
       <h2>It’s here now.</h2>
 
@@ -102,7 +102,7 @@
     </div>
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
       <i class="ion-icon ion-flash mdl-color-text--blue-grey-700"></i>
 
@@ -137,11 +137,11 @@
     </div>
   </div>
 
-  <div class="m-marketing--marketing-responsive-hero-image">
+  <div class="m-marketing--responsive-hero-image">
     <img [src]="minds.cdn_url + '/assets/marketing/witch-head-1771758_1920.jpg'" alt="">
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--12-col m-blockchain--value-logos">
       <img [src]="minds.cdn_url + '/assets/marketing/ethereum_logo.png'" alt="">
 
@@ -158,7 +158,7 @@
     </div>
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing">
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
       <i class="material-icons mdl-color-text--blue-grey-700">people</i>
 
@@ -193,7 +193,7 @@
     </div>
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing m-marketing--marketing-contents--middle">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-marketing--contents--middle">
     <div class="mdl-cell mdl-cell--12-col">
       <h2>The Press</h2>
     </div>
@@ -217,11 +217,11 @@
     </div>
   </div>
 
-  <div class="m-marketing--marketing-responsive-hero-image m-marketing--marketing-responsive-hero-image--bottom">
+  <div class="m-marketing--responsive-hero-image m-marketing--responsive-hero-image--bottom">
     <img [src]="minds.cdn_url + '/assets/marketing/international-space-station-1776401_1920.jpg'" alt="">
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people">
     <div class="mdl-cell mdl-cell--12-col">
       <h2>Team</h2>
     </div>
@@ -340,7 +340,7 @@
 
   </div>
 
-  <div class="m-marketing--marketing-contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people">
+  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people">
     <div class="mdl-cell mdl-cell--12-col">
       <h2>Advisory Board</h2>
     </div>

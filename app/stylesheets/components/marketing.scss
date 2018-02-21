@@ -1,4 +1,4 @@
-.m-marketing--marketing-header{
+.m-marketing--header, .m-marketing--hero {
   background: #eee;
   width: 100%;
   text-align: left;
@@ -6,11 +6,15 @@
   box-sizing: border-box;
   position:relative;
 
+  &.m-marketing--hero {
+    padding-bottom: 100px;
+  }
+
   @media only screen and (max-width: 400px) {
     padding:110px 0;
   }
 
-  .m-marketing--marketing-header-inner { 
+  .m-marketing--header-inner, .m-marketing--hero-inner { 
     position: relative;
     max-width: 1280px;
     width: 100%;
@@ -19,7 +23,7 @@
     z-index: 1;
   }
 
-  h1, h3{
+  h1, h3, h2 {
     color: #FFF;
     font-family: Roboto;
     margin: 0;
@@ -34,6 +38,10 @@
       font-size:30px;
     }
   }
+  h2 {
+    font-weight: 600;
+    letter-spacing: 0.25px;
+  }
   h3{
     font-size: 18px;
     font-weight: 600;
@@ -46,7 +54,7 @@
     }
   }
 
-  .m-marketing--marketing-action-button{
+  .m-marketing--action-button{
     margin-bottom: -80px;
     margin-top: 32px;
     button{
@@ -74,9 +82,10 @@
   }
 }
 
-.m-marketing--marketing-contents {
+.m-marketing--contents {
   max-width:1280px;
   padding:64px 0 !important;
+  margin: auto;
 
   justify-content: center;
 
@@ -109,13 +118,13 @@
     padding-top: 0 !important;
   }
 
-  &.m-marketing--marketing-contents--middle {
+  &.m-marketing--contents--middle {
     align-items: center;
   }
 }
 
-.m-marketing--marketing-header,
-.m-marketing--marketing-hero {
+.m-marketing--header,
+.m-marketing--hero {
   position: relative;
   overflow: hidden;
 
@@ -134,7 +143,7 @@
   }
 }
 
-.m-marketing--marketing .m-marketing--onboarding {
+.m-marketing- .m-marketing--onboarding {
   margin: -115px auto 0;
   display: block;
   position: relative;
@@ -145,12 +154,12 @@
   }
 }
 
-.m-marketing--marketing-faq {
+.m-marketing--faq {
   max-width:690px;
   margin: auto;
   padding:16px;
 
-  .m-marketing--marketing-faq-aq {
+  .m-marketing--faq-aq {
     padding: 16px 0;
 
     h4{
@@ -171,7 +180,7 @@
 
 }
 
-.m-marketing--marketing .m-marketing--terms{
+.m-marketing .m-marketing--terms{
   max-width: 600px;
   margin: 16px auto;
   display: block;
@@ -181,19 +190,19 @@
   overflow: scroll;
 }
 
-.m-marketing--marketing-responsive-video {
+.m-marketing--responsive-video {
   position: relative;
   width: 100%;
 
-  &.m-marketing--marketing-responsive-video-21-9 {
+  &.m-marketing--responsive-video-21-9 {
     padding-bottom: 42.85%;
   }
 
-  &.m-marketing--marketing-responsive-video-16-9 {
+  &.m-marketing--responsive-video-16-9 {
     padding-bottom: 56.25%;
   }
 
-  &.m-marketing--marketing-responsive-video-4-3 {
+  &.m-marketing--responsive-video-4-3 {
     padding-bottom: 75%;
   }
 
@@ -206,7 +215,7 @@
   }
 }
 
-.m-marketing--marketing-responsive-hero-image {
+.m-marketing--responsive-hero-image {
   width: 100%;
   @media screen and (min-width: $min-tablet) {
     height: calc(100vh - 52px);
@@ -218,11 +227,11 @@
     object-fit: cover;
   }
 
-  &.m-marketing--marketing-responsive-hero-image--top > img {
+  &.m-marketing--responsive-hero-image--top > img {
     object-position: top;
   }
 
-  &.m-marketing--marketing-responsive-hero-image--bottom > img {
+  &.m-marketing--responsive-hero-image--bottom > img {
     object-position: bottom;
   }
 }

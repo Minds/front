@@ -10,6 +10,7 @@ import { Client } from '../../common/api/client.service';
 
 export class WireMarketingComponent {
 
+  minds = window.Minds;
   user = window.Minds.user;
   showSubscription: boolean = false;
   showVerify: boolean = false;
