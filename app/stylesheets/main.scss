@@ -238,6 +238,7 @@ blockquote:before { content: '\201C'; }
 blockquote:after { content: '\201D'; }
 
 @import '../src/**/*';
+@import '../shims/smartbanner';
 @import 'core/*';
 
 @import 'components/*';

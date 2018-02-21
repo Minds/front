@@ -27,7 +27,6 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="<%= APP_CDN %>/assets/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-
     <?php
       $meta = Minds\Core\SEO\Manager::get();
       foreach($meta as $name => $content){
@@ -36,6 +35,9 @@
         switch($name){
           case "title":
             echo "<title>$content</title>\n";
+            break;
+          case strpos($name, "smartbanner") !== FALSE:
+            echo "<meta name=\"$name\" content=\"$content\">\n";
             break;
           case strpos($name, ":") !== FALSE:
             echo "<meta property=\"$name\" content=\"$content\">\n";
