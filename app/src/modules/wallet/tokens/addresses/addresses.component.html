@@ -1,0 +1,28 @@
+<div class="m-card--large m-border" *ngIf="!editing">
+  <h2>Addresses</h2>
+
+  <p class="m-card--subtext">
+    To receive OnChain payments from other channels (eg, from a Wire or a Boost), 
+    you will will need to let us know which address to direct these tokens to.
+  </p>
+
+  <p class="m-card--subtext">
+    This address will be listed in your wallet as your Receiver Address and can be changed 
+    here at any time.
+  </p>
+
+  <div class="m-wallet-token--addresses--receiver-address" *ngIf="receiverAddress">
+    <h4>Your receiver address</h4>
+    <strong>{{receiverAddress}}</strong>
+
+    <a (click)="enableEditing()">Change</a>
+  </div>
+
+</div>
+
+<div class="m-token--onboarding" *ngIf="editing">
+  <m-token--onboarding--onchain 
+    skippable="false"
+    (next)="disableEditing()"
+  ></m-token--onboarding--onchain>
+</div>

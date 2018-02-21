@@ -31,6 +31,7 @@ import { TokenOnboardingService } from './onboarding.service';
   exports: [
     TokenOnboardingComponent,
     TokenRewardsOnboardingComponent,
+    TokenOnChainOnboardingComponent,
   ],
   entryComponents: [
     TokenIntroductionOnboardingComponent,

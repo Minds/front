@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Output, EventEmitter } from '@angular/core';
+import { 
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  Output,
+  EventEmitter 
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api/client';
@@ -20,6 +27,7 @@ enum Views {
 })
 export class TokenOnChainOnboardingComponent {
 
+  @Input() skippable: boolean = true;
   @Output() next: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
   error: string;

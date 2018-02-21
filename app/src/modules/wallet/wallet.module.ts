@@ -35,6 +35,7 @@ import { WalletUSDEarningsComponent } from './usd/earnings.component';
 import { WalletUSDPayoutsComponent } from './usd/payouts.component';
 import { WalletUSDSettingsComponent } from './usd/settings.component';
 import { WalletTokenWithdrawLedgerComponent } from './tokens/withdraw/ledger/ledger.component';
+import { WalletTokenAddressesComponent } from './tokens/addresses/addresses.component';
 import { TokenOnboardingModule } from './tokens/onboarding/onboarding.module';
 
 const walletRoutes : Routes = [
@@ -52,7 +53,7 @@ const walletRoutes : Routes = [
           { path: 'withdraw', component: WalletTokenWithdrawComponent },
           { path: 'contributions/join', component: WalletTokenJoinComponent },  
           { path: 'contributions', component: WalletTokenContributionsComponent },
-          { path: 'addresses', component: WalletTokenSettingsComponent },
+          { path: 'addresses', component: WalletTokenAddressesComponent },
         ] 
       },
       { path: 'usd', component: WalletUSDComponent, 
@@ -109,6 +110,7 @@ const walletRoutes : Routes = [
     WalletUSDEarningsComponent,
     WalletUSDPayoutsComponent,
     WalletUSDSettingsComponent,
+    WalletTokenAddressesComponent,
   ],
   exports: [
     WalletComponent,

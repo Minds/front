@@ -152,7 +152,7 @@
     <div class="m-layout--row">
       <div class="m-layout--spacer"></div>
 
-      <button *ngIf="!display"
+      <button *ngIf="!display && skippable === true"
         class="m-btn m-btn--slim"
         (click)="next.next()"
       >Skip. I'm not interested</button>

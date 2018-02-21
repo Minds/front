@@ -1,0 +1,21 @@
+.m-card--large {
+  padding: 24px;
+  background: #FFF;
+  margin-bottom: 16px;
+
+  h2 {
+    font-size: 42px;
+    margin: 0;
+    margin-bottom: 16px;
+    font-weight: bold;
+    line-height: 42px;
+    color: #444;    
+  }
+
+  .m-card--subtext {
+    font-size: 16px;
+    line-height: 20px;
+    margin: 8px 0 16px;
+    padding: 0;
+  }
+}
