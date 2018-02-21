@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Output, EventEmitter } from '@angular/core';
+import { 
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api/client';
@@ -11,6 +18,7 @@ import { Session } from '../../../../../services/session';
 })
 export class TokenRewardsOnboardingComponent {
 
+  @Input() skippable: boolean = true;
   @Output() next: EventEmitter<any> = new EventEmitter();
 
   confirming: boolean = false;

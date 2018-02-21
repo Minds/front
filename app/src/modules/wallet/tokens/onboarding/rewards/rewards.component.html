@@ -43,7 +43,13 @@
 
     <div class="m-layout--row">
       <div class="m-layout--spacer"></div>
-      <button class="m-btn m-btn--slim" (click)="next.next()">Skip. I don't want to earn tokens</button>
+      <button 
+        *ngIf="skippable === true"
+        class="m-btn m-btn--slim" 
+        (click)="next.next()"
+        >
+        Skip. I don't want to earn tokens
+      </button>
     </div>
   </div>
 </div>

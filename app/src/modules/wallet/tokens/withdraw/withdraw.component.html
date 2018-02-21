@@ -1,4 +1,8 @@
-<div class="m-border mdl-color--white m-token-withdraw">
+<div class="m-token--onboarding" *ngIf="!session.getLoggedInUser().rewards">
+  <m-token--onboarding--rewards skippable="false"></m-token--onboarding--rewards>
+</div>
+
+<div class="m-border mdl-color--white m-token-withdraw" *ngIf="session.getLoggedInUser().rewards">
   <p>
     You can request to withdraw your token rewards to your 'onchain' wallet below.
     Note: a small amount of ETH will be charged to cover the transaction fee.
