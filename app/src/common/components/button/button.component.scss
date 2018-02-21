@@ -48,6 +48,11 @@ minds-button {
   &:hover {
     border: 1px solid #4690D6;
   }
+
+  &[disabled] {
+    color: #aaa !important;
+    border-color: #aaa !important;
+  }
 }
 
 .m-btn--with-icon {

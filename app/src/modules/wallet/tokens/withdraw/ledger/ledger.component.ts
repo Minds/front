@@ -32,7 +32,7 @@ export class WalletTokenWithdrawLedgerComponent implements OnInit {
 
   ngOnInit() {
 
-    if (!this.session.getLoggedInUser().phone_number_hash) {
+    if (!this.session.getLoggedInUser().rewards) {
       this.router.navigate(['/wallet/tokens/contributions/join']);
     }
 

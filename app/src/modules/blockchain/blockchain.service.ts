@@ -31,6 +31,7 @@ export class BlockchainService {
     await this.client.post(`api/v2/blockchain/wallet`, data);
 
     this.serverWalletAddressCache = data.address;
+    window.Minds.user.eth_wallet = data.address;
   }
 
   async getBalance(refresh?: boolean) {

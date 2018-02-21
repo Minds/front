@@ -71,7 +71,7 @@ export class WalletTokenJoinComponent {
           secret: this.secret,
         });
 
-      window.Minds.user.phone_number_hash = response.phone_number_hash;
+      window.Minds.user.rewards = true;
       this.join();
     } catch (e) {
       this.error = e.message;

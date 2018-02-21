@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
+import { Storage } from '../../../../../services/storage';
 
 @Component({
   selector: 'm-token--onboarding--completed',
@@ -20,8 +21,14 @@ export class TokenCompletedOnboardingComponent {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected router: Router,
+    protected storage: Storage
   ) { 
 
+  }
+
+  complete() {
+    this.storage.set('walletOnboardingComplete', true);
+    this.next.next()
   }
 
   detectChange() {

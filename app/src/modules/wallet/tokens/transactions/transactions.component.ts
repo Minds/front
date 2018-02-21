@@ -40,11 +40,6 @@ export class WalletTokenTransactionsComponent {
   }
 
   async ngOnInit() {
-
-    //if (!this.session.getLoggedInUser().phone_number_hash) {
-    //  this.router.navigate(['/wallet/tokens/rewards/join']);
-    //}
-
     const d = new Date();
 
     d.setHours(23, 59, 59);

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
+import randomString from '../../helpers/random-string';
+import asyncSleep from '../../helpers/async-sleep';
 
 declare const ethSigner;
 declare const ethAccount;
@@ -74,6 +76,21 @@ export class LocalWalletService {
       this.account = void 0;
       this.privateKey = void 0;
     }, SECURE_MODE_TIMEOUT);
+  }
+
+  async create(fast = true) {
+    let entropy = '';
+
+    if (fast) {
+      entropy = randomString(64);
+    } else {
+      while (entropy.length < 64) {
+        entropy += randomString(8);
+        await asyncSleep(Math.floor(Math.random() * (600 - 350 + 1)) + 350);
+      }
+    }
+
+    return await ethAccount.generate(entropy);
   }
 
   public static _(transactionOverlay: TransactionOverlayService) {

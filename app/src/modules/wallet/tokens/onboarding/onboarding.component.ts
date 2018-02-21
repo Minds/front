@@ -5,6 +5,7 @@ import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { TokenOnboardingService } from './onboarding.service';
 import { DynamicHostDirective } from '../../../../common/directives/dynamic-host.directive';
+import { Storage } from '../../../../services/storage';
 
 
 @Component({
@@ -26,14 +27,18 @@ export class TokenOnboardingComponent {
     protected router: Router,
     public service: TokenOnboardingService,
     private _componentFactoryResolver: ComponentFactoryResolver,
+    protected storage: Storage
   ) { 
 
   }
 
   ngOnInit() {
     if (
-      this.session.getLoggedInUser().phone_number_hash &&
-      this.session.getLoggedInUser().eth_wallet
+      this.storage.get('walletOnboardingComplete') ||
+      (
+        this.session.getLoggedInUser().rewards &&
+        this.session.getLoggedInUser().eth_wallet
+      )
     ) {
       return; //already onboarded
     }

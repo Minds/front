@@ -20,12 +20,37 @@
     }
 
     .m-token--onboarding--onchain-selections--buttons {
+      display: flex;
+      align-items: center;
       padding-top: 16px;
 
       span {
         font-size: 11px;
         color: #444;
         padding: 0 8px;
+      }
+
+      .m-token--onboarding--onchain-selections--buttons-input {
+        appearance: none;
+        flex-grow: 1;
+        margin-right: 16px;
+        padding: 6px 8px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+        letter-spacing: 1px;
+        font-weight: 300;
+      }
+
+      span.m-token--onboarding--onchain-selections--buttons-input {
+        display: inline-block;
+        white-space: nowrap;
+      }
+
+
+      .mdl-spinner {
+        margin-left: 16px;
       }
     }
 

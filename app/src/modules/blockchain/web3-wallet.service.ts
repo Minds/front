@@ -241,7 +241,7 @@ export class Web3WalletService {
       return 'Parity';
     }
 
-    return 'Ethereum';
+    return 'Local Interface';
   }
 
   // Service provider
