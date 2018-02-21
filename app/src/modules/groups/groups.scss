@@ -691,6 +691,8 @@ minds-groups-create {
       pointer-events: all;
 
       .minds-avatar {
+        background-position: center center;
+        background-size: cover;
         width: 200px;
         height: 200px;
       }
