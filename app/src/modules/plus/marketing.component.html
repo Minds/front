@@ -1,40 +1,36 @@
-<div class="m-plus--marketing">
+<div class="m-marketing">
 
-  <div class="m-plus--marketing-header">
-    <h1>Minds Plus</h1>
-    <h3>Opt-out of boosts, earn 1,000 monthly points, access exclusive Minds content, and more</h3>
-
-    <div class="m-plus--marketing-action-button">
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isPlus()" (click)="openSubscription()" [hidden]="showSubscription">Upgrade - $5.00/month</button>
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login">Upgrade - $5.00/month</button>
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="cancelSubscription()">Cancel Plus</button>
+  <div class="m-marketing--header">
+    <div class="m-marketing--background-video">
+      <img [src]="minds.cdn_assets_url + 'assets/photos/fractal.jpg'">
     </div>
 
-    <div class="m-plus--overlay"></div>
+    <div class="m-marketing--header-inner">
+      <h1>Minds Plus</h1>
+      <h3>Upgrade your channel and unlock premium features</h3>
+
+      <div class="m-marketing--action-button">
+        <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isPlus()" (click)="openSubscription()" [hidden]="showSubscription">Upgrade - $5.00/month</button>
+        <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login">Upgrade - $5.00/month</button>
+        <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="cancelSubscription()">Cancel Plus</button>
+      </div>
+    </div>
+
+    <div class="m-marketing--overlay"></div>
   </div>
 
   <m-plus--subscription #subscription [hidden]="!showSubscription"></m-plus--subscription>
 
-  <div class="m-plus--marketing-contents mdl-grid mdl-grid--no-spacing">
+  <div class="m-marketing--contents m-layout--row">
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
       <i class="material-icons mdl-color-text--blue-grey-700">trending_up</i>
       <h2>Hide Boosts</h2>
-      <span>Remove all boosted content from your newsfeed and sidebars (optional) </span>
-    </div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <img src="{{minds.cdn_assets_url}}assets/wire-icon.png" style="display: block; margin: 2px auto 20px; height: 60px;"/>
-      <h2>1,000 points</h2>
-      <span>Receive 1,000 monthly points to boost your own posts or share with others to support their content</span>
+      <span>Hide all boosted content from your newsfeed and sidebars (optional)</span>
     </div>
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
       <i class="material-icons mdl-color-text--blue-grey-700">favorite</i>
       <h2>Exclusive</h2>
-      <span>Gain access to monthly hangouts and exclusive behind-the-scenes content with the Minds team</span>
-    </div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <i class="material-icons mdl-color-text--blue-grey-700">announcement</i>
-      <h2>Ad free</h2>
-      <span>Remove all ads across the site</span>
+      <span>Access exclusive Minds content</span>
     </div>
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
       <i class="material-icons mdl-color-text--blue-grey-700">verified_user</i>
@@ -52,7 +48,7 @@
     </div>
   </div>
 
-  <div class="m-plus--marketing-faq mdl-color-text--blue-grey-600">
+  <div class="m-marketing--faq">
     <m-faq category="plus"></m-faq>
   </div>
 
