@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 import { Subscription } from 'rxjs/Rx';
 
 @Component({
@@ -16,5 +15,4 @@ export class BlogTileComponent {
       entity.thumbnail_src = 'assets/videos/earth-1/earth-1.png';
     this.entity = entity;
   }
-
 }

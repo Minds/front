@@ -3,6 +3,7 @@
   height: 100%;
   background: #FFF;
   display: flex;
+  cursor: pointer;
   flex-direction: column;
 
   .m-blog--tile-thumbnail {
@@ -40,6 +41,7 @@
       color: #444;
       padding: 12px 12px 0;
 
+      cursor: pointer;
       display: block;
       //text-overflow: ellipsis;
       //white-space: nowrap;
