@@ -6,7 +6,6 @@ import { ScrollService } from '../../../../../services/ux/scroll';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
-import { ChannelBadgesComponent } from '../../../../../common/components/badges/badges.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
@@ -172,21 +171,23 @@ export class Activity {
     this.commentsOpened.emit(this.commentsToggle);
   }
 
-  togglePin(){
-    
-    if(this.session.getLoggedInUser().guid != this.activity.owner_guid){
+  async togglePin() {
+
+    if (this.session.getLoggedInUser().guid != this.activity.owner_guid) {
       return;
     }
 
-    let action = 'pin';
-    if(this.activity.pinned){
-      action = 'unpin';
-    }
     this.activity.pinned = !this.activity.pinned;
-    this.client.post(`api/v1/newsfeed/${action}/${this.activity.guid}`)
-      .catch((response: any) => {
-        this.activity.pinned = !this.activity.pinned;
-      });
+    const url: string = `api/v2/newsfeed/pin/${this.activity.guid}`;
+    try {
+      if (this.activity.pinned) {
+        await this.client.post(url);
+      } else {
+        await this.client.delete(url);
+      }
+    } catch (e) {
+      this.activity.pinned = !this.activity.pinned;
+    }
   }
 
   showBoost() {
