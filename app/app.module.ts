@@ -24,6 +24,7 @@ import { PlusModule } from './src/modules/plus/plus.module';
 import { I18nModule } from './src/modules/i18n/i18n.module';
 
 import { AdsModule } from './src/modules/ads/ads.module';
+import { BlockchainModule } from './src/modules/blockchain/blockchain.module';
 import { BoostModule } from './src/modules/boost/boost.module';
 import { WireModule } from './src/modules/wire/wire.module';
 import { ReportModule } from './src/modules/report/report.module';
@@ -70,6 +71,7 @@ import { MessengerModule } from './src/modules/messenger/messenger.module';
     MonetizationModule,
     PlusModule,
     AdsModule,
+    BlockchainModule,
     BoostModule,
     WireModule,
     ReportModule,

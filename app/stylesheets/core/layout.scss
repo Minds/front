@@ -3,6 +3,22 @@
 $layout-header-height: 64px;
 $layout-sidebar-width: 80px;
 
+.m-layout--row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.m-layout--column {
+  display: flex;
+  flex-direction: column;
+}
+
+.m-layout--spacer{
+  flex: 1;
+}
+
+
 minds-app{
 
   width: 100%;
