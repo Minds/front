@@ -149,17 +149,28 @@ export class TokenOnChainOnboardingComponent {
     this.downloadingMetamask = true;
   }
 
-  async loadExternal() {
+  async useExternal() {
     await this.web3Wallet.ready();
 
-    this._externalTimer = setInterval(async () => {
-      const address: string = (await this.web3Wallet.getCurrentWallet()) || '';
+    this.detectExternal();
 
-      if (this.providedAddress !== address) {
-        this.providedAddress = address;
-        this.detectChanges();
-      }
+    this._externalTimer = setInterval(() => {
+      this.detectExternal();
     }, 1000);
+  }
+
+  async detectExternal() {
+    const address: string = (await this.web3Wallet.getCurrentWallet()) || '';
+
+    if (this.providedAddress !== address) {
+      this.providedAddress = address;
+      this.detectChanges();
+
+      if (this.providedAddress) {
+        clearInterval(this._externalTimer);
+        this.provideAddress();
+      }
+    }
   }
 
   detectChanges() {

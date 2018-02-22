@@ -17,7 +17,7 @@
 
         <div class="m-token--onboarding--onchain-selections--buttons">
           <button class="m-btn m-btn--slim m-btn--action"
-            (click)="display = Views.UseExternal; loadExternal()"
+            (click)="display = Views.UseExternal; useExternal()"
           >Use MetaMask</button>
         </div>
       </li>
@@ -29,7 +29,7 @@
 
         <div class="m-token--onboarding--onchain-selections--buttons">
           <button class="m-btn m-btn--slim m-btn--action"
-            (click)="display = Views.CreateAddress"
+            (click)="display = Views.CreateAddress; createAddress()"
           >Create Address</button>
           <span>or</span>
           <button class="m-btn m-btn--slim m-btn--action"
@@ -46,9 +46,9 @@
           <h4>Create Address</h4>
 
           <p *ngIf="!generatedAccount">
-            Clicking the button below will create a new wallet address and
-            its private key. Ensure you download and safely store the private
-            key file. The address will be set as your Receiver Address.
+            We're generating a new wallet address and its private key.
+            Ensure you download and safely store the private key file.
+            The address will be set as your Receiver Address.
           </p>
 
           <p *ngIf="generatedAccount">
@@ -59,12 +59,6 @@
           </p>
 
           <div class="m-token--onboarding--onchain-selections--buttons">
-            <button class="m-btn m-btn--slim m-btn--action"
-              *ngIf="!generatedAccount"
-              [disabled]="inProgress"
-              (click)="createAddress()"
-            >Create Address</button>
-
             <button class="m-btn m-btn--slim m-btn--action"
               *ngIf="generatedAccount"
               [disabled]="inProgress"
@@ -131,11 +125,6 @@
                 MetaMask is either locked or connected to another network.
               </ng-template>
             </span>
-
-            <button class="m-btn m-btn--slim m-btn--action"
-              [disabled]="inProgress || !canProvideAddress()"
-              (click)="provideAddress()"
-            >Save</button>
 
             <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
           </div>
