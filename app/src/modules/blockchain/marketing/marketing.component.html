@@ -3,10 +3,10 @@
   <div class="m-marketing--header">
     <div class="m-marketing--background-video">
       <video autoplay muted loop *ngIf="!videoError; else spaceImage">
-        <source [src]="minds.cdn_url + '/assets/videos/space-1/space-1.mp4'" type="video/mp4" (error)="onSourceError()">
+        <source [src]="minds.cdn_assets_url + 'assets/videos/space-1/space-1.mp4'" type="video/mp4" (error)="onSourceError()">
       </video>
       <ng-template #spaceImage>
-        <img [src]="minds.cdn_url + '/assets/marketing/space-1.png'">
+        <img [src]="minds.cdn_assets_url + 'assets/marketing/space-1.png'">
       </ng-template>
     </div>
 
@@ -36,7 +36,7 @@
 
   <div class="m-marketing--hero m-blockchain--marketing--balloon">
     <div class="m-marketing--background-video">
-      <img [src]="minds.cdn_url + '/assets/photos/balloon.jpg'">
+      <img [src]="minds.cdn_assets_url + 'assets/photos/balloon.jpg'">
     </div>
 
     <div class="m-marketing--hero-inner">
@@ -83,7 +83,7 @@
 
   <div class="m-marketing--hero">
     <div class="m-marketing--background-video">
-      <img [src]="minds.cdn_url + '/assets/photos/galaxy.jpg'">
+      <img [src]="minds.cdn_assets_url + 'assets/photos/galaxy.jpg'">
     </div>
 
     <div class="m-marketing--hero-inner">
@@ -156,7 +156,7 @@
   </div>
 
   <div class="m-marketing--responsive-hero-image m-marketing--responsive-hero-image--bottom">
-    <img [src]="minds.cdn_url + '/assets/marketing/international-space-station-1776401_1920.jpg'" alt="">
+    <img [src]="minds.cdn_assets_url + 'assets/marketing/international-space-station-1776401_1920.jpg'" alt="">
   </div>
 
   <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people">
