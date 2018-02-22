@@ -4,7 +4,7 @@
 <div class="thumbnail" *ngIf="thumbnailFromFile || thumbnailNotChanged">
   <img [src]="thumbnailSrc" />
 </div>
-<video (click)="onClick()" preload="metadata" muted crossOrigin="anonymous" [class.hide]="thumbnailFromFile"></video>
+<video preload="metadata" muted crossOrigin="anonymous" [class.hide]="thumbnailFromFile"></video>
 <div class="m-scrubber mdl-color--blue-grey-600" (click)="seek($event)" [hidden]="thumbnailFromFile">
   <div class="m-scrubber-progress mdl-color--amber-600" [ngStyle]="{'left': (thumbnailSec / element.duration)*100  + '%'}"></div>
 </div>

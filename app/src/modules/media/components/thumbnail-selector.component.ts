@@ -115,7 +115,7 @@ export class ThumbnailSelectorComponent {
     element.value = "";
   }
   
-  removeCustomThumbnail() {
+  removeCustomThumbnail(e) {
     this.thumbnailFromFile = false;
     this.thumbnailNotChanged = true;
     this.thumbnailSrc = this.originalThumbnailSrc;
