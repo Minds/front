@@ -61,7 +61,7 @@ export class RemindButton {
     this.object.reminded = true;
     this.object.reminds++;
 
-    this.client.post('api/v1/newsfeed/remind/' + this.object.guid, {
+    this.client.post('api/v2/newsfeed/remind/' + this.object.guid, {
       message: this.message
     })
       .catch(e => {
