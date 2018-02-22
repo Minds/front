@@ -45,6 +45,9 @@ export class BlogListComponent {
       this.filter = params['filter'];
 
       switch (this.filter) {
+        case 'network':
+          this.filter = 'network';
+          break;
         case 'trending':
           this.title.setTitle('Trending Blogs');
           break;

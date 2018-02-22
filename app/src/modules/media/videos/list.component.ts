@@ -55,6 +55,9 @@ export class MediaVideosListComponent {
         switch (this.filter) {
           case 'all':
             break;
+          case 'network':
+            this.filter = 'network';
+            break;
           case 'top':
             this.filter = 'trending';
             break;

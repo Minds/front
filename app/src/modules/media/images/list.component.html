@@ -11,6 +11,15 @@
           </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
+        routerLink="/media/images/network"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span>Subscriptions</span>
+        <m-tooltip icon="help" i18n="@@@@MINDS__IMAGES__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+          Images from channels you are subscribed to
+        </m-tooltip>
+      </a>
+      <a class="m-topbar--navigation--item"
         routerLink="/media/images/my"
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
