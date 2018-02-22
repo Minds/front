@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 
+declare const BN;
+
 @Injectable()
 export class WithdrawContractService {
   protected instance: any;
@@ -41,7 +43,7 @@ export class WithdrawContractService {
   async request(guid: string | number, amount: number, message: string = '') {
     const tokens = amount / (10 ** 18);
     const gasLimit = 67839; //TODO: make this dynamic
-    const gas = this.instance.defaultTxObject.gasPrice * gasLimit;
+    const gas = (new BN(this.instance.defaultTxObject.gasPrice)).mul(new BN(gasLimit));
     const gasEther = this.web3Wallet.EthJS.fromWei(gas, 'ether');
 
     let tx = await this.web3Wallet.sendSignedContractMethodWithValue(
@@ -51,15 +53,15 @@ export class WithdrawContractService {
         guid,
         amount
       ],
-      gas,
+      gas.clone(),
       `Request a withdrawal of ${tokens} Minds Tokens. ${gasEther} ETH will be transferred to cover the gas fee. If you send a low amount of gas fee, your withdrawal may fail. ${message}`.trim()
     );
 
     return {
       address: (await this.contract()).defaultTxObject.from,
-      guid: guid,
-      amount: amount,
-      gas: gas,
+      guid,
+      amount: amount.toString(),
+      gas: gas.toString(),
       tx
     };
   }
