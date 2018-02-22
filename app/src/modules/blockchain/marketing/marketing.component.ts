@@ -50,6 +50,10 @@ export class BlockchainMarketingComponent implements OnInit, OnDestroy {
 
   }
 
+  downloadWhitepaper() {
+    alert('coming soon');	
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
