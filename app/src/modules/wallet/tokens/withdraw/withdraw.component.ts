@@ -24,7 +24,7 @@ export class WalletTokenWithdrawComponent {
   constructor (
     protected client: Client,
     protected cd: ChangeDetectorRef,
-    protected session: Session,
+    public session: Session,
     protected contract: WithdrawContractService,
   ) { }
 
