@@ -1,7 +1,7 @@
 <div class="m-settings--section m-layout--row m-border">
 
-  <div [hidden]="!inProgress" style="width:100%; text-align:center;">
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+  <div [hidden]="!inProgress">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
   <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">{{error}}</div>
   <div class="m-layout--spacer"></div>
@@ -19,7 +19,6 @@
   >
     <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
   </button>
-  <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" [hidden]="!inProgress"></div>
 </div>
 
 <div class="m-settings--section m-settings--emails--when-campaign m-border">
