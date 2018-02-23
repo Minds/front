@@ -21,7 +21,7 @@
 
     <minds-activity
       *ngFor="let a of activity; let i = index"
-      class="mdl-card mdl-shadow--2dp item"
+      class="mdl-card item"
       [object]="a"
       [canDelete]="group['is:owner']"
       (delete)="delete(a)"
