@@ -107,6 +107,20 @@ m-notifications--topbar-toggle{
   i { cursor: pointer }
   .counter { cursor: default }
 
+  .m-notifications--topbar-toggle--icon {
+    &::after {
+      background: #4690DF;
+      border-radius: 50%;
+      display: block;
+      height: 8px;
+      width: 8px;
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: 2px;
+    }
+  }
+
   .m-notifications--topbar-toggle-overlay {
     position: fixed;
     top: 0;
