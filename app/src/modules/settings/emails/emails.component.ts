@@ -32,6 +32,7 @@ export class SettingsEmailsComponent implements OnInit {
   changed: boolean = false;
   saved: boolean = false;
   inProgress: boolean = false;
+  loading: boolean = false;
 
   paramsSubscription: Subscription;
 
@@ -50,21 +51,19 @@ export class SettingsEmailsComponent implements OnInit {
     }
   }
 
-  load() {
-    this.client.get('api/v2/settings/emails')
-      .then((response: any) => {
-        response.notifications.forEach((item, index, list) => {
-          let value;
-          if (item.value === '1') {
-            value = true;
-          } else if (item.value === '0') {
-            value = false;
-          } else {
-            value = item.value;
-          }
-          this.notifications[item.campaign][item.topic] = value;
-        });
-      });
+  async load() {
+    this.loading = true;
+    let response:any = await this.client.get('api/v2/settings/emails');
+    response.notifications.forEach((item, index, list) => {
+      let value = item.value;
+      if (item.value === '1') {
+        value = true;
+      } else if (item.value === '0') {
+        value = false;
+      }
+      this.notifications[item.campaign][item.topic] = value;
+    });
+    this.loading = false;
   }
 
   change() {

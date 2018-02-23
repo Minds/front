@@ -21,7 +21,7 @@
   </button>
 </div>
 
-<div class="m-settings--section m-settings--emails--when-campaign m-border">
+<div class="m-settings--section m-settings--emails--when-campaign m-border" *ngIf="!loading">
   <h4>Email me when</h4>
 
   <ul class="m-settings--emails-campaigns">
@@ -70,7 +70,7 @@
   </ul>
 </div>
 
-<div class="m-settings--section m-settings--emails--with-campaign m-border">
+<div class="m-settings--section m-settings--emails--with-campaign m-border" *ngIf="!loading">
       
   <h4>Email me with</h4>
 
@@ -142,7 +142,7 @@
 </div>
 
 
-<div class="m-settings--section m-settings--emails--global-campaign m-border">
+<div class="m-settings--section m-settings--emails--global-campaign m-border" *ngIf="!loading">
 
   <h4>Keep me updated with</h4>
 
