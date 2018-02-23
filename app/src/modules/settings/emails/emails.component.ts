@@ -51,7 +51,7 @@ export class SettingsEmailsComponent implements OnInit {
   }
 
   load() {
-    this.client.get('api/v1/settings')
+    this.client.get('api/v2/settings/emails')
       .then((response: any) => {
         response.notifications.forEach((item, index, list) => {
           let value;
@@ -81,9 +81,9 @@ export class SettingsEmailsComponent implements OnInit {
       return;
 
     this.inProgress = true;
-    this.client.post('api/v1/settings', {
-        'notifications': this.notifications 
-      })
+    this.client.post('api/v2/settings/emails', {
+      'notifications': this.notifications
+    })
       .then((response: any) => {
         this.changed = false;
         this.saved = true;
