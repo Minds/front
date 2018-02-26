@@ -3,6 +3,8 @@ import { Client } from '../../../../services/api/client';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
 
+declare const BN;
+
 @Component({
   moduleId: module.id,
   selector: 'm-wallet--balance-tokens',
@@ -49,7 +51,7 @@ export class WalletBalanceTokensComponent implements OnInit {
       }
 
       const balance = await this.tokenContract.balanceOf(address);
-      this.balance += parseInt(balance[0].toString());
+      this.balance = (new BN(this.balance)).add(balance[0]);
       this.addresses.unshift({
         'label': "OnChain",
         'address': address,
