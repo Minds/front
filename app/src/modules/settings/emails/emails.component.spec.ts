@@ -11,7 +11,7 @@ import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { SettingsEmailsComponent } from './emails.component';
 
-describe('SettingsEmailsComponent', () => {
+xdescribe('SettingsEmailsComponent', () => {
 
   let comp: SettingsEmailsComponent;
   let fixture: ComponentFixture<SettingsEmailsComponent>;
