@@ -8,7 +8,7 @@ import { TokenContractService } from '../../blockchain/contracts/token-contract.
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
-import {Md5} from 'ts-md5/dist/md5';
+import { Md5 } from 'ts-md5/src/md5';
 
 
 type CurrencyType = 'offchain' | 'usd' | 'tokens';
