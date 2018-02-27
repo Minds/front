@@ -105,7 +105,6 @@ export class WalletTokenTransactionsComponent {
     this.inProgress = true;
 
     this.detectChanges();
-
     try {
       let startDate = new Date(this.startDate),
         endDate = new Date(this.endDate);
@@ -144,16 +143,16 @@ export class WalletTokenTransactionsComponent {
           this.offset = response['load-next'];
         } else {
           this.moreData = false;
+          this.inProgress = false;
         }
       } else {
         console.error('No data');
         this.moreData = false;
-        // TODO: Show
+        this.inProgress = false;
       }
     } catch (e) {
       console.error(e);
       this.moreData = false;
-      // TODO: Show
     } finally {
       this.inProgress = false;
       this.detectChanges();
