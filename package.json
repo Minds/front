@@ -42,6 +42,7 @@
     "socket.io-client": "^1.4.5",
     "systemjs": "0.19.40",
     "tinymce": "^4.2.6",
+    "ts-md5": "^1.2.4",
     "zone.js": "~0.8.20"
   },
   "devDependencies": {

@@ -40,7 +40,7 @@ export class BoostContractService {
 
   // Boost
 
-  async create(guid: string, amount: number, message: string = '') {
+  async create(guid: string, amount: number, checksum: string, message: string = '') {
     return await this.web3Wallet.sendSignedContractMethod(
       await this.tokenContract.token(),
       'approveAndCall',
@@ -55,14 +55,18 @@ export class BoostContractService {
           {
             type: 'uint256',
             value: guid
-          }
+          },
+          {
+            type: 'uint256',
+            value: checksum,
+          },
         ])
       ],
       `Network Boost for ${amount} Tokens. ${message}`.trim()
     );
   }
 
-  async createPeer(receiver: string, guid: string, amount: number, message: string = '') {
+  async createPeer(receiver: string, guid: string, amount: number, checksum: string, message: string = '') {
     return await this.web3Wallet.sendSignedContractMethod(
       await this.tokenContract.token(),
       'approveAndCall',
@@ -70,6 +74,10 @@ export class BoostContractService {
         this.instance.address,
         this.tokenContract.tokenToUnit(amount),
         this.tokenContract.encodeParams([
+          {
+            type: 'uint256',
+            value: checksum,
+          },
           {
             type: 'address',
             value: receiver

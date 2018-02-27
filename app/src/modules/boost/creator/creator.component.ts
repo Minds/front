@@ -8,6 +8,8 @@ import { TokenContractService } from '../../blockchain/contracts/token-contract.
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
+import {Md5} from 'ts-md5/dist/md5';
+
 
 type CurrencyType = 'offchain' | 'usd' | 'tokens';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
@@ -25,6 +27,7 @@ interface BoostStruc {
   postToFacebook: boolean;
 
   nonce: any;
+  checksum: string;
 }
 
 export class VisibleBoostError extends Error {
@@ -56,7 +59,8 @@ export class BoostCreatorComponent implements AfterViewInit {
     scheduledTs: null,
 
     // Payment
-    nonce: null
+    nonce: null,
+    checksum: null
   };
 
   allowedTypes: { newsfeed?, p2p?, content? } = {};
@@ -76,7 +80,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     maxCategories: 3
   };
 
-  step: number = 0; 
+  step: number = 0;
 
   estimatedTime: number = -1;
 
@@ -459,7 +463,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     this.step++;
   }
 
-  back() { 
+  back() {
     this.step--;
   }
 
@@ -483,6 +487,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     try {
       if (this.boost.currency === 'tokens') {
         guid = await this.generateGuid();
+        this.boost.checksum = this.generateChecksum(guid);
       }
 
       if (this.boost.type !== 'p2p') {
@@ -499,7 +504,7 @@ export class BoostCreatorComponent implements AfterViewInit {
           }
 
           this.boost.nonce = {
-            txHash: await this.boostContract.create(guid, amount),
+            txHash: await this.boostContract.create(guid, amount, this.boost.checksum),
             address: await this.web3Wallet.getCurrentWallet()
           };
         }
@@ -510,7 +515,8 @@ export class BoostCreatorComponent implements AfterViewInit {
           impressions: this.boost.amount,
           categories: this.boost.categories,
           priority: this.boost.priority ? 1 : null,
-          paymentMethod: this.boost.nonce
+          paymentMethod: this.boost.nonce,
+          checksum: this.boost.checksum,
         });
       } else {
         if (this.boost.currency === 'tokens') {
@@ -523,7 +529,7 @@ export class BoostCreatorComponent implements AfterViewInit {
           }
 
           this.boost.nonce = {
-            txHash: await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount),
+            txHash: await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount, this.boost.checksum),
             address: await this.web3Wallet.getCurrentWallet()
           };
         }
@@ -536,7 +542,8 @@ export class BoostCreatorComponent implements AfterViewInit {
           destination: this.boost.target.guid,
           scheduledTs: this.boost.scheduledTs,
           postToFacebook: this.boost.postToFacebook ? 1 : null,
-          nonce: this.boost.nonce
+          nonce: this.boost.nonce,
+          checksum: this.boost.checksum,
         });
       }
 
@@ -550,10 +557,16 @@ export class BoostCreatorComponent implements AfterViewInit {
         throw new Error('Sorry, your payment failed. Please, try again, use another card or wallet.');
       } else {
         this.error = (e && e.message) || 'Sorry, something went wrong';
+        console.warn(this.error);
       }
     } finally {
       this.inProgress = false;
     }
+  }
+
+  generateChecksum(boostGuid: string): string {
+    const prehash: string = boostGuid + this.object.type + this.object.guid + this.object.owner_guid + (this.object.perma_url ? this.object.perma_url: '') + this.object.time_created;
+    return <string>Md5.hashStr(prehash);
   }
 
   generateGuid() {
