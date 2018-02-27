@@ -68,6 +68,7 @@
       border-bottom: 6px solid #555;
     }
   }
+
   .m-phone-input--country-list {
     position: absolute;
     z-index: 2;
@@ -84,6 +85,10 @@
     max-height: 200px;
     overflow-y: scroll;
 
+    &.dropdown-menu {
+      flex-direction: column !important;
+    }
+    
     @media (max-width: 500px) {
       white-space: normal;
     }
@@ -119,10 +124,10 @@
   }
   
 
-  .m-phone-input--country-list .m-phone-input--flag-box, & .country-list .country-name, & .country-list .dial-code {
+  .m-phone-input--country-list .m-phone-input--flag-box, .m-phone-input--country-list .m-phone-input--country-name, .m-phone-input--country-list .m-phone-input--dial-code {
     vertical-align: middle;
   }
-  .country-list .m-phone-input--flag-box, & .country-list .country-name {
+  .m-phone-input--country-list .m-phone-input--flag-box, .m-phone-input--country-list .m-phone-input--country-name {
     margin-right: 6px;
   }
 
