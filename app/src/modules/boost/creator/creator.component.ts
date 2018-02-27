@@ -565,7 +565,14 @@ export class BoostCreatorComponent implements AfterViewInit {
   }
 
   generateChecksum(boostGuid: string): string {
-    const prehash: string = boostGuid + this.object.type + this.object.guid + this.object.owner_guid + (this.object.perma_url ? this.object.perma_url: '') + this.object.time_created;
+    const prehash: string = boostGuid 
+      + this.object.type 
+      + this.object.guid 
+      + this.object.owner_guid 
+      + (this.object.perma_url ? this.object.perma_url : '')
+      + (this.object.message ? this.object.message : '')
+      + (this.object.title ? this.object.title : '')
+      + this.object.time_created;
     return <string>Md5.hashStr(prehash);
   }
 

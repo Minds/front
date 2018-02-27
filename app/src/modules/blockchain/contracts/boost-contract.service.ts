@@ -75,17 +75,17 @@ export class BoostContractService {
         this.tokenContract.tokenToUnit(amount),
         this.tokenContract.encodeParams([
           {
-            type: 'uint256',
-            value: checksum,
-          },
-          {
             type: 'address',
             value: receiver
           },
           {
             type: 'uint256',
             value: guid
-          }
+          },
+          {
+            type: 'uint256',
+            value: checksum,
+          },
         ])
       ],
       `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim()
