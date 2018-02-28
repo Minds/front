@@ -11,6 +11,7 @@ import { TokenIntroductionOnboardingComponent } from './introduction/introductio
 import { TokenRewardsOnboardingComponent } from './rewards/rewards.component';
 import { TokenOnChainOnboardingComponent } from './onchain/onchain.component';
 import { TokenCompletedOnboardingComponent } from './completed/completed.component';
+import { TokenOnboardingVideoComponent } from './video.component';
 import { TokenOnboardingService } from './onboarding.service';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { TokenOnboardingService } from './onboarding.service';
     TokenRewardsOnboardingComponent,
     TokenOnChainOnboardingComponent,
     TokenCompletedOnboardingComponent,
+    TokenOnboardingVideoComponent,
   ],
   exports: [
     TokenOnboardingComponent,

@@ -13,6 +13,7 @@ export class TokenIntroductionOnboardingComponent {
 
   inProgress: boolean = false;
   error: string;
+  minds = window.Minds;
 
   @Output() next: EventEmitter<any> = new EventEmitter();
 
