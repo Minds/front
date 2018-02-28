@@ -102,6 +102,10 @@
     cursor: pointer;
     margin: 0 10px;
 
+    .m-dropdown--list{
+      left:0;
+    }
+    
     & > label {
       cursor: pointer;
 

@@ -65,7 +65,7 @@ export class WalletTokenTransactionsComponent {
       {
         label: 'OffChain',
         address: 'offchain',
-        selected: true
+        selected: false
       }
     ];
 
@@ -112,7 +112,7 @@ export class WalletTokenTransactionsComponent {
       startDate.setHours(0, 0, 0);
       endDate.setHours(23, 59, 59);
 
-      let addresses = this.addresses.filter((item) => {
+      let address = this.addresses.filter((item) => {
           return item.selected;
         })
         .map((item) => {
@@ -123,7 +123,7 @@ export class WalletTokenTransactionsComponent {
       let opts: any = {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
-        addresses: addresses,
+        address: address,
         offset: this.offset
       };
 
@@ -199,7 +199,10 @@ export class WalletTokenTransactionsComponent {
   }
 
   toggleAddress(address) {
-    address.selected = !address.selected;
+    this.addresses.forEach( (item) => {
+      item.selected = false;
+    });
+    address.selected = true;
     this.detectChanges();
     this.load(true);
   }
