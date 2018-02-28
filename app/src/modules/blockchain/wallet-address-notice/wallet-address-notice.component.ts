@@ -18,7 +18,9 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
     protected blockchain: BlockchainService,
     protected router: Router,
     protected cd: ChangeDetectorRef
-  ) { }
+  ) {
+
+  }
 
   ngOnInit() {
     this.load();
@@ -35,10 +37,16 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
     }
   }
 
-  navigate() {
-    this.router.navigate([ '/wallet/crypto/overview', { auto: 1 } ]);
-    this.address = void 0;
-    this.detectChanges();
+  async setWallet() {
+    try {
+      await this.blockchain.setWallet({ address: this.address });
+
+      this.router.navigate(['/wallet/tokens/addresses']);
+      this.address = void 0;
+      this.detectChanges();
+    } catch (e) {
+      alert(e);
+    }
   }
 
   detectChanges() {

@@ -1,6 +1,6 @@
 <m-announcement *ngIf="address" [id]="'blockchain:wallet-address-notice:' + address">
   <span class="m-blockchain--wallet-address-notice--action"
-    (click)="navigate()"
+    (click)="setWallet()"
     i18n="@@BLOCKCHAIN__WALLET_ADDRESS_NOTICE"
   >Hey, do you want to setup your Tokens wallet using <b>{{ address }}</b>?</span>
 </m-announcement>
