@@ -27,6 +27,7 @@ export class TokenRewardsOnboardingComponent {
   secret: string;
   inProgress: boolean = false;
   error: string;
+  minds = window.Minds;
 
   constructor(
     protected client: Client,
