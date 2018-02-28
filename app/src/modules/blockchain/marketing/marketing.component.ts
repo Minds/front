@@ -78,6 +78,10 @@ export class BlockchainMarketingComponent implements OnInit, OnDestroy {
     creator.present();
   }
 
+  downloadWhitepaper() {
+    alert('coming soon');
+  }
+
   /**
    * When the video source's got an error
    */

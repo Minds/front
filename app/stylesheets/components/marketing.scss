@@ -59,9 +59,9 @@
     margin-top: 32px;
     button{
       letter-spacing: 3px;
-      font-size: 18px;
+      font-size: 13px;
       line-height: 35px;
-      height: 53px;
+      height: 48px;
       padding: 0 24px;
       font-weight: 400;
       font-family: Roboto;
@@ -244,5 +244,28 @@
 
   &.m-marketing--responsive-hero-image--bottom > img {
     object-position: bottom;
+  }
+}
+
+.m-marketing--section {
+  background: #FFF;
+}
+
+.m-marketing--lr {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  padding: 100px 0;
+  max-width: 1400px;
+  margin: auto;
+  width: calc(100% - 64px);
+
+  > div {
+    flex: 1;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: 4%;
+    max-width: 40%;
   }
 }

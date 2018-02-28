@@ -1,3 +1,9 @@
+m-blockchain--marketing {
+  .m-marketing--header {
+    padding: 175px 0 250px;
+  }
+}
+
 .m-blockchain--marketing-tde-stats {
   max-width: 1028px;
 
@@ -35,6 +41,42 @@
       text-align: center;
     }
   }
+}
+
+.m-blockchain--marketing--bullets {
+  h3 {
+    font-weight: 600;
+  }
+  ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+  }
+  li {
+    font-size: 16px;
+    color: #555;
+    letter-spacing: 0.25px;
+    padding: 16px 0;
+    border-bottom: 1px solid #ececec;
+  }
+}
+
+.m-blockchain--marketing--logo-and-video {
+  > * {
+    flex: 1;
+  }
+  .m-blockchain--marketing--logo-and-video--logo {
+    align-self: center;
+    text-align: center;
+    img {
+      width: 100px;
+    }
+  }
+}
+
+.m-blockchain--marketing--balloon {
+  padding: 200px 0 !important;
+  margin-bottom: 100px;
 }
 
 .m-blockchain--marketing--press-logo {
@@ -89,6 +131,16 @@
   .m-blockchain--marketing-person-title {
     font-size: 14px;
     color: #888;
+  }
+
+  &.m-blockchain--marketing-people--more {
+    .m-blockchain--marketing-person-image {
+      width: 75px;
+      height: 75px;
+    }
+    .m-blockchain--marketing-person-name {
+      font-size: 18px;
+    }
   }
 }
 .m-blockchain--marketing-faq {
