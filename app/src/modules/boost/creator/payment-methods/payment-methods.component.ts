@@ -4,7 +4,7 @@ import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { Client } from '../../../../services/api/client';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
 
-type CurrencyType = 'offchain' | 'usd' | 'tokens';
+type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
 
 @Component({
   providers: [ CurrencyPipe ],

@@ -110,7 +110,6 @@ export const PROD_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependenci
   { src: 'ethjs-signer/dist/ethjs-signer.min.js', inject: 'shims', dest: JS_DEST },
   { src: 'ethjs-account/dist/ethjs-account.min.js', inject: 'shims', dest: JS_DEST },
   { src: 'bn.js/lib/bn.js', inject: 'shims', dest: JS_DEST },
-  { src: 'ts-md5/dist/md5.js', inject: 'shims', dest: JS_DEST },
 
   { src: 'systemjs/dist/system-polyfills.src.js', inject: 'shims' },
   { src: 'core-js/client/shim.min.js', inject: 'shims' },

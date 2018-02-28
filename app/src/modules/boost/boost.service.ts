@@ -13,7 +13,7 @@ export class BoostService {
    * Returns a promise with a collection of boosts.
    */
   load(type: string, filter: string, { limit, offset }: { limit?: number, offset?: string } = {}): Promise<{ boosts, loadNext }> {
-    return this.client.get(`api/v1/boost/${type}/${filter}`, {
+    return this.client.get(`api/v2/boost/${type}/${filter}`, {
       limit: limit || 12,
       offset: offset || ''
     })
@@ -44,7 +44,7 @@ export class BoostService {
 
       boost.state = 'accepted';
 
-      await this.client.put(`api/v1/boost/peer/${boost.guid}`);
+      await this.client.put(`api/v2/boost/peer/${boost.guid}`);
       return true;
     } catch (e) {
       boost.state = 'created';
@@ -78,7 +78,7 @@ export class BoostService {
 
       boost.state = 'rejected';
 
-      await this.client.delete(`api/v1/boost/peer/${boost.guid}`);
+      await this.client.delete(`api/v2/boost/peer/${boost.guid}`);
       return true;
     } catch (e) {
       boost.state = 'created';
@@ -101,10 +101,10 @@ export class BoostService {
 
     if (this.getBoostType(boost) === 'p2p') {
       // P2P
-      revokeEndpoint = `api/v1/boost/peer/${boost.guid}/revoke`;
+      revokeEndpoint = `api/v2/boost/peer/${boost.guid}/revoke`;
     } else {
       // Network
-      revokeEndpoint = `api/v1/boost/${boost.handler}/${boost.guid}/revoke`;
+      revokeEndpoint = `api/v2/boost/${boost.handler}/${boost.guid}/revoke`;
     }
 
     try {

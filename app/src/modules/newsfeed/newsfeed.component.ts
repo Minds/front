@@ -255,7 +255,7 @@ export class NewsfeedComponent {
   }
 
   autoBoost(activity: any) {
-    this.client.post('api/v1/boost/activity/' + activity.guid + '/' + activity.owner_guid,
+    this.client.post('api/v2/boost/activity/' + activity.guid + '/' + activity.owner_guid,
       {
         newUserPromo: true,
         impressions: 200,

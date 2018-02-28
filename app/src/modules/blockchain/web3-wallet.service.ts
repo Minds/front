@@ -158,7 +158,7 @@ export class Web3WalletService {
 
   // Contract Methods
 
-  async sendSignedContractMethodWithValue(contract: any, method: string, params: any[], value: number | string, message: string = ''): Promise<string> {
+  async sendSignedContractMethodWithValue(contract: any, method: string, params: any[], value: number | string, message: string = '', tokenDelta: number = 0): Promise<string> {
     let txHash;
 
     if (await this.isLocal()) {
@@ -167,12 +167,13 @@ export class Web3WalletService {
       let passedTxObject = { value, ...contract.defaultTxObject };
 
       if (!passedTxObject.gas) {
-        passedTxObject.gas = 200000; // TODO: estimate gas
+        passedTxObject.gas = 300000; // TODO: estimate gas
       }
 
       let txObject = await this.transactionOverlay.waitForLocalTxObject(
         passedTxObject,
-        message
+        message,
+        tokenDelta
       );
 
       txHash = await contract[method](...params, txObject);
@@ -190,8 +191,8 @@ export class Web3WalletService {
     return txHash;
   }
 
-  async sendSignedContractMethod(contract: any, method: string, params: any[], message: string = ''): Promise<string> {
-    return await this.sendSignedContractMethodWithValue(contract, method, params, 0, message);
+  async sendSignedContractMethod(contract: any, method: string, params: any[], message: string = '', tokenDelta: number = 0): Promise<string> {
+    return await this.sendSignedContractMethodWithValue(contract, method, params, 0, message, tokenDelta);
   }
 
   // Normal Transactions

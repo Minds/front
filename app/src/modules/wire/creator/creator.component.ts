@@ -191,7 +191,7 @@ export class WireCreatorComponent implements AfterViewInit {
     // TODO: Move to service and cache (maybe?)
     this.inProgress = true;
 
-    return this.client.get(`api/v1/boost/rates`)
+    return this.client.get(`api/v2/boost/rates`)
       .then((rates: any) => {
         this.inProgress = false;
         this.rates = rates;

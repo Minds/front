@@ -406,7 +406,7 @@ describe('BoostCreatorComponent', () => {
     // Network DELETE `api/v1/boost/${boost.handler}/${boost.guid}/revoke`
 
     // boost.component -> GET `api/v1/boost/rates`
-    clientMock.response[`api/v1/boost/rates`] = {
+    clientMock.response[`api/v2/boost/rates`] = {
       'status': 'success',
       'balance': 28540,
       'hasPaymentMethod': false,

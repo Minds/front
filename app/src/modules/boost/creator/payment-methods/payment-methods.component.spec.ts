@@ -188,46 +188,44 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     expect(getPaymentOptionTitle(1).nativeElement.textContent).toContain('OnChain');
   });
 
-  it('clicking on the onchain payment option should set the currency to tokens', () => {
+  it('clicking on the onchain payment option should set the currency to onchain', () => {
     getPaymentOption(1).nativeElement.click();
     fixture.detectChanges();
 
-    expect(comp.boost.currency).toBe('tokens');
+    expect(getPaymentOptionTitle(1).nativeElement.textContent).toContain('OnChain');
+    expect(comp.boost.currency).toBe('onchain');
   });
 
-  it('should an offchain payment option', () => {
-    expect(getPaymentOptionTitle(2).nativeElement.textContent).toContain('OffChain');
-  });
-  it('offchain payment option should not appear if boost.type === \'p2p\'', () => {
-    comp.boost.type = 'p2p';
-    fixture.detectChanges();
-
-    expect(getPaymentOption(1)).not.toBeNull();
-    expect(getPaymentOptionTitle(1).nativeElement.textContent).toBe('OnChain');
-
-    expect(getPaymentOption(2)).not.toBeNull();
-    expect(getPaymentOptionTitle(2).nativeElement.textContent).toBe('Credit Card');
-  });
-  it('clicking on the offchain payment option should set the currency to tokens', () => {
+  it('clicking on the offchain payment option should set the currency to offchain', () => {
     getPaymentOption(2).nativeElement.click();
     fixture.detectChanges();
 
+    expect(getPaymentOptionTitle(2).nativeElement.textContent).toContain('OffChain');
     expect(comp.boost.currency).toBe('offchain');
+  });
+
+  it('clicking on the creditcard payment option should set the currency to usd', () => {
+    getPaymentOption(3).nativeElement.click();
+    fixture.detectChanges();
+
+    expect(getPaymentOptionTitle(3).nativeElement.textContent).toContain('Credit Card');
+    expect(comp.boost.currency).toBe('usd');
+  });
+
+  it('on p2p, clicking on the creditcard payment option should set the currency to creditcard', () => {
+    comp.boost.type = 'p2p';
+    fixture.detectChanges();
+
+    getPaymentOption(3).nativeElement.click();
+    fixture.detectChanges();
+
+    expect(getPaymentOptionTitle(3).nativeElement.textContent).toContain('Credit Card');
+    expect(comp.boost.currency).toBe('creditcard');
   });
 
   it('both the onchain and the offchain payment option should show the current balance', () => {
     fixture.detectChanges();
     expect(getPaymentOptionBalance(1).nativeElement.textContent).toContain(500);
     expect(getPaymentOptionBalance(2).nativeElement.textContent).toContain(7);
-  });
-
-  it('should have a credit card payment option', () => {
-    expect(getPaymentOptionTitle(3).nativeElement.textContent).toContain('Credit Card');
-  });
-  it('clicking on the credit card payment option should set the currency to usd', () => {
-    getPaymentOption(3).nativeElement.click();
-    fixture.detectChanges();
-
-    expect(comp.boost.currency).toBe('usd');
   });
 });

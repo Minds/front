@@ -32,8 +32,11 @@ export class BoostContractService {
     }
 
     // Refresh default account due a bug in Metamask
-    this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
-    this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei');
+    const wallet = await this.web3Wallet.getCurrentWallet();
+    if (wallet) {
+      this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
+      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei');
+    }
 
     return this.instance;
   }
@@ -62,7 +65,8 @@ export class BoostContractService {
           },
         ])
       ],
-      `Network Boost for ${amount} Tokens. ${message}`.trim()
+      `Network Boost for ${amount} Tokens. ${message}`.trim(),
+      this.tokenContract.tokenToUnit(-amount)
     );
   }
 
@@ -88,7 +92,8 @@ export class BoostContractService {
           },
         ])
       ],
-      `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim()
+      `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim(),
+      this.tokenContract.tokenToUnit(-amount)
     );
   }
 

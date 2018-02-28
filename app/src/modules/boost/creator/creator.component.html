@@ -75,13 +75,13 @@
 
             <span class="m-boost--creator-wide-input--cost-value">
               <span *ngIf="boost.currency === 'usd'">{{ calcCharges(boost.currency) | currency:'USD':true }}</span>
-              <span *ngIf="boost.currency === 'tokens' || boost.currency === 'offchain'">{{ calcCharges(boost.currency) | number:'1.0-4' }}</span>
+              <span *ngIf="boost.currency !== 'usd'">{{ calcCharges(boost.currency) | number:'1.0-4' }}</span>
             </span>
           </span>
 
           <span class="m-boost--creator-wide-input--cost-currency">
             <ng-container *ngIf="boost.currency === 'usd'">USD</ng-container>
-            <ng-container *ngIf="boost.currency === 'tokens' || boost.currency === 'offchain'">Tokens</ng-container>
+            <ng-container *ngIf="boost.currency !== 'usd'">Tokens</ng-container>
           </span>
         </div>
 
@@ -118,7 +118,7 @@
           <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'usd'" i18n="@@BOOST__CREATOR__USD_PRIORITY_FEE">
             + <b>{{ calcPriorityChargesPreview('usd') | currency:'USD':true }} USD</b>
           </span>
-          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency == 'tokens' || boost.currency == 'offchain'" i18n="@@BOOST__CREATOR__TOKENS_PRIORITY_FEE">
+          <span class="m-boost--creator-toggle--label" *ngIf="boost.currency !== 'usd'" i18n="@@BOOST__CREATOR__TOKENS_PRIORITY_FEE">
             + <b>{{ calcPriorityChargesPreview(boost.currency) | number }} tokens</b>
           </span>
         </span>
@@ -146,7 +146,7 @@
           </span>
         </h3>
 
-        <m-boost--creator-p2p-search [(boost)]="boost"></m-boost--creator-p2p-search>
+        <m-boost--creator-p2p-search [boost]="boost" (boostChanged)="setBoostTarget()"></m-boost--creator-p2p-search>
       </section>
     </ng-container>
     <!-- / -->
@@ -162,7 +162,7 @@
   <!-- Next -->
   <section class="m-boost--creator-section m-boost--creator-section-submit"
     (mouseenter)="showErrors()"
-    *ngIf="step < 1 && boost.currency == 'usd'"
+    *ngIf="step < 1 && (boost.currency === 'usd' || boost.currency === 'creditcard')"
   >
     <div class="m-boost--creator--submit">
       <button class="m-boost--creator-button"
@@ -175,7 +175,7 @@
   <!-- Submit -->
   <section class="m-boost--creator-section m-boost--creator-section-submit"
     (mouseenter)="showErrors()"
-    *ngIf="step >= 1 || boost.currency != 'usd'"
+    *ngIf="step >= 1 || (boost.currency !== 'usd' && boost.currency !== 'creditcard')"
   >
 
     <div class="m-boost--creator--submit">
@@ -183,7 +183,7 @@
       <button class="m-boost--creator-button m-boost--creator-button-back"
         (click)="back()"
         i18n="verb|@@M__ACTION__BOOST_BACK"
-        *ngIf="boost.currency == 'usd'"
+        *ngIf="boost.currency === 'usd' || boost.currency === 'creditcard'"
       >Back</button>
 
       <button class="m-boost--creator-button"

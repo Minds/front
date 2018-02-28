@@ -4,9 +4,11 @@ import {
 } from '@angular/core';
 
 import { TransactionOverlayService } from './transaction-overlay.service';
+import { TokenContractService } from '../contracts/token-contract.service';
 
 declare const Eth;
 declare const ethAccount;
+declare const BN;
 
 @Component({
   moduleId: module.id,
@@ -22,12 +24,13 @@ export class TransactionOverlayComponent implements OnInit {
 
   minds: Minds = window.Minds;
 
-  data: { unlock, tx } = {
+  data: { unlock, tx, extras } = {
     unlock: {
       privateKey: '',
       secureMode: true
     },
-    tx: { }
+    tx: { },
+    extras: { },
   };
 
   droppingKeyFile: boolean = false;
@@ -38,7 +41,11 @@ export class TransactionOverlayComponent implements OnInit {
   readonly COMP_LOCAL = 2;
   readonly COMP_UNLOCK = 3;
 
-  constructor(protected service: TransactionOverlayService, protected cd: ChangeDetectorRef) { }
+  constructor(
+    protected service: TransactionOverlayService,
+    protected cd: ChangeDetectorRef,
+    protected token: TokenContractService,
+  ) { }
 
   ngOnInit() {
     this.service.setComponent(this);
@@ -48,15 +55,18 @@ export class TransactionOverlayComponent implements OnInit {
     return this._isHidden;
   }
 
-  show(comp: number, message: string = '', defaultTxObject: Object = null): EventEmitter<any> {
+  show(comp: number, message: string = '', defaultTxObject: Object = null, extras = {}): EventEmitter<any> {
     this.message = message;
     this.comp = comp;
     this.reset();
     this.setTx(defaultTxObject);
+    this.data.extras = extras;
     this.droppingKeyFile = false;
     this._isHidden = false;
 
     this.detectChanges();
+
+    this.onDidShow();
 
     return this.eventEmitter;
   }
@@ -77,7 +87,8 @@ export class TransactionOverlayComponent implements OnInit {
         privateKey: '',
         secureMode: true
       },
-      tx: { }
+      tx: { },
+      extras: { },
     };
   }
 
@@ -253,10 +264,45 @@ export class TransactionOverlayComponent implements OnInit {
     this.hide();
   }
 
+  async checkTokenBalance(passedTokenDelta) {
+    const tokenDelta = new BN(passedTokenDelta);
+
+    if (tokenDelta.gte('0') || !this.data.tx.from) {
+      return;
+    }
+
+    try {
+      const balance = new BN((await this.token.balanceOf(this.data.tx.from))[0]);
+
+      if (balance.add(tokenDelta).lt('0')) {
+        this.reject('Not enough tokens to complete this transaction');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  //
+
+  onDidShow() {
+    switch (this.comp) {
+      case this.COMP_LOCAL:
+        if (this.data.extras.tokenDelta) {
+          this.checkTokenBalance(this.data.extras.tokenDelta);
+        }
+        break;
+    }
+  }
+
   //
 
   cancel() {
     this.eventEmitter.next(false);
+    this.hide();
+  }
+
+  reject(message: string) {
+    this.eventEmitter.next(new Error(message));
     this.hide();
   }
 

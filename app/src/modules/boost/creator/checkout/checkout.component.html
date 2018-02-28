@@ -1,4 +1,4 @@
-<div class="m-boost--creator-payment" *ngIf="boost.currency == 'usd'">
+<div class="m-boost--creator-payment" *ngIf="boost.currency === 'usd' || boost.currency === 'creditcard'">
   <minds-payments-stripe-checkout *ngIf="!boost.nonce"
     (inputed)="setNonce($event)"
     [useMDLStyling]="false"

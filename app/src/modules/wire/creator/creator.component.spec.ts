@@ -197,7 +197,7 @@ describe('WireCreatorComponent', () => {
 
     comp = fixture.componentInstance; // LoginForm test instance
     clientMock.response = {};
-    clientMock.response[ `api/v1/boost/rates` ] = {
+    clientMock.response[ `api/v2/boost/rates` ] = {
       'status': 'success',
       'balance': 301529,
       'hasPaymentMethod': false,

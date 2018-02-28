@@ -47,7 +47,7 @@ export class BoostPublisherEarningsComponent {
   }
 
   getStatistics() {
-    this.client.get('api/v1/boost/sums')
+    this.client.get('api/v2/boost/sums')
       .then((res: any) => {
         this.stats.points_count = res.sums.points_count;
         this.stats.points_earnings = res.sums.points_earnings;

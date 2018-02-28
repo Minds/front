@@ -109,6 +109,7 @@ export class BoostCreatorP2PSearchComponent {
     this.boost.target = { ...target };
     this.results = [];
     this.query = '@' + target.username;
+    this.boostChanged.emit(this.boost);
   }
 
   // Boost Pro

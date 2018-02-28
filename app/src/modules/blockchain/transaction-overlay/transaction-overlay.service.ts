@@ -17,26 +17,26 @@ export class TransactionOverlayService {
       let subscription: Subscription = compEventEmitter.subscribe(data => {
         subscription.unsubscribe();
 
-        if (data) {
+        if (data && !(data instanceof Error)) {
           resolve(data);
         } else {
-          reject('User cancelled');
+          reject((data && data.message) || 'User cancelled');
         }
       });
     });
   }
 
-  waitForLocalTxObject(defaultTxObject: Object = {}, message: string = ''): Promise<any> {
-    let compEventEmitter = this.comp.show(this.comp.COMP_LOCAL, message, defaultTxObject);
+  waitForLocalTxObject(defaultTxObject: Object = {}, message: string = '', tokenDelta: number = 0): Promise<any> {
+    let compEventEmitter = this.comp.show(this.comp.COMP_LOCAL, message, defaultTxObject, { tokenDelta });
 
     return new Promise((resolve, reject) => {
       let subscription: Subscription = compEventEmitter.subscribe(data => {
         subscription.unsubscribe();
 
-        if (data) {
+        if (data && !(data instanceof Error)) {
           resolve(data);
         } else {
-          reject('User cancelled');
+          reject(data || new Error('User cancelled'));
         }
       });
     });

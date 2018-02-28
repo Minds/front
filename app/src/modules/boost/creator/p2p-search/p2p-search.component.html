@@ -22,13 +22,13 @@
     <div class="m-boost--creator-autocomplete--result-content">
       <img class="m-boost--creator-autocomplete--suggestion-avatar" src="icon/{{target.guid}}/small"/>
       <span class="m-boost--creator-autocomplete--suggestion-username"> @{{ target.username }} </span>
-      <ng-container *ngIf="target.merchant"><i class="material-icons material-icons--inline">attach_money</i></ng-container>
-      <ng-container *ngIf="target.eth_wallet"><m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol></ng-container>
+      <ng-container *ngIf="target.eth_wallet"><i class="material-icons">check_circle</i></ng-container>
+      <ng-container *ngIf="target.rewards"><i class="material-icons">donut_large</i></ng-container>
     </div>
 
     <div class="m-boost--creator-autocomplete--result-label">
-      <ng-container *ngIf="target.subscribers_count">{{ target.subscribers_count | abbr }} <i class="material-icons material-icons--inline">people</i></ng-container>
-      <ng-container *ngIf="target.impressions">{{ target.impressions | abbr }} <i class="material-icons material-icons--inline">remove_red_eye</i></ng-container>
+      <ng-container *ngIf="target.subscribers_count">{{ target.subscribers_count | abbr }} <i class="material-icons">people</i></ng-container>
+      <ng-container *ngIf="target.impressions">{{ target.impressions | abbr }} <i class="material-icons">remove_red_eye</i></ng-container>
     </div>
   </div>
 </div>
