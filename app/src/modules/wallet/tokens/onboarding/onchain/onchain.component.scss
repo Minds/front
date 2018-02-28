@@ -50,6 +50,8 @@
 
 
       .mdl-spinner {
+        flex-shrink: 0;
+        flex-grow: 0;
         margin-left: 16px;
       }
     }
