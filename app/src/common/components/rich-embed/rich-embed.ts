@@ -2,6 +2,7 @@ import { Component, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } fro
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { RichEmbedService } from '../../../services/rich-embed';
+import mediaProxyUrl from '../../../helpers/media-proxy-url';
 
 @Component({
   moduleId: module.id,
@@ -30,6 +31,10 @@ export class MindsRichEmbed {
 
     this.src = value;
     this.type = 'src';
+
+    if (this.src.thumbnail_src) {
+      this.src.thumbnail_src = mediaProxyUrl(this.src.thumbnail_src);
+    }
 
     this.init();
   }
