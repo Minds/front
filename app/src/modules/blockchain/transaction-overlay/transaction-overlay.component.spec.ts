@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { TransactionOverlayComponent } from './transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay.service';
+import { TokenContractService } from '../contracts/token-contract.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { transactionOverlayService } from '../../../mocks/modules/blockchain/transaction-overlay/transaction-overlay-service-mock';
 import { By } from '@angular/platform-browser';
@@ -19,7 +20,8 @@ describe('TransactionOverlayComponent', () => {
       declarations: [MaterialSwitchMock, TransactionOverlayComponent], // declare the test component
       imports: [RouterTestingModule, FormsModule],
       providers: [
-        { provide: TransactionOverlayService, useValue: transactionOverlayService }
+        { provide: TransactionOverlayService, useValue: transactionOverlayService },
+        { provide: TokenContractService, useValue: TokenContractService }
       ]
     })
       .compileComponents();  // compile template and css
