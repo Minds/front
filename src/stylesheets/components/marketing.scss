@@ -1,0 +1,273 @@
+@import "defaults";
+
+.m-marketing--header, .m-marketing--hero {
+  background: #eee;
+  width: 100%;
+  text-align: left;
+  padding: 100px 0 200px;
+  box-sizing: border-box;
+  position:relative;
+
+  &.m-marketing--hero {
+    padding-bottom: 100px;
+  }
+
+  @media only screen and (max-width: 400px) {
+    padding:110px 0;
+  }
+
+  .m-marketing--header-inner, .m-marketing--hero-inner { 
+    position: relative;
+    max-width: 1280px;
+    width: 100%;
+    margin: auto;
+    padding: 16px 52px;
+    z-index: 1;
+  }
+
+  h1, h3, h2 {
+    color: #FFF;
+    font-family: Roboto;
+    margin: 0;
+  }
+
+  h1{
+    letter-spacing: 1.25px;
+    font-weight: 800;
+    font-size: 78px;
+
+    @media only screen and (max-width: 400px) {
+      font-size:30px;
+    }
+  }
+  h2 {
+    font-weight: 600;
+    letter-spacing: 0.25px;
+  }
+  h3{
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    line-height: 24px;
+    padding-right: 70px;
+
+    @media only screen and (max-width: 400px) {
+      font-size: 14px;
+    }
+  }
+
+  .m-marketing--action-button{
+    margin-bottom: -80px;
+    margin-top: 32px;
+    button{
+      letter-spacing: 3px;
+      font-size: 13px;
+      line-height: 35px;
+      height: 48px;
+      padding: 0 24px;
+      font-weight: 400;
+      font-family: Roboto;
+      color: #FFF;
+    }
+    z-index:2;
+  }
+
+  .m-marketing--overlay{
+    display: block;
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+}
+
+.m-marketing--contents {
+  max-width:1280px;
+  padding:64px 0 !important;
+  margin: auto;
+
+  justify-content: center;
+
+  .mdl-cell {
+    padding: 32px 16px;
+    text-align: center;
+    color: #444;
+
+    i{
+      font-size: 64px;
+    }
+    h2{
+      padding: 0;
+      margin: 24px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 30px;
+      font-weight: 800;
+    }
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.25px;
+    }
+    span{
+      letter-spacing: 0.25px;
+    }
+  }
+
+  & + & {
+    padding-top: 0 !important;
+  }
+
+  &.m-marketing--contents--middle {
+    align-items: center;
+  }
+}
+
+.m-marketing--header,
+.m-marketing--hero {
+  position: relative;
+  overflow: hidden;
+
+  .m-marketing--background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    > video, img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+.m-marketing- .m-marketing--onboarding {
+  margin: -115px auto 0;
+  display: block;
+  position: relative;
+  max-width: 1280px;
+
+  form{
+    padding: 16px;
+  }
+}
+
+.m-marketing--statement {
+  h2 {
+    color: #444;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+  }
+}
+
+.m-marketing--faq {
+  max-width:900px;
+  margin: auto;
+  padding:16px;
+
+  .m-marketing--faq-aq {
+    padding: 16px 0;
+
+    h4{
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-align: center;
+      word-spacing: 5px;
+      font-weight: 600;
+    }
+
+    p{
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: #000;
+      font-weight: 400;
+    }
+  }
+
+}
+
+.m-marketing .m-marketing--terms{
+  max-width: 600px;
+  margin: 16px auto;
+  display: block;
+  background: #FFF;
+  padding: 16px;
+  max-height: 600px;
+  overflow: scroll;
+}
+
+.m-marketing--responsive-video {
+  position: relative;
+  width: 100%;
+
+  &.m-marketing--responsive-video-21-9 {
+    padding-bottom: 42.85%;
+  }
+
+  &.m-marketing--responsive-video-16-9 {
+    padding-bottom: 56.25%;
+  }
+
+  &.m-marketing--responsive-video-4-3 {
+    padding-bottom: 75%;
+  }
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.m-marketing--responsive-hero-image {
+  width: 100%;
+  @media screen and (min-width: $min-tablet) {
+    height: calc(100vh - 52px);
+  }
+
+  > img {
+    width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+
+  &.m-marketing--responsive-hero-image--top > img {
+    object-position: top;
+  }
+
+  &.m-marketing--responsive-hero-image--bottom > img {
+    object-position: bottom;
+  }
+}
+
+.m-marketing--section {
+  background: #FFF;
+}
+
+.m-marketing--lr {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: left;
+  padding: 100px 0;
+  max-width: 1400px;
+  margin: auto;
+  width: calc(100% - 64px);
+
+  > div {
+    flex: 1;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: 4%;
+    max-width: 40%;
+  }
+}

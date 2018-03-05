@@ -1,0 +1,75 @@
+@import "defaults";
+
+.m-third-party-networks-facebook-card{
+  .m-block{
+    padding:8px;
+  }
+  a {
+    text-decoration:none;
+  }
+}
+
+.m-third-party-networks-facebook-button{
+
+  a {
+    text-decoration:none;
+  }
+
+  background-color: #3067a3;
+  padding:8px;
+  color:#FFF;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.m-third-party-networks-facebook-pages-list{
+
+  > div {
+    padding:8px;
+    font-weight:bold;
+    cursor:pointer;
+  }
+}
+
+// Selector
+
+minds-third-party-networks-selector {
+  display: inline-block;
+  
+  .m-bar-wrapper {
+    display: inline-block;
+    padding: $minds-padding / 2;
+    background: #f0f0f0;
+    position: relative;
+    margin-right: 8px;
+
+    &:before {
+      position: absolute;
+      display: block;
+      content: '';
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 8px 0 8px 8px;
+      border-color: transparent transparent transparent #f0f0f0;
+      z-index: 15;
+      right: -8px;
+      top: 50%;
+      transform: rotate(360deg) translateY(-50%);
+    }
+  }
+
+  .m-bar-button {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+
+    > i.fa {
+      font-size: 24px;
+    }
+  }
+
+  .m-overgrown-material-icon {
+    font-size: 20px;
+  }
+}

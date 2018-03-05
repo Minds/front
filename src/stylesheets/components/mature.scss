@@ -1,0 +1,153 @@
+@import "defaults";
+
+.m-mature-text {
+  filter: blur(0.5em);
+}
+
+.m-mature-overlay {
+  display: none;
+}
+
+.m-mature-text-toggle {
+  cursor: pointer;
+}
+
+.m-mature-message {
+  white-space: inherit !important;
+
+  .m-mature-message-content {
+    white-space: pre-line;
+  }
+}
+
+.m-mature-thumbnail {
+  filter: blur(15px) grayscale(100%);
+  overflow: hidden;
+  transform: translate3d(0, 0, 0) scale(1.001);
+}
+
+.m-mature-thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 145px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+
+  > i.material-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 4em;
+  }
+}
+
+.m-mature-content {
+  position: relative;
+
+  // Hide blur overflowness
+  overflow: hidden;
+  transform: translate3d(0, 0, 0) scale(1.001);
+
+  .m-mature-overlay {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    text-align: center;
+    z-index: 250;
+    cursor: pointer;
+
+    .m-mature-overlay-note {
+      display: block;
+      text-align: center;
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+
+      m-blog-view & {
+        top: 3em;
+        transform: none;
+      }
+
+      > span {
+        font-weight: 400;
+        font-size: 0.85em;
+
+        &:before {
+          content:"\a";
+          white-space: pre;
+        }
+      }
+
+      > i {
+        font-size: 6em;
+      }
+    }
+
+    .m-mature-overlay-note-smaller {
+      > span {
+        font-weight: 400;
+        font-size: 0.65em;
+
+        &:before {
+          content:"\a";
+          white-space: pre;
+        }
+      }
+
+      > i {
+        font-size: 3em;
+      }
+    }
+  }
+
+  img,
+  video {
+    filter: blur(15px) grayscale(100%);
+  }
+
+  .meta {
+    filter: blur(0.5em);
+  }
+}
+
+.m-mature-content-shown {
+  position: relative;
+
+  .m-mature-overlay {
+    display: block;
+    position: absolute;
+    top: $minds-padding;
+    right: $minds-padding;
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 3px;
+    text-align: center;
+    z-index: 250;
+    cursor: pointer;
+
+    .m-mature-overlay-note {
+      display: block;
+      text-align: center;
+      position: relative;
+      color: #f44336;
+
+      > span {
+        display: none;
+      }
+
+      > i {
+        font-size: 2em;
+      }
+    }
+  }
+}

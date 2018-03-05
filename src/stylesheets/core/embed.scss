@@ -1,0 +1,40 @@
+@import "defaults";
+
+.m-embed-video {
+  background: #000;
+
+  video {
+    min-height: 320px;
+    max-height: 100vh;
+  }
+}
+
+.m-modal-share-embed {
+  box-sizing: border-box;
+  width: calc(100% - 34px);
+  padding: $minds-padding * 2;
+
+  &.m-modal-share-embed--first {
+    margin-top: 12px;
+  }
+
+  .m-modal-share-embed__label {
+    display: block;
+    margin-bottom: 0.35em;
+    font-size: 0.85em;
+    line-height: 1.2em;
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    height: calc(2.5em + ($minds-padding * 2));
+    box-sizing: border-box;
+    appearance: none;
+    border: 1px solid #ddd;
+    resize: none;
+    padding: $minds-padding;
+    font-family: monospace;
+    font-size: 12px;
+  }
+}

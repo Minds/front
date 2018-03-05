@@ -19,6 +19,7 @@ tsd_typings
 .*
 *~
 !/.gitignore
+!/.angular-cli.json
 /nbproject
 /nb-configuration.xml
 Session.vim
