@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import * as BN from 'bn.js';
+
 import { Web3WalletService } from '../web3-wallet.service';
 import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';
-
-declare const BN;
 
 export interface TokenApproveAndCallParam {
   type: string;

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import * as BN from 'bn.js';
+
 import { Web3WalletService } from '../web3-wallet.service';
 
-declare const BN;
 
 @Injectable()
 export class WithdrawContractService {

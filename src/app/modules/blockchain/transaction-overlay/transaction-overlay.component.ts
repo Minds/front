@@ -3,12 +3,12 @@ import {
   OnInit
 } from '@angular/core';
 import * as ethAccount from 'ethjs-account';
+import * as Eth from 'ethjs';
+import * as BN from 'bn.js';
 
 import { TransactionOverlayService } from './transaction-overlay.service';
 import { TokenContractService } from '../contracts/token-contract.service';
 
-declare const Eth;
-declare const BN;
 
 @Component({
   moduleId: module.id,

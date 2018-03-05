@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import * as BN from 'bn.js';
+
 import { Client } from '../../../../services/api/client';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
-
-declare const BN;
 
 @Component({
   moduleId: module.id,
