@@ -29,7 +29,7 @@ export class MindsRichEmbed {
       return;
     }
 
-    this.src = value;
+    this.src = Object.assign({}, value);
     this.type = 'src';
 
     if (this.src.thumbnail_src) {
@@ -44,8 +44,12 @@ export class MindsRichEmbed {
       return;
     }
 
-    this.preview = value;
+    this.preview = Object.assign({}, value);
     this.type = 'preview';
+
+    if (this.preview.thumbnail) {
+      this.preview.thumbnail = mediaProxyUrl(this.preview.thumbnail);
+    }
 
     this.init();
   }

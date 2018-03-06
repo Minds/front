@@ -1,7 +1,6 @@
 import { Inject } from '@angular/core';
 import { Client, Upload } from './api';
 import { Session } from './session';
-import mediaProxyUrl from '../helpers/media-proxy-url';
 
 export class AttachmentService {
 
@@ -277,7 +276,7 @@ export class AttachmentService {
           }
 
           if (data.links && data.links.thumbnail && data.links.thumbnail[0]) {
-            this.meta.thumbnail = mediaProxyUrl(data.links.thumbnail[0].href);
+            this.meta.thumbnail = data.links.thumbnail[0].href;
           }
         })
         .catch(e => {

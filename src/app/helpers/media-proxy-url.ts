@@ -1,5 +1,5 @@
 export default function mediaProxyUrl(url, size = 1920) {
-  if (!url || url.indexOf('http') !== 0) {
+  if (!url || typeof url !== 'string') {
     return url;
   }
 
