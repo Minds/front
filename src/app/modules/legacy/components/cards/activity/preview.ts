@@ -42,6 +42,16 @@ export class ActivityPreview {
       this.activity.mature_visibility = true;
     }
   }
+  
+
+  getOwnerIconTime() {
+    let session = this.session.getLoggedInUser();
+    if(session && session.guid === this.activity.ownerObj.guid) {
+      return session.icontime;
+    } else {
+      return this.activity.ownerObj.icontime;
+    }
+  }
 
   toDate(timestamp) {
     return new Date(timestamp * 1000);

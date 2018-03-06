@@ -90,7 +90,7 @@ export class Activity {
       return;
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
-
+    
     if (!this.activity.message) {
       this.activity.message = '';
     }
@@ -103,6 +103,15 @@ export class Activity {
       this.translationService.isTranslatable(this.activity) ||
       (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object))
     );
+  }
+
+  getOwnerIconTime() {
+    let session = this.session.getLoggedInUser();
+    if(session && session.guid === this.activity.ownerObj.guid) {
+      return session.icontime;
+    } else {
+      return this.activity.ownerObj.icontime;
+    }
   }
 
   @Input() set boostToggle(toggle: boolean) {

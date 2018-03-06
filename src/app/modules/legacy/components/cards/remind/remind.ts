@@ -63,6 +63,15 @@ export class Remind {
     this.activity = value;
   }
 
+  getOwnerIconTime() {
+    let session = this.session.getLoggedInUser();
+    if(session && session.guid === this.activity.ownerObj.guid) {
+      return session.icontime;
+    } else {
+      return this.activity.ownerObj.icontime;
+    }
+  }
+
   ngOnDestroy() {
     if (this.eventsSubscription) {
       this.eventsSubscription.unsubscribe();
