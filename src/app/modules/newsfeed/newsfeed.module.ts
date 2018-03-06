@@ -16,9 +16,11 @@ import { NewsfeedBoostRotatorComponent } from './boost-rotator/boost-rotator.com
 import { NewsfeedTopComponent } from './feeds/top.component';
 import { NewsfeedSubscribedComponent } from './feeds/subscribed.component';
 import { NewsfeedBoostComponent } from './feeds/boost.component';
+import { NewsfeedService } from './services/newsfeed.service';
 
 const routes: Routes = [
-  { path: 'newsfeed', component: NewsfeedComponent,
+  {
+    path: 'newsfeed', component: NewsfeedComponent,
     children: [
       { path: '', redirectTo: 'subscribed', pathMatch: 'full' },
       { path: 'top', component: NewsfeedTopComponent },
@@ -26,7 +28,7 @@ const routes: Routes = [
       { path: 'boost', component: NewsfeedBoostComponent, canDeactivate: [CanDeactivateGuardService] },
     ],
   },
-  { path: 'newsfeed/:guid', component: NewsfeedSingleComponent }, 
+  { path: 'newsfeed/:guid', component: NewsfeedSingleComponent },
 ];
 
 @NgModule({
@@ -48,6 +50,9 @@ const routes: Routes = [
     NewsfeedTopComponent,
     NewsfeedSubscribedComponent,
     NewsfeedBoostComponent,
+  ],
+  providers: [
+    NewsfeedService
   ],
   exports: [
     NewsfeedBoostRotatorComponent,

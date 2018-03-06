@@ -9,6 +9,7 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
+import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 
 @Component({
   moduleId: module.id,
@@ -74,6 +75,7 @@ export class Activity {
     public session: Session,
     public client: Client,
     public scroll: ScrollService,
+    public newsfeedService: NewsfeedService,
     _element: ElementRef,
     public attachment: AttachmentService,
     public translationService: TranslationService,
@@ -276,11 +278,11 @@ export class Activity {
         //make visible
         this.visible = true;
 
-        if (this.boost && this.onViewed) {
+        if (this.onViewed) {
           this.onViewed.emit({activity: this.activity, visible: true});
         } else {
           //update the analytics
-          this.client.put('api/v1/newsfeed/' + this.activity.guid + '/view');
+          this.newsfeedService.recordView(this.activity);
         }
       } else if(this.viewed) {
         this.viewed = false;
@@ -288,6 +290,8 @@ export class Activity {
         this.scroll.unListen(this.scroll_listener);
 
         if (this.onViewed)
+          //record view stop
+          // this.newsfeedService.recordView(this.activity, false); //TODO uncomment when view stop is implemented
           this.onViewed.emit({activity: this.activity, visible: false});
       }
     });
@@ -309,7 +313,6 @@ export class Activity {
 
   hide() {
     if (this.player) {
-      console.warn('player: ', this.player);
       this.player.pause();
     }
   }

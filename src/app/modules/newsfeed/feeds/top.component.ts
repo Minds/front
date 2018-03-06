@@ -92,9 +92,5 @@ export class NewsfeedTopComponent {
     }
   }
 
-  onViewed(e?) {
-    // TODO: TBD
-  }
-
 }
 

@@ -7,6 +7,7 @@ import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
+import { NewsfeedService } from '../services/newsfeed.service';
 
 @Component({
   moduleId: module.id,
@@ -49,6 +50,7 @@ export class NewsfeedBoostRotatorComponent {
     public router: Router,
     public client: Client,
     public scroll: ScrollService,
+    public newsfeedService: NewsfeedService,
     private storage: Storage,
     public element: ElementRef,
     private cd: ChangeDetectorRef
@@ -181,10 +183,7 @@ export class NewsfeedBoostRotatorComponent {
   recordImpression(position: number, force: boolean) {
     //ensure was seen for at least 1 second
     if ((Date.now() > this.lastTs + 1000 || force) && this.boosts[position].boosted_guid) {
-      let url: string = `api/v1/boost/fetch/newsfeed/${this.boosts[position].boosted_guid}/view`;
-      if(this.channel)
-        url += `/${this.channel.guid}`;
-      this.client.put(url);
+      this.newsfeedService.recordView(this.boosts[position], true, this.channel);
     }
     this.lastTs = Date.now();
     window.localStorage.setItem('boost-rotator-offset', this.boosts[position].boosted_guid);
