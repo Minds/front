@@ -9,6 +9,11 @@
       </label>
 
       <ul class="m-dropdown--list">
+        <li class="m-dropdown--list--item" (click)="toggleAddress(null)">
+          <span style="text-transform: capitalize">All addresses</span>
+          <div class="m-layout--spacer"></div>
+          <i class="material-icons m-token--ledger-filters--check selected" *ngIf="!selectedAddress">check</i>
+        </li>
         <li class="m-dropdown--list--item" *ngFor="let address of addresses" (click)="toggleAddress(address)">
           
           <span>

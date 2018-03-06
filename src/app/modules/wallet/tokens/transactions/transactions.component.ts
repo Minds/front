@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
+import { InviteModal } from '../../../modals/invite/invite';
 
 @Component({
   moduleId: module.id,
@@ -21,6 +22,7 @@ export class WalletTokenTransactionsComponent {
   transactions: any[] = [];
   offset: string;
   moreData: boolean = true;
+  selectedAddress: string | null = null;
   selectedContract: string | null = null;
   contracts: string[] = ['withdraw', 'wire', 'plus', 'token'];
 
@@ -60,7 +62,7 @@ export class WalletTokenTransactionsComponent {
       {
         address: receiverAddress,
         label: 'Receiver',
-        selected: true
+        selected: false
       },
       {
         label: 'OffChain',
@@ -74,7 +76,7 @@ export class WalletTokenTransactionsComponent {
       if (!onchainAddress)
         return;
 
-      if (this.addresses[0].address == onchainAddress) {
+      if (this.addresses[0].address.toLowerCase() == onchainAddress.toLowerCase()) {
         this.addresses[0].label = 'OnChain & Receiver';
         this.detectChanges();
         return; //no need to count twice
@@ -112,20 +114,19 @@ export class WalletTokenTransactionsComponent {
       startDate.setHours(0, 0, 0);
       endDate.setHours(23, 59, 59);
 
-      let address = this.addresses.filter((item) => {
-          return item.selected;
-        })
-        .map((item) => {
-          return item.address
-        })
-        .join(',');
-
       let opts: any = {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
-        address: address,
         offset: this.offset
       };
+
+      if (this.selectedAddress) {
+        opts.addresses = this.selectedAddress;
+      } else { // 'all addresses' option is selected
+        opts.addresses = this.addresses.map((item) => {
+          return item.address
+        }).join(',');
+      }
 
       if (this.selectedContract)
         opts.contract = this.selectedContract;
@@ -199,10 +200,14 @@ export class WalletTokenTransactionsComponent {
   }
 
   toggleAddress(address) {
-    this.addresses.forEach( (item) => {
+    this.addresses.forEach((item) => {
       item.selected = false;
     });
-    address.selected = true;
+    if (address) {
+      address.selected = true;
+    }
+    console.warn('address: ', address);
+    this.selectedAddress = address ? address.address : null;
     this.detectChanges();
     this.load(true);
   }
