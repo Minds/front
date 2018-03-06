@@ -7,6 +7,12 @@
     You can request to withdraw your token rewards to your 'onchain' wallet below.
     Note: a small amount of ETH will be charged to cover the transaction fee.
     Withdrawals may take a few hours to complete.
+
+    <ng-container *ngIf="withholding">
+      {{ withholding | number }} tokens are unavailable due
+      to credit card payment. They will be released after 30 days the
+      payment occurred.
+    </ng-container>
   </p>
 
   <div class="m-token-withdraw--form">

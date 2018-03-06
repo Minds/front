@@ -13,10 +13,13 @@ import { WalletTokenWithdrawLedgerComponent } from './ledger/ledger.component';
 export class WalletTokenWithdrawComponent {
   inProgress: boolean = false;
   balance: number = 0;
+  available: number = 0;
   amount: number = 0;
 
   error: string = '';
   hasWithdrawnToday: boolean = false;
+
+  withholding: number = 0;
 
   @ViewChild(WalletTokenWithdrawLedgerComponent)
   protected ledgerComponent: WalletTokenWithdrawLedgerComponent;
@@ -47,7 +50,13 @@ export class WalletTokenWithdrawComponent {
 
       if (response && typeof response.addresses !== 'undefined') {
         this.balance = response.addresses[1].balance / Math.pow(10, 18);
-        this.setAmount(this.balance);
+        this.available = response.addresses[1].available / Math.pow(10, 18);
+
+        if (this.balance > this.available) {
+          this.withholding = this.balance - this.available;
+        }
+
+        this.setAmount(this.available);
       } else {
         this.error = 'Server error';
       }
@@ -84,7 +93,7 @@ export class WalletTokenWithdrawComponent {
   }
 
   canWithdraw() {
-    return !this.hasWithdrawnToday && !this.inProgress && !this.error && this.amount > 0 && this.amount <= this.balance;
+    return !this.hasWithdrawnToday && !this.inProgress && !this.error && this.amount > 0 && this.amount <= this.available;
   }
 
   async withdraw() {
