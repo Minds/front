@@ -42,6 +42,7 @@ export class ChannelsListComponent {
 
         switch (this.filter) {
           case 'all':
+            this.filter = 'all';
             break;
           case 'top':
             this.filter = 'trending';
