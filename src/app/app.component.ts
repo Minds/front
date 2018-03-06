@@ -9,7 +9,7 @@ import { ScrollToTopService } from './services/scroll-to-top.service';
 import { ContextService } from './services/context.service';
 import { BlockchainService } from './modules/blockchain/blockchain.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
-import { Client } from './src/services/api/client';
+import { Client } from './services/api/client';
 
 @Component({
   moduleId: module.id,
