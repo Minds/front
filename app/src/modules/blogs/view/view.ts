@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
@@ -11,7 +11,6 @@ import { MindsBlogEntity } from '../../../interfaces/entities';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
-import { WireService } from '../../wire/wire.service';
 
 @Component({
   moduleId: module.id,
@@ -56,7 +55,7 @@ export class BlogView {
     public attachment: AttachmentService,
     private context: ContextService,
     public analytics: AnalyticsService,
-    public wireService: WireService
+    public analyticsService: AnalyticsService
   ) {
     this.minds = window.Minds;
     this.element = _element.nativeElement;
@@ -66,12 +65,6 @@ export class BlogView {
 
   ngOnInit() {
     this.isVisible();
-    this.wireService.wireSent.subscribe(()=> {
-      this.analytics.send('wire', {
-        'page': '/blog/view/' + this.blog.guid,
-        'dimension1': this.blog.ownerObj.guid
-      }, this.blog.guid);
-    });
     this.context.set('object:blog');
   }
 
@@ -89,10 +82,7 @@ export class BlogView {
         if (!this.visible) {
           window.history.pushState(null, this.blog.title, url);
           this.title.setTitle(this.blog.title);
-          AnalyticsService.send('pageview', {
-            'page': '/blog/view/' + this.blog.guid,
-            'dimension1': this.blog.ownerObj.guid
-          });
+          this.analyticsService.send('pageview', {url: `/blog/view/${this.blog.guid}`});
         }
         this.visible = true;
       } else {

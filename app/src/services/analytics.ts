@@ -1,20 +1,10 @@
-import { Component, Inject, Injector } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Inject, Injectable } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Client } from './api/client';
 
+@Injectable()
 export class AnalyticsService {
-
-  //Set the analytics id of the page we want to send data
-  id: string = 'UA-35146796-1';
-
   private defaultPrevented: boolean = false;
-
-  //Manual send.
-  static send(type: string, fields: any = {}) {
-    if (window.ga) {
-      window.ga('send', type, fields);
-    }
-  }
 
   static _(router: Router, client: Client) {
     return new AnalyticsService(router, client);
@@ -34,21 +24,20 @@ export class AnalyticsService {
     });
   }
 
-  send(type: string, fields: any = {}, entityGuid: string) {
-    if (window.ga) {
-      window.ga('send', type, fields);
+  async send(type: string, fields: any = {}, entityGuid: string = null) {
+    if (type === 'pageview') {
+      this.client.post('api/v2/analytics/pageview', fields);
+    } else {
+      this.client.post('api/v1/analytics', { type, fields, entityGuid });
     }
-    this.client.post('api/v1/analytics', { type, fields, entityGuid });
   }
 
-  onRouterInit() {
-    //we instantiate the google analytics service
-    window.ga('create', this.id, 'auto');
+  async onRouterInit() {
   }
 
   onRouteChanged(path) {
     if (!this.defaultPrevented) {
-      AnalyticsService.send('pageview', { 'page': path });
+      this.send('pageview', { url: path });
     }
 
     this.defaultPrevented = false;
