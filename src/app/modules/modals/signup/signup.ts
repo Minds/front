@@ -31,7 +31,8 @@ export class SignupModal {
     private cd: ChangeDetectorRef,
     private zone: NgZone,
     private applicationRef: ApplicationRef,
-    private loginReferrer: LoginReferrerService
+    private loginReferrer: LoginReferrerService,
+    private analyticsService: AnalyticsService,
   ) {
     this.listen();
     this.service.isOpen.subscribe({
@@ -70,12 +71,12 @@ export class SignupModal {
       case 'login':
         //hack to provide login page in history
         window.history.pushState(null, 'Login', this.route + `${op}modal=login`);
-        AnalyticsService.send('pageview', { 'page': this.route + `${op}modal=login` });
+        this.analyticsService.send('pageview', {url: this.route + `${op}modal=login`});
         this.display = 'login';
         break;
       case 'register':
         window.history.pushState(null, 'Register', this.route + `${op}modal=register`);
-        AnalyticsService.send('pageview', { 'page': this.route + `${op}modal=register` });
+        this.analyticsService.send('pageview', {url: this.route + `${op}modal=register`});
         this.display = 'register';
         break;
       case 'fb':
