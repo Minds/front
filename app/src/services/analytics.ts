@@ -37,7 +37,10 @@ export class AnalyticsService {
 
   onRouteChanged(path) {
     if (!this.defaultPrevented) {
-      this.send('pageview', { url: path });
+      this.send('pageview', { 
+        url: path,
+        referrer: document.referrer
+      });
     }
 
     this.defaultPrevented = false;
