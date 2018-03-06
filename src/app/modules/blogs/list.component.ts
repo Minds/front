@@ -54,7 +54,7 @@ export class BlogListComponent {
         case 'top':
           this.filter = 'trending';
         case 'featured':
-          this.title.setTitle('Featured Blogs');
+          this.title.setTitle('Blogs');
           break;
         case 'all':
           break;
