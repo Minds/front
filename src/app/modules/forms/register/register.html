@@ -17,6 +17,7 @@
         formControlName="username"
         placeholder="Username"
         i18n-placeholder="@@M__COMMON__USERNAME"
+        readonly onfocus="this.removeAttribute('readonly');"
         />
     </div>
 
@@ -37,6 +38,7 @@
         formControlName="password"
         placeholder="Password"
         i18n-placeholder="@@M__COMMON__PASSWORD"
+        readonly onfocus="this.removeAttribute('readonly');"
         />
     </div>
 
@@ -48,6 +50,7 @@
         placeholder="Confirm your password"
         i18n-placeholder="@@FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER"
         (keydown.enter)="register($event)"
+        readonly onfocus="this.removeAttribute('readonly');"
         />
     </div>
 
