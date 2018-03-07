@@ -61,6 +61,7 @@ export interface MindsUser {
   subscriptions_count?: number;
   impressions?: number;
   subscribed?: boolean;
+  rating?: number;
 }
 
 export interface MindsGroup {

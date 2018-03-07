@@ -64,6 +64,10 @@ import { ReportCreatorComponent } from '../../../report/creator/creator.componen
         >
         Not spam
       </li>
+      <ng-container *ngIf="session.isAdmin()">
+        <li class="mdl-menu__item" [hidden]="user.rating === 1" (click)="setRating(1)" i18n="@@M__ACTION__MARK_AS_SAFE">Mark as Safe</li>
+        <li class="mdl-menu__item" [hidden]="user.rating === 2" (click)="setRating(2)" i18n="@@M__ACTION__MENU__MARK_AS_OPEN">Mark as Open</li>
+      </ng-container>
     </ul>
     <div class="minds-bg-overlay" (click)="toggleMenu($event)" [hidden]="!showMenu"></div>
 
@@ -241,6 +245,11 @@ export class UserDropdownButton {
     } catch (e) {
       this.user['spam'] = !value ? 1 : 0;
     }
+  }
+
+  async setRating(rating: number) {
+    await this.client.post(`api/v1/admin/rating/${this.user.guid}/${rating}`, {});
+    this.user.rating = rating;
   }
 
 }
