@@ -61,11 +61,15 @@ export class TokenOnboardingComponent {
       componentRef.instance.next.subscribe(next => {
         this.service.next();
         this.loadSlide();
+        this.detectChanges();
       });
     }
+
+    //componentRef.changeDetectorRef.markForCheck();
+    //componentRef.changeDetectorRef.detectChanges();
   }
 
-  detectChange() {
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
