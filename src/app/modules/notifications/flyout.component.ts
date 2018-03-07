@@ -11,7 +11,7 @@ import { NotificationsComponent } from './notifications.component';
 
 export class NotificationsFlyoutComponent {
 
-  @Input() hidden:boolean = false;
+  @Input() visible:boolean = false;
   @Output('close') closeEvt: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('notifications') notificationList: any

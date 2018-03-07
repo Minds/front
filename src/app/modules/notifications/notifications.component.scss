@@ -109,7 +109,7 @@ m-notifications--topbar-toggle{
   i { cursor: pointer }
   .counter { cursor: default }
 
-  .m-notifications--topbar-toggle--icon {
+  .m-notifications--topbar-toggle--icon--active {
     &::after {
       background: #4690DF;
       border-radius: 50%;
