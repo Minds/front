@@ -63,7 +63,9 @@
     distance="25%"
     (load)="load()"
     [moreData]="moreData"
-    [inProgress]="inProgress">
+    [inProgress]="inProgress"
+    *ngIf="!hidden"
+    >
   </infinite-scroll>
 
   </div>
