@@ -274,7 +274,8 @@ export class Activity {
     }
     this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
       if (this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible) {
-        this.viewed = true;
+        //stop listening
+        this.scroll.unListen(this.scroll_listener);
         //make visible
         this.visible = true;
 
@@ -284,15 +285,6 @@ export class Activity {
           //update the analytics
           this.newsfeedService.recordView(this.activity);
         }
-      } else if(this.viewed) {
-        this.viewed = false;
-        //stop listening
-        this.scroll.unListen(this.scroll_listener);
-
-        if (this.onViewed)
-          //record view stop
-          // this.newsfeedService.recordView(this.activity, false); //TODO uncomment when view stop is implemented
-          this.onViewed.emit({activity: this.activity, visible: false});
       }
     });
     //this.scroll.fire();
