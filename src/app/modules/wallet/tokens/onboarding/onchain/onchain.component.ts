@@ -13,6 +13,7 @@ import { Session } from '../../../../../services/session';
 import { LocalWalletService } from '../../../../blockchain/local-wallet.service';
 import { BlockchainService } from '../../../../blockchain/blockchain.service';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
+import { getBrowser } from '../../../../../utils/browser';
 
 enum Views {
   CreateAddress = 1,
@@ -145,7 +146,19 @@ export class TokenOnChainOnboardingComponent {
   }
 
   downloadMetamask() {
-    window.open('https://metamask.io');
+    let browser: string = getBrowser();
+    let url = '';
+    switch (browser) {
+      case 'chrome':
+        url = 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn';
+      case 'firefox':
+        url = 'https://addons.mozilla.org/firefox/addon/ether-metamask/';
+      case 'opera':
+        url = 'https://addons.opera.com/extensions/details/metamask/';
+      default:
+        url = 'https://metamask.io';
+    }
+    window.open(url);
     this.downloadingMetamask = true;
   }
 
