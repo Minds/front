@@ -307,7 +307,7 @@ minds-media-thumbnail-selector{
     display: flex;
 
     h1 {
-      font-family: 'Lato', sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-weight: 400;
       font-size: 36px;
       letter-spacing: 1.5px;
@@ -423,7 +423,7 @@ minds-media-thumbnail-selector{
     }
 
     minds-button-boost .mdl-button {
-      font-family: 'Lato', sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-weight: 300;
       font-size: 12px;
       letter-spacing: 0.5px;
@@ -435,7 +435,7 @@ minds-media-thumbnail-selector{
   .m-media-content--owner {
     display: flex;
     align-items: center;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
   
     .minds-avatar {
@@ -497,7 +497,7 @@ minds-media-thumbnail-selector{
   .m-media-content--description {
     padding: 0 $minds-padding 0 (50px + ($minds-padding * 3));
     margin-top: ($minds-padding * 2);
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
 
     h1, h2, h3, h4, h5, h6, p {
@@ -507,7 +507,7 @@ minds-media-thumbnail-selector{
   }
 
   .m-additional-block {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
   }
 }

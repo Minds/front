@@ -16,7 +16,7 @@
   h1, h3{
     color: #FFF;
 
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-shadow: 0 0 3px #333;
 
     @media only screen and (max-width: 400px) {
@@ -54,7 +54,7 @@
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #FFF;
     }
     z-index:2;
@@ -89,13 +89,13 @@
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 30px;
     }
     span{
-      font-family: 'lato';
+      font-family: 'Roboto';
       letter-spacing: 1px;
     }
   }

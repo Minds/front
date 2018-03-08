@@ -5,7 +5,7 @@
   margin: auto auto 16px auto;
   display:flex;
   align-items:center;
-  font-family: 'Lato';
+  font-family: 'Roboto';
 
   @media only screen and (max-width: 400px) {
     padding:0;
@@ -32,7 +32,7 @@
 
     label{
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       letter-spacing:1px;
       font-size:14px;
     }

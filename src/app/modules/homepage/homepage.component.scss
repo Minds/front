@@ -239,14 +239,14 @@ m-homepage {
         }
         label{
           font-size: 18px;
-          font-family: 'Lato';
+          font-family: 'Roboto';
           font-weight: 400;
           color:#4A4A4A;
           letter-spacing:2px;
           text-transform: uppercase;
         }
         p{
-          font-family: lato;
+          font-family: Roboto;
           line-height: 18px;
           font-size: 14px;
           margin: 24px 0;
@@ -273,7 +273,7 @@ m-homepage {
       }
       label{
         font-size: 18px;
-        font-family: lato;
+        font-family: Roboto;
         font-weight: 400;
         letter-spacing: 2px;
         color: #333;
@@ -571,7 +571,7 @@ m-homepage {
     text-transform: uppercase;
     letter-spacing: 4px;
     flex:1;
-    font-family: lato;
+    font-family: Roboto;
     font-weight: 400;
   }
 }
@@ -598,7 +598,7 @@ m-homepage {
     letter-spacing: 2px;
     font-size: 14px;
     font-weight: 400;
-    font-family: Lato;
+    font-family: Roboto;
     cursor: pointer;
     pointer-events: all;
   }
