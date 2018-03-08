@@ -1,18 +1,5 @@
 <div class="m-boost-rotator-tools">
-  <ul class="m-boost-navigation" [style.visibility]="channel ? 'hidden' : 'visible'">
-    <li routerLink="/newsfeed/subscribed" routerLinkActive="selected">
-      <span i18n="@@M__FEATURE__NEWSFEED">Newsfeed</span>
-      <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__NEWSFEED_TOOLTIP">
-        Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network 
-      </m-tooltip>
-    </li>
-    <li routerLink="/newsfeed/boost" routerLinkActive="selected">
-      <span i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__BOOSTFEED">Boostfeed</span>
-      <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__BOOSTFEED_TOOLTIP">
-        The Boostfeed only shows boosted posts from the wider network. To Boost your content, click the Boost icon on the topbar 
-      </m-tooltip>
-    </li>
-  </ul>
+  <div class="m-layout--spacer"></div>
   <ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0 && !disabled">
     <li (click)="prev()">
       <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>

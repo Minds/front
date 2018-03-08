@@ -1,0 +1,22 @@
+<m-dropdown class="m-topbar--navigation--options" *ngIf="options.indexOf('rating') > -1">
+  <label class="">
+    <i class="material-icons m-dropdown--label-icon">settings</i>
+  </label>
+
+  <ul class="m-dropdown--list">
+    <li class="m-dropdown--list--item" (click)="toggleRating()">
+      <span style="text-transform: capitalize">Open</span>
+      <m-tooltip icon="help" i18n="@@MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP">
+        Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.
+      </m-tooltip>
+      <div class="m-layout--spacer"></div>
+      <span class="m-dropdown--spacer"></span>
+      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [mdlSwitch] [toggled]="true" *ngIf="rating == 2">
+        <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="rating" (ngModelChange)="toggleRating()">
+      </label>
+      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [mdlSwitch] [toggled]="false" *ngIf="rating != 2">
+        <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="rating" (ngModelChange)="toggleRating()">
+      </label>
+    </li>
+  </ul>
+</m-dropdown>

@@ -39,6 +39,14 @@
             Write a new Blog
           </m-tooltip>
       </a>
+
+      <div class="m-layout--spacer"></div>
+
+      <m-topbar--navigation--options 
+        (change)="onOptionsChange($event)" 
+        [options]="filter == 'trending' ? [ 'rating' ] : []"
+        >
+      </m-topbar--navigation--options>
     </div>
   </div>
 </div>

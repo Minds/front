@@ -8,6 +8,7 @@ import { MINDS_PIPES } from './pipes/pipes';
 import { TopbarComponent } from './layout/topbar/topbar.component';
 import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
+import { TopbarOptionsComponent } from './layout/topbar/options.component';
 
 import { TooltipComponent } from './components/tooltip/tooltip.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -74,6 +75,7 @@ import { Client, Upload } from '../services/api';
     TopbarComponent,
     TopbarNavigationComponent,
     SidebarNavigationComponent,
+    TopbarOptionsComponent,
 
     TooltipComponent,
     FooterComponent,
@@ -133,6 +135,7 @@ import { Client, Upload } from '../services/api';
 
     TopbarComponent,
     SidebarNavigationComponent,
+    TopbarOptionsComponent,
 
     TooltipComponent,
     FooterComponent,

@@ -27,6 +27,7 @@ export class BlogListComponent {
   filter: string = 'featured';
   _filter2: string = '';
   paramsSubscription: Subscription;
+  rating: number = 1; //show safe by default
 
   constructor(
     public client: Client,
@@ -74,6 +75,7 @@ export class BlogListComponent {
       this.moreData = true;
       this.entities_0 = [];
       this.entities_1 = [];
+      this.rating = this.session.getLoggedInUser().boost_rating;
 
       this.load();
     });
@@ -89,7 +91,11 @@ export class BlogListComponent {
       return false;
 
     this.inProgress = true;
-    this.client.get('api/v1/blog/' + this.filter + '/' + this._filter2, { limit: 12, offset: this.offset })
+    this.client.get('api/v1/blog/' + this.filter + '/' + this._filter2, { 
+        limit: 12, 
+        offset: this.offset,
+        rating: this.rating,
+      })
       .then((response: any) => {
 
         if (!response.entities) {
@@ -112,6 +118,17 @@ export class BlogListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  onOptionsChange(e: { rating }) {
+    this.rating = e.rating;
+
+    if (this.inProgress) {
+      return setTimeout(() => {
+        this.onOptionsChange(e);
+      }, 100); //keep trying every 100ms
+    }
+    this.load(true);
   }
 
   pushToColumns(blogs) {

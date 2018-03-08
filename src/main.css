@@ -201,12 +201,49 @@ m-app .initial-loading {
 m-app .m-initial-loading-centred {
   margin-top: 100px; }
 
+m-app p {
+  font-family: 'Roboto', Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased; }
+
 m-app .mdl-card__title-text {
-  color: rgba(0, 0, 0, 0.7);
-  font-weight: 600; }
+  color: rgba(0, 0, 0, 0.75);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 20px;
+  overflow: visible; }
 
 m-app .mdl-card__supporting-text {
   font-family: 'Roboto'; }
+
+.m-page {
+  display: -webkit-flex;
+  display: flex; }
+  .m-page .m-page--main {
+    padding: 16px;
+    -webkit-flex: 1;
+            flex: 1;
+    overflow: auto; }
+  .m-page .m-page--sidebar {
+    padding: 16px 0 16px 16px;
+    width: 300px; }
+  .m-page .m-page--sidebar--navigation--item {
+    display: block;
+    border: 1px solid #EEE;
+    margin: 4px 0;
+    background: #FFF;
+    border-radius: 3px;
+    padding: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: 13px; }
+    .m-page .m-page--sidebar--navigation--item.m-page--sidebar--navigation--item-active {
+      color: #4690DF; }
+    .m-page .m-page--sidebar--navigation--item i, .m-page .m-page--sidebar--navigation--item span {
+      vertical-align: middle; }
+    .m-page .m-page--sidebar--navigation--item span {
+      padding-left: 8px; }
 
 /**
  * Colours
@@ -291,7 +328,7 @@ m-announcement {
     text-transform: uppercase;
     font-size: 11px;
     letter-spacing: 1px;
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
 
 .m-channel--badges-activity {
   padding: 0;
@@ -325,7 +362,7 @@ minds-button {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-size: 14px;
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
 
 .m-topbar .m-btn {
   height: 32px; }
@@ -376,7 +413,7 @@ minds-button {
     font-size: 18px;
     padding: 8px;
     letter-spacing: 1px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     font-weight: 600;
     display: inline-block; }
   .m-captcha--sum input[type=number] {
@@ -386,7 +423,7 @@ minds-button {
     padding: 8px 0px;
     text-align: center;
     font-weight: 600;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     box-sizing: content-box; }
 
 minds-card {
@@ -635,7 +672,7 @@ m-inline-editor .m-blog--image {
     transform: matrix(1, 0, 0, 1, 0, 0); } }
 
 .medium-editor-anchor-preview {
-  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
   font-size: 16px;
   left: 0;
   line-height: 1.4;
@@ -710,7 +747,7 @@ m-inline-editor .m-blog--image {
   top: -8px; }
 
 .medium-editor-toolbar {
-  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
   font-size: 16px;
   left: 0;
   position: absolute;
@@ -729,7 +766,7 @@ m-inline-editor .m-blog--image {
   padding: 0; }
 
 .medium-editor-toolbar li button {
-  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
   cursor: pointer;
   display: block;
@@ -776,7 +813,7 @@ m-inline-editor .m-blog--image {
 
 .medium-editor-toolbar-form input,
 .medium-editor-toolbar-form a {
-  font-family: "Lato", Helvetica, Arial, sans-serif; }
+  font-family: "Roboto", Helvetica, Arial, sans-serif; }
 
 .medium-editor-toolbar-form .medium-editor-toolbar-form-row {
   line-height: 14px;
@@ -953,7 +990,7 @@ m-inline-editor .m-blog--image {
       border: 1px solid #EEE;
       border-radius: 3px;
       font-size: 12px;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #888;
       padding: 8px;
       -webkit-flex-grow: 1;
@@ -1071,7 +1108,7 @@ minds-tinymce {
     padding: 16px 32px; }
 
 .mce-content-body {
-  font-family: "Lato";
+  font-family: "Roboto";
   font-weight: 300;
   line-height: 30px;
   font-size: 16px;
@@ -1118,7 +1155,7 @@ minds-country-input {
     display: block;
     width: 100%;
     border: 1px solid #CCC;
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
 
 .m-date-input--field {
   display: inline-block;
@@ -2299,7 +2336,7 @@ m-tooltip {
   padding: 12px;
   border-radius: 3px;
   z-index: 999;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300;
   letter-spacing: 1.4px;
   max-width: 220px;
@@ -3148,6 +3185,22 @@ m-sidebar {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased; }
 
+m-topbar--navigation--options {
+  padding-right: 16px; }
+
+m-topbar--navigation--options m-dropdown .m-dropdown--label-icon {
+  font-size: 18px;
+  color: #444;
+  cursor: pointer; }
+
+m-topbar--navigation--options m-dropdown m-tooltip i.material-icons {
+  font-size: 16px;
+  margin: 0 8px;
+  color: #888; }
+
+m-topbar--navigation--options m-dropdown .mdl-switch {
+  width: 38px; }
+
 /**
  * Colours
  */
@@ -3253,7 +3306,7 @@ m-topbar {
       text-decoration: none; }
     m-topbar .m-topbar--icons span {
       vertical-align: middle; }
-    m-topbar .m-topbar--icons i {
+    m-topbar .m-topbar--icons i.material-icons {
       font-size: 20px;
       vertical-align: middle;
       color: #555; }
@@ -3294,7 +3347,7 @@ m-topbar {
     letter-spacing: 2px;
     font-size: 12px;
     cursor: pointer;
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
 
 /**
  * Colours
@@ -3424,14 +3477,14 @@ minds-admin-boosts .boost {
     line-height: 1.25em;
     color: #EEE;
     margin: 0 0 0.61em 0;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     letter-spacing: 0.5px; }
   .m-admin-boosts-statistics .m-value {
     display: block;
     font-weight: 300;
     color: #FFF;
     text-align: left;
-    font-family: 'Lato', Helvetica;
+    font-family: 'Roboto', Helvetica;
     font-size: 26px;
     letter-spacing: 2px; }
   .m-admin-boosts-statistics .m-admin-boost-stat {
@@ -3458,7 +3511,7 @@ minds-admin-boosts .boost {
   -webkit-align-items: center;
           align-items: center;
   margin: 16px;
-  font-family: Lato;
+  font-family: Roboto;
   color: #f44336; }
 
 m--rejection-reason-modal h5.m-modal-reasons--title {
@@ -3486,13 +3539,13 @@ minds-admin-pages {
     font-weight: 600;
     font-size: 42px;
     letter-spacing: 1.5px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased; }
   minds-admin-pages .m-form h1, minds-admin-pages .m-form h2, minds-admin-pages .m-form h3, minds-admin-pages .m-form h4 {
     font-weight: 600;
     letter-spacing: 1.5px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased; }
   minds-admin-pages .m-form p {
@@ -3503,7 +3556,7 @@ minds-admin-pages {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     color: rgba(0, 0, 0, 0.84);
     margin-top: 29px;
     text-rendering: optimizeLegibility;
@@ -3995,7 +4048,7 @@ minds-capture {
  * Padding, Margins and Offset
  */
 .m-pages {
-  font-family: Lato, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   background-color: white; }
   .m-pages h1 {
     margin-top: 0;
@@ -4014,7 +4067,7 @@ minds-capture {
     font-style: normal;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     color: rgba(0, 0, 0, 0.84);
     margin-top: 29px;
     text-rendering: optimizeLegibility;
@@ -4050,7 +4103,7 @@ minds-capture {
       padding: 110px 0; } }
   .m-rewards--marketing-header h1, .m-rewards--marketing-header h3 {
     color: #FFF;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-shadow: 0 0 3px #333;
     z-index: 1; }
     @media only screen and (max-width: 400px) {
@@ -4081,7 +4134,7 @@ minds-capture {
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #FFF; }
   .m-rewards--marketing-header .m-rewards--overlay {
     display: block;
@@ -4116,7 +4169,7 @@ minds-capture {
       font-size: 16px;
       text-transform: capitalize;
       letter-spacing: 1.25px;
-      font-family: 'Lato'; }
+      font-family: 'Roboto'; }
 
 .m-rewards--form {
   max-width: 990px;
@@ -4133,7 +4186,7 @@ minds-capture {
       font-size: 16px;
       text-transform: capitalize;
       letter-spacing: 1.25px;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       padding: 8px; }
     .m-rewards--form .mdl-cell p {
       padding: 0;
@@ -4152,7 +4205,7 @@ minds-capture {
     padding: 8px 16px;
     max-height: none;
     height: auto;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     letter-spacing: 2.5px;
     font-size: 16px;
     margin: 16px; }
@@ -4767,7 +4820,8 @@ m-blockchain--wallet-selector {
     margin: 0; } }
 
 .m-blog .minds-comments-container {
-  max-height: 600px; }
+  max-height: 600px;
+  overflow-y: auto; }
   @media screen and (max-width: 480px) {
     .m-blog .minds-comments-container {
       max-height: 75vh; } }
@@ -5087,7 +5141,7 @@ minds-blog-edit .m-button--draft, minds-blog-edit .m-button--submit {
 
 .m-blog-lite--full-link {
   padding: 16px;
-  font-family: 'Lato';
+  font-family: 'Roboto';
   border-radius: 3px; }
   .m-blog-lite--full-link a {
     text-decoration: none; }
@@ -5316,13 +5370,13 @@ m-boost-console-card {
     padding: 12px 8px 8px;
     background: #eceff1;
     color: #607d8b;
-    font-family: Lato, sans-serif;
+    font-family: Roboto, sans-serif;
     font-weight: 300; }
   m-boost-console-card .m-boost-card--rejection-reason {
     color: #607d8b;
     padding: 16px;
     font-size: 13px;
-    font-family: Lato;
+    font-family: Roboto;
     letter-spacing: 0.5px;
     background-color: #eceff1;
     border-top: 1px solid #d1d1d1;
@@ -5393,7 +5447,7 @@ m-boost-console .m-boost-console--content {
     m-boost-console .m-boost-console--content .m-boost-console--hero p {
       margin: 0;
       padding: 0 32px;
-      font-family: 'Lato'; }
+      font-family: 'Roboto'; }
     m-boost-console .m-boost-console--content .m-boost-console--hero m-date-selector {
       color: white;
       font-size: 25px;
@@ -5413,7 +5467,7 @@ m-boost-console .m-boost-console--content {
     m-boost-console .m-boost-console--content .m-boost-console--hero .m-boost-console--overview {
       padding: 16px;
       margin: auto;
-      font-family: 'Lato'; }
+      font-family: 'Roboto'; }
       @media only screen and (max-width: 400px) {
         m-boost-console .m-boost-console--content .m-boost-console--hero .m-boost-console--overview {
           padding: 0;
@@ -5455,7 +5509,7 @@ m-boost-console .m-boost-console--content {
           vertical-align: middle; }
         m-boost-console .m-boost-console--content .m-boost-console--hero .m-boost-console--overview .m-boost-console--label label {
           text-transform: uppercase;
-          font-family: 'Lato';
+          font-family: 'Roboto';
           letter-spacing: 1px;
           font-size: 14px; }
         m-boost-console .m-boost-console--content .m-boost-console--hero .m-boost-console--overview .m-boost-console--label i {
@@ -5474,7 +5528,7 @@ m-boost-console .m-boost-console--content {
             justify-content: space-between;
     padding: 16px;
     margin-top: 8px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300; }
     m-boost-console .m-boost-console--content .m-boost-console--merchant > a {
       text-transform: uppercase;
@@ -5483,7 +5537,7 @@ m-boost-console .m-boost-console--content {
       font-weight: 400; }
   m-boost-console .m-boost-console--content .m-boost-console--empty {
     text-align: center;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
     opacity: 0.65; }
     m-boost-console .m-boost-console--content .m-boost-console--empty a {
@@ -5496,7 +5550,7 @@ m-boost-console .m-boost-console--content {
     -webkit-justify-content: space-between;
             justify-content: space-between;
     margin: 16px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300; }
     @media screen and (max-width: 480px) {
       m-boost-console .m-boost-console--content .m-boost-console--third-party-network {
@@ -6135,7 +6189,7 @@ m-boost--creator-payment-methods li.m-boost--creator-selector--small {
       padding: 110px 0; } }
   .m-boost--marketing-header h1, .m-boost--marketing-header h3 {
     color: #FFF;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-shadow: 0 0 3px #333;
     z-index: 1; }
     @media only screen and (max-width: 400px) {
@@ -6166,7 +6220,7 @@ m-boost--creator-payment-methods li.m-boost--creator-selector--small {
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #FFF; }
   .m-boost--marketing-header .m-boost--overlay {
     display: block;
@@ -6195,12 +6249,12 @@ m-boost--creator-payment-methods li.m-boost--creator-selector--small {
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 30px; }
     .m-boost--marketing-contents .mdl-cell span {
-      font-family: 'lato';
+      font-family: 'Roboto';
       letter-spacing: 1px;
       font-weight: 300; }
 
@@ -6786,7 +6840,7 @@ minds-payments-checkout, minds-payments-stripe-checkout {
   width: 100%; }
   minds-payments-checkout .m-error, minds-payments-stripe-checkout .m-error {
     padding: 16px;
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
   minds-payments-checkout .m-checkout-loading, minds-payments-stripe-checkout .m-checkout-loading {
     padding: 16px;
     text-align: center; }
@@ -6823,7 +6877,7 @@ minds-payments-checkout, minds-payments-stripe-checkout {
     padding: 8px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     border: 1px solid #DDD;
     margin: 16px;
     border-radius: 3px; }
@@ -6882,7 +6936,7 @@ minds-payments-checkout, minds-payments-stripe-checkout {
     color: #555;
     background: #FFF; }
     .m-faq--container--category .m-faq--question h3, .m-faq--container--category .m-faq--question p {
-      font-family: lato;
+      font-family: Roboto;
       -webkit-font-smoothing: antialiased;
       letter-spacing: 0.50px;
       text-rendering: optimizeLegibility; }
@@ -7874,6 +7928,7 @@ minds-groups-profile-conversation {
     box-sizing: border-box;
     height: calc(100vh - 180px); }
     minds-groups-profile-conversation .m--group-chat .minds-comments-container {
+      overflow-y: auto;
       max-height: none;
       -webkit-flex: 1;
               flex: 1;
@@ -8179,13 +8234,13 @@ m-homepage .m-homepage--section {
       margin: 16px 0; }
     m-homepage .m-homepage--section .m-homepage--section--icons > div label {
       font-size: 18px;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 400;
       color: #4A4A4A;
       letter-spacing: 2px;
       text-transform: uppercase; }
     m-homepage .m-homepage--section .m-homepage--section--icons > div p {
-      font-family: lato;
+      font-family: Roboto;
       line-height: 18px;
       font-size: 14px;
       margin: 24px 0;
@@ -8203,7 +8258,7 @@ m-homepage .m-homepage--section {
         font-size: 28px; }
     m-homepage .m-homepage--section .m-homepage--section--rewards label {
       font-size: 18px;
-      font-family: lato;
+      font-family: Roboto;
       font-weight: 400;
       letter-spacing: 2px;
       color: #333; }
@@ -8432,7 +8487,7 @@ m-homepage .m-homepage-press {
     letter-spacing: 4px;
     -webkit-flex: 1;
             flex: 1;
-    font-family: lato;
+    font-family: Roboto;
     font-weight: 400; }
 
 .m-homepage--fader {
@@ -8455,7 +8510,7 @@ m-homepage .m-homepage-press {
     letter-spacing: 2px;
     font-size: 14px;
     font-weight: 400;
-    font-family: Lato;
+    font-family: Roboto;
     cursor: pointer;
     pointer-events: all; }
 
@@ -8479,7 +8534,7 @@ m-homepage .m-homepage-press {
       padding: 110px 0; } }
   .m-i18n--marketing-header h1, .m-i18n--marketing-header h3 {
     color: #FFF;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-shadow: 0 0 3px #333;
     z-index: 1; }
     @media only screen and (max-width: 400px) {
@@ -8509,7 +8564,7 @@ m-homepage .m-homepage-press {
       line-height: 35px;
       padding: 8px 24px;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #FFF; }
   .m-i18n--marketing-header .m-i18n--overlay {
     display: block;
@@ -8535,12 +8590,12 @@ m-homepage .m-homepage-press {
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 30px; }
     .m-i18n--marketing-contents .mdl-cell span {
-      font-family: 'lato';
+      font-family: 'Roboto';
       letter-spacing: 1px; }
 
 .m-i18n--marketing m-i18n--terms {
@@ -8732,7 +8787,7 @@ minds-button-remind a, minds-button-thumbs-up a, minds-button-thumbs-down a {
   color: #4690D6 !important; }
 
 .minds-counter {
-  font-family: "Lato", "Helvetica", "Roboto", sans-serif;
+  font-family: "Roboto", "Helvetica", sans-serif;
   display: inline-block;
   font-size: 12px;
   font-weight: 800;
@@ -8943,7 +8998,7 @@ minds-card-image, minds-card-video {
       -webkit-font-smoothing: antialiased; }
     .mdl-card .m-owner-block .body .permalink {
       text-decoration: none;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       text-transform: uppercase;
       letter-spacing: 0.75px;
       text-rendering: optimizeLegibility; }
@@ -9054,7 +9109,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview {
       display: inline-block; }
     minds-activity.mdl-card minds-comments .minds-block .minds-body a span, minds-activity minds-comments .minds-block .minds-body a span, minds-activity-preview minds-comments .minds-block .minds-body a span {
       vertical-align: middle;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       text-rendering: optimizeLegibility;
       letter-spacing: 0.75px;
       -webkit-font-smoothing: antialiased;
@@ -9586,16 +9641,13 @@ minds-comments, .m-comment-wrapper {
       font-size: 20px;
       vertical-align: middle;
       padding-right: 12px; }
-  minds-comments .minds-comments-container, .m-comment-wrapper .minds-comments-container {
-    max-height: 300px;
-    overflow-y: auto; }
-    minds-comments .minds-comments-container .m-comment-attachment .item-image.m-mature-content-shown .m-mature-overlay, .m-comment-wrapper .minds-comments-container .m-comment-attachment .item-image.m-mature-content-shown .m-mature-overlay {
-      left: 8px;
-      right: auto; }
-    minds-comments .minds-comments-container .m-comment-attachment .item-image img, minds-comments .minds-comments-container .m-comment-attachment .item-image minds-video, .m-comment-wrapper .minds-comments-container .m-comment-attachment .item-image img, .m-comment-wrapper .minds-comments-container .m-comment-attachment .item-image minds-video {
-      width: auto;
-      max-width: 100%;
-      max-height: 234px; }
+  minds-comments .minds-comments-container .m-comment-attachment .item-image.m-mature-content-shown .m-mature-overlay, .m-comment-wrapper .minds-comments-container .m-comment-attachment .item-image.m-mature-content-shown .m-mature-overlay {
+    left: 8px;
+    right: auto; }
+  minds-comments .minds-comments-container .m-comment-attachment .item-image img, minds-comments .minds-comments-container .m-comment-attachment .item-image minds-video, .m-comment-wrapper .minds-comments-container .m-comment-attachment .item-image img, .m-comment-wrapper .minds-comments-container .m-comment-attachment .item-image minds-video {
+    width: auto;
+    max-width: 100%;
+    max-height: 234px; }
 
 .m-comment-wrapper {
   margin-top: 0; }
@@ -10249,7 +10301,7 @@ minds-media-thumbnail-selector {
   display: -webkit-flex;
   display: flex; }
   .m-media-content--meta .m-media-content--title h1 {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 36px;
     letter-spacing: 1.5px;
@@ -10332,7 +10384,7 @@ minds-media-thumbnail-selector {
       padding: 0;
       border: 0; }
   .m-media-content--meta .m-media-content--actions minds-button-boost .mdl-button {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 12px;
     letter-spacing: 0.5px;
@@ -10343,7 +10395,7 @@ minds-media-thumbnail-selector {
   display: flex;
   -webkit-align-items: center;
           align-items: center;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300; }
   .m-media-content--meta .m-media-content--owner .minds-avatar {
     background: transparent; }
@@ -10389,14 +10441,14 @@ minds-media-thumbnail-selector {
 .m-media-content--meta .m-media-content--description {
   padding: 0 8px 0 74px;
   margin-top: 16px;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300; }
   .m-media-content--meta .m-media-content--description h1, .m-media-content--meta .m-media-content--description h2, .m-media-content--meta .m-media-content--description h3, .m-media-content--meta .m-media-content--description h4, .m-media-content--meta .m-media-content--description h5, .m-media-content--meta .m-media-content--description h6, .m-media-content--meta .m-media-content--description p {
     font-family: inherit;
     font-weight: inherit; }
 
 .m-media-content--meta .m-additional-block {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 300; }
 
 .m-media-content--comments {
@@ -10425,6 +10477,7 @@ minds-media-thumbnail-selector {
   .m-media-content--wrapper .m-media-content--container {
     -webkit-flex-grow: 1;
             flex-grow: 1;
+    max-width: 100%;
     background: #FFF; }
   .m-media-content--wrapper .m-media-content--recommended {
     padding-top: 16px; }
@@ -10854,6 +10907,9 @@ m-messenger {
   bottom: 0;
   right: 0;
   z-index: 1000; }
+  @media screen and (max-width: 480px) {
+    m-messenger {
+      display: none; } }
   m-messenger .m-messenger--conversations-wrappers {
     position: absolute;
     right: 0;
@@ -11206,7 +11262,7 @@ m-ad-sharing .m-apply-submit {
     line-height: 1.25em;
     color: #EEE;
     margin: 0 0 1.61em 0;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     letter-spacing: 0.5px; }
     .m-ad-sharing-analytics-component .m-monetization--overview .m-monetization--overview-period h2 .m-subnote {
       font-size: 12px; }
@@ -11215,12 +11271,12 @@ m-ad-sharing .m-apply-submit {
     font-weight: 300;
     color: #FFF;
     text-align: left;
-    font-family: 'Lato', Helvetica;
+    font-family: 'Roboto', Helvetica;
     font-size: 26px;
     letter-spacing: 2px; }
   .m-ad-sharing-analytics-component .m-monetization--overview .m-monetization--overview-period .m-monetization--overview-period-tip {
     color: #AAA;
-    font-family: Lato;
+    font-family: Roboto;
     margin-top: -28px;
     font-size: 9px;
     letter-spacing: 1px;
@@ -11233,7 +11289,7 @@ m-ad-sharing .m-apply-submit {
   color: #aaa;
   padding: 8px;
   letter-spacing: 1px;
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
 
 .m-ad-sharing-analytics-component .m-monetization-cta-wrapper {
   width: 100%; }
@@ -11253,7 +11309,7 @@ m-ad-sharing .m-apply-submit {
   width: 100%;
   table-layout: fixed; }
   .m-ad-sharing-analytics-component .m-monetization--list table th {
-    font-family: Lato;
+    font-family: Roboto;
     text-transform: uppercase;
     letter-spacing: 1px; }
   .m-ad-sharing-analytics-component .m-monetization--list table .m-data-title {
@@ -11318,7 +11374,7 @@ m-ad-sharing .m-apply-submit {
   box-sizing: border-box; }
   .m-affiliate--marketing-header h1, .m-affiliate--marketing-header h3 {
     color: #FFF;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-shadow: 0 0 3px #333; }
   .m-affiliate--marketing-header h1 {
     word-spacing: 25px;
@@ -11345,7 +11401,7 @@ m-ad-sharing .m-apply-submit {
   .m-affiliate--marketing-header .m-affiliate--marketing-link span {
     padding: 8px;
     letter-spacing: 1px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     color: #FFF;
     font-size: 16px;
     font-weight: 300;
@@ -11360,7 +11416,7 @@ m-ad-sharing .m-apply-submit {
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #FFF; }
 
 .m-affiliate--marketing-contents {
@@ -11375,12 +11431,12 @@ m-ad-sharing .m-apply-submit {
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 38px; }
     .m-affiliate--marketing-contents .mdl-cell span {
-      font-family: 'lato';
+      font-family: 'Roboto';
       letter-spacing: 1px; }
 
 .m-affiliate--marketing-onboarding {
@@ -11393,7 +11449,7 @@ m-ad-sharing .m-apply-submit {
     padding: 16px 16px 0 32px;
     margin: 0;
     font-size: 16px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     letter-spacing: 0.5px;
     font-weight: 300; }
   .m-affiliate--marketing-onboarding form {
@@ -11402,7 +11458,7 @@ m-ad-sharing .m-apply-submit {
 .m-affiliate--marketing-faq {
   max-width: 900px;
   margin: auto;
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
 
 .m-affiliate--marketing m-affiliate--terms {
   max-width: 600px;
@@ -11414,7 +11470,7 @@ m-ad-sharing .m-apply-submit {
   overflow: scroll; }
 
 .m-affiliate--terms {
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
   .m-affiliate--terms h3 {
     margin: 8px 0;
     text-transform: uppercase;
@@ -11438,7 +11494,7 @@ m-ad-sharing .m-apply-submit {
       padding: 110px 0; } }
   .m-monetization--marketing-header h1, .m-monetization--marketing-header h3 {
     color: #FFF;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-shadow: 0 0 3px #333; }
     @media only screen and (max-width: 400px) {
       .m-monetization--marketing-header h1, .m-monetization--marketing-header h3 {
@@ -11467,7 +11523,7 @@ m-ad-sharing .m-apply-submit {
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #FFF; }
 
 .m-monetization--marketing-contents {
@@ -11482,12 +11538,12 @@ m-ad-sharing .m-apply-submit {
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 30px; }
     .m-monetization--marketing-contents .mdl-cell span {
-      font-family: 'lato';
+      font-family: 'Roboto';
       letter-spacing: 1px; }
 
 .m-monetization--marketing m-monetization--onboarding {
@@ -11513,7 +11569,7 @@ m-ad-sharing .m-apply-submit {
   overflow: scroll; }
 
 .m-monetization--onboarding {
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
   .m-monetization--onboarding label {
     display: block;
     text-transform: uppercase;
@@ -11527,7 +11583,7 @@ m-ad-sharing .m-apply-submit {
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #777;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300; }
   .m-monetization--onboarding .m-date-input--field select {
     padding: 12px 40px 12px 12px;
@@ -11551,7 +11607,7 @@ m-ad-sharing .m-apply-submit {
   display: flex;
   -webkit-align-items: center;
           align-items: center;
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
   .m-monetization--overview i {
     font-style: normal;
     font-weight: 100; }
@@ -11568,7 +11624,7 @@ m-ad-sharing .m-apply-submit {
       vertical-align: middle; }
     .m-monetization--overview .m-monetization--overview-label label {
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       letter-spacing: 1px;
       font-size: 11px; }
     .m-monetization--overview .m-monetization--overview-label i {
@@ -11589,7 +11645,7 @@ m-ad-sharing .m-apply-submit {
   margin-top: -15px;
   text-transform: uppercase;
   letter-spacing: 1.4px;
-  font-family: 'Lato';
+  font-family: 'Roboto';
   font-weight: 300;
   text-align: left; }
   .m-monetization--overview-title > * {
@@ -11615,7 +11671,7 @@ m-revenue--graph {
     fill: transparent; }
   m-revenue--graph text {
     fill: #FFF;
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
   m-revenue--graph path {
     stroke: #FFF;
     stroke-width: 3; }
@@ -11626,7 +11682,7 @@ m-revenue--graph {
 
 .m-revenue--ledger-table table {
   width: 100%;
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
 
 .m-revenue--ledger-table .m-revenue--ledger-header th {
   font-size: 14px;
@@ -11668,7 +11724,7 @@ m-revenue--graph {
       letter-spacing: 2px;
       font-size: 24px; }
   .m-revenue--options .m-revenue--options-payout-method-bank p {
-    font-family: 'Lato';
+    font-family: 'Roboto';
     margin: 0; }
   .m-revenue--options .m-revenue--options-payout-method-bank .m-revenue--options-payout-method-bank-account {
     display: -webkit-flex;
@@ -11678,7 +11734,7 @@ m-revenue--graph {
     padding: 16px;
     border: 1px solid #CCC;
     border-radius: 3px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     letter-spacing: 1px;
     margin: 16px 0; }
     .m-revenue--options .m-revenue--options-payout-method-bank .m-revenue--options-payout-method-bank-account .m-revenue--options-payout-method-bank--name {
@@ -11696,17 +11752,17 @@ m-revenue--graph {
       font-size: 14px;
       cursor: pointer; }
   .m-revenue--options .m-revenue--options-payout-method-setup p {
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
   .m-revenue--options .m-revenue--options-payout-method-setup form label {
     text-transform: uppercase;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     letter-spacing: 1px;
     word-spacing: 4px; }
   .m-revenue--options .m-revenue--options-payout-method-setup form input {
     width: 100%;
     margin: 16px 0;
     padding: 8px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     font-size: 16px; }
   .m-revenue--options .m-revenue--options-payout-method-setup form minds-country-input {
     width: 100%;
@@ -11714,14 +11770,14 @@ m-revenue--graph {
     margin: 16px 0; }
     .m-revenue--options .m-revenue--options-payout-method-setup form minds-country-input select {
       font-size: 16px;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300;
       color: #888; }
   .m-revenue--options .m-error {
     padding: 16px;
     letter-spacing: 2px;
     font-size: 14px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     font-weight: 300;
     margin: 16px 0;
     border-radius: 2px; }
@@ -11734,12 +11790,12 @@ m-revenue--graph {
       letter-spacing: 2px;
       font-size: 24px; }
     .m-revenue--options .m-revenue--options-cancel p {
-      font-family: 'Lato'; }
+      font-family: 'Roboto'; }
     .m-revenue--options .m-revenue--options-cancel button {
       width: 200px; }
 
 .m-affiliate--terms {
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
   .m-affiliate--terms h3 {
     margin: 8px 0;
     text-transform: uppercase;
@@ -11809,7 +11865,7 @@ m-revenue--graph {
     text-transform: uppercase;
     font-size: 11px;
     letter-spacing: 1.5px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     padding: 0 8px;
     color: #777;
     font-weight: 400;
@@ -11970,7 +12026,7 @@ m-revenue--graph {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-weight: 400;
-    font-family: 'Lato', Helvetica, Sans-serif;
+    font-family: 'Roboto', Helvetica, Sans-serif;
     cursor: default; }
   .m-newsfeed--boost-header m-tooltip {
     vertical-align: middle;
@@ -12042,14 +12098,14 @@ m-notifications--flyout {
             text-rendering: optimizeLegibility; }
           m-notifications--flyout .notifications-grid .mdl-cell--12-col minds-notification .body .ts {
             font-size: 10px;
-            font-family: 'Lato';
+            font-family: 'Roboto';
             text-transform: uppercase;
             letter-spacing: 0.75px;
             text-rendering: optimizeLegibility;
             -webkit-font-smoothing: antialiased; }
   m-notifications--flyout .m-notifications--flyout--bottom-container {
     text-transform: uppercase;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     letter-spacing: 2.5px;
     text-rendering: optimizeLegibility;
     font-size: 12px;
@@ -12098,7 +12154,7 @@ minds-notification.mdl-card {
 
 minds-notifications .m-notifications--load-new {
   text-transform: uppercase;
-  font-family: 'Lato';
+  font-family: 'Roboto';
   letter-spacing: 2.5px;
   cursor: pointer;
   text-rendering: optimizeLegibility;
@@ -12143,7 +12199,7 @@ m-notifications--topbar-toggle i {
 m-notifications--topbar-toggle .counter {
   cursor: default; }
 
-m-notifications--topbar-toggle .m-notifications--topbar-toggle--icon::after {
+m-notifications--topbar-toggle .m-notifications--topbar-toggle--icon--active::after {
   background: #4690DF;
   border-radius: 50%;
   display: block;
@@ -12168,7 +12224,7 @@ m-onboarding-card .mdl-card {
   cursor: pointer; }
 
 m-onboarding-card h3, m-onboarding-card h5 {
-  font-family: 'Lato';
+  font-family: 'Roboto';
   font-weight: 300;
   color: #4A4A4A; }
 
@@ -12262,7 +12318,7 @@ minds-paywall-cancel-button .mdl-spinner {
       padding: 110px 0; } }
   .m-plus--marketing-header h1, .m-plus--marketing-header h3 {
     color: #FFF;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-shadow: 0 0 3px #333;
     z-index: 1; }
     @media only screen and (max-width: 400px) {
@@ -12293,7 +12349,7 @@ minds-paywall-cancel-button .mdl-spinner {
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #FFF; }
   .m-plus--marketing-header .m-plus--overlay {
     display: block;
@@ -12319,12 +12375,12 @@ minds-paywall-cancel-button .mdl-spinner {
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 30px; }
     .m-plus--marketing-contents .mdl-cell span {
-      font-family: 'lato';
+      font-family: 'Roboto';
       letter-spacing: 1px; }
 
 .m-plus--marketing m-plus--onboarding {
@@ -12388,7 +12444,7 @@ m-plus--subscription {
   .m-report-console--item .m-report-console--header {
     margin: 16px;
     padding: 16px;
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
     .m-report-console--item .m-report-console--header > b {
       font-size: 13px; }
     .m-report-console--item .m-report-console--header p {
@@ -12404,7 +12460,7 @@ m-plus--subscription {
     -webkit-align-items: center;
             align-items: center;
     margin: 16px 16px 0;
-    font-family: 'Lato', sans-serif; }
+    font-family: 'Roboto', sans-serif; }
     .m-report-console--item .m-report-console--meta .m-report-console--info {
       -webkit-flex-grow: 1;
               flex-grow: 1; }
@@ -12432,7 +12488,7 @@ m-plus--subscription {
   .m-report-console--item .m-comment-wrapper .m-report-console--comment-note {
     padding: 16px;
     text-align: center;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 12px;
     font-weight: 300; }
     .m-report-console--item .m-comment-wrapper .m-report-console--comment-note a {
@@ -12450,7 +12506,7 @@ m-plus--subscription {
       resize: none;
       height: 5em;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       border: 1px solid #EEE;
       padding: 16px;
       font-size: 13px;
@@ -12475,7 +12531,7 @@ m-plus--subscription {
     padding: 16px; }
     .m-report-console--appeal .m-report-console--appeal-note p {
       margin: 0;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-size: 14px;
       letter-spacing: 1px; }
 
@@ -12679,7 +12735,7 @@ m-search--bar-suggestions {
         background: #444; }
   m-search--bar-suggestions .m-search-bar-suggestions-context {
     color: rgba(74, 74, 74, 0.83);
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 13px;
     line-height: 26px;
     letter-spacing: 1.75px;
@@ -12770,7 +12826,7 @@ m-search {
   padding: 8px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-family: 'Lato';
+  font-family: 'Roboto';
   border: 1px solid #DDD;
   margin: 16px;
   border-radius: 3px; }
@@ -12800,7 +12856,7 @@ m-search {
     padding: 8px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     border: 1px solid #DDD;
     margin: 16px;
     border-radius: 3px; }
@@ -13207,7 +13263,7 @@ m-wallet--flyout {
   position: relative;
   padding: 0 16px 16px; }
   .m-purchase-points--coupon label {
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-transform: uppercase;
     vertical-align: middle;
     letter-spacing: 0.5px; }
@@ -13551,7 +13607,7 @@ m-token--onboarding--video {
         .m-token--ledger-filters .m-token--ledger-filters--addresses .minds-dropdown-menu .mdl-menu__item .m-tooltip .m-tooltip--bubble {
           max-width: initial; }
   .m-token--ledger-filters.m-token--ledger-filters--preview {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 12px;
     text-transform: uppercase;
@@ -13789,7 +13845,7 @@ minds-wallet-transactions .mdl-tabs__tab-bar {
       vertical-align: middle; }
     .m-wire--overview-overview .m-wire--overview-label label {
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       letter-spacing: 1px;
       font-size: 14px; }
     .m-wire--overview-overview .m-wire--overview-label i {
@@ -13823,7 +13879,7 @@ m-monetization--graph {
               flex-wrap: wrap; } }
   .m-wire--overview-nav .m-wire--overview-nav-item {
     padding: 16px 32px;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     font-weight: 300;
     letter-spacing: 2px;
     cursor: pointer; }
@@ -13887,7 +13943,7 @@ h2.m-wire--overview-product-header {
 
 m-wire-channel {
   display: block;
-  font-family: 'Lato', sans-serif; }
+  font-family: 'Roboto', sans-serif; }
   m-wire-channel .mdl-card {
     margin-bottom: 8px; }
   m-wire-channel .m-wire-channel--edit-button {
@@ -14022,7 +14078,7 @@ m-wire-channel {
       border: none;
       border-radius: 4px;
       padding: 16px;
-      font-family: 'Lato', sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-size: 32px;
       font-weight: 200;
       text-transform: uppercase;
@@ -14060,7 +14116,7 @@ m-wire-channel {
   display: flex;
   -webkit-align-items: center;
           align-items: center;
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
   @media only screen and (max-width: 400px) {
     .m-wire-channel--overview {
       padding: 0;
@@ -14078,7 +14134,7 @@ m-wire-channel {
       vertical-align: middle; }
     .m-wire-channel--overview .m-wire-channel--overview--label label {
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       letter-spacing: 1px;
       font-size: 14px; }
     .m-wire-channel--overview .m-wire-channel--overview--label i {
@@ -14110,7 +14166,7 @@ m-wire-channel {
   .m-wire-console--hero p {
     margin: 0;
     padding: 0 32px;
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
   .m-wire-console--hero m-date-selector {
     color: white;
     font-size: 25px;
@@ -14176,7 +14232,7 @@ m-wire-channel {
   margin-top: 16px; }
   .m-wire-console--ledger-table table {
     width: 100%;
-    font-family: 'Lato'; }
+    font-family: 'Roboto'; }
   .m-wire-console--ledger-table .m-wire-console--ledger-header th {
     font-size: 14px;
     letter-spacing: 1px;
@@ -15115,7 +15171,7 @@ m-wire--lock-screen {
       padding: 110px 0; } }
   .m-wire--marketing-header h1, .m-wire--marketing-header h3 {
     color: #FFF;
-    font-family: 'Lato';
+    font-family: 'Roboto';
     text-shadow: 0 0 3px #333;
     z-index: 1; }
     @media only screen and (max-width: 400px) {
@@ -15146,7 +15202,7 @@ m-wire--lock-screen {
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       color: #FFF; }
   .m-wire--marketing-header .m-wire--overlay {
     display: block;
@@ -15175,12 +15231,12 @@ m-wire--lock-screen {
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Lato';
+      font-family: 'Roboto';
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 30px; }
     .m-wire--marketing-contents .mdl-cell span {
-      font-family: 'lato';
+      font-family: 'Roboto';
       letter-spacing: 1px;
       font-weight: 300; }
 
@@ -15196,7 +15252,7 @@ m-wire--lock-screen {
   max-width: 990px;
   margin: auto;
   padding: 16px;
-  font-family: 'Lato'; }
+  font-family: 'Roboto'; }
 
 .m-wire--marketing m-wire--terms {
   max-width: 600px;
@@ -15214,7 +15270,7 @@ m-wire-threshold-input, .m-wire-threshold-input {
   display: inline-block; }
 
 .m-wire-threshold-input {
-  font-family: 'Lato', sans-serif; }
+  font-family: 'Roboto', sans-serif; }
   .m-wire-threshold-input .m-wire-threshold-input--toggle {
     display: inline-block;
     vertical-align: middle;
@@ -16160,7 +16216,7 @@ svg.m-facebook-icon {
   min-height: 1em; }
   .m-crypto-token-icon:after {
     content: 'M';
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
     text-decoration: line-through;
     font-style: normal;
@@ -16205,7 +16261,7 @@ infinite-scroll {
 
 @font-face {
   font-family: minds_emoji;
-  src: local("Lato"), local("Helvetica"), local("Roboto"), local("Arial"); }
+  src: local("Helvetica"), local("Roboto"), local("Arial"); }
 
 @font-face {
   font-family: minds_emoji;

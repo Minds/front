@@ -1,0 +1,19 @@
+m-topbar--navigation--options {
+  padding-right: 16px;
+}
+
+m-topbar--navigation--options m-dropdown{
+  .m-dropdown--label-icon {
+    font-size: 18px;
+    color: #444;
+    cursor: pointer;
+  }
+
+  m-tooltip i.material-icons {
+    font-size: 16px;
+    margin: 0 8px;
+    color: #888;
+  }
+
+  .mdl-switch { width: 38px; }
+}

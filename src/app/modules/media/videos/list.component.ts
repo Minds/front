@@ -25,6 +25,7 @@ export class MediaVideosListComponent {
   moreData: boolean = true;
   offset: string | number = '';
   inProgress: boolean = false;
+  rating: number = 1; //safe by default
 
   city: string = '';
   cities: Array<any> = [];
@@ -76,6 +77,7 @@ export class MediaVideosListComponent {
 
       this.inProgress = false;
       this.entities = [];
+      this.rating = this.session.getLoggedInUser().boost_rating;
       this.load(true);
     });
   }
@@ -103,7 +105,8 @@ export class MediaVideosListComponent {
 
     this.client.get('api/v1/entities/' + this.filter + '/videos/' + this.owner, {
       limit: 12,
-      offset: this.offset
+      offset: this.offset,
+      rating: this.rating,
     })
       .then((data: any) => {
         if (!data.entities) {
@@ -128,6 +131,17 @@ export class MediaVideosListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  onOptionsChange(e: { rating }) {
+    this.rating = e.rating;
+
+    if (this.inProgress) {
+      return setTimeout(() => {
+        this.onOptionsChange(e);
+      }, 100); //keep trying every 100ms
+    }
+    this.load(true);
   }
 
 }
