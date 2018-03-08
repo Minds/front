@@ -1,6 +1,9 @@
 @import 'defaults.scss';
 
-m-messenger{
+m-messenger {
+  @media screen and (max-width: $max-mobile) {
+    display: none;
+  }
   position:fixed;
   bottom:0;
   right:0;
