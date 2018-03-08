@@ -117,7 +117,7 @@ export class Comments {
     this.error = '';
     this.inProgress = true;
 
-    this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: true })
+    this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: false })
       .then((response: any) => {
 
         if (!this.socketRoomName && response.socketRoomName) {

@@ -36,11 +36,60 @@ m-app {
   //  }
   //}
 
+  p {
+    font-family: 'Roboto', Helvetica, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
   .mdl-card__title-text {
-    color: rgba(0,0,0,0.7);
-    font-weight: 600;
+    color: rgba(0,0,0,0.75);
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    overflow: visible;
   }
   .mdl-card__supporting-text{
     font-family: 'Roboto';
+  }
+}
+
+.m-page {
+  display: flex;
+
+  .m-page--main {
+    padding: 16px;
+    flex: 1;
+    overflow: auto;
+  }
+
+  .m-page--sidebar {
+    padding: 16px 0 16px 16px;
+    width: 300px;
+  }
+
+  .m-page--sidebar--navigation--item {
+    display: block;
+    border: 1px solid #EEE;
+    margin: 4px 0;
+    background: #FFF;
+    border-radius: 3px;
+    padding: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: 13px;
+
+    &.m-page--sidebar--navigation--item-active {
+      color: #4690DF;
+    }
+
+    i, span {
+      vertical-align: middle;
+    }
+
+    span {
+      padding-left: 8px;
+    }
   }
 }

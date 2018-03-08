@@ -356,8 +356,8 @@ minds-comments, .m-comment-wrapper{
   .minds-comments-container {
     $mcc-height: 300px;
 
-    max-height: $mcc-height;
-    overflow-y: auto;
+    //max-height: $mcc-height;
+    //overflow-y: auto;
 
     .m-comment-attachment .item-image {
       &.m-mature-content-shown .m-mature-overlay {
