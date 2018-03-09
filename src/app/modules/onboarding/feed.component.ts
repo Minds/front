@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { OnboardingService } from './onboarding.service';
 import { Session } from '../../services/session';
 

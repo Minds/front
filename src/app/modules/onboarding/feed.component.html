@@ -1,4 +1,5 @@
-<m-onboarding-card 
+<div class="m-onboarding-feed">
+  <m-onboarding-card
     text="Design Your Channel"
     i18n-text="@@MINDS__ONBOARDING__CHANNEL_TEXT"
     subtext="Setup your avatar, banner, personal bio and more"
@@ -7,9 +8,9 @@
     [route]="['/', session.getLoggedInUser().username, { editToggle: true}]"
     class="mdl-color--blue-grey-800 mdl-color-text--white"
     id="channel"
-></m-onboarding-card>
+  ></m-onboarding-card>
 
-<m-onboarding-card 
+  <m-onboarding-card
     text="Subscribe to channels"
     i18n-text="@@MINDS__ONBOARDING__SUBSCRIBE_TEXT"
     subtext="Click here to find the content you love to fill your newsfeed"
@@ -17,26 +18,16 @@
     icon="person_add"
     [route]="['/discovery/featured/channels']"
     id="subscribe"
-></m-onboarding-card>
+  ></m-onboarding-card>
 
-<m-onboarding-card 
-    text="Earn revenue"
-    i18n-text="@@MINDS__ONBOARDING__MONETIZATION_TEXT"
-    subtext="Minds shares its revenue with you. Click here to monetize your channel and learn more"
-    i18n-subtext="@@MINDS__ONBOARDING__MONETIZATION_SUBTEXT"
-    icon="attach_money"
-    [route]="['/monetization']"
-    class="mdl-color--green mdl-color-text--white"
-    id="monetization"
-></m-onboarding-card>
-
-<m-onboarding-card 
-    text="Become an affiliate"
-    i18n-text="@@MINDS__ONBOARDING__AFFILIATES_TEXT"
-    subtext="Earn 25% of the revenue Minds generates from people you refer to the site"
-    i18n-subtext="@@MINDS__ONBOARDING__AFFILIATES_SUBTEXT"
-    icon="share"
-    [route]="['/affiliates']"
-    class="mdl-color--blue mdl-color-text--white"
-    id="affiliates"
-></m-onboarding-card>
+  <m-onboarding-card
+    text="Set up your ethereum wallet"
+    i18n-text="@@MINDS__ONBOARDING__WALLET_SETUP_TEXT"
+    subtext="Click here to set up your ethereum wallet"
+    i18n-subtext="@@MINDS__ONBOARDING__WALLET_SETUP_SUBTEXT"
+    icon="person_add"
+    [route]="['/wallet']"
+    class="mdl-color--blue-grey-800 mdl-color-text--white"
+    id="wallet"
+  ></m-onboarding-card>
+</div>
