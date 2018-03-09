@@ -105,6 +105,9 @@
   .m-wire--creator-section-row {
     display: flex;
     flex-direction: row;
+    @media screen and (max-width: $min-tablet) {
+      flex-direction: column;
+    }
 
     > .m-wire--creator-section {
       flex: 1;
@@ -123,6 +126,11 @@
   .m-wire--creator--recurring {
     margin-top: $minds-padding * 2;
   }
+
+   .m-wire--creator--amount {
+     display: flex;
+     align-items: center;
+   }
 
   .m-wire--creator--amount, .m-wire--creator--target {
     margin-top: 16px;
@@ -259,7 +267,7 @@
       cursor: pointer;
     }
 
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $min-tablet) {
       $fs-mobile: 32px;
 
       font-size: $fs-mobile;
@@ -268,6 +276,12 @@
       .m-wire--creator-wide-input--edit {
         height: $fs-mobile + $minds-padding;
         line-height: $fs-mobile;
+
+        flex-shrink: 1;
+        min-width: 50px;
+        max-width: 120px;
+        width: initial;
+        padding: $minds-padding;
       }
     }
 
@@ -827,6 +841,13 @@
     min-width: 192px;
     display: inline-flex;
     align-items: center;
+
+    @media screen and (max-width: $min-tablet) {
+      flex-grow: 1;
+      min-width: 50px;
+      max-width: 120px;
+      width: initial;
+    }
   }
 
   .m-wire--creator-wide-input--cost-label {
