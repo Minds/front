@@ -39,10 +39,11 @@
 
       <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
 
-      <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"  *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus">
+      <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"  *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus && showPlusButton">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
           <i class="material-icons">add_circle</i>
           <ng-container i18n="@@MINDS__NEWSFEED__UPGRADE_TO_PLUS_ACTION">Upgrade to Plus</ng-container>
+          <i class="material-icons m-newsfeed-sidebar-button--close" (click)="hidePlusButton($event)">close</i>
         </div>
       </a>
 

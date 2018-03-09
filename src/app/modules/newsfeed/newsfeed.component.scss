@@ -71,11 +71,17 @@
     padding-left: 8px;
   }
 
-  > i.material-icons {
-    vertical-align: middle;
-    position: relative;
-    top: -0.1em;
-    margin-right: 0.2em;
+  > i {
+    &.material-icons {
+      vertical-align: middle;
+      position: relative;
+      top: -0.1em;
+      margin-right: 0.2em;
+    }
+
+    &.m-newsfeed-sidebar-button--close {
+      float: right;
+    }
   }
 }
 .m-newsfeed-boost-promo{

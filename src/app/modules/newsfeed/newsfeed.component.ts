@@ -49,6 +49,8 @@ export class NewsfeedComponent {
 
   boostFeed: boolean = false;
 
+  showPlusButton: boolean = true;
+
   @ViewChild('poster') private poster: Poster;
 
   constructor(
@@ -71,6 +73,11 @@ export class NewsfeedComponent {
         this.title.setTitle('Newsfeed');
       }
     });
+
+    const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');
+    if (showPlusButton != null) {
+      this.showPlusButton = false
+    }
   }
 
   ngOnInit() {
@@ -271,6 +278,12 @@ export class NewsfeedComponent {
     }
   }
 
+  hidePlusButton(event) {
+    this.showPlusButton = false;
+    localStorage.setItem('newsfeed:hide-plus-button', 'true');
+    event.preventDefault();
+    event.stopPropagation();
+  }
 
   onViewed(event: {activity, visible}) {
     if (this.boostFeed) {
