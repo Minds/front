@@ -16,11 +16,8 @@ export class WireThresholdInputComponent implements OnInit {
     this.enabled = !!threshold;
 
     if (!this.threshold) {
-      let currency: WireRewardsType = 'points';
-      if (this.session.getLoggedInUser() && this.session.getLoggedInUser().merchant)
-        currency = 'money';
       this.threshold = {
-        type: currency,
+        type: 'tokens',
         min: 0
       };
     }
