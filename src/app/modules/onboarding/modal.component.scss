@@ -1,0 +1,19 @@
+.m-onboarding--modal-wrapper{
+  background: #FFF;
+  padding: 0;
+  overflow: visible;
+
+  .m-overlay-modal--close {
+    display: none;
+  }
+}
+
+.m-onboarding--modal {
+  .m-token--onboarding .m-token--onboarding--slide {
+    margin-bottom: 0;
+  }
+
+  .m-btn--slim {
+    margin-left: 8px;
+  }
+}

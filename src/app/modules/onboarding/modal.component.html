@@ -1,0 +1,9 @@
+<div class="m-onboarding--modal">
+  <div class="m-token--onboarding" *ngIf="slide == 1">
+    <m-token--onboarding--rewards (next)="next()"></m-token--onboarding--rewards>
+  </div>
+
+  <div class="m-token--onboarding" *ngIf="slide == 2">
+    <m-messenger--onboarding--setup (next)="next()"></m-messenger--onboarding--setup>
+  </div>
+</div>

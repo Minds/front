@@ -7,6 +7,7 @@ import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { SignupModalService } from '../modals/signup/service';
 import { LoginReferrerService } from '../../services/login-referrer.service';
+import { OnboardingService } from '../onboarding/onboarding.service';
 
 @Component({
   selector: 'm-register',
@@ -34,7 +35,8 @@ export class RegisterComponent {
     public route: ActivatedRoute,
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
-    public session: Session
+    public session: Session,
+    private onboarding: OnboardingService,
   ) { }
 
   ngOnInit() {
@@ -58,6 +60,7 @@ export class RegisterComponent {
   }
 
   registered() {
+    this.onboarding.show();
     this.modal.setDisplay('onboarding').open();
     this.loginReferrer.navigate({
       defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'

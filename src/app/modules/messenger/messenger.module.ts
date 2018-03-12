@@ -15,6 +15,7 @@ import { MessengerScrollDirective } from './scroll';
 import { MessengerConversationDockpanes } from './dockpanes/dockpanes.component';
 import { MessengerUserlist } from './userlist/userlist.component';
 import { MessengerSetupChat } from './setup/setup.component';
+import { MessengerOnboardingSetupComponent } from './onboarding/setup.component';
 
 import { Client } from '../../common/api/client.service';
 import { MessengerConversationDockpanesService } from './dockpanes/dockpanes.service';
@@ -39,7 +40,8 @@ import { Storage } from '../../services/storage';
     MessengerScrollDirective,
     MessengerConversationDockpanes,
     MessengerUserlist,
-    MessengerSetupChat
+    MessengerSetupChat,
+    MessengerOnboardingSetupComponent,
   ],
   exports: [
     Messenger,
@@ -49,7 +51,8 @@ import { Storage } from '../../services/storage';
     MessengerScrollDirective,
     MessengerConversationDockpanes,
     MessengerUserlist,
-    MessengerSetupChat
+    MessengerSetupChat,
+    MessengerOnboardingSetupComponent,
   ],
   providers: [
     {

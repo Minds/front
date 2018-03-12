@@ -10915,6 +10915,23 @@ m-messenger {
     right: 0;
     bottom: 0; }
 
+.m-messenger--onboarding--setup--input .m-input {
+  max-width: 400px;
+  background: #FFF;
+  margin-bottom: 8px; }
+
+.m-messenger--onboarding--setup--input m-tooltip {
+  -webkit-align-self: center;
+              -ms-grid-row-align: center;
+          align-self: center; }
+  .m-messenger--onboarding--setup--input m-tooltip i {
+    font-size: 18px;
+    margin-left: 8px; }
+
+.m-messenger--onboarding--setup--icon {
+  font-size: 160px;
+  text-align: center; }
+
 /**
  * Colours
  */
@@ -12004,6 +12021,8 @@ m-revenue--graph {
     position: relative;
     top: -0.1em;
     margin-right: 0.2em; }
+  .minds-newsfeed-sidebar-button > i.m-newsfeed-sidebar-button--close {
+    float: right; }
 
 .m-newsfeed-boost-promo {
   padding: 12px 16px;
@@ -12250,6 +12269,19 @@ m-onboarding-card i.m-onboarding-card--close {
   right: 0;
   font-size: 26px;
   margin: 16px; }
+
+.m-onboarding--modal-wrapper {
+  background: #FFF;
+  padding: 0;
+  overflow: visible; }
+  .m-onboarding--modal-wrapper .m-overlay-modal--close {
+    display: none; }
+
+.m-onboarding--modal .m-token--onboarding .m-token--onboarding--slide {
+  margin-bottom: 0; }
+
+.m-onboarding--modal .m-btn--slim {
+  margin-left: 8px; }
 
 minds-paywall-cancel-button .mdl-spinner {
   zoom: 0.5;
@@ -14539,6 +14571,10 @@ m-wire-console-rewards--container .m-wire-console--rewards {
     display: flex;
     -webkit-flex-direction: row;
             flex-direction: row; }
+    @media screen and (max-width: 768px) {
+      .m-wire--creator .m-wire--creator-section-row {
+        -webkit-flex-direction: column;
+                flex-direction: column; } }
     .m-wire--creator .m-wire--creator-section-row > .m-wire--creator-section {
       -webkit-flex: 1;
               flex: 1; }
@@ -14549,6 +14585,11 @@ m-wire-console-rewards--container .m-wire-console--rewards {
       margin-top: 8px; }
   .m-wire--creator .m-wire--creator--recurring {
     margin-top: 16px; }
+  .m-wire--creator .m-wire--creator--amount {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+            align-items: center; }
   .m-wire--creator .m-wire--creator--amount, .m-wire--creator .m-wire--creator--target {
     margin-top: 16px;
     letter-spacing: 2.5px; }
@@ -14640,13 +14681,19 @@ m-wire-console-rewards--container .m-wire-console--rewards {
       vertical-align: middle; }
     .m-wire--creator .m-wire--creator-wide-input.m-wire--creator-wide-input--reading {
       cursor: pointer; }
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 768px) {
       .m-wire--creator .m-wire--creator-wide-input {
         font-size: 32px;
         height: 40px; }
         .m-wire--creator .m-wire--creator-wide-input .m-wire--creator-wide-input--edit {
           height: 40px;
-          line-height: 32px; } }
+          line-height: 32px;
+          -webkit-flex-shrink: 1;
+                  flex-shrink: 1;
+          min-width: 50px;
+          max-width: 120px;
+          width: initial;
+          padding: 8px; } }
     .m-wire--creator .m-wire--creator-wide-input .m-wire--creator-wide-input--read-mode {
       font-weight: 400; }
       .m-wire--creator .m-wire--creator-wide-input .m-wire--creator-wide-input--read-mode.m-wire--creator-wide-input--empty-read-mode {
@@ -15047,6 +15094,13 @@ m-wire-console-rewards--container .m-wire-console--rewards {
     display: inline-flex;
     -webkit-align-items: center;
             align-items: center; }
+    @media screen and (max-width: 768px) {
+      .m-wire--creator-wide-input--cost .m-wire--creator-wide-input--cost-label-value {
+        -webkit-flex-grow: 1;
+                flex-grow: 1;
+        min-width: 50px;
+        max-width: 120px;
+        width: initial; } }
   .m-wire--creator-wide-input--cost .m-wire--creator-wide-input--cost-label {
     -webkit-flex-grow: 1;
             flex-grow: 1;
@@ -15309,11 +15363,6 @@ m-wire-threshold-input, .m-wire-threshold-input {
       width: 2em;
       min-width: 2em;
       outline: none; }
-    .m-wire-threshold-input .m-wire-threshold-input--input > .mdl-button--icon {
-      width: 24px;
-      height: 24px;
-      min-width: 24px; }
-    .m-wire-threshold-input .m-wire-threshold-input--input > .mdl-button--icon > .material-icons,
     .m-wire-threshold-input .m-wire-threshold-input--input > .material-icons {
       font-size: 20px; }
 

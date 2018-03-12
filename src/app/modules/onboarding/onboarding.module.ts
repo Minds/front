@@ -1,13 +1,15 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
-import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CommonModule } from '../../common/common.module';
+import { TokenOnboardingModule } from '../wallet/tokens/onboarding/onboarding.module';
+import { MessengerModule } from '../messenger/messenger.module';
 import { OnboardingCardComponent } from './card/card.component';
 import { OnboardingFeedComponent } from './feed.component';
 import { OnboardingService } from './onboarding.service';
+import { OnboardingModalComponent } from './modal.component';
 
 
 @NgModule({
@@ -16,19 +18,25 @@ import { OnboardingService } from './onboarding.service';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([]),
-    CommonModule
+    CommonModule,
+    TokenOnboardingModule,
+    MessengerModule,
   ],
   declarations: [
     OnboardingCardComponent,
-    OnboardingFeedComponent
+    OnboardingFeedComponent,
+    OnboardingModalComponent,
   ],
   providers: [
-    OnboardingService
+    OnboardingService,
   ],
   exports: [
     OnboardingCardComponent,
-    OnboardingFeedComponent
-  ]
+    OnboardingFeedComponent,
+  ],
+  entryComponents: [
+    OnboardingModalComponent,
+  ],
 })
 export class OnboardingModule {
 }

@@ -1,0 +1,64 @@
+<div class="m-token--onboarding--slide m-border">
+  <div class="m-token--onboarding--column">
+    <h2>Messenger</h2>
+
+    <p class="m-token--onboarding--subtext">
+      An additional password is required for messenger in order to ensure that your messages are private and fully encrypted.
+    </p>
+
+    <div class="m-messenger--onboarding--setup--input">
+      <div class="m-layout--row">
+        <input 
+          type="password"
+          [(ngModel)]="password"
+          placeholder="Password" 
+          class="m-input m-border"
+          />
+      </div>
+      <div class="m-layout--row">
+        <input 
+          type="password"
+          [(ngModel)]="password2"
+          placeholder="Confirm passowrd" 
+          class="m-input m-border"
+          />
+        <m-tooltip icon="help">Enter the same passwords as above to confirm.</m-tooltip>
+      </div>
+
+    </div>
+
+    <p class="m-token-join--form--error" *ngIf="error">
+      {{error}}
+    </p>
+
+  </div>
+
+  <div class="m-token--onboarding--column m-layout--column" style="flex: 1">
+    <i class="material-icons m-messenger--onboarding--setup--icon">vpn_key</i>
+
+    <div class="m-layout--spacer"></div>
+
+    <div class="m-layout--row">
+      <div class="m-layout--spacer"></div>
+
+      <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+
+      <button 
+        class="m-btn m-btn--slim m-btn--action"
+        (click)="setup(password)"
+        [disabled]="inProgress"
+        *ngIf="password == password2 && password2"
+        >
+        Confirm
+      </button>
+      <button 
+        *ngIf="skippable === true"
+        class="m-btn m-btn--slim" 
+        (click)="next.next()"
+        >
+        Skip.
+      </button>
+    </div>
+  </div>
+
+</div>

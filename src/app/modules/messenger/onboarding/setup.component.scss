@@ -1,0 +1,22 @@
+.m-messenger--onboarding--setup--input {
+  .m-input {
+    max-width: 400px;
+    background: #FFF;
+    margin-bottom: 8px;
+  }
+
+  m-tooltip {
+    align-self: center;
+
+    i {
+      font-size: 18px;
+      margin-left: 8px;
+    }
+  }
+}
+
+.m-messenger--onboarding--setup--icon {
+  font-size: 160px;
+  text-align: center;
+}
+

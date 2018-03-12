@@ -8,6 +8,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
+import { OnboardingService } from '../onboarding/onboarding.service';
 
 @Component({
   selector: 'm-login',
@@ -37,7 +38,8 @@ export class LoginComponent {
     public title: MindsTitle,
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
-    public session: Session
+    public session: Session,
+    private onboarding: OnboardingService,
   ) { }
 
   ngOnInit() {
@@ -73,6 +75,7 @@ export class LoginComponent {
   }
 
   registered() {
+    this.onboarding.show();
     if (this.redirectTo)
         this.router.navigate([this.redirectTo]);
     else {
