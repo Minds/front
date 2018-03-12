@@ -43,20 +43,6 @@
       i18n-placeholder="@@WIRE__CHANNEL__REWARD_DESCRIPTION_PLACEHOLDER"
     ></textarea>
 
-    <m-wire-channel-table type="money"
-      *ngIf="shouldShow('money')"
-      [(rewards)]="rewards.rewards.money"
-      [editing]="editing"
-      [channel]="channel"
-    ></m-wire-channel-table>
-
-    <m-wire-channel-table type="points"
-      *ngIf="shouldShow('points')"
-      [(rewards)]="rewards.rewards.points"
-      [editing]="editing"
-      [channel]="channel"
-    ></m-wire-channel-table>
-
     <m-wire-channel-table type="tokens"
       *ngIf="shouldShow('tokens')"
       [(rewards)]="rewards.rewards.tokens"
