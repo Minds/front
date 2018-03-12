@@ -136,7 +136,7 @@ export class TokenOnChainOnboardingComponent {
       this.detectChanges();
 
       await this.blockchain.setWallet({ address: this.providedAddress });
-      setImmediate(() => this.next.next());
+      this.next.next();
     } catch (e) {
       console.error(e);
     } finally {
