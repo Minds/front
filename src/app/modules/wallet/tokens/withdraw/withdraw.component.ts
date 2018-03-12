@@ -88,7 +88,7 @@ export class WalletTokenWithdrawComponent {
       return;
     }
 
-    amount = amount.replace(/,/g, '');
+    amount = amount.replace(/[,\.]/g, '');
     this.amount = parseFloat(amount);
   }
 
