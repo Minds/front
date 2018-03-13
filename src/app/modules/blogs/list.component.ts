@@ -75,7 +75,9 @@ export class BlogListComponent {
       this.moreData = true;
       this.entities_0 = [];
       this.entities_1 = [];
-      this.rating = this.session.getLoggedInUser().boost_rating;
+
+      if (this.session.isLoggedIn())
+        this.rating = this.session.getLoggedInUser().boost_rating;
 
       this.load();
     });

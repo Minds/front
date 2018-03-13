@@ -24,6 +24,7 @@ export class NewsfeedTopComponent {
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
+  rating: number = 1;
   minds;
 
   paramsSubscription: Subscription;
@@ -42,6 +43,9 @@ export class NewsfeedTopComponent {
     private session: Session,
   ) {
     this.title.setTitle('Newsfeed');
+
+    if (this.session.isLoggedIn())
+      this.rating = this.session.getLoggedInUser().boost_rating;
   }
 
   ngOnInit() {
@@ -64,7 +68,7 @@ export class NewsfeedTopComponent {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/newsfeed/top', { limit: 12, offset: this.offset }, { cache: true })
+    this.client.get('api/v1/newsfeed/top', { limit: 12, offset: this.offset, rating: this.rating }, { cache: true })
       .then((data: MindsActivityObject) => {
         if (!data.activity) {
           this.moreData = false;

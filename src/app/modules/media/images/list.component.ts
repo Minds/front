@@ -77,7 +77,10 @@ export class MediaImagesListComponent {
 
       this.inProgress = false;
       this.entities = [];
-      this.rating = this.session.getLoggedInUser().boost_rating;
+
+      if (this.session.isLoggedIn())
+        this.rating = this.session.getLoggedInUser().boost_rating;
+        
       this.load(true);
     });
   }
