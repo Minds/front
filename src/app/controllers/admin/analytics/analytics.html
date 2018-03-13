@@ -15,6 +15,18 @@
         </div>
       </div>
     </div>
+    <div class="mdl-card">
+      <div class="mdl-card__title" i18n="@@MINDS__ADMIN__ANALYTICS__PAGE_VIEWS">Page Views</div>
+      <div class="mdl-card__supporting-text">
+        <minds-graph-line [data]="pageviews"></minds-graph-line>
+      </div>
+      <div class="mdl-card__supporting-text results">
+        <div *ngFor="let stat of pageviews_list" class="row">
+          <label>{{stat.timestamp * 1000 | date: 'dEEEEMM'}}</label>
+          <b>{{stat.total}}</b>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Monthly active users & Retention -->

@@ -28,9 +28,12 @@ export class AdminAnalytics {
     impressions: 0,
     impressions_met: 0
   };
+  pageviews;
+  pageviews_list;
 
   constructor(public client: Client) {
     this.getActives();
+    this.getPageviews();
     this.getSignups();
     this.getRetention();
     this.getBoosts();
@@ -47,6 +50,17 @@ export class AdminAnalytics {
         self.dam_list = response['daily'].slice(0).reverse();
         self.mam = response['monthly'];
         self.mam_list = response['monthly'].slice(0).reverse();
+      });
+  }
+
+  /**
+   * Return pageviews
+   */
+  getPageviews() {
+    this.client.get('api/v1/admin/analytics/pageviews')
+      .then((response: any) => {
+        this.pageviews = response['pageviews'];
+        this.pageviews_list = response['pageviews'].slice(0).reverse();
       });
   }
 
