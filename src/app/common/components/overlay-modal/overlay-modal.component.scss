@@ -7,7 +7,6 @@
 
   top: 50%;
   max-height: 98vh;
-  transform: translateY(-50%);
 
   display: block;
   box-sizing: border-box;
@@ -45,6 +44,9 @@
     }
   }
 
+  &:not(.m-overlay-modal--top) {
+    transform: translateY(-50%);
+  }
   &.m-overlay-modal--top {
     top: 150px;
   }
