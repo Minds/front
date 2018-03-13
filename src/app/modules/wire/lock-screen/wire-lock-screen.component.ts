@@ -22,6 +22,7 @@ export class WireLockScreenComponent {
 
   @Input() preview: any;
 
+  showSubmittedInfo: boolean = false;
   inProgress: boolean = false;
 
   constructor(
@@ -43,6 +44,7 @@ export class WireLockScreenComponent {
       return;
     }
 
+    this.showSubmittedInfo = false;
     this.inProgress = true;
     this.detectChanges();
 
@@ -73,10 +75,15 @@ export class WireLockScreenComponent {
     }
 
     this.overlayModal.create(WireCreatorComponent, this.entity, {
-      onComplete: () => this.unlock(),
+      onComplete: () => this.wireSubmitted(),
       default: this.entity.wire_threshold
     })
       .present();
+  }
+
+  wireSubmitted() {
+    this.showSubmittedInfo = true;
+    this.detectChanges();
   }
 
   getBackground() {

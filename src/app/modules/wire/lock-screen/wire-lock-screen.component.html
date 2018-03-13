@@ -24,6 +24,9 @@
   </button>
 </div>
 
+<div class="m-wire--lock-screen--transaction-made-notice" *ngIf="showSubmittedInfo">
+  We've received your transaction. Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.
+</div>
 
 <div class="m-wire--lock-screen--button" *ngIf="preview || (entity.ownerObj.guid != session.getLoggedInUser().guid)">
   <div class="m-wire--lock-screen-introduction">
