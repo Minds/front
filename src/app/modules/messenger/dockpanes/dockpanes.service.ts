@@ -1,14 +1,17 @@
 import { Storage } from '../../../services/storage';
+import { Session } from '../../../services/session';
 
 export class MessengerConversationDockpanesService {
 
   conversations: Array<any> = [];
 
-  static _() {
-    return new MessengerConversationDockpanesService(new Storage());
+  static _(session: Session) {
+    return new MessengerConversationDockpanesService(new Storage(), session);
   }
 
-  constructor(public storage: Storage) {
+  constructor(public storage: Storage, public session: Session) {
+    this.session.getLoggedInUser((user) => this.onLogOut(user));
+
     this.loadFromCache();
 
     setInterval(() => {
@@ -92,6 +95,12 @@ export class MessengerConversationDockpanesService {
       delete conversations[i].messages;
     }
     this.storage.set('messenger-dockpanes', JSON.stringify(conversations));
+  }
+
+  private onLogOut(user) {
+    if (user === null) {
+      this.conversations = [];
+    }
   }
 
 }
