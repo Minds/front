@@ -34,7 +34,7 @@ export class WireCreatorComponent implements AfterViewInit {
 
   wire: WireStruc = {
     amount: 1,
-    payloadType: null,
+    payloadType: 'onchain',
     guid: null,
     recurring: false,
 
@@ -222,6 +222,7 @@ export class WireCreatorComponent implements AfterViewInit {
   setDefaults() {
     this.wire.amount = 1;
     this.wire.recurring = true;
+    this.wire.payload = 'onchain';
   }
 
   // General
