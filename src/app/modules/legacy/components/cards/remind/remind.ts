@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, Input } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
@@ -17,6 +17,7 @@ export class Remind {
   minds = window.Minds;
 
   activity: any;
+  @Input() boosted: boolean = false;
   hideTabs: boolean;
 
   events: EventEmitter<any>;
@@ -61,6 +62,7 @@ export class Remind {
 
   set object(value: any) {
     this.activity = value;
+    this.activity.boosted = this.boosted;
   }
 
   getOwnerIconTime() {

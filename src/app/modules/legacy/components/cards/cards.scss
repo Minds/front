@@ -404,15 +404,22 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
 
   .is-boosted{
     color:#888;
-    padding:$minds-padding;
+    display: inline-block;
+    font-size: 11px;
+    padding: 0;
+    padding-left: 8px;
+    line-height: 1;
+    vertical-align: middle;
 
     i{
-      top: 6px;
-       position: relative;
+      font-size: 18px;
+      position: relative;
+      vertical-align: middle;
     }
     a{
       color:#888;
       font-weight:bold;
+      vertical-align: middle;
     }
   }
 

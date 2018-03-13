@@ -28,6 +28,7 @@ export class Activity {
   minds = window.Minds;
 
   activity: any;
+  boosted: boolean = false;
   commentsToggle: boolean = false;
   shareToggle: boolean = false;
   deleteToggle: boolean = false;
@@ -100,6 +101,8 @@ export class Activity {
     if (!this.activity.title) {
       this.activity.title = '';
     }
+
+    this.boosted = this.activity.boosted;
 
     this.isTranslatable = (
       this.translationService.isTranslatable(this.activity) ||
@@ -268,7 +271,7 @@ export class Activity {
   private viewed:boolean = false;
 
   isVisible() {
-    if (this.visible && this.onViewed) {
+    if (this.visible) {
       this.onViewed.emit({activity: this.activity, visible: true});
       return true;
     }
@@ -279,12 +282,9 @@ export class Activity {
         //make visible
         this.visible = true;
 
-        if (this.onViewed) {
-          this.onViewed.emit({activity: this.activity, visible: true});
-        } else {
-          //update the analytics
-          this.newsfeedService.recordView(this.activity);
-        }
+        //this.onViewed.emit({activity: this.activity, visible: true});
+        //update the analytics
+        this.newsfeedService.recordView(this.activity);
       }
     });
     //this.scroll.fire();

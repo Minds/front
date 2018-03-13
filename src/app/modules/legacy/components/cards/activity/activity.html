@@ -20,12 +20,22 @@
       <strong>({{activity.containerObj.name}})</strong>
     </a>
     <a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid && !activity.remind_object">
-      <span>{{activity.time_created * 1000 | date:'medium'}}</span><span *ngIf="activity.edited" class="m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
+      <span>{{activity.time_created * 1000 | date:'medium'}}</span>
+      <span *ngIf="activity.edited" class="m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
+      <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
+        <i class="material-icons">trending_up</i>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
+      </div>
     </a>
     <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink"
       *ngIf="!activity.guid && activity.entity_guid && !activity.remind_object">
-      <span>{{activity.time_created * 1000 | date:'medium'}}</span><span *ngIf="activity.edited" class="m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
-    </a>
+      <span>{{activity.time_created * 1000 | date:'medium'}}</span>
+      <span *ngIf="activity.edited" class="m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
+      <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
+        <i class="material-icons">trending_up</i>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
+       </div>
+     </a> 
   </div>
 
 </div>
@@ -159,15 +169,10 @@
 
 <!-- Reminds -->
 <div *ngIf="activity.remind_object">
-	<minds-remind [object]="activity.remind_object" [events]="childEventsEmitter"></minds-remind>
+	<minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" [boosted]="activity.boosted"></minds-remind>
 </div>
 
 <ng-content select="[bottom-content]"></ng-content>
-
-<div class="mdl-card__supporting-text is-boosted" *ngIf="activity.boosted">
-	<i class="material-icons">trending_up</i>
-	<a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
-</div>
 
 <div class="tabs" *ngIf="!hideTabs">
 	<minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
