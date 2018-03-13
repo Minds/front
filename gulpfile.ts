@@ -23,7 +23,7 @@ const AUTOPREFIXER_BROWSERS = [
 // --------------
 // Build SASS
 gulp.task('build.sass', async done => {
-  const app_cdn = argv.deploy_url ? argv.deploy_url: '/';
+  const app_cdn = argv.deployUrl ? argv.deployUrl: '';
   await gulp.src(join('./src', '**', '*.scss'))
     .pipe(cssGlobbing({  extensions: ['.scss'] }))
     .pipe(sass({
