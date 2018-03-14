@@ -85,8 +85,6 @@ export class NotificationsComponent {
   }
 
   load(refresh: boolean = false) {
-    var self = this;
-
     if (this.inProgress) return false;
 
     if (refresh)
@@ -98,24 +96,26 @@ export class NotificationsComponent {
       .then((data: any) => {
 
         if (!data.notifications) {
-          self.moreData = false;
-          self.inProgress = false;
+          this.moreData = false;
+          this.inProgress = false;
           return false;
         }
 
         if (refresh) {
-          self.notifications = data.notifications;
+          this.notifications = data.notifications;
         } else {
           for (let entity of data.notifications)
-            self.notifications.push(entity);
+            this.notifications.push(entity);
         }
 
         if (!data['load-next'])
           this.moreData = false;
-        self.offset = data['load-next'];
-        self.inProgress = false;
-        self.minds.notifications_count = 0;
-        self.notificationList.nativeElement.scrollTop = 0;
+        this.offset = data['load-next'];
+        this.inProgress = false;
+        this.minds.notifications_count = 0;
+        this.notificationList.nativeElement.scrollTop = 0;
+
+        this.notificationService.clear();
       });
   }
 
