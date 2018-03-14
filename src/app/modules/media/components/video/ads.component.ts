@@ -24,7 +24,7 @@ export class VideoAds {
   }
 
   ngOnInit() {
-    this.setupIMA();
+    //this.setupIMA();
     this.element.nativeElement.style.display = 'none';
   }
 
