@@ -559,6 +559,7 @@ export class BoostCreatorComponent implements AfterViewInit {
             bid = (new BN(bid)).mul(tokenDec).toString();
 
             this.boost.nonce = {
+              method: 'onchain',
               txHash: await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount, this.boost.checksum),
               address: await this.web3Wallet.getCurrentWallet()
             };
