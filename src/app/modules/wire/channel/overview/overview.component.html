@@ -32,7 +32,7 @@
 
   <div class="m-wire-channel--overview--overview-walletlink mdl-cell mdl-cell--6-col" *ngIf="session.getLoggedInUser().guid == channel.guid">
     <div class="m-wire-channel--overview--label">
-      <label routerLink="/wallet/wire" i18n="@@WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK">See breakdown</label>
+      <label [routerLink]="['/wallet/tokens/transactions', 'wire']" i18n="@@WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK">See breakdown</label>
       <m-tooltip icon="help" i18n="@@WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK_TOOLTIP">
         See a breakdown of all your Wires in your wallet 
       </m-tooltip>

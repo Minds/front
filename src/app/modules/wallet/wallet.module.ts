@@ -49,6 +49,7 @@ const walletRoutes : Routes = [
       { path: 'tokens', component: WalletTokensComponent, 
         children: [
           { path: '', redirectTo: 'transactions', pathMatch: 'full' },
+          { path: 'transactions/:contract', component: WalletTokenTransactionsComponent },
           { path: 'transactions', component: WalletTokenTransactionsComponent },
           { path: 'withdraw', component: WalletTokenWithdrawComponent },
           { path: 'contributions/join', component: WalletTokenJoinComponent },  

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
@@ -31,17 +31,32 @@ export class WalletTokenTransactionsComponent {
 
   @Input() preview: boolean = false; // Preview mode
 
+  paramsSubscription;
+
   constructor(
     protected client: Client,
     protected web3Wallet: Web3WalletService,
     protected cd: ChangeDetectorRef,
     protected router: Router,
+    protected route: ActivatedRoute,
     protected session: Session,
   ) {
 
   }
 
   async ngOnInit() {
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params['contract']) {
+        const contract = params['contract'];
+
+        if (contract !== 'all' && this.contracts.indexOf(contract) !== -1) {
+          this.selectedContract = contract;
+        } else if (contract !== 'all') {
+          this.router.navigate(['/wallet/token/transactions', 'all']);
+        }
+      }
+    });
+
     const d = new Date();
 
     d.setHours(23, 59, 59);
