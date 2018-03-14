@@ -42,6 +42,7 @@ import { Poster } from './controllers/newsfeed/poster/poster';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
 import { CarouselComponent } from './components/carousel.component';
+import { ModalPosterComponent } from './controllers/newsfeed/poster/poster-modal.component';
 
 @NgModule({
   imports: [
@@ -88,6 +89,7 @@ import { CarouselComponent } from './components/carousel.component';
     CommentsScrollDirective,
 
     Poster,
+    ModalPosterComponent,
     CarouselComponent,
   ],
   exports: [
@@ -119,6 +121,7 @@ import { CarouselComponent } from './components/carousel.component';
     CommentsScrollDirective,
 
     Poster,
+    ModalPosterComponent,
     CarouselComponent,
   ],
   entryComponents: [
@@ -131,6 +134,7 @@ import { CarouselComponent } from './components/carousel.component';
     Remind,
     UserCard,
     Poster,
+    ModalPosterComponent,
     BoostButton,
   ]
 })
