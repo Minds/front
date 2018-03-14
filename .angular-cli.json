@@ -21,7 +21,9 @@
       "styles": [
         "main.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/medium-editor/dist/js/medium-editor.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

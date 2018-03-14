@@ -35,7 +35,6 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
 })
 
 export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
-  @Input() options: any;
   @Input() placeholder: string;
   el: ElementRef;
   editor: MediumEditor;
@@ -70,15 +69,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
   }
 
   ngOnInit() {
-    this.options = (typeof this.options === 'string') ? JSON.parse(this.options)
-      : (typeof this.options === 'object') ? this.options: {};
-    if (this.placeholder && this.placeholder !== '') {
-      Object.assign(this.options, {
-        placeholder: { text: this.placeholder }
-      });
-    }
-
-    this.editor = new MediumEditor(this.host.nativeElement, {
+    let options = {
       'toolbar': {
         'buttons': [
           {
@@ -140,7 +131,18 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
         'embedImage': this.images,
         'embedVideo': this.videos
       }
-    });
+    };
+
+    if (this.placeholder) {
+      Object.assign(options, {
+        'placeholder': {
+          text: this.placeholder,
+          hidOnClick: true
+        }
+      });
+    }
+
+    this.editor = new MediumEditor(this.host.nativeElement, options);
     this.host.nativeElement.focus();
     this.editor.subscribe('editableInput', (event: any, editable: any) => {
       let value = (<any>this.editor).elements[0].innerHTML;
