@@ -70,10 +70,10 @@ export class AdminFeatured {
   loadCategories(categories: any) {
     this.categories = [];
 
-    for (let category of categories) {
+    for (let category in categories) {
       this.categories.push({
-        'id': category.id,
-        'value': category.label,
+        id: category,
+        value: window.Minds.categories[category],
       });
     }
   }
