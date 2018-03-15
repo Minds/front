@@ -1,11 +1,20 @@
 <section class="m-homepage--hero">
 
+  <div class="m-homepage--hero--video">
+    <video autoplay muted loop *ngIf="!videoError; else fallback">
+      <source [src]="minds.cdn_assets_url + 'assets/videos/what-1/what-1.mp4'" type="video/mp4" (error)="onSourceError()">
+    </video>
+    <ng-template #fallback>
+      <img [src]="minds.cdn_assets_url + 'assets/videos/what-1/what-1.png'">
+    </ng-template>
+  </div>
+
   <div class="m-homepage--hero--inner">
   
     <div class="m-homepage--hero--overlay"></div>
 
     <div class="m-homepage--hero--slogans">
-      <h1 i18n="@@M__SOCIAL_NETWORK_SLOGAN">Minds, the blockchain social network</h1>
+      <h1 i18n="@@M__SOCIAL_NETWORK_SLOGAN">The crypto social network</h1>
       <h3 i18n="@@MINDS__HOME__HOMEPAGE__LAUNCH_CTA">
         We are an open source and decentralized platform 
         for Internet freedom. Get paid in crypto for your contributions
@@ -21,7 +30,7 @@
 
 </section>
 
-<section class="m-homepage--section  m-homepage--section-margin" style="padding-top:100px; text-align: left">
+<!--<section class="m-homepage--section  m-homepage--section-margin" style="padding-top:100px; text-align: left">
   <h2 class="mdl-color-text--blue-grey-800 m-hompeage--wide-letters" i18n="@@MINDS__HOME__HOMEPAGE__AUDIENCE">
     Artists. Musicians. Writers. Brands. 
     Comedians. Gamers. Academics. 
@@ -30,7 +39,7 @@
       Designers. Visionaries. Public Figures.  
     Thought Leaders. <b>YOU</b>.
   </h2>
-</section>
+</section>-->
  
 <!--<section class="m-homepage--section" style="padding-top:36px">
   <div class="mdl-grid m-homepage--section--icons">
@@ -105,11 +114,12 @@
   <h1 class="" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">How the economy works</h1>
 
   <div class="m-homepage--section--subsection"> 
-    <div class="m-homepage--section--subsection-container">
+    <div class="m-homepage--section--subsection-container" style="padding-top:100px">
       <div class="m-homepage--section--subsection-left m-homepage--section--subsection-image">
         <img src="/assets/screenshots/post.jpg" />
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
+        <h5>Newsfeed</h5>
         <h2>Contribute</h2>
         <p>
             Create popular original content that receives upvotes, comments and reminds.
@@ -122,9 +132,10 @@
     </div>
   </div>
 
-  <div class="m-homepage--section--subsection">
+  <div class="m-homepage--section--subsection" style="background-color: #f8f8f8">
     <div class="m-homepage--section--subsection-container">
       <div class="m-homepage--section--subsection-left m-homepage--section--subsection-text">
+        <h5>Rewards</h5>
         <h2>Earn Crypto</h2>
         <p>
             Each day we measure your contribution relative to the community.
@@ -143,6 +154,7 @@
         <img src="/assets/screenshots/boost.jpg" />
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
+        <h5>Boost</h5>
         <h2>Get Views</h2>
         <p>
             Exchange your tokens for views on your content and increase your chances of earning rewards.
@@ -157,10 +169,11 @@
   <div class="m-homepage--section--subsection" style="background-color: #f8f8f8">
     <div class="m-homepage--section--subsection-container">
       <div class="m-homepage--section--subsection-left m-homepage--section--subsection-text">
+        <h5>Wire</h5>
         <h2>Sell Digital Services</h2>
         <p>
-            Earn tokens on a one-time or recurring basis from selling exclusive digital content or premium subscriptions with custom rewards to your supporters.
-            The Wire peer-to-peer payment system is fully autonomous on the blockchain.
+          Earn tokens by selling exclusive digital content with custom rewards to your supporters.
+          The Wire peer-to-peer payment system is fully autonomous on the blockchain.
         </p>
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-image">
@@ -175,10 +188,10 @@
         <img src="/assets/screenshots/wire-send.jpg" />
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
+        <h5>Wire</h5>
         <h2>Support Creators</h2>
         <p>
-          Send your tokens to your favorite channels as a tip for quality content or to subscribe to their exlclusive content and rewards.
-          Help them continue to do what they love. 
+          Send your tokens to your favorite channels as a tip for quality content or to subscribe to their exclusive content and rewards.
         </p>
       </div>
     </div>
@@ -186,37 +199,35 @@
 
 </section>
 
-<span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>
+<section class="m-homepage--section m-homepage" style="padding-top:0">
+  
+  <div class="m-homepage--section--grid">
+    <h2 style="text-align: center; width: 100%" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">Our core principles</h2>
+  </div>
 
-<section class="m-homepage--section m-homepage--section--with-video">
-  <h2 class="mdl-color-text--blue-grey-800" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">What we are building</h2>
-
-  <div class="m-homepage--section--video--overlay">
-    <div class="m-homepage--section--grid">
-      <div class="m-homepage--section--grid-col">
-        <h4 class="mdl-color-text--blue-grey-800">
-          A nonpartisan (r)evolution of ideas and <b>global consciousness.</b>
-        </h4>
-      </div>
-      <div class="m-homepage--section--grid-col">
-        <h4 class="mdl-color-text--blue-grey-800">
-            Transparency.
-            Privacy. <b>Free speech.</b>
-            Real world solutions.           
-        </h4>
-      </div>
-      <div class="m-homepage--section--grid-col">
-        <h4 class="mdl-color-text--blue-grey-800">
-          Cooperate. <b>Question.</b>
-          Respect. Coexist.
-        </h4>
-      </div>
+  <div class="m-homepage--section--grid">
+    <div class="m-homepage--section--grid-col">
+      <i class="material-icons">language</i>
+      <h4 class="">
+        Nonpartisan (r)evolution of ideas and <b>global consciousness</b>
+      </h4>
+    </div>
+    <div class="m-homepage--section--grid-col">
+      <i class="material-icons">record_voice_over</i>
+      <h4 class="">
+        <b>Real world solutions</b> with free speech,
+          co-ownership and open discourse
+      </h4>
+    </div>
+    <div class="m-homepage--section--grid-col">
+      <i class="material-icons">favorite</i>
+      <h4 class="">
+        Privacy and transparency with encryption and
+        <b>open source software</b>
+      </h4>
     </div>
   </div>
 
-  <div class="m-homepage--section--video">
-    <video src="assets/videos/crowd-1/crowd-1.mp4" autoplay loop></video>
-  </div>
 </section>
 
 <span style="width: 100%; height: 1px; background: #DEDEDE; display: block;"></span>

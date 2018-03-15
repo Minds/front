@@ -21,14 +21,28 @@
     }
   }
 
+  .m-homepage--hero--video {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    video {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+
   .m-homepage--hero--overlay {
     position: absolute;
-    //background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.3);
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: 1;
   }
 
   .m-homepage--hero--slogans{
@@ -41,7 +55,7 @@
     }
   
     h1 {
-      font-size: 78px;
+      font-size: 110px;
       font-weight: 800;
       letter-spacing: 1.25px;
       line-height: 1;
@@ -54,11 +68,12 @@
     }
 
     h3 {
-      font-size: 18px;
+      font-size: 26px;
       //color: rgba(255, 255, 255, 0.8);
-      font-weight: 600;
+      font-weight: 400;
       letter-spacing: 0.25px;
-      line-height: 1;
+      line-height: 1.25;
+      margin-top: 16px;
       padding-right: 70px;
 
       @media screen and (max-width: 720px){
@@ -111,6 +126,10 @@
           padding-right:16px;
           color: rgba(255,255,255,0.8);
           font-family: Roboto;
+
+          a {
+            color: #FFF;
+          }
         }
       }
       .m-register-btn {
@@ -168,6 +187,7 @@ m-homepage {
     //text-transform: uppercase;
     font-weight: 100;
     font-size: 41px;
+    background: #FFF;
 
     display: block;
     text-align: center;
@@ -185,10 +205,12 @@ m-homepage {
     }
 
     h1{
-      font-size: 56px;
+      font-size: 72px;
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 5px;
+      color: #444;
+      font-weight: 800;
+      //text-transform: uppercase;
+      letter-spacing: 0.25px;
       margin-left: 8px;
       margin-right: 8px;
 
@@ -198,10 +220,12 @@ m-homepage {
     }
 
     h2{
-      text-transform: uppercase;
-      font-size: 32px;
-      font-weight: 400;
+      //text-transform: uppercase;
+      font-size: 56px;
+      line-height: 1.5;
+      font-weight: 600;
       letter-spacing: 1.25px;
+      color: #444;
 
       @media screen and (max-width: 1250px){
         font-size: 22px;
@@ -223,6 +247,18 @@ m-homepage {
       .m-break--8spaces{
             padding-left: 60px;
       }
+    }
+
+    h5 {
+      font-size: 12px;
+      letter-spacing: 0.75px;
+      line-height: 1;
+      margin: 0;
+      margin-top: -18px;
+      color: #aaa;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      text-transform: uppercase;
     }
 
     .m-homepage--section--icons{
@@ -282,13 +318,15 @@ m-homepage {
   }
 
   .m-homepage--section--subsection {
+
+    border-bottom: 1px solid #ececec;
     
     .m-homepage--section--subsection-container {
       display: flex;
       flex-direction: row;
       align-items: center;
       text-align: left;
-      padding: 100px 0;
+      padding: 150px 0;
       max-width: 1400px;
       margin: auto;
       width: calc(100% - 64px);
@@ -320,7 +358,9 @@ m-homepage {
       }
 
       p {
-        font-size: 16px;
+        font-size: 22px;
+        line-height: 1.5;
+        color: #666;
       }
     }
 
@@ -383,12 +423,19 @@ m-homepage {
       flex: 1;
       padding: 0 16px;
       margin: 16px;
-      text-align: left;
+      text-align: center;
+
+      i {
+        text-align: center;
+        font-size: 72px;
+        color: #444;
+      }
+
       h4 {
         letter-spacing: 0.25px;
         font-weight: 300;
         font-size: 28px;
-        color: #FFF;
+        color: #444;
       }
     }
   }
