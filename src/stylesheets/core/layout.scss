@@ -5,6 +5,14 @@
   flex-direction: row;
 }
 
+.m-layout--wrap {
+  flex-wrap: wrap;
+}
+
+.m-layout--cell {
+  flex: 1;
+}
+
 .m-layout--column {
   display: flex;
   flex-direction: column;
