@@ -63,7 +63,10 @@
 }
 
 .minds-newsfeed-sidebar-button {
-  padding-bottom: 12px;
+  //padding-bottom: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
   .m-buypoints-tag{
     font-size: 11px;
@@ -75,7 +78,7 @@
     &.material-icons {
       vertical-align: middle;
       position: relative;
-      top: -0.1em;
+      //top: -0.1em;
       margin-right: 0.2em;
     }
 
