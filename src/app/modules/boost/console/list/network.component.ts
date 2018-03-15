@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { BoostConsoleType } from '../console.component';
 
 import { BoostService } from '../../boost.service';
@@ -28,6 +29,7 @@ export class BoostConsoleNetworkListComponent {
   constructor(
     public service: BoostService, 
     private overlayModal: OverlayModalService,
+    private router: Router
   ) { }
 
   @Input('type') set _type(type: BoostConsoleType) {
@@ -73,6 +75,11 @@ export class BoostConsoleNetworkListComponent {
 
         if (!boosts.length) {
           this.moreData = false;
+          if (this.boosts.length == 0 && type == 'content') {
+            this.router.navigate(['/boost/console/sidebar/create']);
+          } else { 
+            this.router.navigate(['/boost/console/newsfeed/create']);
+          }
           return;
         }
 
