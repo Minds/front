@@ -92,7 +92,7 @@ export class MediaImagesListComponent {
 
   showPoster() {
     const creator = this.overlayModal.create(ModalPosterComponent, {}, {
-      class: 'm-overlay-modal--no-padding m-overlay-modal--top m-overlay-modal--medium' 
+      class: 'm-overlay-modal--no-padding m-overlay-modal--top m-overlay-modal--medium m-overlay-modal--overflow'
     });
     creator.present();
   }
