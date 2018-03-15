@@ -130,6 +130,8 @@ export class MediaImagesListComponent {
         console.log(this.entities);
 
         this.offset = data['load-next'];
+        if (!this.offset)
+          this.moreData = false;
         this.inProgress = false;
       })
       .catch((e) => {

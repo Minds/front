@@ -127,9 +127,9 @@ export class MediaVideosListComponent {
           this.entities = this.entities.concat(data.entities);
         }
 
-        console.log(this.entities);
-
         this.offset = data['load-next'];
+        if (!this.offset)
+          this.moreData = false;
         this.inProgress = false;
       })
       .catch((e) => {

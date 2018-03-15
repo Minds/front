@@ -99,6 +99,8 @@ export class ChannelsListComponent {
         }
 
         this.offset = data['load-next'];
+        if (!this.offset)
+          this.moreData = false;
         this.inProgress = false;
 
       })
