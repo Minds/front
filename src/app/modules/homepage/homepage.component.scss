@@ -4,7 +4,7 @@
   position:relative;
 
   //background-image: url(/assets/photos/circles.png);
-  background-image: url(/assets/photos/night-sky.jpg);
+  background-image: url("<%= APP_CDN %>/assets/videos/what-1/what-1.jpg");
   background-size: cover;
   background-position: center center;
 
@@ -18,6 +18,9 @@
 
     @media screen and (max-width: 1000px){
       padding: 120px 16px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding: 62px 12px;
     }
   }
 
@@ -78,7 +81,7 @@
 
       @media screen and (max-width: 720px){
         padding-right: 8px;
-        font-size: 13px;
+        font-size: 16px;
       }
     }
     z-index: 2;
@@ -194,6 +197,10 @@ m-homepage {
     padding: 80px 0;
     height:auto;
 
+    @media screen and (max-width: 720px){
+      padding: 16px 0;
+    }
+
     &.m-homepage--section-margin {
       max-width: 1280px;
       margin: auto;
@@ -214,20 +221,20 @@ m-homepage {
       margin-left: 8px;
       margin-right: 8px;
 
-      @media screen and (max-width: 1250px){
-        font-size: 36px;
+      @media screen and (max-width: 720px){
+        font-size: 28px;
       }
     }
 
     h2{
       //text-transform: uppercase;
       font-size: 56px;
-      line-height: 1.5;
+      line-height: 1;
       font-weight: 600;
       letter-spacing: 1.25px;
       color: #444;
 
-      @media screen and (max-width: 1250px){
+      @media screen and (max-width: 720px){
         font-size: 22px;
       }
 
@@ -259,6 +266,10 @@ m-homepage {
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       text-transform: uppercase;
+
+      @media screen and (max-width: 720px){
+        margin-top: 0;
+      }
     }
 
     .m-homepage--section--icons{
@@ -334,8 +345,13 @@ m-homepage {
       @media screen and (max-width: $max-mobile) {
         flex-direction: column;
         width: 100%;
-        padding: 25px 0;
+        padding: 16px 0;
       }
+      
+    }
+
+    &.m-homepage--section--subsection--first .m-homepage--section--subsection-container {
+      padding-top: 16px;
     }
 
     .m-homepage--section--subsection-left, .m-homepage--section--subsection-right {
@@ -347,20 +363,28 @@ m-homepage {
 
       @media screen and (max-width: $max-mobile) {
         max-width: 100%;
-        margin-left: 0;
+        margin: 8px 0;
       }
     }
 
     .m-homepage--section--subsection-text {
       h2, p {
         color: #444;
-        margin: 0;
+        margin: 16px 0;
+
+        @media screen and (max-width: $max-mobile) {
+          margin: 8px 0;
+        }
       }
 
       p {
         font-size: 22px;
         line-height: 1.5;
         color: #666;
+
+        @media screen and (max-width: $max-mobile) {
+          font-size: 18px;
+        }
       }
     }
 
