@@ -11,12 +11,13 @@
     <label>{{ entity.title }}</label>
     <p>{{ entity.excerpt | excerpt:140 }}</p>
     <div class="m-inline-owner-block">
-        <a [routerLink]="['/', entity.ownerObj.username]">
-          <img src="/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}" class="m-border"/>
-          {{entity.ownerObj.username}}
-        </a>
-        <span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
-      </div>  
+      <a [routerLink]="['/', entity.ownerObj.username]">
+        <img src="/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}" class="m-border"/>
+        {{entity.ownerObj.username}}
+      </a>
+      <span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
+    </div>
+    <m-safe-toggle *ngIf="session.isAdmin" [(entity)]="entity"></m-safe-toggle>
   </div>
 
 </div>

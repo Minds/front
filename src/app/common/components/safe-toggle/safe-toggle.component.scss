@@ -1,0 +1,18 @@
+m-safe-toggle {
+
+  .m-safe-toggle {
+
+    label {
+      padding: 0 !important;
+    }
+
+    i.material-icons {
+      color: #9E9E9E;
+
+      &.m-safe-toggle--active {
+        color: #4690DF;
+      }
+    }
+
+  }
+}

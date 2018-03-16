@@ -26,6 +26,7 @@
 
   .m-media--videos--tile-title {
     background: #FFF;
+    position: relative;
     label {
       font-weight: 800;
       font-family: 'Roboto';
@@ -44,6 +45,7 @@
   }
 
   .m-inline-owner-block {
+    display: inline-block;
     padding: 8px;
 
     a {
@@ -70,6 +72,12 @@
       text-rendering: optimizeLegibility;
       color: #888;
     }
+  }
+
+  m-safe-toggle {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
   }
 
 }

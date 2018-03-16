@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Subscription } from 'rxjs/Rx';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +15,8 @@ import { Subscription } from 'rxjs/Rx';
 export class MediaImagesTileComponent {
 
   @Input() entity;
-  
+
+  constructor(public session: Session) {}
 
   getClass() {
     return 

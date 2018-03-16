@@ -1,4 +1,5 @@
 .m-media--images--tile{
+  position: relative;
 
   //padding: 4px;
 
@@ -12,6 +13,12 @@
     //1:1 ratio (square)
     height: 320px;
     width: 100%;
+  }
+
+  m-safe-toggle {
+    position: absolute;
+    right: 12px;
+    top: 12px;
   }
 
 }

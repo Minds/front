@@ -23,6 +23,7 @@ export class ChannelsListComponent {
   offset: string | number = '';
   inProgress: boolean = false;
   paramsSubscription: Subscription;
+  rating: number = 1; //safe by default
 
   constructor(
     public client: Client,
@@ -69,7 +70,7 @@ export class ChannelsListComponent {
 
   load(refresh: boolean = false) {
 
-    if (this.inProgress || !this.moreData)
+    if (this.inProgress || !this.moreData && !refresh)
       return false;
 
     if (refresh)
@@ -109,4 +110,14 @@ export class ChannelsListComponent {
       });
   }
 
+  onOptionsChange(e: { rating }) {
+    this.rating = e.rating;
+
+    if (this.inProgress) {
+      return setTimeout(() => {
+        this.onOptionsChange(e);
+      }, 100); //keep trying every 100ms
+    }
+    this.load(true);
+  }
 }

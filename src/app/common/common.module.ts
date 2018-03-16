@@ -61,6 +61,7 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
 import { PhoneInputCountryComponent } from './components/phone-input/country.component';
 import { Session } from '../services/session';
 import { Client, Upload } from '../services/api';
+import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.component';
 
 @NgModule({
   imports: [
@@ -129,6 +130,7 @@ import { Client, Upload } from '../services/api';
     MindsTokenSymbolComponent,
     PhoneInputComponent,
     PhoneInputCountryComponent,
+    SafeToggleComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -188,6 +190,7 @@ import { Client, Upload } from '../services/api';
     AnnouncementComponent,
     MindsTokenSymbolComponent,
     PhoneInputComponent,
+    SafeToggleComponent,
   ],
   providers: [
     {

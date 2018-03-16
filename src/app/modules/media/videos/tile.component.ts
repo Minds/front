@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Subscription } from 'rxjs/Rx';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-media--videos--tile',
@@ -8,7 +9,7 @@ import { Subscription } from 'rxjs/Rx';
 })
 
 export class MediaVideosTileComponent {
-
   @Input() entity;
 
+  constructor(public session: Session) {}
 }
