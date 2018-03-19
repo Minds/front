@@ -83,6 +83,7 @@ export class Session {
     this.userEmitter.next(null);
     delete window.Minds.user;
     window.Minds.LoggedIn = false;
+    window.Minds.Admin = false;
     window.localStorage.clear();
     this.loggedinEmitter.next(false);
   }

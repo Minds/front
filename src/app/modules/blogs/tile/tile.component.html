@@ -17,7 +17,7 @@
       </a>
       <span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
     </div>
-    <m-safe-toggle *ngIf="session.isAdmin" [(entity)]="entity"></m-safe-toggle>
+    <m-safe-toggle *ngIf="session.isAdmin()" [(entity)]="entity"></m-safe-toggle>
   </div>
 
 </div>

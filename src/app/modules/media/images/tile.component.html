@@ -5,6 +5,6 @@
     [routerLink]="['/media', entity.guid]"
     >
   </a>
-  <m-safe-toggle *ngIf="session.isAdmin" [(entity)]="entity"></m-safe-toggle>
+  <m-safe-toggle *ngIf="session.isAdmin()" [(entity)]="entity"></m-safe-toggle>
 
 </div>
