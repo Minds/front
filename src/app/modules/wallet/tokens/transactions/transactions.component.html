@@ -80,6 +80,13 @@
     <div class="m-token--ledger--reward-details">
       <div class="m-token--ledger--reward-details--meta">
         <span>{{ (transaction.contract.indexOf('offchain:') > -1 ? transaction.contract.substr(9) : transaction.contract)  | uppercase }}</span>
+        <ng-container *ngIf="transaction.contract === 'wire'">
+          <span *ngIf="transaction.amount >= 0; else to">FROM</span>
+          <ng-template #to>
+            <span>TO</span>
+          </ng-template>
+          <img class="m-token--ledger--avatar" [src]="getAvatarSrc(transaction)">
+        </ng-container>
       </div>
       <div class="m-token--ledger--reward-details--meta">
         <span>{{ transaction.wallet_address }}</span>

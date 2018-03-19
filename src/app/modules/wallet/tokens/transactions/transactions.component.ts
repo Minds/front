@@ -221,10 +221,26 @@ export class WalletTokenTransactionsComponent {
     if (address) {
       address.selected = true;
     }
-    console.warn('address: ', address);
     this.selectedAddress = address ? address.address : null;
     this.detectChanges();
     this.load(true);
+  }
+
+  getAvatarSrc(transaction) {
+    let src: string = '';
+
+    let user = this.session.getLoggedInUser();
+
+    // we received a wire
+    if(transaction.amount >= 0) {
+      user = transaction.sender
+    } else {
+      user = transaction.user.guid;
+    }
+
+    src = `/icon/${user.guid}/large/${user.icontime}`;
+
+    return src;
   }
 
   detectChanges() {

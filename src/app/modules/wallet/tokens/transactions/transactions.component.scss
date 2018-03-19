@@ -23,6 +23,11 @@
       }
     }
 
+    .m-token--ledger--avatar {
+      border-radius: 100%;
+      width: 20px;
+    }
+
     .m-token--ledger--reward-details {
       display: flex;
       align-items: center;
