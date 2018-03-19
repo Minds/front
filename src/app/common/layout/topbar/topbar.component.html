@@ -74,11 +74,6 @@
   </button>
 </div>
 
-<!--<div class="m-notifications--toaster" *ngIf="session.isLoggedIn() && notifications">
-  <minds-notification
-    *ngFor="let notification of notifications"
-    class="mdl-card mdl-shadow--4dp item"
-    [notification]="notification"
-    (click)="closeNotification(notification)"
-  ></minds-notification>
-</div>-->
+<div class="m-topbar--toaster"> <!--*ngIf="session.isLoggedIn() && notifications"-->
+  <ng-template dynamic-host></ng-template>
+</div>

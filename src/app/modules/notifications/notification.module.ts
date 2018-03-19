@@ -16,6 +16,7 @@ import { NotificationComponent } from './notification.component';
 import { NotificationsComponent } from './notifications.component';
 
 import { NotificationService } from './notification.service';
+import { NotificationsToasterComponent } from './toaster.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { NotificationService } from './notification.service';
     NotificationsFlyoutComponent,
     NotificationsComponent,
     NotificationComponent,
-    NotificationsTopbarToggleComponent
+    NotificationsTopbarToggleComponent,
+    NotificationsToasterComponent,
   ],
   providers: [
     {
@@ -44,7 +46,8 @@ import { NotificationService } from './notification.service';
     NotificationsFlyoutComponent,
     NotificationsComponent,
     NotificationComponent,
-    NotificationsTopbarToggleComponent
+    NotificationsTopbarToggleComponent,
+    NotificationsToasterComponent,
   ]
 })
 

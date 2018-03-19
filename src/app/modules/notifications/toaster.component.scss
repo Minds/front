@@ -1,0 +1,30 @@
+@import "defaults";
+
+m-notifications--toaster {
+  .m-notifications--toaster {
+    position: fixed;
+    top: 64px + ($minds-padding / 2);
+    right: $minds-padding * 2;
+    width: 350px;
+    max-width: 100vw;
+    max-height: 75vh;
+
+    @media screen and (max-width: $max-mobile) {
+      right: 0;
+    }
+
+    minds-notification {
+      margin-bottom: $minds-padding;
+      padding: $minds-padding;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .body {
+        font-size: 0.8em;
+      }
+    }
+  }
+
+}

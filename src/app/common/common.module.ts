@@ -62,6 +62,7 @@ import { PhoneInputCountryComponent } from './components/phone-input/country.com
 import { Session } from '../services/session';
 import { Client, Upload } from '../services/api';
 import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.component';
+import { NotificationsToasterComponent } from '../modules/notifications/toaster.component';
 
 @NgModule({
   imports: [
@@ -199,6 +200,9 @@ import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.compon
       deps: [Session, Client, Upload]
     }
   ],
+  entryComponents: [
+    NotificationsToasterComponent
+  ]
 })
 
 export class CommonModule {}

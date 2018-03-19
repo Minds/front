@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
 
 import { Storage } from '../../../services/storage';
 import { Sidebar } from '../../../services/ui/sidebar';
 import { NotificationService } from '../../../modules/notifications/notification.service';
 import { Session } from '../../../services/session';
+import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
+import { RevenueOptionsComponent } from '../../../modules/monetization/revenue/options.component';
+import { NotificationComponent } from '../../../modules/notifications/notification.component';
+import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
 
 @Component({
   moduleId: module.id,
@@ -13,14 +17,18 @@ import { Session } from '../../../services/session';
 
 export class TopbarComponent {
 
-  notifications: any[] = [];
+  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+
   minds = window.Minds;
 
-  constructor(public session: Session, public storage: Storage, public sidebar: Sidebar, public notification: NotificationService) {
+  componentRef;
+  componentInstance: NotificationsToasterComponent;
+
+  constructor(public session: Session, public storage: Storage, public sidebar: Sidebar, private _componentFactoryResolver: ComponentFactoryResolver) {
   }
 
-  ngOnInit() {
-    this.listenForNotifications();
+  ngAfterViewInit() {
+    this.loadComponent();
   }
 
 	/**
@@ -30,27 +38,14 @@ export class TopbarComponent {
     this.sidebar.open();
   }
 
-  /**
-   * Notifications
-   */
+  loadComponent() {
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(NotificationsToasterComponent),
+      viewContainerRef = this.host.viewContainerRef;
 
-  listenForNotifications() {
-    this.notification.onReceive.subscribe((notification: any) => {
-      this.notifications.unshift(notification);
+    viewContainerRef.clear();
 
-      setTimeout(() => {
-        this.closeNotification(notification);
-      }, 6000);
-    });
-  }
-
-  closeNotification(notification: any) {
-    let i: any;
-    for (i in this.notifications) {
-      if (this.notifications[i] === notification) {
-        this.notifications.splice(i, 1);
-      }
-    }
+    this.componentRef = viewContainerRef.createComponent(componentFactory);
+    this.componentInstance = this.componentRef.instance;
   }
 
 }
