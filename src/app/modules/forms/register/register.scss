@@ -2,6 +2,10 @@
 
 minds-form-register{
 
+  form {
+    overflow: visible !important;
+  }
+
   .mdl-card__actions{
     display:flex;
     align-items:center;
@@ -12,4 +16,17 @@ minds-form-register{
     padding-left:$minds-padding*2;
   }
 
+  .m-register--username-taken {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    color: red;
+  }
+
+  .m-register--username-available {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    color: green;
+  }
 }

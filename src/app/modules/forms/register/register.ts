@@ -20,6 +20,8 @@ export class RegisterForm {
   inProgress: boolean = false;
   @Input() referrer: string;
   captcha: string;
+  takenUsername: boolean = false;
+  usernameValidationTimeout: any;
 
   form: FormGroup;
   minds = window.Minds;
@@ -85,6 +87,30 @@ export class RegisterForm {
 
         return;
       });
+  }
+
+  validateUsername() {
+    if (this.form.value.username) {
+      this.client.get('api/v1/register/validate/' + this.form.value.username)
+        .then((data: any) => {
+          if (data.exists) {
+            this.form.controls.username.setErrors({ 'exists': true });
+            this.errorMessage = data.message;
+            this.takenUsername = true;
+          } else {
+            this.takenUsername = false;
+            this.errorMessage = '';
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }
+
+  validationTimeoutHandler() {
+    clearTimeout(this.usernameValidationTimeout);
+    this.usernameValidationTimeout = setTimeout(this.validateUsername.bind(this), 500);
   }
 
 }
