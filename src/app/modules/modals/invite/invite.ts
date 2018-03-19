@@ -10,7 +10,7 @@ import { Session } from '../../../services/session';
     <m-modal [open]="open" (closed)="close($event)">
 
       <div class="mdl-card__supporting-text">
-        <ng-container i18n="@@MODALS__INVITE__DESCRIPTION">Send the link below to your friends and get 100 points when they signup.</ng-container>
+        <ng-container i18n="@@MODALS__INVITE__DESCRIPTION">Send the link below to your friends:</ng-container>
       </div>
 
       <div class="mdl-card__supporting-text">
