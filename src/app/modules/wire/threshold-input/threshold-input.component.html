@@ -12,7 +12,7 @@
   <div *ngIf="enabled"
     class="m-wire-threshold-input--input"
   >
-    <m--crypto-token-symbol *ngIf="threshold.type == 'tokens'" class="m-wire-threshold-input--type"></m--crypto-token-symbol>
+    <i *ngIf="threshold.type == 'tokens'" class="material-icons m-wire-threshold-input--type">account_balance</i>
 
     <input type="text"
       [ngModel]="threshold.min | number"
