@@ -4,8 +4,10 @@
 app/stylesheets/plugins.scss
 app/stylesheets/plugins
 public
+dist
 /tests/ng-spec
 coverage
+src/main.css
 
 tsd_typings
 
