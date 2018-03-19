@@ -17,9 +17,6 @@ export class SettingsGeneralComponent {
 
   minds: Minds;
   settings: string;
-  @Input() object: any;
-
-  @Input() card: string; // card we'll scroll to
 
   error: string = '';
   changed: boolean = false;
@@ -61,14 +58,14 @@ export class SettingsGeneralComponent {
       } else {
         this.load(false);
       }
-    });
-  }
 
-  ngAfterViewInit() {
-    if (this.card && this.card !== '') {
-      const el = this.element.nativeElement.querySelector('.m-settings--' + this.card);
-      window.scrollTo(0, el.offsetTop - 64); // 64 comes from the topbar's height
-    }
+      if (params['card'] && params['card'] !== '') {
+        const el = this.element.nativeElement.querySelector('.m-settings--' + params['card']);
+        if (el) {
+          window.scrollTo(0, el.offsetTop - 64); // 64 comes from the topbar's height
+        }
+      }
+    });
   }
 
   ngOnDestroy() {

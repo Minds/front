@@ -25,7 +25,8 @@ import { SettingsReportedContentComponent } from './reported-content/reported-co
 const settingsRoutes : Routes = [
   { path: 'settings', component: SettingsComponent,
     children: [
-      { path: '', redirectTo: 'general', pathMatch: 'full' }, 
+      { path: '', redirectTo: 'general', pathMatch: 'full' },
+      { path: 'general/:card', component: SettingsGeneralComponent },
       { path: 'general', component: SettingsGeneralComponent },
       { path: 'disable', component: SettingsDisableChannelComponent },
       { path: 'twoFactor', component: SettingsTwoFactorComponent },

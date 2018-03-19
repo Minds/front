@@ -262,7 +262,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   selectCategories() {
-    this.router.navigate(['/settings/general/categories']);
+    this.router.navigate(['/settings/general', 'categories']);
   }
 
   detectChanges() {
