@@ -38,7 +38,7 @@
   </div>
 
   <div class="m-page--main">
-    <m-token--onboarding></m-token--onboarding>
+    <m-token--onboarding *ngIf="showOnboarding"></m-token--onboarding>
     <router-outlet></router-outlet>
   </div>
 </div>
