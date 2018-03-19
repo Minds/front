@@ -1,7 +1,42 @@
 
 <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50 m-error-box mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-    {{errorMessage}}
+    <ng-container
+      *ngIf="errorMessage == 'LoginException::AttemptsExceeded'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__ATTEMPTS_EXCEEDED"
+    >
+      Login attempts exceeded
+    </ng-container>
+    <ng-container
+      *ngIf="errorMessage == 'LoginException::DisabledUser'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__DISABLED_USER">
+      This account has been disabled
+    </ng-container>
+    <ng-container
+      *ngIf="errorMessage == 'LoginException::UsernameFailure'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__USERNAME_FAILURE">
+      Incorrect username
+    </ng-container>
+    <ng-container
+      *ngIf="errorMessage == 'LoginException::AccountLocked'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__ACCOUNT_LOCKED">
+      Account locked
+    </ng-container>
+    <ng-container
+      *ngIf="errorMessage == 'LoginException::PasswordFailure'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__PASSWORD_FAILURE">
+      Incorrect password
+    </ng-container>
+    <ng-container
+      *ngIf="errorMessage == 'LoginException::BannedUser'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__BANNED_USER">
+      This account has been banned
+    </ng-container>
+    <ng-container
+      *ngIf="errorMessage == 'LoginException::Unknown'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__UNKNOWN_ERROR">
+      Unknown error
+    </ng-container>
   </div>
 </div>
 
