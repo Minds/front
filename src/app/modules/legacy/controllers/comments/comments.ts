@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Renderer, ViewChild, ElementRef, ChangeDetectorRef, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Renderer, ViewChild } from '@angular/core';
 
 import { Client, Upload } from '../../../../services/api';
 import { Session } from '../../../../services/session';
-import { SignupModalService } from '../../../../modules/modals/signup/service';
 
 import { AttachmentService } from '../../../../services/attachment';
 import { SocketsService } from '../../../../services/sockets';
@@ -70,7 +69,6 @@ export class Comments {
     public session: Session,
     public client: Client,
     public attachment: AttachmentService,
-    private modal: SignupModalService,
     public sockets: SocketsService,
     private renderer: Renderer,
     private cd: ChangeDetectorRef
@@ -305,7 +303,7 @@ export class Comments {
 
   isLoggedIn() {
     if (!this.session.isLoggedIn()) {
-      this.modal.setSubtitle('You need to have channel in order to comment').open();
+      this.showModal = true;
     }
   }
 

@@ -10,7 +10,7 @@ import { LoginReferrerService } from '../../../services/login-referrer.service';
 
 @Component({
   selector: 'm-modal-signup',
-  inputs: ['open', 'subtitle'],
+  inputs: ['open', 'subtitle', 'display', 'overrideOnboarding'],
   templateUrl: 'signup.html'
 })
 
@@ -22,6 +22,7 @@ export class SignupModal {
 
   subtitle: string = 'Signup to comment, upload, vote and receive 100 free views on your content.';
   display: string = 'initial';
+  overrideOnboarding: boolean = false;
 
   constructor(
     public session: Session,
@@ -111,7 +112,11 @@ export class SignupModal {
   }
 
   done(display: string) {
-    // @todo: emi - check if this is working
+    if (this.overrideOnboarding) {
+      this.display = 'initial';
+      this.close();
+      return;
+    }
     switch (display) {
       case 'login':
         this.loginReferrer.navigate({
@@ -121,10 +126,10 @@ export class SignupModal {
         this.close();
         break;
       case 'register':
-        this.loginReferrer.navigate({
-          extraParams: `ref=signup-modal&ts=${Date.now()}`
-        });
-        this.display = 'categories';
+          this.loginReferrer.navigate({
+            extraParams: `ref=signup-modal&ts=${Date.now()}`
+          });
+          this.display = 'categories';
         break;
       case 'fb':
         this.loginReferrer.navigate({
