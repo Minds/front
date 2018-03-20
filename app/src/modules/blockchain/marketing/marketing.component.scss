@@ -1,122 +1,83 @@
+.m-blockchain--splash {
+  minds-topbar, minds-sidebar, m-footer, m-messenger {
+    display: none;
+  }
+}
+
 m-blockchain--marketing {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
   .m-marketing--header {
-    padding: 175px 0 250px;
-  }
-}
-
-.m-blockchain--marketing-tde-stats {
-  max-width: 1028px;
-
-  > .mdl-cell {
-    display: flex;
-    justify-content: center;
-
-    .m-blockchain--marketing-stats-cell {
-      display: flex;
-      flex-direction: column;
-    }
+    height: 100%;
+    overflow: visible;
+    //padding: 175px 0 250px;
   }
 
-  .m-blockchain--marketing-value,
-  .m-blockchain--marketing-label {
-    display: block;
-    text-align: left;
-  }
-
-  .m-blockchain--marketing-value {
-    font-size: 52px;
-    letter-spacing: 2px;
-    line-height: 1.5;
-    color: #4690D6;
-  }
-
-  .m-blockchain--marketing-label {
-    font-size: 24px;
-    letter-spacing: 2px;
-    font-weight: 300;
-    line-height: 1.5;
-    text-transform: uppercase;
-    color: #888;
-    @media screen and (max-width: $max-mobile) {
-      text-align: center;
-    }
-  }
-}
-
-.m-blockchain--marketing--balloon {
-  padding: 300px 0 !important;
-}
-
-.m-blockchain--marketing--press-logo {
-  img {
-    max-width: 80%;
-  }
-}
-
-.m-blockchain--value-logos {
-  padding-bottom: 0;
-
-  > img {
-    width: auto;
-    height: 128px;
-  }
-}
-
-.m-marketing--contents.m-blockchain--marketing-people {
-  justify-content: center;
-
-  .mdl-cell {
-    padding: 16px 8px;
+  .m-marketing--header-inner {
     text-align: center;
-  }
+    box-sizing: border-box;
 
-  .m-blockchain--marketing-person-image {
-    margin: auto;
-    width: 125px;
-    height: 125px;
-    background-position: center;
-    background-size: cover;
-    border-radius: 50%;
-    border: 1px solid #ececec;
-  }
-
-  .m-blockchain--marketing-person-name,
-  .m-blockchain--marketing-person-title {
-    display: block;
-    font-family: Roboto, sans-serif;
-    font-weight: 300;
-    letter-spacing: 0.25px;
-    line-height: 1.5;
-    text-align: center;
-  }
-
-  .m-blockchain--marketing-person-name {
-    font-size: 24px;
-    margin-top: 16px;
-    font-weight: 800;
-  }
-
-  .m-blockchain--marketing-person-title {
-    font-size: 14px;
-    color: #888;
-  }
-
-  &.m-blockchain--marketing-people--more {
-    .m-blockchain--marketing-person-image {
-      width: 75px;
-      height: 75px;
+    img {
+      width: 300px;
     }
-    .m-blockchain--marketing-person-name {
+
+    h1 {
+      margin-top: 46px;
+    }
+    h3 {
+      padding-right: 0;
+    }
+    h4 {
+      margin-top: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.75px;
+      color: #FFF;
+      font-family: Roboto;
       font-size: 18px;
     }
+    p {
+      font-size: 22px;
+      color: #FFF;
+      font-weight: 400;
+      font-family: Roboto;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
   }
-}
-.m-blockchain--marketing-faq {
-  padding: 16px;
-  margin: auto;
-  max-width: 1280px;
-}
 
-m-blockchain--pre-register {
-  padding: 0 !important;
+  .m-blockchain--marketing--preregister {
+    max-width: 440px;
+    margin: 26px auto;
+
+    .m-login-box {
+      background: transparent !important;
+
+      input {
+        border-radius: 3px;
+        background: rgba(255,255,255,0.9);
+        font-family: Roboto;
+        font-weight: 600;
+      }
+      .m-register-btn {
+        background: transparent;
+        border: 1px solid #FFF;
+        font-weight: 300;
+        font-family: Roboto;
+        letter-spacing: 0.25px;
+      }
+      .m-register-tac {
+        color: #FFF;
+        font-family: Roboto;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        font-size: 12px;
+      }
+    }
+  }
+
 }

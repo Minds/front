@@ -7,11 +7,13 @@ import { CommonModule } from '../../common/common.module';
 import { ModalsModule } from '../modals/modals.module';
 import { AdsModule } from '../ads/ads.module';
 import { LegacyModule } from '../legacy/legacy.module';
+import { MindsFormsModule } from '../forms/forms.module';
 
 import { BlockchainMarketingComponent } from './marketing/marketing.component';
 
 const routes: Routes = [
   { path: 'token', component: BlockchainMarketingComponent },
+  { path: 'crypto', component: BlockchainMarketingComponent },
 ];
 
 @NgModule({
@@ -24,6 +26,7 @@ const routes: Routes = [
     ModalsModule,
     AdsModule,
     LegacyModule,
+    MindsFormsModule,
   ],
   declarations: [
     BlockchainMarketingComponent,
