@@ -19,9 +19,12 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
+        "../node_modules/material-design-icons/iconfont/material-icons.css",
         "main.css"
       ],
       "scripts": [
+        "../node_modules/material-design-lite/dist/material.min.js",
         "../node_modules/medium-editor/dist/js/medium-editor.min.js"
       ],
       "environmentSource": "environments/environment.ts",
