@@ -12,8 +12,8 @@
         </a>
       </div>
 
-      <p class="m-wire-creator--subtext" i18n="@@WIRE__CREATOR__WIRE_NOTICE_W_MC">
-        Support <span>@</span>{{owner.username}} by sending them dollars or tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
+      <p class="m-wire-creator--subtext" i18n="@@WIRE__CREATOR__WIRE_NOTICE_TOKENS">
+        Support <span>@</span>{{owner.username}} by sending them tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
       </p>
     </div>
   </div>
@@ -165,6 +165,7 @@
         </li>
 
         <li
+          *mIfFeature="'blockchain_creditcard'"
           (click)="setPayloadType('creditcard')"
           [class.m-wire--creator-selector--highlight]="!wire.payloadType || wire.payloadType === 'creditcard'"
         >
