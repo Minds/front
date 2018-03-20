@@ -24,7 +24,7 @@
   <!-- SUBSCRIBE -->
   <ng-container *ngIf="options.indexOf('subscribe') !== -1">
     <li class="mdl-menu__item" *ngIf="((entity.type === 'user' && !entity.subscribed && session.getLoggedInUser().guid !== entity.guid) || (entity.type !== 'user' && !entity.ownerObj.subscribed && entity.ownerObj.guid !== session.getLoggedInUser().guid))" (click)="subscribe()" i18n="@@M__ACTION__SUBSCRIBE">Subscribe</li>
-    <li class="mdl-menu__item" *ngIf="((entity.type === 'user' && entity.subscribed && session.getLoggedInUser().guid !== entity.guid) || (entity.type !== 'user' && entity.ownerObj.subscribed && entity.ownerObj.guid !== session.getLoggedInUser().guid))" (click)="unSubscribe()" i18n="@@COMMON__POST_MENU__UNSUBSCRIBE">un-Subscribe</li>
+    <li class="mdl-menu__item" *ngIf="((entity.type === 'user' && entity.subscribed && session.getLoggedInUser().guid !== entity.guid) || (entity.type !== 'user' && entity.ownerObj.subscribed && entity.ownerObj.guid !== session.getLoggedInUser().guid))" (click)="unSubscribe()" i18n="@@COMMON__POST_MENU__UNSUBSCRIBE">Unsubscribe</li>
   </ng-container>
   <!-- DELETE -->
   <li class="mdl-menu__item" *ngIf="options.indexOf('delete') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin() || canDelete" (click)="deleteToggle = true" i18n="@@M__ACTION__DELETE">Delete</li>

@@ -17,7 +17,7 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
     <button class="m-btn m-btn--with-icon m-btn--subscribe subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">
       <i class="material-icons">close</i>
       <span>
-        <ng-container i18n="@@MINDS__BUTTONS__SUBSCRIBE__SUBSCRIBED_LABEL">Un-subscribe</ng-container>
+        <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL">Unsubscribe</ng-container>
       </span>
     </button>
   `
