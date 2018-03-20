@@ -18,7 +18,7 @@
 
       <h3>{{ countDown$ | async }}</h3>
 
-      <h4>Pre-Register</h4>
+      <h4 [hidden]="session.isLoggedIn()">Pre-Register</h4>
 
       <div class="m-blockchain--marketing--preregister" [hidden]="session.isLoggedIn()">
         <minds-form-register></minds-form-register>
