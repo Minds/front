@@ -27,6 +27,7 @@ import { Session } from '../../services/session';
       (closed)="showModal = false"
       action="join a group"
       i18n-action="@@GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE"
+      [overrideOnboarding]="true"
       *ngIf="!session.isLoggedIn()">
     </m-modal-signup-on-action>
   `
