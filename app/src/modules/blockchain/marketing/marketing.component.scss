@@ -16,6 +16,10 @@ m-blockchain--marketing {
     height: 100%;
     overflow: visible;
     //padding: 175px 0 250px;
+
+    .m-marketing--background-video {
+      position: fixed !important;
+    }
   }
 
   .m-marketing--header-inner {
@@ -69,6 +73,11 @@ m-blockchain--marketing {
         font-weight: 300;
         font-family: Roboto;
         letter-spacing: 0.25px;
+
+        @media screen and (max-width: 700px) {
+         padding: 0;
+        }
+        padding: 0;
       }
       .m-register-tac {
         color: #FFF;
