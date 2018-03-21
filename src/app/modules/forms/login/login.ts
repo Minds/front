@@ -85,29 +85,4 @@ export class LoginForm {
         this.hideLogin = false;
       });
   }
-
-  loginWithFb() {
-    window.onSuccessCallback = (user) => {
-      this.zone.run(() => {
-        this.session.login(user);
-
-        if (user['new']) {
-          this.doneRegistered.next(user);
-        }
-
-        if (!user['new']) {
-          this.done.next(user);
-        }
-
-      });
-    };
-    window.onErrorCallback = (reason) => {
-      if (reason) {
-        alert(reason);
-      }
-    };
-    window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login', 'Login with Facebook',
-      'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=600, height=400, top=100, left=100');
-  }
-
 }

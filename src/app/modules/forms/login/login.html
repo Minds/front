@@ -75,17 +75,6 @@
     <a class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link" [routerLink]="['/forgot-password']">
       <ng-container i18n="@@FORMS__LOGIN__FORGOT_PASSWORD_LINK">Forgot Password?</ng-container>
     </a>
-
-    <button class="m-fb-login-button mdl-shadow--2dp" (click)="loginWithFb(); $event.preventDefault()">
-      <span class="m-social-icons-icon-inline">
-        <svg width="36" height="36" viewBox="-2 -2 32 32">
-          <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
-        </svg>
-      </span>
-      <span class="m-signup-button-text">
-        <ng-container i18n="@@FORMS__LOGIN__MIGRATE_FROM_FACEBOOK_ACTION">Migrate from Facebook</ng-container>
-      </span>
-    </button>
   </div>
 
 </form>

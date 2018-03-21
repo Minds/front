@@ -1,12 +1,12 @@
 
 <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
-    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-      {{errorMessage}}
-    </div>
+  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+    {{errorMessage}}
+  </div>
 </div>
 
 <!-- START: Register -->
-<form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin">
+<form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin" *ngIf="!showFbForm">
 
   <div class="mdl-card__supporting-text mdl-grid">
 
@@ -29,7 +29,7 @@
         formControlName="email"
         placeholder="Email"
         i18n-placeholder="email placeholder|@@FORMS__REGISTER__EMAIL_PLACEHOLDER"
-        />
+      />
     </div>
 
     <div class="mdl-cell mdl-cell--12-col">
@@ -39,7 +39,8 @@
         formControlName="password"
         placeholder="Password"
         i18n-placeholder="@@M__COMMON__PASSWORD"
-        readonly onfocus="this.removeAttribute('readonly');"
+        readonly
+        onfocus="this.removeAttribute('readonly');"
         />
     </div>
 
@@ -51,7 +52,8 @@
         placeholder="Confirm your password"
         i18n-placeholder="@@FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER"
         (keydown.enter)="register($event)"
-        readonly onfocus="this.removeAttribute('readonly');"
+        readonly
+        onfocus="this.removeAttribute('readonly');"
         />
     </div>
 
@@ -64,8 +66,73 @@
     <button class="m-btn m-btn--action" (click)="register($event)" [disabled]="!this.form.valid || inProgress">
       <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">Signup</ng-container>
     </button>
-    <span routerLink="/p/terms" class="m-register-tac" i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL">By creating an account you agree to the <a routerLink="/p/terms"> Terms & Conditions </a> </span>
+    <button class="m-fb-register-button mdl-shadow--2dp" (click)="signupWithFb(); $event.preventDefault()">
+      <span class="m-social-icons-icon-inline">
+        <svg width="36" height="36" viewBox="-2 -2 32 32">
+          <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
+        </svg>
+      </span>
+      <span class="m-signup-button-text">
+        <!-- i18n: @@FORMS__REGISTER__SIGNUP_WITH_FACEBOOK_ACTION -->Migrate from Facebook<!-- /i18n -->
+      </span>
+    </button>
+    <span routerLink="/p/terms" class="m-register-tac" i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL">By creating an account you agree to the <a
+      routerLink="/p/terms"> Terms & Conditions </a> </span>
   </div>
 
 </form>
 <!-- END: Register -->
+
+<!-- START: Facebook Registration Form -->
+<form (submit)="$event.preventDefault()" [formGroup]="fbForm" class="mdl-card mdl-color-text--blue-grey-400 m-form m-fb-form m-login-box" [hidden]="hideLogin" *ngIf="showFbForm">
+
+  <div class="mdl-card__supporting-text mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col">
+      <input
+        type="text"
+        id="fb-username"
+        formControlName="username"
+        placeholder="Username"
+        i18n-placeholder="@@M__COMMON__USERNAME"
+      />
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col">
+      <input
+        type="password"
+        id="fb-password"
+        formControlName="password"
+        placeholder="Password"
+        i18n-placeholder="@@M__COMMON__PASSWORD"
+      />
+    </div>
+
+    <div class="mdl-cell mdl-cell--12-col" [hidden]="!fbForm.value.password">
+      <input
+        type="password"
+        id="fb-password2"
+        formControlName="password2"
+        placeholder="Confirm your password"
+        i18n-placeholder="@@FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER"
+        (keydown.enter)="register($event)"
+      />
+    </div>
+  </div>
+
+  <div class="mdl-card__actions">
+    <button class="m-fb-register-button mdl-shadow--2dp" (click)="registerWithFb(); $event.preventDefault()">
+      <span class="m-social-icons-icon-inline">
+        <svg width="36" height="36" viewBox="-2 -2 32 32">
+          <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
+        </svg>
+      </span>
+      <span class="m-signup-button-text">
+        <!-- i18n: @@FORMS__REGISTER__SIGNUP_WITH_FACEBOOK_ACTION -->Signup with Facebook<!-- /i18n -->
+      </span>
+    </button>
+    <span routerLink="/p/terms" class="m-register-tac" i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL">By creating an account you agree to the <a
+      routerLink="/p/terms"> Terms & Conditions </a> </span>
+  </div>
+
+</form>
+<!-- END: Facebook Registration Form -->
