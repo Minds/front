@@ -102,7 +102,7 @@ export class Activity {
       this.activity.title = '';
     }
 
-    this.boosted = this.activity.boosted;
+    this.boosted = this.activity.boosted || this.activity.p2p_boosted;
 
     this.isTranslatable = (
       this.translationService.isTranslatable(this.activity) ||
