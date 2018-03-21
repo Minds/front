@@ -9,24 +9,21 @@ import { Router } from '@angular/router';
 })
 
 export class NewsfeedDropdownComponent implements OnInit {
+
   boostRating: number = 2;
   plus: boolean = false;
+  showBoostOptions: boolean = true;
 
-  @Input() showBoostOptions: boolean = true;
-
-
-  constructor(public session: Session,
-              public router: Router,
-              public boostRotatorService: BoostRotatorService) {
+  constructor(
+    public session: Session,
+    public router: Router,
+    public boostRotatorService: BoostRotatorService
+  ) {
   }
 
   ngOnInit() {
     this.boostRating = this.session.getLoggedInUser().boost_rating;
     this.plus = this.session.getLoggedInUser().plus;
-  }
-
-  toggleBoostRating() {
-    this.boostRotatorService.toggleRating();
   }
 
   setExplicit(value: boolean) {
@@ -48,4 +45,9 @@ export class NewsfeedDropdownComponent implements OnInit {
   selectCategories() {
     this.router.navigate(['/settings/general', 'categories']);
   }
+
+  onOptionsChange(e: { rating }) {
+    this.boostRotatorService.setRating(e.rating);
+  }
+
 }

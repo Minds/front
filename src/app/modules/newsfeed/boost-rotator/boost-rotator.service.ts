@@ -20,6 +20,10 @@ export class BoostRotatorService {
     return this.boostRotator.rating;
   }
 
+  setRating(rating) {
+    this.boostRotator.setRating(rating);
+  }
+
   isBoostEnabled() {
     return !this.boostRotator.disabled;
   }

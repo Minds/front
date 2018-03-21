@@ -1,18 +1,5 @@
-<m-topbar--navigation--options *ngIf="showBoostOptions && boostRotatorService.isInitialized()">
-  <ng-container>
-    <li class="m-dropdown--list--item" *ngIf="boostRotatorService.isBoostEnabled()">
-      <span i18n="open boost|Open as Open Boost@@MINDS__NEWSFEED__BOOST_ROTATOR__SHOW_OPEN_BOOST_ITEM">Open Boosts</span>
-      <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__OPEN_BOOST_ITEM_TOOLTIP">
-        Open Boost may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.
-      </m-tooltip>
-      <div class="m-layout--spacer"></div>
-      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-open-boosts" [mdlSwitch] [toggled]="true" *ngIf="boostRotatorService.getBoostRating() == 2">
-        <input type="checkbox" id="switch-open-boosts" class="mdl-switch__input" [ngModel]="boostRotatorService.getBoostRating()" (ngModelChange)="toggleBoostRating()">
-      </label>
-      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-open-boosts" [mdlSwitch] [toggled]="false" *ngIf="boostRotatorService.getBoostRating() != 2">
-        <input type="checkbox" id="switch-open-boosts" class="mdl-switch__input" [ngModel]="boostRotatorService.getBoostRating()" (ngModelChange)="toggleBoostRating()">
-      </label>
-    </li>
+<m-topbar--navigation--options (change)="onOptionsChange($event)">
+  <ng-container *ngIf="showBoostOptions && boostRotatorService.isInitialized()">
     <li class="m-dropdown--list--item" *ngIf="boostRotatorService.getBoostRating() == 2 && boostRotatorService.isBoostEnabled()">
       <span i18n="@@M__COMMON__EXPLICIT">Explicit</span>
       <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__EXPLICIT_ITEM_TOOLTIP">
