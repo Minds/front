@@ -8,7 +8,7 @@
   </a>
 
   <div class="m-blog--tile-title">
-    <label>{{ entity.title }}</label>
+    <label>{{ entity.title | excerpt: 140 }}</label>
     <p>{{ entity.excerpt | excerpt:140 }}</p>
     <div class="m-inline-owner-block">
       <a [routerLink]="['/', entity.ownerObj.username]">
