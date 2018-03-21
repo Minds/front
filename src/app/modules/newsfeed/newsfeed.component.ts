@@ -11,6 +11,7 @@ import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Poster } from '../../modules/legacy/controllers/newsfeed/poster/poster';
 import { ContextService } from '../../services/context.service';
+import { BoostRotatorService } from './boost-rotator/boost-rotator.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -51,6 +52,8 @@ export class NewsfeedComponent {
 
   showPlusButton: boolean = true;
 
+  subscribed: boolean = false;
+
   @ViewChild('poster') private poster: Poster;
 
   constructor(
@@ -62,16 +65,20 @@ export class NewsfeedComponent {
     public route: ActivatedRoute,
     public title: MindsTitle,
     private storage: Storage,
-    private context: ContextService
+    private context: ContextService,
   ) {
 
     this.route.url.subscribe(segments => {
-      if(segments[segments.length-1].path === 'boost') {
+      // const path = segments[segments.length-1].path;
+      const path: string = route.snapshot.firstChild && route.snapshot.firstChild.routeConfig.path;
+      if(path === 'boost') {
         this.title.setTitle('Boost Newsfeed');
         this.boostFeed = true;
       } else {
         this.title.setTitle('Newsfeed');
       }
+
+      this.subscribed = path === 'subscribed';
     });
 
     const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');
@@ -312,6 +319,5 @@ export class NewsfeedComponent {
 
     return true;
   }
-
 }
 

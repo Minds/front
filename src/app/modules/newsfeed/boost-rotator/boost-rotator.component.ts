@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 import { NewsfeedService } from '../services/newsfeed.service';
+import { BoostRotatorService } from './boost-rotator.service';
 
 @Component({
   moduleId: module.id,
@@ -53,8 +54,11 @@ export class NewsfeedBoostRotatorComponent {
     public newsfeedService: NewsfeedService,
     private storage: Storage,
     public element: ElementRef,
+    public service: BoostRotatorService,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {
+    this.service.setBoostRotator(this);
+  }
 
   ngOnInit() {
     this.rating = this.session.getLoggedInUser().boost_rating;
@@ -259,10 +263,6 @@ export class NewsfeedBoostRotatorComponent {
         this.session.getLoggedInUser().disabled_boost = true;
         this.disabled = true;
       });
-  }
-
-  selectCategories() {
-    this.router.navigate(['/settings/general', 'categories']);
   }
 
   detectChanges() {

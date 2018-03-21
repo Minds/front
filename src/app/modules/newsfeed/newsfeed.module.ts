@@ -17,6 +17,8 @@ import { NewsfeedTopComponent } from './feeds/top.component';
 import { NewsfeedSubscribedComponent } from './feeds/subscribed.component';
 import { NewsfeedBoostComponent } from './feeds/boost.component';
 import { NewsfeedService } from './services/newsfeed.service';
+import { BoostRotatorService } from './boost-rotator/boost-rotator.service';
+import { NewsfeedDropdownComponent } from './dropdown/dropdown.component';
 
 const routes: Routes = [
   {
@@ -44,6 +46,7 @@ const routes: Routes = [
     AdsModule,
   ],
   declarations: [
+    NewsfeedDropdownComponent,
     NewsfeedComponent,
     NewsfeedSingleComponent,
     NewsfeedBoostRotatorComponent,
@@ -52,9 +55,11 @@ const routes: Routes = [
     NewsfeedBoostComponent,
   ],
   providers: [
-    NewsfeedService
+    NewsfeedService,
+    BoostRotatorService
   ],
   exports: [
+    NewsfeedDropdownComponent,
     NewsfeedBoostRotatorComponent,
   ],
   entryComponents: [
