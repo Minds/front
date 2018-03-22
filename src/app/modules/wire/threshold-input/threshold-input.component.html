@@ -1,25 +1,56 @@
 <div class="m-wire-threshold-input">
-  <a class="m-wire-threshold-input--toggle"
-    [class.m-wire-threshold-input--toggle-enabled]="enabled"
-    (click)="toggle()"
-  >
-    <m-tooltip>
-      <i m-tooltip--anchor class="ion-icon ion-flash"></i>
-      <ng-container i18n="@@M__FEATURE__WIRE">Wire</ng-container>
-    </m-tooltip>
-  </a>
 
-  <div *ngIf="enabled"
-    class="m-wire-threshold-input--input"
-  >
-    <i *ngIf="threshold.type == 'tokens'" class="material-icons m-wire-threshold-input--type">account_balance</i>
+  <m-dropdown class="m-topbar--navigation--options" #dropdown>
+    <label 
+      class="m-wire-threshold-input--toggle"
+      [class.m-wire-threshold-input--toggle-enabled]="enabled">
+        <m-tooltip>
+          <i m-tooltip--anchor class="ion-icon ion-flash"></i>
+          <ng-container i18n="@@M__FEATURE__WIRE">Wire</ng-container>
+        </m-tooltip>
+    </label>
+  
+    <ul class="m-dropdown--list">
 
-    <input type="text"
-      [ngModel]="threshold.min | number"
-      (ngModelChange)="setMinAmount($event)"
-      [disabled]="disabled"
-      inlineAutoGrow
-      #minAmountInput
-    />
-  </div>
+      <p class="m-wire-threshold-input--info" *ngIf="rewards.length">
+        Select from one of your rewards or enter a custom amount of tokens to restrict who can see this post.
+      </p>
+
+      <p class="m-wire-threshold-input--info" *ngIf="!rewards.length">
+        Enter how many tokens users should send you in order to see this post.
+      </p>
+
+      <li class="m-dropdown--list--item"
+        *ngFor="let reward of rewards"
+        [class.selected]="threshold.min >= reward.amount"
+        (click)="selectTier(reward)"
+        >
+        <b>{{ reward.amount }} Tokens and Over</b>
+        <p>{{ reward.description }}</p>
+      </li>
+
+      <li class="m-dropdown--list--item">
+        <b>Visible to supporters who send over</b>
+        <div class="m-wire-threshold--custom">
+          <i *ngIf="threshold.type == 'tokens'" class="material-icons m-wire-threshold-input--type">account_balance</i>
+
+          <input type="text"
+            class="m-input"
+            [ngModel]="threshold.min | number"
+            (ngModelChange)="setMinAmount($event)"
+            [disabled]="disabled"
+            #minAmountInput
+          />
+
+          <span>Tokens</span>
+
+          <i class="material-icons selected"
+            (click)="dropdown.toggle()"
+            >done</i>
+        </div>
+
+      </li>
+    </ul>
+  </m-dropdown>
+
 </div>

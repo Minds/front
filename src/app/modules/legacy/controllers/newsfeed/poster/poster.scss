@@ -7,6 +7,10 @@
   width:100%;
   min-height:0;
 
+  .mdl-card__supporting-text {
+    overflow: visible;
+  }
+
 
   > div {
     flex-direction: row;

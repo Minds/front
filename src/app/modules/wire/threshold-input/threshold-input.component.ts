@@ -13,7 +13,6 @@ export class WireThresholdInputComponent implements OnInit {
 
   @Input('threshold') set _threshold(threshold: WireThresholdStruc) {
     this.threshold = threshold;
-    this.enabled = !!threshold;
 
     if (!this.threshold) {
       this.threshold = {
@@ -22,12 +21,14 @@ export class WireThresholdInputComponent implements OnInit {
       };
     }
   }
+
   @Input('disabled') disabled: boolean = false;
 
   @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<WireThresholdStruc> = new EventEmitter<WireThresholdStruc>();
   @Output('validThreshold') validThresholdEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @Input('enabled') enabled: boolean = false;
+  //REMOVE SOON.. this doesn't do anything
+  @Input('enabled') legacyEnabled: boolean = false;
   @Output('enabledChange') enabledChangeEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   typeLabels = WireTypeLabels;
@@ -40,14 +41,15 @@ export class WireThresholdInputComponent implements OnInit {
     this.validThresholdEmitter.emit(this.validate());
   }
 
-  toggle() {
-    this.enabled = !this.enabled;
+  get enabled() {
+    return this.threshold.min > 0;
+  }
 
-    if (this.enabled) {
-      this.focusInput();
-    }
-
-    this._emitChange();
+  get rewards() {
+    const user = this.session.getLoggedInUser();
+    if (!user)
+      return [];
+    return <{ amount: number, description: string}[]>user.wire_rewards.rewards.tokens;
   }
 
   setType(type: WireRewardsType) {
@@ -78,6 +80,11 @@ export class WireThresholdInputComponent implements OnInit {
         this.minAmountInput.nativeElement.focus();
       }
     }, 0);
+  }
+
+  selectTier(tier) {
+    this.threshold.min = <number> parseInt(tier.amount);
+    this._emitChange();
   }
 
   // Internal

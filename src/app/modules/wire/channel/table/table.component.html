@@ -10,12 +10,12 @@
         <span *ngIf="!editing && type == 'points'">{{ (reward.amount || 0) | number }}+</span>
 
         <ng-container *ngIf="!editing && type == 'tokens'">
-          <m--crypto-token-symbol ></m--crypto-token-symbol>
+          <i class="material-icons">account_balance</i>
           <span>{{ (reward.amount || 0) | number:'1.0-4' }}+</span>
         </ng-container>
 
         <ng-container *ngIf="editing && type=='money'">$</ng-container>
-        <ng-container *ngIf="editing && type=='tokens'"><m--crypto-token-symbol></m--crypto-token-symbol></ng-container>
+        <ng-container *ngIf="editing && type=='tokens'"><i class="material-icons">account_balance</i></ng-container>
         <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
         <span *ngIf="editing">+</span>
         <ng-container *ngIf="type=='points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</ng-container>
