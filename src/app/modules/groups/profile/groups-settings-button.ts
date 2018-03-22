@@ -2,6 +2,8 @@ import { Component} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups-service';
+import { ReportCreatorComponent } from '../../report/creator/creator.component';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'minds-groups-settings-button',
@@ -15,6 +17,7 @@ import { GroupsService } from '../groups-service';
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
       <li class="mdl-menu__item" [hidden]="group['is:muted']" (click)="mute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS">Disable Notifications</li>
       <li class="mdl-menu__item" [hidden]="!group['is:muted']" (click)="unmute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS">Enable Notifications</li>
+      <li class="mdl-menu__item" (click)="report(); showMenu = false" i18n="@@M__ACTION__REPORT">Report</li>
       <li class="mdl-menu__item" *ngIf="group['is:creator']" [hidden]="group.deleted" (click)="deletePrompt()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP">Delete Group</li>
     </ul>
     <div class="minds-bg-overlay" (click)="toggleMenu($event)" [hidden]="!showMenu"></div>
@@ -45,7 +48,7 @@ export class GroupsSettingsButton {
 
   isGoingToBeDeleted: boolean = false;
 
-  constructor(public service: GroupsService, public router: Router) {
+  constructor(public service: GroupsService, public overlayService: OverlayModalService, public router: Router) {
   }
 
   mute() {
@@ -68,6 +71,11 @@ export class GroupsSettingsButton {
       });
 
     this.showMenu = false;
+  }
+
+  report() {
+    this.overlayService.create(ReportCreatorComponent, this.group)
+      .present();
   }
 
   deletePrompt() {
