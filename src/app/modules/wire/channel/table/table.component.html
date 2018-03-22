@@ -41,7 +41,8 @@
   </tr>
 </table>
 
-<div class="m-wire-channel--rewards--add-tier m-border">
+<div class="m-wire-channel--rewards--add-tier m-border"
+  *ngIf="session.getLoggedInUser().guid == channel.guid">
   <a (click)="addTier()">
     <i class="material-icons">playlist_add</i>
     <span i18n="@@WIRE__CHANNEL__TABLE__ADD_REWARD_ACTION">Add Reward</span>

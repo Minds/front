@@ -6,6 +6,15 @@ m-wire-channel {
     margin-bottom: 8px;
   }
 
+  m-tooltip {
+    margin-left: 8px;
+
+    i {
+      font-size: 16px;
+      color: #888;
+    }
+  }
+
   .m-wire-channel--edit-button {
     display: inline-block;
     vertical-align: middle;
