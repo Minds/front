@@ -36,10 +36,13 @@ export class WireChannelTableComponent {
       this.rewardsChangeEmitter.emit(this.rewards);
     }
   }
+  @Output('editingChange') editingChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private session: Session, private overlayModal: OverlayModalService) { }
+  constructor(public session: Session, private overlayModal: OverlayModalService) { }
 
   addTier() {
+    this.editing = true;
+    this.editingChange.next(true);
     this.rewards.push({
       amount: '',
       description: ''

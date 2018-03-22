@@ -49,7 +49,9 @@ export class WireThresholdInputComponent implements OnInit {
     const user = this.session.getLoggedInUser();
     if (!user)
       return [];
-    return <{ amount: number, description: string}[]>user.wire_rewards.rewards.tokens;
+    if (user.wire_rewards.rewards && user.wire_rewards.rewards.tokens)
+      return <{ amount: number, description: string}[]>user.wire_rewards.rewards.tokens;
+    return [];
   }
 
   setType(type: WireRewardsType) {

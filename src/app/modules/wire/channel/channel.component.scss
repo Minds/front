@@ -4,14 +4,14 @@ m-wire-channel {
 
   .mdl-card {
     margin-bottom: 8px;
-  }
 
-  m-tooltip {
-    margin-left: 8px;
+    m-tooltip {
+      margin-left: 8px;
 
-    i {
-      font-size: 16px;
-      color: #888;
+      i {
+        font-size: 16px !important;
+        color: #888;
+      }
     }
   }
 
@@ -79,8 +79,10 @@ m-wire-channel {
 
   .m-wire-channel--description-editor {
     width: 100%;
-    border: 1px solid #eeeeee;
-    padding: $minds-padding / 2;
+    min-height: 60px;
+    border: 1px solid #ececec;
+    border-radius: 3px;
+    padding: $minds-padding;
     box-sizing: border-box;
     text-align: left !important;
     resize: none !important;
@@ -91,6 +93,7 @@ m-wire-channel {
 
   .m-wire-channel--reward-description > textarea {
     margin-top: 8px;
+    margin-bottom: 16px;
     /* min-height: 51px; */
     font-size: 11px;
     padding: 8px;
@@ -171,6 +174,7 @@ m-wire-channel {
       font-weight: 600;
       border: 1px solid #ececec;
       border-radius: 3px;
+      background-color: #eee;
     }
   }
 
