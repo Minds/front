@@ -220,6 +220,7 @@ export class PostMenuComponent {
   }
 
   delete() {
+    this.deleteToggle = false;
     this.selectOption('delete');
   }
 

@@ -154,8 +154,10 @@ export class GroupsProfileFeed {
   delete(activity) {
     let i: any;
     for (i in this.activity) {
-      if (this.activity[i] === activity)
+      if (this.activity[i] === activity) {
         this.activity.splice(i, 1);
+        break;
+      }
     }
   }
 

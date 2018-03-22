@@ -124,10 +124,19 @@ export class NewsfeedBoostComponent {
 
   delete(activity) {
     let i: any;
-    for (i in this.newsfeed) {
-      if (this.newsfeed[i] === activity)
-        this.newsfeed.splice(i, 1);
+    for (i in this.prepended) {
+      if (this.prepended[i] === activity) {
+        this.prepended.splice(i, 1);
+        return;
+      }
     }
+    for (i in this.newsfeed) {
+      if (this.newsfeed[i] === activity) {
+        this.newsfeed.splice(i, 1);
+        return;
+      }
+    }
+
   }
 
 }

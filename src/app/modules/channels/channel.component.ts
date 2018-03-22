@@ -250,8 +250,10 @@ export class ChannelComponent {
   delete(activity) {
     let i: any;
     for (i in this.feed) {
-      if (this.feed[i] === activity)
+      if (this.feed[i] === activity) {
         this.feed.splice(i, 1);
+        break;
+      }
     }
   }
 
