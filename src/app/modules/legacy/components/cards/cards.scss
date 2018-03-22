@@ -380,7 +380,8 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
          white-space: pre-wrap;
          overflow: hidden;
          max-height: 45px;
-         margin:0;
+         margin:8px 0;
+         line-height: 1.25px;
       }
       p.m-url{
         white-space:nowrap;
