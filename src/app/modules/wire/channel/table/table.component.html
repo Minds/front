@@ -5,20 +5,19 @@
 >
   <tr *ngFor="let reward of rewards; let i = index" (click)="openWireModal(reward)">
     <td>
-      <div class="m-wire-channel--reward-amount mdl-color-text--blue-grey-500">
+      <div class="m-wire-channel--reward-amount">
         <span *ngIf="!editing && type == 'money'">{{ (reward.amount || 0) | currency:'USD':true:'1.0-0' }}+</span>
         <span *ngIf="!editing && type == 'points'">{{ (reward.amount || 0) | number }}+</span>
 
         <ng-container *ngIf="!editing && type == 'tokens'">
-          <i class="material-icons">account_balance</i>
-          <span>{{ (reward.amount || 0) | number:'1.0-4' }}+</span>
+          <span>{{ (reward.amount || 0) | number:'1.0-4' }} Tokens or Over</span>
         </ng-container>
 
         <ng-container *ngIf="editing && type=='money'">$</ng-container>
-        <ng-container *ngIf="editing && type=='tokens'"><i class="material-icons">account_balance</i></ng-container>
         <input type="number" *ngIf="editing" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="getAmountPlaceholder()" />
-        <span *ngIf="editing">+</span>
         <ng-container *ngIf="type=='points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</ng-container>
+        <span *ngIf="editing && type=='tokens'">Tokens or Over</span>
+
 
         <div class="m-wire-channel--reward-send-wire" *ngIf="!editing">
           <i class="ion-icon ion-flash"></i>
@@ -27,16 +26,23 @@
 
       <div class="m-wire-channel--reward-description">
         <p *ngIf="!editing">{{ reward.description }}</p>
-        <textarea *ngIf="editing" [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow] placeholder="Describe the reward" i18n-placeholder="@@WIRE__CHANNEL__TABLE__REWARD_PLACEHOLDER"></textarea>
+        <textarea
+          *ngIf="editing"
+          [ngModel]="reward.description"
+          (ngModelChange)="setDescription(i, $event)"
+          class="m-border"
+          [autoGrow]
+          placeholder="Describe the reward"
+          i18n-placeholder="@@WIRE__CHANNEL__TABLE__REWARD_PLACEHOLDER"
+          >
+        </textarea>
       </div>
     </td>
   </tr>
 </table>
 
-<div class="m-wire-channel--rewards--add-tier">
-  <a *ngIf="editing"
-    (click)="addTier()"
-  >
+<div class="m-wire-channel--rewards--add-tier m-border">
+  <a (click)="addTier()">
     <i class="material-icons">playlist_add</i>
     <span i18n="@@WIRE__CHANNEL__TABLE__ADD_REWARD_ACTION">Add Reward</span>
   </a>

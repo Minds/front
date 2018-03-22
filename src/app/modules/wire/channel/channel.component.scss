@@ -68,8 +68,7 @@ m-wire-channel {
     white-space: pre-line;
   }
 
-  .m-wire-channel--description-editor,
-  .m-wire-channel--reward-description > textarea {
+  .m-wire-channel--description-editor {
     width: 100%;
     border: 1px solid #eeeeee;
     padding: $minds-padding / 2;
@@ -81,8 +80,20 @@ m-wire-channel {
     font-weight: inherit;
   }
 
+  .m-wire-channel--reward-description > textarea {
+    margin-top: 8px;
+    /* min-height: 51px; */
+    font-size: 11px;
+    padding: 8px;
+    font-weight: 500;
+    color: #444;
+    text-align: left !important;
+    width: 100%;
+  }
+
   .m-wire-channel--rewards {
     width: 100%;
+    color: #444;
     //margin-top: $minds-padding * 2;
   }
 
@@ -106,8 +117,20 @@ m-wire-channel {
     font-size: 12px;
   }
 
+  .m-wire-channel--reward-amount span {
+    font-size: 16px;
+    color: #444;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .m-wire-channel--reward-description p {
+    font-size: 11px;
+  }
+
   .m-wire-channel--reward-send-wire {
-    width: 100%;
     text-align: right;
     color: #4690d6;
     & > i {
@@ -117,7 +140,6 @@ m-wire-channel {
 
   .m-wire-channel--reward-amount,
   .m-wire-channel--reward-description {
-    padding: $minds-padding 0;
     font-weight: 400;
     span {
       padding-right: $minds-padding;
@@ -133,40 +155,23 @@ m-wire-channel {
     letter-spacing: 1px;
 
     > input {
-      width: 50%;
-      padding: $minds-padding / 2;
-      margin-left: $minds-margin * 1.5;
-      font-family: inherit;
-      font-size: inherit;
-      font-weight: inherit;
-      text-align: inherit;
-    }
-  }
-
-  .m-wire-channel--rewards-points {
-    .m-wire-channel--reward-amount input {
-      margin-left: 0;
-      margin-right: $minds-margin * 1.5;
-    }
-  }
-
-  .m-wire-channel--reward-description {
-    > textarea {
-      min-height: 51px;
-      font-size: 14px;
-      font-weight: 500;
-      color: inherit;
-    }
-    p {
-      margin: 0;
+      width: 54px;
+      padding: 8px;
+      margin-right: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      border: 1px solid #ececec;
+      border-radius: 3px;
     }
   }
 
   .m-wire-channel--rewards--add-tier {
-    text-align: right;
+    text-align: center;
+    padding: 16px;
 
     > a {
       cursor: pointer;
+      color: #444;
 
       > * {
         vertical-align: middle;

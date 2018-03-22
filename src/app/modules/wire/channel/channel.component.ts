@@ -73,21 +73,21 @@ export class WireChannelComponent {
     };
   }
 
-  save() {
+  async save() {
     this.rewards.rewards.points = this._cleanAndSortRewards(this.rewards.rewards.points);
     this.rewards.rewards.money = this._cleanAndSortRewards(this.rewards.rewards.money);
     this.rewards.rewards.tokens = this._cleanAndSortRewards(this.rewards.rewards.tokens);
 
-    this.client.post('api/v1/wire/rewards', {
-      rewards: this.rewards
-    })
-      .then(() => {
-        this.rewardsChangeEmitter.emit(this.rewards);
-      })
-      .catch(e => {
-        this.editing = true;
-        alert((e && e.message) || 'Server error');
+    try {
+      await this.client.post('api/v1/wire/rewards', {
+        rewards: this.rewards
       });
+      this.rewardsChangeEmitter.emit(this.rewards);
+      this.session.getLoggedInUser().wire_rewards = this.rewards;
+    } catch(e) {
+      this.editing = true;
+      alert((e && e.message) || 'Server error');
+    };
   }
 
   sendWire() {
