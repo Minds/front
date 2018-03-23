@@ -22,7 +22,7 @@
 
       <li class="m-dropdown--list--item"
         *ngFor="let reward of rewards"
-        [class.selected]="threshold.min <= reward.amount && threshold.min > 0"
+        [class.selected]="threshold.min == reward.amount"
         (click)="selectTier(reward)"
         >
         <b>{{ reward.amount }} Tokens and Over</b>
