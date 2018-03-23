@@ -35,9 +35,9 @@ export class MindsAvatar {
     if (!value)
       return;
     this.object = value;
-    this.src = '/fs/v1/avatars/' + this.object.guid + '/large/' + this.object.icontime;
+    this.src = `${this.minds.cdn_url}fs/v1/avatars/${this.object.guid}/large/${this.object.icontime}`;
     if (this.object.type === 'user')
-      this.src = '/icon/' + this.object.guid + '/large/' + this.object.icontime;
+      this.src = `${this.minds.cdn_url}icon/${this.object.guid}/large/${this.object.icontime}`;
   }
 
   set _src(value: any) {
