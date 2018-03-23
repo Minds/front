@@ -226,21 +226,37 @@ export class WalletTokenTransactionsComponent {
     this.load(true);
   }
 
-  getAvatarSrc(transaction) {
-    let src: string = '';
+  getSelf() {
+    const user = this.session.getLoggedInUser();
 
-    let user = this.session.getLoggedInUser();
-
-    // we received a wire
-    if(transaction.amount >= 0) {
-      user = transaction.sender
-    } else {
-      user = transaction.user.guid;
+    return {
+      avatar: `/icon/${user.guid}/large/${user.icontime}`,
+      username: user.username,
     }
+  }
 
-    src = `/icon/${user.guid}/large/${user.icontime}`;
+  getOther(transaction) {
+    const self = this.session.getLoggedInUser(),
+      isSender = transaction.sender.guid != self.guid,
+      user = isSender ? transaction.sender : transaction.receiver;
 
-    return src;
+    return {
+      avatar: `/icon/${user.guid}/large/${user.icontime}`,
+      username: user.username,
+      isSender,
+    }
+  }
+
+  isP2p(transaction) {
+    const contractName = this.getNormalizedContractName(transaction.contract);
+
+    if (contractName === 'wire' || contractName === 'boost') {
+      return !!transaction.sender && !!transaction.receiver;
+    }
+  }
+
+  getNormalizedContractName(contractName) {
+    return contractName.indexOf('offchain:') > -1 ? contractName.substr(9) : contractName;
   }
 
   detectChanges() {

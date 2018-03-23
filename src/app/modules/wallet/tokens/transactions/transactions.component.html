@@ -79,17 +79,20 @@
 
     <div class="m-token--ledger--reward-details">
       <div class="m-token--ledger--reward-details--meta">
-        <span>{{ (transaction.contract.indexOf('offchain:') > -1 ? transaction.contract.substr(9) : transaction.contract)  | uppercase }}</span>
-        <ng-container *ngIf="transaction.contract === 'wire'">
-          <span *ngIf="transaction.amount >= 0; else to">FROM</span>
-          <ng-template #to>
-            <span>TO</span>
-          </ng-template>
-          <img class="m-token--ledger--avatar" [src]="getAvatarSrc(transaction)">
-        </ng-container>
+        <span>{{ getNormalizedContractName(transaction.contract)  | uppercase }}</span>
       </div>
+
       <div class="m-token--ledger--reward-details--meta">
         <span>{{ transaction.wallet_address }}</span>
+      </div>
+
+      <div class="m-token--ledger--reward-details--meta m-token--ledger--reward-details--meta-wrapper" *ngIf="isP2p(transaction)">
+        <img class="m-token--ledger--avatar" [src]="getSelf().avatar">
+
+        <i class="material-icons m-token--ledger--direction">{{getOther(transaction).isSender ? 'arrow_back' : 'arrow_forward'}}</i>
+
+        <img class="m-token--ledger--avatar" [src]="getOther(transaction).avatar">
+        <a class="m-token--ledger--other-username" [routerLink]="['/', getOther(transaction).username]">@{{getOther(transaction).username}}</a>
       </div>
 
       <div class="mdl-layout-spacer"></div>

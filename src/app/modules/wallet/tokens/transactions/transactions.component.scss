@@ -26,6 +26,19 @@
     .m-token--ledger--avatar {
       border-radius: 100%;
       width: 20px;
+      height: 20px;
+    }
+
+    .m-token--ledger--direction {
+      font-size: 16px;
+      line-height: 1;
+      margin: 0 8px;
+    }
+
+    .m-token--ledger--other-username {
+      font-size: 12px;
+      text-decoration: none;
+      margin-left: 8px;
     }
 
     .m-token--ledger--reward-details {
@@ -37,6 +50,12 @@
         margin-right: 8px;
         padding-right: 8px;
         border-right: 1px solid #ececec;
+
+        &.m-token--ledger--reward-details--meta-wrapper {
+          display: inline-flex;
+          align-items: center;
+        }
+
         > * {
           color: #777;
           text-rendering: optimizeLegibility;
@@ -51,11 +70,6 @@
       p {
         padding: 0;
         margin: 0;
-      }
-
-      i {
-        font-size: 14px;
-        margin-right: 8px;
       }
 
       .ts {
