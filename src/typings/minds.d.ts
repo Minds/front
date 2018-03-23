@@ -10,6 +10,7 @@ interface Minds {
   cdn_url: string;
   cdn_assets_url: string;
   site_url: string;
+  cinemr_url: string;
   notifications_count: number;
   socket_server: string;
   thirdpartynetworks: any;

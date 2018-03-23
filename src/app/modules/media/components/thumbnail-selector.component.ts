@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 
 import { Client } from '../../../services/api';
+import { forEach } from '@angular/router/src/utils/collection';
 
 export class ThumbnailEvent {
      constructor(public source: any,
@@ -9,7 +10,7 @@ export class ThumbnailEvent {
 
 @Component({
   selector: 'minds-media-thumbnail-selector',
-  inputs: ['_src: src', 'thumbnailSrc', 'thumbnailFromFile' ],
+  inputs: ['entity', 'thumbnailSrc', 'thumbnailFromFile' ],
   outputs: ['thumbnail'],
   templateUrl: 'thumbnail-selector.component.html' 
 })
@@ -28,6 +29,19 @@ export class ThumbnailSelectorComponent {
   thumbnailFile : any;
   thumbnailFromFile: boolean = false;
   thumbnailNotChanged: boolean = true;
+
+  selectedThumbnail: number = -1;
+  thumbnails: string[] = [];
+
+  private _entity: any;
+
+  public set entity(value: any) {
+    this._entity = value;
+
+    this.src = this._entity.src['360.mp4'];
+    if (this.element)
+      this.element.src = this.src;
+  }
   
   constructor(private _element: ElementRef) {
   }
@@ -40,49 +54,44 @@ export class ThumbnailSelectorComponent {
     this.element.addEventListener('loadedmetadata', () => {
       this.element.currentTime = 0;
       this.inProgress = false;
+
+      this.thumbnails = this.getThumbnails();
     });
   }
 
-  set _src(value: any) {
-    this.src = value[0].uri;
-    if (this.element)
-      this.element.src = this.src;
+  getThumbnails(): string[] {
+    const amount: number = Math.floor(this.element.duration / 5);
+    const thumbs = [1]; //first thumbnail
+    if (amount > 15) { //the video would have at least 3 thumbnails
+      thumbs.push(Math.floor(amount / 2)); //thumbnail in the middle of the video
+    }
+    thumbs.push(amount); //last thumbnail
+
+    return this.getThumbnailUrls(thumbs);
   }
 
-  seek(e) {
-    e.preventDefault();
-    var seeker = e.target;
-    var seek = e.offsetX / seeker.offsetWidth;
-    var seconds = this.seekerToSeconds(seek);
-    this.element.currentTime = seconds;
-    this.thumbnailSec = seconds;
-    this.thumbnailNotChanged = false;
-    this.createThumbnail();
-    return false;
+  getThumbnailUrls(nums: number[]): string[] {
+    let thumbs: string[] = [];
+    for (const num of nums) {
+      const number = ("00000" + num).slice(-5); //adds padding to the number: 10 would become 00010
+      thumbs.push(`${window.Minds.cinemr_url}${this._entity.cinemr_guid}/thumbnail-${number}.png`);
+    }
+
+    return thumbs;
   }
 
-  seekerToSeconds(seek) {
-    var duration = this.element.duration;
-    console.log('seeking to ', duration * seek);
-    return duration * seek;
-  }
+  selectThumbnail(index: number) {
+    const img = document.querySelector(`.m-thumbnail-selector--thumbnails-list > img:nth-child(${index+1})`);
+    this.selectedThumbnail = index;
 
-  createThumbnail() {
     if (!this.canvas) {
       this.canvas = document.createElement('canvas');
       this.canvas.width = 1280;
       this.canvas.height = 720;
     }
-    this.inProgress = true;
-    this.element.addEventListener('seeked', () => {
-      //console.log(this.element.videoWidth, this.canvas.toDataURL("image/jpeg"));
-      this.canvas.getContext('2d').drawImage(this.element, 0, 0, this.canvas.width, this.canvas.height);
-      this.thumbnail.next(new ThumbnailEvent(this.canvas.toDataURL("image/jpeg"), this.thumbnailSec));
-      this.inProgress = false;
-    });
+    this.canvas.getContext('2d').drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
+    this.thumbnail.next(new ThumbnailEvent(this.canvas.toDataURL("image/jpeg"), this.thumbnailSec));
   }
-
-
   uploadThumbnail(event: any) {
     this.thumbnailInput.nativeElement.click();
   }
@@ -113,20 +122,6 @@ export class ThumbnailSelectorComponent {
     };
     reader.readAsDataURL(this.thumbnailFile);
     element.value = "";
-  }
-  
-  removeCustomThumbnail(e) {
-    this.thumbnailFromFile = false;
-    this.thumbnailNotChanged = true;
-    this.thumbnailSrc = this.originalThumbnailSrc;
-    this.element.currentTime = this.thumbnailSec;
-    this.createThumbnail();
-  }
-
-  useOriginal() {
-    this.thumbnailFromFile = false;
-    this.thumbnailNotChanged = true;
-    this.thumbnailSrc = this.originalThumbnailSrc;
   }
 
 }

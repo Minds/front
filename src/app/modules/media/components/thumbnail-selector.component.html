@@ -1,22 +1,28 @@
-<div class="m-video-loading" [hidden]="!inProgress">
+<div class="m-thumbnail-selector--video-loading" [hidden]="!inProgress">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
-<div class="thumbnail" *ngIf="thumbnailFromFile || thumbnailNotChanged">
-  <img [src]="thumbnailSrc" />
+<div class="m-thumbnail-selector--video-wrapper">
+  <div class="m-thumbnail-selector--thumbnail" *ngIf="thumbnailFromFile || thumbnailNotChanged">
+    <img [src]="thumbnailSrc"/>
+  </div>
+  <video preload="metadata" muted crossOrigin="anonymous" [src]="src" [class.hide]="thumbnailFromFile"></video>
 </div>
-<video preload="metadata" muted crossOrigin="anonymous" [class.hide]="thumbnailFromFile"></video>
-<div class="m-scrubber mdl-color--blue-grey-600" (click)="seek($event)" [hidden]="thumbnailFromFile">
-  <div class="m-scrubber-progress mdl-color--amber-600" [ngStyle]="{'left': (thumbnailSec / element.duration)*100  + '%'}"></div>
+
+<div class="m-thumbnail-selector--thumbnails">
+  <h5 class="m-thumbnail-selector--thumbnails--title">Thumbnails</h5>
+
+  <span class="m-thumbnail-selector--thumbnails--subtext">
+      Select one from the list or <a (click)="uploadThumbnail($event)" i18n>upload a new one</a>
+  </span>
+
+  <div class="m-thumbnail-selector--thumbnails-list">
+    <img class="m-thumbnail-selector--thumbnails-list--thumbnail"
+      *ngFor="let thumb of thumbnails; let i = index"
+      [src]="thumb"
+      crossOrigin="anonymous"
+      [class.m-thumbnail-selector--thumbnails-list--thumbnail--selected]="i === selectedThumbnail"
+      (click)="selectThumbnail(i)">
+  </div>
 </div>
-<span class="m-scrubber-tip" [hidden]="thumbnailFromFile">
-  <span i18n>Click on this bar to change the thumbnail or</span>
-  <a (click)="uploadThumbnail($event)" i18n>upload a new one</a>
-</span>
-<span class="m-scrubber-tip m-scrubber-tip-remove-thumbnail" [hidden]="!thumbnailFromFile">
-  <a (click)="removeCustomThumbnail($event)" i18n>remove custom thumbnail</a>
-</span>
-<span class="m-scrubber-tip m-scrubber-tip-use-original" [hidden]="thumbnailNotChanged || thumbnailFromFile">
-  <a (click)="useOriginal()" i18n>keep original</a>
-</span>
-<input type="file" (change)="addNewThumbnail($event)" hidden #thumbnailInput />
+<input type="file" (change)="addNewThumbnail($event)" hidden #thumbnailInput/>
   

@@ -128,6 +128,7 @@
               "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
               "cdn_assets_url" => Minds\Core\Config::_()->get('app_cdn_url'),
               "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
+              "cinemr_url" => Minds\Core\Config::_()->get('cinemr_url') ?: Minds\Core\Config::_()->cinemr_url,
               "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
               "navigation" => Minds\Core\Navigation\Manager::export(),
               "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
