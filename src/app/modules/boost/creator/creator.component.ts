@@ -242,7 +242,12 @@ export class BoostCreatorComponent implements AfterViewInit {
       return;
     }
     amount = amount.replace(/,/g, '');
-    this.boost.amount = parseInt(amount);
+
+    if (this.boost.type !== 'p2p') {
+      this.boost.amount = parseInt(amount);
+    } else {
+      this.boost.amount = parseFloat(amount);
+    }
 
     this.calcEstimatedCompletionTime(true);
   }
@@ -543,8 +548,8 @@ export class BoostCreatorComponent implements AfterViewInit {
           checksum: this.boost.checksum,
         });
       } else {
-        const tokenDec = (new BN(10)).pow(new BN(18));
-        let bid = this.boost.amount;
+        const tokenDec = (new BN(10)).pow(new BN(18)).toString();
+        let bid: number = (this.boost.amount || 0) * tokenDec;
 
         switch (this.boost.currency) {
           case 'onchain':
@@ -556,8 +561,6 @@ export class BoostCreatorComponent implements AfterViewInit {
               throw new Error('Your Ethereum wallet is locked or connected to another network.');
             }
 
-            bid = (new BN(bid)).mul(tokenDec).toString();
-
             this.boost.nonce = {
               method: 'onchain',
               txHash: await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount, this.boost.checksum),
@@ -566,8 +569,6 @@ export class BoostCreatorComponent implements AfterViewInit {
             break;
 
           case 'offchain':
-            bid = (new BN(bid)).mul(tokenDec).toString();
-
             this.boost.nonce = {
               method: 'offchain',
               address: 'offchain'
@@ -575,8 +576,6 @@ export class BoostCreatorComponent implements AfterViewInit {
             break;
 
           case 'creditcard':
-            bid = (new BN(bid)).mul(tokenDec).toString();
-
             this.boost.nonce = {
               method: 'creditcard',
               address: 'creditcard',
@@ -589,7 +588,7 @@ export class BoostCreatorComponent implements AfterViewInit {
         await this.client.post(`api/v2/boost/peer/${this.object.guid}/${this.object.owner_guid}`, {
           guid,
           currency: 'tokens',
-          bid,
+          bid: bid.toString(),
           destination: this.boost.target.guid,
           scheduledTs: this.boost.scheduledTs,
           postToFacebook: this.boost.postToFacebook ? 1 : null,
