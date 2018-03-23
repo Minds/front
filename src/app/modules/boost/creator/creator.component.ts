@@ -582,7 +582,8 @@ export class BoostCreatorComponent implements AfterViewInit {
               address: 'creditcard',
               token: this.boost.nonce
             };
-            break;
+            throw new Error('Credit Card offer boost is deprecated');
+            // break;
         }
 
         await this.client.post(`api/v2/boost/peer/${this.object.guid}/${this.object.owner_guid}`, {
