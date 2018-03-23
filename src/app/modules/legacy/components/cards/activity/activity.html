@@ -179,6 +179,7 @@
 	<minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
   <m-wire-button *ngIf="session.getLoggedInUser().guid != (activity.remind_object ? activity.remind_object.owner_guid : activity.owner_guid)"
     [object]="activity.remind_object ? activity.remind_object : activity"
+    (done)="wireSubmitted($event)"
   ></m-wire-button>
 	<minds-button-comment [object]="activity" (click)="openComments()"></minds-button-comment>
 	<minds-button-remind [object]="activity"></minds-button-remind>
@@ -193,8 +194,8 @@
 <div class="impressions-tag m-activity--metrics" [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid" *ngIf="!hideTabs">
   <div class="m-activity--metrics-inner m-border">
     <div class="m-activity--metrics-metric" (click)="showWire()">
-  		<i class="material-icons">account_balance</i>
-        <span *ngIf="activity.wire_totals">{{ activity.wire_totals.tokens | abbr }}</span>
+  		<i class="ion-icon ion-flash"></i>
+        <span *ngIf="activity.wire_totals">{{ activity.wire_totals.tokens | token:18 | abbr }}</span>
   	</div>
   	<div class="m-activity--metrics-metric">
   		<i class="material-icons">remove_red_eye</i>

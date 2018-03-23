@@ -217,8 +217,18 @@ export class Activity {
   showWire() {
     if(this.session.getLoggedInUser().guid !== this.activity.owner_guid) {
       this.overlayModal.create(WireCreatorComponent,
-        this.activity.remind_object ? this.activity.remind_object : this.activity)
+        this.activity.remind_object ? this.activity.remind_object : this.activity,
+        { onComplete: wire => this.wireSubmitted(wire) })
           .present();
+    }
+  }
+
+  async wireSubmitted(wire?) {
+    if (wire && this.activity.wire_totals) {
+      this.activity.wire_totals.tokens =
+        parseFloat(this.activity.wire_totals.tokens) + (wire.amount * Math.pow(10, 18));
+
+      this.detectChanges();
     }
   }
 
