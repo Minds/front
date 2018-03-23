@@ -37,6 +37,7 @@ export class TokenOnChainOnboardingComponent {
   providedAddress: string = '';
   hasExternal: boolean = false;
   downloadingMetamask: boolean = false;
+  minds = window.Minds;
 
   readonly Views = Views;
 
