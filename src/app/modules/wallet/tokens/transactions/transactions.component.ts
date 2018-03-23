@@ -136,11 +136,7 @@ export class WalletTokenTransactionsComponent {
       };
 
       if (this.selectedAddress) {
-        opts.addresses = this.selectedAddress;
-      } else { // 'all addresses' option is selected
-        opts.addresses = this.addresses.map((item) => {
-          return item.address
-        }).join(',');
+        opts.address = this.selectedAddress;
       }
 
       if (this.selectedContract)

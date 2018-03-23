@@ -1,5 +1,4 @@
 <m-media--theatre [object]="entity" *ngIf="entity && entity.subtype == 'image'"></m-media--theatre>
-<minds-media-thumbnail-selector (thumbnail)="setThumbnail($event)" [entity]="entity" [thumbnailSrc]="entity.thumbnail_src" *ngIf="entity && entity.subtype == 'video'"></minds-media-thumbnail-selector>
 <div class="mdl-grid media-grid" style="max-width:900px" *ngIf="error">
   <h1>{{error}}</h1>
 </div>
@@ -19,6 +18,14 @@
      ></textarea>
     <label class="mdl-textfield__label" for="name">{{entity.title}}</label>
   </div>
+
+  <minds-media-thumbnail-selector
+    (thumbnail)="setThumbnail($event)"
+    [entity]="entity"
+    [thumbnailSrc]="entity.thumbnail_src" 
+    *ngIf="entity && entity.subtype == 'video'"
+  >
+  </minds-media-thumbnail-selector>
 
   <div class="mdl-cell mdl-cell--12-col m-additional-block mdl-color-text--blue-grey-200">
     <div class="m-license-info">

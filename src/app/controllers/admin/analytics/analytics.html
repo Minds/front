@@ -10,7 +10,7 @@
       </div>
       <div class="mdl-card__supporting-text results">
         <div *ngFor="let stat of dam_list" class="row">
-          <label>{{stat.timestamp * 1000 | date: 'dEEEEMM'}}</label>
+          <label>{{stat.timestamp * 1000 | utcDate | date: 'd/MM'}}</label>
           <b>{{stat.total}}</b>
         </div>
       </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="mdl-card__supporting-text results">
         <div *ngFor="let stat of pageviews_list" class="row">
-          <label>{{stat.timestamp * 1000 | date: 'dEEEEMM'}}</label>
+          <label>{{stat.timestamp * 1000 | utcDate | date: 'd/MM'}}</label>
           <b>{{stat.total}}</b>
         </div>
       </div>
@@ -38,7 +38,7 @@
       </div>
       <div class="mdl-card__supporting-text results">
         <div *ngFor="let stat of mam_list" class="row">
-          <label>{{stat.timestamp * 1000 | date: 'MMMM'}}</label>
+          <label>{{stat.timestamp * 1000 | utcDate | date: 'MMMM'}}</label>
           <b>{{stat.total}}</b>
         </div>
       </div>
@@ -68,7 +68,7 @@
       </div>
       <div class="mdl-card__supporting-text results">
         <div *ngFor="let stat of signups_list" class="row">
-          <label>{{stat.timestamp * 1000 | date: 'dEEEEMM'}}</label>
+          <label>{{stat.timestamp * 1000 | utcDate | date: 'd/MM'}}</label>
           <b>{{stat.total}}</b>
         </div>
       </div>

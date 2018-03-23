@@ -1,7 +1,7 @@
 <div class="m-thumbnail-selector--video-loading" [hidden]="!inProgress">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
-<div class="m-thumbnail-selector--video-wrapper">
+<div class="m-thumbnail-selector--video-wrapper" hidden>
   <div class="m-thumbnail-selector--thumbnail" *ngIf="thumbnailFromFile || thumbnailNotChanged">
     <img [src]="thumbnailSrc"/>
   </div>

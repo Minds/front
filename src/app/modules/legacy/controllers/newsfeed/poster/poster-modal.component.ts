@@ -9,10 +9,11 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 })
 
 export class ModalPosterComponent {
+
   constructor(private overlayModal: OverlayModalService) {
   }
 
-  onLoad() {
+  onLoad(e) {
     setTimeout(() => {
       this.overlayModal.dismiss();
     }, 500);
