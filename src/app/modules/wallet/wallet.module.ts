@@ -43,6 +43,7 @@ const walletRoutes : Routes = [
     children: [
       { path: '', redirectTo: 'tokens', pathMatch: 'full' },
       { path: 'overview', redirectTo: 'tokens', pathMatch: 'full' },
+      { path: '101', redirectTo: '/faq', pathMatch: 'full' },
       //{ path: 'overview', component: WalletOverviewComponent },
       //{ path: 'points', component: WalletPointsComponent },
       //{ path: 'points/purchase', component: WalletPurchaseComponent },
