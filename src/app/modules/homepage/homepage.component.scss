@@ -40,7 +40,7 @@
 
   .m-homepage--hero--overlay {
     position: absolute;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.4);
     top: 0;
     left: 0;
     width: 100%;
@@ -351,7 +351,11 @@ m-homepage {
     }
 
     &.m-homepage--section--subsection--first .m-homepage--section--subsection-container {
-      padding-top: 16px;
+      padding-top: 100px;
+
+      @media screen and (max-width: 720px) {
+        padding-top: 16px;
+      }
     }
 
     .m-homepage--section--subsection-left, .m-homepage--section--subsection-right {

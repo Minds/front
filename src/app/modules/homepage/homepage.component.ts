@@ -24,6 +24,7 @@ export class HomepageComponent {
   };
   offset: string = '';
   inProgress: boolean = false;
+  videoError: boolean = false;
 
   minds = window.Minds;
 
