@@ -63,6 +63,10 @@ export class LoginForm {
             self.errorMessage = 'You are not allowed to login.';
             self.session.logout();
             return;
+          } else if (e.message === 'LoginException::AttemptsExceeded') {
+            self.errorMessage = 'You have exceeded your login attempts. Please try again in a few minutes.';
+            self.session.logout();
+            return;
           }
 
           //two factor?

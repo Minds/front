@@ -85,7 +85,8 @@ export class BlogViewInfinite {
           this.blogs = [response.blog];
           this.title.setTitle(response.blog.title);
           this.analytics.send('pageview', {
-            'page': '/blog/view/' + response.blog.guid,
+            'url': '/blog/view/' + response.blog.guid,
+            'referrer': document.referrer,
             'dimension1': response.blog.ownerObj.guid
           }, response.blog.guid);
         } else if (this.blogs.length === 0) {

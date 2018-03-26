@@ -13,7 +13,7 @@ export class TagsPipe {
 
     //<a>tag
     var url = /(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gim;
-    value = value.replace(url, '<a href="$1" target="_blank">$1</a>');
+    value = value.replace(url, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
 
     //#hashtag
     var hash = /(^|\s)#(\w*[a-zA-Z_]+\w*)/gim;
