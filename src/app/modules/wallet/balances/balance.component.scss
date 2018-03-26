@@ -87,3 +87,15 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
     flex-direction: column;
   }
 }
+
+.m-wallet--balance--testnet {
+  text-align: left;
+  padding: 8px;
+
+  p {
+    font-size: 12px;
+    line-height: 1.25;
+    margin: 0;
+    color: #666;
+  }
+}
