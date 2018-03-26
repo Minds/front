@@ -602,17 +602,15 @@ m-homepage {
 }
 
 .m-footer{
-  background:#333;
+  background:#fff;
   padding:28px;
-  height:150px;
+  min-height:150px;
   position:relative;
 //  justify-content:flex-end;
 
   .copyright{
-    position: absolute;
-    bottom: 35px;
-    left: 0;
-    //right:35px;
+    display: block;
+    padding: 16px 0; 
     width: 100%;
     text-align: center;
     font-size: 11px;

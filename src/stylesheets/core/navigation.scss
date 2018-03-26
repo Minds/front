@@ -24,8 +24,8 @@
 
 .m-footer-nav{
   display:flex;
-  align-items:flex-start;
-  justify-content:flex-start;
+  align-items:center;
+  justify-content:center;
   flex-wrap:wrap;
   margin:0;
   padding:0;
@@ -41,6 +41,7 @@
       cursor:pointer;
       font-size:11px;
       padding:0 $minds-padding;
+      color: #888;
     }
   }
 }

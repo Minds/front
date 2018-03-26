@@ -1,10 +1,15 @@
 .m-footer{
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  text-align:center;
+  background: #fff;
+  border: 1px solid #EEE;
+  text-align: center;
+
+  img {
+    width: 150px;
+    margin: 16px 0;
+  }
 
   .copyright{
     text-transform: uppercase;
+    cursor: pointer;
   }
 }

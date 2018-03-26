@@ -1,6 +1,9 @@
 @import "defaults";
 
 .m-newsfeed-footer{
+  .m-footer-nav {
+    justify-content: flex-start;
+  }
   .copyright{
     text-transform:uppercase;
     font-size: 11px;
