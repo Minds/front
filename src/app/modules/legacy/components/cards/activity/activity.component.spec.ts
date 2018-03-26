@@ -25,6 +25,8 @@ import { DomainPipe } from '../../../../../common/pipes/domain';
 import { AbbrPipe } from '../../../../../common/pipes/abbr';
 import { ChannelBadgesComponent } from '../../../../../common/components/badges/badges.component';
 import { TooltipComponentMock } from '../../../../../mocks/common/components/tooltip/tooltip.component';
+import { TokenPipe } from '../../../../../common/pipes/token.pipe';
+import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 /* tslint:disable */
 // START MOCKS
 @Component({
@@ -202,6 +204,7 @@ export class PostMenuComponentMock {
 export class RemindMock {
   @Input() object;
   @Input() events;
+  @Input() boosted;
 }
 
 @Component({
@@ -423,7 +426,8 @@ describe('Activity', () => {
         PostMenuMock,
         TooltipComponentMock,
         CryptoTokenSymbolMock,
-        Activity
+        Activity,
+        TokenPipe,
       ], // declare the test component
       imports: [
         RouterTestingModule,
@@ -435,7 +439,8 @@ describe('Activity', () => {
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: TranslationService, useValue: translationServiceMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock }
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        NewsfeedService,
       ]
     })
       .compileComponents();  // compile template and css

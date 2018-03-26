@@ -178,10 +178,10 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have a list of three payment options', () => {
+  it('should have a list of two payment options', () => {
     expect(getPaymentOption(1)).not.toBeNull();
     expect(getPaymentOption(2)).not.toBeNull();
-    expect(getPaymentOption(3)).not.toBeNull();
+    //expect(getPaymentOption(3)).not.toBeNull();
   });
 
   it('should an onchain payment option', () => {
@@ -204,7 +204,7 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     expect(comp.boost.currency).toBe('offchain');
   });
 
-  it('clicking on the creditcard payment option should set the currency to usd', () => {
+  xit('clicking on the creditcard payment option should set the currency to usd', () => {
     getPaymentOption(3).nativeElement.click();
     fixture.detectChanges();
 
@@ -212,7 +212,7 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     expect(comp.boost.currency).toBe('usd');
   });
 
-  it('on p2p, clicking on the creditcard payment option should set the currency to creditcard', () => {
+  xit('on p2p, clicking on the creditcard payment option should set the currency to creditcard', () => {
     comp.boost.type = 'p2p';
     fixture.detectChanges();
 

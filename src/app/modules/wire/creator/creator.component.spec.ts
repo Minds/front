@@ -29,6 +29,8 @@ import { TokenPipe } from '../../../common/pipes/token.pipe';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
+import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
+import { FeaturesService } from '../../../services/features.service';
 
 /* tslint:disable */
 @Component({
@@ -170,6 +172,7 @@ describe('WireCreatorComponent', () => {
         TooltipComponent,
         AddressExcerptPipe,
         TokenPipe,
+        IfFeatureDirective,
       ], // declare the test component
       imports: [ FormsModule, RouterTestingModule ],
       providers: [
@@ -178,6 +181,7 @@ describe('WireCreatorComponent', () => {
         { provide: WireContractService, useValue: wireContractServiceMock },
         WireService,
         Web3WalletService,
+        FeaturesService,
         { provide: Web3WalletService, useValue: web3WalletServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: TokenContractService, useValue: tokenContractServiceMock },
@@ -288,7 +292,7 @@ describe('WireCreatorComponent', () => {
     const subtitle = fixture.debugElement.query(By.css('.m-wire--creator--header .m-wire-creator--subtext'));
     expect(subtitle).not.toBeNull();
 
-    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them dollars or tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
+    expect(subtitle.nativeElement.textContent).toContain('Support @' + comp.owner.username + ' by sending them tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it\'s a donation.');
   });
 
   it('should have a payment section', () => {
