@@ -1,0 +1,40 @@
+pipeline:
+
+  test:
+    image: markharding/minds-front-base
+    commands:
+      - npm install && npm install -g typescript tslint gulp
+      - npm test
+      #- tslint -c tslint.json 'app/**/*.ts'
+
+  build:
+    image: markharding/minds-front-base
+    commands:
+      - npm install -g gulp @angular/cli
+      - gulp build.sass && gulp build.sass ##weird build needs to be run twice for now
+      - ng build --prod --vc --deploy-url "https://d15u56mvtglc6v.cloudfront.net/front/dist/"
+    when:
+      event: [ push, tag, deployment ]
+      branch: [ master, test/codebuild, delta/launch ]
+  
+  cp:
+    image: plugins/s3-sync:latest
+    bucket: minds-repo
+    secrets: [ aws_access_key_id, aws_secret_access_key ]
+    region: us-east-1
+    source: dist
+    target: front/dist
+    delete: false
+    when:
+      event: [ push, tag, deployment ]
+      branch: [ master, test/codebuild, delta/launch ]
+
+  deploy:
+    image: minds/ecs-update:latest
+    cluster: minds
+    region: us-east-1
+    service: app
+    secrets: [ aws_access_key_id, aws_secret_access_key ]
+    when:
+      event: [ push, tag, deployment ]
+      branch: [ master, test/codebuild ]
