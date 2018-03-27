@@ -31,6 +31,7 @@
     <div class="minds-usercard-buttons" [ngClass]="{ 'has-feature-button': session.isAdmin() }">
       <ng-content select="[buttons]"></ng-content>
     </div>
+    <m-safe-toggle *ngIf="session.isAdmin()" [(entity)]="entity"></m-safe-toggle>
   </div>
   
 </div>
