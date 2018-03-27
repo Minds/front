@@ -113,7 +113,6 @@ export class NotificationsComponent {
         this.offset = data['load-next'];
         this.inProgress = false;
         this.minds.notifications_count = 0;
-        this.notificationList.nativeElement.scrollTop = 0;
 
         this.notificationService.clear();
       });
