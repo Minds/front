@@ -20,7 +20,7 @@ export class TopbarOptionsComponent {
 		return this.session.getLoggedInUser().boost_rating;
   }
   
-  toggleRating() {
+  toggleRating(event) {
 		switch (this.rating) {
 			case 1:
 				this.session.getLoggedInUser().boost_rating = 2;
@@ -31,6 +31,7 @@ export class TopbarOptionsComponent {
 				break;
 		}
 		this.change.next({ rating: this.rating });
+		event.stopPropagation();
   }
 
 }

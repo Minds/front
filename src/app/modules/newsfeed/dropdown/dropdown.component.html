@@ -19,11 +19,11 @@
         This will enable/disable the Boost box on top of your feed from self-rotating.
       </m-tooltip>
       <div class="m-layout--spacer"></div>
-      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2" [mdlSwitch] [toggled]="true" *ngIf="!paused">
-        <input type="checkbox" id="switch-2" class="mdl-switch__input" [ngModel]="!boostRotatorService.isBoostPaused()" (ngModelChange)="toggleBoostPause()">
+      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-pause" [mdlSwitch] [toggled]="true" *ngIf="!paused">
+        <input type="checkbox" id="switch-pause" class="mdl-switch__input" [ngModel]="!boostRotatorService.isBoostPaused()" (ngModelChange)="toggleBoostPause()">
       </label>
-      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2" [mdlSwitch] [toggled]="false" *ngIf="paused">
-        <input type="checkbox" id="switch-2" class="mdl-switch__input" [ngModel]="boostRotatorService.isBoostPaused()" (ngModelChange)="toggleBoostPause()">
+      <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-pause" [mdlSwitch] [toggled]="false" *ngIf="paused">
+        <input type="checkbox" id="switch-pause" class="mdl-switch__input" [ngModel]="boostRotatorService.isBoostPaused()" (ngModelChange)="toggleBoostPause()">
       </label>
     </li>
     <li class="m-dropdown--list--item" *ngIf="plus">

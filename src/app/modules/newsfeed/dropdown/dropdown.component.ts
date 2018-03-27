@@ -47,7 +47,9 @@ export class NewsfeedDropdownComponent implements OnInit {
   }
 
   onOptionsChange(e: { rating }) {
-    this.boostRotatorService.setRating(e.rating);
+    if (e.rating) {
+      this.boostRotatorService.setRating(e.rating);
+    }
   }
 
 }
