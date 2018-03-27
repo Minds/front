@@ -178,6 +178,7 @@ minds-card-image, minds-card-video {
         text-transform: uppercase;
         letter-spacing: 0.75px;
         text-rendering: optimizeLegibility;
+        text-overflow: unset;
 
         &:hover {
           text-decoration: underline;
