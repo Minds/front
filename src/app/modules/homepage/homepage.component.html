@@ -36,7 +36,7 @@
   <div class="m-homepage--section--subsection m-homepage--section--subsection--first"> 
     <div class="m-homepage--section--subsection-container">
       <div class="m-homepage--section--subsection-left m-homepage--section--subsection-image">
-        <img src="/assets/screenshots/post.jpg" />
+        <img [src]="minds.cdn_assets_url + 'assets/screenshots/post.jpg'" />
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
         <h5>Newsfeed</h5>
@@ -63,7 +63,7 @@
         </p>
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-image">
-        <img src="/assets/screenshots/wallet.jpg" />
+        <img [src]="minds.cdn_assets_url + 'assets/screenshots/wallet.jpg'" />
       </div>
     </div>
   </div>
@@ -71,7 +71,7 @@
   <div class="m-homepage--section--subsection">
     <div class="m-homepage--section--subsection-container">
       <div class="m-homepage--section--subsection-left m-homepage--section--subsection-image">
-        <img src="/assets/screenshots/boost.jpg" />
+        <img [src]="minds.cdn_assets_url + 'assets/screenshots/boost.jpg'" />
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
         <h5>Boost</h5>
@@ -97,7 +97,7 @@
         </p>
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-image">
-        <img src="/assets/screenshots/wire.jpg" />
+        <img [src]="minds.cdn_assets_url + 'assets/screenshots/wire.jpg'" />
       </div>
     </div>
   </div>
@@ -105,7 +105,7 @@
   <div class="m-homepage--section--subsection">
     <div class="m-homepage--section--subsection-container">
       <div class="m-homepage--section--subsection-left m-homepage--section--subsection-image">
-        <img src="/assets/screenshots/wire-send.jpg" />
+        <img [src]="minds.cdn_assets_url + 'assets/screenshots/wire-send.jpg'" />
       </div>
       <div class="m-homepage--section--subsection-right m-homepage--section--subsection-text">
         <h5>Wire</h5>
@@ -180,7 +180,7 @@
 <div class="mdl-grid mdl-grid--no-spacing m-homepage--footer">
 
     <section class="mdl-cell mdl-cell--12-col m-footer">
-      <img src="assets/logos/logo.svg" />
+      <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
       <ul class="m-footer-nav m-footer-nav-inline">
         <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item ">
           <a *ngIf="page.path && page.path.indexOf('p/') > -1" [routerLink]="[page.path]">{{page.title}}</a>
