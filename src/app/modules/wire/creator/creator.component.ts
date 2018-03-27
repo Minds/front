@@ -221,8 +221,8 @@ export class WireCreatorComponent implements AfterViewInit {
 
   setDefaults() {
     this.wire.amount = 1;
-    this.wire.recurring = true;
-    this.setPayloadType('onchain');
+    this.wire.recurring = false;
+    this.setPayloadType('offchain');
   }
 
   // General

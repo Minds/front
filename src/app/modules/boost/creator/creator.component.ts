@@ -46,7 +46,7 @@ export class BoostCreatorComponent implements AfterViewInit {
 
   boost: BoostStruc = {
     amount: 1000,
-    currency: 'onchain',
+    currency: 'offchain',
     type: null,
 
     // General

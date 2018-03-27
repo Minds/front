@@ -406,7 +406,7 @@ describe('WireCreatorComponent', () => {
     comp.setPayloadType('onchain');
     fixture.detectChanges();
 
-    expect(comp.wire.recurring).toBe(true);
+    expect(comp.wire.recurring).toBe(false);
     const checkbox: DebugElement = getRecurringCheckbox();
 
     checkbox.nativeElement.click();
@@ -414,7 +414,7 @@ describe('WireCreatorComponent', () => {
 
     fixture.detectChanges();
 
-    expect(comp.wire.recurring).toBe(false);
+    expect(comp.wire.recurring).toBe(true);
   });
 
   it('should show creator rewards', () => {
