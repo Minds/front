@@ -17,6 +17,7 @@ export class WalletBalanceTokensComponent implements OnInit {
   inProgress: boolean = false;
   balance: number = 0;
   addresses: Array<any> = [];
+  minds = window.Minds;
 
   constructor(
     protected client: Client,
