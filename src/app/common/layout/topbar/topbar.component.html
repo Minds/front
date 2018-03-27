@@ -1,7 +1,7 @@
 <div class="m-topbar--row">
 
   <a class="m-topbar--logo" routerLink="/">
-    <img src="assets/logos/bulb.svg" />
+    <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'" />
   </a>  
 
   <ng-content select="[search]"></ng-content>
