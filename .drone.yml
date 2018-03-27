@@ -11,7 +11,7 @@ pipeline:
     image: markharding/minds-front-base
     commands:
       - gulp build.sass && gulp build.sass ##weird build needs to be run twice for now
-      - ng build --prod --vc --deploy-url "https://d15u56mvtglc6v.cloudfront.net/front/dist/"
+      - ng build --prod --vc --deploy-url "https://cdn-assets.minds.com/front/dist/"
     when:
       event: [ push, tag, deployment ]
       branch: [ master, test/codebuild, delta/launch ]
