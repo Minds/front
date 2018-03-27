@@ -9,6 +9,8 @@ minds-channel-modules{
         height: 88px;
         display:inline-block;
         width:calc(100% / 3);
+        padding: 1px;
+        box-sizing: border-box;
         overflow: hidden;
 
         > .m-thumb-image {
