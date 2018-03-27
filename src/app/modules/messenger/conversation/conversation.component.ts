@@ -109,7 +109,7 @@ export class MessengerConversation {
     if (!opts.finish)
       this.inProgress = true;
 
-    this.client.get('api/v2/conversations/' + this.conversation.guid, opts)
+    this.client.get('api/v2/messenger/conversations/' + this.conversation.guid, opts)
       .then((response: any) => {
         this.inProgress = false;
         if (!response.messages) {
@@ -239,7 +239,7 @@ export class MessengerConversation {
       time_created: Math.floor(Date.now() / 1000)
     }), currentIndex = newLength - 1;
 
-    this.client.post('api/v2/conversations/' + this.conversation.guid, {
+    this.client.post('api/v2/messenger/conversations/' + this.conversation.guid, {
       message: this.message,
       encrypt: true,
       tabId: this.tabId
@@ -272,7 +272,7 @@ export class MessengerConversation {
     this.messages = []; // Optimistic
     this.blockingActionInProgress = true;
 
-    this.client.delete('api/v2/conversations/' + this.conversation.guid, {})
+    this.client.delete('api/v2/messenger/conversations/' + this.conversation.guid, {})
       .then((response: any) => {
         this.blockingActionInProgress = false;
       })
@@ -325,7 +325,7 @@ export class MessengerConversation {
 
     this.invited = true;
     this.invitable.forEach(participant => {
-      this.client.put(`api/v2/conversations/invite/${participant.guid}`);
+      this.client.put(`api/v2/messenger/conversations/invite/${participant.guid}`);
     });
   }
 
