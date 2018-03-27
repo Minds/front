@@ -57,6 +57,13 @@
         FAQ 
       </li>
       <li class="mdl-menu__item"
+        [routerLink]="['/groups/profile/', '100000000000000681']"
+        i18n="@@MINDS__TOPBAR__HS_GROUP"
+        (click)="menu.value = false"
+        >
+        Help & Support
+      </li>
+      <li class="mdl-menu__item"
         *ngIf="session.isLoggedIn()"
         [routerLink]="['/logout']"
         i18n="@@MINDS__TOPBAR__LOGOUT"
