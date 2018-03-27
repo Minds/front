@@ -11,7 +11,7 @@
 
     <ul class="m-token--onboarding--onchain-selections" *ngIf="!display">
       <li>
-        <img class="metamask" src="assets/ext/metamask.png" />
+        <img class="metamask" [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'" />
         <h4>MetaMask</h4>
         <p>Minds recommends using MetaMask for the most seamless user experience.</p>
 
@@ -94,7 +94,7 @@
         </ng-container>
 
         <ng-container *ngIf="display === Views.UseExternal">
-          <img class="metamask" src="assets/ext/metamask.png" />
+          <img class="metamask" [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'" />
           <h4>MetaMask</h4>
           <p>
             Minds recommends using MetaMask for the most seamless user experience.
