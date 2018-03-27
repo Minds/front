@@ -9,7 +9,7 @@ import { Session } from '../../services/session';
   inputs: ['_group: group'],
   outputs: ['membership'],
   template: `
-    <button class="m-btn m-btn--join-group"
+    <button class="m-btn m-btn--slim m-btn--join-group"
       *ngIf="!group['is:banned'] && !group['is:awaiting']
         && !group['is:invited'] && !group['is:member']"
         (click)="join()" i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION"
@@ -17,11 +17,11 @@ import { Session } from '../../services/session';
       Join
     </button>
     <span *ngIf="group['is:invited'] &amp;&amp; !group['is:member']">
-      <button class="m-btn m-btn--action" (click)="accept()" i18n="@@M__ACTION__ACCEPT">Accept</button>
-      <button class="m-btn m-btn--action" (click)="decline()" i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION">Decline</button>
+      <button class="m-btn m-btn--slim m-btn--action" (click)="accept()" i18n="@@M__ACTION__ACCEPT">Accept</button>
+      <button class="m-btn m-btn--slim m-btn--action" (click)="decline()" i18n="@@GROUPS__JOIN_BUTTON__DECLINE_ACTION">Decline</button>
     </span>
-    <button class="m-btn subscribed " *ngIf="group['is:member']" (click)="leave()" i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION">Leave</button>
-    <button class="m-btn awaiting" *ngIf="group['is:awaiting']" (click)="cancelRequest()" i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION">Cancel request</button>
+    <button class="m-btn m-btn--slim subscribed " *ngIf="group['is:member']" (click)="leave()" i18n="@@GROUPS__JOIN_BUTTON__LEAVE_ACTION">Leave</button>
+    <button class="m-btn m-btn--slim awaiting" *ngIf="group['is:awaiting']" (click)="cancelRequest()" i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION">Cancel request</button>
     <m-modal-signup-on-action
       [open]="showModal"
       (closed)="showModal = false"

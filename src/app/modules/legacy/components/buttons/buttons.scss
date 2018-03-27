@@ -6,8 +6,8 @@
   > button{
     cursor:pointer;
     background: transparent;
-    border: 1px solid #78909c;
-    color: #78909c;
+    border: 1px solid #ececec;
+    color: #444;
     padding: 8px 16px;
     font-size: 12px;
     border-radius: 2px;
@@ -25,8 +25,8 @@
   }
 
   > button:hover, > button.subscribed, > button.selected{
-    background-color: #78909c;
-    color: #FFF !important;
+    //background-color: #78909c;
+    color: #222;
   }
 }
 
