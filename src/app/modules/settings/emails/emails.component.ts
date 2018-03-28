@@ -28,6 +28,8 @@ export class SettingsEmailsComponent implements OnInit {
     }
   };
 
+  email: string = '';
+
   error: string = '';
   changed: boolean = false;
   saved: boolean = false;
@@ -63,6 +65,7 @@ export class SettingsEmailsComponent implements OnInit {
       }
       this.notifications[item.campaign][item.topic] = value;
     });
+    this.email = response.email;
     this.loading = false;
   }
 
@@ -81,6 +84,7 @@ export class SettingsEmailsComponent implements OnInit {
 
     this.inProgress = true;
     this.client.post('api/v2/settings/emails', {
+      'email': this.email,
       'notifications': this.notifications
     })
       .then((response: any) => {

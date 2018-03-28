@@ -22,6 +22,22 @@
 </div>
 
 <div class="m-settings--section m-settings--emails--when-campaign m-border" *ngIf="!loading">
+  <h4>E-Mail address</h4>
+
+  <ul class="m-settings--emails-campaigns">
+    <li class="m-settings--emails-campaigns--campaign">
+      <input class="m-input"
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        (keyup)="change()"
+      />
+    </li>
+  </ul>
+</div>
+
+<div class="m-settings--section m-settings--emails--when-campaign m-border" *ngIf="!loading">
   <h4>Email me when</h4>
 
   <ul class="m-settings--emails-campaigns">
