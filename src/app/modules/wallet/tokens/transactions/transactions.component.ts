@@ -232,7 +232,7 @@ export class WalletTokenTransactionsComponent {
     const user = this.session.getLoggedInUser();
 
     return {
-      avatar: `/icon/${user.guid}/large/${user.icontime}`,
+      avatar: `/icon/${user.guid}/medium/${user.icontime}`,
       username: user.username,
     }
   }
@@ -243,7 +243,7 @@ export class WalletTokenTransactionsComponent {
       user = isSender ? transaction.sender : transaction.receiver;
 
     return {
-      avatar: `/icon/${user.guid}/large/${user.icontime}`,
+      avatar: `/icon/${user.guid}/medium/${user.icontime}`,
       username: user.username,
       isSender,
     }
