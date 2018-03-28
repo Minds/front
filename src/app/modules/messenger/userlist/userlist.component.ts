@@ -116,7 +116,7 @@ export class MessengerUserlist {
     this.search_timeout = setTimeout(() => {
 
       this.inProgress = true;
-      this.client.get('api/v2/messenger/conversations/search', {
+      this.client.get('api/v2/messenger/search', {
         q,
         limit: 24
       })
