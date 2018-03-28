@@ -45,7 +45,7 @@
             <i class="material-icons m-token--ledger-filters--check selected" *ngIf="!selectedContract">check</i>
           </li>
         <li class="m-dropdown--list--item" *ngFor="let contract of contracts" (click)="toggleContract(contract)">
-          <span style="text-transform: capitalize">{{ contract }}</span>
+          <span style="text-transform: capitalize">{{ getNormalizedContractName(contract) }}</span>
           <div class="m-layout--spacer"></div>
           <i class="material-icons m-token--ledger-filters--check selected" *ngIf="selectedContract == contract">check</i>
         </li>

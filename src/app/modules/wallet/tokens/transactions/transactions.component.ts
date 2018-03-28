@@ -24,7 +24,13 @@ export class WalletTokenTransactionsComponent {
   moreData: boolean = true;
   selectedAddress: string | null = null;
   selectedContract: string | null = null;
-  contracts: string[] = ['withdraw', 'wire', 'plus', 'token'];
+  contracts: string[] = [
+    'withdraw',
+    'wire',
+    'plus',
+    'token',
+    'offchain:reward',
+  ];
 
   contractsToggle: boolean = false;
   addressesToggle: boolean = false;
