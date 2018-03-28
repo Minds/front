@@ -157,6 +157,9 @@ export class Comments {
         ) {
           this.moreData = false;
         }
+
+        this.cd.markForCheck();
+        this.cd.detectChanges();
       })
       .catch((e) => {
         this.inProgress = false;
