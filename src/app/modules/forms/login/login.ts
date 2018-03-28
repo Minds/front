@@ -54,19 +54,13 @@ export class LoginForm {
         this.inProgress = false;
         if (e.status === 'failed') {
           //incorrect login details
-          self.errorMessage = 'Incorrect username/password. Please try again.';
+          self.errorMessage = 'LoginException::AuthenticationFailed';
           self.session.logout();
         }
 
         if (e.status === 'error') {
-          if (e.message === 'LoginException:BannedUser') {
-            self.errorMessage = 'You are not allowed to login.';
+          if (e.message === 'LoginException:BannedUser' || e.message === 'LoginException::AttemptsExceeded') {
             self.session.logout();
-            return;
-          } else if (e.message === 'LoginException::AttemptsExceeded') {
-            self.errorMessage = 'You have exceeded your login attempts. Please try again in a few minutes.';
-            self.session.logout();
-            return;
           }
 
           //two factor?

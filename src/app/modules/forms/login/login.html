@@ -5,7 +5,7 @@
       *ngIf="errorMessage == 'LoginException::AttemptsExceeded'"
       i18n="@@MINDS__LOGIN__EXCEPTION__ATTEMPTS_EXCEEDED"
     >
-      Login attempts exceeded
+      You have exceeded your login attempts. Please try again in a few minutes.
     </ng-container>
     <ng-container
       *ngIf="errorMessage == 'LoginException::DisabledUser'"
@@ -13,9 +13,9 @@
       This account has been disabled
     </ng-container>
     <ng-container
-      *ngIf="errorMessage == 'LoginException::UsernameFailure'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__USERNAME_FAILURE">
-      Incorrect username
+      *ngIf="errorMessage == 'LoginException::AuthenticationFailed'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__INCORRECT_USERNAME_PASSWORD">
+      Incorrect username/password. Please try again.
     </ng-container>
     <ng-container
       *ngIf="errorMessage == 'LoginException::AccountLocked'"
@@ -23,14 +23,9 @@
       Account locked
     </ng-container>
     <ng-container
-      *ngIf="errorMessage == 'LoginException::PasswordFailure'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__PASSWORD_FAILURE">
-      Incorrect password
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::BannedUser'"
+      *ngIf="errorMessage == 'LoginException:BannedUser'"
       i18n="@@MINDS__LOGIN__EXCEPTION__BANNED_USER">
-      This account has been banned
+      You are not allowed to login.
     </ng-container>
     <ng-container
       *ngIf="errorMessage == 'LoginException::Unknown'"
