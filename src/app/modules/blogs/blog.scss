@@ -94,14 +94,6 @@
     }
   }
 
-  .minds-comments-container {
-    max-height: 600px;
-    overflow-y: auto;
-
-    @media screen and (max-width: $max-mobile) {
-      max-height: 75vh;
-    }
-  }
 }
 
 minds-blog-view, m-blog-view {

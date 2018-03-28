@@ -1,15 +1,16 @@
-import { Directive, EventEmitter, ElementRef } from '@angular/core';
+import { Directive, ElementRef, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs/Rx';
 
 @Directive({
   selector: '[commentsScroll]',
-  inputs: ['_emitter: emitter'],
+  inputs: ['_emitter: emitter', 'enabled'],
   outputs: ['previous', 'next'],
   exportAs: 'commentsScroll'
 })
 export class CommentsScrollDirective {
 
   emitter: EventEmitter<any>;
+  enabled: boolean = true;
   previous: EventEmitter<any> = new EventEmitter();
   next: EventEmitter<any> = new EventEmitter();
 
@@ -118,26 +119,30 @@ export class CommentsScrollDirective {
   }
 
   top(run?: boolean, stick?: boolean) {
-    this.elementRef.nativeElement.scrollTop = 0;
+    if (this.enabled) {
+      this.elementRef.nativeElement.scrollTop = 0;
 
-    if (stick) {
-      this.setStick('top');
-    }
+      if (stick) {
+        this.setStick('top');
+      }
 
-    if (run) {
-      this.run();
+      if (run) {
+        this.run();
+      }
     }
   }
 
   bottom(run?: boolean, stick?: boolean) {
-    this.elementRef.nativeElement.scrollTop = this.elementRef.nativeElement.scrollHeight;
+    if (this.enabled) {
+      this.elementRef.nativeElement.scrollTop = this.elementRef.nativeElement.scrollHeight;
 
-    if (stick) {
-      this.setStick('bottom');
-    }
+      if (stick) {
+        this.setStick('bottom');
+      }
 
-    if (run) {
-      this.run();
+      if (run) {
+        this.run();
+      }
     }
   }
 }

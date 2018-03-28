@@ -11,7 +11,7 @@ import { Textarea } from '../../../../common/components/editors/textarea.compone
 @Component({
   moduleId: module.id,
   selector: 'minds-comments',
-  inputs: ['_object : object', '_reversed : reversed', 'limit', 'focusOnInit'],
+  inputs: ['_object : object', '_reversed : reversed', 'limit', 'focusOnInit', 'scrollable'],
   templateUrl: 'list.html',
   providers: [
     {
@@ -33,6 +33,7 @@ export class Comments {
   reversed: boolean = false;
 
   focusOnInit: boolean = false;
+  scrollable: boolean = false;
   @ViewChild('message') textareaControl: Textarea;
   @ViewChild('scrollArea') scrollView: ElementRef;
 

@@ -2,6 +2,7 @@
   commentsScroll
   (previous)="autoloadPrevious()"
   [emitter]="commentsScrollEmitter"
+  [enabled]="scrollable"
   scrollLock [strictScrollLock]="false"
   (overscroll)="overscrollHandler($event)"
   #scrollArea
