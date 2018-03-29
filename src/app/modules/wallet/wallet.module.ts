@@ -38,13 +38,14 @@ import { WalletTokenWithdrawLedgerComponent } from './tokens/withdraw/ledger/led
 import { WalletTokenAddressesComponent } from './tokens/addresses/addresses.component';
 import { TokenOnboardingModule } from './tokens/onboarding/onboarding.module';
 import { WalletTokenContributionsChartComponent } from './tokens/contributions/chart.component';
+import { WalletToken101Component } from './tokens/101/101.component';
 
 const walletRoutes : Routes = [
   { path: 'wallet', component: WalletComponent,
     children: [
       { path: '', redirectTo: 'tokens', pathMatch: 'full' },
       { path: 'overview', redirectTo: 'tokens', pathMatch: 'full' },
-      { path: '101', redirectTo: '/faq', pathMatch: 'full' },
+      { path: '101', redirectTo: 'tokens/101', pathMatch: 'full' },
       //{ path: 'overview', component: WalletOverviewComponent },
       //{ path: 'points', component: WalletPointsComponent },
       //{ path: 'points/purchase', component: WalletPurchaseComponent },
@@ -57,6 +58,7 @@ const walletRoutes : Routes = [
           { path: 'contributions/join', component: WalletTokenJoinComponent },  
           { path: 'contributions', component: WalletTokenContributionsComponent },
           { path: 'addresses', component: WalletTokenAddressesComponent },
+          { path: '101', component: WalletToken101Component },
         ] 
       },
       { path: 'usd', component: WalletUSDComponent, 
@@ -115,6 +117,7 @@ const walletRoutes : Routes = [
     WalletUSDSettingsComponent,
     WalletTokenAddressesComponent,
     WalletTokenContributionsChartComponent,
+    WalletToken101Component,
   ],
   exports: [
     WalletComponent,
