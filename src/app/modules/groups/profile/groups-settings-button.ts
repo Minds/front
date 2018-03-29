@@ -46,7 +46,7 @@ import { Session } from '../../../services/session';
           <option *ngFor="let category of categories" [value]="category.id">{{category.label}}</option>
         </select>
 
-        <button class="mdl-button mdl-button--colored" (click)="feature(true)" i18n="@@M__ACTION__FEATURE">Feature</button>
+        <button class="mdl-button mdl-button--colored" (click)="feature()" i18n="@@M__ACTION__FEATURE">Feature</button>
       </div>
     </m-modal>
   `
@@ -141,7 +141,7 @@ export class GroupsSettingsButton {
       })
   }
 
-  onFeatureModalClose() {
+  onFeatureModalClose(e) {
     this.featureModalOpen = false;
   }
 
