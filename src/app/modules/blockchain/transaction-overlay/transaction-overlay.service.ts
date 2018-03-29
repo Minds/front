@@ -50,11 +50,11 @@ export class TransactionOverlayService {
     try {
       result = await fn();
     } catch (e) {
-      if (e.value.message.includes('User denied transaction signature')) {
+      if (e.value && e.value.message && e.value.message.includes('User denied transaction signature')) {
         throw new Error('User denied the transaction');
       } else {
         console.error(e);
-        throw new Error('Unexpected error');
+        throw new Error('Unexpected error. Is your wallet unlocked?');
       }
     } finally {
       this.comp.hide();
