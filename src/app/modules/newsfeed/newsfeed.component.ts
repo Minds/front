@@ -11,7 +11,7 @@ import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Poster } from '../../modules/legacy/controllers/newsfeed/poster/poster';
 import { ContextService } from '../../services/context.service';
-import { BoostRotatorService } from './boost-rotator/boost-rotator.service';
+import { NewsfeedBoostService } from './newsfeed-boost.service';
 
 @Component({
   selector: 'm-newsfeed',

@@ -1,6 +1,6 @@
-<m-topbar--navigation--options (change)="onOptionsChange($event)">
-  <ng-container *ngIf="showBoostOptions && boostRotatorService.isInitialized()">
-    <li class="m-dropdown--list--item" *ngIf="boostRotatorService.getBoostRating() == 2 && boostRotatorService.isBoostEnabled()">
+<m-topbar--navigation--options>
+  <ng-container *ngIf="showBoostOptions">
+    <li class="m-dropdown--list--item" *ngIf="boostService.getBoostRating() == 2 && boostService.isBoostEnabled()">
       <span i18n="@@M__COMMON__EXPLICIT">Explicit</span>
       <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__EXPLICIT_ITEM_TOOLTIP">
         By selecting Explicit mode, you acknowledge that you are 18+ years of age and are willing to see graphic content, explicit language, and nudity.
@@ -13,22 +13,22 @@
         <input type="checkbox" id="switch-explicit" class="mdl-switch__input" [ngModel]="session.getLoggedInUser().mature" (ngModelChange)="setExplicit(true)">
       </label>
     </li>
-    <li class="m-dropdown--list--item" (click)="toggleBoostPause()" *ngIf="boostRotatorService.isBoostEnabled()">
+    <li class="m-dropdown--list--item" (click)="toggleBoostPause()" *ngIf="boostService.isBoostEnabled()">
       <span i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__AUTO_ROTATE_ITEM">Auto-rotate</span>
       <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__AUTO_ROTATE_ITEM_TOOLTIP">
         This will enable/disable the Boost box on top of your feed from self-rotating.
       </m-tooltip>
       <div class="m-layout--spacer"></div>
       <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-pause" [mdlSwitch] [toggled]="true" *ngIf="!paused">
-        <input type="checkbox" id="switch-pause" class="mdl-switch__input" [ngModel]="!boostRotatorService.isBoostPaused()" (ngModelChange)="toggleBoostPause()">
+        <input type="checkbox" id="switch-pause" class="mdl-switch__input" [ngModel]="!boostService.isBoostPaused()" (ngModelChange)="toggleBoostPause()">
       </label>
       <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-pause" [mdlSwitch] [toggled]="false" *ngIf="paused">
-        <input type="checkbox" id="switch-pause" class="mdl-switch__input" [ngModel]="boostRotatorService.isBoostPaused()" (ngModelChange)="toggleBoostPause()">
+        <input type="checkbox" id="switch-pause" class="mdl-switch__input" [ngModel]="boostService.isBoostPaused()" (ngModelChange)="toggleBoostPause()">
       </label>
     </li>
     <li class="m-dropdown--list--item" *ngIf="plus">
-      <span *ngIf="boostRotatorService.isBoostEnabled()" (click)="hideBoost()" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__HIDE_BOOST_ITEM">Hide Boost</span>
-      <span *ngIf="!boostRotatorService.isBoostEnabled()" (click)="showBoost()" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__SHOW_BOOST_ITEM">Show Boost</span>
+      <span *ngIf="boostService.isBoostEnabled()" (click)="hideBoost()" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__HIDE_BOOST_ITEM">Hide Boost</span>
+      <span *ngIf="!boostService.isBoostEnabled()" (click)="showBoost()" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__SHOW_BOOST_ITEM">Show Boost</span>
       <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__BOOST_VISIBILITY_TOOLTIP">
         Plus users may hide Boosts from their newsfeed.
       </m-tooltip>
@@ -39,7 +39,7 @@
         Upgrade to Plus in order to turn off Boost.
       </m-tooltip>
     </li>
-    <li class="m-dropdown--list--item" (click)="selectCategories()" *ngIf="boostRotatorService.isBoostEnabled()">
+    <li class="m-dropdown--list--item" (click)="selectCategories()" *ngIf="boostService.isBoostEnabled()">
       <span i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__SELECT_CATEGORIES_ITEM">Select Categories</span>
       <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__SELECT_CATEGORIES_ITEM_TOOLTIP">
         Select the categories of content you’d like to see more of

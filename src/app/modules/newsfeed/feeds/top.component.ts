@@ -1,7 +1,7 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
 import { MindsTitle } from '../../../services/ux/title';
@@ -11,13 +11,14 @@ import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { Poster } from '../../../modules/legacy/controllers/newsfeed/poster/poster';
 import { ContextService } from '../../../services/context.service';
+import { SettingsService } from '../../settings/settings.service';
 
 @Component({
   selector: 'm-newsfeed--top',
   templateUrl: 'top.component.html'
 })
 
-export class NewsfeedTopComponent {
+export class NewsfeedTopComponent implements OnInit, OnDestroy {
 
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
@@ -28,6 +29,7 @@ export class NewsfeedTopComponent {
   minds;
 
   paramsSubscription: Subscription;
+  ratingSubscription: Subscription;
 
   @ViewChild('poster') private poster: Poster;
 
@@ -41,11 +43,16 @@ export class NewsfeedTopComponent {
     private storage: Storage,
     private context: ContextService,
     private session: Session,
+    private settingsService: SettingsService
   ) {
     this.title.setTitle('Newsfeed');
 
     if (this.session.isLoggedIn())
       this.rating = this.session.getLoggedInUser().boost_rating;
+
+    this.ratingSubscription = settingsService.ratingChanged.subscribe((event) => {
+      this.onRatingChanged(event);
+    });
   }
 
   ngOnInit() {
@@ -53,6 +60,16 @@ export class NewsfeedTopComponent {
     this.minds = window.Minds;
 
     this.context.set('activity');
+  }
+
+  ngOnDestroy() {
+    if (this.ratingSubscription) {
+      this.ratingSubscription.unsubscribe();
+    }
+
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -103,6 +120,12 @@ export class NewsfeedTopComponent {
       }
     }
 
+  }
+
+  onRatingChanged(rating) {
+    this.rating = rating;
+
+    this.load(true);
   }
 
 }

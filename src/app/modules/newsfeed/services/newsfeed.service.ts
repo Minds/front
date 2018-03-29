@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 
 @Injectable()
 export class NewsfeedService {
-
   constructor(private client: Client, private session: Session) {
   }
 

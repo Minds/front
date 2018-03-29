@@ -71,7 +71,6 @@ export class BlogListComponent {
       }
 
       this.inProgress = false;
-      this.offset = '';
       this.moreData = true;
       this.entities_0 = [];
       this.entities_1 = [];
@@ -79,7 +78,7 @@ export class BlogListComponent {
       if (this.session.isLoggedIn())
         this.rating = this.session.getLoggedInUser().boost_rating;
 
-      this.load();
+      this.load(true);
     });
     this.context.set('object:blog');
   }
@@ -91,6 +90,9 @@ export class BlogListComponent {
   load(refresh: boolean = false) {
     if (this.inProgress)
       return false;
+
+    if (refresh)
+      this.offset = '';
 
     this.inProgress = true;
     this.client.get('api/v1/blog/' + this.filter + '/' + this._filter2, { 
@@ -115,6 +117,9 @@ export class BlogListComponent {
         }
 
         this.offset = response['load-next'];
+        if (!this.offset) {
+          this.moreData = false;
+        }
         this.inProgress = false;
       })
       .catch((e) => {

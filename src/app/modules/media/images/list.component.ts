@@ -77,6 +77,7 @@ export class MediaImagesListComponent {
       this.context.set('object:image');
 
       this.inProgress = false;
+      this.moreData = true;
       this.entities = [];
 
       if (this.session.isLoggedIn())

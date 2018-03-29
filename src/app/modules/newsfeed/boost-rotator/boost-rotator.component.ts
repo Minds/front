@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
 import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { BoostRotatorService } from './boost-rotator.service';
+import { NewsfeedBoostService } from '../newsfeed-boost.service';
+import { SettingsService } from '../../settings/settings.service';
 
 @Component({
   moduleId: module.id,
@@ -44,6 +45,8 @@ export class NewsfeedBoostRotatorComponent {
   plus: boolean = false;
   disabled: boolean = false;
 
+  subscriptions: Array<any>;
+
   @ViewChildren('activities') activities: QueryList<Activity>;
 
   constructor(
@@ -52,23 +55,31 @@ export class NewsfeedBoostRotatorComponent {
     public client: Client,
     public scroll: ScrollService,
     public newsfeedService: NewsfeedService,
+    public settingsService: SettingsService,
     private storage: Storage,
     public element: ElementRef,
-    public service: BoostRotatorService,
+    public service: NewsfeedBoostService,
     private cd: ChangeDetectorRef
   ) {
-    this.service.setBoostRotator(this);
+
+    this.subscriptions = [
+      this.settingsService.ratingChanged.subscribe((event) => this.onRatingChanged(event)),
+      this.service.enableChanged.subscribe((event) => this.onEnableChanged(event)),
+      this.service.pauseChanged.subscribe((event) => this.onPauseChanged(event)),
+      this.service.explicitChanged.subscribe((event) => this.onExplicitChanged(event))
+    ];
+
+
   }
 
   ngOnInit() {
     this.rating = this.session.getLoggedInUser().boost_rating;
     this.plus = this.session.getLoggedInUser().plus;
-    this.disabled = this.session.getLoggedInUser().plus && this.session.getLoggedInUser().disabled_boost;
+    this.disabled = !this.service.isBoostEnabled();
     this.load();
     this.scroll_listener = this.scroll.listenForView().subscribe(() => this.isVisible());
 
-    const paused = localStorage.getItem('boost:rotator:autorotate:paused');
-    this.paused = paused === 'true';
+    this.paused = this.service.isBoostPaused();
   }
 
   /**
@@ -81,7 +92,7 @@ export class NewsfeedBoostRotatorComponent {
       }
       this.inProgress = true;
 
-      if(this.storage.get('boost:offset:rotator')) {
+      if (this.storage.get('boost:offset:rotator')) {
         this.offset = this.storage.get('boost:offset:rotator');
       }
 
@@ -90,7 +101,12 @@ export class NewsfeedBoostRotatorComponent {
         show = 'points';
       }
 
-      this.client.get('api/v1/boost/fetch/newsfeed', { limit: 10, rating: this.rating, offset: this.offset, show: show })
+      this.client.get('api/v1/boost/fetch/newsfeed', {
+        limit: 10,
+        rating: this.rating,
+        offset: this.offset,
+        show: show
+      })
         .then((response: any) => {
           if (!response.boosts) {
             this.inProgress = false;
@@ -118,37 +134,20 @@ export class NewsfeedBoostRotatorComponent {
     });
   }
 
-  setExplicit(active: boolean) {
-    this.session.getLoggedInUser().mature = active;
-
+  onExplicitChanged(value: boolean) {
     this.load();
-    this.client.post('api/v1/settings/' + this.session.getLoggedInUser().guid, {
-      mature: active,
-      boost_rating: this.rating
-    }).catch((e) => {
-      window.Minds.user.mature = !active;
-    });
   }
 
-  setRating(rating) {
+  onPauseChanged(value: boolean) {
+    console.warn('on pause changed');
+    this.paused = value;
+  }
+
+  onRatingChanged(rating) {
     this.rating = rating;
-    this.session.getLoggedInUser().boost_rating = rating;
     this.boosts = [];
 
     this.load();
-    this.client.post('api/v1/settings/' + this.session.getLoggedInUser().guid, {
-      mature: this.session.getLoggedInUser().mature,
-      boost_rating: rating,
-    });
-  }
-
-  toggleRating() {
-    if (this.rating != 1) {
-      this.setRating(1);
-    } else {
-      this.setRating(2);
-    }
-    this.detectChanges();
   }
 
   ratingMenuHandler() {
@@ -211,14 +210,6 @@ export class NewsfeedBoostRotatorComponent {
     this.isVisible();
   }
 
-  togglePause(forceValue?: boolean) {
-    if (forceValue) {
-      this.paused = forceValue;
-    }
-    this.paused = !this.paused;
-    localStorage.setItem('boost:rotator:autorotate:paused', this.paused.toString());
-  }
-
   prev() {
     if (this.currentPosition <= 0) {
       this.currentPosition = this.boosts.length - 1;
@@ -245,24 +236,9 @@ export class NewsfeedBoostRotatorComponent {
     this.recordImpression(this.currentPosition, false);
   }
 
-  disable() {
-    this.session.getLoggedInUser().disabled_boost = true;
-    this.disabled = true;
-    this.client.put('api/v1/plus/boost')
-      .catch(() => {
-        this.session.getLoggedInUser().disabled_boost = false;
-        this.disabled = false;
-      });
-  }
-
-  enable() {
-    this.session.getLoggedInUser().disabled_boost = false;
-    this.disabled = false;
-    this.client.delete('api/v1/plus/boost')
-      .catch(() => {
-        this.session.getLoggedInUser().disabled_boost = true;
-        this.disabled = true;
-      });
+  onEnableChanged(value) {
+    this.disabled = !value;
+    this.detectChanges();
   }
 
   detectChanges() {
@@ -274,6 +250,10 @@ export class NewsfeedBoostRotatorComponent {
     if (this.rotator)
       window.clearInterval(this.rotator);
     this.scroll.unListen(this.scroll_listener);
+
+    for (let subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
 }

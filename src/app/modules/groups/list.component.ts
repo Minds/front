@@ -50,7 +50,6 @@ export class GroupsListComponent {
         }
 
         this.inProgress = false;
-        this.offset = '';
         this.moreData = true;
         this.entities = [];
 
@@ -66,6 +65,12 @@ export class GroupsListComponent {
   }
 
   load(refresh: boolean = false) {
+    if (this.inProgress)
+      return;
+
+    if (refresh)
+      this.offset = '';
+
     let endpoint, key;
 
     switch (this.filter) {
@@ -78,9 +83,6 @@ export class GroupsListComponent {
         key = 'groups';
         break;
     }
-
-    if (this.inProgress)
-      return;
 
     this.inProgress = true;
     this.client.get(endpoint, { limit: 12, offset: this.offset })
@@ -102,6 +104,9 @@ export class GroupsListComponent {
         }
 
         this.offset = response['load-next'];
+        if (!this.offset) {
+          this.moreData = false;
+        }
         this.inProgress = false;
       })
       .catch((e) => {

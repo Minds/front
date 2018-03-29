@@ -17,7 +17,7 @@ import { NewsfeedTopComponent } from './feeds/top.component';
 import { NewsfeedSubscribedComponent } from './feeds/subscribed.component';
 import { NewsfeedBoostComponent } from './feeds/boost.component';
 import { NewsfeedService } from './services/newsfeed.service';
-import { BoostRotatorService } from './boost-rotator/boost-rotator.service';
+import { NewsfeedBoostService } from './newsfeed-boost.service';
 import { NewsfeedDropdownComponent } from './dropdown/dropdown.component';
 
 const routes: Routes = [
@@ -56,7 +56,7 @@ const routes: Routes = [
   ],
   providers: [
     NewsfeedService,
-    BoostRotatorService
+    NewsfeedBoostService,
   ],
   exports: [
     NewsfeedDropdownComponent,

@@ -20,6 +20,7 @@ import { SettingsBillingComponent } from './billing/billing.component';
 import { SettingsBillingSavedCardsComponent } from './billing/saved-cards/saved-cards.component';
 import { SettingsBillingSubscriptionsComponent } from './billing/subscriptions/subscriptions.component';
 import { SettingsReportedContentComponent } from './reported-content/reported-content.component';
+import { SettingsService } from './settings.service';
 
 
 const settingsRoutes : Routes = [
@@ -63,6 +64,9 @@ const settingsRoutes : Routes = [
     SettingsBillingSubscriptionsComponent,
     SettingsReportedContentComponent,
     //BillingComponent
+  ],
+  providers: [
+    SettingsService,
   ],
   exports: [
     SettingsBillingSavedCardsComponent,

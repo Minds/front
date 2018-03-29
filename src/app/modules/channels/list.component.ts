@@ -59,6 +59,7 @@ export class ChannelsListComponent {
       }
 
       this.inProgress = false;
+      this.moreData = true;
       this.entities = [];
       this.load(true);
     });

@@ -77,6 +77,7 @@ export class MediaVideosListComponent {
       this.context.set('object:video');
 
       this.inProgress = false;
+      this.moreData = true;
       this.entities = [];
 
       if (this.session.isLoggedIn())

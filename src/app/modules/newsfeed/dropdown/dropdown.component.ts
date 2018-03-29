@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Session } from '../../../services/session';
-import { BoostRotatorService } from '../boost-rotator/boost-rotator.service';
+import { NewsfeedBoostService } from '../newsfeed-boost.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +17,7 @@ export class NewsfeedDropdownComponent implements OnInit {
   constructor(
     public session: Session,
     public router: Router,
-    public boostRotatorService: BoostRotatorService
+    public boostService: NewsfeedBoostService
   ) {
   }
 
@@ -27,29 +27,23 @@ export class NewsfeedDropdownComponent implements OnInit {
   }
 
   setExplicit(value: boolean) {
-    this.boostRotatorService.setExplicit(value);
+    this.boostService.setExplicit(value);
   }
 
   toggleBoostPause() {
-    this.boostRotatorService.togglePause();
+    this.boostService.togglePause();
   }
 
   hideBoost() {
-    this.boostRotatorService.hideBoost();
+    this.boostService.hideBoost();
   }
 
   showBoost() {
-    this.boostRotatorService.showBoost();
+    this.boostService.showBoost();
   }
 
   selectCategories() {
     this.router.navigate(['/settings/general', 'categories']);
-  }
-
-  onOptionsChange(e: { rating }) {
-    if (e.rating) {
-      this.boostRotatorService.setRating(e.rating);
-    }
   }
 
 }
