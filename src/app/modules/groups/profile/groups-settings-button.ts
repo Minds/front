@@ -1,13 +1,14 @@
-import { Component} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups-service';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { Client } from '../../../services/api/client';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'minds-groups-settings-button',
-  inputs: ['group'],
   template: `
     <button class="material-icons" (click)="toggleMenu($event)">
       settings
@@ -17,6 +18,8 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
       <li class="mdl-menu__item" [hidden]="group['is:muted']" (click)="mute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS">Disable Notifications</li>
       <li class="mdl-menu__item" [hidden]="!group['is:muted']" (click)="unmute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS">Enable Notifications</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin() && !featured" (click)="openFeatureModal()" i18n="@@M__ACTION__FEATURE">Feature</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin() && featured" (click)="unfeature()" i18n="@@M__ACTION__UNFEATURE">Unfeature</li>
       <li class="mdl-menu__item" (click)="report(); showMenu = false" i18n="@@M__ACTION__REPORT">Report</li>
       <li class="mdl-menu__item" *ngIf="group['is:creator']" [hidden]="group.deleted" (click)="deletePrompt()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP">Delete Group</li>
     </ul>
@@ -35,6 +38,17 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
         </button>
       </div>
     </m-modal>
+
+    <m-modal [open]="featureModalOpen" (closed)="onFeatureModalClose($event)">
+      <div class="m-button-feature-modal">
+        <select [(ngModel)]="category">
+          <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY">-- SELECT A CATEGORY --</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.label}}</option>
+        </select>
+
+        <button class="mdl-button mdl-button--colored" (click)="feature(true)" i18n="@@M__ACTION__FEATURE">Feature</button>
+      </div>
+    </m-modal>
   `
 })
 
@@ -44,11 +58,38 @@ export class GroupsSettingsButton {
     'is:muted': false,
     deleted: false
   };
+
+  @Input('group') set _group(value: any) {
+    if (!value) return;
+    this.group = value;
+    this.featured = value.featured_id || value.featured === true;
+  }
+
   showMenu: boolean = false;
 
   isGoingToBeDeleted: boolean = false;
 
-  constructor(public service: GroupsService, public overlayService: OverlayModalService, public router: Router) {
+  categories: Array<any> = [];
+  category: string = 'not-selected';
+
+  featured: boolean = false;
+
+  featureModalOpen: boolean = false;
+
+  constructor(public service: GroupsService, public client: Client, public session: Session, public overlayService: OverlayModalService, public router: Router) {
+  }
+
+  ngOnInit() {
+    this.initCategories();
+  }
+
+  initCategories() {
+    for (let category in window.Minds.categories) {
+      this.categories.push({
+        id: category,
+        label: window.Minds.categories[category],
+      });
+    }
   }
 
   mute() {
@@ -71,6 +112,37 @@ export class GroupsSettingsButton {
       });
 
     this.showMenu = false;
+  }
+
+  openFeatureModal() {
+    this.featureModalOpen = true;
+  }
+
+  feature() {
+    this.featured = true;
+    this.group.featured = true;
+
+    this.client.put(`api/v1/admin/feature/${this.group.guid}/${this.category}`, {})
+      .then((response: any) => {
+        this.featureModalOpen = false;
+      })
+      .catch((e) => {
+        this.featured = false;
+      });
+  }
+
+  unfeature() {
+    this.featured = false;
+    this.group.featured = false;
+
+    this.client.delete(`api/v1/admin/feature/${this.group.guid}`)
+      .catch((e) => {
+        this.featured = true;
+      })
+  }
+
+  onFeatureModalClose() {
+    this.featureModalOpen = false;
   }
 
   report() {
