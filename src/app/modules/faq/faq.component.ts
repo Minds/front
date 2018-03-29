@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { Client } from '../../common/api/client.service';
 
 import { FaqService } from './faq.service'; 
@@ -10,15 +10,21 @@ import { FaqService } from './faq.service';
 
 export class FaqComponent {
 
-  @Input() category = 'all';
   faq$;
+  category = 'all';
+
+  @Input('category') set _category(value: string) {
+    this.category = value;
+
+    this.loadFaq();
+  }
 
   constructor(
     private client: Client,
     public service: FaqService,
   ) { }
 
-  ngOnInit() {
+  async loadFaq() {
     this.faq$ = this.service.get(this.category);
   }
 

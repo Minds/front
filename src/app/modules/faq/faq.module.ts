@@ -10,6 +10,7 @@ import { FaqService } from './faq.service';
 import { FaqPage } from './faq.page';
 
 const faqRoutes = [
+  { path: 'faq/:category', component: FaqPage },
   { path: 'faq', component: FaqPage }
 ];
 
