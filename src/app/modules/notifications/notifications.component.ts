@@ -16,7 +16,7 @@ import { NotificationService } from './notification.service';
 
 export class NotificationsComponent {
 
-  @Input() visible: boolean = false;
+  @Input() visible: boolean = true;
   @Input() params: any;
   @Input() count: number;
   @Input() loadOnDemand: boolean;
