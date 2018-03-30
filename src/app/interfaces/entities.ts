@@ -62,6 +62,7 @@ export interface MindsUser {
   impressions?: number;
   subscribed?: boolean;
   rating?: number;
+  eth_wallet?: string;
 }
 
 export interface MindsGroup {

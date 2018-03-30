@@ -31,6 +31,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { FeaturesService } from '../../../services/features.service';
+import { MindsUser } from '../../../interfaces/entities';
 
 /* tslint:disable */
 @Component({
@@ -89,7 +90,7 @@ describe('WireCreatorComponent', () => {
   let submitSection: DebugElement;
   let sendButton: DebugElement;
 
-  const owner = {
+  const owner: any = {
     'guid': '123',
     'type': 'user',
     'subtype': false,

@@ -7,6 +7,7 @@ import { Session } from '../../../services/session';
 import { WireService } from '../wire.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
+import { MindsUser } from '../../../interfaces/entities';
 
 export type PayloadType = 'onchain' | 'offchain' | 'creditcard';
 
@@ -376,6 +377,9 @@ export class WireCreatorComponent implements AfterViewInit {
       case 'onchain':
         if (!this.wire.payload && !this.wire.payload.receiver) {
           throw new Error('Invalid receiver.');
+        }
+        if (!this.owner.eth_wallet) {
+          throw new VisibleWireError(`@${this.owner.username} hasn't set up his onchain wallet yet.`)
         }
         break;
 
