@@ -95,10 +95,31 @@ m-media--theatre{
   }
 }
 
-m-media--edit{
-  .m-form-select{
-    max-width:128px;
-    flex:auto;
+m-media--edit {
+  display: block;
+  height:100%;
+  background-color: #FFF;
+  .m-form-select {
+    max-width: 128px;
+    flex: auto;
+  }
+  m-inline-editor, m-inline-editor p {
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 21px;
+    line-height: 1.58;
+    letter-spacing: 0.5px;
+    letter-spacing: -.003em;
+    font-family: 'Roboto';
+    color: rgba(0, 0, 0, .84);
+    margin-top: 29px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
   }
 }
 

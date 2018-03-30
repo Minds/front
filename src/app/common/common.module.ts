@@ -35,7 +35,6 @@ import { Tooltip } from './directives/tooltip';
 import { MindsAvatar } from './components/avatar/avatar';
 import { CaptchaComponent } from './components/captcha/captcha.component';
 import { Textarea } from './components/editors/textarea.component';
-import { MindsTinymce } from './components/editors/tinymce';
 import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 
@@ -107,7 +106,6 @@ import { NotificationsToasterComponent } from '../modules/notifications/toaster.
     MindsAvatar,
     CaptchaComponent,
     Textarea,
-    MindsTinymce,
     InlineEditorComponent,
 
     DynamicHostDirective,
@@ -168,7 +166,6 @@ import { NotificationsToasterComponent } from '../modules/notifications/toaster.
     MindsAvatar,
     CaptchaComponent,
     Textarea,
-    MindsTinymce,
     InlineEditorComponent,
 
     DynamicHostDirective,

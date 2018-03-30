@@ -1,12 +1,13 @@
-import { Component, Inject } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs/Rx';
 
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { LICENSES, ACCESS } from '../../../services/list-options';
+import { ACCESS, LICENSES } from '../../../services/list-options';
 import { ThumbnailEvent } from '../components/thumbnail-selector.component';
+import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
 
 @Component({
   moduleId: module.id,
@@ -30,6 +31,8 @@ export class MediaEditComponent {
 
   licenses = LICENSES;
   access = ACCESS;
+
+  @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
 
   paramsSubscription: Subscription;
 
@@ -77,14 +80,18 @@ export class MediaEditComponent {
   }
 
   save() {
-    this.client.post('api/v1/media/' + this.guid, this.entity)
-      .then((response: any) => {
-        console.log(response);
-        this.router.navigate(['/media', this.guid]);
-      })
-      .catch((e) => {
-        this.error = 'There was an error while trying to update';
-      });
+    this.inlineEditor.prepareForSave().then(() => {
+
+      this.client.post('api/v1/media/' + this.guid, this.entity)
+        .then((response: any) => {
+          console.log(response);
+          this.router.navigate(['/media', this.guid]);
+        })
+        .catch((e) => {
+          this.error = 'There was an error while trying to update';
+        });
+
+    });
   }
 
   setThumbnail(file: ThumbnailEvent){
