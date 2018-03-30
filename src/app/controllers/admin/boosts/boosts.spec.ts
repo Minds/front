@@ -10,6 +10,7 @@ import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { MaterialSliderMock } from '../../../../tests/material-slider.mock.spec';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TokenPipe } from '../../../common/pipes/token.pipe';
 
 @Component({
   selector: 'minds-card-video',
@@ -105,6 +106,7 @@ describe('AdminBoosts', () => {
 
     TestBed.configureTestingModule({
       declarations: [
+        TokenPipe,
         MindsCardVideoMock,
         MindsCardImageMock,
         MindsCardBlogMock,

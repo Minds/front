@@ -73,7 +73,7 @@
         |
         <span *ngIf="boost.bidType == 'points'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_POINTS_LABEL">Bid: {{ boost.bid | number }} points</span>
         <span *ngIf="boost.bidType == 'usd'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_USD_LABEL">Bid: {{ boost.bid / 100 | currency:'USD':true }} USD </span>
-        <span *ngIf="boost.bidType == 'tokens'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_TOKENS_LABEL">Bid: {{ boost.bid  | number:'1.0-4' }} Tokens</span>
+        <span *ngIf="boost.bidType == 'tokens'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_TOKENS_LABEL">Bid: {{ boost.bid | token:18 | number:'1.0-4' }} Tokens</span>
       </span>
 
       <div class="mdl-card__supporting-text action-buttons" *ngIf="boost.state != 'created'" i18n="@@MINDS__ADMIN__BOOSTS__NOT_REVIEW_STATE">
