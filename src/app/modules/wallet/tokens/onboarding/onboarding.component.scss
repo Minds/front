@@ -21,6 +21,12 @@
       line-height: 20px;
       margin: 8px 0 16px;
       padding: 0;
+
+      &.m-token--onboarding--subtext-note {
+        font-size: 12px;
+        line-height: 15px;
+        margin: 16px 0 8px;
+      }
     }
   
     > div:nth-of-type(1) {

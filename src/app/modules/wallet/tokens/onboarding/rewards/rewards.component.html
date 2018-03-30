@@ -6,7 +6,7 @@
       You can earn tokens for your contributions to the Minds network. The more interactions on your content, the greater your share of the daily token reward pool to your OffChain address.
     </p>
     <p class="m-token--onboarding--subtext">
-      To start earning rewards, you will need to enter a unique phone number. 
+      To start earning rewards, you will need to enter a unique phone number.
     </p>
 
     <div class="m-token--onboarding--rewards-input" *ngIf="!confirming">
@@ -15,12 +15,12 @@
       <button class="m-btn m-btn--slim m-btn--action" (click)="verify()" [disabled]="inProgress">Join</button>
       <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
     </div>
-    
+
     <div class="m-token--onboarding--rewards-input" *ngIf="confirming">
-      <input 
+      <input
         type="number"
         [(ngModel)]="code"
-        placeholder="eg. 198349" 
+        placeholder="eg. 198349"
         class="m-token-join--form--input-input m-border"
         />
       <m-tooltip icon="help">Please enter the code we just sent you, to verify that your number is correct</m-tooltip>
@@ -34,6 +34,11 @@
 
     <p class="m-token-join--form--error" *ngIf="error">
       {{error}}
+    </p>
+
+    <p class="m-token--onboarding--subtext m-token--onboarding--subtext-note">
+      Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256
+      and combined with a salt key for privacy and security purposes.
     </p>
 
   </div>
