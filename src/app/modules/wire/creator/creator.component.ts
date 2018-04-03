@@ -106,7 +106,7 @@ export class WireCreatorComponent implements AfterViewInit {
     offchain: null,
     onChainAddress: '',
     isReceiverOnchain: false,
-    wireCap: 100
+    wireCap: null
   };
 
   constructor(
@@ -384,6 +384,11 @@ export class WireCreatorComponent implements AfterViewInit {
         break;
 
       case 'offchain':
+        if (this.balances.wireCap === null) {
+          // Skip client-side check until loaded
+          break;
+        }
+
         const wireCap = this.balances.wireCap / Math.pow(10, 18),
           balance = this.balances.offchain / Math.pow(10, 18);
 
