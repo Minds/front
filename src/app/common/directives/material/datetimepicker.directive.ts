@@ -1,5 +1,6 @@
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { default as DateTimePicker } from 'material-datetime-picker';
 
 @Directive({
   selector: '[mdl-datetime-picker]',
@@ -16,7 +17,7 @@ export class MaterialDateTimePickerDirective {
   @HostListener('click')
   onHostClick() {
     if (!this.open) {
-      this.picker = new MaterialDatetimePicker()
+      this.picker = new DateTimePicker()
         .on('submit', this.submitCallback.bind(this))
         .on('close', this.close.bind(this));
       this.open = true;
