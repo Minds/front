@@ -27,6 +27,7 @@ export class WalletTokenTransactionsComponent {
   contracts: string[] = [
     'withdraw',
     'wire',
+    'offchain:wire',
     'plus',
     'token',
     'offchain:reward',
@@ -212,6 +213,10 @@ export class WalletTokenTransactionsComponent {
       this.selectedContract = contract;
     }
 
+    if (this.selectedContract === 'offchain:wire') {
+      this.toggleAddress(null);
+    }
+
     this.detectChanges();
     this.load(true);
   }
@@ -252,13 +257,17 @@ export class WalletTokenTransactionsComponent {
   isP2p(transaction) {
     const contractName = this.getNormalizedContractName(transaction.contract);
 
-    if (contractName === 'wire' || contractName === 'boost') {
+    if (contractName === 'wire' ||contractName == 'offchain wire' || contractName === 'boost') {
       return !!transaction.sender && !!transaction.receiver;
     }
   }
 
   getNormalizedContractName(contractName) {
-    return contractName.indexOf('offchain:') > -1 ? contractName.substr(9) : contractName;
+    if (contractName.indexOf('offchain:') > -1) {
+      const name = contractName.substr(9);
+      return name === 'wire' ? 'offchain wire': name;
+    }
+    return contractName;
   }
 
   detectChanges() {
