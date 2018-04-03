@@ -207,7 +207,8 @@ minds-comments, .m-comment-wrapper{
 
   }
 
-  .m-comment-attachment {
+  .m-comment-attachment.mdl-card {
+    max-width: 550px;
     box-sizing: border-box;
     padding: 0;
 
