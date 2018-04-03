@@ -99,6 +99,17 @@ m-media--edit {
   display: block;
   height:100%;
   background-color: #FFF;
+  .m-h1-input {
+    padding: 0;
+    font-weight: 600;
+    font-size: 42px;
+    letter-spacing: 1.5px;
+    font-family: 'Roboto';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.2em;
+    height: auto;
+  }
   .m-form-select {
     max-width: 128px;
     flex: auto;
