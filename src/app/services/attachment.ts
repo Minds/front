@@ -223,7 +223,7 @@ export class AttachmentService {
     this.meta.description = '';
   }
 
-  preview(content: string) {
+  preview(content: string, detectChangesFn?: Function) {
 
     let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/ig),
       url;
@@ -254,15 +254,21 @@ export class AttachmentService {
 
     this.attachment.richUrl = url;
 
+    if (detectChangesFn) detectChangesFn();
+
     this.previewTimeout = window.setTimeout(() => {
       this.resetRich();
       this.meta.is_rich = 1;
+
+      if (detectChangesFn) detectChangesFn();
 
       this.clientService.get('api/v1/newsfeed/preview', { url })
         .then((data: any) => {
 
           if (!data) {
             this.resetRich();
+            if (detectChangesFn) detectChangesFn();
+
             return;
           }
 
@@ -278,9 +284,12 @@ export class AttachmentService {
           if (data.links && data.links.thumbnail && data.links.thumbnail[0]) {
             this.meta.thumbnail = data.links.thumbnail[0].href;
           }
+
+          if (detectChangesFn) detectChangesFn();
         })
         .catch(e => {
           this.resetRich();
+          if (detectChangesFn) detectChangesFn();
         });
     }, 600);
   }

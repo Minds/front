@@ -1,4 +1,7 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Renderer, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Renderer,
+  ViewChild
+} from '@angular/core';
 
 import { Client, Upload } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -19,7 +22,8 @@ import { Textarea } from '../../../../common/components/editors/textarea.compone
       useFactory: AttachmentService._,
       deps: [Session, Client, Upload]
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class Comments {
@@ -116,6 +120,8 @@ export class Comments {
     this.error = '';
     this.inProgress = true;
 
+    this.detectChanges();
+
     this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: false })
       .then((response: any) => {
 
@@ -130,10 +136,13 @@ export class Comments {
 
         if (!response.comments) {
           this.moreData = false;
+          this.detectChanges();
+
           return false;
         }
 
         this.comments = response.comments.concat(this.comments);
+        this.detectChanges();
 
         if (refresh) {
           this.commentsScrollEmitter.emit('bottom');
@@ -144,7 +153,7 @@ export class Comments {
           let scrollTop = el.scrollTop;
           let scrollHeight = el.scrollHeight;
 
-          this.cd.detectChanges();
+          this.detectChanges();
           el.scrollTop = scrollTop + el.scrollHeight - scrollHeight;
         }
 
@@ -158,12 +167,12 @@ export class Comments {
           this.moreData = false;
         }
 
-        this.cd.markForCheck();
-        this.cd.detectChanges();
+        this.detectChanges();
       })
       .catch((e) => {
         this.inProgress = false;
         this.error = (e && e.message) || 'There was an error';
+        this.detectChanges();
       });
   }
 
@@ -253,6 +262,7 @@ export class Comments {
           let scrolledToBottom = this.scrollView.nativeElement.scrollTop + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
 
           this.comments.push(response.comments[0]);
+          this.detectChanges();
 
           if (scrolledToBottom) {
             this.commentsScrollEmitter.emit('bottom');
@@ -274,6 +284,8 @@ export class Comments {
 
     if (this.inProgress || !this.canPost) {
       this.triedToPost = true;
+      this.detectChanges();
+
       return;
     }
 
@@ -292,6 +304,8 @@ export class Comments {
     this.attachment.reset();
     this.content = '';
 
+    this.detectChanges();
+
     this.commentsScrollEmitter.emit('bottom');
 
     try {
@@ -302,18 +316,22 @@ export class Comments {
       console.error('Error posting', e);
     }
 
+    this.detectChanges();
+
     this.commentsScrollEmitter.emit('bottom');
   }
 
   isLoggedIn() {
     if (!this.session.isLoggedIn()) {
       this.showModal = true;
+      this.detectChanges();
     }
   }
 
 
   delete(index: number) {
     this.comments.splice(index, 1);
+    this.detectChanges();
   }
 
   edited(index: number, $event) {
@@ -338,6 +356,8 @@ export class Comments {
         this.triedToPost = false;
         file.value = null;
       });
+
+    this.detectChanges();
   }
 
   removeAttachment(file: HTMLInputElement) {
@@ -353,14 +373,16 @@ export class Comments {
       this.canPost = true;
       this.triedToPost = false;
     });
+
+    this.detectChanges();
   }
 
-  getPostPreview(message) {
+  async getPostPreview(message) {
     if (!message) {
       return;
     }
 
-    this.attachment.preview(message);
+    this.attachment.preview(message, this.detectChanges);
   }
 
   reply(comment: any) {
@@ -371,9 +393,15 @@ export class Comments {
     const username = comment.ownerObj.username;
 
     this.content = `@${username} ${this.content}`;
+    this.detectChanges();
+
     setTimeout(() => {
       this.textareaControl.focus();
     }, 50);
   }
 
+  detectChanges = () => {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
 }
