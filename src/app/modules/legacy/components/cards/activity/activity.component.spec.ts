@@ -26,6 +26,7 @@ import { AbbrPipe } from '../../../../../common/pipes/abbr';
 import { ChannelBadgesComponent } from '../../../../../common/components/badges/badges.component';
 import { TooltipComponentMock } from '../../../../../mocks/common/components/tooltip/tooltip.component';
 import { TokenPipe } from '../../../../../common/pipes/token.pipe';
+import { ExcerptPipe } from '../../../../../common/pipes/excerpt';
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 /* tslint:disable */
 // START MOCKS
@@ -401,6 +402,7 @@ describe('Activity', () => {
         TagsPipe,
         DomainPipe,
         AbbrPipe,
+        ExcerptPipe,
         MindsRichEmbed,
         ChannelBadgesComponent,
         MaterialMock,
