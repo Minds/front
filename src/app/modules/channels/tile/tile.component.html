@@ -10,7 +10,7 @@
   </div>
   
   <a [routerLink]="['/', entity.username]" class="m-channels--tile-block">
-    <div class="avatar" [ngStyle]="{ 'background-image': 'url(icon/' + entity.guid + '/large/'+ entity.icontime +')' }">
+    <div class="avatar" [ngStyle]="{ 'background-image': 'url(' + minds.cdn_url + 'icon/' + entity.guid + '/large/'+ entity.icontime +')' }">
     </div>
     <div class="body">
       <h3>{{entity.name}}</h3>
