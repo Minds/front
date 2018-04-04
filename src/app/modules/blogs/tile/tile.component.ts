@@ -10,12 +10,13 @@ import { Session } from '../../../services/session';
 export class BlogTileComponent {
 
   entity;
+  minds = window.Minds;
 
   constructor(public session: Session) {}
 
   @Input('entity') set setEntity(entity : any) {
     if (!entity.thumbnail_src || !entity.header_bg)
-      entity.thumbnail_src = 'assets/videos/earth-1/earth-1.png';
+      entity.thumbnail_src = this.minds.cdn_assets_url + 'assets/logos/placeholder-bulb.jpg';
     this.entity = entity;
   }
 }
