@@ -32,6 +32,10 @@
 
 minds-button-subscribe{
 
+  button.m-btn--subscribe {
+    white-space: nowrap;
+  }
+
   &.m-button-icon-only button{
     min-width:0;
     width: 36px;
