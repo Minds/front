@@ -1,4 +1,5 @@
 <?php
+    $meta = Minds\Core\SEO\Manager::get();
     $language = '';
     $language = Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en';
 ?>
@@ -19,7 +20,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-16x16.png">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
     <?php
-      $meta = Minds\Core\SEO\Manager::get();
       foreach($meta as $name => $content){
         $name = strip_tags($name);
         $content = str_replace(['"'], '\'', $content);
