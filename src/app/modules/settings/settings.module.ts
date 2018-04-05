@@ -21,6 +21,8 @@ import { SettingsBillingSavedCardsComponent } from './billing/saved-cards/saved-
 import { SettingsBillingSubscriptionsComponent } from './billing/subscriptions/subscriptions.component';
 import { SettingsReportedContentComponent } from './reported-content/reported-content.component';
 import { SettingsService } from './settings.service';
+import { SettingsWireComponent } from './wire/wire.component';
+import { WireModule } from '../wire/wire.module';
 
 
 const settingsRoutes : Routes = [
@@ -29,6 +31,7 @@ const settingsRoutes : Routes = [
       { path: '', redirectTo: 'general', pathMatch: 'full' },
       { path: 'general/:card', component: SettingsGeneralComponent },
       { path: 'general', component: SettingsGeneralComponent },
+      { path: 'wire', component: SettingsWireComponent },
       { path: 'disable', component: SettingsDisableChannelComponent },
       { path: 'twoFactor', component: SettingsTwoFactorComponent },
       { path: 'emails', component: SettingsEmailsComponent },
@@ -51,6 +54,7 @@ const settingsRoutes : Routes = [
     RouterModule.forChild(settingsRoutes),
     ReportModule,
     PaymentsModule,
+    WireModule,
   ],
   declarations: [
     SettingsComponent,
@@ -63,6 +67,7 @@ const settingsRoutes : Routes = [
     SettingsBillingSavedCardsComponent,
     SettingsBillingSubscriptionsComponent,
     SettingsReportedContentComponent,
+    SettingsWireComponent,
     //BillingComponent
   ],
   providers: [

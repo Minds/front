@@ -1,0 +1,32 @@
+m-settings--wire {
+  .m-settings--wire--paywall--inputs {
+    width: 100%;
+    box-sizing: border-box;
+
+    m-wire--lock-screen {
+      display: block;
+      border: 1px solid #ddd;
+      padding: $minds-padding;
+    }
+  }
+  .m-settings--wire--paywall-inputs > div {
+    padding: 8px 0;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    label {
+      font-weight: 600;
+      line-height: 2;
+      margin-bottom: 8px; 
+    }
+
+    &.m-settings--wire--paywall--background {
+      input[type=file] {
+        width: 100%;
+      }
+    }
+  }
+
+}

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { WireRewardsTiers, WireRewardsType } from '../../../interfaces/wire.interfaces';
+import { WireRewardsTiers } from '../../../interfaces/wire.interfaces';
 import { Session } from '../../../../../services/session';
 
 @Component({
@@ -9,7 +9,6 @@ import { Session } from '../../../../../services/session';
 })
 
 export class WireConsoleRewardsInputsComponent {
-  @Input() type: WireRewardsType;
   @Input() channel;
 
   rewards: WireRewardsTiers = [];
@@ -45,25 +44,5 @@ export class WireConsoleRewardsInputsComponent {
   setDescription(index, value) {
     this.rewards[index].description = value;
     this.rewardsChangeEmitter.emit(this.rewards);
-  }
-
-  getAmountPlaceholder() {
-    let placeholder;
-
-    switch (this.type) {
-      case 'points':
-        placeholder = '1,000';
-        break;
-
-      case 'money':
-        placeholder = '5';
-        break;
-
-      case 'tokens':
-        placeholder = '1';
-        break;
-    }
-
-    return placeholder;
   }
 }

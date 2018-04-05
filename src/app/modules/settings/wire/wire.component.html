@@ -1,0 +1,55 @@
+<div class="m-settings--section m-layout--row m-border">
+
+  <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">{{error}}</div>
+  <div class="m-layout--spacer"></div>
+
+  <button class="m-btn m-btn--slim m-btn--action"
+    [disabled]="!canSubmit()"
+    [hidden]="exclusive.saved && rewardsSaved"
+    (click)="save()"
+  >
+    <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
+  </button>
+  <button class="m-btn  m-btn--slim"
+    [hidden]="!exclusive.saved || !rewardsSaved"
+  >
+    <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
+  </button>
+  <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" [hidden]="!inProgress"></div>
+</div>
+
+<div class="m-settings--section m-settings--wire--paywall m-border">
+
+  <div class="m-settings--wire--paywall">
+    <div class=" m-settings--wire--paywall-inputs">
+      <div class="">
+        <p i18n="@@MINDS__SETTINGS__WIRE__PREVIEW_DESC">The below description and preview image is what your subscribers will see on your exclusive posts until they become a supporter.</p>
+      </div>
+
+      <div class="m-settings--wire--paywall-intro">
+        <label i18n="@@MINDS__SETTINGS__WIRE__DESCRIPTION_LABEL">Description</label>
+        <input type="text" autofocus
+          class="m-input"
+          placeholder="eg. Support me to see my exclusive content and join me for a monthly video chat"
+          i18n-placeholder="@@MINDS__SETTINGS__WIRE__DESCRIPTION_PLACEHOLDER" [(ngModel)]="exclusive.intro"
+          (keyup)="exclusive.saved = false; updatePreviewEntity()"/>
+      </div>
+
+      <div class="m-settings--wire--paywall-background">
+        <label i18n="@@MINDS__SETTINGS__WIRE__BACKGROUND_LABEL">Background</label>
+        <input type="file" #backgroundFile name="preview" (change)="updatePreview(backgroundFile)" accept="image/*"/>
+      </div>
+
+      <div class="m-settings--wire--paywall-preview">
+        <label i18n="@@MINDS__SETTINGS__WIRE__PREVIEW_LABEL">Preview</label>
+
+        <m-wire--lock-screen *ngIf="previewEntity"
+          [preview]="true"
+          [entity]="previewEntity"
+          class="mdl-shadow--4dp"
+        ></m-wire--lock-screen>
+      </div>
+    </div>
+  </div>
+
+</div>

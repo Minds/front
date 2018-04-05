@@ -76,7 +76,9 @@ const wireRoutes : Routes = [
   entryComponents: [
     WireCreatorComponent,
     WireConsoleComponent,
-    WireMarketingComponent
+    WireMarketingComponent,
+    WireLockScreenComponent,
+    WireConsoleRewardsInputsComponent,
   ]
 })
 export class WireModule {
