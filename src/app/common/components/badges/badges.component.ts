@@ -49,4 +49,26 @@ export class ChannelBadgesComponent {
       });
   }
 
+  setFounder(e) {
+    if (!this.session.isAdmin()) {
+      e.preventDefault();
+      return;
+    }
+    if (this.user.founder)
+      return this.unsetFounder();
+    this.user.founder = true;
+    this.client.put('api/v1/admin/founder/' + this.user.guid)
+      .catch(() => {
+        this.user.founder = false;
+      });
+  }
+
+  unsetFounder() {
+    this.user.founder = false;
+    this.client.delete('api/v1/admin/founder/' + this.user.guid)
+      .catch(() => {
+        this.user.founder = true;
+      });
+  }
+
 }
