@@ -162,7 +162,7 @@ export class Comments {
         if (
           !this.offset ||
           this.offset === null ||
-          response.comments.length < this.limit
+          response.comments.length < (this.limit - 1)
         ) {
           this.moreData = false;
         }
