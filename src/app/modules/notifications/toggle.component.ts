@@ -1,6 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { Session } from '../../services/session';
+
 @Component({
   moduleId: module.id,
   selector: 'm-notifications--topbar-toggle',
@@ -13,6 +15,11 @@ export class NotificationsTopbarToggleComponent {
   minds: any = window.Minds;
   @ViewChild('notificationsFlyout') flyout: any;
   
+  constructor(
+    public session: Session,
+  ) {
+
+  }
 
   toggle(e){
     this.toggled = !this.toggled;

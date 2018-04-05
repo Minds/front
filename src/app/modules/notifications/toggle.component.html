@@ -5,4 +5,11 @@
 </a>
 
 <div class="m-notifications--topbar-toggle-overlay" (click)="toggle($event)" *ngIf="toggled"></div>
-<m-notifications--flyout #notificationsFlyout (close)="toggle($event)" [hidden]="!toggled" [visible]="toggled"></m-notifications--flyout>
+<m-notifications--flyout 
+  #notificationsFlyout
+  (close)="toggle($event)"
+  [hidden]="!toggled"
+  [visible]="toggled"
+  *ngIf="session.isLoggedIn()"
+  >
+</m-notifications--flyout>
