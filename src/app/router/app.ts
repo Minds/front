@@ -1,5 +1,4 @@
-import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 
 import {Capture} from '../controllers/capture/capture';
@@ -17,10 +16,21 @@ import { RewardsComponent } from '../controllers/rewards/rewards';
 
 export const MindsAppRoutes: Routes = [
 
-  { path: 'capture', component: Capture },
+  { path: 'capture', redirectTo: 'media/images/top' },
 
-  { path: 'discovery/:filter/:type', component: Discovery },
-  { path: 'discovery/:filter', component: Discovery },
+  // redirectTo: 'media/:type/:filter
+  { path: 'discovery/suggested/channels', redirectTo: 'channels/top'},
+  { path: 'discovery/trending/channels', redirectTo: 'channels/top'},
+  { path: 'discovery/all/channels', redirectTo: 'channels/top'},
+
+  { path: 'discovery/suggested/:type', redirectTo: 'media/:type/top' },
+  { path: 'discovery/trending/:type', redirectTo: 'media/:type/top' },
+  { path: 'discovery/all/:type', redirectTo: 'media/:type/top' },
+  { path: 'discovery/owner/:type', redirectTo: 'media/:type/my' },
+
+  { path: 'discovery/suggested', redirectTo: 'channels/top'},
+  { path: 'discovery/trending', redirectTo: 'media/images/top'},
+  { path: 'discovery/featured', redirectTo: 'channels/top'},
 
   /* /Legacy routes */
 
