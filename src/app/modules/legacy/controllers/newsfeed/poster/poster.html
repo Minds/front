@@ -86,12 +86,20 @@
          [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
     ></div>
     <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
-      <i class="material-icons">videocam</i>
+      <i class="material-icons" *ngIf="!attachment.isPendingDelete()">videocam</i>
     </div>
-    <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview"/>
-    <div class="attachment-preview-delete">
-      <i class="material-icons">delete</i>
-    </div>
+
+    <ng-container>
+      <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview"/>
+      <div class="attachment-preview-delete" *ngIf="!attachment.isPendingDelete()">
+        <i class="material-icons">delete</i>
+      </div>
+      <div class="mdl-spinner attachment-preview-delete-in-progress mdl-js-spinner is-active" [mdl] *ngIf="attachment.isPendingDelete()"></div>
+
+    </ng-container>
+    <!--<div class="attachment-preview-delete-in-progress" *ngIf="attachment.isPendingDelete()">-->
+      <!--<div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>-->
+    <!--</div>-->
   </div>
 
 </div>

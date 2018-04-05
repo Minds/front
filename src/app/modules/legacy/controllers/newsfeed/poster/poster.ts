@@ -96,6 +96,9 @@ export class Poster {
         .then(guid => {
           this.inProgress = false;
           this.canPost = true;
+          if (this.attachment.isPendingDelete()) {
+            this.removeAttachment(file);
+          }
           file.value = null;
         })
         .catch(e => {
@@ -111,6 +114,12 @@ export class Poster {
   }
 
   removeAttachment(file: HTMLInputElement) {
+    if (this.inProgress) {
+      this.attachment.setPendingDelete(true);
+      return;
+    }
+    // if we're not uploading a file right now
+    this.attachment.setPendingDelete(false);
     this.canPost = false;
     this.inProgress = true;
 

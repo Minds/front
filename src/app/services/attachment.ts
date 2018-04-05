@@ -12,6 +12,8 @@ export class AttachmentService {
 
   private previewTimeout: any = null;
 
+  private pendingDelete: boolean = false;
+
   static _(session: Session, client: Client, upload: Upload) {
     return new AttachmentService(session, client, upload);
   }
@@ -64,6 +66,14 @@ export class AttachmentService {
 
   getContainer() {
     return this.container;
+  }
+
+  isPendingDelete() {
+    return this.pendingDelete;
+  }
+
+  setPendingDelete(value: boolean) {
+    this.pendingDelete = value;
   }
 
   setAccessId(access_id) {
@@ -137,6 +147,7 @@ export class AttachmentService {
 
   remove(fileInput: HTMLInputElement) {
     this.attachment.progress = 0;
+    this.attachment.mime = '';
     this.attachment.preview = null;
 
     if (!this.meta.attachment_guid) {

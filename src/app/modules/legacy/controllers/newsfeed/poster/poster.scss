@@ -130,9 +130,15 @@
     }
   }
 
-  .mdl-spinner{
+  .mdl-spinner {
     margin: $minds-padding * 2 auto;
-    display:block;
+    display: block;
+    &.attachment-preview-delete-in-progress {
+      top: calc(50% - 20px);
+      left: calc(50% - 20px);
+      margin: auto;
+      position: absolute;
+    }
   }
 
   .mdl-progress{
