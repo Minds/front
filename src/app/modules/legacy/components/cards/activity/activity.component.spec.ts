@@ -363,6 +363,15 @@ export class AutoGrowMock {
 
 export class PostMenuMock {
 }
+
+@Component({
+  selector: 'm-safe-toggle',
+  template: ''
+})
+export class SafeToggleComponentMock {
+  @Input('entity') entity: any;
+  @Output('entityChange') entityChange: EventEmitter<any> = new EventEmitter<any>();
+}
 // END MOCKS
 
 describe('Activity', () => {
@@ -430,6 +439,7 @@ describe('Activity', () => {
         CryptoTokenSymbolMock,
         Activity,
         TokenPipe,
+        SafeToggleComponentMock,
       ], // declare the test component
       imports: [
         RouterTestingModule,

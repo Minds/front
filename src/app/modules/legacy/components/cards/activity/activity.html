@@ -211,10 +211,11 @@
 </div>
 
 <div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ngIf="!hideTabs">
-    <button class="mdl-button m-pin-button mdl-button--icon" (click)="togglePin()" [disabled]="session.getLoggedInUser().guid != activity.owner_guid">
+	<button class="mdl-button m-pin-button mdl-button--icon" (click)="togglePin()" [disabled]="session.getLoggedInUser().guid != activity.owner_guid">
         <m-tooltip icon="turned_in" *ngIf="activity.pinned" i18n="@@MINDS__CARDS__ACTIVITY__PINNED_POST">This post is pinned</m-tooltip>
         <m-tooltip icon="turned_in_not" *ngIf="session.getLoggedInUser().guid == activity.owner_guid && !activity.pinned" i18n="@@MINDS__CARDS__ACTIVITY__CLICK_TO_PIN">Click to pin this post to the top of your channel feed</m-tooltip>
-	</button>
+    </button>
+    <m-safe-toggle *ngIf="showRatingToggle && session.isAdmin()" [(entity)]="activity"></m-safe-toggle>
 	<button class="mdl-button m-translate-button mdl-button--icon" *ngIf="isTranslatable" (click)="translateToggle = true;">
 			<i class="material-icons">public</i>
 	</button>

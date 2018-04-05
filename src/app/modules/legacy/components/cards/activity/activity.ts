@@ -17,7 +17,7 @@ import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service'
   host: {
     'class': 'mdl-card m-border'
   },
-  inputs: ['object', 'commentsToggle', 'visible', 'canDelete'],
+  inputs: ['object', 'commentsToggle', 'visible', 'canDelete', 'showRatingToggle'],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -66,6 +66,7 @@ export class Activity {
 
   isTranslatable: boolean;
   canDelete: boolean = false;
+  showRatingToggle: boolean = false;
 
   private defaultMenuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
   menuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];

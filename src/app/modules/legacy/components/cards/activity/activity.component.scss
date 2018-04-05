@@ -16,6 +16,28 @@ minds-activity {
   .m-activity--image, .m-activity--video {
     margin-bottom: 8px;
   }
+
+  m-safe-toggle {
+    .m-safe-toggle {
+      display: inline-block;
+
+      label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        height: 24px;
+        width: 24px;
+        min-width: 24px;
+        min-height: 24px;
+      
+        i {
+          font-size: 18px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }
 
 .m-activity--metrics{
