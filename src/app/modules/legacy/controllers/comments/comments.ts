@@ -400,6 +400,14 @@ export class Comments {
     }, 50);
   }
 
+  getAvatar() {
+    if(this.session.isLoggedIn()) {
+      return `${this.minds.cdn_url}icon/${this.session.getLoggedInUser().guid}/small/${this.session.getLoggedInUser().icontime}`;
+    } else {
+      return `${this.minds.cdn_assets_url}assets/avatars/default-small.png`
+    }
+  }
+
   detectChanges = () => {
     this.cd.markForCheck();
     this.cd.detectChanges();
