@@ -99,7 +99,7 @@
 
     <!-- Boost Settings -->
     <!-- General -->
-    <ng-container *ngIf="boost.type && (boost.type != 'p2p')">
+    <ng-container *ngIf="boost.type && boost.type != 'p2p' && boost.currency === 'usd'">
       <section class="m-boost--creator-section m-boost--creator-section-priority">
         <h3>
           <ng-container i18n="@@BOOST__CREATOR__PRIORITY_TITLE">Priority</ng-container>

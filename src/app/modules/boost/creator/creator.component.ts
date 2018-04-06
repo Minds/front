@@ -417,6 +417,10 @@ export class BoostCreatorComponent implements AfterViewInit {
         break;
     }
 
+    if (this.boost.priority && this.boost.currency !== 'usd') {
+      throw new VisibleBoostError('The only supported payment method for priority boosts is credit card')
+    }
+
     if (this.boost.type === 'p2p') {
       if (!this.boost.target) {
         throw new Error('You should select a target.');
