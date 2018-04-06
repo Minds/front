@@ -509,6 +509,7 @@ describe('BoostCreatorComponent', () => {
 
   it('should have a priority section', () => {
     boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.boost.currency='usd';
     boostComponent.syncAllowedTypes();
     fixture.detectChanges();
 
@@ -518,6 +519,7 @@ describe('BoostCreatorComponent', () => {
   it('toggling the priority should affect the boost entity', () => {
     boostComponent.object = { type: 'activity', guid: '123' };
     boostComponent.syncAllowedTypes();
+    boostComponent.boost.currency='usd';
     fixture.detectChanges();
 
     expect(boostComponent.boost.priority).toBeFalsy();
