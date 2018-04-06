@@ -105,7 +105,7 @@ export class MediaTheatreComponent {
   loadNext() {
     this.nextVideo = this.recommended.getFirstRecommended();
     let timer = Observable.timer(2000,1000);
-    this.timerSubscribe = timer.subscribe(t => this.tickerFunc(t));
+    //this.timerSubscribe = timer.subscribe(t => this.tickerFunc(t));
   }
 
   tickerFunc(t) {
