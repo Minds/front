@@ -304,23 +304,13 @@ export class PostMenuComponent {
   }
 
   seeMore() {
-    this.client.put(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {})
-      .then((response: any) => {
-        // this.user.subscribed = false;
-      })
-      .catch((e) => {
-        // this.user.subscribed = true;
-      });
+    this.client.put(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {});
+    this.selectOption('see-more-like-this');
   }
 
   seeLess() {
-    this.client.delete(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {})
-      .then((response: any) => {
-        // this.user.subscribed = false;
-      })
-      .catch((e) => {
-        // this.user.subscribed = true;
-      });
+    this.client.delete(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {});
+    this.selectOption('see-less-like-this');
   }
 
   setRating(rating: number) {
