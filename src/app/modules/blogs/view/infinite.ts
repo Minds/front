@@ -105,26 +105,4 @@ export class BlogViewInfinite {
       });
   }
 
-  loadNextBlog() {
-    if (this.inProgress) {
-      return false;
-    }
-    this.inProgress = true;
-
-    this.client.get('api/v1/blog/next/' + this.guid)
-      .then((response: any) => {
-        if (!response.blog) {
-          this.inProgress = false;
-          this.moreData = false;
-          return false;
-        }
-        this.blogs.push(response.blog);
-        this.guid = response.blog.guid;
-        this.inProgress = false;
-      })
-      .catch((e) => {
-        this.inProgress = false;
-      });
-  }
-
 }
