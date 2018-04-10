@@ -52,7 +52,7 @@ export class WalletTokenTransactionsComponent {
   }
 
   async ngOnInit() {
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.params.subscribe(async params => {
       if (params['contract']) {
         const contract = params['contract'];
 
@@ -62,19 +62,19 @@ export class WalletTokenTransactionsComponent {
           this.router.navigate(['/wallet/token/transactions', 'all']);
         }
       }
+
+      const d = new Date();
+
+      d.setHours(23, 59, 59);
+      this.endDate = d.toISOString();
+
+      d.setMonth(d.getMonth() - 1);
+      d.setHours(0, 0, 0);
+      this.startDate = d.toISOString();
+
+      await this.getAddresses();
+      this.load(true);
     });
-
-    const d = new Date();
-
-    d.setHours(23, 59, 59);
-    this.endDate = d.toISOString();
-
-    d.setMonth(d.getMonth() - 1);
-    d.setHours(0, 0, 0);
-    this.startDate = d.toISOString();
-
-    await this.getAddresses();
-    this.load(true);
   }
 
   async getAddresses() {
@@ -95,11 +95,15 @@ export class WalletTokenTransactionsComponent {
 
     try {
       const onchainAddress = await this.web3Wallet.getCurrentWallet();
-      if (!onchainAddress)
+      if (!onchainAddress) {
+        this.inProgress = false;
+        this.detectChanges();
         return;
+      }
 
       if (this.addresses[0].address.toLowerCase() == onchainAddress.toLowerCase()) {
         this.addresses[0].label = 'OnChain & Receiver';
+        this.inProgress = false;
         this.detectChanges();
         return; //no need to count twice
       }
@@ -109,6 +113,7 @@ export class WalletTokenTransactionsComponent {
         'address': onchainAddress,
         'selected': true
       });
+      this.inProgress = false;
       this.detectChanges();
     } catch (e) {
       console.log(e);
