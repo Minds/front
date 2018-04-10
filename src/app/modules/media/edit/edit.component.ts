@@ -8,11 +8,17 @@ import { Session } from '../../../services/session';
 import { ACCESS, LICENSES } from '../../../services/list-options';
 import { ThumbnailEvent } from '../components/thumbnail-selector.component';
 import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
+import { RecommendedService } from '../components/video/recommended.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-media--edit',
-  templateUrl: 'edit.component.html'
+  templateUrl: 'edit.component.html',
+  providers: [{
+    provide: RecommendedService,
+    useFactory: RecommendedService._,
+    deps: [Client]
+  }],
 })
 
 export class MediaEditComponent {
