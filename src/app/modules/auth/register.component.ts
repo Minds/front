@@ -40,13 +40,16 @@ export class RegisterComponent {
   ) { }
 
   ngOnInit() {
-    if (this.session.isLoggedIn()) {
-      this.loginReferrer.navigate();
-    }
     
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
+      }
+
+      if (this.session.isLoggedIn() && this.referrer) {
+        this.loginReferrer.navigate({ defaultUrl: '/' + this.referrer});
+      } else if (this.session.isLoggedIn()) {
+        this.loginReferrer.navigate();
       }
     });
 
