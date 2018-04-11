@@ -15,7 +15,7 @@ import { ContextService } from '../../../services/context.service';
 
 export class NewsfeedSingleComponent {
 
-  minds;
+  minds = window.Minds;
   inProgress: boolean = false;
   activity: any;
   error: string = '';

@@ -333,8 +333,12 @@ minds-button-user-dropdown{
 .m-error-splash{
   text-align: center;
   text-transform: uppercase;
-  padding-top: 64px;
-
+  padding-top: 12px;
+  img {
+    width: 236px;
+    margin-top: 36px;
+    margin-bottom: 36px;
+  }
   h3{
     margin: auto;
     font-weight: 600;

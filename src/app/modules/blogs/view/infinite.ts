@@ -20,7 +20,7 @@ import { MindsBlogEntity } from '../../../interfaces/entities';
 
 export class BlogViewInfinite {
 
-  minds;
+  minds = window.Minds;
   guid: string;
   blogs: Array<Object> = [];
   sharetoggle: boolean = false;
@@ -37,8 +37,6 @@ export class BlogViewInfinite {
   }
 
   ngOnInit() {
-    this.minds = window.Minds;
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       let load = false;
 

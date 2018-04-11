@@ -24,6 +24,7 @@ import { ContextService } from '../../services/context.service';
 
 export class ChannelComponent {
 
+  minds = window.Minds;
   filter: any = 'feed';
   isLocked: boolean = false;
 

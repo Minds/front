@@ -23,7 +23,7 @@ import { ContextService } from '../../../services/context.service';
 
 export class MediaViewComponent {
 
-  minds;
+  minds = window.Minds;
   guid: string;
   entity: any = {};
   inProgress: boolean = true;
@@ -47,8 +47,6 @@ export class MediaViewComponent {
   ) { }
 
   ngOnInit() {
-    this.minds = window.Minds;
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
         this.guid = params['guid'];
