@@ -16,11 +16,11 @@ export class TagsPipe {
     value = value.replace(url, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
 
     //#hashtag
-    var hash = /(^|\s)#(\w*[a-zA-Z_]+\w*)/gim;
+    var hash = /(^|\s||)#(\w*[a-zA-Z_]+\w*)/gim;
     value = value.replace(hash, '$1<a href="/search;q=%23$2;ref=hashtag" target="_blank">#$2</a>');
 
     //@tag
-    var at = /(^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
+    var at = /(^|\s||)\@(\w*[a-zA-Z_]+\w*)/gim;
     value = value.replace(at, '$1<a class="tag" href="/$2" target="_blank">@$2</a>');
 
     return value;
