@@ -1,11 +1,17 @@
 <div class="m-blog--tile m-border" [routerLink]="['/blog/view', entity.guid]">
 
-  <a
-    class="m-blog--tile-thumbnail"
-    [ngStyle]="{'background': '#444 url(' + entity.thumbnail_src + ') center center / cover'}"
-    [routerLink]="['/blog/view', entity.guid]"
+  <div class="m-blog--tile-thumbnail-wrapper"
+    [ngClass]="{ 'm-blog--tile--mature-thumbnail': attachment.shouldBeBlurred(entity) }"
+  >
+    <a
+      class="m-blog--tile-thumbnail"
+      [ngStyle]="{'background': '#444 url(' + entity.thumbnail_src + ') center center / cover'}"
+      [routerLink]="['/blog/view', entity.guid]"
     >
-  </a>
+    </a>
+
+    <i class="material-icons">explicit</i>
+  </div>
 
   <div class="m-blog--tile-title">
     <label>{{ entity.title | excerpt: 140 }}</label>

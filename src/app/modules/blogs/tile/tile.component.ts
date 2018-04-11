@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
 import { Session } from '../../../services/session';
+import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   selector: 'm-blog--tile',
@@ -12,7 +12,10 @@ export class BlogTileComponent {
   entity;
   minds = window.Minds;
 
-  constructor(public session: Session) {}
+  constructor(
+    public session: Session,
+    public attachment: AttachmentService
+  ) {}
 
   @Input('entity') set setEntity(entity : any) {
     if (!entity.thumbnail_src || !entity.header_bg)
