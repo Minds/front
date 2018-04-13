@@ -60,14 +60,13 @@ export class ThumbnailSelectorComponent {
   }
 
   getThumbnails(): string[] {
-    const amount: number = Math.floor(this.element.duration / 5);
-    const thumbs = [1]; //first thumbnail
-    if (amount > 15) { //the video would have at least 3 thumbnails
-      thumbs.push(Math.floor(amount / 2)); //thumbnail in the middle of the video
-    }
-    thumbs.push(amount); //last thumbnail
-
-    return this.getThumbnailUrls(thumbs);
+    const length: number = Math.round(this.element.duration);
+    const secs: Array<number> = [
+      1,
+      Math.round(length / 2),
+      length - 1,
+    ];
+    return this.getThumbnailUrls(secs);
   }
 
   getThumbnailUrls(nums: number[]): string[] {
