@@ -41,7 +41,7 @@ export class RegisterComponent {
 
   ngOnInit() {
     
-    this.paramsSubscription = this.route.params.subscribe(params => {
+    this.paramsSubscription = this.route.queryParams.subscribe(params => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
       }

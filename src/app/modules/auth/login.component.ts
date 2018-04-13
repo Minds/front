@@ -50,7 +50,7 @@ export class LoginComponent {
     this.title.setTitle('Login');
     this.redirectTo = localStorage.getItem('redirect');
 
-    this.paramsSubscription = this.route.params.subscribe((params) => {
+    this.paramsSubscription = this.route.queryParams.subscribe((params) => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
       }
