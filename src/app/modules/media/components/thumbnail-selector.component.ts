@@ -60,7 +60,8 @@ export class ThumbnailSelectorComponent {
   }
 
   getThumbnails(): string[] {
-    const length: number = Math.round(this.element.duration);
+    //old system took thumbs every 10 seconds, new system takes 3 throughout
+    const length: number = this._entity.time_created < 1523620800 ? Math.round(this.element.duration / 10) : Math.round(this.element.duration);
     const secs: Array<number> = [
       1,
       Math.round(length / 2),
