@@ -1,5 +1,4 @@
 <a [routerLink]="['/wallet']">
-  <i class="material-icons">account_balance</i>
   <span class="mdl-color--blue-grey-500 mdl-color-text--white m-wallet-pop"
     [hidden]="!walletPopContent"
     [@foolishIn]="walletPopState"
@@ -7,6 +6,9 @@
     #walletPop
     >{{ walletPopContent }}
   </span>
+  <m-tooltip icon="account_balance" i18n="@@MINDS__WALLET__TOGGLE">
+    Wallet
+  </m-tooltip>
 </a>
 
 <!--<div class="m-wallet&#45;&#45;topbar-toggle-overlay" (click)="toggle()" *ngIf="toggled"></div>-->
