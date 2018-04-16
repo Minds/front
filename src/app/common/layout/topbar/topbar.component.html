@@ -78,9 +78,9 @@
         Logout
       </li>
     </ul>
+    <div class="minds-bg-overlay" (click)="menu.value = !menu.value" [hidden]="!menu.value"></div>
   </div>
 
-  
 
   <button class="m-btn m-btn--action m-btn--login m-btn--slim" *ngIf="!session.isLoggedIn()" [routerLink]="['/login']">
     <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
