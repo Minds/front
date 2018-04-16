@@ -41,7 +41,7 @@
   </a>
   <a [href]="src.perma_url" target="_blank" rel="noopener noreferrer" class="meta mdl-color-text--blue-grey-900" [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src }">
     <h2 class="m-rich-embed--title mdl-card__title-text mdl-typography--font-medium" *ngIf="src.title">{{src.title | excerpt}}</h2>
-    <p class="m-blurb" *ngIf="src.blurb">{{src.blurb}}</p>
+    <p class="m-blurb" *ngIf="src.blurb">{{src.blurb | excerpt: '300'}}</p>
     <p class="m-url mdl-color-text--blue-grey-400">{{src.perma_url | domain}}</p>
   </a>
 </div>
