@@ -68,6 +68,9 @@
       -webkit-font-smoothing: antialiased;
     }
     .minds-blog-body img {
+      @media screen and (max-width: 891px) {
+        width: 100vw;
+      }
       max-width: initial;
       height: auto;
       width: calc(100% + 200px);
