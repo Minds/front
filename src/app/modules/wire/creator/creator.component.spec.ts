@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { VisibleWireError, WireCreatorComponent } from './creator.component';
+import { VisibleWireError, WireCreatorComponent, WireStruc } from './creator.component';
 import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { AbbrPipe } from '../../../common/pipes/abbr';
@@ -31,7 +31,6 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { FeaturesService } from '../../../services/features.service';
-import { MindsUser } from '../../../interfaces/entities';
 
 /* tslint:disable */
 @Component({
@@ -50,7 +49,7 @@ export class WireCreatorRewardsComponentMock {
 
 @Component({
   selector: 'minds-payments-stripe-checkout',
-  outputs: [ 'inputed', 'done' ],
+  outputs: ['inputed', 'done'],
   template: ''
 })
 
@@ -73,7 +72,8 @@ export class StripeCheckoutMock {
   selector: 'm--crypto-token-symbol',
   template: ''
 })
-class WireCreatorCryptoTokenSymbolMock { }
+class WireCreatorCryptoTokenSymbolMock {
+}
 
 @Component({
   selector: 'm-checkout--blockchain',
@@ -82,6 +82,13 @@ class WireCreatorCryptoTokenSymbolMock { }
 class WireCreatorBlockchainCheckoutMock {
   @Input() autoselect;
 }
+
+let wireServiceMock = new function () {
+  this.wireSent = new EventEmitter<any>();
+  this.submitWire = jasmine.createSpy('submitWire').and.callFake(async (wireStruc: WireStruc) => {
+    return { success: true };
+  });
+};
 
 describe('WireCreatorComponent', () => {
 
@@ -102,6 +109,7 @@ describe('WireCreatorComponent', () => {
     'access_id': '2',
     'name': 'minds',
     'username': 'minds',
+    'eth_wallet': '0x1234',
     'language': 'en',
     'icontime': false,
     'legacy_guid': false,
@@ -124,11 +132,11 @@ describe('WireCreatorComponent', () => {
     'signup_method': false,
     'social_profiles': [],
     'feature_flags': false,
-    'programs': [ 'affiliate' ],
+    'programs': ['affiliate'],
     'plus': false,
     'verified': false,
     'disabled_boost': false,
-    'categories': [ 'news', 'film', 'spirituality' ],
+    'categories': ['news', 'film', 'spirituality'],
     'wire_rewards': null,
     'subscribed': false,
     'subscriber': false,
@@ -175,12 +183,12 @@ describe('WireCreatorComponent', () => {
         TokenPipe,
         IfFeatureDirective,
       ], // declare the test component
-      imports: [ FormsModule, RouterTestingModule ],
+      imports: [FormsModule, RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: WireContractService, useValue: wireContractServiceMock },
-        WireService,
+        { provide: WireService, useValue: wireServiceMock },
         Web3WalletService,
         FeaturesService,
         { provide: Web3WalletService, useValue: web3WalletServiceMock },
@@ -202,7 +210,7 @@ describe('WireCreatorComponent', () => {
 
     comp = fixture.componentInstance; // LoginForm test instance
     clientMock.response = {};
-    clientMock.response[ `api/v2/boost/rates` ] = {
+    clientMock.response[`api/v2/boost/rates`] = {
       'status': 'success',
       'balance': 301529,
       'hasPaymentMethod': false,
@@ -213,20 +221,20 @@ describe('WireCreatorComponent', () => {
       'usd': 1000,
       'minUsd': 1
     };
-    clientMock.response[ `api/v1/wire/rewards/${owner.guid}` ] = {
+    clientMock.response[`api/v1/wire/rewards/${owner.guid}`] = {
       'status': 'success',
       'username': 'minds',
       'wire_rewards': {
         'description': 'description',
         'rewards': {
-          'points': [ { 'amount': 10, 'description': 'description' }, {
+          'points': [{ 'amount': 10, 'description': 'description' }, {
             'amount': 100,
             'description': 'description'
-          } ],
-          'money': [ { 'amount': 1, 'description': 'description' }, {
+          }],
+          'money': [{ 'amount': 1, 'description': 'description' }, {
             'amount': 10,
             'description': ':)'
-          }, { 'amount': 1000, 'description': 'description' } ]
+          }, { 'amount': 1000, 'description': 'description' }]
         }
       },
       'merchant': {
@@ -234,6 +242,7 @@ describe('WireCreatorComponent', () => {
         'id': 'acct_123',
         'exclusive': { 'background': 1502474954, 'intro': 'Support me!' }
       },
+      'eth_wallet': '0x1234',
       'sums': { 'points': '40', 'money': '3096' }
     };
     clientMock.response[`api/v2/blockchain/wallet/balance`] = {
@@ -396,6 +405,24 @@ describe('WireCreatorComponent', () => {
     expect(balance).toBe('500');
   });
 
+  it(`should have credit card payment method`, () => {
+    fixture.detectChanges();
+
+    const creditCardOption = getPaymentMethodItem(3);
+    expect(creditCardOption).not.toBeNull();
+  });
+
+
+  it(`should show stripe checkout component when selecting credit card`, () => {
+    fixture.detectChanges();
+
+    const creditCardOption = getPaymentMethodItem(3);
+    creditCardOption.nativeElement.click();
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.query(By.css('.m-wire--creator-payment minds-payments-stripe-checkout'))).not.toBeNull();
+  });
+
   it('should have a recurring checkbox', () => {
     comp.setPayloadType('onchain');
     fixture.detectChanges();
@@ -488,7 +515,7 @@ describe('WireCreatorComponent', () => {
     expect(comp.submit).toHaveBeenCalled();
   });
 
-  xit('send a correct wire', fakeAsync(() => {
+  it('should send a correct onchain wire', fakeAsync(() => {
     spyOn(comp, 'submit').and.callThrough();
     spyOn(comp, 'canSubmit').and.returnValue(true);
 
@@ -508,25 +535,18 @@ describe('WireCreatorComponent', () => {
 
     fixture.detectChanges();
 
-    clientMock.post.calls.reset();
-    clientMock.response[ `api/v1/wire/${comp.wire.guid}` ] = { 'status': 'success' };
-
     sendButton.nativeElement.click();
 
     fixture.detectChanges();
     tick();
 
-    expect(clientMock.post).toHaveBeenCalled();
-
-    const args = clientMock.post.calls.mostRecent().args;
-
-    expect(args[ 0 ]).toBe(`api/v1/wire/${comp.wire.guid}`);
-
-    expect(args[ 1 ]).toEqual({
-      payload: null,
-      method: 'tokens',
+    expect(wireServiceMock.submitWire).toHaveBeenCalled();
+    expect(wireServiceMock.submitWire.calls.mostRecent().args[0]).toEqual({
       amount: 10,
-      recurring: true
+      guid: null,
+      payload: { receiver: '0x1234', address: '' },
+      payloadType: "onchain",
+      recurring: false
     });
   }));
 });

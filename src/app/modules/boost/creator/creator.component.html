@@ -186,7 +186,7 @@
         *ngIf="boost.currency === 'usd' || boost.currency === 'creditcard'"
       >Back</button>
 
-      <button class="m-boost--creator-button"
+      <button class="m-boost--creator-button m-boost--creator-button--submit"
         [disabled]="!canSubmit() || inProgress || success || criticalError"
         (click)="submit()"
         i18n="verb|@@M__ACTION__BOOST"

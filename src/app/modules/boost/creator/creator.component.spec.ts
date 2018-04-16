@@ -1,5 +1,5 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Component, DebugElement, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -112,12 +112,12 @@ let web3WalletServiceMock = new function () {
   this.unavailable = false;
   this.locked = false;
 
-  this.isUnavailable = jasmine.createSpy('isUnavailable').and.callFake(async () => {
+  this.isUnavailable = jasmine.createSpy('isUnavailable').and.callFake(() => {
     return this.unavailable;
   });
 
   this.unlock = jasmine.createSpy('unlock').and.callFake(async () => {
-    return this.locked;
+    return !this.locked;
   });
 
   this.ready = jasmine.createSpy('ready').and.callFake(async () => {
@@ -204,7 +204,6 @@ describe('BoostCreatorComponent', () => {
   let fixture: ComponentFixture<BoostCreatorComponent>;
   let submitSection: DebugElement;
   let boostSubmitButton: DebugElement;
-  let loadCategoriesSpy: jasmine.Spy;
 
   window.Minds.categories = {
     "art": "Art",
@@ -300,7 +299,7 @@ describe('BoostCreatorComponent', () => {
     'boostProPlus': '1',
     'fb': {
       'uuid': '578128092345756',
-      'name': 'Mark\'s test page'
+      'name': 'Mark"s test page'
     }
   };
 
@@ -343,7 +342,7 @@ describe('BoostCreatorComponent', () => {
   }
 
   function getSubmitButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-boost--creator--submit .m-boost--creator-button'));
+    return fixture.debugElement.query(By.css('.m-boost--creator--submit .m-boost--creator-button.m-boost--creator-button--submit'));
   }
 
   function getNextButton(): DebugElement {
@@ -450,13 +449,13 @@ describe('BoostCreatorComponent', () => {
     expect(boostTypeSection).not.toBeNull();
   });
 
-  it('boost type selection section should have a title that says \'Boost Type\'', () => {
+  it('boost type selection section should have a title that says "Boost Type"', () => {
     const boostTypeTitle = fixture.debugElement.query(By.css('section.m-boost--creator-section-type > .m-boost--creator-section-title--small'));
     expect(boostTypeTitle).not.toBeNull();
     expect(boostTypeTitle.nativeElement.textContent).toContain('Boost Type');
   });
 
-  it('should only offer "content" boost type when the boosted item is NOT an "activity"', () => {
+  it('should only offer "sidebars" boost type when the boosted item is NOT an "activity"', () => {
     boostComponent.object = boostUser;
     boostComponent.syncAllowedTypes();
     fixture.detectChanges();
@@ -467,7 +466,7 @@ describe('BoostCreatorComponent', () => {
     expect(getBoostTypeItem(1).query(By.css('h4')).nativeElement.textContent).toContain('Sidebars');
   });
 
-  it('should offer both "p2p" and "newsfeed" boost types when the boosted item is an "activity"', () => {
+  it('should offer both "offers" (p2p) and "newsfeed" boost types when the boosted item is an "activity"', () => {
     boostComponent.object = { type: 'activity', guid: '123' };
     boostComponent.syncAllowedTypes();
     fixture.detectChanges();
@@ -485,7 +484,17 @@ describe('BoostCreatorComponent', () => {
     expect(getAmountLabel()).not.toBeNull();
   });
 
-  it('amount of views section should have a title that says \'How many views do you want?\'', () => {
+  it('changing amount input should change the boost"s amount', () => {
+    const amountInput: DebugElement = getAmountInput();
+
+    amountInput.nativeElement.value = '10';
+    amountInput.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(boostComponent.boost.amount).toBe(10);
+  });
+
+  it('amount of views section should have a title that says "How many views do you want?"', () => {
     const amountSectionTitle = fixture.debugElement.query(By.css('section.m-boost--creator-section-amount > .m-boost--creator-section-title--small'));
     expect(amountSectionTitle).not.toBeNull();
     expect(amountSectionTitle.nativeElement.textContent).toContain('How many views do you want?');
@@ -496,7 +505,7 @@ describe('BoostCreatorComponent', () => {
     expect(paymentSection).not.toBeNull();
   });
 
-  it('payment section should have a title that says \'Payment Method\'', () => {
+  it('payment section should have a title that says "Payment Method"', () => {
     const paymentTitle = fixture.debugElement.query(By.css('section.m-boost--creator-section-payment > .m-boost--creator-section-title--small'));
     expect(paymentTitle).not.toBeNull();
     expect(paymentTitle.nativeElement.textContent).toContain('Payment Method');
@@ -507,19 +516,37 @@ describe('BoostCreatorComponent', () => {
     expect(paymentMethods).not.toBeNull();
   });
 
-  it('should have a priority section', () => {
+  it('should have a priority section if credit card is selected', () => {
     boostComponent.object = { type: 'activity', guid: '123' };
-    boostComponent.boost.currency='usd';
+    boostComponent.boost.currency = 'usd';
     boostComponent.syncAllowedTypes();
     fixture.detectChanges();
 
     expect(fixture.debugElement.query(By.css('section.m-boost--creator-section-priority'))).not.toBeNull();
   });
 
+  it('priority section should not appear if onchain is selected', () => {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.boost.currency = 'onchain';
+    boostComponent.syncAllowedTypes();
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.query(By.css('section.m-boost--creator-section-priority'))).toBeNull();
+  });
+
+  it('priority section should not appear if offchain is selected', () => {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.boost.currency = 'offchain';
+    boostComponent.syncAllowedTypes();
+    fixture.detectChanges();
+
+    expect(fixture.debugElement.query(By.css('section.m-boost--creator-section-priority'))).toBeNull();
+  });
+
   it('toggling the priority should affect the boost entity', () => {
     boostComponent.object = { type: 'activity', guid: '123' };
     boostComponent.syncAllowedTypes();
-    boostComponent.boost.currency='usd';
+    boostComponent.boost.currency = 'usd';
     fixture.detectChanges();
 
     expect(boostComponent.boost.priority).toBeFalsy();
@@ -527,21 +554,45 @@ describe('BoostCreatorComponent', () => {
     expect(boostComponent.boost.priority).toBeTruthy();
   });
 
-  it('when selecting credit card \'next\' button should appear', ()=> {
+  it('when selecting credit card "next" button should appear', () => {
     boostComponent.object = { type: 'activity', guid: '123' };
     boostComponent.syncAllowedTypes();
 
-    boostComponent.boost.currency='usd';
+    boostComponent.boost.currency = 'usd';
     fixture.detectChanges();
 
     expect(getNextButton()).not.toBeNull();
   });
 
-  it('clicking on the \'next\' button should show the stripe checkout component', ()=> {
+  it('when selecting credit card "priority" button should appear', () => {
     boostComponent.object = { type: 'activity', guid: '123' };
     boostComponent.syncAllowedTypes();
 
-    boostComponent.boost.currency='usd';
+    boostComponent.boost.currency = 'usd';
+    fixture.detectChanges();
+
+    expect(getNextButton()).not.toBeNull();
+  });
+
+  it('"priority" button should toggle boost.priority', () => {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency = 'usd';
+    fixture.detectChanges();
+
+    expect(boostComponent.boost.priority).toBeFalsy();
+
+    togglePriority();
+
+    expect(boostComponent.boost.priority).toBeTruthy();
+  });
+
+  it('clicking on the "next" button should show the stripe checkout component', () => {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency = 'usd';
     fixture.detectChanges();
 
     getNextButton().nativeElement.click();
@@ -550,95 +601,257 @@ describe('BoostCreatorComponent', () => {
     expect(fixture.debugElement.query(By.css('.m-boost--creator-section-checkout m-boost--creator-checkout'))).not.toBeNull();
   });
 
-  /*
+  it('"boost" button should be disabled by default', () => {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.syncAllowedTypes();
 
-  describe('when selected payment method is usd', () => {
-    it('then a card selector should appear', fakeAsync(() => {
-      tick();
-      boostComponent.setBoostCurrency('usd');
-      fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('.m-boost--creator-payment'))).not.toBeNull();
-    }));
+    boostComponent.boost.currency = 'usd';
+    fixture.detectChanges();
 
-    describe('and the boost type is NOT "p2p"', () => {
-      beforeEach(fakeAsync(() => {
-        boostComponent.object = boostActivity;
-        boostComponent.syncAllowedTypes();
-        fixture.detectChanges();
-        const boostTypeOption: DebugElement = getBoostTypeItem(1);
-        boostTypeOption.nativeElement.click();
-        fixture.detectChanges();
-        expect(boostComponent.boost.type).toEqual('newsfeed');
-        boostComponent.setBoostCurrency('usd');
-        fixture.detectChanges();
-        tick();
-      }));
+    getNextButton().nativeElement.click();
+    fixture.detectChanges();
 
-      it('the boost priority section should appear', () => {
-        const prioritySection = fixture.debugElement.query(By.css('section.m-boost--creator-section-priority'));
-        expect(prioritySection).not.toBeNull();
-      });
-
-      it('boost priority section should have a title that says \'Priority\'', () => {
-        const priorityTitle = fixture.debugElement.query(By.css('section.m-boost--creator-section-priority > h3'));
-        expect(priorityTitle).not.toBeNull();
-        expect(priorityTitle.nativeElement.textContent).toContain('Priority');
-      });
-
-      it('boost priority option should be highlighted and usd payment amount should be updated when priority is selected', fakeAsync(() => {
-        const priorityToggle = fixture.debugElement.query(By.css('section.m-boost--creator-section-priority > .m-boost--creator-toggle'));
-        expect(priorityToggle).not.toBeNull();
-
-        expect(priorityToggle.nativeElement.classList.contains('m-boost--creator-toggle--highlight')).toBeFalsy();
-
-        priorityToggle.nativeElement.click();
-        fixture.detectChanges();
-        tick();
-
-        expect(priorityToggle.nativeElement.classList.contains('m-boost--creator-toggle--highlight')).toBeTruthy();
-
-        const chargeAmount = fixture.debugElement.query(By.css('section.m-boost--creator-section-payment > .m-boost--creator-selector > li:first-child > h4 > b'));
-        const totalCharge = boostComponent.rates.minUsd + boostComponent.rates.priority;
-        expect(chargeAmount).not.toBeNull();
-        expect(chargeAmount.nativeElement.textContent).toEqual(`\$${totalCharge.toFixed(2)}`);
-      }));
-    });
+    expect(boostComponent.canSubmit()).toBeFalsy();
   });
 
-  it('changing amount input should change the boost\'s amount', () => {
-    const amountInput: DebugElement = getAmountInput();
+  it('if nonce is set, "boost" button should be enabled', () => {
+    boostComponent.object = { type: 'activity', guid: '123' };
+    boostComponent.syncAllowedTypes();
 
-    amountInput.nativeElement.value = '10';
-    amountInput.nativeElement.dispatchEvent(new Event('input'));
+    boostComponent.boost.currency = 'usd';
     fixture.detectChanges();
 
-    expect(boostComponent.boost.amount).toBe(10);
-  });*/
+    getNextButton().nativeElement.click();
+    fixture.detectChanges();
 
-  /*it('should have a submit section', () => {
+    boostComponent.boost.nonce = 'nonce';
+    fixture.detectChanges();
+    expect(getSubmitButton().nativeElement.disabled).toBeFalsy();
+  });
 
-    expect(submitSection).not.toBeNull();
-  });*/
 
-  /*it('if there are any errors, hovering over the submit section should show them', fakeAsync(() => {
-    spyOn(boostComponent, 'showErrors').and.callThrough();
-    spyOn(boostComponent, 'validateBoost').and.callFake(() => {
-      throw new VisibleBoostError('I\'m an error');
-    });
-    submitSection.nativeElement.dispatchEvent(new Event('mouseenter'));
+  it('clicking on "boost" should submit the boost', fakeAsync(() => {
+    boostComponent.object = { type: 'activity', guid: '123', owner_guid: '789' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency = 'usd';
+    fixture.detectChanges();
+
+    getNextButton().nativeElement.click();
+    fixture.detectChanges();
+
+    boostComponent.boost.nonce = 'nonce';
+    fixture.detectChanges();
+
+    clientMock.response[`api/v2/boost/prepare/${boostComponent.object.guid}`] = {
+      'status': 'success',
+      'guid': '456'
+    };
+
+    spyOn(boostComponent, 'submit').and.callThrough();
+    clientMock.get.calls.reset();
+    clientMock.post.calls.reset();
+
+    expect(boostComponent.canSubmit()).toBeTruthy();
+    expect(boostComponent.inProgress).toBeFalsy();
+
+    getSubmitButton().nativeElement.click();
     fixture.detectChanges();
     tick();
+    jasmine.clock().tick(10);
 
-    expect(boostComponent.showErrors).toHaveBeenCalled();
-    expect(getErrorLabel().nativeElement.textContent).toContain('I\'m an error');
-  }));*/
+    expect(boostComponent.submit).toHaveBeenCalled();
 
-  /*it('should have a submit button with the label \'Boost\'', () => {
-    expect(boostSubmitButton).not.toBeNull();
-    expect(boostSubmitButton.nativeElement.textContent).toContain('Boost');
-  });*/
+    expect(clientMock.post).toHaveBeenCalled();
+    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/boost/${boostComponent.object.type}/${boostComponent.object.guid}/${boostComponent.object.owner_guid}`);
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      bidType: "usd",
+      categories: [],
+      checksum: null,
+      guid: null,
+      impressions: 1000,
+      paymentMethod: "nonce",
+      priority: null
+    });
+  }));
 
-  /*it('boost button should be disabled either if the user hasn\'t entered data, there\'s an error, the component\'s loading something or just saved the boost', () => {
+  it('should fail submitting an "onchain" boost if wallet is unavailable', fakeAsync(() => {
+    web3WalletServiceMock.unavailable = true;
+    boostComponent.object = { type: 'activity', guid: '123', owner_guid: '789' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency = 'onchain';
+    fixture.detectChanges();
+
+    clientMock.get.calls.reset();
+
+    clientMock.response[`api/v2/boost/prepare/${boostComponent.object.guid}`] = {
+      'status': 'success',
+      'guid': '456',
+      'checksum': 'checksum'
+    };
+
+    getSubmitButton().nativeElement.click();
+    fixture.detectChanges();
+    tick();
+    jasmine.clock().tick(10);
+
+    expect(clientMock.get).toHaveBeenCalled();
+    expect(clientMock.get.calls.mostRecent().args[0]).toBe(`api/v2/boost/prepare/${boostComponent.object.guid}`);
+
+    //it first waits for the wallet to be ready
+    expect(web3WalletServiceMock.ready).toHaveBeenCalled();
+    expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
+
+    expect(boostComponent.error).toContain('No Ethereum wallets available on your browser.');
+  }));
+
+  it('should fail submitting an "onchain" boost if wallet is locked', fakeAsync(() => {
+    web3WalletServiceMock.unavailable = false;
+    web3WalletServiceMock.locked = true;
+
+    boostComponent.object = { type: 'activity', guid: '123', owner_guid: '789' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency = 'onchain';
+    fixture.detectChanges();
+    tick();
+    jasmine.clock().tick(10);
+
+    clientMock.response[`api/v2/boost/prepare/${boostComponent.object.guid}`] = {
+      'status': 'success',
+      'guid': '456',
+      'checksum': 'checksum'
+    };
+
+    clientMock.get.calls.reset();
+
+    getSubmitButton().nativeElement.click();
+    fixture.detectChanges();
+    tick();
+    jasmine.clock().tick(10);
+
+    expect(clientMock.get).toHaveBeenCalled();
+    expect(clientMock.get.calls.mostRecent().args[0]).toBe(`api/v2/boost/prepare/${boostComponent.object.guid}`);
+
+    //it first waits for the wallet to be ready
+    expect(web3WalletServiceMock.ready).toHaveBeenCalled();
+    expect(web3WalletServiceMock.isUnavailable).toHaveBeenCalled();
+
+    expect(boostComponent.error).toContain('Your Ethereum wallet is locked or connected to another network.');
+  }));
+
+  it('should submit an "onchain" boost', fakeAsync(() => {
+    web3WalletServiceMock.unavailable = false;
+    web3WalletServiceMock.locked = false;
+    boostComponent.object = { type: 'activity', guid: '123', owner_guid: '789' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency = 'onchain';
+    fixture.detectChanges();
+    tick();
+    jasmine.clock().tick(10);
+
+    clientMock.get.calls.reset();
+
+    clientMock.response[`api/v2/boost/prepare/${boostComponent.object.guid}`] = {
+      'status': 'success',
+      'guid': '456',
+      'checksum': 'checksum'
+    };
+
+    clientMock.get.calls.reset();
+    clientMock.post.calls.reset();
+
+    spyOn(boostComponent, 'submit').and.callThrough();
+
+    getSubmitButton().nativeElement.click();
+    fixture.detectChanges();
+    tick();
+    jasmine.clock().tick(10);
+
+    expect(boostComponent.submit).toHaveBeenCalled();
+
+    expect(clientMock.get).toHaveBeenCalled();
+    expect(clientMock.get.calls.mostRecent().args[0]).toBe(`api/v2/boost/prepare/${boostComponent.object.guid}`);
+
+    //it first waits for the wallet to be ready
+    expect(web3WalletServiceMock.ready).toHaveBeenCalled();
+
+    expect(boostComponent.canSubmit()).toBeTruthy();
+    expect(boostComponent.inProgress).toBeFalsy();
+
+
+    expect(clientMock.post).toHaveBeenCalled();
+    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/boost/${boostComponent.object.type}/${boostComponent.object.guid}/${boostComponent.object.owner_guid}`);
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      bidType: "tokens",
+      categories: [],
+      checksum: "checksum",
+      guid: "456",
+      impressions: 1000,
+      paymentMethod: { method: "onchain", txHash: 'hash', address: "0x123" },
+      priority: null
+    });
+  }));
+
+  it('should submit an "offchain" boost', fakeAsync(() => {
+    web3WalletServiceMock.unavailable = false;
+    web3WalletServiceMock.locked = false;
+    boostComponent.object = { type: 'activity', guid: '123', owner_guid: '789' };
+    boostComponent.syncAllowedTypes();
+
+    boostComponent.boost.currency = 'offchain';
+    fixture.detectChanges();
+    tick();
+    jasmine.clock().tick(10);
+
+    clientMock.get.calls.reset();
+
+    clientMock.response[`api/v2/boost/prepare/${boostComponent.object.guid}`] = {
+      'status': 'success',
+      'guid': '456',
+      'checksum': 'checksum'
+    };
+
+    clientMock.get.calls.reset();
+    clientMock.post.calls.reset();
+
+    spyOn(boostComponent, 'submit').and.callThrough();
+
+    getSubmitButton().nativeElement.click();
+    fixture.detectChanges();
+    tick();
+    jasmine.clock().tick(10);
+
+    expect(boostComponent.submit).toHaveBeenCalled();
+
+    expect(clientMock.get).toHaveBeenCalled();
+    expect(clientMock.get.calls.mostRecent().args[0]).toBe(`api/v2/boost/prepare/${boostComponent.object.guid}`);
+
+    expect(boostComponent.canSubmit()).toBeTruthy();
+    expect(boostComponent.inProgress).toBeFalsy();
+
+
+    expect(clientMock.post).toHaveBeenCalled();
+    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/boost/${boostComponent.object.type}/${boostComponent.object.guid}/${boostComponent.object.owner_guid}`);
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      bidType: "tokens",
+      categories: [],
+      checksum: "checksum",
+      guid: "456",
+      impressions: 1000,
+      paymentMethod: { method: "offchain", address: "offchain" },
+      priority: null
+    });
+  }));
+
+});
+
+  /*
+
+
+  /*it('boost button should be disabled either if the user hasn"t entered data, there"s an error, the component"s loading something or just saved the boost', () => {
     spyOn(boostComponent, 'canSubmit').and.returnValue(true);
     fixture.detectChanges();
     expect(boostSubmitButton.nativeElement.disabled).toBeFalsy();
@@ -663,35 +876,7 @@ describe('BoostCreatorComponent', () => {
     expect(boostSubmitButton.nativeElement.disabled).toBeTruthy();
   });
 
-  it('boost button should call submit()', () => {
-    spyOn(boostComponent, 'submit').and.callThrough();
-    spyOn(boostComponent, 'canSubmit').and.returnValue(true);
-    fixture.detectChanges();
-
-    boostSubmitButton.nativeElement.click();
-    fixture.detectChanges();
-
-    expect(boostComponent.submit).toHaveBeenCalled();
-  });*/
-
-  /*describe('when the boost type is "p2p"', () => {
-    let boostTargetSearchInput: DebugElement;
-
-    beforeEach(() => {
-      boostComponent.object = boostActivity;
-      boostComponent.syncAllowedTypes();
-      boostComponent.setBoostType('p2p');
-      fixture.detectChanges();
-
-      boostTargetSearchInput = fixture.debugElement.query(By.css('section.m-boost--creator-section-target > .m-boost--creator--target > .m-boost--creator-wide-input--edit'));
-    });
-
-    it('should NOT offer boost target categories', () => {
-      const categories = fixture.debugElement.query(By.css('.m-boost--creator--categories'));
-      expect(categories).toBeNull();
-    });
-
-    it('should have a target section with label \'Target\', description, and search box', () => {
+    it('should have a target section with label "Target", description, and search box', () => {
       const boostTargetSection = fixture.debugElement.query(By.css('section.m-boost--creator-section-target'));
       expect(boostTargetSection).not.toBeNull();
 
@@ -746,226 +931,4 @@ describe('BoostCreatorComponent', () => {
       jasmine.clock().tick(10);
       expect(boostComponent.setTarget).toHaveBeenCalled();
       expect(boostComponent.boost.target).toEqual(boostTargetUser);
-    }));
-
-    describe('if the boost target is a boost pro plus subscriber', () => {
-
-      beforeEach(() => {
-        boostComponent.setTarget(boostTargetUser);
-        fixture.detectChanges();
-      });
-
-      it('allows boost to be posted to target\'s facebook page if available, and allows it to be scheduled', () => {
-        spyOn(boostComponent, 'togglePostToFacebook').and.callThrough();
-
-        const fbToggle = fixture.debugElement.query(By.css('.m-boost--creator-toggle--target-facebook'));
-
-        expect(fbToggle.nativeElement.classList.contains('m-boost--creator-toggle--highlight')).toBeFalsy();
-
-        fbToggle.nativeElement.click();
-        fixture.detectChanges();
-
-        expect(boostComponent.togglePostToFacebook).toHaveBeenCalled();
-        expect(fbToggle.nativeElement.classList.contains('m-boost--creator-toggle--highlight')).toBeTruthy();
-
-        const fbScheduler = fixture.debugElement.query(By.css('.m-boost--creator--target-facebook-scheduler'));
-        expect(fbScheduler).not.toBeNull();
-      });
-    });
-
-    it('successfully submits "p2p" boost', fakeAsync(() => {
-      spyOn(boostComponent, 'submit').and.callThrough();
-      spyOn(boostComponent, 'canSubmit').and.returnValue(true);
-
-      boostComponent.object = boostActivity;
-      boostComponent.syncAllowedTypes();
-      fixture.detectChanges();
-
-      const boostTypeOption: DebugElement = getBoostTypeItem(2);
-      boostTypeOption.nativeElement.click();
-      fixture.detectChanges();
-
-      expect(boostComponent.boost.type).toEqual('p2p');
-
-      boostComponent.setTarget(boostTargetUser);
-      fixture.detectChanges();
-
-      const pointsOption: DebugElement = getPaymentMethodItem(2);
-      pointsOption.nativeElement.click()
-      fixture.detectChanges();
-
-      const amountInput: DebugElement = getAmountInput();
-      amountInput.nativeElement.value = '10';
-      amountInput.nativeElement.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
-
-      clientMock.post.calls.reset();
-      clientMock.response[`api/v1/boost/peer/${boostActivity.guid}/${boostActivity.owner_guid}`] = { 'status': 'success' };
-      boostSubmitButton.nativeElement.click();
-      fixture.detectChanges();
-
-      tick();
-
-      expect(boostComponent.submit).toHaveBeenCalled();
-      expect(clientMock.post).toHaveBeenCalled();
-
-      const args = clientMock.post.calls.mostRecent().args;
-      expect(args[0]).toBe(`api/v1/boost/peer/${boostActivity.guid}/${boostActivity.owner_guid}`);
-      expect(args[1]).toEqual({
-        guid: null,
-        type: 'points',
-        currency: 'points',
-        bid: 10,
-        destination: boostTargetUser.guid,
-        scheduledTs: null,
-        postToFacebook: null,
-        nonce: null
-      });
-    }));
-  });*/
-
-  /*describe('boost target categories', () => {
-    it('should be offered if the boost type is NOT "p2p"', () => {
-      boostComponent.object = boostActivity;
-      boostComponent.syncAllowedTypes();
-      fixture.detectChanges();
-
-      const categoriesSection = fixture.debugElement.query(By.css('section.m-boost--creator-section-categories'));
-      expect(categoriesSection).not.toBeNull();
-
-      const categoriesSelector = fixture.debugElement.query(By.css('m--categories-selector'));
-      expect(categoriesSelector).not.toBeNull();
-
-      const selectedCategories = fixture.debugElement.query(By.css('m--selected-categories'));
-      expect(selectedCategories).not.toBeNull();
-    });
-
-    it('should not allow more than the maximum allowed categories to be chosen', () => {
-      let selectedCategories:DebugElement[] = [], i:number;
-
-      boostComponent.object = boostActivity;
-      boostComponent.syncAllowedTypes();
-      fixture.detectChanges();
-
-      let categories: any[] = [];
-      fixture.detectChanges();
-
-      for (i=0; i < boostComponent.rates.maxCategories+1; i++) {
-
-        categories.push({'id': 'a'+i, 'label': 'a'+i});
-
-      }
-      boostComponent.onSelectedCategoriesChange(categories);
-      fixture.detectChanges();
-
-      expect(boostComponent.boost.categories.length).toEqual(0);
-    });
-  });*/
-
-  /*it('successfully submits "newsfeed" boosts', fakeAsync(() => {
-    spyOn(boostComponent, 'submit').and.callThrough();
-    spyOn(boostComponent, 'canSubmit').and.returnValue(true);
-
-    boostComponent.object = boostActivity;
-    boostComponent.syncAllowedTypes();
-    fixture.detectChanges();
-
-    const boostTypeOption: DebugElement = getBoostTypeItem(1);
-    boostTypeOption.nativeElement.click();
-    fixture.detectChanges();
-
-    expect(boostComponent.boost.type).toEqual('newsfeed');
-
-    const pointsOption = getPaymentMethodItem(2);
-    pointsOption.nativeElement.click();
-    fixture.detectChanges();
-
-    const amountInput: DebugElement = getAmountInput();
-    amountInput.nativeElement.value = '10';
-    amountInput.nativeElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    const firstCategory = {'id': 'a', 'label': 'a'};
-    const secondCategory = {'id': 'b', 'label': 'b'};
-    boostComponent.onSelectedCategoriesChange([firstCategory, secondCategory]);
-
-    fixture.detectChanges();
-
-    clientMock.post.calls.reset();
-    clientMock.response[`api/v1/boost/${boostActivity.type}/${boostActivity.guid}/${boostActivity.owner_guid}`] = { 'status': 'success' };
-    boostSubmitButton.nativeElement.click();
-    fixture.detectChanges();
-    tick();
-
-    expect(boostComponent.submit).toHaveBeenCalled();
-    expect(clientMock.post).toHaveBeenCalled();
-
-    const args = clientMock.post.calls.mostRecent().args;
-    expect(args[0]).toBe(`api/v1/boost/${boostActivity.type}/${boostActivity.guid}/${boostActivity.owner_guid}`);
-    expect(args[1]).toEqual({
-      guid: null,
-      bidType: 'points',
-      impressions: 10,
-      categories: [
-        firstCategory.id,
-        secondCategory.id
-      ],
-      priority: null,
-      paymentMethod: null
-    });
-  }));*/
-
-  /*it('successfully submits "content" boosts', fakeAsync(() => {
-    spyOn(boostComponent, 'submit').and.callThrough();
-    spyOn(boostComponent, 'canSubmit').and.returnValue(true);
-
-    boostComponent.object = boostBlog;
-    boostComponent.syncAllowedTypes();
-    fixture.detectChanges();
-
-    const boostTypeOption: DebugElement = getBoostTypeItem(1);
-    boostTypeOption.nativeElement.click();
-    fixture.detectChanges();
-
-    expect(boostComponent.boost.type).toEqual('content');
-
-    const pointsOption = getPaymentMethodItem(2);
-    pointsOption.nativeElement.click();
-    fixture.detectChanges();
-
-    const amountInput: DebugElement = getAmountInput();
-    amountInput.nativeElement.value = '10';
-    amountInput.nativeElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    const firstCategory = {'id': 'a', 'label': 'a'};
-    const secondCategory = {'id': 'b', 'label': 'b'};
-    boostComponent.onSelectedCategoriesChange([firstCategory, secondCategory]);
-
-    fixture.detectChanges();
-
-    clientMock.post.calls.reset();
-    clientMock.response[`api/v1/boost/${boostBlog.type}/${boostBlog.guid}/${boostBlog.owner_guid}`] = { 'status': 'success' };
-    boostSubmitButton.nativeElement.click();
-    fixture.detectChanges();
-
-    tick();
-
-    expect(boostComponent.submit).toHaveBeenCalled();
-    expect(clientMock.post).toHaveBeenCalled();
-
-    const args = clientMock.post.calls.mostRecent().args;
-    expect(args[0]).toBe(`api/v1/boost/${boostBlog.type}/${boostBlog.guid}/${boostBlog.owner_guid}`);
-    expect(args[1]).toEqual({
-      guid: null,
-      bidType: 'points',
-      impressions: 10,
-      categories: [
-        firstCategory.id,
-        secondCategory.id
-      ],
-      priority: null,
-      paymentMethod: null
-    });
-  }));*/
-});
+    }));*/
