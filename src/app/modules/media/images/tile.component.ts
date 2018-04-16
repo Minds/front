@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { Subscription } from 'rxjs/Rx';
 import { Session } from '../../../services/session';
+import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   moduleId: module.id,
@@ -16,7 +17,10 @@ export class MediaImagesTileComponent {
 
   @Input() entity;
 
-  constructor(public session: Session) {}
+  constructor(
+    public session: Session,
+    public attachment: AttachmentService
+  ) {}
 
   getClass() {
     return 

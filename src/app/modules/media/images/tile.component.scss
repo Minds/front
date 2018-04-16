@@ -1,12 +1,12 @@
-.m-media--images--tile{
+.m-media--images--tile {
   position: relative;
 
   //padding: 4px;
 
   a {
-    background-color:#444;
-    background-position: center center; 
-    background-size:cover;
+    background-color: #444;
+    background-position: center center;
+    background-size: cover;
 
     display: block;
 
@@ -21,4 +21,28 @@
     top: 12px;
   }
 
+  > i.material-icons {
+    display: none;
+  }
+
+  &.m-tile-mature-thumbnail {
+    transform-style: preserve-3d;
+    background-color: rgba(0, 0, 0, 0.65);
+
+    > a {
+      filter: blur(5px) grayscale(100%);
+      transform: translate3d(0, 0, 0);
+      opacity: 0.65;
+    }
+
+    > i.material-icons {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      color: #fff;
+    }
+  }
 }
