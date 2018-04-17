@@ -1,0 +1,33 @@
+@import "defaults";
+
+.m-branding {
+  .m-marketing--header {
+    background: #FFF;
+  }
+  .m-marketing--header-inner {
+    text-align: center;
+
+    h1 {
+      color: #444;
+    }
+    h3 {
+      color: #666;
+      padding-right: 0;
+    }
+  }
+
+  .m-marketing--contents {
+    text-align: center;
+    img {
+      max-height: 156px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #666;
+      margin: 56px 0;
+    }
+  }
+
+}
