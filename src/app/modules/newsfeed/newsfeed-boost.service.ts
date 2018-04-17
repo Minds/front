@@ -21,8 +21,7 @@ export class NewsfeedBoostService {
     if (this.session.getLoggedInUser().plus && this.session.getLoggedInUser().disabled_boost) {
       this.enabled = false;
     }
-    const paused = localStorage.getItem('boost:rotator:autorotate:paused');
-    this.paused = paused === 'true';
+    this.paused = !session.getLoggedInUser().boost_autorotate;
   }
 
   getBoostRating() {
@@ -54,7 +53,8 @@ export class NewsfeedBoostService {
 
   togglePause() {
     this.paused = !this.paused;
-    localStorage.setItem('boost:rotator:autorotate:paused', this.paused.toString());
+
+    this.client.post('api/v1/settings', { boost_autorotate: !this.paused });
     this.pauseChanged.emit(this.paused);
   }
 
