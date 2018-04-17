@@ -24,6 +24,7 @@ export class ChannelsListComponent {
   inProgress: boolean = false;
   paramsSubscription: Subscription;
   rating: number = 1; //safe by default
+  version: string = 'v1';
 
   constructor(
     public client: Client,
@@ -40,7 +41,7 @@ export class ChannelsListComponent {
     this.paramsSubscription = this.route.params.subscribe((params) => {
       if (params['filter']) {
         this.filter = params['filter'];
-
+        this.version = 'v1';
         switch (this.filter) {
           case 'all':
             this.filter = 'all';
@@ -54,6 +55,10 @@ export class ChannelsListComponent {
             break;
           case 'subscriptions':
             this.uri = 'subscribe/subscriptions/' + this.session.getLoggedInUser().guid;
+            break;
+          case 'founders':
+            this.uri = 'channels/founders/';
+            this.version = 'v2';
             break;
         }
       }
@@ -70,7 +75,6 @@ export class ChannelsListComponent {
   }
 
   load(refresh: boolean = false) {
-
     if (this.inProgress || !this.moreData && !refresh)
       return false;
 
@@ -79,7 +83,7 @@ export class ChannelsListComponent {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/' + this.uri, {
+    this.client.get('api/' + this.version + '/' + this.uri, {
         limit: 24,
         offset: this.offset
       })
