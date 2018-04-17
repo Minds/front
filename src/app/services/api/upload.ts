@@ -19,7 +19,7 @@ export class Upload {
 	/**
 	 * Return a POST request
 	 */
-  post(endpoint: string, files: Array<any> = [], data: any = {}, progress: Function = () => { return; }) {
+  post(endpoint: string, files: Array<any> = [], data: any = {}, progress: Function = () => { return; }, xhr: XMLHttpRequest = null) {
     const formData = new FormData();
     if (!data.filekey) {
       data.filekey = 'file';
@@ -41,7 +41,9 @@ export class Upload {
     }
 
     return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
+      if(!xhr) {
+        xhr = new XMLHttpRequest();
+      }
       xhr.open('POST', this.base + endpoint, true);
       xhr.upload.addEventListener('progress', function (e: any) {
         progress(e.loaded / e.total * 100);

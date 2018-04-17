@@ -115,7 +115,10 @@ export class Poster {
 
   removeAttachment(file: HTMLInputElement) {
     if (this.inProgress) {
-      this.attachment.setPendingDelete(true);
+      this.attachment.abort();
+      this.canPost = true;
+      this.inProgress = false;
+      this.errorMessage = '';
       return;
     }
     // if we're not uploading a file right now

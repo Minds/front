@@ -14,6 +14,8 @@ export class AttachmentService {
 
   private pendingDelete: boolean = false;
 
+  private xhr: XMLHttpRequest = null;
+
   static _(session: Session, client: Client, upload: Upload) {
     return new AttachmentService(session, client, upload);
   }
@@ -118,12 +120,17 @@ export class AttachmentService {
       return Promise.reject(null);
     }
 
+    if(this.xhr) {
+      this.xhr.abort();
+    }
+    this.xhr = new XMLHttpRequest();
+
     return this.checkFileType(file)
       .then(() => {
         // Upload and return the GUID
         return this.uploadService.post('api/v1/media', [file], this.meta, (progress) => {
           this.attachment.progress = progress;
-        });
+        }, this.xhr);
       })
       .then((response: any) => {
         this.meta.attachment_guid = response.guid ? response.guid : null;
@@ -143,6 +150,17 @@ export class AttachmentService {
       });
 
 
+  }
+
+  abort() {
+    if (this.xhr) {
+      this.xhr.abort();
+      this.xhr = null;
+
+      this.attachment.progress = 0;
+      this.attachment.mime = '';
+      this.attachment.preview = null;
+    }
   }
 
   remove(fileInput: HTMLInputElement) {
