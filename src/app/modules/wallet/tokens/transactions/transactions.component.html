@@ -53,8 +53,10 @@
     </m-dropdown>
 
     <div class="m-layout--spacer"></div>
-    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
-    <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
+    <div class="m-token--ledger--date-selectors">
+      <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
+      <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
+    </div>
   </div>
   <ng-template #previewHeader>
     <div class="m-token--ledger-filters m-token--ledger-filters--preview m-border">
@@ -83,7 +85,7 @@
       </div>
 
       <div class="m-token--ledger--reward-details--meta">
-        <span>{{ transaction.wallet_address }}</span>
+        <span>{{ transaction.wallet_address | addressExcerpt }}</span>
       </div>
 
       <div class="m-token--ledger--reward-details--meta m-token--ledger--reward-details--meta-wrapper" *ngIf="isP2p(transaction)">
@@ -97,8 +99,10 @@
 
       <div class="mdl-layout-spacer"></div>
 
-      <i class="material-icons">access_time</i>
-      <p class="ts">{{ transaction.timestamp * 1000 | utcDate | date: 'medium' }}</p>
+      <div class="m-token--ledger--reward-details--meta">
+        <i class="material-icons">access_time</i>
+        <p class="ts">{{ transaction.timestamp * 1000 | utcDate | date: 'medium' }}</p>
+      </div>
     </div>
   </div>
 </div>

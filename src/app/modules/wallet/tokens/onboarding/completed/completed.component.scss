@@ -1,5 +1,9 @@
 .m-token--onboarding--completed-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -4px;
   .m-btn {
-    margin-right: 8px;
+    margin: 4px;
+    height: 20px;
   }
 }

@@ -2,6 +2,10 @@
 .m-token--onboarding--onchain-selections {
   overflow: visible;
   margin-top: 32px;
+
+  @media screen and(max-width: $max-mobile) {
+    flex-wrap: wrap;
+  }
   
   li {
     min-width: 350px;

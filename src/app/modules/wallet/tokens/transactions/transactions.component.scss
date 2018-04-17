@@ -1,4 +1,11 @@
 .m-token--ledger {
+  @media screen and (max-width: $min-tablet) {
+    .m-date-selector--input {
+      input {
+        width: 54px;
+      }
+    }
+  }
   .minds-dropdown-menu {
     .mdl-menu__item.selected {
       background-color: #eee;
@@ -45,11 +52,18 @@
       display: flex;
       align-items: center;
       color: #444;
+      @media screen and (max-width: 860px) {
+        flex-direction: column;
+        align-items: flex-end;
+      }
 
       .m-token--ledger--reward-details--meta {
         margin-right: 8px;
         padding-right: 8px;
         border-right: 1px solid #ececec;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: flex;
 
         &.m-token--ledger--reward-details--meta-wrapper {
           display: inline-flex;
@@ -78,6 +92,7 @@
         font-weight: 400;
         font-family: 'Roboto', sans-serif;
         color: #444;
+        flex-shrink: 0;
       }
     }
   }
@@ -90,6 +105,11 @@
   padding: 8px;
   margin-bottom: 8px;
   background: #FFF;
+  flex-wrap: wrap;
+
+  @media screen and (max-width: $min-tablet) {
+    justify-content: space-around;
+  }
 
   label.m-token--ledger-filters--label {
     text-transform: uppercase;
@@ -97,6 +117,10 @@
     align-self: center;
     font-size: 12px;
     color: #666;
+  }
+
+  .m-token--ledger--date-selectors {
+    display: flex;
   }
 
   .m-token--ledger-filters--check {
