@@ -24,6 +24,8 @@ export class AdminReports {
   offset: string = '';
   paramsSubscription: Subscription;
 
+  reasons: Array<{value, label}> = REASONS;
+
   constructor(public client: Client, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -131,7 +133,7 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/explicit`, {});
+      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/explicit`, { reason: report.reason });
 
       if (!response.done) {
         alert('There was a problem marking this content as explicit. Please reload.');
@@ -149,7 +151,7 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/spam`, {});
+      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/spam`, { reason: report.reason });
 
       if (!response.done) {
         alert('There was a problem marking this content as spam. Please reload.');
@@ -167,7 +169,7 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/delete`, {});
+      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/delete`, { reason: report.reason });
 
       if (!response.done) {
         alert('There was a problem deleting this content. Please reload.');
@@ -185,7 +187,7 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.put(`api/v1/admin/reports/appeals/${report.guid}`, {});
+      let response: any = await this.client.put(`api/v1/admin/reports/appeals/${report.guid}`, { reason: report.reason });
 
       if (!response.done) {
         alert(`There was a problem approving this content's appeal. Please reload.`);
@@ -203,7 +205,7 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.delete(`api/v1/admin/reports/appeals/${report.guid}`, {});
+      let response: any = await this.client.delete(`api/v1/admin/reports/appeals/${report.guid}`, { reason: report.reason });
 
       if (!response.done) {
         alert(`There was a problem rejecting this content's appeal. Please reload.`);

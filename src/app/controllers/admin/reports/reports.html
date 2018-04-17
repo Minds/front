@@ -34,7 +34,11 @@
         </p>
 
         <p *ngIf="report?.reason">
-          <span i18n="@@MINDS__ADMIN__REPORTS__SUBJECT_LABEL">Subject:</span> {{ parseReason(report.reason) }}
+          <span i18n="@@MINDS__ADMIN__REPORTS__SUBJECT_LABEL">Subject:</span>
+          <select [(ngModel)]="report.reason">
+            <option [value]="reason.value" [selected]="report.reason == reason.value" *ngFor="let reason of reasons">{{reason.label}}</option>
+          </select>
+          <!--{{ parseReason(report.reason) }}-->
         </p>
 
         <p *ngIf="report?.reason_note">
