@@ -1,6 +1,10 @@
 .m-token-contributions--ledger{
   table {
     width: 100%;
+
+    tbody > tr {
+      cursor: pointer;
+    }
   }
 }
 
@@ -20,4 +24,13 @@
 
 .m-token-contributions--ledger-row-notice {
   text-align: center !important;
+}
+
+.m-token-contributions--ledger-category-detail {
+  background: #fcfcfc;
+  text-transform: capitalize;
+}
+
+.m-token-contribution--selected {
+  font-weight: bold;
 }

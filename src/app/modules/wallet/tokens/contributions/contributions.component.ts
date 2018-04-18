@@ -17,6 +17,7 @@ export class WalletTokenContributionsComponent {
   contributions: any[] = [];
   offset: string;
   moreData: boolean = true;
+  metrics: Array<any> = [];
 
   constructor(
     protected client: Client,
@@ -67,13 +68,24 @@ export class WalletTokenContributionsComponent {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
         offset: this.offset
-      });
+      }); 
 
       if (refresh) {
         this.contributions = [];
       }
 
       if (response) {
+        response.contributions.forEach( (item, index) => {
+          response.contributions[index].detailedMetrics = [];
+          response.contributions[index].visible = false;
+          Object.keys(item.metrics).forEach((key) => {
+            let data = item.metrics[key];
+            data.key = key;
+            const share = data.score/item.score * item.share;
+            data.share = share;
+            response.contributions[index].detailedMetrics.push(data);
+          });
+        })
         this.contributions.push(...(response.contributions || []));
 
         if (response['load-next']) {
@@ -109,5 +121,9 @@ export class WalletTokenContributionsComponent {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  toggleCollapse(item) {
+    item.visible = !item.visible;
   }
 }
