@@ -141,11 +141,15 @@ minds-blog-view, m-blog-view {
   }
 
   a {
-    color: #111; 
+    color: #111;
   }
   img {
     max-width: 100%;
     height: auto;
+  }
+
+  minds-comments {
+    margin-bottom: 30px;
   }
 }
 
