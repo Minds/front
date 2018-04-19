@@ -14,8 +14,8 @@
     <thead>
       <tr class="m-token-contributions--ledger-header">
         <th class="mdl-data-table__cell--non-numeric m-data-title">Date</th>
-        <th class="mdl-data-table__cell--numeric m-data-title">Score</th>
         <th class="mdl-data-table__cell--numeric m-data-title">Amount</th>
+        <th class="mdl-data-table__cell--numeric m-data-title">Score</th>
         <th class="mdl-data-table__cell--numeric m-data-title">Share</th>
       </tr>
     </thead>
@@ -23,14 +23,14 @@
     <tbody *ngFor="let contribution of contributions; let i = index">
       <tr class="m-token-contributions--ledger-row" (click)="toggleCollapse(contribution)">
         <td [ngClass]="{ 'm-token-contribution--selected': contribution.visible }" class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.timestamp | date:'mediumDate':'+0000' }}</td>
-        <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category" style="font-weight: bold">{{ contribution.score | number }}</td>
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category" style="font-weight: bold">{{ contribution.amount | number }}</td>
+        <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category" style="font-weight: bold">{{ contribution.score | number }}</td>
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category" style="font-weight: bold">{{ contribution.share.toFixed(6) }}%</td>
       </tr>
       <tr [hidden]="!contribution.visible" *ngFor="let metric of contribution.detailedMetrics; let i = index" class="m-token-contributions--ledger-row m-token-contributions--ledger-category-detail">
         <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{metric.key}}</td>
-        <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category">{{ metric.score ? metric.score : 0 | number }}</td>
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category">{{ metric.amount ? metric.amount : 0 | number }}</td>
+        <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category">{{ metric.score ? metric.score : 0 | number }}</td>
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category">{{ metric.share.toFixed(6) }}%</td>
       </tr>
       <tr *ngIf="!contributions || !contributions.length" class="m-token-contributions--ledger-row m-wire-console--ledger-row-placeholder">
