@@ -20,6 +20,9 @@
     text-align: center;
     img {
       max-height: 156px;
+      @media only screen and (max-width: 460px) {
+        max-width: 332px;
+      }
     }
     label {
       display: block;
