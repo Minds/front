@@ -21,7 +21,7 @@
     <ng-container i18n="@@M__COMMON__VIEWS_WITH_COUNT">{{ boost.impressions | number }} views</ng-container>
   </div>
 
-  <div *ngIf="boost.impressions"
+  <div *ngIf="boost.handler !== 'content' && boost.impressions"
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">done</i>
