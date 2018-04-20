@@ -25,7 +25,8 @@
     class="m-boost-card--manager-item"
   >
     <i class="material-icons">done</i>
-    <ng-container i18n>{{ boost.met_impressions | number }} views so far</ng-container>
+    <ng-container *ngIf="boost.state !== 'completed'; else completedBlock" i18n="@@BOOST__CONSOLE__CARD__VIEWS_SO_FAR">{{ boost.met_impressions | number }} views so far</ng-container>
+    <ng-template #completedBlock i18n="@@BOOST__CONSOLE__CARD__VIEWS_DELIVERED">{{ boost.met_impressions | number }} views delivered</ng-template>
   </div>
 
   <!-- USD bid, if applicable -->
