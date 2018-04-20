@@ -28,6 +28,16 @@
       You are not allowed to login.
     </ng-container>
     <ng-container
+      *ngIf="errorMessage == 'LoginException::CodeVerificationFailed'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__CODE_VERIFICATION_FAILED">
+      Sorry, we couldn't verify your two factor code. Please try logging again.
+    </ng-container>
+    <ng-container
+      *ngIf="errorMessage == 'LoginException::InvalidToken'"
+      i18n="@@MINDS__LOGIN__EXCEPTION__INVALID_TOKEN">
+      Invalid token
+    </ng-container>
+    <ng-container
       *ngIf="errorMessage == 'LoginException::Unknown'"
       i18n="@@MINDS__LOGIN__EXCEPTION__UNKNOWN_ERROR">
       Unknown error

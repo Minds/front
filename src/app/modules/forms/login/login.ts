@@ -41,7 +41,6 @@ export class LoginForm {
 
     this.errorMessage = '';
     this.inProgress = true;
-    var self = this; //this <=> that for promises
     this.client.post('api/v1/authenticate', { username: this.form.value.username, password: this.form.value.password })
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
@@ -54,18 +53,18 @@ export class LoginForm {
         this.inProgress = false;
         if (e.status === 'failed') {
           //incorrect login details
-          self.errorMessage = 'LoginException::AuthenticationFailed';
-          self.session.logout();
+          this.errorMessage = 'LoginException::AuthenticationFailed';
+          this.session.logout();
         }
 
         if (e.status === 'error') {
           if (e.message === 'LoginException:BannedUser' || e.message === 'LoginException::AttemptsExceeded') {
-            self.session.logout();
+            this.session.logout();
           }
 
           //two factor?
-          self.twofactorToken = e.message;
-          self.hideLogin = true;
+          this.twofactorToken = e.message;
+          this.hideLogin = true;
         }
 
       });
@@ -78,7 +77,7 @@ export class LoginForm {
         this.done.next(data.user);
       })
       .catch((e) => {
-        this.errorMessage = 'Sorry, we couldn\'t verify your two factor code. Please try logging again.';
+        this.errorMessage = e.message;
         this.twofactorToken = '';
         this.hideLogin = false;
       });
