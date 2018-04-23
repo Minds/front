@@ -94,7 +94,8 @@ export class WebtorrentService {
   }
 
   setUpSupport() {
-    this.supported = ('MediaStream' in window) && WebTorrent.WEBRTC_SUPPORT;
+    this.supported = false;
+    //this.supported = ('MediaStream' in window) && WebTorrent.WEBRTC_SUPPORT;
 
     return this;
   }
