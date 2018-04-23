@@ -16,6 +16,7 @@ import { MindsVideoProgressBar } from './progress-bar/progress-bar.component';
 import { MindsVideoQualitySelector } from './quality-selector/quality-selector.component';
 import { MindsVideoVolumeSlider } from './volume-slider/volume-slider.component';
 import { AbbrPipe } from '../../../../common/pipes/abbr';
+import { TooltipComponent } from '../../../../common/components/tooltip/tooltip.component';
 
 @Component({
   selector: 'm-torrent-video',
@@ -112,6 +113,7 @@ describe('MindsVideo', () => {
         MindsVideoVolumeSliderMock,
         MindsTorrentVideoMock,
         MindsVideoComponent,
+        TooltipComponent,
       ], // declare the test component
       imports: [ 
         FormsModule,
