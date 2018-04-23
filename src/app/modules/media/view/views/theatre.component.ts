@@ -33,7 +33,8 @@ import { RecommendedService } from '../../components/video/recommended.service';
 	    [autoplay]="!object.monetized"
       [muted]="false"
       (finished)="loadNext()"
-	    [src]="[{ 'uri': object.src['720.mp4'] }, { 'uri': object.src['360.mp4'] }]"
+	    [src]="[{ res: '720', uri: object.src['720.mp4'] }, { res: '360', uri: object.src['360.mp4'] }]"
+        [torrent]="[{ res: '720', key: object.guid + '/720.mp4' }, { res: '360', key: object.guid + '/360.mp4' }]"
         [log]="object.guid"
         [playCount]="false"
         #player>

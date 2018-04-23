@@ -1,23 +1,98 @@
-<video (click)="onClick()" (error)="onError()" preload="none" [poster]="poster" allowfullscreen [muted]="false" >
-  <source [src]="s.uri" *ngFor="let s of src">
-</video>
-<i *ngIf="element.paused" class="material-icons minds-video-play-icon" (click)="onClick()">play_circle_outline</i>
-<ng-content></ng-content>
-<div *ngIf="transcoding" class="minds-video-bar-top">
-  <span> The video is being transcoded </span>
-</div>
-<div class="minds-video-bar-full">
-  <i class="material-icons" [hidden]="!element.paused" (click)="onClick()">play_arrow</i>
-  <i class="material-icons" [hidden]="element.paused" (click)="onClick()">pause</i>
-  <m-video--progress-bar #progressBar [element]="element"></m-video--progress-bar>
-  <m-video--volume-slider [element]="element"></m-video--volume-slider>
-  <a class="material-icons m-video-full-page mdl-color-text--white minds-video--open-new"
-    *ngIf="guid"
-    [routerLink]="['/media', guid]"
-    target="_blank"
-    (click)="element.pause()">
-    lightbulb_outline
-  </a>
-  <m-video--quality-selector *ngIf="src.length > 1" [src]="src" (selectedQuality)="selectedQuality($event)"></m-video--quality-selector>
-  <i class="material-icons" (click)="openFullScreen($event)">tv</i>
-</div>
+<m-torrent-video
+  (click)="torrentVideo.toggle()"
+  (error)="onError()"
+  (refresh)="setUp()"
+  [poster]="poster"
+  [muted]="false"
+  [src]="currentSrc"
+  [torrent]="currentTorrent"
+  [autoplay]="autoplay"
+  #torrentVideo
+></m-torrent-video>
+
+<ng-container *ngIf="element">
+  <i *ngIf="!torrentVideo.isPlaying()"
+    class="material-icons minds-video-play-icon"
+    (click)="torrentVideo.play()"
+  >play_circle_outline</i>
+
+  <ng-content></ng-content>
+
+  <div *ngIf="transcoding" class="minds-video-bar-top">
+    <span> The video is being transcoded </span>
+  </div>
+
+  <div class="minds-video-bar-full">
+    <i class="material-icons" *ngIf="!torrentVideo.isLoading(); else loadingSpinner"
+      (click)="torrentVideo.toggle()"
+    >{{ torrentVideo.isPlaying() ? 'pause' : 'play_arrow' }}</i>
+    <ng-template #loadingSpinner>
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </ng-template>
+
+    <m-video--progress-bar #progressBar [element]="element"></m-video--progress-bar>
+    <m-video--volume-slider [element]="element"></m-video--volume-slider>
+
+    <a class="material-icons m-video-full-page mdl-color-text--white minds-video--open-new"
+      *ngIf="guid"
+      [routerLink]="['/media', guid]"
+      target="_blank"
+      (click)="torrentVideo.pause()">
+      lightbulb_outline
+    </a>
+
+    <ng-container *ngIf="torrentVideo.isTorrenting()">
+      <a class="mdl-color-text--white m-video--info-button"
+        (click)="toggleTorrentInfo()"
+      >
+        <i class="material-icons mdl-color-text--white">people_outline</i>
+        <span>{{ torrentVideo.info.peers | abbr }}</span>
+      </a>
+
+      <a class="mdl-color-text--white m-video--info-button"
+        (click)="toggleTorrentInfo()"
+      >
+        <i class="material-icons mdl-color-text--white">arrow_downward</i>
+        <span>{{ torrentVideo.info.dlspeed | abbr:2:true }}B/s</span>
+      </a>
+
+      <a class="mdl-color-text--white m-video--info-button"
+        (click)="toggleTorrentInfo()"
+      >
+        <i class="material-icons mdl-color-text--white">arrow_upward</i>
+        <span>{{ torrentVideo.info.ulspeed | abbr:2:true }}B/s</span>
+      </a>
+    </ng-container>
+
+    <m-video--quality-selector
+      *ngIf="availableQualities?.length > 1"
+      [current]="currentQuality"
+      [qualities]="availableQualities"
+      (select)="selectedQuality($event)"
+    ></m-video--quality-selector>
+
+    <i class="material-icons" (click)="openFullScreen($event)">tv</i>
+  </div>
+
+  <div class="m-video--torrent-info" *ngIf="torrentInfo && torrentVideo.isTorrenting()">
+    <div class="m-video--torrent-info--cell">
+      <i class="material-icons">file_download</i>
+      <span>{{ torrentVideo.info.progress * 100 | number:'1.2-2' }}%</span>
+    </div>
+
+    <div class="m-video--torrent-info--cell">
+      <i class="material-icons">people</i>
+      <span>{{ torrentVideo.info.peers | number }}</span>
+    </div>
+
+    <div class="m-video--torrent-info--cell">
+      <i class="material-icons">arrow_downward</i>
+      <span>{{ torrentVideo.info.dl | abbr:2:true }}B ({{ torrentVideo.info.dlspeed | abbr:2:true }}B/s)</span>
+    </div>
+
+    <div class="m-video--torrent-info--cell">
+      <i class="material-icons">arrow_upward</i>
+      <span>{{ torrentVideo.info.ul | abbr:2:true }}B ({{ torrentVideo.info.ulspeed | abbr:2:true }}B/s)</span>
+    </div>
+  </div>
+</ng-container>

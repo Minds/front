@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { MindsVideoQualitySelector } from './quality-selector.component';
 
-describe('MindsVideoVolumeSlider', () => {
+describe('MindsVideoQualitySelector', () => {
   let comp: MindsVideoQualitySelector;
   let fixture: ComponentFixture<MindsVideoQualitySelector>;
 
@@ -32,10 +32,10 @@ describe('MindsVideoVolumeSlider', () => {
     jasmine.clock().install();
     fixture = TestBed.createComponent(MindsVideoQualitySelector);
     comp = fixture.componentInstance;
-    comp.src = [
-        {'uri': 'aaaaaa/bbbbb/cccc/video.mp4'}, 
-        {'uri': 'aaaaaa/bbbbb/cccc/video2.video'}, 
-        {'uri': 'aaaaaa/bbbbb/cccc/video3.mpeg'}
+    comp.qualities = [
+      '720',
+      '360',
+      '128',
     ];
     fixture.detectChanges();
     if (fixture.isStable()) {
@@ -52,6 +52,8 @@ describe('MindsVideoVolumeSlider', () => {
   });
 
   it('should render a hidden slider, should show as many options as there srcs, and first one should be selected', () => {
+    comp.current = '720';
+    fixture.detectChanges();
     const wrapper = fixture.debugElement.query(By.css('.m-video--quality-control-wrapper'));
     const control = fixture.debugElement.query(By.css('.m-video--quality-control'));
     const icon = fixture.debugElement.query(By.css('.material-icons'));
@@ -60,15 +62,17 @@ describe('MindsVideoVolumeSlider', () => {
     expect(icon).not.toBeNull();
     expect(wrapper).not.toBeNull();
     expect(selectedOption).not.toBeNull();
-    expect(selectedOption.nativeElement.innerText).toBe('video');
+    expect(selectedOption.nativeElement.innerText).toBe('720');
   });
 
   it('should change quality', () => {
+    comp.current = '720';
+    fixture.detectChanges();
     const selectedOptions = fixture.debugElement.queryAll(By.css('li'));
     selectedOptions[1].nativeElement.click();
     fixture.detectChanges();
     const selectedOption = fixture.debugElement.query(By.css('.m-video--selected-quality'));
     expect(selectedOption).not.toBeNull();
-    expect(selectedOption.nativeElement.innerText).toBe('video2');
+    expect(selectedOption.nativeElement.innerText).toBe('360');
   });
 });

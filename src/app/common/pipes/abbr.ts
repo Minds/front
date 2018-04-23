@@ -6,14 +6,17 @@ import { Pipe, Inject, Renderer } from '@angular/core';
 
 export class AbbrPipe {
 
-	abbrev = ['k', 'm', 'b', 't'];
+	numberAbbrev = ['k', 'm', 'b', 't'];
+	bytesAbbrev = [ 'K', 'M', 'G', 'T' ];
 
-	transform(number: number | any, decimals: number = 2) {
+	transform(number: number | any, decimals: number = 2, isBytes: boolean = false) {
+		const abbrev = isBytes ? this.bytesAbbrev : this.numberAbbrev;
+
 		// 2 decimal places => 100, 3 => 1000, etc
 		decimals = Math.pow(10, decimals);
 
 		// Go through the array backwards, so we do the largest first
-		for (var i = this.abbrev.length - 1; i >= 0; i--) {
+		for (var i = abbrev.length - 1; i >= 0; i--) {
 
 			// Convert array index to "1000", "1000000", etc
 			var size = Math.pow(10, (i + 1) * 3);
@@ -25,13 +28,13 @@ export class AbbrPipe {
 				number = Math.round(number * decimals / size) / decimals;
 
 				// Handle special case where we round up to the next abbreviation
-				if ((number === 1000) && (i < this.abbrev.length - 1)) {
+				if ((number === 1000) && (i < abbrev.length - 1)) {
 					number = 1;
 					i++;
 				}
 
 				// Add the letter for the abbreviation
-				number += this.abbrev[i];
+				number += abbrev[i];
 				break;
 			}
 

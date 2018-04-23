@@ -156,6 +156,10 @@ export class VideoComponentMock {
   set _src(value: string | any[]) {
   }
 
+  @Input('torrent')
+  set _torrent(value: string | any[]) {
+  }
+
   @Input('autoplay')
   set _autoplay(value: any) {
   }

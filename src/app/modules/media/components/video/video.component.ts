@@ -1,9 +1,9 @@
-import { Component, ElementRef, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { MindsVideoProgressBar } from './progress-bar/progress-bar.component';
 
 import { Client } from '../../../../services/api';
 import { ScrollService } from '../../../../services/ux/scroll';
-import { VideoAdsService } from './ads.service';
+import { MindsTorrentVideo } from './torrent-video.component';
 
 @Component({
   selector: 'm-video',
@@ -15,49 +15,62 @@ import { VideoAdsService } from './ads.service';
 })
 
 export class MindsVideoComponent {
-  
-  @ViewChild('progressBar') progressBar: MindsVideoProgressBar;
-  
+
+  @Input() guid: string | number;
+  @Input() log: string | number;
+  @Input() muted: boolean = false;
+  @Input() poster: string = '';
+  @Input() visibleplay: boolean = true;
+  @Input() loop: boolean = true;
+
   @Output('finished') finished: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('progressBar') progressBar: MindsVideoProgressBar;
+  @ViewChild('torrentVideo') torrentVideo: MindsTorrentVideo;
+
+  src: any[];
+  @Input('src') set _src(src) {
+    this.src = src;
+    this.updateAvailableQualities();
+  }
+
+  torrent: any[];
+  @Input('torrent') set _torrent(torrent) {
+    this.torrent = torrent;
+    this.updateAvailableQualities();
+  }
 
   element: any;
   container: any;
-  @Input() guid: string | number;
-  @Input() log: string | number;
 
   time: { minutes: any, seconds: any } = {
     minutes: '00',
     seconds: '00'
   };
-  elapsed: { minutes: any, seconds: any } = {
-    minutes: '00',
-    seconds: '00'
-  };
-  remaining: { minutes: any, seconds: any } | null = null;
-  seek_interval;
-  seeked: number = 0;
 
-  @Input() muted: boolean = false;
-  @Input() visibleplay: boolean = true;
-  @Input() loop: boolean = true;
+  remaining: { minutes: any, seconds: any } | null = null;
+
   scroll_listener;
   transcoding: boolean = false;
-  @Input() poster: string = '';
   playedOnce: boolean = false;
   playCount: number = -1;
   playCountDisabled: boolean = false;
 
+  torrentInfo: boolean = false;
+
+  currentQuality: string;
+  availableQualities: string[] = [];
+
+  currentSrc: any;
+  currentTorrent: any;
+
   constructor(
     public _element: ElementRef, 
     public scroll: ScrollService, 
-    private cd: ChangeDetectorRef, 
     public client: Client
   ) { }
 
   ngOnInit() {
-    this.getElement();
-    this.setUp();
-
     if (this.guid && !this.log) {
       this.log = this.guid;
     }
@@ -74,11 +87,9 @@ export class MindsVideoComponent {
     }
   }
 
-  src: Array<any> = [];
-  @Input('src') set _src(src: any){
-    this.src = src;
+  ngAfterViewInit() {
     this.getElement();
-    this.element.load();
+    this.setUp();
   }
 
   autoplay: boolean = false;
@@ -111,10 +122,14 @@ export class MindsVideoComponent {
 
   getElement() {
     this.container = this._element.nativeElement;
-    this.element = this._element.nativeElement.getElementsByTagName('video')[0];
+    this.element = this.torrentVideo.getPlayer();
   }
 
   setUp() {
+    if (!this.element) {
+      return;
+    }
+
     this.element.addEventListener('play', (e) => {
       this.addViewCount();
     });
@@ -142,21 +157,13 @@ export class MindsVideoComponent {
     this.playedOnce = true;
   }
 
-  onClick() {
-    if (this.element.paused === false) {
-      this.element.pause();
-    } else {
-      this.element.play();
-    }
-  }
-
   onMouseEnter() {
     this.progressBar.getSeeker();
     this.progressBar.enableKeyControls();
-    this.element.addEventListener('dblclick', this.openFullScreen.bind(this));
+    this.element.addEventListener('dblclick', this.openFullScreen);
   }
 
-  openFullScreen(e){
+  openFullScreen = (e) => {
     if (this.element.requestFullscreen) {
       this.element.requestFullscreen();
     } else if (this.element.msRequestFullscreen) {
@@ -166,20 +173,20 @@ export class MindsVideoComponent {
     } else if (this.element.webkitRequestFullscreen) {
       this.element.webkitRequestFullscreen();
     }
-  }
+  };
 
   onMouseLeave() {
     this.progressBar.stopSeeker();
     this.progressBar.disableKeyControls();
+    this.element.removeEventListener('dblclick', this.openFullScreen);
   }
   
-  selectedQuality(e){
-    let time = this.element.currentTime;
-    this.src = e.reorderedSrc;
-    this.getElement();
-    this.element.load();
-    this.element.currentTime = time;
-    this.element.play();
+  selectedQuality(quality) {
+    const time = this.torrentVideo.getCurrentTime();
+
+    this.currentQuality = quality;
+    this.updateCurrentSrc();
+    this.torrentVideo.resumeFrom(time);
   }
 
   isVisible() {
@@ -195,26 +202,74 @@ export class MindsVideoComponent {
     }
     var bounds = this.element.getBoundingClientRect();
     if (bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0) {
-      if (this.element.paused === true) {
-        this.element.play();
+      if (!this.torrentVideo.isPlaying()) {
+        this.torrentVideo.play();
       }
     } else {
-      if (this.element.paused === false) {
-        this.element.muted = true;
-        this.element.pause();
+      if (this.torrentVideo.isPlaying()) {
+        // this.element.muted = true;
+        this.torrentVideo.pause();
       }
     }
   }
 
-  pause() {
-    if (this.element.paused === false) {
-      this.element.pause();
-    }
+  toggleTorrentInfo() {
+    this.torrentInfo = !this.torrentInfo;
   }
 
   ngOnDestroy() {
     if (this.scroll_listener)
       this.scroll.unListen(this.scroll_listener);
+  }
+
+  pause() {
+    this.torrentVideo.pause();
+  }
+
+  play() {
+    this.torrentVideo.play();
+  }
+
+  //
+
+  updateAvailableQualities() {
+    let qualities = [];
+
+    if (this.src && this.src.length) {
+      this.src.forEach(item => qualities.push(item.res));
+    }
+
+    if (this.torrent && this.torrent.length) {
+      this.torrent.forEach(item => qualities.push(item.res));
+    }
+
+    this.availableQualities = qualities
+      .filter((item, index, self) => self.indexOf(item) === index)
+      .sort((a, b) => parseFloat(b) - parseFloat(a));
+
+    if (!this.currentQuality) {
+      this.currentQuality = this.availableQualities[0];
+    }
+
+    this.updateCurrentSrc();
+  }
+
+  updateCurrentSrc() {
+    if (!this.currentQuality) {
+      this.currentSrc = void 0;
+      this.currentTorrent = void 0;
+      return;
+    }
+
+    if (this.src && this.src.length) {
+      this.currentSrc = this.src
+        .find(item => item.res === this.currentQuality)
+    }
+
+    if (this.torrent && this.torrent.length) {
+      this.currentTorrent = this.torrent
+        .find(item => item.res === this.currentQuality)
+    }
   }
 
 }

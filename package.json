@@ -37,6 +37,7 @@
     "medium-editor": "^5.23.2",
     "rxjs": "~5.5.6",
     "socket.io-client": "^1.4.5",
+    "webtorrent": "^0.98.24",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {

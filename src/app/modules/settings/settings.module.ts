@@ -23,6 +23,7 @@ import { SettingsReportedContentComponent } from './reported-content/reported-co
 import { SettingsService } from './settings.service';
 import { SettingsWireComponent } from './wire/wire.component';
 import { WireModule } from '../wire/wire.module';
+import { SettingsP2PMediaComponent } from './p2pmedia/p2pmedia.component';
 
 
 const settingsRoutes : Routes = [
@@ -37,6 +38,7 @@ const settingsRoutes : Routes = [
       { path: 'emails', component: SettingsEmailsComponent },
       { path: 'billing',  component: SettingsBillingComponent },
       { path: 'reported-content',  component: SettingsReportedContentComponent },
+      { path: 'p2pmedia',  component: SettingsP2PMediaComponent },
     ]
   }
 ];
@@ -68,6 +70,7 @@ const settingsRoutes : Routes = [
     SettingsBillingSubscriptionsComponent,
     SettingsReportedContentComponent,
     SettingsWireComponent,
+    SettingsP2PMediaComponent,
     //BillingComponent
   ],
   providers: [

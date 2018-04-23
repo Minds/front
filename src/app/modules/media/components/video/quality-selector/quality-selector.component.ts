@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'm-video--quality-selector',
@@ -6,45 +6,23 @@ import { Component, Input, Output, EventEmitter, ElementRef, ChangeDetectorRef, 
 })
 
 export class MindsVideoQualitySelector {
-  @Input('src') src: Array<any>;
-  @Output('selectedQuality') selectedQuality: EventEmitter<any> = new EventEmitter();
+  @Input() current: string;
+  @Output('select') selectEmitter: EventEmitter<string> = new EventEmitter();
 
-  selected: any = {};
-  qualityOptions: Array<any> = [];
-
-  constructor() {}
-
-  ngOnInit() {
-    this.getQualityOptions();
-  }
-
-  selectQuality(quality){
-    this.selected.id = quality.id;
-    this.selected.reorderedSrc = this.src.filter(source => source.uri === quality.uri);
-    this.src.map(source => {
-      if(source.uri !== quality.uri){
-        this.selected.reorderedSrc.push(source);
-      }
-    });
-    this.selectedQuality.emit( this.selected );
-  }
-
-  getQualityOptions() {
-    if(this.src.length > 1){
-      this.qualityOptions = this.src.map( (source) => {
-        let splitted = source.uri.split("/");
-        let quality_string = splitted[splitted.length-1];
-        return {
-          id : quality_string.substr(0,quality_string.indexOf('.')),
-          uri : source.uri
-        };
-      });
-      
-      this.qualityOptions = this.qualityOptions.sort(function(a, b) {
-        return parseFloat(b.id) - parseFloat(a.id);
-      });
-
-      this.selected.id = this.qualityOptions[0].id;
+  qualities: string[] = [];
+  @Input('qualities') set _qualities(qualities) {
+    if (!qualities || !qualities.length) {
+      this.qualities = [];
+      return;
     }
+
+    this.qualities = qualities
+      .map(quality => quality)
+      .sort((a, b) => parseFloat(b) - parseFloat(a));
+  }
+
+  selectQuality(quality) {
+    this.current = quality;
+    this.selectEmitter.emit(quality);
   }
 }

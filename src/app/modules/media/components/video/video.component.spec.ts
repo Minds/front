@@ -1,6 +1,6 @@
 ///<reference path="../../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, Output, Directive } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -15,7 +15,51 @@ import { MindsVideoComponent } from './video.component';
 import { MindsVideoProgressBar } from './progress-bar/progress-bar.component';
 import { MindsVideoQualitySelector } from './quality-selector/quality-selector.component';
 import { MindsVideoVolumeSlider } from './volume-slider/volume-slider.component';
+import { AbbrPipe } from '../../../../common/pipes/abbr';
 
+@Component({
+  selector: 'm-torrent-video',
+  template: '',
+})
+class MindsTorrentVideoMock {
+  // @ViewChild('player') player: ElementRef;
+
+  @Input() muted: boolean = false;
+  @Input() poster: string = '';
+  @Input() autoplay: boolean = false;
+
+  @Output('error') errorEmitter: EventEmitter<any> = new EventEmitter();
+  @Output('refresh') refreshEmitter: EventEmitter<any> = new EventEmitter();
+
+  src: any;
+  @Input('src') set _src(value) {}
+
+  torrentEnabled: boolean = false;
+  torrentSrc: any;
+  @Input('torrent') set _torrentSrc(value) {}
+
+  loading: boolean = false;
+  currentTorrent: string;
+
+  info = {
+    progress: 0,
+    peers: 0,
+    ul: 0,
+    dl: 0,
+    ulspeed: 0,
+    dlspeed: 0,
+  };
+
+  isPlaying() { return false; }
+  isTorrenting() { return false; }
+  isLoading() { return false; }
+  play() { }
+  pause() { }
+  toggle() { }
+  getPlayer() { }
+  getCurrentTime() { return 0; }
+  resumeFrom() { }
+}
 
 @Component({
   selector: 'm-video--volume-slider',
@@ -30,8 +74,9 @@ export class MindsVideoVolumeSliderMock {
   template: ''
 })
 export class MindsVideoQualitySelectorMock {
-  @Input('src') src: Array<any>;
-  @Output('selectedQuality') selectedQuality: EventEmitter<any> = new EventEmitter();
+  @Input('qualities') qualities: Array<string>;
+  @Input('current') current: string;
+  @Output('select') selectEmitter: EventEmitter<any> = new EventEmitter();
 }
 
 @Component({
@@ -45,6 +90,12 @@ export class MindsVideoProgressBarMock {
   }
 }
 
+@Directive({
+  selector: '[mdl]',
+  inputs: ['mdl']
+})
+export class MDLMock {}
+
 
 describe('MindsVideo', () => {
   let comp: MindsVideoComponent;
@@ -54,9 +105,12 @@ describe('MindsVideo', () => {
 
     TestBed.configureTestingModule({
       declarations: [ 
+        MDLMock,
+        AbbrPipe,
         MindsVideoQualitySelectorMock,
         MindsVideoProgressBarMock,
         MindsVideoVolumeSliderMock,
+        MindsTorrentVideoMock,
         MindsVideoComponent,
       ], // declare the test component
       imports: [ 
@@ -84,6 +138,8 @@ describe('MindsVideo', () => {
     const video = document.createElement('video');
     video.src = 'thisisavideo.mp4';
     comp.element = video;
+    comp.torrentVideo.getPlayer = () => comp.element;
+    fixture.detectChanges(); // re-render
     comp.progressBar.getSeeker = () => {};
     fixture.detectChanges();
     if (fixture.isStable()) {
@@ -107,10 +163,8 @@ describe('MindsVideo', () => {
   });
 
   it('On hover Control bar should be visible', () => {
-    const video = fixture.debugElement.query(By.css('video'));
-    fixture.detectChanges();
-    expect(video).not.toBeNull();
-    video.nativeElement.dispatchEvent(new Event('hover'));
+    expect(comp.element).not.toBeNull();
+    comp.element.dispatchEvent(new Event('hover'));
     const videoBar = fixture.debugElement.query(By.css('.minds-video-bar-full'));
     expect(videoBar.nativeElement.hasAttribute('hidden')).toEqual(false);
     const quality = fixture.debugElement.query(By.css('m-video--quality-selector'));
@@ -137,12 +191,6 @@ describe('MindsVideo', () => {
     fixture.detectChanges();
     const calls = clientMock.get['calls'];
     expect(calls.mostRecent().args[0]).toEqual('api/v1/media/transcoding/1');
-  });
-
-  it('call play on togglepause', () => {
-    comp.onClick();
-    fixture.detectChanges();
-    expect(comp.element.paused).toBe(false);
   });
 
   it('should set muted', () => {
@@ -198,15 +246,12 @@ describe('MindsVideo', () => {
   });
 
   it('Should Select Quality, reloading and playing', () => {
-    let e:any = {};
-    e.reorderedSrc = [{},{}];
-    e.currentTime = 39;
-    spyOn(comp.element, 'load').and.callThrough();
-    spyOn(comp.element, 'play').and.callThrough();
-    comp.selectedQuality(e);
-    fixture.detectChanges();
-    expect(comp.element.load).toHaveBeenCalled();
-    expect(comp.element.play).toHaveBeenCalled();
+    comp.torrentVideo.getCurrentTime = () => 39;
+    spyOn(comp.torrentVideo, 'resumeFrom').and.callThrough();
+    spyOn(comp, 'updateCurrentSrc').and.callThrough();
+    comp.selectedQuality('360');
+    expect(comp.updateCurrentSrc).toHaveBeenCalled();
+    expect(comp.torrentVideo.resumeFrom).toHaveBeenCalled();
   });
 
   it('should set is visible', () => {

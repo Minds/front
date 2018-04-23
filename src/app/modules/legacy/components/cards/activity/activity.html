@@ -125,8 +125,9 @@
 				muted="false"
 				[poster]="activity.custom_data.thumbnail_src"
 				[src]="[{ 'res': '720', 'uri': 'api/v1/media/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
-        [guid]="activity.custom_data.guid"
+				[guid]="activity.custom_data.guid"
 				[playCount]="activity['play:count']"
+				[torrent]="[{ res: '720', key: activity.custom_data.guid + '/720.mp4' }]"
 				#player>
 				<video-ads [player]="player" *ngIf="activity.monetized"></video-ads>
 		</m-video>

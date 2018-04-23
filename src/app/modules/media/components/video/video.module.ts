@@ -11,6 +11,7 @@ import { MindsVideoVolumeSlider } from './volume-slider/volume-slider.component'
 
 import { VideoAdsDirective } from './ads.directive';
 import { VideoAds, MindsVideoComponent } from './video.component';
+import { MindsTorrentVideo } from './torrent-video.component';
 
 @NgModule({
   imports: [
@@ -23,14 +24,16 @@ import { VideoAds, MindsVideoComponent } from './video.component';
     VideoAdsDirective,
     VideoAds,
     MindsVideoComponent,
+    MindsTorrentVideo,
     MindsVideoProgressBar,
     MindsVideoQualitySelector,
-    MindsVideoVolumeSlider
+    MindsVideoVolumeSlider,
   ],
   exports: [
     VideoAdsDirective,
     VideoAds,
-    MindsVideoComponent
+    MindsVideoComponent,
+    MindsTorrentVideo,
   ],
 })
 export class VideoModule {

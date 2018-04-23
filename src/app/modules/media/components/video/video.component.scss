@@ -54,6 +54,11 @@
     box-sizing: border-box;
     //padding: $minds-padding;
     text-align: center;
+    align-items: center;
+
+    .mdl-spinner {
+      margin: 0 8px;
+    }
 
     > m-video--quality-selector, > a, > i {
       cursor: pointer;
@@ -71,5 +76,51 @@
     }
   }
 
+  .m-video--torrent-info {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0, 0, 0, 0.65);
+    color: rgba(255, 255, 255, 0.65);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 8px;
+    font-size: 12px
+  }
 
+  .m-video--torrent-info--cell {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .material-icons {
+      font-size: 16px;
+      line-height: 1;
+      margin-right: 4px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
+   .m-video--info-button {
+     display: flex;
+     align-items: center;
+     line-height: 1;
+     margin-right: 4px;
+     padding: 12px 4px !important;
+
+     > .material-icons {
+       margin-right: 4px;
+     }
+
+     > span {
+       font-size: 12px;
+       font-weight: 300;
+     }
+   }
 }

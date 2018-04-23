@@ -1,0 +1,8 @@
+<ng-container *ngIf="torrentEnabled; else httpPlayer">
+  <video [poster]="poster" [muted]="muted" preload="none" allowfullscreen #player></video>
+</ng-container>
+<ng-template #httpPlayer>
+  <video [autoplay]="autoplay" [poster]="poster" [muted]="muted" preload="none" allowfullscreen #player>
+    <source [src]="src.uri" *ngIf="src" />
+  </video>
+</ng-template>

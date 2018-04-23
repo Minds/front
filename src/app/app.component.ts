@@ -10,6 +10,7 @@ import { ContextService } from './services/context.service';
 import { BlockchainService } from './modules/blockchain/blockchain.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
+import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
 
 @Component({
   moduleId: module.id,
@@ -30,6 +31,7 @@ export class Minds {
     public context: ContextService,
     public web3Wallet: Web3WalletService,
     public client: Client,
+    public webtorrent: WebtorrentService,
   ) {
     this.name = 'Minds';
   }
@@ -60,6 +62,8 @@ export class Minds {
     this.context.listen();
 
     this.web3Wallet.setUp();
+
+    this.webtorrent.setUp();
   }
 
   ngOnDestroy() {

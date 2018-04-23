@@ -136,6 +136,7 @@
                 [src]="[{ 'res': '720', 'uri': 'api/v1/media/' + comment.custom_data.guid + '/play', 'type': 'video/mp4' }]"
                 [guid]="comment.custom_data.guid"
                 [playCount]="comment['play:count']"
+                [torrent]="[{ res: '720', key: comment.custom_data.guid + '/720.mp4' }]"
               >
             </m-video>
           </div>
