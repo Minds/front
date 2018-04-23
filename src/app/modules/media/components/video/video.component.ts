@@ -200,7 +200,7 @@ export class MindsVideoComponent {
       this.muted = false;
       return;
     }
-    var bounds = this.element.getBoundingClientRect();
+    /*var bounds = this.element.getBoundingClientRect();
     if (bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0) {
       if (!this.torrentVideo.isPlaying()) {
         this.torrentVideo.play();
@@ -210,7 +210,7 @@ export class MindsVideoComponent {
         // this.element.muted = true;
         this.torrentVideo.pause();
       }
-    }
+    }*/
   }
 
   toggleTorrentInfo() {
