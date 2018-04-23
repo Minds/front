@@ -75,10 +75,9 @@ export class WebtorrentService {
   // Enable/Disable; Support
 
   isEnabled() {
-    return false;
-    /*const value = this.storage.get('webtorrent:disabled');
+    const value = this.storage.get('webtorrent:disabled');
 
-    return !value || !JSON.parse(value);*/
+    return !value || !JSON.parse(value);
   }
 
   setEnabled(enabled: boolean) {
@@ -95,8 +94,7 @@ export class WebtorrentService {
   }
 
   setUpSupport() {
-    this.supported = false;
-    //this.supported = ('MediaStream' in window) && WebTorrent.WEBRTC_SUPPORT;
+    this.supported = ('MediaStream' in window) && WebTorrent.WEBRTC_SUPPORT;
 
     return this;
   }
