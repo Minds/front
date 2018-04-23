@@ -1,7 +1,7 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Rx';
 
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -9,9 +9,8 @@ import { Navigation as NavigationService } from '../../services/navigation';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
-import { Poster } from '../../modules/legacy/controllers/newsfeed/poster/poster';
 import { ContextService } from '../../services/context.service';
-import { NewsfeedBoostService } from './newsfeed-boost.service';
+import { PosterComponent } from './poster/poster.component';
 
 @Component({
   selector: 'm-newsfeed',
@@ -54,7 +53,7 @@ export class NewsfeedComponent {
 
   subscribed: boolean = false;
 
-  @ViewChild('poster') private poster: Poster;
+  @ViewChild('poster') private poster: PosterComponent;
 
   constructor(
     public session: Session,

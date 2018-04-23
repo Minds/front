@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-newsfeed-poster--modal',

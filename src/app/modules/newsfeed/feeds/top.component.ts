@@ -9,9 +9,9 @@ import { Navigation as NavigationService } from '../../../services/navigation';
 import { MindsActivityObject } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
-import { Poster } from '../../../modules/legacy/controllers/newsfeed/poster/poster';
 import { ContextService } from '../../../services/context.service';
 import { SettingsService } from '../../settings/settings.service';
+import { PosterComponent } from '../poster/poster.component';
 
 @Component({
   selector: 'm-newsfeed--top',
@@ -31,7 +31,7 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   ratingSubscription: Subscription;
 
-  @ViewChild('poster') private poster: Poster;
+  @ViewChild('poster') private poster: PosterComponent;
 
   constructor(
     public client: Client,

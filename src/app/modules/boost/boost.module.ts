@@ -28,8 +28,6 @@ import { BoostPublisherEarningsComponent } from './publisher/earnings/earnings.c
 import { BoostPublisherPayoutsComponent } from './publisher/payouts/payouts.component';
 import { BoostPublisherSettingsComponent } from './publisher/settings/settings.component';
 import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
-import { LegacyModule } from '../legacy/legacy.module';
-import { Poster } from '../legacy/controllers/newsfeed/poster/poster';
 
 const boostRoutes: Routes = [
   { path: 'boost/console', component: BoostConsoleComponent,
@@ -99,7 +97,6 @@ const boostRoutes: Routes = [
     BoostCreatorComponent,
     BoostConsoleComponent,
     BoostMarketingComponent,
-    Poster,
   ]
 })
 export class BoostModule {

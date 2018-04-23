@@ -1,28 +1,27 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Session } from '../../../services/session';
 
-import { Client, Upload } from '../../../../../services/api';
-import { MindsActivityObject } from '../../../../../interfaces/entities';
-import { Session } from '../../../../../services/session';
-
-import { AttachmentService } from '../../../../../services/attachment';
-import { ThirdPartyNetworksSelector } from '../../../../../modules/third-party-networks/selector';
+import { AttachmentService } from '../../../services/attachment';
+import { ThirdPartyNetworksSelector } from '../../third-party-networks/selector';
+import { Upload } from '../../../services/api/upload';
+import { Client } from '../../../services/api/client';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-newsfeed-poster',
-  inputs: [ '_container_guid: containerGuid', 'accessId', 'message' ],
-  outputs: [ 'load' ],
+  inputs: ['_container_guid: containerGuid', 'accessId', 'message'],
+  outputs: ['load'],
   providers: [
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [ Session, Client, Upload ]
+      deps: [Session, Client, Upload]
     }
   ],
-  templateUrl: 'poster.html'
+  templateUrl: 'poster.component.html',
 })
 
-export class Poster {
+export class PosterComponent {
 
   content = '';
   meta: any = {

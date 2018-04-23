@@ -12,9 +12,9 @@ import { RecentService } from '../../services/ux/recent';
 import { MindsActivityObject } from '../../interfaces/entities';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
-import { Poster } from '../../modules/legacy/controllers/newsfeed/poster/poster';
 import { WireChannelComponent } from '../../modules/wire/channel/channel.component';
 import { ContextService } from '../../services/context.service';
+import { PosterComponent } from '../newsfeed/poster/poster.component';
 
 @Component({
   moduleId: module.id,
@@ -47,7 +47,7 @@ export class ChannelComponent {
   showOnboarding: boolean = false;
   paramsSubscription: Subscription;
 
-  @ViewChild('poster') private poster: Poster;
+  @ViewChild('poster') private poster: PosterComponent;
   @ViewChild('wire') private wire: WireChannelComponent;
 
   constructor(

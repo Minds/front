@@ -5,7 +5,7 @@
         <img
           src="{{minds.cdn_url}}icon/{{session.getLoggedInUser().guid}}/medium/{{session.getLoggedInUser().icontime}}/"
           class="m-border"
-          />
+        />
       </a>
     </div>
 
@@ -35,10 +35,10 @@
         </div>
 
         <a class="m-mature-button"
-           [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-           (click)="attachment.toggleMature()"
-           title="Mature content"
-           i18n-title="@@M__COMMON__MATURE_CONTENT"
+          [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+          (click)="attachment.toggleMature()"
+          title="Mature content"
+          i18n-title="@@M__COMMON__MATURE_CONTENT"
         >
           <i class="material-icons">explicit</i>
           <span *ngIf="attachment.isMature()" i18n="@@M__COMMON__MATURE_CONTENT">Mature content</span>
@@ -54,14 +54,15 @@
           class="mdl-button mdl-button--colored"
           [disabled]="!canPost || !validThreshold || inProgress"
         >
-          <ng-container i18n="Action of posting@@MINDS__POSTER__POST_ACTION">Post</ng-container> <i class="material-icons">send</i>
+          <ng-container i18n="Action of posting@@MINDS__POSTER__POST_ACTION">Post</ng-container>
+          <i class="material-icons">send</i>
         </button>
       </div>
 
     </form>
   </div>
   <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp" style="min-height:0;"
-       *ngIf="errorMessage">
+    *ngIf="errorMessage">
     <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
       {{errorMessage}}
     </div>
@@ -78,12 +79,12 @@
 
   <!-- Attachment preview -->
   <div class="post-preview" *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"
-       (click)="removeAttachment(file)">
+    (click)="removeAttachment(file)">
     <div class="mdl-progress mdl-js-progress"
-         [mdlUpload]
-         [progress]="attachment.getUploadProgress()"
-         [hidden]="attachment.getUploadProgress() == 0"
-         [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
+      [mdlUpload]
+      [progress]="attachment.getUploadProgress()"
+      [hidden]="attachment.getUploadProgress() == 0"
+      [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
     ></div>
     <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
       <i class="material-icons" *ngIf="!attachment.isPendingDelete()">videocam</i>
@@ -94,11 +95,12 @@
       <div class="attachment-preview-delete" *ngIf="!attachment.isPendingDelete()">
         <i class="material-icons">delete</i>
       </div>
-      <div class="mdl-spinner attachment-preview-delete-in-progress mdl-js-spinner is-active" [mdl] *ngIf="attachment.isPendingDelete()"></div>
+      <div class="mdl-spinner attachment-preview-delete-in-progress mdl-js-spinner is-active" [mdl]
+        *ngIf="attachment.isPendingDelete()"></div>
 
     </ng-container>
     <!--<div class="attachment-preview-delete-in-progress" *ngIf="attachment.isPendingDelete()">-->
-      <!--<div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>-->
+    <!--<div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>-->
     <!--</div>-->
   </div>
 

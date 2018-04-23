@@ -8,7 +8,6 @@ import { TranslateModule } from '../translate/translate.module';
 import { VideoModule } from '../media/components/video/video.module';
 import { ModalsModule } from '../modals/modals.module';
 import { PaymentsModule } from '../payments/payments.module';
-import { BoostModule } from '../boost/boost.module';
 import { ThirdPartyNetworksModule } from '../third-party-networks/third-party-networks.module';
 import { WireModule } from '../wire/wire.module';
 
@@ -38,11 +37,9 @@ import { ActivityPreview } from './components/cards/activity/preview';
 import { SocialIcons } from './components/social-icons/social-icons';
 import { Comments } from './controllers/comments/comments';
 import { CommentsScrollDirective } from './controllers/comments/scroll';
-import { Poster } from './controllers/newsfeed/poster/poster';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
 import { CarouselComponent } from './components/carousel.component';
-import { ModalPosterComponent } from './controllers/newsfeed/poster/poster-modal.component';
 
 @NgModule({
   imports: [
@@ -55,7 +52,6 @@ import { ModalPosterComponent } from './controllers/newsfeed/poster/poster-modal
     VideoModule,
     PaymentsModule,
     ModalsModule,
-    BoostModule,
     ThirdPartyNetworksModule,
     WireModule,
     PostMenuModule
@@ -88,8 +84,6 @@ import { ModalPosterComponent } from './controllers/newsfeed/poster/poster-modal
     Comments,
     CommentsScrollDirective,
 
-    Poster,
-    ModalPosterComponent,
     CarouselComponent,
   ],
   exports: [
@@ -120,8 +114,6 @@ import { ModalPosterComponent } from './controllers/newsfeed/poster/poster-modal
     Comments,
     CommentsScrollDirective,
 
-    Poster,
-    ModalPosterComponent,
     CarouselComponent,
   ],
   entryComponents: [
@@ -133,8 +125,6 @@ import { ModalPosterComponent } from './controllers/newsfeed/poster/poster-modal
     VideoCard,
     Remind,
     UserCard,
-    Poster,
-    ModalPosterComponent,
     BoostButton,
   ]
 })

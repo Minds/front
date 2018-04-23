@@ -19,6 +19,7 @@ import { NewsfeedBoostComponent } from './feeds/boost.component';
 import { NewsfeedService } from './services/newsfeed.service';
 import { NewsfeedBoostService } from './newsfeed-boost.service';
 import { NewsfeedDropdownComponent } from './dropdown/dropdown.component';
+import { PosterModule } from './poster/poster.module';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
     ModalsModule,
     MindsFormsModule,
     AdsModule,
+    PosterModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,

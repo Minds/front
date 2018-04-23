@@ -4,8 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BoostConsoleType } from '../console.component';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
-import { RevenueLedgerComponent } from '../../../monetization/revenue/ledger.component';
-import { Poster } from '../../../legacy/controllers/newsfeed/poster/poster';
+import { PosterComponent } from '../../../newsfeed/poster/poster.component';
 
 @Component({
   moduleId: module.id,
@@ -23,7 +22,7 @@ export class BoostConsoleBooster {
   @Input('type') type: BoostConsoleType;
 
   componentRef;
-  componentInstance: Poster;
+  componentInstance: PosterComponent;
 
   @ViewChild('poster', { read: ViewContainerRef }) poster: ViewContainerRef;
 
@@ -80,7 +79,7 @@ export class BoostConsoleBooster {
       || (this.type === 'content' && this.media.length === 0)) {
 
 
-      const componentFactory = this._componentFactoryResolver.resolveComponentFactory(Poster);
+      const componentFactory = this._componentFactoryResolver.resolveComponentFactory(PosterComponent);
 
       this.componentRef = this.poster.createComponent(componentFactory);
       this.componentInstance = this.componentRef.instance;

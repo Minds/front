@@ -8,9 +8,7 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-
-import { Poster } from '../../legacy/controllers/newsfeed/poster/poster';
-import { ModalPosterComponent } from '../../legacy/controllers/newsfeed/poster/poster-modal.component';
+import { ModalPosterComponent } from '../../newsfeed/poster/poster-modal.component';
 
 @Component({
   moduleId: module.id,

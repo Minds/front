@@ -8,7 +8,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ChannelsModule } from '../channels/channels.module';
 import { ModalsModule } from '../modals/modals.module';
 
-import { GroupsListComponent, GroupsProfile, GroupsCreator } from './list.component';
+import { GroupsCreator, GroupsListComponent, GroupsProfile } from './list.component';
 import { GroupsJoinButton } from './groups-join-button';
 import { GroupsProfileMembersInvite } from './profile/members/invite/invite';
 import { GroupsCard } from './card/card';
@@ -21,6 +21,7 @@ import { GroupsProfileConversation } from './profile/conversation/conversation.c
 import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
 import { GroupsMembersModuleComponent } from './members/members';
 import { GroupsTileComponent } from './tile/tile.component';
+import { PosterModule } from '../newsfeed/poster/poster.module';
 
 const routes: Routes = [
   { path: 'groups/profile/:guid/:filter', component: GroupsProfile },
@@ -39,7 +40,8 @@ const routes: Routes = [
     CommonModule,
     LegacyModule,
     ChannelsModule,
-    ModalsModule
+    ModalsModule,
+    PosterModule,
   ],
   declarations: [
     GroupsListComponent,

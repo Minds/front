@@ -8,8 +8,6 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { MessengerModule } from '../messenger/messenger.module';
 import { WireModule } from '../wire/wire.module';
 import { OnboardingModule } from '../onboarding/onboarding.module';
-import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
-import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 
 import { ChannelModulesComponent } from './modules/modules';
 import { ChannelSupporters } from './supporters/supporters';
@@ -19,6 +17,8 @@ import { ChannelSocialProfiles } from './social-profiles/social-profiles';
 import { ChannelComponent } from './channel.component';
 import { ChannelsListComponent } from './list.component';
 import { ChannelsTileComponent } from './tile/tile.component';
+import { PosterModule } from '../newsfeed/poster/poster.module';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 
 const routes: Routes = [
   { path: 'channels/:filter', component: ChannelsListComponent },
@@ -36,6 +36,7 @@ const routes: Routes = [
     MessengerModule,
     WireModule,
     OnboardingModule,
+    PosterModule,
     NewsfeedModule,
   ],
   declarations: [
