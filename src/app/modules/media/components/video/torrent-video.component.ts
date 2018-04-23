@@ -103,8 +103,8 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
       if (this.resumeFromTime) {
         (<HTMLVideoElement>this.player.nativeElement).currentTime = this.resumeFromTime;
         this.resumeFromTime = 0;
+        this.play();
       }
-      //this.play();
     }
 
     // TODO: Send refresh signal, but first find a way to check
