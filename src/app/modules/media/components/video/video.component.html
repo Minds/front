@@ -45,21 +45,21 @@
       <a class="mdl-color-text--white m-video--info-button"
         (click)="toggleTorrentInfo()"
       >
-        <i class="material-icons mdl-color-text--white">people_outline</i>
+        <m-tooltip icon="people_outline" anchor="bottom">Peers</m-tooltip>
         <span>{{ torrentVideo.info.peers | abbr }}</span>
       </a>
 
       <a class="mdl-color-text--white m-video--info-button"
         (click)="toggleTorrentInfo()"
       >
-        <i class="material-icons mdl-color-text--white">arrow_downward</i>
+        <m-tooltip icon="arrow_downward" anchor="bottom">Downloading</m-tooltip>
         <span>{{ torrentVideo.info.dlspeed | abbr:2:true }}B/s</span>
       </a>
 
       <a class="mdl-color-text--white m-video--info-button"
         (click)="toggleTorrentInfo()"
       >
-        <i class="material-icons mdl-color-text--white">arrow_upward</i>
+        <m-tooltip icon="arrow_upward" anchor="bottom">Uploading</m-tooltip>
         <span>{{ torrentVideo.info.ulspeed | abbr:2:true }}B/s</span>
       </a>
     </ng-container>
