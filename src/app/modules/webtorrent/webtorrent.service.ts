@@ -75,9 +75,10 @@ export class WebtorrentService {
   // Enable/Disable; Support
 
   isEnabled() {
-    const value = this.storage.get('webtorrent:disabled');
+    return false;
+    /*const value = this.storage.get('webtorrent:disabled');
 
-    return !value || !JSON.parse(value);
+    return !value || !JSON.parse(value);*/
   }
 
   setEnabled(enabled: boolean) {
