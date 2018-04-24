@@ -100,9 +100,11 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
       this.detectChanges();
 
       this.player.nativeElement.load();
-      if (this.resumeFromTime) {
-        (<HTMLVideoElement>this.player.nativeElement).currentTime = this.resumeFromTime;
-        this.resumeFromTime = 0;
+      if ((typeof this.resumeFromTime !== 'undefined') || this.autoplay) {
+        try {
+          (<HTMLVideoElement>this.player.nativeElement).currentTime = this.resumeFromTime || 0;
+        } catch (e) { }
+        this.resumeFromTime = void 0;
         this.play();
       }
     }
@@ -171,9 +173,8 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
     } catch (e) {
       this.loading = false;
       this.torrenting = false;
-      this.detectChanges();
+      this.fallback();
 
-      this.errorEmitter.emit(e);
       return;
     }
 
@@ -193,7 +194,7 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
         this.torrenting = false;
         this.detectChanges();
 
-        this.errorEmitter.emit('No video file');
+        this.fallback();
         return;
       }
 
@@ -202,12 +203,14 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
           this.torrenting = false;
           this.detectChanges();
 
-          this.errorEmitter.emit(err);
+          this.fallback();
         }
 
-        if (this.resumeFromTime) {
-          (<HTMLVideoElement>this.player.nativeElement).currentTime = this.resumeFromTime;
-          this.resumeFromTime = 0;
+        if (typeof this.resumeFromTime !== 'undefined') {
+          try {
+            (<HTMLVideoElement>this.player.nativeElement).currentTime = this.resumeFromTime;
+          } catch (e) { }
+          this.resumeFromTime = void 0;
         }
 
         if (this.paused) {
@@ -233,6 +236,14 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
     if (this.initialized) {
       this.detectChanges();
     }
+  }
+
+  fallback() {
+    this.torrentEnabled = false;
+    this.detectChanges();
+
+    this.resumeFromTime = 0;
+    this.refresh();
   }
 
   isLoading() {

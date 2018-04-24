@@ -37,8 +37,8 @@ export class Client {
 					return resolve(data);
 				},
 				err => {
-					if (!err.data()) {
-						return reject(err);
+					if (err.data && !err.data()) {
+						return reject(err || new Error('GET error'));
 					}
 					if (err.status === 401 && err.json().loggedin === false) {
 						window.location.href = '/login';
@@ -69,8 +69,8 @@ export class Client {
 					return resolve(data);
 				},
 				err => {
-					if (!err.json()) {
-						return reject(err);
+					if (err.json && !err.json()) {
+						return reject(err || new Error('POST error'));
 					}
 					if (err.status === 401 && err.json().loggedin === false) {
 						window.location.href = '/login';
