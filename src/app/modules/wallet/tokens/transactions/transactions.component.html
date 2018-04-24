@@ -89,11 +89,11 @@
       </div>
 
       <div class="m-token--ledger--reward-details--meta m-token--ledger--reward-details--meta-wrapper" *ngIf="isP2p(transaction)">
-        <img class="m-token--ledger--avatar" [src]="getSelf().avatar">
+        <img class="m-token--ledger--avatar" [routerLink]="['/', getSelf().username]"  [src]="getSelf().avatar">
 
         <i class="material-icons m-token--ledger--direction">{{getOther(transaction).isSender ? 'arrow_back' : 'arrow_forward'}}</i>
 
-        <img class="m-token--ledger--avatar" [src]="getOther(transaction).avatar">
+        <img class="m-token--ledger--avatar" [routerLink]="['/', getOther(transaction).username]" [src]="getOther(transaction).avatar">
         <a class="m-token--ledger--other-username" [routerLink]="['/', getOther(transaction).username]">@{{getOther(transaction).username}}</a>
       </div>
 
