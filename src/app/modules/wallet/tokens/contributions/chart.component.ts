@@ -10,13 +10,12 @@ import { Session } from '../../../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WalletTokenContributionsChartComponent {
- 
+
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
     public session: Session,
     protected router: Router,
-  ) {
-  }
+  ) { }
 
 }

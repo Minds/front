@@ -8,5 +8,6 @@ import { ExcerptPipe } from './excerpt';
 import { TokenPipe } from './token.pipe';
 import { UtcDatePipe } from './utcdate';
 import { AddressExcerptPipe } from './address-excerpt';
+import { TimediffPipe } from './timediff.pipe';
 
-export const MINDS_PIPES = [ AbbrPipe, DomainPipe, TagsPipe, SanitizePipe, SafePipe, ListablePipe, ExcerptPipe, TokenPipe, UtcDatePipe, AddressExcerptPipe ];
+export const MINDS_PIPES = [ AbbrPipe, DomainPipe, TagsPipe, SanitizePipe, SafePipe, ListablePipe, ExcerptPipe, TokenPipe, UtcDatePipe, AddressExcerptPipe, TimediffPipe ];

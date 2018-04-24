@@ -1,0 +1,48 @@
+.m-token-contributions--overview {
+  padding: 16px;
+  margin-bottom: 8px;
+  background: #fff;
+
+  .m-token-contributions--overview--columns {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 12px 32px 0;
+  }
+
+  .m-token-contributions--overview--column {
+    flex-grow: 1;
+    flex-basis: 0;
+
+    &.m-token-contributions--overview--avatar-column {
+      text-align: center;
+
+      minds-avatar {
+        width: 72px;
+        height: 72px;
+        display: inline-block;
+
+        .minds-avatar {
+          background-repeat: no-repeat;
+          background-size: cover;
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          border: 2px solid #eee;
+        }
+      }
+    }
+  }
+
+  .m-token-contributions--overview--row {
+    color: #7ED321;
+    font-weight: bold;
+    margin-bottom: 16px;
+    font-size: 16px;
+
+    span {
+      color: #333;
+      width: 15em;
+    }
+  }
+}
