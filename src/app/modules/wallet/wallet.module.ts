@@ -52,7 +52,7 @@ const walletRoutes : Routes = [
       //{ path: 'points/purchase', component: WalletPurchaseComponent },
       { path: 'tokens', component: WalletTokensComponent, 
         children: [
-          { path: '', redirectTo: 'transactions', pathMatch: 'full' },
+          { path: '', redirectTo: 'contributions', pathMatch: 'full' },
           { path: 'transactions/:contract', component: WalletTokenTransactionsComponent },
           { path: 'transactions', component: WalletTokenTransactionsComponent },
           { path: 'withdraw', component: WalletTokenWithdrawComponent },
