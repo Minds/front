@@ -34,8 +34,7 @@ export class WalletTokenContributionsComponent {
 
     d.setHours(23, 59, 59);
     this.endDate = d.toISOString();
-
-    d.setMonth(d.getMonth() - 1);
+    d.setDate(d.getDate() - 7);
     d.setHours(0, 0, 0);
     this.startDate = d.toISOString();
 
