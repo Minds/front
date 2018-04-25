@@ -52,7 +52,7 @@ export class ChannelBadgesComponent {
   setFounder(e) {
     if (!this.session.isAdmin()) {
       e.preventDefault();
-      return;
+      return this.router.navigate(['/channels/founders']);
     }
     if (this.user.founder)
       return this.unsetFounder();

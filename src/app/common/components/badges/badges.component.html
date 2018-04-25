@@ -9,7 +9,12 @@
     <span i18n="Verified as user status@@COMMON__BADGES__VERIFIED">Verified</span>
   </li>
 
-  <li *ngIf="(user.founder || session.isAdmin()) && badges.indexOf('founder') > -1" (click)="setFounder($event)">
+  <li *ngIf="(user.founder && !session.isAdmin()) && badges.indexOf('founder') > -1" routerLink="/channels/founders">
+    <i class="material-icons" [class.selected]="user.founder">flight_takeoff</i>
+    <span i18n="Founder as user status@@COMMON__BADGES__FOUNDER">Founder</span>
+  </li>
+
+  <li *ngIf="(session.isAdmin()) && badges.indexOf('founder') > -1" (click)="setFounder($event)">
     <i class="material-icons" [class.selected]="user.founder">flight_takeoff</i>
     <span i18n="Founder as user status@@COMMON__BADGES__FOUNDER">Founder</span>
   </li>
