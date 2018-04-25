@@ -24,6 +24,7 @@ export interface MindsBlogEntity {
   mature_visibility?: boolean;
   monetized?: boolean;
   time_created?: number;
+  time_published?: number;
   access_id?: number;
   license?: string;
 }
