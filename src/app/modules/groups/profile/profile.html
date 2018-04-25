@@ -194,7 +194,7 @@
     <!-- images  -->
    <minds-channel-modules [container]="group" type="image" *ngIf="filter != 'conversation'">
 
-      <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', 'container:' + group.guid, 'images']">
+      <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/images', 'container:' + group.guid]">
         <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
       </a>
     </minds-channel-modules>
@@ -204,7 +204,7 @@
     <!-- videos  -->
     <minds-channel-modules [container]="group" type="video" limit="6" *ngIf="filter != 'conversation'">
 
-      <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/discovery', 'container:' + group.guid, 'videos']">
+      <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/videos', 'container:' + group.guid]">
         <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
       </a>
     </minds-channel-modules>
