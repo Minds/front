@@ -20,6 +20,7 @@ import { NewsfeedService } from './services/newsfeed.service';
 import { NewsfeedBoostService } from './newsfeed-boost.service';
 import { NewsfeedDropdownComponent } from './dropdown/dropdown.component';
 import { PosterModule } from './poster/poster.module';
+import { CommentsModule } from '../comments/comments.module';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,
+    CommentsModule,
     LegacyModule,
     ModalsModule,
     MindsFormsModule,

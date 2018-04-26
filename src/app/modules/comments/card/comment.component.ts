@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
 
-import { Client, Upload } from '../../../../../services/api';
-import { Session } from '../../../../../services/session';
-import { AttachmentService } from '../../../../../services/attachment';
-import { TranslationService } from '../../../../../services/translation';
-
-import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
-
-import { ReportCreatorComponent } from '../../../../report/creator/creator.component';
+import { Session } from '../../../services/session';
+import { Upload } from '../../../services/api/upload';
+import { Client } from '../../../services/api/client';
+import { AttachmentService } from '../../../services/attachment';
+import { TranslationService } from '../../../services/translation';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ReportCreatorComponent } from '../../report/creator/creator.component';
 
 @Component({
   moduleId: module.id,
@@ -17,7 +16,7 @@ import { ReportCreatorComponent } from '../../../../report/creator/creator.compo
   host: {
     '(keydown.esc)': 'editing = false'
   },
-  templateUrl: 'comment.html',
+  templateUrl: 'comment.component.html',
   providers: [
     {
       provide: AttachmentService,
@@ -27,7 +26,7 @@ import { ReportCreatorComponent } from '../../../../report/creator/creator.compo
   ]
 })
 
-export class CommentCard {
+export class CommentComponent {
 
   comment: any;
   editing: boolean = false;

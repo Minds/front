@@ -3,19 +3,18 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { Client, Upload } from '../../../../services/api';
-import { Session } from '../../../../services/session';
-
-import { AttachmentService } from '../../../../services/attachment';
-import { SocketsService } from '../../../../services/sockets';
-
-import { Textarea } from '../../../../common/components/editors/textarea.component';
+import { Client } from '../../../services/api/client';
+import { Session } from '../../../services/session';
+import { Upload } from '../../../services/api/upload';
+import { AttachmentService } from '../../../services/attachment';
+import { Textarea } from '../../../common/components/editors/textarea.component';
+import { SocketsService } from '../../../services/sockets';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-comments',
   inputs: ['_object : object', '_reversed : reversed', 'limit', 'focusOnInit', 'scrollable'],
-  templateUrl: 'list.html',
+  templateUrl: 'list.component.html',
   providers: [
     {
       provide: AttachmentService,
@@ -26,7 +25,7 @@ import { Textarea } from '../../../../common/components/editors/textarea.compone
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class Comments {
+export class CommentsListComponent {
 
   minds;
   object;

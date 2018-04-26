@@ -1,9 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { Session } from '../../../../services/session';
-import { Client } from '../../../../services/api';
-import { WalletService } from '../../../../services/wallet';
-import { SignupModalService } from '../../../../modules/modals/signup/service';
+import { Session } from '../../../services/session';
+import { Client } from '../../../services/api';
+import { WalletService } from '../../../services/wallet';
+import { SignupModalService } from '../../../modules/modals/signup/service';
 
 @Component({
   selector: 'minds-button-thumbs-down',
@@ -12,9 +12,15 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
   template: `
     <a class="mdl-color-text--blue-grey-500" (click)="thumb()" [ngClass]="{'selected': has() }">
       <i class="material-icons">thumb_down</i>
-      <span class="minds-counter" *ngIf="object['thumbs:down:count'] > 0">{{object['thumbs:down:count'] | number}}</span>
+      <span class="minds-counter"
+        *ngIf="object['thumbs:down:count'] > 0">{{object['thumbs:down:count'] | number}}</span>
     </a>
-  `
+  `,
+  styles: [`
+      a {
+          cursor: pointer;
+      }
+  `],
 })
 
 export class ThumbsDownButton {
@@ -32,8 +38,6 @@ export class ThumbsDownButton {
   }
 
   thumb() {
-    var self = this;
-
     if (!this.session.isLoggedIn()) {
       this.modal.setSubtitle('You need to have a channel to vote').open();
       return false;

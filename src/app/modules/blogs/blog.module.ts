@@ -15,6 +15,7 @@ import { BlogCard } from './card/card';
 import { BlogView } from './view/view';
 import { BlogTileComponent } from './tile/tile.component';
 import { WireModule } from '../wire/wire.module';
+import { CommentsModule } from '../comments/comments.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -34,6 +35,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     ModalsModule,
     AdsModule,
+    CommentsModule,
     LegacyModule,
     PostMenuModule,
     WireModule

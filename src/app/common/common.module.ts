@@ -62,6 +62,8 @@ import { Session } from '../services/session';
 import { Client, Upload } from '../services/api';
 import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.component';
 import { NotificationsToasterComponent } from '../modules/notifications/toaster.component';
+import { ThumbsUpButton } from './components/thumbs/thumbs-up.component';
+import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
 
 @NgModule({
   imports: [
@@ -130,6 +132,8 @@ import { NotificationsToasterComponent } from '../modules/notifications/toaster.
     PhoneInputComponent,
     PhoneInputCountryComponent,
     SafeToggleComponent,
+    ThumbsUpButton,
+    ThumbsDownButton,
   ],
   exports: [
     MINDS_PIPES,
@@ -189,6 +193,8 @@ import { NotificationsToasterComponent } from '../modules/notifications/toaster.
     MindsTokenSymbolComponent,
     PhoneInputComponent,
     SafeToggleComponent,
+    ThumbsUpButton,
+    ThumbsDownButton,
   ],
   providers: [
     {

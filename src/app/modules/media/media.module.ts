@@ -22,8 +22,7 @@ import { MediaTheatreComponent } from './view/views/theatre.component';
 import { MediaGridComponent } from './view/views/grid.component';
 import { MediaViewRecommendedComponent } from './view/recommended/recommended.component';
 import { ThumbnailSelectorComponent } from './components/thumbnail-selector.component';
-import { PosterComponent } from '../newsfeed/poster/poster.component';
-import { ModalPosterComponent } from '../newsfeed/poster/poster-modal.component';
+import { CommentsModule } from '../comments/comments.module';
 
 const routes: Routes = [
   { path: 'media/videos/:filter', component: MediaVideosListComponent },
@@ -48,6 +47,7 @@ const routes: Routes = [
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,
+    CommentsModule,
     LegacyModule,
     ModalsModule,
     MindsFormsModule,

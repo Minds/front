@@ -1,13 +1,13 @@
 @import "defaults";
 
-minds-comments, .m-comment-wrapper{
-  margin-top:50px;
-  width:100%;
+minds-comments, .m-comment-wrapper {
+  margin-top: 50px;
+  width: 100%;
 
-  .minds-comment{
-    min-height:0;
-    margin:0;
-    padding:$minds-padding $minds-padding*2;
+  .minds-comment {
+    min-height: 0;
+    margin: 0;
+    padding: $minds-padding $minds-padding*2;
     background-color: transparent;
     overflow: visible;
     //border-bottom:1px solid #DDD;
@@ -16,8 +16,8 @@ minds-comments, .m-comment-wrapper{
       white-space: pre-line;
     }
 
-    .minds-more{
-      display:inline-block;
+    .minds-more {
+      display: inline-block;
       visibility: hidden;
 
       i {
@@ -28,29 +28,29 @@ minds-comments, .m-comment-wrapper{
         position: static;
       }
     }
-    &:hover .minds-more{
+    &:hover .minds-more {
       visibility: visible;
     }
 
-    .mdl-card__menu{
-      top:0;
+    .mdl-card__menu {
+      top: 0;
     }
 
-    &.minds-comment-post{
+    &.minds-comment-post {
       border-bottom: 0;
       padding-bottom: $minds-padding;
     }
 
-    .minds-avatar{
+    .minds-avatar {
       background: transparent;
 
-      img{
-        width:36px;
+      img {
+        width: 36px;
       }
     }
 
-    .minds-body{
-      margin-left:$minds-margin;
+    .minds-body {
+      margin-left: $minds-margin;
       font-size: 12px;
       max-width: 100%;
       max-width: calc(100% - 60px);
@@ -58,17 +58,17 @@ minds-comments, .m-comment-wrapper{
       .username {
         font-size: 13px;
         text-decoration: none;
-        font-weight:bold;
+        font-weight: bold;
       }
 
-      .minds-comment-span{
+      .minds-comment-span {
         font-size: 10px;
         position: relative;
         top: -1px;
 
-        &.minds-comment-bullet:before{
-          content:'·';
-          font-weight:bold;
+        &.minds-comment-bullet:before {
+          content: '·';
+          font-weight: bold;
           padding: 0 $minds-padding;
         }
 
@@ -84,14 +84,14 @@ minds-comments, .m-comment-wrapper{
         }
 
       }
-      p{
+      p {
         margin: 0.35em 0 0.5em;
-        font-size:12px;
+        font-size: 12px;
         line-height: 16px;
 
       }
-      a{
-        text-decoration:none;
+      a {
+        text-decoration: none;
       }
     }
 
@@ -220,14 +220,14 @@ minds-comments, .m-comment-wrapper{
   .m-comments-composer {
     position: relative;
 
-    form{
-      display:flex;
+    form {
+      display: flex;
       margin: 0;
 
       minds-textarea {
-        font-family:inherit;
-        font-size:12px;
-        flex:1;
+        font-family: inherit;
+        font-size: 12px;
+        flex: 1;
         margin-bottom: $minds-padding;
 
         .m-editor {
@@ -243,7 +243,6 @@ minds-comments, .m-comment-wrapper{
     padding: $minds-padding ($minds-padding + 88px) $minds-padding $minds-padding;
     background: #fff;
   }
-
 
   .m-comments-composer .mdl-card__actions {
     top: $minds-padding / 2;
@@ -266,17 +265,17 @@ minds-comments, .m-comment-wrapper{
     width: auto;
     display: inline-block;
     padding: 0;
-    text-align:right;
+    text-align: right;
 
     .m-mature-button, .m-post-button {
-      display:inline-block;
-      vertical-align:middle;
-      position:relative;
-      overflow:hidden;
-      cursor:pointer;
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
 
-      i{
-        cursor:pointer;
+      i {
+        cursor: pointer;
       }
 
       &.m-button-disabled {
@@ -289,38 +288,38 @@ minds-comments, .m-comment-wrapper{
       }
     }
 
-    .attachment-button:before{
+    .attachment-button:before {
       color: #888;
-      font-family:'material icons';
+      font-family: 'material icons';
       position: absolute;
       top: 7px;
       left: 6px;
     }
 
-    .attachment-button{
-      display:inline-block;
-      vertical-align:middle;
-      position:relative;
-      overflow:hidden;
-      cursor:pointer;
+    .attachment-button {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
 
-      i{
-        cursor:pointer;
+      i {
+        cursor: pointer;
       }
 
-      input{
+      input {
         position: absolute;
-         color: #888;
-         position: absolute;
-         height: 100%;
-         width: 100%;
-         top: 0;
-         left: 0;
-         cursor: pointer;
-         opacity: 0;
+        color: #888;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        cursor: pointer;
+        opacity: 0;
       }
-      input::-webkit-file-upload-button{
-        cursor:pointer;
+      input::-webkit-file-upload-button {
+        cursor: pointer;
       }
 
     }

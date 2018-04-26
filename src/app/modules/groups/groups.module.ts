@@ -21,6 +21,7 @@ import { GroupsProfileConversation } from './profile/conversation/conversation.c
 import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
 import { GroupsMembersModuleComponent } from './members/members';
 import { GroupsTileComponent } from './tile/tile.component';
+import { CommentsModule } from '../comments/comments.module';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    CommentsModule,
     LegacyModule,
     ChannelsModule,
     ModalsModule,
