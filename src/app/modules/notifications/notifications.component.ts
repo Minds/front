@@ -60,12 +60,12 @@ export class NotificationsComponent {
       }
     });
 
+    this.notificationService.clear();
     if (!this.loadOnDemand) {
+      this.title.setTitle('Notifications');
       this.load(true);
     }
 
-    this.notificationService.clear();
-    this.title.setTitle('Notifications');
   }
 
   onVisible() {
