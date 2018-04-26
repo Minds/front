@@ -17,6 +17,9 @@
     </div>
 
     <div class="m-token--onboarding--rewards-input" *ngIf="confirming">
+      <p class="m-token--onboarding--subtext m-token--onboarding--prompt">
+        Please enter the code we just sent to <b>+{{number}}</b>, to verify your number.
+      </p>
       <input
         type="number"
         [(ngModel)]="code"
