@@ -1,16 +1,25 @@
 import WebTorrent from 'webtorrent';
 import { Storage } from '../../services/storage';
 import isMobile from '../../helpers/is-mobile';
+import isSafari from '../../helpers/is-safari';
 
 export const MAX_CONNS = 55;
 
-export function magnetHashId(magnetUri: string) {
-  return magnetUri.split('?')[1].split('&').find(q => q.startsWith('xt=')).substr(3);
+export function getInfoHash(value) {
+  if (typeof value !== 'string') {
+    return value && value.toString ? value.toString() : '???';
+  } else if (/^[a-f0-9]+$/.test) {
+    return value;
+  } else if (value.indexOf('magnet:') !== 0) {
+    return `${value} [?]`;
+  }
+
+  return value.split('?')[1].split('&').find(q => q.startsWith('xt=')).substr(3);
 }
 
 const log =
   (magnetUri, ...args) =>
-    console.log(`[WebTorrent ${magnetHashId(magnetUri)}]`, ...args);
+    console.log(`[WebTorrent ${getInfoHash(magnetUri)}]`, ...args);
 
 export class WebtorrentService {
   protected supported: boolean;
@@ -21,7 +30,7 @@ export class WebtorrentService {
   constructor(
     protected storage: Storage,
   ) {
-    if (isMobile() && !this.storage.get('webtorrent:disabled')) {
+    if (!this.isBrowserSupported() && !this.storage.get('webtorrent:disabled')) {
       this.storage.set('webtorrent:disabled', JSON.stringify(true));
     }
   }
@@ -39,6 +48,10 @@ export class WebtorrentService {
       this.client = new WebTorrent({
         maxConns,
         webSeeds: true,
+      });
+
+      this.client.on('error', err => {
+        console.error('Webtorrent client', err);
       });
 
       // TODO: Setup global event listeners, if needed
@@ -75,14 +88,14 @@ export class WebtorrentService {
   // Enable/Disable; Support
 
   isEnabled() {
-    const value = this.storage.get('webtorrent:disabled');
+    const disabled = JSON.parse(this.storage.get('webtorrent:disabled') || 'false');
 
-    return !value || !JSON.parse(value);
+    return !disabled && this.isBrowserSupported();
   }
 
   setEnabled(enabled: boolean) {
     const current = this.isEnabled();
-    this.storage.set('webtorrent:disabled', JSON.stringify(!enabled));
+    this.storage.set('webtorrent:disabled', JSON.stringify(!enabled || !this.isBrowserSupported()));
 
     if (current && !enabled) {
       this.destroy();
@@ -99,6 +112,10 @@ export class WebtorrentService {
     return this;
   }
 
+  isBrowserSupported() {
+    return !isMobile() && !isSafari();
+  }
+
   isSupported() {
     return this.isEnabled() && this.supported;
   }
@@ -109,57 +126,65 @@ export class WebtorrentService {
 
   // Torrent Manager
 
-  add(magnetUri): Promise<any> {
-    log(magnetUri, 'Trying to add');
-    if (!this.torrentRefs[magnetUri]) {
-      this.torrentRefs[magnetUri] = 0;
+  add(torrentData, infoHash: string): Promise<any> {
+    log(infoHash, 'Trying to add');
+    if (!this.torrentRefs[infoHash]) {
+      this.torrentRefs[infoHash] = 0;
     }
 
-    this.torrentRefs[magnetUri]++;
+    this.torrentRefs[infoHash]++;
 
-    const current = this.client.get(magnetUri);
+    const current = this.client.get(infoHash);
 
     if (current) {
-      log(magnetUri, 'Already exists');
+      log(infoHash, 'Already exists');
       return Promise.resolve(current);
     }
 
-    return new Promise(resolve => {
-      log(magnetUri, 'Adding new');
-      this.client.add(magnetUri, torrent => resolve(torrent))
+    return new Promise((resolve, reject) => {
+      log(infoHash, 'Adding new');
+      try {
+        const torrent = this.client.add(torrentData, torrent => resolve(torrent));
+
+        torrent.on('error', err => {
+          console.error('Torrent error', infoHash, err);
+        });
+      } catch (e) {
+        reject(e);
+      }
     });
   }
 
-  remove(magnetUri) {
-    log(magnetUri, 'Trying to remove');
-    if (this.torrentRefs[magnetUri] && this.torrentRefs[magnetUri] > 0) {
-      this.torrentRefs[magnetUri]--;
+  remove(infoHash) {
+    log(infoHash, 'Trying to remove');
+    if (this.torrentRefs[infoHash] && this.torrentRefs[infoHash] > 0) {
+      this.torrentRefs[infoHash]--;
     }
 
-    if (!this.torrentRefs[magnetUri]) {
-      log(magnetUri, 'No references, added to purge timer');
+    if (!this.torrentRefs[infoHash]) {
+      log(infoHash, 'No references, added to purge timer');
 
-      if (this.torrentPurgeTimers[magnetUri]) {
-        clearTimeout(this.torrentPurgeTimers[magnetUri]);
+      if (this.torrentPurgeTimers[infoHash]) {
+        clearTimeout(this.torrentPurgeTimers[infoHash]);
       }
 
-      this.torrentPurgeTimers[magnetUri] = setTimeout(
-        () => this.purge(magnetUri),
+      this.torrentPurgeTimers[infoHash] = setTimeout(
+        () => this.purge(infoHash),
         30000
       );
-      this.torrentRefs[magnetUri] = 0;
+      this.torrentRefs[infoHash] = 0;
     }
   }
 
-  get(magnetUri) {
-    return this.client.get(magnetUri);
+  get(infoHash) {
+    return this.client.get(infoHash);
   }
 
-  purge(magnetUri) {
-    log(magnetUri, 'Trying to purge');
-    if (!this.torrentRefs[magnetUri]) {
-      log(magnetUri, 'No references, purging');
-      this.client.remove(magnetUri);
+  purge(infoHash) {
+    log(infoHash, 'Trying to purge');
+    if (!this.torrentRefs[infoHash]) {
+      log(infoHash, 'No references, purging');
+      this.client.remove(infoHash);
     }
   }
 

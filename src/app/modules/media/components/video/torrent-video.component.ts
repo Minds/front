@@ -14,6 +14,7 @@ import {
 
 import { Client } from '../../../../services/api/client';
 import { WebtorrentService } from '../../../webtorrent/webtorrent.service';
+import base64ToBlob from '../../../../helpers/base64-to-blob';
 
 @Component({
   moduleId: module.id,
@@ -166,22 +167,30 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
 
     const magnetKey = this.torrentSrc.key;
 
-    let magnetUri;
+    let torrentFile;
+    let infoHash;
+    let webSeed;
     try {
       const response: any = await this.client.get(`api/v2/media/magnet/${magnetKey}`);
-      magnetUri = response.magnet;
+
+      torrentFile = base64ToBlob(response.encodedTorrent);
+      infoHash = response.infoHash;
+      webSeed = response.httpSrc;
     } catch (e) {
       this.loading = false;
       this.torrenting = false;
+      console.error('Torrent API fallback', e);
       this.fallback();
 
       return;
     }
 
     try {
-      this.currentTorrent = magnetUri;
-
-      const torrent = await this.webtorrent.add(magnetUri);
+      this.currentTorrent = infoHash;
+      const torrent = await this.webtorrent.add(torrentFile, infoHash);
+      if (webSeed) {
+        torrent.addWebSeed(webSeed);
+      }
 
       this.loading = false;
       this.detectChanges();
@@ -194,6 +203,7 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
         this.torrenting = false;
         this.detectChanges();
 
+        console.error('Torrent media not found fallback');
         this.fallback();
         return;
       }
@@ -203,6 +213,7 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
           this.torrenting = false;
           this.detectChanges();
 
+          console.error('Torrent media render error fallback');
           this.fallback();
         }
 
@@ -221,6 +232,7 @@ export class MindsTorrentVideo implements OnInit, AfterViewInit, OnDestroy {
       this.torrenting = false;
       this.detectChanges();
 
+      console.error('Webtorrent error', e);
       this.errorEmitter.emit((e && e.message) || 'Error playing video');
     }
   }

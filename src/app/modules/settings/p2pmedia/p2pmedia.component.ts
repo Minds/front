@@ -13,6 +13,7 @@ export class SettingsP2PMediaComponent {
     disableP2p: false,
   };
 
+  supported: boolean = true;
   changed: boolean = false;
 
   constructor(
@@ -22,6 +23,7 @@ export class SettingsP2PMediaComponent {
   ) {}
 
   ngOnInit() {
+    this.supported = this.webtorrent.isBrowserSupported();
     this.settings.disableP2p = !this.webtorrent.isEnabled();
   }
 

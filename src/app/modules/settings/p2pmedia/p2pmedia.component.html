@@ -16,8 +16,13 @@
       name="disable-p2p-media"
       (click)="change()"
       [(ngModel)]="settings.disableP2p"
+      [disabled]="!supported"
     />
 
     <label for="disable-p2p-media">Disable peer-to-peer media on this device.</label>
+  </div>
+
+  <div class="mdl-card__supporting-text" *ngIf="!supported">
+    Safari and mobile browsers don't support peer-to-peer media streaming.
   </div>
 </div>
