@@ -111,7 +111,7 @@ export class WalletTokenTransactionsComponent {
       this.addresses.unshift({
         'label': "OnChain",
         'address': onchainAddress,
-        'selected': true
+        'selected': false
       });
       this.inProgress = false;
       this.detectChanges();
