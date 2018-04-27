@@ -1,7 +1,142 @@
 m-blockchain--marketing {
-  .m-marketing--header {
-    padding: 175px 0 250px;
+  
+}
+
+.m-blockchain--marketing {
+
+  .m-marketing--hero {
+
+    .m-marketing--hero--inner {
+      flex-wrap: wrap;
+    }
+
+    .m-marketing--hero--slogans {
+  
+      h1 {
+        font-size: 86px;
+      }
+  
+    }
+  
+    .m-marketing--hero--actions {
+      text-align: right;
+      flex-basis: 85px;
+      @media screen and (max-width: 500px) {
+        margin-left: 0;
+      }
+
+      .m-blockchain--marketing--pledge--input {
+        display: flex;
+        align-items: center;
+        text-align: right;
+
+        i {
+          color: #FFF;
+          font-size: 36px;
+        }
+
+        .m-input {
+          background: rgba(255,255,255,0.2);
+          border: 0;
+          padding: 12px 16px;
+          font-size: 26px;
+          color: #fff;
+          letter-spacing: 2.5px;
+          font-weight: 600;
+          text-align: right;
+        }
+      
+        .m-btn {
+          height: auto;
+          padding: 20px;
+          border: 0;
+          background-color: rgba(255,255,255,0.3) !important;
+          color: #FFF !important;
+          margin: 16px 0;
+          margin-left: 12px;
+        }
+      }
+    }
+  
   }
+  
+  .m-blockchain--marketing--pledges {
+    display: flex;
+    flex-direction: row;
+
+    
+    .m-blockchain--marketing--pledges--amounts {
+      padding: 24px 12px;
+      text-align: left;
+      width: 100%;
+
+      tr {
+        height: 72px;
+      }
+
+      .m-blockchain--marketing--pledges--amounts--value {
+        line-height: 52px;
+        font-size: 52px;
+        font-weight: 600;
+        color: #FFF;
+        text-align: right;
+      }
+
+      .m-blockchain--marketing--pledges--amounts--label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #EEE;
+        width: 116px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        font-weight: 400;
+      }
+    }
+  }
+
+}
+
+.m-blockchain--marketing--links a {
+  text-decoration: none;
+  line-height: 48px;
+  white-space: nowrap;
+}
+
+.m-blockchain--marketing--modal {
+  text-align: left;
+  padding: 24px;
+
+  h2 {
+    color: #444 !important;
+  }
+
+  m-blockchain--marketing--onboard {
+    text-align: left;
+
+    h2 {
+      display: none;
+    }
+
+    .m-token--onboarding--slide {
+      border: 0;
+      padding: 0 !important;
+
+      > div:nth-of-type(1) {
+        width: 100% !important;
+      } 
+      > div:nth-of-type(2) {
+        display: none;
+      }
+    }
+  }
+
+  table {
+    margin: 16px 0;
+    tr {
+      height: 50px;
+    }
+  }
+
 }
 
 .m-blockchain--marketing-tde-stats {
@@ -61,27 +196,19 @@ m-blockchain--marketing {
   }
 }
 
-.m-blockchain--marketing--logo-and-video {
-  > * {
-    flex: 1;
-  }
-  .m-blockchain--marketing--logo-and-video--logo {
-    align-self: center;
-    text-align: center;
-    img {
-      width: 100px;
-    }
-  }
-}
-
 .m-blockchain--marketing--balloon {
   padding: 200px 0 !important;
   margin-bottom: 100px;
 }
 
-.m-blockchain--marketing--press-logo {
-  img {
-    max-width: 80%;
+.m-blockchain--marketing--press {
+  .m-marketing--section--grid {
+    align-items: center;
+  }
+  .m-marketing--section--grid-col {
+    img {
+      max-width: 80%;
+    }
   }
 }
 
@@ -94,12 +221,22 @@ m-blockchain--marketing {
   }
 }
 
-.m-marketing--contents.m-blockchain--marketing-people {
-  justify-content: center;
+.m-blockchain--marketing--team {
 
-  .mdl-cell {
+  .m-marketing--section--grid {
+    justify-content: center;
+  }
+
+  .m-marketing--section--grid-col {
     padding: 16px 8px;
     text-align: center;
+    width: 225px;
+    flex-basis: 225px;
+    max-width: 225px;
+
+    @media screen and (max-width: 500px) {
+      width: auto;
+    }
   }
 
   .m-blockchain--marketing-person-image {
@@ -133,7 +270,9 @@ m-blockchain--marketing {
     color: #888;
   }
 
-  &.m-blockchain--marketing-people--more {
+  &.m-blockchain--marketing--team--more {
+    padding-top: 0;
+
     .m-blockchain--marketing-person-image {
       width: 75px;
       height: 75px;

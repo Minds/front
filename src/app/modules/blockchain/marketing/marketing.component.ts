@@ -11,7 +11,7 @@ import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 
 @Component({
   moduleId: module.id,
-  selector: 'blockchain--marketing',
+  selector: 'm-blockchain--marketing',
   templateUrl: 'marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -36,7 +36,7 @@ export class BlockchainMarketingComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.poll();
+    //this.poll();
 
     this.title.setTitle('The Minds Cryptocurrency');
   }

@@ -6,34 +6,24 @@ import { FormsModule as NgFormsModule, ReactiveFormsModule } from '@angular/form
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
-import { MindsFormsModule } from '../forms/forms.module';
 
-import { HomepageComponent } from './homepage.component';
-import { MarketingModule } from '../marketing/marketing.module';
-
-const routes: Routes = [
-  { path: '', component: HomepageComponent }
-];
+import { MarketingFeaturesComponent } from './features.component';
 
 @NgModule({
   imports: [
     NgCommonModule,
-    RouterModule.forChild(routes),
     NgFormsModule,
     ReactiveFormsModule,
     CommonModule,
-    LegacyModule,
     ModalsModule,
-    MindsFormsModule,
-    MarketingModule,
   ],
   declarations: [
-    HomepageComponent,
+    MarketingFeaturesComponent,
   ],
-  entryComponents: [
-    HomepageComponent
-  ]
+  exports: [
+    MarketingFeaturesComponent,
+  ],
 })
 
-export class HomepageModule {
+export class MarketingModule {
 }

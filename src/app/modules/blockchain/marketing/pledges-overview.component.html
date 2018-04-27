@@ -1,0 +1,87 @@
+<div class="m-blockchain--marketing--pledges">
+  <table class="m-blockchain--marketing--pledges--amounts">
+    <tr>
+      <td class="m-blockchain--marketing--pledges--amounts--label">
+        Pledged
+      </td>
+      <td class="m-blockchain--marketing--pledges--amounts--value">
+        ${{ stats.amount | number }}
+      </td>
+    </tr>
+    <tr>
+      <td class="m-blockchain--marketing--pledges--amounts--label">
+        Channels
+      </td>
+      <td class="m-blockchain--marketing--pledges--amounts--value">
+        {{ stats.count | number }}
+      </td>
+    </tr>
+    <tr>
+      <td class="m-blockchain--marketing--pledges--amounts--label">
+        Your Pledge
+      </td>
+      <td class="m-blockchain--marketing--pledge--input">
+        <i class="material-icons">attach_money</i>
+        <input class="m-input m-border" [(ngModel)]="amount" />
+        <button class="m-btn m-btn--action" (click)="pledge()">Pledge</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<m-modal-signup-on-action 
+  *ngIf="showLoginModal"
+  open="true"
+  (closed)="closeLoginModal()"
+  action="pledge"
+  [overrideOnboarding]="true">
+</m-modal-signup-on-action>
+
+<m-modal 
+  open="true"
+  *ngIf="showPledgeModal"
+  (closed)="closePledgeModal()"
+  >
+  
+  <div class="m-blockchain--marketing--modal">
+
+    <div class="m-token--onboarding" *ngIf="!session.getLoggedInUser().rewards">
+      <h2>Please verify your phone number</h2>
+      <m-blockchain--marketing--onboard></m-blockchain--marketing--onboard>
+    </div>
+
+    <div *ngIf="session.getLoggedInUser().rewards">
+      <h2>Your pledge for ${{amount}}</h2>
+      <p style="margin-bottom: 0">NOTE: Payment is not required at this time and you are not obligated to follow through with this pledge.</p>
+  
+      <table>
+        <tr>
+          <td><input type="checkbox" [(ngModel)]="ofac"></td>
+          <td>I am not listed on any US OFAC Sanction list or prohibited from engaging in business in the USA</td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" [(ngModel)]="use"></td>
+          <td>I intend to use these tokens on the Minds Platform and not as an investment</td>
+        </tr>
+      </table>
+
+      <button 
+        class="m-btn m-btn--slim m-btn--action"
+        (click)="confirm()"
+        *ngIf="!confirming && !confirmed">
+        Confirm Pledge
+      </button>
+      <button 
+        class="m-btn m-btn--slim"
+        *ngIf="confirming">
+        Please wait...
+      </button>
+      <button 
+        class="m-btn m-btn--slim"
+        *ngIf="confirmed">
+        Completed
+      </button>
+    </div>
+
+  </div>
+</m-modal>

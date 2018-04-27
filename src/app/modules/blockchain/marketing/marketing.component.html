@@ -1,460 +1,547 @@
-<div class="m-marketing">
+<div class="m-marketing m-blockchain--marketing">
 
-  <div class="m-marketing--header">
-    <div class="m-marketing--background-video">
-      <video autoplay muted loop *ngIf="!videoError; else spaceImage">
+  <div class="m-marketing--hero">
+    <div class="m-marketing--hero--video">
+      <video autoplay muted loop *ngIf="!videoError; else fallback">
         <source [src]="minds.cdn_assets_url + 'assets/videos/space-1/space-1.mp4'" type="video/mp4" (error)="onSourceError()">
       </video>
-      <ng-template #spaceImage>
+      <ng-template #fallback>
         <img [src]="minds.cdn_assets_url + 'assets/marketing/space-1.png'">
       </ng-template>
     </div>
 
-    <div class="m-marketing--header-inner">
+    <div class="m-marketing--hero--inner">
 
-      <h1>The Minds Token</h1>
-      <h3>
-        A decentralized, transparent and autonomous social networking solution.
-      </h3>
+      <div class="m-marketing--hero--overlay"></div>
 
-      <div class="m-marketing--action-button">
-        <button class="mdl-button mdl-button--colored mdl-color--green"
-          (click)="downloadWhitepaper()"
-        >Read the Whitepaper</button>
-      </div>
-    </div>
-
-    <div class="m-marketing--overlay"></div>
-  </div>
-
-  <div class="m-marketing--contents m-layout--row m-blockchain--marketing--logo-and-video">
-    <div class="m-blockchain--marketing--logo-and-video--logo">
-      <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'" />
-    </div>
-    <div class="m-blockchain--marketing--video">
-      <iframe 
-        src="https://www.youtube.com/embed/ScMzIvxBSi4?rel=0&amp;showinfo=0" 
-        frameborder="0"
-        gesture="media"
-        allow="encrypted-media"
-        allowfullscreen
-        width="480"
-        height="280"
-        ></iframe>
-    </div>
-  </div>
-
-  <div class="m-marketing--hero m-blockchain--marketing--balloon">
-    <div class="m-marketing--background-video">
-      <img [src]="minds.cdn_assets_url + 'assets/photos/balloon.jpg'">
-    </div>
-
-    <div class="m-marketing--hero-inner">
-      <h2>Traditional social networks are exploiting you with secret algorithms, surveillance and demonetization.</h2>
-    </div>
-  </div>
-
-  <div class="m-marketing--statement">
-    <h2>Minds is taking a different approach.</h2>
-  </div>
-
-  <div class="m-marketing--contents m-layout--row">
-  
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
-      <i class="material-icons mdl-color-text--blue-grey-700">accessibility</i>
-
-      <h2>Freedom</h2>
-
-      <span>
-        Open source. Transparent. Encrypted. Decentralized. Maximized free speech.
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
-      <i class="material-icons mdl-color-text--blue-grey-700">trending_up</i>
-
-      <h2>Reach</h2>
-
-      <span>
-        No restrictive algorithms. No surveillance. 100% organic reach.
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet">
-      <i class="material-icons mdl-color-text--blue-grey-700">stars</i>
-
-      <h2>Rewards</h2>
-
-      <span>
-        Earn crypto for contributing to the network. Exchange it for viral reach and rewards.
-      </span>
-    </div>
-
-  </div>
-
-  <div class="m-marketing--statement">
-    <h2>We are continuing to steadily grow</h2>
-  </div>
-
-  <div class="m-marketing--section m-blockchain--marketing--bullets">
-    <div class="m-marketing--lr">
-      <div class="m-marketing--lr--left m-marketing--lr--text">
-        <h3>Wire: Decentralized Payments</h3>
-
-        <ul>
-          <li>Eliminate the middleman and any risk of demonetization or censorship</li>
-          <li>Autonomously own the relationships with your supporters</li>
-          <li>Sell subscriptions for exclusive content or rewards. Earn tips or donations</li>
-        </ul>
+      <div class="m-marketing--hero--slogans">
+        <h1 i18n="@@M__TOKEN_MARKETING__HEADER">The Minds Token</h1>
+        <h3 i18n="@@M__TOKEN_MARKETING__SUBTITLE">
+            A decentralized social networking utility token for digital advertising and global peer-to-peer payments.
+        </h3>
       </div>
 
-      <div class="m-marketing--lr--right m-marketing--lr--image">
-        <img [src]="minds.cdn_assets_url + 'assets/screenshots/mobile-wire.png'" />
-      </div>
-    </div>
-
-    <div class="m-marketing--lr">
-      <div class="m-marketing--lr--left m-marketing--lr--image">
-        <img [src]="minds.cdn_assets_url + 'assets/screenshots/mobile-boost.png'" />
-      </div>
-
-      <div class="m-marketing--lr--right m-marketing--lr--text">
-        <h3>Boost: The Ad Network</h3>
-
-        <ul>
-          <li>Exchange tokens for advertising views on the network or with a specific channel</li>
-          <li>Full transparency and auditability for all paid advertising campaigns on the blockchain</li>
-          <li>You control the content and ads you see or don’t see with an opt-in system</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-marketing--contents--middle">
-    <div class="mdl-cell mdl-cell--12-col">
-      <h2>The Press</h2>
-    </div>
-
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet m-blockchain--marketing--press-logo">
-      <a href="#">
-        <img [src]="minds.cdn_assets_url + 'assets/marketing/cryptobriefing_logo.png'" alt="">
-      </a>
-    </div>
-
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet m-blockchain--marketing--press-logo">
-      <a href="#">
-        <img [src]="minds.cdn_assets_url + 'assets/marketing/sfc_logo.png'" alt="">
-      </a>
-    </div>
-
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet m-blockchain--marketing--press-logo">
-      <a href="#">
-        <img [src]="minds.cdn_assets_url + 'assets/marketing/observer_logo.png'" alt="">
-      </a>
-    </div>
-  </div>
-
-  <div class="m-marketing--responsive-hero-image m-marketing--responsive-hero-image--bottom">
-    <img [src]="minds.cdn_assets_url + 'assets/marketing/international-space-station-1776401_1920.jpg'" alt="">
-  </div>
-
-  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people">
-    <div class="mdl-cell mdl-cell--12-col">
-      <h2>The Team</h2>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/100000000000000341/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Bill Ottman
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        Co-founder &amp; CEO
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/100000000000000063/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Mark Harding
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        Co-founder &amp; CTO
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/100000000000000134/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        John Ottman
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        Co-founder &amp; Chairman
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/100000000000001111/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Jack Ottman
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        COO
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/458262421140672512/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Peter Schwartz
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        CFO
-      </span>
-    </div>
-
-  </div>
-
-  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people m-blockchain--marketing-people--more">
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/508276211659579407/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Emiliano Balbuena
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/747562985026756623/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Nicolás Cesarini
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/714469159613767694/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Marcelo Rivera
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/773311697292107790/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Martin Santangelo
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/270962885465739264/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Andy Culp
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/100000000000191224/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Nicholas Lewis
-      </span>
-    </div>
-
-  </div>
-
-  <div class="m-marketing--contents mdl-grid mdl-grid--no-spacing m-blockchain--marketing-people m-blockchain--marketing-people--more">
-    <div class="mdl-cell mdl-cell--12-col">
-      <h2>Advisory Board</h2>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/kari/large')"
-      ></div>
-      <span class="m-blockchain--marketing-person-name">
-        Kari Larsen
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="https://www.reedsmith.com/en" target="_blank">Reedsmith LLP</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/gabe/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Gabriel Abed
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="https://bitt.com" target="_blank">bitt.com</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/gabe/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Jason Tyra
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="https://www.tyracpa.com/" target="_blank">Tyra CPA</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/sai/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Sai Gundavelli
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="https://www.solix.com/" target="_blank">Solix</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/mglaw/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Robert Griffitts
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="http://www.mg-law.com/" target="_blank">MG Law</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/tuan/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Tuan Anh Nguyen
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="http://bostonglobalforum.org/" target="_blank">Boston Global Forum</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/veena/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Veena Gundavelli
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="http://www.emagia.com/" target="_blank">Emagia</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/364859896568483840/large')"
-      ></div>
-  
-      <span class="m-blockchain--marketing-person-name">
-        Daniel Pinchbeck
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="http://www.pinchbeck.io/" target="_blank">Pinchbeck.io</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/459118566831042560/large')"
-      ></div>
-
-      <span class="m-blockchain--marketing-person-name">
-        Terrence Koeman
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="https://openinternetfoundation.net" target="_blank">Open Internet Foundation</a>
-      </span>
-    </div>
-
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet">
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/782036635658231826/large')"
-      ></div>
+      <div class="m-marketing--hero--actions">
     
-      <span class="m-blockchain--marketing-person-name">
-        Faizan Khan
-      </span>
-
-      <span class="m-blockchain--marketing-person-title">
-        <a href="https://visary.capital" target="_blank">Visary Capital</a>
-      </span>
+        <m-blockchain--pledges--overview></m-blockchain--pledges--overview>
+  
+      </div>
     </div>
 
-    <div class="mdl-cell mdl-cell--2-col mdl-cell--4-col-tablet"> 
-      <div class="m-blockchain--marketing-person-image" 
-        style="background-image: url('https://minds.com/icon/469824199200874510/large')"
-      ></div>
-  
-      <span class="m-blockchain--marketing-person-name">
-        Douglas Rushkoff
-      </span>
+  </div>
 
-      <span class="m-blockchain--marketing-person-title">
-        <a href="http://www.rushkoff.com/" target="_blank">Rushkoff.com</a>
-      </span>
+  <section class="m-marketing--section" style="background-color: #FFF">
+    <h1 class="" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">How the economy works</h1>
+
+    <div class="m-blockchain--marketing--links">
+      <a class="m-btn m-btn--slim m-btn--action" target="_blank" href="https://cdn-assets.minds.com/front/dist/assets/whitepapers/03_27_18_Minds%20Whitepaper%20V0.1.pdf">Download Whitepaper</a>
+      <a class="m-btn m-btn--slim m-btn--action" target="_blank" routerLink="/wallet/tokens/101">Token 101</a>
+      <a class="m-btn m-btn--slim m-btn--action" target="_blank" routerLink="/blog/view/826188573910073344">Read our Blog</a>
+    </div>
+
+
+    <m-marketing--features></m-marketing--features>
+  </section>
+
+  <div class="m-marketing--section m-marketing--section-margin m-blockchain--marketing--press">
+    <div class="m-marketing--section--grid">
+      <h2 style="text-align: center; width: 100%" i18n="@@M__TOKEN_MARKETING__PRESS">Press</h2>
+    </div>
+
+    <div class="m-marketing--section--grid">
+  
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.wired.com/story/minds-anti-facebook/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/wired.png'" alt="Wired">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://techcrunch.com/2018/04/16/minds-aims-to-decentralize-the-social-network/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/techcrunch.jpg'" alt="Techcrunch">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.youtube.com/watch?v=PXb3_s4ix_4" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/tucker.png'" alt="Tucker Carlson Tonight">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://bitcoinmagazine.com/articles/minds-wants-offer-blockchain-based-alternative-facebook/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/bitcoinmag.png'" alt="Bitcoin Magazine">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.independent.co.uk/life-style/gadgets-and-tech/news/superprivate-social-network-launched-to-take-on-facebook-with-support-of-anonymous-10325307.html" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/independent.png'" alt="The Independent">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.marketwatch.com/story/which-of-your-facebook-friends-leaked-your-data-to-cambridge-analytica-heres-the-sad-truth-2018-04-11" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/marketwatch.png'" alt="MarketWatch">
+        </a>
+      </div>
+
+    </div>
+
+    <div class="m-marketing--section--grid">
+  
+      <div class="m-marketing--section--grid-col">
+        <a href="https://youtu.be/W056blSc9t0?t=12m47s" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/keiser.jpg'" alt="Keiser Report">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.barrons.com/articles/facebook-haters-going-to-hate-but-what-will-investors-do-1518467284" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/barrons.png'" alt="Barrons">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://observer.com/2017/05/minds-open-sourced-social-media-facebook-competitor/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/observer.png'" alt="Observer">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.sfchronicle.com/business/article/Done-with-Facebook-Twitter-User-owned-social-11226613.php" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/sfchronical.png'" alt="San Francisco Chronical">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://discover.coinsquare.io/digital-currency/deletefacebook-minds-blockchain-social-network/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/coinsquare.jpg'" alt="Coinsquare">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.breitbart.com/tech/2017/10/17/exclusive-minds-social-network-founder-discusses-the-decline-of-big-tech/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/breitbart.png'" alt="Breitbart">
+        </a>
+      </div>
+
+    </div>
+
+    <div class="m-marketing--section--grid">
+  
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.revistagq.com/noticias/tecnologia/articulos/minds-red-social-paga-usuarios-tokens/28841" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/gq.png'" alt="GQ">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://cointelegraph.com/news/welcome-to-minds-like-facebook-but-without-the-snooping" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/cointelegraph.png'" alt="Coin Telegraph">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.youtube.com/watch?v=wD6QTAb1SHE" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/rt.png'" alt="Russia Today">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.huffingtonpost.com/2015/06/29/minds-social-network_n_7690028.html" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/huffingtonpost.png'" alt="The Huffington Post">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.businessinsider.com/facebook-competitor-mindscom-launches-with-help-from-anonymous-2015-6" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/businessinsider.png'" alt="Business Insider">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.forbes.com/sites/federicoguerrini/2015/06/15/struggling-with-facebook-organic-reach-decline-try-this-new-open-source-social-networking-app/#421685999665" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/forbes.png'" alt="Forbes">
+        </a>
+      </div>
+  
+    </div>
+
+    <div class="m-marketing--section--grid">
+  
+      <div class="m-marketing--section--grid-col">
+        <a href="https://venturebeat.com/2015/06/15/a-social-network-called-minds-has-an-answer-to-facebooks-strangling-of-organic-posts/ " target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/venturebeat.png'" alt="Venture Beat">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.adweek.com/socialtimes/minds-launches-virtual-currency-powered-social-networking-app/622152" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/mic.jpg'" alt=".Mic">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.adweek.com/socialtimes/minds-launches-virtual-currency-powered-social-networking-app/622152" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/adweek.png'" alt="Adweek">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.ibtimes.com/facebooks-latest-challenger-social-network-minds-pushes-privacy-transparency-1966653#.VX8Bvttr3M8.facebook" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/ibtimes.png'" alt="Internation Business Times">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.bbc.co.uk/newsbeat/article/33181388/anonymous-backs-new-encrypted-social-network-site" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/BBC.png'" alt="BBC">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.ethnos.gr/diethni/arthro/anti_facebook_apo_tous_anonymous-64207028/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/ethnos.jpg'" alt="Ethnos">
+        </a>
+      </div>
+  
+    </div>
+
+    <div class="m-marketing--section--grid">
+  
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.cnet.com/news/non-creepy-ways-to-use-social-media-go-mobile/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/Cnet.jpg'" alt="Cnet">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://reason.com/blog/2015/06/17/encrypted-social-network-minds-launches/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/reason.jpg'" alt="Reason">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.zdnet.com/pictures/facebook-alternatives-social-apps-you-need-to-try/8/" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/zdnet.gif'" alt="ZDNet">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="https://www.voanews.com/a/social-media-network-privacy/2846376.html" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/voa.png'" alt="Voice of America">
+        </a>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <a href="http://www.bangkokpost.com/news/politics/962913/facebook-pressured-following-arrests" target="_blank">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/press-logos/bangkokpost.png'" alt="Bangkok Post">
+        </a>
+      </div>
+  
+    </div>
+
+  </div>
+
+  <div class="m-marketing--section m-marketing--section-margin m-blockchain--marketing--team">
+    <div class="m-marketing--section--grid">
+      <h2 style="text-align: center; width: 100%" i18n="@@M__TOKEN_MARKETING__TEAM">Team</h2>
+    </div>
+
+    <div class="m-marketing--section--grid">
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/100000000000000341/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Bill Ottman
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          Co-founder &amp; CEO
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/100000000000000063/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Mark Harding
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          Co-founder &amp; CTO
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/100000000000000134/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          John Ottman
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          Co-founder &amp; Chairman
+        </span>
+      </div>
+    </div>
+    <div class="m-marketing--section--grid">
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/100000000000001111/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Jack Ottman
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          COO
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/458262421140672512/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Peter Schwartz
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          CFO
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="m-marketing--section m-marketing--section-margin m-blockchain--marketing--team m-blockchain--marketing--team--more">
+
+    <div class="m-marketing--section--grid">
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/508276211659579407/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Emiliano Balbuena
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/747562985026756623/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Nicolás Cesarini
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/714469159613767694/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Marcelo Rivera
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/773311697292107790/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Martin Santangelo
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/270962885465739264/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Andy Culp
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://minds.com/icon/100000000000191224/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Nicholas Lewis
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="m-marketing--section m-marketing--section-margin m-blockchain--marketing--team m-blockchain--marketing--team--more">
+    <div class="m-marketing--section--grid">
+      <h2 style="text-align: center; width: 100%" i18n="@@M__TOKEN_MARKETING__ADVISORS">Advisors</h2>
+    </div>
+
+    <div class="m-marketing--section--grid">
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/kari/large')"
+        ></div>
+        <span class="m-blockchain--marketing-person-name">
+          Kari Larsen
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="https://www.reedsmith.com/en" target="_blank">Reedsmith LLP</a>
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/gabe/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Gabriel Abed
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="https://bitt.com" target="_blank">bitt.com</a>
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/gabe/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Jason Tyra
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="https://www.tyracpa.com/" target="_blank">Tyra CPA</a>
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/sai/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Sai Gundavelli
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="https://www.solix.com/" target="_blank">Solix</a>
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/mglaw/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Robert Griffitts
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="http://www.mg-law.com/" target="_blank">MG Law</a>
+        </span>
+      </div>
+    </div>
+
+    <div class="m-marketing--section--grid">
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/tuan/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Tuan Anh Nguyen
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="http://bostonglobalforum.org/" target="_blank">Boston Global Forum</a>
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/veena/large')"
+        ></div>
+
+        <span class="m-blockchain--marketing-person-name">
+          Veena Gundavelli
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="http://www.emagia.com/" target="_blank">Emagia</a>
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/364859896568483840/large/1434047085')"
+        ></div>
+    
+        <span class="m-blockchain--marketing-person-name">
+          Daniel Pinchbeck
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="http://www.pinchbeck.io/" target="_blank">Pinchbeck.io</a>
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/782036635658231826/large')"
+        ></div>
+      
+        <span class="m-blockchain--marketing-person-name">
+          Faizan Khan
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="https://visary.capital" target="_blank">Visary Capital</a>
+        </span>
+      </div>
+
+      <div class="m-marketing--section--grid-col">
+        <div class="m-blockchain--marketing-person-image" 
+          style="background-image: url('https://cdn.minds.com/icon/469824199200874510/large/12')"
+        ></div>
+    
+        <span class="m-blockchain--marketing-person-name">
+          Douglas Rushkoff
+        </span>
+
+        <span class="m-blockchain--marketing-person-title">
+          <a href="http://www.rushkoff.com/" target="_blank">Rushkoff.com</a>
+        </span>
+      </div>
+
     </div>
 
   </div>
