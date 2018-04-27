@@ -35,18 +35,13 @@
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category">{{ metric.score ? metric.score : 0 | number }}</td>
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category">{{ metric.share.toFixed(6) }}%</td>
       </tr>
-      <tr *ngIf="!contributions || !contributions.length" class="m-token-contributions--ledger-row m-wire-console--ledger-row-placeholder">
-        <td colspan="7" class="m-token-contributions--ledger-row-notice">
+    </tbody>
+    <tbody *ngIf="!contributions || contributions.length == 0">
+      <tr class="m-token-contributions--ledger-row m-wire-console--ledger-row-placeholder">
+        <td colspan="4" class="m-token-contributions--ledger-row-notice">
           No contributions to show.
         </td>
       </tr>
     </tbody>
   </table>
 </div>
-
-<infinite-scroll
-  distance="25%"
-  (load)="load(false)"
-  [moreData]="moreData"
-  [inProgress]="inProgress">
-</infinite-scroll>

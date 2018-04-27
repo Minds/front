@@ -15,8 +15,6 @@ export class WalletTokenContributionsComponent {
   endDate: string;
   inProgress: boolean = false;
   contributions: any[] = [];
-  offset: string;
-  moreData: boolean = true;
   metrics: Array<any> = [];
 
   constructor(
@@ -48,8 +46,6 @@ export class WalletTokenContributionsComponent {
 
     if (refresh) {
       this.contributions = [];
-      this.offset = '';
-      this.moreData = true;
     }
 
     this.inProgress = true;
@@ -66,7 +62,6 @@ export class WalletTokenContributionsComponent {
       let response: any = await this.client.get(`api/v2/blockchain/contributions`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
-        offset: this.offset
       }); 
 
       if (refresh) {
@@ -86,20 +81,12 @@ export class WalletTokenContributionsComponent {
           });
         })
         this.contributions.push(...(response.contributions || []));
-
-        if (response['load-next']) {
-          this.offset = response['load-next'];
-        } else {
-          this.moreData = false;
-        }
       } else {
         console.error('No data');
-        this.moreData = false;
         // TODO: Show
       }
     } catch (e) {
       console.error(e);
-      this.moreData = false;
       // TODO: Show
     } finally {
       this.inProgress = false;
