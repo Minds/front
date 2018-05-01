@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Client } from '../../services/api';
+
+import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Subscription } from 'rxjs/Subscription';
 import { SettingsService } from '../settings/settings.service';
@@ -31,10 +33,11 @@ export class BoostAds implements OnInit, OnDestroy {
 
   ratingSubscription: Subscription;
 
-  constructor(public client: Client, private storage: Storage, private settingsService: SettingsService) {
+  constructor(public client: Client, public session: Session, private storage: Storage, private settingsService: SettingsService) {
   }
 
   ngOnInit() {
+    this.rating = this.session.getLoggedInUser().boost_rating;
     this.ratingSubscription = this.settingsService.ratingChanged.subscribe((rating) => {
       this.onRatingChanged(rating);
     });
