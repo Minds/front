@@ -7,6 +7,41 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { MindsVideoProgressBar } from './progress-bar.component';
+import { MindsVideoDirectHttpPlayer } from '../players/direct-http.component';
+import { MindsPlayerInterface } from '../players/player.interface';
+
+class MindsVideoDirectHttpPlayerMock implements MindsPlayerInterface {
+  @Input() muted: boolean;
+  @Input() poster: string;
+  @Input() autoplay: boolean;
+  @Input() src: string;
+
+  @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onPause: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onEnd: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onError: EventEmitter<{ player: HTMLVideoElement, e }> = new EventEmitter();
+
+  getPlayer = (): HTMLVideoElement => {
+    return null;
+  };
+
+  play = () => {};
+  pause = () => {};
+  toggle = () => {};
+
+  resumeFromTime = () => {};
+
+  isLoading = (): boolean => {
+    return false;
+  };
+  isPlaying = (): boolean => {
+    return false;
+  };
+
+  requestFullScreen = jasmine.createSpy('requestFullScreen').and.stub();
+
+  getInfo = () => {};
+}
 
 describe('MindsVideoProgressBar', () => {
   let comp: MindsVideoProgressBar;
@@ -35,12 +70,20 @@ describe('MindsVideoProgressBar', () => {
     jasmine.clock().install();
     fixture = TestBed.createComponent(MindsVideoProgressBar);
     comp = fixture.componentInstance;
+
     const video = document.createElement('video');
     video.src = 'thisisavideo.mp4';
     comp.element = video;
+
+    const playerRef = new MindsVideoDirectHttpPlayerMock();
+    playerRef.getPlayer = () => { return video;};
+
+    comp.playerRef = playerRef;
+
     spyOn(window, 'removeEventListener').and.stub();
     spyOn(window, 'addEventListener').and.stub();
     spyOn(comp.element, 'addEventListener').and.stub();
+
     fixture.detectChanges();
     if (fixture.isStable()) {
       done();

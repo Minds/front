@@ -7,6 +7,40 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { MindsVideoVolumeSlider } from './volume-slider.component';
+import { MindsPlayerInterface } from '../players/player.interface';
+
+class MindsVideoDirectHttpPlayerMock implements MindsPlayerInterface {
+  @Input() muted: boolean;
+  @Input() poster: string;
+  @Input() autoplay: boolean;
+  @Input() src: string;
+
+  @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onPause: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onEnd: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onError: EventEmitter<{ player: HTMLVideoElement, e }> = new EventEmitter();
+
+  getPlayer = (): HTMLVideoElement => {
+    return null;
+  };
+
+  play = () => {};
+  pause = () => {};
+  toggle = () => {};
+
+  resumeFromTime = () => {};
+
+  isLoading = (): boolean => {
+    return false;
+  };
+  isPlaying = (): boolean => {
+    return false;
+  };
+
+  requestFullScreen = jasmine.createSpy('requestFullScreen').and.stub();
+
+  getInfo = () => {};
+}
 
 describe('MindsVideoVolumeSlider', () => {
   let comp: MindsVideoVolumeSlider;
@@ -32,9 +66,16 @@ describe('MindsVideoVolumeSlider', () => {
     jasmine.clock().install();
     fixture = TestBed.createComponent(MindsVideoVolumeSlider);
     comp = fixture.componentInstance;
+
     const video = document.createElement('video');
     video.src = 'thisisavideo.mp4';
     comp.element = video;
+
+    const playerRef = new MindsVideoDirectHttpPlayerMock();
+    playerRef.getPlayer = () => { return video;};
+
+    comp.playerRef = playerRef;
+
     fixture.detectChanges();
     if (fixture.isStable()) {
       done();

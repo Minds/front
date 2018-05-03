@@ -1,4 +1,5 @@
-import { Component, Input, Output, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
+import { Component, Input} from '@angular/core';
+import { MindsPlayerInterface } from '../players/player.interface';
 
 @Component({
   selector: 'm-video--volume-slider',
@@ -6,7 +7,21 @@ import { Component, Input, Output, ElementRef, ChangeDetectorRef, ChangeDetectio
 })
 
 export class MindsVideoVolumeSlider {
-  @Input('element') element: any;
+  @Input('player') playerRef: MindsPlayerInterface;
+
+  element: HTMLVideoElement;
   
-  constructor() {}
+  ngOnInit() {
+    this.bindToElement();
+  }
+
+  ngAfterViewInit() {
+    this.bindToElement();
+  }
+
+  bindToElement() {
+    if (this.playerRef.getPlayer()) {
+      this.element = this.playerRef.getPlayer();
+    }
+  }
 }

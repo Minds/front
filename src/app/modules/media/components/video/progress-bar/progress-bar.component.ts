@@ -1,16 +1,21 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ElementRef, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { MindsPlayerInterface } from '../players/player.interface';
 
 @Component({
   selector: 'm-video--progress-bar',
   templateUrl: 'progress-bar.component.html'
 })
 
-export class MindsVideoProgressBar {
-  @Input('element') element: any;
+export class MindsVideoProgressBar implements OnInit, OnDestroy {
+  @Input('player') playerRef: MindsPlayerInterface;
+
+  element: HTMLVideoElement;
+
   time: { minutes: any, seconds: any } = {
     minutes: '00',
     seconds: '00'
   };
+
   elapsed: { minutes: any, seconds: any } = {
     minutes: '00',
     seconds: '00'
@@ -21,20 +26,44 @@ export class MindsVideoProgressBar {
   keyPressListener: any;
   duration: number = 0;
 
-  constructor(private cd: ChangeDetectorRef, public _element: ElementRef) {
-  }
+  constructor(
+    private cd: ChangeDetectorRef,
+    public _element: ElementRef
+  ) { }
+
+  protected _loadedMetadata = () => {
+    this.duration = this.element.duration;
+    this.calculateTime();
+  };
 
   ngOnInit() {
     this.keyPressListener = this.executeControl.bind(this);
-    this.element.addEventListener('loadedmetadata', (e) => {
-      
-      this.duration = this.element.duration;
-      this.calculateTime();
-    });
+    this.bindToElement();
+  }
+
+  bindToElement() {
+    if (this.element) {
+      this.element.removeEventListener('loadedmetadata', this._loadedMetadata);
+    }
+
+    if (this.playerRef.getPlayer()) {
+      this.element = this.playerRef.getPlayer();
+      this.element.addEventListener('loadedmetadata', this._loadedMetadata);
+
+      if (this.element.readyState > 0) {
+        this._loadedMetadata();
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    this.element.removeEventListener('loadedmetadata', this._loadedMetadata);
+    clearInterval(this.seek_interval);
   }
 
   calculateTime() {
-    var seconds = this.duration;
+    const seconds = this.duration;
+
     this.time.minutes = Math.floor(seconds / 60);
     if (parseInt(this.time.minutes) < 10)
       this.time.minutes = '0' + this.time.minutes;
@@ -45,7 +74,7 @@ export class MindsVideoProgressBar {
   }
 
   calculateElapsed() {
-    var seconds = this.element.currentTime;
+    const seconds = this.element.currentTime;
     this.elapsed.minutes = Math.floor(seconds / 60);
     if (parseInt(this.elapsed.minutes) < 10)
       this.elapsed.minutes = '0' + this.elapsed.minutes;
@@ -61,7 +90,7 @@ export class MindsVideoProgressBar {
       return;
     }
 
-    var seconds = this.duration - this.element.currentTime;
+    const seconds = this.duration - this.element.currentTime;
     this.remaining = {seconds : 0, minutes : 0};
     this.remaining.minutes = Math.floor(seconds / 60);
     if (parseInt(this.remaining.minutes) < 10)
@@ -75,14 +104,13 @@ export class MindsVideoProgressBar {
 
   seek(e) {
     e.preventDefault();
-    var seeker = e.target;
-    var seek = e.offsetX / seeker.offsetWidth;
-    var seconds = this.seekerToSeconds(seek);
-    this.element.currentTime = seconds;
+    const seeker = e.target;
+    const seek = e.offsetX / seeker.offsetWidth;
+    this.element.currentTime = this.seekerToSeconds(seek);
   }
 
   seekerToSeconds(seek) {
-    var duration = this.element.duration;
+    const duration = this.element.duration;
     return duration * seek;
   }
 
@@ -116,10 +144,6 @@ export class MindsVideoProgressBar {
     } else {
       this.element.play();
     }
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.seek_interval);
   }
 
   moveToTime(offset){

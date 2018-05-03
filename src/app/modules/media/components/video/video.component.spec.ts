@@ -17,49 +17,88 @@ import { MindsVideoQualitySelector } from './quality-selector/quality-selector.c
 import { MindsVideoVolumeSlider } from './volume-slider/volume-slider.component';
 import { AbbrPipe } from '../../../../common/pipes/abbr';
 import { TooltipComponent } from '../../../../common/components/tooltip/tooltip.component';
+import { WebtorrentService } from '../../../webtorrent/webtorrent.service';
+import { webtorrentServiceMock } from '../../../../../tests/webtorrent-service-mock.spec';
+import { MindsPlayerInterface } from './players/player.interface';
 
 @Component({
-  selector: 'm-torrent-video',
-  template: '',
+  selector: 'm-video--direct-http-player',
+  template: ''
 })
-class MindsTorrentVideoMock {
-  // @ViewChild('player') player: ElementRef;
+class MindsVideoDirectHttpPlayerMock implements MindsPlayerInterface {
+  @Input() muted: boolean;
+  @Input() poster: string;
+  @Input() autoplay: boolean;
+  @Input() src: string;
 
-  @Input() muted: boolean = false;
-  @Input() poster: string = '';
-  @Input() autoplay: boolean = false;
+  @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onPause: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onEnd: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onError: EventEmitter<{ player: HTMLVideoElement, e }> = new EventEmitter();
 
-  @Output('error') errorEmitter: EventEmitter<any> = new EventEmitter();
-  @Output('refresh') refreshEmitter: EventEmitter<any> = new EventEmitter();
-
-  src: any;
-  @Input('src') set _src(value) {}
-
-  torrentEnabled: boolean = false;
-  torrentSrc: any;
-  @Input('torrent') set _torrentSrc(value) {}
-
-  loading: boolean = false;
-  currentTorrent: string;
-
-  info = {
-    progress: 0,
-    peers: 0,
-    ul: 0,
-    dl: 0,
-    ulspeed: 0,
-    dlspeed: 0,
+  getPlayer = (): HTMLVideoElement => {
+    return null;
   };
 
-  isPlaying() { return false; }
-  isTorrenting() { return false; }
-  isLoading() { return false; }
-  play() { }
-  pause() { }
-  toggle() { }
-  getPlayer() { }
-  getCurrentTime() { return 0; }
-  resumeFrom() { }
+  play = () => {};
+  pause = () => {};
+  toggle = () => {};
+
+  resumeFromTime = () => {};
+
+  isLoading = (): boolean => {
+    return false;
+  };
+  isPlaying = (): boolean => {
+    return false;
+  };
+
+  requestFullScreen = jasmine.createSpy('requestFullScreen').and.stub();
+
+  getInfo = () => {};
+}
+
+class HTMLVideoElementMock {
+  webkitEnterFullScreen = jasmine.createSpy('webkitEnterFullScreen').and.stub();
+}
+
+@Component({
+  selector: 'm-video--torrent-player',
+  template: ''
+})
+class MindsVideoTorrentPlayerMock implements MindsPlayerInterface {
+  @Input() muted: boolean;
+  @Input() poster: string;
+  @Input() autoplay: boolean;
+  @Input() src: string;
+
+  @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onPause: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onEnd: EventEmitter<HTMLVideoElement> = new EventEmitter();
+  @Output() onError: EventEmitter<{ player: HTMLVideoElement, e }> = new EventEmitter();
+
+  getPlayer = (): HTMLVideoElement => {
+    return null;
+  };
+
+  play = () => {};
+  pause = () => {};
+  toggle = () => {};
+
+  resumeFromTime = () => {
+
+  };
+
+  isLoading = (): boolean => {
+    return false;
+  };
+  isPlaying = (): boolean => {
+    return false;
+  };
+
+  requestFullScreen = jasmine.createSpy('requestFullScreen').and.stub();
+
+  getInfo = () => {};
 }
 
 @Component({
@@ -67,7 +106,7 @@ class MindsTorrentVideoMock {
   template: ''
 })
 export class MindsVideoVolumeSliderMock {
-  @Input() element;
+  @Input() player;
 }
 
 @Component({
@@ -85,9 +124,10 @@ export class MindsVideoQualitySelectorMock {
   template: ''
 })
 export class MindsVideoProgressBarMock {
-  @Input() element;
-  getSeeker(){
-    
+  @Input() player;
+
+  getSeeker() {
+
   }
 }
 
@@ -95,7 +135,8 @@ export class MindsVideoProgressBarMock {
   selector: '[mdl]',
   inputs: ['mdl']
 })
-export class MDLMock {}
+export class MDLMock {
+}
 
 
 describe('MindsVideo', () => {
@@ -105,24 +146,26 @@ describe('MindsVideo', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ 
+      declarations: [
         MDLMock,
         AbbrPipe,
         MindsVideoQualitySelectorMock,
         MindsVideoProgressBarMock,
         MindsVideoVolumeSliderMock,
-        MindsTorrentVideoMock,
+        MindsVideoDirectHttpPlayerMock,
+        MindsVideoTorrentPlayerMock,
         MindsVideoComponent,
         TooltipComponent,
       ], // declare the test component
-      imports: [ 
+      imports: [
         FormsModule,
         RouterTestingModule,
         NgCommonModule,
-       ],
+      ],
       providers: [
         { provide: ScrollService, useValue: scrollServiceMock },
-        { provide: Client, useValue: clientMock }
+        { provide: Client, useValue: clientMock },
+        { provide: WebtorrentService, useValue: webtorrentServiceMock }
       ]
     })
       .compileComponents();  // compile template and css
@@ -137,13 +180,24 @@ describe('MindsVideo', () => {
     clientMock.response = {};
     comp = fixture.componentInstance;
     comp.guid = '1';
-    const video = document.createElement('video');
-    video.src = 'thisisavideo.mp4';
-    comp.element = video;
-    comp.torrentVideo.getPlayer = () => comp.element;
+    comp.current = {
+      type: 'direct-http',
+      src: 'thisisavideo.mp4'
+    };
+
     fixture.detectChanges(); // re-render
-    comp.progressBar.getSeeker = () => {};
-    fixture.detectChanges();
+
+    // const video = document.createElement('video');
+    // video.src = 'thisisavideo.mp4';
+    const video = new HTMLVideoElementMock();
+    comp.playerRef.getPlayer = () => <any>video;
+
+    fixture.detectChanges(); // re-render
+
+    //comp.progressBar.getSeeker = () => {};
+
+    // fixture.detectChanges();
+
     if (fixture.isStable()) {
       done();
     } else {
@@ -164,18 +218,18 @@ describe('MindsVideo', () => {
     expect(videoBar).not.toBeNull();
   });
 
-  it('On hover Control bar should be visible', () => {
-    expect(comp.element).not.toBeNull();
-    comp.element.dispatchEvent(new Event('hover'));
-    const videoBar = fixture.debugElement.query(By.css('.minds-video-bar-full'));
-    expect(videoBar.nativeElement.hasAttribute('hidden')).toEqual(false);
-    const quality = fixture.debugElement.query(By.css('m-video--quality-selector'));
-    const volume = fixture.debugElement.query(By.css('m-video--volume-slider'));
-    const progressBar = fixture.debugElement.query(By.css('m-video--progress-bar'));
-    expect(progressBar).not.toBeNull();
-    expect(quality).toBeNull();
-    expect(volume).not.toBeNull();
-  });
+  // it('On hover Control bar should be visible', () => {
+  //   expect(comp.playerRef.getPlayer()).not.toBeNull();
+  //   comp.playerRef.getPlayer().dispatchEvent(new Event('hover'));
+  //   const videoBar = fixture.debugElement.query(By.css('.minds-video-bar-full'));
+  //   expect(videoBar.nativeElement.hasAttribute('hidden')).toEqual(false);
+  //   const quality = fixture.debugElement.query(By.css('m-video--quality-selector'));
+  //   const volume = fixture.debugElement.query(By.css('m-video--volume-slider'));
+  //   const progressBar = fixture.debugElement.query(By.css('m-video--progress-bar'));
+  //   expect(progressBar).not.toBeNull();
+  //   expect(quality).toBeNull();
+  //   expect(volume).not.toBeNull();
+  // });
 
   it('Should call counter', () => {
     const video = fixture.debugElement.query(By.css('video'));
@@ -187,13 +241,14 @@ describe('MindsVideo', () => {
     expect(calls.mostRecent().args[0]).toEqual('api/v1/analytics/@counter/play/1');
   });
 
-  it('If error loading then try tro confirm that is being transcoded', () => {
+  it('If error loading then try to confirm that is being transcoded', fakeAsync(() => {
     fixture.detectChanges();
     comp.onError();
+    jasmine.clock().tick(100);
     fixture.detectChanges();
     const calls = clientMock.get['calls'];
     expect(calls.mostRecent().args[0]).toEqual('api/v1/media/transcoding/1');
-  });
+  }));
 
   it('should set muted', () => {
     comp.muted = true;
@@ -207,23 +262,23 @@ describe('MindsVideo', () => {
     expect(comp.autoplay).toEqual(false);
   });
 
-  it('should sets src', () => {
+  it('should set src', () => {
     comp._src = [];
     fixture.detectChanges();
     expect(comp.src).toEqual([]);
   });
 
-  it('should set loop', () => {
-    comp.loop = true;
-    fixture.detectChanges();
-    expect(comp.loop).toEqual(true);
-  });
-
-  it('should sets visibleplay', () => {
-    comp.visibleplay = false;
-    fixture.detectChanges();
-    expect(comp.visibleplay).toEqual(false);
-  });
+  // it('should set loop', () => {
+  //   comp.loop = true;
+  //   fixture.detectChanges();
+  //   expect(comp.loop).toEqual(true);
+  // });
+  //
+  // it('should sets visibleplay', () => {
+  //   comp.visibleplay = false;
+  //   fixture.detectChanges();
+  //   expect(comp.visibleplay).toEqual(false);
+  // });
 
   it('should sets _playCount', () => {
     comp._playCount = 70;
@@ -237,51 +292,49 @@ describe('MindsVideo', () => {
     expect(comp.playCountDisabled).toEqual(true);
   });
 
-  it('Open Full Screen', () => {
-    let e:any = {};
-    e.preventDefault = () => {};
-    e.keyCode = 39;
-    spyOn(comp.element, 'webkitRequestFullscreen').and.callThrough();
-    comp.openFullScreen(e);
+  it('Should Select Quality, reloading and playing', fakeAsync(() => {
+    comp._src = [];
+    comp._torrent = [];
     fixture.detectChanges();
-    expect(comp.element.webkitRequestFullscreen).toHaveBeenCalled();
-  });
 
-  it('Should Select Quality, reloading and playing', () => {
-    comp.torrentVideo.getCurrentTime = () => 39;
-    spyOn(comp.torrentVideo, 'resumeFrom').and.callThrough();
-    spyOn(comp, 'updateCurrentSrc').and.callThrough();
+    comp.playerRef.getPlayer().currentTime = 39;
+    spyOn(comp.playerRef, 'resumeFromTime').and.stub();
+    spyOn(comp, 'reorderSourcesBasedOnQuality').and.callThrough();
+    spyOn(comp, 'changeSources').and.callThrough();
     comp.selectedQuality('360');
-    expect(comp.updateCurrentSrc).toHaveBeenCalled();
-    expect(comp.torrentVideo.resumeFrom).toHaveBeenCalled();
-  });
+    jasmine.clock().tick(100);
+    jasmine.clock().tick(100);
+    expect(comp.playerRef.resumeFromTime).toHaveBeenCalled();
+    expect(comp.reorderSourcesBasedOnQuality).toHaveBeenCalled();
+    expect(comp.changeSources).toHaveBeenCalled();
+  }));
 
-  it('should set is visible', () => {
-    comp.element.getBoundingClientRect = () => { 
-      return {'top':1};
-    }
-    comp.scroll.view = {};
-    comp.scroll.view.clientHeight = 10;
-    comp.isVisible();
-    fixture.detectChanges();
-    expect(comp.element.muted).toEqual(false);
-  });
+  // it('should set is visible', () => {
+  //   comp.playerRef.getPlayer().getBoundingClientRect = () => {
+  //     return <any>{'top':1};
+  //   }
+  //   comp.scroll.view = {};
+  //   comp.scroll.view.clientHeight = 10;
+  //   comp.isVisible();
+  //   fixture.detectChanges();
+  //   expect(comp.element.muted).toEqual(false);
+  // });
 
-  it('should set is visible', () => {
-    comp.element.getBoundingClientRect = () => { 
-      return {'top':100};
-    }
-    comp.scroll.view = {};
-    comp.scroll.view.clientHeight = 10;
-    comp.isVisible();
-    fixture.detectChanges();
-    expect(comp.element.muted).toEqual(false);
-  });
+  // it('should set is visible', () => {
+  //   comp.element.getBoundingClientRect = () => {
+  //     return {'top':100};
+  //   }
+  //   comp.scroll.view = {};
+  //   comp.scroll.view.clientHeight = 10;
+  //   comp.isVisible();
+  //   fixture.detectChanges();
+  //   expect(comp.element.muted).toEqual(false);
+  // });
 
-  it('should set is visible', () => {
-    comp.autoplay = true;
-    comp.isVisible();
-    fixture.detectChanges();
-    expect(comp.isVisible()).toEqual(undefined);
-  });
+  // it('should set is visible', () => {
+  //   comp.autoplay = true;
+  //   comp.isVisible();
+  //   fixture.detectChanges();
+  //   expect(comp.isVisible()).toEqual(undefined);
+  // });
 });

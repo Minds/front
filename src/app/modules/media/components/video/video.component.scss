@@ -9,6 +9,11 @@
   video{
     width:100%;
   }
+
+  .m-video--player {
+    display: block;
+  }
+
   .minds-video-bar-min{
     position: absolute;
     background-color: rgba(0,0,0,0.4);
