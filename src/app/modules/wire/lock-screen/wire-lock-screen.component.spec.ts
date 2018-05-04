@@ -10,8 +10,11 @@ import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { SignupModalService } from '../../modals/signup/service';
+import { Session } from '../../../services/session';
+import { sessionMock } from '../../../../tests/session-mock.spec';
+import { signupModalServiceMock } from '../../../mocks/modules/modals/signup/signup-modal-service.mock';
 
-/*describe('WireLockScreenComponent', () => {
+describe('WireLockScreenComponent', () => {
 
   let comp: WireLockScreenComponent;
   let fixture: ComponentFixture<WireLockScreenComponent>;
@@ -21,23 +24,25 @@ import { SignupModalService } from '../../modals/signup/service';
       guid: 123
     },
     wire_threshold: {
-      type: 'points',
-      min: '10'
+      type: 'tokens',
+      min: 10
     }
   };
 
   function setLoggedIn(loggedIn: boolean) {
-    spyOn(comp.session, 'isLoggedIn').and.returnValue(loggedIn);
+    sessionMock.loggedIn = loggedIn;
   }
 
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ MaterialMock, WireLockScreenComponent ], // declare the test component
+      declarations: [MaterialMock, WireLockScreenComponent], // declare the test component
       imports: [],
       providers: [
         { provide: Client, useValue: clientMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock }
+        { provide: Session, useValue: sessionMock },
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: SignupModalService, useValue: signupModalServiceMock }
       ]
     })
       .compileComponents();  // compile template and css
@@ -81,18 +86,18 @@ import { SignupModalService } from '../../modals/signup/service';
     fixture.detectChanges();
     const monthlyMin: DebugElement = fixture.debugElement.query(By.css('h2'));
 
-    expect(monthlyMin.nativeElement.textContent).toContain('10 points/month');
+    expect(monthlyMin.nativeElement.textContent).toContain('10 Tokens/month');
   }));
   it('should have message', () => {
     fixture.detectChanges();
     const message: DebugElement = fixture.debugElement.query(By.css('.m-wire--lock-screen--message'));
     expect(message).toBeDefined();
     expect(message.nativeElement.textContent).toContain('This post can only be seen by supporters who wire');
-    expect(message.nativeElement.textContent).toContain('over 10 points/month');
+    expect(message.nativeElement.textContent).toContain('over 10 Tokens/month');
     expect(message.nativeElement.textContent).toContain('to @minds');
 
   });
-  it('shouldn\'t update the entity if wire/threshold doesn\'t return an activity', fakeAsync(() => {
+  it("shouldn't update the entity if wire/threshold doesn't return an activity", fakeAsync(() => {
     comp.preview = true;
     fixture.detectChanges();
     comp.unlock();
@@ -112,9 +117,9 @@ import { SignupModalService } from '../../modals/signup/service';
     tick();
 
     expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[ 0 ]).toContain('api/v1/wire/threshold');
+    expect(clientMock.get.calls.mostRecent().args[0]).toContain('api/v1/wire/threshold');
     expect(comp.update.next).toHaveBeenCalled();
-    expect(comp.update.next[ 'calls' ].mostRecent().args[ 0 ]).toBe(defaultActivity);
+    expect(comp.update.next['calls'].mostRecent().args[0]).toBe(defaultActivity);
   }));
 
   it('should open signup modal if not loggedin and the user clicks on unlock', fakeAsync(() => {
@@ -126,4 +131,3 @@ import { SignupModalService } from '../../modals/signup/service';
     expect(signupModalServiceMock.open).toHaveBeenCalled();
   }));
 });
-*/

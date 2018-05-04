@@ -4,21 +4,21 @@
 import { EventEmitter } from '@angular/core';
 
 export let sessionMock = new function () {
+  this.user = {guid : '1000'};
+  this.loggedIn = true;
   this.isAdmin = () => {
       return true;
   };
 
   this.getLoggedInUser = () => {
-    return {
-      guid: '1000',
-    }
+    return this.user;
   };
 
   this.isLoggedIn = (fn) => {
-    return true;
+    return this.loggedIn;
   };
 
-  this.login = () => { }
+  this.login = () => { };
 
   this.logout = () => { }
 };
