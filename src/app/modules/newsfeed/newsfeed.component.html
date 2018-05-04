@@ -21,6 +21,7 @@
         </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
+        *ngIf="session.getLoggedInUser()"
         routerLink="/newsfeed/boost"
         routerLinkActive="m-topbar--navigation--item-active"
       >
