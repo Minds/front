@@ -135,76 +135,75 @@ minds-comments, .m-comment-wrapper {
 
     background: transparent;
 
-    minds-rich-embed .m-rich-embed-src {
-      position: relative;
-    }
-
     .m-rich-embed {
       background: #fff;
       text-align: left;
       border: 1px solid #ddd;
       margin: 0 0 $minds-padding;
 
-      .thumbnail {
-        display: block;
-        float: left;
-        width: 25%;
+      minds-rich-embed .m-rich-embed-src {
+        position: relative;
 
-        .m-rich-embed-thumbnail-wrapper {
-          padding-bottom: 100%; // 1:1
-        }
-
-        > img {
-          width: 100%;
-        }
-
-        &.m-inline-embed {
-          width: 100%;
-          max-height: 200px;
+        .thumbnail {
           display: block;
-          float: none;
+          float: left;
+          width: 25%;
 
-          .m-rich-embed-video-iframe {
-            padding-bottom: 200px;
-          }
-        }
-      }
-
-      .meta {
-        display: block;
-        padding: $minds-padding * 2;
-        padding-left: calc(25% + #{$minds-padding * 2});
-
-        box-sizing: border-box;
-        width: 100%;
-        text-decoration: none;
-
-        h2 {
-          margin-bottom: 0.35em;
-        }
-
-        p {
-          $lh: 1.2em;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          max-height: ($lh * 2) + 1em;
-          line-height: $lh;
-
-          &.m-blurb {
-            display: none;
+          .m-rich-embed-thumbnail-wrapper {
+            padding-bottom: 100%; // 1:1
           }
 
-          &:last-child {
-            margin-bottom: 0;
+          > img {
+            width: 100%;
+          }
+
+          &.m-inline-embed {
+            width: 100%;
+            max-height: 200px;
+            display: block;
+            float: none;
+
+            .m-rich-embed-video-iframe {
+              padding-bottom: 200px;
+            }
           }
         }
-      }
 
-      .m-has-inline-embed .meta {
-        display: none;
+        a.meta {
+          display: block;
+          padding: $minds-padding * 2;
+          padding-left: calc(25% + #{$minds-padding * 2});
+
+          box-sizing: border-box;
+          width: 100%;
+          text-decoration: none;
+
+          h2 {
+            margin-bottom: 0.35em;
+          }
+
+          p {
+            $lh: 1.2em;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            max-height: ($lh * 2) + 1em;
+            line-height: $lh;
+
+            &.m-blurb {
+              display: none;
+            }
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .m-has-inline-embed .meta {
+          display: none;
+        }
       }
     }
-
   }
 
   .m-comment-attachment.mdl-card {
