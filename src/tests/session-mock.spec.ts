@@ -1,13 +1,17 @@
 /**
  * Created by Nicolas on 10/10/2017.
  */
-import { EventEmitter } from '@angular/core';
 
 export let sessionMock = new function () {
-  this.user = {guid : '1000'};
+  this.user = {
+    guid: '1000',
+    admin: true,
+    plus: false,
+    disabled_boost: false,
+  };
   this.loggedIn = true;
   this.isAdmin = () => {
-      return true;
+      return this.user.admin;
   };
 
   this.getLoggedInUser = () => {
@@ -20,5 +24,5 @@ export let sessionMock = new function () {
 
   this.login = () => { };
 
-  this.logout = () => { }
+  this.logout = () => { };
 };
