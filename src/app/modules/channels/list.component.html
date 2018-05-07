@@ -14,6 +14,7 @@
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/channels/subscriptions"
+        *ngIf="session.isLoggedIn()"
         routerLinkActive="m-topbar--navigation--item-active"
         >
         <span>Subscriptions</span>
@@ -23,6 +24,7 @@
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/channels/subscribers"
+        *ngIf="session.isLoggedIn()"
         routerLinkActive="m-topbar--navigation--item-active"
         >
         <span>Subscribers</span>

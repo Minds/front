@@ -12,6 +12,7 @@
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/blog/network"
+        *ngIf="session.isLoggedIn()"
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span>Subscriptions</span>
