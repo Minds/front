@@ -20,9 +20,9 @@ import { TooltipComponentMock } from '../../mocks/common/components/tooltip/tool
 import { Storage } from '../../services/storage';
 import { storageMock } from '../../../tests/storage-mock.spec';
 import { MindsTitle } from '../../services/ux/title';
-import { mindsTitleMock } from '../../../tests/minds-title-service-mock.spec';
 import { Navigation } from '../../services/navigation';
 import { navigationMock } from '../../../tests/navigation-service-mock.spec';
+import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
 
 @Component({
   selector: 'm-newsfeed--dropdown',

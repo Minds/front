@@ -25,5 +25,6 @@ export let signupModalServiceMock = new function () {
 
   this.setDisplay = jasmine.createSpy('setDisplay').and.callFake((display) => {
     this.display.next(display);
+    return this;
   });
 };

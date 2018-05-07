@@ -8,6 +8,7 @@ export let sessionMock = new function () {
     admin: true,
     plus: false,
     disabled_boost: false,
+    username: 'test',
   };
   this.loggedIn = true;
   this.isAdmin = () => {
