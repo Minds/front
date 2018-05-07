@@ -24,27 +24,11 @@ export class NewsfeedBoostComponent {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  showRightSidebar: boolean = true;
   minds;
 
-  attachment_preview;
-
   message: string = '';
-  newUserPromo: boolean = false;
-  postMeta: any = {
-    title: '',
-    description: '',
-    thumbnail: '',
-    url: '',
-    active: false,
-    attachment_guid: null
-  };
 
   paramsSubscription: Subscription;
-
-  pollingTimer: any;
-  pollingOffset: string = '';
-  pollingNewPosts: number = 0;
 
   boostFeed: boolean = false;
 
