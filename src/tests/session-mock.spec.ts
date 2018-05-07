@@ -25,5 +25,5 @@ export let sessionMock = new function () {
 
   this.login = jasmine.createSpy('login');
 
-  this.logout = () => { };
+  this.logout = jasmine.createSpy('logout');
 };
