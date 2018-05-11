@@ -8,8 +8,8 @@ import { Client } from '../../../services/api/client';
 import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
+import { MockDirective } from '../../../utils/mock';
 
 describe('LoginForm', () => {
 
@@ -45,6 +45,7 @@ describe('LoginForm', () => {
     tick();
     fixture.detectChanges();
   }
+
   function twoFactorLogin(response) {
     twoFactorCode.nativeElement.value = '123123';
     twoFactorCode.nativeElement.dispatchEvent(new Event('input'));
@@ -65,7 +66,7 @@ describe('LoginForm', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, LoginForm], // declare the test component
+      declarations: [MockDirective({ selector: '[mdl]', inputs: ['[mdl]'] }), LoginForm], // declare the test component
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },

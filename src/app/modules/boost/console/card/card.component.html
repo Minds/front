@@ -15,14 +15,14 @@
 
   <!-- Impressions, if applicable -->
   <div *ngIf="boost.impressions"
-    class="m-boost-card--manager-item"
+    class="m-boost-card--manager-item m-boost-card--impressions"
   >
     <i class="material-icons">remove_red_eye</i>
     <ng-container i18n="@@M__COMMON__VIEWS_WITH_COUNT">{{ boost.impressions | number }} views</ng-container>
   </div>
 
   <div *ngIf="boost.handler !== 'content' && boost.impressions"
-    class="m-boost-card--manager-item"
+    class="m-boost-card--manager-item m-boost-card--met-impressions"
   >
     <i class="material-icons">done</i>
     <ng-container *ngIf="boost.state !== 'completed'; else completedBlock" i18n="@@BOOST__CONSOLE__CARD__VIEWS_SO_FAR">{{ boost.met_impressions | number }} views so far</ng-container>
@@ -46,7 +46,7 @@
   </div>
 
   <div *ngIf="boost.method == 'tokens'"
-    class="m-boost-card--manager-item"
+    class="m-boost-card--manager-item m-boost-card--bid"
   >
     <i class="material-icons">account_balance</i>
     <ng-container i18n="@@BOOST__CONSOLE__CARD__TOKENS_VALUE">{{ boost.bid | token:18 | number }} tokens</ng-container>
@@ -54,7 +54,7 @@
 
   <!-- State (non-P2P or incoming P2P) -->
   <div *ngIf="type != 'p2p' || !isIncoming()"
-    class="m-boost-card--manager-item"
+    class="m-boost-card--manager-item m-boost-card--state"
   >
     <i class="material-icons">hourglass_empty</i>
     {{ boost.state }}
@@ -62,7 +62,7 @@
 
   <!-- Facebook crosspost -->
   <div *ngIf="boost.postToFacebook"
-    class="m-boost-card--manager-item"
+    class="m-boost-card--manager-item m-boost-card--post-to-facebook"
   >
     <svg width="32" height="32" viewBox="-2 -2 32 32" class="m-facebook-icon">
       <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
