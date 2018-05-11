@@ -14,7 +14,7 @@ import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { navigationMock } from '../../../../tests/navigation-service-mock.spec';
 import { Upload } from '../../../services/api/upload';
 import { Navigation } from '../../../services/navigation';
-import { mindsTitleMock } from '../../../../tests/minds-title-service-mock.spec';
+import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
 import { MindsTitle } from '../../../services/ux/title';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';

@@ -16,7 +16,7 @@ import { Client } from '../../../services/api/client';
 import { Navigation } from '../../../services/navigation';
 import { navigationMock } from '../../../../tests/navigation-service-mock.spec';
 import { MindsTitle } from '../../../services/ux/title';
-import { mindsTitleMock } from '../../../../tests/minds-title-service-mock.spec';
+import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
 import { InfiniteScrollMock } from '../../../mocks/common/components/infinite-scroll/infinite-scroll';
 import { Upload } from '../../../services/api/upload';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
