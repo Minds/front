@@ -33,7 +33,7 @@ export class SettingsComponent {
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/login']);
+      return this.router.navigate(['/login']);
     }
     this.minds = window.Minds;
 
