@@ -3,7 +3,7 @@ import { Event, NavigationStart, Router } from '@angular/router';
 
 import { Storage } from './storage';
 
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Client } from './api/client';
 
 export type ContextServiceProduct =

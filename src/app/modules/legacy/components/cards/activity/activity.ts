@@ -298,7 +298,6 @@ export class Activity {
         this.newsfeedService.recordView(this.activity);
       }
     });
-    //this.scroll.fire();
   }
 
   ngOnDestroy() {

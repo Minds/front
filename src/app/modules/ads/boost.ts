@@ -3,7 +3,7 @@ import { Client } from '../../services/api';
 
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
 
 @Component({

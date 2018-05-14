@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';

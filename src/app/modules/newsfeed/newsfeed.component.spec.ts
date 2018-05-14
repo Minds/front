@@ -14,7 +14,7 @@ import { uploadMock } from '../../../tests/upload-mock.spec';
 import { Upload } from '../../services/api/upload';
 import { ContextService } from '../../services/context.service';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TooltipComponentMock } from '../../mocks/common/components/tooltip/tooltip.component';
 import { Storage } from '../../services/storage';
@@ -86,8 +86,8 @@ describe('NewsfeedComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.of({}),
-            url: Observable.of({ segments: [] }),
+            params: of({}),
+            url: of({ segments: [] }),
             snapshot: { firstChild: { routeConfig: { path: '' } } }
           }
         },

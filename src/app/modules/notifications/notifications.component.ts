@@ -1,7 +1,7 @@
 import { Component, Input, ElementRef, ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api/client';

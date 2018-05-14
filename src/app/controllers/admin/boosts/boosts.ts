@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api';
 import { RejectionReasonModalComponent } from './modal/rejection-reason-modal.component';

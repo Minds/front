@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {Observable} from 'rxjs/Rx';
-import {Subscription} from "rxjs";
+import { timer, Subscription } from 'rxjs';
 
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -105,8 +104,8 @@ export class MediaTheatreComponent {
 
   loadNext() {
     this.nextVideo = this.recommended.getFirstRecommended();
-    let timer = Observable.timer(2000,1000);
-    //this.timerSubscribe = timer.subscribe(t => this.tickerFunc(t));
+    let observableTimer = timer(2000,1000);
+    //this.timerSubscribe = observableTimer.subscribe(t => this.tickerFunc(t));
   }
 
   tickerFunc(t) {

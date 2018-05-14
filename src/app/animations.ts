@@ -1,9 +1,6 @@
-import { trigger, style, animate, transition, keyframes, AnimationEntryMetadata } from '@angular/core';
+import { trigger, style, animate, transition, keyframes } from '@angular/animations';
 
-// @note: uncomment (and delete above imports) when bumping to angular 4.x
-// import { trigger, style, animate, transition, keyframes, AnimationEntryMetadata } from '@angular/animations';
-
-export const animations: AnimationEntryMetadata[] = [
+export const animations: any[] = [
   trigger('foolishIn', [
     transition('* => *', [
       style({ opacity: 0 }),

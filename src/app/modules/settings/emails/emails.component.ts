@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../services/api/client';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-settings--emails',

@@ -1,5 +1,5 @@
 import { Inject, Injector, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { Client } from './api';
 import { Session } from './session';

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { SignupModalService } from '../modals/signup/service';
 import { MindsTitle } from '../../services/ux/title';

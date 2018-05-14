@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, OnDestroy, OnChanges, Input, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { GoogleChartsLoader } from '../../../services/third-party/google-charts-loader';
 
@@ -41,9 +42,9 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
         this.draw();
       });
 
-    this._resizeWatch = Observable
-      .fromEvent(window, 'resize')
-      .debounceTime(250).subscribe(value => {
+    this._resizeWatch = fromEvent(window, 'resize')
+      .pipe(debounceTime(250))
+      .subscribe(value => {
         this.ngZone.run(() => this.draw());
       });
   }

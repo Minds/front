@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ScrollService } from '../../../services/ux/scroll';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 export class SignupModalService {
 

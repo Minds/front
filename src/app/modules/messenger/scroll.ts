@@ -1,6 +1,6 @@
 import { Directive, ElementRef, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/debounceTime';
+import { Observable, fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Directive({
   selector: '[minds-messenger-scroll]',
@@ -18,7 +18,7 @@ export class MessengerScrollDirective {
 
   constructor(public _element: ElementRef) {
     this.element = _element.nativeElement;
-    this.scroll = Observable.fromEvent(this.element, 'scroll');
+    this.scroll = fromEvent(this.element, 'scroll');
   }
 
   set emitter(emitter: any) {
@@ -33,7 +33,7 @@ export class MessengerScrollDirective {
 
   ngOnInit() {
     this.scroll
-      .debounceTime(100)
+      .pipe(debounceTime(100))
       .subscribe(() => {
 
         if (!this.moreData)

@@ -1,7 +1,7 @@
 import { Client } from '../../services/api';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { Session } from '../../services/session';
 @Component({

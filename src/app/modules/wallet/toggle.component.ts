@@ -1,5 +1,5 @@
 import { Component, EventEmitter, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { Navigation as NavigationService } from '../../services/navigation';
 import { WalletService } from './wallet.service';

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { Storage } from '../../services/storage';
 import { Client } from '../../services/api';

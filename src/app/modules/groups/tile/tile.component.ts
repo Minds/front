@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-groups--tile',

@@ -14,7 +14,7 @@ import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { Upload } from '../../../services/api/upload';
 import { ContextService } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -48,7 +48,7 @@ describe('NewsfeedSingleComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.of({ guid: 123 })
+            params: of({ guid: 123 })
           }
         },
         { provide: Router, useValue: routerMock }

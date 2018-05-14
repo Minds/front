@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { MindsTitle } from '../../../services/ux/title';
 import { ACCESS, LICENSES } from '../../../services/list-options';

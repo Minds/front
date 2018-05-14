@@ -9,7 +9,7 @@ import { BoostService } from '../boost.service';
 import { TooltipComponentMock } from '../../../mocks/common/components/tooltip/tooltip.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { DateSelectorComponent } from '../../../common/components/date-selector/date-selector.component';
 
@@ -129,7 +129,7 @@ describe('BoostConsoleComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: Observable.of({ type: 'newsfeed' }),
+            params: of({ type: 'newsfeed' }),
             snapshot: { params: { type: 'newsfeed' } }
           }
         },

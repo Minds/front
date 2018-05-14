@@ -1,7 +1,7 @@
 import { ApplicationRef, ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';

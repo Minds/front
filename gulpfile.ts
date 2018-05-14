@@ -22,9 +22,9 @@ const AUTOPREFIXER_BROWSERS = [
 
 // --------------
 // Build SASS
-gulp.task('build.sass', async done => {
+gulp.task('build.sass', done => {
   const app_cdn = argv.deployUrl ? argv.deployUrl: '';
-  await gulp.src(join('./src', '**', '*.scss'))
+  gulp.src(join('./src', '**', '*.scss'))
     .pipe(cssGlobbing({  extensions: ['.scss'] }))
     .pipe(sass({
       includePaths:[join('./src', 'stylesheets')],
@@ -34,8 +34,10 @@ gulp.task('build.sass', async done => {
     .pipe(template({
       'APP_CDN': app_cdn,
     }))
-    .pipe(gulp.dest('./.styles'));
-
-  await gulp.src('./.styles/stylesheets/main.css')
-    .pipe(gulp.dest('./src'));
+    .pipe(gulp.dest('./.styles'))
+    .on('end', () => {
+      gulp.src('./.styles/stylesheets/main.css')
+        .pipe(gulp.dest('./src'))
+        .on('end', done);
+    });
 });

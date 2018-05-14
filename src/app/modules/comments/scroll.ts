@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter } from '@angular/core';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable, Subscription, fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Directive({
   selector: '[commentsScroll]',
@@ -26,7 +27,7 @@ export class CommentsScrollDirective {
   private emitterSubscription: Subscription;
 
   constructor(private elementRef: ElementRef) {
-    this.scroll = Observable.fromEvent(elementRef.nativeElement, 'scroll');
+    this.scroll = fromEvent(elementRef.nativeElement, 'scroll');
   }
 
   set _emitter(emitter: EventEmitter<any>) {
@@ -56,7 +57,7 @@ export class CommentsScrollDirective {
 
   ngOnInit() {
     this.scrollSubscription = this.scroll
-      .debounceTime(this.DEBOUNCE_TIME_MS / 5)
+      .pipe(debounceTime(this.DEBOUNCE_TIME_MS / 5))
       .subscribe((event: Event) => this.run(event));
 
     this.setStick();

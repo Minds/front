@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
 
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { Session } from './session';
 

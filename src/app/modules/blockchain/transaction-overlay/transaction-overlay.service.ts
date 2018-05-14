@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TransactionOverlayComponent } from './transaction-overlay.component';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 @Injectable()
 export class TransactionOverlayService {

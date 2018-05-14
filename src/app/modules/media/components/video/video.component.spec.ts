@@ -107,6 +107,7 @@ class MindsVideoTorrentPlayerMock implements MindsPlayerInterface {
 })
 export class MindsVideoVolumeSliderMock {
   @Input() player;
+  bindToElement() {}
 }
 
 @Component({
@@ -129,6 +130,8 @@ export class MindsVideoProgressBarMock {
   getSeeker() {
 
   }
+
+  bindToElement() {}
 }
 
 @Directive({

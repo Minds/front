@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs';
 
 import { Session } from '../../../services/session';
 import { ScrollService } from '../../../services/ux/scroll';

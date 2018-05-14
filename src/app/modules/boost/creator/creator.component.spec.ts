@@ -1,5 +1,5 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick, discardPeriodicTasks } from '@angular/core/testing';
 import { Component, DebugElement, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -673,6 +673,8 @@ describe('BoostCreatorComponent', () => {
       paymentMethod: "nonce",
       priority: null
     });
+    tick(3000); // timeout for dismissal
+    discardPeriodicTasks();
   }));
 
   it('should fail submitting an "onchain" boost if wallet is unavailable', fakeAsync(() => {
@@ -793,6 +795,8 @@ describe('BoostCreatorComponent', () => {
       paymentMethod: { method: "onchain", txHash: 'hash', address: "0x123" },
       priority: null
     });
+    tick(3000); // timeout for dismissal
+    discardPeriodicTasks();
   }));
 
   it('should submit an "offchain" boost', fakeAsync(() => {
@@ -844,6 +848,8 @@ describe('BoostCreatorComponent', () => {
       paymentMethod: { method: "offchain", address: "offchain" },
       priority: null
     });
+    tick(3000); // timeout for dismissal
+    discardPeriodicTasks();
   }));
 
 });
