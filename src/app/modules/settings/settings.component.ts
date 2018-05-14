@@ -56,7 +56,8 @@ export class SettingsComponent {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
   }
 
 }
