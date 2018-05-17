@@ -17,7 +17,7 @@ m-channel{
       height: 160px;
     }
 
-    minds-carousel{
+    m-channel--carousel {
       height:440px;
       .minds-banner .minds-banner-overlay{
           display:none;
@@ -211,7 +211,7 @@ m-channel{
        text-align:center;
      }
    }
-   minds-channel-modules {
+   m-channel--modules {
      @media screen and (max-width: $min-tablet - 1) {
        display: none;
      }
@@ -255,7 +255,7 @@ m-channel{
      justify-content: center;
    }
 
-   minds-channel-social-profiles {
+   m-channel--social-profiles {
      display: block;
      //width: 100%;
      text-align:center;
@@ -427,7 +427,7 @@ m-channel{
     }
   }
 
-  minds-channel-modules{
+  m-channel--modules{
     a.mdl-card__supporting-text{
       text-decoration:none;
     }

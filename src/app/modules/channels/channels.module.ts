@@ -13,6 +13,8 @@ import { ChannelModulesComponent } from './modules/modules';
 import { ChannelSupporters } from './supporters/supporters';
 import { ChannelSubscribers } from './subscribers/subscribers';
 import { ChannelSubscriptions } from './subscriptions/subscriptions';
+import { ChannelSidebar } from './sidebar/sidebar';
+import { ChannelFeedComponent } from './feed/feed';
 import { ChannelSocialProfiles } from './social-profiles/social-profiles';
 import { ChannelComponent } from './channel.component';
 import { ChannelsListComponent } from './list.component';
@@ -48,6 +50,8 @@ const routes: Routes = [
     ChannelSocialProfiles,
     ChannelsListComponent,
     ChannelsTileComponent,
+    ChannelFeedComponent,
+    ChannelSidebar,
   ],
   exports: [
     ChannelModulesComponent,
@@ -55,6 +59,8 @@ const routes: Routes = [
     ChannelSubscribers,
     ChannelSubscriptions,
     ChannelSocialProfiles,
+    ChannelFeedComponent,
+    ChannelSidebar,
   ],
   entryComponents: [
     ChannelComponent,

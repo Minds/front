@@ -4,7 +4,7 @@ import { Client } from '../../../services/api';
 import { AttachmentService } from '../../../services/attachment';
 
 @Component({
-  selector: 'minds-channel-modules',
+  selector: 'm-channel--modules',
   inputs: ['type', '_owner: owner', '_container: container', 'limit', 'linksTo'],
   host: {
     'class': 'mdl-card m-border',
@@ -61,10 +61,10 @@ export class ChannelModulesComponent {
 
     this.client.get(endpoint, { limit: this.limit })
       .then((response: any) => {
-        if (!(response.entities || response.blogs))
+        let items = response.entities || response.blogs;
+        if (!(items))
           return false;
-
-          this.items = response.entities;
+        this.items = items;
         this.inProgress = false;
       })
       .catch(function (e) {

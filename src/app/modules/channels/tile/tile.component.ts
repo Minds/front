@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 
 @Component({
+  moduleId: module.id,
   selector: 'm-channels--tile',
   templateUrl: 'tile.component.html',
 })

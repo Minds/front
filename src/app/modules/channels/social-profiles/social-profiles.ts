@@ -16,7 +16,7 @@ export interface SocialProfileMeta {
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-channel-social-profiles',
+  selector: 'm-channel--social-profiles',
   inputs: ['_user : user', 'editing'],
   outputs: ['changed'],
   templateUrl: 'social-profiles.html'

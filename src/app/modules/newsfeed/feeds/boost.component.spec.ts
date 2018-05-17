@@ -6,9 +6,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { CommonModule } from '@angular/common';
 
+import { MockComponent, MockDirective } from '../../../utils/mock';
 import { By } from '@angular/platform-browser';
 import { NewsfeedBoostComponent } from './boost.component';
-import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { clientMock } from '../../../../tests/client-mock.spec';
@@ -17,7 +17,6 @@ import { Navigation } from '../../../services/navigation';
 import { navigationMock } from '../../../../tests/navigation-service-mock.spec';
 import { MindsTitle } from '../../../services/ux/title';
 import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { InfiniteScrollMock } from '../../../mocks/common/components/infinite-scroll/infinite-scroll';
 import { Upload } from '../../../services/api/upload';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { storageMock } from '../../../../tests/storage-mock.spec';
@@ -54,7 +53,16 @@ describe('NewsfeedBoostComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, NewsfeedBoostRotatorComponentMock, MindsActivityMock, InfiniteScrollMock, NewsfeedBoostComponent],
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['[mdl]'] }),
+        MockComponent({ selector: 'm-newsfeed--boost-rotator', template: '', inputs: ['interval', 'channel'] }),
+        MindsActivityMock,
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: ['inProgress', 'moreData', 'inProgress'],
+        }),
+        NewsfeedBoostComponent
+      ],
       imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },

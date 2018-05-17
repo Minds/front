@@ -21,7 +21,8 @@
 				{{blog.ownerObj.username}}
 			</a>
 			<span>{{ blog.time_created * 1000 | date:'mediumDate' }}</span>
-      	<span *ngIf="blog.ownerObj && blog.owner_guid == session.getLoggedInUser().guid && !blog.published" i18n="@@BLOGS__DRAFT_LABEL">Draft</span>
+			<span *ngIf="blog.ownerObj && blog.owner_guid == session.getLoggedInUser().guid && !blog.published"
+				i18n="@@BLOGS__DRAFT_LABEL">Draft</span>
 		</div>
 
 </div>

@@ -93,11 +93,6 @@ describe('LoginForm', () => {
     twoFactorLoginButton = fixture.debugElement.query(By.css('.mdl-card > button'));
 
     session = comp.session;
-
-    // so the actual login function doesn't get called
-    spyOn(session, 'login').and.callFake(() => {
-      return;
-    });
   });
 
   it('should have username input field', () => {

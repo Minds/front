@@ -14,10 +14,11 @@ import { Session } from '../../services/session';
 import { TooltipComponent } from'../../common/components/tooltip/tooltip.component';
 
 import { GroupsCardMock } from '../../mocks/modules/groups/card/card';
-import { InfiniteScrollMock } from '../../mocks/common/components/infinite-scroll/infinite-scroll';
 import { GroupsListComponent } from './list.component';
 import { ContextService } from '../../services/context.service';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
+
+import { MockComponent } from '../../utils/mock';
 
 @Component({
   selector: 'm-groups--tile',
@@ -54,7 +55,10 @@ describe('Groups List', () => {
     TestBed.configureTestingModule({
       declarations: [
         GroupsCardMock,
-        InfiniteScrollMock,
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: [ 'inProgress', 'moreData', 'inProgress' ],
+        }),
         GroupsListComponent,
         GroupsTileMock,
         TooltipComponent,

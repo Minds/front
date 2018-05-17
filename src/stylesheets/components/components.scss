@@ -132,7 +132,7 @@
 /**
  * Carousel
  */
-minds-carousel{
+m-channel--carousel{
   position: absolute;
   top: 0;
   left: 0;
@@ -178,7 +178,7 @@ minds-carousel{
     position:absolute;
     top:8px;
     right:8px;
-    z-index:9999;
+    z-index:999;
 
     > *{
       font-size:11px;
@@ -190,7 +190,7 @@ minds-carousel{
     position:absolute;
     top:8px;
     right:80px;
-    z-index:9999;
+    z-index:999;
     i{
       margin-top:6px;
     }

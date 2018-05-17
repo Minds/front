@@ -15,7 +15,7 @@ import { storageMock } from "../../../tests/storage-mock.spec";
 
 import { SearchComponent } from './search.component';
 
-import { InfiniteScrollMock } from '../../mocks/common/components/infinite-scroll/infinite-scroll';
+import { MockComponent } from '../../utils/mock';
 import { TooltipComponentMock } from '../../mocks/common/components/tooltip/tooltip.component';
 import { MaterialBoundSwitchComponentMock } from '../../mocks/common/components/material/bound-switch.component';
 
@@ -50,7 +50,10 @@ describe('Search', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        InfiniteScrollMock,
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: [ 'inProgress', 'moreData', 'inProgress' ],
+        }),
         TooltipComponentMock,
         MaterialBoundSwitchComponentMock,
         SearchHybridListComponentMock,

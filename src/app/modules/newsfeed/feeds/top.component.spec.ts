@@ -6,10 +6,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { CommonModule } from '@angular/common';
 
+import { Mock, MockComponent } from '../../../utils/mock';
+
 import { By } from '@angular/platform-browser';
 import { NewsfeedTopComponent } from './top.component';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
-import { InfiniteScrollMock } from '../../../mocks/common/components/infinite-scroll/infinite-scroll';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { navigationMock } from '../../../../tests/navigation-service-mock.spec';
 import { Upload } from '../../../services/api/upload';
@@ -57,7 +58,16 @@ describe('NewsfeedTopComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, NewsfeedBoostRotatorComponentMock, MindsActivityMock, InfiniteScrollMock, NewsfeedTopComponent],
+      declarations: [
+        MaterialMock, 
+        NewsfeedBoostRotatorComponentMock, 
+        MindsActivityMock, 
+        MockComponent({
+          selector: 'infinite-scroll',
+          inputs: [ 'inProgress', 'moreData', 'inProgress' ],
+        }), 
+        NewsfeedTopComponent
+      ],
       imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },

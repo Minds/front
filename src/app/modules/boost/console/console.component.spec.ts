@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { DateSelectorComponent } from '../../../common/components/date-selector/date-selector.component';
+import { MindsCardMock } from '../../../../tests/minds-card-mock.spec';
 
 @Component({
   selector: 'm-date-selector',

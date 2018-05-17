@@ -19,16 +19,20 @@ describe('ChannelSocialProfiles', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, MaterialSwitchMock, AbbrPipe, ChannelSocialProfiles], // declare the test component
+      declarations: [
+        MaterialMock, 
+        MaterialSwitchMock, 
+        AbbrPipe, 
+        ChannelSocialProfiles
+      ],
       imports: [FormsModule],
       providers: [
         { provide: Client, useValue: clientMock },
       ]
     })
-      .compileComponents();  // compile template and css
+      .compileComponents();
   }));
 
-  // synchronous beforeEach
   beforeEach((done) => {
 
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;

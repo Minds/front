@@ -3,7 +3,7 @@ import { Component, EventEmitter } from '@angular/core';
 import { Client } from '../../../services/api';
 
 @Component({
-  selector: 'minds-carousel',
+  selector: 'm-channel--carousel',
   inputs: ['_banners: banners', '_editMode: editMode'],
   outputs: ['done_event: done', 'delete_event: delete'],
   template: `

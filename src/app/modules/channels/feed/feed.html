@@ -1,0 +1,14 @@
+<minds-newsfeed-poster (load)="prepend($event)" *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid" #poster></minds-newsfeed-poster>
+
+<div class="minds-list">
+  <m-onboarding-feed *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"></m-onboarding-feed>
+  <m-newsfeed--boost-rotator [channel]="user" interval="12" *ngIf="user.guid !== session.getLoggedInUser().guid && user.show_boosts"></m-newsfeed--boost-rotator>
+  <minds-activity *ngFor="let activity of pinned" [object]="activity" [boostToggle]="activity.boostToggle" class="mdl-card m-border item" (delete)="delete(activity)"></minds-activity>
+  <minds-activity *ngFor="let activity of feed" [object]="activity" [boostToggle]="activity.boostToggle" class="mdl-card m-border item" (delete)="delete(activity)"></minds-activity>
+  <infinite-scroll
+    distance="25%"
+    (load)="loadFeed()"
+    [moreData]="moreData"
+    [inProgress]="inProgress">
+  </infinite-scroll>
+</div>

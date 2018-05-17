@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -53,7 +53,6 @@ export class ForgotPasswordComponent {
   request(username) {
     this.error = '';
     this.inProgress = true;
-    var self = this;
     this.client.post('api/v1/forgotpassword/request', {
       username: username.value
     })
@@ -61,18 +60,17 @@ export class ForgotPasswordComponent {
         username.value = '';
 
         this.inProgress = false;
-        self.step = 2;
-        //self.router.navigate(['/Homepage', {}]);
+        this.step = 2;
       })
       .catch((e) => {
 
         this.inProgress = false;
         if (e.status === 'failed') {
-          self.error = 'There was a problem trying to reset your password. Please try again.';
+          this.error = 'There was a problem trying to reset your password. Please try again.';
         }
 
         if (e.status === 'error') {
-          self.error = e.message;
+          this.error = e.message;
         }
 
       });
@@ -92,21 +90,20 @@ export class ForgotPasswordComponent {
   }
 
   reset(password) {
-    if (!this.error){
-      var self = this;
+    if (!this.error) {
       this.client.post('api/v1/forgotpassword/reset', {
         password: password.value,
         code: this.code,
         username: this.username
       })
         .then((response: any) => {
-          self.session.login(response.user);
-          self.router.navigate(['/newsfeed']);
+          this.session.login(response.user);
+          this.router.navigate(['/newsfeed']);
         })
         .catch((e) => {
-          self.error = e.message;
+          this.error = e.message;
           setTimeout(() => {
-            self.router.navigate(['/login']);
+            this.router.navigate(['/login']);
           }, 2000);
         });
     }

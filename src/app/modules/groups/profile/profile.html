@@ -192,22 +192,22 @@
   </m-group--members-module>
 
     <!-- images  -->
-   <minds-channel-modules [container]="group" type="image" *ngIf="filter != 'conversation'">
+   <m-channel--modules [container]="group" type="image" *ngIf="filter != 'conversation'">
 
       <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/images', 'container:' + group.guid]">
         <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
       </a>
-    </minds-channel-modules>
+    </m-channel--modules>
 
     <div class="minds-spacer-2x"></div>
 
     <!-- videos  -->
-    <minds-channel-modules [container]="group" type="video" limit="6" *ngIf="filter != 'conversation'">
+    <m-channel--modules [container]="group" type="video" limit="6" *ngIf="filter != 'conversation'">
 
       <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/videos', 'container:' + group.guid]">
         <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
       </a>
-    </minds-channel-modules>
+    </m-channel--modules>
 
   </div>
 

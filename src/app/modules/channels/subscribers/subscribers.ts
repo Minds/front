@@ -5,7 +5,7 @@ import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-channel-subscribers',
+  selector: 'm-channel--subscribers',
   inputs: ['channel'],
   templateUrl: 'subscribers.html'
 })

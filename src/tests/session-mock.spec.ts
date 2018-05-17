@@ -23,7 +23,7 @@ export let sessionMock = new function () {
     return this.loggedIn;
   };
 
-  this.login = () => { };
+  this.login = jasmine.createSpy('login');
 
   this.logout = () => { };
 };
