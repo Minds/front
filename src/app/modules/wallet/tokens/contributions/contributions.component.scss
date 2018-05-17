@@ -27,10 +27,13 @@
 }
 
 .m-token-contributions--ledger-category-detail {
-  background: #fcfcfc;
+  background: #666;
+  color: #FFF;
   text-transform: capitalize;
 }
 
 .m-token-contribution--selected {
   font-weight: bold;
+  background: #444;
+  color: #FFF;
 }

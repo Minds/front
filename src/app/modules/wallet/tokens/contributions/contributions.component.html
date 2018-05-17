@@ -23,8 +23,8 @@
     </thead>
 
     <tbody *ngFor="let contribution of contributions; let i = index">
-      <tr class="m-token-contributions--ledger-row" (click)="toggleCollapse(contribution)">
-        <td [ngClass]="{ 'm-token-contribution--selected': contribution.visible }" class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.timestamp | date:'mediumDate':'+0000' }}</td>
+      <tr class="m-token-contributions--ledger-row" [ngClass]="{ 'm-token-contribution--selected': contribution.visible }" (click)="toggleCollapse(contribution)">
+        <td class="mdl-data-table__cell--non-numeric m-token-contributions--ledger-category">{{ contribution.timestamp | date:'mediumDate':'+0000' }}</td>
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category" style="font-weight: bold">{{ contribution.amount | number }}</td>
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category" style="font-weight: bold">{{ contribution.score | number }}</td>
         <td class="mdl-data-table__cell--numeric m-token-contributions--ledger-category" style="font-weight: bold">{{ contribution.share.toFixed(6) }}%</td>
