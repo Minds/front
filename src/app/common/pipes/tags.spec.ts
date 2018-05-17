@@ -58,11 +58,11 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a class="tag"')
   });
 
-  it('should transform when @ preceded by any ', () => {
+  it('should transform to an email', () => {
     let pipe = new TagsPipe();
-    let string = 'textstring@name';
+    let string = 'textstring@name.com';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a class="tag"')
+    expect(transformedString).toContain('<a href="mailto:textstring@name.com"')
   });
 
   it('should not transform when @ not present', () => {
