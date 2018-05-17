@@ -9,6 +9,7 @@
   "exclude": [
     "test.ts",
     "app/mocks",
+    "app/utils/mock.ts",
     "**/*.spec.ts",
     "**/testing/*"
   ]

@@ -13,7 +13,8 @@ import { Client } from '../../services/api/client';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { MindsTitle } from '../../services/ux/title';
 import { ContextService } from '../../services/context.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs/internal/observable/of';
 import { ActivatedRoute } from '@angular/router';
 import { MockComponent, MockService } from '../../utils/mock';
 
@@ -77,7 +78,7 @@ describe('BlogListComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: MindsTitle, useValue: MockService(MindsTitle) },
         { provide: ContextService, useValue: MockService(ContextService) },
-        { provide: ActivatedRoute, useValue: { params: Observable.of({ filter: 'trending' }) } }
+        { provide: ActivatedRoute, useValue: { params: of({ filter: 'trending' }) } }
       ]
     })
       .compileComponents();

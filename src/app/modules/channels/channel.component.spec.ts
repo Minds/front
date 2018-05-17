@@ -27,7 +27,8 @@ import { RecentService } from '../../services/ux/recent';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 import { ContextService } from '../../services/context.service';
 import { toObservable } from '@angular/forms/src/validators';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
+import { from } from 'rxjs/internal/observable/from';
 
 describe('ChannelComponent', () => {
 
@@ -79,7 +80,7 @@ describe('ChannelComponent', () => {
         { provide: ScrollService, useValue: scrollServiceMock},
         { provide: RecentService, useValue: recentServiceMock},
         { provide: ContextService, useValue: contextServiceMock},
-        { provide: ActivatedRoute, useValue: { 'params': Observable.from([{ 'filter': 'feed', 'username': 'username' }]) } }
+        { provide: ActivatedRoute, useValue: { 'params': from([{ 'filter': 'feed', 'username': 'username' }]) } }
       ]
     })
       .compileComponents();  // compile template and css
