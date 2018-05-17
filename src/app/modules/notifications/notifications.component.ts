@@ -73,7 +73,7 @@ export class NotificationsComponent {
       this.load(true);
     } else {
       setTimeout(() => {
-        if (this.minds.notifications_count > 0 && this.notificationList.nativeElement.scrollTop === 0) {
+        if (this.minds.notifications_count > 0 && this.notificationList.nativeElement.scrollTop <= 100) {
           this.load(true);
         }
       }, 200);
@@ -113,7 +113,6 @@ export class NotificationsComponent {
         this.offset = data['load-next'];
         this.inProgress = false;
         this.minds.notifications_count = 0;
-
         this.notificationService.clear();
       });
   }
