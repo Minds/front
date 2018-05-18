@@ -17,7 +17,7 @@ export class MessengerEncryptionService {
 
   isOn(): boolean {
     //if(!this.on){
-    this.on = !!this.storage.get('encryption-password');
+    this.on = !!this.storage.get('encryption-unlocked');
     //}
     return this.on;
   }
@@ -26,7 +26,7 @@ export class MessengerEncryptionService {
     return new Promise((resolve, reject) => {
       this.client.post('api/v2/messenger/keys/unlock', { password: password })
         .then((response: any) => {
-          this.storage.set('encryption-password', response.password);
+          this.storage.set('encryption-unlocked', true);
           this.on = true;
           resolve();
         })
@@ -48,7 +48,7 @@ export class MessengerEncryptionService {
     return new Promise((resolve, reject) => {
       this.client.post('api/v2/messenger/keys/setup', { password: password, download: false })
         .then((response: any) => {
-          this.storage.set('encryption-password', response.password);
+          this.storage.set('encryption-unlocked', true);
           this.setup = true;
           this.on = true;
           resolve();
@@ -63,7 +63,7 @@ export class MessengerEncryptionService {
     return new Promise((resolve, reject) => {
       this.client.post('api/v2/messenger/keys/setup', { password: password, download: false })
         .then((response: any) => {
-          this.storage.set('encryption-password', response.password);
+          this.storage.set('encryption-unlocked', true);
           this.setup = true;
           this.on = true;
           this.reKeying = false;
@@ -75,12 +75,8 @@ export class MessengerEncryptionService {
     });
   }
 
-  getEncryptionPassword(): string {
-    return this.storage.get('encryption-password');
-  }
-
   logout() {
-    this.storage.destroy('encryption-password');
+    this.storage.destroy('encryption-unlocked');
     this.on = false;
   }
 

@@ -154,9 +154,7 @@ export class MessengerUserlist {
         }
       }
 
-      this.client.get(`api/v2/messenger/conversations/${guid}`, {
-        password: this.encryption.getEncryptionPassword()
-      })
+      this.client.get(`api/v2/messenger/conversations/${guid}`)
         .then((response) => {
           this.openConversation(response);
         });

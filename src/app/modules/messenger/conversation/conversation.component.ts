@@ -99,8 +99,7 @@ export class MessengerConversation {
     opts = (<any>Object).assign({
       limit: 12,
       offset: '',
-      finish: '',
-      password: this.encryption.getEncryptionPassword()
+      finish: ''
     }, opts);
 
     let scrollView = opts.container;
