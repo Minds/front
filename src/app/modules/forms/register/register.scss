@@ -50,6 +50,16 @@ minds-form-register{
 
   }
 
+  .tooltip-wrapper {
+    bottom: 80px;
+    position: absolute;
+    right: 20px;
+
+    .m-tooltip--bubble {
+      width: 280px;
+    }
+  }
+
   .m-register--username-taken {
     position: absolute;
     right: 15px;
