@@ -1,5 +1,4 @@
-import { NgModule, enableProdMode, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { APP_BASE_HREF } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +8,7 @@ import { CaptchaModule } from './modules/captcha/captcha.module';
 
 import { Minds } from './app.component';
 
-import { MindsAppRoutes, MindsAppRoutingProviders, MINDS_APP_ROUTING_DECLARATIONS } from './router/app';
+import { MINDS_APP_ROUTING_DECLARATIONS, MindsAppRoutes, MindsAppRoutingProviders } from './router/app';
 
 import { MINDS_DECLARATIONS } from './declarations';
 import { MINDS_PLUGIN_DECLARATIONS } from './plugin-declarations';
@@ -102,7 +101,7 @@ import { BrandingModule } from './modules/branding/branding.module';
     BrandingModule,
 
     //last due to :username route
-    ChannelsModule,    
+    ChannelsModule,
   ],
   providers: [
     MindsAppRoutingProviders,

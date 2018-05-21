@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 
-import { Client, Upload } from '../../../services/api';
+import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
@@ -43,13 +42,12 @@ export class AdminAnalytics {
    * Return active user analytics
    */
   getActives() {
-    var self = this;
     this.client.get('api/v1/admin/analytics/active')
       .then((response: any) => {
-        self.dam = response['daily'];
-        self.dam_list = response['daily'].slice(0).reverse();
-        self.mam = response['monthly'];
-        self.mam_list = response['monthly'].slice(0).reverse();
+        this.dam = response['daily'];
+        this.dam_list = response['daily'].slice(0).reverse();
+        this.mam = response['monthly'];
+        this.mam_list = response['monthly'].slice(0).reverse();
       });
   }
 
@@ -90,12 +88,11 @@ export class AdminAnalytics {
    * Return boost analytics
    */
   getBoosts() {
-    var self = this;
     this.client.get('api/v1/admin/analytics/boost')
       .then((response: any) => {
-        self.boost_newsfeed = response.newsfeed;
-        self.boost_newsfeed.total = self.boost_newsfeed.review + self.boost_newsfeed.approved;
-        self.boost_newsfeed.percent = (self.boost_newsfeed.approved / self.boost_newsfeed.total) * 100;
+        this.boost_newsfeed = response.newsfeed;
+        this.boost_newsfeed.total = this.boost_newsfeed.review + this.boost_newsfeed.approved;
+        this.boost_newsfeed.percent = (this.boost_newsfeed.approved / this.boost_newsfeed.total) * 100;
       });
   }
 

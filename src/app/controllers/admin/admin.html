@@ -2,6 +2,18 @@
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <a class="m-topbar--navigation--item"
+        routerLink="/admin/analytics"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span>Analytics</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/interactions"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span>Interactions</span>
+      </a>
+      <a class="m-topbar--navigation--item"
         routerLink="/admin/boosts"
         routerLinkActive="m-topbar--navigation--item-active"
         >
@@ -53,6 +65,7 @@
   </div>
 </div>
 <minds-admin-analytics *ngIf="filter == 'analytics'"></minds-admin-analytics>
+<m-admin--interactions *ngIf="filter == 'interactions'"></m-admin--interactions>
 <minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>
 <minds-admin-pages *ngIf="filter == 'pages'"></minds-admin-pages>
 <minds-admin-reports *ngIf="filter == 'reports' || filter == 'appeals'"></minds-admin-reports>
