@@ -40,14 +40,14 @@ export class AdminInteractions {
   type: 'actors' | 'beneficiaries' = 'actors';
 
   constructor(public client: Client) {
-    const end = new Date();
+    const d = new Date();
 
-    end.setHours(23, 59, 59);
-    this.endDate = end.toISOString();
+    d.setHours(23, 59, 59);
+    this.endDate = d.toISOString();
 
-    const today = new Date();
-    today.setHours(0, 0, 0);
-    this.startDate = today.toISOString();
+    d.setDate(d.getDate() -1)
+    d.setHours(0, 0, 0);
+    this.startDate = d.toISOString();
   }
 
   onStartDateChange(newDate) {
