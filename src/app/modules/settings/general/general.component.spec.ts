@@ -14,7 +14,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialTextfieldMock } from '../../../mocks/common/directives/material/text-field-mock.spec';
 import { thirdPartyNetworksServiceMock } from '../../../mocks/services/third-party-networks-mock.spec';
 import { ThirdPartyNetworksService } from '../../../services/third-party-networks';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs/internal/observable/of';
 import { ActivatedRoute, Router } from '@angular/router';
 
 let routerMock = new function() {
@@ -43,7 +44,7 @@ describe('SettingsGeneralComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: ThirdPartyNetworksService, useValue: thirdPartyNetworksServiceMock },
-        { provide: ActivatedRoute, useValue: { params: Observable.of({ 'guid': '1000' }) } },
+        { provide: ActivatedRoute, useValue: { params: of({ 'guid': '1000' }) } },
         { provide: Router, useValue: routerMock },
       ]
     })

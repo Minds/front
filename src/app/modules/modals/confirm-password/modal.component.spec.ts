@@ -57,7 +57,7 @@ describe('ConfirmPasswordCreatorComponent', () => {
 
     comp = fixture.componentInstance; // LoginForm test instance
     clientMock.response = {};
-    clientMock.response[`api/v2/validatepassword`] = {
+    clientMock.response[`api/v2/settings/password/validate`] = {
       'status': 'success',
     };
 
@@ -95,7 +95,7 @@ describe('ConfirmPasswordCreatorComponent', () => {
     comp.submit();
     fixture.detectChanges();
     tick();
-    expect(clientMock.post.calls.mostRecent().args[0]).toEqual('api/v2/validatepassword');
+    expect(clientMock.post.calls.mostRecent().args[0]).toEqual('api/v2/settings/password/validate');
 
     expect(comp.overlayModal.dismiss).toHaveBeenCalled();
   }));
@@ -103,12 +103,12 @@ describe('ConfirmPasswordCreatorComponent', () => {
   it('password should update from form change and call endpoint', fakeAsync(() => {
     comp.form.controls['password'].setValue('value');
     expect(comp.form.value.password).toEqual('value');
-    clientMock.response[`api/v2/validatepassword`] = {
+    clientMock.response[`api/v2/settings/password/validate`] = {
       'status': 'failed',
     };
     comp.submit();
     fixture.detectChanges();
-    expect(clientMock.post.calls.mostRecent().args[0]).toEqual('api/v2/validatepassword');
+    expect(clientMock.post.calls.mostRecent().args[0]).toEqual('api/v2/settings/password/validate');
     
   }));
 });

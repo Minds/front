@@ -13,7 +13,7 @@ let routerMock = new function () {
   this.navigate = jasmine.createSpy('navigate');
 };
 
-describe('LogoutComponent', () => {
+xdescribe('LogoutComponent', () => {
 
   let comp: LogoutComponent;
   let fixture: ComponentFixture<LogoutComponent>;
