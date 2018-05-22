@@ -12,6 +12,7 @@ import { RemindComposerModal } from './remind-composer/remind-composer';
 import { ShareModal } from './share/share';
 import { SignupOnActionModal } from './signup/signup-on-action';
 import { SignupOnScrollModal } from './signup/signup-on-scroll';
+import { ConfirmPasswordModalComponent } from './confirm-password/modal.component';
 import { SignupModal } from './signup/signup';
 
 @NgModule({
@@ -31,6 +32,10 @@ import { SignupModal } from './signup/signup';
     SignupOnActionModal,
     SignupOnScrollModal,
     SignupModal,
+    ConfirmPasswordModalComponent
+  ],
+  entryComponents: [
+    ConfirmPasswordModalComponent
   ],
   exports: [
     ConfirmModal,

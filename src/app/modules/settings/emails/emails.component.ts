@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Subscription } from 'rxjs';
 
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/modal.component';
+
 @Component({
   selector: 'm-settings--emails',
   templateUrl: 'emails.component.html'
@@ -38,7 +41,7 @@ export class SettingsEmailsComponent implements OnInit {
 
   paramsSubscription: Subscription;
 
-  constructor(public client: Client) {
+  constructor(public client: Client, public overlayModal: OverlayModalService) {
   }
 
   ngOnInit() {
@@ -78,9 +81,7 @@ export class SettingsEmailsComponent implements OnInit {
     return this.changed;
   }
 
-  save() {
-    if (!this.canSubmit())
-      return;
+  submit() {
 
     this.inProgress = true;
     this.client.post('api/v2/settings/emails', {
@@ -99,5 +100,17 @@ export class SettingsEmailsComponent implements OnInit {
         this.inProgress = false;
       });
   }
+  
+  save() {
+    if (!this.canSubmit())
+      return;
 
+    const creator = this.overlayModal.create(ConfirmPasswordModalComponent, {}, {
+      class: 'm-overlay-modal--small',
+      onComplete: (wire) => {
+        this.submit();
+      }
+    });
+    creator.present();
+  }
 }

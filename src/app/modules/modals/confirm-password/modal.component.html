@@ -1,0 +1,45 @@
+<div class="m-confirm-password--modal">
+  <div class="m-confirm-password--modal--header">
+    <h2>
+      <span i18n="@@M__CREATOR__CONFIRM_PASSWORD">Confirm password</span>
+    </h2>
+  </div>
+  <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50 m-error-box mdl-shadow--2dp minds-login-box m-error-box" *ngIf="error">
+    <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+      <ng-container
+        *ngIf="error == 'LoginException::AuthenticationFailed'"
+        i18n="@@MINDS__LOGIN__EXCEPTION__INCORRECT_PASSWORD">
+        Incorrect password. Please try again.
+      </ng-container>
+      <ng-container
+        *ngIf="error == 'LoginException::Unknown'"
+        i18n="@@MINDS__LOGIN__EXCEPTION__UNKNOWN_ERROR">
+        Unknown error
+      </ng-container>
+    </div>
+  </div>
+  <form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box">
+  
+    <div class="mdl-card__supporting-text mdl-grid">
+  
+      <div class="mdl-cell mdl-cell--12-col">
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Password"
+          i18n-placeholder="@@M__COMMON__PASSWORD"
+          (keydown.enter)="submit(); $event.preventDefault();"
+          />
+      </div>
+    </div>
+  
+    <div class="mdl-card__actions">
+      <button class="m-btn m-btn--action m-btn--login" (click)="submit()" [disabled]="inProgress">
+        <ng-container i18n="@@M__ACTION__SUBMIT">Submit</ng-container>
+      </button>
+    </div>
+  
+  </form>
+  
+</div>
