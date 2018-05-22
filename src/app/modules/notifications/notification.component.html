@@ -122,7 +122,7 @@
     <div *ngIf="notification.entityObj">
       <a [routerLink]="['/newsfeed', notification.entityObj.guid]" *ngIf="notification.entityObj.type == 'object'">
         <p>
-          <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_OBJECT">{{notification.fromObj.name}} voted up</ng-container>
+          <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_OBJECT">{{notification.fromObj.name}} voted up </ng-container>
           <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title">{{notification.entityObj.title | excerpt}}</span>
           <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="!notification.entityObj.title" i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT">your {{notification.entityObj.subtype}}</span>
         </p>
