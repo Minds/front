@@ -23,7 +23,7 @@ import { Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { AttachmentService } from '../../../services/attachment';
 
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockDirective } from '../../../utils/mock';
 
 describe('ChannelSubscribers', () => {
 
@@ -34,10 +34,6 @@ describe('ChannelSubscribers', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock, 
-        MaterialSwitchMock, 
-        AbbrPipe, 
-        ChannelSubscriptions,
         MockComponent({
           selector: 'minds-card',
           inputs: [ 'object'],
@@ -49,7 +45,12 @@ describe('ChannelSubscribers', () => {
         MockComponent({
           selector: 'infinite-scroll',
           inputs: [ 'inProgress', 'moreData', 'inProgress' ],
-        })], 
+        }),
+        MockDirective({ selector: '[mdl]', inputs: ['[mdl]'] }),
+        MockDirective({ selector: '[mdlSwitch]', inputs: ['mdlSwitch', 'toggled'] }),
+        AbbrPipe, 
+        ChannelSubscriptions,
+        ],
       imports: [
         FormsModule,
         RouterTestingModule,
@@ -104,11 +105,18 @@ describe('ChannelSubscribers', () => {
 
   it('should load all entities', fakeAsync(() => {
     comp.load();
-    fixture.detectChanges();
     tick();
+    fixture.detectChanges();
+
     expect(comp.moreData).toBe(false);
     expect(comp.users.length).toBe(3);
+    expect(fixture.debugElement.queryAll(By.css('minds-card-user')).length).toBe(3);
     expect(clientMock.get.calls.mostRecent().args[0]).toEqual('api/v1/subscribe/subscriptions/guid');
   }));
+
+
+  it('should have an infinite-scroll', () => {
+    expect(fixture.debugElement.query(By.css('infinite-scroll'))).toBeTruthy();
+  });
 
 });
