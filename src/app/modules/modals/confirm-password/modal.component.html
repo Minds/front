@@ -18,14 +18,15 @@
       </ng-container>
     </div>
   </div>
-  <form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box">
+  <form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form">
   
-    <div class="mdl-card__supporting-text mdl-grid">
+    <div class="m-layout--row">
   
-      <div class="mdl-cell mdl-cell--12-col">
+      <div class="m-layout--cell">
         <input
           type="password"
           id="password"
+          class="m-input"
           formControlName="password"
           placeholder="Password"
           i18n-placeholder="@@M__COMMON__PASSWORD"
@@ -34,7 +35,8 @@
       </div>
     </div>
   
-    <div class="mdl-card__actions">
+    <div class="m-layout--row">
+      <div class="m-layout--spacer"></div>
       <button class="m-btn m-btn--action m-btn--login" (click)="submit()" [disabled]="inProgress">
         <ng-container i18n="@@M__ACTION__SUBMIT">Submit</ng-container>
       </button>

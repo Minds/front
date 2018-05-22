@@ -85,7 +85,7 @@ export class ConfirmPasswordModalComponent {
       this.submitted = true;
       this.error = '';
 
-      await this.client.post('api/v2/validatepassword', {'password': this.form.value.password});
+      await this.client.post('api/v2/settings/password/validate', {'password': this.form.value.password});
 
       if (this._opts && this._opts.onComplete) {
         this._opts.onComplete();

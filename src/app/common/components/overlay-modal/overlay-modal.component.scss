@@ -33,7 +33,9 @@
   }
 
   &.m-overlay-modal--small {
+    background: #FFF;
     max-width: 480px;
+    padding: 16px;
   }
 
   &.m-overlay-modal--no-padding {
