@@ -8,7 +8,7 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../tests/material-mock.spec';
 import { NotificationsFlyoutComponent } from './flyout.component';
 
-import { Mock, MockComponent } from '../../utils/mock';
+import { Mock, MockComponent, MockDirective } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NotificationsFlyoutComponent', () => {
@@ -20,12 +20,13 @@ describe('NotificationsFlyoutComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock, 
-        NotificationsFlyoutComponent,
-        MockComponent({ 
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        MockComponent({
           selector: 'minds-notifications',
-          inputs: [ 'loadOnDemand', 'hidden', 'visible' ],
-        }),],
+          inputs: ['loadOnDemand', 'hidden', 'visible'],
+        }, ['onVisible']),
+        NotificationsFlyoutComponent,
+      ],
       imports: [RouterTestingModule],
       providers: [
         { provide: Client, useValue: clientMock },
@@ -73,7 +74,6 @@ describe('NotificationsFlyoutComponent', () => {
   });
 
   it('Should call onVisible', () => {
-    spyOn(comp.notificationList, 'onVisible').and.callThrough();
     comp.toggleLoad();
     expect(comp.notificationList.onVisible).toHaveBeenCalled();
   });

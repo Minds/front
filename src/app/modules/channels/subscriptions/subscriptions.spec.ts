@@ -46,7 +46,7 @@ describe('ChannelSubscribers', () => {
           selector: 'infinite-scroll',
           inputs: [ 'inProgress', 'moreData', 'inProgress' ],
         }),
-        MockDirective({ selector: '[mdl]', inputs: ['[mdl]'] }),
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         MockDirective({ selector: '[mdlSwitch]', inputs: ['mdlSwitch', 'toggled'] }),
         AbbrPipe, 
         ChannelSubscriptions,

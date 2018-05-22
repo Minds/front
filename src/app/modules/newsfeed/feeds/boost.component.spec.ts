@@ -54,7 +54,7 @@ describe('NewsfeedBoostComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['[mdl]'] }),
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         MockComponent({ selector: 'm-newsfeed--boost-rotator', template: '', inputs: ['interval', 'channel'] }),
         MindsActivityMock,
         MockComponent({

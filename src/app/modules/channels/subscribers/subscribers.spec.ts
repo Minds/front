@@ -24,7 +24,7 @@ describe('ChannelSubscribers', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['[mdl]'] }),
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         MockDirective({ selector: '[mdlSwitch]', inputs: ['mdlSwitch', 'toggled'] }),
         MockComponent({
           selector: 'minds-card',

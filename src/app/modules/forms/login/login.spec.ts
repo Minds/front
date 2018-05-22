@@ -66,7 +66,7 @@ describe('LoginForm', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MockDirective({ selector: '[mdl]', inputs: ['[mdl]'] }), LoginForm], // declare the test component
+      declarations: [MockDirective({ selector: '[mdl]', inputs: ['mdl'] }), LoginForm], // declare the test component
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },

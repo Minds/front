@@ -7,7 +7,7 @@ export function Mock(opts: any = {}) {
   };
 }
 
-export function MockComponent(options: Component) {
+export function MockComponent(options: Component, spies: string[] = []) {
   let metadata: Component = {
     selector: options.selector,
     template: options.template || '',
@@ -20,10 +20,13 @@ export function MockComponent(options: Component) {
       component.prototype[output] = new EventEmitter<any>();
     }
   }
+  for (let spy of spies) {
+    component.prototype[spy] = jasmine.createSpy(spy);
+  }
   return Component(metadata)(component);
 }
 
-export function MockDirective(options: Directive) {
+export function MockDirective(options: Directive, spies: string[] = []) {
   let metadata: Directive = {
     selector: options.selector,
     inputs: options.inputs,
@@ -34,6 +37,9 @@ export function MockDirective(options: Directive) {
     for (let output of options.outputs) {
       directive.prototype[output] = new EventEmitter<any>();
     }
+  }
+  for (let spy of spies) {
+    directive.prototype[spy] = jasmine.createSpy(spy);
   }
   return Directive(metadata)(directive);
 }
