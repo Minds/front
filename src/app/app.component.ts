@@ -52,6 +52,7 @@ export class Minds {
       .avoid([
         '/login',
         '/logout',
+        '/logout/all',
         '/register',
         '/forgot-password',
       ])

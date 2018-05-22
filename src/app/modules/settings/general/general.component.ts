@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -39,13 +39,15 @@ export class SettingsGeneralComponent {
   selectedCategories: string[] = [];
 
   paramsSubscription: Subscription;
+  openSessions: number = 1;
 
   constructor(
     public session: Session,
     public element: ElementRef,
     public client: Client,
     public route: ActivatedRoute,
-    public thirdpartynetworks: ThirdPartyNetworksService
+    public router: Router,
+    public thirdpartynetworks: ThirdPartyNetworksService,
   ) {
     this.minds = window.Minds;
     this.getCategories();
@@ -86,6 +88,7 @@ export class SettingsGeneralComponent {
         this.enabled_mails = !parseInt(response.channel.disabled_emails, 10);
         this.language = response.channel.language || 'en';
         this.selectedCategories = response.channel.categories || [];
+        this.openSessions = response.channel.open_sessions || 1;
 
         this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
@@ -224,5 +227,9 @@ export class SettingsGeneralComponent {
 
     this.changed = true;
     this.saved = false;
+  }
+
+  closeAllSessions() {
+    this.router.navigate(['/logout/all']);
   }
 }

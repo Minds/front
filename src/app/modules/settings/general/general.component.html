@@ -1,5 +1,5 @@
 <!-- START: Actions -->
-<div class="m-settings--section m-layout--row m-border">
+<div class="m-settings--section m-layout--row m-border m-settings--action">
 
   <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">{{error}}</div>
   <div class="m-layout--spacer"></div>
@@ -11,7 +11,7 @@
     >
     <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
   </button>
-  <button class="m-btn  m-btn--slim"
+  <button class="m-btn m-btn--slim"
     [hidden]="!saved"
     >
     <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
@@ -41,7 +41,7 @@
 
   <div class="mdl-card__supporting-text">
 
-    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" [mdlTextfield]>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfitexteld--floating-label" [mdlTextfield]>
       <input class="mdl-textfield__input"
         type="password"
         id="password"
@@ -168,3 +168,18 @@ END: LANGUAGE -->
   </div>
 </div>
 <!-- END: CATEGORIES -->
+
+<!-- START: SESSIONS -->
+<div class="m-settings--section m-border m-settings--close-all-sessions">
+  <h4 i18n="@@MINDS__SETTINGS__SESSIONS">Sessions</h4>
+
+  <p i18n="@@MINDS__SETTINGS__YOU_CURRENTLY_HAVE_X_OPENED">
+    You currently have {{ openSessions }} opened <span *ngIf="openSessions > 1; then sessionsBlock else sessionBlock"></span>.
+  </p>
+  <ng-template #sessionsBlock i18n="@@MINDS__SETTINGS__SESSIONS">sessions</ng-template>
+  <ng-template #sessionBlock i18n="@@MINDS__SETTINGS__SESSION">session</ng-template>
+  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="closeAllSessions()">
+    <ng-container i18n="@@MINDS__SETTINGS__CLOSE_ALL_SESSIONS_CONFIRM">Close All Sessions</ng-container>
+  </button>
+</div>
+<!-- END: SESSIONS -->

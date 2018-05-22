@@ -1,28 +1,35 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 
 
 @Component({
-	template: ``
+  template: ``
 })
 
 export class LogoutComponent {
 
-	constructor(
+  constructor(
     public client: Client,
     public router: Router,
-    public session: Session
+    public route: ActivatedRoute,
+    public session: Session,
   ) {
-		this.logout();
-	}
+    this.route.url.subscribe(segments => {
+      this.logout(segments && segments.length>1 && segments[1].toString() === 'all');
+    });
+  }
 
-	logout() {
-		this.client.delete('api/v1/authenticate');
-		this.session.logout();
-		this.router.navigate(['/login']);
-	}
+  logout(closeAllSessions: boolean = false) {
+    let url: string = 'api/v1/authenticate';
+    if (closeAllSessions)
+      url += '/all';
+
+    this.client.delete(url);
+    this.session.logout();
+    this.router.navigate(['/login']);
+  }
 
 }
