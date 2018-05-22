@@ -17,7 +17,7 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 
 import { ExcerptPipe } from '../../common/pipes/excerpt';
 
-fdescribe('NotificationsComponent', () => {
+describe('NotificationsComponent', () => {
 
   let comp: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
