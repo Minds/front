@@ -68,18 +68,9 @@ export class BlockchainMarketingComponent implements OnInit, OnDestroy {
     this.changeDetectorRef.detectChanges();
   }
 
-  showPreRegister() {
-    const creator = this.overlayModal.create(BlockchainPreRegisterComponent);
-    creator.present();
-  }
-
   showBuy() {
     const creator = this.overlayModal.create(BlockchainTdeBuyComponent);
     creator.present();
-  }
-
-  downloadWhitepaper() {
-    alert('coming soon');
   }
 
   /**

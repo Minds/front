@@ -56,6 +56,15 @@ m-blockchain--marketing {
           margin-left: 12px;
         }
       }
+
+      .m-marketing--marketing-action-button {
+        button.mdl-button {
+          width: 200px;
+          font-size: 20px;
+          background-color: #4690D6 !important;
+          color: white;
+        }
+      }
     }
   
   }

@@ -40,5 +40,6 @@ interface Window {
   google?: any;
   twoOhSix?: any;
   web3?: any;
+  sale?: boolean | string;
 }
 declare var window: Window;

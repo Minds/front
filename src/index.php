@@ -126,7 +126,8 @@
               "recaptchaKey" => Minds\Core\Config::_()->get('google')['recaptcha']['site_key'],
               "max_video_length" => Minds\Core\Config::_()->get('max_video_length'),
               "features" => (object) (Minds\Core\Config::_()->get('features') ?: []),
-              "blockchain" => (object) Minds\Core\Di\Di::_()->get('Blockchain\Manager')->getPublicSettings()
+              "blockchain" => (object) Minds\Core\Di\Di::_()->get('Blockchain\Manager')->getPublicSettings(),
+              "sale" => Minds\Core\Config::_()->get('blockchain')['sale'],
           ];
 
           if(Minds\Core\Session::isLoggedIn()){
