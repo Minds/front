@@ -21,6 +21,7 @@ interface Minds {
   max_video_length?: number;
   features?: any;
   blockchain?: any;
+  sale?: boolean | string;
 }
 
 interface MindsNavigation {
