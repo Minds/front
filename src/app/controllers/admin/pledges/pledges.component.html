@@ -9,17 +9,35 @@
         <th>Wallet Address</th>
         <th>Amount</th>
         <th>Date</th>
+        <th>&nbsp;</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of pledges">
+      <tr *ngFor="let item of pledges; let i = index">
         <td [routerLink]="['/', item.user.guid]">
           <img class="m-admin--pledges--avatar" src="/icon/{{item.user.guid}}/medium/{{item.user.icontime}}">
           @{{item.user.username}}
         </td>
         <td>{{item.wallet_address}}</td>
-        <td>{{item.amount | number:'1.0-4'}}</td>
+        <td>{{item.amount | token:18 | number:'1.0-4'}}</td>
         <td>{{item.timestamp | date:'mediumDate'}}</td>
+        <td class="m-admin--pledges--actions" [ngSwitch]="item.status">
+          <ng-template ngSwitchCase="">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green"
+              (click)="approve(i)"
+              [disabled]="inProgress"
+            >Approve</button>
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+              (click)="reject(i)"
+              [disabled]="inProgress"
+            >Reject</button>
+          </ng-template>
+
+          <ng-template ngSwitchDefault>
+            <span class="m-admin--pledges--actions--status">{{ item.status }}</span>
+          </ng-template>
+        </td>
       </tr>
       <tr *ngIf="pledges.length === 0 && !inProgress">
         <td style="text-align: left">No data</td>

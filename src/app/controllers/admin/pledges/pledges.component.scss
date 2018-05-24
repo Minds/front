@@ -32,6 +32,15 @@ m-admin--pledges {
         td {
           border: 1px solid #ececec;
           font-size: 14px;
+
+          &.m-admin--pledges--actions {
+            text-align: center;
+
+            .m-admin--pledges--actions--status {
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+          }
         }
         th {
           border: 1px solid #ececec;

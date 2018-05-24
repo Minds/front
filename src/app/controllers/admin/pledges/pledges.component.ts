@@ -6,7 +6,9 @@ export type Pledge = {
   user: MindsUser,
   wallet_address: string,
   timestamp: number,
-  amount: number
+  amount: number,
+  phone_number_hash?: string,
+  status: string,
 };
 
 @Component({
@@ -53,6 +55,48 @@ export class AdminPledgesComponent {
 
     this.inProgress = false;
 
+    this.detectChanges();
+  }
+
+  async approve(i) {
+    if (this.inProgress || !confirm('Are you sure you want to APPROVE this pledge?')) {
+      return;
+    }
+
+    this.inProgress = true;
+    this.detectChanges();
+
+    try {
+      const item = this.pledges[i];
+      const response: any = await this.client.put(`api/v1/admin/pledges/${item.phone_number_hash}`);
+
+      this.pledges[i] = response.pledge;
+    } catch (e) {
+      console.error(e);
+    }
+
+    this.inProgress = false;
+    this.detectChanges();
+  }
+
+  async reject(i) {
+    if (this.inProgress || !confirm('Are you sure you want to REJECT this pledge?')) {
+      return;
+    }
+
+    this.inProgress = true;
+    this.detectChanges();
+
+    try {
+      const item = this.pledges[i];
+      const response: any = await this.client.delete(`api/v1/admin/pledges/${item.phone_number_hash}`);
+
+      this.pledges[i] = response.pledge;
+    } catch (e) {
+      console.error(e);
+    }
+
+    this.inProgress = false;
     this.detectChanges();
   }
 
