@@ -19,6 +19,7 @@ import {AdminVerify} from './controllers/admin/verify/verify.component';
 import { RejectionReasonModalComponent } from './controllers/admin/boosts/modal/rejection-reason-modal.component';
 import { AdminInteractions } from './controllers/admin/interactions/interactions.component';
 import { InteractionsTableComponent } from './controllers/admin/interactions/table/table.component';
+import { AdminPledgesComponent } from './controllers/admin/pledges/pledges.component';
 
 export const MINDS_DECLARATIONS: any[] = [
   // Components
@@ -44,4 +45,5 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminFeatured,
   AdminTagcloud,
   AdminVerify,
+  AdminPledgesComponent,
 ];
