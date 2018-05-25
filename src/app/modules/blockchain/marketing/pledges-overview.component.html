@@ -5,7 +5,7 @@
         Pledged
       </td>
       <td class="m-blockchain--marketing--pledges--amounts--value">
-        ${{ stats.amount | number }}
+        {{ stats.amount | number:'1.0-2' }} <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
       </td>
     </tr>
     <tr>
@@ -21,8 +21,8 @@
         Your Pledge
       </td>
       <td class="m-blockchain--marketing--pledge--input">
-        <i class="material-icons">attach_money</i>
-        <input class="m-input m-border" [(ngModel)]="amount" />
+        <input type="number" class="m-input m-border" [(ngModel)]="amount" />
+        <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
         <button class="m-btn m-btn--action" (click)="pledge()">Pledge</button>
       </td>
     </tr>
@@ -51,10 +51,21 @@
     </div>
 
     <div *ngIf="session.getLoggedInUser().rewards">
-      <h2>Your pledge for ${{amount}}</h2>
+      <h2>Your pledge for {{amount | number:'1.0-4'}} ETH</h2>
       <p style="margin-bottom: 0">NOTE: Payment is not required at this time and you are not obligated to follow through with this pledge.</p>
   
       <table>
+        <tr>
+          <td colspan="2" class="m-blockchain--marketing--pledge--address-input">
+            <label>Your ethereum address</label>
+            <input type="text" [(ngModel)]="address" placeholder="0x…" />
+          </td>
+        </tr>
+        <tr style="height: auto;" *ngIf="autodetectedWallet === false">
+          <td colspan="2" class="m-blockchain--marketing--pledge--address-warn">
+            We couldn't detect your wallet address. Ensure Metamask is enabled and unlocked.
+          </td>
+        </tr>
         <tr>
           <td><input type="checkbox" [(ngModel)]="ofac"></td>
           <td>I am not listed on any US OFAC Sanction list or prohibited from engaging in business in the USA</td>
@@ -68,6 +79,7 @@
       <button 
         class="m-btn m-btn--slim m-btn--action"
         (click)="confirm()"
+        [disabled]="!canConfirm()"
         *ngIf="!confirming && !confirmed">
         Confirm Pledge
       </button>

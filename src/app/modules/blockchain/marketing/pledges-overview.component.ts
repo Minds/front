@@ -14,6 +14,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BlockchainPreRegisterComponent } from '../pre-register/pre-register.component';
 import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 import { Session } from '../../../services/session';
+import { Web3WalletService } from '../web3-wallet.service';
 
 @Component({
   selector: 'm-blockchain--pledges--overview',
@@ -28,10 +29,13 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
     pledged: 0,
   };
   
-  amount: number = 100;
+  amount: number = 0.2;
 
+  address: string = '';
   ofac: boolean = true;
   use: boolean = true;
+
+  autodetectedWallet: boolean | null = null;
 
   minds = window.Minds;
   showPledgeModal: boolean = false;
@@ -45,10 +49,12 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
     protected changeDetectorRef: ChangeDetectorRef,
     protected title: MindsTitle,
     protected overlayModal: OverlayModalService,
-    public session: Session,
+    protected web3Wallet: Web3WalletService,
+    public session: Session
   ) { }
 
   ngOnInit() {
+    this.loadWalletAddress();
     this.load();
   }
 
@@ -65,6 +71,13 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
     } catch (e) { }
   }
 
+  async loadWalletAddress() {
+    const address = await this.web3Wallet.getCurrentWallet();
+    this.address = address ? address : '';
+    this.autodetectedWallet = !!this.address;
+    this.detectChanges();
+  }
+
   pledge() {
     if (this.session.isLoggedIn()) {
       this.showPledgeModal = true;
@@ -72,6 +85,10 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
       this.showLoginModal = true;
     }
     this.detectChanges();
+  }
+
+  canConfirm() {
+    return this.address && this.amount > 0 && this.ofac && this.use;
   }
 
   async confirm() {
@@ -82,10 +99,12 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
     this.detectChanges();
 
     try {
-      if (!this.ofac || !this.use)
-        throw { message: "You must accept the checkboxes above" };
-      const response = await this.client.post('api/v2/blockchain/pledges', {
-        amount: this.amount
+      if (!this.canConfirm())
+        throw new Error("You must enter your wallet address and accept the checkboxes above.");
+
+      await this.client.post('api/v2/blockchain/pledges', {
+        amount: this.amount,
+        wallet_address: this.address
       });
       this.confirmed = true;
       setTimeout(() => this.closePledgeModal(), 1000);

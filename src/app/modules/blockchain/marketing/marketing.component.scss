@@ -55,6 +55,12 @@ m-blockchain--marketing {
           margin: 16px 0;
           margin-left: 12px;
         }
+
+        .m-blockchain--marketing--pledges--eth-label {
+          font-size: 22px;
+          margin: 0 0 0 0.35em;
+          color: #ffffff;
+        }
       }
 
       .m-marketing--marketing-action-button {
@@ -103,6 +109,10 @@ m-blockchain--marketing {
     }
   }
 
+  .m-blockchain--marketing--pledges--eth-label {
+    font-weight: 300;
+  }
+
 }
 
 .m-blockchain--marketing--links a {
@@ -146,6 +156,30 @@ m-blockchain--marketing {
     }
   }
 
+}
+
+.m-blockchain--marketing--pledge--address-input {
+  padding-bottom: 16px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    font-size: 16px;
+    padding: 8px;
+  }
+}
+
+.m-blockchain--marketing--pledge--address-warn {
+  font-size: 0.85em;
+  color: #c00;
+  padding-bottom: 16px;
 }
 
 .m-blockchain--marketing-tde-stats {
