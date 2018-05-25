@@ -40,6 +40,10 @@ m-admin--pledges {
               text-transform: uppercase;
               letter-spacing: 0.5px;
             }
+
+            > button {
+              margin: 0 0.35em;
+            }
           }
         }
         th {

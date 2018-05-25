@@ -22,13 +22,13 @@
         <td>{{item.amount | token:18 | number:'1.0-4'}}</td>
         <td>{{item.timestamp | date:'mediumDate'}}</td>
         <td class="m-admin--pledges--actions" [ngSwitch]="item.status">
-          <ng-template ngSwitchCase="">
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green"
+          <ng-template ngSwitchCase="review">
+            <button class="m-btn m-btn--action m-btn--slim"
               (click)="approve(i)"
               [disabled]="inProgress"
             >Approve</button>
 
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+            <button class="m-btn m-btn--destructive m-btn--slim"
               (click)="reject(i)"
               [disabled]="inProgress"
             >Reject</button>
