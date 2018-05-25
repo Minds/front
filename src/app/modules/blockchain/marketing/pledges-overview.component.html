@@ -5,7 +5,7 @@
         Pledged
       </td>
       <td class="m-blockchain--marketing--pledges--amounts--value">
-        {{ stats.amount | number:'1.0-2' }} <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
+        {{ stats.amount | token:18 | number:'1.0-2' }} <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
       </td>
     </tr>
     <tr>

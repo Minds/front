@@ -15,6 +15,7 @@ import { BlockchainPreRegisterComponent } from '../pre-register/pre-register.com
 import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../web3-wallet.service';
+import * as BN from 'bn.js';
 
 @Component({
   selector: 'm-blockchain--pledges--overview',
@@ -66,7 +67,7 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
         count: response.count,
         pledged: response.pledged
       };
-      this.amount = this.stats.pledged;
+      this.amount = this.web3Wallet.EthJS.fromWei(this.stats.pledged, 'ether');
       this.detectChanges();
     } catch (e) { }
   }
@@ -100,13 +101,29 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
 
     try {
       if (!this.canConfirm())
-        throw new Error("You must enter your wallet address and accept the checkboxes above.");
+        throw new Error('You must enter your wallet address and accept the checkboxes above.');
 
-      await this.client.post('api/v2/blockchain/pledges', {
+      const response: any = await this.client.post('api/v2/blockchain/pledges', {
         amount: this.amount,
         wallet_address: this.address
       });
+
+      if (!response.pledge) {
+        throw new Error('Internal server error');
+      }
+
       this.confirmed = true;
+
+      const amount = (new BN(`${this.stats.amount}`))
+        .add(new BN(`${response.pledge.amount}`))
+        .toString();
+
+      this.stats = {
+        amount,
+        count: parseInt(this.stats.count, 10) + 1,
+        pledged: `${response.amount}`
+      };
+
       setTimeout(() => this.closePledgeModal(), 1000);
     } catch (err) {
       this.error = err.message;
