@@ -44,6 +44,7 @@ export class LoginComponent {
 
   ngOnInit() {
     if (this.session.isLoggedIn()) {
+      this.loginReferrer.register('/newsfeed');
       this.loginReferrer.navigate();
     }
 
