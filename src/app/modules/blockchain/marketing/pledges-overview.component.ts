@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
+  ElementRef, Input,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -33,8 +33,8 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
   amount: number = 0.2;
 
   address: string = '';
-  ofac: boolean = true;
-  use: boolean = true;
+  ofac: boolean = false;
+  use: boolean = false;
 
   autodetectedWallet: boolean | null = null;
 
@@ -44,6 +44,9 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
   confirming: boolean = false;
   confirmed: boolean = false;
   error: string;
+
+  @Input() phase: string = 'presale';
+  inProgress: boolean = false;
 
   constructor(
     protected client: Client,
@@ -60,16 +63,21 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
   }
 
   async load() {
+    this.inProgress = true;
+    this.detectChanges();
+
     try {
       const response: any = await this.client.get('api/v2/blockchain/pledges');
       this.stats = {
         amount: response.amount,
         count: response.count,
-        pledged: response.pledged
+        pledged: response.pledge.eth_amount
       };
-      this.amount = this.web3Wallet.EthJS.fromWei(this.stats.pledged, 'ether');
-      this.detectChanges();
+      this.amount = this.stats.pledged;
     } catch (e) { }
+
+    this.inProgress = false;
+    this.detectChanges();
   }
 
   async loadWalletAddress() {

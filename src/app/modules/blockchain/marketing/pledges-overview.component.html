@@ -1,29 +1,34 @@
 <div class="m-blockchain--marketing--pledges">
-  <table class="m-blockchain--marketing--pledges--amounts">
+  <table class="m-blockchain--marketing--pledges--amounts" *ngIf="!inProgress">
+    <ng-container *ngIf="phase === 'presale'">
+      <tr>
+        <td class="m-blockchain--marketing--pledges--amounts--label">
+          Pledged
+        </td>
+        <td class="m-blockchain--marketing--pledges--amounts--value">
+          {{ stats.amount | token:18 | number:'1.0-2' }}
+          <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="m-blockchain--marketing--pledges--amounts--label">
+          Channels
+        </td>
+        <td class="m-blockchain--marketing--pledges--amounts--value">
+          {{ stats.count | number }}
+        </td>
+      </tr>
+    </ng-container>
     <tr>
       <td class="m-blockchain--marketing--pledges--amounts--label">
-        Pledged
-      </td>
-      <td class="m-blockchain--marketing--pledges--amounts--value">
-        {{ stats.amount | token:18 | number:'1.0-2' }} <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
-      </td>
-    </tr>
-    <tr>
-      <td class="m-blockchain--marketing--pledges--amounts--label">
-        Channels
-      </td>
-      <td class="m-blockchain--marketing--pledges--amounts--value">
-        {{ stats.count | number }}
-      </td>
-    </tr>
-    <tr>
-      <td class="m-blockchain--marketing--pledges--amounts--label">
-        Your Pledge
+        Your {{ phase === 'presale' ? 'Pledge' : 'Reservation'}}
       </td>
       <td class="m-blockchain--marketing--pledge--input">
         <input type="number" class="m-input m-border" [(ngModel)]="amount" />
         <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
-        <button class="m-btn m-btn--action" (click)="pledge()">Pledge</button>
+        <button class="m-btn m-btn--action" (click)="pledge()">
+          {{ phase === 'presale' ? 'Pledge' : 'Reserve'}}
+        </button>
       </td>
     </tr>
   </table>
@@ -51,13 +56,19 @@
     </div>
 
     <div *ngIf="session.getLoggedInUser().rewards">
-      <h2>Your pledge for {{amount | number:'1.0-4'}} ETH</h2>
-      <p style="margin-bottom: 0">NOTE: Payment is not required at this time and you are not obligated to follow through with this pledge.</p>
+      <h2>Your {{ phase === 'presale' ? 'pledge' : 'reservation'}} for {{amount | number:'1.0-4'}} ETH</h2>
+
+      <p class="m-blockchain--marketing--pledge--note">
+        Token {{ phase === 'presale' ? 'pledges' : 'reservations'}} need to be approved by Minds before they can be
+        purchased. Please enter your Ethereum wallet address that you will use to purchase the tokens so that address
+        will then be whitelisted. Payment is not required at this time and you are not obligated to follow through with
+        this {{ phase === 'presale' ? 'pledge' : 'reservation'}}.
+      </p>
   
       <table>
         <tr>
           <td colspan="2" class="m-blockchain--marketing--pledge--address-input">
-            <label>Your ethereum address</label>
+            <label class="m-blockchain--marketing--pledge--wallet-label">Your Ethereum Address</label>
             <input type="text" [(ngModel)]="address" placeholder="0x…" />
           </td>
         </tr>
@@ -67,12 +78,22 @@
           </td>
         </tr>
         <tr>
-          <td><input type="checkbox" [(ngModel)]="ofac"></td>
-          <td>I am not listed on any US OFAC Sanction list or prohibited from engaging in business in the USA</td>
+          <td><input id="ofac-check" type="checkbox" [(ngModel)]="ofac"></td>
+          <td class="m-blockchain--marketing--pledge--check-label">
+            <label for="ofac-check">
+              I am not listed on any US OFAC Sanction list or prohibited from engaging in business in the USA
+            </label>
+          </td>
         </tr>
         <tr>
-          <td><input type="checkbox" [(ngModel)]="use"></td>
-          <td>I intend to use these tokens on the Minds Platform and not as an investment</td>
+          <td><input id="use-check" type="checkbox" [(ngModel)]="use"></td>
+          <td
+            class="m-blockchain--marketing--pledge--check-label"
+          >
+            <label for="use-check">
+              I intend to use these tokens on the Minds Platform and not as an investment
+            </label>
+          </td>
         </tr>
       </table>
 
@@ -81,7 +102,7 @@
         (click)="confirm()"
         [disabled]="!canConfirm()"
         *ngIf="!confirming && !confirmed">
-        Confirm Pledge
+        Confirm {{ phase === 'presale' ? 'Pledge' : 'Reservation'}}
       </button>
       <button 
         class="m-btn m-btn--slim"

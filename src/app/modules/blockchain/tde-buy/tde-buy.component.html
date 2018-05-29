@@ -1,31 +1,18 @@
-<div class="m-blockchain--tde-buy">
-  <h2>Token Distribution Event</h2>
-
-  <div class="m-blockchain--tde-buy--form">
-    <div class="m-blockchain--tde-buy--field">
-      <input type="text"
-        [ngModel]="model.tokens"
-        (ngModelChange)="setTokens($event)"
-        [disabled]="!tokensRate"
-      />
-      <span>
-        Tokens
-      </span>
-    </div>
-
-    <div class="m-blockchain--tde-buy--field">
-      <input type="text"
-        [ngModel]="model.eth"
-        (ngModelChange)="setEth($event)"
-        [disabled]="!tokensRate"
-      />
-      <span>ETH</span>
-    </div>
-  </div>
+<div class="m-blockchain--tde-buy m-blockchain--marketing--modal">
+  <h2>
+    You're approved to purchase
+    <ng-container *ngIf="pledged !== null">{{ pledged | number:'1.0-2' }} ETH</ng-container>
+    <ng-template #notLoaded>&hellip;</ng-template>
+    of Minds Tokens
+  </h2>
 
   <p>
-    Minds Tokens are available to be purchased during the Token Distribution Event period. 
-    If you have a pre-approved (whitelisted) address to send over 5ETH then please make sure you send the funds using that wallet address.
+    Your Ethereum Address, <b>{{ address }}</b>, has been whitelisted to accept
+    <b>
+      <ng-container *ngIf="pledged !== null">{{ pledged | number:'1.0-2' }} ETH.</ng-container>
+      <ng-template #notLoaded>&hellip;</ng-template>
+    </b>
+    You can either send the funds directly to <b>{{ tdeAddress }}</b> or click the button below.
   </p>
 
   <p *ngIf="error" class="m-blockchain--tde-buy--error">
@@ -34,10 +21,14 @@
 
   <div class="m-blockchain--tde-buy--action">
     <button class="m-blockchain--tde-buy-button"
-      [disabled]="model.eth <= 0"
       [hidden]="inProgress || success || metamaskError"
       (click)="buy()"
     >Buy</button>
+
+    <button class="m-blockchain--tde-buy-button" style="margin-left: 1em;"
+      *ngIf="!inProgress && !success && !metamaskError"
+      (click)="changeAmount()"
+    >Increase Amount</button>
 
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
 

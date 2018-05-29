@@ -26,7 +26,7 @@ export class TokenDistributionEventService {
       value: this.web3Wallet.EthJS.toWei(ethAmount, 'ether'),
       gasPrice: this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei'),
       data: '0x'
-    }, `Buy ${ethAmount} ETH worth of Minds Tokens. ${message}`.trim());
+    }, `purchase of ${ethAmount} ETH worth Minds Tokens. ${message}`.trim());
   }
 
   // Service provider

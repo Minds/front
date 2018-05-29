@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
 import { Client } from '../../../services/api/client';
 import { Web3WalletService } from '../web3-wallet.service';
-import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   moduleId: module.id,
@@ -16,25 +16,28 @@ export class BlockchainTdeBuyComponent implements OnInit {
   error: string = '';
   metamaskError: string = '';
 
-  model = {
-    eth: 0.1,
-    tokens: 35
-  };
-
-  tokensRate = 350;
+  pledged: number | null = null;
+  address: string = '…';
+  tdeAddress: string;
 
   protected _checkWalletAvailabilityTimer;
+
+  _opts: any;
+  set opts(opts: any) {
+    this._opts = opts;
+  }
 
   constructor(
     protected cd: ChangeDetectorRef,
     protected tokenDistributionEvent: TokenDistributionEventService,
     protected client: Client,
     protected web3Wallet: Web3WalletService,
-    protected overlayService: TransactionOverlayService
+    private overlayModal: OverlayModalService,
   ) { }
 
   ngOnInit() {
-    this.load();
+    this.updatePledgeConfirmation();
+    this.tdeAddress = this.web3Wallet.config.token_distribution_event_address;
   }
 
   ngOnDestroy() {
@@ -43,25 +46,25 @@ export class BlockchainTdeBuyComponent implements OnInit {
     }
   }
 
-  async load() {
+  async updatePledgeConfirmation() {
     this.inProgress = true;
     this.detectChanges();
 
     try {
-      let response: any = await this.client.get(`api/v2/blockchain/tde/rates`);
+      const response: any = await this.client.get('api/v2/blockchain/pledges', { brief: 1 });
 
-      if (!response || !response.rates) {
-        this.error = 'There was an error reading token rates';
-      } else {
-        this.tokensRate = response.rates.eth;
+      if (!response.pledge) {
+        throw new Error('No pledge found');
       }
 
+      this.pledged = response.pledge.eth_amount;
+      this.address = response.pledge.wallet_address;
     } catch (e) {
-      this.error = (e && e.message) || 'There was an error reading token rates';
-    } finally {
-      this.inProgress = false;
-      this.detectChanges();
+      console.error(e);
     }
+
+    this.inProgress = false;
+    this.detectChanges();
 
     this.checkWalletAvailability();
   }
@@ -100,33 +103,19 @@ export class BlockchainTdeBuyComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  setEth(amount: string) {
-    if (!amount) {
-      amount = '0';
-    }
-
-    this.model.eth = Math.floor(parseFloat(amount) * 1000000) / 1000000;
-    this.model.tokens = Math.floor((this.model.eth * this.tokensRate) * 10000) / 10000;
-  }
-
-  setTokens(amount: string) {
-    if (!amount) {
-      amount = '0';
-    }
-
-    this.model.tokens = Math.floor(parseFloat(amount) * 10000) / 10000;
-    this.model.eth = Math.floor((this.model.tokens / this.tokensRate) * 1000000) / 1000000;
-  }
-
   async buy() {
     this.inProgress = true;
     this.detectChanges();
 
     try {
-      let bought = await await this.tokenDistributionEvent.buy(this.model.eth);
+      let bought = await await this.tokenDistributionEvent.buy(this.pledged);
 
       if (bought) {
         this.success = true;
+
+        if (this._opts && this._opts.onComplete) {
+          this._opts.onComplete({ done: true });
+        }
       } else {
         this.error = 'There was an issue buying tokens';
       }
@@ -137,5 +126,13 @@ export class BlockchainTdeBuyComponent implements OnInit {
 
       this.detectChanges();
     }
+  }
+
+  changeAmount() {
+    if (this._opts && this._opts.onComplete) {
+      this._opts.onComplete({ changeAmount: true });
+    }
+
+    this.overlayModal.dismiss();
   }
 }

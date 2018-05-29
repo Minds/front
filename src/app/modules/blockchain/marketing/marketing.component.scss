@@ -127,6 +127,7 @@ m-blockchain--marketing {
 
   h2 {
     color: #444 !important;
+    font-size: 30px;
   }
 
   m-blockchain--marketing--onboard {
@@ -173,13 +174,28 @@ m-blockchain--marketing {
     border: 1px solid #eee;
     font-size: 16px;
     padding: 8px;
+    letter-spacing: 1px;
   }
 }
 
 .m-blockchain--marketing--pledge--address-warn {
   font-size: 0.85em;
-  color: #c00;
+  color: #888;
   padding-bottom: 16px;
+}
+
+.m-blockchain--marketing--pledge--note {
+  margin-bottom: 0;
+}
+
+.m-blockchain--marketing--pledge--note,
+.m-blockchain--marketing--pledge--check-label {
+  line-height: 1.35;
+  color: #444;
+}
+
+.m-blockchain--marketing--pledge--wallet-label {
+  font-weight: 500;
 }
 
 .m-blockchain--marketing-tde-stats {
