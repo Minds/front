@@ -195,6 +195,28 @@ export class GroupsService {
       });
   }
 
+    // Moderation
+
+    grantModerator(group: any, user: string) {
+      return this.clientService.put(`${this.base}management/${group.guid}/${user}/moderator`)
+        .then((response: any) => {
+          return !!response.done;
+        })
+        .catch(e => {
+          return false;
+        });
+    }
+
+    revokeModerator(group: any, user: string) {
+      return this.clientService.delete(`${this.base}management/${group.guid}/${user}/moderator`)
+        .then((response: any) => {
+          return !response.done;
+        })
+        .catch(e => {
+          return true;
+        });
+    }
+
   // Invitations
 
   canInvite(user: string) {
