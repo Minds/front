@@ -40,7 +40,7 @@ export class BlogView {
 
   scroll_listener;
 
-  menuOptions: Array<string> = ['edit', 'mute', 'feature', 'delete', 'report', 'subscribe', 'set-explicit', 'remove-explicit', 'rating'];
+  menuOptions: Array<string> = ['edit', 'follow', 'feature', 'delete', 'report', 'subscribe', 'set-explicit', 'remove-explicit', 'rating'];
 
   @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
 

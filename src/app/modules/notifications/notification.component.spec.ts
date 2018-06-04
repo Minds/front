@@ -270,7 +270,10 @@ describe('NotificationsComponent', () => {
       },
       "params" : {
         time_created: 2222,
-        bid: 10
+        bid: 10,
+        parent: {
+          guid: 123
+        }
       }
     };
     fixture.detectChanges();

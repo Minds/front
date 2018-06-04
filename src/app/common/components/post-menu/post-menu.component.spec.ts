@@ -103,7 +103,7 @@ describe('PostMenuComponent', () => {
     fixture = TestBed.createComponent(PostMenuComponent);
 
     comp = fixture.componentInstance;
-    comp.options = ["edit", "translate", "share", "mute", "unmute", "feature", "unfeature", "delete", "report", "block"];
+    comp.options = ["edit", "translate", "share", "follow", "unfollow", "feature", "unfeature", "delete", "report", "block"];
     comp.entity = {};
     // comp.opened = true;
     comp.entity.ownerObj = { guid: '1' };

@@ -239,11 +239,11 @@
       </a>
 
       <ng-container *ngIf="notification.entityObj.type == 'comment'">
-        <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.params?.parent?.type != 'group'">
+        <a [routerLink]="['/newsfeed', notification.params?.parent?.guid]" *ngIf="notification.params?.parent?.type != 'group'">
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_COMMENT">{{notification.fromObj.name}} tagged you in a comment</p>
         </a>
 
-        <a [routerLink]="['/groups/profile', notification.entityObj.parent_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+        <a [routerLink]="['/groups/profile', notification.params?.parent?.guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_CONVERSATION">
             <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> tagged you in
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation

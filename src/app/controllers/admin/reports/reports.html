@@ -61,7 +61,7 @@
       <minds-card [object]="report.entityObj" hostClass="mdl-card" *ngIf="report.entityObj && report.entityObj.type != 'comment'"></minds-card>
       <div *ngIf="report.entityObj && report.entityObj.type == 'comment'" class="m-comment-wrapper">
         <div class="m-admin-reports--comment-note">
-          <a target="_blank" [routerLink]="['/newsfeed', report.entityObj.parent_guid]" i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD">View parent and its comment thread</a>
+          <a target="_blank" [routerLink]="['/newsfeed', report.entityObj.entity_guid]" i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD">View parent and its comment thread</a>
         </div>
         <minds-card-comment [object]="report.entityObj" class="mdl-card"></minds-card-comment>
       </div>

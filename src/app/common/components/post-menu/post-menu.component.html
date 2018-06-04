@@ -31,10 +31,10 @@
   <!-- REPORT -->
   <li class="mdl-menu__item" *ngIf="options.indexOf('report') !== -1 && entity.owner_guid != session.getLoggedInUser().guid" (click)="report()" i18n="Report as notify something@@M__ACTION__REPORT">Report</li>
   <!-- NOTIFICATIONS -->
-  <ng-container *ngIf="options.indexOf('mute') !== -1">
-    <li class="mdl-menu__item" *ngIf="!asyncMute" disabled i18n="@@COMMON__POST_MENU__MUTE_NOTIFICATIONS">Mute notifications</li>
-    <li class="mdl-menu__item" *ngIf="asyncMute && !entity['is:muted']" (click)="mute()" i18n="@@COMMON__POST_MENU__MUTE_NOTIFICATIONS">Mute notifications</li>
-    <li class="mdl-menu__item" *ngIf="asyncMute && entity['is:muted']" (click)="unmute()" i18n="@@COMMON__POST_MENU__UNMUTE_NOTIFICATIONS">Unmute notifications</li>
+  <ng-container *ngIf="options.indexOf('follow') !== -1">
+    <li class="mdl-menu__item" *ngIf="!asyncFollow" disabled i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS">Follow post</li>
+    <li class="mdl-menu__item" *ngIf="asyncFollow && entity['is:following']" (click)="unfollow()" i18n="@@COMMON__POST_MENU__UNFOLLOW_NOTIFICATIONS">Un-follow post</li>
+    <li class="mdl-menu__item" *ngIf="asyncFollow && !entity['is:following']" (click)="follow()" i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS">Follow post</li>
   </ng-container>
   <!-- BLOCK -->
   <ng-container *ngIf="options.indexOf('block') !== -1 && entity.ownerObj.guid != session.getLoggedInUser().guid ">
