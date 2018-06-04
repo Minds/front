@@ -41,7 +41,7 @@
       [emitter]="scrollEmitter"
       #scrollArea
       (previous)="load({ offset: offset, container: scrollArea })">
-      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-100"
+      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
         *ngIf="chatNotice">
         <span [innerHtml]="chatNotice"></span>
       </div>
@@ -78,15 +78,15 @@
             [routerLink]="['/', message.owner.username]">
           <div [hidden]="!message.showTs" class="m-messenger--conversations-ts mdl-color-text--blue-grey-100">{{ message.time_created * 1000 | date: 'medium' }}</div>
       </div>
-      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-100"
+      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
         *ngIf="blocked">
         <span i18n>You have blocked this chat</span>
       </div>
-      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-100"
+      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
         *ngIf="!blocked && unavailable">
         <span i18n>This chat is no longer available</span>
       </div>
-      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-100"
+      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
         *ngIf="!blocked && invalid">
         <span i18n>Awaiting other party&hellip;</span>
       </div>
