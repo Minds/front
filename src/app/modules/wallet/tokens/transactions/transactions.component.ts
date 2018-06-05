@@ -162,7 +162,7 @@ export class WalletTokenTransactionsComponent {
 
       if (response) {
         this.transactions.push(...(response.transactions || []));
-
+        
         if (response['load-next']) {
           this.offset = response['load-next'];
         } else {

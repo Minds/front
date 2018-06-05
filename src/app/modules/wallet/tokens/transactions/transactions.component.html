@@ -88,6 +88,10 @@
         <span>{{ transaction.wallet_address }}</span>
       </div>
 
+      <div *ngIf="transaction.failed" class="m-token--ledger--reward-details--meta">
+        <span>FAILED</span>
+      </div>
+
       <div class="m-token--ledger--reward-details--meta m-token--ledger--reward-details--meta-wrapper" *ngIf="isP2p(transaction)">
         <img class="m-token--ledger--avatar" [routerLink]="['/', getSelf().username]"  [src]="getSelf().avatar">
 
