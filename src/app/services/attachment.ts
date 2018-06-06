@@ -111,9 +111,11 @@ export class AttachmentService {
   }
 
   upload(fileInput: HTMLInputElement) {
+    this.reset();
+
     this.attachment.progress = 0;
     this.attachment.mime = '';
-
+    
     let file = fileInput ? fileInput.files[0] : null;
 
     if (!file) {
@@ -253,11 +255,14 @@ export class AttachmentService {
   }
 
   preview(content: string, detectChangesFn?: Function) {
-
     let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/ig),
       url;
 
     if (!match) {
+      return;
+    }
+    
+    if (this.attachment.preview) {
       return;
     }
 
@@ -297,7 +302,6 @@ export class AttachmentService {
           if (!data) {
             this.resetRich();
             if (detectChangesFn) detectChangesFn();
-
             return;
           }
 
