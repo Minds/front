@@ -28,6 +28,16 @@
   .m-newsfeed--sidebar, .m-newsfeed--boost-sidebar{
     max-width:270px;
 
+    m-ads-boost {
+      minds-card {
+        minds-card-group.mdl-card {
+          .m-groups-card-stats {
+            width: 154px;
+          }
+        }
+      }
+    }
+
     .m-btn--with-icon i {
       display: none;
     }
