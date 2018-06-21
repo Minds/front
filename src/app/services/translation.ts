@@ -51,7 +51,14 @@ export class TranslationService {
   getUserDefaultLanguage(): Promise<any> {
     return this.getLanguages()
       .then(() => {
-        return this.storage.get(`translation:userDefault`);
+        let lang = this.storage.get(`translation:userDefault`);
+
+        if (lang === 'null') {
+          // Some users have the default language cache tainted
+          lang = null;
+        }
+
+        return lang;
       });
   }
 
