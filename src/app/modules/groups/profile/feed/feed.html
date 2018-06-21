@@ -23,7 +23,7 @@
       *ngFor="let a of activity; let i = index"
       class="mdl-card item"
       [object]="a"
-      [canDelete]="group['is:owner']"
+      [canDelete]="group['is:owner'] || group['is:moderator']"
       (delete)="delete(a)"
       [hideTabs]="filter == 'review'"
     >
