@@ -602,11 +602,26 @@
     </div> 
   </ng-template>
 
-  <ng-template ngSwitchCase="contributions">
-    <a target="_blank"
-      routerLink="/wallet/tokens/contributions">
-      <p i18n="@@NOTIFICATIONS__NOTIFICATION__CONTRIBUTIONS__YOU_HAVE_RECEIVED_X_TOKENS">
-        You have received {{notification.params.amount}} tokens.
+  <ng-template ngSwitchCase="contributions"></ng-template>
+
+  <ng-template ngSwitchCase="rewards_summary">
+    <a
+      target="_blank"
+      routerLink="/wallet/tokens/contributions"
+    >
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_RECEIVED_X_TOKENS_TODAY">
+        You earned {{notification.params.amount}} tokens today.
+      </p>
+    </a>
+  </ng-template>
+
+  <ng-template ngSwitchCase="rewards_reminder">
+    <a
+      target="_blank"
+      routerLink="/wallet/tokens/contributions"
+    >
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_LEFT">
+        You have {{notification.params.left}} left to earn tokens today!
       </p>
     </a>
   </ng-template>

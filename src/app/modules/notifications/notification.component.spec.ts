@@ -447,11 +447,11 @@ describe('NotificationsComponent', () => {
     expect(notification.nativeElement.innerHTML).toContain('<!---->Your payment request for $10.00 was declined.');
   });
 
-  it('Should load the notification contributions', () => {
+  it('Should load the notification rewards summary', () => {
     comp.notification = {
       "type":"notification",
       "guid":"843204301747658770",
-      "notification_view":"contributions",
+      "notification_view":"rewards_summary",
       'entityObj': {
         'type' : 'activity',
         'title': 'Title'
@@ -467,7 +467,30 @@ describe('NotificationsComponent', () => {
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('You have received 10 tokens.');
+    expect(notification.nativeElement.innerHTML).toContain('You earned 10 tokens today.');
+  });
+
+  it('Should load the notification rewards reminder', () => {
+    comp.notification = {
+      "type":"notification",
+      "guid":"843204301747658770",
+      "notification_view":"rewards_reminder",
+      'entityObj': {
+        'type' : 'activity',
+        'title': 'Title'
+      },
+      "fromObj": {
+        name: 'name'
+      },
+      "params" : {
+        time_created: 2222,
+        left: 'some time'
+      }
+    };
+    fixture.detectChanges();
+    expect(comp.notification).not.toBeNull();
+    const notification = fixture.debugElement.query(By.css('p'));
+    expect(notification.nativeElement.innerHTML).toContain('You have some time left to earn tokens today!');
   });
 
 
