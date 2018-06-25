@@ -50,6 +50,12 @@
           <span>Payouts</span>
       </a>
       <a class="m-topbar--navigation--item"
+        routerLink="/admin/withdrawals"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span>Withdrawals</span>
+      </a>
+      <a class="m-topbar--navigation--item"
         routerLink="/admin/tagcloud"
         routerLinkActive="m-topbar--navigation--item-active"
         >
@@ -72,6 +78,7 @@
 <minds-admin-monetization *ngIf="filter == 'monetization'"></minds-admin-monetization>
 <minds-admin-programs *ngIf="filter == 'programs'"></minds-admin-programs>
 <minds-admin-payouts *ngIf="filter == 'payouts'"></minds-admin-payouts>
+<minds-admin-withdrawals *ngIf="filter == 'withdrawals'"></minds-admin-withdrawals>
 <minds-admin-featured *ngIf="filter == 'featured'"></minds-admin-featured>
 <minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
 <m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>

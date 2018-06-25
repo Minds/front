@@ -1,4 +1,8 @@
 <div class="m-token--ledger">
+  <div class="m-token--ledger-remote" *ngIf="remote">
+    <b>@{{remoteUser}}</b>'s transactions
+  </div>
+
   <div class="m-token--ledger-filters m-border" *ngIf="!preview; else previewHeader">
     
     <m-dropdown class="m-token--ledger-filters--addresses">
@@ -93,7 +97,7 @@
       </div>
 
       <div class="m-token--ledger--reward-details--meta m-token--ledger--reward-details--meta-wrapper" *ngIf="isP2p(transaction)">
-        <img class="m-token--ledger--avatar" [routerLink]="['/', getSelf().username]"  [src]="getSelf().avatar">
+        <img class="m-token--ledger--avatar" [routerLink]="['/', getSelf(transaction).username]"  [src]="getSelf(transaction).avatar">
 
         <i class="material-icons m-token--ledger--direction">{{getOther(transaction).isSender ? 'arrow_back' : 'arrow_forward'}}</i>
 
