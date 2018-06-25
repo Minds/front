@@ -93,7 +93,7 @@ export class WalletTokenWithdrawComponent {
   }
 
   canWithdraw() {
-    return !this.hasWithdrawnToday && !this.inProgress && !this.error && this.amount > 0 && this.amount <= this.available;
+    return !this.hasWithdrawnToday && !this.inProgress && this.amount > 0 && this.amount <= this.available;
   }
 
   async withdraw() {
