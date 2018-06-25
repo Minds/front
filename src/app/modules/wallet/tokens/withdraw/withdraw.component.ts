@@ -31,10 +31,10 @@ export class WalletTokenWithdrawComponent {
     protected contract: WithdrawContractService,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.load();
     try {
-      this.checkPreviousWithdrawals();
+      await this.checkPreviousWithdrawals();
     } catch (e) {
       this.error = 'You can only withdraw once a day';
     }
@@ -102,7 +102,7 @@ export class WalletTokenWithdrawComponent {
     this.detectChanges();
 
     try {
-      this.checkPreviousWithdrawals();
+      await this.checkPreviousWithdrawals();
 
       let result: { address, guid, amount, gas, tx} = await this.contract.request(
         this.session.getLoggedInUser().guid, 
