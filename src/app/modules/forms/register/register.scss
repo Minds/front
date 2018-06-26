@@ -8,17 +8,16 @@ minds-form-register{
 
   .mdl-card__actions{
     display:flex;
+    padding-left:$minds-padding*2;
     align-items:center;
   }
 
   .m-register-tac{
     font-size:11px;
-    padding-left:$minds-padding*2;
   }
 
   //this is exactly the same as modal.scss
   .m-fb-register-button{
-
     background: #FFF;
     color: #3b5998;
     width: 170px;
@@ -76,5 +75,9 @@ minds-form-register{
     right: 15px;
     top: 20px;
     color: green;
+  }
+
+  .mdl-checkbox {
+    padding-top: 5px;
   }
 }
