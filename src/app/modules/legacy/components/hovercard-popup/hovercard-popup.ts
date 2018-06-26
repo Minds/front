@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HovercardService } from '../../services/hovercard';
+import { HovercardService } from '../../../../services/hovercard';
 
 @Component({
   selector: 'm-hovercard-popup',

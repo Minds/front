@@ -1,11 +1,3 @@
-import {HovercardPopup} from './components/hovercard-popup/hovercard-popup';
-import {MINDS_GRAPHS} from './components/graphs';
-import {GraphSVG} from './components/graphs/svg';
-import {GraphPoints} from './components/graphs/points';
-import {FORM_COMPONENTS} from './components/forms/forms';
-import {AnalyticsImpressions} from './components/analytics/impressions';
-import {MindsTooltip} from './components/tooltip/tooltip';
-
 import {AdminAnalytics} from './controllers/admin/analytics/analytics';
 import {AdminBoosts} from './controllers/admin/boosts/boosts';
 import {AdminPages} from './controllers/admin/pages/pages';
@@ -23,13 +15,6 @@ import { AdminWithdrawals } from './controllers/admin/withdrawals/withdrawals.co
 
 export const MINDS_DECLARATIONS: any[] = [
   // Components
-  HovercardPopup,
-  MINDS_GRAPHS,
-  GraphSVG,
-  GraphPoints,
-  FORM_COMPONENTS,
-  AnalyticsImpressions,
-  MindsTooltip,
   InteractionsTableComponent,
 
   // Controllers; Controller-based directives
