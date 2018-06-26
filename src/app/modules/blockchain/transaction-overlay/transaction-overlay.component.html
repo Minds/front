@@ -83,39 +83,62 @@
 
     <ng-container *ngIf="comp === COMP_LOCAL">
       <!-- LOCAL -->
-      <div class="m--blockchain--transaction-overlay--field">
-        <span class="m--blockchain--transaction-overlay--field-label" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__GAS_PRICE">Gas Price</span>
+      <div class="mdl-grid mdl-grid--no-spacing">
+        <div class="mdl-cell mdl-cell--8-col">
 
-        <input class="m--blockchain--transaction-overlay--field-input"
-          type="number"
-          [(ngModel)]="data.tx.gasPrice"
-        />
-      </div>
+          <div class="m--blockchain--transaction-overlay--field">
+            <span class="m--blockchain--transaction-overlay--field-label" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__GAS_PRICE">Gas Price</span>
 
-      <div class="m--blockchain--transaction-overlay--field">
-        <span class="m--blockchain--transaction-overlay--field-label" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__GAS">Gas</span>
+            <input class="m--blockchain--transaction-overlay--field-input"
+              type="number"
+              [(ngModel)]="data.tx.gasPrice"
+            />
+          </div>
 
-        <input class="m--blockchain--transaction-overlay--field-input"
-          type="number"
-          [(ngModel)]="data.tx.gas"
-        />
-      </div>
+          <div class="m--blockchain--transaction-overlay--field">
+            <span class="m--blockchain--transaction-overlay--field-label" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__GAS">Gas</span>
 
-      <div class="m--blockchain--transaction-overlay--field">
-        <button class="m-btn"
-          (click)="cancel()"
-          i18n="@@M__ACTION__CANCEL"
-        >
-          Cancel
-        </button>
+            <input class="m--blockchain--transaction-overlay--field-input"
+              type="number"
+              [(ngModel)]="data.tx.gas"
+            />
+          </div>
 
-        <button class="m-btn m-btn--action"
-          (click)="approve()"
-          [disabled]="!validateTxObject()"
-          i18n="@@M__ACTION__APPROVE"
-        >
-          Approve
-        </button>
+          <div class="m--blockchain--transaction-overlay--field">
+            <button class="m-btn"
+              (click)="cancel()"
+            >
+              Cancel
+            </button>
+
+            <button class="m-btn m-btn--action"
+              (click)="approve()"
+              [disabled]="!validateTxObject()"
+            >
+              Approve
+            </button>
+          </div>
+        </div>
+
+        <div class="mdl-cell mdl-cell--4-col">
+          <div class="m--blockchain--transaction-overlay--balance">
+            <div class="m--blockchain--transaction-overlay--balance--subtext">Current balance:</div>
+            <div class="m--blockchain--transaction-overlay--balance--amount">
+              <span class="mdl-color-text--green">{{balance}}</span> MINDS
+            </div>
+            <div class="m--blockchain--transaction-overlay--balance--amount">
+              <span class="mdl-color-text--green">{{ethBalance}}</span> ETH
+            </div>
+          </div>
+          <a class="m--blockchain--transaction-overlay--coloured-button" href="{{minds.site_url}}token" target="_blank">
+            <span>Buy Tokens</span>
+          </a>
+
+          <a class="m--blockchain--transaction-overlay--coloured-button" href="https://www.coinbase.com" target="_blank">
+            <span>Buy ETH</span>
+          </a>
+
+        </div>
       </div>
       <!-- LOCAL -->
     </ng-container>
