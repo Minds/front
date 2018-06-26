@@ -109,6 +109,34 @@ describe('Service: Attachment Service', () => {
     expect(clientMock.get).toHaveBeenCalledTimes(2);
   }));
 
+
+  it('preview call twice if url change and paste similar ones', fakeAsync(() => {
+    service.preview('https://github.com/releases');
+    tick(1000);
+    service.preview('https://github.com/releases2');
+    tick(1000);
+    service.preview('https://github.com/releases2');
+    tick(1000);
+    service.preview('https://github.com/releases');
+    tick(1000);
+    expect(clientMock.get).toHaveBeenCalledTimes(3);
+  }));
+
+  it('preview shouldnt be called if already has a file', fakeAsync(() => {
+    let file = {
+      attachment_guid : 'guid',
+      custom_data : {
+        thumbnail_src : 'thumbnail/url/'
+      }
+    };
+
+    service.load(file);
+    
+    service.preview('githubcom/releases');
+    tick(1000);
+    expect(clientMock.get).toHaveBeenCalledTimes(0);
+  }));
+
   it('preview should be called once', fakeAsync(() => {
     service.preview('githubcom/releases');
     tick(1000);
