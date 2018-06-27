@@ -167,26 +167,21 @@
         </li>
 
         <li
-          *mIfFeature="'blockchain_creditcard'; else spacer"
-          (click)="setPayloadType('creditcard')"
-          [class.m-wire--creator-selector--highlight]="!wire.payloadType || wire.payloadType === 'creditcard'"
+          (click)="buyTokens()" 
         >
           <div class="m-wire--creator-selector-type">
-            <i class="material-icons">credit_card</i>
-            <h5 i18n="@@M__COMMON__USD">
-              <span i18n="@@WIRE__CREATOR__CREDIT_CARD">Credit Card</span>
-              <m-tooltip icon="help" i18n="@@WIRE__CREATOR__CREDIT_CARD_TOOLTIP">
-                Credit cards may be used to wire, though we recommend first purchasing tokens in order to access a discount.
-                Recipients will receive the token value.
-              </m-tooltip>
+            <i class="material-icons">monetization_on</i>
+            <h5 i18n="@@M__COMMON__BUY_MINDS_TOKENS">
+              <span>Buy Tokens</span>
             </h5>
 
             <span class="m-wire--creator-selector-subtext" i18n="@@M__WIRE_CREATOR__DONT_HAVE_TOKENS">
-              Don't have Tokens? No problem.
+              Don't have Tokens?
             </span>
           </div>
           <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
         </li>
+
         <ng-template #spacer>
             <li class="m-layout--spacer"></li>
         </ng-template>

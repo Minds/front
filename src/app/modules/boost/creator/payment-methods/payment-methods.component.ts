@@ -3,6 +3,8 @@ import { CurrencyPipe } from '@angular/common';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { Client } from '../../../../services/api/client';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { Router } from '@angular/router';
 
 type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
 
@@ -12,6 +14,8 @@ type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
   templateUrl: 'payment-methods.component.html'
 })
 export class BoostCreatorPaymentMethodsComponent {
+
+  minds: Minds = window.Minds;
 
   @Input() boost;
   @Output() boostChanged: EventEmitter<any> = new EventEmitter();
@@ -39,7 +43,9 @@ export class BoostCreatorPaymentMethodsComponent {
     private _changeDetectorRef: ChangeDetectorRef,
     private web3Wallet: Web3WalletService,
     private client: Client,
-    private tokenContract: TokenContractService
+    private tokenContract: TokenContractService,
+    private overlayService: OverlayModalService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -165,5 +171,10 @@ export class BoostCreatorPaymentMethodsComponent {
 
   getOnChainInterfaceLabel() {
     return this.web3Wallet.getOnChainInterfaceLabel();
+  }
+
+  buyTokens() {
+    this.overlayService.dismiss();
+    this.router.navigate(['/token']);
   }
 }

@@ -8,6 +8,7 @@ import { WireService } from '../wire.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { MindsUser } from '../../../interfaces/entities';
+import { Router } from '@angular/router';
 
 export type PayloadType = 'onchain' | 'offchain' | 'creditcard';
 
@@ -118,6 +119,7 @@ export class WireCreatorComponent implements AfterViewInit {
     private currency: CurrencyPipe,
     private web3Wallet: Web3WalletService,
     private tokenContract: TokenContractService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -440,6 +442,11 @@ export class WireCreatorComponent implements AfterViewInit {
         this.error = e.message;
       }
     }
+  }
+
+  buyTokens() {
+    this.overlayModal.dismiss();
+    this.router.navigate(['/token']);
   }
 
   /**
