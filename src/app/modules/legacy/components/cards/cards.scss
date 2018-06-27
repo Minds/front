@@ -403,7 +403,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     img {
       width: 100%;
       max-height: 1500px;
-      object-fit: scale-down;
+      object-fit: contain;
     }
   }
 
