@@ -22,7 +22,7 @@ export class GroupsListComponent {
   inProgress: boolean = false;
   offset: string = '';
   entities: Array<any> = [];
-  filter: string = 'featured';
+  filter: string = 'top';
   paramsSubscription: Subscription;
 
   constructor(
@@ -42,12 +42,6 @@ export class GroupsListComponent {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
         this.filter = params['filter'];
-
-        switch (this.filter) {
-          case 'top':
-            this.filter = 'featured';
-            break;
-        }
 
         this.inProgress = false;
         this.moreData = true;
@@ -74,8 +68,8 @@ export class GroupsListComponent {
     let endpoint, key;
 
     switch (this.filter) {
-      case 'trending':
-        endpoint = `api/v1/entities/${this.filter}/groups`;
+      case 'top':
+        endpoint = `api/v1/entities/trending/groups`;
         key = 'entities';
         break;
       default:
