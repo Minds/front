@@ -94,6 +94,14 @@ export class Activity {
       return;
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
+
+    if (
+      this.activity.custom_type == 'batch' 
+      && this.activity.custom_data 
+      && this.activity.custom_data[0].src
+    ) {
+      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
+    }
     
     if (!this.activity.message) {
       this.activity.message = '';
