@@ -34,6 +34,8 @@ export class MindsAvatar {
   set _object(value: any) {
     if (!value)
       return;
+    
+    value.icontime = value.icontime ? value.icontime : '';
     this.object = value;
     this.src = `${this.minds.cdn_url}fs/v1/avatars/${this.object.guid}/large/${this.object.icontime}`;
     if (this.object.type === 'user')
