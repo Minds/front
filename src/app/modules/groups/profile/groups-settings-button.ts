@@ -92,24 +92,28 @@ export class GroupsSettingsButton {
     }
   }
 
-  mute() {
+  async mute() {
     this.group['is:muted'] = true;
 
-    this.service.muteNotifications(this.group)
-      .then((isMuted: boolean) => {
-        this.group['is:muted'] = isMuted;
-      });
+    try {
+      const isMuted: boolean = await this.service.muteNotifications(this.group)
+      this.group['is:muted'] = isMuted;
+    } catch (e) {
+      this.group['is:muted'] = false;
+    }
 
     this.showMenu = false;
   }
 
-  unmute() {
-    this.group['is:muted'] = true;
+  async unmute() {
+    this.group['is:muted'] = false;
 
-    this.service.unmuteNotifications(this.group)
-      .then((isMuted: boolean) => {
-        this.group['is:muted'] = isMuted;
-      });
+    try {
+      const isMuted: boolean = await this.service.unmuteNotifications(this.group);
+      this.group['is:muted'] = isMuted;
+    } catch (e) {
+      this.group['is:muted'] = true;
+    }
 
     this.showMenu = false;
   }
@@ -118,27 +122,27 @@ export class GroupsSettingsButton {
     this.featureModalOpen = true;
   }
 
-  feature() {
+  async feature() {
     this.featured = true;
     this.group.featured = true;
 
-    this.client.put(`api/v1/admin/feature/${this.group.guid}/${this.category}`, {})
-      .then((response: any) => {
-        this.featureModalOpen = false;
-      })
-      .catch((e) => {
-        this.featured = false;
-      });
+    try {
+      await this.client.put(`api/v1/admin/feature/${this.group.guid}/${this.category}`, {})
+      this.featureModalOpen = false;
+    } catch (e) {
+      this.featured = false;
+    }
   }
 
-  unfeature() {
+  async unfeature() {
     this.featured = false;
     this.group.featured = false;
 
-    this.client.delete(`api/v1/admin/feature/${this.group.guid}`)
-      .catch((e) => {
-        this.featured = true;
-      })
+    try {
+      await this.client.delete(`api/v1/admin/feature/${this.group.guid}`);
+    } catch (e) {
+      this.featured = true;
+    }
   }
 
   onFeatureModalClose(e) {
