@@ -24,6 +24,20 @@
     </p>
   </div>
 
+  <div class="m-token-join--form" *ngIf="plusPrompt">
+    <p>
+      One more step!
+      To qualify for our crypto rewards program, you will need to sign up for Minds Plus.
+      This will cost $1 for the first month and $5 for every following month with the option for cancellation.
+      Cancellation will not impact your ability to earn rewards. This is required to help us offset the expensive fees associated with sending SMS text messages internationally!
+    </p>
+    <m-plus--subscription
+      #subscription
+      >
+    </m-plus--subscription>
+  </div>
+
+
   <div class="m-token-join--form" *ngIf="confirming">
     <div class="m-token-join--form--input-wrapper">
       <input 

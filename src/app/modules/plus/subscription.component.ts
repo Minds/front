@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { 
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
 import { Client } from '../../common/api/client.service';
 
@@ -16,6 +22,7 @@ export class PlusSubscriptionComponent {
   inProgress: boolean = true;
   completed: boolean = false;
   active: boolean = false;
+  @Output('completed') completed$: EventEmitter<any> = new EventEmitter;
 
   constructor(private client: Client, private cd: ChangeDetectorRef) {
   }
@@ -62,6 +69,7 @@ export class PlusSubscriptionComponent {
         this.inProgress = false;
         this.source = '';
         this.completed = true;
+        this.completed$.next(true);
         this.user.plus = true;
         this.detectChanges();
       })
