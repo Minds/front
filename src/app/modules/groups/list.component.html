@@ -30,6 +30,15 @@
             Start a new group
           </m-tooltip>
       </a>
+
+      <div class="m-layout--spacer"></div>
+
+      <m-topbar--navigation--options
+        (change)="onOptionsChange($event)" 
+        [options]="filter == 'top' ? [ 'rating' ] : []"
+        *ngIf="filter === 'top'"
+        >
+      </m-topbar--navigation--options>
     </div>
   </div>
 </div>
