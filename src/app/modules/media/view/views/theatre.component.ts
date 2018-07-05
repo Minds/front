@@ -19,7 +19,7 @@ import { RecommendedService } from '../../components/video/recommended.service';
     <div class="m-media-stage" *ngIf="object.subtype == 'image'"
       [class.m-media-stage--has-nav]="isAlbum()"
     >
-      <img src="/fs/v1/thumbnail/{{object.guid}}/xlarge"/>
+      <img [src]="getThumbnail()"/>
     </div>
     <div class="m-media-stage" *ngIf="object.subtype == 'video'"
       [class.m-media-stage--has-nav]="isAlbum()"
@@ -60,6 +60,8 @@ export class MediaTheatreComponent {
   counterSeconds: number = 0;
   counterLimit: number = 10;
 
+  minds = window.Minds;
+
   constructor(
     public session: Session,
     public client: Client, 
@@ -72,6 +74,12 @@ export class MediaTheatreComponent {
     if (!value.guid)
       return;
     this.object = value;
+  }
+
+  getThumbnail() {
+    const url = this.object.paywalled || (this.object.wire_threshold && this.object.wire_threshold !== '0') ? this.minds.site_url : this.minds.cdn_url;
+
+    return url + `fs/v1/thumbnail/${this.object.guid}/xlarge`;
   }
 
   prev() {
