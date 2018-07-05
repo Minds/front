@@ -1,6 +1,5 @@
 <div class="m-groups--tile m-border">
     
-  <m-safe-toggle *ngIf="session.isAdmin()" [(entity)]="entity"></m-safe-toggle>
   <div class="m-groups--tile-banner">
     <div class="m-groups--tile-banner-img"
         [ngStyle]="{'background-image': 'url(' + minds.cdn_url + 'fs/v1/banners/' + entity.guid + '/fat/' + entity.icontime + ')'}"
@@ -27,6 +26,8 @@
         Open
       </button>
     </ng-template>
+
+    <m-safe-toggle *ngIf="session.isAdmin()" [(entity)]="entity"></m-safe-toggle>
   </div>
   
 </div>
