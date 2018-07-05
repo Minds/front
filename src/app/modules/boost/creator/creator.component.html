@@ -56,6 +56,7 @@
             class="m-boost--creator-wide-input--edit"
             [ngModel]="boost.amount | number"
             (ngModelChange)="setBoostAmount($event)"
+            (focus)="amountEditorFocus()"
             (blur)="amountEditorBlur()"
             (keydown.enter)="amountEditorBlur()"
             (keydown.esc)="amountEditorBlur()"

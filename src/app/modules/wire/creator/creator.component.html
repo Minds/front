@@ -43,6 +43,7 @@
           class="m-wire--creator-wide-input--edit"
           [ngModel]="wire.amount | number"
           (ngModelChange)="setAmount($event)"
+          (focus)="amountEditorFocus()"
           (blur)="amountEditorBlur()"
           (keydown.enter)="amountEditorBlur()"
           (keydown.esc)="amountEditorBlur()"

@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -30,7 +30,7 @@ export interface WireStruc {
   selector: 'm-wire--creator',
   templateUrl: 'creator.component.html'
 })
-export class WireCreatorComponent implements AfterViewInit {
+export class WireCreatorComponent {
 
   minds = window.Minds;
 
@@ -69,6 +69,9 @@ export class WireCreatorComponent implements AfterViewInit {
   error: string = '';
 
   tokenRate: number;
+
+  wasAmountChanged: boolean = false;
+  defaultAmount: number | '' = this.wire.amount;
 
   protected submitted: boolean;
 
@@ -130,10 +133,6 @@ export class WireCreatorComponent implements AfterViewInit {
       });
     this.loadBalances();
     this.loadTokenRate();
-  }
-
-  ngAfterViewInit() {
-    this.amountEditorFocus();
   }
 
   async loadBalances() {
@@ -225,15 +224,13 @@ export class WireCreatorComponent implements AfterViewInit {
   setDefaults() {
     this.wire.amount = 1;
     this.wire.recurring = false;
-    // this.setPayloadType('offchain');
     let payloadType = localStorage.getItem('preferred-payment-method');
-    if (payloadType === 'usd') {
-      payloadType = 'creditcard';
-    }
-    if (['onchain', 'offchain', 'creditcard'].indexOf(payloadType) === -1) {
+    if (['onchain', 'offchain'].indexOf(payloadType) === -1) {
       payloadType = 'offchain';
     }
     this.setPayloadType(<PayloadType>payloadType);
+
+    this.defaultAmount = this.wire.amount;
   }
 
   // General
@@ -286,14 +283,16 @@ export class WireCreatorComponent implements AfterViewInit {
   amountEditorFocus() {
     this.editingAmount = true;
 
-    if (!this.wire.amount) {
-      this.wire.amount = 0;
+    if (!this.wasAmountChanged) {
+      this.wire.amount = '';
     }
 
     this.cd.detectChanges();
   }
 
   setAmount(amount: string) {
+    this.wasAmountChanged = true;
+
     if (!amount) {
       this.wire.amount = 0;
       return;
@@ -313,6 +312,11 @@ export class WireCreatorComponent implements AfterViewInit {
    */
   amountEditorBlur() {
     this.editingAmount = false;
+
+    if (!this.wasAmountChanged) {
+      this.wire.amount = this.defaultAmount;
+      return;
+    }
 
     if (!this.wire.amount) {
       this.wire.amount = 0;

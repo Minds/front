@@ -94,6 +94,9 @@ export class BoostCreatorComponent implements AfterViewInit {
   criticalError: boolean = false;
   error: string = '';
 
+  wasAmountChanged: boolean = false;
+  defaultAmount: number | '' = this.boost.amount;
+
   @Input('object') set data(object) {
     this.object = object;
   }
@@ -119,7 +122,6 @@ export class BoostCreatorComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.syncAllowedTypes();
-    this.amountEditorFocus();
   }
 
   getPreferredPaymentMethod() {
@@ -238,18 +240,16 @@ export class BoostCreatorComponent implements AfterViewInit {
   amountEditorFocus() {
     this.editingAmount = true;
 
-    if (!this.boost.amount) {
+    if (!this.boost.amount || !this.wasAmountChanged) {
       this.boost.amount = '';
     }
 
     this._changeDetectorRef.detectChanges();
-
-    //if (this._amountEditor.nativeElement) {
-    //  setTimeout(() => (<HTMLInputElement>this._amountEditor.nativeElement).focus(), 100);
-    //}
   }
 
   setBoostAmount(amount: string) {
+    this.wasAmountChanged = true;
+
     if (!amount) {
       this.boost.amount = 0;
       return;
@@ -270,6 +270,11 @@ export class BoostCreatorComponent implements AfterViewInit {
    */
   amountEditorBlur() {
     this.editingAmount = false;
+
+    if (!this.wasAmountChanged) {
+      this.boost.amount = this.defaultAmount;
+      return;
+    }
 
     if (!this.boost.amount) {
       this.boost.amount = 0;
