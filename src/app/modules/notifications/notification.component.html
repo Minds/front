@@ -98,7 +98,7 @@
         <div *ngIf="notification.entityObj.subtype != 'blog'">
           <a [routerLink]="['/media', notification.entityObj.guid]">
             <p>
-              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON">{{notification.fromObj.name}} commented on</ng-container>
+              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON">{{notification.fromObj.name}} commented on </ng-container>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title" >{{notification.entityObj.title | excerpt}}</span>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.owner_guid != session.getLoggedInUser().guid && !notification.entityObj.title" i18n="object belonging to user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT">{{notification.entityObj.ownerObj.name}}'s {{notification.entityObj.subtype}}</span>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title" i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT">your {{notification.entityObj.subtype}}</span>
