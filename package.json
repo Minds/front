@@ -47,7 +47,7 @@
     "@angular/language-service": "~6.0.0",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
-    "@types/node": "~6.0.60",
+    "@types/node": "~8",
     "codelyzer": "^4.0.1",
     "gulp": "~4.0.0",
     "gulp-autoprefixer": "^3.0.2",

@@ -13,15 +13,15 @@
       </m-tooltip>
     </h5>
 
-    <span class="m-boost--creator-selector--description m-boost--creator-selector--description--small" i18n="@@M__COMMON__BALANCE_VALUE">
+    <span class="m-boost--creator-selector--description m-boost--creator-selector--description--small">
       <m-tooltip anchor="left">
-        <span m-tooltip--anchor class="m-boost--creator-selector--hoverable">Balance</span>
+        <span m-tooltip--anchor class="m-boost--creator-selector--hoverable"  i18n="@@M__COMMON__BALANCE_LABEL">Balance</span>
 
-        <ng-container *ngIf="!balances.isReceiverOnchain; else receiverOnchainTooltip">
+        <ng-container *ngIf="!balances.isReceiverOnchain; else receiverOnchainTooltip" i18n="@@M__COMMON__BALANCE_VALUE_ETH_IFACE_LABEL">
           This balance is for the {{ balances.onChainAddress | addressExcerpt:true }} wallet that is
           currently active in your Ethereum interface.
         </ng-container>
-        <ng-template #receiverOnchainTooltip>
+        <ng-template #receiverOnchainTooltip i18n="@@M__COMMON__BALANCE_VALUE_AS_RCV_LABEL">
           This balance is for the {{ balances.onChainAddress | addressExcerpt:true }} wallet that is
           currently set up as the receiver wallet for your channel.
         </ng-template>
@@ -51,12 +51,14 @@
       </m-tooltip>
     </h5>
 
-    <span class="m-boost--creator-selector--description m-boost--creator-selector--description--small" i18n="@@M__COMMON__BALANCE_VALUE">
+    <span class="m-boost--creator-selector--description m-boost--creator-selector--description--small">
       <m-tooltip anchor="left">
-        <span m-tooltip--anchor class="m-boost--creator-selector--hoverable">Balance</span>
+        <span m-tooltip--anchor class="m-boost--creator-selector--hoverable" i18n="@@M__COMMON__BALANCE_LABEL">Balance</span>
 
-        This balance is for your Minds.com OffChain wallet. 
-        Transactions made from this address will not appear on the blockchain.
+        <ng-container i18n="@@M__COMMON__BALANCE_VALUE_OFFCHAIN_LABEL">
+          This balance is for your Minds.com OffChain wallet.
+          Transactions made from this address will not appear on the blockchain.
+        </ng-container>
       </m-tooltip>:
 
       <ng-container>

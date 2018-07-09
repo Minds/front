@@ -15,6 +15,7 @@ interface Minds {
   socket_server: string;
   thirdpartynetworks: any;
   categories: any;
+  languages: any;
   language: any;
   stripe_key?: any;
   recaptchaKey?: string;

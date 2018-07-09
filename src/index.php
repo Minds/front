@@ -1,7 +1,5 @@
 <?php
     $meta = Minds\Core\SEO\Manager::get();
-    $language = '';
-    $language = Minds\Core\Di\Di::_()->get('I18n')->getLanguage() ?: 'en';
 ?>
 
 <?php
@@ -120,7 +118,8 @@
               "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
               "navigation" => Minds\Core\Navigation\Manager::export(),
               "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
-              'language' => $language,
+              'language' => Minds\Core\Di\Di::_()->get('I18n')->getLanguage(),
+              'languages' => Minds\Core\Di\Di::_()->get('I18n')->getLanguages(),
               "categories" => Minds\Core\Config::_()->get('categories') ?: [],
               "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
               "recaptchaKey" => Minds\Core\Config::_()->get('google')['recaptcha']['site_key'],

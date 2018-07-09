@@ -33,6 +33,7 @@ export class SettingsGeneralComponent {
   password1: string;
   password2: string;
 
+  languages: Array<{code, name}> = [];
   language: string = 'en';
 
   categories: { id, label, selected }[];
@@ -54,6 +55,16 @@ export class SettingsGeneralComponent {
   }
 
   ngOnInit() {
+    this.languages = [];
+    for (let code in this.minds.languages) {
+      if (this.minds.languages.hasOwnProperty(code)) {
+        this.languages.push({
+          code,
+          name: this.minds.languages[code],
+        });
+      }
+    }
+
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid'] && params['guid'] === this.session.getLoggedInUser().guid) {
         this.load(true);
