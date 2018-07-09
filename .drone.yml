@@ -11,8 +11,8 @@ pipeline:
     image: markharding/minds-front-base
     commands:
       - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
-      - ./build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
-      - ./build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
+      - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
+      - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
     when:
       event: [ push, tag, deployment ]
       branch: [ master, test/codebuild, delta/launch ]
