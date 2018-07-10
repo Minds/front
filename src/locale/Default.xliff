@@ -257,7 +257,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="NOTIFICATIONS__NOTIFICATION__COMMENTED_ON" datatype="html">
-        <source>%1$s commented on</source>
+        <source>%1$s commented on </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/notifications/notification.component.ts</context>
           <context context-type="linenumber">101</context>
@@ -4407,7 +4407,7 @@
       </trans-unit>
       <trans-unit id="FORMS__REGISTER__TOS_ACCEPTANCE_LABEL" datatype="html">
         <source> I accept the
-          {{id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"}} Terms &amp; Conditions {{id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"}} 
+          {{id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"}} Terms &amp; Conditions {{id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"}}
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.ts</context>
@@ -6881,6 +6881,72 @@
           <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="M_TOPBAR_NEWSFEED" datatype="html">
+        <source>Newsfeed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="M_TOPBAR_CHANNELS" datatype="html">
+        <source>Channels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="M_TOPBAR_VIDEOS" datatype="html">
+        <source>Videos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="M_TOPBAR_IMAGES" datatype="html">
+        <source>Images</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="M_TOPBAR_BLOGS" datatype="html">
+        <source>Blogs</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="M_TOPBAR_GROUPS" datatype="html">
+        <source>Groups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/navigation.component.ts</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="M__COMMON__TOTAL_EARNINGS_30_MINUS_FEES" datatype="html">
         <source>
         This is your total earnings for the past 30 days, minus any fees.
@@ -7356,22 +7422,36 @@
           <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__LANGUAGE_SETTINGS_TITLE" datatype="html">
+        <source>Language Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
+          <context context-type="linenumber">141</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SITE_LANGUAGE_LABEL" datatype="html">
+        <source>Site language:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
+          <context context-type="linenumber">143</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="MINDS__SETTINGS__CATEGORIES_TITLE" datatype="html">
         <source>Categories</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
-          <context context-type="linenumber">156</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__SESSIONS" datatype="html">
         <source>Sessions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
-          <context context-type="linenumber">174</context>
+          <context context-type="linenumber">173</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__YOU_CURRENTLY_HAVE_X_OPENED" datatype="html">
@@ -7380,21 +7460,21 @@
   </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
-          <context context-type="linenumber">176</context>
+          <context context-type="linenumber">175</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__SESSION" datatype="html">
         <source>session</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
-          <context context-type="linenumber">180</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__CLOSE_ALL_SESSIONS_CONFIRM" datatype="html">
         <source>Close All Sessions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
-          <context context-type="linenumber">182</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__DISABLE_CHANNEL" datatype="html">
