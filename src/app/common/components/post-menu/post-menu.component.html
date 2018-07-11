@@ -6,11 +6,6 @@
   <li class="mdl-menu__item" *ngIf="options.indexOf('edit') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="selectOption('edit')" i18n="@@M__ACTION__EDIT">Edit</li>
   <li class="mdl-menu__item" *ngIf="options.indexOf('share') !== -1" (click)="share()" i18n="@@M__ACTION__SHARE">Share</li>
   <li class="mdl-menu__item" *ngIf="options.indexOf('translate') !== -1  && isTranslatable" (click)="selectOption('translate')" i18n="@@M__ACTION__TRANSLATE">Translate</li>
-  <!--BOOST-->
-  <ng-container *ngIf="options.indexOf('see-more-like-this') !== -1">
-    <li class="mdl-menu__item" (click)="seeMore()" i18n="@@M__ACTION__SEE_MORE_LIKE_THIS">See more like this</li>
-    <li class="mdl-menu__item" (click)="seeLess()" i18n="@@M__ACTION__SEE_LESS_LIKE_THIS">See less like this</li>
-  </ng-container>
   <!-- FEATURE -->
   <ng-container *ngIf="options.indexOf('feature') !== -1">
     <li class="mdl-menu__item" *ngIf="!entity.featured && session.isAdmin()" (click)="feature()" i18n="@@M__ACTION__FEATURE">Feature</li>

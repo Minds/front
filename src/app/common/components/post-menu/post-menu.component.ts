@@ -23,8 +23,6 @@ type Option =
   | 'unmonetize'
   | 'subscribe'
   | 'unsubscribe'
-  | 'see-more-like-this'
-  | 'see-less-like-this'
   | 'rating'
   | 'block';
 
@@ -301,16 +299,6 @@ export class PostMenuComponent {
 
   detectChanges() {
     this.cd.markForCheck();
-  }
-
-  seeMore() {
-    this.client.put(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {});
-    this.selectOption('see-more-like-this');
-  }
-
-  seeLess() {
-    this.client.delete(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {});
-    this.selectOption('see-less-like-this');
   }
 
   setRating(rating: number) {

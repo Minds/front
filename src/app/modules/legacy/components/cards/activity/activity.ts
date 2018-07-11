@@ -43,11 +43,10 @@ export class Activity {
   set showBoostMenuOptions(value: boolean) {
     this._showBoostMenuOptions = value;
 
-    if (value) {
-      this.menuOptions.push('see-more-like-this');
-    } else {
+    if (!value) {
       this.menuOptions = this.defaultMenuOptions;
     }
+
     this.menuOptions = this.menuOptions.slice();
   }
   type: string;
