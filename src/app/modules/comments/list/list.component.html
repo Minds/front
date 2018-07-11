@@ -103,6 +103,9 @@
                 <minds-rich-embed
                   [preview]="attachment.getMeta()"
                 ></minds-rich-embed>
+                <div class="attachment-preview-delete" (click)="resetPreview()">
+                  <i class="material-icons">delete</i>
+                </div>
               </div>
             </div>
 
