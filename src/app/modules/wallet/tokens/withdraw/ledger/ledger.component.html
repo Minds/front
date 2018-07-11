@@ -7,7 +7,10 @@
   </div>
   <ng-template #previewHeader>
     <div class="m-token--ledger-filters m-token--ledger-filters--preview m-border">
-      Last month
+      <div class="m-token--ledger--date-selectors">
+        <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
+        <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
+      </div>
     </div>
   </ng-template>
 
