@@ -88,14 +88,13 @@ export class WebtorrentService {
   // Enable/Disable; Support
 
   isEnabled() {
-    const disabled = JSON.parse(this.storage.get('webtorrent:disabled') || 'false');
+    const disabled = window.Minds.user.p2p_media_disabled;
 
     return !disabled && this.isBrowserSupported();
   }
 
   setEnabled(enabled: boolean) {
     const current = this.isEnabled();
-    this.storage.set('webtorrent:disabled', JSON.stringify(!enabled || !this.isBrowserSupported()));
 
     if (current && !enabled) {
       this.destroy();
