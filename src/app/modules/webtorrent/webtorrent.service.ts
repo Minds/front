@@ -88,6 +88,8 @@ export class WebtorrentService {
   // Enable/Disable; Support
 
   isEnabled() {
+    if (!window.Minds.user)
+      return false;
     const disabled = window.Minds.user.p2p_media_disabled;
 
     return !disabled && this.isBrowserSupported();
