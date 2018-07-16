@@ -45,7 +45,9 @@
         Password must have more than 8 characters. Including uppercase, numbers, and special characters (ie. !,#,@)
       </m-tooltip>
     </div>
-
+    <div class="mdl-cell mdl-cell--12-col password-help" [hidden]="!form.value.password">
+      <span>Password must have more than 8 characters. Including uppercase, numbers, and special characters (ie. !,#,@)</span>
+    </div>
     <div class="mdl-cell mdl-cell--12-col" [hidden]="!form.value.password">
       <input
         type="password"

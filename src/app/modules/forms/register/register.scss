@@ -6,6 +6,10 @@ minds-form-register{
     overflow: visible !important;
   }
 
+  .password-help {
+    padding-left: 4px;
+  }
+
   .mdl-card__actions{
     display:flex;
     padding-left:$minds-padding*2;
