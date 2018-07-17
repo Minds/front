@@ -3,7 +3,7 @@
     <div class="m-wire-console--rewards--reward" *ngFor="let reward of rewards; let i = index">
       <div class="m-wire-console--rewards-amount">
         <input type="number" [ngModel]="reward.amount" (ngModelChange)="setAmount(i, $event)" [placeholder]="1"/>
-        <span>Tokens</span>
+        <span i18n="@@WIRE__CONSOLE__REWARDS_TABLE__INPUTS__TOKENS_LABEL">Tokens</span>
       </div>
       <div class="m-wire-console--rewards-description">
         <textarea [ngModel]="reward.description" (ngModelChange)="setDescription(i, $event)" [autoGrow]

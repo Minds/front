@@ -9,28 +9,28 @@
     <h2>...</h2>
   </ng-template>
 
-  <h3>Tokens</h3>
+  <h3 i18n="@@WALLET__BALANCES__TOKENS__TOKENS_TITLE">Tokens</h3>
 
   <div class="m-wallet--balance--addresses">
 
-    <span *ngIf="addresses.length">Breakdown</span>
+    <span *ngIf="addresses.length" i18n="@@WALLET__BALANCES__TOKENS__BREAKDOWN_TITLE">Breakdown</span>
 
     <div class="m-wallet--balance--addresses-address" *ngFor="let address of addresses">
       
       <div class="m-wallet--balance--addresses-address-col">
         <label class="m-wallet--balance--addresses-address-label">
-          <span>{{address.label}} Address</span>
-          <m-tooltip icon="help" *ngIf="address.label == 'Receiver'">
+          <span i18n="@@WALLET__BALANCES__TOKENS__ADDRESS_LABEL">{{address.label}} Address</span>
+          <m-tooltip icon="help" *ngIf="address.label == 'Receiver'" i18n="@@WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_RECEIVER">
             This is your public address which will receive Boost & Wire transactions via the blockchain.
             You can change this in Addresses.
           </m-tooltip>
-          <m-tooltip icon="help" *ngIf="address.label == 'OffChain'">
+          <m-tooltip icon="help" *ngIf="address.label == 'OffChain'" i18n="@@WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_OFFCHAIN">
             This is your offchain address where your rewards are deposited. These transaction will not appear on the blockchain.
           </m-tooltip>
-          <m-tooltip icon="help" *ngIf="address.label == 'OnChain'">
+          <m-tooltip icon="help" *ngIf="address.label == 'OnChain'" i18n="@@WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_ONCHAIN">
             This is your currently active Web3/Metamask wallet. This address differs from what you have configured to receive Boost & Wires via the blockchain.
           </m-tooltip>
-          <m-tooltip icon="help" *ngIf="address.label == 'OnChain & Receiver'">
+          <m-tooltip icon="help" *ngIf="address.label == 'OnChain & Receiver'" i18n="@@WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_ONCHAIN_AND_RECEIVER">
             This is your currently active Web3/Metamask wallet and is also configured to receive Boost & Wires via the blockchain.
           </m-tooltip>
         </label>
@@ -49,8 +49,8 @@
   </div>
 
   <div class="m-wallet--balance--testnet m-border">
-    <p>Minds is currently running on the Rinkeby TestNet.</p>
-    <p style="margin-top: 8px"><b>1 Token = 1000 Views</b></p>
+    <p i18n="@@WALLET__BALANCES__TOKENS__RINKEBY_NOTICE">Minds is currently running on the Rinkeby TestNet.</p>
+    <p style="margin-top: 8px"><b i18n="@@WALLET__BALANCES__TOKENS__TOKEN_TO_VIEWS_CONV_1_1000">1 Token = 1000 Views</b></p>
   </div>
 
 </div>

@@ -12,11 +12,11 @@
   
     <ul class="m-dropdown--list">
 
-      <p class="m-wire-threshold-input--info" *ngIf="rewards.length">
+      <p class="m-wire-threshold-input--info" *ngIf="rewards.length" i18n="@@WIRE__THRESHOLD_INPUT__SELECT_FROM_OR_ENTER_CUSTOM_DESC">
         Select from one of your rewards or enter a custom amount of tokens to restrict who can see this post.
       </p>
 
-      <p class="m-wire-threshold-input--info" *ngIf="!rewards.length">
+      <p class="m-wire-threshold-input--info" *ngIf="!rewards.length" i18n="@@WIRE__THRESHOLD_INPUT__ENTER_HOW_MANY_DESC">
         Enter how many tokens users should send you in order to see this post.
       </p>
 
@@ -25,12 +25,12 @@
         [class.selected]="threshold.min == reward.amount"
         (click)="selectTier(reward)"
         >
-        <b>{{ reward.amount }} Tokens and Over</b>
+        <b i18n="@@WIRE__THRESHOLD_INPUT__TOKENS_AND_OVER_LABEL">{{ reward.amount }} Tokens and Over</b>
         <p>{{ reward.description }}</p>
       </li>
 
       <li class="m-dropdown--list--item m-dropdown--list--custom-threshold">
-        <b>Visible to supporters who send over</b>
+        <b i18n="@@WIRE__THRESHOLD_INPUT__VISIBLE_TO">Visible to supporters who send over</b>
         <div class="m-wire-threshold--custom">
           <i *ngIf="threshold.type == 'tokens'" class="material-icons m-wire-threshold-input--type">account_balance</i>
 
@@ -42,7 +42,7 @@
             #minAmountInput
           />
 
-          <span>Tokens</span>
+          <span i18n="@@WIRE__THRESHOLD_INPUT__TOKENS_LABEL">Tokens</span>
 
           <i class="material-icons selected"
             (click)="dropdown.toggle()"

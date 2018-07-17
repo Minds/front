@@ -104,25 +104,25 @@
 
     <div class="m-blog-edit--fields" [hidden]="!toggle.value">
       <div class="m-blog-edit--field">
-        <label>URL Slug</label>
+        <label i18n="@@BLOGS__EDIT__URL_SLUG">URL Slug</label>
 
         <input type="text" name="slug" [(ngModel)]="blog.slug">
       </div>
 
       <div class="m-blog-edit--field">
-        <label>Meta Title</label>
+        <label i18n="@@BLOGS__EDIT__META_TITLE">Meta Title</label>
 
         <input type="text" name="custom_meta_title" [(ngModel)]="blog.custom_meta.title">
       </div>
 
       <div class="m-blog-edit--field">
-        <label>Meta Description</label>
+        <label i18n="@@BLOGS__EDIT__META_DESCRIPTION">Meta Description</label>
 
         <textarea name="custom_meta_description" [(ngModel)]="blog.custom_meta.description"></textarea>
       </div>
 
       <div class="m-blog-edit--field">
-        <label>Meta Author</label>
+        <label i18n="@@BLOGS__EDIT__META_AUTHOR">Meta Author</label>
 
         <input type="text" name="custom_meta_author" [(ngModel)]="blog.custom_meta.author">
       </div>

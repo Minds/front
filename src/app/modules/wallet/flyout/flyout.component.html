@@ -1,6 +1,6 @@
 <div class="m-wallet--flyout-wrapper mdl-card mdl-shadow--3dp">
   <div class="m-wallet--flyout-announcement" *ngIf="address && showAnnouncement" (click)="setUpCryptoWallet()">
-    <span>Hey, do you want to setup your Token wallet using <b>{{ address }}</b>?</span>
+    <span i18n="@@WALLET__FLYOUT__SETUP_WALLET_NOTICE">Hey, do you want to setup your Token wallet using <b>{{ address }}</b>?</span>
     <div class="m-wallet--flyout-announcement--close" (click)="closeMessage()">
       <i class="material-icons">close</i>
     </div>
@@ -28,8 +28,8 @@
       <span *ngIf="balance.tokens > -1">{{ balance.tokens | token: 18 | number }}</span>
       <span *ngIf="balance.tokens < 0">...</span>
       <div class="m-wallet--flyout-label">
-        <label i18n>Tokens</label>
-        <m-tooltip icon="help" i18n>
+        <label i18n="@@WALLET__FLYOUT_COIN__TOKENS_LABEL">Tokens</label>
+        <m-tooltip icon="help" i18n="@@WALLET__FLYOUT_COIN__TOKENS_TOOLTIP">
           Your Tokens balance
         </m-tooltip>
       </div>

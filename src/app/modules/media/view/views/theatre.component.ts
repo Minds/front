@@ -25,7 +25,12 @@ import { RecommendedService } from '../../components/video/recommended.service';
       [class.m-media-stage--has-nav]="isAlbum()"
     >
       <div *ngIf="counterSeconds > 0" class="m-media-theatre--next-countdown">
-        <span> Loading the next video in <strong>{{counterLimit - counterSeconds}}</strong> seconds. <a (click)="cancelCountdown()"><strong>Cancel</strong></a>.</span>
+        <span>
+          <ng-container i18n="@@MEDIA__THEATRE__COUNTDOWN_NEXT_IN">
+            Loading the next video in <strong>{{counterLimit - counterSeconds}}</strong> seconds.
+          </ng-container>
+          <a (click)="cancelCountdown()"><strong i18n="@@M__ACTION__CANCEL">Cancel</strong></a>.
+        </span>
       </div>
       <m-video
       [poster]="object.thumbnail_src"

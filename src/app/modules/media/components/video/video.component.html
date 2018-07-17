@@ -34,7 +34,7 @@
     <ng-content></ng-content>
 
     <div *ngIf="transcoding" class="minds-video-bar-top">
-      <span> The video is being transcoded </span>
+      <span i18n="@@MEDIA__VIDEO__TRANSCODING_NOTICE">The video is being transcoded</span>
     </div>
 
     <div class="minds-video-bar-full">
@@ -60,21 +60,21 @@
         <a class="mdl-color-text--white m-video--info-button"
           (click)="toggleTorrentInfo()"
         >
-          <m-tooltip icon="people_outline" anchor="bottom">Peers</m-tooltip>
+          <m-tooltip icon="people_outline" anchor="bottom" i18n="@@MEDIA__VIDEO__PEERS_LABEL">Peers</m-tooltip>
           <span>{{ playerRef.getInfo().peers | abbr }}</span>
         </a>
 
         <a class="mdl-color-text--white m-video--info-button"
         (click)="toggleTorrentInfo()"
         >
-          <m-tooltip icon="arrow_downward" anchor="bottom">Downloading</m-tooltip>
+          <m-tooltip icon="arrow_downward" anchor="bottom" i18n="@@MEDIA__VIDEO__DOWNLOADING_LABEL">Downloading</m-tooltip>
           <span>{{ playerRef.getInfo().dlspeed | abbr:2:true }}B/s</span>
         </a>
 
         <a class="mdl-color-text--white m-video--info-button"
           (click)="toggleTorrentInfo()"
         >
-          <m-tooltip icon="arrow_upward" anchor="bottom">Uploading</m-tooltip>
+          <m-tooltip icon="arrow_upward" anchor="bottom" i18n="@@MEDIA__VIDEO__UPLOADING_LABEL">Uploading</m-tooltip>
           <span>{{ playerRef.getInfo().ulspeed | abbr:2:true }}B/s</span>
         </a>
       </ng-container>

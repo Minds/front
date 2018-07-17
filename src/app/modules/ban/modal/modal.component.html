@@ -24,7 +24,7 @@
 
   <div class="m-report-creator--appeals" *ngIf="next && !success && subject === 11">
     <div class="m-report-creator--note">
-      <textarea [(ngModel)]="note" placeholder="Please explain why you think this content should not be on Minds."></textarea>
+      <textarea [(ngModel)]="note" placeholder="Please explain why you think this content should not be on Minds." i18n-placeholder="@@M__BAN__MODAL__PLEASE_EXPLAIN"></textarea>
     </div>
   </div>
 
@@ -38,6 +38,7 @@
           class="m-report-creator--button m-report-creator--button-submit"
           [disabled]="!canSubmit() || inProgress || success"
           (click)="submit()"
+          i18n="@@M__BAN__MODAL__SUBMIT_CAPS"
         >
           SUBMIT
         </button>
@@ -60,6 +61,7 @@
             class="m-report-creator--button m-report-creator--button-next"
           [disabled]="!canSubmit() || inProgress || success"
           (click)="next = true"
+          i18n="@@M__BAN__MODAL__NEXT_CAPS"
         >
           NEXT
         </button>

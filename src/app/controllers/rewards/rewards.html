@@ -1,30 +1,30 @@
 <div class="m-rewards">
   <div class="m-rewards--marketing-header">
     <h1>{{name}}</h1> 
-    <h3>Thank you for investing!</h3>
+    <h3 i18n="M__REWARDS_MKT__TITLE_THANKS">Thank you for investing!</h3>
     <div class="m-rewards--overlay"></div>
   </div>
 
     <div class="m-rewards--rewards mdl-grid mdl-grid--no-spacing" *ngIf="rewards">
       <div class="mdl-cell mdl-cell--12-col">
-        <h2>Your rewards</h2>
+        <h2 i18n="M__REWARDS_MKT__YOUR_REWARDS">Your rewards</h2>
       </div>
       
       <div *ngIf="rewards.indexOf('10,000 points') != -1">
         <i class="material-icons mdl-color-text--blue-grey-800">account_balance</i>
-        <label>10,000 points</label>
+        <label i18n="M__REWARDS_MKT__10K_POINTS">10,000 points</label>
       </div>
       <div *ngIf="rewards.indexOf('an investor badge') != -1">
           <i class="material-icons mdl-color-text--blue-grey-800"><i class="material-icons">flight_takeoff</i></i>
-        <label>investor badge</label>
+        <label i18n="M__REWARDS_MKT__INVESTOR_BADGE">investor badge</label>
       </div>
       <div *ngIf="rewards.indexOf('an official founders page') != -1">
         <i class="material-icons mdl-color-text--blue-grey-800">account_box</i>
-        <label>official founders page</label>
+        <label i18n="M__REWARDS_MKT__FOUNDERS_PAGE">official founders page</label>
       </div>
       <div *ngIf="rewards.indexOf('Minds video chat') != -1">
         <i class="material-icons mdl-color-text--blue-grey-800">video_call</i>
-        <label>Minds video chat</label>
+        <label i18n="M__REWARDS_MKT__VIDEO_CHAT">Minds video chat</label>
       </div>
       <div *ngIf="rewards.indexOf('a t-shirt') != -1"i style="align-items: center;">
               <svg style="width:46px;height:46px" viewBox="0 0 24 24">
@@ -35,27 +35,27 @@
       </div>
       <div *ngIf="rewards.indexOf('a coffee cup') != -1">
         <i class="material-icons mdl-color-text--blue-grey-800">free_breakfast</i>
-        <label>coffee cup</label>
+        <label i18n="M__REWARDS_MKT__COFFEE_CUP">coffee cup</label>
       </div>
       <div *ngIf="rewards.indexOf('a town hall meeting') != -1">
         <i class="material-icons mdl-color-text--blue-grey-800">group</i>
-        <label>town hall meeting</label>
+        <label i18n="M__REWARDS_MKT__TOWN_HALL_MEETING">town hall meeting</label>
       </div>
       <div *ngIf="rewards.indexOf('a dinner with bill') != -1 && !(rewards.indexOf('a wine & dine with the team'))">
         <i class="material-icons mdl-color-text--blue-grey-800">local_dining</i>
-        <label>dinner with bill</label>
+        <label i18n="M__REWARDS_MKT__DINNER_WITH_BILL">dinner with bill</label>
       </div>
       <div *ngIf="rewards.indexOf('a wine & dine with the team') != -1">
         <i class="material-icons mdl-color-text--blue-grey-800">local_dining</i>
-        <label>wine & dine with the team</label>
+        <label i18n="M__REWARDS_MKT__WINE_AND_DINE_W_TEAM">wine & dine with the team</label>
       </div>
       <div *ngIf="rewards.indexOf('quarterly video chats') != -1">
         <i class="material-icons mdl-color-text--blue-grey-800">video_call</i>
-        <label>quarterly video chats</label>
+        <label i18n="M__REWARDS_MKT__QT_VIDEO_CHATS">quarterly video chats</label>
       </div>
       <div *ngIf="rewards.indexOf('feature sponsorship') != -1">
         <i class="material-icons mdl-color-text--blue-grey-800">highlight</i>
-        <label>feature sponsorship</label>
+        <label i18n="M__REWARDS_MKT__FEATURES_SPONSORSHIP">feature sponsorship</label>
       </div>
     </div>
 
@@ -64,26 +64,26 @@
         (submit)="onClaim()"
         class="mdl-grid" 
         *ngIf="loggedIn">
-        <h6 class="mdl-cell mdl-cell--12-col" *ngIf="requiresCellPhone">
+        <h6 class="mdl-cell mdl-cell--12-col" *ngIf="requiresCellPhone" i18n="M__REWARDS_MKT__NEED_MORE_DATA">
           We need more data before we can proceed
         </h6>
 
         <div class="mdl-cell mdl-cell--6-col" *ngIf="requiresTShirtSize">
-          <label i18n>T-shirt Size</label>
+          <label i18n="M__REWARDS_MKT__TSHIRT_SIZE">T-shirt Size</label>
           <select name="tshirtSize" [(ngModel)]="tshirtSize" required>
             <option *ngFor="let size of tshirtSizes" [ngValue]="size">{{ size }}</option>
           </select>
         </div>
 
         <div class="mdl-cell mdl-cell--6-col"  *ngIf="requiresTShirtSize">
-          <label>Address</label>
+          <label i18n="M__REWARDS_MKT__ADDRESS">Address</label>
           <textarea
             name="address"
             [(ngModel)]="address"></textarea>
         </div>
 
         <div class="mdl-cell mdl-cell--6-col" *ngIf="requiresCellPhone">
-          <p>Please email bill@minds.com to arrange your Dinner reward</p>
+          <p i18n="M__REWARDS_MKT__EMAIL_BILL">Please email bill@minds.com to arrange your Dinner reward</p>
         </div>
 
         <div class="m-rewards--form-action mdl-cell" 
@@ -94,13 +94,13 @@
               class="mdl-button mdl-button--colored mdl-color--green"
               [disabled]="!claimForm.form.valid || inProgress"
               [ngStyle]="{'margin': !requiresCellPhone ? '16px auto': '16px'}"
-              >
+              i18n="M__REWARDS_MKT__CLAIM_MY_REWARDS">
             Claim my rewards 
           </button>
         </div>
       </form>
 
-      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!loggedIn" routerLink="/login">Login to claim your rewards</button>
+      <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!loggedIn" routerLink="/login" i18n="M__REWARDS_MKT__LOGIN_TO_CLAIM">Login to claim your rewards</button>
 
     </div>
 </div>

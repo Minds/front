@@ -80,12 +80,12 @@
           </span>
 
           <span class="m-boost--creator-wide-input--cost-currency">
-            <ng-container *ngIf="boost.currency === 'usd'">USD</ng-container>
-            <ng-container *ngIf="boost.currency !== 'usd'">Tokens</ng-container>
+            <ng-container *ngIf="boost.currency === 'usd'" i18n="@@BOOST__CREATOR__USD_LABEL">USD</ng-container>
+            <ng-container *ngIf="boost.currency !== 'usd'" i18n="@@BOOST__CREATOR__TOKENS_LABEL">Tokens</ng-container>
           </span>
         </div>
 
-        <span class="m-boost--creator-wide-input--estimation" *ngIf="estimatedTime !== -1">
+        <span class="m-boost--creator-wide-input--estimation" *ngIf="estimatedTime !== -1" i18n="@@BOOST__CREATOR__ESTIMATED_COMPLETION">
             Estimated completion time: {{ estimatedTime }} hours
         </span>
       </section>
@@ -154,7 +154,7 @@
 
   <ng-container *ngIf="step == 1">
     <section class="m-boost--creator-section m-boost--creator-section-checkout">
-      <h3 class="m-boost--creator-section-title--small">Please enter your billing details</h3>
+      <h3 class="m-boost--creator-section-title--small" i18n="@@BOOST__CREATOR__PLEASE_ENTER_BILLING">Please enter your billing details</h3>
       <m-boost--creator-checkout [boost]="boost"></m-boost--creator-checkout>
     </section>
   </ng-container>

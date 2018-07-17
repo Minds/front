@@ -4,7 +4,7 @@
     <a class="mdl-tabs__tab" [class.is-active]="type == 'received'" (click)="setType('received')" i18n="@@WIRE__CONSOLE__LEDGER__RECEIVED_TAB">Received</a>
 
     <div class="m-wire-console--ledger-filters">
-      <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
+      <m-date-selector label="From:" i18n-label="@@WIRE__CONSOLE__LEDGER__FROM" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
 
       <div class="m-wire-console--ledger-method" *ngIf="canSelectMethod()">
         <span>

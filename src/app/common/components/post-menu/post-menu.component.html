@@ -33,9 +33,9 @@
   </ng-container>
   <!-- BLOCK -->
   <ng-container *ngIf="options.indexOf('block') !== -1 && entity.ownerObj.guid != session.getLoggedInUser().guid ">
-    <li class="mdl-menu__item"  *ngIf="asyncBlockInProgress" disabled>Block/Unblock</li>
-    <li class="mdl-menu__item" *ngIf="!asyncBlockInProgress && !asyncBlock" (click)="block()" i18n>Block user</li>
-    <li class="mdl-menu__item" *ngIf="!asyncBlockInProgress && asyncBlock" (click)="unBlock()" i18n>Unblock user</li>
+    <li class="mdl-menu__item"  *ngIf="asyncBlockInProgress" disabled i18n="@@COMMON__POST_MENU__BLOCK_AND_UNBLOCK">Block/Unblock</li>
+    <li class="mdl-menu__item" *ngIf="!asyncBlockInProgress && !asyncBlock" (click)="block()" i18n="@@COMMON__POST_MENU__BLOCK">Block user</li>
+    <li class="mdl-menu__item" *ngIf="!asyncBlockInProgress && asyncBlock" (click)="unBlock()" i18n="@@COMMON__POST_MENU__UNBLOCK">Unblock user</li>
   </ng-container>
   <!-- ADMIN EDIT FLAGS -->
   <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && (entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin())">
@@ -77,7 +77,7 @@
 <m-modal [open]="true" (closed)="onModalClose()" *ngIf="featureToggle">
   <div class="m-button-feature-modal">
     <select [(ngModel)]="featuredCategory">
-      <option value="not-selected">-- SELECT A CATEGORY --</option>
+      <option value="not-selected" i18n="@@COMMON__POST_MENU__SELECT_CATEGORY">-- SELECT A CATEGORY --</option>
       <option *ngFor="let category of categories" [value]="category.id">{{category.label}}</option>
     </select>
 

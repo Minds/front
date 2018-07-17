@@ -1,8 +1,8 @@
 <div class="m-token--onboarding--slide m-border">
   <div class="m-token--onboarding--column">
-    <h2>Messenger</h2>
+    <h2 i18n="@@MESSENGER__SETUP__MESSENGER_TITLE">Messenger</h2>
 
-    <p class="m-token--onboarding--subtext">
+    <p class="m-token--onboarding--subtext" i18n="@@MESSENGER__SETUP__ADDITIONAL_PWD_DESC">
       An additional password is required for messenger in order to ensure that your messages are private and fully encrypted.
     </p>
 
@@ -11,7 +11,8 @@
         <input 
           type="password"
           [(ngModel)]="password"
-          placeholder="Password" 
+          placeholder="Password"
+          i18n-placeholder="@@MESSENGER__ONBOARDING__PASSWORD_PH"
           class="m-input m-border"
           />
       </div>
@@ -19,10 +20,11 @@
         <input 
           type="password"
           [(ngModel)]="password2"
-          placeholder="Confirm password" 
+          placeholder="Confirm password"
+          i18n-placeholder="@@MESSENGER__ONBOARDING__CONFIRM_PASSWORD_PH"
           class="m-input m-border"
           />
-        <m-tooltip icon="help">Enter the same passwords as above to confirm.</m-tooltip>
+        <m-tooltip icon="help" i18n="@@MESSENGER__SETUP__ENTER_SAME_PWDS_TOOLTIP">Enter the same passwords as above to confirm.</m-tooltip>
       </div>
 
     </div>
@@ -48,6 +50,7 @@
         (click)="setup(password)"
         [disabled]="inProgress"
         *ngIf="password == password2 && password2"
+        i18n="@@M__COMMON__CONFIRM"
         >
         Confirm
       </button>
@@ -55,6 +58,7 @@
         *ngIf="skippable === true"
         class="m-btn m-btn--slim" 
         (click)="next.next()"
+        i18n="@@M__COMMON__SKIP_W_PERIOD"
         >
         Skip.
       </button>

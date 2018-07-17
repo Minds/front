@@ -14,7 +14,7 @@
     </div>
     <div class="body">
       <h3>{{entity.name}}</h3>
-      <span><b>{{entity['members:count'] | number}}</b> members</span>
+      <span i18n="@@GROUPS__TILE__MEMBERS_COUNT"><b>{{entity['members:count'] | number}}</b> members</span>
     </div>
   </a>
   
@@ -22,7 +22,7 @@
     <minds-groups-join-button *ngIf="!entity['is:member']; else isMember" [group]="entity"></minds-groups-join-button>
     
     <ng-template #isMember>
-      <button class="m-btn m-btn--action" [routerLink]="['/groups/profile', entity.guid]">
+      <button class="m-btn m-btn--action" [routerLink]="['/groups/profile', entity.guid]" i18n="@@GROUPS__TILE__OPEN_ACTION">
         Open
       </button>
     </ng-template>
@@ -31,4 +31,3 @@
   </div>
   
 </div>
-    

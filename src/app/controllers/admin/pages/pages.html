@@ -37,7 +37,7 @@
       /p/<input type="text" class="m-form-input" name="path" [(ngModel)]="page.path"/>
       </div>
       <!--<minds-tinymce [(content)]="page.body" [reset]="page.path"></minds-tinymce>-->
-      <m-inline-editor name="description" [(ngModel)]="page.body" placeholder="Go ahead and write some content!" #inlineEditor></m-inline-editor>
+      <m-inline-editor name="description" [(ngModel)]="page.body" placeholder="Go ahead and write some content!" i18n-placeholder="@@ADMIN__PAGES__INLINE_EDITOR_PH" #inlineEditor></m-inline-editor>
 
       <div class="m-form-actions">
         <button class="m-button m-button--submit" (click)="save(page)" [hidden]="status == 'saving'" i18n="@@MINDS__ADMIN__PAGES__SAVE_AND_PUBLISH_ACTION">Save &amp; Publish</button>

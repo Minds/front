@@ -18,7 +18,7 @@ import { Client } from '../../../../services/api/client';
       </tr>
 
       <tr *ngIf="data[type].length === 0 && !inProgress">
-        <td style="text-align: left">No data</td>
+        <td style="text-align: left" i18n="@@COMMON__ADMIN__NO_DATA">No data</td>
       </tr>
       </tbody>
     </table>
