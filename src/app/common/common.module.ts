@@ -65,6 +65,7 @@ import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.compon
 import { NotificationsToasterComponent } from '../modules/notifications/toaster.component';
 import { ThumbsUpButton } from './components/thumbs/thumbs-up.component';
 import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
+import { DismissableNoticeComponent } from './components/notice/notice.component';
 import { AnalyticsImpressions } from './components/analytics/impressions';
 import { LineGraph } from './components/graphs/line-graph';
 import { PieGraph } from './components/graphs/pie-graph';
@@ -141,6 +142,7 @@ import { GraphPoints } from './components/graphs/points';
     SafeToggleComponent,
     ThumbsUpButton,
     ThumbsDownButton,
+    DismissableNoticeComponent,
     AnalyticsImpressions,
     LineGraph,
     PieGraph,
@@ -208,6 +210,7 @@ import { GraphPoints } from './components/graphs/points';
     SafeToggleComponent,
     ThumbsUpButton,
     ThumbsDownButton,
+    DismissableNoticeComponent,
     AnalyticsImpressions,
     GraphSVG,
     GraphPoints,

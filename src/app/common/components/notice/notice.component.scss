@@ -1,0 +1,42 @@
+@import "defaults";
+
+m-cookies-notice {
+  box-sizing: border-box;
+  position: fixed;
+  bottom: $minds-margin * 2;
+  left: $minds-padding * 2;
+  width: 360px;
+  max-height: 75vh;
+  z-index: 999999999;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: #FFF;
+  color: #555;
+  padding: $minds-padding * 2 $minds-padding * 2;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+
+  @media screen and (max-width: $max-mobile) {
+    width: 100vw;
+    border-radius: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  .m-notice--message {
+    a {
+      color: #64B5F6;
+    }
+  }
+
+  .m-btn.m-btn--slim {
+    border: 1px solid #ccc;
+    background-color: white !important;
+    white-space: nowrap;
+    margin-left: 8px;
+  }
+
+}

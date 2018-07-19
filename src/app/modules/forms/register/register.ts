@@ -62,6 +62,9 @@ export class RegisterForm {
       return;
     }
 
+    //re-enable cookies
+    document.cookie = 'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
     if (this.form.value.password !== this.form.value.password2) {
       if (this.reCaptcha) {
         this.reCaptcha.reset();
