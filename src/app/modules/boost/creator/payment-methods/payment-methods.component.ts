@@ -99,6 +99,7 @@ export class BoostCreatorPaymentMethodsComponent {
       return;
     }
     this.boost.currency = currency;
+    localStorage.setItem('preferred-payment-method', currency);
     this.boost.nonce = null;
     this.roundAmount();
   }

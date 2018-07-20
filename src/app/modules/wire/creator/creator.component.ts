@@ -225,7 +225,15 @@ export class WireCreatorComponent implements AfterViewInit {
   setDefaults() {
     this.wire.amount = 1;
     this.wire.recurring = false;
-    this.setPayloadType('offchain');
+    // this.setPayloadType('offchain');
+    let payloadType = localStorage.getItem('preferred-payment-method');
+    if (payloadType === 'usd') {
+      payloadType = 'creditcard';
+    }
+    if (['onchain', 'offchain', 'creditcard'].indexOf(payloadType) === -1) {
+      payloadType = 'offchain';
+    }
+    this.setPayloadType(<PayloadType>payloadType);
   }
 
   // General
@@ -241,6 +249,8 @@ export class WireCreatorComponent implements AfterViewInit {
     if (payloadType === 'onchain') {
       this.setOnchainNoncePayload('');
     }
+
+    localStorage.setItem('preferred-payment-method', payloadType);
 
     this.roundAmount();
     this.showErrors();
