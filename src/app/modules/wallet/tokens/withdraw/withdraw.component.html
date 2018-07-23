@@ -4,11 +4,13 @@
 
 <div class="m-border mdl-color--white m-token-withdraw" *ngIf="session.getLoggedInUser().rewards">
   <p>
-    You can request to withdraw your token rewards to your 'onchain' wallet below.
-    Note: a small amount of ETH will be charged to cover the transaction fee.
-    Withdrawals may take a few hours to complete.
+    <ng-container i18n="@@WALLET__TOKENS__WITHDRAW__REQUEST_DESC">
+      You can request to withdraw your token rewards to your 'onchain' wallet below.
+      Note: a small amount of ETH will be charged to cover the transaction fee.
+      Withdrawals may take a few hours to complete.
+    </ng-container>
 
-    <ng-container *ngIf="withholding">
+    <ng-container *ngIf="withholding" i18n="@@WALLET__TOKENS__WITHDRAW__REQUEST_UNAVAILABLE_DESC">
       {{ withholding | number }} tokens are unavailable due
       to credit card payment. They will be released after 30 days the
       payment occurred.
@@ -25,6 +27,7 @@
     <button class="m-token-withdraw--submit-button"
       [disabled]="!canWithdraw()"
       (click)="withdraw()"
+      i18n="@@WALLET__TOKENS__WITHDRAW__WITHDRAW_ACTION"
     >
       Withdraw
     </button>

@@ -121,9 +121,13 @@
           color: #444;
         }
       }
+      .m-login-box .mdl-checkbox__box-outline {
+        border-color: #FFF;
+      }
       .m-btn--action {
         color: #FFF !important;
         border: 1px solid #FFF;
+        margin-right: 16px;
       }
       .mdl-card__actions{
         flex-direction:row-reverse;;

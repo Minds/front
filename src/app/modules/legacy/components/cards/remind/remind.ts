@@ -63,6 +63,14 @@ export class Remind {
   set object(value: any) {
     this.activity = value;
     this.activity.boosted = this.boosted;
+
+    if (
+      this.activity.custom_type == 'batch' 
+      && this.activity.custom_data 
+      && this.activity.custom_data[0].src
+    ) {
+      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
+    }
   }
 
   getOwnerIconTime() {

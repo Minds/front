@@ -36,7 +36,7 @@
         <div class="m-wire--creator-rewards--amount">
           <span *ngIf="type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</span>
           <span *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_WITH_VALUE">{{ reward.amount | number }} points</span>
-          <span *ngIf="type == 'tokens'" i18n="@@M__COMMON__TOKENS_WITH_VALUE">M {{ reward.amount | number }}</span>
+          <span *ngIf="type == 'tokens'" i18n="@@M__COMMON__TOKENS_WITH_VALUE">{{ reward.amount | number }} Tokens</span>
         </div>
         <div class="m-wire--creator-rewards--description"> 
           <p>{{ reward.description }}</p>

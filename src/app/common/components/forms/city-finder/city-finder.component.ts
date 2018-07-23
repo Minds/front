@@ -1,16 +1,16 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { Client, Upload } from '../../../services/api';
-import { Session } from '../../../services/session';
+import { Client, Upload } from '../../../../services/api';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-form-city-finder',
   outputs: ['done'],
-  templateUrl: 'city-finder.html'
+  templateUrl: 'city-finder.component.html'
 })
 
-export class CityFinderForm {
+export class CityFinderComponent {
 
   error: string = '';
   inProgress: boolean = false;

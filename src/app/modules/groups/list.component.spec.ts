@@ -30,7 +30,7 @@ class GroupsTileMock {
 
 // Spec
 
-describe('Groups List', () => {
+fdescribe('Groups List', () => {
   let fixture: ComponentFixture<GroupsListComponent>;
   let comp: GroupsListComponent;
 
@@ -42,7 +42,7 @@ describe('Groups List', () => {
   }
 
   function getGroupTiles(): DebugElement[] {
-    return fixture.debugElement.queryAll(By.css('m-groups--tiles'));
+    return fixture.debugElement.queryAll(By.css('m-groups--tile'));
   }
 
   function getInfiniteScroll(): DebugElement {
@@ -58,6 +58,12 @@ describe('Groups List', () => {
         MockComponent({
           selector: 'infinite-scroll',
           inputs: [ 'inProgress', 'moreData', 'inProgress' ],
+        }),
+        MockComponent({
+          selector: 'm-topbar--navigation--options',
+          template: '',
+          inputs: ['options'],
+          outputs: ['change']
         }),
         GroupsListComponent,
         GroupsTileMock,
@@ -76,23 +82,48 @@ describe('Groups List', () => {
     }).compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(GroupsListComponent);
-    comp = fixture.componentInstance;
 
-    fixture.detectChanges();
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
-  xit('should render a button to create a group', () => {
-    expect(getCreateAnchor()).toBeTruthy();
+  beforeEach((done) => {
+    jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
+    jasmine.clock().uninstall();
+    jasmine.clock().install();
+    fixture = TestBed.createComponent(GroupsListComponent);
+    comp = fixture.componentInstance;
+    clientMock.response = {};
+    clientMock.response[`api/v1/entities/trending/groups`] = {
+      'status': 'success',
+      'entities': [{guid: "858049985139183618", type: "group", name: "nicos"}, {guid: "858049985139183618", type: "group", name: "nicos"}]
+    };
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
+    }
   });
 
   it('should render a list of groups and an infinite scroll', () => {
-    comp.entities = [{}, {}];
+    comp.entities = [{guid: "858049985139183618", type: "group", name: "nicos"}, {guid: "858049985139183618", type: "group", name: "nicos"}];
     fixture.detectChanges();
 
-    //TODO: fix this
-    //expect(getGroupTiles().length).toBe(2);
+    expect(getGroupTiles().length).toBe(2);
     expect(getInfiniteScroll()).toBeTruthy();
+  });
+
+  it('should render a list of groups and do the load', () => {
+    spyOn(comp, 'load').and.stub();
+    fixture.detectChanges();
+
+    comp.onOptionsChange({rating:2});
+
+    expect(comp.load).toHaveBeenCalled();
+    expect(comp.rating).toBe(2);
   });
 });

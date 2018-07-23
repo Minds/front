@@ -5,7 +5,7 @@ import { TreeNode } from './tree-node.model';
 @Component({
   selector: 'm--tree',
   template: `
-    <span *ngIf="nodes.length === 0"><i>No results found</i></span>
+    <span *ngIf="nodes.length === 0"><i i18n="No results on a tree view@@COMMON__TREE__NO_RESULTS">No results found</i></span>
     <ng-container *ngFor="let item of nodes">
       <ng-container *ngIf="!item.isHidden">
         <div class="m-tree--items" [style.padding-left.px]="item.level * 10">

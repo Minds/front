@@ -65,7 +65,7 @@
       </div>
 
       <div class="m-group-info-default-view mdl-color-text--blue-grey-300">
-          <i class="material-icons mdl-color-text--blue-grey-300" title="Default view">pageview</i>
+          <i class="material-icons mdl-color-text--blue-grey-300" title="Default view" i18n="@@GROUPS__DEFAULT_VIEW_TOOLTIP">pageview</i>
           <select class="icon-prefix" name="default_view" [ngModel]="group.default_view" (change)="group.default_view = $event.target.value">
             <option value="0" i18n="@@GROUPS__DEFAULT_VIEW_FEED">Default view: Feed</option>
             <option value="1" i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS">Default view: Conversations</option>

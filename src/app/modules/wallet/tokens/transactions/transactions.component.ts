@@ -40,6 +40,9 @@ export class WalletTokenTransactionsComponent {
 
   paramsSubscription;
 
+  remote: boolean = false;
+  remoteUser: string = '';
+
   constructor(
     protected client: Client,
     protected web3Wallet: Web3WalletService,
@@ -63,6 +66,9 @@ export class WalletTokenTransactionsComponent {
         }
       }
 
+      this.remote = !!params['remote'];
+      this.remoteUser = params['remote'] || '';
+
       const d = new Date();
 
       d.setHours(23, 59, 59);
@@ -79,44 +85,52 @@ export class WalletTokenTransactionsComponent {
 
   async getAddresses() {
     this.inProgress = true;
-    let receiverAddress: string = this.session.getLoggedInUser().eth_wallet;
-    this.addresses = [
-      {
-        address: receiverAddress,
-        label: 'Receiver',
-        selected: false
-      },
-      {
-        label: 'OffChain',
-        address: 'offchain',
-        selected: false
-      }
-    ];
 
-    try {
-      const onchainAddress = await this.web3Wallet.getCurrentWallet();
-      if (!onchainAddress) {
+    if (!this.remote) {
+      let receiverAddress: string = this.session.getLoggedInUser().eth_wallet;
+
+      this.addresses = [
+        {
+          address: receiverAddress,
+          label: 'Receiver',
+          selected: false
+        },
+        {
+          label: 'OffChain',
+          address: 'offchain',
+          selected: false
+        }
+      ];
+
+      try {
+        const onchainAddress = await this.web3Wallet.getCurrentWallet();
+        if (!onchainAddress) {
+          this.inProgress = false;
+          this.detectChanges();
+          return;
+        }
+
+        if (this.addresses[0].address.toLowerCase() == onchainAddress.toLowerCase()) {
+          this.addresses[0].label = 'OnChain & Receiver';
+          this.inProgress = false;
+          this.detectChanges();
+          return; //no need to count twice
+        }
+
+        this.addresses.unshift({
+          'label': "OnChain",
+          'address': onchainAddress,
+          'selected': false
+        });
         this.inProgress = false;
         this.detectChanges();
-        return;
+      } catch (e) {
+        console.log(e);
       }
-
-      if (this.addresses[0].address.toLowerCase() == onchainAddress.toLowerCase()) {
-        this.addresses[0].label = 'OnChain & Receiver';
-        this.inProgress = false;
-        this.detectChanges();
-        return; //no need to count twice
-      }
-
-      this.addresses.unshift({
-        'label': "OnChain",
-        'address': onchainAddress,
-        'selected': false
-      });
+    } else {
+      this.selectedAddress = null;
+      this.addresses = [];
       this.inProgress = false;
-      this.detectChanges();
-    } catch (e) {
-      console.log(e);
     }
   }
 
@@ -154,6 +168,10 @@ export class WalletTokenTransactionsComponent {
       if (this.selectedContract)
         opts.contract = this.selectedContract;
 
+      if (this.remote && this.remoteUser) {
+        opts.remote = this.remoteUser;
+      }
+
       let response: any = await this.client.get(`api/v2/blockchain/transactions/ledger`, opts);
 
       if (refresh) {
@@ -162,7 +180,7 @@ export class WalletTokenTransactionsComponent {
 
       if (response) {
         this.transactions.push(...(response.transactions || []));
-
+        
         if (response['load-next']) {
           this.offset = response['load-next'];
         } else {
@@ -238,18 +256,28 @@ export class WalletTokenTransactionsComponent {
     this.load(true);
   }
 
-  getSelf() {
-    const user = this.session.getLoggedInUser();
+  getSelf(transaction) {
+    if (this.remote) {
+      const isSender = transaction.sender.username.toLowerCase() == this.remoteUser.toLowerCase(),
+        user = isSender ? transaction.sender : transaction.receiver;
 
-    return {
-      avatar: `/icon/${user.guid}/medium/${user.icontime}`,
-      username: user.username,
+      return {
+        avatar: `/icon/${user.guid}/medium/${user.icontime}`,
+        username: user.username,
+      }
+    } else {
+      const user = this.session.getLoggedInUser();
+
+      return {
+        avatar: `/icon/${user.guid}/medium/${user.icontime}`,
+        username: user.username,
+      }
     }
   }
 
   getOther(transaction) {
-    const self = this.session.getLoggedInUser(),
-      isSender = transaction.sender.guid != self.guid,
+    const selfUsername = this.remote ? this.remoteUser : this.session.getLoggedInUser().username,
+      isSender = transaction.sender.username.toLowerCase() != selfUsername.toLowerCase(),
       user = isSender ? transaction.sender : transaction.receiver;
 
     return {

@@ -27,8 +27,8 @@
 
         <span [ngSwitch]="subscription.payment_method" class="m-settings--billing-subscriptions--subscription-item-amount">
           <ng-template ngSwitchCase="money">{{ subscription.amount | currency:'USD':true }}</ng-template>
-          <ng-template ngSwitchCase="tokens">{{ subscription.amount | token:18 | number }} Tokens</ng-template>
-          <ng-template ngSwitchCase="points">{{ subscription.amount | number:'1.0-0' }} Points</ng-template>
+          <ng-template ngSwitchCase="tokens" i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__TOKENS_LABEL">{{ subscription.amount | token:18 | number }} Tokens</ng-template>
+          <ng-template ngSwitchCase="points" i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__POINTS_LABEL">{{ subscription.amount | number:'1.0-0' }} Points</ng-template>
         </span>
 
         <span class="m-settings--billing-subscriptions--subscription-item-select" (click)="cancel(i)" i18n="@@M__ACTION__CANCEL">Cancel</span>

@@ -337,6 +337,12 @@ export class CommentsListComponent {
     this.comments[index] = $event.comment;
   }
 
+  resetPreview() {
+    this.canPost = true;
+    this.triedToPost = false;
+    this.attachment.resetRich();
+  }
+
   uploadAttachment(file: HTMLInputElement, e?: any) {
     this.canPost = false;
     this.triedToPost = false;

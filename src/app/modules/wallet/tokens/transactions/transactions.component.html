@@ -1,16 +1,20 @@
 <div class="m-token--ledger">
+  <div class="m-token--ledger-remote" *ngIf="remote" i18n="@@WALLET__TOKENS__TRANSACTIONS__REMOTE_LABEL">
+    <b>@{{remoteUser}}</b>'s transactions
+  </div>
+
   <div class="m-token--ledger-filters m-border" *ngIf="!preview; else previewHeader">
     
     <m-dropdown class="m-token--ledger-filters--addresses">
       <label class="m-token--ledger-filters--label">
-        <span>Addresses</span>
+        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__ADDRESSES_DROPDOWN">Addresses</span>
         <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
         <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
       </label>
 
       <ul class="m-dropdown--list">
         <li class="m-dropdown--list--item" (click)="toggleAddress(null)">
-          <span style="text-transform: capitalize">All addresses</span>
+          <span style="text-transform: capitalize" i18n="@@WALLET__TOKENS__TRANSACTIONS__ALL_ADDRESSES_OPTION">All addresses</span>
           <div class="m-layout--spacer"></div>
           <i class="material-icons m-token--ledger-filters--check selected" *ngIf="!selectedAddress">check</i>
         </li>
@@ -34,13 +38,13 @@
 
     <m-dropdown class="m-token--ledger-filters--addresses">
       <label class="m-token--ledger-filters--label">
-        <span>Contracts</span>
+        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__CONTRACTS_DROPDOWN">Contracts</span>
         <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
         <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
       </label>
       <ul class="m-dropdown--list">
         <li class="m-dropdown--list--item" (click)="toggleContract(null)">
-            <span style="text-transform: capitalize">All contracts</span>
+            <span style="text-transform: capitalize" i18n="@@WALLET__TOKENS__TRANSACTIONS__ALL_CONTRACTS_OPTIONS">All contracts</span>
             <div class="m-layout--spacer"></div>
             <i class="material-icons m-token--ledger-filters--check selected" *ngIf="!selectedContract">check</i>
           </li>
@@ -54,12 +58,12 @@
 
     <div class="m-layout--spacer"></div>
     <div class="m-token--ledger--date-selectors">
-      <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
-      <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
+      <m-date-selector label="From:" i18n-label="@@WALLET__TOKENS__TRANSACTIONS__FROM" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
+      <m-date-selector label="To:" i18n-label="@@WALLET__TOKENS__TRANSACTIONS__TO" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
     </div>
   </div>
   <ng-template #previewHeader>
-    <div class="m-token--ledger-filters m-token--ledger-filters--preview m-border">
+    <div class="m-token--ledger-filters m-token--ledger-filters--preview m-border" i18n="@@WALLET__TOKENS__TRANSACTIONS__LAST_MONTH_TITLE">
       Last month
     </div>
   </ng-template>
@@ -88,8 +92,12 @@
         <span>{{ transaction.wallet_address }}</span>
       </div>
 
+      <div *ngIf="transaction.failed" class="m-token--ledger--reward-details--meta">
+        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__FAILED_LABEL">FAILED</span>
+      </div>
+
       <div class="m-token--ledger--reward-details--meta m-token--ledger--reward-details--meta-wrapper" *ngIf="isP2p(transaction)">
-        <img class="m-token--ledger--avatar" [routerLink]="['/', getSelf().username]"  [src]="getSelf().avatar">
+        <img class="m-token--ledger--avatar" [routerLink]="['/', getSelf(transaction).username]"  [src]="getSelf(transaction).avatar">
 
         <i class="material-icons m-token--ledger--direction">{{getOther(transaction).isSender ? 'arrow_back' : 'arrow_forward'}}</i>
 

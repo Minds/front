@@ -8,7 +8,7 @@
   <ng-container *ngIf="type == 'newsfeed' || type == 'offers'">
     <ng-container *ngIf="posts && posts.length > 0">
       <div class="m-boost-console--booster--posts-list">
-          <minds-card [object]="object" class="m-border" *ngFor="let object of posts"></minds-card>
+          <minds-card [object]="object" class="m-border" hostClass="mdl-card" *ngFor="let object of posts"></minds-card>
       </div>
     </ng-container>
 

@@ -39,6 +39,9 @@ export class LoginForm {
     if (this.inProgress)
       return;
 
+    //re-enable cookies
+    document.cookie = 'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+
     this.errorMessage = '';
     this.inProgress = true;
     this.client.post('api/v1/authenticate', { username: this.form.value.username, password: this.form.value.password })

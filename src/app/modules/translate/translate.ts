@@ -35,6 +35,7 @@ export class Translate {
     message: '',
     title: '',
     description: '',
+    body: '',
     source: ''
   };
   translationInProgress: boolean;

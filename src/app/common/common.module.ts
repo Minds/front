@@ -15,6 +15,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';
 import { CountryInputComponent } from './components/forms/country-input/country-input.component';
 import { DateInputComponent } from './components/forms/date-input/date-input.component';
+import { CityFinderComponent } from './components/forms/city-finder/city-finder.component';
 import { StateInputComponent } from './components/forms/state-input/state-input.component';
 import { ReadMoreDirective } from './read-more/read-more.directive';
 import { ReadMoreButtonComponent } from './read-more/button.component';
@@ -64,6 +65,12 @@ import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.compon
 import { NotificationsToasterComponent } from '../modules/notifications/toaster.component';
 import { ThumbsUpButton } from './components/thumbs/thumbs-up.component';
 import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
+import { DismissableNoticeComponent } from './components/notice/notice.component';
+import { AnalyticsImpressions } from './components/analytics/impressions';
+import { LineGraph } from './components/graphs/line-graph';
+import { PieGraph } from './components/graphs/pie-graph';
+import { GraphSVG } from './components/graphs/svg';
+import { GraphPoints } from './components/graphs/points';
 
 @NgModule({
   imports: [
@@ -86,6 +93,7 @@ import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
     CountryInputComponent,
     DateInputComponent,
     StateInputComponent,
+    CityFinderComponent,
     Scheduler,
     Modal,
     ReadMoreDirective,
@@ -134,6 +142,12 @@ import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
     SafeToggleComponent,
     ThumbsUpButton,
     ThumbsDownButton,
+    DismissableNoticeComponent,
+    AnalyticsImpressions,
+    LineGraph,
+    PieGraph,
+    GraphSVG,
+    GraphPoints,
   ],
   exports: [
     MINDS_PIPES,
@@ -147,6 +161,7 @@ import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
     InfiniteScroll,
     CountryInputComponent,
     DateInputComponent,
+    CityFinderComponent,
     StateInputComponent,
     Scheduler,
     Modal,
@@ -195,6 +210,12 @@ import { ThumbsDownButton } from './components/thumbs/thumbs-down.component';
     SafeToggleComponent,
     ThumbsUpButton,
     ThumbsDownButton,
+    DismissableNoticeComponent,
+    AnalyticsImpressions,
+    GraphSVG,
+    GraphPoints,
+    LineGraph,
+    PieGraph,
   ],
   providers: [
     {

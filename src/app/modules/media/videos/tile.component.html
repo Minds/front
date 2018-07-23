@@ -1,4 +1,5 @@
-<div class="m-media--videos--tile">
+<div class="m-media--videos--tile"
+  [ngClass]="{ 'm-video-tile-mature-thumbnail': attachment.shouldBeBlurred(entity) }">
 
   <a
     class="m-media--videos--tile-thumbnail"
@@ -8,8 +9,10 @@
     <span class="material-icons">
       play_circle_outline
     </span>
-  </a>
 
+   
+  </a>
+  <i class="material-icons">explicit</i>
   <div class="m-media--videos--tile-title m-border">
     <label>{{ entity.title }}</label>
     <div class="m-inline-owner-block">

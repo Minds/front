@@ -6,19 +6,22 @@ minds-form-register{
     overflow: visible !important;
   }
 
+  .password-help {
+    padding-left: 4px;
+  }
+
   .mdl-card__actions{
     display:flex;
+    padding-left:$minds-padding*2;
     align-items:center;
   }
 
   .m-register-tac{
     font-size:11px;
-    padding-left:$minds-padding*2;
   }
 
   //this is exactly the same as modal.scss
   .m-fb-register-button{
-
     background: #FFF;
     color: #3b5998;
     width: 170px;
@@ -50,6 +53,10 @@ minds-form-register{
 
   }
 
+  .m-login-box > div {
+    overflow: visible;
+  }
+
   .tooltip-wrapper {
     bottom: 14px;
     position: absolute;
@@ -72,5 +79,9 @@ minds-form-register{
     right: 15px;
     top: 20px;
     color: green;
+  }
+
+  .mdl-checkbox {
+    padding-top: 5px;
   }
 }

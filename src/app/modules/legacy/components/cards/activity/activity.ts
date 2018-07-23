@@ -43,11 +43,10 @@ export class Activity {
   set showBoostMenuOptions(value: boolean) {
     this._showBoostMenuOptions = value;
 
-    if (value) {
-      this.menuOptions.push('see-more-like-this');
-    } else {
+    if (!value) {
       this.menuOptions = this.defaultMenuOptions;
     }
+
     this.menuOptions = this.menuOptions.slice();
   }
   type: string;
@@ -69,7 +68,7 @@ export class Activity {
   showRatingToggle: boolean = false;
 
   private defaultMenuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
-  menuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
+  menuOptions: Array<string> = ['edit', 'translate', 'share', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
 
   @ViewChild('player') player: MindsVideoComponent;
 
@@ -94,6 +93,14 @@ export class Activity {
       return;
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
+
+    if (
+      this.activity.custom_type == 'batch' 
+      && this.activity.custom_data 
+      && this.activity.custom_data[0].src
+    ) {
+      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
+    }
     
     if (!this.activity.message) {
       this.activity.message = '';

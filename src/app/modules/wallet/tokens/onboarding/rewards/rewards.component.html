@@ -1,35 +1,50 @@
 <div class="m-token--onboarding--slide m-border">
   <div class="m-token--onboarding--column">
-    <h2>Rewards</h2>
+    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_TITLE">Rewards</h2>
 
-    <p class="m-token--onboarding--subtext">
+    <p class="m-token--onboarding--subtext" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_DESC">
       You can earn tokens for your contributions to the Minds network. The more interactions on your content, the greater your share of the daily token reward pool to your OffChain address.
     </p>
-    <p class="m-token--onboarding--subtext">
+    <p class="m-token--onboarding--subtext" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_PHONE_DESC">
       To start earning rewards, you will need to enter a unique phone number.
     </p>
 
-    <div class="m-token--onboarding--rewards-input" *ngIf="!confirming">
+    <div class="m-token--onboarding--rewards-input" *ngIf="!confirming && !plusPrompt">
       <m-phone-input [(ngModel)]="number"></m-phone-input>
-      <m-tooltip icon="help">Please enter your phone number in order to join the rewards program</m-tooltip>
-      <button class="m-btn m-btn--slim m-btn--action" (click)="verify()" [disabled]="inProgress">Join</button>
+      <m-tooltip icon="help" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_PHONE_TOLTIP">Please enter your phone number in order to join the rewards program</m-tooltip>
+      <button class="m-btn m-btn--slim m-btn--action" (click)="getPlus()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION">Join</button>
       <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
     </div>
 
+    <div class="m-token--onboarding--rewards-input" *ngIf="plusPrompt && !confirming">
+      <p i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ONE_MORE_STEP_DESC">
+        One more step!
+        To qualify for our crypto rewards program, you will need to sign up for <a routerLink="/plus">Minds Plus</a>.
+        This will cost <b>$1</b> for the first month and $5 for every following month with the option for cancellation.
+        Cancellation will not impact your ability to earn rewards. This is required to help us offset the expensive fees associated with sending SMS text messages internationally!
+      </p>
+      <m-plus--subscription
+        #subscription
+        (completed)="onPlusCompleted($event)"
+        >
+      </m-plus--subscription>
+    </div>
+
     <div class="m-token--onboarding--rewards-input" *ngIf="confirming">
-      <p class="m-token--onboarding--subtext m-token--onboarding--prompt">
+      <p class="m-token--onboarding--subtext m-token--onboarding--prompt" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_DESC">
         Please enter the code we just sent to <b>+{{number}}</b>, to verify your number.
       </p>
       <input
         type="number"
         [(ngModel)]="code"
         placeholder="eg. 198349"
+        i18n-placeholder="@@WALLET__TOKENS__REWARDS__CODE_EXAMPLE_PH"
         class="m-token-join--form--input-input m-border"
         />
-      <m-tooltip icon="help">Please enter the code we just sent you, to verify that your number is correct</m-tooltip>
+      <m-tooltip icon="help" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_TOOLTIP">Please enter the code we just sent you, to verify that your number is correct</m-tooltip>
 
-      <button class="m-btn m-btn--slim m-btn--action" (click)="confirm()" [disabled]="inProgress">Confirm</button>
-      <button class="m-btn m-btn--slim" (click)="cancel()">Go Back</button>
+      <button class="m-btn m-btn--slim m-btn--action" (click)="confirm()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__CONFIRM_ACTION">Confirm</button>
+      <button class="m-btn m-btn--slim" (click)="cancel()" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__GO_BACK_ACTION">Go Back</button>
 
       <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
     </div>
@@ -39,7 +54,7 @@
       {{error}}
     </p>
 
-    <p class="m-token--onboarding--subtext m-token--onboarding--subtext-note">
+    <p class="m-token--onboarding--subtext m-token--onboarding--subtext-note" *ngIf="!plusPrompt" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__PHONE_HASH_DESC">
       Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256
       and combined with a salt key for privacy and security purposes.
     </p>
@@ -59,6 +74,7 @@
         *ngIf="skippable === true"
         class="m-btn m-btn--slim" 
         (click)="next.next()"
+        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__SKIP_ACTION"
         >
         Skip. I don't want to earn tokens
       </button>

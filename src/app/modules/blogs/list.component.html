@@ -5,7 +5,7 @@
         routerLink="/blog/top"
         routerLinkActive="m-topbar--navigation--item-active"
         >
-          <span>Top</span>
+          <span i18n="@@M__COMMON_TOPBAR_TOP">Top</span>
           <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
             Top displays the top content on Minds
           </m-tooltip>
@@ -15,8 +15,8 @@
         *ngIf="session.isLoggedIn()"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span>Subscriptions</span>
-        <m-tooltip icon="help" i18n="@@@@MINDS__BLOGS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+        <span i18n="@@M__COMMON_TOPBAR_SUBSCRIPTIONS">Subscriptions</span>
+        <m-tooltip icon="help" i18n="@@MINDS__BLOGS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
           Blogs from channels you are subscribed to
         </m-tooltip>
       </a>
@@ -25,7 +25,7 @@
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
         >
-          <span>My Blogs</span>
+          <span i18n="@@M__COMMON_TOPBAR_MY_BLOGS">My Blogs</span>
           <m-tooltip icon="help" i18n="@@MINDS__BLOGS__TOPBAR__YOUR_BLOGS_TOOLTIP">
             Your blogs
           </m-tooltip>
@@ -35,7 +35,7 @@
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
         >
-          <span>Write a new blog</span>
+          <span i18n="@@M__COMMON_TOPBAR_WRITE_NEW_BLOG">Write a new blog</span>
           <m-tooltip icon="help" i18n="@@MINDS__BLOGS__TOPBAR__WRITE_A_NEW_BLOG_TOOLTIP">
             Write a new Blog
           </m-tooltip>

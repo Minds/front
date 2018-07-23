@@ -5,6 +5,7 @@ import { Session } from '../../../../services/session';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { BanModalComponent } from '../../../ban/modal/modal.component';
 import { ReportCreatorComponent } from '../../../report/creator/creator.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'minds-button-user-dropdown',
@@ -41,6 +42,20 @@ import { ReportCreatorComponent } from '../../../report/creator/creator.componen
         i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_FROM_MONETIZATION"
         >
         Un-ban from Monetization
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        (click)="viewLedger()"
+        i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER"
+      >
+        View Ledger
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        (click)="viewWithdrawals()"
+        i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS"
+      >
+        View Withdrawals
       </li>
       <li class="mdl-menu__item"
         (click)="report(); showMenu = false"
@@ -117,7 +132,12 @@ export class UserDropdownButton {
   banToggle: boolean = false;
   banMonetizationToggle: boolean = false;
 
-  constructor(public session: Session, public client: Client, public overlayService: OverlayModalService) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public overlayService: OverlayModalService,
+    public router: Router
+  ) {
   }
 
   block() {
@@ -250,6 +270,14 @@ export class UserDropdownButton {
   async setRating(rating: number) {
     await this.client.post(`api/v1/admin/rating/${this.user.guid}/${rating}`, {});
     this.user.rating = rating;
+  }
+
+  viewLedger() {
+    this.router.navigate(['/wallet/tokens/transactions', { remote: this.user.username }])
+  }
+
+  viewWithdrawals() {
+    this.router.navigate(['/admin/withdrawals', { user: this.user.username }])
   }
 
 }

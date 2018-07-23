@@ -1,13 +1,16 @@
 <div class="m-token--ledger">
   <div class="m-token-rewards--ledger-filters m-border" *ngIf="!preview; else previewHeader">
-    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"
+    <m-date-selector label="From:" i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__FROM" [date]="startDate" (dateChange)="onStartDateChange($event)"
       dateFormat="shortDate"></m-date-selector>
-    <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)"
+    <m-date-selector label="To:" i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__TO" [date]="endDate" (dateChange)="onEndDateChange($event)"
       dateFormat="shortDate"></m-date-selector>
   </div>
   <ng-template #previewHeader>
     <div class="m-token--ledger-filters m-token--ledger-filters--preview m-border">
-      Last month
+      <div class="m-token--ledger--date-selectors">
+        <m-date-selector label="From:" i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__FROM" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
+        <m-date-selector label="To:" i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__TO" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
+      </div>
     </div>
   </ng-template>
 
@@ -19,10 +22,10 @@
     </div>
 
     <div class="m-token--ledger--reward-details">
-      <p *ngIf="withdrawal.completed; else withdrawPending">
+      <p *ngIf="withdrawal.completed; else withdrawPending" i18n="@@WALLET__TOKENS__WITHDRAW__LEDGER__COMPLETED_LABEL">
         COMPLETED
       </p>
-      <ng-template #withdrawPending>
+      <ng-template #withdrawPending i18n="@@WALLET__TOKENS__WITHDRAW__LEDGER__PENDING_LABEL">
         PENDING
       </ng-template>
 

@@ -35,6 +35,7 @@ import { ActivityPreview } from './components/cards/activity/preview';
 import { SocialIcons } from './components/social-icons/social-icons';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
+import { HovercardPopup } from './components/hovercard-popup/hovercard-popup';
 import { CarouselComponent } from './components/carousel.component';
 import { CommentsModule } from '../comments/comments.module';
 
@@ -63,7 +64,7 @@ import { CommentsModule } from '../comments/comments.module';
     VideoCard,
     Remind,
     UserCard,
-
+    HovercardPopup,
     BoostButton,
     CommentButton,
     FeatureButton,
@@ -102,7 +103,7 @@ import { CommentsModule } from '../comments/comments.module';
 
     TagsInput,
     SocialIcons,
-
+    HovercardPopup,
     CarouselComponent,
   ],
   entryComponents: [

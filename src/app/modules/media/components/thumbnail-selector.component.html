@@ -9,10 +9,11 @@
 </div>
 
 <div class="m-thumbnail-selector--thumbnails">
-  <h5 class="m-thumbnail-selector--thumbnails--title">Thumbnails</h5>
+  <h5 class="m-thumbnail-selector--thumbnails--title" i18n="@@MEDIA__THUMBNAIL_SELECTOR__THUMBNAILS_TITLE">Thumbnails</h5>
 
   <span class="m-thumbnail-selector--thumbnails--subtext">
-      Select one from the list or <a (click)="uploadThumbnail($event)" i18n>upload a new one</a>
+    <ng-container i18n="@@MEDIA__THUMBNAIL_SELECTOR__SELECT_ONE_OR">Select one from the list or</ng-container>
+    <a (click)="uploadThumbnail($event)" i18n="@@MEDIA__THUMBNAIL_SELECTOR__UPLOAD_A_NEW_ONE">upload a new one</a>
   </span>
 
   <div class="m-thumbnail-selector--thumbnails-list">

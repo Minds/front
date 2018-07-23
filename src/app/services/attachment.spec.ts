@@ -17,14 +17,19 @@ describe('Service: Attachment Service', () => {
     TestBed.configureTestingModule({
       declarations: [ AttachmentService ],
       providers: [
-        { provide: Session, useValue: uploadMock },
+        { provide: Session, useValue: sessionMock },
         { provide: Upload, useValue: uploadMock },
-        { provide: Client, useValue: sessionMock }
+        { provide: Client, useValue: clientMock }
       ]
     });
+    clientMock.response = {};
+
+    clientMock.response[`/api/v1/newsfeed/preview`] = { 'status': 'success' };
 
     service = new AttachmentService(sessionMock, clientMock, uploadMock);
 
+    clientMock.get.calls.reset();
+    clientMock.post.calls.reset();
     mockObject = {
       'guid':'758019279000969217',
       'type':'object',
@@ -81,4 +86,62 @@ describe('Service: Attachment Service', () => {
     mockObject.flags = {};
     expect(service.parseMaturity(mockObject)).toEqual(false);
   });
+
+  it('preview should be set', fakeAsync(() => {
+    service.preview('https://github.com/releases');
+    tick(1000);
+    expect(clientMock.get).toHaveBeenCalled();
+  }));
+
+  it('preview wont call if url doesnt change', fakeAsync(() => {
+    service.preview('https://github.com/releases');
+    tick(1000);
+    service.preview('https://github.com/releases');
+    tick(1000);
+    expect(clientMock.get).toHaveBeenCalledTimes(1);
+  }));
+
+  it('preview call twice if url change', fakeAsync(() => {
+    service.preview('https://github.com/releases');
+    tick(1000);
+    service.preview('https://github.com/releases2');
+    tick(1000);
+    expect(clientMock.get).toHaveBeenCalledTimes(2);
+  }));
+
+
+  it('preview call twice if url change and paste similar ones', fakeAsync(() => {
+    service.preview('https://github.com/releases');
+    tick(1000);
+    service.preview('https://github.com/releases2');
+    tick(1000);
+    service.preview('https://github.com/releases2');
+    tick(1000);
+    service.preview('https://github.com/releases');
+    tick(1000);
+    expect(clientMock.get).toHaveBeenCalledTimes(3);
+  }));
+
+  it('preview shouldnt be called if already has a file', fakeAsync(() => {
+    let file = {
+      attachment_guid : 'guid',
+      custom_data : {
+        thumbnail_src : 'thumbnail/url/'
+      }
+    };
+
+    service.load(file);
+    
+    service.preview('githubcom/releases');
+    tick(1000);
+    expect(clientMock.get).toHaveBeenCalledTimes(0);
+  }));
+
+  it('preview should be called once', fakeAsync(() => {
+    service.preview('githubcom/releases');
+    tick(1000);
+    service.preview('https://github.com/releases2');
+    tick(1000);
+    expect(clientMock.get).toHaveBeenCalledTimes(1);
+  }));
 });

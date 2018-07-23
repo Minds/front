@@ -165,6 +165,7 @@
   }
   .attachment-preview-delete {
     display: none;
+    cursor: pointer;
   }
 
   &:hover {
@@ -175,6 +176,7 @@
       top: 0;
       left: 0;
       width: 100%;
+      z-index: 200;
       height: 100%;
       background: rgba(0, 0, 0, 0.6);
       align-items: center;

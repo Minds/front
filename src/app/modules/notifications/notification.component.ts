@@ -11,6 +11,7 @@ import { Reason, rejectionReasons } from '../../controllers/admin/boosts/rejecti
 export class NotificationComponent {
 
   notification: any;
+  minds = window.Minds;
 
   constructor(public session: Session) { }
 

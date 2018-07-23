@@ -41,6 +41,10 @@
       <span [innerHtml]="translation.description | tags" ></span>
   </div>
 
+  <div class="mdl-card__supporting-text message" *ngIf="translation.body">
+      <span [innerHtml]="translation.body | tags" ></span>
+  </div>
+
   <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
     <i class="material-icons m-material-icons-inline">public</i>
     <ng-container i18n="@@TRANSLATE__TRANSLATED_LABEL">Translated</ng-container><span *ngIf="translation.source" i18n="Translation source@@TRANSLATE__TRANSLATED_FROM_PART"> from <b>{{ translation.source }}</b></span>.

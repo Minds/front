@@ -6,33 +6,43 @@ import { GroupsService } from '../groups-service';
   selector: 'minds-groups-card-user-actions-button',
   inputs: ['group', 'user'],
   template: `
-  <button *ngIf="group['is:owner']" (click)="toggleMenu($event)">
+  <button *ngIf="group['is:owner'] || (group['is:moderator'] && !(user['is:owner']||user['is:moderator']))" (click)="toggleMenu($event)">
     <i class="material-icons">settings</i>
   </button>
 
   <ul class="minds-dropdown-menu" [hidden]="!showMenu">
     <li class="mdl-menu__item"
-      *ngIf="group['is:owner'] && !user['is:owner'] && user['is:member']"
+      *ngIf="(group['is:owner'] || group['is:moderator']) && !(user['is:owner']||user['is:moderator']) && user['is:member']"
       (click)="removePrompt()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_FROM_GROUP">
       Remove from Group
     </li>
     <li class="mdl-menu__item"
-      *ngIf="group['is:owner'] && !user['is:member'] && !wasReInvited"
+      *ngIf="(group['is:owner'] || group['is:moderator']) && !user['is:member'] && !wasReInvited"
       (click)="reInvite()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REINVITE">
       Re-invite to Group
     </li>
-    <li class="mdl-menu__item" *ngIf="group['is:owner'] && wasReInvited">
+    <li class="mdl-menu__item" *ngIf="(group['is:owner'] || group['is:moderator']) && wasReInvited">
       <span class="minds-menu-info-item" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__INVITED">Invited</span>
     </li>
     <li class="mdl-menu__item"
-      *ngIf="group['is:owner'] && !user['is:owner'] && user['is:member']"
+      *ngIf="group['is:owner'] && !(user['is:owner']||user['is:moderator']) && user['is:member']"
       (click)="grantOwnership()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_ADMIN">
-      Make Admin
+      Make Owner
     </li>
     <li class="mdl-menu__item"
       *ngIf="group['is:owner'] && user['is:owner'] && user['is:member']"
       (click)="revokeOwnership()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_ADMIN">
-      Remove as Admin
+      Remove as Owner
+    </li>
+    <li class="mdl-menu__item"
+      *ngIf="group['is:owner'] && !(user['is:owner']||user['is:moderator']) && user['is:member']"
+      (click)="grantModerator()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_MODERATOR">
+      Make Moderator
+    </li>
+    <li class="mdl-menu__item"
+      *ngIf="group['is:owner'] && user['is:moderator'] && user['is:member']"
+      (click)="revokeModerator()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_MODERATOR">
+      Remove as Moderator
     </li>
   </ul>
   <div class="minds-bg-overlay" (click)="toggleMenu($event)" [hidden]="!showMenu"></div>
@@ -60,6 +70,7 @@ export class GroupsCardUserActionsButton {
   };
   user: any = {
     'is:member': false,
+    'is:moderator': false,
     'is:owner': false,
     'is:creator': false,
     'is:banned': false
@@ -148,6 +159,34 @@ export class GroupsCardUserActionsButton {
     this.service.revokeOwnership({ guid: this.group.guid }, this.user.guid)
       .then((isOwner: boolean) => {
         this.user['is:owner'] = isOwner;
+      });
+
+    this.showMenu = false;
+  }
+
+  /**
+   * Grant moderation
+   */
+  grantModerator() {
+    this.user['is:moderator'] = true;
+
+    this.service.grantModerator({ guid: this.group.guid }, this.user.guid)
+      .then((isModerator: boolean) => {
+        this.user['is:moderator'] = isModerator;
+      });
+
+    this.showMenu = false;
+  }
+
+  /**
+   * Revoke moderation
+   */
+  revokeModerator() {
+    this.user['is:moderator'] = false;
+
+    this.service.revokeModerator({ guid: this.group.guid }, this.user.guid)
+      .then((isModerator: boolean) => {
+        this.user['is:moderator'] = isModerator;
       });
 
     this.showMenu = false;

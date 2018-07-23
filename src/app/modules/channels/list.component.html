@@ -5,7 +5,7 @@
         routerLink="/channels/top"
         routerLinkActive="m-topbar--navigation--item-active"
         >
-        <span>
+        <span i18n="@@M__COMMON_TOPBAR_TOP">
           Top
         </span>
         <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
@@ -17,7 +17,7 @@
         *ngIf="session.isLoggedIn()"
         routerLinkActive="m-topbar--navigation--item-active"
         >
-        <span>Subscriptions</span>
+        <span i18n="@@M__COMMON_TOPBAR_SUBSCRIPTIONS">Subscriptions</span>
         <m-tooltip icon="help" i18n="@@MINDS__CHANNELS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
           Channels you are subscribed to
         </m-tooltip>
@@ -27,7 +27,7 @@
         *ngIf="session.isLoggedIn()"
         routerLinkActive="m-topbar--navigation--item-active"
         >
-        <span>Subscribers</span>
+        <span i18n="@@M__COMMON_TOPBAR_SUBSCRIBERS">Subscribers</span>
         <m-tooltip icon="help" i18n="@@MINDS__CHANNELS__TOPBAR__SUBSCRIBERS_TOOLTIP">
           Channels who are subscribed to you
         </m-tooltip>
@@ -36,7 +36,7 @@
         routerLink="/channels/founders"
         routerLinkActive="m-topbar--navigation--item-active"
         >
-        <span>Founders</span>
+        <span i18n="@@M__COMMON_TOPBAR_FOUNDERS">Founders</span>
         <m-tooltip icon="help" i18n="@@MINDS__CHANNELS__TOPBAR__FOUNDERS_TOOLTIP">
           Channels who invested in the Minds Reg-CF Crowfunding campaign
         </m-tooltip>

@@ -112,6 +112,10 @@ export class PosterComponent {
     }
   }
 
+  removeRichEmbed() {
+    this.attachment.reset();
+  }
+
   removeAttachment(file: HTMLInputElement) {
     if (this.inProgress) {
       this.attachment.abort();

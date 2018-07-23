@@ -1,14 +1,80 @@
 <nav class="m-topbar--navigation">
-  <div *ngFor="let item of navigation.getItems()">
+  <div>
     <a class="m-topbar--navigation--item"
-      [ngClass]="{'m-topbar--navigation--item-active' : item.active }"
-      [routerLink]="[item.path, item.params]"
-      [title]="item.text"
-      *ngIf="(item.visibility == 2) || (item.visibility === 0 && session.isLoggedIn()) || (item.visibility === -1 && session.isAdmin())"
+      routerLink="/newsfeed"
+      routerLinkActive="m-topbar--navigation--item-active"
+      title="Newsfeed"
+      i18n-title="@@M_TOPBAR_NEWSFEED"
     >
-      <i class="material-icons">{{item.icon}}</i>
+      <i class="material-icons">home</i>
 
-      <span class="m-topbar--navigation--text">{{ item.text }}</span>
+      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_NEWSFEED">Newsfeed</span>
     </a>
   </div>
+
+  <div>
+    <a class="m-topbar--navigation--item"
+      routerLink="/channels"
+      routerLinkActive="m-topbar--navigation--item-active"
+      title="Channels"
+      i18n-title="@@M_TOPBAR_CHANNELS"
+    >
+      <i class="material-icons">people</i>
+
+      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_CHANNELS">Channels</span>
+    </a>
+  </div>
+
+  <div>
+    <a class="m-topbar--navigation--item"
+      routerLink="/media/videos"
+      routerLinkActive="m-topbar--navigation--item-active"
+      title="Videos"
+      i18n-title="@@M_TOPBAR_VIDEOS"
+    >
+      <i class="material-icons">videocam</i>
+
+      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_VIDEOS">Videos</span>
+    </a>
+  </div>
+
+  <div>
+    <a class="m-topbar--navigation--item"
+      routerLink="/media/images"
+      routerLinkActive="m-topbar--navigation--item-active"
+      title="Images"
+      i18n-title="@@M_TOPBAR_IMAGES"
+    >
+      <i class="material-icons">photo</i>
+
+      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_IMAGES">Images</span>
+    </a>
+  </div>
+
+  <div>
+    <a class="m-topbar--navigation--item"
+      routerLink="/blog"
+      routerLinkActive="m-topbar--navigation--item-active"
+      title="Blogs"
+      i18n-title="@@M_TOPBAR_BLOGS"
+    >
+      <i class="material-icons">subject</i>
+
+      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_BLOGS">Blogs</span>
+    </a>
+  </div>
+
+  <div>
+    <a class="m-topbar--navigation--item"
+      routerLink="/groups"
+      routerLinkActive="m-topbar--navigation--item-active"
+      title="Groups"
+      i18n-title="@@M_TOPBAR_GROUPS"
+    >
+      <i class="material-icons">group_work</i>
+
+      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_GROUPS">Groups</span>
+    </a>
+  </div>
+
 </nav>

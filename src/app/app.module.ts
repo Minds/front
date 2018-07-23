@@ -49,6 +49,7 @@ import { MediaModule } from './modules/media/media.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BlockchainModule } from './modules/blockchain/blockchain.module';
 import { BrandingModule } from './modules/branding/branding.module';
+import { CommentsModule } from './modules/comments/comments.module';
 
 @NgModule({
   bootstrap: [
@@ -99,6 +100,7 @@ import { BrandingModule } from './modules/branding/branding.module';
     AuthModule,
     BlockchainModule,    
     BrandingModule,
+    CommentsModule,
 
     //last due to :username route
     ChannelsModule,

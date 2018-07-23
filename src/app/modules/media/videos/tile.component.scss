@@ -23,7 +23,7 @@
       font-size: 72px;
     }
   }
-
+  
   .m-media--videos--tile-title {
     background: #FFF;
     position: relative;
@@ -78,6 +78,38 @@
     position: absolute;
     right: 8px;
     bottom: 8px;
+  }
+
+  &.m-video-tile-mature-thumbnail > a {
+    transform-style: preserve-3d;
+    background-color: rgba(0, 0, 0, 0.65);
+    filter: blur(10px) grayscale(100%);
+    transform: translate3d(0, 0, 0);
+    opacity: 0.65;
+
+    > span.material-icons {
+      display:none;
+    }
+  }
+
+  > i.material-icons {
+    display: none;
+  }
+
+  &.m-video-tile-mature-thumbnail {
+    i.material-icons {
+      display: inline-block;
+      position: relative;
+      bottom: 100px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 72px;
+      color: #fff;
+    }
+  }
+
+  &.m-video-tile-mature-thumbnail > .m-media--videos--tile-title {
+    filter: blur(.5em);
   }
 
 }

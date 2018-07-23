@@ -5,7 +5,7 @@
         routerLink="/newsfeed/top"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span i18n="@@M__FEATURE__SIDEBAR_PLURAL">Top</span>
+        <span i18n="@@M__COMMON_TOPBAR_TOP">Top</span>
         <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
           Top displays the top content on Minds
         </m-tooltip>
@@ -15,7 +15,7 @@
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
       >
-        <span i18n="@@M__FEATURE__NEWSFEED_PLURAL">Subscribed</span>
+        <span i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIBED">Subscribed</span>
         <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIBED_TOOLTIP">
           Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network
         </m-tooltip>
@@ -25,7 +25,7 @@
         routerLink="/newsfeed/boost"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span i18n="@@M__FEATURE__CHANNEL__PLURAL">BoostFeed</span>
+        <span i18n="@@MINDS__NEWSFEED__TOPBAR__BOOSTFEED">BoostFeed</span>
         <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__TOPBAR__BOOSTFEED_TOOLTIP">
           The Boostfeed only shows boosted posts from the wider network. To Boost your content, click the Boost icon on the topbar
         </m-tooltip>
@@ -54,8 +54,8 @@
       </a>
 
       <a routerLink="/login" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link" *ngIf="!session.isLoggedIn()">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button">
-          <!-- i18n: @@M__ACTION__LOGIN -->Login<!-- /i18n -->
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button" i18n="@@M__ACTION__LOGIN">
+          Login
         </div>
       </a>
 
@@ -78,7 +78,7 @@
               <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
             </li>
           </ul>
-          <span class="copyright mdl-color-text--blue-grey-700" i18n="@@MINDS__NEWSFEED__COPYRIGHT_FOOTER">&#169; Minds 2016</span>
+          <span class="copyright mdl-color-text--blue-grey-700" i18n="@@M__COMMON__COPYRIGHT_YEAR">&#169; Minds {{'2018'}}</span>
         </div>
       </div>
     </div>
@@ -100,7 +100,7 @@
             <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
           </li>
         </ul>
-        <span class="copyright mdl-color-text--blue-grey-700" i18n="@@MINDS__NEWSFEED__COPYRIGHT_FOOTER">&#169; Minds 2018</span>
+        <span class="copyright mdl-color-text--blue-grey-700" i18n="@@M__COMMON__COPYRIGHT_YEAR">&#169; Minds {{'2018'}}</span>
       </div>
     </div>
 

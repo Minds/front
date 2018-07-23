@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, ViewChild } from '@angular/core';
 
 import { SocketsService } from '../../../services/sockets';
 
@@ -28,7 +28,7 @@ export class MessengerUserlist {
   hasMoreData: boolean = true;
   inProgress: boolean = false;
   cb: number = Date.now();
-
+  opened_ribbon: boolean = false;
   minds: Minds = window.Minds;
   storage: Storage = new Storage();
 
@@ -168,6 +168,13 @@ export class MessengerUserlist {
         this.socketSubscriptions[sub].unsubscribe();
       }
     }
+  }
+
+  ribbonToggle() {
+    if (!this.userListToggle) {
+      this.userListToggle = true;
+    }
+    this.opened_ribbon = !this.opened_ribbon;
   }
 
   toggle() {

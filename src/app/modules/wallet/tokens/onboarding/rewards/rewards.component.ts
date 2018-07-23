@@ -28,6 +28,7 @@ export class TokenRewardsOnboardingComponent {
   inProgress: boolean = false;
   error: string;
   minds = window.Minds;
+  plusPrompt: boolean = false;
 
   constructor(
     protected client: Client,
@@ -43,6 +44,24 @@ export class TokenRewardsOnboardingComponent {
     if (this.session.getLoggedInUser().rewards) {
       this.next.next();
     }
+  }
+
+  async getPlus() {
+    if (this.session.getLoggedInUser().plus) {
+      return this.verify();
+    }
+    //US + UK exempt
+    if (this.number.toString().indexOf('1') === 0
+      || this.number.toString().indexOf('44') === 0
+    ) {
+      return this.verify();
+    }
+    this.plusPrompt = true;
+    this.detectChange();
+  }
+
+  async onPlusCompleted(e) {
+    return this.verify();
   }
 
   async verify() {

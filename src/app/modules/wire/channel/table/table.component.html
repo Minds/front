@@ -10,7 +10,7 @@
         <span *ngIf="!editing && type == 'points'">{{ (reward.amount || 0) | number }}+</span>
 
         <ng-container *ngIf="!editing && type == 'tokens'">
-          <span>{{ (reward.amount || 0) | number:'1.0-4' }} Tokens or Over</span>
+          <span i18n="@@WIRE__CHANNEL__TABLE__AMOUNT_OR_OVER_LABEL">{{ (reward.amount || 0) | number:'1.0-4' }} Tokens or Over</span>
         </ng-container>
 
         <ng-container *ngIf="editing && type=='money'">$</ng-container>

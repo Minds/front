@@ -6,9 +6,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == ''"
           [routerLink]="['/search', { q: q, type: '', ref: ref }]"
-          i18n="@@SEARCH__TOP_TAB"
         >
-          <span>Top</span>
+          <span i18n="@@SEARCH__TOP_TAB">Top</span>
           <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
             Top displays the top content on Minds
           </m-tooltip>
@@ -17,9 +16,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'latest'"
           [routerLink]="['/search', { q: q, type: 'latest', ref: ref }]"
-          i18n="@@SEARCH__LATEST_TAB"
         >
-          <span>Latest</span>
+          <span i18n="@@SEARCH__LATEST_TAB">Latest</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__LATEST_TOOLTIP">
             Show newly created content first
           </m-tooltip>
@@ -28,9 +26,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'user'"
           [routerLink]="['/search', { q: q, type: 'user', ref: ref }]"
-          i18n="@@M__FEATURE__CHANNEL__PLURAL"
         >
-          <span>Channels</span>
+          <span i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__CHANNELS_TOOLTIP">
             Show only channels
           </m-tooltip>
@@ -39,9 +36,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'activity'"
           [routerLink]="['/search', { q: q, type: 'activity', ref: ref }]"
-          i18n="@@M__FEATURE__POST_PLURAL"
         >
-          <span>Posts</span>
+          <span i18n="@@M__FEATURE__POST_PLURAL">Posts</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__POSTS_TOOLTIP">
             Show only Posts
           </m-tooltip>
@@ -50,9 +46,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:video'"
           [routerLink]="['/search', { q: q, type: 'object:video', ref: ref }]"
-          i18n="@@M__FEATURE__VIDEO_PLURAL"
         >
-          <span>Videos</span>
+          <span i18n="@@M__FEATURE__VIDEO_PLURAL">Videos</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__VIDEOS_TOOLTIP">
             Show only videos
           </m-tooltip>
@@ -61,9 +56,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:image'"
           [routerLink]="['/search', { q: q, type: 'object:image', ref: ref }]"
-          i18n="@@M__FEATURE__IMAGE_PLURAL"
         >
-          <span>Images</span>
+          <span i18n="@@M__FEATURE__IMAGE_PLURAL">Images</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__IMAGES_TOOLTIP">
             Show only images
           </m-tooltip>
@@ -72,9 +66,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:blog'"
           [routerLink]="['/search', { q: q, type: 'object:blog', ref: ref }]"
-          i18n="@@M__FEATURE__BLOG_PLURAL"
         >
-          <span>Blogs</span>
+          <span i18n="@@M__FEATURE__BLOG_PLURAL">Blogs</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__BLOGS_TOOLTIP">
             Show only blogs
           </m-tooltip>
@@ -83,9 +76,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'group'"
           [routerLink]="['/search', { q: q, type: 'group', ref: ref }]"
-          i18n="@@M__FEATURE__GROUP__PLURAL"
         >
-          <span>Groups</span>
+          <span i18n="@@M__FEATURE__GROUP__PLURAL">Groups</span>
           <m-tooltip icon="help" i18n="@@MINDS__CHANNELS__TOPBAR__GROUPS_TOOLTIP">
             Show only groups
           </m-tooltip>
@@ -96,9 +88,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == ''"
           [routerLink]="['/search', { q: q, type: '', id: container, ref: ref }]"
-          i18n="@@SEARCH__TOP_TAB"
         >
-          <span>Top</span>
+          <span i18n="@@SEARCH__TOP_TAB">Top</span>
           <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
             Top displays the top content on Minds
           </m-tooltip>
@@ -107,9 +98,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'latest'"
           [routerLink]="['/search', { q: q, type: 'latest', id: container, ref: ref }]"
-          i18n="@@SEARCH__LATEST_TAB"
         >
-          <span>Latest</span>
+          <span i18n="@@SEARCH__LATEST_TAB">Latest</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__LATEST_TOOLTIP">
             Show newly created content first
           </m-tooltip>
@@ -118,9 +108,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'activity'"
           [routerLink]="['/search', { q: q, type: 'activity', id: container, ref: ref }]"
-          i18n="@@M__FEATURE__POST_PLURAL"
         >
-          <span>Posts</span>
+          <span i18n="@@M__FEATURE__POST_PLURAL">Posts</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__POSTS_TOOLTIP">
             Show only Posts
           </m-tooltip>
@@ -129,9 +118,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:video'"
           [routerLink]="['/search', { q: q, type: 'object:video', id: container, ref: ref }]"
-          i18n="@@M__FEATURE__VIDEO_PLURAL"
         >
-          <span>Videos</span>
+          <span i18n="@@M__FEATURE__VIDEO_PLURAL">Videos</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__VIDEOS_TOOLTIP">
             Show only videos
           </m-tooltip>
@@ -140,9 +128,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:image'"
           [routerLink]="['/search', { q: q, type: 'object:image', id: container, ref: ref }]"
-          i18n="@@M__FEATURE__IMAGE_PLURAL"
         >
-          <span>Images</span>
+          <span i18n="@@M__FEATURE__IMAGE_PLURAL">Images</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__IMAGES_TOOLTIP">
             Show only images
           </m-tooltip>
@@ -151,9 +138,8 @@
         <a class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:blog'"
           [routerLink]="['/search', { q: q, type: 'object:blog', id: container, ref: ref }]"
-          i18n="@@M__FEATURE__BLOG_PLURAL"
         >
-          <span>Blogs</span>
+          <span i18n="@@M__FEATURE__BLOG_PLURAL">Blogs</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__BLOGS_TOOLTIP">
             Show only blogs
           </m-tooltip>

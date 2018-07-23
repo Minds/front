@@ -1,6 +1,6 @@
 <div class="avatar">
   <a [routerLink]="['/', notification.fromObj.username || '']" *ngIf="notification.fromObj">
-    <img [src]="'/icon/' + notification.fromObj.guid + '/small/' + notification.fromObj.icontime" class="mdl-shadow--2dp"/>
+    <img [src]="minds.cdn_url + 'icon/' + notification.fromObj.guid + '/small/' + notification.fromObj.icontime" class="mdl-shadow--2dp"/>
   </a>
 </div>
 
@@ -98,7 +98,7 @@
         <div *ngIf="notification.entityObj.subtype != 'blog'">
           <a [routerLink]="['/media', notification.entityObj.guid]">
             <p>
-              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON">{{notification.fromObj.name}} commented on</ng-container>
+              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON">{{notification.fromObj.name}} commented on </ng-container>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title" >{{notification.entityObj.title | excerpt}}</span>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.owner_guid != session.getLoggedInUser().guid && !notification.entityObj.title" i18n="object belonging to user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT">{{notification.entityObj.ownerObj.name}}'s {{notification.entityObj.subtype}}</span>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title" i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT">your {{notification.entityObj.subtype}}</span>
@@ -239,11 +239,11 @@
       </a>
 
       <ng-container *ngIf="notification.entityObj.type == 'comment'">
-        <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.params?.parent?.type != 'group'">
+        <a [routerLink]="['/newsfeed', notification.params?.parent?.guid]" *ngIf="notification.params?.parent?.type != 'group'">
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_COMMENT">{{notification.fromObj.name}} tagged you in a comment</p>
         </a>
 
-        <a [routerLink]="['/groups/profile', notification.entityObj.parent_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+        <a [routerLink]="['/groups/profile', notification.params?.parent?.guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_CONVERSATION">
             <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> tagged you in
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation
@@ -539,7 +539,7 @@
   <ng-template ngSwitchCase="video_transcoded">
     <a href="#">
       <p>
-        <ng-container i18n> Your <a [routerLink]="['/media', notification.params.entity.guid]" class="pseudo-link mdl-color-text--blue-grey-400">video</a> is ready to be viewed!</ng-container>
+        <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__VIDEO_IS_READY"> Your <a [routerLink]="['/media', notification.params.entity.guid]" class="pseudo-link mdl-color-text--blue-grey-400">video</a> is ready to be viewed!</ng-container>
       </p>
     </a>
   </ng-template>
@@ -608,11 +608,26 @@
     </div> 
   </ng-template>
 
-  <ng-template ngSwitchCase="contributions">
-    <a target="_blank"
-      routerLink="/wallet/tokens/contributions">
-      <p i18n="@@NOTIFICATIONS__NOTIFICATION__CONTRIBUTIONS__YOU_HAVE_RECEIVED_X_TOKENS">
-        You have received {{notification.params.amount}} tokens.
+  <ng-template ngSwitchCase="contributions"></ng-template>
+
+  <ng-template ngSwitchCase="rewards_summary">
+    <a
+      target="_blank"
+      routerLink="/wallet/tokens/contributions"
+    >
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_RECEIVED_X_TOKENS_TODAY">
+        You earned {{notification.params.amount}} tokens today.
+      </p>
+    </a>
+  </ng-template>
+
+  <ng-template ngSwitchCase="rewards_reminder">
+    <a
+      target="_blank"
+      routerLink="/wallet/tokens/contributions"
+    >
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_LEFT">
+        You have {{notification.params.left}} left to earn tokens today!
       </p>
     </a>
   </ng-template>

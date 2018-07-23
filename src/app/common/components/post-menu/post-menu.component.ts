@@ -11,8 +11,8 @@ type Option =
   'edit'
   | 'translate'
   | 'share'
-  | 'mute'
-  | 'unmute'
+  | 'follow'
+  | 'unfollow'
   | 'feature'
   | 'unfeature'
   | 'delete'
@@ -23,8 +23,6 @@ type Option =
   | 'unmonetize'
   | 'subscribe'
   | 'unsubscribe'
-  | 'see-more-like-this'
-  | 'see-less-like-this'
   | 'rating'
   | 'block';
 
@@ -46,8 +44,8 @@ export class PostMenuComponent {
 
   featuredCategory: string = 'not-selected';
 
-  asyncMute: boolean = false;
-  asyncMuteInProgress: boolean = false;
+  asyncFollow: boolean = false;
+  asyncFollowInProgress: boolean = false;
   asyncBlockInProgress: boolean = false;
   asyncBlock: boolean = false;
 
@@ -74,39 +72,39 @@ export class PostMenuComponent {
 
   cardMenuHandler() {
     this.opened = !this.opened;
-    this.asyncMuteFetch();
+    this.asyncFollowFetch();
     this.asyncBlockFetch();
   }
 
-  asyncMuteFetch() {
-    if (this.asyncMute || this.asyncMuteInProgress) {
+  asyncFollowFetch() {
+    if (this.asyncFollow || this.asyncFollowInProgress) {
       return;
     }
 
-    this.asyncMuteInProgress = true;
+    this.asyncFollowInProgress = true;
     this.detectChanges();
 
-    this.client.get(`api/v1/entities/notifications/${this.entity.guid}`)
+    this.client.get(`api/v2/notifications/follow/${this.entity.guid}`)
       .then((response: any) => {
-        this.asyncMuteInProgress = false;
-        this.asyncMute = true;
+        this.asyncFollowInProgress = false;
+        this.asyncFollow = true;
 
-        this.entity['is:muted'] = !!response['is:muted'];
+        this.entity['is:following'] = !!response.postSubscription.following;
         this.detectChanges();
       })
       .catch(e => {
-        this.asyncMuteInProgress = false;
+        this.asyncFollowInProgress = false;
         this.detectChanges();
       });
   }
 
-  mute() {
-    this.entity['is:muted'] = true;
+  follow() {
+    this.entity['is:following'] = true;
 
-    this.client.post(`api/v1/entities/notifications/${this.entity.guid}/mute`)
+    this.client.put(`api/v2/notifications/follow/${this.entity.guid}`)
       .then((response: any) => {
         if (response.done) {
-          this.entity['is:muted'] = true;
+          this.entity['is:following'] = true;
           this.detectChanges();
           return;
         }
@@ -114,20 +112,20 @@ export class PostMenuComponent {
         throw new Error('E_NOT_DONE');
       })
       .catch(e => {
-        this.entity['is:muted'] = false;
+        this.entity['is:following'] = false;
         this.detectChanges();
       });
 
-    this.selectOption('mute');
+    this.selectOption('follow');
   }
 
-  unmute() {
-    this.entity['is:muted'] = false;
+  unfollow() {
+    this.entity['is:following'] = false;
 
-    this.client.post(`api/v1/entities/notifications/${this.entity.guid}/unmute`)
+    this.client.delete(`api/v2/notifications/follow/${this.entity.guid}`)
       .then((response: any) => {
         if (response.done) {
-          this.entity['is:muted'] = false;
+          this.entity['is:following'] = false;
           this.detectChanges();
           return;
         }
@@ -135,10 +133,10 @@ export class PostMenuComponent {
         throw new Error('E_NOT_DONE');
       })
       .catch(e => {
-        this.entity['is:muted'] = true;
+        this.entity['is:following'] = true;
         this.detectChanges();
       });
-    this.selectOption('unmute');
+    this.selectOption('unfollow');
   }
 
   asyncBlockFetch() {
@@ -301,16 +299,6 @@ export class PostMenuComponent {
 
   detectChanges() {
     this.cd.markForCheck();
-  }
-
-  seeMore() {
-    this.client.put(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {});
-    this.selectOption('see-more-like-this');
-  }
-
-  seeLess() {
-    this.client.delete(`api/v1/categories/${this.session.getLoggedInUser().guid}/${this.entity.boosted_guid}`, {});
-    this.selectOption('see-less-like-this');
   }
 
   setRating(rating: number) {

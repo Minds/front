@@ -1,8 +1,8 @@
 <div class="m-boost-publisher--ledger">
 
   <div class="m-boost-publisher--ledger-filters m-border">
-    <m-date-selector label="From:" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
-    <m-date-selector label="To:" [date]="endDate" (dateChange)="onEndDateChange($event)"></m-date-selector>
+    <m-date-selector label="From:" i18n-label="@@BOOST__PUBLISHER__LEDGER__FROM" [date]="startDate" (dateChange)="onStartDateChange($event)"></m-date-selector>
+    <m-date-selector label="To:" i18n-label="@@BOOST__PUBLISHER__LEDGER__TO" [date]="endDate" (dateChange)="onEndDateChange($event)"></m-date-selector>
   </div>
 
   <table class="mdl-data-table mdl-js-data-table m-border" [mdl]>
@@ -10,7 +10,7 @@
       <tr class="m-boost-publisher--ledger-header">
         <th class="mdl-data-table__cell--non-numeric m-data-title" i18n="@@M__COMMON__DATE">Date</th>
         <th class="mdl-data-table__cell--non-numeric m-data-title" i18n="@@BOOST__CONSOLE__PUBLISHER_LEDGER__VIEWS_COLUMN">Views</th>
-        <th i18n="@@M__COMMON__COLUMN">Earnings</th>
+        <th i18n="@@BOOST__PUBLISHER__LEDGER__EARNINGS">Earnings</th>
         <th></th>
       </tr>
     </thead>

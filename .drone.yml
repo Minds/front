@@ -10,8 +10,9 @@ pipeline:
   build:
     image: markharding/minds-front-base
     commands:
-      - gulp build.sass && gulp build.sass ##weird build needs to be run twice for now
-      - ng build --prod --vc --deploy-url "https://cdn-assets.minds.com/front/dist/" --build-optimizer=false
+      - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
+      - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
+      - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
     when:
       event: [ push, tag, deployment ]
       branch: [ master, test/codebuild, delta/launch ]

@@ -18,6 +18,7 @@ export class WalletTokenJoinComponent {
   secret: string;
   inProgress: boolean = false;
   error: string;
+  plusPrompt: boolean = false;
 
   constructor(
     protected client: Client,
@@ -36,19 +37,21 @@ export class WalletTokenJoinComponent {
   }
 
   async verify() {
-    this.inProgress = true;
+    this.plusPrompt = true;
+
+    /*this.inProgress = true;
     this.error = null;
     try {
       let response: any = await this.client.post('api/v2/blockchain/rewards/verify', {
           number: this.number,
         });
       this.secret = response.secret;
-      this.confirming = true;
+      this.plusPrompt = true;
     } catch (e) {
       this.error = e.message;
     }
     this.inProgress = false;
-
+*/
     this.detectChange();
   }
 

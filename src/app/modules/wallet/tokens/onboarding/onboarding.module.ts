@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../../../common/common.module';
 import { BlockchainModule } from '../../../blockchain/blockchain.module';
+import { PlusModule } from '../../../plus/plus.module';
 
 import { TokenOnboardingComponent } from './onboarding.component';
 import { TokenIntroductionOnboardingComponent } from './introduction/introduction.component';
@@ -21,6 +22,7 @@ import { TokenOnboardingService } from './onboarding.service';
     ReactiveFormsModule,
     CommonModule,
     BlockchainModule,
+    PlusModule,
   ],
   declarations: [
     TokenOnboardingComponent,

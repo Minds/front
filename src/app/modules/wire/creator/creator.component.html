@@ -60,13 +60,13 @@
         <span class="m-wire--creator-wide-input--cost-label-value">
           <span class="m-wire--creator-wide-input--cost-label">Cost</span>
 
-          <span class="m-wire--creator-wide-input--cost-value" i18n>
+          <span class="m-wire--creator-wide-input--cost-value">
             <span *ngIf="tokenRate">{{ getTokenAmountRate(wire.amount) | currency:'USD':'symbol-narrow' }}</span>
             <span *ngIf="!tokenRate">&hellip;</span>
           </span>
         </span>
 
-        <span class="m-wire--creator-wide-input--cost-currency" i18n>
+        <span class="m-wire--creator-wide-input--cost-currency" i18n="@@M__COMMON__USD_LABEL">
           USD
         </span>
       </div>
@@ -99,7 +99,7 @@
             <i class="material-icons">check_circle</i>
             <h5>
               <span i18n="@@M__COMMON__ONCHAIN">OnChain</span>
-              <m-tooltip icon="help">
+              <m-tooltip icon="help" i18n="@@WIRE__CREATOR__ONCHAIN_TOOLTIP">
                 Onchain payments will be published to the public blockchain.
                 You may utilize Metamask or another address. These purchases require
                 a Gas fee.
@@ -110,11 +110,11 @@
               <m-tooltip anchor="left">
                 <span m-tooltip--anchor class="m-boost--creator-selector--hoverable" i18n="@@M__COMMON__BALANCE">Balance</span>
 
-                <ng-container *ngIf="!balances.isReceiverOnchain; else receiverOnchainTooltip">
+                <ng-container *ngIf="!balances.isReceiverOnchain; else receiverOnchainTooltip" i18n="@@WIRE__CREATOR__ACTIVE_ADDRESS_TOOLTIP">
                   This balance is for the {{ balances.onChainAddress | addressExcerpt:true }} wallet that is
                   currently active in your Ethereum interface.
                 </ng-container>
-                <ng-template #receiverOnchainTooltip>
+                <ng-template #receiverOnchainTooltip i18n="@@WIRE__CREATOR__RECEIVER_ADDRESS_TOOLTIP">
                   This balance is for the {{ balances.onChainAddress | addressExcerpt:true }} wallet that is
                   currently set up as the receiver wallet for your channel.
                 </ng-template>
@@ -139,7 +139,7 @@
             <i class="material-icons">donut_large</i>
             <h5>
               <span i18n="@@M__COMMON__OFFCHAIN">OffChain</span>
-              <m-tooltip icon="help">
+              <m-tooltip icon="help" i18n="@@WIRE__CREATOR__OFFCHAIN_TOOLTIP">
                 Offchain payments will not be published to the blockchain
                 and are limited to 100 tokens a day.
               </m-tooltip>
@@ -149,8 +149,10 @@
               <m-tooltip anchor="left">
                 <span m-tooltip--anchor class="m-boost--creator-selector--hoverable" i18n="@@M__COMMON__BALANCE">Balance</span>
 
-                This balance is for your Minds.com OffChain wallet. Transactions
-                made from this address will not appear on the blockchain.
+                <ng-container i18n="@@WIRE__CREATOR__BALANCE_OFFCHAIN_TOOLTIP">
+                  This balance is for your Minds.com OffChain wallet. Transactions
+                  made from this address will not appear on the blockchain.
+                </ng-container>
               </m-tooltip>:
 
               <ng-container *ngIf="balances.onchain !== null; else loadingOnchainBalance">
@@ -172,8 +174,8 @@
           <div class="m-wire--creator-selector-type">
             <i class="material-icons">credit_card</i>
             <h5 i18n="@@M__COMMON__USD">
-              <span>Credit Card</span>
-              <m-tooltip icon="help">
+              <span i18n="@@WIRE__CREATOR__CREDIT_CARD">Credit Card</span>
+              <m-tooltip icon="help" i18n="@@WIRE__CREATOR__CREDIT_CARD_TOOLTIP">
                 Credit cards may be used to wire, though we recommend first purchasing tokens in order to access a discount.
                 Recipients will receive the token value.
               </m-tooltip>

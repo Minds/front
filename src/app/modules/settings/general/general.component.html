@@ -16,7 +16,7 @@
     >
     <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
   </button>
-  <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" [hidden]="!inProgress"></div>
+  <div id="p2" class="mdl-spinner mdl-js-spinner is-active" [hidden]="!inProgress"></div>
 </div>
 
 <!-- START: NAME -->
@@ -136,20 +136,19 @@
 </div>
 <!-- END: Tw connect -->
 
-<!-- START: LANGUAGE 
+<!-- START: LANGUAGE  -->
 <div class="m-settings--section m-border m-settings--language">
   <h4 i18n="@@MINDS__SETTINGS__LANGUAGE_SETTINGS_TITLE">Language Settings</h4>
   <div class="mdl-card__supporting-text">
     <ng-container i18n="@@MINDS__SETTINGS__SITE_LANGUAGE_LABEL">Site language:</ng-container>
     <select name="language" [ngModel]="language" (ngModelChange)="language = $event; change()">
-      <option value="en">English</option>
-      <option value="es">Español</option>
+      <option *ngFor="let language of languages" [value]="language.code">{{language.name}}</option>
     </select>
   </div>
 
 </div>
 
-END: LANGUAGE -->
+<!-- END: LANGUAGE -->
 
 <!-- START: CATEGORIES -->
 <div class="m-settings--section m-border m-settings--categories">

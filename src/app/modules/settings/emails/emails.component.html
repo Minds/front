@@ -22,7 +22,7 @@
 </div>
 
 <div class="m-settings--section m-settings--emails--when-campaign m-border" *ngIf="!loading">
-  <h4>E-Mail address</h4>
+  <h4 i18n="@@SETTINGS__EMAIL__EMAIL_ADDRESS_TITLE">E-Mail address</h4>
 
   <ul class="m-settings--emails-campaigns">
     <li class="m-settings--emails-campaigns--campaign">
@@ -38,7 +38,7 @@
 </div>
 
 <div class="m-settings--section m-settings--emails--when-campaign m-border" *ngIf="!loading">
-  <h4>Email me when</h4>
+  <h4 i18n="@@SETTINGS__EMAIL__EMAIL_ME_WHEN_TITLE">Email me when</h4>
 
   <ul class="m-settings--emails-campaigns">
     <li class="m-settings--emails-campaigns--campaign">
@@ -88,7 +88,7 @@
 
 <div class="m-settings--section m-settings--emails--with-campaign m-border" *ngIf="!loading">
       
-  <h4>Email me with</h4>
+  <h4 i18n="@@SETTINGS__EMAIL__EMAIL_ME_WITH">Email me with</h4>
 
   <ul class="m-settings--emails-campaigns">
     <li class="m-settings--emails-campaigns--campaign">
@@ -106,9 +106,9 @@
       </label>
       <br />
       <select id="top-posts-dropdown" name="top-posts" [disabled]="!notifications.with.top_posts" (click)="change()" [(ngModel)]="notifications.with.top_posts">
-        <option value="periodically">Periodically</option>
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
+        <option value="periodically" i18n="@@SETTINGS__EMAIL__PERIODICALLY_OPTION">Periodically</option>
+        <option value="daily" i18n="@@SETTINGS__EMAIL__DAILY_OPTION">Daily</option>
+        <option value="weekly" i18n="@@SETTINGS__EMAIL__WEEKLY_OPTION">Weekly</option>
       </select>
     </li>
     <li class="m-settings--emails-campaigns--campaign">
@@ -160,7 +160,7 @@
 
 <div class="m-settings--section m-settings--emails--global-campaign m-border" *ngIf="!loading">
 
-  <h4>Keep me updated with</h4>
+  <h4 i18n="@@SETTINGS__EMAIL__KEEP_ME_UPDATED_WITH_TITLE">Keep me updated with</h4>
 
   <ul class="m-settings--emails-campaigns">
     <li class="m-settings--emails-campaigns--campaign">

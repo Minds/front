@@ -39,6 +39,8 @@ export class RegisterForm {
       email: ['', Validators.required],
       password: ['', Validators.required],
       password2: ['', Validators.required],
+      tos: [false],
+      exclusive_promotions: [false],
       captcha: ['']
     });
 
@@ -46,6 +48,8 @@ export class RegisterForm {
       username: ['', Validators.required],
       password: ['', Validators.required],
       password2: ['', Validators.required],
+      tos: [false],
+      exclusive_promotions: [false],
       captcha: ['']
     });
   }
@@ -53,6 +57,13 @@ export class RegisterForm {
   register(e) {
     e.preventDefault();
     this.errorMessage = '';
+    if (!this.form.value.tos) {
+      this.errorMessage = 'To create an account you need to accept terms and conditions.';
+      return;
+    }
+
+    //re-enable cookies
+    document.cookie = 'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
     if (this.form.value.password !== this.form.value.password2) {
       if (this.reCaptcha) {
@@ -100,6 +111,11 @@ export class RegisterForm {
 
   registerWithFb() {
     this.inProgress = true;
+
+    if (!this.form.value.tos) {
+      this.errorMessage = 'To create an account you need to accept terms and conditions.';
+      return;
+    }
 
     this.client.post('api/v1/thirdpartynetworks/facebook/register', this.fbForm.value)
       .then((data: any)=> {

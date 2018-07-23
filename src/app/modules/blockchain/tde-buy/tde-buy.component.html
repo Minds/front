@@ -15,7 +15,7 @@
     You can either send the funds directly to <b>{{ tdeAddress }}</b> or click the button below.
   </p>
 
-  <p *ngIf="error" class="m-blockchain--tde-buy--error">
+  <p *ngIf="error" class="m-blockchain--tde-buy--error" i18n="@@M__BLOCKCHAIN__TDE_BUY__ERROR_LABEL">
     Error: {{ error }}
   </p>
 
@@ -23,6 +23,7 @@
     <button class="m-blockchain--tde-buy-button"
       [hidden]="inProgress || success || metamaskError"
       (click)="buy()"
+      i18n="@@M__BLOCKCHAIN__TDE_BUY__BUY_ACTION"
     >Buy</button>
 
     <button class="m-blockchain--tde-buy-button" style="margin-left: 1em;"
@@ -34,7 +35,7 @@
 
     <ng-container *ngIf="success">
       <i class="material-icons">check</i>
-      <span i18n>Bought</span>
+      <span i18n="@@M__BLOCKCHAIN__TDE_BUY__BOUGHT_NOTE">Bought</span>
     </ng-container>
 
     <div class="m-blockchain--tde-buy--error" *ngIf="metamaskError">

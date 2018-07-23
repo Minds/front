@@ -41,3 +41,8 @@ gulp.task('build.sass', done => {
         .on('end', done);
     });
 });
+
+// --------------
+// i18n
+gulp.task('extract.i18n', require(join(__dirname, 'tasks', 'extract.i18n.xlf'))(gulp));
+gulp.task('import.i18n', require(join(__dirname, 'tasks', 'import.i18n.xlf'))(gulp));

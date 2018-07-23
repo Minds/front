@@ -20,6 +20,8 @@ import { Session } from '../../../services/session';
       <li class="mdl-menu__item" [hidden]="!group['is:muted']" (click)="unmute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS">Enable Notifications</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin() && !featured" (click)="openFeatureModal()" i18n="@@M__ACTION__FEATURE">Feature</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin() && featured" (click)="unfeature()" i18n="@@M__ACTION__UNFEATURE">Unfeature</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin() && !group.mature" (click)="setExplicit(true)" i18n="@@M__ACTION__SET_EXPLICIT">Set Explicit</li>
+      <li class="mdl-menu__item" *ngIf="session.isAdmin() && group.mature" (click)="setExplicit(false)" i18n="@@M__ACTION__REMOVE_EXPLICIT">Remove Explicit</li>
       <li class="mdl-menu__item" (click)="report(); showMenu = false" i18n="@@M__ACTION__REPORT">Report</li>
       <li class="mdl-menu__item" *ngIf="group['is:creator']" [hidden]="group.deleted" (click)="deletePrompt()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP">Delete Group</li>
     </ul>
@@ -92,24 +94,28 @@ export class GroupsSettingsButton {
     }
   }
 
-  mute() {
+  async mute() {
     this.group['is:muted'] = true;
 
-    this.service.muteNotifications(this.group)
-      .then((isMuted: boolean) => {
-        this.group['is:muted'] = isMuted;
-      });
+    try {
+      const isMuted: boolean = await this.service.muteNotifications(this.group)
+      this.group['is:muted'] = isMuted;
+    } catch (e) {
+      this.group['is:muted'] = false;
+    }
 
     this.showMenu = false;
   }
 
-  unmute() {
-    this.group['is:muted'] = true;
+  async unmute() {
+    this.group['is:muted'] = false;
 
-    this.service.unmuteNotifications(this.group)
-      .then((isMuted: boolean) => {
-        this.group['is:muted'] = isMuted;
-      });
+    try {
+      const isMuted: boolean = await this.service.unmuteNotifications(this.group);
+      this.group['is:muted'] = isMuted;
+    } catch (e) {
+      this.group['is:muted'] = true;
+    }
 
     this.showMenu = false;
   }
@@ -118,27 +124,27 @@ export class GroupsSettingsButton {
     this.featureModalOpen = true;
   }
 
-  feature() {
+  async feature() {
     this.featured = true;
     this.group.featured = true;
 
-    this.client.put(`api/v1/admin/feature/${this.group.guid}/${this.category}`, {})
-      .then((response: any) => {
-        this.featureModalOpen = false;
-      })
-      .catch((e) => {
-        this.featured = false;
-      });
+    try {
+      await this.client.put(`api/v1/admin/feature/${this.group.guid}/${this.category}`, {})
+      this.featureModalOpen = false;
+    } catch (e) {
+      this.featured = false;
+    }
   }
 
-  unfeature() {
+  async unfeature() {
     this.featured = false;
     this.group.featured = false;
 
-    this.client.delete(`api/v1/admin/feature/${this.group.guid}`)
-      .catch((e) => {
-        this.featured = true;
-      })
+    try {
+      await this.client.delete(`api/v1/admin/feature/${this.group.guid}`);
+    } catch (e) {
+      this.featured = true;
+    }
   }
 
   onFeatureModalClose(e) {
@@ -156,6 +162,15 @@ export class GroupsSettingsButton {
 
   cancelDelete() {
     this.isGoingToBeDeleted = false;
+  }
+
+  setExplicit(value) {
+    this.service.setExplicit(this.group.guid, value)
+      .then(result => {
+        if (result) {
+          this.group.mature = value;
+        }
+      });
   }
 
   delete() {

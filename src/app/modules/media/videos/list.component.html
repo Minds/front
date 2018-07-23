@@ -5,7 +5,7 @@
         routerLink="/media/videos/top"
         routerLinkActive="m-topbar--navigation--item-active"
         >
-        <span>Top</span>
+        <span i18n="@@M__COMMON_TOPBAR_TOP">Top</span>
         <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
           Top displays the top content on Minds
         </m-tooltip>
@@ -15,8 +15,8 @@
         *ngIf="session.isLoggedIn()"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span>Subscriptions</span>
-        <m-tooltip icon="help" i18n="@@@@MINDS__VIDEOS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+        <span i18n="@@MINDS__VIDEOS__TOPBAR__SUBSCRIPTIONS">Subscriptions</span>
+        <m-tooltip icon="help" i18n="@@MINDS__VIDEOS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
           Videos from channels you are subscribed to
         </m-tooltip>
       </a>
@@ -25,7 +25,7 @@
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
         >
-        <span>My Videos</span>
+        <span i18n="@@MINDS__VIDEOS__TOPBAR__MY_VIDEOS">My Videos</span>
         <m-tooltip icon="help" i18n="@@MINDS__VIDEOS__TOPBAR__YOUR_VIDEOS_TOOLTIP">
           Your Videos
         </m-tooltip>
@@ -34,7 +34,7 @@
         (click)="showPoster()"
         *ngIf="session.isLoggedIn()"
         >
-        <span>Upload</span>
+        <span i18n="@@MINDS__VIDEOS__TOPBAR__UPLOAD">Upload</span>
         <m-tooltip icon="help" i18n="@@MINDS__VIDEOS__TOPBAR__UPLOAD_TOOLTIP">
           Upload a new Video
         </m-tooltip>

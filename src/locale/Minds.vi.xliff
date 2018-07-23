@@ -1,0 +1,3560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="ng2.template" datatype="plaintext" xml:space="preserve" source-language="en" target-language="vi">
+    <header>
+      <tool tool-id="poeditor.com" tool-name="POEditor"/>
+    </header>
+    <body>
+      <trans-unit id="MINDS__HOME__HOMEPAGE__LAUNCH_CTA">
+        <source>We are an open source and decentralized platform for Internet freedom. Get paid in crypto for your contributions to the community.</source>
+        <target>Chúng tôi là một nền tảng mã nguồn mở và phi tập trung với mục tiêu là tự do trên Internet. Bạn sẽ được trả bằng tiền ảo cho những đóng góp của bạn với cộng đồng.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__HOME__HOMEPAGE__SEE_MORE_ACTION">
+        <source>Click To See more</source>
+        <target>Nhấn để xem thêm</target>
+      </trans-unit>
+      <trans-unit id="MINDS__HOME__LOGIN__LOGIN">
+        <source>Login to Minds</source>
+        <target>Đăng nhập vào Minds</target>
+        <note>Đăng nhập vào Minds</note>
+      </trans-unit>
+      <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__ENTER_USERNAME_HELP_NOTE">
+        <source>To request a new password, enter your username</source>
+        <target>Để yêu cầu mật khẩu mới, hãy nhập tên tài khoản của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__UNLOCK_CODE_SENT">
+        <source>We have sent an unlock code to your registered email address.</source>
+        <target>Chúng tôi đã gửi một mã mở khóa đến địa chỉ email bạn đăng kí.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__ENTER_NEW_PASSWORD_HELP_NOTE">
+        <source>Please enter your new password</source>
+        <target>Vui lòng nhập mật khẩu mới</target>
+      </trans-unit>
+      <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__CONFIRM_PASSWORD_LABEL">
+        <source>Password (confirm)</source>
+        <target>Xác nhận lại mật khẩu</target>
+        <note>Mật khẩu (xác nhận)</note>
+      </trans-unit>
+      <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__RESET_ACTION">
+        <source>Reset</source>
+        <target>Thiết lập lại</target>
+      </trans-unit>
+      <trans-unit id="MINDS__POSTER__SPEAK_YOUR_MIND">
+        <source>Speak your mind...</source>
+        <target>Bạn đang nghĩ rằng...</target>
+      </trans-unit>
+      <trans-unit id="MINDS__POSTER__POST_ACTION">
+        <source>Post</source>
+        <target>Đăng bài viết</target>
+        <note>Action of posting</note>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM">
+        <source>This activity is flagged as spam.</source>
+        <target>Hành động này được đánh dấu là tin rác.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__SINGLE__APPEAL_FLAG_NOTE">
+        <source>If you wish to appeal, please contact us at info@minds.com.</source>
+        <target>Nếu bạn cần khiếu nại, xin vui lòng liên lạc với chúng tôi tại info@minds.com.</target>
+        <note>Nếu bạn muốn kháng nghị, vui lòng liên hệ với chúng tôi ở info@minds.com</note>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__UPGRADE_TO_PLUS_ACTION">
+        <source>Upgrade to Plus</source>
+        <target>Nâng cấp thành Plus</target>
+        <note>Nâng hạng lên Plus</note>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__COPYRIGHT_FOOTER">
+        <source>© Minds 2016</source>
+        <target>© Minds 2016</target>
+        <note>© Minds 2016</note>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__200_FREE_VIEWS">
+        <source>Have 200 free views on us. Hit post to be boosted.</source>
+        <target>Nhận 200 lượt xem miễn phí từ chúng tôi. Đăng bài viết để được quảng cáo.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CAPTURE__DROP_AREA">
+        <source>Drop your files here</source>
+        <target>Thả tập tin của bạn vào đây</target>
+        <note>Drop : Bỏ vào</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CAPTURE__ALBUM_LABEL">
+        <source>Album</source>
+        <target>Album</target>
+        <note>Bộ sưu tập</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CAPTURE__ADD_FILE_ACTION">
+        <source>Add file</source>
+        <target>Thêm tập tin</target>
+        <note>Thêm tập tin</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CAPTURE__SAVE_TO_ALBUM">
+        <source>Save to album</source>
+        <target>Lưu vào Album</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CAPTURE__DRAG_TO_UPLOAD">
+        <source>Drag to upload</source>
+        <target>Kéo để tải lên</target>
+        <note>Kéo (trượt) để tải lên</note>
+      </trans-unit>
+      <trans-unit id="MINDS__DISCOVERY__ALBUMS_TAB">
+        <source>Albums</source>
+        <target>Album</target>
+        <note>Các bộ sưu tập</note>
+      </trans-unit>
+      <trans-unit id="MINDS__DISCOVERY__LOCATION_OFF_TOGGLE">
+        <source>Location off</source>
+        <target>Tắt định vị</target>
+      </trans-unit>
+      <trans-unit id="MINDS__DISCOVERY__NO_RESULTS_LABEL">
+        <source>No results</source>
+        <target>Không có kết quả</target>
+        <note>Không tìm thấy kết quả</note>
+      </trans-unit>
+      <trans-unit id="MINDS__DISCOVERY__LOCATING_LABEL">
+        <source>Locating</source>
+        <target>Đang xác định vị trí</target>
+      </trans-unit>
+      <trans-unit id="MINDS__DISCOVERY__MILES_UNIT">
+        <source>miles</source>
+        <target>dặm</target>
+      </trans-unit>
+      <trans-unit id="MINDS__DISCOVERY__OF_WORD">
+        <source>of</source>
+        <target>của</target>
+        <note>Distance from a city</note>
+      </trans-unit>
+      <trans-unit id="MINDS__DISCOVERY__PASS_ACTION">
+        <source>Pass</source>
+        <target>Đưa ra</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__WIRE_TYPE_TITLE">
+        <source>Payment Method</source>
+        <target>Phương thức thanh toán</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__REPEAT_TRANSACTION_MONTHLY">
+        <source>Repeat this transaction monthly.</source>
+        <target>Thực hiện giao dịch này hàng tháng\n</target>
+        <note>Thực hiện lại việc này mỗi tháng 1 lần</note>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__SEND_ACTION">
+        <source>SEND</source>
+        <target>GỬI</target>
+        <note>Gửi</note>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__WIRED_NOTICE">
+        <source>Wired!</source>
+        <target>Đã chuyển khoản</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__WIRE_ME_ACTION">
+        <source>Wire me</source>
+        <target>Chuyển khoản cho tôi</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__REWARDS_TITLE">
+        <source>Rewards</source>
+        <target>Phần thưởng</target>
+        <note>Phần thưởng</note>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__REWARD_DESCRIPTION_PLACEHOLDER">
+        <source>About your offerings. eg. Describe what your supporters will receive…</source>
+        <target>Về đề nghị của bạn. Ví dụ: Mô tả những gì người ủng hộ sẽ nhận được ...</target>
+        <note>Liên quan đến các khoản hứa thưởng của bạn, ví dụ: Miêu tả thứ mà những người ủng hộ của bạn sẽ nhận được...</note>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__REWARD_CHANGE_NOTICE">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /><x id="INTERPOLATION" /> reserves the right to change rewards at anytime without notice</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /><x id="INTERPOLATION" /> có quyền thay đổi phần thưởng bất cứ lúc nào mà không cần thông báo</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__FLAGGED_AS_SPAM">
+        <source>This user was flagged as spam.</source>
+        <target>Người dùng này được gắn cờ là tin rác\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__FLAGGED_AS_DELETED">
+        <source>This user was flagged as deleted.</source>
+        <target>Người dùng này được cắm cờ là đã xoá.</target>
+        <note>Người dùng này đã bị xóa</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__ERROR_CHECK_USERNAME">
+        <source>Please check the username</source>
+        <target>Vui lòng kiểm tra lại tên đăng nhập</target>
+        <note>Vui lòng kiểm tra tên đăng nhập</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__BLOCKED_NOTICE">
+        <source>You have blocked @<x id="INTERPOLATION" /></source>
+        <target>Bạn đã chặn @<x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__UNBLOCK_ACTION">
+        <source>Click to Unblock</source>
+        <target>Nhấn vào để bỏ chặn</target>
+        <note>Nhấn để bỏ chặn</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__SUPPORTERS">
+        <source>Supporters</source>
+        <target>Hỗ Trợ Viên</target>
+        <note>Count of supporters</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">
+        <source>Subscribers (<x id="INTERPOLATION" />)</source>
+        <target>Người theo dõi (<x id="INTERPOLATION" />)</target>
+        <note>Người Theo Dõi Bạn</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">
+        <source>Subscriptions (<x id="INTERPOLATION" />)</source>
+        <target>Lượt theo dõi (<x id="INTERPOLATION" />)</target>
+        <note>Người Bạn Theo Dõi</note>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__ACCOUNT_TIMESTAMP">
+        <source>Account created on:</source>
+        <target>Tài khoản được tạo vào ngày:</target>
+        <note>Tài khoản được tạo tại:</note>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__ENTITY_FLAGGED_AS_SPAM">
+        <source>This media was flagged as spam.</source>
+        <target>Nội dung này được gắn cờ là tin rác.\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__ENTITY_FLAGGED_AS_DELETED">
+        <source>This media was flagged as deleted.</source>
+        <target>Nội dung đa phương tiện được cắm cờ đã bị xoá.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__ENTITY_NOT_EXISTS">
+        <source>The post may not exist</source>
+        <target>Bài viết có vẻ như không tồn tại.\n</target>
+        <note>Bài đăng này có thể không tồn tại</note>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__PLAYS_COUNTER">
+        <source><x id="INTERPOLATION" /> plays</source>
+        <target><x id="INTERPOLATION" /> chơi</target>
+        <note>Số lần chơi</note>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__BACK_TO_ALBUM_ACTION">
+        <source>Back to album</source>
+        <target>Quay lại album</target>
+        <note>Quay lại Album</note>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__CONFIRM_DELETION">
+        <source>Are you sure you want to delete this?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" />There's no UNDO!</source>
+        <target>Bạn có chắc là muốn xóa <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> không? Hành động này không thể PHỤC HỒI!</target>
+        <note>Bạn có chắc chắn xóa phần này? {id="LINE_BREAK" ctype="lb"}}<x id="LINE_BREAK" ctype="lb" /> Không có ứng dụng khôi phục lại.</note>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__DELETION_CONFIRMATION">
+        <source>The media has been deleted.</source>
+        <target>Nội dung đã bị xoá.</target>
+        <note>Đoạn phim này vừa bị xóa</note>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__TITLE_INPUT_PLACEHOLDER">
+        <source>Title...</source>
+        <target>Tiêu đề...</target>
+        <note>Tiêu đề</note>
+      </trans-unit>
+      <trans-unit id="MINDS__MEDIA__ANYONE_LABEL">
+        <source>Anyone</source>
+        <target>Bất cứ ai</target>
+      </trans-unit>
+      <trans-unit id="5fa5c05063493603a4bba6c2341641a83fb0be18">
+        <source>Enter password</source>
+        <target>Nhập mật khẩu</target>
+      </trans-unit>
+      <trans-unit id="aac99820b81b63dd081ef9449080e545df8b03cd">
+        <source>Unlock</source>
+        <target>Mở khóa</target>
+        <note>Mở khóa</note>
+      </trans-unit>
+      <trans-unit id="3da600d1c07bca497e04290639e681b36c50d65c">
+        <source>Enter a password</source>
+        <target>Nhập một mật khẩu</target>
+        <note>Nhập mật khẩu</note>
+      </trans-unit>
+      <trans-unit id="2880518d3a5544fa6cd834b1ac80e47978a9c7c4">
+        <source>Confirm your password</source>
+        <target>Xác nhận mật khẩu</target>
+        <note>Xác nhận mật khẩu của bạn</note>
+      </trans-unit>
+      <trans-unit id="ff3774138bffaf62a4b812046dfbb9939c42657e">
+        <source>Setup</source>
+        <target>Tạo dựng</target>
+      </trans-unit>
+      <trans-unit id="8fcd5ac68b67a75cbedc58af3cdbe43871cb52b6">
+        <source>Changing your encryption password will cause your previous messages to be unreadable.</source>
+        <target>Việc thay đổi mật khẩu mã khóa của bạn sẽ khiến những tin nhắn trước đó không thể đọc được.</target>
+        <note>Việc thay đổi mật mã mã hóa sẽ khiến những tin nhắn trước đây của bạn không đọc được</note>
+      </trans-unit>
+      <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7">
+        <source>Cancel</source>
+        <target>Huỷ bỏ</target>
+        <note>Bỏ</note>
+      </trans-unit>
+      <trans-unit id="024cdb2814b0cb3f4ced148f1a0b9854447cb214">
+        <source>Change</source>
+        <target>Thay đổi</target>
+        <note>Thay đổi</note>
+      </trans-unit>
+      <trans-unit id="5a089bf395596f2cf60308df8ab5155b57e7808f">
+        <source>Delete chat history</source>
+        <target>Xoá lịch sử trò chuyện</target>
+        <note>Xóa lịch sử tán gẫu</note>
+      </trans-unit>
+      <trans-unit id="bf463b189696c19769ea263227e6c22aefafb918">
+        <source>Destroy</source>
+        <target>Phá hủy</target>
+        <note>Cái này nên dịch là xoá hoàn toàn thì đúng hơn. Vì trong cái lịch sử chat khi xoá lịch sử chat nó sẽ hỏi bạn có muốn destroy nó ko? Ko lẽ dịch thành bạn có muốn phá hủy nó không?</note>
+      </trans-unit>
+      <trans-unit id="95307fc6945349382ee0699191e04e3063f9e838">
+        <source>Block participants</source>
+        <target>Chặn người tham gia</target>
+      </trans-unit>
+      <trans-unit id="7f5d0c10614e8a34f0e2dad33a0568277c50cf69">
+        <source>Block</source>
+        <target>Chặn</target>
+        <note>Chặn</note>
+      </trans-unit>
+      <trans-unit id="bf9e72e00f689f8d9960aa83a58f619efbc8a006">
+        <source>Un-block chat</source>
+        <target>Bỏ chặn trò chuyện</target>
+        <note>Bỏ chặn tán gẫu</note>
+      </trans-unit>
+      <trans-unit id="dc7c08653bc37fb9cdcf3453b7d9680ab808c9cb">
+        <source>Un-block</source>
+        <target>Bỏ chặn</target>
+        <note>Bỏ chặn</note>
+      </trans-unit>
+      <trans-unit id="94d1674e27430e9051dc87a58779893b2605ac5d">
+        <source>Call Ended</source>
+        <target>Cuộc gọi kết thúc</target>
+        <note>Cuộc gọi đã kết thúc</note>
+      </trans-unit>
+      <trans-unit id="a478a0197700c2360a41d1f343299dc938e53463">
+        <source>Missed Call</source>
+        <target>Cuộc gọi nhỡ</target>
+        <note>Cuộc gọi nhỡ</note>
+      </trans-unit>
+      <trans-unit id="fadb80ab260c1bce075198beaf83fabc08aaa09b">
+        <source>You have blocked this chat</source>
+        <target>Bạn đã chặn cuộc trò chuyện này</target>
+        <note>Bạn đã chặn phần tán gẫu này</note>
+      </trans-unit>
+      <trans-unit id="7f3bb04fd3c88098a333f05ce1a1bc7e06b3da9d">
+        <source>This chat is no longer available</source>
+        <target>Cuộc trò chuyện này không còn hiện hữu</target>
+        <note>Nội dung trò chuyện không thể truy cập</note>
+      </trans-unit>
+      <trans-unit id="1e6578b9c0cab71d5f46c0041f3c0094c1eed359">
+        <source>Awaiting other party…</source>
+        <target>Đang đợi bên kia...</target>
+      </trans-unit>
+      <trans-unit id="9078f2de0ffbefe89d0fb9b09cf2038b0b287b3e">
+        <source>Send a message...</source>
+        <target>Gửi tin nhắn...</target>
+        <note>Gửi tin nhắn</note>
+      </trans-unit>
+      <trans-unit id="78583d92f26b96e875855729612b59ea506806e2">
+        <source>Messenger</source>
+        <target>Tin nhắn</target>
+      </trans-unit>
+      <trans-unit id="292a64764e45a7538202ea8888657ba15c0068ad">
+        <source>Logout of chat</source>
+        <target>Rời khỏi cuộc trò chuyện</target>
+      </trans-unit>
+      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d">
+        <source>Logout</source>
+        <target>Đăng xuất</target>
+        <note>Đăng xuất</note>
+      </trans-unit>
+      <trans-unit id="3b95046d824f0138f44cace2859369c042655629">
+        <source>Disable sounds</source>
+        <target>Vô hiệu hóa âm thanh</target>
+        <note>Tắt âm thanh</note>
+      </trans-unit>
+      <trans-unit id="7be9877f3b1042bfc095c728acb0dbeb9c6e8205">
+        <source>Mute</source>
+        <target>Tắt tiếng</target>
+      </trans-unit>
+      <trans-unit id="4ebe71781b77a896451943d0a9b3cb527e0e4bb7">
+        <source>Enable sounds</source>
+        <target>Bật âm thanh\n</target>
+        <note>Bật âm thanh</note>
+      </trans-unit>
+      <trans-unit id="1f689fada9748a830117f5b429a88ef8629082a8">
+        <source>Unmute</source>
+        <target>Mở lại âm thanh</target>
+      </trans-unit>
+      <trans-unit id="e7b6e42c6553dba6812def465939dc96bd286d61">
+        <source>Change your encryption password</source>
+        <target>Đổi mã khoá của mật khẩu</target>
+        <note>Thay đổi mật khẩu mã hóa</note>
+      </trans-unit>
+      <trans-unit id="959fdc6bec6e975de7beb7ba6274eb04b5303211">
+        <source>Re-key</source>
+        <target>Nhập lại</target>
+        <note>Gỗ lại</note>
+      </trans-unit>
+      <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016">
+        <source>Search</source>
+        <target>Tìm</target>
+        <note>Tìm kiếm</note>
+      </trans-unit>
+      <trans-unit id="MINDS__TOPBAR__SETTINGS">
+        <source>Settings</source>
+        <target>Cài đặt</target>
+        <note>Cài đặt</note>
+      </trans-unit>
+      <trans-unit id="MINDS__TOPBAR__LOGOUT">
+        <source>Logout</source>
+        <target>Đăng xuất</target>
+        <note>In / out là “Nhập / Xuất”. Nếu dùng chữ thuần Việt thì có thể dịch thành “  Vào / Ra”. Xin để nghị  log out = Ra. Đây là dịp ai phàn nàn về chữ Việt hiện nay có cơ hội sửa lại.</note>
+      </trans-unit>
+      <trans-unit id="MINDS__EMOJI__LABEL">
+        <source>Emoji</source>
+        <target>Biểu tượng cảm xúc</target>
+        <note>là từ vay mượn, không nên dịch sang tiếng Việt</note>
+      </trans-unit>
+      <trans-unit id="MINDS__TAGCLOUD__TITLE">
+        <source>Trending Hashtags</source>
+        <target>Hashtag phổ biến</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__DAU_TITLE">
+        <source>Daily Active Users</source>
+        <target>Người dùng tích cực hàng ngày</target>
+        <note>Những người dùng có hoạt động hàng ngày</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__MAU_TITLE">
+        <source>Monthly Active Users</source>
+        <target>Người dùng tích cực hàng tháng</target>
+        <note>Từ này nghĩa là mỗi tháng đăng nhập vào có 1-2 lần.&#13;\nDịch là "trong tháng" chắc mấy chị em hiểu lầm , nhưng biết dịch sao cho sát nghĩa hơn giờ. "hằng tháng" cũng sai</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__RETENTION_TITLE">
+        <source>Retention</source>
+        <target>Duy trì</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__SIGNUPS_TITLE">
+        <source>Signups</source>
+        <target>Đăng ký</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__IMPRESSIONS_BOOST_ROW">
+        <source>Impressions</source>
+        <target>Ấn tượng</target>
+        <note>“Sự quan tâm” phù hợp hơn. Cái này để chủ tài khoản phân tích tỉ lệ người dùng khác đang quan tâm một bài viết nào đó</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__BURN_RATE_BOOST_ROW">
+        <source>Burn rate</source>
+        <target>Tốc độ ghi\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__BURN_RATE_BOOST_VALUE">
+        <source><x id="INTERPOLATION" /> / hour</source>
+        <target><x id="INTERPOLATION" /> / giờ</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS_MODAL__REJECTION_TITLE">
+        <source>Specify a reason for the rejection</source>
+        <target>Nêu rõ lý do từ chối\n</target>
+        <note>Xác định lý do từ chối</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__NEWSFEED_TAB">
+        <source>Newsfeed (<x id="INTERPOLATION" />)</source>
+        <target>Bảng tin (<x id="INTERPOLATION" />)</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__CONTENT_TAB">
+        <source>Content (<x id="INTERPOLATION" />)</source>
+        <target>Nội dung (<x id="INTERPOLATION" />)\n</target>
+        <note>Nội dung</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__IN_REVIEW_STATS">
+        <source>In Review</source>
+        <target>Đang xét duyệt\n</target>
+        <note>Đăng xét duyệt</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BACKLOG_STATS">
+        <source>Backlog (all)</source>
+        <target>Tồn đọng (tất cả)\n</target>
+        <note>Tồn đọng (tất cả)</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BACKLOG_PRIORITY_STATS">
+        <source>Backlog (priority)</source>
+        <target>Tồn đọng (ưu tiên)</target>
+        <note>Bảng ghi nhật ký ưu tiên</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__IMPRESSIONS_STATS">
+        <source>Impressions (backlog)</source>
+        <target>Ấn tượng (tồn đọng)\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__AVG_IMPRESSIONS_STATS">
+        <source>Avg. Impressions (backlog)</source>
+        <target>Ấn tượng trung bình (tồn đọng)\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__AVG_APPROVAL_TIME_STATS">
+        <source>Avg. Approval Time</source>
+        <target>Thời gian phê duyệt trung bình\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__LAST_UPDATED_STATS">
+        <source>Updated <x id="INTERPOLATION" /></source>
+        <target>Đã cập nhật <x id="INTERPOLATION" /></target>
+        <note>Đã cập nhật <x id="INTERPOLATION" /></note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__NO_MORE_BOOSTS">
+        <source>There are no more boosts to approve</source>
+        <target>Không còn quảng cáo chờ phê duyệt</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__QUALITY_SLIDER_LABEL">
+        <source>Quality:</source>
+        <target>Số lượng:</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__PREVIOUSLY_REJECTED_LABEL">
+        <source>Previously rejected: <x id="INTERPOLATION" /></source>
+        <target>Đã từ chối trước đây: <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BOOST_BID_POINTS_LABEL">
+        <source>Bid: <x id="INTERPOLATION" /> points</source>
+        <target>Đấu giá: <x id="INTERPOLATION" /> điểm</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BOOST_BID_USD_LABEL">
+        <source>Bid: <x id="INTERPOLATION" /> USD</source>
+        <target>Đấu giá: <x id="INTERPOLATION" /> USD</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN">
+        <source>Open</source>
+        <target>Mở</target>
+        <note>Open as a safe boost</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN_EXPLICIT">
+        <source>Open (E-tag)</source>
+        <target>Mở (E-tag)</target>
+        <note>Open as an explicit boost</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BOOST_ACTION_EXPLICIT">
+        <source>E-tag</source>
+        <target>E-tag</target>
+        <note>E-tag as mark as explicit</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BOOST_MODAL__YES_BUTTON">
+        <source>Reject Boost</source>
+        <target>Từ chối tăng cường</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__PAGES__ADD_PAGE">
+        <source>Add a new page</source>
+        <target>Thêm trang mới</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__PAGES__ADD_LINK">
+        <source>Add a new link</source>
+        <target>Thêm liên kết mới</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__PAGES__SAVE_AND_PUBLISH_ACTION">
+        <source>Save &amp; Publish</source>
+        <target>Lưu và Đăng</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__PAGES__SAVING">
+        <source>Saving</source>
+        <target>Đang lưu</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__PAGES__LINK_URL_LABEL">
+        <source>URL (relative or absolute):</source>
+        <target>URL (tương đối hay tuyệt đối):</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__REPORTS_TAB">
+        <source>Reports</source>
+        <target>Báo cáo</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__APPEALS_TAB">
+        <source>Appeals</source>
+        <target>Khiếu Nại</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__ARCHIVED_TAB">
+        <source>Archived</source>
+        <target>Đã Lưu trữ</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__HISTORY_TAB">
+        <source>History</source>
+        <target>Lịch sử</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__EMPTY_FILTER_LABEL">
+        <source>There are no <x id="INTERPOLATION" />.</source>
+        <target>Không có <x id="INTERPOLATION" />.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__REPORTED_BY_LABEL">
+        <source>Reported by:</source>
+        <target>Được báo cáo bởi:</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__SUBJECT_LABEL">
+        <source>Subject:</source>
+        <target>Chủ đề:</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__MESSAGE_LABEL">
+        <source>Message:</source>
+        <target>Tin nhắn:</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__DATE_LABEL">
+        <source>Date:</source>
+        <target>Ngày:</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__LAST_ACTION_LABEL">
+        <source>Last Action:</source>
+        <target>Hoạt động gần nhất:</target>
+        <note>không nên viết hoa mỗi từ, trừ trường hợp tên riêng trong tiếng Việt</note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__APPEAL_NOTE_LABEL">
+        <source>Appeal Note:</source>
+        <target>Ghi chú Khiếu nại:</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__ARCHIVE_ACTION">
+        <source>Archive</source>
+        <target>Lưu trữ\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__REPORTS__MARK_AS_EXPLICIT_ACTION">
+        <source>Mark as <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />explicit<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></source>
+        <target>Đánh dấu là <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />nhạy cảm<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /></target>
+        <note>Đánh dấu là <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="" />nhạy cảm<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="" /></note>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__MONETIZATION__EMPTY">
+        <source>Nothing is monetized .</source>
+        <target>Không có gì để thương mại hoá.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__MONETIZATION__DEMONETIZE">
+        <source>De-Monetize</source>
+        <target>Ngưng Thương mại hoá\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__PROGRAMS__APPLICATION_DESCRIPTOR">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" /> <x id="TAG_IMG" ctype="image" equiv-text="&lt;img/&gt;" /> <x id="INTERPOLATION" /> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> is applying for <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" /> <x id="TAG_IMG" ctype="image" equiv-text="&lt;img/&gt;" /> <x id="INTERPOLATION" /> <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> đang áp dụng cho <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__PAYOUTS__PAY_ACTION">
+        <source>Pay</source>
+        <target>Thanh toán\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__TAGCLOUD__HELP_LABEL">
+        <source>This is a list of currently trending hashtags. Click the hashtag to see the search results for it. Click on the X next to the tag to hide it. Hidden hashtags won't appear again.</source>
+        <target>Đây là danh sách những hashtags đang thịnh hành. Nhấn vào hashtag để xem kết quả tìm kiếm của nó. Nhấn vào dấu X bên cạnh thẻ để ẩn nó đi. Các hashtag đã ẩn sẽ không xuất hiện lại.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__TAGCLOUD__GENERATION_TIMESTAMP_LABEL">
+        <source>This list was generated <x id="INTERPOLATION" /> minute(s) ago.</source>
+        <target>Danh sách này đã được tạo <x id="INTERPOLATION" /> phút trước.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__TAGCLOUD__LAST_HIDDEN_LABEL">
+        <source>Last <x id="INTERPOLATION" /> hidden tags:</source>
+        <target>%1$ thẻ ẩn gần nhất:</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__VERIFY__VERIFY_ACTION">
+        <source>Verify</source>
+        <target>Xác nhận</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__SOCIAL_PROFILES__URL_PLACEHOLDER">
+        <source>Social media profile URL</source>
+        <target>Đường dẫn hồ sơ đa phương tiện xã hội\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__SOCIAL_PROFILES__ADD">
+        <source>Add Social Profile</source>
+        <target>Thêm hồ sơ mạng xã hội</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__EXPLICIT_ITEM_TOOLTIP">
+        <source>By selecting Explicit mode, you acknowledge that you are 18+ years of age and are willing to see graphic content, explicit language, and nudity.</source>
+        <target>Bằng việc lựa chọn chế độ Nhạy cảm, bạn xác nhận mình trên 18 tuổi và sẵn sàng xem các hình ảnh, ngôn ngữ nhạy cảm và khoả thân.</target>
+        <note>Explicit does not mean “Rõ ràng” (clear). It means adult material. A better term might be “Nội dung người lớn”.</note>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__AUTO_ROTATE_ITEM">
+        <source>Auto-rotate</source>
+        <target>Tự động luân phiên</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__AUTO_ROTATE_ITEM_TOOLTIP">
+        <source>This will enable/disable the Boost box on top of your feed from self-rotating.</source>
+        <target>Thao tác này sẽ bật/tắt chức năng tự động luân phiên quảng cáo trên đầu bảng tin của bạn.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__HIDE_BOOST_ITEM">
+        <source>Hide Boost</source>
+        <target>Ẩn quảng cáo</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__SHOW_BOOST_ITEM">
+        <source>Show Boost</source>
+        <target>Hiện quảng cáo</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__BOOST_VISIBILITY_TOOLTIP">
+        <source>Plus users may hide Boosts from their newsfeed.</source>
+        <target>Người dùng Plus có thể ẩn quảng cáo trên bảng tin của họ.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__BOOST_VISIBILITY_UPGRADE_TOOLTIP">
+        <source>Upgrade to Plus in order to turn off Boost.</source>
+        <target>Nâng cấp thành Plus để tắt quảng cáo.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__SELECT_CATEGORIES_ITEM">
+        <source>Select Categories</source>
+        <target>Chọn danh mục</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__SELECT_CATEGORIES_ITEM_TOOLTIP">
+        <source>Select the categories of content you’d like to see more of</source>
+        <target>Chọn những danh mục bạn muốn xem nhiều hơn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__BOOST_ROTATOR__ABOUT_BOOST">
+        <source>About Boost</source>
+        <target>Thông tin về Boost</target>
+        <note>It's not a question, why did you translate it into "Boost là gì", it should be "giới thiệu về Boost"</note>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__DISPLAY_NAME_TITLE">
+        <source>Display Name</source>
+        <target>Tên hiển thị</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__ACCOUNT_PASSWORD_TITLE">
+        <source>Account Password</source>
+        <target>Mật khẩu Tài khoản</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__CURRENT_PASSWORD_LABEL">
+        <source>Current password</source>
+        <target>Mật khẩu hiện tại</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__NEW_PASSWORD_LABEL">
+        <source>Your new password</source>
+        <target>Mật khẩu mới</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__NEW_PASSWORD_AGAIN_LABEL">
+        <source>Your new password again</source>
+        <target>Nhập lại mật khẩu mới</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__MATURE_CONTENT_TITLE">
+        <source>Mature Content</source>
+        <target>Nội dung dành cho người lớn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__MATURE_CONTENT_LABEL">
+        <source>Always show mature content (18+)</source>
+        <target>Luôn hiển thị nội dung dành cho người lớn (18+)</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__REVOKE_FACEBOOK_ACTION">
+        <source>Revoke Facebook Login</source>
+        <target>Huỷ đăng nhập Facebook</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__DISCONNECT_FACEBOOK_ACTION">
+        <source>Disconnect from Facebook</source>
+        <target>Ngắt kết nối với Facebook</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__CONNECT_FACEBOOK_ACTION">
+        <source>Connect with Facebook</source>
+        <target>Kết nối với Facebook</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__DISCONNECT_TWITTER_ACTION">
+        <source>Disconnect from Twitter</source>
+        <target>Ngắt kết nối với Twitter</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__CONNECTED_AS_TWITTER_LABEL">
+        <source>Connected as @<x id="INTERPOLATION" /></source>
+        <target>Đã kết nối theo @<x id="INTERPOLATION" />\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__CONNECT_TWITTER_ACTION">
+        <source>Connect with Twitter</source>
+        <target>Kết nối với Twitter\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__CATEGORIES_TITLE">
+        <source>Categories</source>
+        <target>Danh mục</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__DISABLE_CHANNEL">
+        <source>Disable Channel</source>
+        <target>Vô hiệu hóa kênh</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__DISABLE_CONFIRM">
+        <source>I'm sure - Disable</source>
+        <target>Tôi chắc chắn - Vô hiệu hóa</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__2FA_TITLE">
+        <source>Two Factor Authentication</source>
+        <target>Bảo mật 2 lớp</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__REMOVE_2FA_ACTION">
+        <source>Remove two factor</source>
+        <target>Bỏ bảo mật 2 lớp</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SMS_INPUT_HELP">
+        <source>Your SMS number. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />Enter your country code too (eg. +1, +44, etc)<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></source>
+        <target>Số tin nhắn của bạn. <x id="START_BOLD_TEXT" ctype="x-b" /> Nhập mã quốc gia (ví dụ +1, +44) <x id="CLOSE_BOLD_TEXT" ctype="x-b" /></target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SMS_INPUT_LABEL">
+        <source>eg. +44 07999 000909</source>
+        <target>Ví dụ: +44 07999 000909</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SETUP_ACTION">
+        <source>Setup</source>
+        <target>Cài đặt\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SENT_SMS_LABEL">
+        <source>We sent an SMS to <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" />. Enter the code below to complete your two factor setup.</source>
+        <target>Chúng tôi vừa gửi một tin nhắn đến <x id="START_BOLD_TEXT" ctype="x-b" /><x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" />. Hãy nhập mã số bên dưới để hoàn thành cài đặt bảo mật hai lớp.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SENDING_SMS_LABEL">
+        <source>We are sending an SMS to <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" />. Enter the code below to complete your two factor</source>
+        <target>Chúng tôi đang gửi một tin nhắn đến <x id="START_BOLD_TEXT" ctype="x-b" /><x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" />. Hãy nhập mã vào bên dưới để hoàn tất bảo mật hai lớp của bạn.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__2FA_RETRY_ACTION">
+        <source>Retry</source>
+        <target>Thử lại\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__PAID_SUBSCRIPTIONS_TITLE">
+        <source>Paid Subscriptions</source>
+        <target>Theo dõi có tính phí</target>
+      </trans-unit>
+      <trans-unit id="ccac601bf473fa28c9ac46794f1cd40542f74347">
+        <source>Message</source>
+        <target>Tin nhắn\n</target>
+      </trans-unit>
+      <trans-unit id="COMMON__INFINITE_SCROLL__LOAD_MORE">
+        <source>Click to load more</source>
+        <target>Nhấn vào đây để tải thêm</target>
+      </trans-unit>
+      <trans-unit id="COMMON__INFINITE_SCROLL__NOTHING_MORE">
+        <source>Nothing more to load</source>
+        <target>Không còn dữ liệu để tải\n</target>
+      </trans-unit>
+      <trans-unit id="COMMON__DATE_INPUT__MONTH_LABEL">
+        <source>Month</source>
+        <target>Tháng\n</target>
+      </trans-unit>
+      <trans-unit id="COMMON__DATE_INPUT__DAY_LABEL">
+        <source>Day</source>
+        <target>Ngày</target>
+      </trans-unit>
+      <trans-unit id="COMMON__DATE_INPUT__YEAR_LABEL">
+        <source>Year</source>
+        <target>Năm</target>
+      </trans-unit>
+      <trans-unit id="COMMON__READ_MORE__ACTION">
+        <source>Read more</source>
+        <target>Xem thêm</target>
+      </trans-unit>
+      <trans-unit id="COMMON__BADGES__PLUS">
+        <source>Plus</source>
+        <target>Plus</target>
+        <note>Plus as user status</note>
+      </trans-unit>
+      <trans-unit id="COMMON__BADGES__VERIFIED">
+        <source>Verified</source>
+        <target>Đã kiểm chứng</target>
+        <note>Verified as user status</note>
+      </trans-unit>
+      <trans-unit id="COMMON__BADGES__FOUNDER">
+        <source>Founder</source>
+        <target>Người sáng lập</target>
+        <note>Founder as user status</note>
+      </trans-unit>
+      <trans-unit id="COMMON__AVATAR__CHANGE">
+        <source>Change avatar</source>
+        <target>Đổi ảnh đại diện</target>
+      </trans-unit>
+      <trans-unit id="COMMON__AVATAR__ADD">
+        <source>Add an avatar</source>
+        <target>Thêm ảnh đại diện</target>
+      </trans-unit>
+      <trans-unit id="COMMON__CAPTCHA__SIMPLE_SUM">
+        <source>What is <x id="INTERPOLATION" /> <x id="INTERPOLATION_1" /> <x id="INTERPOLATION_2" />?</source>
+        <target><x id="INTERPOLATION" /> <x id="INTERPOLATION_1" /> <x id="INTERPOLATION_2" /> là gì?</target>
+        <note>A sum (eg. 2 + 2)</note>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__BOOST_TYPE_TITLE">
+        <source>Boost Type</source>
+        <target>Kiểu tăng cường</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__NEWSFEEDS_SELECTOR_DESC">
+        <source>Your content will appear on newsfeeds across the site.</source>
+        <target>Nội dung của bạn sẽ xuất hiện trên bảng tin.</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__SIDEBARS_SELECTOR_DESC">
+        <source>Your content will display on the sidebars throughout the site.</source>
+        <target>Nội dung của bạn sẽ hiển thị trên thanh bên trong toàn trang.</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__BID_TITLE">
+        <source>How many views do you want?</source>
+        <target>Bạn muốn có bao nhiêu lượt xem?</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__OFFER_TITLE">
+        <source>What's your offer?</source>
+        <target>Bạn muốn trả bao nhiêu?</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__VIEWS_INPUT_LABEL">
+        <source>views</source>
+        <target>lượt xem</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__TARGET_TITLE">
+        <source>Target</source>
+        <target>Mục tiêu</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__TARGET_TITLE_CTX">
+        <source>Search for the channel you want to boost to.</source>
+        <target>Tìm kênh bạn muốn tăng cường.</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__PRIORITY_TITLE">
+        <source>Priority</source>
+        <target>Ưu tiên</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__PRIORITY_TITLE_CTX">
+        <source>Priority content goes to the front of the line, but costs at least twice the price of a regular boost.</source>
+        <target>Nội dung ưu tiên sẽ được xếp hàng đầu, nhưng chi phí sẽ gấp ít nhất là hai lần so với quảng cáo thông thường.</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__USD_PRIORITY_FEE">
+        <source>+ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /> USD<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></source>
+        <target>+ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /> USD<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></target>
+        <note>Vì nội dung chỉ nêu về đơn vị tiền USD và không có chữ khác, để nguyên không dịch</note>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__TARGET_INPUT_PLACEHOLDER">
+        <source>@channel</source>
+        <target>@kênh</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__POST_TO_FACEBOOK_LABEL">
+        <source>Post to <x id="INTERPOLATION" /></source>
+        <target>Đăng bài viết trên <x id="INTERPOLATION" /></target>
+        <note>Post to [page]</note>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__BOOSTED_LABEL">
+        <source>Boosted!</source>
+        <target>Đã tăng cường!</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">
+        <source>Boosted</source>
+        <target>Đã tăng cường</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CARDS__ACTIVITY__BOOST_NOTICE">
+        <source>Boost this post to reach more people!</source>
+        <target>Tăng cường bài viết này đến nhiều người hơn!</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CARDS__ACTIVITY__PINNED_POST">
+        <source>This post is pinned</source>
+        <target>Bài viết đã được ghim</target>
+        <note>PINNED_POST : là tính năng ghim bài viết lên đầu trang để cho khách có thể đọc nó trước tiên khi vào thăm trang.</note>
+      </trans-unit>
+      <trans-unit id="MINDS__CARDS__ACTIVITY__CLICK_TO_PIN">
+        <source>Click to pin this post to the top of your channel feed</source>
+        <target>Nhấn để ghim bài viết này lên đầu kênh tin tức của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CARDS__ACTIVITY__AWAITING_MODERATION">
+        <source>This post is awaiting moderation.</source>
+        <target>Bài viết này đang chờ kiểm duyệt.</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__DRAFT_LABEL">
+        <source>Draft</source>
+        <target>Bản nháp</target>
+      </trans-unit>
+      <trans-unit id="COMMON__DATE_SELECTOR__PLACEHOLDER">
+        <source>Select a date</source>
+        <target>Chọn một ngày</target>
+      </trans-unit>
+      <trans-unit id="COMMON__ADMIN_ACTIONS__MARK_AS_DELETED">
+        <source>Mark as deleted</source>
+        <target>Đánh dấu là đã xoá\n</target>
+      </trans-unit>
+      <trans-unit id="COMMON__ADMIN_ACTIONS__UNDELETE">
+        <source>Undelete</source>
+        <target>Bỏ xoá</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__OVERVIEW__REVENUE_LABEL">
+        <source>Revenue</source>
+        <target>Doanh thu</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__OVERVIEW__REVENUE_TOOLTIP">
+        <source>You earn 25% of all revenue your referrals bring to Minds.</source>
+        <target>Bạn sẽ nhận 25% doanh thu từ những người bạn giới thiệu vào Minds.\n</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__OVERVIEW__BREAKDOWN_LINK">
+        <source>See Breakdown</source>
+        <target>Xem chi tiết</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__OVERVIEW__MONETIZE_ACTION">
+        <source>Monetize now</source>
+        <target>Kiếm tiền ngay</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__NUMBER_LABEL">
+        <source>Card number</source>
+        <target>Số thẻ</target>
+        <note>Credit Card Number</note>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__AMEX_SELECTOR">
+        <source>Amex</source>
+        <target>Amex</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__VISA_SELECTOR">
+        <source>Visa</source>
+        <target>Visa\n</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__MASTERCARD_SELECTOR">
+        <source>MasterCard</source>
+        <target>MasterCard</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__MONTH_PLACEHOLDER">
+        <source>mm</source>
+        <target>Tháng\n</target>
+        <note>Month</note>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__YEAR_PLACEHOLDER">
+        <source>yyyy</source>
+        <target>Năm</target>
+        <note>Year</note>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__CVC_LABEL">
+        <source>CVC/Security Code</source>
+        <target>CVC/Mã bảo mật</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__CARDHOLDER_NAME">
+        <source>Card holders name</source>
+        <target>Tên chủ thẻ</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CARD__CHECKOUT_TOOLTIP">
+        <source>Your credit card information is safe, secure and PCI compliant.</source>
+        <target>Thông tin thẻ tín dụng của bạn được an toàn, bảo mật và phù hợp PCI.</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__CAPTURING_DETAILS">
+        <source>Capturing card details...</source>
+        <target>Đang thu thập chi tiết thẻ...</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__WAITING_LABEL">
+        <source>One moment please...</source>
+        <target>Vui lòng đợi một chút ...</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__SAVED_CARDS_TITLE">
+        <source>Select a card to use</source>
+        <target>Chọn một thẻ để sử dụng</target>
+      </trans-unit>
+      <trans-unit id="CHECKOUT__USE_NEW_CARD">
+        <source>Use a new card</source>
+        <target>Sử dụng một thẻ mới</target>
+      </trans-unit>
+      <trans-unit id="ADS__BOOSTED_CONTENT">
+        <source>Boosted content</source>
+        <target>Nội dung được tăng cường</target>
+      </trans-unit>
+      <trans-unit id="WALLET__PURCHASE__BUY_ACTION">
+        <source>BUY!</source>
+        <target>MUA!</target>
+      </trans-unit>
+      <trans-unit id="WALLET__PURCHASE__RECURRING_10PCT_LABEL">
+        <source>Repeat this transaction every month and get <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />10%<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> more points</source>
+        <target>Lặp lại giao dịch này hàng tháng và nhận thêm <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />10%<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> điểm nữa</target>
+      </trans-unit>
+      <trans-unit id="WALLET__PURCHASE__CANCEL_RECURRING_ACTION">
+        <source>Cancel recurring (<x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />$<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /><x id="INTERPOLATION" />)</source>
+        <target>Huỷ thao tác định kỳ (<x id="START_ITALIC_TEXT" ctype="x-i" />$<x id="CLOSE_ITALIC_TEXT" ctype="x-i" /><x id="INTERPOLATION" />)</target>
+      </trans-unit>
+      <trans-unit id="WALLET__PURCHASE__COUPON_CODE_LABEL">
+        <source>Coupon code</source>
+        <target>Mã giảm giá\n</target>
+      </trans-unit>
+      <trans-unit id="WALLET__PURCHASE__COUPON_CODE_TOOLTIP">
+        <source>If you have a discount / coupon code, please apply it here (only for subscriptions)</source>
+        <target>Nếu bạn có mã giảm giá / phiếu mua hàng, vui lòng điền tại đây (chỉ dành cho các tài khoản theo dõi)</target>
+      </trans-unit>
+      <trans-unit id="WALLET__PURCHASE__SUCCESS_NOTICE">
+        <source>Great, you now have <x id="INTERPOLATION" /> points!</source>
+        <target>Tuyệt vời, hiện tại bạn có <x id="INTERPOLATION" /> điểm!</target>
+      </trans-unit>
+      <trans-unit id="WALLET__PURCHASE__BUY_MORE_ACTION">
+        <source>Click here to BUY more.</source>
+        <target>Nhấn vào đây để MUA thêm.</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__INBOX_TAB">
+        <source>Inbox</source>
+        <target>Hộp thư đến\n</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__OUTBOX_TAB">
+        <source>Outbox</source>
+        <target>Hộp thư đi</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__WIRE_DESC">
+        <source>Wire allows you to receive money for rewards and exclusive content. You can configure your rewards on your channel page.</source>
+        <target>Chuyển khoản cho phép bạn nhận tiền thưởng và nội dung độc quyền. Bạn có thể định cấu hình phần thưởng trên trang kênh của bạn.</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__DOB_LABEL">
+        <source>Date of Birth</source>
+        <target>Ngày sinh</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__GENDER_LABEL">
+        <source>Gender</source>
+        <target>Giới tính</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__FEMALE_OPTION">
+        <source>Female</source>
+        <target>Nữ</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__MALE_OPTION">
+        <source>Male</source>
+        <target>Nam\n</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__SSN_LAST_4_LABEL">
+        <source>SSN (last 4 digits)</source>
+        <target>Số an sinh xã hội (SSN)(4 số cuối)</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__PERSONAL_ID_LABEL">
+        <source>Personal ID</source>
+        <target>ID cá nhân</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__CA_PERSONAL_ID_TOOLTIP">
+        <source>Social Insurance Number (SIN).</source>
+        <target>Số bảo hiểm xã hội (SIN).\n</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__HK_PERSONAL_ID_TOOLTIP">
+        <source>Hong Kong Identity Card (HKID).</source>
+        <target>Thẻ căn cước Hong Kong (HKID).</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__SG_PERSONAL_ID_TOOLTIP">
+        <source>National Registration Identity Card (NRIC).</source>
+        <target>Thẻ căn cước công dân (NRIC).</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__PERSONAL_ID_PLACEHOLDER">
+        <source>Personal ID number or code</source>
+        <target>Số hoặc mã ID cá nhân</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__ADDRESS_LABEL">
+        <source>Address</source>
+        <target>Địa chỉ\n</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__ADDRESS_PLACEHOLDER">
+        <source>House name/number, Street name</source>
+        <target>Tên/số nhà, Tên đường</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__CITY_LABEL">
+        <source>City</source>
+        <target>Thành phố</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__CITY_PLACEHOLDER">
+        <source>eg. New York City</source>
+        <target>Ví dụ: Thành phố New York</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__STATE_PROVINCE_LABEL">
+        <source>State / Province</source>
+        <target>Bang / Tỉnh</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__STATE_PROVINCE_PLACEHOLDER">
+        <source>State or province</source>
+        <target>Tiểu-bang hoặc Tỉnh</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__ZIP_CODE_LABEL">
+        <source>Zip (Postal) Code</source>
+        <target>Mã bưu chính</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__ZIP_CODE_PLACEHOLDER">
+        <source>eg. 10001</source>
+        <target>Ví dụ: 10001</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__PHONE_LABEL">
+        <source>Phone Number</source>
+        <target>Số điện thoại</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__PHONE_PLACEHOLDER">
+        <source>eg. 123-456789</source>
+        <target>ví dụ: 123-456789</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__AGREE_TERMS_LABEL">
+        <source>I have read and agree to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />Monetization Terms &amp; Conditions<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />.</source>
+        <target>Tôi đã đọc và đồng ý với các <x id="START_LINK" ctype="x-a" />Điều khoản và Điều kiện về Thương mại hoá<x id="CLOSE_LINK" ctype="x-a" />.</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__ONBOARDING__NEXT_ACTION">
+        <source>Next</source>
+        <target>Tiếp theo\n</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__AFFILIATE__PROGRAM_SUBTITLE">
+        <source>Refer new users to Minds through your referral link, and earn 25% of the revenue they generate.</source>
+        <target>Giới thiệu người dùng mới đến với Minds bằng đường dẫn giới thiệu của bạn, và bạn sẽ nhận được 25% doanh thu mà họ kiếm được.</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__AFFILIATE__COPY_LINK">
+        <source>Copy and share the link above</source>
+        <target>Sao chép và chia sẻ liên kết trên</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__AFFILIATE__CLICK_TO_LEARN_MORE">
+        <source><x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />Click here<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> to find out more about the affiliate program.</source>
+        <target><x id = "START_LINK" ctype = "x-a" /> Nhấn vào đây <x id = "CLOSE_LINK" ctype = "x-a" /> để tìm hiểu thêm về chương trình liên kết.</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__LEDGER__TYPE_COLUMN">
+        <source>Type</source>
+        <target>Loại</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__LEDGER__STATUS_COLUMN">
+        <source>Status</source>
+        <target>Trạng thái</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__LEDGER__REFUNDED_LABEL">
+        <source>Refunded</source>
+        <target>Hoàn trả</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__LEDGER__REFUNDED_TOOLTIP">
+        <source>A refund was issued for this payment. Funds will be deducted from your balance or reclaimed.</source>
+        <target>Một khoản hoàn trả đã được cấp cho thanh toán này. Chi phí sẽ được khấu trừ từ số dư của bạn hoặc được thu hồi.</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__LEDGER__DISPUTED_LABEL">
+        <source>Disputed</source>
+        <target>Đã tranh chấp</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__LEDGER__DISPUTED_TOOLTIP">
+        <source>This payment was disputed by the card holder.</source>
+        <target>Khoản thanh toán này bị chủ thẻ từ chối.</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__PAYOUT_METHOD_TITLE">
+        <source>Payout Method</source>
+        <target>Phương thức thanh toán</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__BANK_DETAILS_LABEL">
+        <source>Payouts will be sent to the bank account below. If you wish to add a new bank account, you can edit the account information below.</source>
+        <target>Thanh toán sẽ được gửi đến tài khoản ngân hàng bên dưới. Nếu bạn muốn thêm một tài khoản mới, sửa thông tin tài khoản bên dưới.\n</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__NO_BANK_DETAILS_LABEL">
+        <source>You haven't setup your bank account yet. In order to receive payouts you will need to link your bank account.</source>
+        <target>Bạn chưa thiết lập một tài khoản ngân hàng. Để nhận các khoản tiền bạn cần phải liên kết với tài khoản ngân hàng của bạn.\n</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__ENTER_BANK_DETAILS_BELOW_LABEL">
+        <source>Enter your new bank account details below.</source>
+        <target>Nhập thông tin chi tiết tài khoản ngân hàng mới của bạn bên dưới.</target>
+        <note>Nhập thông tin tài khoản ngân hàng mới của bạn bên dưới.</note>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__ACCOUNT_NUMBER_IBAN_LABEL">
+        <source>Account Number / IBAN</source>
+        <target>Số Tài khoản / IBAN</target>
+        <note>IBAN = International Bank Account Number</note>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__ROUTING_NUMBER_SORT_CODE_LABEL">
+        <source>Routing Number / Sort Code</source>
+        <target>Số định tuyến / Mã ngân hàng</target>
+        <note>Thuật ngữ ngân hàng, nên để nguyên</note>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__ADD_ACCOUNT_ACTION">
+        <source>Add account</source>
+        <target>Thêm tài khoản</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__APPLY_ACTION">
+        <source>Apply</source>
+        <target>Áp dụng</target>
+      </trans-unit>
+      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__CANCEL_MONETIZATION_LABEL">
+        <source>Click below to leave the monetization program. You will <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />not<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> be able to rejoin in the future.</source>
+        <target>Nhấp vào bên dưới để rời khỏi chương trình thương mại hoá. Bạn sẽ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /> không <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> thể tham gia lại trong tương lai.</target>
+      </trans-unit>
+      <trans-unit id="PLUS__SUBSCRIPTION__CURRENTLY_MEMBER">
+        <source>You are a currently a Plus member.</source>
+        <target>Bạn đang là một thành viên Plus.</target>
+      </trans-unit>
+      <trans-unit id="PLUS__SUBSCRIPTION__CANCEL_PLUS_ACTION">
+        <source>Cancel Plus</source>
+        <target>Hủy Plus</target>
+      </trans-unit>
+      <trans-unit id="PLUS__SUBSCRIPTION__CONGRATULATE_PLUS">
+        <source>Congratulations, you are now a Minds Plus member!</source>
+        <target>Chúc mừng, bạn đã trở thành thành viên Minds Plus!</target>
+      </trans-unit>
+      <trans-unit id="PLUS__VERIFY__LINKS_INPUT_LABEL">
+        <source>Please enter two social media links, which link back to your Minds channel page</source>
+        <target>Hãy nhập 2 liên kết mạng xã hội kết nối tới trang kênh Minds của bạn</target>
+      </trans-unit>
+      <trans-unit id="PLUS__VERIFY__DESCRIPTION_LABEL">
+        <source>Please give a brief statement as to why you should be verified</source>
+        <target>Vui lòng đưa ra một tuyên bố ngắn gọn về lý do bạn nên được xác minh</target>
+      </trans-unit>
+      <trans-unit id="PLUS__VERIFY__SUBMIT_ACTION">
+        <source>Submit</source>
+        <target>Gửi đi\n</target>
+      </trans-unit>
+      <trans-unit id="THIRD_PARTY_NETWORKS__FACEBOOK__DETACH_PAGE_ACTION">
+        <source>Detach page</source>
+        <target>Tách trang</target>
+      </trans-unit>
+      <trans-unit id="THIRD_PARTY_NETWORKS__FACEBOOK__LINK_BOOST">
+        <source>Link your boosts to facebook</source>
+        <target>Kết nối quảng cáo với Facebook</target>
+      </trans-unit>
+      <trans-unit id="THIRD_PARTY_NETWORKS__FACEBOOK__SELECT_PAGE_LABEL">
+        <source>Select a page to link below</source>
+        <target>Chọn một trang để liên kết bên dưới</target>
+        <note>Chọn trang để liên kết dưới đây</note>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__LIST__EMPTY_BOOSTS">
+        <source>You have no boosted posts. <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" /> Create one<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></source>
+        <target>Bạn không có bài viết quảng cáo nào. <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" /> Tạo mới<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />\n</target>
+        <note>Bạn chưa có Boost nào.</note>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__LIST__EMPTY_P2P_BOOSTS">
+        <source>You have no boosts in your <x id="INTERPOLATION" />.</source>
+        <target>Bạn không có quảng cáo trong <x id="INTERPOLATION" /> của bạn.\n</target>
+        <note>Bạn không có boosts trong ...</note>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__CARD__USD_VALUE">
+        <source><x id="INTERPOLATION" /> USD</source>
+        <target><x id="INTERPOLATION" /> USD</target>
+        <note>không dịch trong trường hợp này</note>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__CARD__REVOKE_ACTION">
+        <source>Revoke</source>
+        <target>Thu hồi</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__CARD__PREVIOUS_REJECTION">
+        <source>Your boost was rejected: <x id="INTERPOLATION" /></source>
+        <target>Quảng cáo của bạn bị từ chối: <x id="INTERPOLATION" /></target>
+        <note>Boosts của bạn đã bị từ chối / bác bỏ</note>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__BOOSTER__CTA">
+        <source>Boosting guarantees more views on your posts and content.</source>
+        <target>Quảng cáo đảm bảo cho bài đăng và bài viết của bạn nhiều lượt xem hơn.</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__BOOSTER__YOUR_CHANNEL_TITLE">
+        <source>Your channel</source>
+        <target>Kênh của bạn</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__BOOSTER__YOUR_RECENT_MEDIA_TITLE">
+        <source>Your recent media</source>
+        <target>Phương tiện truyền thông gần đây của bạn\n</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__TABLE__REWARD_PLACEHOLDER">
+        <source>Describe the reward</source>
+        <target>Mô tả phần thưởng</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__TABLE__ADD_REWARD_ACTION">
+        <source>Add Reward</source>
+        <target>Thêm phần thưởng</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__OVERVIEW__WIRES_CARD_TOOLTIP">
+        <source>How many wires <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /><x id="INTERPOLATION" /> has received in the last 30 days</source>
+        <target>Bao nhiêu khoản<x id="START_TAG_SPAN" ctype="x-span" />@<x id="CLOSE_TAG_SPAN" ctype="x-span" /><x id="INTERPOLATION" /> bạn đã nhận trong 30 ngày qua</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__OVERVIEW__POINTS_CARD_TOOLTIP">
+        <source>This is <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /><x id="INTERPOLATION" />'s total volume (gross) of all Token wires received in the last 30 days</source>
+        <target>Đây là <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" />tổng số lượng (giá trị) của tất cả khoản chuyển Token của <x id="INTERPOLATION" /> bạn đã nhận được trong 30 ngày trước</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK">
+        <source>See breakdown</source>
+        <target>Xem chi tiết</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK_TOOLTIP">
+        <source>See a breakdown of all your Wires in your wallet</source>
+        <target>Xem chi tiết tất cả Khoản Chuyển trong ví của bạn</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__OVERVIEW__YOU_SENT_CARD_LABEL">
+        <source>You Sent</source>
+        <target>Bạn đã gửi</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CHANNEL__OVERVIEW__YOU_SENT_CARD_TOOLTIP">
+        <source>This is the amount you have wired to <x id="INTERPOLATION" /> in the last 30 days</source>
+        <target>Đây là số tiền bạn đã chuyển cho <x id="INTERPOLATION" /> trong 30 ngày vừa qua</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__REWARDS__TITLE">
+        <source><x id="INTERPOLATION" />'s rewards</source>
+        <target>Phần thưởng của <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__REWARDS__YOU_SENT_LABEL">
+        <source>You have sent</source>
+        <target>Bạn đã gửi</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__REWARDS__IN_THE_LAST_MONTH">
+        <source>in the last month.</source>
+        <target>trong tháng trước.</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__LEDGER__SENT_TAB">
+        <source>Sent</source>
+        <target>Đã gửi</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__LEDGER__RECEIVED_TAB">
+        <source>Received</source>
+        <target>Đã nhận</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__LEDGER__CHANNEL_COLUMN">
+        <source>Channel</source>
+        <target>Kênh</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__LEDGER__AMOUNT_USD_CELL_VALUE">
+        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />$<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /><x id="INTERPOLATION" /></source>
+        <target><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />$<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /><x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__LEDGER__NO_WIRES_NOTICE">
+        <source>No Wires to show.</source>
+        <target>Không có chuyển khoản nào.</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__SUPPORTER__THIS_MONTH">
+        <source>this month</source>
+        <target>tháng này</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__SETTINGS__PREVIEW_DESC">
+        <source>The below description and preview image is what your subscribers will see on your exclusive posts until they become a supporter.</source>
+        <target>Mô tả dưới đây và hình ảnh xem trước là những gì những người theo dõi bạn sẽ thấy trên các bài viết độc quyền của bạn cho đến khi họ trở thành người ủng hộ.</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__SETTINGS__DESCRIPTION_LABEL">
+        <source>Description</source>
+        <target>Mô tả</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__SETTINGS__DESCRIPTION_PLACEHOLDER">
+        <source>eg. Support me to see my exclusive content and join me for a monthly video chat</source>
+        <target>Ví dụ: Ủng hộ tôi để được xem nội dung độc quyền của tôi và trò chuyện hằng tháng bằng video cùng tôi.</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__SETTINGS__BACKGROUND_LABEL">
+        <source>Background</source>
+        <target>Lý lịch</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__SETTINGS__PREVIEW_LABEL">
+        <source>Preview</source>
+        <target>Xem trước</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__SETTINGS__SAVING_LABEL">
+        <source>Saving…</source>
+        <target>Đang lưu...</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__ONLY_SUPPORTERS_TITLE_PART">
+        <source>Only supporters who wire you over</source>
+        <target>Chỉ những người ủng hộ có thể chuyển khoản cho bạn</target>
+        <note>Chỉ những người đã chuyển ngân cho bạn hơn ... (...)</note>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__USD_PER_MONTH">
+        <source><x id="INTERPOLATION" />/month</source>
+        <target><x id="INTERPOLATION" />/tháng</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__POINTS_PER_MONTH">
+        <source><x id="INTERPOLATION" /> points/month</source>
+        <target><x id="INTERPOLATION" /> điểm/tháng</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__WILL_SEE_TITLE_PART">
+        <source>will see this post.</source>
+        <target>sẽ thấy bài viết này.</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__LOCKED_LABEL">
+        <source>Locked</source>
+        <target>Đã Khóa</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__WIRE_ME_OVER_PART">
+        <source>Wire me over</source>
+        <target>Chuyển khoản cho tôi</target>
+        <note>Chuyển ngân cho tôi...</note>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__TO_SEE_TITLE_PART">
+        <source>to see this post.</source>
+        <target>để thấy bài viết này.</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__UNLOCK_ACTION">
+        <source>Unlock</source>
+        <target>Mở Khóa</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__CAN_ONLY_BE_SEEN_TITLE_PART">
+        <source>This post can only be seen by supporters who wire</source>
+        <target>Bài viết này chỉ có thể được nhìn thấy bởi những người ủng hộ đã chuyển khoản</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__OVER_USD_PER_MONTH">
+        <source>over <x id="INTERPOLATION" />/month</source>
+        <target>trên <x id="INTERPOLATION" />/tháng</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__OVER_POINTS_PER_MONTH">
+        <source>over <x id="INTERPOLATION" /> points/month</source>
+        <target>trên <x id="INTERPOLATION" /> điểm/tháng</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__TO_USERNAME_PART">
+        <source>to @<x id="INTERPOLATION" /></source>
+        <target>đến @<x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__OVERVIEW__MONEY_WIRES_TOOLTIP">
+        <source>The total wires you have received</source>
+        <target>Tổng số khoản bạn đã nhận</target>
+        <note>Sửa lại nhé mọi người !</note>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__OVERVIEW__MONEY_EARNINGS_TOOLTIP">
+        <source>The total in USD you have earned</source>
+        <target>Tổng số bằng USD bạn đã kiếm được</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__TO_LABEL">
+        <source>Translate to:</source>
+        <target>Dịch sang:</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__LANGUAGE_PLACEHOLDER">
+        <source>Language…</source>
+        <target>Ngôn ngữ...</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__PREFERRED_LANGUAGES_LABEL">
+        <source>Preferred Languages</source>
+        <target>Ngôn ngữ ưu tiên</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__TRANSLATING_LABEL">
+        <source>Translating</source>
+        <target>Đang dịch</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__TRANSLATING_TO_PART">
+        <source>to <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></source>
+        <target>sang <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" />{{id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"}</target>
+        <note>Translation target</note>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__TRANSLATED_LABEL">
+        <source>Translated</source>
+        <target>Đã dịch</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__TRANSLATED_FROM_PART">
+        <source>from <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></source>
+        <target>từ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" />{{id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"}</target>
+        <note>Translation source</note>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__HIDE_TRANSLATION_ACTION">
+        <source>Hide translation</source>
+        <target>Ẩn bản dịch</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__CHANGE_LANGUAGE_ACTION">
+        <source>Change language</source>
+        <target>Thay đổi ngôn ngữ</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__ERROR_TRANSLATING_LABEL">
+        <source>There was an error when translating this content.</source>
+        <target>Có lỗi khi đang dịch nội dung này.</target>
+      </trans-unit>
+      <trans-unit id="TRANSLATE__DISMISS_ACTION">
+        <source>Dismiss</source>
+        <target>Bỏ qua</target>
+      </trans-unit>
+      <trans-unit id="FORMS__LOGIN__FORGOT_PASSWORD_LINK">
+        <source>Forgot Password?</source>
+        <target>Quên mật khẩu?</target>
+      </trans-unit>
+      <trans-unit id="FORMS__LOGIN__2FA_LOGIN_TITLE">
+        <source>Twofactor Login</source>
+        <target>Đăng nhập hai lớp</target>
+      </trans-unit>
+      <trans-unit id="FORMS__LOGIN__2FA_LOGIN_SMS_SENT">
+        <source>We just sent you a text. Enter the code below to authenticate.</source>
+        <target>Chúng tôi vừa gửi cho bạn một tin nhắn. Nhập mã dưới đây để xác nhận.</target>
+      </trans-unit>
+      <trans-unit id="FORMS__REGISTER__EMAIL_PLACEHOLDER">
+        <source>Email</source>
+        <target>Email</target>
+        <note>email placeholder</note>
+      </trans-unit>
+      <trans-unit id="FORMS__REGISTER__CONFIRM_PASSWORD_PLACEHOLDER">
+        <source>Confirm your password</source>
+        <target>Xác nhận mật khẩu</target>
+      </trans-unit>
+      <trans-unit id="FORMS__REGISTER__SIGNUP_ACTION">
+        <source>Signup</source>
+        <target>Đăng ký</target>
+      </trans-unit>
+      <trans-unit id="FORMS__REGISTER__TOS_ACCEPTANCE_LABEL">
+        <source>I accept the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" /> Terms &amp; Conditions <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></source>
+        <target>Tôi chấp nhận <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" /> Điều khoản và Điều Kiện <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="FORMS__FB_REGISTER__USERNAME_LABEL">
+        <source>Pick a username</source>
+        <target>Chọn tên người dùng</target>
+      </trans-unit>
+      <trans-unit id="FORMS__FB_REGISTER__USERNAME_PLACEHOLDER">
+        <source>Username (eg. @me)</source>
+        <target>Tên Người Dùng (ví dụ @toi)</target>
+      </trans-unit>
+      <trans-unit id="FORMS__ONBOARDING__AVATAR_LABEL">
+        <source>Avatar</source>
+        <target>Ảnh đại diện</target>
+      </trans-unit>
+      <trans-unit id="FORMS__CATEGORIES_SELECTOR__INTEREST_TITLE">
+        <source>What are you interested in?</source>
+        <target>Bạn quan tâm đến điều gì?</target>
+      </trans-unit>
+      <trans-unit id="FORMS__CATEGORIES_SELECTOR__INTEREST_DESC">
+        <source>Select from the categories below so we can show you great content</source>
+        <target>Chọn từ các danh mục dưới đây để chúng tôi có thể mang đến cho bạn nội dung phù hợp nhất</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__EARN_POINTS">
+        <source>Earn points for using the app</source>
+        <target>Kiếm điểm khi sử dụng ứng dụng</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__EXCHANGE_POINTS">
+        <source>Exchange your points for views on your content</source>
+        <target>Đổi điểm lấy lượt xem trên nội dung của bạn</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__MONETIZE_YOUR_CHANNEL">
+        <source>Monetize your channel</source>
+        <target>Thương mại hoá kênh của bạn</target>
+        <note>tutorial</note>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__E2E_ENCRYPTION">
+        <source>Protect your privacy with end-to-end encryption</source>
+        <target>Bảo vệ quyền riêng tư của bằng mã hoá từ đầu đến cuối\n</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__FIND_PEOPLE">
+        <source>Find people in cities around the world with geo-discovery</source>
+        <target>Tìm người trên khắp thế giới bằng khám phá địa lý</target>
+        <note>What is the meaning of "geo-discovery" in here? is it a tool of Minds or just geo-discovery?</note>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__EXPAND_YOUR_AUDIENCE">
+        <source>Expand your audience and subscribers</source>
+        <target>Mở rộng lượng độc giả và người theo dõi bạn</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__GROUPS">
+        <source>Create open and closed groups</source>
+        <target>Tạo nhóm mở và nhóm kín</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__SEARCH">
+        <source>Search and create videos, images, blogs</source>
+        <target>Tìm và tạo video, hình ảnh, blog</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__EXPRESS_YOURSELF">
+        <source>Express yourself freely without censorship</source>
+        <target>Tự do thể hiện bản thân mà không bị kiểm duyệt</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__REWARDS">
+        <source>Rewards</source>
+        <target>Phần thưởng</target>
+        <note>general rewards</note>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__POST_TEXT_ACTIVITY">
+        <source>Post a text/link activity</source>
+        <target>Đăng một văn bản/liên kết</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__GET_COMMENTED">
+        <source>Get commented on</source>
+        <target>Đã được bình luận trên</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__BE_SUBSCRIBED">
+        <source>Be subscribed to</source>
+        <target>Được</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__GET_VOTED_UP">
+        <source>Get voted up</source>
+        <target>Được tán thành</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__GET_REMINDED">
+        <source>Get reminded</source>
+        <target>Được nhắc nhở</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__POST_RICH_ACTIVITY">
+        <source>Post a rich media activity</source>
+        <target>Đăng một bài viết đa phương tiện</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__PUBLISH_BLOG">
+        <source>Publish a blog</source>
+        <target>Xuất bản một blog</target>
+      </trans-unit>
+      <trans-unit id="FORMS__TUTORIAL__HOURLY_REWARD">
+        <source>Hourly</source>
+        <target>Hàng giờ</target>
+      </trans-unit>
+      <trans-unit id="MODALS__INVITE__DESCRIPTION">
+        <source>Send the link below to your friends:</source>
+        <target>Gửi liên kết bên dưới tới bạn của bạn:</target>
+      </trans-unit>
+      <trans-unit id="MODALS__REMIND_COMPOSER__REMIND_TITLE">
+        <source>Remind</source>
+        <target>Nhắc nhở</target>
+      </trans-unit>
+      <trans-unit id="MODALS__REMIND_COMPOSER__PLACEHOLDER">
+        <source>Enter your remind status here (optional)</source>
+        <target>Nhập trạng thái nhắc nhở của bạn ở đây (tùy chọn)</target>
+      </trans-unit>
+      <trans-unit id="MODALS__SHARE__ON_FACEBOOK">
+        <source>Share on Facebook</source>
+        <target>Chia sẻ trên Facebook</target>
+      </trans-unit>
+      <trans-unit id="MODALS__SHARE__ON_TWITTER">
+        <source>Share on Twitter</source>
+        <target>Chia sẻ trên Twitter</target>
+      </trans-unit>
+      <trans-unit id="MODALS__SIGNUP__ON_ACTION_SUBTITLE">
+        <source>You need to have a channel in order to <x id="INTERPOLATION" /></source>
+        <target>Bạn cần có một kênh để <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="MODALS__SIGNUP__SUBTITLE">
+        <source>An open-source, community-owned <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />social network<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> providing tools for revenue, reach, privacy and Internet freedom.</source>
+        <target>Một mạng xã hội nguồn mở, thuộc sở hữu bởi cộng đồng <x id = "START_BOLD_TEXT" ctype = "x-b" /> mạng xã hội <x id = "CLOSE_BOLD_TEXT" ctype = "x-b" /> cung cấp các công cụ cho doanh thu, phạm vi tiếp cận, quyền riêng tư và tự do Internet.\n</target>
+      </trans-unit>
+      <trans-unit id="MODALS__SIGNUP__WITH_FACEBOOK">
+        <source>Signin with Facebook</source>
+        <target>Đăng nhập bằng Facebook</target>
+      </trans-unit>
+      <trans-unit id="MODALS__SIGNUP__WITH_MINDS">
+        <source>Signin with Minds</source>
+        <target>Đăng nhập bằng Minds</target>
+      </trans-unit>
+      <trans-unit id="MODALS__SIGNUP__ANDROID_APP_ALT">
+        <source>Android app on Google Play</source>
+        <target>Ứng dụng Android trên Google Play</target>
+      </trans-unit>
+      <trans-unit id="MODALS__SIGNUP__MAYBE_LATER">
+        <source>Maybe later</source>
+        <target>Lúc khác</target>
+      </trans-unit>
+      <trans-unit id="MODALS__SIGNUP__ALREADY_HAVE_CHANNEL">
+        <source>Already have a channel? Click here.</source>
+        <target>Đã có một kênh? Nhấn vào đây.</target>
+      </trans-unit>
+      <trans-unit id="PAYMENTS__PAYWALL__EXCLUSIVE_DESC">
+        <source>Only paid subscribers can see this post</source>
+        <target>Chỉ những người theo dõi đã trả phí mới có thể xem bài viết này</target>
+      </trans-unit>
+      <trans-unit id="PAYMENTS__PAYWALL__VIEW_ACTION">
+        <source>View</source>
+        <target>Xem</target>
+      </trans-unit>
+      <trans-unit id="PAYMENTS__PAYWALL__SUPPORTERS_ONLY">
+        <source>This post is only available to supporters.</source>
+        <target>Bài viết này chỉ dành cho những người ủng hộ.</target>
+      </trans-unit>
+      <trans-unit id="PAYMENTS__PAYWALL__USD_PER_MONTH">
+        <source>$ <x id="INTERPOLATION" /> / month</source>
+        <target>$ <x id="INTERPOLATION" /> / tháng</target>
+      </trans-unit>
+      <trans-unit id="PAYMENTS__PAYWALL_CANCEL__ACTION">
+        <source>Cancel Subscription</source>
+        <target>Hủy theo dõi</target>
+      </trans-unit>
+      <trans-unit id="REPORT__CREATOR__REPORT_NOTE_PLACEHOLDER">
+        <source>Please explain why you think this content should not be on Minds.</source>
+        <target>Vui lòng giải thích tại sao bạn nghĩ nội dung này không nên có trên Minds.</target>
+      </trans-unit>
+      <trans-unit id="REPORT__CREATOR__DMCA_NOTICE">
+        <source>Please submit a DMCA notice to copyright@minds.com.</source>
+        <target>Vui lòng gửi thông báo DMCA đến copyright@minds.com.</target>
+      </trans-unit>
+      <trans-unit id="REPORT__CREATOR__SUBMIT_ACTION">
+        <source>SUBMIT</source>
+        <target>GỬI</target>
+      </trans-unit>
+      <trans-unit id="REPORT__CREATOR__NEXT_ACTION">
+        <source>NEXT</source>
+        <target>TIẾP THEO</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CARDS__COMMENT__PRESS_ESC_TO_CANCEL">
+        <source>Press ESC to cancel</source>
+        <target>Ấn ESC để huỷ\n</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__FEATURE__CATEGORY_PLACEHOLDER">
+        <source>-- SELECT A CATEGORY --</source>
+        <target>-- CHỌN MỘT DANH MỤC --</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BLOCK">
+        <source>Block @<x id="INTERPOLATION" /></source>
+        <target>Chặn @<x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__UNBLOCK">
+        <source>Un-Block @<x id="INTERPOLATION" /></source>
+        <target>Bỏ chặn @<x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__UNSUBSCRIBE">
+        <source>Unsubscribe</source>
+        <target>Huỷ theo dõi</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_GLOBALLY">
+        <source>Ban globally</source>
+        <target>Cấm trên toàn cầu</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__UNBAN_GLOBALLY">
+        <source>Un-ban globally</source>
+        <target>Bỏ cấm trên toàn cầu</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_FROM_MONETIZATION">
+        <source>Ban from Monetization</source>
+        <target>Cấm sử dụng Thương mại hoá</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__UNBAN_FROM_MONETIZATION">
+        <source>Un-ban from Monetization</source>
+        <target>Bỏ cấm sử dụng Thương mại hoá</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_USER_CONFIRM_MESSAGE">
+        <source>Are you sure you want to ban this user?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> This will close all open sessions and lock him/her out from Minds.</source>
+        <target>Bạn có chắc là muốn cấm người dùng này không?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> Việc này sẽ đóng tất cả các phiên đang mở và sẽ chặn họ khỏi Minds.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_USER_SUCCESS_MESSAGE">
+        <source>User has been banned.</source>
+        <target>Người dùng này đã bị cấm.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_MONETIZATION_CONFIRM_MESSAGE">
+        <source>Are you sure you want to ban this user from monetization?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> This will close all open sessions and decline pending payments.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> There's no UNDO. This will NOT ban the user from Minds.</source>
+        <target>Bạn có chắc chắn muốn cấm người dùng này thương mại hoá không?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> Việc này sẽ đóng tất cả các phiêm đang mở và từ chối các khoản thanh toán đang chờ xử lý. <x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> Hành động này không thể PHỤC HỒI. Việc này sẽ KHÔNG cấm người dùng này sử dụng Minds.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_MONETIZATION_SUCCESS_MESSAGE">
+        <source>User has been banned from monetization.</source>
+        <target>Người dùng đã bị cấm thương mại hoá</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BANNER__ADD_NEW_BANNER">
+        <source>Click here to add a new banner</source>
+        <target>Nhấn vào đây để thêm một ảnh bìa mới</target>
+        <note>What is the meaning of "banner"? Person who be banned or banderol?</note>
+      </trans-unit>
+      <trans-unit id="MINDS__SOCIAL_ICONS__LINKEDIN">
+        <source>LinkedIn</source>
+        <target>LinkedIn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SOCIAL_ICONS__GOOGLE_PLUS">
+        <source>Google Plus</source>
+        <target>Google Plus</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SOCIAL_ICONS__EMBED_CODE">
+        <source>Embeddable code</source>
+        <target>Mã nhúng</target>
+      </trans-unit>
+      <trans-unit id="MINDS__COMMENTS__LOADING_ELLIPSIS">
+        <source>Loading…</source>
+        <target>Đang tải...</target>
+      </trans-unit>
+      <trans-unit id="MINDS__COMMENTS__LOAD_ACTION">
+        <source>Load</source>
+        <target>Tải</target>
+      </trans-unit>
+      <trans-unit id="MINDS__COMMENTS__TRY_AGAIN_ACTION">
+        <source>Try again</source>
+        <target>Thử lại</target>
+      </trans-unit>
+      <trans-unit id="MINDS__COMMENTS__LOAD_EARLIER_ACTION">
+        <source>Load earlier</source>
+        <target>Tải phần trước đó</target>
+      </trans-unit>
+      <trans-unit id="MINDS__COMMENTS__START_CONVERSATION">
+        <source>Start the conversation!</source>
+        <target>Bắt đầu cuộc đối thoại!</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__UNFEATURE">
+        <source>un-Feature</source>
+        <target>Ngưng tính năng</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__MONETIZE">
+        <source>Monetize</source>
+        <target>Thương mại hoá</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__UNMONETIZE">
+        <source>un-Monetize</source>
+        <target>Ngưng Thương mại hoá</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__UNSUBSCRIBE">
+        <source>Unsubscribe</source>
+        <target>Hủy theo dõi</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__SET_AS_EXPLICIT">
+        <source>Set as Explicit</source>
+        <target>Đặt làm Nhạy cảm</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__REMOVE_EXPLICIT">
+        <source>Remove Explicit</source>
+        <target>Gở bỏ Tính nhạy cảm</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__DELETE_MODAL_MESSAGE">
+        <source>Are you sure you want to delete this post? There's no UNDO.</source>
+        <target>Bạn có chắc là muốn xóa bài viết này? Việc này sẽ không thể KHÔI PHỤc.</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__DELETE_MODAL_ATTACHMENT_MESSAGE">
+        <source>This action will also delete the attached media from your gallery.</source>
+        <target>Hành động này sẽ đồng thời xóa những phương tiện truyền thông đính kèm khỏi bộ sưu tập của bạn.</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__DELETE_CONFIRMATION_MESSAGE">
+        <source>The post has been deleted.</source>
+        <target>Bài viết đã bị xóa.</target>
+      </trans-unit>
+      <trans-unit id="REPORT__CONSOLE__APPEALED_TAB">
+        <source>Appealed</source>
+        <target>Đã khiếu nại</target>
+      </trans-unit>
+      <trans-unit id="REPORT__CONSOLE__REASON_LABEL">
+        <source>The following post has been <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> because it <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" />.</source>
+        <target>Bài viết này đã bị <x id="START_BOLD_TEXT" ctype="x-b"  equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" /> bởi vì nó <x id="START_BOLD_TEXT" ctype="x-b" /><x id="INTERPOLATION_1" /><x id="CLOSE_BOLD_TEXT" ctype="x-b"  equiv-text="&lt;/b&gt;" />.</target>
+      </trans-unit>
+      <trans-unit id="REPORT__CONSOLE__APPEAL_ACTION">
+        <source>Appeal</source>
+        <target>Khiếu nại</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__SAVED_CARDS__TITLE">
+        <source>Payment Methods</source>
+        <target>Phương thức thanh toán</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__SAVED_CARDS__ADD_NEW_CARD_LABEL">
+        <source>Add a new card</source>
+        <target>Thêm một thẻ mới</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__SAVED_CARDS__ADD_ACTION">
+        <source>ADD</source>
+        <target>THÊM</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SUBSCRIPTIONS__TITLE">
+        <source>Recurring Payments</source>
+        <target>Thanh toán định kỳ</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NAVIGATION__GENERAL_NAV">
+        <source>General</source>
+        <target>Cài đặt chung</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NAVIGATION__DISABLE_NAV">
+        <source>Deactivate Channel</source>
+        <target>Hủy kích hoạt kênh</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NAVIGATION__2FA_NAV">
+        <source>TwoFactor Authentication</source>
+        <target>Bảo mật 2 lớp</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NAVIGATION__BILLINGS_NAV">
+        <source>Billing</source>
+        <target>Hoá đơn</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NAVIGATION__REPORTED_CONTENT_NAV">
+        <source>Reported Content</source>
+        <target>Nội dung đã bị báo cáo</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ONBOARDING__CHANNEL_TEXT">
+        <source>Design Your Channel</source>
+        <target>Thiết kế kênh của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ONBOARDING__CHANNEL_SUBTEXT">
+        <source>Setup your avatar, banner, personal bio and more</source>
+        <target>Thiết lập ảnh đại diện, ảnh bìa, tiểu sử và những thứ khác</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ONBOARDING__SUBSCRIBE_TEXT">
+        <source>Subscribe to channels</source>
+        <target>Theo dõi kênh</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ONBOARDING__SUBSCRIBE_SUBTEXT">
+        <source>Click here to find the content you love to fill your newsfeed</source>
+        <target>Nhấn vào đây để tìm kiếm nội dung bạn muốn xuất hiện trên Bảng Tin của mình</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATIONS__ALL_FILTER">
+        <source>All</source>
+        <target>Tất cả</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATIONS__TAGS_FILTER">
+        <source>tags</source>
+        <target>Thẻ</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATIONS__COMMENTS_FILTER">
+        <source>Comments</source>
+        <target>Bình luận</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATIONS__VOTES_FILTER">
+        <source>Votes</source>
+        <target>Bình chọn</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATIONS__REMINDS_FILTER">
+        <source>Reminds</source>
+        <target>Nhắc nhở</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__FLYOUT__VIEW_ALL_ACTION">
+        <source>View all</source>
+        <target>Xem tất cả</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__FRIENDS_MATCH">
+        <source>You have a match! <x id="INTERPOLATION" /> subscribed to you</source>
+        <target>Bạn có một đối tượng phù hợp! <x id="INTERPOLATION" /> đã theo dõi bạn</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__FRIENDS">
+        <source><x id="INTERPOLATION" /> subscribed to you</source>
+        <target><x id="INTERPOLATION" /> đã theo dõi bạn</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__GROUP_INVITE">
+        <source><x id="INTERPOLATION" /> invited you to join <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> đã mời bạn gia nhập <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__GROUP_KICK">
+        <source>You were kicked off from <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target>Bạn đã bị đá khỏi nhóm <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__GROUP_ACTIVITY">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> posted in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> đã đăng bài viết trong <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__GROUP_QUEUE_ADD">
+        <source>Your post for <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> is awaiting approval from group administrators.</source>
+        <target>Bài viết của bạn cho nhóm <x id="START_TAG_SPAN" ctype="x-span" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" /> đang chờ quản trị viên xét duyệt.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__GROUP_QUEUE_APPROVE">
+        <source>Your post for <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> was approved.</source>
+        <target>Bài viết của bạn cho nhóm <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> đã được chấp nhận.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__GROUP_QUEUE_REJECT">
+        <source>Your post for <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> was rejected.</source>
+        <target> Bài viết của bạn cho nhóm <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> đã bị từ chối.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__COMMENT_ACTIVITY_OWN">
+        <source><x id="INTERPOLATION" /> commented on <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />your activity<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> đã bình luận trong <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />hoạt động của bạn<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__COMMENT_ACTIVITY_OTHER">
+        <source><x id="INTERPOLATION" /> commented on <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" />'s activity<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> đã bình luận trong <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />hoạt động của <x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__COMMENTED_ON">
+        <source><x id="INTERPOLATION" /> commented on</source>
+        <target><x id="INTERPOLATION" /> đã bình luận trong</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT">
+        <source><x id="INTERPOLATION" />'s <x id="INTERPOLATION_1" /></source>
+        <target><x id="INTERPOLATION_1" /> của <x id="INTERPOLATION" /></target>
+        <note>object belonging to user</note>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__OWN_OBJECT">
+        <source>your <x id="INTERPOLATION" /></source>
+        <target><x id="INTERPOLATION" /> của bạn</target>
+        <note>object belonging to current user</note>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__ERROR_VIEWING">
+        <source>There was an error viewing this notification.</source>
+        <target>Có lỗi khi hiển thị thông báo này.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_OBJECT">
+        <source><x id="INTERPOLATION" /> voted up</source>
+        <target><x id="INTERPOLATION" /> tán thành </target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_ACTIVITY">
+        <source><x id="INTERPOLATION" /> voted up <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> tán thành  <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_OWN_ACTIVITY">
+        <source><x id="INTERPOLATION" /> voted up <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />your activity<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> tán thành  <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />hành động của bạn<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_COMMENT">
+        <source><x id="INTERPOLATION" /> voted up <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /> your comment <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> tán thành  <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /> bình luận của bạn <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_CONVERSATION">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> voted up your message in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" />'s conversation</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> tán thành  lời nhắn của bạn trong cuộc hội thoại của <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__POST_DELETED">
+        <source>This post was deleted.</source>
+        <target>Bài viết đã bị xóa.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_OBJECT">
+        <source><x id="INTERPOLATION" /> down voted</source>
+        <target><x id="INTERPOLATION" /> không tán thành </target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_ACTIVITY">
+        <source><x id="INTERPOLATION" /> down voted <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> không tán thành  <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_OWN_ACTIVITY">
+        <source><x id="INTERPOLATION" /> down voted <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />your activity<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> không tán thành  <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />hoạt động của bạn<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_COMMENT">
+        <source><x id="INTERPOLATION" /> down voted <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /> your comment <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> không tán thành  <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />bình luận của bạn<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_CONVERSATION">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> down voted your message in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" />'s conversation</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> không tán thành lời nhắn của bạn trong cuộc hội thoại của <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED">
+        <source><x id="INTERPOLATION" /> reminded</source>
+        <target><x id="INTERPOLATION" /> đã nhắc nhở</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED_ACTIVITY">
+        <source><x id="INTERPOLATION" /> reminded <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> đã nhắc nhở <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED_OWN_ACTIVITY">
+        <source><x id="INTERPOLATION" /> reminded <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />your activity<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> đã nhắc nhở <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />hoạt động của bạn<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__FEATURE">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> was featured</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" /> đã được mô tả</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__TAG__IN_A_POST">
+        <source><x id="INTERPOLATION" /> tagged you in a post</source>
+        <target><x id="INTERPOLATION" /> đã gắn thẻ bạn trong một bài viết</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__TAG__IN_A_COMMENT">
+        <source><x id="INTERPOLATION" /> tagged you in a comment</source>
+        <target><x id="INTERPOLATION" /> đã nhắc đến bạn trong một bình luận</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__TAG__IN_A_CONVERSATION">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> tagged you in <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" />'s conversation</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> đã tag bạn trong cuộc trò chuyện của <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__MISSED_CALL">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> tried to call you.</source>
+        <target><x id = "START_TAG_SPAN" ctype = "x-span" /><x id="INTERPOLATION" /><x id = "CLOSE_TAG_SPAN" ctype = "x-span" /> đã cố gắng gọi cho bạn.</target>
+        <note>Gọi nhỡ</note>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_GIFT__GIFTED_YOU">
+        <source><x id="INTERPOLATION" /> gifted you <x id="INTERPOLATION_1" /> views <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />for<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> đã tặng bạn <x id="INTERPOLATION_1" /> lượt xem <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />vì<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__YOUR_POST">
+        <source>your post</source>
+        <target>Bài viết của bạn</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__YOUR_CHANNEL">
+        <source>your channel</source>
+        <target>Kênh của bạn</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED__VIEWS_FOR">
+        <source><x id="INTERPOLATION" /> views <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />for<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> lượt xem <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />cho<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED__AWAITING_APPROVAL">
+        <source>is awaiting approval.</source>
+        <target>đang chờ xét duyệt.</target>
+        <note>boost</note>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED_P2P__AWAITING_APPROVAL_BY">
+        <source>is awaiting approval by <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target>đang chờ xét duyệt bởi <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+        <note>boost</note>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_REQUEST__POINTS_TO_BOOST">
+        <source><x id="INTERPOLATION" /> is offering you <x id="INTERPOLATION_1" /> points to boost</source>
+        <target><x id="INTERPOLATION" /> đang đề nghị với bạn <x id="INTERPOLATION_1" /> điểm để quảng cáo</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__THEIR_ACTIVITY">
+        <source>their activity</source>
+        <target>hoạt động của họ</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__THEIR_CHANNEL">
+        <source>their channel</source>
+        <target>kênh của họ</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_REJECTED__BOOST_FORM">
+        <source>Your boost <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />for<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target>Quảng cáo của bạn <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />cho<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_REJECTED__REASON">
+        <source>was rejected for <x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;" /><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" />.<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;" /> Your tokens have been credited back to your wallet.</source>
+        <target>đã bị từ chối vì <x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;" /><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" />.<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;" /> Token của bạn đã được trả lại ví của bạn.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__BOOST_FOR">
+        <source>You revoked your boost <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />for<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target>Bạn đã hủy bỏ quảng cáo của bạn  <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />cho<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__REFUNDED">
+        <source>Your offer has been refunded.</source>
+        <target>Đề nghị của bạn đã được hoàn trả.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_ACCEPTED__WERE_ACCEPTED">
+        <source>were accepted.</source>
+        <target>đã được chấp nhận.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_COMPLETED__VIEWS_FOR">
+        <source><x id="INTERPOLATION" />/<x id="INTERPOLATION" /> views <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />for<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" />/<x id="INTERPOLATION" /> lượt xem <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />cho<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_COMPLETED__BEEN_MET">
+        <source>have been met.</source>
+        <target>đã được đáp ứng.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REQUEST__IS_OFFERING">
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />@<x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> is offering</source>
+        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />@<x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> đang đề nghị</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__THEIR_POST">
+        <source>their post</source>
+        <target>bài viết của họ</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_PEER_ACCEPTED__ACCEPTED_BID">
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />@<x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> accepted your bid of</source>
+        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />@<x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> đã chấp nhận mức giá bạn đưa ra</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__DECLINED_BID">
+        <source><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />@<x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> declined your bid of</source>
+        <target><x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />@<x id="INTERPOLATION" /><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /> đã từ chối mức giá bạn đưa ra</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__NOT_CHARGED">
+        <source>You have not been charged.</source>
+        <target>Bạn chưa bị tính phí.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__PROGRAM_QUEUED">
+        <source>Your application for <x id="INTERPOLATION" /> program is awaiting approval.</source>
+        <target>Đơn ứng tuyển của bạn vào chương trình <x id="INTERPOLATION" /> đang chờ phê duyệt.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__PROGRAM_ACCEPTED">
+        <source>Your application for <x id="INTERPOLATION" /> program was approved. Congratulations!</source>
+        <target>Đơn ứng tuyển của bạn vào chương trình <x id="INTERPOLATION" /> đã được chấp nhận. Xin chúc mừng!</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__CHANNEL_MONETIZED">
+        <source>Your channel is now monetized. Congratulations!</source>
+        <target>Kênh của bạn đã được thương mại hoá. Xin chúc mừng!</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__PROGRAM_DECLINED">
+        <source>Your application for <x id="INTERPOLATION" /> program was declined.</source>
+        <target> Đơn ứng tuyển của bạn vào chương trình <x id="INTERPOLATION" /> đã bị từ chối.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__PAYOUT_QUEUED">
+        <source>Your payment request for <x id="INTERPOLATION" /> is awaiting approval.</source>
+        <target>Yêu cầu thanh toán của bạn cho <x id="INTERPOLATION" /> đang chờ phê duyệt.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__PAYOUT_ACCEPTED">
+        <source>Your payment request for <x id="INTERPOLATION" /> was approved.</source>
+        <target>Yêu cầu thanh toán của bạn cho <x id="INTERPOLATION" /> đã được chấp nhận.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__PAYOUT_DECLINED">
+        <source>Your payment request for <x id="INTERPOLATION" /> was declined.</source>
+        <target>Yêu cầu thanh toán của bạn cho <x id="INTERPOLATION" /> đã bị từ chối.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WELCOME_POINTS">
+        <source>Welcome to Minds. We have given you <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />1000 points<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> to get you started.</source>
+        <target>Chào mừng bạn đến Minds. Chúng tôi đã gửi tặng bạn <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />1000 điểm<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> để bạn bắt đầu.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WELCOME_POST">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />Tap here<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> to create a post</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />Nhấn vào đây<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> để tạo một bài viết\n</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WELCOME_BOOST">
+        <source>You can gain more reach by boosting your content. Hit the blue boost icon on your posts.</source>
+        <target>Bạn có thể kiếm thêm người độc giả bằng cách quảng cáo nội dung bài viết. Ấn vào biểu tượng quảng cáo màu xanh trên bài viết.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WELCOME_CHAT">
+        <source>Chat securely with your mutual subscriptions.</source>
+        <target>Trò chuyện bảo mật với những người theo dõi chung.</target>
+        <note>Trò chuyện an toàn giữa những người theo dõi lẫn nhau.</note>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WELCOME_DISCOVER">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />Tap here<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> to discover new channels and media.</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />Nhấn vào đây<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> để khám phá các kênh và truyền thông mới.\n</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__MESSENGER_INVITE">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> wants to chat with you!</source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" />{{id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"} muốn trò chuyện cùng bạn!</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__TO_ONETIME">
+        <source>You have successfully wired <x id="INTERPOLATION" /> to <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />@<x id="INTERPOLATION_1" /><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></source>
+        <target>Bạn đã chuyển khoản thành công <x id="INTERPOLATION" /> tới <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />@<x id="INTERPOLATION_1" /><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__FROM_ONETIME">
+        <source>You have received a wire of <x id="INTERPOLATION" /> from <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />@<x id="INTERPOLATION_1" /><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></source>
+        <target>Bạn nhận được chuyển khoản là <x id="INTERPOLATION" /> từ <x id="START_LINK" ctype="x-a" />@<x id="INTERPOLATION_1" /><x id="CLOSE_LINK" ctype="x-a" />\n</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__TO_SUBSCRIPTION">
+        <source>You have subscribed to wire <x id="INTERPOLATION" />/month to <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />@<x id="INTERPOLATION_1" /><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></source>
+        <target>Bạn đã theo dõi để chuyển khoản <x id="INTERPOLATION" />/tháng tới <x id="START_LINK" ctype="x-a" />@<x id="INTERPOLATION_1" /><x id="CLOSE_LINK" ctype="x-a" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__WIRE_HAPPENED__FROM_SUBSCRIPTION">
+        <source>You have received a wire subscription of <x id="INTERPOLATION" />/month from <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />@<x id="INTERPOLATION_1" /><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></source>
+        <target>Bạn hiện đã nhận một theo dõi chuyển khoản là <x id="INTERPOLATION" />/tháng từ <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />@<x id="INTERPOLATION_1" /><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REPORT_ACTIONED__ACTIVITY_BEEN">
+        <source>Your post</source>
+        <target>Bài viết của bạn</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REPORT_ACTIONED__ACTIVITY_TITLE_BEEN">
+        <source>Your post <x id="INTERPOLATION" /></source>
+        <target>Bài viết của bạn <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REPORT_ACTIONED__COMMENT_BEEN">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />Your comment<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> has been <x id="INTERPOLATION" /></source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />Bình luận của bạn<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> đã được\n <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__GENERAL_ERROR_VIEWING">
+        <source>Sorry, there was an error viewing this notification</source>
+        <target>Rất tiếc, đã xảy ra lỗi khi xem thông báo này</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__FEED__REMOVE_USER">
+        <source>Remove user</source>
+        <target>Xóa người dùng</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__FEED__USER_WAS_KICKED">
+        <source>User was kicked from <x id="INTERPOLATION" />.</source>
+        <target>Người dùng bị đuổi từ <x id="INTERPOLATION" />.</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__FEED__OK_ACTION">
+        <source>Ok</source>
+        <target>Đồng ý</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__REQUESTS_COUNT">
+        <source>Requests</source>
+        <target>Yêu cầu</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__SAVE_CHANGES_ACTION">
+        <source>Save changes</source>
+        <target>Lưu thay đổi</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__ADMINQUEUE_COUNT">
+        <source><x id="INTERPOLATION" /> new</source>
+        <target><x id="INTERPOLATION" /> mới</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__INVITE_ACTION">
+        <source>Invite</source>
+        <target>Mời</target>
+        <note>verb</note>
+      </trans-unit>
+      <trans-unit id="GROUPS__JOIN_BUTTON__JOIN_ACTION">
+        <source>Join</source>
+        <target>Gia nhập</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__JOIN_BUTTON__DECLINE_ACTION">
+        <source>Decline</source>
+        <target>Từ chối</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__JOIN_BUTTON__LEAVE_ACTION">
+        <source>Leave</source>
+        <target>Rời khỏi</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION">
+        <source>Cancel request</source>
+        <target>Hủy yêu cầu</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE">
+        <source>join a group</source>
+        <target>Gia nhập một nhóm</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__NAME_TITLE">
+        <source>Invite to <x id="INTERPOLATION" /></source>
+        <target>Mời tham gia <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__TITLE">
+        <source>Invite</source>
+        <target>Mời</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__ITEM_ONLY_SUBSCRIBERS">
+        <source>- You can only invite users who are your subscribers</source>
+        <target>- Bạn chỉ có thể mời những người dùng đã theo dõi kênh của bạn</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__ITEM_NOTIFICATION_INFO">
+        <source>- They will receive a notification to confirm they want to be a member of this group</source>
+        <target>Họ sẽ nhận được một thông báo để xác nhận là họ muốn trở thành một thành viên của nhóm này</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__ITEM_BAN_REINVITE">
+        <source>- If the user was banned from the group, inviting them will lift the ban</source>
+        <target>- Nếu người dùng đã bị cấm khỏi nhóm, việc mời họ sẽ xóa bỏ lệnh cấm</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__INVITING">
+        <source>Inviting...</source>
+        <target>Đang mời...</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__SEARCH_PLACEHOLDER">
+        <source>Search for a channel</source>
+        <target>Tìm kiếm một kênh</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_FROM_GROUP">
+        <source>Remove from Group</source>
+        <target>Loại khỏi nhóm</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__CARD_USER_ACTIONS__REINVITE">
+        <source>Re-invite to Group</source>
+        <target>Mời lại vào nhóm</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__CARD_USER_ACTIONS__INVITED">
+        <source>Invited</source>
+        <target>Đã mời</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_ADMIN">
+        <source>Make Owner</source>
+        <target>Làm quản trị viên</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_ADMIN">
+        <source>Remove as Owner</source>
+        <target>Xoá quyền quản trị</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS">
+        <source>Disable Notifications</source>
+        <target>Tắt thông báo</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS">
+        <source>Enable Notifications</source>
+        <target>Bật thông báo</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP">
+        <source>Delete Group</source>
+        <target>Xóa nhóm</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP_CONFIRM">
+        <source>Are you sure you want to delete <x id="INTERPOLATION" />? This action cannot be undone.</source>
+        <target>Bạn có chắc muốn xóa <x id="INTERPOLATION" /> không? Hành động này không thể được khôi phục.</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__MEMBERS__SEARCH_PLACEHOLDER">
+        <source>Search for a member</source>
+        <target>Tìm kiếm thành viên</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION">
+        <source>Feed</source>
+        <target>Bảng tin</target>
+        <note>group activities selector</note>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__FLAGGED_AS_SPAM">
+        <source>This blog was flagged as spam.</source>
+        <target>Blog này đã được gắn cờ là rác.</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__FLAGGED_AS_DELETED">
+        <source>This blog was flagged as deleted.</source>
+        <target>Blog này đã bị gắn cờ là đã bị xóa.</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__SHARE">
+        <source>SHARE</source>
+        <target>CHIA SẺ</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__CONFIRM_DELETION">
+        <source>Are you sure you want to delete this blog?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" />There's no UNDO!</source>
+        <target>Bạn có chắc chắn muốn xóa blog này không?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" />Không thể KHÔI PHỤC!</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__VIEW__DELETION_CONFIRMATION">
+        <source>The blog has been deleted.</source>
+        <target>Blog đã bị xóa.</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__TITLE_PLACEHOLDER">
+        <source>Your title</source>
+        <target>Tiêu đề của bạn</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__INLINE_EDITOR_PLACEHOLDER">
+        <source>Go ahead and write some content!</source>
+        <target>Hãy tiếp tục và viết một số nội dung!</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__SAVE_DRAFT_ACTION">
+        <source>Save draft</source>
+        <target>Lưu bản nháp</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__PUBLISH_ACTION">
+        <source>Publish</source>
+        <target>Công bố</target>
+      </trans-unit>
+      <trans-unit id="BLOGS__EDIT__LICENCE_PLACEHOLDER">
+        <source>-- License --</source>
+        <target>-- Giấy phép --</target>
+      </trans-unit>
+      <trans-unit id="SEARCH__TOP_TAB">
+        <source>Top</source>
+        <target>Hàng đầu</target>
+      </trans-unit>
+      <trans-unit id="SEARCH__LATEST_TAB">
+        <source>Latest</source>
+        <target>Mới nhất</target>
+      </trans-unit>
+      <trans-unit id="SEARCH__EXPLICIT_TOOLTIP">
+        <source>Include explicit content (+18) search results</source>
+        <target>Bao gồm kết quả tìm kiếm nội dung nhạy cảm (+18)</target>
+      </trans-unit>
+      <trans-unit id="SEARCH__EXCLUSIVE_TOOLTIP">
+        <source>Include exclusive content in search results</source>
+        <target>Bao gồm nội dung độc quyền trong kết quả tìm kiếm</target>
+      </trans-unit>
+      <trans-unit id="SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL">
+        <source>Search Minds:</source>
+        <target>Tìm kiếm trên Minds:</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__CATEGORIES_TARGET_TITLE_CTX">
+        <source>Select the categories which you want your boost to be targeted to (<x id="INTERPOLATION" /> max).</source>
+        <target>Chọn các danh mục mà bạn muốn quảng cáo của mình được nhắm đến ( tối đa <x id="INTERPOLATION" />).</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BANNER__ADD_NEW_BANNER_W_RECOMMENDATION">
+        <source>Click here to add a new banner<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;" />Recommended minimum size 2000px × 1125px (Ratio 16:9)<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;" /></source>
+        <target>Nhấn vào đây để thêm ảnh bìa mới<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;" /> <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;" />Kích thước tối thiểu được đề xuất 2000px × 1125px (Tỷ lệ 16: 9)<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="M__SOCIAL_NETWORK_SLOGAN">
+        <source>Your Social Network</source>
+        <target>Mạng xã hội của bạn</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__CHANNEL__PLURAL">
+        <source>Channels</source>
+        <target>Kênh</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__UPLOAD">
+        <source>Upload</source>
+        <target>Tải lên</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__GROUP__PLURAL">
+        <source>Groups</source>
+        <target>Nhóm</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__EXCLUSIVE">
+        <source>Exclusive</source>
+        <target>Độc quyền</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__BOOST">
+        <source>Boost</source>
+        <target>quảng cáo</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__WIRE">
+        <source>Wire</source>
+        <target>chuyển khoản</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__COPYRIGHT_2017">
+        <source>© Minds 2018</source>
+        <target>© Minds 2018</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__START_A_CHANNEL">
+        <source>Not on Minds? Start a channel</source>
+        <target>Không có trên Minds? Bắt đầu một kênh</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__USERNAME">
+        <source>Username</source>
+        <target>Tên người dùng</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__CONTINUE">
+        <source>Continue</source>
+        <target>Tiếp tục</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__PASSWORD">
+        <source>Password</source>
+        <target>Mật khẩu</target>
+        <note>Mật mã (密码) chắc là bao quát hơn là  “mật khẩu” vì khẩu là cái miệng. Mật khẩu nghiêng về  nghĩa “lời nói bí mật” hơn.</note>
+      </trans-unit>
+      <trans-unit id="M__ACTION__SHARE">
+        <source>Share</source>
+        <target>Chia sẻ</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__MATURE_CONTENT">
+        <source>Mature content</source>
+        <target>Nội dung dành cho người lớn</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__PLEASE_TRY_AGAIN">
+        <source>Please try again later</source>
+        <target>Vui lòng thử lại sau</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__AFFILIATE_PROGRAM">
+        <source>Affiliate Program</source>
+        <target>Chương trình liên kết</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__INVITE_FRIENDS">
+        <source>Referral Link</source>
+        <target>Mời bạn bè</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__CREATE">
+        <source>Create</source>
+        <target>Tạo</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__VIDEO_PLURAL">
+        <source>Videos</source>
+        <target>Video</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__IMAGE_PLURAL">
+        <source>Images</source>
+        <target>Hình ảnh</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__ENTER_CITY">
+        <source>Enter your city...</source>
+        <target>Nhập thành phố của bạn...</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__SELECT_CITY">
+        <source>Select your city:</source>
+        <target>Chọn thành phố của bạn:</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__POINTS">
+        <source>Points</source>
+        <target>Điểm</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__SELECTED">
+        <source>Selected</source>
+        <target>Đã chọn</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__USD">
+        <source>USD</source>
+        <target>USD</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__SELECT_MONEY">
+        <source>Don't have Tokens? No problem.</source>
+        <target>Bạn không có Token? Không thành vấn đề.</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__PAYMENT_ATTACHED">
+        <source>Your payment is attached.</source>
+        <target>Thanh toán của bạn đã được đính kèm.</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__CHANGE">
+        <source>Change</source>
+        <target>Thay đổi</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__APPEAL_MARK">
+        <source>If you wish to appeal, please check your <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />Reported Content console<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />.</source>
+        <target>Nếu bạn muốn khiếu nại, vui lòng kiểm tra <x id = "START_LINK" ctype = "x-a" /> Bảng điều khiển nội dung được báo cáo<x id = "CLOSE_LINK" ctype = "x-a" /> của bạn.</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__FEED_COUNT">
+        <source>Feed</source>
+        <target>Bảng tin</target>
+        <note>Count of activities</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__SUBSCRIBERS">
+        <source>Subscribers</source>
+        <target>Người theo dõi</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__VIEWS">
+        <source>Views</source>
+        <target>Lượt xem</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__EDIT">
+        <source>Edit</source>
+        <target>Chỉnh sửa</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__SAVE">
+        <source>Save</source>
+        <target>Lưu</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__VIEW_MORE">
+        <source>View More</source>
+        <target>Xem thêm</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__CONFIRM_18">
+        <source>Click to confirm your are 18+</source>
+        <target>Nhấn để xác nhận bạn trên 18 tuổi</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__VIEWS_WITH_COUNT">
+        <source><x id="INTERPOLATION" /> views</source>
+        <target><x id="INTERPOLATION" /> lượt xem</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__VISIBILITY_PUBLIC">
+        <source>Public</source>
+        <target>Công khai</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__VISIBILITY_UNLISTED">
+        <source>Unlisted</source>
+        <target>Không được liệt kê</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__LICENSE_ALL_RIGHT_RESERVED">
+        <source>All Rights Reserved</source>
+        <target>Đã đăng ký bản quyền</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__DELETE_PERMANENTLY">
+        <source>Delete permanently</source>
+        <target>Xóa vĩnh viễn</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__BOOST">
+        <source>Boost</source>
+        <target>Quảng cáo</target>
+        <note>verb</note>
+      </trans-unit>
+      <trans-unit id="M__ACTION__LOGIN">
+        <source>Login</source>
+        <target>Đăng nhập</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__REVIEW">
+        <source>Review</source>
+        <target>Xem lại</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__BACKLOG">
+        <source>Backlog</source>
+        <target>Tồn đọng</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__BACKLOG_VALUE_HOURS">
+        <source><x id="INTERPOLATION" /> hours</source>
+        <target><x id="INTERPOLATION" /> giờ</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__APPROVED">
+        <source>Approved</source>
+        <target>Được chấp nhận</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__ACCEPT">
+        <source>Accept</source>
+        <target>Đồng ý</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__REJECT">
+        <source>Reject</source>
+        <target>Từ Chối</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__CANCEL">
+        <source>Cancel</source>
+        <target>Hủy bỏ</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__DELETE">
+        <source>Delete</source>
+        <target>Xóa</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__REVIEW_PENDING">
+        <source>Review Pending</source>
+        <target>Bài viết đang chờ</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__REJECTED">
+        <source>Rejected</source>
+        <target>Đã từ chối</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__VIEW_PARENT_COMMENT_THREAD">
+        <source>View parent and its comment thread</source>
+        <target>Xem bài viết và tất cả bình luận</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__POST_NOT_FOUND">
+        <source>Post not found</source>
+        <target>Không tìm thấy bài viết</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__MARK_SPAM">
+        <source>Mark as spam</source>
+        <target>Đánh dấu là thư rác</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__APPROVE">
+        <source>Approve</source>
+        <target>Chấp nhận</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__BAN_MONETIZATION_NOTICE">
+        <source>Users can be banned for monetizing on the dropdown in their profile.</source>
+        <target>Người dùng có thể bị cấm thương mại hoá dựa trên mục thả xuống trong hồ sơ của họ.\n</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__CATEGORY_PLACEHOLDER">
+        <source>-- Category --</source>
+        <target>-- Danh mục --</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__REMOVE">
+        <source>Remove</source>
+        <target>Loại bỏ</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__EXPLICIT">
+        <source>Explicit</source>
+        <target>Rõ ràng</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__SAVED">
+        <source>Saved</source>
+        <target>Đã lưu</target>
+      </trans-unit>
+      <trans-unit id="M__NAMES__FACEBOOK">
+        <source>Facebook</source>
+        <target>Facebook</target>
+      </trans-unit>
+      <trans-unit id="M__NAMES__TWITTER">
+        <source>Twitter</source>
+        <target>Twitter</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__EMAIL">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__EARNINGS">
+        <source>Tokens</source>
+        <target>Token</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__ENTER_2FA_CODE">
+        <source>Enter your code here</source>
+        <target>Nhập mã xác thực của bạn tại đây</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__CONFIRM">
+        <source>Confirm</source>
+        <target>Xác nhận</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__COUNTRY">
+        <source>Country</source>
+        <target>Quốc gia</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__COUNTRY_STATE">
+        <source>State</source>
+        <target>Tiểu bang</target>
+        <note>State as a country entity</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__SUBSCRIPTIONS">
+        <source>Subscriptions</source>
+        <target>Lượt theo dõi</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__NEWSFEED_PLURAL">
+        <source>Feeds</source>
+        <target>Bảng tin</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__SIDEBAR_PLURAL">
+        <source>Sidebars</source>
+        <target>Thanh bên</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__SELECT">
+        <source>Select</source>
+        <target>Chọn</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__EDITED">
+        <source>edited</source>
+        <target>Đã chỉnh sửa</target>
+        <note>Được sửa</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__MEMBERS">
+        <source>Members</source>
+        <target>Thành viên</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__NOT_SPAM">
+        <source>Not spam</source>
+        <target>Không phải là thư rác</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__TOTAL_EARNINGS_30_MINUS_FEES">
+        <source>This is your total earnings for the past 30 days, minus any fees.</source>
+        <target>Đây là tổng thu nhập của bạn trong 30 ngày qua, đã trừ đi các khoản phí.</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__PENDING">
+        <source>Pending</source>
+        <target>Đang xử lý</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__EARNINGS_AWAITING_NEGATIVE_REFUND">
+        <source>This is your earnings awaiting payout. A negative number indicates a refund or chargeback has occured.</source>
+        <target>Đây là thu nhập đang chờ thanh toán của bạn. Một số âm cho biết khoản tiền hoàn lại hoặc khoản bồi hoàn đã xảy ra.</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__PAID_OUT">
+        <source>Paid out</source>
+        <target>Đã thanh toán</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__THIS_SENT_TO_BANK_ACCOUNT">
+        <source>This is what has been sent to your bank account</source>
+        <target>Đây là những khoản đã được chuyển vào tài khoản ngân hàng của bạn</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__COMPLETE">
+        <source>Complete</source>
+        <target>Hoàn tất</target>
+        <note>Completed</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__POINTS_WITH_VALUE">
+        <source><x id="INTERPOLATION" /> points</source>
+        <target><x id="INTERPOLATION" /> điểm</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__PLEASE_WAIT">
+        <source>Please wait...</source>
+        <target>Vui lòng chờ...</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__OPTIONS">
+        <source>Options</source>
+        <target>Tùy chọn</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__FIRST_NAME">
+        <source>First name</source>
+        <target>Tên</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__LAST_NAME">
+        <source>Last name</source>
+        <target>Họ</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__DATE">
+        <source>Date</source>
+        <target>Ngày</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__COLUMN">
+        <source>Amount</source>
+        <target>Số lượng</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__CANCEL_MONETIZATION">
+        <source>Cancel Monetization</source>
+        <target>Hủy Thương mại hoá</target>
+        <note>Dịch thế nào nhỉ? Monetization nghĩa là sự làm tiền bằng dịch vụ nào đó. Nhưng không có ngữ cảnh thì "làm tiền" trong tiếng Việt thường mang nghĩa xấu.</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__POINTS_SUFFIX">
+        <source>points</source>
+        <target>Điểm</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__WIRE_PLURAL">
+        <source>Wires</source>
+        <target>chuyển khoản</target>
+        <note>Từ này có vẻ không phù hợp trong môi trường internet</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__SYMBOL_AND_USD">
+        <source>$ USD</source>
+        <target>$ USD</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__COMPLETE">
+        <source>Complete</source>
+        <target>Hoàn tất</target>
+        <note>verb</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__EMBED_INTO_WEBSITE">
+        <source>Embed into your website:</source>
+        <target>Chèn vào trang web của bạn</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__BLOG_PLURAL">
+        <source>Blogs</source>
+        <target>Blog</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__REPORT">
+        <source>Report</source>
+        <target>Báo cáo</target>
+        <note>Report as flag something</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__THANKS_LET_US_KNOW_KEEP_MINDS_SAFE">
+        <source>Thanks for letting us know! We appreciate your effort to keep Minds safe and secure.</source>
+        <target>Cám ơn vì đã cho chúng tôi biết. Chúng tôi cảm kích nỗ lực của bạn để giữ cho Minds an toàn và bảo mật.</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__REVIEW_REPORT_ASAP">
+        <source>We will review your report as soon as possible.</source>
+        <target>Chúng tôi sẽ xem xét báo cáo của bạn trong thời gian sớm nhất.</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__CLOSE__CAPS">
+        <source>CLOSE</source>
+        <target>ĐÓNG</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__TRANSLATE">
+        <source>Translate</source>
+        <target>Dịch</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__REPORT">
+        <source>Report</source>
+        <target>Báo cáo</target>
+        <note>verb</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__WAIT_UPLOAD">
+        <source>Please wait until the upload is complete.</source>
+        <target>Vui lòng đợi cho đến khi quá trình đăng tải hoàn tất.</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__FEATURE">
+        <source>Feature</source>
+        <target>Tính năng</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__SUBSCRIBE">
+        <source>Subscribe</source>
+        <target>Theo dõi</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__BAN_USER">
+        <source>Ban user</source>
+        <target>Chặn người dùng</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__COMMENT_X_ON_Y">
+        <source><x id="INTERPOLATION" /> commented on <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> đã bình luận về <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION_1" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__X_POINTS_FOR">
+        <source><x id="INTERPOLATION" /> points <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />for<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="INTERPOLATION" /> chỉ ra <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />cho<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__FOR_WORD">
+        <source>for</source>
+        <target>cho</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__REMOVE_X_FROM_Y_CONFIRM">
+        <source>Are you sure you want to remove <x id="INTERPOLATION" /> from <x id="INTERPOLATION_1" />?</source>
+        <target>Bạn có chắc chắn muốn loại bỏ <x id="INTERPOLATION" /> từ <x id="INTERPOLATION_1" /> không?</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__BAN_PERMANENTLY">
+        <source>Ban permanently</source>
+        <target>Cấm vĩnh viễn</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__NAME_PLACEHOLDER">
+        <source>Enter a name</source>
+        <target>Nhập tên</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__CONVERSATIONS">
+        <source>Conversations</source>
+        <target>Cuộc đối thoại</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__DESCRIPTION_PLACEHOLDER">
+        <source>Enter a brief description</source>
+        <target>Nhập một mô tả ngắn gọn</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__OPEN_GROUP">
+        <source>Open Group</source>
+        <target>Nhóm mở</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__CLOSED_GROUP">
+        <source>Closed Group</source>
+        <target>Nhóm kín</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__ANYONE_CAN_POST">
+        <source>Anyone can post</source>
+        <target>Ai cũng có thể đăng bài viết</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__POSTS_ARE_MODERATED">
+        <source>Posts are moderated</source>
+        <target>Bài viết đã được kiểm duyệt</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__DEFAULT_VIEW_FEED">
+        <source>Default view: Feed</source>
+        <target>Chế độ xem mặc định: Bảng tin</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__DEFAULT_VIEW_CONVERSATIONS">
+        <source>Default view: Conversations</source>
+        <target>Chế độ xem mặc định: Cuộc đối thoại</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__USER_INFO">
+        <source>Views: <x id="INTERPOLATION" /> | Subscribers: <x id="INTERPOLATION_1" /></source>
+        <target>Lượt xem: <x id="INTERPOLATION" /> | Lượt theo dõi: <x id="INTERPOLATION_1" /></target>
+        <note>Kí hiệu "<x id="INTERPOLATION" />" này có nghĩa là một cái tên bất kì hay một con số nào đó. Nó không phải là 1$ hay một đô la đâu. Trong tiếng Anh, 1 đô la là $1 hoặc 1USD. Như kiểu ẩn số, giống x trong toán đó. Có vẻ như mọi người hiểu nhầm ý rồi.</note>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__POST_PLURAL">
+        <source>Posts</source>
+        <target>Bài viết</target>
+      </trans-unit>
+      <trans-unit id="SEARCH_CONTEXT_COLON">
+        <source>Search <x id="INTERPOLATION" />:</source>
+        <target>Tìm kiếm <x id="INTERPOLATION" />:</target>
+      </trans-unit>
+      <trans-unit id="192b09ff0c9ff068903252b633dfc28ea56da479">
+        <source>Your <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />video<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> is ready to be viewed!</source>
+        <target><x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />Video<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> của bạn đã sẵn sàng để phát!</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_RECEIVED_X_TOKENS_TODAY">
+        <source>You earned <x id="INTERPOLATION" /> tokens today.</source>
+        <target>Hôm nay bạn đã kiếm được <x id="INTERPOLATION" /> token.</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_LEFT">
+        <source>You have <x id="INTERPOLATION" /> left to earn tokens today!</source>
+        <target>Hôm nay bạn còn <x id="INTERPOLATION" /> token để kiếm!</target>
+      </trans-unit>
+      <trans-unit id="MINDS__TOPBAR__VIEW_CHANNEL">
+        <source>View Channel</source>
+        <target>Xem kênh</target>
+      </trans-unit>
+      <trans-unit id="MINDS__TOPBAR__ADMIN">
+        <source>Admin</source>
+        <target>Quản trị viên</target>
+      </trans-unit>
+      <trans-unit id="MINDS__TOPBAR__FAQ">
+        <source>FAQ</source>
+        <target>Câu hỏi thường gặp</target>
+        <note>Các câu hỏi thường gặp</note>
+      </trans-unit>
+      <trans-unit id="MINDS__TOPBAR__HS_GROUP">
+        <source>Help &amp; Support</source>
+        <target>Trợ giúp &amp; Hỗ trợ</target>
+      </trans-unit>
+      <trans-unit id="MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP">
+        <source>Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.</source>
+        <target>Nội dung này có thể gây tranh cãi. Nếu chọn mở, bạn xác nhận rằng mình sẵn sàng xem nội dung gây tranh cãi.</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__OFFER__PLURAL">
+        <source>Offers</source>
+        <target>Đề nghị</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__OFFERS_SELECTOR_DESC">
+        <source>Your content will be shared to a specific channel in exchange for USD or tokens.</source>
+        <target>Nội dung của bạn sẽ được chia sẻ tới một kênh cụ thể để đổi lấy USD hoặc token.</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__PAYMENT_METHOD_CRYPTO_TITLE">
+        <source>Payment Method</source>
+        <target>Phương thức thanh toán</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__TOKENS_PRIORITY_FEE">
+        <source>+ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /> tokens<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></source>
+        <target>+ <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" /><x id="INTERPOLATION" /> token<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__BOOST_NEXT">
+        <source>Next</source>
+        <target>Tiếp theo</target>
+        <note>verb</note>
+      </trans-unit>
+      <trans-unit id="M__ACTION__BOOST_BACK">
+        <source>Back</source>
+        <target>Quay lại</target>
+        <note>verb</note>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__WIRE_NOTICE_TOKENS">
+        <source>Support <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /><x id="INTERPOLATION" /> by sending them tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.</source>
+        <target>Hỗ trợ <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" />@<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /><x id="INTERPOLATION" /> bằng cách gửi token cho họ. Khi bạn gửi cho họ số tiền được liệt kê trong các cấp, bạn có thể nhận phần thưởng nếu họ đề nghị. Nếu không, đó là một khoản ủng hộ.</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CREATOR__AMOUNT_TITLE_HOW_MANY_TOKENS">
+        <source>How many tokens do you want to send?</source>
+        <target>Bạn muốn gửi bao nhiêu token?</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__TOKENS_INPUT">
+        <source>Tokens</source>
+        <target>Token</target>
+        <note>tokens input</note>
+      </trans-unit>
+      <trans-unit id="b1ca9ab71d6492ee128ec3771cda9d079e8c2383">
+        <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;" />…<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
+        <target><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="INTERPOLATION" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /> <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;" />…<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+      </trans-unit>
+      <trans-unit id="c9be1b0d69f461808134609a0b76d06a7f09540a">
+        <source>USD</source>
+        <target>USD</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__ONCHAIN">
+        <source>OnChain</source>
+        <target>OnChain</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__BALANCE">
+        <source>Balance</source>
+        <target>Số dư</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__OFFCHAIN">
+        <source>OffChain</source>
+        <target>OffChain</target>
+      </trans-unit>
+      <trans-unit id="M__WIRE_CREATOR__DONT_HAVE_TOKENS">
+        <source>Don't have Tokens? No problem.</source>
+        <target>Bạn không có Token? Không vấn đề.</target>
+      </trans-unit>
+      <trans-unit id="WALLET__TOKENS_NAV">
+        <source>Tokens</source>
+        <target>Token</target>
+      </trans-unit>
+      <trans-unit id="MINDS__WALLET__TOPBAR__TOKENS_TOOLTIP">
+        <source>See your contributions score and rewards, withdraw them and configure your ethereum wallet</source>
+        <target>Xem điểm đóng góp và phần thưởng của bạn, rút ra và cấu tạo ví ethereum của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__WALLET__TOPBAR__WIRE_TOOLTIP">
+        <source>Your sent and received wires ledger</source>
+        <target>Sổ sách của bạn đã gửi và đã nhận</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__MINDS_PLUS ">
+        <source>Minds Plus</source>
+        <target>Minds Plus</target>
+      </trans-unit>
+      <trans-unit id="MINDS__WALLET__TOPBAR__MINDS_PLUS_TOOLTIP">
+        <source>Opt-out of boosts, earn 1,000 monthly points, access exclusive Minds content, and more</source>
+        <target>Không tham gia quảng cáo, kiếm 1.000 điểm hàng tháng, truy cập nội dung  độc quyền của Minds và hơn thế nữa</target>
+      </trans-unit>
+      <trans-unit id="MINDS__WALLET__TOGGLE">
+        <source>Wallet</source>
+        <target>Ví</target>
+      </trans-unit>
+      <trans-unit id="831c70609f5320ba73bb112526ec9cb86c71367c">
+        <source>Tokens</source>
+        <target>Token</target>
+      </trans-unit>
+      <trans-unit id="3ad5221f4d6c53c3cb08f9067ac7a7ae44edf016">
+        <source>Your Tokens balance</source>
+        <target>Token còn lại</target>
+      </trans-unit>
+      <trans-unit id="WALLET__FLYOUT__GO_TO_WALLET">
+        <source>Go to Wallet</source>
+        <target>Đi đến Ví</target>
+      </trans-unit>
+      <trans-unit id="BLOCKCHAIN__OPTIONS__LOCAL_WALLETS_LABEL">
+        <source>Local Wallets</source>
+        <target>Ví địa phương</target>
+        <note>wallet selector</note>
+      </trans-unit>
+      <trans-unit id="MINDS__BOOST_CONSOLE__TOPBAR__NEWSFEED_TOOLTIP">
+        <source>Boosts shown on user's feeds</source>
+        <target>Quảng cáo được hiển thị trên bảng tin của người dùng</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BOOST_CONSOLE__TOPBAR__SIDEBAR_TOOLTIP">
+        <source>Boosts shown on sidebars</source>
+        <target>Quảng cáo được hiển thị trên thanh bên</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BOOST_CONSOLE__TOPBAR__OFFERS_TOOLTIP">
+        <source>Boosts you've offered to other users or that've been offered to you</source>
+        <target>Bạn đã đề nghị Quảng cáo cho người dùng khác hoặc bạn đã nhận được đề nghị quảng cáo</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__PUBLISHER">
+        <source>Publisher</source>
+        <target>Người phát hành</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BOOST_CONSOLE__TOPBAR__PUBLISHER_TOOLTIP">
+        <source>Boost Publisher program</source>
+        <target>Chương trình người phát hành quảng cáo</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BOOST_CONSOLE__TOPBAR__INBOX_TOOLTIP">
+        <source>Boosts that have been offered to you</source>
+        <target>Quảng cáo đã được đề nghị cho bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BOOST_CONSOLE__TOPBAR__OUTBOX_TOOLTIP">
+        <source>Boosts you've offered other users</source>
+        <target> Quảng cáo bạn đề nghị cho người dùng khác</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__CARD__VIEWS_SO_FAR">
+        <source><x id="INTERPOLATION" /> views so far</source>
+        <target>Đến nay đã có <x id="INTERPOLATION" /> lượt xem</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__CARD__VIEWS_DELIVERED">
+        <source><x id="INTERPOLATION" /> views delivered</source>
+        <target><x id="INTERPOLATION" /> lượt xem được nhượng lại</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__CARD__POINTS_VALUE">
+        <source><x id="INTERPOLATION" /> points</source>
+        <target><x id="INTERPOLATION" /> điểm</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__CARD__TOKENS_VALUE">
+        <source><x id="INTERPOLATION" /> tokens</source>
+        <target><x id="INTERPOLATION" /> token</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__BOOSTER__POST_SOMETHING">
+        <source>You have no content yet. Why don't you post something?</source>
+        <target>Bạn chưa đăng nội dung nào. Sao bạn không viết gì đó?</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
+        <source><x id="INTERPOLATION" /> Tokens/month</source>
+        <target><x id="INTERPOLATION" /> Tokens/tháng</target>
+      </trans-unit>
+      <trans-unit id="WIRE__LOCK_SCREEN__OVER_TOKENS_PER_MONTH">
+        <source>over <x id="INTERPOLATION" /> Tokens/month</source>
+        <target>Hơn <x id="INTERPOLATION" /> Tokens/tháng</target>
+      </trans-unit>
+      <trans-unit id="M__FEATURE__TOKENS">
+        <source>Tokens</source>
+        <target>Token</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__TOKEN">
+        <source>Token</source>
+        <target>Token</target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__LEDGER__AMOUNT_TOKEN_CELL_VALUE">
+        <source><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />M<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /><x id="INTERPOLATION" /></source>
+        <target><x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;" />M<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;" /><x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="WIRE__CONSOLE__OVERVIEW__TOKENS_EARNINGS_TOOLTIP">
+        <source>The total in Tokens you have earned</source>
+        <target>Tổng số Token bạn đã kiếm được</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL">
+        <source>Unsubscribe</source>
+        <target>Bỏ theo dõi</target>
+      </trans-unit>
+      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER">
+        <source>View Ledger</source>
+        <target>Xem sổ sách</target>
+      </trans-unit>
+      <trans-unit id="MINDS_BUTTON__USER_DROPDOWN__VIEW_WITHDRAWALS">
+        <source>View Withdrawals</source>
+        <target>Xem các khoản đã rút</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__MARK_AS_SAFE">
+        <source>Mark as Safe</source>
+        <target>Đánh dấu an toàn</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__MENU__MARK_AS_OPEN">
+        <source>Mark as Open</source>
+        <target>Đánh dấu đã mở</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SUBSCRIPTIONS__LAST_BILLING">
+        <source>Last billing: <x id="INTERPOLATION" /></source>
+        <target>Hóa đơn cuối: <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SUBSCRIPTIONS__NEXT_BILLING">
+        <source>Next billing: <x id="INTERPOLATION" /></source>
+        <target>Hóa đơn tiếp theo: <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__ATTEMPTS_EXCEEDED">
+        <source>You have exceeded your login attempts. Please try again in a few minutes.</source>
+        <target>Bạn đã vượt quá số lần thử đăng nhập. Vui lòng thử lại trong một vài phút nữa.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__DISABLED_USER">
+        <source>This account has been disabled</source>
+        <target>Tài khoản này đã bị vô hiệu hóa</target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__INCORRECT_USERNAME_PASSWORD">
+        <source>Incorrect username/password. Please try again.</source>
+        <target>Tên người dùng/mật khẩu không đúng. Vui lòng thử lại.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__ACCOUNT_LOCKED">
+        <source>Account locked</source>
+        <target>Tài khoản đã bị khóa</target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__BANNED_USER">
+        <source>You are not allowed to login.</source>
+        <target>Bạn không được phép đăng nhập.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__CODE_VERIFICATION_FAILED">
+        <source>Sorry, we couldn't verify your two factor code. Please try logging again.</source>
+        <target>Xin lỗi, chúng tôi không thể kiểm chứng mã hai lớp của bạn. Vui lòng thử đăng nhập lại.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__INVALID_TOKEN">
+        <source>Invalid token</source>
+        <target>Token không hợp lệ</target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__UNKNOWN_ERROR">
+        <source>Unknown error</source>
+        <target>Lỗi không xác định</target>
+      </trans-unit>
+      <trans-unit id="MINDS__PASSWORD_TOOLTIP">
+        <source>Password must have more than 8 characters. Including uppercase, numbers, and special characters (ie. !,#,@)</source>
+        <target>Mật khẩu phải có nhiều hơn 8 ký tự. Bao gồm chữ hoa, số và ký tự đặc biệt (ví dụ: !,#,@)</target>
+      </trans-unit>
+      <trans-unit id="FORMS__REGISTER__EXCLUSIVE_PROMOTIONS_ACCEPTANCE_LABEL">
+        <source>Receive exclusive promotions from Minds (recommended)</source>
+        <target>Nhận quảng cáo độc quyền từ Minds (khuyến nghị)</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ONBOARDING__WALLET_SETUP_TEXT">
+        <source>Set up your ethereum wallet</source>
+        <target>Thiết lập ví ethereum của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ONBOARDING__WALLET_SETUP_SUBTEXT">
+        <source>Click here to set up your ethereum wallet</source>
+        <target>Nhấn vào đây để thiết lập ví ethereum của bạn</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATIONS__LOAD_NEW_BUTTON">
+        <source>New Notifications</source>
+        <target>Thông báo mới</target>
+      </trans-unit>
+      <trans-unit id="NOTIFICATIONS__NOTIFICATIONS__LOADING">
+        <source>Loading Notifications...</source>
+        <target>Đang tải thông báo...</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NOTIFICATIONS__TOGGLE">
+        <source>Notifications</source>
+        <target>Thông báo</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON_TOPBAR_TOP_TOOLTIP">
+        <source>Top displays the top content on Minds</source>
+        <target>Bảng xếp hạng nội dung hàng đầu trên Minds</target>
+      </trans-unit>
+      <trans-unit id="MINDS__GROUPS__TOPBAR__YOUR_GROUPS_TOOLTIP">
+        <source>Your Groups</source>
+        <target>Nhóm của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__GROUPS__TOPBAR__START_A_NEW_GROUP_TOOLTIP">
+        <source>Start a new group</source>
+        <target>Bắt đầu một nhóm mới</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_MODERATOR">
+        <source>Make Moderator</source>
+        <target>Đặt làm Kiểm duyệt viên</target>
+      </trans-unit>
+      <trans-unit id="GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_MODERATOR">
+        <source>Remove as Moderator</source>
+        <target>Xóa Kiểm duyệt viên</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__UNFEATURE">
+        <source>Unfeature</source>
+        <target>Ngưng tính năng</target>
+        <note>là một plugin</note>
+      </trans-unit>
+      <trans-unit id="M__COMMON__SELECT_A_CATEGORY">
+        <source>-- SELECT A CATEGORY --</source>
+        <target>-- CHỌN MỘT DANH MỤC --</target>
+      </trans-unit>
+      <trans-unit id="@@MINDS__BLOGS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+        <source>Blogs from channels you are subscribed to</source>
+        <target>Blog từ kênh bạn theo dõi</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BLOGS__TOPBAR__YOUR_BLOGS_TOOLTIP">
+        <source>Your blogs</source>
+        <target>Blog của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__BLOGS__TOPBAR__WRITE_A_NEW_BLOG_TOOLTIP">
+        <source>Write a new Blog</source>
+        <target>Viết một Blog mới</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__SEE_MORE_LIKE_THIS">
+        <source>See more like this</source>
+        <target>Xem nhiều hơn</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__SEE_LESS_LIKE_THIS">
+        <source>See less like this</source>
+        <target>Xem ít hơn</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__FOLLOW_NOTIFICATIONS">
+        <source>Follow post</source>
+        <target>Theo dõi bài viết</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__UNFOLLOW_NOTIFICATIONS">
+        <source>Un-follow post</source>
+        <target>Bỏ theo dõi bài viết</target>
+      </trans-unit>
+      <trans-unit id="5d64b798bdc235e10b8631d52c0accfb6272bfa4">
+        <source>Block user</source>
+        <target>Chặn người dùng</target>
+      </trans-unit>
+      <trans-unit id="dcc6ef89466f0bb774ec988995452df291e80b8f">
+        <source>Unblock user</source>
+        <target>Bỏ chặn người dùng</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__MARK_AS_SAFE">
+        <source>Mark as Safe</source>
+        <target>Đánh dấu là An Toàn</target>
+      </trans-unit>
+      <trans-unit id="COMMON__POST_MENU__MARK_AS_OPEN">
+        <source>Mark as Open</source>
+        <target>Đánh dấu là Mở</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SEARCH__TOPBAR__LATEST_TOOLTIP">
+        <source>Show newly created content first</source>
+        <target>Hiển thị nội dung mới tạo trước</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SEARCH__TOPBAR__CHANNELS_TOOLTIP">
+        <source>Show only channels</source>
+        <target>Chỉ hiển thị kênh</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SEARCH__TOPBAR__POSTS_TOOLTIP">
+        <source>Show only Posts</source>
+        <target>Chỉ hiển thị bài viết</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SEARCH__TOPBAR__VIDEOS_TOOLTIP">
+        <source>Show only videos</source>
+        <target>Chỉ hiển thị video</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SEARCH__TOPBAR__IMAGES_TOOLTIP">
+        <source>Show only images</source>
+        <target>chỉ hiển thị hình ảnh</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SEARCH__TOPBAR__BLOGS_TOOLTIP">
+        <source>Show only blogs</source>
+        <target>Chỉ hiển thị blog</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__TOPBAR__GROUPS_TOOLTIP">
+        <source>Show only groups</source>
+        <target>Chỉ hiển thị nhóm</target>
+      </trans-unit>
+      <trans-unit id="BLOCKCHAIN__OPTIONS__INSTALL_WEB3">
+        <source>Minds recommends <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />MetaMask<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />. It's a bridge that allows you to visit the distributed web of tomorrow in your browser today. MetaMask includes a secure identity vault, providing a user interface to manage your identities on different sites and sign blockchain transactions.</source>
+        <target>Minds khuyến nghị <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;" />MetaMask<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />. Nó là một cầu nối cho phép bạn truy cập môi trường web tương lai trên chính trình duyệt hiện tại. MetaMask cung cấp một kho lưu trữ danh tính an toàn, với một giao diện quản lý danh tính của bạn trên nhiều trang và ký các giao dịch blockchain.</target>
+      </trans-unit>
+      <trans-unit id="BLOCKCHAIN__OPTIONS__WEB3_LOCKED_OR_NO_WALLETS">
+        <source>There are no local wallets available, the wallet manager is locked, or you're connected to a different network.</source>
+        <target>Không có ví địa phương sẵn sàng, hoặc quản lý ví đang bị khóa, hoặc bạn đã kiết nối với một mạng lưới khác.</target>
+      </trans-unit>
+      <trans-unit id="BLOCKCHAIN__WALLET_ADDRESS_NOTICE">
+        <source>Hey, do you want to setup your Tokens wallet?</source>
+        <target>Xin chào, bạn có muốn thiết lập ví Token không?</target>
+      </trans-unit>
+      <trans-unit id="af9d0d81e627049804748055715389cab9d39238">
+        <source>Bought</source>
+        <target>Đã mua</target>
+      </trans-unit>
+      <trans-unit id="1e957cc693a4a5114f86a4ddba3f7144b36a1b87">
+        <source>T-shirt Size</source>
+        <target>Kích cỡ áo thun</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__ANALYTICS__PAGE_VIEWS">
+        <source>Page Views</source>
+        <target>lượt xem của trang</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__BOOST_BID_TOKENS_LABEL">
+        <source>Bid: <x id="INTERPOLATION" /> Tokens</source>
+        <target>Đấu giá: <x id="INTERPOLATION" /> Token</target>
+      </trans-unit>
+      <trans-unit id="MINDS__ADMIN__BOOSTS__NOT_REVIEW_STATE">
+        <source>This boost is in <x id="INTERPOLATION" /> state.</source>
+        <target>Quảng cáo trong <x id="INTERPOLATION" /> quốc gia.</target>
+      </trans-unit>
+      <trans-unit id="BLOCKCHAIN__OPTIONS__WALLET_TITLE">
+        <source>Token Configuration</source>
+        <target>Kết cấu Token</target>
+      </trans-unit>
+      <trans-unit id="BLOCKCHAIN__OPTIONS__WALLET_DESC">
+        <source>Enter your Ethereum wallet address below. If you installed and unlocked MetaMask, or have a web3-enabled browser your local wallets will be listed below. You can click on them to auto-fill the address field.</source>
+        <target>Nhập địa chỉ ví Ethereum của bạn dưới đây. Nếu bạn đã cài đặt và mở khóa MetaMask hoặc có trình duyệt hỗ trợ web3, các ví địa phương của bạn sẽ được liệt kê bên dưới. Bạn có thể nhấp vào chúng để tự động điền vào ô địa chỉ.</target>
+      </trans-unit>
+      <trans-unit id="BLOCKCHAIN__OPTIONS__WALLET_LABEL">
+        <source>Ethereum Wallet Address</source>
+        <target>Địa chỉ ví Ethereum</target>
+      </trans-unit>
+      <trans-unit id="BLOCKCHAIN__OPTIONS__SAVE_WALLET_ADDRESS">
+        <source>Save Address</source>
+        <target>Lưu địa chỉ</target>
+      </trans-unit>
+      <trans-unit id="7b60fcdd6c299388c6e789816df031f4368206fd">
+        <source>Pre-registered</source>
+        <target>Đăng ký trước</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__TOKENS_WITH_VALUE">
+        <source>M <x id="INTERPOLATION" /></source>
+        <target>M <x id="INTERPOLATION" /></target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__OFFCHAIN_LABEL">
+        <source>OffChain</source>
+        <target>OffChain</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CREATOR__CC_SELECTOR">
+        <source>Credit Card</source>
+        <target>Thẻ tín dụng</target>
+      </trans-unit>
+      <trans-unit id="BOOST_CONSOLE_PUBLISHER__SETTINGS__TITLE">
+        <source>Publisher Settings</source>
+        <target>Cài đặt của Người phát hành</target>
+      </trans-unit>
+      <trans-unit id="BOOST_CONSOLE_PUBLISHER__SETTINGS__DESCRIPTION">
+        <source>Being a publisher allows you to earn points and/or money by showing boosts on your channel page.</source>
+        <target>Trở thành một Người phát hành cho phép bạn kiếm điểm và/hoặc tiền bằng cách hiển thị quảng cáo lên trang kênh của bạn.</target>
+      </trans-unit>
+      <trans-unit id="BOOST_CONSOLE_PUBLISHER__SETTINGS__BECOME_A_PUBLISHER">
+        <source>Become a Publisher</source>
+        <target>Trở thành Người phát hành</target>
+      </trans-unit>
+      <trans-unit id="BOOST_CONSOLE_PUBLISHER__OPTIONS__STOP_BEING_A_PUBLISHER">
+        <source>Stop Being a Publisher</source>
+        <target>Ngưng trở thành Người phát hành</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__PUBLISHER_LEDGER__VIEWS_COLUMN">
+        <source>Views</source>
+        <target>Lượt xem</target>
+      </trans-unit>
+      <trans-unit id="BOOST__CONSOLE__PUBLISHER_LEDGER__NO_EASRNINGS_NOTICE">
+        <source>No earnings to show.</source>
+        <target>Không có thu nhập để hiển thị.</target>
+      </trans-unit>
+      <trans-unit id="M__CREATOR__CONFIRM_PASSWORD">
+        <source>Confirm password</source>
+        <target>Xác nhận mật khẩu</target>
+      </trans-unit>
+      <trans-unit id="MINDS__LOGIN__EXCEPTION__INCORRECT_PASSWORD">
+        <source>Incorrect password. Please try again.</source>
+        <target>Mật khẩu không đúng. Vui lòng thử lại.</target>
+      </trans-unit>
+      <trans-unit id="M__ACTION__SUBMIT">
+        <source>Submit</source>
+        <target>Gửi đi</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NAVIGATION__EMAIL_NOTIFICATIONS_NAV">
+        <source>Email Notifications</source>
+        <target>Thông báo Email</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SESSIONS">
+        <source>Sessions</source>
+        <target>Phiên</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__YOU_CURRENTLY_HAVE_X_OPENED">
+        <source>You currently have <x id="INTERPOLATION" /> opened <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" />.</source>
+        <target>Bạn đã mở <x id="INTERPOLATION" /> <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;" /><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" />.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SESSION">
+        <source>session</source>
+        <target>phiên</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__CLOSE_ALL_SESSIONS_CONFIRM">
+        <source>Close All Sessions</source>
+        <target>Đóng tất cả phiên</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__UNREAD_NOTIFICATIONS_LABEL">
+        <source>I have unread notifications</source>
+        <target>Tôi có thông báo chưa đọc</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__WIRE_RECEIVED_LABEL">
+        <source>I receive a wire</source>
+        <target>Tôi nhận được một khoản chuyển</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__BOOST_COMPLETED_LABEL">
+        <source>My boost has been completed</source>
+        <target>Quảng cáo của tôi đã hoàn tất</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__TOP_POSTS_LABEL">
+        <source>Top posts from my network</source>
+        <target>Bài viết hàng đầu từ mạng lưới của tôi</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__TIPS_IMPROVE_CHANNEL_LABEL">
+        <source>Tips on how to improve my channel</source>
+        <target>Mẹo để cải thiện kênh của tôi</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__SINCE_MISSED_SINCE_LAST_LOGIN_LABEL">
+        <source>Things I've missed since my last login</source>
+        <target>Những thứ tôi đã bỏ lỡ từ lần cuối đăng nhập</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__NEW_CHANNELS_LABEL">
+        <source>New channels to subscribe to</source>
+        <target>Kênh mới để theo dõi</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__MINDS_NEWS_LABEL">
+        <source>News about new Minds products and features</source>
+        <target>Tin tức về sản phẩm và tính năng mới của Minds</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__TIPS_ON_HOW_TO_USE_MINDS_LABEL">
+        <source>Tips on how to use Minds</source>
+        <target>Mẹo sử dụng Minds</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__EXCLUSIVE_PROMOTIONS_LABEL">
+        <source>Exclusive promotions</source>
+        <target>Chương trình khuyến mãi độc quyền</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__WIRE__PREVIEW_DESC">
+        <source>The below description and preview image is what your subscribers will see on your exclusive posts until they become a supporter.</source>
+        <target>Mô tả dưới đây và hình ảnh xem trước là những gì người theo dõi bạn sẽ thấy trên các bài viết độc quyền của bạn cho đến khi họ trở thành người ủng hộ.</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__WIRE__DESCRIPTION_LABEL">
+        <source>Description</source>
+        <target>Mô tả</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__WIRE__DESCRIPTION_PLACEHOLDER">
+        <source>eg. Support me to see my exclusive content and join me for a monthly video chat</source>
+        <target>ví dụ. Hỗ trợ tôi để xem nội dung độc quyền của tôi và tham gia cùng tôi để trò chuyện video hàng tháng</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__WIRE__BACKGROUND_LABEL">
+        <source>Background</source>
+        <target>Hình nền</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__WIRE__PREVIEW_LABEL">
+        <source>Preview</source>
+        <target>Xem trước</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+        <source>Channels you are subscribed to</source>
+        <target>Kênh bạn đã theo dõi</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__TOPBAR__SUBSCRIBERS_TOOLTIP">
+        <source>Channels who are subscribed to you</source>
+        <target>Kênh đã theo dõi bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__CHANNELS__TOPBAR__FOUNDERS_TOOLTIP">
+        <source>Channels who invested in the Minds Reg-CF Crowfunding campaign</source>
+        <target>Kênh đầu tư vào chiến dịch huy động vốn từ cộng đồng Minds Reg-CF</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__TOPBAR__SUBSCRIBED_TOOLTIP">
+        <source>Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network</source>
+        <target>Newsfeed của bạn chứa các bài viết từ các kênh bạn đã theo dõi, cũng như các bài đăng được tăng cường từ mạng rộng hơn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__NEWSFEED__TOPBAR__BOOSTFEED_TOOLTIP">
+        <source>The Boostfeed only shows boosted posts from the wider network. To Boost your content, click the Boost icon on the topbar</source>
+        <target>Boostfeed chỉ hiển thị các bài viết được tăng cường từ mạng rộng hơn. Để tăng cường nội dung của bạn, hãy nhấp vào biểu tượng Tăng cường ở thanh trên cùng</target>
+      </trans-unit>
+      <trans-unit id="MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">
+        <source>How the economy works</source>
+        <target>Kink tế hoạt động như thế nào?</target>
+      </trans-unit>
+      <trans-unit id="@@MINDS__VIDEOS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+        <source>Videos from channels you are subscribed to</source>
+        <target>Video từ các kênh bạn đã theo dõi</target>
+      </trans-unit>
+      <trans-unit id="MINDS__VIDEOS__TOPBAR__YOUR_VIDEOS_TOOLTIP">
+        <source>Your Videos</source>
+        <target>Video của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__VIDEOS__TOPBAR__UPLOAD_TOOLTIP">
+        <source>Upload a new Video</source>
+        <target>Tải lên một video mới</target>
+      </trans-unit>
+      <trans-unit id="@@MINDS__IMAGES__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+        <source>Images from channels you are subscribed to</source>
+        <target>Hình ảnh từ các kênh bạn đã theo dõi</target>
+      </trans-unit>
+      <trans-unit id="MINDS__IMAGES__TOPBAR__YOUR_IMAGES_TOOLTIP">
+        <source>Your Images</source>
+        <target>Hình ảnh của bạn</target>
+      </trans-unit>
+      <trans-unit id="MINDS__IMAGES__TOPBAR__UPLOAD_TOOLTIP">
+        <source>Upload a new Image</source>
+        <target>Tải lên một ảnh mới</target>
+      </trans-unit>
+      <trans-unit id="779e00c9618927a6a740ddf74ba9756e5020d682">
+        <source>upload a new one</source>
+        <target>Tải lên một cái mới</target>
+        <note>What is "one" in this case?</note>
+      </trans-unit>
+      <trans-unit id="MEDIA__EDIT__INLINE_EDITOR_PLACEHOLDER">
+        <source>Go ahead and write some content!</source>
+        <target>Hãy viết gì đó!</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__BALANCE_LABEL">
+        <source>Balance</source>
+        <target>Cân bằng</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__BALANCE_VALUE_ETH_IFACE_LABEL">
+        <source>This balance is for the <x id="INTERPOLATION" /> wallet that is currently active in your Ethereum interface.</source>
+        <target>Số dư này dành cho ví <x id="INTERPOLATION" /> hiện đang hoạt động trong giao diện Ethereum của bạn.</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__BALANCE_VALUE_AS_RCV_LABEL">
+        <source>This balance is for the <x id="INTERPOLATION" /> wallet that is currently set up as the receiver wallet for your channel.</source>
+        <target>Số dư này dành cho ví <x id="INTERPOLATION" /> hiện được thiết lập làm ví tiền cho kênh của bạn.</target>
+      </trans-unit>
+      <trans-unit id="M__COMMON__BALANCE_VALUE_OFFCHAIN_LABEL">
+        <source>This balance is for your Minds.com OffChain wallet. Transactions made from this address will not appear on the blockchain.</source>
+        <target>Số dư này là dành cho ví MindCh.com OffChain của bạn. Các giao dịch được thực hiện từ địa chỉ này sẽ không xuất hiện trên blockchain.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

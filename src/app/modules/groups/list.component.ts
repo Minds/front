@@ -22,8 +22,9 @@ export class GroupsListComponent {
   inProgress: boolean = false;
   offset: string = '';
   entities: Array<any> = [];
-  filter: string = 'featured';
+  filter: string = 'top';
   paramsSubscription: Subscription;
+  rating: number = 1; 
 
   constructor(
     public client: Client,
@@ -43,16 +44,13 @@ export class GroupsListComponent {
       if (params['filter']) {
         this.filter = params['filter'];
 
-        switch (this.filter) {
-          case 'top':
-            this.filter = 'featured';
-            break;
-        }
-
         this.inProgress = false;
         this.moreData = true;
         this.entities = [];
-
+        
+        if (this.session.isLoggedIn())
+          this.rating = this.session.getLoggedInUser().boost_rating;
+        
         this.load(true);
       }
     });
@@ -74,8 +72,8 @@ export class GroupsListComponent {
     let endpoint, key;
 
     switch (this.filter) {
-      case 'trending':
-        endpoint = `api/v1/entities/${this.filter}/groups`;
+      case 'top':
+        endpoint = `api/v1/entities/trending/groups`;
         key = 'entities';
         break;
       default:
@@ -85,7 +83,11 @@ export class GroupsListComponent {
     }
 
     this.inProgress = true;
-    this.client.get(endpoint, { limit: 12, offset: this.offset })
+    this.client.get(endpoint, { 
+        limit: 12, 
+        offset: this.offset,
+        rating: this.rating
+      })
       .then((response: MindsGroupListResponse) => {
 
         if (!response[key] || response[key].length === 0) {
@@ -112,6 +114,17 @@ export class GroupsListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  onOptionsChange(e: { rating }) {
+    this.rating = e.rating;
+
+    if (this.inProgress) {
+      return setTimeout(() => {
+        this.onOptionsChange(e);
+      }, 100); //keep trying every 100ms
+    }
+    this.load(true);
   }
 }
 

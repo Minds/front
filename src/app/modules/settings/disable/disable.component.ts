@@ -32,4 +32,16 @@ export class SettingsDisableChannelComponent {
       });
   }
 
+  delete() {
+    if (confirm('Your account and all data related to it will be deleted permanently. Are you sure you want to proceed?')) {
+      this.client.delete('api/v1/channel/delete')
+        .then((response: any) => {
+          this.router.navigate(['/logout']);
+        })
+        .catch((e: any) => {
+          alert('Sorry, we could not delete your account');
+        });
+    }
+  }
+
 }

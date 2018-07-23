@@ -399,9 +399,11 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     }
   }
 
-  .item-image{
-    img{
-      width:100%;
+  .item-image {
+    img {
+      width: 100%;
+      max-height: 1500px;
+      object-fit: contain;
     }
   }
 
