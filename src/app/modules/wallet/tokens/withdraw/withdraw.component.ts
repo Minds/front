@@ -85,11 +85,13 @@ export class WalletTokenWithdrawComponent {
 
     if (typeof amount === 'number') {
       this.amount = amount;
+      this.detectChanges();
       return;
     }
 
-    amount = amount.replace(/[,\.]/g, '');
+    amount = amount.replace(/,/g, '');
     this.amount = parseFloat(amount);
+    this.detectChanges();
   }
 
   canWithdraw() {
