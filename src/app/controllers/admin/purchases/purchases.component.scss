@@ -1,10 +1,10 @@
-m-admin--pledges {
+m-admin--purchases {
   display: block;
   padding: 16px;
 
   .m-admin--pledges--results {
     display: flex;
-    width: 990px;
+    min-width: 990px;
     flex-direction: row;
     flex-wrap: wrap;
     margin: 0 auto;

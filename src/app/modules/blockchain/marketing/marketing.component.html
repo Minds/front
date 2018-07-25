@@ -24,17 +24,9 @@
       </div>
 
       <div class="m-marketing--hero--actions">
-        <m-blockchain--pledges--overview *ngIf="minds.sale == 'presale'"></m-blockchain--pledges--overview>
 
-        <div class="m-marketing--marketing-action-button" *ngIf="minds.sale == 'sale'">
-          <m-blockchain--pledges--overview phase="sale" *ngIf="!isPledgeApproved; else pledgeConfirmed"></m-blockchain--pledges--overview>
-
-          <ng-template #pledgeConfirmed>
-            <button
-              class="mdl-button mdl-button--colored"
-              (click)="showBuy()"
-            >Buy</button>
-          </ng-template>
+        <div class="m-marketing--marketing-action-button">
+          <m-blockchain--purchase phase="sale"></m-blockchain--purchase>
         </div>
       </div>
     </div>

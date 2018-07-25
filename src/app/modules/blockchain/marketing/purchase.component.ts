@@ -15,19 +15,21 @@ import { BlockchainPreRegisterComponent } from '../pre-register/pre-register.com
 import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../web3-wallet.service';
+import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
 import * as BN from 'bn.js';
 
 @Component({
-  selector: 'm-blockchain--pledges--overview',
-  templateUrl: 'pledges-overview.component.html',
+  selector: 'm-blockchain--purchase',
+  templateUrl: 'purchase.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BlockchainPledgesOverviewComponent implements OnInit {
+export class BlockchainPurchaseComponent implements OnInit {
 
-  stats: { amount, count, pledged } = {
+  stats: { amount, count, requested, issued } = {
     amount: 0,
     count: 0,
-    pledged: 0,
+    requested: 0,
+    issued: 0,
   };
   
   amount: number = 0.2;
@@ -54,12 +56,23 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
     protected title: MindsTitle,
     protected overlayModal: OverlayModalService,
     protected web3Wallet: Web3WalletService,
+    protected tde: TokenDistributionEventService,
     public session: Session
   ) { }
 
   ngOnInit() {
     this.loadWalletAddress();
-    this.load();
+    this.load();  
+  }
+
+  get tokens() {
+    const rate = this.web3Wallet.config.rate;
+    return this.amount * rate;
+  }
+
+  set tokens(value) {
+    const rate = this.web3Wallet.config.rate;
+    this.amount = value / rate;
   }
 
   async load() {
@@ -67,13 +80,14 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
     this.detectChanges();
 
     try {
-      const response: any = await this.client.get('api/v2/blockchain/pledges');
+      const response: any = await this.client.get('api/v2/blockchain/purchase');
       this.stats = {
         amount: response.amount,
         count: response.count,
-        pledged: response.pledge.eth_amount
+        requested: response.requested,
+        issued: response.issued,
       };
-      this.amount = this.stats.pledged;
+      //this.amount = this.stats.pledged;
     } catch (e) { }
 
     this.inProgress = false;
@@ -87,7 +101,7 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
     this.detectChanges();
   }
 
-  pledge() {
+  purchase() {
     if (this.session.isLoggedIn()) {
       this.showPledgeModal = true;
     } else {
@@ -97,49 +111,38 @@ export class BlockchainPledgesOverviewComponent implements OnInit {
   }
 
   canConfirm() {
-    return this.address && this.amount > 0 && this.ofac && this.use;
+    return this.amount > 0 && this.ofac && this.use;
   }
 
   async confirm() {
-    if (this.confirming)
-      return;
-
     this.confirming = true;
     this.detectChanges();
 
+    let tx;
+
     try {
-      if (!this.canConfirm())
-        throw new Error('You must enter your wallet address and accept the checkboxes above.');
-
-      const response: any = await this.client.post('api/v2/blockchain/pledges', {
-        amount: this.amount,
-        wallet_address: this.address
-      });
-
-      if (!response.pledge) {
-        throw new Error('Internal server error');
-      }
-
-      this.confirmed = true;
-
-      const amount = (new BN(`${this.stats.amount}`))
-        .add(new BN(`${response.pledge.amount}`))
-        .toString();
-
-      this.stats = {
-        amount,
-        count: parseInt(this.stats.count, 10) + 1,
-        pledged: `${response.amount}`
-      };
-
-      setTimeout(() => this.closePledgeModal(), 1000);
+      tx = await this.tde.buy(this.amount);
     } catch (err) {
-      this.error = err.message;
-      alert(err.message);
-    } finally {
+      this.error = err;
       this.confirming = false;
       this.detectChanges();
+      return;
     }
+
+    let response = await this.client.post('api/v2/blockchain/purchase', {
+        tx: tx,
+        amount: this.amount,
+        wallet_address: await this.web3Wallet.getCurrentWallet()
+    });
+
+    this.confirming = false;
+    this.confirmed = true;
+    this.detectChanges();
+
+    setTimeout(() => {
+      this.closePledgeModal();
+      this.confirmed = false;
+    }, 2000);
   }
 
   closeLoginModal() {

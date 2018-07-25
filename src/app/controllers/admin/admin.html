@@ -68,10 +68,10 @@
           <span i18n="@@M__ADMIN_NAV__VERIFY">Verify</span>
       </a>
       <a class="m-topbar--navigation--item"
-        routerLink="/admin/pledges"
+        routerLink="/admin/purchases"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span>Pledges</span>
+        <span>Purchases</span>
       </a>
     </div>
   </div>
@@ -88,4 +88,4 @@
 <minds-admin-featured *ngIf="filter == 'featured'"></minds-admin-featured>
 <minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
 <m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
-<m-admin--pledges *ngIf="filter == 'pledges'"></m-admin--pledges>
+<m-admin--purchases *ngIf="filter == 'purchases'"></m-admin--purchases>

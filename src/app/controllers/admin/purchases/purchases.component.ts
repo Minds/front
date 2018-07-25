@@ -2,23 +2,25 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { Client } from '../../../services/api/client';
 import { MindsUser } from '../../../interfaces/entities';
 
-export type Pledge = {
+export type Purchase = {
   user: MindsUser,
+  tx: string,
   wallet_address: string,
   timestamp: number,
-  amount: number,
+  requested_amount: number,
+  issued_amount: number,
   phone_number_hash?: string,
   status: string,
 };
 
 @Component({
-  selector: 'm-admin--pledges',
-  templateUrl: 'pledges.component.html',
+  selector: 'm-admin--purchases',
+  templateUrl: 'purchases.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AdminPledgesComponent {
-  pledges: Array<Pledge> = [];
+export class AdminPurchasesComponent {
+  purchases: Array<Purchase> = [];
   offset = '';
 
   inProgress: boolean = false;
@@ -31,7 +33,7 @@ export class AdminPledgesComponent {
 
   async load(refresh: boolean = false) {
     if (refresh) {
-      this.pledges = [];
+      this.purchases = [];
       this.offset = '';
       this.moreData = true;
     }
@@ -40,9 +42,9 @@ export class AdminPledgesComponent {
 
 
     try {
-      const response: any = await this.client.get('api/v1/admin/pledges', { offset: this.offset });
+      const response: any = await this.client.get('api/v1/admin/purchases', { offset: this.offset });
 
-      this.pledges.push(...response.pledges);
+      this.purchases.push(...response.purchases);
 
       if (response['load-next']) {
         this.offset = response['load-next'];
@@ -58,7 +60,7 @@ export class AdminPledgesComponent {
     this.detectChanges();
   }
 
-  async approve(i) {
+  async issue(i) {
     if (this.inProgress || !confirm('Are you sure you want to APPROVE this pledge?')) {
       return;
     }
@@ -67,10 +69,10 @@ export class AdminPledgesComponent {
     this.detectChanges();
 
     try {
-      const item = this.pledges[i];
-      const response: any = await this.client.put(`api/v1/admin/pledges/${item.phone_number_hash}`);
+      const item = this.purchases[i];
+      const response: any = await this.client.put(`api/v1/admin/purchases/${item.phone_number_hash}/${item.tx}`);
 
-      this.pledges[i] = response.pledge;
+      this.purchases[i] = response.purchase;
     } catch (e) {
       console.error(e);
     }
@@ -88,10 +90,10 @@ export class AdminPledgesComponent {
     this.detectChanges();
 
     try {
-      const item = this.pledges[i];
-      const response: any = await this.client.delete(`api/v1/admin/pledges/${item.phone_number_hash}`);
+      const item = this.purchases[i];
+      const response: any = await this.client.delete(`api/v1/admin/purchases/${item.phone_number_hash}/{item.tx}`);
 
-      this.pledges[i] = response.pledge;
+      this.purchases[i] = response.purchase;
     } catch (e) {
       console.error(e);
     }

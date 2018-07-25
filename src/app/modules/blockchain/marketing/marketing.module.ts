@@ -8,7 +8,7 @@ import { MarketingModule } from '../../marketing/marketing.module';
 import { OnboardingModule } from '../../onboarding/onboarding.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockchainMarketingComponent } from './marketing.component';
-import { BlockchainPledgesOverviewComponent } from './pledges-overview.component';
+import { BlockchainPurchaseComponent } from './purchase.component';
 import { BlockchainMarketingOnboardComponent } from './onboard.component';
 import { ModalsModule } from '../../modals/modals.module';
 
@@ -33,7 +33,7 @@ const routes: Routes = [
   declarations: [
     BlockchainMarketingComponent,
     BlockchainMarketingOnboardComponent,
-    BlockchainPledgesOverviewComponent,
+    BlockchainPurchaseComponent,
   ],
   exports: [
     BlockchainMarketingComponent,
