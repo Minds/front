@@ -3,6 +3,7 @@ import { Client } from '../../../../services/api/client';
 import { WithdrawContractService } from '../../../blockchain/contracts/withdraw-contract.service';
 import { Session } from '../../../../services/session';
 import { WalletTokenWithdrawLedgerComponent } from './ledger/ledger.component';
+import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 
 @Component({
   moduleId: module.id,
@@ -29,6 +30,7 @@ export class WalletTokenWithdrawComponent {
     protected cd: ChangeDetectorRef,
     public session: Session,
     protected contract: WithdrawContractService,
+    protected web3Wallet: Web3WalletService
   ) { }
 
   async ngOnInit() {
@@ -105,6 +107,14 @@ export class WalletTokenWithdrawComponent {
 
     try {
       await this.checkPreviousWithdrawals();
+
+      await this.web3Wallet.ready();
+
+      if (this.web3Wallet.isUnavailable()) {
+        throw new Error('No Ethereum wallets available on your browser.');
+      } else if (!(await this.web3Wallet.unlock())) {
+        throw new Error('Your Ethereum wallet is locked or connected to another network.');
+      }
 
       let result: { address, guid, amount, gas, tx} = await this.contract.request(
         this.session.getLoggedInUser().guid, 
