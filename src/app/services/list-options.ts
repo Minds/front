@@ -37,6 +37,19 @@ export const REASONS : Array<any> = [
   { value: 11, label: 'Another reason' }
 ];
 
+export const READABLE_REASONS : Array<any> = [
+  { value: 1 , label: 'is illegal' },
+  { value: 2, label: 'Should be marked as explicit' },
+  { value: 3, label: 'Encourages or incites violence' },
+  { value: 4, label: 'Threatens, harasses, bullies or encourages others to do so' },
+  { value: 5, label: 'contains personal and confidential info' },
+  { value: 6, label: 'Maliciously targets users (@name, links, images or videos)' },
+  { value: 7, label: 'Impersonates someone in a misleading or deceptive manner' },
+  { value: 8, label: 'is spam' },
+  { value: 10, label: 'is a copyright infringement' },
+  { value: 11, label: 'Another reason' }
+];
+
 export const REPORT_ACTIONS = {
   'explicit': 'Marked as Explicit',
   'spam': 'Marked as Spam',

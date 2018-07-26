@@ -78,18 +78,6 @@ export class ReportConsoleComponent implements OnInit {
     }
   }
 
-  parseReason(reasonValue: string | number) {
-    let reason = reasonValue;
-
-    REASONS.forEach(item => {
-      if (item.value === reasonValue) {
-        reason = item.label;
-      }
-    });
-
-    return reason;
-  }
-
   parseAction(action: string) {
     return typeof REPORT_ACTIONS[action] !== 'undefined' ?
       REPORT_ACTIONS[action] :
