@@ -22,6 +22,10 @@ m-wire-threshold-input, .m-wire-threshold-input {
       border-bottom: 1px solid #ececec;
     }
 
+    .m-btn--with-icon i {
+      margin-right: 0px;
+    }
+
     .m-dropdown--list--item {
       flex-wrap: wrap;
       cursor: pointer;
@@ -72,10 +76,15 @@ m-wire-threshold-input, .m-wire-threshold-input {
 
 
   .m-wire-threshold-input--toggle {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    overflow: visible;
     vertical-align: middle;
     color: #455a64;
     cursor: pointer;
+    span {
+      font-size: 14px;
+    }
 
     &.m-wire-threshold-input--toggle-enabled {
       color: #4690D6;

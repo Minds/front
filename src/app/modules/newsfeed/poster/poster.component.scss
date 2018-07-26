@@ -46,6 +46,19 @@
 
     .mdl-card__actions {
       text-align: right;
+      
+      > * {
+        margin-left: 4px;
+        margin-right: 4px;
+      }
+
+      .m-btn--with-icon {
+        padding-right: 8px;
+        i {
+          margin-right: 0px;
+          margin-left: 4px;
+        }
+      }
 
       .m-mature-button {
         display: inline-block;
