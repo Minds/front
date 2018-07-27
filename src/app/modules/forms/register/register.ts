@@ -54,6 +54,12 @@ export class RegisterForm {
     });
   }
 
+  ngOnInit() {
+    if (this.reCaptcha) {
+      this.reCaptcha.reset();
+    }
+  }
+
   register(e) {
     e.preventDefault();
     this.errorMessage = '';
