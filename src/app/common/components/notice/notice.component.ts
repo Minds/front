@@ -1,5 +1,6 @@
 import { Component, EventEmitter, HostBinding, Input, OnInit, Output } from '@angular/core';
 import { Client } from '../../../services/api/client';
+import { Storage } from '../../../services/storage';
 
 @Component({
   selector: 'm-cookies-notice',
@@ -12,7 +13,13 @@ export class DismissableNoticeComponent {
 
   cookiesEnabled: boolean = true;
 
-  constructor(private client: Client) {
+  constructor(
+    private client: Client,
+    private storage: Storage
+  ) {
+    if (this.storage.get('cookies-notice-dismissed')) {
+      this.hidden = true;
+    }
     this.checkCookies();
   }
 
@@ -21,6 +28,7 @@ export class DismissableNoticeComponent {
   }
 
   dismiss() {
+    this.storage.set('cookies-notice-dismissed', 'true');
     this.hidden = true;
   }
 
