@@ -183,6 +183,10 @@ export class RegisterForm {
     }
   }
 
+  setCaptcha(code) {
+    this.form.patchValue({ captcha: code });
+  }
+
   validationTimeoutHandler() {
     clearTimeout(this.usernameValidationTimeout);
     this.usernameValidationTimeout = setTimeout(this.validateUsername.bind(this), 500);
