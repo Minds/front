@@ -12,7 +12,7 @@ export class TagsPipe {
       return value;
 
     //<a>tag
-    var url = /(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gim;
+    var url = /(\b(https?|ftp|file):\/\/[^\s\]]+)/gim;
     value = value.replace(url, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
 
     //<a>tag

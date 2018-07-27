@@ -88,7 +88,9 @@ export class ConfirmPasswordModalComponent {
       await this.client.post('api/v2/settings/password/validate', {'password': this.form.value.password});
 
       if (this._opts && this._opts.onComplete) {
-        this._opts.onComplete();
+        this._opts.onComplete({
+          password: this.form.value.password
+        });
         this.overlayModal.dismiss();
       }
     } catch (e) {
