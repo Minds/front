@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
 import { Client } from '../../../services/api';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/modal.component';
 
 @Component({
   moduleId: module.id,
@@ -21,7 +23,7 @@ export class SettingsTwoFactorComponent {
   inProgress: boolean = false;
   error: string = '';
 
-  constructor(public client: Client) {
+  constructor(public client: Client, private overlayModal: OverlayModalService) {
     this.minds = window.Minds;
     this.load();
   }
@@ -75,9 +77,17 @@ export class SettingsTwoFactorComponent {
   }
 
   cancel() {
-    this.client.delete('api/v1/twofactor');
-    this.telno = null;
-    this.error = '';
+    const creator = this.overlayModal.create(ConfirmPasswordModalComponent, {}, {
+      class: 'm-overlay-modal--small',
+      onComplete: ({ password }) => {
+        this.client.post('api/v1/twofactor', {
+          password: password
+        });
+        this.telno = null;
+        this.error = '';
+      }
+    });
+    creator.present();
   }
 
 }
