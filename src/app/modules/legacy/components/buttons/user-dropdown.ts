@@ -58,6 +58,13 @@ import { Router } from '@angular/router';
         View Withdrawals
       </li>
       <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        (click)="viewEmail()"
+        i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_EMAIL_ADDR"
+      >
+        E-mail Address
+      </li>
+      <li class="mdl-menu__item"
         (click)="report(); showMenu = false"
         i18n="@@M__ACTION__REPORT"
       >
@@ -119,6 +126,13 @@ import { Router } from '@angular/router';
           User has been banned from monetization.
       </p>
     </m-modal-confirm>
+    <m-modal *ngIf="viewEmailToggle" [open]="true" (closed)="viewEmailToggle = false">
+      <div class="mdl-card__supporting-text" style="padding: 64px; font-size: 20px; text-align: center;">
+        @{{user.username}}'s email:
+        <a *ngIf="user.email" [href]="'mailto:' + user.email" style="text-decoration: none;">{{user.email}}</a>
+        <ng-container *ngIf="!user.email">...</ng-container>
+      </div>
+    </m-modal>
   `
 })
 
@@ -131,6 +145,7 @@ export class UserDropdownButton {
   showMenu: boolean = false;
   banToggle: boolean = false;
   banMonetizationToggle: boolean = false;
+  viewEmailToggle: boolean = false;
 
   constructor(
     public session: Session,
@@ -278,6 +293,17 @@ export class UserDropdownButton {
 
   viewWithdrawals() {
     this.router.navigate(['/admin/withdrawals', { user: this.user.username }])
+  }
+
+  async viewEmail() {
+    this.viewEmailToggle = true;
+
+    try {
+      const { email } = await this.client.get(`api/v2/admin/user/${this.user.username}/email`) as any;
+      this.user.email = email;
+    } catch (e) {
+      console.error('viewEmail', e);
+    }
   }
 
 }
