@@ -80,7 +80,7 @@ export class SettingsTwoFactorComponent {
     const creator = this.overlayModal.create(ConfirmPasswordModalComponent, {}, {
       class: 'm-overlay-modal--small',
       onComplete: ({ password }) => {
-        this.client.post('api/v1/twofactor', {
+        this.client.post('api/v1/twofactor/remove', {
           password: password
         });
         this.telno = null;
