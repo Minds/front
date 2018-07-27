@@ -1,7 +1,7 @@
 <div class="m-boost--creator-wide-input m-boost--creator--target m-boost--creator--target-avatar">
   <img *ngIf="boost.target" class="m-boost--creator-autocomplete--suggestion-avatar" src="icon/{{boost.target.guid}}/small"/>
   <input type="text"
-    class="m-boost--creator-wide-input--edit"
+    class="m-boost--creator-wide-input--edit m-boost--creator--target"
     [(ngModel)]="query"
     (blur)="onBlur()"
     (keydown.esc)="onBlur()"

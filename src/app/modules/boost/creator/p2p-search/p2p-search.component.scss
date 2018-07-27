@@ -4,9 +4,12 @@ m-boost--creator-p2p-search {
     width: 60%;
     max-width: 100%;
 
-    .m-boost--creator-wide-input--edit {
-      width: 100%;
-      max-width: 100%!important;
+    @media screen and (max-width: $max-mobile) {
+      width: 70%;
+    }
+
+    .m-boost--creator-wide-input--edit.m-boost--creator--target {
+      max-width: initial !important;
     }
   }
 }  
