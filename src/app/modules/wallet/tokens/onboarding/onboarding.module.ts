@@ -22,6 +22,7 @@ import { TokenOnboardingService } from './onboarding.service';
     ReactiveFormsModule,
     CommonModule,
     BlockchainModule,
+    RouterModule,
     PlusModule,
   ],
   declarations: [
