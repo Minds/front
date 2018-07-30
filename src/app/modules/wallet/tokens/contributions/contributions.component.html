@@ -38,8 +38,9 @@
     </tbody>
     <tbody *ngIf="!contributions || contributions.length == 0">
       <tr class="m-token-contributions--ledger-row m-wire-console--ledger-row-placeholder">
-        <td colspan="4" class="m-token-contributions--ledger-row-notice" i18n="@@WALLET__TOKENS__CONTRIBUTIONS__NO_CONTRIB_LEGEND">
-          No contributions to show.
+        <td colspan="4" class="m-token-contributions--ledger-row-notice">
+          <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+          <span *ngIf="!inProgress" i18n="@@WALLET__TOKENS__CONTRIBUTIONS__NO_CONTRIB_LEGEND">No contributions to show.</span>
         </td>
       </tr>
     </tbody>
