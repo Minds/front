@@ -185,6 +185,7 @@ m-channel{
        h2{
          letter-spacing: 0.25px;
          font-weight: 800;
+         width: calc(100% - 64px);
          text-rending: optimizeLegibilty;
          -webkit-font-smoothing: antialiased;
          font-size: 28px;
