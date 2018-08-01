@@ -2,7 +2,8 @@
   <table class="m-blockchain--marketing--pledges--amounts" *ngIf="!inProgress">
     <ng-container *ngIf="phase === 'presale'">
       <tr>
-        <td class="m-blockchain--marketing--pledges--amounts--label">
+        <td class="m-blockchain--marketing--pledges--amounts--label"
+          i18n="@@M__PURCHASE_PLEDGED_AMOUNTS">
           Pledged
         </td>
         <td class="m-blockchain--marketing--pledges--amounts--value">
@@ -11,7 +12,8 @@
         </td>
       </tr>
       <tr>
-        <td class="m-blockchain--marketing--pledges--amounts--label">
+        <td class="m-blockchain--marketing--pledges--amounts--label"
+          i18n="@@M__PURCHASE_PLEDGED_CHANNEL">
           Channels
         </td>
         <td class="m-blockchain--marketing--pledges--amounts--value">
@@ -33,7 +35,10 @@
       <td class="m-blockchain--marketing--pledge--input">
         <input type="number" class="m-input m-border" [(ngModel)]="amount" />
         <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
-        <button class="m-btn m-btn--action" (click)="purchase()">
+        <button 
+          class="m-btn m-btn--action" 
+          (click)="purchase()"
+          i18n="@@M__PURCHASE_PURCHASE_HEADER">
           Purchase
         </button>
       </td>
@@ -58,14 +63,14 @@
   <div class="m-blockchain--marketing--modal">
 
     <div class="m-token--onboarding" *ngIf="!session.getLoggedInUser().rewards">
-      <h2>Please verify your phone number</h2>
+      <h2 i18n="@@M__PURCHASE_VERIFY_PHONE_MESSAGE">Please verify your phone number</h2>
       <m-blockchain--marketing--onboard></m-blockchain--marketing--onboard>
     </div>
 
-    <div *ngIf="session.getLoggedInUser().rewards">
-        <h2>Your {{ phase === 'presale' ? 'pledge' : 'purchase'}} for {{tokens | number:'1.0-4'}} Tokens ({{amount | number:'1.0-4'}} ETH)</h2>
+    <div *ngIf="session.getLoggedInUser().rewards && !confirmed">
+      <h2 i18n="@@M__PURCHASE_TITLE">Your {{ phase === 'presale' ? 'pledge' : 'purchase'}} for {{tokens | number:'1.0-4'}} Tokens ({{amount | number:'1.0-4'}} ETH)</h2>
 
-      <p class="m-blockchain--marketing--pledge--note">
+      <p class="m-blockchain--marketing--pledge--note" i18n="@@M__PURCHASE_ETH_MIN_TO_APPROVE">
         Token {{ phase === 'presale' ? 'pledges' : 'purchases'}} over 40 ETH need to be approved by Minds before they can be
         issued.
       </p>
@@ -74,7 +79,7 @@
         <tr>
           <td><input id="ofac-check" type="checkbox" [(ngModel)]="ofac"></td>
           <td class="m-blockchain--marketing--pledge--check-label">
-            <label for="ofac-check">
+            <label for="ofac-check" i18n="@@M__PURCHASE_OFAC">
               I am not listed on any US OFAC Sanction list or prohibited from engaging in business in the USA
             </label>
           </td>
@@ -84,28 +89,35 @@
           <td
             class="m-blockchain--marketing--pledge--check-label"
           >
-            <label for="use-check">
+            <label for="use-check" i18n="@@M__PURCHASE_INVESTIMENT_INTENT">
               I intend to use these tokens on the Minds Platform and not as an investment
             </label>
           </td>
         </tr>
       </table>
-
+    </div>
+    <div *ngIf="confirmed">
+      <h2 i18n="@@M__PURCHASE_SUCCESS">Your {{ phase === 'presale' ? 'pledge' : 'purchase'}} for {{tokens | number:'1.0-4'}} Tokens ({{amount | number:'1.0-4'}} ETH) has been confirmed</h2>
+    </div>
+    <div>
       <button 
         class="m-btn m-btn--slim m-btn--action"
         (click)="confirm()"
         [disabled]="!canConfirm()"
-        *ngIf="!confirming && !confirmed">
+        *ngIf="!confirming && !confirmed"
+        i18n="@@M__PURCHASE_BUTTON">
         Purchase 
       </button>
       <button 
         class="m-btn m-btn--slim"
-        *ngIf="confirming">
+        *ngIf="confirming"
+        i18n="@@M__PURCHASE_PLEASE_WAIT_BUTTON">
         Please wait...
       </button>
       <button 
         class="m-btn m-btn--slim"
-        *ngIf="confirmed">
+        *ngIf="confirmed"
+        i18n="@@M__PURCHASE_COMPLETED">
         Completed
       </button>
 
