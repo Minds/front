@@ -38,7 +38,7 @@ describe('SettingsGeneralComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, MaterialTextfieldMock, SettingsGeneralComponent], // declare the test component
+      declarations: [MaterialMock, MaterialTextfieldMock, SettingsGeneralComponent],
       imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
@@ -48,7 +48,7 @@ describe('SettingsGeneralComponent', () => {
         { provide: Router, useValue: routerMock },
       ]
     })
-      .compileComponents();  // compile template and css
+      .compileComponents();
   }));
 
   // synchronous beforeEach
@@ -58,7 +58,7 @@ describe('SettingsGeneralComponent', () => {
 
     fixture = TestBed.createComponent(SettingsGeneralComponent);
 
-    comp = fixture.componentInstance; // SettingsGeneralComponent test instance
+    comp = fixture.componentInstance;
 
     clientMock.response = {};
     clientMock.response['api/v1/settings/'] = {
@@ -136,7 +136,7 @@ describe('SettingsGeneralComponent', () => {
   });
 
   it('should display a progress bar in the action bar', () => {
-    const spinner = fixture.debugElement.query(By.css('.m-settings--action > .mdl-progress'));
+    const spinner = fixture.debugElement.query(By.css('.m-settings--action > .mdl-spinner'));
     expect(spinner).not.toBeNull();
 
     expect(spinner.nativeElement.hidden).toBeTruthy();

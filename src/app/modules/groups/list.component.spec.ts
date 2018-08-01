@@ -30,7 +30,7 @@ class GroupsTileMock {
 
 // Spec
 
-fdescribe('Groups List', () => {
+describe('Groups List', () => {
   let fixture: ComponentFixture<GroupsListComponent>;
   let comp: GroupsListComponent;
 

@@ -23,43 +23,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Navigation } from '../../services/navigation';
 import { navigationMock } from '../../../tests/navigation-service-mock.spec';
 import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
-
-@Component({
-  selector: 'm-newsfeed--dropdown',
-  template: ''
-})
-
-export class NewsfeedDropdownComponentMock {
-
-}
-
-@Component({
-  selector: 'minds-card-user',
-  template: ''
-})
-class MindsCardUserMock {
-  @Input() object: any;
-}
-
-@Component({
-  moduleId: module.id,
-  selector: 'm-tagcloud',
-  template: ''
-})
-
-export class TagcloudComponentMock {
-}
-
-@Component({
-  selector: 'm-ads-boost',
-  template: ``
-})
-
-export class BoostAdsMock {
-  @Input() handler;
-  @Input() limit;
-}
-
+import { MockComponent, MockDirective } from '../../utils/mock';
 
 describe('NewsfeedComponent', () => {
 
@@ -69,12 +33,12 @@ describe('NewsfeedComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock,
-        TooltipComponentMock,
-        NewsfeedDropdownComponentMock,
-        MindsCardUserMock,
-        TagcloudComponentMock,
-        BoostAdsMock,
+        MockDirective({selector: '[mdl]', inputs: ['mdl']}),
+        MockComponent({selector: 'm-tooltip', inputs: ['icon'], template: '<ng-content></ng-content>'}),
+        MockComponent({selector: 'm-newsfeed--dropdown', inputs: ['options'], template: ''}),
+        MockComponent({selector: 'minds-card-user', inputs: ['object'], template: ''}),
+        MockComponent({selector: 'm-tagcloud', inputs: ['options'], template: ''}),
+        MockComponent({selector: 'm-ads-boost', inputs: ['handler', 'limit'], template: ''}),
         NewsfeedComponent,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],

@@ -10,7 +10,7 @@ export let thirdPartyNetworksServiceMock = new function () {
 
   this.overrideStatus = jasmine.createSpy('overrideStatus').and.stub();
 
-  this.connect = jasmine.createSpy('connect').and.stub();
+  this.connect = jasmine.createSpy('connect').and.returnValue(new Promise((resolve, reject) => resolve(true)));
 
   this.disconnect = jasmine.createSpy('disconnect').and.stub();
 

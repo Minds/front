@@ -154,7 +154,7 @@ describe('GroupsSettingsButton', () => {
   }));
 
   it('should have an option to report', ()=> {
-    const report = getMenuItem(4);
+    const report = getMenuItem(5);
     expect(report).not.toBeNull();
     expect(report.nativeElement.textContent).toContain('Report');
 
@@ -169,7 +169,7 @@ describe('GroupsSettingsButton', () => {
       'is:creator': true
     };
 
-    const deleteGroup = getMenuItem(5);
+    const deleteGroup = getMenuItem(6);
     expect(deleteGroup).not.toBeNull();
     expect(deleteGroup.nativeElement.textContent).toContain('Delete Group');
 
@@ -177,11 +177,11 @@ describe('GroupsSettingsButton', () => {
     comp._group = group;
     fixture.detectChanges();
 
-    expect(getMenuItem(5)).toBeNull();
+    expect(getMenuItem(6)).toBeNull();
   });
 
   it('should delete the group', fakeAsync(()=> {
-    const deleteGroup = getMenuItem(5);
+    const deleteGroup = getMenuItem(6);
 
     deleteGroup.nativeElement.click();
     fixture.detectChanges();
