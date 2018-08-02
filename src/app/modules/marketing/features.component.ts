@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 export class MarketingFeaturesComponent {
 
   minds = window.Minds;
+
+  @Input() panels = { 
+    newsfeed: true
+  };
 
   constructor(
   ) {

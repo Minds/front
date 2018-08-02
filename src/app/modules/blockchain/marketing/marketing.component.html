@@ -18,7 +18,7 @@
         
         <h1 i18n="@@M__BLOCKCHAIN__MKT__MINDS_TOKEN_TITLE">The Minds Token</h1>
         <h3 i18n="@@M__BLOCKCHAIN__MKT__MINDS_TOKEN_SUBTITLE">
-            A decentralized, transparent and autonomous social networking solution.
+           A social networking utility token to fuel rewards, advertising and p2p content subscriptions. 
         </h3>
 
       </div>
@@ -33,16 +33,17 @@
 
   </div>
 
-  <section class="m-marketing--section" style="background-color: #FFF">
-    <h1 class="" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">How the economy works</h1>
-
-    <div class="m-blockchain--marketing--links">
+  <section class="m-marketing--section">
+     <div class="m-blockchain--marketing--links">
       <a class="m-btn m-btn--slim m-btn--action" target="_blank" href="https://cdn-assets.minds.com/front/dist/assets/whitepapers/03_27_18_Minds%20Whitepaper%20V0.1.pdf">Download Whitepaper</a>
       <a class="m-btn m-btn--slim m-btn--action" target="_blank" routerLink="/wallet/tokens/101">Token 101</a>
       <a class="m-btn m-btn--slim m-btn--action" target="_blank" routerLink="/blog/view/826188573910073344">Read our Blog</a>
     </div>
+  </section>
 
-    <m-marketing--features></m-marketing--features>
+  <section class="m-marketing--section" style="background-color: #f8f8f8; padding-bottom: 0;">
+    <h1 class="" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">How the economy works</h1>
+    <m-marketing--features [panels]="{ 'newsfeed': false }"></m-marketing--features>
   </section>
 
   <div class="m-marketing--section m-marketing--section-margin m-blockchain--marketing--press">
@@ -319,7 +320,7 @@
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://minds.com/icon/458262421140672512/large')"
+            style="background-image: url('https://cdn-assets.minds.com/front/dist/assets/marketing/advisors/pete.jpeg')"
         ></div>
 
         <span class="m-blockchain--marketing-person-name">
@@ -337,16 +338,6 @@
   <div class="m-marketing--section m-marketing--section-margin m-blockchain--marketing--team m-blockchain--marketing--team--more">
 
     <div class="m-marketing--section--grid">
-
-      <div class="m-marketing--section--grid-col">
-        <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://minds.com/icon/508276211659579407/large')"
-        ></div>
-
-        <span class="m-blockchain--marketing-person-name">
-          Emiliano Balbuena
-        </span>
-      </div>
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
@@ -380,16 +371,6 @@
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://minds.com/icon/270962885465739264/large')"
-        ></div>
-
-        <span class="m-blockchain--marketing-person-name">
-          Andy Culp
-        </span>
-      </div>
-
-      <div class="m-marketing--section--grid-col">
-        <div class="m-blockchain--marketing-person-image" 
           style="background-image: url('https://minds.com/icon/100000000000191224/large')"
         ></div>
 
@@ -411,70 +392,51 @@
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://cdn.minds.com/icon/kari/large')"
+            style="background-image: url('https://cdn-assets.minds.com/front/dist/assets/marketing/advisors/reedsmith.png')"
         ></div>
         <span class="m-blockchain--marketing-person-name">
-          Kari Larsen
+          Reedsmith LLC
         </span>
-
-        <span class="m-blockchain--marketing-person-title">
-          <a href="https://www.reedsmith.com/en" target="_blank">Reedsmith LLP</a>
-        </span>
-      </div>
+     </div>
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://cdn.minds.com/icon/gabe/large')"
+            style="background-image: url('https://cdn-assets.minds.com/front/dist/assets/marketing/advisors/gabe.jpeg')"
         ></div>
 
         <span class="m-blockchain--marketing-person-name">
           Gabriel Abed
         </span>
 
-        <span class="m-blockchain--marketing-person-title">
-          <a href="https://bitt.com" target="_blank">bitt.com</a>
-        </span>
-      </div>
+     </div>
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://cdn.minds.com/icon/gabe/large')"
+            style="background-image: url('https://cdn-assets.minds.com/front/dist/assets/marketing/advisors/jason.jpeg')" 
         ></div>
 
         <span class="m-blockchain--marketing-person-name">
           Jason Tyra
         </span>
-
-        <span class="m-blockchain--marketing-person-title">
-          <a href="https://www.tyracpa.com/" target="_blank">Tyra CPA</a>
-        </span>
       </div>
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://cdn.minds.com/icon/sai/large')"
+            style="background-image: url('https://cdn-assets.minds.com/front/dist/assets/marketing/advisors/sai.jpeg')"
         ></div>
 
         <span class="m-blockchain--marketing-person-name">
           Sai Gundavelli
         </span>
-
-        <span class="m-blockchain--marketing-person-title">
-          <a href="https://www.solix.com/" target="_blank">Solix</a>
-        </span>
       </div>
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://cdn.minds.com/icon/mglaw/large')"
+            style="background-image: url('https://cdn-assets.minds.com/front/dist/assets/marketing/advisors/robert.jpeg')" 
         ></div>
 
         <span class="m-blockchain--marketing-person-name">
           Robert Griffitts
-        </span>
-
-        <span class="m-blockchain--marketing-person-title">
-          <a href="http://www.mg-law.com/" target="_blank">MG Law</a>
         </span>
       </div>
     </div>
@@ -483,30 +445,24 @@
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://cdn.minds.com/icon/tuan/large')"
+            style="background-image: url('https://cdn-assets.minds.com/front/dist/assets/marketing/advisors/heisenberg.jpg')"
         ></div>
 
         <span class="m-blockchain--marketing-person-name">
-          Tuan Anh Nguyen
+          Heisenberg Captial 
         </span>
 
-        <span class="m-blockchain--marketing-person-title">
-          <a href="http://bostonglobalforum.org/" target="_blank">Boston Global Forum</a>
-        </span>
       </div>
 
       <div class="m-marketing--section--grid-col">
         <div class="m-blockchain--marketing-person-image" 
-          style="background-image: url('https://cdn.minds.com/icon/veena/large')"
+            style="background-image: url('https://cdn-assets.minds.com/front/dist/assets/marketing/advisors/elizabeth.jpg')"    
         ></div>
 
         <span class="m-blockchain--marketing-person-name">
-          Veena Gundavelli
+          Elizabeth McCauley
         </span>
 
-        <span class="m-blockchain--marketing-person-title">
-          <a href="http://www.emagia.com/" target="_blank">Emagia</a>
-        </span>
       </div>
 
       <div class="m-marketing--section--grid-col">
@@ -516,10 +472,6 @@
     
         <span class="m-blockchain--marketing-person-name">
           Daniel Pinchbeck
-        </span>
-
-        <span class="m-blockchain--marketing-person-title">
-          <a href="http://www.pinchbeck.io/" target="_blank">Pinchbeck.io</a>
         </span>
       </div>
 
@@ -531,10 +483,6 @@
         <span class="m-blockchain--marketing-person-name">
           Faizan Khan
         </span>
-
-        <span class="m-blockchain--marketing-person-title">
-          <a href="https://visary.capital" target="_blank">Visary Capital</a>
-        </span>
       </div>
 
       <div class="m-marketing--section--grid-col">
@@ -544,10 +492,6 @@
     
         <span class="m-blockchain--marketing-person-name">
           Douglas Rushkoff
-        </span>
-
-        <span class="m-blockchain--marketing-person-title">
-          <a href="http://www.rushkoff.com/" target="_blank">Rushkoff.com</a>
         </span>
       </div>
 

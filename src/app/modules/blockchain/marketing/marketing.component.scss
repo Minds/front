@@ -2,6 +2,12 @@ m-blockchain--marketing {
   
 }
 
+.m-error--text {
+  margin-left: 8px;
+  font-size: 11px;
+  color: red;
+}
+
 .m-blockchain--marketing {
 
   .m-marketing--hero {
@@ -119,6 +125,7 @@ m-blockchain--marketing {
   text-decoration: none;
   line-height: 48px;
   white-space: nowrap;
+  margin-right: 8px;
 }
 
 .m-blockchain--marketing--modal {

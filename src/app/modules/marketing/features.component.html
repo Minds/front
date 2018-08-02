@@ -1,4 +1,4 @@
-<div class="m-marketing--section--subsection m-marketing--section--subsection--first"> 
+<div class="m-marketing--section--subsection m-marketing--section--subsection--first" [hidden]="panels.newsfeed === false"> 
   <div class="m-marketing--section--subsection-container">
     <div class="m-marketing--section--subsection-left m-marketing--section--subsection-image">
       <img [src]="minds.cdn_assets_url + 'assets/screenshots/post.jpg'" />
@@ -17,14 +17,13 @@
   </div>
 </div>
 
-<div class="m-marketing--section--subsection" style="background-color: #f8f8f8">
+<div class="m-marketing--section--subsection" style="background-color: #f8f8f8" [class.m-marketing--section--subsection--first]="panels.newsfeed === false">
   <div class="m-marketing--section--subsection-container">
     <div class="m-marketing--section--subsection-left m-marketing--section--subsection-text">
       <h5>Rewards</h5>
-      <h2>Earn Crypto</h2>
+      <h2>Earn tokens for your contributions</h2>
       <p>
-          Each day we measure your contribution relative to the community.
-          Your percentage determines your share of the Daily Reward Pool of tokens.
+      We reward you for the energy you put in, whether that is creating great content, being active or helping develop our code. 
       </p>
     </div>
     <div class="m-marketing--section--subsection-right m-marketing--section--subsection-image">
@@ -40,12 +39,10 @@
     </div>
     <div class="m-marketing--section--subsection-right m-marketing--section--subsection-text">
       <h5>Boost</h5>
-      <h2>Get Views</h2>
+      <h2>Gain more views on your content</h2>
       <p>
-          Exchange your tokens for views on your content and increase your chances of earning rewards.
-          The Boost ad network is fully transparent without any unwanted surveillance.
-          No algorithms.
-          100% organic reach.
+        Exchange your tokens to promote your content to the full network or a specific channel’s audience. 
+        1 token = 100 views
       </p>
     </div>
   </div>
@@ -55,10 +52,9 @@
   <div class="m-marketing--section--subsection-container">
     <div class="m-marketing--section--subsection-left m-marketing--section--subsection-text">
       <h5>Wire</h5>
-      <h2>Sell Digital Services</h2>
+      <h2>Exchange tokens with other channels</h2>
       <p>
-        Earn tokens by selling exclusive digital content with custom rewards to your supporters.
-        The Wire peer-to-peer payment system is fully autonomous on the blockchain.
+        Send tokens to other channels are a tip or in exchange for content subscriptions or custom rewards. No commission, no middleman.
       </p>
     </div>
     <div class="m-marketing--section--subsection-right m-marketing--section--subsection-image">
@@ -69,15 +65,33 @@
 
 <div class="m-marketing--section--subsection">
   <div class="m-marketing--section--subsection-container">
-    <div class="m-marketing--section--subsection-left m-marketing--section--subsection-image">
-      <img [src]="minds.cdn_assets_url + 'assets/screenshots/wire-send.jpg'" />
+    <div class="m-marketing--section--subsection-left m-marketing--section--subsection-image" style="text-align:center">
+      <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.jpg'" />
     </div>
-    <div class="m-marketing--section--subsection-right m-homepage--section--subsection-text">
-      <h5>Wire</h5>
-      <h2>Support Creators</h2>
+    <div class="m-marketing--section--subsection-right m-marketing--section--subsection-text">
+      <h5>Plus</h5>
+      <h2>Unlock premium features for your channel</h2>
       <p>
-        Send your tokens to your favorite channels as a tip for quality content or to subscribe to their exclusive content and rewards.
+        Hide all advertisements.
+        Verify your channel.
+        Access exclusive Minds content.
+        Earn badges.
       </p>
+    </div>
+  </div>
+</div>
+
+<div class="m-marketing--section--subsection" style="background-color: #f8f8f8">
+  <div class="m-marketing--section--subsection-container">
+    <div class="m-marketing--section--subsection-left m-marketing--section--subsection-text">
+      <h5>Nodes</h5>
+      <h2>Build your own custom social network</h2>
+      <p>
+        Leverage our free and open source code to launch your own customized social network. 
+      </p>
+    </div>
+    <div class="m-marketing--section--subsection-right m-marketing--section--subsection-image">
+      <img [src]="minds.cdn_assets_url + 'assets/marketing/nodes.png'" />
     </div>
   </div>
 </div>
