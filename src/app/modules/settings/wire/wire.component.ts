@@ -134,9 +134,9 @@ export class SettingsWireComponent implements OnInit {
         await this.savePreview();
       }
 
-      if (!this.rewardsSaved) {
+      /*if (!this.rewardsSaved) {
         await this.saveRewards();
-      }
+      }*/
     } catch (e) {
       alert((e && e.message) || 'Server error');
     }
@@ -151,6 +151,9 @@ export class SettingsWireComponent implements OnInit {
       .then(() => {
         return this.client.post('api/v1/merchant/exclusive', this.exclusive)
           .then(() => {
+            if (!this.minds.user.merchant) {
+              this.minds.user.merchant = {};
+            }
             this.minds.user.merchant.exclusive = this.exclusive;
             this.exclusive.saved = true;
             this.detectChanges();
