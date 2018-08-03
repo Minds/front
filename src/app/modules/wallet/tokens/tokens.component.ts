@@ -7,7 +7,9 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: 'tokens.component.html'
 })
 export class WalletTokensComponent {
+
   showOnboarding: boolean = false;
+  minds = window.Minds;
 
   constructor(route: ActivatedRoute) {
     route.url.subscribe(() => {
