@@ -1,5 +1,6 @@
 ///<reference path="../../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Component, DebugElement, EventEmitter, Input } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +20,9 @@ import { localWalletServiceMock } from '../../../../../tests/local-wallet-servic
 import { LocalWalletService } from '../../../blockchain/local-wallet.service';
 import { transactionOverlayServiceMock } from '../../../../../tests/transaction-overlay-service-mock.spec';
 import { TransactionOverlayService } from '../../../blockchain/transaction-overlay/transaction-overlay.service';
+
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { overlayModalServiceMock } from '../../../../../tests/overlay-modal-service-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -114,7 +118,10 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
         TokenPipe,
         BoostCreatorPaymentMethodsComponent
       ],
-      imports: [FormsModule],
+      imports: [
+        RouterTestingModule,
+        FormsModule
+      ],
       providers: [
         { provide: Client, useValue: clientMock },
         BoostService,
@@ -122,6 +129,7 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
         { provide: TransactionOverlayService, useValue: transactionOverlayServiceMock },
         { provide: LocalWalletService, useValue: localWalletServiceMock },
         { provide: TokenContractService, useValue: tokenContractServiceMock },
+        { provide: OverlayModalService, useValue: overlayModalServiceMock }
       ]
     }).compileComponents();
   }));

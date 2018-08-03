@@ -324,7 +324,7 @@ describe('WireCreatorComponent', () => {
 
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:first-child > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('OnChain');
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(2) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('OffChain');
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(3) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('Credit Card');
+    //expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(3) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('Credit Card');
   });
 
   it('clicking on a payment option should highlight it', fakeAsync(() => {

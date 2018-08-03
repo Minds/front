@@ -150,7 +150,7 @@ describe('NewsfeedComponent', () => {
     expect(comp.showPlusButton).toBeFalsy();
   });
 
-  it("should have a 'Buy Minds Tokens' button in the sidebar", () => {
+  xit("should have a 'Buy Minds Tokens' button in the sidebar", () => {
     expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--buy-tokens'))).not.toBeNull();
     expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--buy-tokens div i:first-child')).nativeElement.textContent).toContain('account_balance');
     expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--buy-tokens div')).nativeElement.textContent).toContain('Buy Minds Tokens');
