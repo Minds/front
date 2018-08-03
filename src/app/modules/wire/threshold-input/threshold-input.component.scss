@@ -76,7 +76,7 @@ m-wire-threshold-input, .m-wire-threshold-input {
 
 
   .m-wire-threshold-input--toggle {
-    display: inline-flex;
+    /*display: inline-flex;
     align-items: center;
     overflow: visible;
     vertical-align: middle;
@@ -84,7 +84,7 @@ m-wire-threshold-input, .m-wire-threshold-input {
     cursor: pointer;
     span {
       font-size: 14px;
-    }
+    }*/
 
     &.m-wire-threshold-input--toggle-enabled {
       color: #4690D6;

@@ -2,7 +2,7 @@
 
   <m-dropdown class="m-topbar--navigation--options" #dropdown>
     <label 
-      class="m-btn m-btn--slim m-btn m-btn--with-icon"
+      class="m-btn m-btn--slim m-btn m-btn--with-icon m-wire-threshold-input--toggle"
       [class.m-wire-threshold-input--toggle-enabled]="enabled">
         <span *ngIf="!enabled" i18n="@@M__FEATURE__PUBLIC">Public</span>
         <span *ngIf="enabled" i18n="@@M__FEATURE__TOKENS"> {{threshold.min}} Tk</span>
