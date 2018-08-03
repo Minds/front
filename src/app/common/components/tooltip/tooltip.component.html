@@ -1,11 +1,11 @@
 <div class="m-tooltip"
   [class.m-tooltip--anchored]="!!anchor"
 >
-  <i *ngIf="icon" class="material-icons">{{icon}}</i>
+  <i *ngIf="icon" class="material-icons" [ngClass]="iconClass">{{icon}}</i>
   <ng-content select="[m-tooltip--anchor]"></ng-content>
 
   <div class="m-tooltip--bubble"
-    [class.m-tooltip--bubble--anchor-bottom]="anchor == 'bottom'"  
+    [class.m-tooltip--bubble--anchor-bottom]="anchor == 'bottom'"
     [class.m-tooltip--bubble--anchor-left]="anchor == 'left'"
     [class.m-tooltip--bubble--anchor-right]="anchor == 'right'"
     [hidden]="hidden"

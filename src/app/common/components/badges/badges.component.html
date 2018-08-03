@@ -1,21 +1,25 @@
 <ul class="m-channel--badges">
     <li *ngIf="user.plus && badges.indexOf('plus') > -1" routerLink="/plus">
-    <i class="material-icons selected">add_circle_outline</i>
-    <span i18n="Plus as user status@@COMMON__BADGES__PLUS">Plus</span>
+    <m-tooltip icon="add_circle_outline" iconClass="selected" i18n="Plus as user status@@COMMON__BADGES__PLUS">
+      Plus
+    </m-tooltip>
   </li>
 
-  <li *ngIf="(user.verified || session.isAdmin()) && badges.indexOf('verified') > -1" (click)="verify($event)">
-    <i class="material-icons mdl-color-text--blue-grey-800" [class.selected]="user.verified">verified_user</i>
-    <span i18n="Verified as user status@@COMMON__BADGES__VERIFIED">Verified</span>
+  <li *ngIf="true" (click)="verify($event)">
+    <m-tooltip icon="verified_user" [iconClass]="{'selected': user.verified}" i18n="Verified as user status@@COMMON__BADGES__VERIFIED">
+      Verified
+    </m-tooltip>
   </li>
 
   <li *ngIf="(user.founder && !session.isAdmin()) && badges.indexOf('founder') > -1" routerLink="/channels/founders">
-    <i class="material-icons" [class.selected]="user.founder">flight_takeoff</i>
-    <span i18n="Founder as user status@@COMMON__BADGES__FOUNDER">Founder</span>
+    <m-tooltip icon="flight_takeoff" [iconClass]="{'selected': user.founder}" i18n="Founder as user status@@COMMON__BADGES__FOUNDER">
+      Founder
+    </m-tooltip>
   </li>
 
   <li *ngIf="(session.isAdmin()) && badges.indexOf('founder') > -1" (click)="setFounder($event)">
-    <i class="material-icons" [class.selected]="user.founder">flight_takeoff</i>
-    <span i18n="Founder as user status@@COMMON__BADGES__FOUNDER">Founder</span>
+    <m-tooltip icon="flight_takeoff" [iconClass]="{'selected': user.founder}" i18n="Founder as user status@@COMMON__BADGES__FOUNDER">
+      Founder
+    </m-tooltip>
   </li>
 </ul>
