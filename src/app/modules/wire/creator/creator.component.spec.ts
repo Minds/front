@@ -423,7 +423,7 @@ describe('WireCreatorComponent', () => {
     expect(fixture.debugElement.query(By.css('.m-wire--creator-payment minds-payments-stripe-checkout'))).not.toBeNull();
   });
 
-  it('should have a recurring checkbox', () => {
+  xit('should have a recurring checkbox', () => {
     comp.setPayloadType('onchain');
     fixture.detectChanges();
     expect(getRecurringCheckbox()).not.toBeNull();
