@@ -193,31 +193,35 @@ m-modal-signup, m-modal-signup-on-action{
   }
 }
 
-m-modal-share, m-modal-invite{
-  z-index:1000;
-  position:relative;
+m-modal-share, m-modal-invite {
+  z-index: 1000;
+  position: relative;
 
-  input{
-    font-size:28px;
-    padding:$minds-padding*2;
+  input {
+    font-size: 28px;
+    padding: $minds-padding*2;
     width: calc(100% - 34px);
+    border: 1px solid #eee;
   }
-  .m-social-share-buttons{
-    padding:$minds-padding*2;
+  .m-social-share-buttons {
+    padding: $minds-padding*2;
 
-    .m-social-share-twitter{
-      background:#4099FF;
+    & > button {
+      margin: 0 4px;
     }
-    .m-social-share-fb{
-      background:#335795;
+    .m-social-share-twitter {
+      background: #4099FF;
     }
-    .m-social-share-email{
-      color:#333 !important;
+    .m-social-share-fb {
+      background: #335795;
+    }
+    .m-social-share-email {
+      color: #333 !important;
     }
   }
 
-  .mdl-card__supporting-text{
-    @media screen and (max-width: 720px){
+  .mdl-card__supporting-text {
+    @media screen and (max-width: 720px) {
       width: calc(90% - 20px);
     }
   }

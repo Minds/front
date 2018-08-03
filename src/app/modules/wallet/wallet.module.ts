@@ -41,6 +41,7 @@ import { TokenOnboardingModule } from './tokens/onboarding/onboarding.module';
 import { WalletTokenContributionsOverviewComponent } from './tokens/contributions/overview.component';
 import { WalletTokenContributionsChartComponent } from './tokens/contributions/chart.component';
 import { WalletToken101Component } from './tokens/101/101.component';
+import { ModalsModule } from '../modals/modals.module';
 
 const walletRoutes : Routes = [
   { path: 'wallet', component: WalletComponent,
@@ -92,6 +93,7 @@ const walletRoutes : Routes = [
     BlockchainModule,
     TokenOnboardingModule,
     PlusModule,
+    ModalsModule,
   ],
   declarations: [
     WalletComponent,

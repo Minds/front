@@ -1,6 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 
 import { Session } from '../../../services/session';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   selector: 'm-modal-invite',
@@ -10,11 +11,19 @@ import { Session } from '../../../services/session';
     <m-modal [open]="open" (closed)="close($event)">
 
       <div class="mdl-card__supporting-text">
-        <ng-container i18n="@@MODALS__INVITE__DESCRIPTION">Send the link below to your friends:</ng-container>
+        <ng-container i18n="@@MODALS__INVITE__DESCRIPTION">Send the link below to your contacts to earn tokens for your referrals:</ng-container>
       </div>
 
       <div class="mdl-card__supporting-text">
         <input class="" value="{{url}}" (focus)="copy($event)" (click)="copy($event)" autofocus/>
+      </div>
+
+      <div class="mdl-card__supporting-text">
+        <ng-container i18n="@@MODALS__INVITE__DESCRIPTION">Add this code to the end of any Minds link you share and earn tokens for signups within 24 hours:</ng-container>
+      </div>
+
+      <div class="mdl-card__supporting-text">
+        <input class="" value="?referrer={{user.username}}" (focus)="copy($event)" (click)="copy($event)" autofocus/>
       </div>
 
       <div class="m-social-share-buttons">
@@ -43,6 +52,8 @@ export class InviteModal {
   url: string = '';
   encodedUrl: string = '';
   embedCode: string = '';
+
+  user: MindsUser = window.Minds.user;
 
   constructor(public session: Session) { }
 
