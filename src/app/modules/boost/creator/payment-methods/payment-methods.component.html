@@ -94,7 +94,8 @@
   </li>
 
   <li class="m-boost--creator-selector--small"
-    (click)="buyTokens()" 
+    (click)="buyTokens()"
+    *ngIf="minds.site_url != 'https://www.minds.com/'"
   >
     <i class="material-icons m-boost--creator--payment-method--icon">monetization_on</i>
     <h5>

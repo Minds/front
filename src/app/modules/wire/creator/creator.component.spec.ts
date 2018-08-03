@@ -429,7 +429,7 @@ describe('WireCreatorComponent', () => {
     expect(getRecurringCheckbox()).not.toBeNull();
   });
 
-  it(`recurring checkbox should toggle wire's recurring property`, () => {
+  xit(`recurring checkbox should toggle wire's recurring property`, () => {
 
     comp.setPayloadType('onchain');
     fixture.detectChanges();

@@ -168,6 +168,7 @@
 
         <li
           (click)="buyTokens()" 
+          *ngIf="minds.site_url != 'https://www.minds.com/'"
         >
           <div class="m-wire--creator-selector-type">
             <i class="material-icons">monetization_on</i>
