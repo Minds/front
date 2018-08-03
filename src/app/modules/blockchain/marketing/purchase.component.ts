@@ -139,10 +139,10 @@ export class BlockchainPurchaseComponent implements OnInit {
     this.confirmed = true;
     this.detectChanges();
 
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.closePledgeModal();
       this.confirmed = false;
-    }, 2000);
+    }, 2000);*/
   }
 
   closeLoginModal() {

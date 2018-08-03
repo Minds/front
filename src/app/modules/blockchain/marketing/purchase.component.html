@@ -70,7 +70,7 @@
     <div *ngIf="session.getLoggedInUser().rewards && !confirmed">
       <h2 i18n="@@M__PURCHASE_TITLE">Your {{ phase === 'presale' ? 'pledge' : 'purchase'}} for {{tokens | number:'1.0-4'}} Tokens ({{amount | number:'1.0-4'}} ETH)</h2>
 
-      <p class="m-blockchain--marketing--pledge--note" i18n="@@M__PURCHASE_ETH_MIN_TO_APPROVE">
+      <p class="m-blockchain--marketing--pledge--note" i18n="@@M__PURCHASE_ETH_MIN_TO_APPROVE" hidden>
         Token {{ phase === 'presale' ? 'pledges' : 'purchases'}} over 40 ETH need to be approved by Minds before they can be
         issued.
       </p>
@@ -90,15 +90,23 @@
             class="m-blockchain--marketing--pledge--check-label"
           >
             <label for="use-check" i18n="@@M__PURCHASE_INVESTIMENT_INTENT">
-              I intend to use these tokens on the Minds Platform and not as an investment
+              I am purchasing the tokens for use on the Minds Platform, and not as an investment. 
             </label>
           </td>
         </tr>
       </table>
     </div>
+
     <div *ngIf="confirmed">
-      <h2 i18n="@@M__PURCHASE_SUCCESS">Your {{ phase === 'presale' ? 'pledge' : 'purchase'}} for {{tokens | number:'1.0-4'}} Tokens ({{amount | number:'1.0-4'}} ETH) has been confirmed</h2>
+      <h2 i18n="@@M__PURCHASE_COMPLETED_H2">Thank you for your purchase of {{tokens | number:'1.0-4'}} Tokens</h2>
+      <p class="m-blockchain--marketing--pledge--note" i18n="@@M__PURCHASE_COMPLETED_NOTE">Your transaction is processing and we will notify you once the transaction is complete.</p>
+      <p class="m-blockchain--marketing--pledge--note" i18n="@@M__PURCHASE_COMPLETED_NOTE_REVIEW" *ngIf="amount > 60">
+        Because your purchase was over 60 ETH, it may take over 24 hours for the transaction to be completed. 
+        If you would like to contact us, please reach out to info@minds.com.
+        </p>
+      <br/>
     </div>
+
     <div>
       <button 
         class="m-btn m-btn--slim m-btn--action"
