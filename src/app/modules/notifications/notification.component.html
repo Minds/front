@@ -493,9 +493,15 @@
 
   <!-- Points prompt -->
   <ng-template ngSwitchCase="custom_message">
-      <a>
-          <p>{{notification.params.message}}</p>
+    <a *ngIf="!notification?.params?.router_link; else withRouterLink">
+        <p>{{notification.params.message}}</p>
+    </a>
+
+    <ng-template #withRouterLink>
+      <a [routerLink]="[notification.params.router_link]">
+        <p>{{notification.params.message}}</p>
       </a>
+    </ng-template>
   </ng-template>
 
   <!-- Welcome points -->

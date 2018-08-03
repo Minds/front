@@ -12,7 +12,6 @@ import { BlockchainWalletSelector } from './wallet-selector/wallet-selector.comp
 import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice/wallet-address-notice.component';
 import { TransactionOverlayComponent } from './transaction-overlay/transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
-import { BlockchainMarketingComponent } from './marketing/marketing.component';
 import { BlockchainTdeBuyComponent } from './tde-buy/tde-buy.component';
 import { BlockchainPreRegisterComponent } from './pre-register/pre-register.component';
 import { Web3WalletService } from './web3-wallet.service';
@@ -24,6 +23,8 @@ import { TokenDistributionEventService } from './contracts/token-distribution-ev
 import { LocalWalletService } from './local-wallet.service';
 import { OffchainPaymentService } from './offchain-payment.service';
 import { Client } from '../../services/api/client';
+import { MarketingModule } from '../marketing/marketing.module';
+import { BlockchainMarketingModule } from './marketing/marketing.module';
 
 const cryptoRoutes: Routes = [
   {
@@ -34,10 +35,6 @@ const cryptoRoutes: Routes = [
       { path: 'overview', component: BlockchainConsoleComponent }
     ]
   },
-  {
-    path: 'token',
-    component: BlockchainMarketingComponent,
-  }
 ];
 
 @NgModule({
@@ -48,13 +45,13 @@ const cryptoRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FaqModule,
+    BlockchainMarketingModule,
   ],
   declarations: [
     BlockchainConsoleComponent,
     BlockchainWalletSelector,
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
-    BlockchainMarketingComponent,
     BlockchainTdeBuyComponent,
     BlockchainPreRegisterComponent,
   ],

@@ -1,5 +1,10 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostBinding, HostListener,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostBinding,
+  HostListener,
   OnInit
 } from '@angular/core';
 import * as ethAccount from 'ethjs-account';
@@ -8,7 +13,8 @@ import * as BN from 'bn.js';
 
 import { TransactionOverlayService } from './transaction-overlay.service';
 import { TokenContractService } from '../contracts/token-contract.service';
-
+import { Router } from '@angular/router';
+import { Web3WalletService } from '../web3-wallet.service';
 
 @Component({
   moduleId: module.id,
@@ -33,6 +39,9 @@ export class TransactionOverlayComponent implements OnInit {
     extras: { },
   };
 
+  balance: string = '0';
+  ethBalance: string = '0';
+
   droppingKeyFile: boolean = false;
 
   protected eventEmitter: EventEmitter<any> = new EventEmitter();
@@ -45,6 +54,8 @@ export class TransactionOverlayComponent implements OnInit {
     protected service: TransactionOverlayService,
     protected cd: ChangeDetectorRef,
     protected token: TokenContractService,
+    protected web3Wallet: Web3WalletService,
+    protected router: Router,
   ) { }
 
   ngOnInit() {
@@ -274,9 +285,20 @@ export class TransactionOverlayComponent implements OnInit {
     try {
       const balance = new BN((await this.token.balanceOf(this.data.tx.from))[0]);
 
+      this.balance = balance.toString(10);
+
       if (balance.add(tokenDelta).lt('0')) {
         this.reject('Not enough tokens to complete this transaction');
       }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async getEthBalance() {
+    try {
+      const balance = await this.web3Wallet.getBalance(this.data.tx.from);
+      this.ethBalance = balance ? balance : '0';
     } catch (e) {
       console.error(e);
     }
@@ -289,6 +311,7 @@ export class TransactionOverlayComponent implements OnInit {
       case this.COMP_LOCAL:
         if (this.data.extras.tokenDelta) {
           this.checkTokenBalance(this.data.extras.tokenDelta);
+          this.getEthBalance();
         }
         break;
     }

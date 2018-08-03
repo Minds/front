@@ -12,7 +12,14 @@ export class TokenDistributionEventService {
   // Buy tokens
 
   async buy(ethAmount: number, gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1, message: string = '') {
+
     await this.web3Wallet.ready();
+
+    if (this.web3Wallet.isUnavailable()) {
+      throw new Error('No Ethereum wallets available on your browser.');
+    } else if (!(await this.web3Wallet.unlock())) {
+      throw new Error('Your Ethereum wallet is locked or connected to another network.');
+    }
 
     let wallet = await this.web3Wallet.getCurrentWallet();
 
@@ -26,7 +33,7 @@ export class TokenDistributionEventService {
       value: this.web3Wallet.EthJS.toWei(ethAmount, 'ether'),
       gasPrice: this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei'),
       data: '0x'
-    }, `Buy ${ethAmount} ETH worth of Minds Tokens. ${message}`.trim());
+    }, `purchase of ${ethAmount} ETH worth Minds Tokens. ${message}`.trim());
   }
 
   // Service provider

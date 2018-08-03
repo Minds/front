@@ -8,6 +8,8 @@ import { transactionOverlayService } from '../../../mocks/modules/blockchain/tra
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
+import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
+import { Web3WalletService } from '../web3-wallet.service';
 
 describe('TransactionOverlayComponent', () => {
 
@@ -17,17 +19,17 @@ describe('TransactionOverlayComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MaterialSwitchMock, TransactionOverlayComponent], // declare the test component
+      declarations: [MaterialSwitchMock, TransactionOverlayComponent],
       imports: [RouterTestingModule, FormsModule],
       providers: [
         { provide: TransactionOverlayService, useValue: transactionOverlayService },
-        { provide: TokenContractService, useValue: TokenContractService }
+        { provide: TokenContractService, useValue: TokenContractService },
+        { provide: Web3WalletService, useValue: web3WalletServiceMock }
       ]
     })
-      .compileComponents();  // compile template and css
+      .compileComponents();
   }));
 
-  // synchronous beforeEach
   beforeEach(() => {
     fixture = TestBed.createComponent(TransactionOverlayComponent);
 

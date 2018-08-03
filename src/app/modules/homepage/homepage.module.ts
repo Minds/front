@@ -9,6 +9,7 @@ import { ModalsModule } from '../modals/modals.module';
 import { MindsFormsModule } from '../forms/forms.module';
 
 import { HomepageComponent } from './homepage.component';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent }
@@ -24,9 +25,10 @@ const routes: Routes = [
     LegacyModule,
     ModalsModule,
     MindsFormsModule,
+    MarketingModule,
   ],
   declarations: [
-    HomepageComponent
+    HomepageComponent,
   ],
   entryComponents: [
     HomepageComponent

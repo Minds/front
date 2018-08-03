@@ -44,12 +44,19 @@
 
       <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
 
-      <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link"  *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus && showPlusButton">
+      <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link m-newsfeed--upgrade-to-plus" *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus && showPlusButton">
         <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button m-layout--row">
           <i class="material-icons">add_circle</i>
           <ng-container i18n="@@MINDS__NEWSFEED__UPGRADE_TO_PLUS_ACTION">Upgrade to Plus</ng-container>
           <div class="m-layout--spacer"></div>
           <i class="material-icons m-newsfeed-sidebar-button--close" (click)="hidePlusButton($event)">close</i>
+        </div>
+      </a>
+
+      <a routerLink="/token" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link m-newsfeed--buy-tokens"  *ngIf="session.isLoggedIn() && minds.site_url != 'https://www.minds.com/'">
+        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button m-layout--row">
+          <i class="material-icons">account_balance</i>
+          <ng-container i18n="@@MINDS__NEWSFEED__BUY_MINDS_TOKENS_ACTION">Buy Minds Tokens</ng-container>
         </div>
       </a>
 

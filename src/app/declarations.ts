@@ -11,6 +11,7 @@ import {AdminVerify} from './controllers/admin/verify/verify.component';
 import { RejectionReasonModalComponent } from './controllers/admin/boosts/modal/rejection-reason-modal.component';
 import { AdminInteractions } from './controllers/admin/interactions/interactions.component';
 import { InteractionsTableComponent } from './controllers/admin/interactions/table/table.component';
+import { AdminPurchasesComponent } from './controllers/admin/purchases/purchases.component';
 import { AdminWithdrawals } from './controllers/admin/withdrawals/withdrawals.component';
 
 export const MINDS_DECLARATIONS: any[] = [
@@ -30,5 +31,6 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminFeatured,
   AdminTagcloud,
   AdminVerify,
+  AdminPurchasesComponent,
   AdminWithdrawals,
 ];

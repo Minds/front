@@ -127,14 +127,14 @@ describe('NewsfeedComponent', () => {
   it("should have an 'Upgrade to Plus' button in the sidebar if the user isn't part of the program yet", () => {
     sessionMock.user.plus = false;
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-boost-console-link'))).not.toBeNull();
-    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-boost-console-link div i:first-child')).nativeElement.textContent).toContain('add_circle');
-    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-boost-console-link div')).nativeElement.textContent).toContain('Upgrade to Plus');
-    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-boost-console-link div i:last-child')).nativeElement.textContent).toContain('close');
+    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--upgrade-to-plus'))).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--upgrade-to-plus div i:first-child')).nativeElement.textContent).toContain('add_circle');
+    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--upgrade-to-plus div')).nativeElement.textContent).toContain('Upgrade to Plus');
+    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--upgrade-to-plus div i:last-child')).nativeElement.textContent).toContain('close');
 
     sessionMock.user.plus = true;
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-boost-console-link'))).toBeNull();
+    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--upgrade-to-plus'))).toBeNull();
   });
 
   it("should allow to close the Upgrade to Plus button", () => {
@@ -142,12 +142,18 @@ describe('NewsfeedComponent', () => {
     fixture.detectChanges();
 
     spyOn(comp, 'hidePlusButton').and.callThrough();
-    const button = fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-boost-console-link div i:last-child'));
+    const button = fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--upgrade-to-plus div i:last-child'));
     button.nativeElement.click();
     fixture.detectChanges();
 
     expect(comp.hidePlusButton).toHaveBeenCalled();
     expect(comp.showPlusButton).toBeFalsy();
+  });
+
+  it("should have a 'Buy Minds Tokens' button in the sidebar", () => {
+    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--buy-tokens'))).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--buy-tokens div i:first-child')).nativeElement.textContent).toContain('account_balance');
+    expect(fixture.debugElement.query(By.css('.m-newsfeed--sidebar .m-newsfeed--buy-tokens div')).nativeElement.textContent).toContain('Buy Minds Tokens');
   });
 
   it('should have a right sidebar', () => {

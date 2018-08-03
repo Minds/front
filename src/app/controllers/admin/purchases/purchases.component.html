@@ -1,0 +1,56 @@
+<div class="m-admin--pledges--results">
+  <!--<h3> {{metric.title | titlecase}}</h3>-->
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress && !purchases.length"></div>
+  <div class="m-admin--pledges--table">
+    <table>
+      <thead>
+      <tr>
+        <th>User</th>
+        <th>Tx</th>
+        <th>Wallet Address</th>
+        <th>Amount</th>
+        <th>Date</th>
+        <th>&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of purchases; let i = index">
+        <td [routerLink]="['/', item.user.guid]">
+          <img class="m-admin--pledges--avatar" src="/icon/{{item.user.guid}}/medium/{{item.user.icontime}}">
+          @{{item.user.username}}
+        </td>
+        <td>{{item.tx}}</td>
+        <td>{{item.wallet_address}}</td>
+        <td>{{item.requested_amount | token:18 | number:'1.0-4'}}</td>
+        <td>{{item.timestamp | date:'mediumDate'}}</td>
+        <td class="m-admin--pledges--actions" [ngSwitch]="item.status">
+          <ng-template ngSwitchCase="purchased">
+            <button class="m-btn m-btn--action m-btn--slim"
+              (click)="issue(i)"
+              [disabled]="inProgress"
+            >Issue</button>
+
+            <button class="m-btn m-btn--destructive m-btn--slim"
+              (click)="reject(i)"
+              [disabled]="inProgress"
+            >Refund</button>
+          </ng-template>
+
+          <ng-template ngSwitchDefault>
+            <span class="m-admin--pledges--actions--status">{{ item.status }}</span>
+          </ng-template>
+        </td>
+      </tr>
+      <tr *ngIf="purchases.length === 0 && !inProgress">
+        <td style="text-align: left">No data</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress">
+  </infinite-scroll>
+</div>

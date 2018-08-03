@@ -12,6 +12,48 @@ m--blockchain--transaction-overlay {
   color: #333333;
   user-select: none;
 
+  .m--blockchain--transaction-overlay--coloured-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #4caf50;
+    color: white;
+    margin-bottom: 12px;
+
+    span {
+      text-align: center;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      font-weight: 600;
+    }
+  }
+
+  .m--blockchain--transaction-overlay--balance {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color: #444;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: $minds-padding * 5;
+
+    .m--blockchain--transaction-overlay--balance--subtext {
+      display: block;
+      margin-bottom: $minds-padding * 2;
+      letter-spacing: 1px;
+      font-size: 18px;
+    }
+    .m--blockchain--transaction-overlay--balance--amount {
+      font-weight: 200;
+    }
+  }
+
   .m--blockchain--transaction-overlay--content {
     max-width: 1280px;
     width: 100%;

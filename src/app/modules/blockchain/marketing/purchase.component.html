@@ -1,0 +1,117 @@
+<div class="m-blockchain--marketing--pledges">
+  <table class="m-blockchain--marketing--pledges--amounts" *ngIf="!inProgress">
+    <ng-container *ngIf="phase === 'presale'">
+      <tr>
+        <td class="m-blockchain--marketing--pledges--amounts--label">
+          Pledged
+        </td>
+        <td class="m-blockchain--marketing--pledges--amounts--value">
+          {{ stats.amount | token:18 | number:'1.0-2' }}
+          <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="m-blockchain--marketing--pledges--amounts--label">
+          Channels
+        </td>
+        <td class="m-blockchain--marketing--pledges--amounts--value">
+          {{ stats.count | number }}
+        </td>
+      </tr>
+    </ng-container>
+    <tr>
+      <td class="m-blockchain--marketing--pledges--amounts--label">
+      </td>
+      <td class="m-blockchain--marketing--pledge--input">
+        <input type="number" class="m-input m-border" [(ngModel)]="tokens" />
+        <span class="m-blockchain--marketing--pledges--eth-label">Tokens</span>
+      </td>
+    </tr>
+    <tr>
+      <td class="m-blockchain--marketing--pledges--amounts--label">
+      </td>
+      <td class="m-blockchain--marketing--pledge--input">
+        <input type="number" class="m-input m-border" [(ngModel)]="amount" />
+        <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
+        <button class="m-btn m-btn--action" (click)="purchase()">
+          Purchase
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<m-modal-signup-on-action 
+  *ngIf="showLoginModal"
+  open="true"
+  (closed)="closeLoginModal()"
+  action="pledge"
+  [overrideOnboarding]="true">
+</m-modal-signup-on-action>
+
+<m-modal 
+  open="true"
+  *ngIf="showPledgeModal"
+  (closed)="closePledgeModal()"
+  >
+  
+  <div class="m-blockchain--marketing--modal">
+
+    <div class="m-token--onboarding" *ngIf="!session.getLoggedInUser().rewards">
+      <h2>Please verify your phone number</h2>
+      <m-blockchain--marketing--onboard></m-blockchain--marketing--onboard>
+    </div>
+
+    <div *ngIf="session.getLoggedInUser().rewards">
+        <h2>Your {{ phase === 'presale' ? 'pledge' : 'purchase'}} for {{tokens | number:'1.0-4'}} Tokens ({{amount | number:'1.0-4'}} ETH)</h2>
+
+      <p class="m-blockchain--marketing--pledge--note">
+        Token {{ phase === 'presale' ? 'pledges' : 'purchases'}} over 40 ETH need to be approved by Minds before they can be
+        issued.
+      </p>
+  
+      <table>
+        <tr>
+          <td><input id="ofac-check" type="checkbox" [(ngModel)]="ofac"></td>
+          <td class="m-blockchain--marketing--pledge--check-label">
+            <label for="ofac-check">
+              I am not listed on any US OFAC Sanction list or prohibited from engaging in business in the USA
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td><input id="use-check" type="checkbox" [(ngModel)]="use"></td>
+          <td
+            class="m-blockchain--marketing--pledge--check-label"
+          >
+            <label for="use-check">
+              I intend to use these tokens on the Minds Platform and not as an investment
+            </label>
+          </td>
+        </tr>
+      </table>
+
+      <button 
+        class="m-btn m-btn--slim m-btn--action"
+        (click)="confirm()"
+        [disabled]="!canConfirm()"
+        *ngIf="!confirming && !confirmed">
+        Purchase 
+      </button>
+      <button 
+        class="m-btn m-btn--slim"
+        *ngIf="confirming">
+        Please wait...
+      </button>
+      <button 
+        class="m-btn m-btn--slim"
+        *ngIf="confirmed">
+        Completed
+      </button>
+
+      <span class="m-error--text">{{error}}</span>
+
+    </div>
+
+  </div>
+</m-modal>

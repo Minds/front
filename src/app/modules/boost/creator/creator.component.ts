@@ -113,12 +113,25 @@ export class BoostCreatorComponent implements AfterViewInit {
   ) { }
 
   ngOnInit() {
+    this.getPreferredPaymentMethod();
     this.load();
   }
 
   ngAfterViewInit() {
     this.syncAllowedTypes();
     this.amountEditorFocus();
+  }
+
+  getPreferredPaymentMethod() {
+    let currency = localStorage.getItem('preferred-payment-method');
+    if (currency === 'creditcard') {
+      currency = 'usd';
+    }
+    if (['offchain', 'usd', 'onchain'].indexOf(currency) !== -1)
+      this.boost.currency = <CurrencyType>(currency ? currency: 'offchain');
+    else {
+      this.boost.currency = 'offchain';
+    }
   }
 
   // Load settings

@@ -22,6 +22,7 @@ interface Minds {
   max_video_length?: number;
   features?: any;
   blockchain?: any;
+  sale?: boolean | string;
 }
 
 interface MindsNavigation {
@@ -41,5 +42,6 @@ interface Window {
   google?: any;
   twoOhSix?: any;
   web3?: any;
+  sale?: boolean | string;
 }
 declare var window: Window;
