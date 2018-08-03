@@ -14,6 +14,10 @@ import { ModalsModule } from '../../modals/modals.module';
 
 const routes: Routes = [
   {
+    path: 'tokens',
+    redirectTo: '/token',
+  },
+  {
     path: 'token',
     component: BlockchainMarketingComponent,
   }
