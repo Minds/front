@@ -76,10 +76,6 @@ export class GroupsJoinButton {
       return;
     }
 
-    if (this.isPublic()) {
-      this.group['is:member'] = true;
-    }
-
     this.service.join(this.group)
       .then(() => {
         if (this.isPublic()) {
