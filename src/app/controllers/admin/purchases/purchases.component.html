@@ -24,7 +24,7 @@
         <td>{{item.requested_amount | token:18 | number:'1.0-4'}}</td>
         <td>{{item.timestamp | date:'mediumDate'}}</td>
         <td class="m-admin--pledges--actions" [ngSwitch]="item.status">
-          <ng-template ngSwitchCase="review">
+          <ng-template ngSwitchCase="purchased">
             <button class="m-btn m-btn--action m-btn--slim"
               (click)="issue(i)"
               [disabled]="inProgress"
