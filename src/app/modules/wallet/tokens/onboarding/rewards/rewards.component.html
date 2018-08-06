@@ -9,25 +9,11 @@
       To start earning rewards, you will need to enter a unique phone number.
     </p>
 
-    <div class="m-token--onboarding--rewards-input" *ngIf="!confirming && !plusPrompt">
+    <div class="m-token--onboarding--rewards-input" *ngIf="!confirming">
       <m-phone-input [(ngModel)]="number"></m-phone-input>
       <m-tooltip icon="help" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_PHONE_TOLTIP">Please enter your phone number in order to join the rewards program</m-tooltip>
-      <button class="m-btn m-btn--slim m-btn--action" (click)="getPlus()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION">Join</button>
+      <button class="m-btn m-btn--slim m-btn--action" (click)="verify()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION">Join</button>
       <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-    </div>
-
-    <div class="m-token--onboarding--rewards-input" *ngIf="plusPrompt && !confirming">
-      <p i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ONE_MORE_STEP_DESC">
-        One more step!
-        To qualify for our crypto rewards program, you will need to sign up for <a routerLink="/plus">Minds Plus</a>.
-        This will cost <b>$1</b> for the first month and $5 for every following month with the option for cancellation.
-        Cancellation will not impact your ability to earn rewards. This is required to help us offset the expensive fees associated with sending SMS text messages internationally!
-      </p>
-      <m-plus--subscription
-        #subscription
-        (completed)="onPlusCompleted($event)"
-        >
-      </m-plus--subscription>
     </div>
 
     <div class="m-token--onboarding--rewards-input" *ngIf="confirming">
@@ -49,12 +35,11 @@
       <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
     </div>
 
-
     <p class="m-token-join--form--error" *ngIf="error">
       {{error}}
     </p>
 
-    <p class="m-token--onboarding--subtext m-token--onboarding--subtext-note" *ngIf="!plusPrompt" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__PHONE_HASH_DESC">
+    <p class="m-token--onboarding--subtext m-token--onboarding--subtext-note" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__PHONE_HASH_DESC">
       Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256
       and combined with a salt key for privacy and security purposes.
     </p>
