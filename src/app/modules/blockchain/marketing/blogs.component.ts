@@ -50,6 +50,24 @@ export class BlockchainMarketingBlogsComponent {
         guid: "100000000000000519",
        },
      },
+     {
+       guid: "871784584725569536",
+       title: "How to setup your wallet without MetaMask",
+       ownerObj: {
+        name: "Minds",
+        username: "minds",
+        guid: "100000000000000519",
+       },
+     },
+     {
+       guid: "826188573910073344",
+       title: "Crypto launch, new apps, and more",
+       ownerObj: {
+        name: "Minds",
+        username: "minds",
+        guid: "100000000000000519",
+       },
+     },
    ];
 
     ngOnInit() {

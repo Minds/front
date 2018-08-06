@@ -36,32 +36,30 @@
 
   <section class="m-marketing--section">
      <div class="m-blockchain--marketing--links">
-      <a class="m-btn m-btn--slim m-btn--action" target="_blank" href="https://cdn-assets.minds.com/front/dist/assets/whitepapers/03_27_18_Minds%20Whitepaper%20V0.1.pdf">Download Whitepaper</a>
+      <a class="m-btn m-btn--slim m-btn--action" target="_blank" href="https://cdn-assets.minds.com/front/dist/assets/whitepapers/03_27_18_Minds%20Whitepaper%20V0.1.pdf">Whitepaper (PDF)</a>
       <a class="m-btn m-btn--slim m-btn--action" target="_blank" routerLink="/wallet/tokens/101">Token 101</a>
-      <a class="m-btn m-btn--slim m-btn--action" target="_blank" routerLink="/blog/view/826188573910073344">Read our Blog</a>
     </div>
   </section>
 
-  <section class="m-marketing--section">
+  <section class="m-marketing--section" style="padding: 0">
     <div class="m-marketing--section--subsection m-marketing--section--subsection--first" style="border-bottom: 0"> 
       <div class="m-marketing--section--subsection-container" style="padding:0">
-        <div class="m-marketing--section--subsection-left m-marketing--section--subsection-image" style="text-align:center">
-          <img [src]="minds.cdn_assets_url + 'assets/marketing/minds-eth.jpg'" style="max-width: 300px;"/>
-        </div>
-        <div class="m-marketing--section--subsection-right m-marketing--section--subsection-video"
+        <div class="m-marketing--section--subsection-video"
             style="overflow: hidden;
                 border: 1px solid #ddd;
                 border-radius: 3px;
                 padding: 0;
                 flex: auto;
                 height: auto;
-                max-height: 320px;
-                min-height: 0;">
+                max-height: 360px;
+                min-height: 0;
+                max-width: 850px;
+                margin: auto;">
           <m-video
             width="100%"
-            style="background:#000; height:auto; max-height: 320px;"
+            style="background:#eaeaea; height:auto; max-height: 360px;"
             [muted]="false"
-            [poster]="minds.cdn_assets_url + 'assets/marketing/witch-head-1771758_1920.jpg'"
+            [poster]="minds.cdn_assets_url + 'assets/marketing/video-thumb.jpg'"
             [src]="[{ 'res': '360', 'uri': 'api/v1/media/872156064642600960/play', 'type': 'video/mp4' }]"
             guid="872156064642600960"
             [torrent]="[{ res: '360', key: '872156064642600960/360.mp4' }]"

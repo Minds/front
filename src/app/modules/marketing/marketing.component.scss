@@ -312,6 +312,14 @@
     
   }
 
+  &.m-marketing--section--subsection--alt {
+    .m-marketing--section--subsection-container {
+      @media screen and (max-width: $max-mobile) {
+        flex-direction: column-reverse;
+      }
+    }
+  }
+
   &.m-marketing--section--subsection--first .m-marketing--section--subsection-container {
     padding-top: 100px;
 

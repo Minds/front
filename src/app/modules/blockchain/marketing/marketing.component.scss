@@ -29,6 +29,7 @@ m-blockchain--marketing {
       flex-basis: 85px;
       @media screen and (max-width: 500px) {
         margin-left: 0;
+        margin-top: 52px;
       }
 
       .m-blockchain--marketing--pledge--input {
@@ -121,6 +122,10 @@ m-blockchain--marketing {
 
   m-video--progress-bar .seeker-ball {
     top: 12px;
+  }
+
+  m-video .minds-video-play-icon {
+    text-shadow: 0 0 3px #333;
   }
 
 }
@@ -274,12 +279,25 @@ m-blockchain--marketing {
 .m-blockchain--marketing--press {
   .m-marketing--section--grid {
     align-items: center;
+    @media screen and (max-width: 500px) {
+      flex-wrap: wrap;
+      flex-direction: row;          
+    }
   }
   .m-marketing--section--grid-col {
     img {
       max-width: 80%;
     }
+    @media screen and (max-width: 500px) {
+      flex: 1;
+      margin: 4px !important;
+      padding: 0 !important;
+      img {
+        max-width: 80% !important;
+      }
+    }
   }
+
 }
 
 .m-blockchain--value-logos {
@@ -306,6 +324,7 @@ m-blockchain--marketing {
 
     @media screen and (max-width: 500px) {
       width: auto;
+      margin: 8px auto !important;
     }
   }
 
@@ -356,7 +375,7 @@ m-blockchain--marketing {
 .m-blockchain--marketing--blogs {
   display: flex;
   flex-direction: row;
-  max-width: 1380px;
+  max-width: 1008px;
   margin: auto;
   align-items: center;
   flex-wrap: wrap;
@@ -386,6 +405,10 @@ m-blockchain--marketing {
   padding: 16px;
   margin: auto;
   max-width: 1280px;
+}
+
+m-blockchain--purchase m-modal {
+  text-align: left;
 }
 
 m-blockchain--pre-register {
