@@ -27,6 +27,7 @@
 
         <div class="m-marketing--marketing-action-button">
           <m-blockchain--purchase phase="sale" *ngIf="minds.site_url != 'https://www.minds.com/'"></m-blockchain--purchase>
+          <m-blockchain--marketing--countdown *ngIf="minds.site_url == 'https://www.minds.com/'"></m-blockchain--marketing--countdown>
         </div>
       </div>
     </div>
@@ -83,6 +84,11 @@
   <div class="m-marketing--section m-marketing--section-margin m-blockchain--marketing--press">
     <div class="m-marketing--section--grid">
       <h2 style="text-align: center; width: 100%" i18n="@@M__TOKEN_MARKETING__PRESS">Press</h2>
+    </div>
+
+     <div class="m-blockchain--marketing--links">
+      <a class="m-btn m-btn--slim m-btn--action" target="_blank" href="https://cdn-assets.minds.com/front/dist/assets/documents/Overview-6thAugust2018.pdf">Overview (pdf)</a>
+      <a class="m-btn m-btn--slim m-btn--action" target="_blank" href="https://cdn-assets.minds.com/front/dist/assets/documents/PressKit-6thAugust2018.pdf">Press Kit (pdf)</a>
     </div>
 
     <div class="m-marketing--section--grid">

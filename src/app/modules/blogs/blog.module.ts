@@ -54,6 +54,7 @@ const routes: Routes = [
     BlogViewInfinite,
     BlogEdit,
     BlogListComponent,
+    BlogTileComponent,
   ],
   entryComponents: [
     BlogCard

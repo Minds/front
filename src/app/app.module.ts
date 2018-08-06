@@ -48,6 +48,7 @@ import { NewsfeedModule } from './modules/newsfeed/newsfeed.module';
 import { MediaModule } from './modules/media/media.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { BlockchainModule } from './modules/blockchain/blockchain.module';
+import { BlockchainMarketingModule } from './modules/blockchain/marketing/marketing.module';
 import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 
@@ -71,7 +72,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     CaptchaModule,
     CommonModule,
     WalletModule,
-    CheckoutModule,
+    //CheckoutModule,
     MonetizationModule,
     PlusModule,
     AdsModule,
@@ -99,6 +100,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     MediaModule,
     AuthModule,
     BlockchainModule,    
+    BlockchainMarketingModule,
     BrandingModule,
     CommentsModule,
 

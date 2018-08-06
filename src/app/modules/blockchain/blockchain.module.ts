@@ -45,7 +45,7 @@ const cryptoRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FaqModule,
-    BlockchainMarketingModule,
+    //    BlockchainMarketingModule,
   ],
   declarations: [
     BlockchainConsoleComponent,

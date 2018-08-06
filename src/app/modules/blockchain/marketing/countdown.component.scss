@@ -1,0 +1,25 @@
+.m-blockchain--marketing--countdown {
+  color: #FFF;
+  display: flex;
+  flex-direction: row;
+
+  .m-blockchain--marketing--countdown--col {
+    flex: 1;
+    text-align: center;
+    
+    span {
+      display: block;
+      font-size: 42px;
+      line-height: 48px;
+      font-weight: 600;
+    }
+
+    label {
+      text-transform: uppercase;
+      letter-spacing: 1.25px;
+      font-weight: 300;
+    }
+  }
+  
+}
+
