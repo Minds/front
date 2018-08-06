@@ -38,7 +38,7 @@ export class BlockchainMarketingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     //this.poll();
 
-    this.title.setTitle('The Minds Cryptocurrency');
+    this.title.setTitle('The Minds Token');
     this.updatePledgeConfirmation();
   }
 
