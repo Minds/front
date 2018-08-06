@@ -26,13 +26,14 @@ export class BlockchainMarketingBlogsComponent {
       header_bg: true,
      },
      { 
-      guid: "871789298595016704",
-      title: "How to buy ETH on Coinbase",
-      ownerObj: {
-        name: "Minds",
-        username: "minds",
-        guid: "100000000000000519",
+       guid: "871789298595016704",
+       title: "How to buy ETH on Coinbase",
+       ownerObj: {
+         name: "Minds",
+         username: "minds",
+         guid: "100000000000000519",
        },
+       thumbnail_src: window.Minds.cdn_url + 'fs/v1/banners/871789298595016704/1533585765',
        header_bg: true,
      },
      {
