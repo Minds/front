@@ -6,20 +6,24 @@
     </div>
 
     <div class="m-marketing--hero--inner">
+      <div class="m-marketing--hero--overlay"></div>
+
       <div class="m-marketing--hero--slogans">
         <h1 i18n="@@BOOST__MKT__BOOST_TITLE">Boost</h1>
         <h3 i18n="@@BOOST__MKT__PROMOTE_YOUR_CHANNEL_SUBTITLE">Promote your channel and content. Expand your reach.</h3>
       </div>
 
-      <div class="m-marketing--hero--action-button">
-        <a class="mdl-button mdl-button--colored mdl-color--green mdl-color-text--white"
-          routerLink="/boost/console/newsfeed/create"
-          i18n="@@BOOST__MKT__CREATE_A_BOOST_ACTION"
-          >
-          Create a boost
-        </a>
+      <div class="m-marketing--hero--actions">
+        <div class="m-marketing--hero--action-button" *ngIf="user">
+          <a class="mdl-button mdl-button--colored mdl-color--green mdl-color-text--white"
+            routerLink="/boost/console/newsfeed/create"
+            i18n="@@BOOST__MKT__CREATE_A_BOOST_ACTION"
+            >
+            Create a boost
+          </a>
+        </div>
       </div>
-      <div class="m-marketing--hero--overlay"></div>
+      
     </div>
   </div>
 
