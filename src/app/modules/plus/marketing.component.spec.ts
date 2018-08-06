@@ -118,7 +118,7 @@ describe('PlusMarketingComponent', () => {
 
   it('Should load correctly', () => {
     const marketing = fixture.debugElement.query(By.css('.m-marketing'));
-    const marketingInner = fixture.debugElement.query(By.css('.m-marketing--header-inner'));
+    const marketingInner = fixture.debugElement.query(By.css('.m-marketing--hero-inner'));
     expect(marketing).not.toBeNull();
     expect(marketingInner).not.toBeNull();
   });
