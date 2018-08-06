@@ -41,6 +41,40 @@
     </div>
   </section>
 
+  <section class="m-marketing--section">
+    <div class="m-marketing--section--subsection m-marketing--section--subsection--first" style="border-bottom: 0"> 
+      <div class="m-marketing--section--subsection-container" style="padding:0">
+        <div class="m-marketing--section--subsection-left m-marketing--section--subsection-image" style="text-align:center">
+          <img [src]="minds.cdn_assets_url + 'assets/marketing/minds-eth.jpg'" style="max-width: 300px;"/>
+        </div>
+        <div class="m-marketing--section--subsection-right m-marketing--section--subsection-video"
+            style="overflow: hidden;
+                border: 1px solid #ddd;
+                border-radius: 3px;
+                padding: 0;
+                flex: auto;
+                height: auto;
+                max-height: 320px;
+                min-height: 0;">
+          <m-video
+            width="100%"
+            style="background:#000; height:auto; max-height: 320px;"
+            [muted]="false"
+            [poster]="minds.cdn_assets_url + 'assets/marketing/witch-head-1771758_1920.jpg'"
+            [src]="[{ 'res': '360', 'uri': 'api/v1/media/872156064642600960/play', 'type': 'video/mp4' }]"
+            guid="872156064642600960"
+            [torrent]="[{ res: '360', key: '872156064642600960/360.mp4' }]"
+            #player>
+          </m-video>    
+        </div> 
+      </div>
+    </div>
+  </section>
+
+  <section class="m-marketing--section">
+     <m-blockchain--marketing--blogs></m-blockchain--marketing--blogs>
+  </section>
+
   <section class="m-marketing--section" style="background-color: #f8f8f8; padding-bottom: 0;">
     <h1 class="" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">How the economy works</h1>
     <m-marketing--features [panels]="{ 'newsfeed': false }"></m-marketing--features>
