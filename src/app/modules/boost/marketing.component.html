@@ -1,24 +1,26 @@
 <div class="m-marketing">
 
-  <div class="m-marketing--header">
-    <div class="m-marketing--background-video">
+  <div class="m-marketing--hero">
+    <div class="m-marketing--hero--video">
       <img [src]="minds.cdn_assets_url + 'assets/photos/rocket.jpg'">
     </div>
 
-    <div class="m-marketing--header-inner">
-      <h1 i18n="@@BOOST__MKT__BOOST_TITLE">Boost</h1>
-      <h3 i18n="@@BOOST__MKT__PROMOTE_YOUR_CHANNEL_SUBTITLE">Promote your channel and content. Expand your reach.</h3>
+    <div class="m-marketing--hero--inner">
+      <div class="m-marketing--hero--slogans">
+        <h1 i18n="@@BOOST__MKT__BOOST_TITLE">Boost</h1>
+        <h3 i18n="@@BOOST__MKT__PROMOTE_YOUR_CHANNEL_SUBTITLE">Promote your channel and content. Expand your reach.</h3>
+      </div>
 
-      <div class="m-marketing--action-button">
+      <div class="m-marketing--hero--action-button">
         <a class="mdl-button mdl-button--colored mdl-color--green mdl-color-text--white"
           routerLink="/boost/console/newsfeed/create"
           i18n="@@BOOST__MKT__CREATE_A_BOOST_ACTION"
-        >
-        Create a boost
-      </a>
+          >
+          Create a boost
+        </a>
       </div>
+      <div class="m-marketing--hero--overlay"></div>
     </div>
-    <div class="m-marketing--overlay"></div>
   </div>
 
   <div class="m-marketing--contents m-layout--row">

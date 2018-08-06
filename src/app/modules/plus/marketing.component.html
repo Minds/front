@@ -1,22 +1,28 @@
 <div class="m-marketing">
 
-  <div class="m-marketing--header">
-    <div class="m-marketing--background-video">
+  <div class="m-marketing--hero">
+
+    <div class="m-marketing--hero--video">
       <img [src]="minds.cdn_assets_url + 'assets/photos/fractal.jpg'">
     </div>
+  
+    <div class="m-marketing--hero--inner">
 
-    <div class="m-marketing--header-inner">
-      <h1 i18n="@@PLUS__MKT__PLUS_TITLE">Minds Plus</h1>
-      <h3 i18n="@@PLUS__MKT__PLUS_DESC">Upgrade your channel and unlock premium features</h3>
-
-      <div class="m-marketing--action-button">
-        <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isPlus()" (click)="openSubscription()" [hidden]="showSubscription" i18n="@@PLUS__MKT__PLUS_UPGRADE_ACTION">Upgrade - $5.00/month</button>
-        <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login" i18n="@@PLUS__MKT__PLUS_UPGRADE_ACTION">Upgrade - $5.00/month</button>
-        <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="cancelSubscription()" i18n="@@PLUS__MKT__CANCEL_ACTION">Cancel Plus</button>
+      <div class="m-marketing--slogans">
+        <h1 i18n="@@PLUS__MKT__PLUS_TITLE">Minds Plus</h1>
+        <h3 i18n="@@PLUS__MKT__PLUS_DESC">Upgrade your channel and unlock premium features</h3>
       </div>
-    </div>
+    
+      <div class="m-marketing--hero--actions">
+        <div class="m-marketing--action-button">
+          <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isPlus()" (click)="openSubscription()" [hidden]="showSubscription" i18n="@@PLUS__MKT__PLUS_UPGRADE_ACTION">Upgrade - $5.00/month</button>
+          <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login" i18n="@@PLUS__MKT__PLUS_UPGRADE_ACTION">Upgrade - $5.00/month</button>
+          <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="isPlus()" (click)="cancelSubscription()" i18n="@@PLUS__MKT__CANCEL_ACTION">Cancel Plus</button>
+        </div>
+      </div>
 
-    <div class="m-marketing--overlay"></div>
+      <div class="m-marketing--hero--overlay"></div>
+    </div>
   </div>
 
   <m-plus--subscription #subscription [hidden]="!showSubscription"></m-plus--subscription>
