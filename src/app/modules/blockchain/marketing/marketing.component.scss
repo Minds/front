@@ -135,6 +135,11 @@ m-blockchain--marketing {
   line-height: 48px;
   white-space: nowrap;
   margin-right: 8px;
+
+  @media screen and (max-width: 420px) {
+    font-size: 10px;
+    padding: 6px;
+  }
 }
 
 .m-blockchain--marketing--modal {
