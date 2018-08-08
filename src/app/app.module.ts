@@ -51,6 +51,7 @@ import { BlockchainModule } from './modules/blockchain/blockchain.module';
 import { BlockchainMarketingModule } from './modules/blockchain/marketing/marketing.module';
 import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
+import { NodesMarketingModule } from './modules/nodes/nodes.module';
 
 @NgModule({
   bootstrap: [
@@ -101,6 +102,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     AuthModule,
     BlockchainModule,    
     BlockchainMarketingModule,
+    NodesMarketingModule,
     BrandingModule,
     CommentsModule,
 
