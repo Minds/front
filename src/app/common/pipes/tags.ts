@@ -20,7 +20,7 @@ export class TagsPipe {
     value = value.replace(mail, '<a href="mailto:$&" target="_blank" rel="noopener noreferrer">$&</a>');
 
     //#hashtag
-    var hash = /(?<!(https?|ftp|file):\/\/[^\s\]]+)#(\w+)/gim;
+    var hash = /(^|\s||)#(\w+)/gim;
     value = value.replace(hash, '$1<a href="/search;q=%23$2;ref=hashtag" target="_blank">#$2</a>');
 
     //@tag
