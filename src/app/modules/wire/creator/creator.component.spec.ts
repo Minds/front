@@ -263,7 +263,6 @@ describe('WireCreatorComponent', () => {
     sendButton = fixture.debugElement.query(By.css('.m-wire--creator--submit > button.m-wire--creator-button'));
 
     comp.owner = owner;
-
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -316,7 +315,7 @@ describe('WireCreatorComponent', () => {
     expect(title.nativeElement.textContent).toContain('Payment Method');
   });
 
-  it('should have payment method list (onchain, offchain, credit card)', () => {
+  it('should have payment method list (onchain, offchain)', () => {
     const list = fixture.debugElement.query(By.css('section.m-wire--creator-payment-section > ul.m-wire--creator-selector'));
     expect(list).not.toBeNull();
 
@@ -324,7 +323,6 @@ describe('WireCreatorComponent', () => {
 
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:first-child > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('OnChain');
     expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(2) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('OffChain');
-    //expect(fixture.debugElement.query(By.css('.m-wire--creator-selector > li:nth-child(3) > .m-wire--creator-selector-type > h5 > span')).nativeElement.textContent).toContain('Credit Card');
   });
 
   it('clicking on a payment option should highlight it', fakeAsync(() => {
@@ -342,14 +340,6 @@ describe('WireCreatorComponent', () => {
     tick();
 
     expect(onchainOption.nativeElement.classList.contains('m-wire--creator-selector--highlight')).toBeTruthy();
-  }));
-
-  it('if selected payment method is credit card, then a card selector should appear', fakeAsync(() => {
-    tick();
-    comp.setPayloadType('creditcard');
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-payment'))).not.toBeNull();
   }));
 
   it('should have an amount section', () => {
@@ -412,24 +402,7 @@ describe('WireCreatorComponent', () => {
     expect(creditCardOption).not.toBeNull();
   });
 
-
-  it(`should show stripe checkout component when selecting credit card`, () => {
-    fixture.detectChanges();
-
-    const creditCardOption = getPaymentMethodItem(3);
-    creditCardOption.nativeElement.click();
-    fixture.detectChanges();
-
-    expect(fixture.debugElement.query(By.css('.m-wire--creator-payment minds-payments-stripe-checkout'))).not.toBeNull();
-  });
-
-  xit('should have a recurring checkbox', () => {
-    comp.setPayloadType('onchain');
-    fixture.detectChanges();
-    expect(getRecurringCheckbox()).not.toBeNull();
-  });
-
-  xit(`recurring checkbox should toggle wire's recurring property`, () => {
+  it(`recurring checkbox should toggle wire's recurring property`, () => {
 
     comp.setPayloadType('onchain');
     fixture.detectChanges();
@@ -442,6 +415,7 @@ describe('WireCreatorComponent', () => {
 
     fixture.detectChanges();
 
+    expect(checkbox).not.toBeNull();
     expect(comp.wire.recurring).toBe(true);
   });
 
