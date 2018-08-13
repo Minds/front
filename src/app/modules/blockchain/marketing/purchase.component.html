@@ -35,8 +35,8 @@
       <td class="m-blockchain--marketing--pledge--input">
         <input type="number" class="m-input m-border" [(ngModel)]="amount" />
         <span class="m-blockchain--marketing--pledges--eth-label">ETH</span>
-        <button 
-          class="m-btn m-btn--action" 
+        <button
+          class="m-btn m-btn--action"
           (click)="purchase()"
           i18n="@@M__PURCHASE_PURCHASE_HEADER">
           Purchase
@@ -46,7 +46,7 @@
   </table>
 </div>
 
-<m-modal-signup-on-action 
+<m-modal-signup-on-action
   *ngIf="showLoginModal"
   open="true"
   (closed)="closeLoginModal()"
@@ -54,12 +54,12 @@
   [overrideOnboarding]="true">
 </m-modal-signup-on-action>
 
-<m-modal 
+<m-modal
   open="true"
   *ngIf="showPledgeModal"
   (closed)="closePledgeModal()"
   >
-  
+
   <div class="m-blockchain--marketing--modal">
 
     <div class="m-token--onboarding" *ngIf="!session.getLoggedInUser().rewards">
@@ -74,7 +74,7 @@
         Token {{ phase === 'presale' ? 'pledges' : 'purchases'}} over 40 ETH need to be approved by Minds before they can be
         issued.
       </p>
-  
+
       <table>
         <tr>
           <td><input id="ofac-check" type="checkbox" [(ngModel)]="ofac"></td>
@@ -90,7 +90,17 @@
             class="m-blockchain--marketing--pledge--check-label"
           >
             <label for="use-check" i18n="@@M__PURCHASE_INVESTIMENT_INTENT">
-              I am purchasing the tokens for use on the Minds Platform, and not as an investment. 
+              I am purchasing the tokens for use on the Minds Platform, and not as an investment.
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td><input id="terms-check" type="checkbox" [(ngModel)]="terms"></td>
+          <td
+            class="m-blockchain--marketing--pledge--check-label"
+          >
+            <label for="use-check" i18n="@@M__PURCHASE_TERMS">
+              I have read and accept the <a href="https://cdn-assets.minds.com/front/dist/assets/documents/TermsOfSale-v0.1.pdf" target="_blank">Terms Of Sale</a> for the Minds Token
             </label>
           </td>
         </tr>
@@ -101,28 +111,28 @@
       <h2 i18n="@@M__PURCHASE_COMPLETED_H2">Thank you for your purchase of {{tokens | number:'1.0-4'}} Tokens</h2>
       <p class="m-blockchain--marketing--pledge--note" i18n="@@M__PURCHASE_COMPLETED_NOTE">Your transaction is processing and we will notify you once the transaction is complete.</p>
       <p class="m-blockchain--marketing--pledge--note" i18n="@@M__PURCHASE_COMPLETED_NOTE_REVIEW" *ngIf="amount > 60">
-        Because your purchase was over 60 ETH, it may take over 24 hours for the transaction to be completed. 
+        Because your purchase was over 60 ETH, it may take over 24 hours for the transaction to be completed.
         If you would like to contact us, please reach out to info@minds.com.
         </p>
       <br/>
     </div>
 
     <div>
-      <button 
+      <button
         class="m-btn m-btn--slim m-btn--action"
         (click)="confirm()"
         [disabled]="!canConfirm()"
         *ngIf="!confirming && !confirmed"
         i18n="@@M__PURCHASE_BUTTON">
-        Purchase 
+        Purchase
       </button>
-      <button 
+      <button
         class="m-btn m-btn--slim"
         *ngIf="confirming"
         i18n="@@M__PURCHASE_PLEASE_WAIT_BUTTON">
         Please wait...
       </button>
-      <button 
+      <button
         class="m-btn m-btn--slim"
         *ngIf="confirmed"
         i18n="@@M__PURCHASE_COMPLETED">

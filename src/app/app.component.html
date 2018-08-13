@@ -9,6 +9,14 @@
 </m-topbar>
 
 <m-body class="mdl-color--grey-100">
+  <m-announcement [id]="'blockchain:presale'">
+    <span class="m-blockchain--wallet-address-notice--action"
+      routerLink="/tokens" 
+      i18n="@@BLOCKCHAIN__SALE__NOTICE"
+    >
+    The MINDS token will go live Monday, August 13th. Learn more here.
+    </span>
+  </m-announcement>   
   <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
   <router-outlet></router-outlet>
 </m-body>
