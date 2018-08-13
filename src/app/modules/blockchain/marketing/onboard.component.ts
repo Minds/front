@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { OnInit, Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
 import { TokenRewardsOnboardingComponent } from '../../wallet/tokens/onboarding/rewards/rewards.component';
 
@@ -8,7 +8,7 @@ import { TokenRewardsOnboardingComponent } from '../../wallet/tokens/onboarding/
     <ng-template dynamic-host></ng-template>
   `
 })
-export class BlockchainMarketingOnboardComponent implements AfterViewInit {
+export class BlockchainMarketingOnboardComponent implements OnInit {
 
   @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
 
@@ -18,7 +18,7 @@ export class BlockchainMarketingOnboardComponent implements AfterViewInit {
   constructor(private _componentFactoryResolver: ComponentFactoryResolver,) {
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.loadComponent();
   }
 
