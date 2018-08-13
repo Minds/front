@@ -31,12 +31,13 @@ export class BlockchainPurchaseComponent implements OnInit {
     requested: 0,
     issued: 0,
   };
-  
+
   amount: number = 0.2;
 
   address: string = '';
   ofac: boolean = false;
   use: boolean = false;
+  terms: boolean = false;
 
   autodetectedWallet: boolean | null = null;
 
@@ -62,7 +63,7 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   ngOnInit() {
     this.loadWalletAddress();
-    this.load();  
+    this.load();
   }
 
   get tokens() {
@@ -111,7 +112,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   }
 
   canConfirm() {
-    return this.amount > 0 && this.ofac && this.use;
+    return this.amount > 0 && this.ofac && this.use && this.terms;
   }
 
   async confirm() {
