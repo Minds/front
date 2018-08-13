@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import * as BN from 'bn.js';
 
 import { Client } from '../../../../services/api/client';
+import { Session } from '../../../../services/session';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
 
@@ -16,6 +17,7 @@ export class WalletBalanceTokensComponent implements OnInit {
 
   inProgress: boolean = false;
   balance: number = 0;
+  testnetBalance: number = 0;
   addresses: Array<any> = [];
   minds = window.Minds;
 
@@ -24,6 +26,7 @@ export class WalletBalanceTokensComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
+    public session: Session,
   ) { }
 
   ngOnInit() {
@@ -73,6 +76,7 @@ export class WalletBalanceTokensComponent implements OnInit {
 
       if (response) {
         this.balance = response.balance;
+        this.testnetBalance = response.testnetBalance;
         this.addresses = response.addresses;
       } else {
         console.error('No data');

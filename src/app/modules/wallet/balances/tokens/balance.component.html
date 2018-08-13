@@ -46,10 +46,37 @@
       </div>
   
     </div>
+
+    <div class="m-wallet--balance--addresses-address" *ngIf="!session.getLoggedInUser().rewards">
+
+      <div class="m-wallet--balance--addresses-address-col">
+        <label class="m-wallet--balance--addresses-address-label">
+          <span i18n="@@WALLET__BALANCES__TOKENS__ADDRESS_LABEL">Testnet Rewards</span>
+
+          <m-tooltip icon="help">
+            Signup for the rewards system with your phone number to receiver these Tokens
+          </m-tooltip>
+        </label>
+        <span class="m-wallet--balance--addresses-address-address">
+          Pending
+        </span>
+      </div>
+
+      <div class="m-wallet--balance--addresses-address-col">
+        <span class="m-wallet--balance--addresses-address-balance">
+         {{ testnetBalance | token:18 | number}}
+       </span>
+     </div>
+
+    </div>
+
   </div>
 
   <div class="m-wallet--balance--testnet m-border">
-    <p i18n="@@WALLET__BALANCES__TOKENS__RINKEBY_NOTICE">Minds is currently running on the Rinkeby TestNet.</p>
+    <p i18n="@@WALLET__BALANCES__TOKENS__RINKEBY_NOTICE">
+      Minds is currently running on the 
+      <a href="https://etherscan.com/token/0xb26631c6dda06ad89b93c71400d25692de89c068" target="_blank">Ethereum Mainnet</a>.
+    </p>
     <p style="margin-top: 8px"><b i18n="@@WALLET__BALANCES__TOKENS__TOKEN_TO_VIEWS_CONV_1_1000">1 Token = 1000 Views</b></p>
   </div>
 

@@ -45,6 +45,7 @@ export class WithdrawContractService {
   // Withdraw
 
   async request(guid: string | number, amount: number, message: string = '') {
+    await this.contract(); //wait for instance to get correct info
     const tokens = amount / (10 ** 18);
     const gasLimit = 67839; //TODO: make this dynamic
     const gas = (new BN(this.instance.defaultTxObject.gasPrice)).mul(new BN(gasLimit));
