@@ -11,6 +11,7 @@ import { Client } from '../../common/api/client.service';
 export class I18nMarketingComponent {
 
   user = window.Minds.user;
+  minds = window.Minds;
 
   constructor(private client: Client, private cd: ChangeDetectorRef) {
   }
