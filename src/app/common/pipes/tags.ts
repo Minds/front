@@ -28,7 +28,7 @@ export class TagsPipe {
     });
 
     //@tag
-    var at = /(^|\s|\W)@(\w*[a-zA-Z_]+\w*)/gim;
+    var at = /(^|\s|\W)@(\w*[a-zA-Z_-]+\w*)/gim;
     value = value.replace(at, '$1<a class="tag" href="/$2" target="_blank">@$2</a>');
 
     return value;
