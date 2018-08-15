@@ -36,10 +36,6 @@
     <div class="m-group--stats mdl-tabs__tab-bar"
       [class.m-group--stats--narrow]="group['is:owner'] && group.membership != 2"
     >
-      <a [routerLink]="['/groups/profile', group.guid, 'activity']" class="mdl-tabs__tab minds-first-tab mdl-color-text--blue-grey-500">
-        <span i18n="Count of activities@@M__COMMON__FEED_COUNT">Feed</span>
-        <b>{{group['activity:count'] | number}}</b>
-      </a>
       <a [routerLink]="['/groups/profile', group.guid, 'members']" class="mdl-tabs__tab mdl-color-text--blue-grey-500">
         <span i18n="@@M__COMMON__MEMBERS">Members</span>
         <b>{{group['members:count'] | number}}</b>
