@@ -21,7 +21,11 @@ export class TagsPipe {
 
     //#hashtag
     var hash = /(^|\s||)#(\w+)/gim;
-    value = value.replace(hash, '$1<a href="/search;q=%23$2;ref=hashtag" target="_blank">#$2</a>');
+    value = value.replace(hash, (str: any, p1: any, p2: any, offset: any, s: any) => {
+      const nc = s.substr(offset+str.length, 1);
+      if(['"', '<'].includes(nc)) return str;
+      return `${p1}<a href="/search;q=%23${p2};ref=hashtag" target="_blank">#${p2}</a>`;
+    });
 
     //@tag
     var at = /(^|\s|\W)@(\w*[a-zA-Z_]+\w*)/gim;
