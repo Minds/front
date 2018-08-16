@@ -65,7 +65,11 @@ describe('ChannelComponent', () => {
         MockComponent({ 
           selector: 'm-channel--sidebar',
           inputs: [ 'user', 'editing' ],
-        }), 
+        }),
+        MockComponent({
+          selector: 'm-channel--explicit-overlay',
+          inputs: [ 'channel' ]
+        }),
       ], 
       imports: [
         FormsModule,
