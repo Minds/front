@@ -1,0 +1,27 @@
+<div class="m-blockchain--pre-register">
+  <h2 i18n="@@M__BLOCKCHAIN__PRE_REGISTER__TDE_TITLE">Token Distribution Event</h2>
+
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias assumenda culpa ex, facere in optio quo velit!
+    Aliquid consequuntur cupiditate dolores iure laudantium odio pariatur quibusdam rem sequi voluptates!
+  </p>
+
+  <p *ngIf="error" class="m-blockchain--pre-register--error" i18n="@@M__BLOCKCHAIN__PRE_REGISTER__ERROR_LABEL">
+    Error: {{ error }}
+  </p>
+
+  <div class="m-blockchain--pre-register--action">
+    <button class="m-blockchain--pre-register-button"
+      [hidden]="inProgress || success"
+      (click)="preRegister()"
+      i18n="@@M__BLOCKCHAIN__PRE_REGISTER__PRE_REGISTER_ACTION"
+    >Pre-register</button>
+
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+
+    <ng-container *ngIf="success">
+      <i class="material-icons">check</i>
+      <span i18n="@@M__BLOCKCHAIN__PRE_REGISTER__PRE_REGISTERED_NOTE">Pre-registered</span>
+    </ng-container>
+  </div>
+</div>

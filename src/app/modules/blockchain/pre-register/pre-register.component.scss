@@ -1,0 +1,45 @@
+.m-blockchain--pre-register {
+  font-family: Roboto, sans-serif;
+
+  h2 {
+    font-size: 36px;
+  }
+
+  p, h2 {
+    margin: 0 0 ($minds-padding * 4);
+  }
+}
+
+.m-blockchain--pre-register--action {
+  .material-icons {
+    font-size: 16px;
+    vertical-align: text-top;
+  }
+
+  font-weight: 200;
+}
+
+.m-blockchain--pre-register--error {
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+.m-blockchain--pre-register-button {
+  letter-spacing: 2.33px;
+  appearance: none;
+  padding: 8px 32px;
+  background: none;
+  border: 1px solid #555;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: uppercase;
+  color: #555;
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.35;
+  }
+}

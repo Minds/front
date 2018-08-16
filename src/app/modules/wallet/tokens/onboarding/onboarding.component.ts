@@ -48,7 +48,7 @@ export class TokenOnboardingComponent {
   loadSlide() {
     const viewContainerRef = this.host.viewContainerRef;
     viewContainerRef.clear();
-    
+
     if (!this.service.slide) {
       return;
     }
