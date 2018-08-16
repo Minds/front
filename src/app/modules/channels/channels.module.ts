@@ -21,6 +21,7 @@ import { ChannelsListComponent } from './list.component';
 import { ChannelsTileComponent } from './tile/tile.component';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { ExplicitOverlayComponent } from './explicit-overlay/overlay.component';
 
 const routes: Routes = [
   { path: 'channels/:filter', component: ChannelsListComponent },
@@ -52,6 +53,7 @@ const routes: Routes = [
     ChannelsTileComponent,
     ChannelFeedComponent,
     ChannelSidebar,
+    ExplicitOverlayComponent,
   ],
   exports: [
     ChannelModulesComponent,

@@ -86,6 +86,22 @@ import { Router } from '@angular/router';
         >
         Not spam
       </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="user.is_mature"
+        (click)="setExplicit(true); showMenu = false"
+        i18n="@@M__ACTION__MARK_EXPLICIT"
+      >
+        Set as explicit
+      </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        [hidden]="!user.is_mature"
+        (click)="setExplicit(false); showMenu = false"
+        i18n="@@M__ACTION__REMOVE_EXPLICIT"
+      >
+        Remove Explicit
+      </li>
       <ng-container *ngIf="session.isAdmin()">
         <li class="mdl-menu__item" [hidden]="user.rating === 1" (click)="setRating(1)" i18n="@@M__ACTION__MARK_AS_SAFE">Mark as Safe</li>
         <li class="mdl-menu__item" [hidden]="user.rating === 2" (click)="setRating(2)" i18n="@@M__ACTION__MENU__MARK_AS_OPEN">Mark as Open</li>
@@ -279,6 +295,15 @@ export class UserDropdownButton {
       }
     } catch (e) {
       this.user['spam'] = !value ? 1 : 0;
+    }
+  }
+
+  async setExplicit(value: boolean) {
+    this.user.is_mature = value;
+    try {
+      await this.client.post(`api/v1/entities/explicit/${this.user.guid}`, { value: value ? '1': '0' });
+    } catch (e) {
+      this.user.is_mature = !value;
     }
   }
 
