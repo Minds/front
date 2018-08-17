@@ -50,6 +50,7 @@
       > * {
         margin-left: 4px;
         margin-right: 4px;
+        vertical-align: middle;
       }
 
       .m-btn--with-icon {
@@ -58,6 +59,13 @@
           margin-right: 0px;
           margin-left: 4px;
         }
+      }
+
+      m-wire-threshold {
+        display: inline-block;
+        height: 32px;
+        vertical-align: middle;
+        line-height: 32px;
       }
 
       .m-mature-button {
