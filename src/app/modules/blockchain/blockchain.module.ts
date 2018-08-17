@@ -13,7 +13,6 @@ import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice/
 import { TransactionOverlayComponent } from './transaction-overlay/transaction-overlay.component';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
 import { BlockchainTdeBuyComponent } from './tde-buy/tde-buy.component';
-import { BlockchainPreRegisterComponent } from './pre-register/pre-register.component';
 import { Web3WalletService } from './web3-wallet.service';
 import { TokenContractService } from './contracts/token-contract.service';
 import { BoostContractService } from './contracts/boost-contract.service';
@@ -53,7 +52,6 @@ const cryptoRoutes: Routes = [
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
     BlockchainTdeBuyComponent,
-    BlockchainPreRegisterComponent,
   ],
   providers: [
     TransactionOverlayService,
@@ -105,7 +103,6 @@ const cryptoRoutes: Routes = [
     BlockchainTdeBuyComponent
   ],
   entryComponents: [
-    BlockchainPreRegisterComponent,
     BlockchainTdeBuyComponent,
   ]
 })

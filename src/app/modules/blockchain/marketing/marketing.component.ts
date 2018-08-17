@@ -6,7 +6,6 @@ import { Client } from '../../../services/api/client';
 import { MindsTitle } from '../../../services/ux/title';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { BlockchainPreRegisterComponent } from '../pre-register/pre-register.component';
 import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 
 @Component({

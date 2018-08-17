@@ -10,7 +10,7 @@
     </p>
 
     <div class="m-token--onboarding--rewards-input" *ngIf="!confirming">
-      <m-phone-input [(ngModel)]="number"></m-phone-input>
+      <m-phone-input [(ngModel)]="number" ngDefaultControl></m-phone-input>
       <m-tooltip icon="help" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_PHONE_TOLTIP">Please enter your phone number in order to join the rewards program</m-tooltip>
       <button class="m-btn m-btn--slim m-btn--action" (click)="verify()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION">Join</button>
       <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
