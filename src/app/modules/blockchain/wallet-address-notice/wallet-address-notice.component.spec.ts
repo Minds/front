@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { BlockchainWalletAddressNoticeComponent } from './wallet-address-notice.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -29,7 +29,8 @@ describe('BlockchainWalletAddressNoticeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         MockComponent({ selector: 'm-announcement', template: '<ng-content></ng-content>' }),
-        BlockchainWalletAddressNoticeComponent],
+        BlockchainWalletAddressNoticeComponent
+      ],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Web3WalletService, useValue: walletService },
@@ -42,6 +43,7 @@ describe('BlockchainWalletAddressNoticeComponent', () => {
 
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
+    jasmine.clock().install();
 
     fixture = TestBed.createComponent(BlockchainWalletAddressNoticeComponent);
 
@@ -60,14 +62,19 @@ describe('BlockchainWalletAddressNoticeComponent', () => {
     }
   });
 
-  it('should have an m-announcement with a prompt to set up the wallet', () => {
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
+  it('should have an m-announcement with a prompt to set up the wallet', fakeAsync(() => {
+    fixture.detectChanges();
     const announcement = fixture.debugElement.query(By.css('m-announcement'));
     expect(announcement).not.toBeNull();
 
     const text = fixture.debugElement.query(By.css('m-announcement span'));
     expect(text).not.toBeNull();
     expect(text.nativeElement.textContent).toContain('Hey, do you want to setup your Tokens wallet?');
-  });
+  }));
 
   it('clicking on the text should set up the wallet and navigate to /wallet/tokens/addresses', fakeAsync(() => {
     spyOn(comp, 'setWallet').and.callThrough();

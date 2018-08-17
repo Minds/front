@@ -34,6 +34,8 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
     if (wallet && !await this.blockchain.getWallet()) {
       this.address = wallet;
       this.detectChanges();
+    } else {
+      setTimeout(() => this.load(), 10000); // check every 10 seconds if there's a wallet detected
     }
   }
 
