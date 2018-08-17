@@ -42,6 +42,7 @@ import { WalletTokenContributionsOverviewComponent } from './tokens/contribution
 import { WalletTokenContributionsChartComponent } from './tokens/contributions/chart.component';
 import { WalletToken101Component } from './tokens/101/101.component';
 import { ModalsModule } from '../modals/modals.module';
+import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component';
 
 const walletRoutes : Routes = [
   { path: 'wallet', component: WalletComponent,
@@ -62,6 +63,7 @@ const walletRoutes : Routes = [
           { path: 'contributions', component: WalletTokenContributionsComponent },
           { path: 'addresses', component: WalletTokenAddressesComponent },
           { path: '101', component: WalletToken101Component },
+          { path: 'testnet', component: WalletTokenTestnetComponent },
         ] 
       },
       { path: 'usd', component: WalletUSDComponent, 
@@ -124,6 +126,7 @@ const walletRoutes : Routes = [
     WalletTokenContributionsOverviewComponent,
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
+    WalletTokenTestnetComponent,
   ],
   exports: [
     WalletComponent,

@@ -51,6 +51,13 @@
         <span i18n="@@WALLET__TOKENS__TOKEN_101">Token 101</span>
       </a>
       <a class="m-page--sidebar--navigation--item"
+        routerLink="/wallet/tokens/testnet"
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+      >
+        <i class="material-icons">link</i>
+        <span i18n="@@WALLET__TOKENS__TESTNET_TOKENS">Testnet Tokens</span>
+      </a>
+      <a class="m-page--sidebar--navigation--item"
         (click)="invite.open = true"
       >
         <m-modal-invite #invite [open]="invite.open" (closed)="invite.open = false"></m-modal-invite>

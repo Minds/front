@@ -1,0 +1,28 @@
+<div class="m-wallet-token--testnet--spinner" [hidden]="!inProgress">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+
+<div *ngIf="!inProgress">
+  <p>
+    You have {{offchainBalance}} offchain tokens
+  </p>
+
+  <div class="m-token--onboarding" *ngIf="!session.getLoggedInUser().rewards">
+    <m-token--onboarding--rewards skippable="false"></m-token--onboarding--rewards>
+  </div>
+
+  <div class="m-wallet-token--testnet--instructions"
+    *ngIf="session.getLoggedInUser().phone_number_hash">
+    If you have OnChain Token from the Test Net period, please follow the below steps in order to migrate them to the
+    Mainnet:
+    <ul>
+      <li>Transfer your Tokens to the following address: <strong>0x461f1c5768cdb7e567a84e22b19db0eaba069bad</strong>
+      </li>
+      <li>Please wait up to 72 hours to receive your tokens to the same address on the Mainnet</li>
+    </ul>
+
+    <div class="m-wallet-token--testnet--note">
+      Note: We will use a manual process and go through each received token address
+    </div>
+  </div>
+</div>
