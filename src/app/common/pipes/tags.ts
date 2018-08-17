@@ -1,37 +1,95 @@
-import { Pipe, Inject, Renderer } from '@angular/core';
+import { Pipe, Inject, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'tags'
 })
 
-export class TagsPipe {
+/**
+ * Tags pipe
+ */
+export class TagsPipe implements PipeTransform  {
 
-  transform(value: string) {
+  results = [];
 
-    if (!value || typeof value !== 'string')
-      return value;
+  /**
+   * Tags
+   */
+  tags = {
+    url: {
+      rule: /(\b(https?|ftp|file):\/\/[^\s\]]+)/gim,
+      replace: (m) => {
+        return `<a href="${m.match[1]}" target="_blank" rel="noopener noreferrer">${m.match[1]}</a>`;
+      }
+    },
+    mail: {
+      rule: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gim,
+      replace: (m) => {
+        return `<a href="mailto:${m.match[0]}" target="_blank" rel="noopener noreferrer">${m.match[0]}</a>`;
+      }
+    },
+    hash: {
+      rule: /(^|\s||)#(\w+)/gim,
+      replace: (m) => {
+        return  `${m.match[1]}<a href="/search;q=%23${m.match[2]};ref=hashtag" target="_blank">#${m.match[2]}</a>`;
+      }
+    },
+    at: {
+      rule: /(^|\s|\W)@(\w*[a-zA-Z_-]+\w*)/gim,
+      replace: (m) => {
+        return `${m.match[1]}<a class="tag" href="/${m.match[2]}" target="_blank">@${m.match[2]}</a>`;
+      }
+    }
+  };
 
-    //<a>tag
-    var url = /(\b(https?|ftp|file):\/\/[^\s\]]+)/gim;
-    value = value.replace(url, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+  /**
+   * Push a match to results array
+   * @param match
+   */
+  push(match: any) {
+    // ignore match inside others
+    if (this.results.findIndex(m => match.start >= m.start && match.end <= m.end) !== -1) {
+      return;
+    }
+    this.results.push(match);
+  }
 
-    //<a>tag
-    var mail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gim;
-    value = value.replace(mail, '<a href="mailto:$&" target="_blank" rel="noopener noreferrer">$&</a>');
+  /**
+   * Parse tags
+   * @param tag
+   * @param value
+   */
+  parse(tag: string, value: string) {
+    let match;
+    while ((match = this.tags[tag].rule.exec(value)) !== null) {
+      this.push({
+        type: tag,
+        start: match.index,
+        end: match.index + match[0].length,
+        match: match
+      });
+    }
+  }
 
-    //#hashtag
-    var hash = /(^|\s||)#(\w+)/gim;
-    value = value.replace(hash, (str: any, p1: any, p2: any, offset: any, s: any) => {
-      const nc = s.substr(offset+str.length, 1);
-      if(['"', '<'].includes(nc)) return str;
-      return `${p1}<a href="/search;q=%23${p2};ref=hashtag" target="_blank">#${p2}</a>`;
+  /**
+   * Replace tags
+   * @param str
+   */
+  replace(str) {
+    this.results.forEach(m => {
+      str = str.replace(m.match[0], this.tags[m.type].replace(m, str));
     });
 
-    //@tag
-    var at = /(^|\s|\W)@(\w*[a-zA-Z_-]+\w*)/gim;
-    value = value.replace(at, '$1<a class="tag" href="/$2" target="_blank">@$2</a>');
+    return str;
+  }
 
-    return value;
+  transform(value: string): string {
+    this.results = [];
+    this.parse('url', value);
+    this.parse('mail', value);
+    this.parse('hash', value);
+    this.parse('at', value);
+
+    return this.replace(value);
   }
 
 }

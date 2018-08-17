@@ -10,65 +10,124 @@ describe('TagPipe', () => {
   });
 
   it('should transform when # in the middle ', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring#name';
+    const pipe = new TagsPipe();
+    const string = 'textstring#name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/search')
+    expect(transformedString).toContain('<a href="/search');
   });
 
   it('should transform when # preceded by space ', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring #name';
+    const pipe = new TagsPipe();
+    const string = 'textstring #name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/search')
+    expect(transformedString).toContain('<a href="/search');
   });
 
   it('should transform when # preceded by [] ', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring [#name';
+    const pipe = new TagsPipe();
+    const string = 'textstring [#name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/search')
+    expect(transformedString).toContain('<a href="/search');
   });
 
   it('should transform when # preceded by () ', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring (#name)';
+    const pipe = new TagsPipe();
+    const string = 'textstring (#name)';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/search')
+    expect(transformedString).toContain('<a href="/search');
   });
 
   it('should transform when @ preceded by () ', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring (@name';
+    const pipe = new TagsPipe();
+    const string = 'textstring (@name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a class="tag"')
+    expect(transformedString).toContain('<a class="tag"');
   });
 
   it('should transform when @ preceded by [] ', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring [@name';
+    const pipe = new TagsPipe();
+    const string = 'textstring [@name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a class="tag"')
+    expect(transformedString).toContain('<a class="tag"');
   });
 
   it('should transform when @ preceded by space', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring @name';
+    const pipe = new TagsPipe();
+    const string = 'textstring @name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a class="tag"')
+    expect(transformedString).toContain('<a class="tag"');
   });
 
   it('should transform to an email', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring@name.com';
+    const pipe = new TagsPipe();
+    const string = 'textstring@name.com';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="mailto:textstring@name.com"')
+    expect(transformedString).toContain('<a href="mailto:textstring@name.com"');
   });
 
   it('should not transform when @ not present', () => {
-    let pipe = new TagsPipe();
-    let string = 'textstring name';
+    const pipe = new TagsPipe();
+    const string = 'textstring name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).not.toContain('<a class="tag"')
+    expect(transformedString).not.toContain('<a class="tag"');
+  });
+
+  it('should transform url http', () => {
+    const pipe = new TagsPipe();
+    const string = 'textstring http://minds.com/';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a href="http://minds.com/');
+  });
+
+  it('should transform url with https', () => {
+    const pipe = new TagsPipe();
+    const string = 'textstring https://minds.com/';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a href="https://minds.com/');
+  });
+
+  it('should transform url with ftp', () => {
+    const pipe = new TagsPipe();
+    const string = 'textstring ftp://minds.com/';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a href="ftp://minds.com/');
+  });
+
+  it('should transform url with file', () => {
+    const pipe = new TagsPipe();
+    const string = 'textstring file://minds.com/';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a href="file://minds.com/');
+  });
+
+  it('should transform url with a hastag', () => {
+    const pipe = new TagsPipe();
+    const string = 'text http://minds.com/#position';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('text <a href="http://minds.com/#position"');
+  });
+
+  it('should transform url with a hastag and @', () => {
+    const pipe = new TagsPipe();
+    const string = 'text http://minds.com/#position@some';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('text <a href="http://minds.com/#position@some"');
+  });
+
+  it('should transform many tags', () => {
+    const pipe = new TagsPipe();
+    const string = `text http://minds.com/#position@some @name
+    @name1 #hash1#hash2 #hash3 ftp://s.com name@mail.com
+    `;
+    const transformedString = pipe.transform(<any>string);
+
+    expect(transformedString).toContain('<a href="http://minds.com/#position@some"');
+    expect(transformedString).toContain('<a class="tag" href="/name"');
+    expect(transformedString).toContain('<a class="tag" href="/name1"');
+    expect(transformedString).toContain('<a href="/search;q=%23hash1;ref=hashtag"');
+    expect(transformedString).toContain('<a href="/search;q=%23hash2;ref=hashtag"');
+    expect(transformedString).toContain('<a href="/search;q=%23hash3;ref=hashtag"');
+    expect(transformedString).toContain('<a href="ftp://s.com"');
+    expect(transformedString).toContain('<a href="mailto:name@mail.com"');
   });
 });
