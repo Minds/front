@@ -57,7 +57,7 @@
 
     </div>
 
-    <div class="m-messenger--userlist-search">
+    <div class="m-messenger--userlist-search" [hidden]="opened_ribbon">
       <i class="material-icons">search</i>
       <input type="text" placeholder="Search" i18n-placeholder="@@MESSENGER__USERLIST__SEARCH_PH" #q (keyup)="search(q);">
     </div>
