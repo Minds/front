@@ -1,28 +1,31 @@
-<div class="m-wallet-token--testnet--spinner" [hidden]="!inProgress">
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-</div>
-
-<div *ngIf="!inProgress">
-  <p>
-    You have {{offchainBalance}} offchain tokens
-  </p>
-
+<div class="m-border" style="background: #FFF;">
+  
   <div class="m-token--onboarding" *ngIf="!session.getLoggedInUser().rewards">
     <m-token--onboarding--rewards skippable="false"></m-token--onboarding--rewards>
   </div>
 
   <div class="m-wallet-token--testnet--instructions"
-    *ngIf="session.getLoggedInUser().phone_number_hash">
-    If you have OnChain Token from the Test Net period, please follow the below steps in order to migrate them to the
-    Mainnet:
-    <ul>
-      <li>Transfer your Tokens to the following address: <strong>0x461f1c5768cdb7e567a84e22b19db0eaba069bad</strong>
-      </li>
-      <li>Please wait up to 72 hours to receive your tokens to the same address on the Mainnet</li>
-    </ul>
+    *ngIf="session.getLoggedInUser().rewards">
+    <p>
+        In order to claim your OnChain Tokens from the Rinkeby network, you will need to send them to our address (0x461f1c5768cdb7e567a84e22b19db0eaba069bad) for processing. This can be done by most Ethereum clients, including Metamask, or by using the form below. Token transfers can take up to 7 days.
+    </p>
 
-    <div class="m-wallet-token--testnet--note">
-      Note: We will use a manual process and go through each received token address
+    <div class="m-wallet-token--testnet--form m-layout--row">
+        <div class="">
+            <label>Address</label>
+        </div>
+        <div class="m-layout--cell">
+            <input class="m-input m-border" type="text" [(ngModel)]="address" />
+        </div>
+        <div class="m-layout--cell">
+            <button class="m-btn m-btn--slim m-btn--action"
+              (click)="transfer()"
+              [disabled]="inProgress"
+            >Transfer to MainNet</button>
+        </div>
     </div>
+    <p class="m-error" *ngIf="error">
+      {{error}}
+    </p>
   </div>
 </div>

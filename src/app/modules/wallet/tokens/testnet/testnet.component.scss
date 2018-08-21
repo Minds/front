@@ -1,16 +1,11 @@
 m-wallet-token--testnet {
-  font-size: 16px;
+  p {
+    font-size: 16px;
+  }
+
   .m-wallet-token--testnet--spinner {
     display: flex;
     align-items: center;
-  }
-  p {
-    width: 100%;
-    background: #FFF;
-    padding: 16px;
-    box-sizing: border-box;
-    font-size: 34px;
-    font-weight: 600;
   }
 
   .m-wallet-token--testnet--instructions {
@@ -23,5 +18,24 @@ m-wallet-token--testnet {
     background: #FFF;
     padding: 16px;
     box-sizing: border-box;
+  }
+
+  .m-wallet-token--testnet--form {
+    align-items: center;
+
+    label {
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.75px;
+    }
+
+    > div {
+      margin-right: 8px;
+    }
+  }
+
+  .m-error {
+    margin-top: 24px;
+    color: red;
   }
 }
