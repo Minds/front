@@ -42,11 +42,11 @@
         onfocus="this.removeAttribute('readonly');"
         />
       <m-tooltip class="tooltip-wrapper" icon="help" i18n="@@MINDS__PASSWORD_TOOLTIP" anchor="right">
-        Password must have more than 8 characters. Including uppercase, numbers, and special characters (ie. !,#,@)
+        Password must have more than 8 characters. Including uppercase, numbers, special characters (ie. !,#,@), and cannot have spaces.
       </m-tooltip>
     </div>
-    <div class="mdl-cell mdl-cell--12-col password-help" [hidden]="!form.value.password">
-      <span>Password must have more than 8 characters. Including uppercase, numbers, and special characters (ie. !,#,@)</span>
+    <div class="mdl-cell mdl-cell--12-col password-help" [hidden]="errorMessage || !form.value.password">
+      <span i18n="@@MINDS__PASSWORD_TOOLTIP">Password must have more than 8 characters. Including uppercase, numbers, special characters (ie. !,#,@), and cannot have spaces</span>
     </div>
     <div class="mdl-cell mdl-cell--12-col" [hidden]="!form.value.password">
       <input
