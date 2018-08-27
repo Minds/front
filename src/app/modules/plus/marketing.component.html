@@ -14,17 +14,11 @@
         <h3 i18n="@@PLUS__MKT__PLUS_DESC">Upgrade your channel and unlock premium features</h3>
       </div>
     
-      <div class="m-marketing--hero--actions">
-        <div class="m-marketing--action-button">
-          <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && !isPlus()" (click)="openSubscription()" [hidden]="showSubscription" i18n="@@PLUS__MKT__PLUS_UPGRADE_ACTION">Upgrade - $5.00/month</button>
-          <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="!user" routerLink="/login" i18n="@@PLUS__MKT__PLUS_UPGRADE_ACTION">Upgrade - $5.00/month</button>
-          <button class="mdl-button mdl-button--colored mdl-color--green" *ngIf="user && isPlus()" (click)="cancelSubscription()" i18n="@@PLUS__MKT__CANCEL_ACTION">Cancel Plus</button>
-        </div>
+      <div class="m-marketing--hero--actions m-marketing--action-button">
+        <m-plus--subscription></m-plus--subscription>
       </div>
     </div>
   </div>
-
-  <m-plus--subscription #subscription [hidden]="!showSubscription"></m-plus--subscription>
 
   <div class="m-marketing--contents m-layout--row">
     <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">

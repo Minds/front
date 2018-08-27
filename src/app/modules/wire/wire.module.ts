@@ -8,6 +8,7 @@ import { CheckoutModule } from '../checkout/checkout.module';
 import { FaqModule } from '../faq/faq.module';
 
 import { WireCreatorComponent } from './creator/creator.component';
+import { WirePaymentsCreatorComponent } from './payments-creator/creator.component';
 import { WireButtonComponent } from './button/button.component';
 import { WireChannelComponent } from './channel/channel.component';
 import { WireChannelTableComponent } from './channel/table/table.component';
@@ -50,6 +51,7 @@ const wireRoutes : Routes = [
     WireThresholdInputComponent,
     WireConsoleRewardsInputsComponent,
     WireConsoleRewardsComponent,
+    WirePaymentsCreatorComponent,
     WireConsoleComponent,
     WireConsoleLedgerComponent,
     WireConsoleSupporterComponent,
@@ -77,6 +79,7 @@ const wireRoutes : Routes = [
     WireCreatorComponent,
     WireConsoleComponent,
     WireMarketingComponent,
+    WirePaymentsCreatorComponent,
     WireLockScreenComponent,
     WireConsoleRewardsInputsComponent,
   ]

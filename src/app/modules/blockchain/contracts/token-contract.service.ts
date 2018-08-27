@@ -52,6 +52,7 @@ export class TokenContractService {
   async payment(amount: number) {
     return (await this.token()).transfer(this.web3Wallet.config.wallet_address, this.tokenToUnit(amount));
   }
+    
 
   // Balances
 

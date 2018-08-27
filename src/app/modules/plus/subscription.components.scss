@@ -1,7 +1,56 @@
-m-plus--subscription{
+m-plus--subscription {
   max-width: 600px;
   display: block;
-  margin: -100px auto 0;
+  margin: -120px auto 0;
   z-index: 5;
   position: relative;
+
+  .m-plus--subscription--select-payment-option {
+    margin: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .m-plus--subscription-currencies {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      padding: 8px 24px;
+      padding-left: 24px;
+      cursor: pointer;
+      user-select: none;
+
+      h4, span {
+        margin: 0;
+        font-weight: 300;
+        font-size: 24px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+      }
+      b {
+        font-weight: 400 !important;
+        letter-spacing: 3px;
+      }
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+
+  m--crypto-token-symbol {
+    font-size: 32px;
+    .m--crypto-token-symbol--stroke {
+      stroke: #555;
+    }
+
+    .m--crypto-token-symbol--fill {
+      fill: #555;
+    }
+  }
+  
 }

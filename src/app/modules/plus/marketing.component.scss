@@ -45,8 +45,6 @@
   }
 
   .m-plus--marketing-action-button{
-    margin-bottom: -80px;
-    margin-top: 32px;
     button{
       letter-spacing: 3px;
       font-size: 18px;
@@ -126,4 +124,8 @@
   padding: 16px;
   max-height: 600px;
   overflow: scroll;
+}
+
+.m-marketing--action-button button {
+  margin: 5px;
 }

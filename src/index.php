@@ -141,9 +141,6 @@
       ?>
       window.Minds = <?= json_encode($minds) ?>;
     </script>
-
-    <?php if (!isset($_COOKIE['disable_cookies'])) { ?>
-        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <?php } ?>
+  
   </body>
 </html>
