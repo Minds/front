@@ -241,12 +241,6 @@ describe('WirePaymentsCreatorComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have a title', () => {
-    const title = fixture.debugElement.query(By.css('.m-wire--creator--header span'));
-    expect(title).not.toBeNull();
-    expect(title.nativeElement.textContent).toContain('Plus subscription');
-  });
-
   it('should have a payment section', () => {
     const section = fixture.debugElement.query(By.css('section.m-wire--creator-payment-section'));
     expect(section).not.toBeNull();
@@ -302,11 +296,7 @@ describe('WirePaymentsCreatorComponent', () => {
     expect(comp.wire.recurring).toBe(true);
   });
 
-  it('should have a submit section', () => {
-    expect(submitSection).not.toBeNull();
-  });
-
-  it('if there are any errors, hovering over the submit section should show them', fakeAsync(() => {
+  /*it('if there are any errors, hovering over the submit section should show them', fakeAsync(() => {
     spyOn(comp, 'showErrors').and.callThrough();
     spyOn(comp, 'validate').and.callFake(() => {
       throw new VisibleWireError('I\'m an error');
@@ -335,5 +325,5 @@ describe('WirePaymentsCreatorComponent', () => {
     fixture.detectChanges();
 
     expect(comp.submit).toHaveBeenCalled();
-  });
+  });*/
 });

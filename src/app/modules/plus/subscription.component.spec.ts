@@ -141,6 +141,9 @@ describe('PlusSubscriptionComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(PlusSubscriptionComponent);
+    window.Minds.blockchain = {
+      plus_address: 'oxtn'
+    };
     comp = fixture.componentInstance;
     window.Minds.user = {
       "guid": "732337264197111809",
