@@ -95,8 +95,8 @@ export class BlogListComponent {
       this.offset = '';
 
     this.inProgress = true;
-    this.client.get('api/v1/blog/' + this.filter + '/' + this._filter2, { 
-        limit: 12, 
+    this.client.get('api/v1/blog/' + this.filter + '/' + this._filter2, {
+        limit: 12,
         offset: this.offset,
         rating: this.rating,
       })
@@ -108,13 +108,7 @@ export class BlogListComponent {
           return false;
         }
 
-        if (refresh) {
-          this.pushToColumns(response.entities);
-        } else {
-          if (this.offset)
-            response.entities.shift();
-          this.pushToColumns(response.entities);
-        }
+        this.pushToColumns(response.entities);
 
         this.offset = response['load-next'];
         if (!this.offset) {
@@ -155,7 +149,7 @@ export class BlogListComponent {
           this.entities_0.push(blogs[i]);
         } else {
           this.entities_1.push(blogs[i]);
-        } 
+        }
       }
     }
   }
