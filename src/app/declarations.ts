@@ -1,4 +1,5 @@
 import {AdminAnalytics} from './controllers/admin/analytics/analytics';
+import {AdminReportsDownload} from './controllers/admin/reports-download/reports-download';
 import {AdminBoosts} from './controllers/admin/boosts/boosts';
 import {AdminPages} from './controllers/admin/pages/pages';
 import {AdminReports} from './controllers/admin/reports/reports';
@@ -33,4 +34,5 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminVerify,
   AdminPurchasesComponent,
   AdminWithdrawals,
+  AdminReportsDownload,
 ];

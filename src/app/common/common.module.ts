@@ -71,6 +71,7 @@ import { LineGraph } from './components/graphs/line-graph';
 import { PieGraph } from './components/graphs/pie-graph';
 import { GraphSVG } from './components/graphs/svg';
 import { GraphPoints } from './components/graphs/points';
+import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
 
 @NgModule({
   imports: [
@@ -148,6 +149,7 @@ import { GraphPoints } from './components/graphs/points';
     PieGraph,
     GraphSVG,
     GraphPoints,
+    DynamicFormComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -216,6 +218,7 @@ import { GraphPoints } from './components/graphs/points';
     GraphPoints,
     LineGraph,
     PieGraph,
+    DynamicFormComponent
   ],
   providers: [
     {

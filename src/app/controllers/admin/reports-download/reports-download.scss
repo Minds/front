@@ -1,0 +1,30 @@
+
+.m-admin--reports-download {
+  display: block;
+  padding: 16px;
+
+  .m-admin--reports-download-selector {
+
+    margin-bottom: 16px;
+
+    span {
+      padding-right: 10px;
+      line-height: 2em;
+    }
+  }
+
+  select {
+    padding: 8px 40px 8px 8px;
+    appearance: none;
+    border: 1px solid #CCC;
+  }
+
+  .m-date-selector--input {
+    margin-left: 10px;
+    width: 150px;
+  }
+}
+
+.m-admin--reports-download--container {
+  max-width: 600px;
+}

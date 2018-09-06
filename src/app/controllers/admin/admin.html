@@ -71,7 +71,13 @@
         routerLink="/admin/purchases"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span>Purchases</span>
+        <span i18n="@@M__ADMIN_NAV__PURCHASES">Purchases</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/reports-download"
+        routerLinkActive="m-topbar--navigation--item-active"
+      >
+        <span i18n="@@M__ADMIN_NAV__REPORTS">Reports</span>
       </a>
     </div>
   </div>
@@ -89,3 +95,4 @@
 <minds-admin-tagcloud *ngIf="filter == 'tagcloud'"></minds-admin-tagcloud>
 <m-admin--verify *ngIf="filter == 'verify'"></m-admin--verify>
 <m-admin--purchases *ngIf="filter == 'purchases'"></m-admin--purchases>
+<m-admin--reports-download *ngIf="filter == 'reports-download'"></m-admin--reports-download>

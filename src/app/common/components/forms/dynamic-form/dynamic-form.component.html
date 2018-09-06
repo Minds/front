@@ -1,0 +1,41 @@
+<form novalidate [formGroup]="form">
+  <div *ngFor="let field of fieldDefinitions">
+    <div [ngSwitch]="field.type">
+      <div *ngSwitchCase="'text'">
+        <div>
+          <div class="mdl-textfield mdl-js-textfield">
+            <input [id]="field.key" [formControlName]="field.key" class="mdl-textfield__input" type="text">
+            <label class="mdl-textfield__label" [for]="field.key">{{field.label}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'date'">
+        <div>
+          <label class="m-date-selector--label" *ngIf="field.label">{{field.label}}:</label>
+          <div class="m-date-selector--input" mdl-datetime-picker [date]="form.get(field.key).value" (dateChange)="form.get(field.key).setValue($event)">
+            <input type="text" placeholder="Select a date" i18n-placeholder="@@COMMON__DATE_SELECTOR__PLACEHOLDER" [value]="form.get(field.key).value | date" place>
+            <i class="material-icons">keyboard_arrow_down</i>
+          </div>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'select'">
+        <div class="mdl-textfield">
+          <span class='select-label'>{{field.label}}:</span>
+          <select [formControlName]="field.key">
+            <option *ngFor="let option of field.options" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="mdl-color-text--red-500" *ngIf="form.get(field.key).invalid && (form.get(field.key).dirty || form.get(field.key).touched)">
+      <div *ngIf="form.get(field.key).errors.required">
+        {{ field.label }} is required. {{form.get(field.key).validator|json}}
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,39 @@
+m-dynamic-form {
+  .select-label {
+    padding-right: 10px;
+  }
+  .m-date-selector--label {
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    align-self: center;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .m-date-selector--input {
+    display: flex;
+    align-items: center;
+    background-color: #FFF;
+    color: #666;
+    border: 1px solid #DEDEDE;
+
+    input {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: rgba(0, 0, 0, .54);
+      background-color: transparent;
+      padding: 8px 0;
+      border: none;
+      text-align: center;
+      width: auto;
+      height: auto;
+      align-self: center;
+    }
+
+    i {
+      vertical-align: middle;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+  }
+}

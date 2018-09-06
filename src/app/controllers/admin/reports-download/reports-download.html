@@ -1,0 +1,33 @@
+<div class="m-admin--reports-download">
+  <div class="mdl-grid m-admin--reports-download--container">
+    <div class="mdl-cell mdl-cell--12-col">
+      <div class="mdl-grid mdl-card mdl-shadow--4dp mdl-color--blue-grey-800 m-admin--reports-download-selector">
+          <span class="mdl-color-text--white" i18n="@@M__ADMIN__REPORTS_DOWNLOAD__SELECT_REPORT">Select Report:</span>
+          <select [ngModel]="selectedReport" (ngModelChange)="setReport($event)">
+            <option *ngFor="let report of reports; let i = index" [value]="i">{{ report.name }}</option>
+          </select>
+      </div>
+      <div class="mdl-card mdl-shadow--4dp m-border">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Report {{reports[selectedReport].name}}</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <m-dynamic-form [fields]="reports[selectedReport].params" #reportform></m-dynamic-form>
+          <span class="mdl-color-text--red-500" *ngIf="error">{{error}}</span>
+          <input type="checkbox"
+            name="with_titles"
+            [(ngModel)]="with_titles"
+            />
+            <label for="flag_mature">
+                <ng-container i18n="@@M__ADMIN__REPORTS_DOWNLOAD__WITH_TITLES">Include columns titles</ng-container>
+            </label>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" (click)="download(reportform.getValues())" [disabled]="downloading">
+            Download
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
