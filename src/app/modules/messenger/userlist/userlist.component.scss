@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
-&.m-messenger--userlist{
-    
+#{if(&, "&", "*")}.m-messenger--userlist{
+
   width:200px;
 
   .m-messenger--userlist-search{
@@ -27,7 +27,7 @@
       -webkit-appearance: none;
       outline: none;
     }
-  } 
+  }
 
   .m-messenger--userlist-conversations{
     max-height: 240px;
