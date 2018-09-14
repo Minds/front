@@ -23,6 +23,7 @@ interface Minds {
   features?: any;
   blockchain?: any;
   sale?: boolean | string;
+  last_tos_update: number;
 }
 
 interface MindsNavigation {

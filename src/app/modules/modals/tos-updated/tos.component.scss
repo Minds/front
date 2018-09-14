@@ -1,0 +1,23 @@
+m-modal--tos-updated {
+  m-modal {
+    @media screen and (min-width: $min-desktop) {
+      .m-modal-container {
+        min-width: auto;
+        width: 800px;
+      }
+    }
+  }
+
+}
+.m-tos-updated--body {
+  padding: 16px;
+
+  h3 {
+    margin: 0;
+    margin-bottom: 16px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}

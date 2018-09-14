@@ -21,6 +21,8 @@ export class Minds {
   name: string;
   minds = window.Minds;
 
+  showTOSModal: boolean = false;
+
   constructor(
     public session: Session,
     public notificationService: NotificationService,

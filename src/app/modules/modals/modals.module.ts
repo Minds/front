@@ -14,6 +14,7 @@ import { SignupOnActionModal } from './signup/signup-on-action';
 import { SignupOnScrollModal } from './signup/signup-on-scroll';
 import { ConfirmPasswordModalComponent } from './confirm-password/modal.component';
 import { SignupModal } from './signup/signup';
+import { TOSUpdatedModal } from './tos-updated/tos.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { SignupModal } from './signup/signup';
     SignupOnActionModal,
     SignupOnScrollModal,
     SignupModal,
-    ConfirmPasswordModalComponent
+    ConfirmPasswordModalComponent,
+    TOSUpdatedModal,
   ],
   entryComponents: [
     ConfirmPasswordModalComponent
@@ -45,6 +47,7 @@ import { SignupModal } from './signup/signup';
     SignupOnActionModal,
     SignupOnScrollModal,
     SignupModal,
+    TOSUpdatedModal,
   ]
 })
 export class ModalsModule {
