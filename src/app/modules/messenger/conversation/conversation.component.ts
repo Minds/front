@@ -121,7 +121,9 @@ export class MessengerConversation {
         } else if (opts.offset) {
           let scrollTop = scrollView.scrollTop;
           let scrollHeight = scrollView.scrollHeight;
-          response.messages.shift();
+          if (this.messages.length) {
+            response.messages.pop();
+          }
           this.messages = response.messages.concat(this.messages);
           this.offset = response['load-previous'];
 
