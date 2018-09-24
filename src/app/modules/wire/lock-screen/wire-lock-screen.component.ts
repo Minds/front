@@ -83,6 +83,10 @@ export class WireLockScreenComponent {
     this.detectChanges();
   }
 
+  isOwner() {
+    return this.entity.ownerObj.guid === this.session.getLoggedInUser().guid;
+  }
+
   getBackground() {
     if (!this.entity) {
       return;

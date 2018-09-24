@@ -1,36 +1,11 @@
-<div class="m-wire--lock-screen--button m-wire--lock-screen--button-owner" *ngIf="!preview && (entity.ownerObj.guid == session.getLoggedInUser().guid)">
-  <div class="m-wire--lock-screen-introduction">
-    <p class="mdl-color-text--grey-800">
-      <ng-container i18n="@@WIRE__LOCK_SCREEN__ONLY_SUPPORTERS_TITLE_PART">Only supporters who wire you over</ng-container>
-
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH">
-        {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
-      </ng-container>
-
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'points'" i18n="@@WIRE__LOCK_SCREEN__POINTS_PER_MONTH">
-        {{ entity.wire_threshold.min | number }} points/month
-      </ng-container>
-
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
-        {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
-      </ng-container>
-
-      <ng-container i18n="@@WIRE__LOCK_SCREEN__WILL_SEE_TITLE_PART">will see this post.</ng-container>
-    </p>
-  </div>
-  <button class="mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white">
-    <i class="mdl-color-text--white ion-icon ion-flash"></i>
-    <span><ng-container i18n="@@WIRE__LOCK_SCREEN__LOCKED_LABEL">Locked</ng-container></span>
-  </button>
-</div>
 
 <div class="m-wire--lock-screen--transaction-made-notice" *ngIf="showSubmittedInfo" i18n="@@WIRE__LOCK_SCREEN__RECEIVED_TIMEOUT_LABEL">
   We've received your transaction. Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.
 </div>
 
-<div class="m-wire--lock-screen--button" *ngIf="preview || (entity.ownerObj.guid != session.getLoggedInUser().guid)">
+<div class="m-wire--lock-screen--button">
   <div class="m-wire--lock-screen-introduction">
-    <p class="mdl-color-text--grey-800">
+    <p class="mdl-color-text--grey-800" *ngIf="!isOwner()">
       <b>&ldquo;</b>
 
       <ng-container *ngIf="entity.ownerObj?.merchant?.exclusive?.intro; else notHasIntro">
@@ -57,6 +32,23 @@
 
       <b>&rdquo;</b>
     </p>
+    <p class="mdl-color-text--grey-800" *ngIf="isOwner()">
+      <ng-container i18n="@@WIRE__LOCK_SCREEN__ONLY_SUPPORTERS_TITLE_PART">Only supporters who wire you over</ng-container>
+
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH">
+        {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+      </ng-container>
+
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'points'" i18n="@@WIRE__LOCK_SCREEN__POINTS_PER_MONTH">
+        {{ entity.wire_threshold.min | number }} points/month
+      </ng-container>
+
+      <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
+        {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
+      </ng-container>
+
+      <ng-container i18n="@@WIRE__LOCK_SCREEN__WILL_SEE_TITLE_PART">will see this post.</ng-container>
+    </p>
   </div>
   <button class="m-unlock-button mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white" (click)="unlock()">
     <i class="mdl-color-text--white ion-icon ion-flash"></i>
@@ -67,7 +59,7 @@
   </button>
 </div>
 
-<div class="m-wire--lock-screen" *ngIf="entity.wire_threshold && (preview || (entity.ownerObj.guid != session.getLoggedInUser().guid))"
+<div class="m-wire--lock-screen" *ngIf="entity.wire_threshold"
   [style.backgroundImage]="getBackground()"
 >
   <div class="m-wire--lock-screen-overlay"></div>
