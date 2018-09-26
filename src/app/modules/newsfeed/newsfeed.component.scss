@@ -38,8 +38,11 @@
       }
     }
 
-    .m-btn--with-icon i {
-      display: none;
+    .m-btn--with-icon {
+      padding: 8px 12px;
+      i {
+        display: none;
+      }
     }
   }
 
