@@ -170,29 +170,38 @@ export class AdminBoosts {
     e.stopPropagation();
 
     // numbers
-    if (e.keyCode >= 48 && e.keyCode <= 57 || e.keyCode >= 96 && e.keyCode <= 105) {
-      const keyValue = Number.parseInt(e.key);
-      this.boosts[0].quality = keyValue > 0 ? keyValue * 10 : 100; // if we detect 0 then put 100%, else just multiply by 10
-    }
 
-    if (e.keyCode === 37)
-      return this.accept();
-    if (e.keyCode === 39)
-      return this.openReasonsModal();
+    switch(e.key.toLowerCase()) {
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+      case '0':
+        const keyValue = Number.parseInt(e.key);
+        this.boosts[0].quality = keyValue > 0 ? keyValue * 10 : 100;
+        break;
+      case 'arrowleft':
+        return this.accept();
+      case 'arrowright':
+        return this.openReasonsModal();
 
-    switch (e.code) {
-      case 'KeyE':
+      case 'e':
         //mark as nsfw and reject
         this.eTag(this.boosts[0]);
         break;
-      case 'KeyN':
+      case 'n':
         //mark as nsfw and accept
         this.accept(this.boosts[0], true);
         break;
-      case 'KeyA':
+      case 'a':
         this.accept();
         break;
-      case 'KeyR':
+      case 'r':
         this.openReasonsModal();
         break;
     }
