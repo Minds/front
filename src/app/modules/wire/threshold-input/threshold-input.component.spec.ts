@@ -208,6 +208,46 @@ describe('WireThresholdInputComponent', () => {
     expect(comp.threshold.min).toBe(10);
   });
 
+  it("should support threshold's min amount with decimals", () => {
+    comp._threshold = {
+      'type': 'tokens',
+      'min': 0
+    };
+
+    clickDropdown();
+
+    const input = getInput().nativeElement;
+    input.value = '0.1';
+    input.dispatchEvent(new Event('input'));
+
+    expect(comp.threshold.min).toBe(0.1);
+
+    input.value = '0.01';
+    input.dispatchEvent(new Event('input'));
+
+    expect(comp.threshold.min).toBe(0.01);
+  });
+
+  it("should support threshold's min amount with 3 decimals max", () => {
+    comp._threshold = {
+      'type': 'tokens',
+      'min': 0
+    };
+
+    clickDropdown();
+
+    const input = getInput().nativeElement;
+    input.value = '0.001';
+    input.dispatchEvent(new Event('input'));
+
+    expect(comp.threshold.min).toBe(0.001);
+
+    input.value = '0.0001';
+    input.dispatchEvent(new Event('input'));
+
+    expect(comp.threshold.min).toBe(0);
+  });
+
   it("should close the dropdown when clicking on done", () => {
     clickDropdown();
 

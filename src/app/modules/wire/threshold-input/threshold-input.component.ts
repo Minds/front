@@ -62,9 +62,16 @@ export class WireThresholdInputComponent implements OnInit {
   }
 
   setMinAmount(value: string) {
-    const cleanValue = Math.floor(parseFloat(value.replace(/,/g, '')));
+    let cleanValue = parseFloat(value.replace(/,/g, '.'));
 
-    this.threshold.min = !isNaN(cleanValue) ? cleanValue: 0;
+    if (cleanValue) {
+      // allow 3 decimals only
+      cleanValue = Math.round(cleanValue * 1000) / 1000;
+    } else {
+      cleanValue = 0;
+    }
+
+    this.threshold.min = cleanValue;
     this._emitChange();
   }
 
