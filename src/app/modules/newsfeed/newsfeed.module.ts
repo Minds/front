@@ -21,14 +21,13 @@ import { NewsfeedBoostService } from './newsfeed-boost.service';
 import { NewsfeedDropdownComponent } from './dropdown/dropdown.component';
 import { PosterModule } from './poster/poster.module';
 import { CommentsModule } from '../comments/comments.module';
-import { HashtagsModule } from '../hashtags/hashtags.module';
 
 const routes: Routes = [
   {
     path: 'newsfeed', component: NewsfeedComponent,
     children: [
       { path: '', redirectTo: 'subscribed', pathMatch: 'full' },
-      { path: 'suggested', component: NewsfeedTopComponent },
+      { path: 'top', component: NewsfeedTopComponent },
       { path: 'subscribed', component: NewsfeedSubscribedComponent, canDeactivate: [CanDeactivateGuardService] },
       { path: 'boost', component: NewsfeedBoostComponent, canDeactivate: [CanDeactivateGuardService] },
     ],
@@ -49,7 +48,6 @@ const routes: Routes = [
     MindsFormsModule,
     AdsModule,
     PosterModule,
-    HashtagsModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,

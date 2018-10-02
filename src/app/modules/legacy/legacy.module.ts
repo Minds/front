@@ -30,6 +30,7 @@ import { UserDropdownButton } from './components/buttons/user-dropdown';
 import { MindsBanner } from './components/banner/banner';
 import { MindsFatBanner } from './components/banner/fat';
 
+import { TagsInput } from './components/forms/tags-input/tags';
 import { ActivityPreview } from './components/cards/activity/preview';
 import { SocialIcons } from './components/social-icons/social-icons';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
@@ -37,7 +38,6 @@ import { PostMenuModule } from '../../common/components/post-menu/post-menu.modu
 import { HovercardPopup } from './components/hovercard-popup/hovercard-popup';
 import { CarouselComponent } from './components/carousel.component';
 import { CommentsModule } from '../comments/comments.module';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 
 @NgModule({
   imports: [
@@ -55,7 +55,6 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
     WireModule,
     PostMenuModule,
     CommentsModule,
-    TextInputAutocompleteModule,
   ],
   declarations: [
     Activity,
@@ -77,6 +76,7 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
     MindsBanner,
     MindsFatBanner,
 
+    TagsInput,
     SocialIcons,
 
     CarouselComponent,
@@ -101,6 +101,7 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
     MindsBanner,
     MindsFatBanner,
 
+    TagsInput,
     SocialIcons,
     HovercardPopup,
     CarouselComponent,

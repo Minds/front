@@ -1,11 +1,12 @@
 import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { CommonModule } from '@angular/common';
 
-import { MockComponent } from '../../../utils/mock';
+import { Mock, MockComponent } from '../../../utils/mock';
 
 import { By } from '@angular/platform-browser';
 import { NewsfeedTopComponent } from './top.component';
@@ -27,10 +28,27 @@ import { Storage } from '../../../services/storage';
 import { SettingsService } from '../../settings/settings.service';
 import { settingsServiceMock } from '../../../mocks/modules/settings/settings.service.mock.spec';
 
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { NewsfeedService } from '../services/newsfeed.service';
-import { newsfeedServiceMock } from '../../../mocks/modules/newsfeed/services/newsfeed-service.mock';
+@Component({
+  selector: 'm-newsfeed--boost-rotator',
+  template: ''
+})
+class NewsfeedBoostRotatorComponentMock {
+  @Input() interval: any;
+  @Input() channel: any;
+}
+
+@Component({
+  selector: 'minds-activity',
+  template: ''
+})
+class MindsActivityMock {
+  @Input() object: any;
+  @Input() boostToggle;
+  @Input() showRatingToggle;
+  @Input() boost;
+  @Input() showBoostMenuOptions: boolean;
+  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
+}
 
 describe('NewsfeedTopComponent', () => {
 
@@ -41,20 +59,13 @@ describe('NewsfeedTopComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock,
-        MockComponent({
-          selector: 'm-newsfeed--boost-rotator',
-          inputs: ['interval', 'channel']
-        }),
-        MockComponent({
-          selector: 'minds-activity',
-          inputs: ['object', 'boostToggle', 'showRatingToggle', 'boost', 'showBoostMenuOptions'],
-          outputs: ['delete']
-        }),
+        MaterialMock, 
+        NewsfeedBoostRotatorComponentMock, 
+        MindsActivityMock, 
         MockComponent({
           selector: 'infinite-scroll',
-          inputs: ['inProgress', 'moreData', 'inProgress'],
-        }),
+          inputs: [ 'inProgress', 'moreData', 'inProgress' ],
+        }), 
         NewsfeedTopComponent
       ],
       imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
@@ -67,8 +78,6 @@ describe('NewsfeedTopComponent', () => {
         { provide: Storage, useValue: storageMock },
         { provide: ContextService, useValue: contextServiceMock },
         { provide: SettingsService, useValue: settingsServiceMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: NewsfeedService, useValue: newsfeedServiceMock },
       ]
     })
       .compileComponents();
@@ -80,20 +89,12 @@ describe('NewsfeedTopComponent', () => {
 
     fixture = TestBed.createComponent(NewsfeedTopComponent);
 
-    window.Minds = <any>{
-      user: {
-        guid: 1,
-        name: 'test',
-        opted_in_hashtags: 1
-      }
-    };
-
     comp = fixture.componentInstance;
 
     clientMock.response = {};
-    clientMock.response['api/v1/entities/suggested/activities'] = {
+    clientMock.response['api/v1/newsfeed/top'] = {
       status: 'success',
-      entities: [
+      activity: [
         {
           'guid': '1',
           'type': 'activity',
@@ -103,8 +104,7 @@ describe('NewsfeedTopComponent', () => {
           'message': 'test',
           'boosted': true,
           'boosted_guid': '1'
-        },
-        {
+        }, {
           'guid': '2',
           'type': 'activity',
           'message': 'test2',
@@ -141,9 +141,10 @@ describe('NewsfeedTopComponent', () => {
   it('should have a list of activities', () => {
     expect(clientMock.get).toHaveBeenCalled();
     const call = clientMock.get.calls.mostRecent();
-    expect(call.args[0]).toBe('api/v1/entities/suggested/activities');
+    expect(call.args[0]).toBe('api/v1/newsfeed/top');
     expect(call.args[1]).toEqual({ limit: 12, offset: '', rating: 1 });
     expect(call.args[2]).toEqual({ cache: true });
+
     const list = fixture.debugElement.query(By.css('.minds-list'));
     expect(list.nativeElement.children.length).toBe(3); // 2 activities + infinite-scroll
   });
@@ -157,7 +158,7 @@ describe('NewsfeedTopComponent', () => {
     expect(comp.rating).toBe(2);
 
     const call = clientMock.get.calls.mostRecent();
-    expect(call.args[0]).toBe('api/v1/entities/suggested/activities');
+    expect(call.args[0]).toBe('api/v1/newsfeed/top');
     expect(call.args[1]).toEqual({ limit: 12, offset: '', rating: 2 });
     expect(call.args[2]).toEqual({ cache: true });
   }));

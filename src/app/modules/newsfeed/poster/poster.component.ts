@@ -5,7 +5,6 @@ import { AttachmentService } from '../../../services/attachment';
 import { ThirdPartyNetworksSelector } from '../../third-party-networks/selector';
 import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
-import { HashtagsSelectorComponent, Tag } from '../../hashtags/selector/selector.component';
 
 @Component({
   moduleId: module.id,
@@ -34,14 +33,10 @@ export class PosterComponent {
 
   canPost: boolean = true;
   validThreshold: boolean = true;
-  tooManyTags: boolean = false;
 
   errorMessage: string = null;
 
-  amountOfTags: number = 0;
-
   @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
-  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
 
   constructor(public session: Session, public client: Client, public upload: Upload, public attachment: AttachmentService) {
     this.minds = window.Minds;
@@ -63,48 +58,11 @@ export class PosterComponent {
     }
   }
 
-  onMessageChange($event) {
-    this.meta.message = $event;
-    this.hashtagsSelector.parseTags($event);
-  }
-
-  onTagsChange(tags: string[]) {
-    this.amountOfTags = tags.length;
-    if (this.amountOfTags > 5) {
-      this.errorMessage = "You can only select up to 5 hashtags";
-      this.tooManyTags = true;
-    } else {
-      this.tooManyTags = false;
-      if (this.errorMessage === "You can only select up to 5 hashtags") {
-        this.errorMessage = '';
-      }
-    }
-  }
-
-  onTagsAdded(tags: Tag[]) {
-    for (let tag of tags) {
-      this.meta.message += ` #${tag.value}`;
-    }
-
-    this.hashtagsSelector.parseTags(this.meta.message);
-  }
-
-  onTagsRemoved(tags: Tag[]) {
-    for (let tag of tags) {
-      this.meta.message = this.meta.message.slice(0, tag.index) + this.meta.message.slice(Math.min(this.meta.message.length, tag.index + 1 + tag.value.length + 1));
-    }
-
-    this.hashtagsSelector.parseTags(this.meta.message);
-  }
-
   /**
    * Post to the newsfeed
    */
   post() {
     if (!this.meta.message && !this.attachment.has()) {
-      return;
-    }
-    if (this.amountOfTags > 5) {
       return;
     }
 
@@ -190,16 +148,5 @@ export class PosterComponent {
     }
 
     this.attachment.preview(message.value);
-  }
-
-  async findTrendingHashtags(searchText: string) {
-    const response: any = await this.client.get('api/v2/search/suggest/tags', { q: searchText });
-    return response.tags
-      .filter(item => item.toLowerCase().includes(searchText.toLowerCase()))
-      .slice(0, 5);
-  }
-
-  getChoiceLabel(text: string) {
-    return `#${text}`;
   }
 }

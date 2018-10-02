@@ -25,7 +25,7 @@ import { ExplicitOverlayComponent } from './explicit-overlay/overlay.component';
 
 const routes: Routes = [
   { path: 'channels/:filter', component: ChannelsListComponent },
-  { path: 'channels', redirectTo: '/channels/suggested', pathMatch: 'full' },
+  { path: 'channels', redirectTo: '/channels/top', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -17,8 +17,6 @@ import { attachmentServiceMock } from '../../../../tests/attachment-service-mock
 import { AutoGrow } from '../../../common/directives/autogrow';
 import { MaterialUploadMock } from '../../../mocks/common/directives/material/upload-mock';
 import { CommonModule } from '@angular/common';
-import { MockComponent } from '../../../utils/mock';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
@@ -26,9 +24,55 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
   template: '',
 })
 
-class ThirdPartyNetworksSelectorMock {
+export class ThirdPartyNetworksSelectorMock {
   inject(data) {
     return data;
+  }
+}
+
+@Component({
+  selector: 'm-wire-threshold-input',
+  template: ''
+})
+export class WireThresholdInputComponentMock {
+  threshold: any;
+
+  @Input('threshold')
+  set _threshold(threshold: any) {
+  }
+
+  @Input('disabled') disabled: boolean = false;
+  @Input('enabled') enabled: boolean = false;
+
+  @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<any> = new EventEmitter<any>();
+
+  toggle() {
+  }
+
+  setType(type: any) {
+  }
+}
+
+@Component({
+  selector: 'minds-rich-embed',
+  template: ''
+})
+export class MindsRichEmbedMock {
+  @Input() src;
+  @Input() preview;
+  @Input() maxheight;
+  @Input() cropImage;
+
+  action() {
+
+  }
+
+  parseInlineEmbed() {
+
+  }
+
+  hasInlineContentLoaded() {
+
   }
 }
 
@@ -56,9 +100,8 @@ describe('PosterComponent', () => {
         MaterialMock,
         MaterialUploadMock,
         ThirdPartyNetworksSelectorMock,
-        MockComponent({ selector: 'm-wire-threshold-input', inputs:['threshold', 'disabled', 'enabled'], outputs: ['thresholdChange'] }),
-        MockComponent({ selector: 'minds-rich-embed', inputs:['src', 'preview', 'maxheight', 'cropimage'] }),
-        MockComponent({ selector: 'm-hashtags-selector', outputs: ['tagsChange'] }),
+        WireThresholdInputComponentMock,
+        MindsRichEmbedMock,
         PosterComponent,
       ],
       imports: [
@@ -66,7 +109,6 @@ describe('PosterComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        TextInputAutocompleteModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },

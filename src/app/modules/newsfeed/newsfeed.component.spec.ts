@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, DebugElement, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { NewsfeedComponent } from './newsfeed.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -7,13 +8,15 @@ import { Client } from '../../services/api/client';
 import { By } from '@angular/platform-browser';
 import { Session } from '../../services/session';
 import { clientMock } from '../../../tests/client-mock.spec';
+import { MaterialMock } from '../../../tests/material-mock.spec';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { uploadMock } from '../../../tests/upload-mock.spec';
 import { Upload } from '../../services/api/upload';
 import { ContextService } from '../../services/context.service';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 import { of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TooltipComponentMock } from '../../mocks/common/components/tooltip/tooltip.component';
 import { Storage } from '../../services/storage';
 import { storageMock } from '../../../tests/storage-mock.spec';
 import { MindsTitle } from '../../services/ux/title';
@@ -21,11 +24,6 @@ import { Navigation } from '../../services/navigation';
 import { navigationMock } from '../../../tests/navigation-service-mock.spec';
 import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
 import { MockComponent, MockDirective } from '../../utils/mock';
-
-import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
-import { OverlayModalService } from '../../services/ux/overlay-modal';
-import { NewsfeedService } from './services/newsfeed.service';
-import { newsfeedServiceMock } from '../../mocks/modules/newsfeed/services/newsfeed-service.mock';
 
 describe('NewsfeedComponent', () => {
 
@@ -35,13 +33,12 @@ describe('NewsfeedComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        MockComponent({ selector: 'm-tooltip', inputs: ['icon'], template: '<ng-content></ng-content>' }),
-        MockComponent({ selector: 'm-newsfeed--dropdown', inputs: ['options'], template: '' }),
-        MockComponent({ selector: 'minds-card-user', inputs: ['object'], template: '' }),
-        MockComponent({ selector: 'm-tagcloud', inputs: ['options'], template: '' }),
-        MockComponent({ selector: 'm-ads-boost', inputs: ['handler', 'limit'], template: '' }),
-        MockComponent({ selector: 'm-topbar--hashtags', inputs: [], outputs: ['selectionChange'], template: '' }),
+        MockDirective({selector: '[mdl]', inputs: ['mdl']}),
+        MockComponent({selector: 'm-tooltip', inputs: ['icon'], template: '<ng-content></ng-content>'}),
+        MockComponent({selector: 'm-newsfeed--dropdown', inputs: ['options'], template: ''}),
+        MockComponent({selector: 'minds-card-user', inputs: ['object'], template: ''}),
+        MockComponent({selector: 'm-tagcloud', inputs: ['options'], template: ''}),
+        MockComponent({selector: 'm-ads-boost', inputs: ['handler', 'limit'], template: ''}),
         NewsfeedComponent,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
@@ -61,8 +58,6 @@ describe('NewsfeedComponent', () => {
         { provide: Storage, useValue: storageMock },
         { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Navigation, useValue: navigationMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: NewsfeedService, useValue: newsfeedServiceMock },
       ]
     })
       .compileComponents();  // compile template and css
@@ -108,8 +103,8 @@ describe('NewsfeedComponent', () => {
     const boostfeedTooltip = fixture.debugElement.query(By.css('.m-topbar--navigation .m-topbar--navigation--item:nth-child(3) > m-tooltip'));
 
     expect(top).not.toBeNull();
-    expect(top.nativeElement.textContent).toContain('Suggested');
-    expect(topTooltip.nativeElement.textContent).toContain('Suggested displays the suggested content on Minds');
+    expect(top.nativeElement.textContent).toContain('Top');
+    expect(topTooltip.nativeElement.textContent).toContain('Top displays the top content on Minds');
 
     expect(subscribed).not.toBeNull();
     expect(subscribed.nativeElement.textContent).toContain('Subscribed');

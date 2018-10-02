@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
+import { MindsBlogListResponse } from '../../interfaces/responses';
 import { ContextService } from '../../services/context.service';
 
 @Component({
@@ -31,7 +32,6 @@ export class BlogListComponent {
   constructor(
     public client: Client,
     public route: ActivatedRoute,
-    public router: Router,
     public title: MindsTitle,
     private context: ContextService,
     public session: Session
@@ -52,10 +52,7 @@ export class BlogListComponent {
         case 'trending':
           this.title.setTitle('Trending Blogs');
           break;
-        case 'suggested':
-          if (!this.session.isLoggedIn()) {
-            this.router.navigate(['/login']);
-          }
+        case 'top':
           this.filter = 'trending';
         case 'featured':
           this.title.setTitle('Blogs');
@@ -98,18 +95,11 @@ export class BlogListComponent {
       this.offset = '';
 
     this.inProgress = true;
-    let endpoint;
-
-    if (this.filter === 'suggested') {
-      endpoint = 'api/v2/entities/suggested/blogs';
-    } else {
-      endpoint = 'api/v1/blog/' + this.filter + '/' + this._filter2;
-    }
-    this.client.get(endpoint, {
-      limit: 12,
-      offset: this.offset,
-      rating: this.rating,
-    })
+    this.client.get('api/v1/blog/' + this.filter + '/' + this._filter2, {
+        limit: 12,
+        offset: this.offset,
+        rating: this.rating,
+      })
       .then((response: any) => {
 
         if (!response.entities) {
@@ -129,10 +119,6 @@ export class BlogListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
-  }
-
-  reloadTopFeed() {
-    this.load(true);
   }
 
   onOptionsChange(e: { rating }) {

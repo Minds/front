@@ -59,8 +59,11 @@
       </select>
     </div>
     <div class="m-category-info">
-      <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
-      <minds-form-tags-input [(tags)]="blog.tags"></minds-form-tags-input>
+      <i class="material-icons">label</i>
+      <select name="category" [ngModel]="blog.category" (change)="blog.category = $event.target.value" class="mdl-color-text--blue-grey-300 m-form-select">
+          <option value="" i18n="@@M__COMMON__CATEGORY_PLACEHOLDER">-- Category --</option>
+          <option *ngFor="let c of categories" [value]="c.id">{{c.label}}</option>
+      </select>
     </div>
     <div class="m-visibility-info">
       <i class="material-icons">visibility</i>

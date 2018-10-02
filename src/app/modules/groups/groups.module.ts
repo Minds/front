@@ -23,15 +23,13 @@ import { GroupsMembersModuleComponent } from './members/members';
 import { GroupsTileComponent } from './tile/tile.component';
 import { CommentsModule } from '../comments/comments.module';
 import { PosterModule } from '../newsfeed/poster/poster.module';
-import { HashtagsModule } from '../hashtags/hashtags.module';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 
 const routes: Routes = [
   { path: 'groups/profile/:guid/:filter', component: GroupsProfile },
   { path: 'groups/profile/:guid', component: GroupsProfile },
   { path: 'groups/create', component: GroupsCreator },
   { path: 'groups/:filter', component: GroupsListComponent },
-  { path: 'groups', redirectTo: '/groups/suggested', pathMatch: 'full' },
+  { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -46,8 +44,6 @@ const routes: Routes = [
     ChannelsModule,
     ModalsModule,
     PosterModule,
-    HashtagsModule,
-    TextInputAutocompleteModule,
   ],
   declarations: [
     GroupsListComponent,

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -12,7 +12,6 @@ import { SocketsService } from '../../../services/sockets';
 
 import { GroupsProfileFeed } from './feed/feed';
 import { ContextService } from '../../../services/context.service';
-import { Client } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
@@ -49,13 +48,12 @@ export class GroupsProfile {
 
   constructor(
     public session: Session,
-    public service: GroupsService,
-    public route: ActivatedRoute,
-    public title: MindsTitle,
+    public service: GroupsService, 
+    public route: ActivatedRoute, 
+    public title: MindsTitle, 
     private sockets: SocketsService,
     private context: ContextService,
-    private recent: RecentService,
-    private client: Client,
+    private recent: RecentService
   ) { }
 
   ngOnInit() {
@@ -112,7 +110,7 @@ export class GroupsProfile {
         this.joinCommentsSocketRoom();
         this.title.setTitle(this.group.name);
         this.context.set('activity', { label: this.group.name, nameLabel: this.group.name, id: this.group.guid });
-        if (this.session.getLoggedInUser()) {
+        if(this.session.getLoggedInUser()){
           this.addRecent();
         }
       });
@@ -127,8 +125,7 @@ export class GroupsProfile {
 
     try {
       count = await this.service.getReviewCount(this.guid);
-    } catch (e) {
-    }
+    } catch (e) { }
 
     this.group['adminqueue:count'] = count;
   }
@@ -245,16 +242,5 @@ export class GroupsProfile {
     if (this.socketSubscription) {
       this.socketSubscription.unsubscribe();
     }
-  }
-
-  async findTrendingHashtags(searchText: string) {
-    const response: any = await this.client.get('api/v2/search/suggest/tags', { q: searchText });
-    return response.tags
-      .filter(item => item.toLowerCase().includes(searchText.toLowerCase()))
-      .slice(0, 5);
-  }
-
-  getChoiceLabel(text: string) {
-    return `#${text}`;
   }
 }

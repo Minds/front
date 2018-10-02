@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -29,7 +29,6 @@ export class GroupsListComponent {
   constructor(
     public client: Client,
     public route: ActivatedRoute,
-    public router: Router,
     public title: MindsTitle,
     private context: ContextService,
     public session: Session
@@ -43,9 +42,6 @@ export class GroupsListComponent {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
-        if (params['filter'] === 'suggested' && !this.session.isLoggedIn()) {
-          this.router.navigate(['/login']);
-        }
         this.filter = params['filter'];
 
         this.inProgress = false;
@@ -75,9 +71,9 @@ export class GroupsListComponent {
 
     let endpoint, key;
 
-        switch (this.filter) {
-      case 'suggested':
-        endpoint = `api/v2/entities/suggested/groups`;
+    switch (this.filter) {
+      case 'top':
+        endpoint = `api/v1/entities/trending/groups`;
         key = 'entities';
         break;
       default:
@@ -118,10 +114,6 @@ export class GroupsListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
-  }
-
-  reloadTopFeed() {
-    this.load(true);
   }
 
   onOptionsChange(e: { rating }) {

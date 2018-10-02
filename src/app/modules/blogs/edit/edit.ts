@@ -31,7 +31,7 @@ export class BlogEdit {
     description: '<p><br></p>',
     time_created: Date.now(),
     access_id: 2,
-    tags: '',
+    category: '',
     license: 'attribution-sharealike-cc',
     fileKey: 'header',
     mature: 0,

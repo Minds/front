@@ -8,8 +8,6 @@ import { WireModule } from '../../wire/wire.module';
 import { ThirdPartyNetworksModule } from '../../third-party-networks/third-party-networks.module';
 import { CommonModule } from '../../../common/common.module';
 import { RouterModule } from '@angular/router';
-import { HashtagsModule } from '../../hashtags/hashtags.module';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 
 @NgModule({
   imports: [
@@ -19,8 +17,6 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
     CommonModule,
     WireModule,
     ThirdPartyNetworksModule,
-    HashtagsModule,
-    TextInputAutocompleteModule,
   ],
   declarations: [
     PosterComponent,

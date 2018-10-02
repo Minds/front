@@ -11,7 +11,6 @@ import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -55,7 +54,6 @@ export class NewsfeedSubscribedComponent {
     private storage: Storage,
     private context: ContextService,
     private session: Session,
-    private overlayModal: OverlayModalService,
   ) {
     this.title.setTitle('Newsfeed');
   }

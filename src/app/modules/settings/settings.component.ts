@@ -7,9 +7,6 @@ import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 
-import { HashtagsSelectorModalComponent } from '../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
-import { OverlayModalService } from '../../services/ux/overlay-modal';
-
 @Component({
   selector: 'm-settings',
   templateUrl: 'settings.component.html'
@@ -30,8 +27,7 @@ export class SettingsComponent {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
-    private overlayModal: OverlayModalService,
+    public title: MindsTitle
   ) {
   }
 
@@ -62,12 +58,6 @@ export class SettingsComponent {
   ngOnDestroy() {
     if (this.paramsSubscription)
       this.paramsSubscription.unsubscribe();
-  }
-
-  openHashtagsSelector() {
-    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
-      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large' 
-    }).present();
   }
 
 }

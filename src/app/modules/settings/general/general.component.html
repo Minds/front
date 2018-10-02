@@ -150,6 +150,24 @@
 
 <!-- END: LANGUAGE -->
 
+<!-- START: CATEGORIES -->
+<div class="m-settings--section m-border m-settings--categories">
+  <h4 i18n="@@MINDS__SETTINGS__CATEGORIES_TITLE">Categories</h4>
+  <div class="mdl-card__supporting-text">
+    <ul name="categories" class="minds-settings--list">
+      <li class="minds-settings--list-item"
+        *ngFor="let category of categories" [value]="category.id"
+        [class.selected]="category.selected"
+        (click)="onCategoryClick(category)">
+
+        {{ category.label }}
+
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- END: CATEGORIES -->
+
 <!-- START: SESSIONS -->
 <div class="m-settings--section m-border m-settings--close-all-sessions">
   <h4 i18n="@@MINDS__SETTINGS__SESSIONS">Sessions</h4>

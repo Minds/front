@@ -16,14 +16,13 @@ import { BlogView } from './view/view';
 import { BlogTileComponent } from './tile/tile.component';
 import { WireModule } from '../wire/wire.module';
 import { CommentsModule } from '../comments/comments.module';
-import { HashtagsModule } from '../hashtags/hashtags.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
   { path: 'blog/view/:guid', component: BlogViewInfinite },
   { path: 'blog/edit/:guid', component: BlogEdit },
   { path: 'blog/:filter', component: BlogListComponent },
-  { path: 'blog', redirectTo: '/blog/suggested', pathMatch: 'full' },
+  { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },
   { path: ':username/blog/:slugid', component: BlogViewInfinite },
 ];
 
@@ -39,8 +38,7 @@ const routes: Routes = [
     CommentsModule,
     LegacyModule,
     PostMenuModule,
-    WireModule,
-    HashtagsModule,
+    WireModule
   ],
   declarations: [
     BlogView,

@@ -351,6 +351,29 @@ describe('SettingsGeneralComponent', () => {
     expect(thirdPartyNetworksServiceMock.disconnect).toHaveBeenCalled();
   });
 
+  it('should have a categories section', () => {
+    expect(fixture.debugElement.query(By.css('.m-settings--categories'))).not.toBeNull();
+
+    const h4 = fixture.debugElement.query(By.css('.m-settings--categories > h4'));
+    expect(h4).not.toBeNull();
+    expect(h4.nativeElement.textContent).toContain('Categories');
+
+    const ul = fixture.debugElement.query(By.css('.m-settings--categories ul'));
+    expect(ul).not.toBeNull();
+    expect(ul.nativeElement.children.length).toBe(2);
+  });
+
+  it('should select a category when clicking it', () => {
+    spyOn(comp, 'onCategoryClick').and.callThrough();
+    const li = fixture.debugElement.query(By.css('.m-settings--categories li:first-child'));
+    expect(li).not.toBeNull();
+    li.nativeElement.click();
+    fixture.detectChanges();
+    expect(comp.onCategoryClick).toHaveBeenCalled();
+
+    expect(comp.categories[0].selected).toBeTruthy();
+  });
+
   it('should have a sessions section', () => {
     expect(fixture.debugElement.query(By.css('.m-settings--close-all-sessions'))).not.toBeNull();
 

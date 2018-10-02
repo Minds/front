@@ -71,20 +71,13 @@
     </div>
 
     <div class="m-group-info-brief-description mdl-card__supporting-text" *ngIf="editing && group['is:owner']">
-      <mwl-text-input-autocomplete-container>
-        <textarea
-          name="briefdescription"
-          [autoGrow]
-          [(ngModel)]="group.briefdescription"
-          placeholder="Enter a brief description"
-          i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
-          mwlTextInputAutocomplete
-          [findChoices]="findTrendingHashtags.bind(this)"
-          [getChoiceLabel]="getChoiceLabel"
-          [triggerCharacter]="'#'"
-        >
-        ></textarea>
-      </mwl-text-input-autocomplete-container>
+      <textarea
+        name="briefdescription" 
+        [autoGrow]
+        [(ngModel)]="group.briefdescription"
+        placeholder="Enter a brief description"
+        i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
+      ></textarea>
     </div>
 
       <!-- Tags -->
