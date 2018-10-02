@@ -1,14 +1,15 @@
-import { Component, EventEmitter, ElementRef } from '@angular/core';
-
-import { Client, Upload } from '../../../../../services/api';
-import { Session } from '../../../../../services/session';
+import { Component, ElementRef, EventEmitter } from '@angular/core';
+import { Session } from '../../../services/session';
+import { Client } from '../../../services/api/client';
 
 @Component({
   selector: 'minds-form-tags-input',
   host: {
     '(click)': 'focus()'
   },
-  inputs: ['_tags: tags'],
+  inputs: [
+    '_tags: tags'
+  ],
   outputs: ['change: tagsChange'],
   template: `
     <div class="m-form-tags-input-tags-tag mdl-shadow--2dp mdl-color--blue-grey-600 mdl-color-text--blue-grey-50"
@@ -17,13 +18,21 @@ import { Session } from '../../../../../services/session';
       <span>{{tag}}</span>
       <i class="material-icons mdl-color-text--white">close</i>
     </div>
-    <input
-      type="text"
-      name="input-tags"
-      [(ngModel)]="input"
-      (keyup)="keyUp($event)"
-      (blur)="blur($event)"
-      [size]="input.length ? input.length : 1">
+    <mwl-text-input-autocomplete-container>
+      <input
+        type="text"
+        name="input-tags"
+        [(ngModel)]="input"
+        (keyup)="keyUp($event)"
+        (blur)="blur($event)"
+        [size]="input.length ? input.length : 1"
+        mwlTextInputAutocomplete
+        [findChoices]="findTrendingHashtags.bind(this)"
+        [getChoiceLabel]="getChoiceLabel"
+        [triggerCharacter]="'#'"
+      >
+    </mwl-text-input-autocomplete-container>
+
   `
 })
 
@@ -37,8 +46,10 @@ export class TagsInput {
   tags: Array<string> = [];
   change: EventEmitter<any> = new EventEmitter();
 
-  constructor(public session: Session, private element: ElementRef) {
-
+  constructor(public client: Client,
+              public session: Session,
+              private element: ElementRef
+  ) {
   }
 
   set _tags(tags: Array<string>) {
@@ -56,7 +67,7 @@ export class TagsInput {
         this.push();
         break;
       case 8: //backspace
-        //remove the last tag if we don't have an input
+              //remove the last tag if we don't have an input
         if (!this.input) {
           this.pop();
         }
@@ -97,6 +108,17 @@ export class TagsInput {
 
   pop() {
     this.tags.pop();
+  }
+
+  async findTrendingHashtags(searchText: string) {
+    const response: any = await this.client.get('api/v2/search/suggest/tags', { q: searchText });
+    return response.tags
+      .filter(item => item.toLowerCase().includes(searchText.toLowerCase()))
+      .slice(0, 5);
+  }
+
+  getChoiceLabel(text: string) {
+    return `#${text}`;
   }
 
 }

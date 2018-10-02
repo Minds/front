@@ -4,6 +4,8 @@ import { Session } from '../../../services/session';
 
 @Injectable()
 export class NewsfeedService {
+  onReloadFeed: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(private client: Client, private session: Session) {
   }
 
@@ -26,6 +28,10 @@ export class NewsfeedService {
     }
 
     return await this.client.post(`api/v2/analytics/views/activity/${entity.guid}`);
+  }
+
+  public reloadFeed() {
+    this.onReloadFeed.emit();
   }
 
 }

@@ -42,7 +42,8 @@ export class MediaVideosListComponent {
     private context: ContextService,
     public session: Session,
     private overlayModal: OverlayModalService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.title.setTitle('Videos');
@@ -58,7 +59,10 @@ export class MediaVideosListComponent {
           case 'network':
             this.filter = 'network';
             break;
-          case 'top':
+          case 'suggested':
+            if (!this.session.isLoggedIn()) {
+              this.router.navigate(['/login']);
+            }
             this.filter = 'trending';
             break;
           case 'my':
@@ -71,7 +75,7 @@ export class MediaVideosListComponent {
             this.filter = 'owner';
         }
       }
-   
+
       this.context.set('object:video');
 
       this.inProgress = false;
@@ -80,7 +84,7 @@ export class MediaVideosListComponent {
 
       if (this.session.isLoggedIn())
         this.rating = this.session.getLoggedInUser().boost_rating;
-        
+
       this.load(true);
     });
   }
@@ -106,7 +110,14 @@ export class MediaVideosListComponent {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/entities/' + this.filter + '/videos/' + this.owner, {
+    let endpoint;
+    if (this.filter === 'trending') {
+      endpoint = 'api/v2/entities/suggested/videos';
+    } else {
+      endpoint = 'api/v1/entities/' + this.filter + '/videos/' + this.owner;
+    }
+
+    this.client.get(endpoint, {
       limit: 12,
       offset: this.offset,
       rating: this.rating,
@@ -134,6 +145,10 @@ export class MediaVideosListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  reloadTopFeed() {
+    this.load(true);
   }
 
   onOptionsChange(e: { rating }) {

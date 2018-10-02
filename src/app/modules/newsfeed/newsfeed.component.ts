@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { HashtagsSelectorModalComponent } from '../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
@@ -11,6 +13,7 @@ import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
 import { PosterComponent } from './poster/poster.component';
+import { NewsfeedService } from './services/newsfeed.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -53,6 +56,8 @@ export class NewsfeedComponent {
 
   subscribed: boolean = false;
 
+  suggested: boolean = false;
+
   @ViewChild('poster') private poster: PosterComponent;
 
   constructor(
@@ -64,13 +69,15 @@ export class NewsfeedComponent {
     public route: ActivatedRoute,
     public title: MindsTitle,
     private storage: Storage,
+    private overlayModal: OverlayModalService,
     private context: ContextService,
+    private newsfeedService: NewsfeedService,
   ) {
 
     this.route.url.subscribe(segments => {
       // const path = segments[segments.length-1].path;
       const path: string = route.snapshot.firstChild && route.snapshot.firstChild.routeConfig.path;
-      if(path === 'boost') {
+      if (path === 'boost') {
         this.title.setTitle('Boost Newsfeed');
         this.boostFeed = true;
       } else {
@@ -78,6 +85,7 @@ export class NewsfeedComponent {
       }
 
       this.subscribed = path === 'subscribed';
+      this.suggested = path === 'suggested';
     });
 
     const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');
@@ -171,6 +179,10 @@ export class NewsfeedComponent {
     } else {
       this.loadNewsfeed(refresh);
     }
+  }
+
+  reloadTopFeed() {
+    this.newsfeedService.reloadFeed();
   }
 
   /**

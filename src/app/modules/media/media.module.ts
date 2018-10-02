@@ -23,12 +23,13 @@ import { MediaGridComponent } from './view/views/grid.component';
 import { MediaViewRecommendedComponent } from './view/recommended/recommended.component';
 import { ThumbnailSelectorComponent } from './components/thumbnail-selector.component';
 import { CommentsModule } from '../comments/comments.module';
+import { HashtagsModule } from '../hashtags/hashtags.module';
 
 const routes: Routes = [
   { path: 'media/videos/:filter', component: MediaVideosListComponent },
-  { path: 'media/videos', redirectTo: '/media/videos/top', pathMatch: 'full' },  
+  { path: 'media/videos', redirectTo: '/media/videos/suggested', pathMatch: 'full' },
   { path: 'media/images/:filter', component: MediaImagesListComponent },
-  { path: 'media/images', redirectTo: '/media/images/top', pathMatch: 'full' },  
+  { path: 'media/images', redirectTo: '/media/images/suggested', pathMatch: 'full' },
 
   { path: 'media/edit/:guid', component: MediaEditComponent },
   { path: 'media/:container/:guid', component: MediaViewComponent },
@@ -54,6 +55,7 @@ const routes: Routes = [
     WireModule,
     PostMenuModule,
     VideoModule,
+    HashtagsModule,
   ],
   declarations: [
     MediaVideosListComponent,

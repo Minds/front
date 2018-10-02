@@ -17,6 +17,7 @@ import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
+import { MockComponent } from '../../../utils/mock';
 
 @Component({
   selector: 'minds-banner',
@@ -25,7 +26,7 @@ import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.m
   template: ``
 })
 
-export class MindsBannerMock {
+class MindsBannerMock {
 
   minds: Minds = window.Minds;
   object;
@@ -93,7 +94,7 @@ export class MDLMock {}
   exportAs: 'Textarea'
 })
 
-export class TextareaMock {
+class TextareaMock {
 
   @Input('mModel') model: string = '';
   @Output('mModelChange') update: EventEmitter<any> = new EventEmitter();
@@ -119,7 +120,7 @@ export class TextareaMock {
   selector: 'm-wire-threshold-input',
   template: ''
 })
-export class WireThresholdInputComponentMock {
+class WireThresholdInputComponentMock {
   threshold: any;
 
   @Input('threshold')
@@ -155,7 +156,7 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
   providers: [MEDIUM_EDITOR_VALUE_ACCESSOR]
 })
 
-export class InlineEditorComponentMock {
+class InlineEditorComponentMock {
   @Input() options: any;
   @Input() placeholder: string;
   @ViewChild('host') host: HTMLDivElement;
@@ -224,6 +225,11 @@ describe('BlogEdit', () => {
         TextareaMock,
         InlineEditorComponentMock,
         WireThresholdInputComponentMock,
+        MockComponent({
+          selector: 'minds-form-tags-input',
+          inputs: ['tags', 'additionalTags'],
+          outputs: ['change', 'tagsChange'],
+        }),
         BlogEdit,
         MDLMock
       ], // declare the test component

@@ -16,21 +16,21 @@ import { RewardsComponent } from '../controllers/rewards/rewards';
 
 export const MindsAppRoutes: Routes = [
 
-  { path: 'capture', redirectTo: 'media/images/top' },
+  { path: 'capture', redirectTo: 'media/images/suggested' },
 
   // redirectTo: 'media/:type/:filter
-  { path: 'discovery/suggested/channels', redirectTo: 'channels/top'},
-  { path: 'discovery/trending/channels', redirectTo: 'channels/top'},
-  { path: 'discovery/all/channels', redirectTo: 'channels/top'},
+  { path: 'discovery/suggested/channels', redirectTo: 'channels/suggested'},
+  { path: 'discovery/trending/channels', redirectTo: 'channels/suggested'},
+  { path: 'discovery/all/channels', redirectTo: 'channels/suggested'},
 
-  { path: 'discovery/suggested/:type', redirectTo: 'media/:type/top' },
-  { path: 'discovery/trending/:type', redirectTo: 'media/:type/top' },
-  { path: 'discovery/all/:type', redirectTo: 'media/:type/top' },
+  { path: 'discovery/suggested/:type', redirectTo: 'media/:type/suggested' },
+  { path: 'discovery/trending/:type', redirectTo: 'media/:type/suggested' },
+  { path: 'discovery/all/:type', redirectTo: 'media/:type/suggested' },
   { path: 'discovery/owner/:type', redirectTo: 'media/:type/my' },
 
-  { path: 'discovery/suggested', redirectTo: 'channels/top'},
-  { path: 'discovery/trending', redirectTo: 'media/images/top'},
-  { path: 'discovery/featured', redirectTo: 'channels/top'},
+  { path: 'discovery/suggested', redirectTo: 'channels/suggested'},
+  { path: 'discovery/trending', redirectTo: 'media/images/suggested'},
+  { path: 'discovery/featured', redirectTo: 'channels/suggested'},
 
   /* /Legacy routes */
 

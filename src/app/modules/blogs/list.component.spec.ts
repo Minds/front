@@ -70,6 +70,11 @@ describe('BlogListComponent', () => {
           template: '',
           inputs: ['entity'],
         }),
+        MockComponent({
+          selector: 'm-topbar--hashtags',
+          template: '',
+          outputs: ['selectionChange']
+        }),
         BlogListComponent
       ],
       imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
@@ -152,9 +157,9 @@ describe('BlogListComponent', () => {
     const options = fixture.debugElement.query(By.css('.m-toolbar m-topbar--navigation--options'));
 
     expect(nav1).not.toBeNull();
-    expect(nav1.nativeElement.children[0].textContent).toContain('Top');
+    expect(nav1.nativeElement.children[0].textContent).toContain('Suggested');
     expect(tooltip1).not.toBeNull();
-    expect(tooltip1.nativeElement.textContent).toContain('Top displays the top content on Minds');
+    expect(tooltip1.nativeElement.textContent).toContain('Suggested displays the suggested content on Minds');
 
     expect(nav2).not.toBeNull();
     expect(nav2.nativeElement.children[0].textContent).toContain('Subscriptions');

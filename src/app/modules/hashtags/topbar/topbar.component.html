@@ -1,0 +1,18 @@
+<div class="m-topbar--hashtags">
+  <span *ngFor="let hashtag of hashtags"
+    class="m-topbar--hashtags--hashtag"
+    [class.m-topbar--hashtags--hashtag--selected]="hashtag.selected"
+    (click)="toggleHashtag(hashtag)">
+    #{{hashtag.value}}
+  </span>
+
+  <span
+    class="m-topbar--hashtags--select-more"
+    i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE"
+    (click)="openModal()">
+    MORE
+    <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE_TOOLTIP">
+      Select the hashtags you wish to see more often
+    </m-tooltip>
+  </span>
+</div>

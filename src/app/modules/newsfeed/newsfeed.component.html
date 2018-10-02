@@ -2,12 +2,12 @@
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <a class="m-topbar--navigation--item"
-        routerLink="/newsfeed/top"
+        routerLink="/newsfeed/suggested"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span i18n="@@M__COMMON_TOPBAR_TOP">Top</span>
-        <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
-          Top displays the top content on Minds
+        <span i18n="@@M__COMMON_TOPBAR_SUGGESTED">Suggested</span>
+        <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_SUGGESTED_TOOLTIP">
+          Suggested displays the suggested content on Minds
         </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
@@ -32,6 +32,11 @@
       </a>
 
       <div class="m-layout--spacer"></div>
+
+      <m-topbar--hashtags
+        (selectionChange)="reloadTopFeed()"
+        *ngIf="suggested"
+      ></m-topbar--hashtags>
 
       <m-newsfeed--dropdown></m-newsfeed--dropdown>
     </div>

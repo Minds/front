@@ -6,12 +6,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Client, Upload } from '../../../services/api';
 import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
-import { MindsActivityObject } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
+import { HashtagsSelectorModalComponent } from '../../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { NewsfeedService } from '../services/newsfeed.service';
 
 @Component({
   selector: 'm-newsfeed--top',
@@ -30,6 +32,7 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
 
   paramsSubscription: Subscription;
   ratingSubscription: Subscription;
+  reloadFeedSubscription: Subscription;
 
   @ViewChild('poster') private poster: PosterComponent;
 
@@ -43,7 +46,9 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
     private storage: Storage,
     private context: ContextService,
     private session: Session,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private overlayModal: OverlayModalService,
+    private newsfeedService: NewsfeedService,
   ) {
     this.title.setTitle('Newsfeed');
 
@@ -53,11 +58,17 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
     this.ratingSubscription = settingsService.ratingChanged.subscribe((event) => {
       this.onRatingChanged(event);
     });
+
+    this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(() => this.load(true));
   }
 
   ngOnInit() {
     this.load();
     this.minds = window.Minds;
+
+    if (this.minds.user.opted_in_hashtags == 0) {
+      this.openHashtagsSelector();
+    }
 
     this.context.set('activity');
   }
@@ -69,6 +80,10 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
 
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
+    }
+
+    if (this.reloadFeedSubscription) {
+      this.reloadFeedSubscription.unsubscribe();
     }
   }
 
@@ -85,22 +100,27 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/newsfeed/top', { limit: 12, offset: this.offset, rating: this.rating }, { cache: true })
-      .then((data: MindsActivityObject) => {
-        if (!data.activity) {
+    this.client.get('api/v1/entities/suggested/activities', { limit: 12, offset: this.offset, rating: this.rating }, { cache: true })
+      .then((data: any) => {
+        if (!data.entities) {
           this.moreData = false;
           this.inProgress = false;
+
+          if (this.newsfeed.length == 0) {
+            this.openHashtagsSelector();
+          }
+
           return false;
         }
         if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.activity);
+          this.newsfeed = this.newsfeed.concat(data.entities);
         } else {
-          this.newsfeed = data.activity;
+          this.newsfeed = data.entities;
         }
         this.offset = data['load-next'];
         this.inProgress = false;
       })
-      .catch(function (e) {
+      .catch((e) => {
         this.inProgress = false;
       });
   }
@@ -126,6 +146,12 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
     this.rating = rating;
 
     this.load(true);
+  }
+
+  openHashtagsSelector() {
+    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
+      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large'
+    }).present();
   }
 
 }
