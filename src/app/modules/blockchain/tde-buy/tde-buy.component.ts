@@ -108,7 +108,7 @@ export class BlockchainTdeBuyComponent implements OnInit {
     this.detectChanges();
 
     try {
-      let bought = await await this.tokenDistributionEvent.buy(this.pledged);
+      let bought = await await this.tokenDistributionEvent.buy(this.pledged, 0);
 
       if (bought) {
         this.success = true;

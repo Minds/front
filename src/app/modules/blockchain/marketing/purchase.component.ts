@@ -31,7 +31,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     issued: 0,
   };
 
-  amount: number = 0.2;
+  amount: number = 0.25;
 
   address: string = '';
   ofac: boolean = false;
@@ -49,6 +49,7 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   @Input() phase: string = 'presale';
   inProgress: boolean = false;
+  rate: number = 0;
 
   constructor(
     protected client: Client,
@@ -66,13 +67,11 @@ export class BlockchainPurchaseComponent implements OnInit {
   }
 
   get tokens() {
-    const rate = this.web3Wallet.config.rate;
-    return this.amount * rate;
+    return this.amount * this.rate;
   }
 
   set tokens(value) {
-    const rate = this.web3Wallet.config.rate;
-    this.amount = value / rate;
+    this.amount = value / this.rate;
   }
 
   async load() {
@@ -87,6 +86,7 @@ export class BlockchainPurchaseComponent implements OnInit {
         requested: response.requested,
         issued: response.issued,
       };
+      this.rate = response.rate;
       //this.amount = this.stats.pledged;
     } catch (e) { }
 
@@ -101,7 +101,8 @@ export class BlockchainPurchaseComponent implements OnInit {
     this.detectChanges();
   }
 
-  purchase() {
+  async purchase() {
+    await this.load();
     if (this.session.isLoggedIn()) {
       this.showPledgeModal = true;
     } else {
@@ -121,7 +122,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     let tx;
 
     try {
-      tx = await this.tde.buy(this.amount);
+      tx = await this.tde.buy(this.amount, this.rate);
     } catch (err) {
       this.error = err;
       this.confirming = false;

@@ -11,7 +11,7 @@ export class TokenDistributionEventService {
 
   // Buy tokens
 
-  async buy(ethAmount: number, gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1, message: string = '') {
+  async buy(ethAmount: number, rate: number, gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1, message: string = '') {
 
     await this.web3Wallet.ready();
 
