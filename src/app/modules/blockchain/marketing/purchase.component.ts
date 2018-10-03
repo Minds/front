@@ -124,11 +124,11 @@ export class BlockchainPurchaseComponent implements OnInit {
     this.confirming = true;
     this.detectChanges();
 
-    let tx;
+    let tx, amount;
 
     try {
       let comp = 0.000001; 
-      let amount = parseFloat((this.amount + comp).toFixed(18)); // Allow for small rounding discrepencies caused by recurring decimals
+      amount = parseFloat((this.amount + comp).toFixed(18)); // Allow for small rounding discrepencies caused by recurring decimals
       tx = await this.tde.buy(amount, this.rate);
     } catch (err) {
       this.error = err;
