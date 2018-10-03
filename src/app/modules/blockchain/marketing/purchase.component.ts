@@ -71,7 +71,8 @@ export class BlockchainPurchaseComponent implements OnInit {
   }
 
   set tokens(value) {
-    this.amount = value / this.rate;
+    this.amount = parseFloat((value / this.rate).toFixed(18));
+    this.tokens = (this.amount * this.rate);
   }
 
   async load() {
@@ -132,7 +133,7 @@ export class BlockchainPurchaseComponent implements OnInit {
 
     let response = await this.client.post('api/v2/blockchain/purchase', {
         tx: tx,
-        amount: this.amount,
+        amount: this.amount.toString(),
         wallet_address: await this.web3Wallet.getCurrentWallet()
     });
 
