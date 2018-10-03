@@ -31,7 +31,8 @@ export class BlockchainPurchaseComponent implements OnInit {
     issued: 0,
   };
 
-  amount: number = 0.25;
+  //amount: number = 0.25;
+  tokens: number = 500;
 
   address: string = '';
   ofac: boolean = false;
@@ -63,18 +64,21 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   ngOnInit() {
     this.loadWalletAddress();
-    this.load();
+    this.load().then(() => {
+      this.amount = 0.25;
+    });
   }
 
-  get tokens() {
-    return this.amount * this.rate;
+  get amount() {
+    let newAmnt = this.tokens / this.rate;
+    let wei = 10 ** 18;
+    return Math.ceil(newAmnt * wei) / wei; // Rounds up amount 
   }
 
-  set tokens(value) {
-    this.amount = parseFloat((value / this.rate).toFixed(18));
-    this.tokens = (this.amount * this.rate);
+  set amount(value: number) {
+    this.tokens = value * this.rate;
   }
-
+  
   async load() {
     this.inProgress = true;
     this.detectChanges();
@@ -156,6 +160,11 @@ export class BlockchainPurchaseComponent implements OnInit {
   closePledgeModal() {
     this.showPledgeModal = false;
     this.detectChanges();
+  }
+
+  promptTokenInput(input) {
+    alert('Please enter how many tokens you wish to purchase');
+    setTimeout(() => { input.focus()}, 100);
   }
 
   detectChanges() {
