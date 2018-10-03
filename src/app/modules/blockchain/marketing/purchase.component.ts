@@ -72,7 +72,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   get amount() {
     let newAmnt = this.tokens / this.rate;
     let wei = 10 ** 18;
-    return Math.ceil(newAmnt * wei) / wei; // Rounds up amount 
+    return Math.ceil(newAmnt * wei) / wei; // Rounds up amount and add 1/1000th ETH to compensate for rounding
   }
 
   set amount(value: number) {
@@ -127,7 +127,9 @@ export class BlockchainPurchaseComponent implements OnInit {
     let tx;
 
     try {
-      tx = await this.tde.buy(this.amount, this.rate);
+      let comp = 0.000001; 
+      let amount = parseFloat((this.amount + comp).toFixed(18)); // Allow for small rounding discrepencies caused by recurring decimals
+      tx = await this.tde.buy(amount, this.rate);
     } catch (err) {
       this.error = err;
       this.confirming = false;
@@ -137,7 +139,7 @@ export class BlockchainPurchaseComponent implements OnInit {
 
     let response = await this.client.post('api/v2/blockchain/purchase', {
         tx: tx,
-        amount: this.amount.toString(),
+        amount: amount.toString(),
         wallet_address: await this.web3Wallet.getCurrentWallet()
     });
 
