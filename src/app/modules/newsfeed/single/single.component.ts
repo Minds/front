@@ -36,6 +36,7 @@ export class NewsfeedSingleComponent {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
+        this.error = '';
         this.activity = void 0;
         this.load(params['guid']);
       }
