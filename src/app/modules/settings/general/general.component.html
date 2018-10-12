@@ -6,7 +6,7 @@
 
   <button class="m-btn m-btn--slim m-btn--action"
     [disabled]="!canSubmit()"
-    [hidden]="saved"
+    [hidden]="saved || inProgress"
     (click)="save()"
     >
     <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
@@ -16,7 +16,7 @@
     >
     <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
   </button>
-  <div id="p2" class="mdl-spinner mdl-js-spinner is-active" [hidden]="!inProgress"></div>
+  <div id="p2" class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
 </div>
 
 <!-- START: NAME -->
