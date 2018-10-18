@@ -40,7 +40,7 @@ export class TopbarHashtagsComponent implements OnInit {
         tag.selected = hashtag.selected;
       } else if (hashtag.selected) {
         // if it's not in the collection AND it's a selection, then add it
-        this.hashtags = [hashtag, ...this.hashtags.slice(0)];
+        this.hashtags = [hashtag, ...this.hashtags.slice(0, 5)];
       }
       this.cd.markForCheck();
       this.cd.detectChanges();
