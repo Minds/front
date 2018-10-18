@@ -89,16 +89,17 @@
 
       <!-- Tags -->
       <div class="m-group-info-tags mdl-color-text--blue-grey-300">
-        <div *ngIf="editing && group['is:owner']">
+        <div>
           <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
           <ng-container *ngIf="!editing">
             <span *ngFor="let tag of group.tags">#{{tag}}</span>
           </ng-container>
           <m-hashtags-selector #hashtagsSelector
+            [tags]="group.tags"
             (tagsChange)="onTagsChange($event)"
             (tagsAdded)="onTagsAdded($event)"
             (tagsRemoved)="onTagsRemoved($event)"
-            *ngIf="editing"
+            *ngIf="editing && group['is:owner']"
           ></m-hashtags-selector> 
         </div>
 
