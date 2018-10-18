@@ -50,6 +50,13 @@ export class ChannelsListComponent {
             this.filter = 'trending';
             this.uri = 'entities/trending/channels';
             break;
+          case 'suggested':
+            if (!this.session.isLoggedIn()) {
+              this.router.navigate(['/channels', 'subscriptions']);
+            }
+            this.filter = 'trending';
+            this.uri = 'entities/trending/channels';
+            break;
           case 'subscribers':
             this.uri = 'subscribe/subscribers/' + this.session.getLoggedInUser().guid;
             break;

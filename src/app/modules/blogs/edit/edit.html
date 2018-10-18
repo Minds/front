@@ -12,7 +12,7 @@
 
 <form (submit)="save()" class="mdl-grid blogs-grid m-blog-container mdl-color--white" style="max-width:740px" *ngIf="blog.guid">
 
-  <div class="mdl-grid" style="width: 100%"> 
+  <div class="mdl-grid" style="width: 100%">
     <div class="mdl-cell mdl-cell--12-col">
       <minds-textarea
         name="title"
@@ -59,11 +59,11 @@
       </select>
     </div>
     <div class="m-category-info">
-      <i class="material-icons">label</i>
-      <select name="category" [ngModel]="blog.category" (change)="blog.category = $event.target.value" class="mdl-color-text--blue-grey-300 m-form-select">
-          <option value="" i18n="@@M__COMMON__CATEGORY_PLACEHOLDER">-- Category --</option>
-          <option *ngFor="let c of categories" [value]="c.id">{{c.label}}</option>
-      </select>
+      <m-hashtags-selector #hashtagsSelector
+        (tagsChange)="onTagsChange($event)"
+        (tagsAdded)="onTagsAdded($event)"
+        (tagsRemoved)="onTagsRemoved($event)"
+      ></m-hashtags-selector>
     </div>
     <div class="m-visibility-info">
       <i class="material-icons">visibility</i>

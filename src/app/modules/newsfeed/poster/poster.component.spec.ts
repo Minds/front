@@ -1,5 +1,5 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 
 import { PosterComponent } from './poster.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +17,11 @@ import { attachmentServiceMock } from '../../../../tests/attachment-service-mock
 import { AutoGrow } from '../../../common/directives/autogrow';
 import { MaterialUploadMock } from '../../../mocks/common/directives/material/upload-mock';
 import { CommonModule } from '@angular/common';
+import { MockComponent } from '../../../utils/mock';
+import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
+import { DropdownComponent } from '../../../common/components/dropdown/dropdown.component';
+import { TagsInput } from '../../hashtags/tags-input/tags.component';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
@@ -24,55 +29,9 @@ import { CommonModule } from '@angular/common';
   template: '',
 })
 
-export class ThirdPartyNetworksSelectorMock {
+class ThirdPartyNetworksSelectorMock {
   inject(data) {
     return data;
-  }
-}
-
-@Component({
-  selector: 'm-wire-threshold-input',
-  template: ''
-})
-export class WireThresholdInputComponentMock {
-  threshold: any;
-
-  @Input('threshold')
-  set _threshold(threshold: any) {
-  }
-
-  @Input('disabled') disabled: boolean = false;
-  @Input('enabled') enabled: boolean = false;
-
-  @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<any> = new EventEmitter<any>();
-
-  toggle() {
-  }
-
-  setType(type: any) {
-  }
-}
-
-@Component({
-  selector: 'minds-rich-embed',
-  template: ''
-})
-export class MindsRichEmbedMock {
-  @Input() src;
-  @Input() preview;
-  @Input() maxheight;
-  @Input() cropImage;
-
-  action() {
-
-  }
-
-  parseInlineEmbed() {
-
-  }
-
-  hasInlineContentLoaded() {
-
   }
 }
 
@@ -100,8 +59,16 @@ describe('PosterComponent', () => {
         MaterialMock,
         MaterialUploadMock,
         ThirdPartyNetworksSelectorMock,
-        WireThresholdInputComponentMock,
-        MindsRichEmbedMock,
+        MockComponent({
+          selector: 'm-wire-threshold-input',
+          inputs: ['threshold', 'disabled', 'enabled'],
+          outputs: ['thresholdChange']
+        }),
+        MockComponent({ selector: 'minds-rich-embed', inputs: ['src', 'preview', 'maxheight', 'cropimage'] }),
+        MockComponent({ selector: 'm-tooltip', template: '<ng-content></ng-content>' }),
+        DropdownComponent,
+        TagsInput,
+        HashtagsSelectorComponent,
         PosterComponent,
       ],
       imports: [
@@ -109,6 +76,7 @@ describe('PosterComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
+        TextInputAutocompleteModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
@@ -223,7 +191,11 @@ describe('PosterComponent', () => {
     expect(getPostButton()).not.toBeNull();
   });
   it('clicking on the post button should call api/v1/newsfeed', fakeAsync(() => {
-    comp.meta.message = 'test';
+    comp.meta.message = 'test #tags ';
+    comp.hashtagsSelector.parseTags(comp.meta.message);
+
+    fixture.detectChanges();
+
     clientMock.response['api/v1/newsfeed'] = { status: 'success' };
 
     spyOn(comp, 'post').and.callThrough();

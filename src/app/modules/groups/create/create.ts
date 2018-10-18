@@ -107,4 +107,27 @@ export class GroupsCreator {
       });
   }
 
+  onTagsChange(tags) {
+  }
+
+  onTagsAdded(tags) {
+    if (!this.group.tags)
+      this.group.tags = [];
+
+    for (let tag of tags) {
+      this.group.tags.push(tag.value);
+    }
+  }
+
+  onTagsRemoved(tags) {
+    for (let tag of tags) {
+      for (let i in this.group.tags) {
+        console.log(this.group.tags[i]);
+        if (this.group.tags[i] == tag.value) {
+          this.group.tags.splice(i, 1);
+        }
+      }
+    }
+  }
+
 }

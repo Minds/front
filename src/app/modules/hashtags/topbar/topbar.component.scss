@@ -1,0 +1,51 @@
+m-topbar--hashtags {
+  .m-topbar--hashtags {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #222;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    text-decoration: none;
+    font-family: 'Roboto';
+    cursor: pointer;
+
+    span {
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1.25px;
+      padding-left: 4px;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+
+      &.m-topbar--hashtags--hashtag--all {
+        font-weight:bold;
+      }
+
+      &.m-topbar--hashtags--hashtag--selected {
+        color: #4690DF;
+      }
+
+      &.m-topbar--hashtags--hashtag--disabled {
+        color: #666;
+      }
+
+      &.m-topbar--hashtags--select-more {
+        font-weight: 600;
+      }
+    }
+  }
+  m-tooltip {
+    vertical-align: middle;
+    //margin-left: 8px;
+    //i {
+    //  font-size: 16px !important;
+    //}
+
+    .m-tooltip--bubble {
+      right: 30px;
+    }
+  }
+}

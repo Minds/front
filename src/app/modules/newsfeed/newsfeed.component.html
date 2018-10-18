@@ -2,12 +2,12 @@
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <a class="m-topbar--navigation--item"
-        routerLink="/newsfeed/top"
+        routerLink="/newsfeed/suggested"
         routerLinkActive="m-topbar--navigation--item-active"
       >
-        <span i18n="@@M__COMMON_TOPBAR_TOP">Top</span>
-        <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
-          Top displays the top content on Minds
+        <span i18n="@@M__COMMON_TOPBAR_SUGGESTED">Top</span>
+        <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_SUGGESTED_TOOLTIP">
+          Top displays your top suggested content on Minds based on hashtags
         </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
@@ -33,42 +33,67 @@
 
       <div class="m-layout--spacer"></div>
 
+      <a class="m-topbar--navigation--item m-topbar--navigation--item-active"
+        *ngIf="session.getLoggedInUser() && !!tag"
+      >
+        <span>#{{tag}}</span>
+      </a>
+
+      <m-topbar--hashtags
+        (selectionChange)="reloadTopFeed($event)"
+        [enabled]="suggested"
+      ></m-topbar--hashtags>
+
       <m-newsfeed--dropdown></m-newsfeed--dropdown>
     </div>
   </div>
 </div>
 
-<div class="mdl-grid m-newsfeed">
+<div class="mdl-grid m-newsfeed m-page">
 
     <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar" >
 
       <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
 
-      <a routerLink="/plus" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link m-newsfeed--upgrade-to-plus" *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus && showPlusButton">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button m-layout--row">
+      <div class="m-page--sidebar--navigation">
+
+        <a class="m-page--sidebar--navigation--item"
+          routerLink="/plus"
+          *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus && showPlusButton"
+        >
           <i class="material-icons">add_circle</i>
-          <ng-container i18n="@@MINDS__NEWSFEED__UPGRADE_TO_PLUS_ACTION">Upgrade to Plus</ng-container>
-          <div class="m-layout--spacer"></div>
-          <i class="material-icons m-newsfeed-sidebar-button--close" (click)="hidePlusButton($event)">close</i>
-        </div>
-      </a>
+          <span>Upgrade to Plus</span>
+        </a>
 
-      <a routerLink="/token" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link m-newsfeed--buy-tokens"  *ngIf="session.isLoggedIn() && minds.site_url != 'https://www.minds.com/'">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button m-layout--row">
+        <a class="m-page--sidebar--navigation--item"
+          routerLink="/tokens"
+          *ngIf="session.isLoggedIn()"
+        >
+          <i class="material-icons">shopping_cart</i>
+          <span>Buy Tokens</span>
+        </a>
+    
+        <a class="m-page--sidebar--navigation--item"
+          routerLink="/wallet"
+          *ngIf="session.isLoggedIn()"
+        >
           <i class="material-icons">account_balance</i>
-          <ng-container i18n="@@MINDS__NEWSFEED__BUY_MINDS_TOKENS_ACTION">Buy Minds Tokens</ng-container>
-        </div>
-      </a>
+          <span>Wallet</span>
+        </a>
 
-      <a routerLink="/login" class="mdl-card mdl-color--green mdl-color-text--white m-boost-console-link" *ngIf="!session.isLoggedIn()">
-        <div class="mdl-card__supporting-text mdl-color-text--white minds-newsfeed-sidebar-button" i18n="@@M__ACTION__LOGIN">
-          Login
-        </div>
-      </a>
+        <a class="m-page--sidebar--navigation--item"
+          routerLink="/login"
+          *ngIf="!session.isLoggedIn()"
+        >
+          <i class="material-icons">vpn_key</i>
+          <span>Login</span>
+        </a>
+
+      </div>
 
       <div class="minds-spacer minds-spacer-2x"></div>
 
-      <div class="mdl-card mdl-color--white m-border">
+      <div class="mdl-card mdl-color--white m-border" *ngIf="false">
         <m-tagcloud></m-tagcloud>
       </div>
 
@@ -77,16 +102,16 @@
       <div class="m-newsfeed--dynamic-siderbar" *ngIf="!showRightSidebar">
         <m-ads-boost limit="8"></m-ads-boost>
         <div class="minds-spacer minds-spacer-2x"></div>
+      </div>
 
-        <div class="m-newsfeed-footer">
-          <ul class="m-footer-nav m-footer-nav-inline">
-            <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item">
-              <a *ngIf="page.path && page.path.indexOf('p/') > -1" [routerLink]="['/' + page.path]">{{page.title}}</a>
-              <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
-            </li>
-          </ul>
-          <span class="copyright mdl-color-text--blue-grey-700" i18n="@@M__COMMON__COPYRIGHT_YEAR">&#169; Minds {{'2018'}}</span>
-        </div>
+      <div class="m-newsfeed-footer">
+        <ul class="m-footer-nav m-footer-nav-inline">
+          <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item">
+            <a *ngIf="page.path && page.path.indexOf('p/') > -1" [routerLink]="['/' + page.path]">{{page.title}}</a>
+            <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
+          </li>
+        </ul>
+        <span class="copyright mdl-color-text--blue-grey-700" i18n="@@M__COMMON__COPYRIGHT_YEAR">&#169; Minds {{'2018'}}</span>
       </div>
     </div>
 
@@ -99,16 +124,6 @@
     <div class="mdl-cell mdl-cell--4-col m-newsfeed--boost-sidebar" *ngIf="showRightSidebar">
       <m-ads-boost limit="8" *ngIf="!(session.getLoggedInUser().plus && session.getLoggedInUser().disabled_boost)"></m-ads-boost>
       <div class="minds-spacer minds-spacer-2x"></div>
-
-      <div class="m-newsfeed-footer">
-        <ul class="m-footer-nav m-footer-nav-inline">
-          <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item">
-            <a *ngIf="page.path && page.path.indexOf('p/') > -1" [routerLink]="['/' + page.path]">{{page.title}}</a>
-            <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
-          </li>
-        </ul>
-        <span class="copyright mdl-color-text--blue-grey-700" i18n="@@M__COMMON__COPYRIGHT_YEAR">&#169; Minds {{'2018'}}</span>
-      </div>
     </div>
 
 </div>

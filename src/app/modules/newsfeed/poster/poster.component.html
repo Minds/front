@@ -10,20 +10,25 @@
     </div>
 
     <form (submit)="post()">
-
+      <mwl-text-input-autocomplete-container>
             <textarea
               class="mdl-textfield__input"
               type="text"
               id="message"
               #message
               name="message"
-              [(ngModel)]="meta.message"
-              (keyup)="getPostPreview(message)"
+              [ngModel]="meta.message"
+              (ngModelChange)="onMessageChange($event)"
+              (keyup)="getPostPreview(message);"
               placeholder="Speak your mind..."
               i18n-placeholder="@@MINDS__POSTER__SPEAK_YOUR_MIND"
               [autoGrow]
+              mwlTextInputAutocomplete
+              [findChoices]="findTrendingHashtags.bind(this)"
+              [getChoiceLabel]="getChoiceLabel"
+              [triggerCharacter]="'#'"
             ></textarea>
-
+      </mwl-text-input-autocomplete-container>
       <div class="mdl-card__actions">
         <minds-third-party-networks-selector
           #thirdPartyNetworksSelector="thirdPartyNetworksSelector"
@@ -44,6 +49,13 @@
           <span *ngIf="attachment.isMature()" i18n="@@M__COMMON__MATURE_CONTENT">Mature content</span>
         </a>
 
+        <m-hashtags-selector #hashtagsSelector
+          [tags]="tags"
+          (tagsChange)="onTagsChange($event)"
+          (tagsAdded)="onTagsAdded($event)"
+          (tagsRemoved)="onTagsRemoved($event)"
+        ></m-hashtags-selector>
+
         <m-wire-threshold-input
           [(threshold)]="meta.wire_threshold"
           (validThreshold)="validThreshold = $event"
@@ -52,7 +64,7 @@
         <button
           type="submit"
           class="m-btn m-btn--slim m-btn m-btn--with-icon"
-          [disabled]="!canPost || !validThreshold || inProgress"
+          [disabled]="!canPost || !validThreshold || tooManyTags || inProgress"
         >
           <span i18n="Action of posting@@MINDS__POSTER__POST_ACTION">Post</span>
           <i class="material-icons">send</i>

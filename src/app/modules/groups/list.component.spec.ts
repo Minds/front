@@ -65,6 +65,11 @@ describe('Groups List', () => {
           inputs: ['options'],
           outputs: ['change']
         }),
+        MockComponent({
+          selector: 'm-topbar--hashtags',
+          template: '',
+          outputs: ['selectionChange']
+        }),
         GroupsListComponent,
         GroupsTileMock,
         TooltipComponent,

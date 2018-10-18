@@ -5,6 +5,8 @@ import { AttachmentService } from '../../../services/attachment';
 import { ThirdPartyNetworksSelector } from '../../third-party-networks/selector';
 import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
+import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
+import { Tag } from '../../hashtags/types/tag';
 
 @Component({
   moduleId: module.id,
@@ -25,18 +27,22 @@ export class PosterComponent {
 
   content = '';
   meta: any = {
+    message : '',
     wire_threshold: null
   };
+  tags = [];  
   minds;
   load: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
 
   canPost: boolean = true;
   validThreshold: boolean = true;
+  tooManyTags: boolean = false;
 
   errorMessage: string = null;
 
   @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
+  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
 
   constructor(public session: Session, public client: Client, public upload: Upload, public attachment: AttachmentService) {
     this.minds = window.Minds;
@@ -58,6 +64,53 @@ export class PosterComponent {
     }
   }
 
+  onMessageChange($event) {
+    this.errorMessage = "";
+    this.meta.message = $event;
+
+    const regex = /(^|\s||)#(\w+)/gim;
+    this.tags = [];
+    let match;
+
+    while ((match = regex.exec(this.meta.message)) !== null) {
+      this.tags.push(match[2]);
+    }
+  }
+
+  onTagsChange(tags: string[]) {
+    if (this.hashtagsSelector.tags.length > 5) {
+      this.errorMessage = "You can only select up to 5 hashtags";
+      this.tooManyTags = true;
+    } else {
+      this.tooManyTags = false;
+      if (this.errorMessage === "You can only select up to 5 hashtags") {
+        this.errorMessage = '';
+      }
+    }
+  }
+
+  showTagsError() {
+    if(this.tags.length === 0) {
+      this.errorMessage = 'You need to select at least one hashtag';
+      this.tooManyTags = false;
+    } else if(this.tags.length > 5) {
+      this.errorMessage = 'You can only select up to 5 hashtags';
+      this.tooManyTags = true;
+    }
+  }
+
+  onTagsAdded(tags: Tag[]) {
+    for (let tag of tags) {
+      this.meta.message += ` #${tag.value}`;
+    }
+  }
+
+  onTagsRemoved(tags: Tag[]) {
+    for (let tag of tags) {
+      this.meta.message = this.meta.message.replace('#' + tag.value, tag.value);
+    }
+  }
+
   /**
    * Post to the newsfeed
    */
@@ -65,6 +118,12 @@ export class PosterComponent {
     if (!this.meta.message && !this.attachment.has()) {
       return;
     }
+    if (this.hashtagsSelector.tags.length === 0 || this.hashtagsSelector.tags.length > 5) {
+      this.showTagsError();
+      return;
+    }
+
+    this.errorMessage = "";
 
     let data = Object.assign(this.meta, this.attachment.exportMeta());
 
@@ -148,5 +207,16 @@ export class PosterComponent {
     }
 
     this.attachment.preview(message.value);
+  }
+
+  async findTrendingHashtags(searchText: string) {
+    const response: any = await this.client.get('api/v2/search/suggest/tags', { q: searchText });
+    return response.tags
+      .filter(item => item.toLowerCase().includes(searchText.toLowerCase()))
+      .slice(0, 5);
+  }
+
+  getChoiceLabel(text: string) {
+    return `#${text}`;
   }
 }

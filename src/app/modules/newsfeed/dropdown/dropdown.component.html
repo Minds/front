@@ -39,12 +39,6 @@
         Upgrade to Plus in order to turn off Boost.
       </m-tooltip>
     </li>
-    <li class="m-dropdown--list--item" (click)="selectCategories()" *ngIf="boostService.isBoostEnabled()">
-      <span i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__SELECT_CATEGORIES_ITEM">Select Categories</span>
-      <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__SELECT_CATEGORIES_ITEM_TOOLTIP">
-        Select the categories of content you’d like to see more of
-      </m-tooltip>
-    </li>
     <li class="m-dropdown--list--item" routerLink="/boost" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__ABOUT_BOOST">About Boost</li>
   </ng-container>
 </m-topbar--navigation--options>

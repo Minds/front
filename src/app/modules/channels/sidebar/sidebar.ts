@@ -3,6 +3,9 @@ import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
 
+import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
+import { Tag } from '../../hashtags/types/tag';
+
 @Component({
   moduleId: module.id,
   selector: 'm-channel--sidebar',
@@ -18,6 +21,9 @@ export class ChannelSidebar {
   editing: boolean = false;
   user: MindsUser;
   searching;
+  errorMessage: string = '';
+  amountOfTags: number = 0;
+  tooManyTags: boolean = false;
 
   @Output() changeEditing = new EventEmitter<boolean>();
 
@@ -35,6 +41,11 @@ export class ChannelSidebar {
   }
 
   toggleEditing() {
+    
+    if (this.tooManyTags) {
+      return;
+    }
+
     this.changeEditing.next(!this.editing);
   }
 
@@ -74,6 +85,25 @@ export class ChannelSidebar {
       city: window.Minds.user.city
     });
   }
+
+
+  onTagsChange(tags: string[]) {
+    this.amountOfTags = tags.length;
+    if (this.amountOfTags > 5) {
+      this.errorMessage = "You can only select up to 5 hashtags";
+      this.tooManyTags = true;
+    } else {
+      this.tooManyTags = false;
+      this.user.tags = tags;
+      if (this.errorMessage === "You can only select up to 5 hashtags") {
+        this.errorMessage = '';
+      }
+    }
+  }
+
+  onTagsAdded(tags: Tag[]) {}
+
+  onTagsRemoved(tags: Tag[]) {}
 
   setSocialProfile(value: any) {
     this.user.social_profiles = value;

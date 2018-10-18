@@ -71,26 +71,35 @@
     </div>
 
     <div class="m-group-info-brief-description mdl-card__supporting-text" *ngIf="editing && group['is:owner']">
-      <textarea
-        name="briefdescription" 
-        [autoGrow]
-        [(ngModel)]="group.briefdescription"
-        placeholder="Enter a brief description"
-        i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
-      ></textarea>
+      <mwl-text-input-autocomplete-container>
+        <textarea
+          name="briefdescription"
+          [autoGrow]
+          [(ngModel)]="group.briefdescription"
+          placeholder="Enter a brief description"
+          i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
+          mwlTextInputAutocomplete
+          [findChoices]="findTrendingHashtags.bind(this)"
+          [getChoiceLabel]="getChoiceLabel"
+          [triggerCharacter]="'#'"
+        >
+        ></textarea>
+      </mwl-text-input-autocomplete-container>
     </div>
 
       <!-- Tags -->
       <div class="m-group-info-tags mdl-color-text--blue-grey-300">
-
-        <div [hidden]="editing || !group.tags" *ngIf="group.tags">
-          <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
-          <span *ngFor="let tag of group.tags">{{tag}}</span>
-        </div>
-
         <div *ngIf="editing && group['is:owner']">
           <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
-          <minds-form-tags-input [(tags)]="group.tags"></minds-form-tags-input>
+          <ng-container *ngIf="!editing">
+            <span *ngFor="let tag of group.tags">#{{tag}}</span>
+          </ng-container>
+          <m-hashtags-selector #hashtagsSelector
+            (tagsChange)="onTagsChange($event)"
+            (tagsAdded)="onTagsAdded($event)"
+            (tagsRemoved)="onTagsRemoved($event)"
+            *ngIf="editing"
+          ></m-hashtags-selector> 
         </div>
 
       </div>

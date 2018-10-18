@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { HashtagsSelectorModalComponent } from '../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
@@ -11,6 +13,7 @@ import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
 import { PosterComponent } from './poster/poster.component';
+import { NewsfeedService } from './services/newsfeed.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -53,6 +56,10 @@ export class NewsfeedComponent {
 
   subscribed: boolean = false;
 
+  tag: string = null;
+
+  suggested: boolean = false;
+
   @ViewChild('poster') private poster: PosterComponent;
 
   constructor(
@@ -64,20 +71,26 @@ export class NewsfeedComponent {
     public route: ActivatedRoute,
     public title: MindsTitle,
     private storage: Storage,
+    private overlayModal: OverlayModalService,
     private context: ContextService,
+    private newsfeedService: NewsfeedService,
   ) {
 
     this.route.url.subscribe(segments => {
-      // const path = segments[segments.length-1].path;
+      this.tag = null;
+
       const path: string = route.snapshot.firstChild && route.snapshot.firstChild.routeConfig.path;
-      if(path === 'boost') {
+      if (path === 'boost') {
         this.title.setTitle('Boost Newsfeed');
         this.boostFeed = true;
+      } else if (path === 'tag/:tag') {
+        this.tag = route.snapshot.firstChild.url[1].path;
       } else {
         this.title.setTitle('Newsfeed');
       }
 
       this.subscribed = path === 'subscribed';
+      this.suggested = path === 'suggested';
     });
 
     const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');
@@ -89,7 +102,7 @@ export class NewsfeedComponent {
   ngOnInit() {
 
     if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/newsfeed/top']);
+      this.router.navigate(['/login']); //force login
     } else {
       this.load();
       //this.setUpPoll();
@@ -127,7 +140,9 @@ export class NewsfeedComponent {
           this.pollingNewPosts += response.count;
           this.pollingOffset = response['load-previous'];
         })
-        .catch(e => { console.error('Newsfeed polling', e); });
+        .catch(e => {
+          console.error('Newsfeed polling', e);
+        });
     }, 60000);
   }
 
@@ -142,7 +157,11 @@ export class NewsfeedComponent {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/newsfeed', { limit: this.pollingNewPosts, offset: this.pollingOffset, prepend: true }, { cache: true })
+    this.client.get('api/v1/newsfeed', {
+      limit: this.pollingNewPosts,
+      offset: this.pollingOffset,
+      prepend: true
+    }, { cache: true })
       .then((data: MindsActivityObject) => {
         this.inProgress = false;
         this.pollingNewPosts = 0;
@@ -153,7 +172,7 @@ export class NewsfeedComponent {
 
         this.prepended = data.activity.concat(this.prepended);
 
-        this.pollingOffset = data['load-previous'] ? data['load-previous'] : '';
+        this.pollingOffset = data['load-previous'] ? data['load-previous']: '';
       })
       .catch(e => {
         this.inProgress = false;
@@ -170,6 +189,13 @@ export class NewsfeedComponent {
       this.loadBoosts(refresh);
     } else {
       this.loadNewsfeed(refresh);
+    }
+  }
+
+  reloadTopFeed(all: boolean = false) {
+    this.newsfeedService.reloadFeed(all);
+    if (!this.suggested) {
+      this.router.navigate(['newsfeed/suggested']);
     }
   }
 
@@ -299,11 +325,11 @@ export class NewsfeedComponent {
     event.stopPropagation();
   }
 
-  onViewed(event: {activity, visible}) {
+  onViewed(event: { activity, visible }) {
     if (this.boostFeed) {
-      if(event.visible){
+      if (event.visible) {
         this.client.put('api/v1/boost/fetch/newsfeed/' + event.activity.boosted_guid);
-      }else {
+      } else {
         this.client.put('api/v1/boost/fetch/newsfeed/' + event.activity.boosted_guid + '/stop');
       }
     }

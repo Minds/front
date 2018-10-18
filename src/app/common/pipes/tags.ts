@@ -30,7 +30,7 @@ export class TagsPipe implements PipeTransform  {
     hash: {
       rule: /(^|\s||)#(\w+)/gim,
       replace: (m) => {
-        return  `${m.match[1]}<a href="/search;q=%23${m.match[2]};ref=hashtag" target="_blank">#${m.match[2]}</a>`;
+        return  `${m.match[1]}<a href="/newsfeed/tag/${m.match[2]};ref=hashtag">#${m.match[2]}</a>`;
       }
     },
     at: {

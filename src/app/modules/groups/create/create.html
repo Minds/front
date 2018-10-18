@@ -33,7 +33,7 @@
 
   <div class="mdl-cell mdl-cell--4-col m-group-info">
 
-    <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card mdl-shadow--2dp" style="overflow: visible">
 
       <div class="m-group-info-name mdl-color-text--blue-grey-300">
         <input type="text" class="h1" name="name" [(ngModel)]="group.name" placeholder="Enter a name" i18n-placeholder="@@GROUPS__NAME_PLACEHOLDER" />
@@ -45,7 +45,12 @@
 
       <div class="m-group-info-tags mdl-color-text--blue-grey-300">
         <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
-        <minds-form-tags-input [(tags)]="group.tags"></minds-form-tags-input>
+        <m-hashtags-selector #hashtagsSelector
+            (tagsChange)="onTagsChange($event)"
+            (tagsAdded)="onTagsAdded($event)"
+            (tagsRemoved)="onTagsRemoved($event)"
+            *ngIf="editing"
+          ></m-hashtags-selector> 
       </div>
 
       <div class="m-group-info-membership mdl-color-text--blue-grey-300">

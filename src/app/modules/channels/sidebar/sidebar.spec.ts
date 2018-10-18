@@ -71,7 +71,13 @@ describe('ChannelSidebar', () => {
         MockComponent({ 
           selector: 'minds-button-subscribe',
           inputs: [ 'user' ],
-        })], 
+        }),
+        MockComponent({
+          selector: 'm-hashtags-selector',
+          inputs: ['tags'],
+          outputs: ['tagsChange', 'tagsAdded', 'tagsRemoved'],
+        }),
+      ],
       imports: [
         FormsModule,
         RouterTestingModule,

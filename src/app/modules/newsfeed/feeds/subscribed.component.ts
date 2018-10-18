@@ -11,6 +11,7 @@ import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -54,6 +55,7 @@ export class NewsfeedSubscribedComponent {
     private storage: Storage,
     private context: ContextService,
     private session: Session,
+    private overlayModal: OverlayModalService,
   ) {
     this.title.setTitle('Newsfeed');
   }
@@ -113,7 +115,7 @@ export class NewsfeedSubscribedComponent {
         this.offset = data['load-next'];
         this.inProgress = false;
       })
-      .catch(function (e) {
+      .catch((e) => {
         this.inProgress = false;
       });
   }

@@ -20,10 +20,11 @@ export class TagcloudComponent {
   }
 
   load() {
-    this.client.get('api/v1/search/tagcloud')
+    this.tags = window.Minds.tags;
+  /*this.client.get('api/v1/search/tagcloud')
       .then((response: any) => {
         this.tags = response.tags;
-      });
+        });*/
   }
 
 }

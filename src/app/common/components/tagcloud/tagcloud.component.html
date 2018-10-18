@@ -1,10 +1,10 @@
 <div class="m-tagcloud">
 
-  <h3 i18n="@@MINDS__TAGCLOUD__TITLE">Trending Hashtags</h3>
+  <h3 i18n="@@MINDS__TAGCLOUD__TITLE">Suggested Hashtags</h3>
 
   <div class="m-tagcloud-tag"
     *ngFor="let tag of tags"
-    [routerLink]="['/search', { q: '#' + tag, ref: 'hashtag-trending' }]">
+    [routerLink]="['/newsfeed/tag', tag]">
     #{{tag}}
   </div>
 

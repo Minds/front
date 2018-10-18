@@ -1,0 +1,10 @@
+<div class="minds-list">
+  <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle"
+    (delete)="delete(activity)" [showRatingToggle]="true" class="mdl-card m-border item"></minds-activity>
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress">
+  </infinite-scroll>
+</div>

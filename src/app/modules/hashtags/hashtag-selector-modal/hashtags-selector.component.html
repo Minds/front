@@ -1,0 +1,42 @@
+<div class="m-hashtags-selector--modal">
+  <div class="m-hashtags-selector--header">
+    <h3 i18n="@@M__HASHTAG__SELECTOR_TITLE">Personalize your feed</h3>
+
+    <div class="m-hashtags-selector--header-text">
+      <p class="m-hashtags-selector--subtext" i18n="@@M__HASHTAG__SELECTOR__SUBTITLE">
+        Select the hashtags below that you wish to see more of. The hashtags you select will be pinned to the top bar of your feed. You can change these at anytime via your settings or by clicking on 'MORE' at the top of any feed. 
+      </p>
+    </div>
+  </div>
+
+  <section class="m-hashtag-selector--section-row">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+    
+    <div class="m-hashtag-selector--section-item" *ngFor="let hashtag of hashtags">
+      <span [ngClass]="{ 'selected': hashtag.selected }" (click)="toggleSelection(hashtag)">#{{hashtag.value}}</span>
+    </div>
+    <div class="m-hashtag--creator" *ngIf="!inProgress">
+      <input
+        type="text"
+        name="hashtag"
+        [(ngModel)]="input"
+        (keyup)="keyUp($event)"/>
+      <i class="material-icons m-hashtag--creator--done"
+        (click)="addNew()"
+      >done</i>
+      <i class="material-icons m-hashtag--creator--close"
+        (click)="addingHashtag = false"
+      >close</i>
+    </div>
+  </section>
+
+  <!-- Submit -->
+  <section *ngIf="!inProgress" class="m-hashtag-selector-section m-hashtag-selector-section--last">
+    <button
+      class="m-btn m-btn--slim m-hashtag-selector--button"
+      i18n="@@M_HASHTAG__SELECTOR__DONE"
+      (click)="close()"
+    >DONE</button>
+  </section>
+</div>
+  

@@ -59,6 +59,15 @@ export class MediaImagesListComponent {
             this.filter = 'network';
             break;
           case 'top':
+            if (!this.session.isLoggedIn()) {
+              this.router.navigate(['/login']);
+            }
+            this.filter = 'trending';
+            break;
+          case 'suggested':
+            if (!this.session.isLoggedIn()) {
+              this.router.navigate(['/login']);
+            }
             this.filter = 'trending';
             break;
           case 'my':
@@ -106,7 +115,14 @@ export class MediaImagesListComponent {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/entities/' + this.filter + '/images/' + this.owner, {
+    let endpoint;
+    // if (this.filter === 'trending') {
+    //   endpoint = 'api/v2/entities/suggested/images';
+    // } else {
+      endpoint = 'api/v1/entities/' + this.filter + '/images/' + this.owner;
+    // }
+
+    this.client.get(endpoint, {
       limit: 12,
       offset: this.offset,
       rating: this.rating,
@@ -136,6 +152,10 @@ export class MediaImagesListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  reloadTopFeed() {
+    this.load(true);
   }
 
   onOptionsChange(e: { rating }) {

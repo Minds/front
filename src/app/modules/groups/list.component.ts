@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -24,11 +24,12 @@ export class GroupsListComponent {
   entities: Array<any> = [];
   filter: string = 'top';
   paramsSubscription: Subscription;
-  rating: number = 1; 
+  rating: number = 1;
 
   constructor(
     public client: Client,
     public route: ActivatedRoute,
+    public router: Router,
     public title: MindsTitle,
     private context: ContextService,
     public session: Session
@@ -42,15 +43,18 @@ export class GroupsListComponent {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
+        if (params['filter'] === 'suggested' && !this.session.isLoggedIn()) {
+          this.router.navigate(['/login']);
+        }
         this.filter = params['filter'];
 
         this.inProgress = false;
         this.moreData = true;
         this.entities = [];
-        
+
         if (this.session.isLoggedIn())
           this.rating = this.session.getLoggedInUser().boost_rating;
-        
+
         this.load(true);
       }
     });
@@ -73,7 +77,14 @@ export class GroupsListComponent {
 
     switch (this.filter) {
       case 'top':
+        if (!this.session.isLoggedIn()) {
+          this.router.navigate(['/login']);
+        }
         endpoint = `api/v1/entities/trending/groups`;
+        key = 'entities';
+        break;
+      case 'suggested':
+        endpoint = `api/v2/entities/suggested/groups`;
         key = 'entities';
         break;
       default:
@@ -83,11 +94,11 @@ export class GroupsListComponent {
     }
 
     this.inProgress = true;
-    this.client.get(endpoint, { 
-        limit: 12, 
-        offset: this.offset,
-        rating: this.rating
-      })
+    this.client.get(endpoint, {
+      limit: 12,
+      offset: this.offset,
+      rating: this.rating
+    })
       .then((response: MindsGroupListResponse) => {
 
         if (!response[key] || response[key].length === 0) {
@@ -114,6 +125,10 @@ export class GroupsListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  reloadTopFeed() {
+    this.load(true);
   }
 
   onOptionsChange(e: { rating }) {

@@ -70,6 +70,11 @@ describe('BlogListComponent', () => {
           template: '',
           inputs: ['entity'],
         }),
+        MockComponent({
+          selector: 'm-topbar--hashtags',
+          template: '',
+          outputs: ['selectionChange']
+        }),
         BlogListComponent
       ],
       imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],

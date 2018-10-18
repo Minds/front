@@ -1,0 +1,31 @@
+minds-form-tags-input {
+  display: block;
+  padding: 4px;
+  border: 1px solid #EEE;
+
+  .m-form-tags-input-tags-tag {
+    display: block;
+    width: auto;
+    padding: 2px 8px;
+    margin: 4px 2px 4px;
+    font-size: 11px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    > i {
+      padding-right: 0 !important;
+      font-size: 11px;
+      font-weight: 800;
+      width: 8px;
+    }
+  }
+
+  input:not([type=checkbox]) {
+    width: auto !important;
+    border: 0 !important;
+    padding: 4px !important;
+    margin: 4px;
+    box-shadow: none;
+    -webkit-appearence: none;
+  }
+}

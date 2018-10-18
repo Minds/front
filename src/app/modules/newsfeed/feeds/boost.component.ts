@@ -100,7 +100,7 @@ export class NewsfeedBoostComponent {
         this.storage.set('boost:offset:boostfeed', this.offset);
         this.inProgress = false;
       })
-      .catch(function (e) {
+      .catch((e) => {
         this.inProgress = false;
       });
   }

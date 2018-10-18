@@ -13,28 +13,28 @@ describe('TagPipe', () => {
     const pipe = new TagsPipe();
     const string = 'textstring#name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/search');
+    expect(transformedString).toContain('<a href="/newsfeed/tag/name;ref=hashtag');
   });
 
   it('should transform when # preceded by space ', () => {
     const pipe = new TagsPipe();
     const string = 'textstring #name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/search');
+    expect(transformedString).toContain('<a href="/newsfeed/tag/name;ref=hashtag');
   });
 
   it('should transform when # preceded by [] ', () => {
     const pipe = new TagsPipe();
     const string = 'textstring [#name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/search');
+    expect(transformedString).toContain('<a href="/newsfeed/tag/name;ref=hashtag');
   });
 
   it('should transform when # preceded by () ', () => {
     const pipe = new TagsPipe();
     const string = 'textstring (#name)';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/search');
+    expect(transformedString).toContain('<a href="/newsfeed/tag/name;ref=hashtag');
   });
 
   it('should transform when @ preceded by () ', () => {
@@ -100,14 +100,14 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a href="file://minds.com/');
   });
 
-  it('should transform url with a hastag', () => {
+  it('should transform url with a hashtag', () => {
     const pipe = new TagsPipe();
     const string = 'text http://minds.com/#position';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain('text <a href="http://minds.com/#position"');
   });
 
-  it('should transform url with a hastag and @', () => {
+  it('should transform url with a hashtag and @', () => {
     const pipe = new TagsPipe();
     const string = 'text http://minds.com/#position@some';
     const transformedString = pipe.transform(<any>string);
@@ -124,9 +124,9 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a href="http://minds.com/#position@some"');
     expect(transformedString).toContain('<a class="tag" href="/name"');
     expect(transformedString).toContain('<a class="tag" href="/name1"');
-    expect(transformedString).toContain('<a href="/search;q=%23hash1;ref=hashtag"');
-    expect(transformedString).toContain('<a href="/search;q=%23hash2;ref=hashtag"');
-    expect(transformedString).toContain('<a href="/search;q=%23hash3;ref=hashtag"');
+    expect(transformedString).toContain('<a href="/newsfeed/tag/hash1;ref=hashtag');
+    expect(transformedString).toContain('<a href="/newsfeed/tag/hash2;ref=hashtag');
+    expect(transformedString).toContain('<a href="/newsfeed/tag/hash3;ref=hashtag');
     expect(transformedString).toContain('<a href="ftp://s.com"');
     expect(transformedString).toContain('<a href="mailto:name@mail.com"');
   });

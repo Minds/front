@@ -9,7 +9,8 @@ import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
 import { WireThresholdInputComponent } from '../../wire/threshold-input/threshold-input.component';
-
+import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
+import { Tag } from '../../hashtags/types/tag';
 
 @Component({
   moduleId: module.id,
@@ -31,7 +32,7 @@ export class BlogEdit {
     description: '<p><br></p>',
     time_created: Date.now(),
     access_id: 2,
-    category: '',
+    tags: '',
     license: 'attribution-sharealike-cc',
     fileKey: 'header',
     mature: 0,
@@ -62,6 +63,7 @@ export class BlogEdit {
   paramsSubscription: Subscription;
   @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
   @ViewChild('thresholdInput') thresholdInput: WireThresholdInputComponent;
+  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
 
   constructor(public session: Session, public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
     this.getCategories();
@@ -149,6 +151,7 @@ export class BlogEdit {
           this.guid = response.blog.guid;
           this.title.setTitle(this.blog.title);
 
+          this.hashtagsSelector.setTags(this.blog.tags);
           // draft
           if (!this.blog.published && response.blog.draft_access_id) {
             this.blog.access_id = response.blog.draft_access_id;
@@ -162,6 +165,14 @@ export class BlogEdit {
         }
       });
   }
+
+  onTagsChange(tags: string[]) {
+    this.blog.tags = tags;
+  }
+
+  onTagsAdded(tags: Tag[]) {}
+
+  onTagsRemoved(tags: Tag[]) {}
 
   save() {
     if (!this.canSave)

@@ -66,6 +66,7 @@ export interface MindsUser {
   eth_wallet?: string;
   is_mature?: boolean;
   mature_lock?: boolean;
+  tags?: Array<string>;
 }
 
 export interface MindsGroup {

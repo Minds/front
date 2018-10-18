@@ -4,6 +4,9 @@ import { Session } from '../../../services/session';
 
 @Injectable()
 export class NewsfeedService {
+  allHashtags: boolean = false;
+  onReloadFeed: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(private client: Client, private session: Session) {
   }
 
@@ -26,6 +29,11 @@ export class NewsfeedService {
     }
 
     return await this.client.post(`api/v2/analytics/views/activity/${entity.guid}`);
+  }
+
+  public reloadFeed(allHashtags: boolean = false) {
+    this.allHashtags = allHashtags;
+    this.onReloadFeed.emit(allHashtags);
   }
 
 }

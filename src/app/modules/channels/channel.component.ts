@@ -145,7 +145,6 @@ export class ChannelComponent {
   }
 
   updateCarousels(value: any) {
-
     if (!value.length)
       return;
     for (var banner of value) {
@@ -169,8 +168,8 @@ export class ChannelComponent {
       this.client.delete('api/v1/channel/carousel/' + value.guid);
   }
 
-  async update() {
-      await this.client.post('api/v1/channel/info', this.user);
+  async update() {    
+    await this.client.post('api/v1/channel/info', this.user);
    
     this.editing = false;
   }

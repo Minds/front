@@ -44,6 +44,32 @@
     </div>
     <!-- END City / Location -->
 
+
+    <div class="m-channel-bio-field mdl-color-text--blue-grey-300" *ngIf="user.tags && !editing">
+      <div [hidden]="editing || !user.tags">
+        <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
+        <span *ngFor="let tag of user.tags">#{{tag}}</span>
+      </div>
+    </div>
+
+    <div class="m-channel-bio-editor m-channel-city-editor" *ngIf="editing && isOwner()">
+      <div class="m-channel-bio-input">
+        <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
+        <m-hashtags-selector #hashtagsSelector
+          [tags]="user.tags"
+          (tagsChange)="onTagsChange($event)"
+          (tagsAdded)="onTagsAdded($event)"
+          (tagsRemoved)="onTagsRemoved($event)">
+        </m-hashtags-selector>
+      </div>
+      <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp" style="min-height:0;"
+        *ngIf="errorMessage">
+        <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
+          {{errorMessage}}
+        </div>
+      </div>
+    </div>
+
     <m-channel--social-profiles
       [user]="user"
       [editing]="editing && isOwner()"
