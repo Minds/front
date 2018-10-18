@@ -90,10 +90,7 @@ export class PosterComponent {
   }
 
   showTagsError() {
-    if(this.tags.length === 0) {
-      this.errorMessage = 'You need to select at least one hashtag';
-      this.tooManyTags = false;
-    } else if(this.tags.length > 5) {
+    if (this.tags.length > 5) {
       this.errorMessage = 'You can only select up to 5 hashtags';
       this.tooManyTags = true;
     }
@@ -118,7 +115,7 @@ export class PosterComponent {
     if (!this.meta.message && !this.attachment.has()) {
       return;
     }
-    if (this.hashtagsSelector.tags.length === 0 || this.hashtagsSelector.tags.length > 5) {
+    if (this.hashtagsSelector.tags.length > 5) {
       this.showTagsError();
       return;
     }
