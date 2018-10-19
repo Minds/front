@@ -62,12 +62,6 @@
         [enabled]="filter == 'trending'">
       </m-topbar--hashtags>
 
-      <m-topbar--navigation--options
-        (change)="onOptionsChange($event)" 
-        [options]="filter == 'trending' ? [ 'rating' ] : []"
-        *ngIf="filter === 'trending' && false"
-      >
-      </m-topbar--navigation--options> 
     </div>
   </div>
 </div>

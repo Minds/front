@@ -16,6 +16,8 @@ import { Client } from '../../services/api/client';
 import { MockComponent } from '../../utils/mock';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs/internal/observable/of';
+import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 
 describe('ChannelsListComponent', () => {
 
@@ -48,6 +50,12 @@ describe('ChannelsListComponent', () => {
           template: '',
           inputs: ['entity']
         }),
+        MockComponent({
+          selector: 'm-topbar--hashtags',
+          template: '',
+          inputs: ['enabled'],
+          outputs: ['selectionChange']
+        }),
         ChannelsListComponent
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
@@ -56,7 +64,8 @@ describe('ChannelsListComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: ContextService, useValue: contextServiceMock },
-        { provide: ActivatedRoute, useValue: { params: of('all') } }
+        { provide: ActivatedRoute, useValue: { params: of('all') } },
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
       ]
     })
       .compileComponents();

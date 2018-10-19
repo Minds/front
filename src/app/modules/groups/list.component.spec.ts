@@ -19,6 +19,8 @@ import { ContextService } from '../../services/context.service';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 
 import { MockComponent } from '../../utils/mock';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
+import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
 
 @Component({
   selector: 'm-groups--tile',
@@ -68,6 +70,7 @@ describe('Groups List', () => {
         MockComponent({
           selector: 'm-topbar--hashtags',
           template: '',
+          inputs: ['enabled'],
           outputs: ['selectionChange']
         }),
         GroupsListComponent,
@@ -82,7 +85,8 @@ describe('Groups List', () => {
         { provide: Client, useValue: clientMock },
         { provide: MindsTitle, useClass: Title, deps: [ Title ] },
         { provide: ContextService, useValue: contextServiceMock },
-        { provide: Session, useClass: Session }
+        { provide: Session, useClass: Session },
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
       ]
     }).compileComponents();
   }));
