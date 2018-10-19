@@ -7,6 +7,8 @@ import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { ContextService } from '../../services/context.service';
+import { HashtagsSelectorModalComponent } from '../hashtags/hashtag-selector-modal/hashtags-selector.component';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 
 @Component({
   moduleId: module.id,
@@ -20,6 +22,7 @@ export class ChannelsListComponent {
   uri: string = 'entities/trending/channels';
   entities: Array<Object> = [];
   moreData: boolean = true;
+  all: boolean = false;
   offset: string | number = '';
   inProgress: boolean = false;
   paramsSubscription: Subscription;
@@ -32,7 +35,8 @@ export class ChannelsListComponent {
     public route: ActivatedRoute,
     public title: MindsTitle,
     private context: ContextService,
-    public session: Session
+    public session: Session,
+    private overlayModal: OverlayModalService,
   ) { }
 
   ngOnInit() {
@@ -50,8 +54,9 @@ export class ChannelsListComponent {
             if (!this.session.isLoggedIn()) {
               this.router.navigate(['/login']);
             }
+            this.version = 'v2';
             this.filter = 'trending';
-            this.uri = 'entities/trending/channels';
+            this.uri = 'entities/suggested/channels';
             break;
           case 'suggested':
             if (!this.session.isLoggedIn()) {
@@ -84,25 +89,41 @@ export class ChannelsListComponent {
     this.paramsSubscription.unsubscribe();
   }
 
+  reloadTags(all: boolean = false) {
+    this.all = all;
+    this.load(true);
+  }
+
   load(refresh: boolean = false) {
+
     if (this.inProgress || !this.moreData && !refresh)
       return false;
 
-    if (refresh)
+    if (refresh) {
       this.offset = '';
+      this.entities = [];
+    }
 
     this.inProgress = true;
 
-    this.client.get('api/' + this.version + '/' + this.uri, {
+    let uri = this.uri;
+    if (this.all) {
+      uri = uri + '/all';
+      this.router.navigate(['channels/top']);
+    }
+
+    this.client.get('api/' + this.version + '/' + uri, {
         limit: 24,
         offset: this.offset
       })
       .then((data: any) => {
         if (data.users)
           data.entities = data.users;
-        if (!data.entities) {
+        if (!data.entities || !data.entities.length) {
           this.moreData = false;
           this.inProgress = false;
+          if (this.filter == 'trending')
+            this.openHashtagsSelector();
           return false;
         }
 
@@ -135,4 +156,14 @@ export class ChannelsListComponent {
     }
     this.load(true);
   }
+
+  openHashtagsSelector() {
+    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
+      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+      onSelected: () => {
+        this.load(true); //refresh list
+      },
+    }).present();
+  }
+
 }

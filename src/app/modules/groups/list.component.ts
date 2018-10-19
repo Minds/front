@@ -8,6 +8,8 @@ import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { MindsGroupListResponse } from '../../interfaces/responses';
 import { ContextService } from '../../services/context.service';
+import { HashtagsSelectorModalComponent } from '../hashtags/hashtag-selector-modal/hashtags-selector.component';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-groups--list',
@@ -20,6 +22,7 @@ export class GroupsListComponent {
 
   moreData: boolean = true;
   inProgress: boolean = false;
+  all: boolean = false;
   offset: string = '';
   entities: Array<any> = [];
   filter: string = 'top';
@@ -32,7 +35,8 @@ export class GroupsListComponent {
     public router: Router,
     public title: MindsTitle,
     private context: ContextService,
-    public session: Session
+    public session: Session,
+    private overlayModal: OverlayModalService,
   ) {
   }
 
@@ -66,12 +70,20 @@ export class GroupsListComponent {
     }
   }
 
+  reloadTags(all: boolean) {
+    this.all = all;
+    this.load(true);
+  }
+
   load(refresh: boolean = false) {
+
     if (this.inProgress)
       return;
 
-    if (refresh)
+    if (refresh) {
       this.offset = '';
+      this.entities = [];
+    }
 
     let endpoint, key;
 
@@ -80,7 +92,9 @@ export class GroupsListComponent {
         if (!this.session.isLoggedIn()) {
           this.router.navigate(['/login']);
         }
-        endpoint = `api/v1/entities/trending/groups`;
+        endpoint = `api/v2/entities/suggested/groups`;
+        if (this.all)
+          endpoint += '/all';
         key = 'entities';
         break;
       case 'suggested':
@@ -90,6 +104,8 @@ export class GroupsListComponent {
       default:
         endpoint = `api/v1/groups/${this.filter}`;
         key = 'groups';
+        if (this.all)
+          this.router.navigate(['/groups/top']);
         break;
     }
 
@@ -104,6 +120,8 @@ export class GroupsListComponent {
         if (!response[key] || response[key].length === 0) {
           this.moreData = false;
           this.inProgress = false;
+          if (this.filter == 'top')
+            this.openHashtagsSelector();
           return false;
         }
 
@@ -141,6 +159,16 @@ export class GroupsListComponent {
     }
     this.load(true);
   }
+
+  openHashtagsSelector() {
+    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
+      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+      onSelected: () => {
+        this.load(true); //refresh list
+      },
+    }).present();
+  }
+
 }
 
 export { GroupsProfile } from './profile/profile';
