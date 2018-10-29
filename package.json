@@ -7,8 +7,8 @@
     "start": "ng serve",
     "prebuild": "gulp build.sass",
     "build": "ng build --prod",
-    "prebuild-dev": "gulp build.sass --deploy-url=http://dev.minds.io",
-    "build-dev": "ng build",
+    "prebuild-dev": "gulp build.sass --deploy-url=http://localhost",
+    "build-dev": "ng build -op dist/en",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
