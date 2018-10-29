@@ -69,7 +69,7 @@ export class HashtagsSelectorModalComponent {
   async addNew() {
     this.addingHashtag = true;
     let hashtag: Hashtag = {
-      value: this.input,
+      value: this.input.toLowerCase(),
       selected: false,
     };
     this.hashtags.push(hashtag);

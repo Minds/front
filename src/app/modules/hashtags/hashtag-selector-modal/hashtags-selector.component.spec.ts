@@ -49,19 +49,19 @@ describe('HashtagsSelectorModalComponent', () => {
 
     topbarHashtagsServiceMock.loadResponse = [
       {
-        value: 'Thegreatmigration',
+        value: 'thegreatmigration',
         selected: true,
       },
       {
-        value: 'Thegreatmigration',
+        value: 'thegreatmigration',
         selected: true,
       },
       {
-        value: 'Thegreatmigration',
+        value: 'thegreatmigration',
         selected: true,
       },
       {
-        value: 'Thegreatmigration',
+        value: 'thegreatmigration',
         selected: true,
       }];
 
@@ -119,6 +119,21 @@ describe('HashtagsSelectorModalComponent', () => {
     comp.input = 'Newhastag';
     comp.addNew();
     fixture.detectChanges();
+
+    expect(topbarHashtagsServiceMock.toggleSelection).toHaveBeenCalled();
+
+    expect(subtitle.nativeElement.textContent).toContain("Select the hashtags below that you wish to see more of. The hashtags you select will be pinned to the top bar of your feed. You can change these at anytime via your settings or by clicking on 'MORE' at the top of any feed");
+  });
+
+  it('should create a hashtag and be case insensitive', () => {
+    const subtitle = fixture.debugElement.query(By.css('.m-hashtags-selector--header .m-hashtags-selector--subtext'));
+    expect(subtitle).not.toBeNull();
+
+    comp.input = "UpperCaseDoesn'tMatter";
+    comp.addNew();
+    fixture.detectChanges();
+
+    expect(comp.hashtags.findIndex((item) => item.value === "uppercasedoesn'tmatter")).not.toBe(-1);
 
     expect(topbarHashtagsServiceMock.toggleSelection).toHaveBeenCalled();
 
