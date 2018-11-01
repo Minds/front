@@ -60,6 +60,7 @@ export class PosterComponent {
     if (value) {
       value = decodeURIComponent((value).replace(/\+/g, '%20'));
       this.meta.message = value;
+      this.showTagsError();
       this.getPostPreview({ value: value }); //a little ugly here!
     }
   }
@@ -93,6 +94,8 @@ export class PosterComponent {
     if (this.tags.length > 5) {
       this.errorMessage = 'You can only select up to 5 hashtags';
       this.tooManyTags = true;
+    } else {
+      this.tooManyTags = false;
     }
   }
 
