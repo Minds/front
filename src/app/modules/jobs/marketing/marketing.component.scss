@@ -5,6 +5,7 @@
 
     .m-marketing--hero--inner {
       padding: 52px;
+      flex-wrap: wrap;
     }
 
   }
@@ -15,6 +16,13 @@
 
   .m-marketing--hero--actions img {
     max-height: 250px;
+  }
+
+  @media screen and (max-width: 662px) {
+    .m-marketing--hero--actions {
+      flex-basis: 100% !important;
+      margin-top: 16px;
+    }
   }
 
   .m-marketing--hero--slogans h1 {

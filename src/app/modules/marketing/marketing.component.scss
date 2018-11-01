@@ -327,6 +327,15 @@
       padding-top: 16px;
     }
   }
+  
+  &.m-marketing--section--subsection--thin {
+      padding: 16px;
+      border-bottom: 0;
+
+      .m-marketing--section--subsection-container {
+        padding: 0;
+      }
+  }
 
   .m-marketing--section--subsection-left, .m-marketing--section--subsection-right {
     flex: 1;
@@ -555,5 +564,17 @@
     padding-right: 16px;
     margin-left: 4%;
     max-width: 40%;
+  }
+}
+
+.m-marketing--icon-attributions {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  font-size: 11px;
+  color: #888;
+  img {
+    width: 24px;
   }
 }
