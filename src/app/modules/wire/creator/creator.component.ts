@@ -395,7 +395,7 @@ export class WireCreatorComponent {
           throw new Error('Invalid receiver.');
         }
         if (!this.owner.eth_wallet) {
-          throw new VisibleWireError(`@${this.owner.username} hasn't set up his onchain wallet yet.`)
+          throw new VisibleWireError(`@${this.owner.username} hasn't set up their onchain wallet yet.`)
         }
         break;
 
