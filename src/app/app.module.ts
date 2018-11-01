@@ -52,6 +52,7 @@ import { BlockchainMarketingModule } from './modules/blockchain/marketing/market
 import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
+import { JobsMarketingModule } from './modules/jobs/jobs.module';
 
 @NgModule({
   bootstrap: [
@@ -105,6 +106,7 @@ import { NodesMarketingModule } from './modules/nodes/nodes.module';
     NodesMarketingModule,
     BrandingModule,
     CommentsModule,
+    JobsMarketingModule,
 
     //last due to :username route
     ChannelsModule,
