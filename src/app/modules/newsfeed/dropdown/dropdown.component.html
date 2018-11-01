@@ -3,7 +3,7 @@
     <li class="m-dropdown--list--item" *ngIf="boostService.getBoostRating() == 2 && boostService.isBoostEnabled()">
       <span i18n="@@M__COMMON__EXPLICIT">Explicit</span>
       <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__BOOST_ROTATOR__EXPLICIT_ITEM_TOOLTIP">
-        By selecting Explicit mode, you acknowledge that you are 18+ years of age and are willing to see graphic content, explicit language, and nudity.
+        By selecting Explicit mode, you acknowledge that you are 18+ years of age and are willing to see graphic content.
       </m-tooltip>
       <div class="m-layout--spacer"></div>
       <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-explicit" [mdlSwitch] [toggled]="true" *ngIf="session.getLoggedInUser().mature">
