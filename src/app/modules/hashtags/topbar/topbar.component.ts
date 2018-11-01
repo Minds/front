@@ -1,9 +1,19 @@
-import { Component, EventEmitter, OnInit, Input, Output, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Input,
+  Output,
+  ChangeDetectorRef,
+  HostListener,
+  ViewChild
+} from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { HashtagsSelectorModalComponent } from '../hashtag-selector-modal/hashtags-selector.component';
 import { TopbarHashtagsService } from '../service/topbar.service';
 import { Subscription } from 'rxjs';
+import { DropdownComponent } from '../../../common/components/dropdown/dropdown.component';
 
 type Hashtag = {
   value: string, selected: boolean
@@ -20,6 +30,10 @@ export class TopbarHashtagsComponent implements OnInit {
   all: boolean = false;
   @Input('enabled') enabled: boolean = true;
 
+  showMenu: boolean = false;
+
+  @ViewChild('dropdown') dropdown: DropdownComponent;
+
   private selectionChangeSubscription: Subscription;
 
   constructor(
@@ -32,7 +46,7 @@ export class TopbarHashtagsComponent implements OnInit {
   async ngOnInit() {
     await this.load();
 
-    this.selectionChangeSubscription = this.service.selectionChange.subscribe(({hashtag, emitter}) => {
+    this.selectionChangeSubscription = this.service.selectionChange.subscribe(({ hashtag, emitter }) => {
       //if (emitter === this)
       //  return;
       const tag = this.hashtags.find((item) => item.value === hashtag.value);
@@ -45,6 +59,8 @@ export class TopbarHashtagsComponent implements OnInit {
       this.cd.markForCheck();
       this.cd.detectChanges();
     });
+
+    this.detectWidth();
   }
 
   async load() {
@@ -61,6 +77,9 @@ export class TopbarHashtagsComponent implements OnInit {
   }
 
   async toggleAll() {
+    if (this.dropdown) {
+      this.dropdown.toggle();
+    }
     this.all = !this.all;
 
     await this.selectionChange.emit(this.all);
@@ -72,6 +91,9 @@ export class TopbarHashtagsComponent implements OnInit {
   }
 
   async toggleHashtag(hashtag: Hashtag) {
+    if (this.dropdown) {
+      this.dropdown.toggle();
+    }
 
     if (!this.enabled) {
       this.selectionChange.emit(this.all);
@@ -92,6 +114,9 @@ export class TopbarHashtagsComponent implements OnInit {
   }
 
   openModal() {
+    if (this.dropdown) {
+      this.dropdown.toggle();
+    }
 
     if (this.all)
       this.disableAll();
@@ -105,5 +130,9 @@ export class TopbarHashtagsComponent implements OnInit {
         setTimeout(() => this.load());
       })
       .present();
+  }
+
+  @HostListener('window:resize') detectWidth() {
+    this.showMenu = window.innerWidth < 1200;
   }
 }

@@ -29,6 +29,7 @@ export class NewsfeedComponent {
   inProgress: boolean = false;
   moreData: boolean = true;
   showRightSidebar: boolean = true;
+  preventHashtagOverflow: boolean = false;
   minds;
 
   attachment_preview;
@@ -336,10 +337,8 @@ export class NewsfeedComponent {
   }
 
   @HostListener('window:resize') detectWidth() {
-    if (window.innerWidth < 1100)
-      this.showRightSidebar = false;
-    else
-      this.showRightSidebar = true;
+    this.showRightSidebar = window.innerWidth >= 1100;
+    this.preventHashtagOverflow = window.innerWidth < 400;
   }
 
   canDeactivate() {

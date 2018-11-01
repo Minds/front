@@ -1,7 +1,7 @@
-m-topbar--hashtags {
+m-topbar--hashtags, m-topbar--hashtags m-dropdown {
   .m-topbar--hashtags {
 
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
     align-items: center;
     color: #222;
@@ -11,30 +11,37 @@ m-topbar--hashtags {
     text-decoration: none;
     font-family: 'Roboto';
     cursor: pointer;
+  }
 
+  label {
+    display: inline-flex;
     span {
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 1.25px;
-      padding-left: 4px;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
+      display: inline-flex;
+    }
+  }
 
-      &.m-topbar--hashtags--hashtag--all {
-        font-weight:bold;
-      }
+  span {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1.25px;
+    padding-left: 4px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 
-      &.m-topbar--hashtags--hashtag--selected {
-        color: #4690DF;
-      }
+    &.m-topbar--hashtags--hashtag--all {
+      font-weight: bold;
+    }
 
-      &.m-topbar--hashtags--hashtag--disabled {
-        color: #666;
-      }
+    &.m-topbar--hashtags--hashtag--selected {
+      color: #4690DF;
+    }
 
-      &.m-topbar--hashtags--select-more {
-        font-weight: 600;
-      }
+    &.m-topbar--hashtags--hashtag--disabled {
+      color: #666;
+    }
+
+    &.m-topbar--hashtags--select-more {
+      font-weight: 600;
     }
   }
   m-tooltip {

@@ -20,6 +20,7 @@ describe('TopbarHashtagsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         MockComponent({ selector: 'm-tooltip', template: '<ng-content></ng-content>' }),
+        MockComponent({ selector: 'm-dropdown', template: '<ng-content></ng-content>' }),
         TopbarHashtagsComponent
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],

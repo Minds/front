@@ -54,14 +54,26 @@
           Channels who invested in the Minds Reg-CF Crowfunding campaign
         </m-tooltip>
       </a>
- 
+
       <div class="m-layout--spacer"></div>
 
       <m-topbar--hashtags
         (selectionChange)="reloadTags($event)"
-        [enabled]="filter == 'trending'">
+        [enabled]="filter == 'trending'"
+        *ngIf="!preventHashtagOverflow"
+      >
       </m-topbar--hashtags>
 
+    </div>
+  </div>
+  <div class="m-topbar--row" *ngIf="preventHashtagOverflow">
+    <div class="m-topbar--navigation m-topbar--navigation--text-only">
+      <div class="m-layout--spacer"></div>
+
+      <m-topbar--hashtags
+        (selectionChange)="reloadTags($event)"
+        [enabled]="filter == 'trending'"
+      ></m-topbar--hashtags>
     </div>
   </div>
 </div>

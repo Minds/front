@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -28,6 +28,7 @@ export class ChannelsListComponent {
   paramsSubscription: Subscription;
   rating: number = 1; //safe by default
   version: string = 'v1';
+  preventHashtagOverflow: boolean = false;
 
   constructor(
     public client: Client,
@@ -82,6 +83,7 @@ export class ChannelsListComponent {
       this.moreData = true;
       this.entities = [];
       this.load(true);
+      this.detectWidth();
     });
   }
 
@@ -144,6 +146,10 @@ export class ChannelsListComponent {
       .catch((e) => {
         this.inProgress = false;
       });
+  }
+
+  @HostListener('window:resize') detectWidth() {
+    this.preventHashtagOverflow = window.innerWidth < 400;
   }
 
   onOptionsChange(e: { rating }) {

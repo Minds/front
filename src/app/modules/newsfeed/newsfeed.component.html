@@ -42,9 +42,20 @@
       <m-topbar--hashtags
         (selectionChange)="reloadTopFeed($event)"
         [enabled]="suggested"
+        *ngIf="!preventHashtagOverflow"
       ></m-topbar--hashtags>
 
       <m-newsfeed--dropdown></m-newsfeed--dropdown>
+    </div>
+  </div>
+  <div class="m-topbar--row" *ngIf="preventHashtagOverflow">
+    <div class="m-topbar--navigation m-topbar--navigation--text-only">
+      <div class="m-layout--spacer"></div>
+
+      <m-topbar--hashtags
+        (selectionChange)="reloadTopFeed($event)"
+        [enabled]="suggested"
+      ></m-topbar--hashtags>
     </div>
   </div>
 </div>

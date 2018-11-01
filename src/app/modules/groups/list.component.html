@@ -46,7 +46,9 @@
 
       <m-topbar--hashtags
         (selectionChange)="reloadTags($event)"
-        [enabled]="filter === 'top'">
+        [enabled]="filter === 'top'"
+        *ngIf="!preventHashtagOverflow"
+      >
       </m-topbar--hashtags>
 
       <m-topbar--navigation--options
@@ -55,6 +57,16 @@
         *ngIf="filter === 'top'"
         >
       </m-topbar--navigation--options>
+    </div>
+  </div>
+  <div class="m-topbar--row" *ngIf="preventHashtagOverflow">
+    <div class="m-topbar--navigation m-topbar--navigation--text-only">
+      <div class="m-layout--spacer"></div>
+
+      <m-topbar--hashtags
+        (selectionChange)="reloadTags($event)"
+        [enabled]="filter === 'top'"
+      ></m-topbar--hashtags>
     </div>
   </div>
 </div>

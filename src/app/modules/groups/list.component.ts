@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -28,6 +28,7 @@ export class GroupsListComponent {
   filter: string = 'top';
   paramsSubscription: Subscription;
   rating: number = 1;
+  preventHashtagOverflow: boolean = false;
 
   constructor(
     public client: Client,
@@ -44,6 +45,7 @@ export class GroupsListComponent {
     this.title.setTitle('Groups');
     this.context.set('group');
     this.minds = window.Minds;
+    this.detectWidth();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
@@ -158,6 +160,10 @@ export class GroupsListComponent {
       }, 100); //keep trying every 100ms
     }
     this.load(true);
+  }
+
+  @HostListener('window:resize') detectWidth() {
+    this.preventHashtagOverflow = window.innerWidth < 400;
   }
 
   openHashtagsSelector() {
