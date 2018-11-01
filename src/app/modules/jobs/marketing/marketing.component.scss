@@ -4,7 +4,8 @@
     padding: 24px 0 !important;
 
     .m-marketing--hero--inner {
-      padding: 52px;
+      padding-top: 52px;
+      padding-bottom: 52px;
       flex-wrap: wrap;
     }
 
@@ -25,8 +26,11 @@
     }
   }
 
-  .m-marketing--hero--slogans h1 {
-    font-size: 62px !important;
+  @media screen and (min-width: 500px) {
+    .m-marketing--hero--slogans h2 {
+      font-size: 62px !important;
+      line-height: 1.25;
+    }
   }
 
   .m-job--marketing--list {
