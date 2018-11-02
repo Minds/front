@@ -128,6 +128,7 @@ export class PosterComponent {
     let data = Object.assign(this.meta, this.attachment.exportMeta());
 
     data = this.thirdPartyNetworksSelector.inject(data);
+    data.tags = this.tags;
 
     this.inProgress = true;
     this.client.post('api/v1/newsfeed', data)
