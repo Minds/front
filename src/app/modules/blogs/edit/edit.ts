@@ -170,12 +170,32 @@ export class BlogEdit {
     this.blog.tags = tags;
   }
 
-  onTagsAdded(tags: Tag[]) {}
+  onTagsAdded(tags: Tag[]) {
+  }
 
-  onTagsRemoved(tags: Tag[]) {}
+  onTagsRemoved(tags: Tag[]) {
+  }
+
+  validate() {
+    this.error = '';
+
+    if (!this.blog.description) {
+      this.error = 'error:no-description';
+      return false;
+    }
+    if (!this.blog.title) {
+      this.error = 'error:no-title';
+      return false;
+    }
+
+    return true;
+  }
 
   save() {
     if (!this.canSave)
+      return;
+
+    if (!this.validate())
       return;
 
     this.inlineEditor.prepareForSave().then(() => {
@@ -190,7 +210,7 @@ export class BlogEdit {
       this.check_for_banner().then(() => {
         this.upload.post('api/v1/blog/' + this.guid, [this.banner], blog)
           .then((response: any) => {
-            this.router.navigate(response.route ? [ '/' + response.route ] : [ '/blog/view', response.guid ]);
+            this.router.navigate(response.route ? ['/' + response.route]: ['/blog/view', response.guid]);
             this.canSave = true;
             this.inProgress = false;
           })
@@ -203,7 +223,7 @@ export class BlogEdit {
           this.client.post('api/v1/blog/' + this.guid, this.blog)
             .then((response: any) => {
               if (response.guid) {
-                this.router.navigate(response.route ? [ '/' + response.route ] : [ '/blog/view', response.guid ]);
+                this.router.navigate(response.route ? ['/' + response.route]: ['/blog/view', response.guid]);
               }
               this.inProgress = false;
               this.canSave = true;

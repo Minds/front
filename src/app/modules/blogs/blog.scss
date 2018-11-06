@@ -180,6 +180,15 @@ m-blog-view, minds-blog-edit {
   }
 }
 
+minds-blog-edit {
+  .m-blog--edit--error {
+    font-size: 14px;
+    display: inline-block;
+    margin: 8px;
+    color: #F44336;
+  }
+}
+
 .minds-blog-body {
   padding: 0 $minds-padding;
 
