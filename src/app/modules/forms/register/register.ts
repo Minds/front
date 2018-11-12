@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
-
+import { ExperimentsService } from '../../experiments/experiments.service';
 
 @Component({
   moduleId: module.id,
@@ -33,7 +33,13 @@ export class RegisterForm {
 
   @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
 
-  constructor(public session: Session, public client: Client, fb: FormBuilder, public zone: NgZone) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    fb: FormBuilder,
+    public zone: NgZone,
+    private experiments: ExperimentsService,
+  ) {
     this.form = fb.group({
       username: ['', Validators.required],
       email: ['', Validators.required],
@@ -41,17 +47,10 @@ export class RegisterForm {
       password2: ['', Validators.required],
       tos: [false],
       exclusive_promotions: [false],
-      captcha: ['']
+      captcha: [''],
+      Homepage121118: experiments.getExperimentBucket('Homepage121118'),
     });
 
-    this.fbForm = fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      password2: ['', Validators.required],
-      tos: [false],
-      exclusive_promotions: [false],
-      captcha: ['']
-    });
   }
 
   ngOnInit() {
@@ -115,55 +114,6 @@ export class RegisterForm {
       });
   }
 
-  registerWithFb() {
-    this.inProgress = true;
-
-    if (!this.form.value.tos) {
-      this.errorMessage = 'To create an account you need to accept terms and conditions.';
-      return;
-    }
-
-    this.client.post('api/v1/thirdpartynetworks/facebook/register', this.fbForm.value)
-      .then((data: any)=> {
-        this.inProgress = false;
-
-        this.session.login(data.user);
-        this.done.next(data.user);
-      })
-      .catch((e)=> {
-        console.log(e);
-        this.inProgress = false;
-
-        if (e.status === 'failed') {
-          //incorrect login details
-          this.errorMessage = 'Incorrect username/password. Please try again.';
-          this.session.logout();
-        }
-
-        if (e.status === 'error') {
-          //two factor?
-          this.errorMessage = e.message;
-          this.session.logout();
-        }
-      });
-  }
-
-  signupWithFb() {
-    window.onSuccessCallback = (username: string) => {
-      this.zone.run(()=> {
-        this.showFbForm = true;
-        this.fbForm.controls['username'].patchValue(username);
-      });
-    };
-    window.onErrorCallback = (reason) => {
-      if (reason) {
-        alert(reason);
-      }
-    };
-    window.open(this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login', 'Login with Facebook',
-      'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=800, height=600, top=100, left=100');
-  }
-   
   validateUsername() {
     if (this.form.value.username) {
       this.client.get('api/v1/register/validate/' + this.form.value.username)

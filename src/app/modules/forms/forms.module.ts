@@ -12,6 +12,7 @@ import { OnboardingForm } from './onboarding/onboarding';
 import { OnboardingCategoriesSelector } from './categories-selector/categories-selector';
 import { Tutorial } from './tutorial/tutorial';
 import { CaptchaModule } from '../captcha/captcha.module';
+import { ExperimentsModule } from '../experiments/experiments.module';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { CaptchaModule } from '../captcha/captcha.module';
     RouterModule.forChild([]),
     FormsModule,
     ReactiveFormsModule,
-    CaptchaModule
+    CaptchaModule,
+    ExperimentsModule,
   ],
   declarations: [
     LoginForm,
