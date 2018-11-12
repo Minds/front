@@ -42,18 +42,14 @@ export class HomepageComponent {
   ) {
     this.title.setTitle('Home');
     this.loadStream();
-    //this.loadVideos();
-    //this.loadBlogs();
-
-    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
-      this.flags.canPlayInlineVideos = false;
-    }
-  }
-
-  ngOnInit() {
+    
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
+    }
+
+    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+      this.flags.canPlayInlineVideos = false;
     }
   }
 
