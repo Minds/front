@@ -129,7 +129,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = 'activity';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     clientMock.get.calls.reset();
@@ -150,7 +150,8 @@ describe('Search', () => {
       limit: 12,
       offset: '',
       taxonomies: 'activity',
-      rating: 1,
+      rating: 2,
+      mature: 0,
     });
   }));
 
@@ -160,7 +161,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = '';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     clientMock.get.calls.reset();
@@ -181,7 +182,8 @@ describe('Search', () => {
       limit: 12,
       offset: '',
       sort: '',
-      rating: 1,
+      rating: 2,
+      mature: 0,
     });
   }));
 
@@ -191,7 +193,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = 'latest';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     clientMock.get.calls.reset();
@@ -212,7 +214,8 @@ describe('Search', () => {
       limit: 12,
       offset: '',
       sort: 'latest',
-      rating: 1,
+      rating: 2,
+      mature: 0,
     });
   }));
 
@@ -222,7 +225,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = 'activity';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     comp.entities = [ 4998, 4999 ];
@@ -246,7 +249,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = 'activity';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     comp.entities = [ 4998, 4999 ];
@@ -270,7 +273,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = 'activity';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     clientMock.get.calls.reset();
@@ -291,7 +294,8 @@ describe('Search', () => {
       limit: 12,
       offset: '123',
       taxonomies: 'activity',
-      rating: 1,
+      rating: 2,
+      mature: 0,
     });
   }));
 
@@ -301,7 +305,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = '';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     comp.hybridEntities = {
@@ -334,7 +338,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = '';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     comp.hybridEntities = {
@@ -367,7 +371,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = 'activity';
     comp.container = '';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     clientMock.get.calls.reset();
@@ -388,7 +392,8 @@ describe('Search', () => {
       limit: 12,
       offset: '123',
       taxonomies: 'activity',
-      rating: 1,
+      rating: 2,
+      mature: 0,
     });
   }));
 
@@ -398,7 +403,7 @@ describe('Search', () => {
     comp.q = 'test';
     comp.type = 'activity';
     comp.container = '1000';
-    comp.mature = true;
+    comp.mature = false;
     comp.paywall = true;
 
     clientMock.get.calls.reset();
@@ -419,7 +424,8 @@ describe('Search', () => {
       limit: 12,
       offset: '',
       taxonomies: 'activity',
-      rating: 1,
+      rating: 2,
+      mature: 0,
     });
   }));
 
@@ -452,7 +458,7 @@ describe('Search', () => {
       taxonomies: 'activity',
       mature: 0,
       paywall: 0,
-      rating: 1,
+      rating: 2,
     });
   }));
 
