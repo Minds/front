@@ -149,7 +149,8 @@ describe('Search', () => {
       container: '',
       limit: 12,
       offset: '',
-      taxonomies: 'activity'
+      taxonomies: 'activity',
+      rating: 1,
     });
   }));
 
@@ -179,7 +180,8 @@ describe('Search', () => {
       container: '',
       limit: 12,
       offset: '',
-      sort: ''
+      sort: '',
+      rating: 1,
     });
   }));
 
@@ -209,7 +211,8 @@ describe('Search', () => {
       container: '',
       limit: 12,
       offset: '',
-      sort: 'latest'
+      sort: 'latest',
+      rating: 1,
     });
   }));
 
@@ -287,7 +290,8 @@ describe('Search', () => {
       container: '',
       limit: 12,
       offset: '123',
-      taxonomies: 'activity'
+      taxonomies: 'activity',
+      rating: 1,
     });
   }));
 
@@ -383,7 +387,8 @@ describe('Search', () => {
       container: '',
       limit: 12,
       offset: '123',
-      taxonomies: 'activity'
+      taxonomies: 'activity',
+      rating: 1,
     });
   }));
 
@@ -413,7 +418,8 @@ describe('Search', () => {
       container: '1000',
       limit: 12,
       offset: '',
-      taxonomies: 'activity'
+      taxonomies: 'activity',
+      rating: 1,
     });
   }));
 
@@ -445,7 +451,8 @@ describe('Search', () => {
       offset: '',
       taxonomies: 'activity',
       mature: 0,
-      paywall: 0
+      paywall: 0,
+      rating: 1,
     });
   }));
 
