@@ -70,7 +70,7 @@ export class SearchBarSuggestionsComponent {
   loadRecent() {
     if (this.session.getLoggedInUser()) {
       this.recent = this.recentService.fetch('recent', 6);
-    } 
+    }
   }
 
   mousedown(e) {
@@ -79,7 +79,7 @@ export class SearchBarSuggestionsComponent {
     setTimeout(() => {
       this.active = false;
       this.detectChanges();
-    }, 300); 
+    }, 300);
   }
 
   detectChanges() {

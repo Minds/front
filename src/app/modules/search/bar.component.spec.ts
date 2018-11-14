@@ -8,10 +8,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { ContextService } from '../../services/context.service';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
-
+import { Session } from '../../services/session';
 import { SearchBarComponent } from './bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { sessionMock } from '../../../tests/session-mock.spec';
 // Mocks
 
 @Component({
@@ -53,6 +53,7 @@ describe('Search', () => {
         ReactiveFormsModule
       ],
       providers: [
+        { provide: Session, useValue: sessionMock},
         { provide: ContextService, useValue: contextServiceMock }
       ]
     }).compileComponents();

@@ -12,6 +12,8 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { MindsTitle } from '../../services/ux/title';
 import { Storage } from '../../services/storage';
 import { storageMock } from "../../../tests/storage-mock.spec";
+import { Session } from '../../services/session';
+import { sessionMock } from '../../../tests/session-mock.spec';
 
 import { SearchComponent } from './search.component';
 
@@ -67,7 +69,8 @@ describe('Search', () => {
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: MindsTitle, useClass: Title, deps: [ Title ] },
-        { provide: Storage, useValue: storageMock }
+        { provide: Storage, useValue: storageMock },
+        { provide: Session, useValue: sessionMock }
       ]
     }).compileComponents();
   }));

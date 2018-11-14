@@ -1,4 +1,4 @@
-<div class="m-search-bar-suggestions-list" [hidden]="disabled || !active" (mousedown)="mousedown($event)">
+<div class="m-search-bar-suggestions-list" [hidden]="disabled || !active" (mousedown)="mousedown($event)" *ngIf="session.isLoggedIn()">
   <ng-container *ngIf="!q">
     <ng-container *ngFor="let suggestion of recent">
       <a class="m-search-bar-suggestions-suggestion"

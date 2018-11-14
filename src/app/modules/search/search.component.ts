@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Storage } from '../../services/storage';
+import { Session } from '../../services/session';
 
 export type HybridSearchEntities = {
   user: any[],
@@ -46,7 +47,18 @@ export class SearchComponent {
 
   ref: string = '';
 
-  constructor(public client: Client, public route: ActivatedRoute, public title: MindsTitle, private storage: Storage) {
+  constructor(
+    public client: Client,
+    public route: ActivatedRoute,
+    private router: Router,
+    public title: MindsTitle,
+    private storage: Storage,
+    private session: Session,
+  ) {
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
   }
 
   ngOnInit() {

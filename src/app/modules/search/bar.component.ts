@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-search--bar',
@@ -23,7 +24,11 @@ export class SearchBarComponent {
 
   @ViewChild('searchInput') searchInput: ElementRef;
 
-  constructor(public router: Router, private context: ContextService) { }
+  constructor(
+    public router: Router,
+    private context: ContextService,
+    public session: Session
+  ) { }
 
   ngOnInit() {
     this.listen();
@@ -92,7 +97,7 @@ export class SearchBarComponent {
 
 
   keyup(e) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && this.session.isLoggedIn()) {
       this.search();
       this.unsetFocus();
     }
