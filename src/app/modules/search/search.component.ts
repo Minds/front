@@ -42,6 +42,7 @@ export class SearchComponent {
   optionsToggle: boolean = false;
   mature: boolean = false;
   paywall: boolean = true;
+  rating: number = 1;
 
   paramsSubscription: Subscription;
 
@@ -59,6 +60,7 @@ export class SearchComponent {
       this.router.navigate(['/login']);
       return;
     }
+    this.rating = this.session.getLoggedInUser().boost_rating;
   }
 
   ngOnInit() {
@@ -120,6 +122,7 @@ export class SearchComponent {
         q: this.q,
         container: this.container || '',
         limit: 12,
+        rating: this.rating,
         offset: this.offset
       };
 
@@ -219,6 +222,11 @@ export class SearchComponent {
     const refs = this.ref.split('-');
 
     return refs.indexOf(ref) > -1;
+  }
+
+  onOptionsChange(opts) {
+    this.rating = opts.rating;
+    this.search(true);
   }
 
   protected reset() {

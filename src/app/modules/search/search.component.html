@@ -185,6 +185,14 @@
 
       </div>
 
+      <div class="m-layout--spacer"></div>
+
+      <m-topbar--navigation--options
+        (change)="onOptionsChange($event)" 
+        [options]="[ 'rating' ]"
+        >
+      </m-topbar--navigation--options>
+
     </div>
   </div>
 </div>
