@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MentionModule } from 'angular-mentions/mention';
 import { RouterModule } from '@angular/router';
 import { CaptchaModule } from './modules/captcha/captcha.module';
 
@@ -105,6 +106,7 @@ import { NodesMarketingModule } from './modules/nodes/nodes.module';
     NodesMarketingModule,
     BrandingModule,
     CommentsModule,
+    MentionModule,
 
     //last due to :username route
     ChannelsModule,

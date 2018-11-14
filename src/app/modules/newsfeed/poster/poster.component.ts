@@ -1,4 +1,5 @@
-import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Component, EventEmitter, ViewChild, NgModule } from '@angular/core';
+import { MentionModule } from 'angular-mentions/mention';
 import { Session } from '../../../services/session';
 
 import { AttachmentService } from '../../../services/attachment';
@@ -7,6 +8,10 @@ import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
+
+@NgModule({
+    imports: [ MentionModule ]
+})
 
 @Component({
   moduleId: module.id,
@@ -30,7 +35,8 @@ export class PosterComponent {
     message : '',
     wire_threshold: null
   };
-  tags = [];  
+  tags = [];
+  users = [];
   minds;
   load: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
@@ -46,6 +52,10 @@ export class PosterComponent {
 
   constructor(public session: Session, public client: Client, public upload: Upload, public attachment: AttachmentService) {
     this.minds = window.Minds;
+      this.client.get('/api/v2/search/suggest/user')
+          .then((response: any) => {
+              this.users = response.entities;
+          });
   }
 
   set _container_guid(guid: any) {
@@ -75,6 +85,18 @@ export class PosterComponent {
     while ((match = regex.exec(this.meta.message)) !== null) {
       this.tags.push(match[2]);
     }
+
+    // Detect @user tags.
+    const userRegex = /(^|\s||)@([a-zA-Z0-9\_\.]{3})/gim;
+    let userMatch;
+
+    while ((userMatch = userRegex.exec(this.meta.message)) !== null) {
+        this.client.get('/api/v2/search/suggest/user?username=' + userMatch[2])
+            .then((response: any) => {
+                this.users = response.entities;
+            });
+    }
+
   }
 
   onTagsChange(tags: string[]) {

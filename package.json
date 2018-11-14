@@ -24,6 +24,7 @@
     "@angular/platform-browser": "~6.0.9",
     "@angular/platform-browser-dynamic": "~6.0.9",
     "@angular/router": "~6.0.9",
+    "angular-mentions": "^0.8.0",
     "angular-text-input-autocomplete": "^0.3.0",
     "bn.js": "^4.11.8",
     "braintree-web": "2.15.2",
