@@ -94,7 +94,8 @@ export class SearchComponent {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
   }
 
   /**
