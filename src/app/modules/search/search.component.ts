@@ -42,7 +42,7 @@ export class SearchComponent {
   optionsToggle: boolean = false;
   mature: boolean = false;
   paywall: boolean = true;
-  rating: number = 1;
+  rating: number = 2;
 
   paramsSubscription: Subscription;
 
@@ -60,7 +60,6 @@ export class SearchComponent {
       this.router.navigate(['/login']);
       return;
     }
-    this.rating = this.session.getLoggedInUser().boost_rating;
   }
 
   ngOnInit() {
@@ -141,6 +140,8 @@ export class SearchComponent {
 
       if (!this.mature) {
         data['mature'] = 0;
+      } else {
+        data.rating = 3; // explicit is now rating 3
       }
 
       if (!this.paywall) {
