@@ -102,6 +102,13 @@ import { Router } from '@angular/router';
       >
         Remove Explicit
       </li>
+      <li class="mdl-menu__item"
+        *ngIf="session.isAdmin()"
+        (click)="reindex(); showMenu = false"
+        i18n="@@M__ACTION__REINDEX"
+      >
+        Reindex
+      </li>
       <ng-container *ngIf="session.isAdmin()">
         <li class="mdl-menu__item" [hidden]="user.rating === 1" (click)="setRating(1)" i18n="@@M__ACTION__MARK_AS_SAFE">Mark as Safe</li>
         <li class="mdl-menu__item" [hidden]="user.rating === 2" (click)="setRating(2)" i18n="@@M__ACTION__MENU__MARK_AS_OPEN">Mark as Open</li>
@@ -169,6 +176,13 @@ export class UserDropdownButton {
     public overlayService: OverlayModalService,
     public router: Router
   ) {
+  }
+
+  /**
+   * Reindex the user
+   */
+  reindex() {
+    this.client.post('api/v2/admin/reindex', {guid: this.user.guid});
   }
 
   block() {
