@@ -56,6 +56,12 @@ describe('Search', () => {
           selector: 'infinite-scroll',
           inputs: [ 'inProgress', 'moreData', 'inProgress' ],
         }),
+        MockComponent({
+          selector: 'm-topbar--navigation--options',
+          template: '',
+          inputs: ['options'],
+          outputs: ['change']
+        }),
         TooltipComponentMock,
         MaterialBoundSwitchComponentMock,
         SearchHybridListComponentMock,
