@@ -47,10 +47,13 @@ export class PosterComponent {
 
   constructor(public session: Session, public client: Client, public upload: Upload, public attachment: AttachmentService) {
     this.minds = window.Minds;
-      this.client.get('/api/v2/search/suggest/user')
-          .then((response: any) => {
-              this.users = response.entities;
-          });
+  }
+
+  ngOnInit() {
+    this.client.get('api/v2/search/suggest/user')
+      .then((response: any) => {
+        this.users = response.entities;
+    });
   }
 
   set _container_guid(guid: any) {
@@ -86,12 +89,11 @@ export class PosterComponent {
     let userMatch;
 
     while ((userMatch = userRegex.exec(this.meta.message)) !== null) {
-        this.client.get('/api/v2/search/suggest/user?username=' + userMatch[2])
+        this.client.get('api/v2/search/suggest?q=' + userMatch[2])
             .then((response: any) => {
                 this.users = response.entities;
             });
     }
-
   }
 
   onTagsChange(tags: string[]) {

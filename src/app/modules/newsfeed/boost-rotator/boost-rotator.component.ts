@@ -220,7 +220,9 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   next() {
-    this.activities.toArray()[this.currentPosition].hide();
+    if (this.activities.toArray()[this.currentPosition]) {
+      this.activities.toArray()[this.currentPosition].hide();
+    }
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       //this.currentPosition = 0;
       this.load()
