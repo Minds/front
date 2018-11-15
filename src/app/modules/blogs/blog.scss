@@ -290,6 +290,9 @@ minds-blog-edit {
   .m-additional-block m-wire-threshold-input i {
     padding: 0;
   }
+  .m-additional-block .m-category-info {
+    flex-shrink: 0;
+  }
 
   .m-h1-input {
     font-weight: 600;

@@ -74,7 +74,7 @@ describe('ChannelSidebar', () => {
         }),
         MockComponent({
           selector: 'm-hashtags-selector',
-          inputs: ['tags'],
+          inputs: ['tags', 'alignLeft'],
           outputs: ['tagsChange', 'tagsAdded', 'tagsRemoved'],
         }),
       ],

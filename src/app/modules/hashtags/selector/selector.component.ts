@@ -6,6 +6,7 @@ import { Tag } from '../types/tag';
   templateUrl: 'selector.component.html',
 })
 export class HashtagsSelectorComponent {
+  @Input() alignLeft: boolean = false;
   tags: Tag[] = [];
 
   tagsValues: Tag[] = [];
@@ -21,12 +22,12 @@ export class HashtagsSelectorComponent {
     let match;
 
     while ((match = regex.exec(message)) !== null) {
-        tags.push({
-          value: match[2],
-          index: match.index,
-          length: match.length,
-          checked: true,
-        });
+      tags.push({
+        value: match[2],
+        index: match.index,
+        length: match.length,
+        checked: true,
+      });
     }
 
     this.tags = tags;

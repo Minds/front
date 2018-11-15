@@ -46,11 +46,12 @@
       <div class="m-group-info-tags mdl-color-text--blue-grey-300">
         <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
         <m-hashtags-selector #hashtagsSelector
-            (tagsChange)="onTagsChange($event)"
-            (tagsAdded)="onTagsAdded($event)"
-            (tagsRemoved)="onTagsRemoved($event)"
-            *ngIf="editing"
-          ></m-hashtags-selector> 
+          [alignLeft]="true"
+          (tagsChange)="onTagsChange($event)"
+          (tagsAdded)="onTagsAdded($event)"
+          (tagsRemoved)="onTagsRemoved($event)"
+          *ngIf="editing"
+        ></m-hashtags-selector>
       </div>
 
       <div class="m-group-info-membership mdl-color-text--blue-grey-300">

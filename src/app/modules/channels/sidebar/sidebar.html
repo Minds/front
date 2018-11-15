@@ -56,6 +56,7 @@
       <div class="m-channel-bio-input">
         <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
         <m-hashtags-selector #hashtagsSelector
+          [alignLeft]="true"
           [tags]="user.tags"
           (tagsChange)="onTagsChange($event)"
           (tagsAdded)="onTagsAdded($event)"

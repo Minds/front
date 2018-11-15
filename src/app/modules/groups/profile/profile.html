@@ -95,6 +95,7 @@
             <span *ngFor="let tag of group.tags">#{{tag}}</span>
           </ng-container>
           <m-hashtags-selector #hashtagsSelector
+            [alignLeft]="true"
             [tags]="group.tags"
             (tagsChange)="onTagsChange($event)"
             (tagsAdded)="onTagsAdded($event)"
