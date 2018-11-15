@@ -1,5 +1,4 @@
-import { Component, EventEmitter, ViewChild, NgModule } from '@angular/core';
-import { MentionModule } from 'angular-mentions/mention';
+import { Component, EventEmitter, ViewChild } from '@angular/core';
 import { Session } from '../../../services/session';
 
 import { AttachmentService } from '../../../services/attachment';
@@ -8,10 +7,6 @@ import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
-
-@NgModule({
-    imports: [ MentionModule ]
-})
 
 @Component({
   moduleId: module.id,

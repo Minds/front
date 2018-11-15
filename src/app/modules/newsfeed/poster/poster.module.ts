@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MentionModule } from 'angular-mentions/mention';
 
 import { ModalPosterComponent } from './poster-modal.component';
 import { PosterComponent } from './poster.component';
@@ -21,6 +22,7 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
     ThirdPartyNetworksModule,
     HashtagsModule,
     TextInputAutocompleteModule,
+    MentionModule,
   ],
   declarations: [
     PosterComponent,
