@@ -44,7 +44,7 @@ export class CommentsListComponent {
 
   showModal: boolean = false;
 
-  limit: number = 5;
+  limit: number = 12;
   offset: string = '';
   inProgress: boolean = false;
   canPost: boolean = true;
@@ -121,7 +121,11 @@ export class CommentsListComponent {
 
     this.detectChanges();
 
-    this.client.get('api/v1/comments/' + this.guid, { limit: this.limit, offset: this.offset, reversed: false })
+    this.client.get('api/v1/comments/' + this.guid, { 
+      limit: refresh ? 5 : this.limit, 
+      offset: this.offset, 
+      reversed: false 
+    })
       .then((response: any) => {
 
         if (!this.socketRoomName && response.socketRoomName) {
@@ -160,8 +164,9 @@ export class CommentsListComponent {
 
         if (
           !this.offset ||
-          this.offset === null ||
-          response.comments.length < (this.limit - 1)
+          this.offset === null 
+          //||
+          //response.comments.length < (this.limit - 1)
         ) {
           this.moreData = false;
         }
