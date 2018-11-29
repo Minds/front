@@ -12,6 +12,7 @@ import { Client } from '../../../../services/api/client';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { MockComponent } from '../../../../utils/mock';
 
 describe('QuestionsComponent', () => {
 
@@ -21,8 +22,19 @@ describe('QuestionsComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [QuestionsComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
+      declarations: [
+        QuestionsComponent,
+        MockComponent({
+          selector: 'minds-activity',
+          inputs: [ 'object' ],
+        }),
+      ],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
@@ -101,14 +113,14 @@ describe('QuestionsComponent', () => {
   });
 
   it("should have a 'Go Back' button", () => {
-    const button = fixture.debugElement.query(By.css('.m-helpdesk--questions--go-back'));
+    const button = fixture.debugElement.query(By.css('.m-helpdeskQuestions__goBack'));
 
     expect(button).not.toBeNull();
     expect(button.nativeElement.textContent).toContain('Back to Help Desk');
   });
 
-  it("should have a popular questions section", () => {
-    const section = fixture.debugElement.query(By.css('.m-helpdesk--questions--popular-questions'));
+  xit("should have a popular questions section", () => {
+    const section = fixture.debugElement.query(By.css('.m-helpdeskQuestions__categories'));
 
     expect(section).not.toBeNull();
 
@@ -133,17 +145,17 @@ describe('QuestionsComponent', () => {
   });
 
   it("should have a main page section with the question, answer and the upvote and downvote buttons", () => {
-    const question = fixture.debugElement.query(By.css('.m-page--main .m-helpdesk--questions--question'));
+    const question = fixture.debugElement.query(By.css('.m-page--main > .m-helpdeskQuestions__question'));
 
     expect(question).not.toBeNull();
     expect(question.nativeElement.textContent).toContain('is this a test?');
 
-    const answer = fixture.debugElement.query(By.css('.m-page--main .m-helpdesk--questions--answer'));
+    const answer = fixture.debugElement.query(By.css('.m-page--main .m-helpdeskQuestions__answer'));
 
     expect(answer).not.toBeNull();
     expect(answer.nativeElement.textContent).toContain('yep');
 
-    const voteButtons = fixture.debugElement.queryAll(By.css('.m-helpdesk--questions--feedback > a'));
+    const voteButtons = fixture.debugElement.queryAll(By.css('.m-helpdeskQuestions__feedback > div'));
     expect(voteButtons.length).toBe(2);
 
   });

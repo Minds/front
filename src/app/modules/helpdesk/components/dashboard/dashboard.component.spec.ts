@@ -20,7 +20,7 @@ describe('HelpdeskDashboardComponent', () => {
   let fixture: ComponentFixture<HelpdeskDashboardComponent>;
 
   function getInput(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-helpdesk--dashboard--input input'));
+    return fixture.debugElement.query(By.css('.m-helpdesk__dashboardInput input'));
   }
 
   beforeEach(async(() => {
@@ -108,13 +108,13 @@ describe('HelpdeskDashboardComponent', () => {
   });
 
   it("should have a popular questions section", () => {
-    const section = fixture.debugElement.query(By.css('.m-helpdesk--dashboard--popular-questions'));
+    const section = fixture.debugElement.query(By.css('.m-helpdeskQuestions__questions'));
 
     expect(section).not.toBeNull();
 
-    expect(fixture.debugElement.query(By.css('.m-helpdesk--dashboard--popular-questions--title')).nativeElement.textContent).toContain('Popular questions');
+    expect(fixture.debugElement.query(By.css('.m-helpdeskQuestions__questions h4')).nativeElement.textContent).toContain('Popular Questions');
 
-    const questions = fixture.debugElement.queryAll(By.css('.m-helpdesk--dashboard--popular-questions--question'));
+    const questions = fixture.debugElement.queryAll(By.css('.m-helpdeskQuestions__question'));
     expect(questions.length).toBe(3);
   });
 
