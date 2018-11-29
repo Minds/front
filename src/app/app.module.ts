@@ -53,6 +53,7 @@ import { BrandingModule } from './modules/branding/branding.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
+import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
 
 @NgModule({
   bootstrap: [
@@ -107,6 +108,7 @@ import { JobsMarketingModule } from './modules/jobs/jobs.module';
     BrandingModule,
     CommentsModule,
     JobsMarketingModule,
+    HelpdeskModule,
 
     //last due to :username route
     ChannelsModule,

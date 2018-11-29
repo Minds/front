@@ -1,0 +1,219 @@
+@import "defaults";
+
+m-helpdesk--questions {
+
+
+  & > .m-page {
+    max-width: 1280px;
+    margin: auto;
+    & > .m-page--sidebar {
+    //  width: 400px;
+    }
+  }
+
+  .m-helpdeskRelatedPosts__list {
+    padding-top: 2 * $minds-padding;
+    margin: 0 $minds-padding * 2;
+
+    h4 {
+      color: #444;
+    }
+  }
+
+  .m-helpdeskQuestions__question {
+    padding: $minds-padding * 3;
+    position: relative;
+  }
+
+  h1 {
+    color: #444;
+    line-height: 1;
+    font-size: 52px;
+    margin-bottom: 16px;
+  }
+  
+  .m-helpdeskQuestions__editIcon {
+    position: absolute;
+    top: $minds-padding * 2;
+    right: $minds-padding * 2;
+  }
+
+  p.m-helpdeskQuestions__answer {
+    color: #444;
+    font-size: 16px;
+  }
+
+
+  .m-helpdeskQuestions__goBack {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #888;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 8px;
+  }
+
+  .m-helpdeskQuestions__input {
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative; 
+
+    & > i.material-icons {
+      width: 60px;
+      position: absolute;
+      left: 6px;
+      border: none;
+      font-size: 24px;
+      color: #888;
+    }
+    & > input {
+      color: #444;
+      background: #FFF;
+      font-size: 18px;
+      padding-left: 32px;
+      flex-grow: 1;
+      padding: 16px 16px 16px 32px;
+      border-color: #e8e8e8;
+    }
+  }
+
+  .m-helpdesk--search-autocomplete--results {
+    position: relative;
+    width: 30em;
+    max-width: 90%;
+    max-height: 300px;
+    font-size: 16px;
+    border-radius: 3px;
+    background: rgba(0,0,0,0.15);
+    padding: $minds-padding;
+    margin-top: $minds-padding * 1.5;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    &:after {
+      bottom: 100%;
+      left: 95%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-color: rgba(102, 102, 102, 0);
+      border-bottom-color: #ffffff;
+      border-width: 8px;
+      margin-left: -8px;
+    }
+
+    .m-helpdesk--search-autocomplete--result {
+      padding: $minds-padding / 2;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+
+      &:hover, &.m-helpdesk--search-autocomplete--result-highlight {
+        background: #ffffff;
+        color: #000;
+        font-weight: 400;
+      }
+
+      .m-helpdesk--search-autocomplete--result-content .material-icons {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .m-helpdesk--questions--big-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+    padding: $minds-padding * 2;
+
+    img {
+      width: 80px;
+    }
+    .m-helpdesk--questions--big-item--text {
+      padding-left: $minds-padding * 5;
+      max-width: 430px;
+
+      .m-helpdesk--questions--big-item--title {
+        font-size: 30px;
+        font-weight: bold;
+        line-height: 1.2em;
+        margin-bottom: $minds-padding;
+      }
+
+      .m-helpdesk--questions--big-item--subtext {
+        font-size: 16px;
+        color: #888;
+      }
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      margin: 0 $minds-padding * 2;
+      .m-helpdesk--questions--big-item--text {
+        padding-left: $minds-padding * 2;
+      }
+    }
+  }
+}
+
+.m-helpdeskQuestions__question {
+  background: #FFF;
+  padding: 16px;
+}
+
+.m-helpdeskQuestions__questions, .m-helpdeskQuestions__categories {
+  background: #FFF;
+  text-align: left;
+
+  ul, li {
+    margin: auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  h4 {
+    font-size: 24px;
+    line-height: 1.25;
+    margin: 0;
+    color: #666;
+    font-weight: bold;
+    padding: $minds-padding * 2;
+    padding-bottom: 0;
+  }
+  .m-helpdeskQuestions__question a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $minds-padding $minds-padding * 2;
+    padding-top: $minds-padding;
+    font-size: 18px;
+    color: #555;
+    font-weight: 400;
+    text-decoration: none;
+
+    &:hover {
+      background-color: #f0f0f0; 
+    }
+  }
+}
+
+.m-helpdeskQuestions__feedback {
+  div {
+    display: inline-block;
+    cursor: pointer;
+    padding: $minds-padding;
+    i.material-icons {
+      font-size: 24px;
+      color: #666;
+    }
+  }
+}

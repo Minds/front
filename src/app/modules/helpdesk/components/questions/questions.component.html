@@ -1,0 +1,143 @@
+<div class="m-page m-helpdesk__wrapper">
+  <div class="m-page__sidebar">
+    <a class="m-helpdeskQuestions__goBack" routerLink="/help">
+      <i class="material-icons">
+        keyboard_arrow_left
+      </i>
+      Back to Help Desk
+    </a>
+
+    <div class="m-helpdeskQuestions__input">
+      <i class="material-icons">
+        search
+      </i>
+      <input
+        class="m-input m-border"
+        placeholder="Enter your question here"
+        (blur)="onBlur()"
+        [(ngModel)]="query"
+        (keydown.esc)="onBlur()"
+        (keyup)="search()">
+    </div>
+
+    <div *ngIf="results.length > 0"
+      class="m-helpdeskQuestions__categories m-border"
+    >
+      <ul>
+        <li *ngFor="let question of results"
+          class="m-helpdeskQuestions__question"
+        >
+          <a [routerLink]="['/help/question/', question.uuid]">
+            <span>{{question.question}}</span>
+            <i class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="minds-spacer" *ngIf="results.length > 0"></div>
+
+    <div class="m-helpdeskQuestions__categories m-border">
+      <ul *ngFor="let category of categories">
+        <h4>{{category.title}}</h4>
+        <a
+          class="m-helpdeskQuestions__editIcon"
+          [routerLink]="'/help/category/edit/' + category.uuid"
+          *ngIf="session.isAdmin()"
+        >
+          <i class="material-icons">
+            edit
+          </i>
+        </a>
+
+        <li class="m-helpdeskQuestions__question"
+          *ngFor="let question of category.questions"
+        >
+          <a [routerLink]="['/help/question/', question.uuid]">
+            <span>{{question.question}}</span>
+            <i class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="minds-spacer"></div>
+
+    <div class="m-helpdeskQuestions__categories m-border">
+      <ul>
+        <h4>Popular questions</h4>
+
+        <li class="m-helpdeskQuestions__question"
+          *ngFor="let question of topQuestions"
+        >
+          <a [routerLink]="['/help/question/', question.uuid]">
+            <span>{{question.question}}</span>
+            <i class="material-icons">
+              keyboard_arrow_right
+            </i>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="minds-spacer"></div>
+
+    <div class="m-border mdl-card m-helpdesk--questions--big-item m-helpdesk--questions--help-and-support"
+      (click)="navigateToSupportGroup()">
+      <img [src]="minds.cdn_assets_url + 'assets/help-desk/chat.png'">
+      <div class="m-helpdesk--questions--big-item--text">
+        <div class="m-helpdesk--questions--big-item--title">
+          Help & Support Group
+        </div>
+        <div class="m-helpdesk--questions--big-item--subtext">
+          Get help from the wider Minds community
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-page--main">
+    <div class="m-helpdeskQuestions__question m-border">
+      <h1>{{selectedQuestion.question}}</h1>
+      <a
+        class="m-helpdeskQuestions__editIcon"
+        [routerLink]="'/help/question/edit/' + selectedQuestion.uuid"
+        *ngIf="session.isAdmin()"
+      >
+        <i class="material-icons">
+          edit
+        </i>
+      </a>
+
+      <p class="m-helpdeskQuestions__answer">
+        {{selectedQuestion.answer}}
+      </p>
+      <div class="m-helpdeskQuestions__feedback">
+        <div
+          (click)="castVote('up')"
+        >
+          <i class="material-icons" [ngClass]="{'selected': hasVoted('up') }">thumb_up</i>
+          <span class="minds-counter" *ngIf="selectedQuestion['thumbs_up_count'] > 0">{{selectedQuestion['thumbs_up_count'] | number}}</span>
+        </div>
+        <div
+          (click)="castVote('down')"
+        >
+          <i class="material-icons" [ngClass]="{'selected': hasVoted('down') }">thumb_down</i>
+          <span class="minds-counter" *ngIf="selectedQuestion['thumbs_down_count'] > 0">{{selectedQuestion['thumbs_down_count'] | number}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="m-helpdeskRelatedPosts__list">
+      <h4>Related Help & Support posts</h4>
+      <minds-activity
+        *ngFor="let a of relatedPosts; let i = index"
+        class="mdl-card item"
+        [object]="a"
+      ></minds-activity>
+    </div>
+  </div>
+</div>

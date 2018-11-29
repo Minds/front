@@ -1,0 +1,105 @@
+<div class="m-layout m-helpdesk__dashboard">
+  <section class="m-layout__hero m-helpdesk--dashboard--section">
+    <div class="m-layout__inner m-layout__row">
+      <div class="m-layout__cell">
+        <h2 *ngIf="session.isLoggedIn()">How can we help you, @{{session.getLoggedInUser().username}}?</h2>
+        <h2 *ngIf="!session.isLoggedIn()">How can we help you?</h2>
+        <div class="m-helpdesk__dashboardInput">
+          <i class="material-icons">
+            search
+          </i>
+          <input placeholder="Enter your question here"
+            class="m-input m-border"
+            (blur)="onBlur()"
+            [(ngModel)]="query"
+            (keydown.esc)="onBlur()"
+            (keyup)="search()">
+        </div>
+
+        <div class="m-helpdesk__dashboardButtons" *ngIf="session.isAdmin()">
+          <button
+            class="m-btn m-btn--slim"
+            i18n="@@HELPDESK__DASHBOARD__NEW_CATEGORY"
+            (click)="newCategory()"
+          >
+            New Category
+          </button>
+          <button
+            class="m-btn m-btn--slim"
+            i18n="@@HELPDESK__DASHBOARD__NEW_CATEGORY"
+            (click)="newQuestion()"
+          >
+            New Question
+          </button>
+        </div>
+
+        <div *ngIf="results.length > 0"
+          class="m-helpdeskSearch__results m-border"
+        >
+          <div *ngFor="let question of results"
+            class="m-helpdeskSearch__result"
+            [routerLink]="['/help/question', question.uuid]"
+          >
+            <span>{{question.question}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-layout__cell m-helpdesk__heroIcon">
+        <img [src]="minds.cdn_assets_url + 'assets/help-desk/presentation.png'">
+      </div>
+    </div>
+  </section>
+
+  <section class="m-layout__section m-helpdesk--dashboard--section" style="background-color: #f8f8f8; padding-bottom: 0;">
+    <div class="m-layout__inner m-layout__row">
+      <div class="m-layout__cell">
+        <div class="m-helpdeskQuestions__questions m-border">
+          <ul>
+            <h4>Popular Questions</h4>
+            <li class="m-helpdeskQuestions__question" *ngFor="let question of topQuestions">
+              <a [routerLink]="['/help/question/', question.uuid]">
+                <span>{{question.question}}</span>
+                <i class="material-icons">
+                  keyboard_arrow_right
+                </i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="m-layout__cell">
+        <div class="m-helpdesk--dashboard--links">
+
+          <div class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--help-and-support"
+            (click)="router.navigate(['/groups/profile', '100000000000000681'])">
+            <img [src]="minds.cdn_assets_url + 'assets/help-desk/chat.png'">
+            <div class="m-helpdesk--dashboard--big-item--text">
+              <h3 class="m-helpdesk--dashboard--big-item--title">
+                Help & Support Group
+              </h3>
+              <p class="m-helpdesk--dashboard--big-item--subtext">
+                Get help from the wider Minds community
+              </p>
+            </div>
+          </div>
+
+          <hr/>
+
+          <div class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--token-sales-and-enterprise">
+            <img [src]="minds.cdn_assets_url + 'assets/help-desk/briefcase.png'">
+            <div class="m-helpdesk--dashboard--big-item--text">
+              <h3 class="m-helpdesk--dashboard--big-item--title">
+                Token Sales & Enterprise
+              </h3>
+              <p class="m-helpdesk--dashboard--big-item--subtext">
+                Support with purchasing the Minds Token or your hosted Minds Node
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
