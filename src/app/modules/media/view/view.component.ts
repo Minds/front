@@ -1,5 +1,5 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { Session } from '../../../services/session';
 import { RecommendedService } from '../components/video/recommended.service';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
+import { MindsTitle } from '../../../services/ux/title';
 
 @Component({
   moduleId: module.id,
@@ -40,6 +41,7 @@ export class MediaViewComponent {
     public session: Session,
     public client: Client,
     public router: Router,
+    public title: MindsTitle,
     public route: ActivatedRoute,
     public attachment: AttachmentService,
     public context: ContextService,
@@ -47,6 +49,8 @@ export class MediaViewComponent {
   ) { }
 
   ngOnInit() {
+    this.title.setTitle('');
+
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
         this.guid = params['guid'];
@@ -86,6 +90,10 @@ export class MediaViewComponent {
             default:
               this.context.reset();
           }
+
+          if (this.entity.title) {
+            this.title.setTitle(this.entity.title);
+          }
         }
 
         this.detectChanges();
@@ -99,7 +107,7 @@ export class MediaViewComponent {
   delete() {
     this.client.delete('api/v1/media/' + this.guid)
       .then((response: any) => {
-        const type: string = this.entity.subtype === 'video' ? 'videos' : 'images';
+        const type: string = this.entity.subtype === 'video' ? 'videos': 'images';
         this.router.navigate([`/media/${type}/my`]);
       })
       .catch(e => {
@@ -151,7 +159,7 @@ export class MediaViewComponent {
     this.entity.mature = value;
     this.detectChanges();
 
-    this.client.post(`api/v1/entities/explicit/${this.entity.guid}`, { value: value ? '1' : '0' })
+    this.client.post(`api/v1/entities/explicit/${this.entity.guid}`, { value: value ? '1': '0' })
       .catch(e => {
         this.entity.mature = !!this.entity.mature;
         this.detectChanges();
