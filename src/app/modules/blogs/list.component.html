@@ -54,10 +54,11 @@
 
       <div class="m-layout--spacer"></div>
 
-      <!--<m-topbar&#45;&#45;hashtags-->
-        <!--(selectionChange)="reloadTopFeed()"-->
-        <!--*ngIf="filter == 'trending'"-->
-      <!--&gt;</m-topbar&#45;&#45;hashtags>-->
+      <m-topbar--hashtags
+        (selectionChange)="reloadTags($event)"
+        [enabled]="filter == 'trending'"
+      >
+      </m-topbar--hashtags>
 
       <m-topbar--navigation--options
         (change)="onOptionsChange($event)" 

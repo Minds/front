@@ -27,6 +27,7 @@ export class BlogListComponent {
   _filter2: string = '';
   paramsSubscription: Subscription;
   rating: number = 1; //show safe by default
+  all: boolean = false;
 
   constructor(
     public client: Client,
@@ -96,21 +97,31 @@ export class BlogListComponent {
     this.paramsSubscription.unsubscribe();
   }
 
+  reloadTags(all: boolean = false) {
+    this.all = all;
+    this.load(true);
+  }
+
   load(refresh: boolean = false) {
     if (this.inProgress)
       return false;
 
-    if (refresh)
+    if (refresh) {
       this.offset = '';
+      this.entities_0 = [];
+      this.entities_1 = [];
+    }
 
     this.inProgress = true;
     let endpoint;
 
-    // if (this.filter === 'suggested') {
-    //   endpoint = 'api/v2/entities/suggested/blogs';
-    // } else {
+    if (this.filter === 'trending') {
+      endpoint = 'api/v2/entities/suggested/blogs';
+      if (this.all)
+        endpoint += '/all';
+    } else {
       endpoint = 'api/v1/blog/' + this.filter + '/' + this._filter2;
-    // }
+    }
     this.client.get(endpoint, {
       limit: 12,
       offset: this.offset,

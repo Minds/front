@@ -25,6 +25,7 @@ export class MediaImagesListComponent {
   offset: string | number = '';
   inProgress: boolean = false;
   rating: number = 1; //safe by default
+  all: boolean = false;
 
   city: string = '';
   cities: Array<any> = [];
@@ -105,22 +106,31 @@ export class MediaImagesListComponent {
     creator.present();
   }
 
+  reloadTags(all: boolean = false) {
+    this.all = all;
+    this.load(true);
+  }
+
   load(refresh: boolean = false) {
 
     if (this.inProgress)
       return false;
 
-    if (refresh)
+    if (refresh) {
       this.offset = '';
+      this.entities = [];
+    }
 
     this.inProgress = true;
 
     let endpoint;
-    // if (this.filter === 'trending') {
-    //   endpoint = 'api/v2/entities/suggested/images';
-    // } else {
+    if (this.filter === 'trending') {
+      endpoint = 'api/v2/entities/suggested/images';
+      if (this.all)
+        endpoint += '/all';
+    } else {
       endpoint = 'api/v1/entities/' + this.filter + '/images/' + this.owner;
-    // }
+    }
 
     this.client.get(endpoint, {
       limit: 12,

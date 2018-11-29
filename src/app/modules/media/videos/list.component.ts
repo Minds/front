@@ -25,6 +25,7 @@ export class MediaVideosListComponent {
   offset: string | number = '';
   inProgress: boolean = false;
   rating: number = 1; //safe by default
+  all: boolean = false;
 
   city: string = '';
   cities: Array<any> = [];
@@ -106,22 +107,31 @@ export class MediaVideosListComponent {
     this.paramsSubscription.unsubscribe();
   }
 
+  reloadTags(all: boolean = false) {
+    this.all = all;
+    this.load(true);
+  }
+
   load(refresh: boolean = false) {
 
     if (this.inProgress)
       return false;
 
-    if (refresh)
+    if (refresh) {
       this.offset = '';
+      this.entities = [];
+    }
 
     this.inProgress = true;
 
     let endpoint;
-    // if (this.filter === 'trending') {
-    //   endpoint = 'api/v2/entities/suggested/videos';
-    // } else {
+    if (this.filter === 'trending') {
+      endpoint = 'api/v2/entities/suggested/videos';
+      if (this.all)
+        endpoint += '/all';
+    } else {
       endpoint = 'api/v1/entities/' + this.filter + '/videos/' + this.owner;
-    // }
+    }
 
     this.client.get(endpoint, {
       limit: 12,

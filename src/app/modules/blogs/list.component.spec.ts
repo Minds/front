@@ -73,7 +73,8 @@ describe('BlogListComponent', () => {
         MockComponent({
           selector: 'm-topbar--hashtags',
           template: '',
-          outputs: ['selectionChange']
+          outputs: ['selectionChange'],
+          inputs: ['enabled'],
         }),
         BlogListComponent
       ],
@@ -99,7 +100,7 @@ describe('BlogListComponent', () => {
     comp.filter = 'trending';
 
     clientMock.response = {};
-    clientMock.response['api/v1/blog/trending/'] = {
+    clientMock.response['api/v2/entities/suggested/blogs'] = {
       status: 'success',
       entities: [
         {
@@ -140,7 +141,7 @@ describe('BlogListComponent', () => {
 
   it('should have loaded the blogs', () => {
     expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[0]).toBe('api/v1/blog/trending/');
+    expect(clientMock.get.calls.mostRecent().args[0]).toBe('api/v2/entities/suggested/blogs');
   });
 
   it('should have a topbar', () => {
