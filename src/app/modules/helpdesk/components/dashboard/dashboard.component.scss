@@ -80,13 +80,13 @@
   }
 }
 
-h1, h3, h2 {
+.m-helpdesk__dashboard h1, h3, h2 {
   color: #FFF;
   font-family: Roboto;
   margin: 0;
 }
 
-h1 {
+.m-helpdesk__dashboard h1 {
   letter-spacing: 1.25px;
   font-weight: 800;
   font-size: 78px;
@@ -96,12 +96,12 @@ h1 {
   }
 }
 
-h2 {
+.m-helpdesk__dashboard h2 {
   font-weight: 600;
   letter-spacing: 0.25px;
 }
 
-h3 {
+.m-helpdesk__dashboard h3 {
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 1px;
