@@ -9,6 +9,7 @@ import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ModalPosterComponent } from '../../newsfeed/poster/poster-modal.component';
+import { HashtagsSelectorModalComponent } from '../../hashtags/hashtag-selector-modal/hashtags-selector.component';
 
 @Component({
   moduleId: module.id,
