@@ -17,6 +17,8 @@ import { Observable } from 'rxjs';
 import { of } from 'rxjs/internal/observable/of';
 import { ActivatedRoute } from '@angular/router';
 import { MockComponent, MockService } from '../../utils/mock';
+import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 
 const user = {
   guid: '1000',
@@ -84,7 +86,8 @@ describe('BlogListComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: MindsTitle, useValue: MockService(MindsTitle) },
         { provide: ContextService, useValue: MockService(ContextService) },
-        { provide: ActivatedRoute, useValue: { params: of({ filter: 'trending' }) } }
+        { provide: ActivatedRoute, useValue: { params: of({ filter: 'trending' }) } },
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
       ]
     })
       .compileComponents();

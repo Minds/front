@@ -7,6 +7,8 @@ import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { ContextService } from '../../services/context.service';
+import { HashtagsSelectorModalComponent } from '../hashtags/hashtag-selector-modal/hashtags-selector.component';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 
 @Component({
   moduleId: module.id,
@@ -35,7 +37,8 @@ export class BlogListComponent {
     public router: Router,
     public title: MindsTitle,
     private context: ContextService,
-    public session: Session
+    public session: Session,
+    private overlayModal: OverlayModalService,
   ) {
   }
 
@@ -132,6 +135,9 @@ export class BlogListComponent {
         if (!response.entities) {
           this.moreData = false;
           this.inProgress = false;
+
+          if (this.filter == 'trending')
+            this.openHashtagsSelector();
           return false;
         }
 
@@ -161,6 +167,15 @@ export class BlogListComponent {
       }, 100); //keep trying every 100ms
     }
     this.load(true);
+  }
+
+  openHashtagsSelector() {
+    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
+      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+      onSelected: () => {
+        this.load(true); //refresh list
+      },
+    }).present();
   }
 
   pushToColumns(blogs) {

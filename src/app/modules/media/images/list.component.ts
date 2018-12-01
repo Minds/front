@@ -141,6 +141,10 @@ export class MediaImagesListComponent {
         if (!data.entities) {
           this.moreData = false;
           this.inProgress = false;
+
+          if (this.filter === 'trending') {
+            this.openHashtagsSelector();
+          }
           return false;
         }
 
@@ -177,6 +181,15 @@ export class MediaImagesListComponent {
       }, 100); //keep trying every 100ms
     }
     this.load(true);
+  }
+
+  openHashtagsSelector() {
+    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
+      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+      onSelected: () => {
+        this.load(true); //refresh list
+      },
+    }).present();
   }
 
 }
