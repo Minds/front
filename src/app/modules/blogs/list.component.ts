@@ -132,7 +132,7 @@ export class BlogListComponent {
     })
       .then((response: any) => {
 
-        if (!response.entities) {
+        if (!response.entities || !response.entities.length) {
           this.moreData = false;
           this.inProgress = false;
 

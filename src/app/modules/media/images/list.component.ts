@@ -139,7 +139,7 @@ export class MediaImagesListComponent {
       rating: this.rating,
     })
       .then((data: any) => {
-        if (!data.entities) {
+        if (!data.entities || !data.entities.length) {
           this.moreData = false;
           this.inProgress = false;
 
