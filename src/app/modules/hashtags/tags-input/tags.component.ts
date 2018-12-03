@@ -1,7 +1,8 @@
-import { Component, ElementRef, EventEmitter, OnInit, Input } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit } from '@angular/core';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api/client';
 import { Tag } from '../types/tag';
+import { TopbarHashtagsService } from '../service/topbar.service';
 
 @Component({
   selector: 'm-form-tags-input',
@@ -17,7 +18,7 @@ import { Tag } from '../types/tag';
       <div class="m-layout--spacer"></div>
       <i class="material-icons selected m-form-tags-input-tags--check" [class.selected]="tag.selected">check</i>
     </div>
-  
+
     <div class="m-form-tags-input-tags-tag">
       <span>#</span>
       <input
@@ -47,6 +48,7 @@ export class TagsInput implements OnInit {
     public client: Client,
     public session: Session,
     private element: ElementRef,
+    private service: TopbarHashtagsService,
   ) {
   }
 
@@ -57,7 +59,7 @@ export class TagsInput implements OnInit {
   @Input('tags') set _tags(tags: Array<Tag>) {
     this.tags = this.suggestedTags.slice(0); // Reset
     if (Array.isArray(tags)) {
-      this.merge(tags); 
+      this.merge(tags);
     }
   }
 
@@ -83,7 +85,7 @@ export class TagsInput implements OnInit {
         this.push();
         break;
       case 8: //backspace
-              //remove the last tag if we don't have an input
+        //remove the last tag if we don't have an input
         if (!this.input) {
           this.pop();
         }
@@ -91,7 +93,7 @@ export class TagsInput implements OnInit {
     }
 
     if (e.keyCode === 13) {
-        e.preventDefault();
+      e.preventDefault();
     }
 
     this.emitChanges();
@@ -122,8 +124,8 @@ export class TagsInput implements OnInit {
   }
 
   removeTag(index: number) {
-  //    this.tags.splice(index, 1);
-  //  this.emitChanges();
+    //    this.tags.splice(index, 1);
+    //  this.emitChanges();
   }
 
   focus() {
@@ -134,9 +136,7 @@ export class TagsInput implements OnInit {
     let input = this.input;
 
     // sanitize tag
-    input = input
-      .replace(/^[,\s]+/, '') // strip initial commas and spaces
-      .replace(/[,\s]+$/, ''); // strip final commas and spaces
+    input = this.service.cleanupHashtag(input)
 
     if (!input) {
       return;
@@ -164,5 +164,5 @@ export class TagsInput implements OnInit {
       console.error(e);
     }
   }
-  
+
 }

@@ -22,6 +22,8 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { DropdownComponent } from '../../../common/components/dropdown/dropdown.component';
 import { TagsInput } from '../../hashtags/tags-input/tags.component';
+import {TopbarHashtagsService} from "../../hashtags/service/topbar.service";
+import {topbarHashtagsServiceMock} from "../../../mocks/modules/hashtags/service/topbar.service.mock";
 
 @Component({
   selector: 'minds-third-party-networks-selector',
@@ -83,6 +85,7 @@ describe('PosterComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: AttachmentService, useValue: attachmentServiceMock },
+        { provide: TopbarHashtagsService, useValue: topbarHashtagsServiceMock },
       ]
     })
       .compileComponents();

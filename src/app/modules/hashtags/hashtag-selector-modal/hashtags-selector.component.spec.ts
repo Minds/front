@@ -131,9 +131,10 @@ describe('HashtagsSelectorModalComponent', () => {
 
     comp.input = "UpperCaseDoesn'tMatter";
     comp.addNew();
+
     fixture.detectChanges();
 
-    expect(comp.hashtags.findIndex((item) => item.value === "uppercasedoesn'tmatter")).not.toBe(-1);
+    expect(comp.hashtags.findIndex((item) => item.value === "uppercasedoesntmatter")).not.toBe(-1);
 
     expect(topbarHashtagsServiceMock.toggleSelection).toHaveBeenCalled();
 

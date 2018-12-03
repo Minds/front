@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import {EventEmitter} from '@angular/core';
 
 export let topbarHashtagsServiceMock = new function () {
   this.selectionChange = new EventEmitter();
@@ -18,4 +18,23 @@ export let topbarHashtagsServiceMock = new function () {
   this.load = jasmine.createSpy('load').and.callFake(async () => {
     return this.loadResponse;
   });
+
+  this.cleanupHashtag = (hashtag: string) => {
+    const regex = /\w*/gm;
+    let m;
+    let result = '';
+
+    while ((m = regex.exec(hashtag)) !== null) {
+      // This is necessary to avoid infinite loops with zero-width matches
+      if (m.index === regex.lastIndex) {
+        regex.lastIndex++;
+      }
+
+      // The result can be accessed through the `m`-variable.
+      m.forEach((match, groupIndex) => {
+        result += match;
+      });
+    }
+    return result;
+  }
 };

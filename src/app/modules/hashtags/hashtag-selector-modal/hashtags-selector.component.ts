@@ -63,13 +63,13 @@ export class HashtagsSelectorModalComponent {
       case 188: //comma
         this.addNew();
         break;
-    } 
+    }
   }
 
   async addNew() {
     this.addingHashtag = true;
     let hashtag: Hashtag = {
-      value: this.input.toLowerCase(),
+      value: this.service.cleanupHashtag(this.input.toLowerCase()),
       selected: false,
     };
     this.hashtags.push(hashtag);
