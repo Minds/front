@@ -1,12 +1,16 @@
 .m-mobile--marketing {
 
   .m-marketing--hero {
-    padding: 24px 0 !important;
+    padding:52px 0 !important;
 
     .m-marketing--hero--inner {
       padding-top: 52px;
       padding-bottom: 52px;
       flex-wrap: wrap;
+    }
+
+    img {
+      min-width: 100%;
     }
 
   }
@@ -20,9 +24,17 @@
   }
 
   @media screen and (max-width: 662px) {
+    .m-marketing--hero--slogans {
+      text-align: center;
+    }
     .m-marketing--hero--actions {
       flex-basis: 100% !important;
       margin-top: 16px;
+      margin-left: 0;
+      text-align: center;
+    }
+    .m-marketing--section {
+      padding: 16px;
     }
   }
 
@@ -43,8 +55,16 @@
     }
   }
 
+  .m-mobile--marketing--list--hashes {
+    li {
+      font-size: 10px;
+      word-break: break-all;
+    }
+  }
+
 }
 
 .m-mobile__giantDroid {
-  font-size: 64px;
+  font-size: 152px;
+  color: #FFF;
 }
