@@ -34,7 +34,7 @@ export class MindsTitle {
 
   applyTitle() {
     if (this.counter) {
-      this.title.setTitle(`(${this.counter}) ${this.text}`);
+      this.title.setTitle(`(*) ${this.text}`);
     } else {
       this.title.setTitle(this.text);
     }
