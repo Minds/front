@@ -1,0 +1,22 @@
+<div class="m-marketing m-hours">
+
+  <div class="m-marketing--header">
+
+    <div class="m-marketing--header-inner">
+      <h1 i18n="@@HOURS__TITLE">Hours</h1>
+      <h3 i18n="@@HOURS__SUBTITLE">How long you have been registered for</h3>
+    </div>
+
+  </div>
+
+  <div class="m-marketing--contents m-layout--row m-layout--wrap">
+    <div class="m-layout--cell">
+      You've been a non-paritsan (r)evolutionary for 
+      <strong>{{ (seconds/3600)| number:'1.0-0'}} hours</strong>
+      and <strong>{{ seconds % 3600/ 60 | number:'1.0-0'}} minutes</strong>.
+    </div>
+  </div>
+
+</div>
+
+<m-footer></m-footer>

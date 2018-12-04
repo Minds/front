@@ -1,0 +1,23 @@
+@import "defaults";
+
+.m-hours {
+  .m-marketing--header {
+    background: #FFF;
+    padding: 100px 0 0;
+  }
+
+  .m-marketing--header-inner {
+    text-align: center;
+
+    h1 {
+      color: #444;
+    }
+
+    h3 {
+      color: #666;
+      padding-right: 0;
+    }
+
+  }
+
+}

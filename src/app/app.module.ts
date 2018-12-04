@@ -50,6 +50,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BlockchainModule } from './modules/blockchain/blockchain.module';
 import { BlockchainMarketingModule } from './modules/blockchain/marketing/marketing.module';
 import { BrandingModule } from './modules/branding/branding.module';
+import { HoursModule } from './modules/hours/hours.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
@@ -105,6 +106,7 @@ import { JobsMarketingModule } from './modules/jobs/jobs.module';
     BlockchainMarketingModule,
     NodesMarketingModule,
     BrandingModule,
+    HoursModule,
     CommentsModule,
     JobsMarketingModule,
 
