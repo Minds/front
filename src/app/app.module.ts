@@ -54,6 +54,7 @@ import { CommentsModule } from './modules/comments/comments.module';
 import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
+import { MobileModule } from './modules/mobile/mobile.module';
 
 @NgModule({
   bootstrap: [
@@ -109,6 +110,7 @@ import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
     CommentsModule,
     JobsMarketingModule,
     HelpdeskModule,
+    MobileModule,
 
     //last due to :username route
     ChannelsModule,
