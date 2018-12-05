@@ -111,6 +111,7 @@ export class BlogListComponent {
 
     if (refresh) {
       this.offset = '';
+      this.moreData = true;
       this.entities_0 = [];
       this.entities_1 = [];
     }
