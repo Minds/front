@@ -154,6 +154,5 @@ describe('GroupsProfileMembersInvite', () => {
     const body = fixture.debugElement.query(By.css('.m-search-inline-item .m-body'));
     expect(body).not.toBeNull();
     expect(body.nativeElement.children[0].textContent).toContain('test1');
-    expect(body.nativeElement.children[1].textContent).toBe('Views: 1000 | Subscribers: 10');
   });
 });
