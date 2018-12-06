@@ -98,43 +98,6 @@
 </div>
 <!-- END: MATURE CONTENT -->
 
-<!-- START: FB connect -->
-<div class="m-settings--section m-border m-settings--facebook" *ngIf="thirdpartynetworks.hasIntegration('facebook')">
-  <h4 class="mdl-card__title-text" i18n="@@M__NAMES__FACEBOOK">Facebook</h4>
-  <div class="mdl-card__supporting-text" *ngIf="minds.user.signup_method == 'facebook'">
-    <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeFbLogin()" [disabled]="thirdpartynetworks.inProgress">
-      <ng-container i18n="@@MINDS__SETTINGS__REVOKE_FACEBOOK_ACTION">Revoke Facebook Login</ng-container>
-    </button>
-  </div>
-  <div class="mdl-card__supporting-text" *ngIf="thirdpartynetworks.isConnected('facebook')">
-    <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeFb()" [disabled]="thirdpartynetworks.inProgress">
-      <ng-container i18n="@@MINDS__SETTINGS__DISCONNECT_FACEBOOK_ACTION">Disconnect from Facebook</ng-container>
-    </button>
-  </div>
-  <div class="mdl-card__supporting-text" *ngIf="!thirdpartynetworks.isConnected('facebook')">
-    <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="connectFb()" [disabled]="thirdpartynetworks.inProgress">
-      <ng-container i18n="@@MINDS__SETTINGS__CONNECT_FACEBOOK_ACTION">Connect with Facebook</ng-container>
-    </button>
-  </div>
-</div>
-<!-- END: FB connect -->
-
-<!-- START: Tw connect -->
-<div class="m-settings--section m-border m-settings--twitter" *ngIf="thirdpartynetworks.hasIntegration('twitter')">
-  <h4 i18n="@@M__NAMES__TWITTER">Twitter</h4>
-  <div class="mdl-card__supporting-text" *ngIf="thirdpartynetworks.isConnected('twitter')">
-    <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="removeTw()" [disabled]="thirdpartynetworks.inProgress">
-      <ng-container i18n="@@MINDS__SETTINGS__DISCONNECT_TWITTER_ACTION">Disconnect from Twitter</ng-container>
-    </button>
-    <ng-container i18n="@@MINDS__SETTINGS__CONNECTED_AS_TWITTER_LABEL">Connected as @{{ thirdpartynetworks.getStatusKey('twitter', 'username') }}</ng-container>
-  </div>
-  <div class="mdl-card__supporting-text" *ngIf="!thirdpartynetworks.isConnected('twitter')">
-    <button class="mdl-button mdl-button--raised mdl-button--accent" (click)="connectTw()" [disabled]="thirdpartynetworks.inProgress">
-      <ng-container i18n="@@MINDS__SETTINGS__CONNECT_TWITTER_ACTION">Connect with Twitter</ng-container>
-    </button>
-  </div>
-</div>
-<!-- END: Tw connect -->
 
 <!-- START: LANGUAGE  -->
 <div class="m-settings--section m-border m-settings--language">
