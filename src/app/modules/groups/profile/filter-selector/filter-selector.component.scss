@@ -15,7 +15,7 @@ m-groups--filter-selector {
     background: rgba(255, 255, 255, 0.8);
     border-radius: 2px;
     font-size: 11px;
-    line-height: 1.5;
+    line-height: 1;
 
     @media screen and (max-width: 840px) {
       position: inherit;
@@ -32,6 +32,7 @@ m-groups--filter-selector {
       text-transform: uppercase;
       text-decoration: none;
       letter-spacing: 2px;
+      cursor: pointer;
 
       &:last-child {
         border-right: none;
@@ -39,6 +40,14 @@ m-groups--filter-selector {
 
       &:hover, &.m-groups--filter-selector-active {
         color: #417cb2;
+      }
+
+      > * {
+        vertical-align: middle;
+      }
+      > i {
+        line-height: 16px;
+        height: 16px;
       }
     }
   }

@@ -218,14 +218,14 @@ import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-fo
     GraphPoints,
     LineGraph,
     PieGraph,
-    DynamicFormComponent
+    DynamicFormComponent,
   ],
   providers: [
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
       deps: [Session, Client, Upload]
-    }
+    },
   ],
   entryComponents: [
     NotificationsToasterComponent

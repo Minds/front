@@ -7,6 +7,7 @@ import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ChannelsModule } from '../channels/channels.module';
 import { ModalsModule } from '../modals/modals.module';
+import { VideoChatModule } from '../videochat/videochat.module';
 
 import { GroupsCreator, GroupsListComponent, GroupsProfile } from './list.component';
 import { GroupsJoinButton } from './groups-join-button';
@@ -48,6 +49,7 @@ const routes: Routes = [
     PosterModule,
     HashtagsModule,
     TextInputAutocompleteModule,
+    VideoChatModule,
   ],
   declarations: [
     GroupsListComponent,
