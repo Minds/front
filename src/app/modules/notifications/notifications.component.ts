@@ -82,7 +82,8 @@ export class NotificationsComponent {
   }
   
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
   }
 
   load(refresh: boolean = false) {
