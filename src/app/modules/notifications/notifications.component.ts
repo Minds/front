@@ -62,6 +62,11 @@ export class NotificationsComponent {
 
     this.notificationService.clear();
     if (!this.loadOnDemand) {
+      if (!this.session.isLoggedIn()) {
+        this.router.navigate(['/login']);
+        return;
+      }
+
       this.title.setTitle('Notifications');
       this.load(true);
     }
