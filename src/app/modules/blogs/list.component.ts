@@ -137,7 +137,7 @@ export class BlogListComponent {
           this.moreData = false;
           this.inProgress = false;
 
-          if (this.filter == 'trending')
+          if (this.filter == 'trending' && !this.offset)
             this.openHashtagsSelector();
           return false;
         }
