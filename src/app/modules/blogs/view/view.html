@@ -71,7 +71,7 @@
     <div class="m-visibility-info" *ngIf="blog.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
       <i class="material-icons">visibility</i>
       <span [hidden]="blog.access_id != 2" i18n="@@M__COMMON__VISIBILITY_PUBLIC">Public</span>
-      <span [hidden]="blog.access_id != 0" i18n="@@M__COMMON__VISIBILITY_UNLISTED">Only Me</span>
+      <span [hidden]="blog.access_id != 0" i18n="@@M__COMMON__VISIBILITY_UNLISTED">Unlisted</span>
     </div>
     <div class="m-share-buttons mdl-color-text--green-300" style="padding-right:8px" (click)="sharetoggle = true">
       <i class="material-icons" style="cursor:pointer">share</i>

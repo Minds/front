@@ -19,7 +19,7 @@ export const LICENSES : Array<any> = [
 ];
 
 export const ACCESS : Array<any> = [
-  {value: 0, text: 'Only Me'},
+  {value: 0, text: 'Unlisted'},
   {value: 1, text: 'Loggedin'},
   {value: 2, text: 'Public'}
 ];
