@@ -26,7 +26,7 @@ export class SettingsP2PMediaComponent {
 
   ngOnInit() {
     this.supported = this.webtorrent.isBrowserSupported();
-    this.settings.enableP2p = !this.webtorrent.isEnabled();
+    //this.settings.enableP2p = !this.webtorrent.isEnabled();
   }
 
   change() {
