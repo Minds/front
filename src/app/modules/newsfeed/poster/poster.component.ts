@@ -41,7 +41,6 @@ export class PosterComponent {
 
   errorMessage: string = null;
 
-  @ViewChild('thirdPartyNetworksSelector') thirdPartyNetworksSelector: ThirdPartyNetworksSelector;
   @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
 
   constructor(public session: Session, public client: Client, public upload: Upload, public attachment: AttachmentService) {
@@ -127,7 +126,6 @@ export class PosterComponent {
 
     let data = Object.assign(this.meta, this.attachment.exportMeta());
 
-    data = this.thirdPartyNetworksSelector.inject(data);
     data.tags = this.tags;
 
     this.inProgress = true;
