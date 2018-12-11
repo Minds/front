@@ -45,7 +45,7 @@
 </div>
 
 
-<div class="mdl-card minds-comment minds-comment-post minds-block" *ngIf="!readonly">
+<div class="m-comment m-comment--poster minds-block" *ngIf="!readonly">
 
     <div class="minds-avatar">
       <a [routerLink]="['/', session.getLoggedInUser().username]">

@@ -1,3 +1,159 @@
+.m-comment {
+  position: relative;
+}
+
+.m-comment--poster {
+  padding: 12px;
+}
+
+.m-comment__bubble {
+  background: #e8e8e8;
+  display: inline-block;
+  border-radius: 50px;
+  padding: 8px 16px;
+  max-width: 75%;
+}
+
+.m-commentBubble__username {
+  display: inline;
+  line-height: 13px;
+}
+
+.m-commentBubble__message {
+  display: inline;
+  margin: 0 0 0 8px;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.m-comment__attachment > * {
+  margin-top: 8px;
+}
+
+.m-comment__toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.m-commentToolbar__buttons {
+  display: inline-block;
+  position: relative;
+  margin: 4px 0 4px 8px;
+  
+  > * {
+    display: inline-block;
+    margin-right: 8px;
+
+    .material-icons {
+      font-size: 16px;
+      vertical-align: middle;
+      //color: #666;
+    }
+
+    &.m-clickable {
+      color: #666;
+      .material-icons {
+        margin-top: -2px;
+      }
+      span {
+        vertical-align: middle;
+        line-height: 16px;
+      }
+    }
+
+    .minds-counter {
+      font-size: 12px;
+      line-height: 16px;
+      vertical-align: top;
+    }
+  }
+}
+
+.m-commentToolbar__timestamp {
+  font-size: 10px;
+  vertical-align: middle;
+  line-height: 13px;
+  color: #aaa;
+}
+
+
+.m-comment .minds-avatar {
+  margin-top: 0;
+
+  img {
+    width: 36px;
+  }
+}
+
+.m-comment__ribbonBtn {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  border: 0;
+  font-size: 16px;
+  color: #888;
+  cursor: pointer;
+  outline: none;
+
+  &:hover {
+    color: #aaa;
+  }
+
+  &.m-comment__ribbonBtn--collapsed {
+    display: none;
+  }
+
+  i {
+    font-size: 16px;
+  }
+}
+
+.minds-body:hover {
+  .m-comment__ribbonBtn--collapsed {
+    display: inline-block;
+  }
+}
+
+.m-comment__ribbon {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+
+  .m-commentRibbon__item {
+    list-style: none;
+    font-size: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+    margin-right: 8px;
+    color: #888;
+
+    i {
+      font-size: 16px;
+      cursor: pointer;
+    }
+  }
+}
+
+// subcomments
+.m-comment {
+  .m-comment {
+    padding: 8px 0;
+
+    .minds-avatar {
+      margin-right: 0;
+      margin-top: 8px;
+
+      img {
+        width: 20px;
+      }
+    }
+  }
+}
+
 .minds-comment {
   &.m-comment--error {
     opacity: 0.65;
@@ -23,3 +179,5 @@
     white-space: nowrap;
   }
 }
+
+

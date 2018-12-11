@@ -31,6 +31,7 @@ export class CommentsListComponent {
   object;
   guid: string = '';
   parent: any;
+  @Input() parentGuid = 0;
   comments: Array<any> = [];
   content = '';
   reversed: boolean = false;
@@ -121,7 +122,7 @@ export class CommentsListComponent {
 
     this.detectChanges();
 
-    this.client.get('api/v1/comments/' + this.guid, { 
+    this.client.get('api/v1/comments/' + this.guid + '/' + this.parentGuid, { 
       limit: refresh ? 5 : this.limit, 
       offset: this.offset, 
       reversed: false 
@@ -313,7 +314,7 @@ export class CommentsListComponent {
     this.commentsScrollEmitter.emit('bottom');
 
     try {
-      let response: any = await this.client.post('api/v1/comments/' + this.guid, data);
+      let response: any = await this.client.post('api/v1/comments/' + this.guid + '/' + this.parentGuid, data);
       this.comments[currentIndex] = response.comment;
     } catch (e) {
       this.comments[currentIndex].error = (e && e.message) || 'There was an error';

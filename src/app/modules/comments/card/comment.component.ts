@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, forwardRef } from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Upload } from '../../../services/api/upload';
@@ -7,6 +7,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
+import { CommentsListComponent } from '../list/list.component';
 
 @Component({
   moduleId: module.id,
@@ -22,8 +23,12 @@ import { ReportCreatorComponent } from '../../report/creator/creator.component';
       provide: AttachmentService,
       useFactory: AttachmentService._,
       deps: [Session, Client, Upload]
-    }
-  ]
+    },
+    {
+      provide: CommentsListComponent,
+      useValue: forwardRef(() => CommentsListComponent),
+     },
+  ],
 })
 
 export class CommentComponent {
@@ -35,6 +40,7 @@ export class CommentComponent {
   canPost: boolean = true;
   triedToPost: boolean = false;
   inProgress: boolean = false;
+  showReplies: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
   _saved: EventEmitter<any> = new EventEmitter();
@@ -229,5 +235,9 @@ export class CommentComponent {
   showReport() {
     this.overlayModal.create(ReportCreatorComponent, this.comment)
       .present();
+  }
+
+  toggleReplies() {
+    this.showReplies = !this.showReplies;
   }
 }
