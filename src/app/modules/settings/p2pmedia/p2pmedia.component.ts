@@ -11,7 +11,7 @@ import { Client } from '../../../services/api/client';
 })
 export class SettingsP2PMediaComponent {
   settings = {
-    disableP2p: false,
+    enableP2p: false,
   };
 
   supported: boolean = true;
@@ -26,7 +26,7 @@ export class SettingsP2PMediaComponent {
 
   ngOnInit() {
     this.supported = this.webtorrent.isBrowserSupported();
-    this.settings.disableP2p = !this.webtorrent.isEnabled();
+    this.settings.enableP2p = window.Minds.user.p2p_media_enabled;
   }
 
   change() {
@@ -34,21 +34,21 @@ export class SettingsP2PMediaComponent {
   }
 
   async save() {
-    window.Minds.user.p2p_media_disabled = this.settings.disableP2p;
-    this.webtorrent.setEnabled(!this.settings.disableP2p);
+    window.Minds.user.p2p_media_enabled = this.settings.enableP2p;
+    this.webtorrent.setEnabled(!this.settings.enableP2p);
 
     const url = 'api/v2/settings/p2p';
 
     try {
-      if (this.settings.disableP2p) {
+      if (this.settings.enableP2p) {
         await this.client.post(url);
 
       } else {
         await this.client.delete(url);
       }
     } catch (e) {
-      window.Minds.user.p2p_media_disabled = this.settings.disableP2p;
-      this.webtorrent.setEnabled(this.settings.disableP2p);
+      window.Minds.user.p2p_media_enabled = this.settings.enableP2p;
+      this.webtorrent.setEnabled(this.settings.enableP2p);
     }
 
     this.changed = false;

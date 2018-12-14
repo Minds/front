@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -14,6 +14,7 @@ import { GroupsProfileFeed } from './feed/feed';
 import { ContextService } from '../../../services/context.service';
 import { Client } from '../../../services/api';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
+import { VideoChatService } from '../../videochat/videochat.service';
 
 @Component({
   moduleId: module.id,
@@ -58,6 +59,8 @@ export class GroupsProfile {
     private context: ContextService,
     private recent: RecentService,
     private client: Client,
+    private videochat: VideoChatService,
+    private cd: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -145,8 +148,12 @@ export class GroupsProfile {
   }
 
   filterToDefaultView() {
-    if (!this.group || this.route.snapshot.params.filter) {
+    if (!this.group || this.route.snapshot.params.filter && this.route.snapshot.params.filter !== 'gathering') {
       return;
+    }
+
+    if (this.filter === 'gathering') {
+      this.videochat.activate(this.group);
     }
 
     this.filter = 'activity';
@@ -159,6 +166,8 @@ export class GroupsProfile {
   }
 
   save() {
+    this.group.videoChatDisabled = parseInt(this.group.videoChatDisabled);
+
     this.service.save({
       guid: this.group.guid,
       name: this.group.name,
@@ -166,11 +175,13 @@ export class GroupsProfile {
       tags: this.group.tags,
       membership: this.group.membership,
       moderated: this.group.moderated,
-      default_view: this.group.default_view
+      default_view: this.group.default_view,
+      videoChatDisabled: this.group.videoChatDisabled,
     });
 
     this.editing = false;
     this.editDone = true;
+    this.detectChanges();
   }
 
   toggleEdit() {
@@ -281,6 +292,11 @@ export class GroupsProfile {
         }
       }
     }
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
 }

@@ -171,10 +171,6 @@ describe('PosterComponent', () => {
     expect(getTextarea()).not.toBeNull();
   });
 
-  it('should have a list of third party networks', () => {
-    expect(fixture.debugElement.query(By.css('minds-third-party-networks-selector'))).not.toBeNull();
-  });
-
   it('should have an attachment button', () => {
     expect(fixture.debugElement.query(By.css('.attachment-button'))).not.toBeNull();
   });

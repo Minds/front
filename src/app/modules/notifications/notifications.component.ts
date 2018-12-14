@@ -43,7 +43,8 @@ export class NotificationsComponent {
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
-    //      this.router.navigate(['/login']);
+      if (!this.loadOnDemand)
+        this.router.navigate(['/login']);
       return;
     }
 
@@ -81,7 +82,8 @@ export class NotificationsComponent {
   }
   
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
   }
 
   load(refresh: boolean = false) {

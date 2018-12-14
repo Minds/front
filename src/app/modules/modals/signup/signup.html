@@ -12,22 +12,12 @@
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
-        <button class="m-fb-login-button" (click)="do('fb')">
-            <span class="m-social-icons-icon-inline">
-            <svg width="40" height="40" viewBox="-2 -2 32 32">
-                <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
-            </svg>
-            </span>
-            <span class="m-signup-button-text">
-            <ng-container i18n="@@MODALS__SIGNUP__WITH_FACEBOOK">Signin with Facebook</ng-container>
-            </span>
-        </button>
-        <button class="mdl-color--amber" (click)="do('register')">
-            <span class="m-signup-bulb-icon m-wiggle-animation"><img src="{{minds.cdn_assets_url}}assets/icon.png"></span>
-            <span class="m-signup-button-text">
-            <ng-container i18n="@@MODALS__SIGNUP__WITH_MINDS">Signin with Minds</ng-container>
-            </span>
-        </button>
+            <button class="mdl-color--amber" (click)="do('register')">
+                <span class="m-signup-bulb-icon m-wiggle-animation"><img src="{{minds.cdn_assets_url}}assets/icon.png"></span>
+                <span class="m-signup-button-text">
+                <ng-container i18n="@@MODALS__SIGNUP__WITH_MINDS">Signin with Minds</ng-container>
+                </span>
+            </button>
         </div>
 
         <div class="mdl-card__supporting-text m-modal-signup-apps">

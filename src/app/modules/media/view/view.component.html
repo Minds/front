@@ -72,7 +72,7 @@
               <div class="m-visibility-info" *ngIf="entity.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
                 <i class="material-icons">visibility</i>
                 <span [hidden]="entity.access_id != 2" i18n="@@M__COMMON__VISIBILITY_PUBLIC">Public</span>
-                <span [hidden]="entity.access_id != 0" i18n="@@M__COMMON__VISIBILITY_UNLISTED">Only Me</span>
+                <span [hidden]="entity.access_id != 0" i18n="@@M__COMMON__VISIBILITY_UNLISTED">Unlisted</span>
               </div>
   
               <div class="m-mature-info" *ngIf="entity.flags && entity.flags.mature">
@@ -182,12 +182,6 @@
    <!--<m-ads-boost limit="4"></m-ads-boost>-->
   </div>
 </div>
-
-<m-social-icons [url]="minds.site_url + 'media/' + entity.guid"
-  [title]="entity.title || ''"
-  [embed]="entity"
-  *ngIf="entity && !attachment.shouldBeBlurred(entity)"
-></m-social-icons>
 
 <m-modal-confirm *ngIf="deleteToggle"
   [open]="true"

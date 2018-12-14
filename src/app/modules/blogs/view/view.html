@@ -71,7 +71,7 @@
     <div class="m-visibility-info" *ngIf="blog.ownerObj.guid == session.getLoggedInUser().guid || session.isAdmin()">
       <i class="material-icons">visibility</i>
       <span [hidden]="blog.access_id != 2" i18n="@@M__COMMON__VISIBILITY_PUBLIC">Public</span>
-      <span [hidden]="blog.access_id != 0" i18n="@@M__COMMON__VISIBILITY_UNLISTED">Only Me</span>
+      <span [hidden]="blog.access_id != 0" i18n="@@M__COMMON__VISIBILITY_UNLISTED">Unlisted</span>
     </div>
     <div class="m-share-buttons mdl-color-text--green-300" style="padding-right:8px" (click)="sharetoggle = true">
       <i class="material-icons" style="cursor:pointer">share</i>
@@ -84,8 +84,6 @@
 </div>
 
 <m-wire--lock-screen [(entity)]="blog" *ngIf="blog.paywall" #lockScreen></m-wire--lock-screen>
-
-<m-social-icons [url]="minds.site_url + (blog.route ? blog.route : 'blog/view/' + blog.guid)" [title]="blog.title" *ngIf="visible"></m-social-icons>
 
 <div class="mdl-grid blogs-grid" style="max-width:660px" *ngIf="blog.guid">
   <minds-comments [object]="blog"></minds-comments>

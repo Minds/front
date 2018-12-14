@@ -12,4 +12,15 @@
     [routerLink]="[ '/groups/profile', group.guid, 'conversation' ]"
     i18n="@@GROUPS__CONVERSATIONS"
   >Conversations</a>
+  
+  <a
+    class="m-groups--filter-selector-item"
+    [class.m-groups--filter-selector-active]="videoChat.isActive"
+    i18n="@@GROUPS__VIDEO_CHAT"
+    (click)="openVideoChat()"
+    *ngIf="!group.videoChatDisabled"
+    >
+    <span>Gathering</span>
+    <i class="material-icons">video_call</i>
+  </a>
 </div>

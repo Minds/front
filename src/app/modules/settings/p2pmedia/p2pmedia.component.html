@@ -13,14 +13,14 @@
 
   <div class="mdl-card__supporting-text">
     <input type="checkbox"
-      id="disable-p2p-media"
-      name="disable-p2p-media"
+      id="enable-p2p-media"
+      name="enable-p2p-media"
       (click)="change()"
-      [(ngModel)]="settings.disableP2p"
+      [(ngModel)]="settings.enableP2p"
       [disabled]="!supported"
     />
 
-    <label for="disable-p2p-media" i18n="@@SETTINGS__P2PMEDIA__DISABLE_HERE_LABEL">Disable peer-to-peer media on this device.</label>
+    <label for="enable-p2p-media" i18n="@@SETTINGS__P2PMEDIA__DISABLE_HERE_LABEL">Enable peer-to-peer media on this device. (experimental)</label>
   </div>
 
   <div class="mdl-card__supporting-text" *ngIf="!supported" i18n="@@SETTINGS__P2PMEDIA__NOT_SUPPORTED">
