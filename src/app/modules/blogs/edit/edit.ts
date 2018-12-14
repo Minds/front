@@ -32,7 +32,7 @@ export class BlogEdit {
     description: '<p><br></p>',
     time_created: Date.now(),
     access_id: 2,
-    tags: '',
+    tags: [],
     license: 'attribution-sharealike-cc',
     fileKey: 'header',
     mature: 0,
@@ -107,7 +107,8 @@ export class BlogEdit {
             description: '',
             author: ''
           },
-          slug: ''
+          slug: '',
+          tags: [],
         };
 
         this.banner = void 0;
