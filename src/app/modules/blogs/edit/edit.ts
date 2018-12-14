@@ -152,7 +152,7 @@ export class BlogEdit {
           this.guid = response.blog.guid;
           this.title.setTitle(this.blog.title);
 
-          this.hashtagsSelector.setTags(this.blog.tags);
+          //this.hashtagsSelector.setTags(this.blog.tags);
           // draft
           if (!this.blog.published && response.blog.draft_access_id) {
             this.blog.access_id = response.blog.draft_access_id;
