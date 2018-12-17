@@ -48,10 +48,13 @@ export class SettingsTwoFactorComponent {
         this.secret = response.secret;
         this.sendingSms = false;
       })
-      .catch(() => {
+      .catch((e) => {
         this.waitingForCheck = false;
         this.sendingSms = false;
         this.telno = null;
+        if (e.message == 'voip phones not allowed') {
+          this.error = "We don't allow voip phones. Please, try again with a different number";
+        }
         this.error = 'The phone number you entered was incorrect. Please, try again.';
       });
   }
