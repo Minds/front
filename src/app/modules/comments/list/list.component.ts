@@ -257,7 +257,7 @@ export class CommentsListComponent {
         return;
       }
 
-      this.client.get('api/v1/comments/' + this.guid, { limit: 1, offset: guid, reversed: false })
+      this.client.get('api/v1/comments/' + this.guid + '/' + this.parentGuid + '/' + guid, { limit: 1, reversed: false })
         .then((response: any) => {
           if (!response.comments || response.comments.length === 0) {
             return;

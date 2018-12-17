@@ -9,7 +9,7 @@
 .m-comment__bubble {
   background: #e8e8e8;
   display: inline-block;
-  border-radius: 50px;
+  border-radius: 24px;
   padding: 8px 16px;
   max-width: 75%;
 }
@@ -17,11 +17,14 @@
 .m-commentBubble__username {
   display: inline;
   line-height: 13px;
+  vertical-align: middle;
+  margin-right: 4px;
 }
 
 .m-commentBubble__message {
   display: inline;
-  margin: 0 0 0 8px;
+  vertical-align: middle;
+  //margin: 0 0 0 8px;
   font-size: 13px;
   line-height: 13px;
 }
@@ -102,6 +105,7 @@
 
   &.m-comment__ribbonBtn--collapsed {
     display: none;
+    background: none;
   }
 
   i {
