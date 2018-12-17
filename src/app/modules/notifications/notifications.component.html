@@ -19,6 +19,7 @@
   </a>
   <a (click)="changeFilter('groups')" class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'groups' }"
+    *ngIf="false"
   >
     <m-tooltip icon="group_work" i18n="@@M__FEATURE__GROUP__PLURAL">Groups</m-tooltip>
     <span class="m-full-label" i18n="@@M__FEATURE__GROUP__PLURAL">Groups</span>

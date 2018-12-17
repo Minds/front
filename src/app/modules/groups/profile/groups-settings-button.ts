@@ -12,12 +12,12 @@ import { Session } from '../../../services/session';
   template: `
     <button class="material-icons" (click)="toggleMenu($event)">
       settings
-      <i *ngIf="group['is:muted']" class="minds-groups-button-badge material-icons">notifications_off</i>
+      <i *ngIf="group['is:muted'] && false" class="minds-groups-button-badge material-icons">notifications_off</i>
     </button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
-      <li class="mdl-menu__item" [hidden]="group['is:muted']" (click)="mute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS">Disable Notifications</li>
-      <li class="mdl-menu__item" [hidden]="!group['is:muted']" (click)="unmute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS">Enable Notifications</li>
+      <li class="mdl-menu__item" [hidden]="group['is:muted'] || true" (click)="mute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS">Disable Notifications</li>
+      <li class="mdl-menu__item" [hidden]="!group['is:muted'] || true" (click)="unmute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS">Enable Notifications</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin() && !featured" (click)="openFeatureModal()" i18n="@@M__ACTION__FEATURE">Feature</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin() && featured" (click)="unfeature()" i18n="@@M__ACTION__UNFEATURE">Unfeature</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin() && !group.mature" (click)="setExplicit(true)" i18n="@@M__ACTION__SET_EXPLICIT">Set Explicit</li>
