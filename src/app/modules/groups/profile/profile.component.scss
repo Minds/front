@@ -1,0 +1,113 @@
+.m-group__grid {
+  display: flex;
+  flex-direction: row;
+
+  .m-groupGrid__left {
+    flex: 2; 
+  }  
+  .m-groupGrid__right {
+    flex: 1;
+    min-width: 33%;
+    width: 33%;
+  }
+
+  @media screen and (max-width: 700px) {
+    display: block;
+    .m-groupGrid__right {
+      min-width: 100%;
+      width: 100%;
+    }
+  }
+
+}
+
+.m-group__feeds {
+  position: relative;
+  padding: 8px;
+  max-width: 780px;
+  margin : auto;
+}
+
+.m-group__infoWrapper {
+  margin: auto;
+  padding: 8px;
+}
+
+.m-group__info {
+  background: #FFF;
+  margin: auto;
+  padding: 16px;
+  position: relative;
+  max-width: 780px;
+  box-sizing: border-box;
+
+  minds-groups-settings-button.m-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    > button.material-icons {
+      border: 0;
+      font-size: 18px;
+      padding: 8px;
+
+      i {
+        font-size: 18px;
+      }
+    }
+  }
+
+  minds-avatar{
+    width: 100px;
+    height: 100px;
+    margin: -70px 0 0;
+    padding: 0;
+    display: block;
+
+    .minds-avatar{
+      margin:0;
+      background-position: center center;
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .m-groupInfo__name {
+    margin: 8px 0;  
+    
+    h1 {
+      margin: 0;
+      display: inline;
+      vertical-align: middle;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+
+  .m-groupInfo__description {
+    white-space: pre-line;
+    margin-top: 16px;
+    line-height: 1.25;
+  }
+
+  .m-groupInfo__actionButtons {
+    display: inline-flex;
+  }
+
+  .m-groupInfo__member-previews {
+    position: absolute;
+    top: 8px;
+    left: 126px; 
+  }
+}
+
+minds-groups-profile .m-group__grid header {
+  height: 180px;
+
+  minds-banner .minds-banner {
+    max-height: 268px;
+    height: 268px;
+  }
+}

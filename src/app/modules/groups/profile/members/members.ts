@@ -18,6 +18,7 @@ export class GroupsProfileMembers {
   minds = window.Minds;
 
   group: any;
+  $group;
 
   invitees: any = [];
   members: Array<any> = [];
@@ -35,15 +36,18 @@ export class GroupsProfileMembers {
 
   }
 
-  set _group(value: any) {
-    this.group = value;
-    this.load();
+  ngOnInit() {
+    this.$group = this.service.$group.subscribe((group) => {
+      this.group = group;
+      this.load(true);
+    });
   }
 
   ngOnDestroy() {
     if (this.searchDelayTimer) {
       clearTimeout(this.searchDelayTimer);
     }
+    this.$group.unsubscribe();
   }
 
   load(refresh: boolean = false, query = null) {

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -35,6 +35,7 @@ export class GroupsProfile {
   editDone: boolean = false;
   minds = window.Minds;
 
+  showRight: boolean = true;
   activity: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
@@ -59,13 +60,14 @@ export class GroupsProfile {
     private context: ContextService,
     private recent: RecentService,
     private client: Client,
-    private videochat: VideoChatService,
+    public videochat: VideoChatService,
     private cd: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
     this.context.set('activity');
     this.listenForNewMessages();
+    this.detectWidth();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
@@ -292,6 +294,16 @@ export class GroupsProfile {
         }
       }
     }
+  }
+
+  onOptionsChange(options) {
+    this.editing = options.editing;
+    if (options.editing === false)
+      this.save();
+  }
+
+  @HostListener('window:resize') detectWidth() {
+    this.showRight = window.innerWidth > 900;
   }
 
   detectChanges() {

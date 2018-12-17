@@ -1,5 +1,6 @@
-import { Inject } from '@angular/core';
+import { Inject, EventEmitter } from '@angular/core';
 import { Client, Upload } from '../../services/api';
+import { BehaviorSubject } from 'rxjs';
 
 export class GroupsService {
 
@@ -7,6 +8,9 @@ export class GroupsService {
 
   private infiniteInProgress: boolean = false;
   private infiniteOffset: any;
+
+  group = new BehaviorSubject(null);
+  $group = this.group.asObservable();
 
   static _(client: Client, upload: Upload) {
     return new GroupsService(client, upload);
@@ -21,6 +25,7 @@ export class GroupsService {
     return this.clientService.get(`${this.base}group/${guid}`)
       .then((response: any) => {
         if (response.group) {
+          this.group.next(response.group);
           return response.group;
         }
 
@@ -34,6 +39,8 @@ export class GroupsService {
     if (group.guid) {
       endpoint += `/${group.guid}`;
     }
+
+    this.group = group;
 
     return this.clientService.post(endpoint, group)
       .then((response: any) => {

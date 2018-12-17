@@ -25,11 +25,17 @@ import { GroupsTileComponent } from './tile/tile.component';
 import { CommentsModule } from '../comments/comments.module';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
+import { GroupMemberPreviews } from './profile/member-previews/member-previews.component';
 import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 
 const routes: Routes = [
-  { path: 'groups/profile/:guid/:filter', component: GroupsProfile },
-  { path: 'groups/profile/:guid', component: GroupsProfile },
+  { path: 'groups/profile/:guid', component: GroupsProfile, children: [
+      { path: '', redirectTo: 'feed', pathMatch: 'full' },
+      { path: 'feed', component: GroupsProfileFeed },
+      { path: 'members', component: GroupsProfileMembers },
+      { path: 'requests',  component: GroupsProfileRequests },
+    ],
+  },
   { path: 'groups/create', component: GroupsCreator },
   { path: 'groups/:filter', component: GroupsListComponent },
   { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
@@ -67,6 +73,7 @@ const routes: Routes = [
     GroupsProfileFilterSelector,
     GroupsMembersModuleComponent,
     GroupsTileComponent,
+    GroupMemberPreviews,
   ],
   exports: [
     GroupsListComponent,

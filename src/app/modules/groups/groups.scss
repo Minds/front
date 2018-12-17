@@ -2,6 +2,7 @@
 
 .groups-grid {
   max-width: 990px;
+  margin: 0;
 }
 .minds-banner-card{
   minds-groups-join-button{
@@ -504,7 +505,7 @@ minds-groups-create{
 }
 
 .m-group--action-buttons{
-  padding:16px;
+  padding:0;
   margin:auto;
   display:flex;
 
@@ -547,7 +548,7 @@ minds-groups-create{
     }
   }
   minds-groups-join-button{
-    padding:$minds-padding $minds-padding*2;
+    padding:$minds-padding 0;
 
     .m-btn.subscribed {
       color: #444 !important;

@@ -26,6 +26,7 @@ export class GroupsProfileFeed {
 
   guid;
   group: any;
+  $group;
 
   filter: 'activity' | 'review' = 'activity';
 
@@ -47,13 +48,15 @@ export class GroupsProfileFeed {
 
   constructor(public session: Session, public client: Client, public service: GroupsService) { }
 
-  @Input('group') set _group(value: any) {
-    this.group = value;
-    this.guid = value.guid;
-    this.load(true);
-    this.setUpPoll();
+  ngOnInit() {
+    this.$group = this.service.$group.subscribe((group) => { 
+      this.group = group;
+      this.guid = group.guid;
+      this.load(true);
+      this.setUpPoll();
+    });
   }
-
+  
   @Input('filter') set _filter(value: 'activity' | 'review') {
     const oldFilter = this.filter;
     this.filter = value;
@@ -83,6 +86,7 @@ export class GroupsProfileFeed {
   }
 
   ngOnDestroy() {
+    this.$group.unsubscribe();
     clearInterval(this.pollingTimer);
   }
 

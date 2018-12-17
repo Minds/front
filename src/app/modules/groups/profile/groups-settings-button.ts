@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups-service';
@@ -16,6 +16,10 @@ import { Session } from '../../../services/session';
     </button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
+      <li class="mdl-menu__item" *ngIf="group['is:creator']" (click)="toggleEdit()">
+          <ng-container *ngIf="!editing">Edit</ng-container>
+          <ng-container *ngIf="editing">Save</ng-container>
+      </li>
       <li class="mdl-menu__item" [hidden]="group['is:muted']" (click)="mute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_NOTIFICATIONS">Disable Notifications</li>
       <li class="mdl-menu__item" [hidden]="!group['is:muted']" (click)="unmute()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_NOTIFICATIONS">Enable Notifications</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin() && !featured" (click)="openFeatureModal()" i18n="@@M__ACTION__FEATURE">Feature</li>
@@ -67,6 +71,9 @@ export class GroupsSettingsButton {
     this.featured = value.featured_id || value.featured === true;
   }
 
+  @Output() change: EventEmitter<any> = new EventEmitter();
+
+  editing: boolean = false;
   showMenu: boolean = false;
 
   isGoingToBeDeleted: boolean = false;
@@ -203,6 +210,11 @@ export class GroupsSettingsButton {
     }
     this.showMenu = true;
     // TODO: [emi] Maybe refresh state?
+  }
+
+  toggleEdit() {
+    this.editing = !this.editing;
+    this.change.emit({ editing: this.editing });
   }
 
 }
