@@ -89,7 +89,10 @@
             >Mark as <i class="material-icons">explicit</i></button>
 
             <button type="button"
-              *ngIf="report.entityObj && report.entityObj.type != 'comment'"
+              *ngIf="report.entityObj 
+                && report.entityObj.type != 'comment'
+                && report.entityObj.type != 'user'
+                "
               class="mdl-button mdl-button--raised mdl-button--colored mdl-color--orange"
               (click)="spam(report, i)"
               i18n="@@M__ACTION__MARK_SPAM"
