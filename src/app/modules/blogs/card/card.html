@@ -12,7 +12,7 @@
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block m-title-block-fixed m-title-block-with-actions" *ngIf="blog.ownerObj && blog.ownerObj.username">
 
 		<a [routerLink]="blog.route ? [ '/' + blog.route ] : [ '/blog/view', blog.guid ]" class="mdl-color-text--blue-grey-700">
-			<strong>{{ blog.title }}</strong>
+			<strong>{{ blog.title | excerpt: 140 }}</strong>
 		</a>
 
 		<div class="m-inline-owner-block">

@@ -9,6 +9,7 @@ import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { AttachmentService } from '../../../services/attachment';
 import { attachmentServiceMock } from '../../../../tests/attachment-service-mock.spec';
+import { ExcerptPipe } from '../../../common/pipes/excerpt';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -44,6 +45,7 @@ describe('BlogCard', () => {
 
     TestBed.configureTestingModule({
       declarations: [
+        ExcerptPipe,
         ThumbsUpMock,
         ThumbsDownMock,
         CommentsMock,
