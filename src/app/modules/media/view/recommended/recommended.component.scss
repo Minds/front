@@ -2,6 +2,8 @@
   margin-bottom: $minds-padding;
 
   minds-card {
+    position: relative;
+
     > :first-child {
       margin-bottom: $minds-padding * 2;
     }

@@ -1,4 +1,4 @@
-<div class="m-settings--section m-border">
+<div class="m-settings--section m-border" *ngIf="cards.length">
 
   <h4 i18n="@@SETTINGS__BILLING__SAVED_CARDS__TITLE">Payment Methods</h4>
 
@@ -16,15 +16,7 @@
         <span class="m-settings--billing-saved-cards--cards-item-expiry">{{card.exp_month}} / {{card.exp_year}}</span>
         <span class="m-settings--billing-saved-cards--cards-item-select" (click)="removeCard(i)" i18n="@@M__ACTION__REMOVE">Remove</span>
       </li>
-      <li class="m-settings--billing-saved-cards--cards-item m-settings--billing-saved-cards--cards-item-new">
-        <span class="m-settings--billing-saved-cards--cards-item-type" i18n="@@SETTINGS__BILLING__SAVED_CARDS__ADD_NEW_CARD_LABEL">Add a new card</span>
-        <span class="m-settings--billing-saved-cards--cards-item-select" (click)="addNewCard = true" i18n="@@SETTINGS__BILLING__SAVED_CARDS__ADD_ACTION">ADD</span>
-      </li>
     </ul>
-  </div>
-
-  <div class="m-settings--billing-saved-cards--card-input" *ngIf="addNewCard">
-    <minds-checkout-card-input (confirm)="setCard($event)" [hidden]="inProgress"></minds-checkout-card-input>
   </div>
 
 </div>
