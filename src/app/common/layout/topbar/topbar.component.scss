@@ -116,10 +116,15 @@ m-topbar{
 
     .m-dropdown--menu {
       margin-top: 28px;
-      li.mdl-menu__item > a {
-        text-decoration: none;
-        color: rgba(0,0,0,.87);
-        font-weight: 400;
+      li.mdl-menu__item {
+        padding: 0;
+        > a {
+          padding: 0 $minds-padding * 2;
+          text-decoration: none;
+          color: rgba(0,0,0,.87);
+          font-weight: 400;
+          display: block;
+        }
       }
     }
   }
