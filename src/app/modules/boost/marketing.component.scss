@@ -137,3 +137,11 @@
   max-height: 600px;
   overflow: scroll;
 }
+
+m-boost--marketing {
+  .m-layout--row {
+    @media screen and(max-width: $max-mobile) {
+      flex-wrap: wrap;
+    }
+  }
+}
