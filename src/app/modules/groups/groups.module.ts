@@ -38,7 +38,7 @@ const routes: Routes = [
   },
   { path: 'groups/create', component: GroupsCreator },
   { path: 'groups/:filter', component: GroupsListComponent },
-  { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
+  { path: 'groups', redirectTo: '/groups/member', pathMatch: 'full' },
 ];
 
 @NgModule({

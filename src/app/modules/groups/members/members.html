@@ -1,4 +1,4 @@
-<div class="m-group-info-members">
+<div class="m-group-info-members" #el>
   <div class="mdl-card__title" [routerLink]="linksTo">
     <h2 class="mdl-card__title-text" style="text-transform:capitalize" i18n="@@M__COMMON__MEMBERS">Members</h2>
     <a [routerLink]="['/groups/profile', group.guid, 'members']" class="mdl-color-text--blue-grey-400" i18n="verb|@@GROUPS__PROFILE__INVITE_ACTION">Invite</a>

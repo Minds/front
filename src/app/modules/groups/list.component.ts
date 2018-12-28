@@ -85,6 +85,7 @@ export class GroupsListComponent {
     if (refresh) {
       this.offset = '';
       this.entities = [];
+      this.moreData = true;
     }
 
     let endpoint, key;

@@ -15,6 +15,7 @@ import { ContextService } from '../../../services/context.service';
 import { Client } from '../../../services/api';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { VideoChatService } from '../../videochat/videochat.service';
+import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 
 @Component({
   moduleId: module.id,
@@ -62,6 +63,7 @@ export class GroupsProfile {
     private client: Client,
     public videochat: VideoChatService,
     private cd: ChangeDetectorRef,
+    private updateMarkers: UpdateMarkersService,
   ) { }
 
   ngOnInit() {
@@ -100,6 +102,7 @@ export class GroupsProfile {
     this.reviewCountInterval = setInterval(() => {
       this.reviewCountLoad();
     }, 120 * 1000);
+
   }
 
   ngOnDestroy() {
@@ -113,6 +116,18 @@ export class GroupsProfile {
   }
 
   load() {
+    this.updateMarkers.markAsRead({
+      entity_guid: this.guid,
+      entity_type: 'group',
+      marker: 'activity'
+    });
+
+    this.updateMarkers.markAsRead({
+      entity_guid: this.guid,
+      entity_type: 'group',
+      marker: 'conversation'
+    });
+
     return this.service.load(this.guid)
       .then((group) => {
         this.group = group;
