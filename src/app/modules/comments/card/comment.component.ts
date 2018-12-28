@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Output, ViewEncapsulation, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, forwardRef, ChangeDetectorRef, 
+  ChangeDetectionStrategy,
+  OnChanges,
+  Input
+} from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Upload } from '../../../services/api/upload';
@@ -12,7 +16,8 @@ import { CommentsListComponent } from '../list/list.component';
 @Component({
   moduleId: module.id,
   selector: 'minds-card-comment',
-  inputs: ['object', 'parent'],
+  //changeDetection: ChangeDetectionStrategy.OnPush,
+  inputs: ['parent'],
   outputs: ['_delete: delete', '_saved: saved'],
   host: {
     '(keydown.esc)': 'editing = false'
@@ -31,7 +36,7 @@ import { CommentsListComponent } from '../list/list.component';
   ],
 })
 
-export class CommentComponent {
+export class CommentComponent implements OnChanges {
 
   comment: any;
   editing: boolean = false;
@@ -67,9 +72,12 @@ export class CommentComponent {
     public client: Client,
     public attachment: AttachmentService,
     public translationService: TranslationService,
-    private overlayModal: OverlayModalService) {
+    private overlayModal: OverlayModalService,
+    private cd: ChangeDetectorRef,
+  ) {
   }
 
+  @Input('object')
   set object(value: any) {
     if (!value)
       return;
@@ -240,4 +248,11 @@ export class CommentComponent {
   toggleReplies() {
     this.showReplies = !this.showReplies;
   }
+
+  ngOnChanges(changes) {
+    console.log('on changes');
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
 }

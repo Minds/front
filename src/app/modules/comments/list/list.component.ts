@@ -248,8 +248,8 @@ export class CommentsListComponent {
   }
 
   listen() {
-    this.socketSubscriptions.comment = this.sockets.subscribe('comment', (parent_guid, owner_guid, guid) => {
-      if (parent_guid !== this.guid) {
+    this.socketSubscriptions.comment = this.sockets.subscribe('comment', (entity_guid, owner_guid, guid) => {
+      if (entity_guid !== this.guid) {
         return;
       }
 
@@ -274,6 +274,44 @@ export class CommentsListComponent {
           }
         });
     });
+
+    this.sockets.subscribe('reply', (guid) => {
+      for (let i = 0; i < this.comments.length; i++) {
+        if (this.comments[i]._guid == guid) {
+          this.comments[i].replies_count++;
+          this.detectChanges();
+        }
+      }
+    });
+
+    this.sockets.subscribe('vote', (guid, owner_guid, direction) => {
+      if (this.session.isLoggedIn() && owner_guid === this.session.getLoggedInUser().guid) {
+        return;
+      }
+      let key = 'thumbs:' + direction + ':count';
+      for (let i = 0; i < this.comments.length; i++) {
+         if (this.comments[i]._guid == guid) {
+           this.comments[i][key]++;
+           this.detectChanges();
+         }
+       }
+       this.comments = this.comments.slice();
+       this.detectChanges();
+     });
+
+     this.sockets.subscribe('vote:cancel', (guid, owner_guid, direction) => {
+       if (this.session.isLoggedIn() && owner_guid === this.session.getLoggedInUser().guid) {
+         return;
+       }
+       let key = 'thumbs:' + direction + ':count';
+       for (let i = 0; i < this.comments.length; i++) {
+         if (this.comments[i]._guid == guid) {
+           this.comments[i][key]--;
+           this.detectChanges();
+         }
+       }
+     }); 
+  
   }
 
   postEnabled() {

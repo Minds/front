@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
@@ -9,7 +9,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 @Component({
   selector: 'minds-button-thumbs-up',
   inputs: ['_object: object'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a class="mdl-color-text--blue-grey-500" (click)="thumb()" [ngClass]="{'selected': has() }">
       <i class="material-icons">thumb_up</i>
@@ -32,7 +32,13 @@ export class ThumbsUpButton {
   };
   showModal: boolean = false;
 
-  constructor(public session: Session, public client: Client, public wallet: WalletService, private modal: SignupModalService) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public wallet: WalletService,
+    private modal: SignupModalService,
+    private cd: ChangeDetectorRef,  
+  ) {
   }
 
   set _object(value: any) {
@@ -41,6 +47,9 @@ export class ThumbsUpButton {
     this.object = value;
     if (!this.object['thumbs:up:user_guids'])
       this.object['thumbs:up:user_guids'] = [];
+
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   thumb() {
@@ -72,4 +81,7 @@ export class ThumbsUpButton {
     return false;
   }
 
+  ngOnChanges(changes) {
+    console.log(changes);
+  }
 }

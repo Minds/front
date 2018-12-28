@@ -71,6 +71,7 @@ export class SocketsService {
     });
 
     this.socket.on('registered', (guid) => {
+    console.log('[ws]::registered');
       this.nz.run(() => {
         this.registered = true;
         this.socket.emit('join', this.rooms);
@@ -86,6 +87,7 @@ export class SocketsService {
     // -- Rooms
 
     this.socket.on('rooms', (rooms: string[]) => {
+    console.log('rooms', rooms);
       this.nz.run(() => {
         this.rooms = rooms;
       });
