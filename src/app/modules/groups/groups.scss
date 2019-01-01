@@ -215,6 +215,10 @@ minds-groups-profile{
       text-align: center;
       position: relative;
 
+      @media screen and (max-width: 720px) {
+        margin: 200px auto;
+      }
+
       .m-group-avatar{
         min-height:140px;
       }
