@@ -27,9 +27,10 @@ import { PosterModule } from '../newsfeed/poster/poster.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { GroupMemberPreviews } from './profile/member-previews/member-previews.component';
 import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+import { CanDeactivateGroupService } from "./profile/can-deactivate/can-deactivate-group.service";
 
 const routes: Routes = [
-  { path: 'groups/profile/:guid', component: GroupsProfile, children: [
+  { path: 'groups/profile/:guid', component: GroupsProfile, canDeactivate: [CanDeactivateGroupService], children: [
       { path: '', redirectTo: 'feed', pathMatch: 'full' },
       { path: 'feed', component: GroupsProfileFeed },
       { path: 'members', component: GroupsProfileMembers },
@@ -93,6 +94,9 @@ const routes: Routes = [
   ],
   entryComponents: [
     GroupsCard
+  ],
+  providers: [
+    CanDeactivateGroupService
   ]
 })
 export class GroupsModule {
