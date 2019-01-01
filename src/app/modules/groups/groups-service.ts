@@ -40,7 +40,7 @@ export class GroupsService {
       endpoint += `/${group.guid}`;
     }
 
-    this.group = group;
+    this.group.next(group);
 
     return this.clientService.post(endpoint, group)
       .then((response: any) => {
