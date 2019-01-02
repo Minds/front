@@ -1,5 +1,7 @@
 m-videochat {
-  max-height: calc(100% - 90px);
+  &, & iframe {
+    max-height: calc(100vh - 90px);
+  }
   display: block;
   position: relative;
 }
