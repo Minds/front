@@ -1,26 +1,21 @@
-<div class="m-groups--filter-selector" *ngIf="group">
+<div class="m-groups--filter-selector m-border" *ngIf="group">
   <a
     class="m-groups--filter-selector-item"
-    [class.m-groups--filter-selector-active]="filter == 'activity' || filter == 'review'"
-    [routerLink]="[ '/groups/profile', group.guid, 'activity' ]"
+    [class.m-groups--filter-selector-active]="filter == 'activity'"
+    [routerLink]="[ '/groups/profile', group.guid, 'feed' ]"
     i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
   >Feed</a>
+  <a
+    class="m-groups--filter-selector-item"
+    [class.m-groups--filter-selector-active]="filter == 'image'"
+    [routerLink]="[ '/groups/profile', group.guid, 'feed', 'image' ]"
+    i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
+  >Images</a>
 
   <a
     class="m-groups--filter-selector-item"
-    [class.m-groups--filter-selector-active]="filter == 'conversation'"
-    [routerLink]="[ '/groups/profile', group.guid, 'conversation' ]"
-    i18n="@@GROUPS__CONVERSATIONS"
-  >Conversations</a>
-  
-  <a
-    class="m-groups--filter-selector-item"
-    [class.m-groups--filter-selector-active]="videoChat.isActive"
-    i18n="@@GROUPS__VIDEO_CHAT"
-    (click)="openVideoChat()"
-    *ngIf="!group.videoChatDisabled"
-    >
-    <span>Gathering</span>
-    <i class="material-icons">video_call</i>
-  </a>
+    [class.m-groups--filter-selector-active]="filter == 'video'"
+    [routerLink]="[ '/groups/profile', group.guid, 'feed', 'video' ]"
+    i18n="@@GROUPS__VIDEOS"
+  >Videos</a>
 </div>
