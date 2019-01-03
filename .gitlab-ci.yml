@@ -1,0 +1,46 @@
+image: markharding/minds-front-base
+
+services:
+  - docker:dind
+
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  script:
+    - npm install # Should be cached...
+    - ng test
+
+build:
+  stage: build
+  script:
+    - npm install # TODO: Why is this needed?
+    - npm install -g gulp-cli
+    - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
+    - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
+    - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
+  cache:
+    paths:
+      - dist
+    policy: push
+
+deploy:
+  stage: deploy
+  script:
+    - apk add --no-cache python py-pip
+    - pip install awscli
+    - aws s3 sync dist $REPOSITORY_URL
+    - aws ecs update-service --service=$SERVICE --force-new-deployment --region us-east-1 --cluster=$CLUSTER
+  cache:
+    paths:
+      - dist
+    policy: pull
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
+  environment:
+    name: production
