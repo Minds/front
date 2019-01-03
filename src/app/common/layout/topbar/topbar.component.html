@@ -2,7 +2,7 @@
 
   <a class="m-topbar--logo" routerLink="/">
     <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'" />
-  </a>  
+  </a>
 
   <ng-content select="[search]"></ng-content>
 
@@ -15,8 +15,8 @@
   </div>
 
   <button class="m-btn m-btn--action m-btn--slim m-btn--boost"
-    [routerLink]="['/boost/console/newsfeed/history', { 'toggled':true}]"
-    *ngIf="session.isLoggedIn()">
+          [routerLink]="['/boost/console/newsfeed/history', { 'toggled':true}]"
+          *ngIf="session.isLoggedIn()">
     <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
   </button>
 
@@ -25,57 +25,78 @@
       <img src="/icon/{{session.getLoggedInUser().guid}}/small/{{session.getLoggedInUser().icontime}}" />
     </a>
     <ul class="minds-dropdown-menu m-dropdown--menu" [hidden]="!menu.value">
-      <li class="mdl-menu__item" 
-        *ngIf="session.isLoggedIn()"
-        [routerLink]="['/', session.getLoggedInUser().username]"
-        i18n="@@MINDS__TOPBAR__VIEW_CHANNEL"
-        (click)="menu.value = false"
+      <li class="mdl-menu__item"
+          *ngIf="session.isLoggedIn()"
+          (click)="menu.value = false"
+      >
+        <a
+          [routerLink]="['/', session.getLoggedInUser().username]"
+          i18n="@@MINDS__TOPBAR__VIEW_CHANNEL"
         >
-        View Channel
+          View Channel
+        </a>
       </li>
       <li class="mdl-menu__item"
-        *ngIf="session.isLoggedIn() && session.isAdmin()"
-        [routerLink]="['/admin/analytics']"
-        i18n="@@MINDS__TOPBAR__ADMIN"
-        (click)="menu.value = false"
+          *ngIf="session.isLoggedIn() && session.isAdmin()"
+          (click)="menu.value = false"
+      >
+        <a
+          [routerLink]="['/admin/analytics']"
+          i18n="@@MINDS__TOPBAR__ADMIN"
         >
-        Admin
+          Admin
+        </a>
       </li>
       <li class="mdl-menu__item"
-        *ngIf="session.isLoggedIn()"
-        [routerLink]="['/settings/general']"
-        i18n="@@MINDS__TOPBAR__SETTINGS"
-        (click)="menu.value = false"
+          *ngIf="session.isLoggedIn()"
+          (click)="menu.value = false"
+      >
+        <a
+          [routerLink]="['/settings/general']"
+          i18n="@@MINDS__TOPBAR__SETTINGS"
         >
-        Settings
+          Settings
+        </a>
       </li>
       <li class="mdl-menu__item"
-        [routerLink]="['/faq']"
-        i18n="@@MINDS__TOPBAR__FAQ"
-        (click)="menu.value = false"
+          (click)="menu.value = false"
+      >
+        <a
+          [routerLink]="['/faq']"
+          i18n="@@MINDS__TOPBAR__FAQ"
         >
-        FAQ 
+          FAQ
+        </a>
       </li>
       <li class="mdl-menu__item"
-        [routerLink]="['/groups/profile/', '100000000000000681']"
-        i18n="@@MINDS__TOPBAR__HS_GROUP"
-        (click)="menu.value = false"
+          (click)="menu.value = false"
+      >
+        <a
+          [routerLink]="['/groups/profile/', '100000000000000681']"
+          i18n="@@MINDS__TOPBAR__HS_GROUP"
         >
-        Help & Support
+          Help & Support
+        </a>
       </li>
-      <a class="mdl-menu__item"
-        target="_blank"
-        [href]="minds.cdn_assets_url + 'assets/documents/Whitepaper-v0.3.pdf'" 
-        >
-        Whitepaper
-      </a>
       <li class="mdl-menu__item"
-        *ngIf="session.isLoggedIn()"
-        [routerLink]="['/logout']"
-        i18n="@@MINDS__TOPBAR__LOGOUT"
-        (click)="menu.value = false"
+      >
+        <a
+          target="_blank"
+          [href]="minds.cdn_assets_url + 'assets/documents/Whitepaper-v0.3.pdf'"
         >
-        Logout
+          Whitepaper
+        </a>
+      </li>
+      <li class="mdl-menu__item"
+          *ngIf="session.isLoggedIn()"
+          (click)="menu.value = false"
+      >
+        <a
+          [routerLink]="['/logout']"
+          i18n="@@MINDS__TOPBAR__LOGOUT"
+        >
+          Logout
+        </a>
       </li>
     </ul>
     <div class="minds-bg-overlay" (click)="menu.value = !menu.value" [hidden]="!menu.value"></div>
