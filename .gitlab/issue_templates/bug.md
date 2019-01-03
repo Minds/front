@@ -34,5 +34,4 @@ logs, and code as it's very hard to read otherwise.)
 
 (If you can, link to the line of code that might be responsible for the problem)
 
-/label ~T - Bug ~T - Triage:new
-
+/label ~"T \- Bug" ~"S \- Triage:new" 
