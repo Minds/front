@@ -100,7 +100,7 @@ describe('NotificationsComponent', () => {
   it('Should show the filters with tooltips', () => {
     fixture.detectChanges();
     const tooltips = fixture.debugElement.queryAll(By.css('m-tooltip'));
-    expect(tooltips.length).toBe(7);
+    expect(tooltips.length).toBe(6);
   });
 
   it('infinite scroll shouldnt be visible if visible false', () => {

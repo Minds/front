@@ -197,7 +197,9 @@ m-hashtags-selector {
   &:hover {
 
     .attachment-preview-delete {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: absolute;
       top: 0;
       left: 0;
@@ -205,14 +207,9 @@ m-hashtags-selector {
       z-index: 200;
       height: 100%;
       background: rgba(0, 0, 0, 0.6);
-      align-items: center;
-      -webkit-align-items: center;
       i {
         font-size: 40px;
         color: #FFF;
-        top: calc(50% - 20px);
-        left: calc(50% - 20px);
-        position: absolute;
       }
     }
 

@@ -8,7 +8,7 @@ dist
 /tests/ng-spec
 coverage
 src/main.css
-
+!.gitlab-ci.yml
 tsd_typings
 
 /.htaccess

@@ -380,7 +380,7 @@
           <span [hidden]="notification.params.type != 'points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</span>
           <span [hidden]="notification.params.currency != 'tokens'" i18n="@@M__COMMON__POINTS_SUFFIX">tokens</span>
         </b>
-        <span *ngIf="notification.entityObj" i18n="@@NOTIFICATIONS__NOTIFICATION__FOR_WORD">for </span>
+        <span *ngIf="notification.entityObj" i18n="@@NOTIFICATIONS__NOTIFICATION__FOR_WORD"> for </span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title | excerpt}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && !notification.entityObj.name && notification.entityObj.type !== 'user'" i18n="@@NOTIFICATIONS__NOTIFICATION__THEIR_POST">their post</span>

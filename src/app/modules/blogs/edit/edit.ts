@@ -32,7 +32,7 @@ export class BlogEdit {
     description: '<p><br></p>',
     time_created: Date.now(),
     access_id: 2,
-    tags: '',
+    tags: [],
     license: 'attribution-sharealike-cc',
     fileKey: 'header',
     mature: 0,
@@ -107,7 +107,8 @@ export class BlogEdit {
             description: '',
             author: ''
           },
-          slug: ''
+          slug: '',
+          tags: [],
         };
 
         this.banner = void 0;
@@ -151,7 +152,7 @@ export class BlogEdit {
           this.guid = response.blog.guid;
           this.title.setTitle(this.blog.title);
 
-          this.hashtagsSelector.setTags(this.blog.tags);
+          //this.hashtagsSelector.setTags(this.blog.tags);
           // draft
           if (!this.blog.published && response.blog.draft_access_id) {
             this.blog.access_id = response.blog.draft_access_id;
