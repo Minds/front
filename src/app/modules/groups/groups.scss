@@ -291,6 +291,29 @@ minds-groups-profile-members-invite {
   }
 }
 
+.m-group__infoWrapper {
+  .m-groupInfo__name,
+  .m-groupInfo__description {
+    input[type=text], select, textarea {
+      width: 100%;
+      padding: $minds-padding;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+
+      &.h1 {
+        font-size: 26px;
+        font-weight: 400;
+      }
+
+      &.icon-prefix {
+        width: 85%;
+        width: calc(100% - 38px);
+      }
+
+    }
+  }
+}
+
 .m-group-info {
 
   @media screen and (max-width: $min-tablet) {
