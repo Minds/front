@@ -6,8 +6,12 @@
   flex-direction: row;
   align-items: center;
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 750px) and (min-width: 600px) {
     max-width: 75%;
+  }
+
+  @media screen and (max-width: 600px) {
+    max-width: 65%;
   }
 
 }
