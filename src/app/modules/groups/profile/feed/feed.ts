@@ -1,10 +1,12 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { GroupsService } from '../../groups-service';
 
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { PosterComponent } from '../../../newsfeed/poster/poster.component';
+import { Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 interface MindsGroupResponse {
   group: MindsGroup;
@@ -28,7 +30,7 @@ export class GroupsProfileFeed {
   group: any;
   $group;
 
-  filter: 'activity' | 'review' = 'activity';
+  filter: 'activity' | 'review' | 'image' | 'video' = 'activity';
 
   activity: Array<any> = [];
   pinned: Array<any> = [];
@@ -44,27 +46,24 @@ export class GroupsProfileFeed {
   kickBan: boolean = false;
   kickSuccess: boolean = false;
   kickUser: any;
+  paramsSubscription: Subscription;
 
   @ViewChild('poster') private poster: PosterComponent;
 
-  constructor(public session: Session, public client: Client, public service: GroupsService) { }
+  constructor(public session: Session, public client: Client, public service: GroupsService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.$group = this.service.$group.subscribe((group) => { 
+    this.$group = this.service.$group.subscribe((group) => {
       this.group = group;
       this.guid = group.guid;
+    });
+
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      this.filter = params['filter'] ? params['filter'] : 'activity';
+
       this.load(true);
       this.setUpPoll();
     });
-  }
-  
-  @Input('filter') set _filter(value: 'activity' | 'review') {
-    const oldFilter = this.filter;
-    this.filter = value;
-
-    if (this.group && oldFilter != this.filter) {
-      this.load(true);
-    }
   }
 
   setUpPoll() {
@@ -89,6 +88,7 @@ export class GroupsProfileFeed {
   ngOnDestroy() {
     this.$group.unsubscribe();
     clearInterval(this.pollingTimer);
+    this.paramsSubscription.unsubscribe();
   }
 
   prepend(activity: any) {
@@ -96,23 +96,8 @@ export class GroupsProfileFeed {
     this.pollingOffset = activity.guid;
   }
 
-  /**
-   * Load a groups newsfeed
-   */
-  load(refresh: boolean = false) {
-    if (this.inProgress && !refresh) {
-      return false;
-    }
-
+  loadActivities(refresh: boolean = false) {
     this.inProgress = true;
-
-    if (refresh) {
-      this.offset = '';
-      this.pollingOffset = '';
-      this.pollingNewPosts = 0;
-      this.activity = [];
-      this.pinned = [];
-    }
 
     let endpoint = `api/v1/newsfeed/container/${this.guid}`;
 
@@ -178,6 +163,93 @@ export class GroupsProfileFeed {
           this.moreData = false;
         }
       });
+  }
+
+  loadMedia(refresh: boolean = false) {
+    this.inProgress = true;
+    let endpoint = `api/v1/entities/owner/${this.filter}/container${this.guid}`;
+
+    const currentFilter = this.filter;
+
+    this.client.get(endpoint, { limit: 12, offset: this.offset })
+      .then((response: any) => {
+        if (this.filter !== currentFilter) {
+          return; // Prevents race condition
+        }
+
+        this.inProgress = false;
+
+        if (refresh) {
+          this.activity = [];
+        }
+
+        if (typeof response['adminqueue:count'] !== 'undefined') {
+          this.group['adminqueue:count'] = response['adminqueue:count'];
+        }
+
+        if (!response.entities || response.entities.length === 0) {
+          this.moreData = false;
+          return false;
+        }
+
+        for(let entity of response.entities) {
+          let fakeActivity = {
+            custom_type: this.filter === 'image' ? 'batch' : 'video',
+            custom_data: this.filter === 'image' ? [{src: entity.thumbnail_src}]: entity,
+            guid: entity.guid,
+            ownerObj: entity.ownerObj,
+            owner_guid: entity.owner_guid,
+            time_created: entity.time_created,
+            time_updated: entity.time_updated,
+            container_guid: entity.container_guid,
+            containerObj: entity.containerObj,
+            access_id: entity.access_id,
+            'thumbs:up:count': entity['thumbs:up:count'],
+            'thumbs:up:user_guids': entity['thumbs:up:user_guids'],
+            'thumbs:down:count': entity['thumbs:down:count'],
+            'thumbs:down:user_guids': entity['thumbs:down:user_guids'],
+            wire_totals: entity.wire_totals,
+            title: entity.title,
+            message: entity.message,
+          };
+          this.activity.push(fakeActivity);
+        };
+
+        if (typeof this.activity[0] !== 'undefined') {
+          this.pollingOffset = response.entities[0].guid;
+        }
+
+        if (response['load-next']) {
+          this.offset = response['load-next'];
+        } else {
+          this.moreData = false;
+        }
+      });
+  }
+
+  /**
+   * Load a groups newsfeed
+   */
+  load(refresh: boolean = false) {
+    if (this.inProgress && !refresh) {
+      return false;
+    }
+
+    if (refresh) {
+      this.offset = '';
+      this.pollingOffset = '';
+      this.pollingNewPosts = 0;
+      this.activity = [];
+    }
+
+    switch(this.filter) {
+      case 'activity':
+      case 'review':
+        return this.loadActivities(refresh);
+      case 'image':
+      case 'video':
+        return this.loadMedia(refresh);
+    }
   }
 
   delete(activity) {

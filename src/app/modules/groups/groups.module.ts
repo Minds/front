@@ -32,6 +32,7 @@ import { CanDeactivateGroupService } from "./profile/can-deactivate/can-deactiva
 const routes: Routes = [
   { path: 'groups/profile/:guid', component: GroupsProfile, canDeactivate: [CanDeactivateGroupService], children: [
       { path: '', redirectTo: 'feed', pathMatch: 'full' },
+      { path: 'feed/:filter', component: GroupsProfileFeed },
       { path: 'feed', component: GroupsProfileFeed },
       { path: 'members', component: GroupsProfileMembers },
       { path: 'requests',  component: GroupsProfileRequests },
