@@ -145,6 +145,9 @@ export class CommentsListComponent {
           return false;
         }
 
+        let el = this.scrollView.nativeElement;
+        let previousScrollHeightMinusTop = el.scrollHeight - el.scrollTop;
+
         this.comments = response.comments.concat(this.comments);
         this.detectChanges();
 
@@ -153,12 +156,9 @@ export class CommentsListComponent {
         }
 
         if (this.offset && this.scrollView) {
-          let el = this.scrollView.nativeElement;
-          let scrollTop = el.scrollTop;
-          let scrollHeight = el.scrollHeight;
+          el.scrollTop = el.scrollHeight - previousScrollHeightMinusTop;
 
           this.detectChanges();
-          el.scrollTop = scrollTop + el.scrollHeight - scrollHeight;
         }
 
         this.offset = response['load-previous'];
