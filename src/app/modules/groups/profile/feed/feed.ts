@@ -31,6 +31,7 @@ export class GroupsProfileFeed {
   filter: 'activity' | 'review' = 'activity';
 
   activity: Array<any> = [];
+  pinned: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
@@ -110,6 +111,7 @@ export class GroupsProfileFeed {
       this.pollingOffset = '';
       this.pollingNewPosts = 0;
       this.activity = [];
+      this.pinned = [];
     }
 
     let endpoint = `api/v1/newsfeed/container/${this.guid}`;
@@ -120,7 +122,16 @@ export class GroupsProfileFeed {
 
     const currentFilter = this.filter;
 
-    this.client.get(endpoint, { limit: 12, offset: this.offset })
+    let opts:any = {
+      limit: 12,
+      offset: this.offset,
+    };
+
+    if (!this.offset && this.group.pinned_posts.length > 0){
+      opts.pinned = this.group.pinned_posts;
+    }
+
+    this.client.get(endpoint, opts)
       .then((response: any) => {
         if (this.filter !== currentFilter) {
           return; // Prevents race condition
@@ -141,6 +152,20 @@ export class GroupsProfileFeed {
           return false;
         }
 
+        this.pinned = response.pinned;
+
+        response.activity = response.activity
+          .map(entity => { 
+            if (this.group.pinned_posts.indexOf(entity.guid) >= 0) {
+              entity.pinned = true;
+            }
+            if (!(this.group['is:moderator'] || this.group['is:owner'])) {
+              entity.dontPin = true;
+            }
+            return entity;
+          })
+          .filter(entity => !entity.pinned);
+        
         this.activity.push(...(response.activity || []));
 
         if (typeof this.activity[0] !== 'undefined') {
