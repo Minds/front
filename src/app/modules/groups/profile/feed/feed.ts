@@ -167,7 +167,7 @@ export class GroupsProfileFeed {
 
   loadMedia(refresh: boolean = false) {
     this.inProgress = true;
-    let endpoint = `api/v1/entities/owner/${this.filter}/container${this.guid}`;
+    let endpoint = `api/v1/entities/container/${this.filter}/${this.guid}`;
 
     const currentFilter = this.filter;
 
