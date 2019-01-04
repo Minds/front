@@ -53,6 +53,7 @@ export class GroupsProfile {
 
   private reviewCountInterval: any;
   private socketSubscription: any;
+  private videoChatActiveSubscription;
 
   constructor(
     public session: Session,
@@ -115,6 +116,7 @@ export class GroupsProfile {
       this.reviewCountLoad();
     }, 120 * 1000);
 
+    this.videoChatActiveSubscription = this.videochat.activate$.subscribe(next => window.scrollTo(0, 0));
   }
 
   setFilter(url: string) {
@@ -130,8 +132,14 @@ export class GroupsProfile {
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-    this.childParamsSubscription.unsubscribe();
+    if (this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
+    if (this.childParamsSubscription)
+      this.childParamsSubscription.unsubscribe();
+
+    if (this.videoChatActiveSubscription)
+      this.videoChatActiveSubscription.unsubscribe(); 
+    
     this.unlistenForNewMessages();
     this.leaveCommentsSocketRoom();
 
