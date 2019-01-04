@@ -216,16 +216,7 @@ export class GroupsProfile {
   save() {
     this.group.videoChatDisabled = parseInt(this.group.videoChatDisabled);
 
-    this.service.save({
-      guid: this.group.guid,
-      name: this.group.name,
-      briefdescription: this.group.briefdescription,
-      tags: this.group.tags,
-      membership: this.group.membership,
-      moderated: this.group.moderated,
-      default_view: this.group.default_view,
-      videoChatDisabled: this.group.videoChatDisabled,
-    });
+    this.service.save(this.group);
 
     this.editing = false;
     this.editDone = true;
