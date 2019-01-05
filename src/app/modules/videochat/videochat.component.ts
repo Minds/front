@@ -54,7 +54,6 @@ export class VideoChatComponent implements OnInit {
     const options = {
       roomName: this.configs.roomName,
       width: '100%',
-      height: '100%',
       parentNode: this.meet.nativeElement,
       avatarUrl: `${this.minds.cdn_url}icon/${this.minds.user.guid}/large/${this.minds.user.icontime}`,
       interfaceConfigOverwrite: {

@@ -1,5 +1,5 @@
 import { Component, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ChildActivationEnd, NavigationEnd, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -15,6 +15,8 @@ import { ContextService } from '../../../services/context.service';
 import { Client } from '../../../services/api';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { VideoChatService } from '../../videochat/videochat.service';
+import { UpdateMarkersService } from '../../../common/services/update-markers.service';
+import { filter } from "rxjs/operators";
 
 @Component({
   moduleId: module.id,
@@ -41,6 +43,7 @@ export class GroupsProfile {
   inProgress: boolean = false;
   moreData: boolean = true;
   paramsSubscription: Subscription;
+  childParamsSubscription: Subscription;
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
@@ -50,11 +53,13 @@ export class GroupsProfile {
 
   private reviewCountInterval: any;
   private socketSubscription: any;
+  private videoChatActiveSubscription;
 
   constructor(
     public session: Session,
     public service: GroupsService,
     public route: ActivatedRoute,
+    private router: Router,
     public title: MindsTitle,
     private sockets: SocketsService,
     private context: ContextService,
@@ -62,6 +67,7 @@ export class GroupsProfile {
     private client: Client,
     public videochat: VideoChatService,
     private cd: ChangeDetectorRef,
+    private updateMarkers: UpdateMarkersService,
   ) { }
 
   ngOnInit() {
@@ -93,17 +99,47 @@ export class GroupsProfile {
           this.newConversationMessages = false;
         }
       }
-
       this.filterToDefaultView();
     });
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      const url = this.router.routerState.snapshot.url;
+
+      this.setFilter(url);
+    });
+
+    this.setFilter(this.router.routerState.snapshot.url);
 
     this.reviewCountInterval = setInterval(() => {
       this.reviewCountLoad();
     }, 120 * 1000);
+
+    this.videoChatActiveSubscription = this.videochat.activate$.subscribe(next => window.scrollTo(0, 0));
+  }
+
+  setFilter(url: string) {
+    if (url.includes('/feed')) {
+      if (url.includes('/image')) {
+        this.filter = 'image';
+      } else if (url.includes('/video')) {
+        this.filter = 'video';
+      } else {
+        this.filter = 'activity';
+      }
+    }
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
+    if (this.childParamsSubscription)
+      this.childParamsSubscription.unsubscribe();
+
+    if (this.videoChatActiveSubscription)
+      this.videoChatActiveSubscription.unsubscribe(); 
+    
     this.unlistenForNewMessages();
     this.leaveCommentsSocketRoom();
 
@@ -113,6 +149,18 @@ export class GroupsProfile {
   }
 
   load() {
+    this.updateMarkers.markAsRead({
+      entity_guid: this.guid,
+      entity_type: 'group',
+      marker: 'activity'
+    });
+
+    this.updateMarkers.markAsRead({
+      entity_guid: this.guid,
+      entity_type: 'group',
+      marker: 'conversation'
+    });
+
     return this.service.load(this.guid)
       .then((group) => {
         this.group = group;
@@ -157,8 +205,6 @@ export class GroupsProfile {
     if (this.filter === 'gathering') {
       this.videochat.activate(this.group);
     }
-
-    this.filter = 'activity';
 
     switch (this.group.default_view) {
       case 1:

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 
 import { Client } from '../../../services/api';
 
@@ -12,7 +12,8 @@ import { Client } from '../../../services/api';
 })
 
 export class GroupsMembersModuleComponent {
-  members: Array<any> = [];
+members: Array<any> = [];
+  @ViewChild('el') el;
 
   group: any;
   limit: number = 21;
@@ -26,6 +27,7 @@ export class GroupsMembersModuleComponent {
   @Input('group') set _group(value: any) {
     this.group = value;
     this.load();
+    this.el.nativeElement.scrollIntoView();
   }
 
   load() {

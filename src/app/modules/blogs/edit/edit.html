@@ -78,6 +78,7 @@
     </div>
     <div class="m-category-info">
       <m-hashtags-selector #hashtagsSelector
+        [tags]="blog.tags.slice(0)"
         (tagsChange)="onTagsChange($event)"
         (tagsAdded)="onTagsAdded($event)"
         (tagsRemoved)="onTagsRemoved($event)"

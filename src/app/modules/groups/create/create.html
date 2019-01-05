@@ -77,14 +77,6 @@
           </select>
       </div>
 
-      <div class="m-group-info-video-calls mdl-color-text--blue-grey-300">
-        <i class="material-icons mdl-color-text--blue-grey-300" title="Video calls" i18n="@@GROUPS__VIDEO_CALLS_TOOLTIP">call</i>
-        <select class="icon-prefix" name="video_calls" [ngModel]="group.calls_disabled" (change)="group.calls_disabled = $event.target.value">
-          <option value="0" i18n="@@GROUPS__VIDEO_CALLS_ENABLED">Video calls enabled</option>
-          <option value="1" i18n="@@GROUPS__VIDEO_CALLS_DISABLED">Video calls disabled</option>
-        </select>
-      </div>
-
       <div class="m-groups-save">
        <button class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!group.name" i18n="@@M__ACTION__CREATE">Create</button>
       </div>

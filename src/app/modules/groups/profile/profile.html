@@ -230,6 +230,12 @@
       </div> <!-- END INFO -->
     </div> <!-- END INFO WRAPPER -->
 
+    <m-groups--filter-selector
+      [group]="group"
+      [filter]="filter"
+      *ngIf="group['is:member']"
+    ></m-groups--filter-selector>
+
     <div class="m-group__feeds">
       <router-outlet></router-outlet> 
     </div> <!-- End Feeds -->

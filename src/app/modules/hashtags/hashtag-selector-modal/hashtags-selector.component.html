@@ -20,12 +20,13 @@
         type="text"
         name="hashtag"
         [(ngModel)]="input"
-        (keyup)="keyUp($event)"/>
+        (keyup)="keyUp($event)"
+        #hashtagInput/>
       <i class="material-icons m-hashtag--creator--done"
         (click)="addNew()"
       >done</i>
       <i class="material-icons m-hashtag--creator--close"
-        (click)="addingHashtag = false"
+        (click)="input = ''; addingHashtag = false; hashtagInput.focus()"
       >close</i>
     </div>
   </section>

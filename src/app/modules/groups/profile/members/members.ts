@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { GroupsService } from '../../groups-service';
 
-import { Client } from '../../../../services/api';
+import { HttpClient } from '../../../../common/api/client.service';
+import { map, filter, switchMap } from 'rxjs/operators';
 import { Session } from '../../../../services/session';
 
 @Component({
@@ -15,7 +16,8 @@ import { Session } from '../../../../services/session';
 
 export class GroupsProfileMembers {
 
-  minds = window.Minds;
+minds = window.Minds;
+@ViewChild('el') el;
 
   group: any;
   $group;
@@ -32,7 +34,9 @@ export class GroupsProfileMembers {
   private lastQuery;
   private searchDelayTimer;
 
-  constructor(public session: Session, public client: Client, public service: GroupsService) {
+  httpSubscription;
+
+  constructor(public session: Session, public client: HttpClient, public service: GroupsService) {
 
   }
 
@@ -40,6 +44,7 @@ export class GroupsProfileMembers {
     this.$group = this.service.$group.subscribe((group) => {
       this.group = group;
       this.load(true);
+      this.el.nativeElement.scrollIntoView();
     });
   }
 
@@ -51,17 +56,13 @@ export class GroupsProfileMembers {
   }
 
   load(refresh: boolean = false, query = null) {
-    if (this.inProgress)
-      return;
-
-    if (query !== null && query !== this.lastQuery) {
-      refresh = true;
-      this.lastQuery = query;
-    }
+    if (this.httpSubscription)
+      this.httpSubscription.unsubscribe();
 
     if (refresh) {
       this.offset = '';
       this.moreData = true;
+      this.members = [];
     }
 
     // TODO: [emi] Send this via API
@@ -76,15 +77,16 @@ export class GroupsProfileMembers {
     let endpoint = `api/v1/groups/membership/${this.group.guid}`,
       params: { limit, offset, q?: string } = { limit: 12, offset: this.offset };
 
-    if (this.lastQuery) {
+    if (this.q) {
       endpoint = `${endpoint}/search`;
-      params.q = this.lastQuery;
+      params.q = this.q; 
     }
 
     this.inProgress = true;
-    this.client.get(endpoint, params)
-      .then((response: any) => {
-
+    this.httpSubscription = this.client.get(endpoint, params)
+      .pipe(map(response => response.json()))
+      .subscribe((response: any) => {
+        console.log(response);
         if (!response.members) {
           this.moreData = false;
           this.inProgress = false;
@@ -105,10 +107,9 @@ export class GroupsProfileMembers {
 
         this.inProgress = false;
 
-      })
-      .catch((e) => {
-        this.inProgress = false;
-      });
+        }, (err) => {
+            this.inProgress = false;
+        });
   }
 
   invite(user: any) {
@@ -124,9 +125,10 @@ export class GroupsProfileMembers {
       clearTimeout(this.searchDelayTimer);
     }
 
+    this.q = q;
     this.searchDelayTimer = setTimeout(() => {
-      this.load(true, q);
-    }, 500);
+      this.load(true);
+    }, 300);
   }
 
 }

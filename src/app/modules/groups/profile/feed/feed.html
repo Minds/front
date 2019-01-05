@@ -26,6 +26,15 @@
     <div class="minds-list">
 
         <minds-activity
+            *ngFor="let activity of pinned"
+            [object]="activity"
+            [canDelete]="group['is:owner'] || group['is:moderator']"
+            (delete)="delete(a)"
+            [showRatingToggle]="true"
+            class="mdl-card item">
+        </minds-activity>
+
+        <minds-activity
           *ngFor="let a of activity; let i = index"
           class="mdl-card item"
           [object]="a"

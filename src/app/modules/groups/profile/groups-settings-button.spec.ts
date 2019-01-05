@@ -93,7 +93,7 @@ describe('GroupsSettingsButton', () => {
     expect(menu.nativeElement.hidden).toBeFalsy();
   });
 
-  it('should have an option to mute / unmute the group', fakeAsync(() => {
+  xit('should have an option to mute / unmute the group', fakeAsync(() => {
     const mute = getMenuItem(1);
     const unmute = getMenuItem(2);
 

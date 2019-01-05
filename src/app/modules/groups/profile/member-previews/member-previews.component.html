@@ -4,10 +4,10 @@
       <img [src]="minds.cdn_url + 'icon/' + member.guid + '/small'" />
     </a>
   </li>
-  <li class="m-groupMemberPreviews__member--count">
-    <span *ngIf="count > 0" routerLink="members">
+  <li class="m-groupMemberPreviews__member--count" routerLink="members">
+    <span *ngIf="count > 0">
       +{{count | number}} Member<ng-container *ngIf="count > 1">s</ng-container>
     </span>
-    <span *ngIf="count <= 0" routerLink="members">+ Members</span>
+    <span *ngIf="count <= 0">+ Members</span>
   </li>
 </ul>

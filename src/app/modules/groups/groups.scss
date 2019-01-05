@@ -2,7 +2,7 @@
 
 .groups-grid {
   max-width: 990px;
-  margin: 0;
+  margin: 0 auto;
 }
 .minds-banner-card{
   minds-groups-join-button{
@@ -214,6 +214,10 @@ minds-groups-profile{
       margin: 290px auto;
       text-align: center;
       position: relative;
+
+      @media screen and (max-width: 720px) {
+        margin: 200px auto;
+      }
 
       .m-group-avatar{
         min-height:140px;

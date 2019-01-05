@@ -73,7 +73,13 @@
     >
       <i class="material-icons">group_work</i>
 
-      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_GROUPS">Groups</span>
+      <span
+        class="m-topbar--navigation--text"
+        [class.m-topbarNavigationItem__text--has-marker]="hasMarker"
+        i18n="@@M_TOPBAR_GROUPS"
+        >
+        Groups
+      </span>
     </a>
   </div>
 

@@ -61,6 +61,7 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
 import { PhoneInputCountryComponent } from './components/phone-input/country.component';
 import { Session } from '../services/session';
 import { Client, Upload } from '../services/api';
+import { HttpClient } from './api/client.service';
 import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.component';
 import { NotificationsToasterComponent } from '../modules/notifications/toaster.component';
 import { ThumbsUpButton } from './components/thumbs/thumbs-up.component';
@@ -72,6 +73,8 @@ import { PieGraph } from './components/graphs/pie-graph';
 import { GraphSVG } from './components/graphs/svg';
 import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
+
+import { UpdateMarkersService } from './services/update-markers.service';
 
 @NgModule({
   imports: [
@@ -226,6 +229,12 @@ import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-fo
       useFactory: AttachmentService._,
       deps: [Session, Client, Upload]
     },
+    {
+      provide: UpdateMarkersService,
+      useFactory: (_http) => { return new UpdateMarkersService(_http); },
+      deps: [ HttpClient ],
+    },
+    HttpClient,
   ],
   entryComponents: [
     NotificationsToasterComponent

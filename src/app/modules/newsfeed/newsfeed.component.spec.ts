@@ -198,7 +198,7 @@ describe('NewsfeedComponent', () => {
 
     const copyright = fixture.debugElement.query(By.css('.m-newsfeed-footer .copyright'));
     expect(copyright).not.toBeNull();
-    expect(copyright.nativeElement.textContent).toContain('© Minds 2018');
+    expect(copyright.nativeElement.textContent).toContain('© Minds 2019');
 
   });
 

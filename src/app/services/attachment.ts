@@ -306,7 +306,7 @@ export class AttachmentService {
           }
 
           if (data.meta) {
-            this.meta.url = data.meta.canonical || url;
+            this.meta.url = url;
             this.meta.title = data.meta.title || this.meta.url;
             this.meta.description = data.meta.description || '';
           } else {

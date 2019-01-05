@@ -29,22 +29,6 @@ import { Router } from '@angular/router';
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_GLOBALLY">Un-ban globally</li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
-        [hidden]="user.ban_monetization === 'yes'"
-        (click)="banMonetizationToggle = true; showMenu = false"
-        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_FROM_MONETIZATION"
-        >
-        Ban from Monetization
-      </li>
-      <li class="mdl-menu__item"
-        *ngIf="session.isAdmin()"
-        [hidden]="user.ban_monetization !== 'yes'"
-        (click)="unBanMonetization()"
-        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_FROM_MONETIZATION"
-        >
-        Un-ban from Monetization
-      </li>
-      <li class="mdl-menu__item"
-        *ngIf="session.isAdmin()"
         (click)="viewLedger()"
         i18n="@@MINDS_BUTTON__USER_DROPDOWN__VIEW_LEDGER"
       >
@@ -69,22 +53,6 @@ import { Router } from '@angular/router';
         i18n="@@M__ACTION__REPORT"
       >
         Report
-      </li>
-      <li class="mdl-menu__item"
-        *ngIf="session.isAdmin()"
-        [hidden]="user.spam"
-        (click)="setSpam(true); showMenu = false"
-        i18n="@@M__ACTION__MARK_SPAM"
-        >
-        Mark as spam
-      </li>
-      <li class="mdl-menu__item"
-        *ngIf="session.isAdmin()"
-        [hidden]="!user.spam"
-        (click)="setSpam(false); showMenu = false"
-        i18n="@@M__ACTION__NOT_SPAM"
-        >
-        Not spam
       </li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
