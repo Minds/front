@@ -124,7 +124,7 @@ export class CommentsListComponent {
 
     this.client.get('api/v1/comments/' + this.guid + '/' + this.parentGuid, { 
       limit: refresh ? 5 : this.limit, 
-      offset: this.offset, 
+      token: this.offset,
       reversed: false 
     })
       .then((response: any) => {
