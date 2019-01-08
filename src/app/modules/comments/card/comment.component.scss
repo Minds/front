@@ -20,6 +20,16 @@
   line-height: 13px;
   vertical-align: middle;
   margin-right: 4px;
+
+  > a {
+    line-height: 13px;
+    font-size: 13px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+  .m-channel--badges-activity {
+    margin-top: -2px;
+  }
 }
 
 .m-commentBubble__message {

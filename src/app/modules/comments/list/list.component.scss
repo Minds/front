@@ -217,7 +217,7 @@ minds-comments, .m-comment-wrapper {
         border-radius: 25px;
 
         .m-editor {
-          min-height: 26px;
+          //min-height: 26px;
         }
       }
     }
@@ -231,7 +231,7 @@ minds-comments, .m-comment-wrapper {
   }
 
   .m-comments-composer .mdl-card__actions {
-    top: $minds-padding / 2;
+    top: 6px;
     right: $minds-padding;
   }
 
