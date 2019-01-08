@@ -90,7 +90,61 @@ export class AdminReportsDownload {
             ],
           },
         }
-      }
+      },
+      {
+        name: 'Boost Tokens',
+        endpoint: 'api/v2/blockchain/transactions/reports',
+        report: 'BoostTokens',
+        options: { type: 'text/csv;charset=utf-8;' },
+        file_name: 'boost_tokens.csv',
+        params: {
+          from: {
+            label: 'From',
+            value: startDate,
+            type: 'date',
+            map: (v) => {
+              const date: Date = new Date(v);
+              return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 1000);
+            }
+          },
+          to: {
+            label: 'To',
+            value: endDate,
+            type: 'date',
+            map: (v) => {
+              const date: Date = new Date(v);
+              return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59) / 1000);
+            }
+          },
+        }
+      },
+      {
+        name: 'Plus Tokens',
+        endpoint: 'api/v2/blockchain/transactions/reports',
+        report: 'PlusTokens',
+        options: { type: 'text/csv;charset=utf-8;' },
+        file_name: 'plus_tokens.csv',
+        params: {
+          from: {
+            label: 'From',
+            value: startDate,
+            type: 'date',
+            map: (v) => {
+              const date: Date = new Date(v);
+              return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 1000);
+            }
+          },
+          to: {
+            label: 'To',
+            value: endDate,
+            type: 'date',
+            map: (v) => {
+              const date: Date = new Date(v);
+              return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59) / 1000);
+            }
+          },
+        }
+      },
     ];
   }
 
