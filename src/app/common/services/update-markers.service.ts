@@ -28,6 +28,7 @@ export class UpdateMarkersService {
   get markers() {
     if (!this.$markers) {
       this.$markers = this.markersSubject.asObservable();
+      this.get();
       setInterval(() => this.get(), 5000); // TODO: use sockets
     }
     return this.$markers;
