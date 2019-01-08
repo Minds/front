@@ -37,7 +37,7 @@ export class VideoChatService {
 
       this.keepAliveInterval = setInterval(() => {
         this.keepAlive(roomName)
-      }, 240000); // 4 minutes
+      }, 20000); // 20 seconds
     } catch (e) {
       console.error('Error trying to open video chat.');
       console.error(e);
