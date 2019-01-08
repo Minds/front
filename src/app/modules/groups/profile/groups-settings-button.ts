@@ -16,7 +16,7 @@ import { Session } from '../../../services/session';
     </button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
-      <li class="mdl-menu__item" *ngIf="group['is:creator']" (click)="toggleEdit()">
+      <li class="mdl-menu__item" *ngIf="group['is:owner']" (click)="toggleEdit()">
           <ng-container *ngIf="!editing">Edit</ng-container>
           <ng-container *ngIf="editing">Save</ng-container>
       </li>

@@ -68,7 +68,7 @@ minds = window.Minds;
     // TODO: [emi] Send this via API
     this.canInvite = false;
 
-    if (this.group.membership === 0 && this.group['is:owner']) {
+    if (this.group['is:owner']) {
       this.canInvite = true;
     } else if (this.group.membership === 2 && this.group['is:member']) {
       this.canInvite = true;

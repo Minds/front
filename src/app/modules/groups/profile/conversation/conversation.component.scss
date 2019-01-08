@@ -21,7 +21,7 @@ minds-groups-profile-conversation {
   //right: 0;
   top: 52px;
   //width: 100%;
-  width: 33%; //1/3rd of screen
+  width: calc(33% - 12px); //1/3rd of screen
   display: block;
   margin-bottom: 0;
   flex: 1;
@@ -106,6 +106,6 @@ minds-groups-profile-conversation {
     //width: 612px;
   }
   .mdl-card__actions {
-    top: 9px !important;
+  //  top: 9px !important;
   }
 }

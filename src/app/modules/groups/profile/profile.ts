@@ -54,6 +54,7 @@ export class GroupsProfile {
   private reviewCountInterval: any;
   private socketSubscription: any;
   private videoChatActiveSubscription;
+  private updateMarkersSubscription;
 
   constructor(
     public session: Session,
@@ -100,6 +101,21 @@ export class GroupsProfile {
         }
       }
       this.filterToDefaultView();
+
+    });
+
+    this.updateMarkersSubscription = this.updateMarkers.markers.subscribe(markers => {
+      if (!markers)
+        return;
+      let hasMarker = markers
+        .filter(marker => 
+          (marker.read_timestamp < marker.updated_timestamp)
+          && (marker.entity_guid == this.group.guid)
+        )
+        .length;
+
+      if (hasMarker)
+        this.resetMarkers();
     });
 
     this.router.events.pipe(
@@ -139,7 +155,10 @@ export class GroupsProfile {
 
     if (this.videoChatActiveSubscription)
       this.videoChatActiveSubscription.unsubscribe(); 
-    
+
+    if (this.updateMarkersSubscription)
+      this.updateMarkersSubscription.unsubscribe();
+
     this.unlistenForNewMessages();
     this.leaveCommentsSocketRoom();
 
@@ -149,18 +168,8 @@ export class GroupsProfile {
   }
 
   load() {
-    this.updateMarkers.markAsRead({
-      entity_guid: this.guid,
-      entity_type: 'group',
-      marker: 'activity'
-    });
-
-    this.updateMarkers.markAsRead({
-      entity_guid: this.guid,
-      entity_type: 'group',
-      marker: 'conversation'
-    });
-
+    this.resetMarkers();
+ 
     return this.service.load(this.guid)
       .then((group) => {
         this.group = group;
@@ -341,6 +350,20 @@ export class GroupsProfile {
 
   @HostListener('window:resize') detectWidth() {
     this.showRight = window.innerWidth > 900;
+  }
+
+  resetMarkers() {
+    this.updateMarkers.markAsRead({
+      entity_guid: this.guid,
+      entity_type: 'group',
+      marker: 'activity'
+    });
+
+    this.updateMarkers.markAsRead({
+      entity_guid: this.guid,
+      entity_type: 'group',
+      marker: 'conversation'
+    });
   }
 
   detectChanges() {
