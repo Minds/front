@@ -1,0 +1,16 @@
+<ul class="m-groupSidebarMarkers__list">
+  <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker" [class.has-gathering]="group.hasGathering">
+    <a [routerLink]="['/groups/profile', group.guid]">
+      <m-tooltip
+         anchor="right"  
+      >
+        <img [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime" m-tooltip--anchor/>
+        <span>{{group.name}}</span>
+
+        <ng-container>
+            {{group.name}}
+            </ng-container>
+       </m-tooltip>
+    </a>
+  </li>
+</ul>

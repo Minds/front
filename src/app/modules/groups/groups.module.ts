@@ -22,6 +22,7 @@ import { GroupsProfileConversation } from './profile/conversation/conversation.c
 import { GroupsProfileFilterSelector } from './profile/filter-selector/filter-selector.component';
 import { GroupsMembersModuleComponent } from './members/members';
 import { GroupsTileComponent } from './tile/tile.component';
+import { GroupsSidebarMarkersComponent } from './sidebar-markers/sidebar-markers.component';
 import { CommentsModule } from '../comments/comments.module';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
@@ -76,6 +77,7 @@ const routes: Routes = [
     GroupsMembersModuleComponent,
     GroupsTileComponent,
     GroupMemberPreviews,
+    GroupsSidebarMarkersComponent,
   ],
   exports: [
     GroupsListComponent,
@@ -91,10 +93,12 @@ const routes: Routes = [
     GroupsSettingsButton,
     GroupsProfileConversation,
     GroupsProfileFilterSelector,
-    GroupsMembersModuleComponent
+    GroupsMembersModuleComponent,
+    GroupsSidebarMarkersComponent,
   ],
   entryComponents: [
-    GroupsCard
+    GroupsCard,
+    GroupsSidebarMarkersComponent,
   ],
   providers: [
     CanDeactivateGroupService

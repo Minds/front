@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Http } from '@angular/http';
 
 import { MINDS_PIPES } from './pipes/pipes';
 
 import { TopbarComponent } from './layout/topbar/topbar.component';
+import { SidebarMarkersComponent } from './layout/sidebar/markers.component';
 import { TopbarNavigationComponent } from './layout/topbar/navigation.component';
 import { SidebarNavigationComponent } from './layout/sidebar/navigation.component';
 import { TopbarOptionsComponent } from './layout/topbar/options.component';
@@ -87,6 +89,7 @@ import { UpdateMarkersService } from './services/update-markers.service';
     MINDS_PIPES,
 
     TopbarComponent,
+    SidebarMarkersComponent,
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
@@ -209,6 +212,8 @@ import { UpdateMarkersService } from './services/update-markers.service';
     CategoriesSelectedComponent,
     TreeComponent,
 
+    SidebarMarkersComponent,
+
     AnnouncementComponent,
     MindsTokenSymbolComponent,
     PhoneInputComponent,
@@ -234,7 +239,11 @@ import { UpdateMarkersService } from './services/update-markers.service';
       useFactory: (_http) => { return new UpdateMarkersService(_http); },
       deps: [ HttpClient ],
     },
-    HttpClient,
+    {
+      provide: HttpClient,
+      useFactory: HttpClient._,
+      deps: [Http]
+    },
   ],
   entryComponents: [
     NotificationsToasterComponent
