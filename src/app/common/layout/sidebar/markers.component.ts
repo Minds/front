@@ -5,21 +5,21 @@ import { Sidebar } from '../../../services/ui/sidebar';
 import { NotificationService } from '../../../modules/notifications/notification.service';
 import { Session } from '../../../services/session';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
-import { GroupsTopbarMarkersComponent } from '../../../modules/groups/topbar-markers/topbar-markers.component';
+import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-markers/sidebar-markers.component';
 
 @Component({
   selector: 'm-sidebar--markers',
   templateUrl: 'markers.component.html'
 })
 
-export class TopbarMarkersComponent {
+export class SidebarMarkersComponent {
 
   @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
 
   minds = window.Minds;
 
   componentRef;
-  componentInstance: GroupsTopbarMarkersComponent;
+  componentInstance: GroupsSidebarMarkersComponent;
 
   constructor(
     public session: Session,
@@ -30,7 +30,7 @@ export class TopbarMarkersComponent {
   }
 
   ngAfterViewInit() {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(GroupsTopbarMarkersComponent),
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(GroupsSidebarMarkersComponent),
       viewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();
