@@ -236,7 +236,7 @@
         </span>
       </div>
 
-      <span class="m-commentToolbar__timestamp">{{comment.time_created * 1000 | date: 'medium'}}</span>
+      <span [title]="comment.time_created * 1000 | date: 'medium'" class="m-commentToolbar__timestamp">{{comment.time_created * 1000 | friendlydatediff }}</span>
       <span *ngIf="comment.edited" class="mdl-color-text--blue-grey-300 minds-comment-span m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
 
       

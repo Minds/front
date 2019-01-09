@@ -82,7 +82,7 @@ describe('GroupsProfileMembers', () => {
 
     comp.canInvite = true;
 
-    comp._group = {
+    comp.group = {
       guid: '1234',
       'membership': 0,
       'is:owner': true,
