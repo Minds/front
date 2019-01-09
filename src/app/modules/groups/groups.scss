@@ -782,6 +782,29 @@ minds-groups-profile-feed {
     padding: 0 ($minds-padding * 2) ($minds-padding * 2);
     text-align: right;
   }
+
+  .minds-list.m-group__profileFeed__media {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    max-width: 1280px;
+    margin: auto;
+
+    minds-activity {
+      margin: $minds-padding $minds-padding / 4;
+      flex-basis: calc(50% - 4px);
+      max-width: calc(50% - 4px);
+
+      .item-image {
+        img {
+          width: 100%;
+          height: 300px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
 }
 
 minds-groups-profile-conversation.mdl-card {
