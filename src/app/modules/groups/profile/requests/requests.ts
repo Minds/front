@@ -16,6 +16,7 @@ export class GroupsProfileRequests {
 
   minds;
   group: any;
+  $group;
 
   users: Array<any> = [];
   offset: string = '';
@@ -26,12 +27,13 @@ export class GroupsProfileRequests {
 
   }
 
-  set _group(value: any) {
-    this.group = value;
-    this.load();
-    this.minds = window.Minds;
+  ngOnInit() {
+    this.$group = this.service.$group.subscribe((group) => {
+      this.group = group;
+      this.load(true);
+    });
   }
-
+ 
   load(refresh: boolean = false) {
     this.inProgress = true;
     this.client.get('api/v1/groups/membership/' + this.group.guid + '/requests', { limit: 12, offset: this.offset })

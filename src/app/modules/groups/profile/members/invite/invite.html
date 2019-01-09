@@ -1,6 +1,9 @@
 <div class="m-border m-groupMemberInvite">
-  <h2 class="m-groupMemberInvite__title" *ngIf="group" i18n="@@GROUPS__PROFILE__MEMBERS__INVITE__NAME_TITLE">Invite to {{ group.name }}</h2>
-  <h2 class="m-groupMemberInvite__title" *ngIf="!group" i18n="@@GROUPS__PROFILE__MEMBERS__INVITE__TITLE">Invite</h2>
+  <h2 class="m-groupMemberInvite__title" i18n="@@GROUPS__PROFILE__MEMBERS__INVITE__NAME_TITLE">
+    <ng-container *ngIf="group">Invite to {{ group.name }}</ng-container>
+    <ng-container *ngIf="!group">Invite</ng-container>
+    <a routerLink="../requests">(Requests)</a>
+  </h2>
   
   <ul class="m-groupMemberInvite__instructions">
     <li i18n="@@GROUPS__PROFILE__MEMBERS__INVITE__ITEM_ONLY_SUBSCRIBERS">You can only invite users who are your subscribers</li>
