@@ -23,7 +23,7 @@
       {{ group['adminqueue:count'] }} new {{ group['adminqueue:count'] === 1 ? 'post' : 'posts' }} in review queue
     </a>
 
-    <div class="minds-list" [class.m-group__profileFeed__media]="filter !== 'activity'">
+    <div class="minds-list" [class.m-groupProfileFeed__mediaList]="filter !== 'activity'">
 
         <minds-activity
             *ngFor="let activity of pinned"
