@@ -55,7 +55,8 @@ export class GroupsProfileFeed {
   ngOnInit() {
     this.$group = this.service.$group.subscribe((group) => {
       this.group = group;
-      this.guid = group.guid;
+      if (this.group)
+        this.guid = group.guid;
     });
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -231,6 +232,10 @@ export class GroupsProfileFeed {
    * Load a groups newsfeed
    */
   load(refresh: boolean = false) {
+
+    if (!this.group)
+      return;
+
     if (this.inProgress && !refresh) {
       return false;
     }

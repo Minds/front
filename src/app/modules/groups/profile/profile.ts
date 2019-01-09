@@ -19,8 +19,7 @@ import { UpdateMarkersService } from '../../../common/services/update-markers.se
 import { filter } from "rxjs/operators";
 
 @Component({
-  moduleId: module.id,
-  selector: 'minds-groups-profile',
+  selector: 'm-groups--profile',
   templateUrl: 'profile.html'
 })
 
@@ -42,6 +41,7 @@ export class GroupsProfile {
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
+  error: string;
   paramsSubscription: Subscription;
   childParamsSubscription: Subscription;
 
@@ -167,19 +167,28 @@ export class GroupsProfile {
     }
   }
 
-  load() {
+  async load() {
     this.resetMarkers();
- 
-    return this.service.load(this.guid)
-      .then((group) => {
-        this.group = group;
-        this.joinCommentsSocketRoom();
-        this.title.setTitle(this.group.name);
-        this.context.set('activity', { label: this.group.name, nameLabel: this.group.name, id: this.group.guid });
-        if (this.session.getLoggedInUser()) {
-          this.addRecent();
-        }
-      });
+    this.error = "";
+    this.group = null;
+
+    // Load group
+    try { 
+      this.group = await this.service.load(this.guid);
+    } catch (e) {
+      this.error = e.message;
+      return;
+    }
+
+    // Check for comment updates
+    this.joinCommentsSocketRoom();
+    this.title.setTitle(this.group.name);
+
+    this.context.set('activity', { label: this.group.name, nameLabel: this.group.name, id: this.group.guid });
+
+    if (this.session.getLoggedInUser()) {
+      this.addRecent();
+    }
   }
 
   async reviewCountLoad() {
