@@ -58,7 +58,7 @@ export class Activity {
 
   _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();
-  @Input() focusedCommentGuid: string = null;
+  @Input() focusedCommentGuid: string;
   scroll_listener;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
