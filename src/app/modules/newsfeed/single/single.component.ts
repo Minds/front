@@ -20,7 +20,8 @@ export class NewsfeedSingleComponent {
   activity: any;
   error: string = '';
   paramsSubscription: Subscription;
-
+  queryParamsSubscription: Subscription;
+  focusedCommentGuid: string = '';
   constructor(
     public client: Client,
     public upload: Upload,
@@ -38,6 +39,9 @@ export class NewsfeedSingleComponent {
       if (params['guid']) {
         this.error = '';
         this.activity = void 0;
+        if (this.route.snapshot.queryParamMap.has('comment_guid')) {
+          this.focusedCommentGuid = this.route.snapshot.queryParamMap.get('comment_guid');
+        }
         this.load(params['guid']);
       }
     });

@@ -32,6 +32,7 @@ export class CommentsListComponent {
   guid: string = '';
   parent: any;
   @Input() parentGuid = 0;
+  @Input() focusedCommentGuid: string = '';
   comments: Array<any> = [];
   content = '';
   reversed: boolean = false;
@@ -121,11 +122,11 @@ export class CommentsListComponent {
     this.inProgress = true;
 
     this.detectChanges();
-
-    this.client.get('api/v1/comments/' + this.guid + '/' + this.parentGuid, { 
+    this.client.get('api/v1/comments/' + this.guid + '/' + this.parentGuid, {
       limit: refresh ? 5 : this.limit, 
-      offset: this.offset,
-      reversed: false 
+      token: this.offset,
+      offset: this.focusedCommentGuid,
+      descending: this.focusedCommentGuid == '',
     })
       .then((response: any) => {
 
