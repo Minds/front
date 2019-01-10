@@ -34,6 +34,7 @@ import { ContextService } from './context.service';
 import { FeaturesService } from './features.service';
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
 import { WebtorrentService } from '../modules/webtorrent/webtorrent.service';
+import { TimeDiffService } from './timediff.service';
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -180,5 +181,9 @@ export const MINDS_PROVIDERS : any[] = [
     provide: WebtorrentService,
     useFactory: WebtorrentService._,
     deps: WebtorrentService._deps,
+  },
+  { 
+    provide: TimeDiffService,
+    useFactory: TimeDiffService._
   }
 ];

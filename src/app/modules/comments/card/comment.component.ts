@@ -12,6 +12,9 @@ import { TranslationService } from '../../../services/translation';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
+import { TimeDiffService } from '../../../services/timediff.service';
+import { Observable } from 'rxjs';
+import { map } from "rxjs/operators";
 
 @Component({
   moduleId: module.id,
@@ -63,7 +66,8 @@ export class CommentComponent implements OnChanges {
   isTranslatable: boolean;
   translationInProgress: boolean;
   translateToggle: boolean = false;
-
+  commentAge$: Observable<number>;
+  
   @Output() onReply = new EventEmitter();
 
 
@@ -74,7 +78,11 @@ export class CommentComponent implements OnChanges {
     public translationService: TranslationService,
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
+    private timeDiffService: TimeDiffService,
   ) {
+    this.commentAge$ = this.timeDiffService.source.pipe(map(secondsElapsed => {
+      return (this.comment.time_created - secondsElapsed) * 1000;
+    }));
   }
 
   @Input('object')
