@@ -790,6 +790,7 @@ minds-groups-profile-feed {
     flex-flow: row wrap;
     max-width: 1280px;
     margin: auto;
+    align-items: flex-start;
 
     minds-activity {
       margin: $minds-padding $minds-padding / 4;
