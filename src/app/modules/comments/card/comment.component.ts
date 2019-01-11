@@ -79,7 +79,9 @@ export class CommentComponent implements OnChanges {
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
     private timeDiffService: TimeDiffService,
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.commentAge$ = this.timeDiffService.source.pipe(map(secondsElapsed => {
       return (this.comment.time_created - secondsElapsed) * 1000;
     }));
