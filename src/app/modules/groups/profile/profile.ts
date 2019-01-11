@@ -104,20 +104,6 @@ export class GroupsProfile {
 
     });
 
-    this.updateMarkersSubscription = this.updateMarkers.markers.subscribe(markers => {
-      if (!markers)
-        return;
-      let hasMarker = markers
-        .filter(marker => 
-          (marker.read_timestamp < marker.updated_timestamp)
-          && (marker.entity_guid == this.group.guid)
-        )
-        .length;
-
-      if (hasMarker)
-        this.resetMarkers();
-    });
-
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event) => {
@@ -179,6 +165,21 @@ export class GroupsProfile {
       this.error = e.message;
       return;
     }
+
+    if (this.updateMarkersSubscription)
+      this.updateMarkersSubscription.unsubcribe();
+
+    this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe(marker => {
+      if (!marker)
+        return;
+  
+      let hasMarker = 
+        (marker.read_timestamp < marker.updated_timestamp)
+        && (marker.entity_guid == this.group.guid);
+
+      if (hasMarker)
+        this.resetMarkers();
+    });
 
     // Check for comment updates
     this.joinCommentsSocketRoom();
