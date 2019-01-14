@@ -1,5 +1,5 @@
 <ul class="m-groupSidebarMarkers__list">
-  <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker" [class.has-gathering]="group.hasGathering">
+  <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker" [class.has-gathering]="group.hasGathering$ | async">
     <a [routerLink]="['/groups/profile', group.guid]">
       <m-tooltip
          anchor="right"  

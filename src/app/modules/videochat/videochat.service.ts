@@ -1,6 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Client} from '../../services/api/client';
 import {Session} from '../../services/session';
+import { BehaviorSubject, ReplaySubject, interval } from 'rxjs';
+import { startWith } from 'rxjs/operators';
 
 export type JitsiConfig = {
   roomName: string;
@@ -12,6 +14,7 @@ export class VideoChatService {
 
   isActive: boolean;
   activate$: EventEmitter<JitsiConfig | false> = new EventEmitter<JitsiConfig | false>();
+  heartBeatSubscription;
 
   keepAliveInterval;
 
@@ -35,9 +38,13 @@ export class VideoChatService {
         roomName: roomName
       });
 
-      this.keepAliveInterval = setInterval(() => {
-        this.keepAlive(roomName)
-      }, 20000); // 20 seconds
+      if (this.heartBeatSubscription)
+        this.heartBeatSubscription.unsubscribe();
+
+      this.heartBeatSubscription = interval(10000) //10 seconds
+        .pipe(startWith(0))
+        .subscribe(() => this.heartBeat(entity.guid));
+
     } catch (e) {
       console.error('Error trying to open video chat.');
       console.error(e);
@@ -45,14 +52,14 @@ export class VideoChatService {
   }
 
   deactivate() {
-    clearInterval(this.keepAliveInterval);
     this.isActive = false;
     this.activate$.emit(false);
+    if (this.heartBeatSubscription)
+      this.heartBeatSubscription.unsubscribe();
   }
 
-  public async keepAlive(roomName: string) {
-    const response: any = await this.client.post(`api/v2/video/room/${roomName}`);
-    return response.room;
+  public async heartBeat(key: string) {
+    await this.client.put(`api/v2/notifications/markers/heartbeat/${key}`);
   }
 
   private async getRoomName(entity: any) {

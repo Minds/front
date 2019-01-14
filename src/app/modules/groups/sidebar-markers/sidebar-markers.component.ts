@@ -1,4 +1,6 @@
 import { Component, ComponentFactoryResolver, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { interval } from 'rxjs';
+import { startWith, map, tap } from 'rxjs/operators';
 
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
@@ -25,15 +27,21 @@ export class GroupsSidebarMarkersComponent {
     this.$updateMarker = this.updateMarkers.markers.subscribe(markers => {
       if (!markers)
         return;
-        //    this.markers = markers.filter(marker => marker.entity_type == 'group');
 
       for (let i in this.groups) {
-        if (this.groups[i].guid == 569511221745688576)
-          this.groups[i].hasGathering = true;
-        this.groups[i].hasMarker = markers.filter(marker => {
-          return marker.entity_guid == this.groups[i].guid
-            && marker.read_timestamp < marker.updated_timestamp;
-        }).length > 0;
+        let entity_guid = this.groups[i].guid;
+        this.groups[i].hasGathering$ = interval(1000).pipe(
+          startWith(0),
+          map(() => markers.filter(marker => marker.entity_guid == entity_guid
+            && marker.marker == 'gathering-heartbeat'
+            && marker.updated_timestamp > (Date.now() / 1000) - 10
+          ).length > 0)
+        );
+
+        this.groups[i].hasMarker = markers.filter(marker => marker.entity_guid == this.groups[i].guid
+          && marker.read_timestamp < marker.updated_timestamp
+          && marker.marker != 'gathering-heartbeat'
+        ).length > 0;
       }
 
     });

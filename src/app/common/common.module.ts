@@ -77,6 +77,7 @@ import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
 
 import { UpdateMarkersService } from './services/update-markers.service';
+import { SocketsService } from '../services/sockets';
 
 @NgModule({
   imports: [
@@ -236,8 +237,8 @@ import { UpdateMarkersService } from './services/update-markers.service';
     },
     {
       provide: UpdateMarkersService,
-      useFactory: (_http) => { return new UpdateMarkersService(_http); },
-      deps: [ HttpClient ],
+      useFactory: (_http, _sockets) => { return new UpdateMarkersService(_http, _sockets); },
+      deps: [ HttpClient, SocketsService ],
     },
     {
       provide: HttpClient,

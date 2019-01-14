@@ -172,10 +172,11 @@ export class GroupsProfile {
     this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe(marker => {
       if (!marker)
         return;
-  
+        
       let hasMarker = 
         (marker.read_timestamp < marker.updated_timestamp)
-        && (marker.entity_guid == this.group.guid);
+        && (marker.entity_guid == this.group.guid)
+        && (marker.marker != 'gathering-heartbeat');
 
       if (hasMarker)
         this.resetMarkers();
