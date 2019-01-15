@@ -42,10 +42,10 @@ export class UpdateMarkersService {
         switchMap(() => this.get())
       )*/
       this.get()
-      .subscribe(markers => {
-        this.data = markers; //cache
-        this.markersSubject.next(markers);
-      });
+        .subscribe(markers => {
+          this.data = markers; //cache
+          this.markersSubject.next(markers);
+        });
       this.markers$ = this.markersSubject.asObservable();
       this.emitToEntityGuids();  
     }
