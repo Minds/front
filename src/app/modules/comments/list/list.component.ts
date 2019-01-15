@@ -47,11 +47,14 @@ export class CommentsListComponent {
   showModal: boolean = false;
 
   limit: number = 12;
-  offset: string = '';
-  inProgress: boolean = false;
+  earlierToken: string = '';
+  laterToken: string = '';
+  descendingInProgress: boolean = false;
+  ascendingInProgress: boolean = false;
   canPost: boolean = true;
   triedToPost: boolean = false;
-  moreData: boolean = false;
+  moreDescendingData: boolean = false;
+  moreAscendingData: boolean = false;
   loaded: boolean = false;
 
   socketRoomName: string;
@@ -98,14 +101,16 @@ export class CommentsListComponent {
   }
 
   ngOnInit() {
-    this.load(true);
+    this.load(true, !this.focusedCommentGuid);
     this.listen();
   }
 
-  load(refresh = false) {
+  load(refresh = false, descending = true) {
     if (refresh) {
-      this.offset = '';
-      this.moreData = true;
+      this.earlierToken = '';
+      this.laterToken = '';
+      this.moreDescendingData = descending || this.focusedCommentGuid !== '';
+      this.moreAscendingData = !descending || this.focusedCommentGuid !== '';
       this.comments = [];
 
       if (this.socketRoomName) {
@@ -114,19 +119,23 @@ export class CommentsListComponent {
       this.socketRoomName = void 0;
     }
 
-    if (this.inProgress) {
+    if ((this.ascendingInProgress && !descending) || (this.descendingInProgress && descending)) {
       return;
     }
 
     this.error = '';
-    this.inProgress = true;
-
+    if (descending) {
+      this.descendingInProgress = true;
+    } else {
+      this.ascendingInProgress = true;
+    }
     this.detectChanges();
     this.client.get('api/v1/comments/' + this.guid + '/' + this.parentGuid, {
       limit: refresh ? 5 : this.limit, 
-      token: this.offset,
+      token: descending ? this.earlierToken : this.laterToken,
       offset: this.focusedCommentGuid || '',
-      descending: !this.focusedCommentGuid,
+      include_offset: !this.focusedCommentGuid == descending,
+      descending: descending,
     })
       .then((response: any) => {
       
@@ -136,11 +145,19 @@ export class CommentsListComponent {
         }
 
         this.loaded = true;
-        this.inProgress = false;
-        this.moreData = true;
+        if (descending) {
+          this.descendingInProgress = false;
+        } else {
+          this.ascendingInProgress = false;
+        }
+        //this.moreDescendingData = true;
 
         if (!response.comments) {
-          this.moreData = false;
+          if (descending) {
+            this.moreDescendingData = false;
+          } else {
+            this.moreAscendingData = false;
+          }
           this.detectChanges();
 
           return false;
@@ -149,41 +166,50 @@ export class CommentsListComponent {
         let el = this.scrollView.nativeElement;
         let previousScrollHeightMinusTop = el.scrollHeight - el.scrollTop;
 
-        this.comments = response.comments.concat(this.comments);
+        if (descending) {
+          this.comments = response.comments.concat(this.comments);
+        } else {
+          this.comments = this.comments.concat(response.comments);
+        }
         this.detectChanges();
 
         if (refresh) {
           this.commentsScrollEmitter.emit('bottom');
         }
 
-        if (this.offset && this.scrollView) {
+        if (this.earlierToken && this.scrollView) {
           el.scrollTop = el.scrollHeight - previousScrollHeightMinusTop;
 
           this.detectChanges();
         }
 
-        this.offset = response['load-previous'];
-
-        if (
-          !this.offset ||
-          this.offset === null 
-          //||
-          //response.comments.length < (this.limit - 1)
-        ) {
-          this.moreData = false;
+        if (descending) {
+          this.earlierToken = response['load-previous'];
+          if (!this.earlierToken) {
+            this.moreDescendingData = false;
+          }
+        } else {
+          this.laterToken = response['load-previous'];
+          if (!this.laterToken) {
+            this.moreAscendingData = false;
+          }
         }
 
         this.detectChanges();
       })
       .catch((e) => {
-        this.inProgress = false;
+        if (descending) {
+          this.descendingInProgress = false;
+        } else {
+          this.ascendingInProgress = false;
+        }
         this.error = (e && e.message) || 'There was an error';
         this.detectChanges();
       });
   }
 
   autoloadPrevious() {
-    if (!this.moreData || this.autoloadBlocked) {
+    if (!this.moreDescendingData || this.autoloadBlocked) {
       return;
     }
 
@@ -194,7 +220,7 @@ export class CommentsListComponent {
       this.autoloadBlocked = false;
     }, 1000);
 
-    this.load();
+    this.load(false, true);
   }
 
   overscrollHandler({ deltaY }) {
@@ -316,7 +342,7 @@ export class CommentsListComponent {
   }
 
   postEnabled() {
-    return !this.inProgress && this.canPost && (this.content || this.attachment.has());
+    return !this.descendingInProgress && !this.ascendingInProgress && this.canPost && (this.content || this.attachment.has());
   }
 
   async post(e) {
@@ -326,7 +352,7 @@ export class CommentsListComponent {
       return;
     }
 
-    if (this.inProgress || !this.canPost) {
+    if (this.descendingInProgress || this.ascendingInProgress || !this.canPost) {
       this.triedToPost = true;
       this.detectChanges();
 

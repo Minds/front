@@ -36,6 +36,8 @@ export class MediaViewComponent {
   menuOptions: Array<string> = ['edit', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'subscribe', 'remove-explicit', 'rating'];
 
   paramsSubscription: Subscription;
+  queryParamsSubscription$: Subscription;
+  focusedCommentGuid: string = '';
 
   constructor(
     public session: Session,
@@ -51,16 +53,24 @@ export class MediaViewComponent {
   ngOnInit() {
     this.title.setTitle('');
 
-    this.paramsSubscription = this.route.params.subscribe(params => {
-      if (params['guid']) {
-        this.guid = params['guid'];
+    this.paramsSubscription = this.route.paramMap.subscribe(params => {
+      if (params.get('guid')) {
+        this.guid = params.get('guid');
         this.load(true);
+      }
+    });
+
+    this.queryParamsSubscription$ = this.route.queryParamMap.subscribe(params => {
+      this.focusedCommentGuid = params.get('comment_guid');
+      if (this.focusedCommentGuid) {
+        window.scrollTo(0, 500);
       }
     });
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+    this.queryParamsSubscription$.unsubscribe();
   }
 
   load(refresh: boolean = false) {

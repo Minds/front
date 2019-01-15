@@ -74,7 +74,8 @@
 
       <!-- Activity -->
       <a *ngIf="notification.entityObj.type == 'activity'"
-        [routerLink]="['/newsfeed', notification.entityObj.guid]">
+        [routerLink]="['/newsfeed', notification.entityObj.guid]"
+        [queryParams]="{ comment_guid: notification.params?.parent_guid == 0 ? notification.params?.comment_guid : null }">
         <p *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title">
           <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_ACTIVITY_OWN">{{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">your activity</span></ng-container>
         </p>
@@ -96,7 +97,9 @@
         </div>
 
         <div *ngIf="notification.entityObj.subtype != 'blog'">
-          <a [routerLink]="['/media', notification.entityObj.guid]">
+            <a
+              [routerLink]="['/media', notification.entityObj.guid]"
+              [queryParams]="{ comment_guid: notification.params?.parent_guid == 0 ? notification.params?.comment_guid : null }">
             <p>
               <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON">{{notification.fromObj.name}} commented on </ng-container>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title" >{{notification.entityObj.title | excerpt}}</span>

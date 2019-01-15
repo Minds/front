@@ -39,8 +39,8 @@ export class NewsfeedSingleComponent {
       if (params['guid']) {
         this.error = '';
         this.activity = void 0;
-        if (params['comment_guid']) {
-          this.focusedCommentGuid = params['comment_guid'];
+        if (this.route.snapshot.queryParamMap.has('comment_guid')) {
+          this.focusedCommentGuid = this.route.snapshot.queryParamMap.get('comment_guid');
         }
         this.load(params['guid']);
       }
