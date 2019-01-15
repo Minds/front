@@ -23,7 +23,8 @@ export class GroupsSidebarMarkersComponent {
     private updateMarkers: UpdateMarkersService,
   ) { }
  
-  ngOnInit() {
+  async ngOnInit() {
+    await this.load();
     this.$updateMarker = this.updateMarkers.markers.subscribe(markers => {
       if (!markers)
         return;
@@ -45,7 +46,6 @@ export class GroupsSidebarMarkersComponent {
       }
 
     });
-    this.load();
   }
 
   ngOnDestroy() {
