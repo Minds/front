@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '../api/client.service';
+import { Session } from '../../../app/services/session';
+import { BehaviorSubject } from 'rxjs';
 import { SocketsService } from '../../services/sockets';
-import { BehaviorSubject, ReplaySubject, interval } from 'rxjs';
-import { 
+
+import {
   map,
-  filter,
-  switchMap,
-  reduce,
   concatAll,
-  mergeAll, mergeMap, startWith, groupBy, toArray, catchError, concatMap, tap, flatMap } from 'rxjs/operators';
+} from 'rxjs/operators';
 
 @Injectable()
 export class UpdateMarkersService {
 
+  isLoggedIn: boolean = false;
   markersSubject = new BehaviorSubject([]);
   markers$;
   entityGuids$ = [];
@@ -21,7 +21,8 @@ export class UpdateMarkersService {
 
   constructor(
     private http: HttpClient,
-    private sockets: SocketsService,  
+    private session: Session,
+    private sockets: SocketsService
   ) {
   }
 
@@ -37,19 +38,41 @@ export class UpdateMarkersService {
 
   get markers() {
     if (!this.markers$) {
-      /*interval(50000).pipe(
-        startWith(0),
-        switchMap(() => this.get())
-      )*/
+      this.markers$ = this.markersSubject.asObservable();
+      this.isLoggedIn = this.session.isLoggedIn((is) => {
+        this.isLoggedIn = is;
+        this.fetch();
+      });
+      this.emitToEntityGuids();
+      this.fetch();
+    }
+    return this.markers$;
+  }
+
+  fetch() {
+    if (this.isLoggedIn) {
       this.get()
         .subscribe(markers => {
           this.data = markers; //cache
           this.markersSubject.next(markers);
         });
-      this.markers$ = this.markersSubject.asObservable();
-      this.emitToEntityGuids();  
+    } else {
+      this.clear();
     }
-    return this.markers$;
+  }
+
+  listen() {
+    this.emitToEntityGuids();
+  }
+
+  clear() {
+    // clean subscriptions
+    this.entityGuidsSockets$.forEach(sub => {
+      sub.unsubscribe();
+    });
+    this.entityGuidsSockets$ = [];
+    this.entityGuids$ = [];
+    this.data = [];
   }
 
   markAsRead(opts) {
@@ -59,7 +82,7 @@ export class UpdateMarkersService {
       throw "entity type must be set";
     if (!opts.marker)
       throw "marker must be set";
-    
+
     this.http.post('api/v2/notifications/markers/read', opts)
       .pipe(map(response => response.json()))
       .subscribe(res => null, err => console.warn(err));
@@ -74,12 +97,13 @@ export class UpdateMarkersService {
   }
 
   getByEntityGuid(entity_guid) {
-    if (!this.entityGuids$[entity_guid])
+    if (!this.entityGuids$[entity_guid]) {
       this.entityGuids$[entity_guid] = new BehaviorSubject({});
+    }
 
     if (!this.entityGuidsSockets$[entity_guid]) {
       this.sockets.join(`marker:${entity_guid}`);
-      this.entityGuidsSockets$[entity_guid] = this.sockets.subscribe(`marker:${entity_guid}`, 
+      this.entityGuidsSockets$[entity_guid] = this.sockets.subscribe(`marker:${entity_guid}`,
         (marker) => {
           marker = JSON.parse(marker);
           let entity_guid = marker.entity_guid;
@@ -93,14 +117,15 @@ export class UpdateMarkersService {
               found = true;
             }
           }
-          if (!found)
+          if (!found) {
             this.data.push(marker);
+          }
           this.markersSubject.next(this.data);
         }
       );
     }
 
-    return this.entityGuids$[entity_guid]; 
+    return this.entityGuids$[entity_guid];
   }
 
   emitToEntityGuids() {
@@ -109,7 +134,7 @@ export class UpdateMarkersService {
         concatAll(),
       )
       .subscribe(marker => {
-        let subject = this.getByEntityGuid(marker.entity_guid);
+        const subject = this.getByEntityGuid(marker.entity_guid);
         subject.next(marker);
       });
   }
