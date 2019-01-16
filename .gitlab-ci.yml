@@ -26,6 +26,10 @@ build:
     paths:
       - dist
     policy: push
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
 
 deploy:
   stage: deploy
