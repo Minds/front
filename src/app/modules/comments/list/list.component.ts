@@ -322,7 +322,7 @@ export class CommentsListComponent {
            this.detectChanges();
          }
        }
-       this.comments = this.comments.slice();
+       //this.comments = this.comments.slice(0);
        this.detectChanges();
      });
 
@@ -484,8 +484,13 @@ export class CommentsListComponent {
     }
   }
 
-  detectChanges = () => {
+  detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+  ngOnChanges(changes) {
+  //  console.log('[comment:list]: on changes', changes);
+  }
+
 }

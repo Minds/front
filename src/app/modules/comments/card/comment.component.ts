@@ -19,7 +19,7 @@ import { map } from "rxjs/operators";
 @Component({
   moduleId: module.id,
   selector: 'minds-card-comment',
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   inputs: ['parent'],
   outputs: ['_delete: delete', '_saved: saved'],
   host: {
@@ -260,7 +260,7 @@ export class CommentComponent implements OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log('on changes');
+  //  console.log('[comment:card]: on changes', changes);
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
