@@ -1,4 +1,5 @@
 import { Component, EventEmitter } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
@@ -13,7 +14,7 @@ export class TopbarNavigationComponent {
 
 	user;
 	items;
-    hasMarker = false;
+    hasMarker$;
 
 	constructor(
 		public navigation: NavigationService,
@@ -25,13 +26,19 @@ export class TopbarNavigationComponent {
     ngOnInit() {
         this.items = this.navigation.getItems('topbar');
 		this.getUser();
-        this.updateMarkers.markers.subscribe(markers => {
-          if (!markers)
-            return;
-          this.hasMarker = markers
-            .filter(marker => marker.read_timestamp < marker.updated_timestamp)
-            .length;
-        });
+        this.hasMarker$ = this.updateMarkers.markers
+          .pipe(
+            map((markers: any) => {
+              if (!markers)
+                return;
+              return markers
+                .filter(marker =>
+                  marker.read_timestamp < marker.updated_timestamp
+                  && marker.marker != 'gathering-heartbeat'
+                )
+                .length;
+            })
+          );
     }
 
 	getUser() {

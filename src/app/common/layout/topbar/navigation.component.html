@@ -75,7 +75,7 @@
 
       <span
         class="m-topbar--navigation--text"
-        [class.m-topbarNavigationItem__text--has-marker]="hasMarker"
+        [class.m-topbarNavigationItem__text--has-marker]="hasMarker$ | async"
         i18n="@@M_TOPBAR_GROUPS"
         >
         Groups
