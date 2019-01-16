@@ -129,7 +129,9 @@ export class TagsInput implements OnInit {
   }
 
   focus() {
-    this.element.nativeElement.getElementsByName('input-tags')[0].focus();
+    const input = this.element.nativeElement.querySelector('input[name=input-tags]');
+    if (input)
+      input.focus();
   }
 
   push() {

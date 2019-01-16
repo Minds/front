@@ -41,6 +41,20 @@ export class HashtagsSelectorComponent {
 
   // Set the tags from the upstream
   @Input('tags') set _tags(tags) {
+    let different = false;
+    if (tags.length !== this.tags.length) {
+      different = true;
+    } else {
+      for (let i = 0; i < tags.length; ++i) {
+        if (this.tags[i].value !== tags[i]) {
+          different = true;
+          break;
+        }
+      }
+    }
+    if (!different)
+      return;
+
     this.tags = tags.map(tag => {
       return { value: tag, selected: true };
     });
