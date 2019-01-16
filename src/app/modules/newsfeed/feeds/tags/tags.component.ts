@@ -12,7 +12,7 @@ import { Storage } from '../../../../services/storage';
   selector: 'm-newsfeed--tags',
   templateUrl: 'tags.component.html'
 })
-export class NewsfeedTagsComponent implements OnInit, OnDestroy {
+export class NewsfeedTagsComponent implements OnDestroy {
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: number = 0;
@@ -32,6 +32,8 @@ export class NewsfeedTagsComponent implements OnInit, OnDestroy {
     private storage: Storage,
     private context: ContextService,
   ) {
+    this.minds = window.Minds;
+
     this.title.setTitle('Newsfeed');
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['tag']) {
@@ -41,12 +43,6 @@ export class NewsfeedTagsComponent implements OnInit, OnDestroy {
       }
       this.load(true);
     });
-    this.context.set('activity');
-  }
-
-  ngOnInit() {
-    this.load();
-    this.minds = window.Minds;
     this.context.set('activity');
   }
 
