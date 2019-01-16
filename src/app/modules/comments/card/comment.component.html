@@ -10,7 +10,7 @@
     <div class="m-comment__bubble">
       <div class="m-commentBubble__username">
         <a [routerLink]="['/', comment.ownerObj.username]">
-          <span>@{{comment.ownerObj.username}}</span>
+          <span>{{comment.ownerObj.name}}</span>
           <m-channel--badges class="m-channel--badges-activity" [user]="comment.ownerObj" badges="[ 'verified' ]"></m-channel--badges>
         </a>
       </div>
@@ -229,6 +229,7 @@
         <span class="m-clickable"
           [class.selected]="comment.replies_count > 0"
           (click)="toggleReplies();"
+          *ngIf="comment.parent_guid_l2 == 0"
         >
           <i class="material-icons">reply</i>
           <span *ngIf="comment.replies_count > 0">{{ comment.replies_count }} Replies</span>
@@ -245,7 +246,7 @@
     <minds-comments
       [object]="comment"
       [parentGuid]="comment._guid"
-      *ngIf="showReplies"
+      *ngIf="showReplies && comment.parent_guid_l2 == 0"
       >
     </minds-comments>
 

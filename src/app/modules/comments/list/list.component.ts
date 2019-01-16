@@ -130,12 +130,25 @@ export class CommentsListComponent {
       this.ascendingInProgress = true;
     }
     this.detectChanges();
-    this.client.get('api/v1/comments/' + this.guid + '/' + this.parentGuid, {
+
+    const key = 'parent_guid_l';
+    let parent_guid_l1 = 0,
+      parent_guid_l2 = 0;
+    if (this.parent[key + '1'] == 0) {
+      parent_guid_l1 = this.parent._guid;
+    } else {
+      parent_guid_l1 = this.parent[key + '1'];
+      parent_guid_l2 = this.parent._guid;
+    }
+
+    this.client.get('api/v1/comments/' + this.guid, {
       limit: refresh ? 5 : this.limit, 
       token: descending ? this.earlierToken : this.laterToken,
       offset: this.focusedCommentGuid || '',
       include_offset: !this.focusedCommentGuid == descending,
       descending: descending,
+      parent_guid_l1: parent_guid_l1,
+      parent_guid_l2: parent_guid_l2,
     })
       .then((response: any) => {
       
@@ -284,7 +297,25 @@ export class CommentsListComponent {
         return;
       }
 
-      this.client.get('api/v1/comments/' + this.guid + '/' + this.parentGuid + '/' + guid, { limit: 1, reversed: false })
+      let l1 = 0,
+        l2 = 0;
+
+      if (this.parent.parent_guid_l1 == 0) {
+        l1 = this.parent._guid;
+      } else {
+        l1 = this.parent.parent_guid_l1;
+        l2 = this.parent._guid;
+      }
+
+      this.client.get('api/v1/comments/' + this.guid, { 
+          limit: 1,
+          reversed: false,
+          descending: true,
+          offset: guid,
+          include_offset: true,
+          parent_guid_l1: l1,
+          parent_guid_l2: l2,
+        })
         .then((response: any) => {
           if (!response.comments || response.comments.length === 0) {
             return;
@@ -293,7 +324,9 @@ export class CommentsListComponent {
           // if the list is scrolled to the bottom
           let scrolledToBottom = this.scrollView.nativeElement.scrollTop + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
 
-          this.comments.push(response.comments[0]);
+          if (response.comments[0]._guid == guid)
+            this.comments.push(response.comments[0]);
+
           this.detectChanges();
 
           if (scrolledToBottom) {
@@ -362,13 +395,26 @@ export class CommentsListComponent {
     let data = this.attachment.exportMeta();
     data['comment'] = this.content;
 
+    if (this.parent && this.parent.type === 'comment') {
+      const key = 'parent_guid_l';
+
+      if (this.parent[key + '1'] == 0) {
+        data[key + '1'] = this.parent._guid;
+      } else {
+        data[key + '1'] = this.parent[key + '1'];
+        data[key + '2'] = this.parent._guid;
+      }
+    }
+
     let newLength = this.comments.push({ // Optimistic
       description: this.content,
       guid: 0,
       ownerObj: this.session.getLoggedInUser(),
       owner_guid: this.session.getLoggedInUser().guid,
       time_created: Date.now() / 1000,
-      type: 'comment'
+      type: 'comment',
+      parent_guid_l1: data['parent_guid_l1'],
+      parent_guid_l2: data['parent_guid_l2'],
     }), currentIndex = newLength - 1;
 
     this.attachment.reset();
@@ -379,7 +425,7 @@ export class CommentsListComponent {
     this.commentsScrollEmitter.emit('bottom');
 
     try {
-      let response: any = await this.client.post('api/v1/comments/' + this.guid + '/' + this.parentGuid, data);
+      let response: any = await this.client.post('api/v1/comments/' + this.guid, data);
       this.comments[currentIndex] = response.comment;
     } catch (e) {
       this.comments[currentIndex].error = (e && e.message) || 'There was an error';
