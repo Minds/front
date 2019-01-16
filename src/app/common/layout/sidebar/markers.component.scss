@@ -1,12 +1,12 @@
-m-sidebar--markers {
+.m-sidebarMarkers__container {
   right: 0;
   position: fixed;
   z-index: 999;
   width: 48px;
   height : 100%;
   background: #FFF;
-  top: 52px;  
+  top: 52px;
 }
-m-body {
+.has-markers-sidebar {
   margin-right: 46px;
 }

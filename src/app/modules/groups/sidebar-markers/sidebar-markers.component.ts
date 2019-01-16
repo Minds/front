@@ -22,7 +22,7 @@ export class GroupsSidebarMarkersComponent {
     public session: Session,
     private updateMarkers: UpdateMarkersService,
   ) { }
- 
+
   async ngOnInit() {
     await this.load();
     
@@ -51,12 +51,12 @@ export class GroupsSidebarMarkersComponent {
   }
 
   ngOnDestroy() {
-    this.$updateMarker.unsubscribe()
+    this.$updateMarker.unsubscribe();
   }
 
   async load() {
-    let response:any = await this.client.get('api/v1/groups/member');
+    const response: any = await this.client.get('api/v1/groups/member');
     this.groups = response.entities;
-  } 
+  }
 
 }

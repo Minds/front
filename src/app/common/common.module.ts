@@ -237,8 +237,8 @@ import { SocketsService } from '../services/sockets';
     },
     {
       provide: UpdateMarkersService,
-      useFactory: (_http, _sockets) => { return new UpdateMarkersService(_http, _sockets); },
-      deps: [ HttpClient, SocketsService ],
+      useFactory: (_http, _session, _sockets) => { return new UpdateMarkersService(_http, _session, _sockets); },
+      deps: [ HttpClient, Session, SocketsService ],
     },
     {
       provide: HttpClient,
