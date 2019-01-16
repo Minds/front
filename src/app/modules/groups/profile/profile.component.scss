@@ -123,3 +123,27 @@ m-groups--profile .m-group__grid header {
     height: 268px;
   }
 }
+
+.m-group__splash--closed-group {
+  .m-groupSplash__inner {
+    margin: auto;
+    max-width: 990px;
+    text-align: center;
+
+    h1 {
+      font-weight: 500;
+    }
+  }
+
+  .m-groupSplash__avatar {
+    margin-top: -50px;
+
+    .minds-avatar {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      background-size: cover;
+      margin: auto;
+    }
+  }
+}

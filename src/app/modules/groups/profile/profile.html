@@ -281,13 +281,13 @@
 
 
 <!-- IF A CLOSED GROUP AND NOT A MEMBER -->
-<div class="m-group-closed-splash" *ngIf="group && !group['is:member'] && group.membership != 2">
+<div class="m-group__splash--closed-group" *ngIf="group && !group['is:member'] && group.membership != 2">
 
   <minds-banner [object]="group" [top]="group.banner_position"></minds-banner>
 
-  <div class="m-group-closed-splash-inner">
+  <div class="m-groupSplash__inner">
 
-    <div class="m-group-avatar">
+    <div class="m-groupSplash__avatar">
       <minds-avatar [object]="group" [editMode]="editing" (added)="upload_avatar($event)"></minds-avatar>
     </div>
 

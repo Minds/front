@@ -1,7 +1,9 @@
 import { Component, Inject, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GroupsService } from './groups-service';
 import { Session } from '../../services/session';
+import { LoginReferrerService } from '../../services/login-referrer.service';
 
 @Component({
   selector: 'minds-groups-join-button',
@@ -24,7 +26,7 @@ import { Session } from '../../services/session';
     <button class="m-btn m-btn--slim awaiting" *ngIf="group['is:awaiting']" (click)="cancelRequest()" i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION">Cancel request</button>
     <m-modal-signup-on-action
       [open]="showModal"
-      (closed)="showModal = false"
+      (closed)="join(); showModal = false;"
       action="join a group"
       i18n-action="@@GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE"
       [overrideOnboarding]="true"
@@ -41,7 +43,12 @@ export class GroupsJoinButton {
   membership: EventEmitter<any> = new EventEmitter();
 
 
-  constructor(public session: Session, public service: GroupsService) {
+  constructor(
+    public session: Session,
+    public service: GroupsService,
+    private router: Router,
+    private loginReferrer: LoginReferrerService,
+  ) {
     this.minds = window.Minds;
   }
 
@@ -70,10 +77,13 @@ export class GroupsJoinButton {
   /**
    * Join a group
    */
-  join() {
-    if (!this.session.isLoggedIn()) {
-      this.showModal = true;
-      return;
+ join() {
+ 
+   if (!this.session.isLoggedIn()) {
+     //this.showModal = true;
+     this.loginReferrer.register(`/groups/profile/${this.group.guid}/feed?join=true`);
+     this.router.navigate(['/login']);
+     return;
     }
 
     this.service.join(this.group)

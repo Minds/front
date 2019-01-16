@@ -44,6 +44,7 @@ export class GroupsProfile {
   error: string;
   paramsSubscription: Subscription;
   childParamsSubscription: Subscription;
+  queryParamsSubscripton: Subscription;
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
@@ -87,8 +88,12 @@ export class GroupsProfile {
           this.group = void 0;
 
           this.load()
-            .then(() => {
+            .then(async () => {
               this.filterToDefaultView();
+              if (this.route.snapshot.queryParamMap.has('join') && confirm('Are you sure you want to join this group')) {
+                await this.service.join(this.group);
+                this.group['is:awaiting'] = true;
+              }
             });
         }
       }
@@ -138,6 +143,8 @@ export class GroupsProfile {
       this.paramsSubscription.unsubscribe();
     if (this.childParamsSubscription)
       this.childParamsSubscription.unsubscribe();
+    if (this.queryParamsSubscripton)
+      this.queryParamsSubscripton.unsubscribe();
 
     if (this.videoChatActiveSubscription)
       this.videoChatActiveSubscription.unsubscribe(); 
@@ -194,7 +201,7 @@ export class GroupsProfile {
   }
 
   async reviewCountLoad() {
-    if (!this.guid) {
+    if (!this.guid || !this.session.isLoggedIn()) {
       return;
     }
 
