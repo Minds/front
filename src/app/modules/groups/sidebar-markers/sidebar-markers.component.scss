@@ -40,14 +40,15 @@
     display: block;
     //top: 0;
     //left: 0;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     box-sizing: border-box;
-    margin: 4px;
+    margin: 2px;
     //margin: -15% -15%;
     border-radius: 50%;
     background-color: #2196f3;
-    animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    background-color: red;
+    animation: pulse-ring 1.25s cubic-bezier(0.215, 0.5, 0.355, 1) infinite;
     content: "";
   }
 

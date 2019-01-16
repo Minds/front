@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { interval } from 'rxjs';
-import { startWith, map, tap } from 'rxjs/operators';
+import { interval, timer } from 'rxjs';
+import { startWith, map, tap, throttle } from 'rxjs/operators';
 
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
@@ -25,6 +25,7 @@ export class GroupsSidebarMarkersComponent {
  
   async ngOnInit() {
     await this.load();
+    
     this.$updateMarker = this.updateMarkers.markers.subscribe(markers => {
       if (!markers)
         return;
@@ -32,6 +33,7 @@ export class GroupsSidebarMarkersComponent {
       for (let i in this.groups) {
         let entity_guid = this.groups[i].guid;
         this.groups[i].hasGathering$ = interval(1000).pipe(
+          throttle(() => interval(2000)), //only allow once per 2 seconds
           startWith(0),
           map(() => markers.filter(marker => marker.entity_guid == entity_guid
             && marker.marker == 'gathering-heartbeat'
