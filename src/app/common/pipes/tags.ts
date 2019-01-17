@@ -7,7 +7,7 @@ import { Pipe, Inject, PipeTransform } from '@angular/core';
 /**
  * Tags pipe
  */
-export class TagsPipe implements PipeTransform  {
+export class TagsPipe implements PipeTransform {
 
   results = [];
 
@@ -31,7 +31,7 @@ export class TagsPipe implements PipeTransform  {
       rule: /#\w+/gim,
       // rule: /(^|\s||)#(\w+)/gim,
       replace: (m) => {
-        return  `<a href="/newsfeed/tag/${m.match[0].substring(1)};ref=hashtag" target="_blank">${m.match[0]}</a>`;
+        return `<a href="/newsfeed/tag/${m.match[0].substring(1)};ref=hashtag" target="_blank">${m.match[0]}</a>`;
       }
     },
     at: {
@@ -71,18 +71,6 @@ export class TagsPipe implements PipeTransform  {
     }
   }
 
-  /**
-   * Replace tags
-   * @param str
-   */
-  replace(str) {
-    this.results.forEach(m => {
-      str = str.replace(m.match[0], this.tags[m.type].replace(m, str));
-    });
-
-    return str;
-  }
-
   transform(value: string): string {
     this.results = [];
     this.parse('url', value);
@@ -90,26 +78,21 @@ export class TagsPipe implements PipeTransform  {
     this.parse('hash', value);
     this.parse('at', value);
 
-    this.results.sort((a,b) => a.start-b.start );
+    /* Sort by the start points and then build the string by pushing the individual string segments onto an array,
+     then joining it at the end to avoid a chain of string concatenations. (O=n^2) */
+    this.results.sort((a, b) => a.start - b.start);
     let html = [];
     let copyStartIndex = 0;
-    for (let i=0; i<this.results.length; i++)
-    {
+    for (let i = 0; i < this.results.length; i++) {
       let tag = this.results[i];
       html.push(value.substring(copyStartIndex, tag.start));
-      copyStartIndex = tag.end;
-
       html.push(this.tags[tag.type].replace(tag));
 
-      if (i == this.results.length - 1){
+      copyStartIndex = tag.end;
+      if (i == this.results.length - 1) {
         html.push(value.substring(copyStartIndex));
       }
     }
-    console.log(html);
     return html.join('');
-
-    //return this.replace(value);
-
   }
-
 }
