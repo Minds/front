@@ -111,6 +111,7 @@ export class CommentsListComponent {
       this.laterToken = '';
       this.moreDescendingData = descending || this.focusedCommentGuid !== '';
       this.moreAscendingData = !descending || this.focusedCommentGuid !== '';
+      this.moreAscendingData = this.focusedCommentGuid !== '';
       this.comments = [];
 
       if (this.socketRoomName) {

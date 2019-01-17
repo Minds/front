@@ -54,7 +54,7 @@
   <div class="mdl-color-text--blue-grey-500 m-comments-load-more"
      (click)="load(false, false)"
      [ngClass]="{ 'm-disabled': ascendingInProgress }"
-     *ngIf="moreAscendingData || !loaded"
+     *ngIf="moreAscendingData && focusedCommentGuid"
   >
     <span *ngIf="ascendingInProgress">
       <i class="material-icons">autorenew</i> <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS">Loading&hellip;</ng-container>
