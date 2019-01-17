@@ -7,7 +7,7 @@ import { Pipe, Inject, PipeTransform } from '@angular/core';
 /**
  * Tags pipe
  */
-export class TagsPipe implements PipeTransform {
+export class TagsPipe implements PipeTransform  {
 
   results = [];
 
@@ -28,10 +28,9 @@ export class TagsPipe implements PipeTransform {
       }
     },
     hash: {
-      rule: /#\w+/gim,
-      // rule: /(^|\s||)#(\w+)/gim,
+      rule: /(^|\s||)#(\w+)/gim,
       replace: (m) => {
-        return `<a href="/newsfeed/tag/${m.match[0].substring(1)};ref=hashtag" target="_blank">${m.match[0]}</a>`;
+        return  `${m.match[1]}<a href="/newsfeed/tag/${m.match[2]};ref=hashtag">#${m.match[2]}</a>`;
       }
     },
     at: {
@@ -71,6 +70,18 @@ export class TagsPipe implements PipeTransform {
     }
   }
 
+  /**
+   * Replace tags
+   * @param str
+   */
+  replace(str) {
+    this.results.forEach(m => {
+      str = str.replace(m.match[0], this.tags[m.type].replace(m, str));
+    });
+
+    return str;
+  }
+
   transform(value: string): string {
     this.results = [];
     this.parse('url', value);
@@ -78,21 +89,7 @@ export class TagsPipe implements PipeTransform {
     this.parse('hash', value);
     this.parse('at', value);
 
-    /* Sort by the start points and then build the string by pushing the individual string segments onto an array,
-     then joining it at the end to avoid a chain of string concatenations. (O=n^2) */
-    this.results.sort((a, b) => a.start - b.start);
-    let html = [];
-    let copyStartIndex = 0;
-    for (let i = 0; i < this.results.length; i++) {
-      let tag = this.results[i];
-      html.push(value.substring(copyStartIndex, tag.start));
-      html.push(this.tags[tag.type].replace(tag));
-
-      copyStartIndex = tag.end;
-      if (i == this.results.length - 1) {
-        html.push(value.substring(copyStartIndex));
-      }
-    }
-    return html.join('');
+    return this.replace(value);
   }
+
 }
