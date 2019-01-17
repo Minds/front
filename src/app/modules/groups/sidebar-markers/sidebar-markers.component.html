@@ -13,4 +13,20 @@
        </m-tooltip>
     </a>
   </li>
+
+  <!-- If no results -->
+  <li *ngIf="!groups || groups.length === 0">
+    <a [routerLink]="['/groups/top']">
+      <m-tooltip
+         anchor="right"  
+      >
+        <img src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg" m-tooltip--anchor/>
+        <span>Noname</span>
+
+        <ng-container>
+          Join some groups to populate this sidebar
+        </ng-container>
+      </m-tooltip>
+    </a>
+  </li>
 </ul>
