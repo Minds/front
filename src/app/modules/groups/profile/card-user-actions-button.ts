@@ -27,12 +27,12 @@ import { GroupsService } from '../groups-service';
     <li class="mdl-menu__item"
       *ngIf="group['is:owner'] && !(user['is:owner']||user['is:moderator']) && user['is:member']"
       (click)="grantOwnership()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__MAKE_ADMIN">
-      Make Owner
+      Make Admin
     </li>
     <li class="mdl-menu__item"
       *ngIf="group['is:owner'] && user['is:owner'] && user['is:member']"
       (click)="revokeOwnership()" i18n="@@GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_AS_ADMIN">
-      Remove as Owner
+      Remove as Admin
     </li>
     <li class="mdl-menu__item"
       *ngIf="group['is:owner'] && !(user['is:owner']||user['is:moderator']) && user['is:member']"
