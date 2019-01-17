@@ -131,24 +131,14 @@ export class CommentsListComponent {
     }
     this.detectChanges();
 
-    const key = 'parent_guid_l';
-    let parent_guid_l1 = 0,
-      parent_guid_l2 = 0;
-    if (this.parent[key + '1'] == 0) {
-      parent_guid_l1 = this.parent._guid;
-    } else {
-      parent_guid_l1 = this.parent[key + '1'];
-      parent_guid_l2 = this.parent._guid;
-    }
+    const parent_path = this.parent.child_path || "0:0:0"; 
 
-    this.client.get('api/v1/comments/' + this.guid, {
+    this.client.get(`api/v1/comments/${this.guid}/0/${parent_path}`, {
       limit: refresh ? 5 : this.limit, 
       token: descending ? this.earlierToken : this.laterToken,
       offset: this.focusedCommentGuid || '',
       include_offset: !this.focusedCommentGuid == descending,
       descending: descending,
-      parent_guid_l1: parent_guid_l1,
-      parent_guid_l2: parent_guid_l2,
     })
       .then((response: any) => {
       
@@ -297,24 +287,12 @@ export class CommentsListComponent {
         return;
       }
 
-      let l1 = 0,
-        l2 = 0;
+      const parent_path = this.parent.child_path || "0:0:0";
 
-      if (this.parent.parent_guid_l1 == 0) {
-        l1 = this.parent._guid;
-      } else {
-        l1 = this.parent.parent_guid_l1;
-        l2 = this.parent._guid;
-      }
-
-      this.client.get('api/v1/comments/' + this.guid, { 
+      this.client.get(`api/v1/comments/${this.guid}/${guid}/${parent_path}`, { 
           limit: 1,
           reversed: false,
           descending: true,
-          offset: guid,
-          include_offset: true,
-          parent_guid_l1: l1,
-          parent_guid_l2: l2,
         })
         .then((response: any) => {
           if (!response.comments || response.comments.length === 0) {
@@ -394,17 +372,7 @@ export class CommentsListComponent {
 
     let data = this.attachment.exportMeta();
     data['comment'] = this.content;
-
-    if (this.parent && this.parent.type === 'comment') {
-      const key = 'parent_guid_l';
-
-      if (this.parent[key + '1'] == 0) {
-        data[key + '1'] = this.parent._guid;
-      } else {
-        data[key + '1'] = this.parent[key + '1'];
-        data[key + '2'] = this.parent._guid;
-      }
-    }
+    data['parent_path'] = this.parent.child_path || '0:0:0';
 
     let newLength = this.comments.push({ // Optimistic
       description: this.content,
@@ -413,8 +381,6 @@ export class CommentsListComponent {
       owner_guid: this.session.getLoggedInUser().guid,
       time_created: Date.now() / 1000,
       type: 'comment',
-      parent_guid_l1: data['parent_guid_l1'],
-      parent_guid_l2: data['parent_guid_l2'],
     }), currentIndex = newLength - 1;
 
     this.attachment.reset();

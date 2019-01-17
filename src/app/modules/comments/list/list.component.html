@@ -26,7 +26,14 @@
     
   </div>
 
-  <p class="m-comments--start-conversation-label" *ngIf="!descendingInProgress && !ascendingInProgress && !error && comments?.length === 0" i18n="@@MINDS__COMMENTS__START_CONVERSATION">
+  <p class="m-comments--start-conversation-label"
+    *ngIf="!descendingInProgress
+      && !ascendingInProgress
+      && !error
+      && comments?.length === 0
+      && parent.type == 'activity'"
+    i18n="@@MINDS__COMMENTS__START_CONVERSATION"
+    >
     Start the conversation!
   </p>
 
