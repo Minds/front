@@ -88,6 +88,17 @@
       vertical-align: top;
     }
   }
+
+}
+
+.m-comment__toolbar  .m-edited-text {
+  margin-left: 8px;
+  vertical-align: middle;
+  font-size: 10px;
+  text-transform: uppercase;
+  line-height: 13px;
+  color: #888;
+  font-weight: 500;
 }
 
 .m-commentToolbar__timestamp {
