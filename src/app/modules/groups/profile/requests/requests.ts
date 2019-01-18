@@ -35,6 +35,15 @@ export class GroupsProfileRequests {
   }
  
   load(refresh: boolean = false) {
+    if (this.inProgress)
+      return;
+
+    if (refresh) {
+      this.offset = '';
+      this.moreData = true;
+      this.users = [];
+    }
+
     this.inProgress = true;
     this.client.get('api/v1/groups/membership/' + this.group.guid + '/requests', { limit: 12, offset: this.offset })
       .then((response: any) => {
