@@ -198,6 +198,7 @@ export class GroupsProfileFeed {
             custom_type: this.filter === 'image' ? 'batch' : 'video',
             custom_data: this.filter === 'image' ? [{src: entity.thumbnail_src}]: entity,
             guid: entity.guid,
+            entity_guid: entity.guid,
             ownerObj: entity.ownerObj,
             owner_guid: entity.owner_guid,
             time_created: entity.time_created,
