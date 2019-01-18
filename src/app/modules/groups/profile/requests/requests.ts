@@ -14,7 +14,7 @@ import { Session } from '../../../../services/session';
 
 export class GroupsProfileRequests {
 
-  minds;
+  minds = window.Minds;
   group: any;
   $group;
 
@@ -24,7 +24,7 @@ export class GroupsProfileRequests {
   moreData: boolean = true;
 
   constructor(public session: Session, public client: Client, public service: GroupsService) {
-
+    
   }
 
   ngOnInit() {
