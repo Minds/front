@@ -159,6 +159,9 @@ export class CommentComponent implements OnChanges {
     }
 
     this.client.delete('api/v1/comments/' + this.comment.guid);
+    if(this.parent.type === 'comment'){
+      this.parent.replies_count -= 1;
+    }
     this._delete.next(true);
   }
 
