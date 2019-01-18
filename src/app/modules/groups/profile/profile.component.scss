@@ -24,6 +24,9 @@
     .material-icons {
       text-shadow: 0px 0px 1px white, 0px 0px 1px white;
     }
+    @media screen and (max-width: 900px) {
+      right: 8px !important;
+    }
   }
 }
 
@@ -100,6 +103,12 @@
 
   .m-groupInfo__actionButtons {
     display: inline-flex;
+
+    @media screen and (max-width: 700px) {
+      .m-btn {
+        display: none;
+      }
+    }
   }
 
   .m-groupInfo__member-previews {
@@ -107,6 +116,12 @@
     top: 8px;
     left: 126px;
     width: calc(100% - 180px);
+
+    @media screen and (max-width: 700px) {
+      .m-groupMemberPreviews__member {
+        display: none;
+      }
+    }
   }
 }
 
