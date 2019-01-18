@@ -54,7 +54,7 @@
     > button.material-icons {
       border: 0;
       font-size: 18px;
-      padding: 8px;
+      padding: 14px 8px;
 
       i {
         font-size: 18px;
@@ -104,7 +104,8 @@
   .m-groupInfo__member-previews {
     position: absolute;
     top: 8px;
-    left: 126px; 
+    left: 126px;
+    width: calc(100% - 180px);
   }
 }
 

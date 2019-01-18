@@ -6,7 +6,7 @@
   </li>
   <li class="m-groupMemberPreviews__member--count" routerLink="members">
     <span *ngIf="count > 0">
-      +{{count | number}} Member<ng-container *ngIf="count > 1">s</ng-container>
+      +{{count | abbr:0 }} Member<ng-container *ngIf="count > 1">s</ng-container>
     </span>
     <span *ngIf="count <= 0">+ Members</span>
   </li>
