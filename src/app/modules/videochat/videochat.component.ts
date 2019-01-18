@@ -37,6 +37,8 @@ export class VideoChatComponent implements OnInit {
       } else {
         this.isActive = false;
       }
+      this.cd.markForCheck();
+      this.cd.detectChanges();
     });
   }
 
