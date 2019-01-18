@@ -118,8 +118,24 @@
 
       </div>
 
+      <div *ngIf="notification.entityObj.type == 'group'">
+        <div>
+          <a
+              [routerLink]="['/groups/profile', notification.entityObj.guid]"
+              [queryParams]="{ comment_guid: notification.params?.parent_path == '0:0:0' ? notification.params?.comment_guid : null }">
+            <p>
+            <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION" 
+                *ngIf="notification.params?.is_reply">
+                {{notification.fromObj.name}} replied to your message in 
+              </ng-container>
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.name" >{{notification.entityObj.name | excerpt}}</span>'s conversation
+            </p>
+          </a>
+        </div>
+      </div>
+
       <!-- Default -->
-      <a *ngIf="notification.entityObj.type != 'object' && notification.entityObj.type != 'activity'">
+      <a *ngIf="notification.entityObj.type != 'object' && notification.entityObj.type != 'activity' && notification.entityObj.type != 'group'">
         <p style="font-style:italic">
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__ERROR_VIEWING">There was an error viewing this notification.</ng-container>
         </p>
