@@ -1,5 +1,6 @@
 import { Inject, EventEmitter } from '@angular/core';
 import { Client, Upload } from '../../services/api';
+import { UpdateMarkersService } from '../../common/services/update-markers.service';
 import { BehaviorSubject } from 'rxjs';
 
 export class GroupsService {
@@ -12,11 +13,15 @@ export class GroupsService {
   group = new BehaviorSubject(null);
   $group = this.group.asObservable();
 
-  static _(client: Client, upload: Upload) {
-    return new GroupsService(client, upload);
+  static _(client: Client, upload: Upload, updateMarkers: UpdateMarkersService) {
+    return new GroupsService(client, upload, updateMarkers);
   }
 
-  constructor( @Inject(Client) public clientService: Client, @Inject(Upload) public uploadService: Upload) {
+  constructor(
+    @Inject(Client) public clientService: Client,
+    @Inject(Upload) public uploadService: Upload,
+    @Inject(UpdateMarkersService) private updateMarkers: UpdateMarkersService,
+  ) {
   }
 
   // Group
@@ -161,6 +166,7 @@ export class GroupsService {
   // Notifications
 
   muteNotifications(group: any) {
+    this.updateMarkers.mute(group.guid);
     return this.clientService.post(`${this.base}notifications/${group.guid}/mute`)
       .then((response: any) => {
         return !!response['is:muted'];
@@ -171,6 +177,7 @@ export class GroupsService {
   }
 
   unmuteNotifications(group: any) {
+    this.updateMarkers.unmute(group.guid);
     return this.clientService.post(`${this.base}notifications/${group.guid}/unmute`)
       .then((response: any) => {
         return !!response['is:muted'];

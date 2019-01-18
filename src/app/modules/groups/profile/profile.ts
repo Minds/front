@@ -174,7 +174,7 @@ export class GroupsProfile {
     }
 
     if (this.updateMarkersSubscription)
-      this.updateMarkersSubscription.unsubcribe();
+      this.updateMarkersSubscription.unsubscribe();
 
     this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe(marker => {
       if (!marker)

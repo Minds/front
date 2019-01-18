@@ -18,6 +18,7 @@ export class UpdateMarkersService {
   entityGuids$ = [];
   entityGuidsSockets$ = [];
   private data = [];
+  muted = [];
 
   constructor(
     private http: HttpClient,
@@ -54,6 +55,12 @@ export class UpdateMarkersService {
       this.get()
         .subscribe(markers => {
           this.data = markers; //cache
+
+          for (let i in this.data) {
+            if (this.data[i].disabled === true) 
+              this.muted.push(this.data[i].entity_guid);
+          }
+
           this.markersSubject.next(markers);
         });
     } else {
@@ -96,6 +103,21 @@ export class UpdateMarkersService {
     this.markersSubject.next(this.data);
   }
 
+
+  mute(entity_guid) {
+    if (this.muted.indexOf(entity_guid) > -1)
+      return;
+    this.muted.push(entity_guid);
+    console.log(this.muted);
+  }
+
+  unmute(entity_guid) {
+    for (let i = 0; i < this.muted.length; i++) {
+      if (this.muted[i] == entity_guid)
+        this.muted.splice(i, 1);
+    }
+  }
+
   getByEntityGuid(entity_guid) {
     if (!this.entityGuids$[entity_guid]) {
       this.entityGuids$[entity_guid] = new BehaviorSubject({});
@@ -107,6 +129,9 @@ export class UpdateMarkersService {
         (marker) => {
           marker = JSON.parse(marker);
           let entity_guid = marker.entity_guid;
+        
+          if (this.muted.indexOf(entity_guid) > -1)
+            return; //muted, so take no action
           //this.entityGuids$[entity_guid].next(marker);
 
           let found:boolean = false;
