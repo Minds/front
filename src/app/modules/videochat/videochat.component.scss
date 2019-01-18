@@ -2,6 +2,20 @@ m-videochat {
   &, & iframe {
     max-height: calc(100vh - 90px);
   }
+
   display: block;
   position: relative;
+
+  .m-videochat--error {
+    position: absolute;
+    left: calc(50% - 250px);
+    top: 50%;
+    background-color: white;
+    padding: $minds-padding $minds-padding * 2;
+
+    p, h3 {
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
 }

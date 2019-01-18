@@ -18,6 +18,10 @@ export class VideoChatComponent implements OnInit {
   minds = window.Minds;
   isActive$;
   isFullWidth$;
+  showNotice: boolean = false;
+
+  listenerTimeout: any;
+  listener = this.onReceiveMessage.bind(this);
 
   @Input() configs: JitsiConfig;
   @HostBinding('class.is-active') isActive = false;
@@ -27,7 +31,8 @@ export class VideoChatComponent implements OnInit {
   constructor(
     private service: VideoChatService,
     private cd: ChangeDetectorRef,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.isActive$ = this.service.activate$.subscribe((configs: JitsiConfig) => {
@@ -47,10 +52,13 @@ export class VideoChatComponent implements OnInit {
 
   startJitsi() {
     this.isActive = true;
+    this.showNotice = false;
     this.cd.markForCheck();
     this.cd.detectChanges();
     const domain = 'meet.jit.si';
-    console.warn('configs:', this.configs);
+
+    this.startListener();
+
     const options = {
       roomName: this.configs.roomName,
       width: '100%',
@@ -87,6 +95,29 @@ export class VideoChatComponent implements OnInit {
     api.on('videoConferenceLeft', () => {
       this.service.deactivate();
     });
+  }
+
+  private startListener() {
+    this.listenerTimeout = setTimeout(() => {
+      // if we didn't find the event we're looking for in 10 seconds, then stop listening and show error
+      window.removeEventListener('message', this.listener);
+
+      // show error
+      this.showNotice = true;
+    }, 10000);
+
+    window.addEventListener('message', this.listener);
+  }
+
+  private onReceiveMessage(event) {
+    if (event && event.data && event.data !== '') {
+      const data = JSON.parse(event.data);
+      if (typeof data === 'object' && data.method && data.method === 'video-conference-joined') {
+        // remove listener and cancel timeout so the notice isn't shown
+        window.removeEventListener('message', this.listener);
+        clearTimeout(this.listenerTimeout);
+      }
+    }
   }
 
   end() {
