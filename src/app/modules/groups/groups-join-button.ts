@@ -16,7 +16,8 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
         && !group['is:invited'] && !group['is:member']"
         (click)="join()" i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION"
       >
-      Join
+      <ng-container *ngIf="!inProgress">Join</ng-container>
+      <ng-container *ngIf="inProgress">Joining</ng-container>
     </button>
     <span *ngIf="group['is:invited'] &amp;&amp; !group['is:member']">
       <button class="m-btn m-btn--slim m-btn--action" (click)="accept()" i18n="@@M__ACTION__ACCEPT">Accept</button>
@@ -41,7 +42,7 @@ export class GroupsJoinButton {
   showModal: boolean = false;
   group: any;
   membership: EventEmitter<any> = new EventEmitter();
-
+  inProgress: boolean = false;
 
   constructor(
     public session: Session,
@@ -85,9 +86,10 @@ export class GroupsJoinButton {
      this.router.navigate(['/login']);
      return;
     }
-
+    this.inProgress = true;
     this.service.join(this.group)
       .then(() => {
+        this.inProgress = false;
         if (this.isPublic()) {
           this.group['is:member'] = true;
           this.membership.next({
@@ -101,6 +103,8 @@ export class GroupsJoinButton {
       .catch(e => {
         this.group['is:member'] = false;
         this.group['is:awaiting'] = false;
+        this.membership.next({ });
+        this.inProgress = false;
       });
   }
 
