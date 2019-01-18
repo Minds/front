@@ -15,7 +15,7 @@
   </li>
 
   <!-- If no results -->
-  <li *ngIf="!groups || groups.length === 0">
+  <li *ngIf="(!groups || groups.length === 0) && !inProgress">
     <a [routerLink]="['/groups/top']">
       <m-tooltip
          anchor="right"  
@@ -28,5 +28,11 @@
         </ng-container>
       </m-tooltip>
     </a>
+  </li>
+
+  <li *ngIf="inProgress">
+    <div style="width:100%; text-align:center;">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    </div>
   </li>
 </ul>

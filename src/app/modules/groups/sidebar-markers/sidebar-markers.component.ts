@@ -13,6 +13,7 @@ import { Session } from '../../../services/session';
 
 export class GroupsSidebarMarkersComponent {
 
+  inProgress: boolean = false;
   $updateMarker;
   markers = [];
   groups = [];
@@ -37,7 +38,7 @@ export class GroupsSidebarMarkersComponent {
           startWith(0),
           map(() => markers.filter(marker => marker.entity_guid == entity_guid
             && marker.marker == 'gathering-heartbeat'
-            && marker.updated_timestamp > (Date.now() / 1000) - 10
+            && marker.updated_timestamp > (Date.now() / 1000) - 60 //1 minute tollerance
           ).length > 0)
         );
 
@@ -55,8 +56,10 @@ export class GroupsSidebarMarkersComponent {
   }
 
   async load() {
+    this.inProgress = true;
     const response: any = await this.client.get('api/v1/groups/member');
     this.groups = response.entities;
+    this.inProgress = false;
   }
 
 }
