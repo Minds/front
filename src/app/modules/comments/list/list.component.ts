@@ -354,7 +354,7 @@ export class CommentsListComponent {
   }
 
   postEnabled() {
-    return !this.descendingInProgress && !this.ascendingInProgress && this.canPost && (this.content || this.attachment.has());
+    return !this.descendingInProgress && !this.ascendingInProgress && this.canPost && ((this.content && this.content.trim() !== '') || this.attachment.has());
   }
 
   async post(e) {
@@ -364,12 +364,14 @@ export class CommentsListComponent {
       return;
     }
 
-    if (this.descendingInProgress || this.ascendingInProgress || !this.canPost) {
+    if (this.descendingInProgress || this.ascendingInProgress || !this.postEnabled()) {
       this.triedToPost = true;
       this.detectChanges();
 
       return;
     }
+
+    this.content = this.content.trim();
 
     let data = this.attachment.exportMeta();
     data['comment'] = this.content;

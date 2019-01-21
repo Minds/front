@@ -102,10 +102,12 @@ export class CommentComponent implements OnChanges {
   }
 
   saveEnabled() {
-    return !this.inProgress && this.canPost && (this.comment.description || this.attachment.has());
+    return !this.inProgress && this.canPost && ((this.comment.description && this.comment.description.trim() !== '') || this.attachment.has());
   }
 
   save() {
+    this.comment.description = this.comment.description.trim();
+
     if (!this.comment.description && !this.attachment.has()) {
       return;
     }
@@ -133,7 +135,7 @@ export class CommentComponent implements OnChanges {
   applyAndSave(control: any, e) {
     e.preventDefault();
 
-    if (this.inProgress || !this.canPost) {
+    if (!this.saveEnabled()) {
       this.triedToPost = true;
       return;
     }
