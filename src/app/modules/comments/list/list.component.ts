@@ -259,7 +259,7 @@ export class CommentsListComponent {
   }
 
   ngAfterViewInit() {
-    if (this.focusOnInit) {
+    if (this.focusOnInit && this.textareaControl) {
       this.textareaControl.focus();
     }
   }
