@@ -64,6 +64,7 @@ describe('LoginComponent', () => {
 
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
+    jasmine.clock().uninstall();
     jasmine.clock().install();
 
     fixture = TestBed.createComponent(LoginComponent);

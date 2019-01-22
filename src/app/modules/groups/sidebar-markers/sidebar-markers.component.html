@@ -1,0 +1,38 @@
+<ul class="m-groupSidebarMarkers__list">
+  <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker" [class.has-gathering]="group.hasGathering$ | async">
+    <a [routerLink]="['/groups/profile', group.guid]">
+      <m-tooltip
+         anchor="right"  
+      >
+        <img [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime" m-tooltip--anchor/>
+        <span>{{group.name}}</span>
+
+        <ng-container>
+            {{group.name}}
+            </ng-container>
+       </m-tooltip>
+    </a>
+  </li>
+
+  <!-- If no results -->
+  <li *ngIf="(!groups || groups.length === 0) && !inProgress">
+    <a [routerLink]="['/groups/top']">
+      <m-tooltip
+         anchor="right"  
+      >
+        <img src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg" m-tooltip--anchor/>
+        <span>Noname</span>
+
+        <ng-container>
+          Join some groups to populate this sidebar
+        </ng-container>
+      </m-tooltip>
+    </a>
+  </li>
+
+  <li *ngIf="inProgress">
+    <div style="width:100%; text-align:center;">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    </div>
+  </li>
+</ul>

@@ -1,4 +1,4 @@
-<div class="mdl-card minds-comment minds-block"
+<div class="m-comment minds-comment minds-block"
   [class.m-comment--error]="comment?.error"
 >
   <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
@@ -7,77 +7,16 @@
     </a>
   </div>
   <div class="minds-body">
-    <div class="m-comment--username-wrapper">
-        <a [routerLink]="['/', comment.ownerObj.username]" class="username mdl-color-text--blue-grey-500">
-          <span>{{comment.ownerObj.name}} @{{comment.ownerObj.username}}</span>
+    <div class="m-comment__bubble">
+      <div class="m-commentBubble__username">
+        <a [routerLink]="['/', comment.ownerObj.username]">
+          <span>{{comment.ownerObj.name}}</span>
           <m-channel--badges class="m-channel--badges-activity" [user]="comment.ownerObj" badges="[ 'verified' ]"></m-channel--badges>
         </a>
-        <span class="mdl-color-text--blue-grey-300 minds-comment-span minds-comment-bullet">{{comment.time_created * 1000 | date: 'medium'}}</span>
-        <span *ngIf="comment.edited" class="mdl-color-text--blue-grey-300 minds-comment-span m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
-    </div>
-    <div class="mdl-card__menu mdl-color-text--blue-grey-300" *ngIf="comment?.guid">
-
-      <button class="mdl-button mdl-button--icon m-comment-carrot"
-        [ngClass]="{ 'm-comment-carrot-collapsed': !toggle.value }"
-        (click)="toggle.value = !toggle.value"
-      >
-        <i class="material-icons">{{ !toggle.value ? 'keyboard_arrow_left' : 'keyboard_arrow_right' }}</i>
-      </button>
-      
-      <ul class="m-ribbon m-ribbon-right" [hidden]="!toggle.value" #toggle>
-        <li class="m-ribbon--item"
-          *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()"
-          (click)="editing = !editing; toggle.value = false"
-          title="Edit"
-          i18n-title="@@M__ACTION__EDIT"
-        ><i class="material-icons">edit</i></li>
-        <li class="m-ribbon--item"
-          *ngIf="isTranslatable && !editing"
-          (click)="translateToggle = true; toggle.value = false"
-          title="Translate"
-          i18n-title="@@M__ACTION__TRANSLATE"
-        ><i class="material-icons">public</i></li>
-        <li class="m-ribbon--item"
-          *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid"
-          (click)="delete(); toggle.value = false"
-          title="Delete"
-          i18n-title="@@M__ACTION__DELETE"
-        ><i class="material-icons">delete</i></li>
-        <li class="m-ribbon--item"
-          *ngIf="!editing && comment.owner_guid != session.getLoggedInUser()?.guid"
-          (click)="showReport()"
-          title="Report"
-          i18n-title="verb|@@M__ACTION__REPORT"
-        ><i class="material-icons">flag</i></li>
-      </ul>
-      <div class="minds-bg-overlay" (click)="toggle.value = false" [hidden]="!toggle.value"></div>
-
-      <span class="minds-comments-voting" [hidden]="editing">
-          <a class="m-clickable mdl-color-text--blue-grey-500"
-            (click)="onReply.emit({ comment: comment })"
-          >
-            <i class="material-icons">reply</i>
-          </a>
-          <minds-button-thumbs-up [object]="comment"></minds-button-thumbs-up>
-          <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
-      </span>
-    </div>
-    <div>
-      <p [hidden]="editing">
-        <a class="m-mature-text-toggle"
-        (click)="comment.mature_visibility = !comment.mature_visibility"
-        *ngIf="attachment.shouldBeBlurred(comment) || attachment.isForcefullyShown(comment)"
-        [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(comment) }"
-        >
-          <i class="material-icons m-material-icons-inline">explicit</i>
-        </a>
-        <span
-        class="m-comment-message"
-        [innerHtml]="(comment.description || '') | tags "
-        [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(comment) }"
-        ></span>
+      </div>
+      <p [hidden]="editing" class="m-commentBubble__message" [innerHtml]="(comment.description || '') | tags ">
       </p>
-  
+
       <p class="m-comment--error-label" *ngIf="comment?.error">
         <i class="material-icons">warning</i>
         <span>{{ comment.error }}</span>
@@ -90,7 +29,53 @@
         (onTranslateError)="translateToggle = false"
         #translate
       ></m-translate>
-  
+      
+    </div>
+
+    <button class="m-comment__ribbonBtn"
+      [ngClass]="{ 'm-comment__ribbonBtn--collapsed': !toggle.value }"
+      (click)="toggle.value = !toggle.value"
+      >
+      <i class="material-icons">{{ !toggle.value ? 'more_vert' : 'keyboard_arrow_left' }}</i>
+    </button>
+      
+    <ul class="m-comment__ribbon" [hidden]="!toggle.value" #toggle>
+      <li class="m-commentRibbon__item"
+        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()"
+        (click)="editing = !editing; toggle.value = false"
+        title="Edit"
+        i18n-title="@@M__ACTION__EDIT"
+        >
+        <i class="material-icons">edit</i>
+      </li>
+      <li class="m-commentRibbon__item"
+        *ngIf="isTranslatable && !editing"
+        (click)="translateToggle = true; toggle.value = false"
+        title="Translate"
+        i18n-title="@@M__ACTION__TRANSLATE"
+        >
+        <i class="material-icons">public</i>
+      </li>
+      <li class="m-commentRibbon__item"
+        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid"
+        (click)="delete(); toggle.value = false"
+        title="Delete"
+        i18n-title="@@M__ACTION__DELETE"
+        >
+          <i class="material-icons">delete</i>
+        </li>
+      <li class="m-commentRibbon__item"
+        *ngIf="!editing && comment.owner_guid != session.getLoggedInUser()?.guid"
+        (click)="showReport()"
+        title="Report"
+        i18n-title="verb|@@M__ACTION__REPORT"
+        >
+        <i class="material-icons">flag</i>
+      </li>
+    </ul>
+
+    <div class="m-comment__attachment">
+
       <div class="mdl-card m-comment-attachment" [hidden]="editing" *ngIf="(comment.perma_url && comment.title) || comment.custom_type == 'batch' || comment.custom_type == 'video'">
         <!-- Rich content -->
         <div class="m-rich-embed mdl-shadow--2dp cf"
@@ -235,6 +220,37 @@
         </div>
       </ng-container>
     </div>
+
+    <div class="m-comment__toolbar" *ngIf="comment?.guid">
+
+      <div class="m-commentToolbar__buttons" [hidden]="editing">
+        <minds-button-thumbs-up [object]="comment" [class.has-count]="comment['thumbs:up:count'] > 0"></minds-button-thumbs-up>
+        <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
+        <span class="m-clickable"
+          [class.selected]="comment.replies_count > 0"
+          (click)="toggleReplies();"
+          *ngIf="comment.can_reply"
+        >
+          <i class="material-icons">reply</i>
+          <span *ngIf="comment.replies_count > 0">{{ comment.replies_count }} Replies</span>
+          <span *ngIf="comment.replies_count <= 0">Reply</span>
+        </span>
+      </div>
+
+      <span [title]="comment.time_created * 1000 | date: 'medium'" class="m-commentToolbar__timestamp" *ngIf="( commentAge$ | async ) as commentAge">{{ commentAge | friendlydatediff }}</span>
+      <span *ngIf="comment.edited" class="m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
+
+
+    </div>
+
+    <minds-comments
+      [object]="comment"
+      [parentGuid]="comment._guid"
+      *ngIf="showReplies && comment.can_reply"
+      >
+    </minds-comments>
+
   </div>
+
 </div>
 

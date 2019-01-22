@@ -1,4 +1,8 @@
-import { Component, EventEmitter, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output, ViewEncapsulation, forwardRef, ChangeDetectorRef, 
+  ChangeDetectionStrategy,
+  OnChanges,
+  Input
+} from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Upload } from '../../../services/api/upload';
@@ -7,11 +11,16 @@ import { AttachmentService } from '../../../services/attachment';
 import { TranslationService } from '../../../services/translation';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
+import { CommentsListComponent } from '../list/list.component';
+import { TimeDiffService } from '../../../services/timediff.service';
+import { Observable } from 'rxjs';
+import { map } from "rxjs/operators";
 
 @Component({
   moduleId: module.id,
   selector: 'minds-card-comment',
-  inputs: ['object', 'parent'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  inputs: ['parent'],
   outputs: ['_delete: delete', '_saved: saved'],
   host: {
     '(keydown.esc)': 'editing = false'
@@ -22,11 +31,15 @@ import { ReportCreatorComponent } from '../../report/creator/creator.component';
       provide: AttachmentService,
       useFactory: AttachmentService._,
       deps: [Session, Client, Upload]
-    }
-  ]
+    },
+    {
+      provide: CommentsListComponent,
+      useValue: forwardRef(() => CommentsListComponent),
+     },
+  ],
 })
 
-export class CommentComponent {
+export class CommentComponent implements OnChanges {
 
   comment: any;
   editing: boolean = false;
@@ -35,6 +48,7 @@ export class CommentComponent {
   canPost: boolean = true;
   triedToPost: boolean = false;
   inProgress: boolean = false;
+  showReplies: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
   _saved: EventEmitter<any> = new EventEmitter();
@@ -52,7 +66,8 @@ export class CommentComponent {
   isTranslatable: boolean;
   translationInProgress: boolean;
   translateToggle: boolean = false;
-
+  commentAge$: Observable<number>;
+  
   @Output() onReply = new EventEmitter();
 
 
@@ -61,9 +76,18 @@ export class CommentComponent {
     public client: Client,
     public attachment: AttachmentService,
     public translationService: TranslationService,
-    private overlayModal: OverlayModalService) {
+    private overlayModal: OverlayModalService,
+    private cd: ChangeDetectorRef,
+    private timeDiffService: TimeDiffService,
+  ) {}
+
+  ngOnInit() {
+    this.commentAge$ = this.timeDiffService.source.pipe(map(secondsElapsed => {
+      return (this.comment.time_created - secondsElapsed) * 1000;
+    }));
   }
 
+  @Input('object')
   set object(value: any) {
     if (!value)
       return;
@@ -78,10 +102,12 @@ export class CommentComponent {
   }
 
   saveEnabled() {
-    return !this.inProgress && this.canPost && (this.comment.description || this.attachment.has());
+    return !this.inProgress && this.canPost && ((this.comment.description && this.comment.description.trim() !== '') || this.attachment.has());
   }
 
   save() {
+    this.comment.description = this.comment.description.trim();
+
     if (!this.comment.description && !this.attachment.has()) {
       return;
     }
@@ -109,7 +135,7 @@ export class CommentComponent {
   applyAndSave(control: any, e) {
     e.preventDefault();
 
-    if (this.inProgress || !this.canPost) {
+    if (!this.saveEnabled()) {
       this.triedToPost = true;
       return;
     }
@@ -230,4 +256,15 @@ export class CommentComponent {
     this.overlayModal.create(ReportCreatorComponent, this.comment)
       .present();
   }
+
+  toggleReplies() {
+    this.showReplies = !this.showReplies;
+  }
+
+  ngOnChanges(changes) {
+  //  console.log('[comment:card]: on changes', changes);
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
 }

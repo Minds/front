@@ -50,6 +50,7 @@ export class ChannelsListComponent {
         switch (this.filter) {
           case 'all':
             this.filter = 'all';
+            this.uri = 'entities/all/channels';
             break;
           case 'top':
             if (!this.session.isLoggedIn()) {

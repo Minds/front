@@ -1,92 +1,115 @@
-<m-videochat></m-videochat>
+<div [hidden]="group || error" style="width:100%; text-align:center; ">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+</div>
 
-<header *ngIf="group && (group['is:member'] || group.membership == 2)"
-  [ngClass]="[ 'm-group--' + filter + '-view' ]"
-  [class.m-group--view-mode]="!editing"
->
-  <minds-banner [object]="group" [editMode]="editing" [top]="group.banner_position" [done]="editDone" (added)="add_banner($event)"></minds-banner>
-</header>
+<div class="m-error-splash" *ngIf="error && !group">
+  <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'">
+  <h3 class="mdl-color-text--red-300">{{error}}</h3>
+  <span class="mdl-color-text--blue-grey-300">Check the url is correct</span>
+  <router-outlet></router-outlet>
+</div>
 
-
-<div [class]="'mdl-grid groups-grid newsfeed-grid m-group--' + filter" *ngIf="group && (group['is:member'] || group.membership == 2)"
+<div class="m-group__grid" *ngIf="group && (group['is:member'] || group.membership == 2)"
 
 >
 
   <!-- Sidebar -->
-  <div class="mdl-cell mdl-cell--4-col m-group-info m-group--sidebar">
+  <div class="m-groupGrid__left">
+    <m-videochat></m-videochat>
 
-    <div class="mdl-card mdl-shadow--2dp">
-      <minds-avatar [object]="group" [editMode]="editing" (added)="upload_avatar($event)"></minds-avatar>
-      <!-- Name -->
-      <div class="m-group-info-name mdl-color-text--blue-grey-800">
+    <header
+      *ngIf="group && (group['is:member'] || group.membership == 2)"
+      [ngClass]="[ 'm-group--' + filter + '-view' ]"
+      [class.m-group--view-mode]="!editing"
+    >
+      <minds-banner 
+        [object]="group"
+        [editMode]="editing"
+        [top]="group.banner_position"
+        [done]="editDone"
+        (added)="add_banner($event)"
+        >
+      </minds-banner>
+    </header>
 
-        <div [hidden]="editing || !group.name">
-          <h1>
-            <a class="m-isomorphic-link" [routerLink]="['/groups/profile', group.guid]">
-              {{group.name}}
-            </a>
-          </h1>
+    <div class="m-group__infoWrapper">
+      <div class="m-group__info m-border">
+        <minds-avatar
+          [object]="group"
+          [editMode]="editing"
+          (added)="upload_avatar($event)"
+          >
+        </minds-avatar>
+      
+        <minds-groups-settings-button
+          [(group)]="group"
+          class="m-button"
+          (change)="onOptionsChange($event)"
+          >
+        </minds-groups-settings-button>
+
+        <div class="m-groupInfo__member-previews">
+          <m-group--member-previews [group]="group"></m-group--member-previews>
+        </div>
+
+        <!-- Name -->
+        <div class="m-groupInfo__name m-group-info-name mdl-color-text--blue-grey-800">
+
+          <div [hidden]="editing || !group.name">
+            <h1>
+              <a class="m-isomorphic-link" [routerLink]="['/groups/profile', group.guid]">
+                {{group.name}}
+              </a>
+            </h1>
+            <div class="m-groupInfo__actionButtons">
+            <minds-groups-join-button 
+              [group]="group"
+              (membership)="change_membership($event)"
+              *ngIf="(!group['is:creator'] || (session.isAdmin()) && !group['is:invited'])"
+            >
+            </minds-groups-join-button>
+            <button class="m-btn m-btn--slim m-btn--with-icon" style="margin-left: 8;" (click)="videochat.activate(group)" *ngIf="!group.videoChatDisabled">
+              <span>Gathering</span>
+              <i class="material-icons">video_call</i>
+            </button>
+          </div>
         </div>
 
         <div *ngIf="editing && group['is:owner']">
           <input type="text" class="h1" name="name" [(ngModel)]="group.name" placeholder="Enter a name" i18n-placeholder="@@GROUPS__NAME_PLACEHOLDER" />
         </div>
 
-      </div>
+      </div> <!-- END NAME -->
 
-    <div class="m-group--stats mdl-tabs__tab-bar"
-      [class.m-group--stats--narrow]="group['is:owner'] && group.membership != 2"
-    >
-      <a [routerLink]="['/groups/profile', group.guid, 'members']" class="mdl-tabs__tab mdl-color-text--blue-grey-500">
-        <span i18n="@@M__COMMON__MEMBERS">Members</span>
-        <b>{{group['members:count'] | number}}</b>
-      </a>
-      <a *ngIf="group['is:owner'] && group.membership != 2" [routerLink]="['/groups/profile', group.guid, 'requests']" class="mdl-tabs__tab mdl-color-text--blue-grey-500">
-        <span i18n="@@GROUPS__PROFILE__REQUESTS_COUNT">Requests</span>
-        <b>{{group['requests:count'] | number}}</b>
-      </a>
-      <a *ngIf="group['is:member'] || group.membership == 2" [routerLink]="['/groups/profile', group.guid, 'conversation']" class="mdl-tabs__tab mdl-color-text--blue-grey-500 m-group-conversation--link">
-        <span i18n="@@GROUPS__CONVERSATIONS">Conversations</span>
-        <b>
-          <strong>{{ (group['comments:count'] || 0) | abbr }}</strong>
-          <i class="m-group-conversation--link--new" [hidden]="!newConversationMessages"></i>
-        </b>
-      </a>
-    </div>
-
-    <div class="m-group--action-buttons">
-      <minds-groups-join-button [group]="group" (membership)="change_membership($event)" *ngIf="(!group['is:creator'] || session.isAdmin()) && (!group['is:invited'] || group['is:member'])"></minds-groups-join-button>
-
-      <span class="minds-button-edit" (click)="toggleEdit()" [hidden]="editing" *ngIf="group['is:owner']">
-        <button class="material-icons">mode_edit</button>
-      </span>
-      <span class="minds-button-edit" (click)="save()" [hidden]="!editing" *ngIf="group['is:owner']">
-        <button i18n="@@GROUPS__PROFILE__SAVE_CHANGES_ACTION">Save changes</button>
-      </span>
-      <minds-groups-settings-button [group]="group" class="m-button"></minds-groups-settings-button>
-
-    </div>
-
-    <!-- Brief description -->
-    <div class="m-group-info-brief-description mdl-card__supporting-text" style="white-space: pre-line" [hidden]="editing || !group.briefdescription"  [innerHtml]="group.briefdescription | tags">
-    </div>
-
-    <div class="m-group-info-brief-description mdl-card__supporting-text" *ngIf="editing && group['is:owner']">
-      <mwl-text-input-autocomplete-container>
-        <textarea
-          name="briefdescription"
-          [autoGrow]
-          [(ngModel)]="group.briefdescription"
-          placeholder="Enter a brief description"
-          i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
-          mwlTextInputAutocomplete
-          [findChoices]="findTrendingHashtags.bind(this)"
-          [getChoiceLabel]="getChoiceLabel"
-          [triggerCharacter]="'#'"
+      <!-- Brief description -->
+      <p
+        class="m-groupInfo__description"
+        [hidden]="editing || !group.briefdescription"
+        [innerHtml]="group.briefdescription | tags"
         >
-        ></textarea>
-      </mwl-text-input-autocomplete-container>
-    </div>
+      </p>
+      
+      <p
+        class="m-groupInfo__description"
+        *ngIf="editing && group['is:owner']"
+        >
+        <mwl-text-input-autocomplete-container>
+          <textarea
+            name="briefdescription"
+            [autoGrow]
+            [(ngModel)]="group.briefdescription"
+            placeholder="Enter a brief description"
+            i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
+            mwlTextInputAutocomplete
+            [findChoices]="findTrendingHashtags.bind(this)"
+            [getChoiceLabel]="getChoiceLabel"
+            [triggerCharacter]="'#'"
+          >
+          </textarea>
+        </mwl-text-input-autocomplete-container>
+      </p>
+      
+      <ng-container *ngIf="false">
 
       <!-- Tags -->
       <div class="m-group-info-tags">
@@ -212,67 +235,59 @@
         <minds-button-boost [object]="group"></minds-button-boost>
       </div>
 
+      </ng-container>
+
+      </div> <!-- END INFO -->
+    </div> <!-- END INFO WRAPPER -->
+
+    <m-groups--filter-selector
+      [group]="group"
+      [filter]="filter"
+      *ngIf="group['is:member']"
+    ></m-groups--filter-selector>
+
+    <div class="m-group__feeds">
+      <router-outlet></router-outlet> 
+    </div> <!-- End Feeds -->
+  </div> <!-- END LEFT BLOCK -->
+
+  <div class="m-groupGrid__toggleBtn" style="
+    /* left: 0; */
+    position: fixed;
+    top: 55px;
+    right: 60px;
+    display: block;
+    z-index: 99;
+    cursor: pointer;
+    "
+    (click)="showRight = !showRight">
+     <i class="material-icons" style="
+      font-size: 32px;
+      color: #888;
+      " *ngIf="showRight">keyboard_arrow_right</i>
+     <i class="material-icons" style="
+      font-size: 32px;
+      color: #888;
+      " *ngIf="!showRight">keyboard_arrow_left</i> 
     </div>
 
-  <!-- members -->
-  <m-group--members-module [group]="group" *ngIf="filter != 'conversation'">
-
-    <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/groups/profile', group.guid, 'members']">
-      <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
-    </a>
-  </m-group--members-module>
-
-    <!-- images  -->
-   <m-channel--modules [container]="group" type="image" *ngIf="filter != 'conversation'">
-
-      <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/images', 'container:' + group.guid]">
-        <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
-      </a>
-    </m-channel--modules>
-
-    <div class="minds-spacer-2x"></div>
-
-    <!-- videos  -->
-    <m-channel--modules [container]="group" type="video" limit="6" *ngIf="filter != 'conversation'">
-
-      <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/videos', 'container:' + group.guid]">
-        <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
-      </a>
-    </m-channel--modules>
-
-  </div>
-
-
-  <!-- Activity feed -->
-  <minds-groups-profile-feed #feed [group]="group" [filter]="filter" class="mdl-cell mdl-cell--8-col" [ngClass]="{'m-group-closed': group.membership != 2}"
-    *ngIf="filter == 'activity' || filter == 'review'">
-  </minds-groups-profile-feed>
-  <!-- END: Activity feed -->
-
-  <!-- Members filter -->
-  <minds-groups-profile-members [group]="group" class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'members'">
-  </minds-groups-profile-members>
-  <!-- END: Members filter -->
-
-  <!-- Requests Filter -->
-  <minds-groups-profile-requests [group]="group" class="mdl-cell mdl-cell--8-col mdl-grid" *ngIf="filter == 'requests'">
-  </minds-groups-profile-requests>
-  <!-- END: Requests filter -->
-
-  <!-- Conversation filter -->
-  <minds-groups-profile-conversation [group]="group" class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'conversation'">
-  </minds-groups-profile-conversation>
-  <!-- END: Conversation filter -->
+  <div class="m-groupGrid__right" [hidden]="!showRight">
+    <!-- Conversation filter -->
+    <minds-groups-profile-conversation [group]="group">
+    </minds-groups-profile-conversation>
+    <!-- END: Conversation filter -->
+  </div> <!-- END RIGHT BLOCK -->
 </div>
 
+
 <!-- IF A CLOSED GROUP AND NOT A MEMBER -->
-<div class="m-group-closed-splash" *ngIf="group && !group['is:member'] && group.membership != 2">
+<div class="m-group__splash--closed-group" *ngIf="group && !group['is:member'] && group.membership != 2">
 
   <minds-banner [object]="group" [top]="group.banner_position"></minds-banner>
 
-  <div class="m-group-closed-splash-inner">
+  <div class="m-groupSplash__inner">
 
-    <div class="m-group-avatar">
+    <div class="m-groupSplash__avatar">
       <minds-avatar [object]="group" [editMode]="editing" (added)="upload_avatar($event)"></minds-avatar>
     </div>
 

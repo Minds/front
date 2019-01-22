@@ -84,7 +84,7 @@ export class SettingsWireComponent implements OnInit {
 
     var reader = new FileReader();
     reader.onloadend = () => {
-      input.src = reader.result;
+      input.src = typeof reader.result === 'string' ? reader.result : reader.result.toString();
       this.backgroundFile = input;
 
       this.preview = { src: reader.result };

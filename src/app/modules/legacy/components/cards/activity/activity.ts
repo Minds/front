@@ -17,7 +17,7 @@ import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service'
   host: {
     'class': 'mdl-card m-border'
   },
-  inputs: ['object', 'commentsToggle', 'visible', 'canDelete', 'showRatingToggle'],
+  inputs: ['object', 'commentsToggle', 'focusedCommentGuid', 'visible', 'canDelete', 'showRatingToggle'],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,6 +58,7 @@ export class Activity {
 
   _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();
+  @Input() focusedCommentGuid: string;
   scroll_listener;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();

@@ -1,5 +1,5 @@
 import { argv } from 'yargs';
-import { execSync } from 'child_process';
+import { execSync, StdioOptions } from 'child_process';
 import { join } from 'path';
 
 import { readFileSync, statSync, unlinkSync, writeFileSync } from 'fs';
@@ -16,7 +16,7 @@ let run = (cmd: string, env: any = {}, outputAsResult: boolean = true) => {
         ...env
       },
       maxBuffer: 1024 * 1024,
-      stdio: outputAsResult ? 'pipe' : 'inherit'
+      stdio: <StdioOptions>(outputAsResult ? 'pipe' : 'inherit')
     };
 
   if (shell) {

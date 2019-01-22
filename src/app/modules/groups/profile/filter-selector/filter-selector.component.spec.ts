@@ -48,47 +48,34 @@ describe('GroupsProfileFilterSelector', () => {
     expect(div.nativeElement.children.length).toBe(3);
   });
 
-  it('should have a link to the groups feed', () => {
+  it('should have a link to feed', () => {
     const a = fixture.debugElement.query(By.css('.m-groups--filter-selector-item:first-child'));
     expect(a).not.toBeNull();
 
     expect(a.nativeElement.textContent).toContain('Feed');
-    expect(a.nativeElement.href).toContain('/groups/profile/123/activity');
+    expect(a.nativeElement.href).toContain('/groups/profile/123/feed');
     expect(a.nativeElement.classList).toContain('m-groups--filter-selector-active')
   });
 
-  it('should have a link to the groups conversation', () => {
-    comp.filter = 'conversation';
+  it('should have a link to images', () => {
+    comp.filter = 'image';
     fixture.detectChanges();
 
     const a = fixture.debugElement.query(By.css('.m-groups--filter-selector-item:nth-child(2)'));
     expect(a).not.toBeNull();
 
-    expect(a.nativeElement.textContent).toContain('Conversations');
-    expect(a.nativeElement.href).toContain('/groups/profile/123/conversation');
+    expect(a.nativeElement.textContent).toContain('Images');
+    expect(a.nativeElement.href).toContain('/groups/profile/123/feed/image');
     expect(a.nativeElement.classList).toContain('m-groups--filter-selector-active')
   });
 
-  it('should have a link to gathering', () => {
-    comp.filter = 'conversation';
+  it('should have a link to videos', () => {
+    comp.filter = 'image';
     fixture.detectChanges();
 
     const a = fixture.debugElement.query(By.css('.m-groups--filter-selector-item:nth-child(3)'));
     expect(a).not.toBeNull();
 
-    expect(a.nativeElement.textContent).toContain('Gathering');
-  });
-
-  it('should activate video chat when clicking on link', () => {
-    comp.filter = 'conversation';
-    fixture.detectChanges();
-
-    const a = fixture.debugElement.query(By.css('.m-groups--filter-selector-item:nth-child(3)'));
-    expect(a).not.toBeNull();
-    a.nativeElement.click();
-    fixture.detectChanges();
-
-
-    expect(comp.videoChat.activate).toHaveBeenCalled();
+    expect(a.nativeElement.textContent).toContain('Videos');
   });
 });

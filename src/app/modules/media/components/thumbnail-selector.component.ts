@@ -111,10 +111,10 @@ export class ThumbnailSelectorComponent {
       const img: HTMLImageElement = document.createElement('img');
 
       let index = this.thumbnailFromFile ? this.thumbnails.length - 1: this.thumbnails.length;
-      this.thumbnails[index] = reader.result;
+      this.thumbnails[index] = typeof reader.result === 'string' ? reader.result : reader.result.toString();
       this.selectedThumbnail = index;
 
-      img.src = reader.result;
+      img.src = typeof reader.result === 'string' ? reader.result : reader.result.toString();
       img.onload = () => {
         this.thumbnailSec = 0.1;
         this.canvas.getContext('2d').drawImage(img, 0, 0, this.canvas.width, this.canvas.height);

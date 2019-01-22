@@ -7,7 +7,7 @@ minds-comments, .m-comment-wrapper {
   .minds-comment {
     min-height: 0;
     margin: 0;
-    padding: $minds-padding $minds-padding*2;
+    padding: $minds-padding $minds-padding*1.5;
     background-color: transparent;
     overflow: visible;
     //border-bottom:1px solid #DDD;
@@ -39,14 +39,6 @@ minds-comments, .m-comment-wrapper {
     &.minds-comment-post {
       border-bottom: 0;
       padding-bottom: $minds-padding;
-    }
-
-    .minds-avatar {
-      background: transparent;
-
-      img {
-        width: 36px;
-      }
     }
 
     .minds-body {
@@ -82,12 +74,6 @@ minds-comments, .m-comment-wrapper {
             padding: 0;
           }
         }
-
-      }
-      p {
-        margin: 0.35em 0 0.5em;
-        font-size: 12px;
-        line-height: 16px;
 
       }
       a {
@@ -228,9 +214,10 @@ minds-comments, .m-comment-wrapper {
         font-size: 12px;
         flex: 1;
         margin-bottom: $minds-padding;
+        border-radius: 25px;
 
         .m-editor {
-          min-height: 26px;
+          //min-height: 26px;
         }
       }
     }
@@ -244,7 +231,7 @@ minds-comments, .m-comment-wrapper {
   }
 
   .m-comments-composer .mdl-card__actions {
-    top: $minds-padding / 2;
+    top: 6px;
     right: $minds-padding;
   }
 
@@ -402,3 +389,8 @@ minds-comments, .m-comment-wrapper {
     vertical-align: middle;
   }
 }
+
+.m-comment--poster .minds-body {
+  overflow: hidden;
+}
+

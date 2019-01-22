@@ -1,3 +1,4 @@
+<a class="m-group__goBack" routerLink="..">&lt; Back to feed</a>
 <div class="">
   <minds-groups-profile-members-invite *ngIf="canInvite" [group]="group" (invited)="invite($event)"></minds-groups-profile-members-invite>
   <div class="invitees m-search-inline">
@@ -15,16 +16,30 @@
   </div>
 </div>
 
-<div class="m-groups-search-member">
-  <input type="text" name="q" [(ngModel)]="q" (keyup)="search(q)" placeholder="Search for a member" i18n-placeholder="@@GROUPS__PROFILE__MEMBERS__SEARCH_PLACEHOLDER" />
+<div class="m-groupMembers__search" #el>
+  <input
+    type="text"
+    name="q"
+    [(ngModel)]="q"
+    (keyup)="search(q)"
+    placeholder="Search for a member"
+    i18n-placeholder="@@GROUPS__PROFILE__MEMBERS__SEARCH_PLACEHOLDER"
+    class="m-input m-border"
+    />
 </div>
-<div class="mdl-grid">
-  <div class="mdl-cell mdl-cell--6-col minds-groups-member-card" *ngFor="let member of members">
-      <div class="mdl-card mdl-shadow--2dp">
+
+<div class="mdl-grid m-groupMembers__list m-border">
+  <div class="mdl-cell mdl-cell--6-col m-groupMembers__memberCard" *ngFor="let member of members">
+      <div class="mdl-card m-border">
           <minds-card-user [object]="member" [ngClass]="{ 'minds-user-ephemeral': !member['is:member'] }">
             <div buttons>
-              <minds-groups-card-user-actions-button class="m-button" *ngIf="session.isLoggedIn() &amp;&amp; session.getLoggedInUser().guid != member.guid"
-                [group]="group" [user]="member"></minds-groups-card-user-actions-button>
+              <minds-groups-card-user-actions-button
+                class="m-button"
+                *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != member.guid"
+                [group]="group"
+                [user]="member"
+                >
+              </minds-groups-card-user-actions-button>
             </div>
           </minds-card-user>
       </div>

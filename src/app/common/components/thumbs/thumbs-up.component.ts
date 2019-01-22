@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectorRef, ChangeDetectionStrategy, Component, DoCheck, OnChanges } from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
@@ -23,8 +23,9 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
   `],
 })
 
-export class ThumbsUpButton {
+export class ThumbsUpButton implements DoCheck, OnChanges {
 
+  changesDetected: boolean = false;
   object = {
     'guid': null,
     'owner_guid': null,
@@ -32,7 +33,13 @@ export class ThumbsUpButton {
   };
   showModal: boolean = false;
 
-  constructor(public session: Session, public client: Client, public wallet: WalletService, private modal: SignupModalService) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public wallet: WalletService,
+    private modal: SignupModalService,
+    private cd: ChangeDetectorRef,  
+  ) {
   }
 
   set _object(value: any) {
@@ -72,4 +79,18 @@ export class ThumbsUpButton {
     return false;
   }
 
+  ngOnChanges(changes) {
+  }
+
+  ngDoCheck() {
+    this.changesDetected = false;
+    if (this.object['thumbs:up:count'] != this.object['thumbs:up:count:old']) {
+        this.object['thumbs:up:count:old'] = this.object['thumbs:up:count'];
+        this.changesDetected = true;
+    }
+
+    if (this.changesDetected) {
+      this.cd.detectChanges();
+    }
+  }
 }

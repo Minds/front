@@ -15,13 +15,14 @@ import { Upload } from '../../../services/api/upload';
 import { ContextService } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
 import { of } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 
 @Component({
   selector: 'minds-activity',
   template: ''
 })
 class MindsActivityMock {
+  @Input() focusedCommentGuid: string;
   @Input() object: any;
   @Input() commentsToggle: boolean;
   @Input() showRatingToggle: boolean;
@@ -38,7 +39,7 @@ describe('NewsfeedSingleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, MindsActivityMock, NewsfeedSingleComponent], // declare the test component
+      declarations: [MaterialMock, MindsActivityMock, NewsfeedSingleComponent],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
@@ -48,23 +49,25 @@ describe('NewsfeedSingleComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            params: of({ guid: 123 })
+            params: of({ guid: 123 }),
+            snapshot: {
+              queryParamMap: convertToParamMap({})
+            }
           }
         },
         { provide: Router, useValue: routerMock }
       ]
     })
-      .compileComponents();  // compile template and css
+      .compileComponents();
   }));
 
-  // synchronous beforeEach
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(NewsfeedSingleComponent);
 
-    comp = fixture.componentInstance; // NewsfeedSingleComponent test instance
+    comp = fixture.componentInstance;
 
     clientMock.response = {};
 

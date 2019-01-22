@@ -1,7 +1,9 @@
 import { Component, Inject, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GroupsService } from './groups-service';
 import { Session } from '../../services/session';
+import { LoginReferrerService } from '../../services/login-referrer.service';
 
 @Component({
   selector: 'minds-groups-join-button',
@@ -14,7 +16,8 @@ import { Session } from '../../services/session';
         && !group['is:invited'] && !group['is:member']"
         (click)="join()" i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION"
       >
-      Join
+      <ng-container *ngIf="!inProgress">Join</ng-container>
+      <ng-container *ngIf="inProgress">Joining</ng-container>
     </button>
     <span *ngIf="group['is:invited'] &amp;&amp; !group['is:member']">
       <button class="m-btn m-btn--slim m-btn--action" (click)="accept()" i18n="@@M__ACTION__ACCEPT">Accept</button>
@@ -24,7 +27,7 @@ import { Session } from '../../services/session';
     <button class="m-btn m-btn--slim awaiting" *ngIf="group['is:awaiting']" (click)="cancelRequest()" i18n="@@GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION">Cancel request</button>
     <m-modal-signup-on-action
       [open]="showModal"
-      (closed)="showModal = false"
+      (closed)="join(); showModal = false;"
       action="join a group"
       i18n-action="@@GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE"
       [overrideOnboarding]="true"
@@ -39,9 +42,14 @@ export class GroupsJoinButton {
   showModal: boolean = false;
   group: any;
   membership: EventEmitter<any> = new EventEmitter();
+  inProgress: boolean = false;
 
-
-  constructor(public session: Session, public service: GroupsService) {
+  constructor(
+    public session: Session,
+    public service: GroupsService,
+    private router: Router,
+    private loginReferrer: LoginReferrerService,
+  ) {
     this.minds = window.Minds;
   }
 
@@ -70,14 +78,18 @@ export class GroupsJoinButton {
   /**
    * Join a group
    */
-  join() {
-    if (!this.session.isLoggedIn()) {
-      this.showModal = true;
-      return;
+ join() {
+ 
+   if (!this.session.isLoggedIn()) {
+     //this.showModal = true;
+     this.loginReferrer.register(`/groups/profile/${this.group.guid}/feed?join=true`);
+     this.router.navigate(['/login']);
+     return;
     }
-
+    this.inProgress = true;
     this.service.join(this.group)
       .then(() => {
+        this.inProgress = false;
         if (this.isPublic()) {
           this.group['is:member'] = true;
           this.membership.next({
@@ -91,6 +103,8 @@ export class GroupsJoinButton {
       .catch(e => {
         this.group['is:member'] = false;
         this.group['is:awaiting'] = false;
+        this.membership.next({ });
+        this.inProgress = false;
       });
   }
 

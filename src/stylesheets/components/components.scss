@@ -70,6 +70,10 @@
   .mdl-menu__item{
     opacity:1;
     text-overflow:ellipsis;
+    line-height: 32px;
+    height: 32px;
+    border-bottom: 1px solid #ececec;
+    padding: 0 8px;
   }
 
 }

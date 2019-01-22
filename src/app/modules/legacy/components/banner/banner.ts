@@ -94,7 +94,7 @@ export class MindsBanner {
      */
     var reader = new FileReader();
     reader.onloadend = () => {
-      this.src = reader.result;
+      this.src = typeof reader.result === 'string' ? reader.result : reader.result.toString();
     };
     reader.readAsDataURL(this.file);
 

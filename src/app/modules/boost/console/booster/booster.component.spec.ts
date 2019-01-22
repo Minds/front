@@ -38,7 +38,6 @@ describe('BoostConsoleBooster', () => {
 
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
-    jasmine.clock().install();
 
     fixture = TestBed.createComponent(BoostConsoleBooster);
 
@@ -72,10 +71,6 @@ describe('BoostConsoleBooster', () => {
           done()
         });
     }
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   it('should have loaded the lists', () => {

@@ -6,10 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { Session } from '../../../../services/session';
-import { clientMock } from '../../../../../tests/client-mock.spec';
-import { Client } from '../../../../services/api/client';
 import { MockComponent, MockDirective, MockService } from '../../../../utils/mock';
 import { GroupsService } from '../../groups-service';
+import { MindsHttpClient } from "../../../../common/api/client.service";
+import { mindsHttpClientMock } from "../../../../mocks/common/api/minds-http-client.service.mock";
+import { groupsServiceMock } from "../../../../mocks/modules/groups/groups.service.mock";
 
 const user = {
   guid: '1000',
@@ -27,15 +28,13 @@ let sessionConfig = {
 
 let sessionMock: any = MockService(Session, sessionConfig);
 
-let groupsServiceMock: any = MockService(GroupsService, sessionConfig);
-
 describe('GroupsProfileMembers', () => {
 
   let comp: GroupsProfileMembers;
   let fixture: ComponentFixture<GroupsProfileMembers>;
 
   function getSearchInput(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-groups-search-member > input'));
+    return fixture.debugElement.query(By.css('.m-groupMembers__search > input'));
   }
 
   beforeEach(async(() => {
@@ -57,7 +56,7 @@ describe('GroupsProfileMembers', () => {
       imports: [RouterTestingModule, FormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock },
+        { provide: MindsHttpClient, useValue: mindsHttpClientMock },
         { provide: GroupsService, useValue: groupsServiceMock }
       ]
     })
@@ -71,8 +70,8 @@ describe('GroupsProfileMembers', () => {
 
     window.Minds.cdn_url = 'http://dev.minds.io/';
 
-    clientMock.response = {};
-    clientMock.response['api/v1/groups/membership/1234'] = {
+    mindsHttpClientMock.response = {};
+    mindsHttpClientMock.response['api/v1/groups/membership/1234'] = {
       status: 'success',
       members: [
         { guid: '1', username: 'test1' },
@@ -82,12 +81,15 @@ describe('GroupsProfileMembers', () => {
 
     comp.canInvite = true;
 
-    comp._group = {
+    comp.group = {
       guid: '1234',
       'membership': 0,
       'is:owner': true,
       'is:member': true,
     };
+
+
+    groupsServiceMock.group.next(comp.group);
 
     fixture.detectChanges();
 
@@ -102,8 +104,8 @@ describe('GroupsProfileMembers', () => {
   });
 
   it('should have loaded the members', () => {
-    expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[0]).toBe('api/v1/groups/membership/1234');
+    expect(mindsHttpClientMock.get).toHaveBeenCalled();
+    expect(mindsHttpClientMock.get.calls.mostRecent().args[0]).toBe('api/v1/groups/membership/1234');
   });
 
   it('should have a minds-groups-profile-members-invite', () => {
@@ -138,9 +140,9 @@ describe('GroupsProfileMembers', () => {
   });
 
   it('should have a list of members', () => {
-    expect(fixture.debugElement.query(By.css('.minds-groups-member-card'))).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('.m-groupMembers__memberCard'))).not.toBeNull();
 
-    expect(fixture.debugElement.queryAll(By.css('.minds-groups-member-card minds-card-user')).length).toBe(2);
+    expect(fixture.debugElement.queryAll(By.css('.m-groupMembers__memberCard minds-card-user')).length).toBe(2);
   });
 
   it('should have an infinite-scroll', () => {

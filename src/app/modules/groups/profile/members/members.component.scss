@@ -1,0 +1,20 @@
+.m-groupMembers__search {
+  margin-bottom: 8px;
+  input {
+    background: #FFF;
+  }
+}
+
+.m-groupMembers__list {
+  background: #FFF;
+}
+.m-groupMembers__memberCard {
+  .mdl-card {
+    overflow: visible;
+  }
+  minds-card-user .minds-usercard-buttons {
+    right: 8px !important;
+    bottom: 16px !important;
+    top: inherit !important;
+  }
+}

@@ -16,7 +16,16 @@
     </div>
 
     <div class="minds-list">
-      <minds-activity *ngIf="activity" [object]="activity" [commentsToggle]="true" (delete)="delete(activity)" [showRatingToggle]="true" class="mdl-card mdl-shadow--2dp item"></minds-activity>
+      <minds-activity
+        *ngIf="activity"
+        [object]="activity"
+        [commentsToggle]="true"
+        [focusedCommentGuid]="focusedCommentGuid"
+        (delete)="delete(activity)"
+        [showRatingToggle]="true"
+        class="mdl-card mdl-shadow--2dp item"
+        >
+      </minds-activity>
     </div>
   </div>
 

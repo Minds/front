@@ -1,5 +1,5 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
+import { ActivatedRoute, ChildActivationEnd, NavigationEnd, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -15,10 +15,11 @@ import { ContextService } from '../../../services/context.service';
 import { Client } from '../../../services/api';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { VideoChatService } from '../../videochat/videochat.service';
+import { UpdateMarkersService } from '../../../common/services/update-markers.service';
+import { filter } from "rxjs/operators";
 
 @Component({
-  moduleId: module.id,
-  selector: 'minds-groups-profile',
+  selector: 'm-groups--profile',
   templateUrl: 'profile.html'
 })
 
@@ -35,11 +36,15 @@ export class GroupsProfile {
   editDone: boolean = false;
   minds = window.Minds;
 
+  showRight: boolean = true;
   activity: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
+  error: string;
   paramsSubscription: Subscription;
+  childParamsSubscription: Subscription;
+  queryParamsSubscripton: Subscription;
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
@@ -49,23 +54,28 @@ export class GroupsProfile {
 
   private reviewCountInterval: any;
   private socketSubscription: any;
+  private videoChatActiveSubscription;
+  private updateMarkersSubscription;
 
   constructor(
     public session: Session,
     public service: GroupsService,
     public route: ActivatedRoute,
+    private router: Router,
     public title: MindsTitle,
     private sockets: SocketsService,
     private context: ContextService,
     private recent: RecentService,
     private client: Client,
-    private videochat: VideoChatService,
+    public videochat: VideoChatService,
     private cd: ChangeDetectorRef,
+    private updateMarkers: UpdateMarkersService,
   ) { }
 
   ngOnInit() {
     this.context.set('activity');
     this.listenForNewMessages();
+    this.detectWidth();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
@@ -78,8 +88,13 @@ export class GroupsProfile {
           this.group = void 0;
 
           this.load()
-            .then(() => {
+            .then(async () => {
               this.filterToDefaultView();
+              if (this.route.snapshot.queryParamMap.has('join') && confirm('Are you sure you want to join this group')) {
+                await this.service.join(this.group);
+                this.group['is:awaiting'] = true;
+                this.detectChanges();
+              }
             });
         }
       }
@@ -91,17 +106,53 @@ export class GroupsProfile {
           this.newConversationMessages = false;
         }
       }
-
       this.filterToDefaultView();
+
     });
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      const url = this.router.routerState.snapshot.url;
+
+      this.setFilter(url);
+    });
+
+    this.setFilter(this.router.routerState.snapshot.url);
 
     this.reviewCountInterval = setInterval(() => {
       this.reviewCountLoad();
     }, 120 * 1000);
+
+    this.videoChatActiveSubscription = this.videochat.activate$.subscribe(next => window.scrollTo(0, 0));
+  }
+
+  setFilter(url: string) {
+    if (url.includes('/feed')) {
+      if (url.includes('/image')) {
+        this.filter = 'image';
+      } else if (url.includes('/video')) {
+        this.filter = 'video';
+      } else {
+        this.filter = 'activity';
+      }
+    }
   }
 
   ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription)
+      this.paramsSubscription.unsubscribe();
+    if (this.childParamsSubscription)
+      this.childParamsSubscription.unsubscribe();
+    if (this.queryParamsSubscripton)
+      this.queryParamsSubscripton.unsubscribe();
+
+    if (this.videoChatActiveSubscription)
+      this.videoChatActiveSubscription.unsubscribe(); 
+
+    if (this.updateMarkersSubscription)
+      this.updateMarkersSubscription.unsubscribe();
+
     this.unlistenForNewMessages();
     this.leaveCommentsSocketRoom();
 
@@ -110,21 +161,48 @@ export class GroupsProfile {
     }
   }
 
-  load() {
-    return this.service.load(this.guid)
-      .then((group) => {
-        this.group = group;
-        this.joinCommentsSocketRoom();
-        this.title.setTitle(this.group.name);
-        this.context.set('activity', { label: this.group.name, nameLabel: this.group.name, id: this.group.guid });
-        if (this.session.getLoggedInUser()) {
-          this.addRecent();
-        }
-      });
+  async load() {
+    this.resetMarkers();
+    this.error = "";
+    this.group = null;
+
+    // Load group
+    try { 
+      this.group = await this.service.load(this.guid);
+    } catch (e) {
+      this.error = e.message;
+      return;
+    }
+
+    if (this.updateMarkersSubscription)
+      this.updateMarkersSubscription.unsubscribe();
+
+    this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe(marker => {
+      if (!marker)
+        return;
+        
+      let hasMarker = 
+        (marker.read_timestamp < marker.updated_timestamp)
+        && (marker.entity_guid == this.group.guid)
+        && (marker.marker != 'gathering-heartbeat');
+
+      if (hasMarker)
+        this.resetMarkers();
+    });
+
+    // Check for comment updates
+    this.joinCommentsSocketRoom();
+    this.title.setTitle(this.group.name);
+
+    this.context.set('activity', { label: this.group.name, nameLabel: this.group.name, id: this.group.guid });
+
+    if (this.session.getLoggedInUser()) {
+      this.addRecent();
+    }
   }
 
   async reviewCountLoad() {
-    if (!this.guid) {
+    if (!this.guid || !this.session.isLoggedIn()) {
       return;
     }
 
@@ -156,8 +234,6 @@ export class GroupsProfile {
       this.videochat.activate(this.group);
     }
 
-    this.filter = 'activity';
-
     switch (this.group.default_view) {
       case 1:
         this.filter = 'conversation';
@@ -168,16 +244,7 @@ export class GroupsProfile {
   save() {
     this.group.videoChatDisabled = parseInt(this.group.videoChatDisabled);
 
-    this.service.save({
-      guid: this.group.guid,
-      name: this.group.name,
-      briefdescription: this.group.briefdescription,
-      tags: this.group.tags,
-      membership: this.group.membership,
-      moderated: this.group.moderated,
-      default_view: this.group.default_view,
-      videoChatDisabled: this.group.videoChatDisabled,
-    });
+    this.service.save(this.group);
 
     this.editing = false;
     this.editDone = true;
@@ -292,6 +359,30 @@ export class GroupsProfile {
         }
       }
     }
+  }
+
+  onOptionsChange(options) {
+    this.editing = options.editing;
+    if (options.editing === false)
+      this.save();
+  }
+
+  @HostListener('window:resize') detectWidth() {
+    this.showRight = window.innerWidth > 900;
+  }
+
+  resetMarkers() {
+    this.updateMarkers.markAsRead({
+      entity_guid: this.guid,
+      entity_type: 'group',
+      marker: 'activity'
+    });
+
+    this.updateMarkers.markAsRead({
+      entity_guid: this.guid,
+      entity_type: 'group',
+      marker: 'conversation'
+    });
   }
 
   detectChanges() {

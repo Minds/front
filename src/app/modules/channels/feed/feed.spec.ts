@@ -216,6 +216,7 @@ describe('ChannelFeed', () => {
     comp.loadFeed();
     tick();
     fixture.detectChanges();
+    tick();
     expect(comp.moreData).toBe(false);
   }));
 

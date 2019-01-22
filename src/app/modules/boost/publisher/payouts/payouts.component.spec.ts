@@ -37,6 +37,7 @@ describe('BoostPublisherPayoutsComponent', () => {
   }));
 
   beforeEach((done) => {
+    jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(BoostPublisherPayoutsComponent);
 

@@ -9,32 +9,40 @@
 >
   <div class="mdl-color-text--blue-grey-500 m-comments-load-more"
     (click)="load()"
-    [ngClass]="{ 'm-disabled': inProgress }"
-    *ngIf="moreData || !loaded"
+    [ngClass]="{ 'm-disabled': descendingInProgress }"
+    *ngIf="moreDescendingData || !loaded"
   >
-    <span *ngIf="inProgress">
+    <span *ngIf="descendingInProgress">
       <i class="material-icons">autorenew</i> <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS">Loading&hellip;</ng-container>
     </span>
-    <span *ngIf="!inProgress && !loaded">
+    <span *ngIf="!descendingInProgress && !loaded">
       <i class="material-icons">update</i>
       <ng-container *ngIf="!error"><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION">Load</ng-container></ng-container>
       <ng-container *ngIf="error"><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION">Try again</ng-container></ng-container>
     </span>
-    <span *ngIf="!inProgress && loaded">
+    <span *ngIf="!descendingInProgress && loaded">
       <i class="material-icons">update</i> <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION">Load earlier</ng-container>
     </span>
     
   </div>
 
-  <p class="m-comments--start-conversation-label" *ngIf="!inProgress && !error && comments?.length === 0" i18n="@@MINDS__COMMENTS__START_CONVERSATION">
+  <p class="m-comments--start-conversation-label"
+    *ngIf="!descendingInProgress
+      && !ascendingInProgress
+      && !error
+      && comments?.length === 0
+      && parent.type == 'activity'"
+    i18n="@@MINDS__COMMENTS__START_CONVERSATION"
+    >
     Start the conversation!
   </p>
 
-  <p class="m-comments--load-error-label" *ngIf="!inProgress && !!error">
+  <p class="m-comments--load-error-label" *ngIf="!descendingInProgress && !ascendingInProgress && !!error">
     <i class="material-icons">warning</i>
     <span>{{ error }}</span>
   </p>
 
+  <div class="m-layout--spacer"></div>
   <minds-card-comment *ngFor="let comment of comments; let i = index"
     [object]="comment"
     [parent]="parent"
@@ -42,10 +50,28 @@
     (saved)="edited(i, $event)"
     (onReply)="reply($event.comment)"
   ></minds-card-comment>
+
+  <div class="mdl-color-text--blue-grey-500 m-comments-load-more"
+     (click)="load(false, false)"
+     [ngClass]="{ 'm-disabled': ascendingInProgress }"
+     *ngIf="moreAscendingData && focusedCommentGuid"
+  >
+    <span *ngIf="ascendingInProgress">
+      <i class="material-icons">autorenew</i> <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS">Loading&hellip;</ng-container>
+    </span>
+    <span *ngIf="!ascendingInProgress && !loaded">
+      <i class="material-icons">update</i>
+      <ng-container *ngIf="!error"><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION">Load</ng-container></ng-container>
+      <ng-container *ngIf="error"><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION">Try again</ng-container></ng-container>
+    </span>
+    <span *ngIf="!ascendingInProgress && loaded">
+      <i class="material-icons">update</i> <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION">Load later</ng-container>
+    </span>
+  </div>
+
 </div>
 
-
-<div class="mdl-card minds-comment minds-comment-post minds-block" *ngIf="!readonly">
+<div class="m-comment m-comment--poster minds-block" *ngIf="!readonly">
 
     <div class="minds-avatar">
       <a [routerLink]="['/', session.getLoggedInUser().username]">
@@ -60,7 +86,7 @@
                 <minds-textarea
                   #message="Textarea"
                   [(mModel)]="content"
-                  [disabled]="inProgress && attachment.hasFile()"
+                  [disabled]="(ascendingInProgress || descendingInProgress) && attachment.hasFile()"
                   (click)="isLoggedIn()"
                   (keyup)="getPostPreview(content)"
                   (keydown.enter)="post($event)"

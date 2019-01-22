@@ -7,13 +7,8 @@ describe('OffchainPaymentService', () => {
   let service: OffchainPaymentService;
 
   beforeEach(() => {
-    jasmine.clock().install();
     service = new OffchainPaymentService(clientMock);
     clientMock.response = {};
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   it('should be instantiated', () => {

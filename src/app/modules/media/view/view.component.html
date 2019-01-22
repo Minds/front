@@ -154,7 +154,11 @@
 
         <!-- Don't show comments for albums -->
         <div class="mdl-grid m-media-content--comments mdl-color--white" *ngIf="entity.guid && entity.subtype != 'album'">
-          <minds-comments [object]="entity"></minds-comments>
+          <minds-comments
+            [object]="entity"
+            [focusedCommentGuid]="focusedCommentGuid"
+            >
+          </minds-comments>
         </div>
       </div>
 

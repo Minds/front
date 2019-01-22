@@ -74,7 +74,8 @@
 
       <!-- Activity -->
       <a *ngIf="notification.entityObj.type == 'activity'"
-        [routerLink]="['/newsfeed', notification.entityObj.guid]">
+        [routerLink]="['/newsfeed', notification.entityObj.guid]"
+        [queryParams]="{ comment_guid: notification.params?.parent_path === '0:0:0' ? notification.params?.comment_guid : null }">
         <p *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title">
           <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_ACTIVITY_OWN">{{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">your activity</span></ng-container>
         </p>
@@ -96,9 +97,18 @@
         </div>
 
         <div *ngIf="notification.entityObj.subtype != 'blog'">
-          <a [routerLink]="['/media', notification.entityObj.guid]">
+            <a
+              [routerLink]="['/media', notification.entityObj.guid]"
+              [queryParams]="{ comment_guid: notification.params?.parent_path == '0:0:0' ? notification.params?.comment_guid : null }">
             <p>
-              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON">{{notification.fromObj.name}} commented on </ng-container>
+              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON" 
+                *ngIf="!notification.params?.is_reply">
+                {{notification.fromObj.name}} commented on
+              </ng-container>
+              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO" 
+                *ngIf="notification.params?.is_reply">
+                {{notification.fromObj.name}} replied to your comment on 
+              </ng-container>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title" >{{notification.entityObj.title | excerpt}}</span>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.owner_guid != session.getLoggedInUser().guid && !notification.entityObj.title" i18n="object belonging to user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT">{{notification.entityObj.ownerObj.name}}'s {{notification.entityObj.subtype}}</span>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title" i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT">your {{notification.entityObj.subtype}}</span>
@@ -108,8 +118,24 @@
 
       </div>
 
+      <div *ngIf="notification.entityObj.type == 'group'">
+        <div>
+          <a
+              [routerLink]="['/groups/profile', notification.entityObj.guid]"
+              [queryParams]="{ comment_guid: notification.params?.parent_path == '0:0:0' ? notification.params?.comment_guid : null }">
+            <p>
+            <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION" 
+                *ngIf="notification.params?.is_reply">
+                {{notification.fromObj.name}} replied to your message in 
+              </ng-container>
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.name" >{{notification.entityObj.name | excerpt}}</span>'s conversation
+            </p>
+          </a>
+        </div>
+      </div>
+
       <!-- Default -->
-      <a *ngIf="notification.entityObj.type != 'object' && notification.entityObj.type != 'activity'">
+      <a *ngIf="notification.entityObj.type != 'object' && notification.entityObj.type != 'activity' && notification.entityObj.type != 'group'">
         <p style="font-style:italic">
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__ERROR_VIEWING">There was an error viewing this notification.</ng-container>
         </p>
@@ -137,9 +163,13 @@
       </a>
 
       <ng-container *ngIf="notification.entityObj.type == 'comment'">
-        <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.params?.parent?.type != 'group'">
+        <a [routerLink]="['/newsfeed', notification.entityObj.entity_guid]" *ngIf="notification.params?.parent?.type != 'group'">
           <p>
-            <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_COMMENT">{{notification.fromObj.name}} voted up <span class="pseudo-link mdl-color-text--blue-grey-400"> your comment </span></ng-container>
+            <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_COMMENT">
+              {{notification.fromObj.name}} voted up
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.partition_path == '0:0:0'"> your comment </span>
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.partition_path != '0:0:0'"> your reply </span>
+            </ng-container>
           </p>
         </a>
 
@@ -239,11 +269,19 @@
       </a>
 
       <ng-container *ngIf="notification.entityObj.type == 'comment'">
-        <a [routerLink]="['/newsfeed', notification.params?.parent?.guid]" *ngIf="notification.params?.parent?.type != 'group'">
+        <a
+          [routerLink]="['/newsfeed', notification.params?.parent?.guid]"
+          [queryParams]="{ comment_guid: notification.entityObj.parent_path === '0:0:0' ? notification.entityObj._guid : null }"
+          *ngIf="notification.params?.parent?.type != 'group'"
+          >
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_COMMENT">{{notification.fromObj.name}} tagged you in a comment</p>
         </a>
 
-        <a [routerLink]="['/groups/profile', notification.params?.parent?.guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+        <a 
+          [routerLink]="['/groups/profile', notification.params?.parent?.guid, 'feed']"
+          [queryParams]="{ comment_guid: notification.entityObj.parent_path === '0:0:0' ? notification.entityObj._guid : null }"
+          *ngIf="notification.params?.parent?.type == 'group'"
+          >
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_CONVERSATION">
             <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> tagged you in
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation

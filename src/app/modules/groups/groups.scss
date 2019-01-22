@@ -2,6 +2,7 @@
 
 .groups-grid {
   max-width: 990px;
+  margin: 0 auto;
 }
 .minds-banner-card{
   minds-groups-join-button{
@@ -214,6 +215,10 @@ minds-groups-profile{
       text-align: center;
       position: relative;
 
+      @media screen and (max-width: 720px) {
+        margin: 200px auto;
+      }
+
       .m-group-avatar{
         min-height:140px;
       }
@@ -283,6 +288,29 @@ minds-groups-profile-members-invite {
   .m-group-info-members,
   .m-group--sidebar .mdl-card__supporting-text {
     display:none;
+  }
+}
+
+.m-group__infoWrapper {
+  .m-groupInfo__name,
+  .m-groupInfo__description {
+    input[type=text], select, textarea {
+      width: 100%;
+      padding: $minds-padding;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+
+      &.h1 {
+        font-size: 26px;
+        font-weight: 400;
+      }
+
+      &.icon-prefix {
+        width: 85%;
+        width: calc(100% - 38px);
+      }
+
+    }
   }
 }
 
@@ -504,7 +532,7 @@ minds-groups-create{
 }
 
 .m-group--action-buttons{
-  padding:16px;
+  padding:0;
   margin:auto;
   display:flex;
 
@@ -547,7 +575,7 @@ minds-groups-create{
     }
   }
   minds-groups-join-button{
-    padding:$minds-padding $minds-padding*2;
+    padding:$minds-padding 0;
 
     .m-btn.subscribed {
       color: #444 !important;
@@ -753,6 +781,35 @@ minds-groups-profile-feed {
   .m-groups-feed--review-actions {
     padding: 0 ($minds-padding * 2) ($minds-padding * 2);
     text-align: right;
+  }
+
+  .minds-list.m-groupProfileFeed__mediaList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-flow: row wrap;
+    max-width: 1280px;
+    margin: auto;
+    align-items: flex-start;
+
+    minds-activity {
+      margin: $minds-padding $minds-padding / 4;
+      flex-basis: calc(50% - 4px);
+      max-width: calc(50% - 4px);
+
+      @media screen and (max-width: 900px) {
+        flex-basis: calc(100% - 8px);
+        max-width: calc(100% - 8px);
+      }
+
+      .item-image {
+        img {
+          width: 100%;
+          height: 300px;
+          object-fit: cover;
+        }
+      }
+    }
   }
 }
 

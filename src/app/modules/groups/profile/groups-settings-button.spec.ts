@@ -53,6 +53,7 @@ describe('GroupsSettingsButton', () => {
 
   beforeEach(() => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
+    jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(GroupsSettingsButton);
 
@@ -117,7 +118,7 @@ describe('GroupsSettingsButton', () => {
     expect(unmute.nativeElement.hidden).toBeFalsy();
   }));
 
-  it('should have an option to feature / unfeature the group', fakeAsync(() => {
+  xit('should have an option to feature / unfeature the group', fakeAsync(() => {
     const feature = getMenuItem(3);
 
     expect(feature).not.toBeNull();
@@ -154,7 +155,7 @@ describe('GroupsSettingsButton', () => {
   }));
 
   it('should have an option to report', ()=> {
-    const report = getMenuItem(5);
+    const report = getMenuItem(4);
     expect(report).not.toBeNull();
     expect(report.nativeElement.textContent).toContain('Report');
 
@@ -169,7 +170,7 @@ describe('GroupsSettingsButton', () => {
       'is:creator': true
     };
 
-    const deleteGroup = getMenuItem(6);
+    const deleteGroup = getMenuItem(5);
     expect(deleteGroup).not.toBeNull();
     expect(deleteGroup.nativeElement.textContent).toContain('Delete Group');
 
@@ -181,7 +182,7 @@ describe('GroupsSettingsButton', () => {
   });
 
   it('should delete the group', fakeAsync(()=> {
-    const deleteGroup = getMenuItem(6);
+    const deleteGroup = getMenuItem(5);
 
     deleteGroup.nativeElement.click();
     fixture.detectChanges();
