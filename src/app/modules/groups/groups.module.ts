@@ -35,6 +35,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'feed', pathMatch: 'full' },
       { path: 'feed/:filter', component: GroupsProfileFeed },
       { path: 'feed', component: GroupsProfileFeed },
+      { path: 'activity', redirectTo: 'feed' },
       { path: 'members', component: GroupsProfileMembers },
       { path: 'requests',  component: GroupsProfileRequests },
     ],
