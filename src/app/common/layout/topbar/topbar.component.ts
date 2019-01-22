@@ -45,6 +45,7 @@ export class TopbarComponent {
     viewContainerRef.clear();
 
     this.componentRef = viewContainerRef.createComponent(componentFactory);
+    this.componentRef.notifications = [];
     this.componentInstance = this.componentRef.instance;
   }
 

@@ -26,7 +26,7 @@ export class TopbarNavigationComponent {
     ngOnInit() {
         this.items = this.navigation.getItems('topbar');
 		this.getUser();
-        this.hasMarker$ = this.updateMarkers.markers
+        /*this.hasMarker$ = this.updateMarkers.markers
           .pipe(
             map((markers: any) => {
               if (!markers)
@@ -38,7 +38,7 @@ export class TopbarNavigationComponent {
                 )
                 .length;
             })
-          );
+            );*/
     }
 
 	getUser() {
