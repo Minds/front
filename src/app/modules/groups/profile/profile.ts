@@ -93,6 +93,7 @@ export class GroupsProfile {
               if (this.route.snapshot.queryParamMap.has('join') && confirm('Are you sure you want to join this group')) {
                 await this.service.join(this.group);
                 this.group['is:awaiting'] = true;
+                this.detectChanges();
               }
             });
         }
