@@ -16,7 +16,7 @@
     </div>
 
     <a class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
-      [routerLink]="['/groups/profile', group.guid, 'review']"
+      routerLink="review"
       *ngIf="filter == 'activity' && (group['is:owner']||group['is:moderator']) && group['adminqueue:count']"
     >
       <i class="material-icons">rate_review</i>
