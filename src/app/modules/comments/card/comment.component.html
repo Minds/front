@@ -229,7 +229,7 @@
         <span class="m-clickable"
           [class.selected]="comment.replies_count > 0"
           (click)="toggleReplies();"
-          *ngIf="comment.parent_guid_l2 == 0"
+          *ngIf="comment.can_reply"
         >
           <i class="material-icons">reply</i>
           <span *ngIf="comment.replies_count > 0">{{ comment.replies_count }} Replies</span>
@@ -246,7 +246,7 @@
     <minds-comments
       [object]="comment"
       [parentGuid]="comment._guid"
-      *ngIf="showReplies && comment.parent_guid_l2 == 0"
+      *ngIf="showReplies && comment.can_reply"
       >
     </minds-comments>
 
