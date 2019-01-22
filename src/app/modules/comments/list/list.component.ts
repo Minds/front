@@ -473,7 +473,7 @@ export class CommentsListComponent {
       return;
     }
 
-    this.attachment.preview(message, this.detectChanges);
+    this.attachment.preview(message, this.detectChanges.bind(this));
   }
 
   reply(comment: any) {
