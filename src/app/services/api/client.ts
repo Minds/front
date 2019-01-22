@@ -93,7 +93,7 @@ export class Client {
             return resolve(data);
           },
           err => {
-            if (err.json && !err.json()) {
+            if (err.data && !err.data()) {
               return reject(err || new Error('POST error'));
             }
             if (err.status === 401 && err.loggedin === false) {
@@ -101,7 +101,7 @@ export class Client {
               return reject(err);
             }
             if (err.status !== 200) {
-              return reject(err.json());
+              return reject(err.error);
             }
           });
     });
@@ -126,12 +126,12 @@ export class Client {
             return resolve(data);
           },
           err => {
-            if (err.status === 401 && err.json().loggedin === false) {
+            if (err.status === 401 && err.data().loggedin === false) {
               window.location.href = '/login';
               return reject(err);
             }
             if (err.status !== 200) {
-              return reject(err.json());
+              return reject(err.error);
             }
           });
     });
@@ -160,7 +160,7 @@ export class Client {
               return reject(err);
             }
             if (err.status !== 200) {
-              return reject(err.json());
+              return reject(err.error);
             }
           });
     });
