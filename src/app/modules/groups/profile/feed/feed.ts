@@ -113,7 +113,7 @@ export class GroupsProfileFeed {
       offset: this.offset,
     };
 
-    if (!this.offset && this.group.pinned_posts.length > 0){
+    if (!this.offset && this.group && this.group.pinned_posts && this.group.pinned_posts.length > 0){
       opts.pinned = this.group.pinned_posts;
     }
 
