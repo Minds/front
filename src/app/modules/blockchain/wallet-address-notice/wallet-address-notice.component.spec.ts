@@ -43,7 +43,6 @@ describe('BlockchainWalletAddressNoticeComponent', () => {
 
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
-    jasmine.clock().install();
 
     fixture = TestBed.createComponent(BlockchainWalletAddressNoticeComponent);
 
@@ -60,10 +59,6 @@ describe('BlockchainWalletAddressNoticeComponent', () => {
           done()
         });
     }
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   it('should have an m-announcement with a prompt to set up the wallet', fakeAsync(() => {

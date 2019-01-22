@@ -8,16 +8,10 @@ describe('NewsfeedBoostService', () => {
   let service: NewsfeedBoostService;
 
   beforeEach(() => {
-    jasmine.clock().uninstall();
-    jasmine.clock().install();
     service = new NewsfeedBoostService(sessionMock, clientMock);
     clientMock.response = {};
 
     sessionMock.user.boost_autorotate = true;
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   it('should be instantiated', () => {

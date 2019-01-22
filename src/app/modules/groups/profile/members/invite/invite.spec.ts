@@ -56,7 +56,6 @@ describe('GroupsProfileMembersInvite', () => {
   }));
 
   beforeEach((done) => {
-    jasmine.clock().install();
     fixture = TestBed.createComponent(GroupsProfileMembersInvite);
 
     comp = fixture.componentInstance;
@@ -89,22 +88,18 @@ describe('GroupsProfileMembersInvite', () => {
     }
   });
 
-  afterEach(() => {
-    jasmine.clock().uninstall();
-  });
-
   it('should have a title saying Invite to <<group name>>', () => {
     expect(fixture.debugElement.query(By.css('h2')).nativeElement.textContent).toContain('Invite to test group');
   });
 
   it('should have a brief explanation', () => {
-    const spans = fixture.debugElement.queryAll(By.css('.mdl-card__supporting-text > span'));
+    const instructions = fixture.debugElement.queryAll(By.css('.m-groupMemberInvite__instructions > li'));
 
-    expect(spans.length).toBe(3);
+    expect(instructions.length).toBe(3);
 
-    expect(spans[0].nativeElement.textContent).toContain('- You can only invite users who are your subscribers');
-    expect(spans[1].nativeElement.textContent).toContain('- They will receive a notification to confirm they want to be a member of this group');
-    expect(spans[2].nativeElement.textContent).toContain('- If the user was banned from the group, inviting them will lift the ban');
+    expect(instructions[0].nativeElement.textContent).toContain('You can only invite users who are your subscribers');
+    expect(instructions[1].nativeElement.textContent).toContain('They will receive a notification to confirm they want to be a member of this group');
+    expect(instructions[2].nativeElement.textContent).toContain('If the user was banned from the group, inviting them will lift the ban');
   });
 
   it('should have a search input', () => {

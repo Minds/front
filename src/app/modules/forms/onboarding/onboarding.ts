@@ -70,7 +70,7 @@ export class OnboardingForm {
 
     var reader = new FileReader();
     reader.onloadend = () => {
-      this.banner = reader.result;
+      this.banner = typeof reader.result === 'string' ? reader.result : reader.result.toString();
     };
     reader.readAsDataURL(file);
 

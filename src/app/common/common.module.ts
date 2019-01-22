@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Http } from '@angular/http';
 
 import { MINDS_PIPES } from './pipes/pipes';
 
@@ -63,7 +62,7 @@ import { PhoneInputComponent } from './components/phone-input/phone-input.compon
 import { PhoneInputCountryComponent } from './components/phone-input/country.component';
 import { Session } from '../services/session';
 import { Client, Upload } from '../services/api';
-import { HttpClient } from './api/client.service';
+import { MindsHttpClient } from './api/client.service';
 import { SafeToggleComponent } from './components/safe-toggle/safe-toggle.component';
 import { NotificationsToasterComponent } from '../modules/notifications/toaster.component';
 import { ThumbsUpButton } from './components/thumbs/thumbs-up.component';
@@ -78,6 +77,7 @@ import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-fo
 
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
+import { HttpClient } from "@angular/common/http";
 
 @NgModule({
   imports: [
@@ -238,12 +238,12 @@ import { SocketsService } from '../services/sockets';
     {
       provide: UpdateMarkersService,
       useFactory: (_http, _session, _sockets) => { return new UpdateMarkersService(_http, _session, _sockets); },
-      deps: [ HttpClient, Session, SocketsService ],
+      deps: [ MindsHttpClient, Session, SocketsService ],
     },
     {
-      provide: HttpClient,
-      useFactory: HttpClient._,
-      deps: [Http]
+      provide: MindsHttpClient,
+      useFactory: MindsHttpClient._,
+      deps: [HttpClient]
     },
   ],
   entryComponents: [

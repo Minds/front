@@ -1,6 +1,5 @@
-import { Inject, Injector } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Cookie } from '../cookie';
+import { HttpClient } from "@angular/common/http";
 
 /**
  * API Class
@@ -10,11 +9,11 @@ export class Upload {
   base: string = '/';
   cookie: Cookie = new Cookie();
 
-  static _(http: Http) {
+  static _(http: HttpClient) {
     return new Upload(http);
   }
 
-  constructor(public http: Http) { }
+  constructor(public http: HttpClient) { }
 
 	/**
 	 * Return a POST request

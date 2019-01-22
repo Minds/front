@@ -1,5 +1,4 @@
 import { NgZone } from '@angular/core';
-import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
@@ -36,6 +35,7 @@ import { BlockchainService } from '../modules/blockchain/blockchain.service';
 import { WebtorrentService } from '../modules/webtorrent/webtorrent.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
+import { HttpClient } from "@angular/common/http";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -51,12 +51,12 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: Client,
      useFactory: Client._,
-     deps: [ Http ]
+     deps: [ HttpClient ]
    },
    {
      provide: Upload,
      useFactory: Upload._,
-     deps: [ Http ]
+     deps: [ HttpClient ]
    },
    {
      provide: Storage,

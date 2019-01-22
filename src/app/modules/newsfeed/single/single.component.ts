@@ -4,7 +4,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsActivityObject } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
 
@@ -22,6 +21,7 @@ export class NewsfeedSingleComponent {
   paramsSubscription: Subscription;
   queryParamsSubscription: Subscription;
   focusedCommentGuid: string = '';
+
   constructor(
     public client: Client,
     public upload: Upload,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '../api/client.service';
+import { MindsHttpClient } from '../api/client.service';
 import { Session } from '../../../app/services/session';
 import { BehaviorSubject } from 'rxjs';
 import { SocketsService } from '../../services/sockets';
@@ -21,7 +21,7 @@ export class UpdateMarkersService {
   muted = [];
 
   constructor(
-    private http: HttpClient,
+    private http: MindsHttpClient,
     private session: Session,
     private sockets: SocketsService
   ) {
@@ -32,8 +32,7 @@ export class UpdateMarkersService {
         type: 'group',
       })
       .pipe(
-        map(response => response.json()),
-        map(json => json.markers),
+        map((response: any) => response.markers),
       );
   }
 
@@ -53,7 +52,7 @@ export class UpdateMarkersService {
   fetch() {
     if (this.isLoggedIn) {
       this.get()
-        .subscribe(markers => {
+        .subscribe((markers: any) => {
           this.data = markers; //cache
 
           for (let i in this.data) {
@@ -91,7 +90,6 @@ export class UpdateMarkersService {
       throw "marker must be set";
 
     this.http.post('api/v2/notifications/markers/read', opts)
-      .pipe(map(response => response.json()))
       .subscribe(res => null, err => console.warn(err));
 
     for (let i = 0; i < this.data.length; i++) {

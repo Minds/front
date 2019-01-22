@@ -53,7 +53,7 @@ describe('GroupsProfileFilterSelector', () => {
     expect(a).not.toBeNull();
 
     expect(a.nativeElement.textContent).toContain('Feed');
-    expect(a.nativeElement.href).toContain('/groups/profile/123/activity');
+    expect(a.nativeElement.href).toContain('/groups/profile/123/feed');
     expect(a.nativeElement.classList).toContain('m-groups--filter-selector-active')
   });
 
@@ -65,7 +65,7 @@ describe('GroupsProfileFilterSelector', () => {
     expect(a).not.toBeNull();
 
     expect(a.nativeElement.textContent).toContain('Images');
-    expect(a.nativeElement.href).toContain('/groups/profile/123/conversation');
+    expect(a.nativeElement.href).toContain('/groups/profile/123/feed/image');
     expect(a.nativeElement.classList).toContain('m-groups--filter-selector-active')
   });
 

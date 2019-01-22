@@ -1,20 +1,19 @@
-import { Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Cookie } from '../../services/cookie';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 /**
  * API Class
  */
-export class HttpClient {
+export class MindsHttpClient {
 
   base: string = '/';
   cookie: Cookie = new Cookie();
 
-  static _(http: Http) {
-    return new HttpClient(http);
+  static _(http: HttpClient) {
+    return new MindsHttpClient(http);
   }
 
-  constructor(public http: Http) {
+  constructor(public http: HttpClient) {
   }
 
   /**
@@ -23,12 +22,12 @@ export class HttpClient {
   get(endpoint: string, data: Object = {}, options: Object = {}) {
     endpoint += '?' + this.buildParams(data);
     return this.http.get(
-        this.base + endpoint,
-        this.buildOptions(options)
-      );
+      this.base + endpoint,
+      this.buildOptions(options)
+    );
     //     .map(response => response.json());
   }
-  
+
   /**
    * Return a POST request
    */
@@ -71,11 +70,13 @@ export class HttpClient {
    * Build the options
    */
   private buildOptions(options: Object) {
-    var XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
-    var headers = new Headers();
-    headers.append('X-XSRF-TOKEN', XSRF_TOKEN);
-    var Objecti: any = Object;
-    return Objecti.assign(options, {
+    const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
+
+    const headers = new HttpHeaders({
+      'X-XSRF-TOKEN': XSRF_TOKEN,
+    });
+
+    return Object.assign(options, {
       headers: headers,
       cache: true
     });

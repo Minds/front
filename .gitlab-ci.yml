@@ -18,6 +18,7 @@ build:
   stage: build
   script:
     - npm install # TODO: Why is this needed?
+    - npm run postinstall
     - npm install -g gulp-cli
     - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
     - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist

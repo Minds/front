@@ -36,7 +36,7 @@ describe('LoginForm', () => {
 
     clientMock.post.calls.reset();
 
-    clientMock.response = response;
+    clientMock.response['api/v1/authenticate'] = response;
 
     tick();
     fixture.detectChanges();
@@ -52,7 +52,7 @@ describe('LoginForm', () => {
 
     clientMock.post.calls.reset();
 
-    clientMock.response = response;
+    clientMock.response['api/v1/twofactor/authenticate'] = response;
 
     tick();
     fixture.detectChanges();
@@ -94,6 +94,8 @@ describe('LoginForm', () => {
     twoFactorLoginButton = fixture.debugElement.query(By.css('.mdl-card > button'));
 
     session = comp.session;
+
+    clientMock.response = [];
   });
 
   it('should have username input field', () => {
@@ -174,12 +176,52 @@ describe('LoginForm', () => {
     expect(comp.login).toHaveBeenCalled();
   }));
 
-  it('should\'ve called api/v1/authenticate with correct arguments', () => {
+  it('should\'ve called api/v1/authenticate with correct arguments', fakeAsync(() => {
+    login({
+      'status': 'success',
+      'user': {
+        'guid': '714452562123689992',
+        'type': 'user',
+        'subtype': false,
+        'time_created': '1495714764',
+        'time_updated': false,
+        'container_guid': '0',
+        'owner_guid': '0',
+        'site_guid': false,
+        'access_id': '2',
+        'name': 'minds',
+        'username': 'minds',
+        'language': 'en',
+        'icontime': '1496687850',
+        'legacy_guid': false,
+        'featured_id': false,
+        'banned': 'no',
+        'website': false,
+        'briefdescription': false,
+        'dob': false,
+        'gender': false,
+        'city': false,
+        'merchant': false,
+        'boostProPlus': false,
+        'fb': false,
+        'mature': 0,
+        'monetized': false,
+        'signup_method': false,
+        'social_profiles': [],
+        'feature_flags': false,
+        'chat': true,
+        'subscribed': false,
+        'subscriber': false,
+        'subscriptions_count': 1,
+        'impressions': 0,
+        'boost_rating': '2'
+      }
+    });
     const calls = clientMock.post['calls'];
     expect(calls.count()).toEqual(1);
     expect(calls.mostRecent().args[0]).toEqual('api/v1/authenticate');
     expect(calls.mostRecent().args[1]).toEqual({ 'username': 'username', 'password': 'password' });
-  });
+  }));
 
   it('login form should hide and two-factor form should appear', fakeAsync(() => {
     login({ 'status': 'error', 'code': '403', 'message': 'imaprettymessage' });

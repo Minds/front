@@ -46,7 +46,6 @@ describe('QuestionsComponent', () => {
 
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
-    jasmine.clock().install();
 
     clientMock.response = {};
     clientMock.response['api/v2/helpdesk/questions/top'] = {
@@ -106,10 +105,6 @@ describe('QuestionsComponent', () => {
           done();
         });
     }
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   it("should have a 'Go Back' button", () => {

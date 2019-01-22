@@ -27,7 +27,7 @@ gulp.task('build.sass', done => {
   gulp.src(join('./src', '**', '*.scss'))
     .pipe(cssGlobbing({  extensions: ['.scss'] }))
     .pipe(sass({
-      includePaths:[join('./src', 'stylesheets')],
+      includePaths: [join('./src', 'stylesheets')],
       style: 'compressed'
     }).on('error', sass.logError))
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS))

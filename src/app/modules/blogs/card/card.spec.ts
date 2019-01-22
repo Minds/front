@@ -67,6 +67,7 @@ describe('BlogCard', () => {
 
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
+    jasmine.clock().uninstall();
     jasmine.clock().install();
 
     fixture = TestBed.createComponent(BlogCard);

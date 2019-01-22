@@ -39,7 +39,6 @@ describe('HelpdeskDashboardComponent', () => {
 
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
-    jasmine.clock().install();
 
     clientMock.response = {};
     clientMock.response['api/v2/helpdesk/questions/top'] = {
@@ -81,10 +80,6 @@ describe('HelpdeskDashboardComponent', () => {
           done();
         });
     }
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   it("should have a 'How can we help you @username?' title", () => {

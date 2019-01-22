@@ -2,8 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 
 import { GroupsService } from '../../groups-service';
 
-import { HttpClient } from '../../../../common/api/client.service';
-import { map, filter, switchMap } from 'rxjs/operators';
+import { MindsHttpClient } from '../../../../common/api/client.service';
+import { map } from 'rxjs/operators';
 import { Session } from '../../../../services/session';
 
 @Component({
@@ -36,7 +36,7 @@ minds = window.Minds;
 
   httpSubscription;
 
-  constructor(public session: Session, public client: HttpClient, public service: GroupsService) {
+  constructor(public session: Session, public client: MindsHttpClient, public service: GroupsService) {
 
   }
 
@@ -84,7 +84,6 @@ minds = window.Minds;
 
     this.inProgress = true;
     this.httpSubscription = this.client.get(endpoint, params)
-      .pipe(map(response => response.json()))
       .subscribe((response: any) => {
         console.log(response);
         if (!response.members) {

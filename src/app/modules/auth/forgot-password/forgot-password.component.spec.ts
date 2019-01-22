@@ -66,7 +66,6 @@ describe('ForgotPasswordComponent', () => {
   // synchronous beforeEach
   beforeEach(() => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
-    jasmine.clock().install();
     fixture = TestBed.createComponent(ForgotPasswordComponent);
 
     comp = fixture.componentInstance;
@@ -74,10 +73,6 @@ describe('ForgotPasswordComponent', () => {
     clientMock.response = {};
 
     fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   it('should have a prompt to enter your username', () => {

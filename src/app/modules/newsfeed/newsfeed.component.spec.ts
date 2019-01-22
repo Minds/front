@@ -13,7 +13,7 @@ import { Upload } from '../../services/api/upload';
 import { ContextService } from '../../services/context.service';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 import { of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '../../services/storage';
 import { storageMock } from '../../../tests/storage-mock.spec';
 import { MindsTitle } from '../../services/ux/title';
@@ -80,6 +80,7 @@ describe('NewsfeedComponent', () => {
     clientMock.response = {};
 
     sessionMock.user.admin = false;
+    sessionMock.loggedIn = true;
 
     fixture.detectChanges();
 
