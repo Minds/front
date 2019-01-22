@@ -142,7 +142,7 @@ export class GroupsProfileFeed {
 
         response.activity = response.activity
           .map(entity => { 
-            if (this.group.pinned_posts.indexOf(entity.guid) >= 0) {
+            if (this.group.pinned_posts && this.group.pinned_posts.indexOf(entity.guid) >= 0) {
               entity.pinned = true;
             }
             if (!(this.group['is:moderator'] || this.group['is:owner'])) {
