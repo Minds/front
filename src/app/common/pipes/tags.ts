@@ -84,12 +84,31 @@ export class TagsPipe implements PipeTransform  {
 
   transform(value: string): string {
     this.results = [];
+    // Order is important. Url and Mail first, then smaller matches (hash and at).
     this.parse('url', value);
     this.parse('mail', value);
     this.parse('hash', value);
     this.parse('at', value);
 
-    return this.replace(value);
+    if (this.results.length === 0) {
+      return value;
+    }
+    /* Sort by the start points and then build the string by pushing the individual string segments onto an array,
+     then joining it at the end to avoid a chain of string concatenations. (O=n^2) */
+    this.results.sort((a, b) => a.start - b.start);
+    let html = [];
+    let copyStartIndex = 0;
+
+    for (let i = 0; i < this.results.length; i++) {
+      let tag = this.results[i];
+      html.push(value.substring(copyStartIndex, tag.start));
+      html.push(this.tags[tag.type].replace(tag));
+      copyStartIndex = tag.end;
+      if (i == this.results.length - 1) {
+        html.push(value.substring(copyStartIndex));
+      }
+    }
+    return html.join('');
   }
 
 }

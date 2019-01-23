@@ -37,6 +37,15 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a href="/newsfeed/tag/name;ref=hashtag');
   });
 
+
+  it('should correctly parse when duplicates substrings present', () => {
+    const pipe = new TagsPipe();
+    const string = '#hash #hashlonger';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a href="/newsfeed/tag/hash;ref=hashtag');
+    expect(transformedString).toContain('<a href="/newsfeed/tag/hashlonger;ref=hashtag');
+  });
+
   it('should transform when @ preceded by () ', () => {
     const pipe = new TagsPipe();
     const string = 'textstring (@name';
@@ -69,6 +78,8 @@ describe('TagPipe', () => {
     const pipe = new TagsPipe();
     const string = 'textstring name';
     const transformedString = pipe.transform(<any>string);
+
+    expect(transformedString).toEqual(string);
     expect(transformedString).not.toContain('<a class="tag"');
   });
 
