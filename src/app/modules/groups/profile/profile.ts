@@ -275,7 +275,11 @@ export class GroupsProfile {
   }
 
   change_membership(membership: any) {
-    this.load();
+    if (!membership.error || membership.error === 'already_a_member') {
+      this.load();
+    } else {
+      this.error = membership.error;
+    }
   }
 
   canDeactivate() {

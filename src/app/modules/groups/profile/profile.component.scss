@@ -3,8 +3,8 @@
   flex-direction: row;
 
   .m-groupGrid__left {
-    flex: 2; 
-  }  
+    flex: 2;
+  }
   .m-groupGrid__right {
     flex: 1;
     min-width: 33%;
@@ -84,8 +84,8 @@
   }
 
   .m-groupInfo__name {
-    margin: 8px 0;  
-    
+    margin: 8px 0;
+
     h1 {
       margin: 0;
       display: inline;
@@ -162,5 +162,12 @@ m-groups--profile .m-group__grid header {
       background-size: cover;
       margin: auto;
     }
+  }
+
+  .m-groupSplash__error {
+    text-transform: uppercase;
+    color: #f44336;
+    letter-spacing: 0.1em;
+    font-weight: bold;
   }
 }

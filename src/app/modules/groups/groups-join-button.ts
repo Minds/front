@@ -101,9 +101,21 @@ export class GroupsJoinButton {
         this.group['is:awaiting'] = true;
       })
       .catch(e => {
+        let error = e.error;
+        switch (e.error) {
+          case 'You are banned from this group':
+            error = 'banned';
+            break;
+          case 'User is already a member':
+            error = 'already_a_member';
+            break;
+          default:
+            error = e.error;
+            break;
+        }
         this.group['is:member'] = false;
         this.group['is:awaiting'] = false;
-        this.membership.next({ });
+        this.membership.next({ error: error });
         this.inProgress = false;
       });
   }
