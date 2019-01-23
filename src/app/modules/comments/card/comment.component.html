@@ -78,7 +78,7 @@
 
       <div class="mdl-card m-comment-attachment" [hidden]="editing" *ngIf="(comment.perma_url && comment.title) || comment.custom_type == 'batch' || comment.custom_type == 'video'">
         <!-- Rich content -->
-        <div class="m-rich-embed mdl-shadow--2dp cf"
+        <div class="m-rich-embed m-border cf"
         *ngIf="comment.perma_url && comment.title"
         [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(comment), 'm-mature-content-shown': attachment.isForcefullyShown(comment) }"
         >
