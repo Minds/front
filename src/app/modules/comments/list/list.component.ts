@@ -416,6 +416,7 @@ export class CommentsListComponent {
 
   delete(index: number) {
     this.comments.splice(index, 1);
+    this.object.replies_count -= 1;
     this.detectChanges();
   }
 
