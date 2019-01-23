@@ -66,6 +66,7 @@ export class CommentsListComponent {
 
   @Input() conversation: boolean = false;
   @Input() readonly: boolean = false;
+  @Input() canEdit: boolean = false;
 
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
 

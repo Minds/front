@@ -67,7 +67,8 @@ export class CommentComponent implements OnChanges {
   translationInProgress: boolean;
   translateToggle: boolean = false;
   commentAge$: Observable<number>;
-  
+  @Input() canEdit: boolean = false;
+
   @Output() onReply = new EventEmitter();
 
 

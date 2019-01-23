@@ -46,6 +46,7 @@
   <minds-card-comment *ngFor="let comment of comments; let i = index"
     [object]="comment"
     [parent]="parent"
+    [canEdit]="canEdit"
     (delete)="delete(i)"
     (saved)="edited(i, $event)"
     (onReply)="reply($event.comment)"
