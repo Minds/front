@@ -173,7 +173,7 @@
           </p>
         </a>
 
-        <a [routerLink]="['/groups/profile', notification.entityObj.parent_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+        <a [routerLink]="['/groups/profile', notification.entityObj.entity_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_CONVERSATION">
             <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> voted up your message in
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation
@@ -219,7 +219,7 @@
           </p>
         </a>
 
-        <a [routerLink]="['/groups/profile', notification.entityObj.parent_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+        <a [routerLink]="['/groups/profile', notification.entityObj.entity_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_CONVERSATION">
             <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> down voted your message in
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation
