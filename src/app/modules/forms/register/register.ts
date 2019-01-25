@@ -100,14 +100,14 @@ export class RegisterForm {
 
         if (e.status === 'failed') {
           //incorrect login details
-          this.errorMessage = 'Incorrect username/password. Please try again.';
+          this.errorMessage = 'RegisterException::AuthenticationFailed';
           this.session.logout();
-        }
-
-        if (e.status === 'error') {
+        } else if (e.status === 'error') {
           //two factor?
           this.errorMessage = e.message;
           this.session.logout();
+        } else {
+          this.errorMessage = "Sorry, there was an error. Please try again.";
         }
 
         return;
