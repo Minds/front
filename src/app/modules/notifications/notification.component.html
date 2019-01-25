@@ -209,9 +209,13 @@
       </a>
 
       <ng-container *ngIf="notification.entityObj.type == 'comment'">
-        <a [routerLink]="['/newsfeed', notification.entityObj.parent_guid]" *ngIf="notification.params?.parent?.type != 'group'">
+        <a [routerLink]="['/newsfeed',  notification.entityObj.entity_guid]" *ngIf="notification.params?.parent?.type != 'group'">
           <p>
-            <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_COMMENT">{{notification.fromObj.name}} down voted <span class="pseudo-link mdl-color-text--blue-grey-400"> your comment </span></ng-container>
+            <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_COMMENT">
+              {{notification.fromObj.name}} down voted
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.partition_path == '0:0:0'"> your comment </span>
+              <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.partition_path != '0:0:0'"> your reply </span>
+            </ng-container>
           </p>
         </a>
 
