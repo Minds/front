@@ -58,9 +58,7 @@ export class LoginForm {
           //incorrect login details
           this.errorMessage = 'LoginException::AuthenticationFailed';
           this.session.logout();
-        }
-
-        if (e.status === 'error') {
+        } else if (e.status === 'error') {
           if (e.message === 'LoginException:BannedUser' || e.message === 'LoginException::AttemptsExceeded') {
             this.session.logout();
           }
@@ -68,6 +66,8 @@ export class LoginForm {
           //two factor?
           this.twofactorToken = e.message;
           this.hideLogin = true;
+        } else {
+          this.errorMessage = 'LoginException::Unknown';
         }
 
       });
