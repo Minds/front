@@ -6,16 +6,4 @@ m-videochat {
   display: block;
   position: relative;
 
-  .m-videochat--error {
-    position: absolute;
-    left: calc(50% - 335px);
-    top: calc(50% - 100px);
-    background-color: white;
-    padding: $minds-padding $minds-padding * 2;
-
-    p, h3 {
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-  }
 }
