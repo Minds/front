@@ -74,6 +74,7 @@ import { PieGraph } from './components/graphs/pie-graph';
 import { GraphSVG } from './components/graphs/svg';
 import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
+import { SortSelectorComponent } from "./components/sort-selector/sort-selector.component";
 
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
@@ -159,6 +160,7 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
     GraphPoints,
     DynamicFormComponent,
     AndroidAppDownloadComponent,
+    SortSelectorComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -231,6 +233,7 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
     PieGraph,
     DynamicFormComponent,
     AndroidAppDownloadComponent,
+    SortSelectorComponent,
   ],
   providers: [
     {

@@ -35,7 +35,32 @@
   </section>
   <!-- Feed list -->
   <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="filter == 'feed'">
-    <m-channel--feed [user]="user" #feed></m-channel--feed>
+    <div class="m-topbar--row m-channel--feed-sort" *mIfFeature="'top-feeds'">
+      <div class="m-topbar--navigation m-topbar--navigation--text-only">
+        <a class="m-topbar--navigation--item"
+           [routerLink]="['/', username]"
+           routerLinkActive="m-topbar--navigation--item-active"
+           [routerLinkActiveOptions]="{exact: true}"
+           *ngIf="session.isLoggedIn()"
+        >
+          <span i18n>Latest</span>
+        </a>
+
+        <m-sort-selector
+          [isActive]="isSorting"
+          [algorithm]="algorithm"
+          [period]="period"
+          [except]="['latest']"
+          (onChange)="setSort($event.algorithm, $event.period)"
+          caption="Sort by:"
+          i18n-caption
+          labelClass="m-topbar--navigation--item"
+          labelActiveClass="m-topbar--navigation--item-active"
+        ></m-sort-selector>
+      </div>
+    </div>
+
+    <m-channel--feed [user]="user" [isSorting]="!isLegacySorting && isSorting" [algorithm]="algorithm" [period]="period" #feed></m-channel--feed>
   </section>
 
   <!-- Supporters list -->

@@ -1,7 +1,7 @@
 <div class="m-toolbar">
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
-      <a class="m-topbar--navigation--item"
+      <a class="m-topbar--navigation--item" *mIfFeature="'!top-feeds'"
         routerLink="/newsfeed/suggested"
         routerLinkActive="m-topbar--navigation--item-active"
       >
@@ -11,12 +11,12 @@
         </m-tooltip>
       </a>
       <a class="m-topbar--navigation--item"
-        routerLink="/newsfeed/subscribed"
+        routerLink="/newsfeed/subscriptions"
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
       >
-        <span i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIBED">Subscribed</span>
-        <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIBED_TOOLTIP">
+        <span i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIPTIONS">Subscriptions</span>
+        <m-tooltip icon="help" i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
           Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network
         </m-tooltip>
       </a>
@@ -31,6 +31,17 @@
         </m-tooltip>
       </a>
 
+      <m-sort-selector *mIfFeature="'top-feeds'"
+        [isActive]="isSorting"
+        [algorithm]="algorithm"
+        [period]="period"
+        (onChange)="setSort($event.algorithm, $event.period, hashtag)"
+        caption="Global:"
+        i18n-caption
+        labelClass="m-topbar--navigation--item"
+        labelActiveClass="m-topbar--navigation--item-active"
+      ></m-sort-selector>
+
       <div class="m-layout--spacer"></div>
 
       <a class="m-topbar--navigation--item m-topbar--navigation--item-active"
@@ -39,11 +50,22 @@
         <span>#{{tag}}</span>
       </a>
 
-      <m-topbar--hashtags
-        (selectionChange)="reloadTopFeed($event)"
-        [enabled]="suggested"
-        *ngIf="!preventHashtagOverflow"
-      ></m-topbar--hashtags>
+      <ng-container *mIfFeature="'top-feeds'; else legacyHashtagSelector">
+        <m-hashtags--topbar-selector
+          [selected]="hashtag"
+          (selectionChange)="setHashtag($event)"
+          [enabled]="isSorted"
+          *ngIf="!preventHashtagOverflow"
+        ></m-hashtags--topbar-selector>
+      </ng-container>
+
+      <ng-template #legacyHashtagSelector>
+        <m-topbar--hashtags
+          (selectionChange)="reloadTopFeed($event)"
+          [enabled]="suggested"
+          *ngIf="!preventHashtagOverflow"
+        ></m-topbar--hashtags>
+      </ng-template>
 
       <m-newsfeed--dropdown></m-newsfeed--dropdown>
     </div>
@@ -52,10 +74,18 @@
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <div class="m-layout--spacer"></div>
 
-      <m-topbar--hashtags
-        (selectionChange)="reloadTopFeed($event)"
-        [enabled]="suggested"
-      ></m-topbar--hashtags>
+      <m-hashtags--topbar-selector *mIfFeature="'top-feeds'; else legacyHashtagSelectorFull"
+        [selected]="hashtag"
+        (selectionChange)="setHashtag($event)"
+        [enabled]="isSorted"
+      ></m-hashtags--topbar-selector>
+
+      <ng-template #legacyHashtagSelectorFull>
+        <m-topbar--hashtags
+          (selectionChange)="reloadTopFeed($event)"
+          [enabled]="suggested"
+        ></m-topbar--hashtags>
+      </ng-template>
     </div>
   </div>
 </div>

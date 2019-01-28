@@ -496,4 +496,27 @@ m-channel{
     }
 
   }
+
+  //
+
+  .m-channel--feed-sort {
+    position: relative;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    margin-top: -8px;
+
+    .m-topbar--navigation--item {
+      cursor: pointer;
+      border-top: none;
+      border-bottom: none;
+      color: #333333;
+
+      &.m-topbar--navigation--item-active,
+      &.m-topbar--navigation--item-active i {
+        color: #4690DF;
+      }
+    }
+  }
 }

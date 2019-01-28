@@ -1,9 +1,8 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { HashtagsSelectorModalComponent } from '../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
@@ -14,6 +13,7 @@ import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
 import { PosterComponent } from './poster/poster.component';
 import { NewsfeedService } from './services/newsfeed.service';
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: 'm-newsfeed',
@@ -32,20 +32,11 @@ export class NewsfeedComponent {
   preventHashtagOverflow: boolean = false;
   minds;
 
-  attachment_preview;
-
   message: string = '';
   newUserPromo: boolean = false;
-  postMeta: any = {
-    title: '',
-    description: '',
-    thumbnail: '',
-    url: '',
-    active: false,
-    attachment_guid: null
-  };
 
   paramsSubscription: Subscription;
+  urlSubscription: Subscription;
 
   pollingTimer: any;
   pollingOffset: string = '';
@@ -59,9 +50,19 @@ export class NewsfeedComponent {
 
   tag: string = null;
 
-  suggested: boolean = false;
+  isSorted: boolean = false;
+
+  legacySorting: boolean = false;
+
+  algorithm: string;
+
+  period: string;
+
+  hashtag: string;
 
   @ViewChild('poster') private poster: PosterComponent;
+
+  private setHashtagSubject = new Subject();
 
   constructor(
     public session: Session,
@@ -77,10 +78,12 @@ export class NewsfeedComponent {
     private newsfeedService: NewsfeedService,
   ) {
 
-    this.route.url.subscribe(segments => {
+    this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 
       const path: string = route.snapshot.firstChild && route.snapshot.firstChild.routeConfig.path;
+      const params: any = (route.snapshot.firstChild && route.snapshot.firstChild.params) || {};
+
       if (path === 'boost') {
         this.title.setTitle('Boost Newsfeed');
         this.boostFeed = true;
@@ -91,13 +94,35 @@ export class NewsfeedComponent {
       }
 
       this.subscribed = path === 'subscribed';
-      this.suggested = path === 'suggested';
+
+      this.legacySorting = path === 'suggested';
+      this.isSorted = this.legacySorting || path === 'global/:algorithm' || path === 'global/:algorithm/:period';
+
+      if (!this.legacySorting && this.isSorted) {
+        this.algorithm = params.algorithm || null;
+        this.period = params.period || '12h';
+        this.hashtag = params.hashtag || null;
+      } else if (!this.legacySorting) {
+        // Default selections
+
+        if (!this.algorithm) {
+          this.algorithm = 'hot';
+        }
+      }
     });
 
     const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');
     if (showPlusButton != null) {
       this.showPlusButton = false
     }
+
+    this.setHashtagSubject.pipe(debounceTime(300)).subscribe(({ hashtag }) => {
+      this.hashtag = hashtag;
+
+      if (!this.legacySorting) {
+        this.setSort(this.algorithm, this.period, this.hashtag)
+      }
+    });
   }
 
   ngOnInit() {
@@ -106,7 +131,6 @@ export class NewsfeedComponent {
       this.router.navigate(['/login']); //force login
     } else {
       this.load();
-      //this.setUpPoll();
       this.minds = window.Minds;
     }
 
@@ -130,56 +154,6 @@ export class NewsfeedComponent {
     this.detectWidth();
   }
 
-  setUpPoll() {
-    this.pollingTimer = setInterval(() => {
-      this.client.get('api/v1/newsfeed', { offset: this.pollingOffset, count: true }, { cache: true })
-        .then((response: any) => {
-          if (typeof response.count === 'undefined') {
-            return;
-          }
-
-          this.pollingNewPosts += response.count;
-          this.pollingOffset = response['load-previous'];
-        })
-        .catch(e => {
-          console.error('Newsfeed polling', e);
-        });
-    }, 60000);
-  }
-
-  pollingLoadNew() {
-    if (!this.pollingOffset || !this.pollingNewPosts) {
-      return;
-    }
-
-    if (this.pollingNewPosts > 120) { // just replace the whole newsfeed
-      return this.load(true);
-    }
-
-    this.inProgress = true;
-
-    this.client.get('api/v1/newsfeed', {
-      limit: this.pollingNewPosts,
-      offset: this.pollingOffset,
-      prepend: true
-    }, { cache: true })
-      .then((data: MindsActivityObject) => {
-        this.inProgress = false;
-        this.pollingNewPosts = 0;
-
-        if (!data.activity) {
-          return;
-        }
-
-        this.prepended = data.activity.concat(this.prepended);
-
-        this.pollingOffset = data['load-previous'] ? data['load-previous']: '';
-      })
-      .catch(e => {
-        this.inProgress = false;
-      });
-  }
-
   ngOnDestroy() {
     clearInterval(this.pollingTimer);
     this.paramsSubscription.unsubscribe();
@@ -194,10 +168,36 @@ export class NewsfeedComponent {
   }
 
   reloadTopFeed(all: boolean = false) {
+    // Legacy
     this.newsfeedService.reloadFeed(all);
-    if (!this.suggested) {
+    if (!this.isSorted) {
       this.router.navigate(['newsfeed/suggested']);
     }
+  }
+
+  setHashtag(hashtag: string) {
+    this.setHashtagSubject.next({ hashtag });
+  }
+
+  setSort(algorithm: string, period: string | null, hashtag: string) {
+    this.algorithm = algorithm;
+    this.period = period;
+    this.hashtag = hashtag;
+
+    let route;
+
+    // TODO: Debounce
+    if (this.period) {
+      route = ['newsfeed/global', this.algorithm, this.period];
+    } else {
+      route = ['newsfeed/global', this.algorithm];
+    }
+
+    if (this.hashtag) {
+      route.push({ hashtag: this.hashtag })
+    }
+
+    this.router.navigate(route);
   }
 
   /**

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -9,13 +9,11 @@ import { Session } from '../../services/session';
 import { ScrollService } from '../../services/ux/scroll';
 import { RecentService } from '../../services/ux/recent';
 
-import { MindsActivityObject } from '../../interfaces/entities';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
-import { WireChannelComponent } from '../../modules/wire/channel/channel.component';
 import { ChannelFeedComponent } from './feed/feed'
 import { ContextService } from '../../services/context.service';
-import { PosterComponent } from '../newsfeed/poster/poster.component';
+import { FeaturesService } from "../../services/features.service";
 
 @Component({
   moduleId: module.id,
@@ -38,8 +36,12 @@ export class ChannelComponent {
   error: string = '';
   openWireModal: boolean = false;
   changed: boolean = false;
-  showOnboarding: boolean = false;
   paramsSubscription: Subscription;
+
+  isLegacySorting: boolean = false;
+  isSorting: boolean = false;
+  algorithm: string;
+  period: string;
 
   @ViewChild('feed') private feed: ChannelFeedComponent;
 
@@ -47,9 +49,11 @@ export class ChannelComponent {
     public session: Session,
     public client: Client,
     public upload: Upload,
-    private route: ActivatedRoute,
+    public router: Router,
     public title: MindsTitle,
     public scroll: ScrollService,
+    public features: FeaturesService,
+    private route: ActivatedRoute,
     private recent: RecentService,
     private context: ContextService
   ) { }
@@ -59,13 +63,19 @@ export class ChannelComponent {
     this.context.set('activity');
     this.onScroll();
 
-    this.paramsSubscription = this.route.params.subscribe((params) => {
+    this.isLegacySorting = !this.features.has('top-feeds');
+
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      let feedChanged = false;
+
       this.changed = false;
       this.editing = false;
 
       if (params['username']) {
         this.changed = this.username !== params['username'];
         this.username = params['username'];
+
+        feedChanged = true;
       }
 
       if (params['filter']) {
@@ -80,10 +90,29 @@ export class ChannelComponent {
         this.editing = true;
       }
 
-      if (this.changed) {
-        this.load();
+      this.isSorting = Boolean(params['algorithm']);
+
+      if (this.isSorting) {
+        feedChanged = this.changed || this.algorithm !== params['algorithm'] || this.algorithm !== params['period'];
+
+        this.filter = 'feed';
+        this.algorithm = params['algorithm'];
+        this.period = params['period'] || '7d';
+      } else {
+        if (!this.algorithm) {
+          this.algorithm = 'top';
+        }
+
+        if (!this.period) {
+          this.period = '7d';
+        }
       }
 
+      if (this.changed) {
+        this.load();
+      } else if (feedChanged) {
+        console.log('reload feed with new settings')
+      }
     });
   }
 
@@ -193,6 +222,18 @@ export class ChannelComponent {
     this.recent
       .store('recent', this.user, (entry) => entry.guid == this.user.guid)
       .splice('recent', 50);
+  }
+
+  setSort(algorithm: string, period: string | null) {
+    this.algorithm = algorithm;
+    this.period = period;
+
+    // TODO: Debounce
+    if (period) {
+      this.router.navigate([ '/', this.username, 'sort', algorithm, period ]);
+    } else {
+      this.router.navigate([ '/', this.username, 'sort', algorithm ]);
+    }
   }
 }
 

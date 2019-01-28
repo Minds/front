@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'm-dropdown',
@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         <ng-content select="label"></ng-content>
       </div>
       <div class="m-dropdown--list-container" [hidden]="!toggled">
-        <ng-content select=".m-dropdown--list" ></ng-content>
+        <ng-content select=".m-dropdown--list"></ng-content>
       </div>
     </div>
 
@@ -24,4 +24,7 @@ export class DropdownComponent {
     this.toggled = !this.toggled;
   }
 
+  close() {
+    this.toggled = false;
+  }
 }

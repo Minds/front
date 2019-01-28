@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 import { TopbarHashtagsComponent } from './topbar/topbar.component';
 import { TopbarHashtagsService } from './service/topbar.service';
+import { HashtagsTopbarSelectorComponent } from "./topbar-selector/topbar-selector.component";
 
 @NgModule({
   imports: [
@@ -21,12 +22,14 @@ import { TopbarHashtagsService } from './service/topbar.service';
     HashtagsSelectorModalComponent,
     TagsInput,
     TopbarHashtagsComponent,
+    HashtagsTopbarSelectorComponent,
   ],
   exports: [
     HashtagsSelectorComponent,
     HashtagsSelectorModalComponent,
     TagsInput,
     TopbarHashtagsComponent,
+    HashtagsTopbarSelectorComponent,
   ],
   providers: [
     TopbarHashtagsService,
