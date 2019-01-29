@@ -2,15 +2,15 @@
   <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker" [class.has-gathering]="group.hasGathering$ | async">
     <a [routerLink]="['/groups/profile', group.guid]">
       <m-tooltip
-         anchor="right"  
+        anchor="right"
       >
         <img [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime" m-tooltip--anchor/>
         <span>{{group.name}}</span>
 
         <ng-container>
-            {{group.name}}
-            </ng-container>
-       </m-tooltip>
+          {{group.name}}
+        </ng-container>
+      </m-tooltip>
     </a>
   </li>
 
@@ -18,7 +18,7 @@
   <li *ngIf="(!groups || groups.length === 0) && !inProgress">
     <a [routerLink]="['/groups/top']">
       <m-tooltip
-         anchor="right"  
+        anchor="right"
       >
         <img src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg" m-tooltip--anchor/>
         <span>Noname</span>
