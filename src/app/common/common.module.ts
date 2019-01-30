@@ -80,6 +80,7 @@ import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
 import { HttpClient } from "@angular/common/http";
 import { AndroidAppDownloadComponent } from "./components/android-app-download-button/button.component";
+import { SwitchComponent } from "./components/switch/switch.component";
 
 @NgModule({
   imports: [
@@ -161,6 +162,8 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
+
+    SwitchComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -234,6 +237,7 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
+    SwitchComponent,
   ],
   providers: [
     {

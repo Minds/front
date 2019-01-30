@@ -12,18 +12,20 @@ export class TopbarHashtagsService {
   constructor(private client: Client) {
   }
 
-  async load(limit: number) {
+  async load(limit: number, opts: any = {}) {
     const response: any = await this.client.get(`api/v2/hashtags/suggested`, {
-      limit: limit
+      limit: limit,
+      trending: opts.trending ? 1 : '',
+      defaults: opts.defaults ? 1 : '',
     });
 
     return response.tags.sort(function (a, b) {
       if (a.selected && !b.selected) {
         return -1;
-      }
-      if (!a.selected && b.selected) {
+      } else if (!a.selected && b.selected) {
         return 1;
       }
+
       return 0;
     });
   }

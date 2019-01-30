@@ -1,0 +1,13 @@
+m-switch {
+  display: inline-block;
+  padding-right: 16px;
+  margin-right: 24px;
+
+  .mdl-switch.is-upgraded {
+    padding-left: 16px;
+  }
+
+  .mdl-switch__label {
+    font-size: 14px;
+  }
+}

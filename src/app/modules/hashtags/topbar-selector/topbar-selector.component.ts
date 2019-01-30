@@ -50,7 +50,9 @@ export class HashtagsTopbarSelectorComponent implements OnInit {
 
   async load() {
     try {
-      this.hashtags = await this.topbarHashtagsService.load(5);
+      this.hashtags = await this.topbarHashtagsService.load(5, {
+        defaults: true
+      });
     } catch (e) {
       console.error(e);
     }
