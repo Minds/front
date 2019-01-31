@@ -1,7 +1,47 @@
 
 <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
-  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-    {{errorMessage}}
+  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50" [ngSwitch]="errorMessage">
+    <ng-container
+     *ngSwitchCase="'RegisterException::NotAllowed'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__ATTEMPTS_EXCEEDED"
+    >
+      Sorry, you are not allowed to register.
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'RegisterException::VerifyEmailIsCorrect'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__VERIFY_EMAIL_IS_CORRECT">
+      Please verify your email address is correct
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'RegistrationException::InvalidEmail'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_EMAIL">
+      Invalid email
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'RegistrationException::InvalidPassword'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_PASSWORD">
+      Invalid password
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'RegistrationException::InvalidUsername'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__INVALID_USERNAME">
+      Invalid username
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'RegistrationException::UsernameInUse'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_ALREADY_IN_USE">
+      Username already in use
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'RegistrationException::EmailInUse'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__EMAIL_ALREADY_IN_USE">
+      Email already in use
+    </ng-container>
+    <ng-container
+      *ngSwitchDefault
+      i18n="@@MINDS__REGISTER__EXCEPTION__SORRY_THERE_WAS_AN_ERROR_PLEASE_TRY_AGAIN">
+      Sorry, there was an error. Please try again.
+    </ng-container>
   </div>
 </div>
 
