@@ -1,21 +1,47 @@
-<div class="m-groups--filter-selector m-border" *ngIf="group">
-  <a
-    class="m-groups--filter-selector-item"
-    [class.m-groups--filter-selector-active]="filter == 'activity'"
-    [routerLink]="[ '/groups/profile', group.guid, 'feed' ]"
-    i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
-  >Feed</a>
-  <a
-    class="m-groups--filter-selector-item"
-    [class.m-groups--filter-selector-active]="filter == 'image'"
-    [routerLink]="[ '/groups/profile', group.guid, 'feed', 'image' ]"
-    i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
-  >Images</a>
+<ng-container *ngIf="group">
+  <div class="m-topbar--row m-group--feed-sort" *mIfFeature="'top-feeds'">
+    <div class="m-topbar--navigation m-topbar--navigation--text-only">
+      <a class="m-topbar--navigation--item"
+         [routerLink]="['/groups/profile', group.guid, 'feed']"
+         routerLinkActive="m-topbar--navigation--item-active"
+         [routerLinkActiveOptions]="{exact: true}"
+      >
+        <span i18n>Latest</span>
+      </a>
 
-  <a
-    class="m-groups--filter-selector-item"
-    [class.m-groups--filter-selector-active]="filter == 'video'"
-    [routerLink]="[ '/groups/profile', group.guid, 'feed', 'video' ]"
-    i18n="@@GROUPS__VIDEOS"
-  >Videos</a>
-</div>
+      <m-sort-selector
+        [isActive]="isSorting"
+        [algorithm]="algorithm"
+        [period]="period"
+        [except]="['latest']"
+        (onChange)="onChangeEmitter.emit($event)"
+        caption="Sort by:"
+        i18n-caption
+        labelClass="m-topbar--navigation--item"
+        labelActiveClass="m-topbar--navigation--item-active"
+      ></m-sort-selector>
+    </div>
+  </div>
+
+  <div class="m-groups--filter-selector m-border" *ngIf="!isSorting">
+    <a
+      class="m-groups--filter-selector-item"
+      [class.m-groups--filter-selector-active]="filter == 'activity'"
+      [routerLink]="[ '/groups/profile', group.guid, 'feed' ]"
+      i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
+    >Feed</a>
+    <a
+      class="m-groups--filter-selector-item"
+      [class.m-groups--filter-selector-active]="filter == 'image'"
+      [routerLink]="[ '/groups/profile', group.guid, 'feed', 'image' ]"
+      i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
+    >Images</a>
+
+    <a
+      class="m-groups--filter-selector-item"
+      [class.m-groups--filter-selector-active]="filter == 'video'"
+      [routerLink]="[ '/groups/profile', group.guid, 'feed', 'video' ]"
+      i18n="@@GROUPS__VIDEOS"
+    >Videos</a>
+  </div>
+</ng-container>

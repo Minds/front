@@ -243,11 +243,15 @@
     <m-groups--filter-selector
       [group]="group"
       [filter]="filter"
+      [isSorting]="isSorting"
+      [algorithm]="algorithm"
+      [period]="period"
+      (onSortingChange)="setSort($event.algorithm, $event.period)"
       *ngIf="group['is:member']"
     ></m-groups--filter-selector>
 
     <div class="m-group__feeds">
-      <router-outlet></router-outlet> 
+      <router-outlet (activate)="onOutletActivation($event)"></router-outlet>
     </div> <!-- End Feeds -->
   </div> <!-- END LEFT BLOCK -->
 

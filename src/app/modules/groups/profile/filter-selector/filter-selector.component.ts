@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { VideoChatService } from '../../../videochat/videochat.service';
 
 @Component({
@@ -9,6 +9,12 @@ import { VideoChatService } from '../../../videochat/videochat.service';
 export class GroupsProfileFilterSelector {
   @Input() group: any;
   @Input() filter: string;
+
+  @Input() isSorting: boolean;
+  @Input() algorithm: string;
+  @Input() period: string;
+
+  @Output('onSortingChange') onChangeEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     public videoChat: VideoChatService

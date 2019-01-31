@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, HostListener, Input } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, NavigationEnd, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -48,6 +48,10 @@ export class GroupsProfile {
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
+
+  isSorting: boolean;
+  algorithm: string = 'top';
+  period: string = '7d';
 
   @ViewChild('feed') private feed: GroupsProfileFeed;
   @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
@@ -149,7 +153,7 @@ export class GroupsProfile {
       this.queryParamsSubscripton.unsubscribe();
 
     if (this.videoChatActiveSubscription)
-      this.videoChatActiveSubscription.unsubscribe(); 
+      this.videoChatActiveSubscription.unsubscribe();
 
     if (this.updateMarkersSubscription)
       this.updateMarkersSubscription.unsubscribe();
@@ -162,13 +166,29 @@ export class GroupsProfile {
     }
   }
 
+  onOutletActivation(component) {
+    setTimeout(() => {
+      this.isSorting = Boolean(component && component.isSorting);
+
+      if (this.isSorting) {
+        if (component.algorithm) {
+          this.algorithm = component.algorithm;
+        }
+
+        if (component.period) {
+          this.period = component.period;
+        }
+      }
+    }, 0);
+  }
+
   async load() {
     this.resetMarkers();
     this.error = "";
     this.group = null;
 
     // Load group
-    try { 
+    try {
       this.group = await this.service.load(this.guid);
     } catch (e) {
       this.error = e.message;
@@ -181,8 +201,8 @@ export class GroupsProfile {
     this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe(marker => {
       if (!marker)
         return;
-        
-      let hasMarker = 
+
+      let hasMarker =
         (marker.read_timestamp < marker.updated_timestamp)
         && (marker.entity_guid == this.group.guid)
         && (marker.marker != 'gathering-heartbeat');
@@ -400,9 +420,20 @@ export class GroupsProfile {
     localStorage.setItem('groups:conversations:minimized', (!this.showRight).toString());
   }
 
+  setSort(algorithm: string, period: string | null) {
+    this.algorithm = algorithm;
+    this.period = period;
+
+    // TODO: Debounce
+    if (period) {
+      this.router.navigate(['/groups/profile', this.group.guid, 'sort', algorithm, period]);
+    } else {
+      this.router.navigate(['/groups/profile', this.group.guid, 'sort', algorithm]);
+    }
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

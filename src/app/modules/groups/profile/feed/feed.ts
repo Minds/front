@@ -48,6 +48,10 @@ export class GroupsProfileFeed {
   kickUser: any;
   paramsSubscription: Subscription;
 
+  isSorting: boolean;
+  algorithm: string;
+  period: string;
+
   @ViewChild('poster') private poster: PosterComponent;
 
   constructor(public session: Session, public client: Client, public service: GroupsService, private route: ActivatedRoute) { }
@@ -62,12 +66,31 @@ export class GroupsProfileFeed {
     this.paramsSubscription = this.route.params.subscribe(params => {
       this.filter = params['filter'] ? params['filter'] : 'activity';
 
+      this.isSorting = Boolean(params['algorithm']);
+
+      if (this.isSorting) {
+        this.algorithm = params['algorithm'];
+        this.period = params['period'] || '7d';
+      } else {
+        if (!this.algorithm) {
+          this.algorithm = 'top';
+        }
+
+        if (!this.period) {
+          this.period = '7d';
+        }
+      }
+
+      console.log(this.isSorting)
+
       this.load(true);
       this.setUpPoll();
     });
   }
 
   setUpPoll() {
+    clearInterval(this.pollingTimer);
+
     this.pollingTimer = setInterval(() => {
       this.client.get('api/v1/newsfeed/container/' + this.guid, { offset: this.pollingOffset, count: true }, { cache: true })
         .then((response: any) => {
@@ -229,6 +252,38 @@ export class GroupsProfileFeed {
       });
   }
 
+  async loadSorted(refresh: boolean = false) {
+    try {
+      const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/activities`, {
+        limit: 12,
+        offset: this.offset,
+        period: this.period,
+        container_guid: this.guid,
+      }, {
+        cache: true
+      });
+
+      if (!data.entities || !data.entities.length) {
+        this.moreData = false;
+        this.inProgress = false;
+
+        return false;
+      }
+
+      if (refresh) {
+        this.activity = [];
+      }
+
+      this.activity.push(...data.entities);
+
+      this.offset = data['load-next'];
+      this.inProgress = false;
+    } catch (e) {
+      console.log(e);
+      this.inProgress = false;
+    }
+  }
+
   /**
    * Load a groups newsfeed
    */
@@ -248,13 +303,17 @@ export class GroupsProfileFeed {
       this.activity = [];
     }
 
-    switch(this.filter) {
-      case 'activity':
-      case 'review':
-        return this.loadActivities(refresh);
-      case 'image':
-      case 'video':
-        return this.loadMedia(refresh);
+    if (this.isSorting) {
+      this.loadSorted(refresh);
+    } else {
+      switch(this.filter) {
+        case 'activity':
+        case 'review':
+          return this.loadActivities(refresh);
+        case 'image':
+        case 'video':
+          return this.loadMedia(refresh);
+      }
     }
   }
 
