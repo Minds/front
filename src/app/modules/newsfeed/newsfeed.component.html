@@ -32,7 +32,7 @@
       </a>
 
       <m-sort-selector *mIfFeature="'top-feeds'"
-        [isActive]="isSorting"
+        [isActive]="isSorted"
         [algorithm]="algorithm"
         [period]="period"
         (onChange)="setSort($event.algorithm, $event.period, hashtag)"
@@ -62,7 +62,7 @@
       <ng-template #legacyHashtagSelector>
         <m-topbar--hashtags
           (selectionChange)="reloadTopFeed($event)"
-          [enabled]="suggested"
+          [enabled]="isSorted"
           *ngIf="!preventHashtagOverflow"
         ></m-topbar--hashtags>
       </ng-template>

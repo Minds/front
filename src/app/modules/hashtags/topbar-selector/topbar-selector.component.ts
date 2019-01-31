@@ -72,17 +72,11 @@ export class HashtagsTopbarSelectorComponent implements OnInit {
       this.dropdown.toggle();
     }
 
-    if (!this.enabled) {
-      this.emit();
-      return;
-    }
-
     if (this.all) {
       this.all = false;
     }
 
     this.selectedHashtag = hashtag.value;
-
     this.emit();
   }
 
