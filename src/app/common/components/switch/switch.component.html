@@ -1,4 +1,12 @@
-<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect is-checked" [ngClass]="labelClass" [for]="switchId" [mdlSwitch] [toggled]="mModel">
-  <input type="checkbox" [id]="switchId" class="mdl-switch__input" [ngModel]="mModel" (ngModelChange)="emitMModelChange($event)" (change)="emitChange($event)" [mdl] />
-  <span class="mdl-switch__label"><ng-content></ng-content></span>
+<ng-template #labelContent><ng-content></ng-content></ng-template>
+
+<label class="m-switch" [ngClass]="switchClass" [for]="switchId" [class.m-switch--toggled]="!!mModel" [class.m-switch--enabled]="!disabled">
+  <span *ngIf="labelPosition === 'left'" class="m-switch__label m-switch__label--left"><ng-container *ngTemplateOutlet="labelContent"></ng-container></span>
+
+  <input class="m-switch__input" type="checkbox" [id]="switchId" [ngModel]="mModel" [disabled]="disabled" (ngModelChange)="emitMModelChange($event)" (change)="emitChange($event)" />
+  <span class="m-switch__track">
+    <span class="m-switch__thumb"></span>
+  </span>
+
+  <span *ngIf="labelPosition === 'right'" class="m-switch__label m-switch__label--right"><ng-container *ngTemplateOutlet="labelContent"></ng-container></span>
 </label>

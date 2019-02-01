@@ -9,8 +9,10 @@ let _uniqueId = 1000;
 export class SwitchComponent {
   switchId: string;
 
+  @Input() disabled: boolean = false;
   @Input() mModel: any;
-  @Input() labelClass: string | string[] | Set<string> | { [key: string]: any; } = '';
+  @Input() switchClass: string | string[] | Set<string> | { [key: string]: any; } = '';
+  @Input() labelPosition: 'left' | 'right' = 'right';
 
   @Output() mModelChange: EventEmitter<any> = new EventEmitter<any>();
   @Output() change: EventEmitter<Event> = new EventEmitter<Event>();
