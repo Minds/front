@@ -154,10 +154,15 @@ minds-comments, .m-comment-wrapper {
             max-height: 200px;
             display: block;
             float: none;
+            position: initial;
 
             .m-rich-embed-video-iframe {
               padding-bottom: 200px;
             }
+          }
+
+          .m-rich-embed-video-iframe > iframe {
+            height: 200px;
           }
         }
 
@@ -169,6 +174,10 @@ minds-comments, .m-comment-wrapper {
           box-sizing: border-box;
           width: 100%;
           text-decoration: none;
+
+          &.m-rich-embed--title--no-padding {
+            padding: 8px;
+          }
 
           h2 {
             margin-bottom: 0;
