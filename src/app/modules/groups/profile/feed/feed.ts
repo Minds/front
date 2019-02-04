@@ -81,8 +81,6 @@ export class GroupsProfileFeed {
         }
       }
 
-      console.log(this.isSorting)
-
       this.load(true);
       this.setUpPoll();
     });

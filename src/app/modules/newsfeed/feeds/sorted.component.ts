@@ -14,6 +14,7 @@ import { PosterComponent } from '../poster/poster.component';
 import { HashtagsSelectorModalComponent } from '../../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
+import { TopbarHashtagsService } from "../../hashtags/service/topbar.service";
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -24,6 +25,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   algorithm: string = 'hot';
   period: string = '12h';
   hashtags: Array<string> = [];
+  all: boolean = false;
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: string = '';
@@ -72,9 +74,18 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       if (params['period']) {
         this.period = params['period'];
       }
+
       if (typeof params['hashtag'] !== 'undefined') {
         this.hashtags = params['hashtag'] ? [params['hashtag']] : null;
+        this.all = false;
+      } else if (typeof params['all'] !== 'undefined') {
+        this.hashtags = null;
+        this.all = true;
+      } else {
+        this.hashtags = null;
+        this.all = false;
       }
+
       this.load(true);
     });
   }
@@ -116,10 +127,11 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
     this.client.get(`api/v2/feeds/global/${this.algorithm}/activities`, {
       limit: 12,
-      offset: this.offset,
-      rating: this.rating,
-      hashtags: this.hashtags,
-      period: this.period,
+      offset: this.offset || '',
+      rating: this.rating || '',
+      hashtags: this.hashtags || '',
+      period: this.period || '',
+      all: this.all ? 1 : '',
     }, {
       cache: true
     })

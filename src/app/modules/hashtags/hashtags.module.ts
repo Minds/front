@@ -9,6 +9,7 @@ import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 import { TopbarHashtagsComponent } from './topbar/topbar.component';
 import { TopbarHashtagsService } from './service/topbar.service';
 import { HashtagsTopbarSelectorComponent } from "./topbar-selector/topbar-selector.component";
+import { SidebarSelectorComponent } from "./sidebar-selector/sidebar-selector.component";
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { HashtagsTopbarSelectorComponent } from "./topbar-selector/topbar-select
     TagsInput,
     TopbarHashtagsComponent,
     HashtagsTopbarSelectorComponent,
+    SidebarSelectorComponent,
   ],
   exports: [
     HashtagsSelectorComponent,
@@ -30,6 +32,7 @@ import { HashtagsTopbarSelectorComponent } from "./topbar-selector/topbar-select
     TagsInput,
     TopbarHashtagsComponent,
     HashtagsTopbarSelectorComponent,
+    SidebarSelectorComponent,
   ],
   providers: [
     TopbarHashtagsService,

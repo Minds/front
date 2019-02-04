@@ -35,7 +35,7 @@
         [isActive]="isSorted"
         [algorithm]="algorithm"
         [period]="period"
-        (onChange)="setSort($event.algorithm, $event.period, hashtag)"
+        (onChange)="setSort($event.algorithm, $event.period)"
         caption="Global:"
         i18n-caption
         labelClass="m-topbar--navigation--item"
@@ -50,22 +50,13 @@
         <span>#{{tag}}</span>
       </a>
 
-      <ng-container *mIfFeature="'top-feeds'; else legacyHashtagSelector">
-        <m-hashtags--topbar-selector
-          [selected]="hashtag"
-          (selectionChange)="setHashtag($event)"
-          [enabled]="isSorted"
-          *ngIf="!preventHashtagOverflow"
-        ></m-hashtags--topbar-selector>
-      </ng-container>
-
-      <ng-template #legacyHashtagSelector>
+      <ng-container *mIfFeature="'!top-feeds'">
         <m-topbar--hashtags
           (selectionChange)="reloadTopFeed($event)"
           [enabled]="isSorted"
           *ngIf="!preventHashtagOverflow"
         ></m-topbar--hashtags>
-      </ng-template>
+      </ng-container>
 
       <m-newsfeed--dropdown></m-newsfeed--dropdown>
     </div>
@@ -74,18 +65,10 @@
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <div class="m-layout--spacer"></div>
 
-      <m-hashtags--topbar-selector *mIfFeature="'top-feeds'; else legacyHashtagSelectorFull"
-        [selected]="hashtag"
-        (selectionChange)="setHashtag($event)"
+      <m-topbar--hashtags *mIfFeature="'!top-feeds'"
+        (selectionChange)="reloadTopFeed($event)"
         [enabled]="isSorted"
-      ></m-hashtags--topbar-selector>
-
-      <ng-template #legacyHashtagSelectorFull>
-        <m-topbar--hashtags
-          (selectionChange)="reloadTopFeed($event)"
-          [enabled]="suggested"
-        ></m-topbar--hashtags>
-      </ng-template>
+      ></m-topbar--hashtags>
     </div>
   </div>
 </div>
@@ -132,11 +115,18 @@
 
       </div>
 
-      <div class="minds-spacer minds-spacer-2x"></div>
+      <ng-container *mIfFeature="'top-feeds'">
+        <div class="minds-spacer minds-spacer-2x"></div>
 
-      <div class="mdl-card mdl-color--white m-border" *ngIf="false">
-        <m-tagcloud></m-tagcloud>
-      </div>
+        <div class="mdl-card mdl-color--white m-border">
+          <m-hashtags--sidebar-selector
+            [disabled]="!isSorted"
+            [currentHashtag]="hashtag"
+            [preferred]="!all && !hashtag"
+            (filterChange)="hashtagFilterChange($event)"
+          ></m-hashtags--sidebar-selector>
+        </div>
+      </ng-container>
 
       <div class="minds-spacer minds-spacer-2x"></div>
 

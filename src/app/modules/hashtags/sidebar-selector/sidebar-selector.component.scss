@@ -1,0 +1,117 @@
+m-hashtags--sidebar-selector {
+  display: block;
+  padding: 16px;
+
+  .m-hashtags--sidebar-selector-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    > h3 {
+      flex-grow: 1;
+      margin: 0;
+      color: #555555;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .m-switch__label {
+      top: 0;
+      color: #888888;
+      font-size: 9px;
+      font-weight: bold;
+      line-height: 1;
+    }
+  }
+
+  .m-hashtags--sidebar-selector-list {
+    > ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      > li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .m-hashtags--sidebar-selector-list-label {
+      flex-grow: 1;
+      font-size: 13px;
+      color: #666666;
+      line-height: 1.2;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &.m-hashtags--sidebar-selector-list-label__visible {
+        color: #4690df;
+      }
+    }
+
+    .m-hashtags--sidebar-selector-list-visibility {
+      flex-shrink: 0;
+      width: 28px;
+      color: #666666;
+      text-align: center;
+      cursor: pointer;
+
+      &.m-hashtags--sidebar-selector-list-visibility__visible {
+        color: #4690df;
+      }
+
+      > i.material-icons {
+        font-size: 12.5px;
+      }
+    }
+
+    .m-hashtags--sidebar-selector-list-switch {
+      flex-shrink: 0;
+      width: 28px;
+      text-align: right;
+    }
+
+    .m-hashtags--sidebar-selector-list-add-input {
+      flex-grow: 1;
+      appearance: none;
+      color: #666666;
+      border: 1px solid #888888;
+      font-family: inherit;
+      font-size: 12px;
+      line-height: 1.2;
+
+      &::placeholder {
+        color: #aaaaaa;
+      }
+    }
+
+    .m-hashtags--sidebar-selector-list-add-button {
+      flex-shrink: 0;
+      width: 28px;
+      color: #666666;
+      text-align: center;
+      cursor: pointer;
+
+      > i.material-icons {
+        font-size: 12.5px;
+      }
+    }
+  }
+
+  .m-hashtags--sidebar-selector-show-more-link {
+    display: block;
+    margin-top: 16px;
+    color: #aaaaaa;
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+  }
+}

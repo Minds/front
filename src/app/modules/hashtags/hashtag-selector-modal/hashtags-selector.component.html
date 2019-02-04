@@ -3,7 +3,7 @@
     <h3>
       <span i18n="@@M__HASHTAG__SELECTOR_TITLE">Personalize your feed</span>
 
-      <span class="m-hashtags-selector--header-switches">
+      <span class="m-hashtags-selector--header-switches" *mIfFeature="'top-feeds'">
         <m-switch [(mModel)]="showTrending" (change)="filterChange()" i18n>Trending</m-switch>
         <m-switch [(mModel)]="showDefaults" (change)="filterChange()" i18n>Defaults</m-switch>
       </span>

@@ -14,6 +14,7 @@ import { ContextService } from '../../services/context.service';
 import { PosterComponent } from './poster/poster.component';
 import { NewsfeedService } from './services/newsfeed.service';
 import { debounceTime } from "rxjs/operators";
+import { SideBarSelectorChange } from "../hashtags/sidebar-selector/sidebar-selector.component";
 
 @Component({
   selector: 'm-newsfeed',
@@ -60,9 +61,11 @@ export class NewsfeedComponent {
 
   hashtag: string;
 
+  all: boolean;
+
   @ViewChild('poster') private poster: PosterComponent;
 
-  private setHashtagSubject = new Subject();
+  protected hashtagFilterChangeSubject: Subject<SideBarSelectorChange> = new Subject<SideBarSelectorChange>();
 
   constructor(
     public session: Session,
@@ -102,6 +105,7 @@ export class NewsfeedComponent {
         this.algorithm = params.algorithm || null;
         this.period = params.period || '12h';
         this.hashtag = params.hashtag || null;
+        this.all = Boolean(params.all);
       } else if (!this.legacySorting) {
         // Default selections
 
@@ -116,11 +120,26 @@ export class NewsfeedComponent {
       this.showPlusButton = false
     }
 
-    this.setHashtagSubject.pipe(debounceTime(300)).subscribe(({ hashtag }) => {
-      this.hashtag = hashtag;
+    this.hashtagFilterChangeSubject.pipe(debounceTime(300)).subscribe(({ type, value }) => {
+      switch (type) {
+        case 'single':
+          this.hashtag = value;
+          this.all = false;
+          break;
+
+        case 'all':
+          this.hashtag = null;
+          this.all = true;
+          break;
+
+        case 'preferred':
+          this.hashtag = null;
+          this.all = false;
+          break;
+      }
 
       if (!this.legacySorting) {
-        this.setSort(this.algorithm, this.period, this.hashtag)
+        this.updateSortRoute();
       }
     });
   }
@@ -175,15 +194,18 @@ export class NewsfeedComponent {
     }
   }
 
-  setHashtag(hashtag: string) {
-    this.setHashtagSubject.next({ hashtag });
+  hashtagFilterChange(filter: SideBarSelectorChange) {
+    this.hashtagFilterChangeSubject.next(filter);
   }
 
-  setSort(algorithm: string, period: string | null, hashtag: string) {
+  setSort(algorithm: string, period: string | null) {
     this.algorithm = algorithm;
     this.period = period;
-    this.hashtag = hashtag;
 
+    this.updateSortRoute();
+  }
+
+  updateSortRoute() {
     let route;
 
     // TODO: Debounce
@@ -194,7 +216,9 @@ export class NewsfeedComponent {
     }
 
     if (this.hashtag) {
-      route.push({ hashtag: this.hashtag })
+      route.push({ hashtag: this.hashtag });
+    } else if (this.all) {
+      route.push({ all: 1 })
     }
 
     this.router.navigate(route);
