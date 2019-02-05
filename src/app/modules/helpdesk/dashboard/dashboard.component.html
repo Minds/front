@@ -32,6 +32,14 @@
             New Question
           </button>
         </div>
+        <div class="m-helpdesk__dashboardButtons">
+          <a class="m-btn m-btn--slim" routerLink="/groups/profile/100000000000000681/feed">
+            Help & Support Group
+          </a>
+          <a class="m-btn m-btn--slim" routerLink="/report-a-bug">
+            Report a bug
+          </a>
+        </div>
 
         <div *ngIf="results.length > 0"
           class="m-helpdeskSearch__results m-border"
@@ -44,17 +52,8 @@
           </div>
         </div>
       </div>
-
-      <div class="m-layout__cell m-helpdesk__heroIcon">
-        <img [src]="minds.cdn_assets_url + 'assets/help-desk/presentation.png'">
-      </div>
-    </div>
-  </section>
-
-  <section class="m-layout__section m-helpdesk--dashboard--section" style="background-color: #f8f8f8; padding-bottom: 0;">
-    <div class="m-layout__inner m-layout__row">
       <div class="m-layout__cell">
-        <div class="m-helpdeskQuestions__questions m-border">
+        <div class="m-helpdeskQuestions__questions m-border" style="margin-left: 36px">
           <ul>
             <h4>Popular Questions</h4>
             <li class="m-helpdeskQuestions__question" *ngFor="let question of topQuestions">
@@ -68,6 +67,19 @@
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="m-layout__section m-helpdesk--dashboard--section" style="background-color: #f8f8f8; padding-bottom: 0;">
+    
+    <div class="m-layout__inner" style="padding-top: 36px">
+      <m-helpdesk--dashboard--all></m-helpdesk--dashboard--all>
+    </div>
+
+  </section>
+
+  <section class="m-layout__section m-helpdesk--dashboard--section" style="background-color: #f8f8f8; padding-bottom: 0;" *ngIf="false">
+    <div class="m-layout__inner m-layout__row">
 
       <div class="m-layout__cell">
         <div class="m-helpdesk--dashboard--links">

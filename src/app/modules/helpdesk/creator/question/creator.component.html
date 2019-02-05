@@ -1,9 +1,8 @@
-<div class="m-helpdesk--dashboard">
-  <form (submit)="save()" class="mdl-grid blogs-grid m-blog-container mdl-color--white" style="max-width:740px">
-    <div class="mdl-grid" style="width: 100%">
+<div class="m-helpdeskDashboard">
+  <form (submit)="save()" class="m-border" style="max-width:740px; background: #FFF; width: 600px; margin: auto; padding: 16px;">
+    <div class="m-layout__column" style="width: 100%">
 
-      <div class="mdl-cell mdl-cell--12-col">
-
+      <div class="m-layout__cell">
         <minds-textarea
           name="question"
           [(mModel)]="question.question"
@@ -13,17 +12,17 @@
         ></minds-textarea>
       </div>
 
-      <div class="mdl-cell mdl-cell--12-col">
-        <minds-textarea
+      <div class="m-layout__cell">
+        <m-inline-editor
           name="answer"
-          [(mModel)]="question.answer"
-          class="m-input"
+          [(ngModel)]="question.answer"
           placeholder="Your answer"
           i18n-placeholder="@@HELPDESK__EDIT__ANSWER_PLACEHOLDER"
-        ></minds-textarea>
+          #inlineEditor
+        ></m-inline-editor>
       </div>
 
-      <div class="mdl-cell mdl-cell--12-col">
+      <div class="m-layout__cell">
         <m-dropdown #dropdown>
           <label i18n="@@HELPDESK__EDIT__CATEGORIES__TITLE">
             Select a Category
@@ -45,7 +44,7 @@
       </div>
     </div>
 
-    <div class="mdl-cell mdl-cell--12-col">
+    <div class="m-layout__cell">
       <button type="submit" class="m-button m-button--text m-button--draft" i18n="@@HELPDESK__EDIT__SAVE_ACTION">
         Save
       </button>
