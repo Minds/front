@@ -16,6 +16,17 @@
             (keyup)="search()">
         </div>
 
+        <div *ngIf="results.length > 0"
+          class="m-helpdeskSearch__results m-border"
+        >
+          <div *ngFor="let question of results"
+            class="m-helpdeskSearch__result"
+            [routerLink]="['/help/question', question.uuid]"
+          >
+            <span>{{question.question}}</span>
+          </div>
+        </div>
+
         <div class="m-helpdesk__dashboardButtons" *ngIf="session.isAdmin()">
           <button
             class="m-btn m-btn--slim"
@@ -39,17 +50,6 @@
           <a class="m-btn m-btn--slim" routerLink="/report-a-bug">
             Report a bug
           </a>
-        </div>
-
-        <div *ngIf="results.length > 0"
-          class="m-helpdeskSearch__results m-border"
-        >
-          <div *ngFor="let question of results"
-            class="m-helpdeskSearch__result"
-            [routerLink]="['/help/question', question.uuid]"
-          >
-            <span>{{question.question}}</span>
-          </div>
         </div>
       </div>
       <div class="m-layout__cell">
