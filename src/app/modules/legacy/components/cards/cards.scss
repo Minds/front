@@ -158,18 +158,24 @@ minds-card-image, minds-card-video {
     box-sizing: border-box;
     .body{
       margin-top: 0;
+      max-width: 95%;
       a{
         overflow: hidden;
         white-space: nowrap;
-        text-overflow: ellipsis
+        text-overflow: ellipsis;
+        padding-right: 128px;
       }
 
       strong {
+        display: inline-block;
+        max-width: 100%;
         vertical-align: middle;
         letter-spacing: 0.25px;
         font-family: 'Roboto';
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .permalink {

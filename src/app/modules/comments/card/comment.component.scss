@@ -18,22 +18,30 @@
 .m-commentBubble__username {
   display: inline-block;
   line-height: 16px;
-  vertical-align: middle;
   margin-right: 4px;
+  vertical-align: middle;
+  max-width: 100%;
 
   > a {
     display: block;
-    height: 16px; // Also the same as line-height
+    height: 16px; 
     line-height: 16px;
     font-size: 13px;
     font-weight: 600;
-    vertical-align: middle;
+    // vertical-align: middle;
+    max-width: 100%;
+    white-space: nowrap;
 
     span {
-      display: inline-flex;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: inline-block;
+      max-width: 100%;
     }
   }
   .m-channel--badges-activity {
+    vertical-align: unset;
     margin-top: -1px;
   }
 }
@@ -211,5 +219,4 @@
     white-space: nowrap;
   }
 }
-
 
