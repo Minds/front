@@ -1,0 +1,8 @@
+<div class="m-helpdeskRelatedPosts__list">
+  <h4>Related Help & Support posts</h4>
+  <minds-activity
+    *ngFor="let post of posts; let i = index"
+    class="mdl-card item"
+    [object]="post"
+  ></minds-activity>
+</div>

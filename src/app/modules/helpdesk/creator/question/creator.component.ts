@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { Client } from '../../../../../services/api/client';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Client } from '../../../../services/api/client';
 import { ActivatedRoute, Router } from '@angular/router';
+import { InlineEditorComponent } from "../../../../common/components/editors/inline-editor.component";
 
 @Component({
-  selector: 'm-helpdesk--category-creator',
+  selector: 'm-helpdesk--question-creator',
   templateUrl: 'creator.component.html'
 })
 
-export class CategoryCreatorComponent implements OnInit {
+export class QuestionCreatorComponent implements OnInit {
+  @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
+
   categories: Array<any> = [];
 
   error: string = null;
 
-  category: any = {
-    title: '',
-    parent_uuid: null,
+  question: any = {
+    question: '',
+    answer: '',
+    category_uuid: null,
   };
 
   constructor(
@@ -82,14 +86,18 @@ export class CategoryCreatorComponent implements OnInit {
   }
 
   selectCategory(category) {
-    this.category.parent_uuid = category.uuid;
+    this.question.category_uuid = category.uuid;
   }
 
   async load(uuid: string) {
     try {
-      const response: any = await this.client.get(`api/v2/helpdesk/categories/category/${uuid}`);
+      const response: any = await this.client.get(`api/v2/helpdesk/questions/question/${uuid}`);
 
-      this.category = response.category;
+      this.question = response.question;
+
+      if (!this.question.answer.includes('<p>')) {
+        this.question.answer = `<p class="">${this.question.answer}</p>`;
+      }
     } catch (e) {
       console.error(e);
     }
@@ -97,9 +105,15 @@ export class CategoryCreatorComponent implements OnInit {
 
   validate() {
     this.error = null;
-    
-    if (!this.category.title) {
-      this.error = 'You must provide a title';
+
+    if (!this.question.category_uuid) {
+      this.error = 'You must select a category';
+    }
+    if (!this.question.answer) {
+      this.error = 'You must provide an answer';
+    }
+    if (!this.question.question) {
+      this.error = 'You must provide a question';
     }
 
     if (this.error) {
@@ -114,13 +128,16 @@ export class CategoryCreatorComponent implements OnInit {
       return;
     }
 
-    try {
-      await this.client.post('api/v2/admin/helpdesk/categories', { ...this.category })
+    await this.inlineEditor.prepareForSave();
 
-      this.router.navigate(['/help']);
+    try {
+      const response: any = await this.client.post('api/v2/admin/helpdesk/questions', { ...this.question });
+
+      this.router.navigate(['/help/question/', response.uuid]);
     } catch (e) {
       console.error(e);
       this.error = e;
     }
   }
+
 }

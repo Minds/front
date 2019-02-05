@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { Client } from '../../../../../services/api/client';
+import { Client } from '../../../../services/api/client';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'm-helpdesk--question-creator',
+  selector: 'm-helpdesk--category-creator',
   templateUrl: 'creator.component.html'
 })
 
-export class QuestionCreatorComponent implements OnInit {
+export class CategoryCreatorComponent implements OnInit {
   categories: Array<any> = [];
 
   error: string = null;
 
-  question: any = {
-    question: '',
-    answer: '',
-    category_uuid: null,
+  category: any = {
+    title: '',
+    parent_uuid: null,
   };
 
   constructor(
@@ -83,14 +82,14 @@ export class QuestionCreatorComponent implements OnInit {
   }
 
   selectCategory(category) {
-    this.question.category_uuid = category.uuid;
+    this.category.parent_uuid = category.uuid;
   }
 
   async load(uuid: string) {
     try {
-      const response: any = await this.client.get(`api/v2/helpdesk/questions/question/${uuid}`);
+      const response: any = await this.client.get(`api/v2/helpdesk/categories/category/${uuid}`);
 
-      this.question = response.question;
+      this.category = response.category;
     } catch (e) {
       console.error(e);
     }
@@ -98,15 +97,9 @@ export class QuestionCreatorComponent implements OnInit {
 
   validate() {
     this.error = null;
-
-    if (!this.question.category_uuid) {
-      this.error = 'You must select a category';
-    }
-    if (!this.question.answer) {
-      this.error = 'You must provide an answer';
-    }
-    if (!this.question.question) {
-      this.error = 'You must provide a question';
+    
+    if (!this.category.title) {
+      this.error = 'You must provide a title';
     }
 
     if (this.error) {
@@ -122,9 +115,9 @@ export class QuestionCreatorComponent implements OnInit {
     }
 
     try {
-      const response: any = await this.client.post('api/v2/admin/helpdesk/questions', { ...this.question })
+      await this.client.post('api/v2/admin/helpdesk/categories', { ...this.category })
 
-      this.router.navigate(['/help/question/', response.uuid]);
+      this.router.navigate(['/help']);
     } catch (e) {
       console.error(e);
       this.error = e;

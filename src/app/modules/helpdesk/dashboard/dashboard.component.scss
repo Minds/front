@@ -13,6 +13,7 @@
     margin-top: $minds-margin * 1.5;
     overflow-y: auto;
     box-sizing: border-box;
+    background: #FFF;
 
     &:after {
       bottom: 100%;
@@ -30,16 +31,15 @@
     }
 
     .m-helpdeskSearch__result {
-      padding: $minds-padding;
+      padding: $minds-padding * 2;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
-
+      font-weight: 400;
       border-top: 1px solid #eee;
 
       &:hover, &.m-helpdeskSearch__result--highlight {
         color: #000;
-        font-weight: 400;
       }
       &:first-child {
         border-top: 0;
@@ -67,6 +67,7 @@
     font-size: 18px;
     width: 100%;
     padding: 16px 16px 16px 56px;
+    background: #FFF;
   }
 }
 
@@ -77,6 +78,11 @@
 
   & > .m-btn {
     margin: 0 $minds-padding;
+    color: #FFF;
+    text-decoration: none;
+    display: inline-block;
+    box-sizing: border-box;
+    line-height: 1.25;
   }
 }
 
@@ -255,6 +261,18 @@
     }
   }
 
+}
+
+.m-helpdesk__dashboard .m-layout__hero  {
+  background-image: url('assets/photos/balloon.jpg');
+
+  .m-layout__cell:nth-of-type(1) {
+    align-self: center;
+  }
+
+  h2 {
+    color: #FFF;
+  }
 }
 
 .m-helpdesk__heroIcon {
