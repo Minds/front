@@ -1,8 +1,20 @@
 <span [ngClass]="[labelClass, (isActive && labelActiveClass) || '']" (click)="algorithmDropdown.toggle()">
-  <span>{{caption}}</span>
+  <ng-container *ngIf="tooltipText; else noTooltipText">
+    <span>{{caption}}</span>
+
+    <m-tooltip icon="help">
+      {{tooltipText}}
+    </m-tooltip>
+
+    <span>:</span>
+  </ng-container>
+
+  <ng-template #noTooltipText>
+    <span>{{caption}}:</span>
+  </ng-template>
 </span>
 
-<m-dropdown #algorithmDropdown>
+<m-dropdown class="m-sort-selector--algorithm-dropdown" #algorithmDropdown>
   <label [ngClass]="[labelClass, (isActive && labelActiveClass) || '']">
     <i class="material-icons m-dropdown--label-icon m-sort-selector--algorithm-icon" *ngIf="getCurrentAlgorithmProp('icon')">{{getCurrentAlgorithmProp('icon')}}</i>
     <span>{{getCurrentAlgorithmProp('label')}}</span>
@@ -12,7 +24,13 @@
   <ul class="m-dropdown--list">
     <li class="m-dropdown--list--item" *ngFor="let algorithm of getVisibleAlgorithms()" (click)="setAlgorithm(algorithm.id); closeDropdowns();">
       <i class="material-icons m-dropdown--label-icon m-sort-selector--item-algorithm-icon" *ngIf="algorithm.icon">{{algorithm.icon}}</i>
-      <span [className]="labelClass">{{algorithm.label}}</span>
+      <span [className]="labelClass">
+        {{algorithm.label}}
+
+        <m-tooltip icon="help" *ngIf="algorithm.help">
+          {{algorithm.help}}
+        </m-tooltip>
+      </span>
     </li>
   </ul>
 </m-dropdown>

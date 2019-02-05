@@ -42,7 +42,13 @@
            routerLinkActive="m-topbar--navigation--item-active"
            [routerLinkActiveOptions]="{exact: true}"
         >
-          <span i18n>Latest</span>
+          <span>
+            <ng-container i18n>Latest</ng-container>
+
+            <m-tooltip icon="help" i18n>
+              Latest will sort the content based on its creation date.
+            </m-tooltip>
+          </span>
         </a>
 
         <m-sort-selector
@@ -51,10 +57,12 @@
           [period]="period"
           [except]="['latest']"
           (onChange)="setSort($event.algorithm, $event.period)"
-          caption="Sort by:"
+          caption="Sort by"
           i18n-caption
           labelClass="m-topbar--navigation--item"
           labelActiveClass="m-topbar--navigation--item-active"
+          tooltipText="Sort content by various criteria which takes in account the number of votes they had in a certain time period."
+          i18n-tooltipText
         ></m-sort-selector>
       </div>
     </div>

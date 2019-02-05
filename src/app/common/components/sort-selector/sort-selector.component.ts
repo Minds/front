@@ -6,27 +6,31 @@ import { DropdownComponent } from "../dropdown/dropdown.component";
   templateUrl: './sort-selector.component.html',
 })
 export class SortSelectorComponent {
-  algorithms: Array<{ id, label, icon?, noPeriod? }> = [
+  algorithms: Array<{ id, label, icon?, help?, noPeriod? }> = [
     {
       id: 'hot',
       label: 'Hot',
       icon: 'whatshot',
+      help: 'Hot will sort based on the difference between up and down votes, and the freshness of the content over the last hours.',
       noPeriod: true,
     },
     {
       id: 'top',
       label: 'Top',
       icon: 'thumb_up',
+      help: 'Top will sort based on the number of up votes a content has over certain time period.',
     },
     {
       id: 'controversial',
       label: 'Controversial',
       icon: 'thumbs_up_down',
+      help: 'Controversial will sort based on the balance of up and down votes a content has over certain time period.',
     },
     {
       id: 'latest',
       label: 'Latest',
       icon: 'timelapse',
+      help: 'Latest will sort the content based on its creation date.',
       noPeriod: true,
     },
   ];
@@ -66,7 +70,9 @@ export class SortSelectorComponent {
 
   @Input() except: Array<string> = [];
 
-  @Input() caption: string = 'Sort:';
+  @Input() caption: string = 'Sort';
+
+  @Input() tooltipText: string;
 
   @Output('onChange') onChangeEventEmitter = new EventEmitter<{ algorithm, period }>();
 

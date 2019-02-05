@@ -63,6 +63,7 @@ m-hashtags--sidebar-selector {
       color: #666666;
       text-align: center;
       cursor: pointer;
+      user-select: none;
 
       &.m-hashtags--sidebar-selector-list-visibility__visible {
         color: #4690df;
@@ -100,6 +101,7 @@ m-hashtags--sidebar-selector {
       color: #666666;
       text-align: center;
       cursor: pointer;
+      user-select: none;
 
       > i.material-icons {
         font-size: 12.5px;
@@ -115,5 +117,6 @@ m-hashtags--sidebar-selector {
     font-weight: bold;
     line-height: 1;
     cursor: pointer;
+    user-select: none;
   }
 }
