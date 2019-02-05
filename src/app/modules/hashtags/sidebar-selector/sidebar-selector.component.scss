@@ -5,7 +5,7 @@ m-hashtags--sidebar-selector {
   .m-hashtags--sidebar-selector-header {
     display: flex;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 
     > h3 {
       flex-grow: 1;
@@ -22,6 +22,7 @@ m-hashtags--sidebar-selector {
       font-size: 9px;
       font-weight: bold;
       line-height: 1;
+      margin-right: 8px;
     }
   }
 
@@ -34,7 +35,7 @@ m-hashtags--sidebar-selector {
       > li {
         display: flex;
         align-items: center;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
 
         &:last-child {
           margin-bottom: 0;
@@ -68,7 +69,8 @@ m-hashtags--sidebar-selector {
       }
 
       > i.material-icons {
-        font-size: 12.5px;
+        font-size: 14px;
+        line-height: 14px;
       }
     }
 
