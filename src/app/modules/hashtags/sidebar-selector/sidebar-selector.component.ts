@@ -10,7 +10,7 @@ import {
 import { TopbarHashtagsService } from "../service/topbar.service";
 import { Tag } from "../types/tag";
 
-export type SideBarSelectorChange = { type: string, value?: any };
+export type SideBarSelectorChange = { type: string, timestamp?: number, value?: any };
 
 @Component({
   selector: 'm-hashtags--sidebar-selector',
@@ -66,8 +66,10 @@ export class SidebarSelectorComponent implements OnInit {
     // Ensure selected hashtags are always shown; checks the first non-selected and uses index + 5
     const selectedLength = this.hashtags.findIndex(hashtag => !hashtag.selected) + 5;
 
-    // Ensure current hashtag position is always shown; uses index + 1 as size
-    const currentSelectedLength = this.hashtags.findIndex(hashtag => hashtag.value === this.currentHashtag) + 1;
+    // Ensure current hashtag position is always shown; uses index + 1 as size; only when not disabled
+    const currentSelectedLength = !this.disabled ?
+      this.hashtags.findIndex(hashtag => hashtag.value === this.currentHashtag) + 1 :
+      -1;
 
     // Return the largest
     return Math.max(this.showAtLeast, userLength, selectedLength, currentSelectedLength);
@@ -106,6 +108,7 @@ export class SidebarSelectorComponent implements OnInit {
 
     this.filterChange.emit({
       type: this.preferred ? 'preferred' : 'all',
+      timestamp: this.preferred ? Date.now() : null,
     });
   }
 
@@ -114,7 +117,7 @@ export class SidebarSelectorComponent implements OnInit {
   }
 
   addHashtag(htmlInputElement: HTMLInputElement) {
-    const hashtagValue =htmlInputElement.value;
+    const hashtagValue = htmlInputElement.value;
 
     this.resetAddHashtag(htmlInputElement);
     this.detectChanges();
@@ -146,6 +149,8 @@ export class SidebarSelectorComponent implements OnInit {
     }
 
     this.detectChanges();
+
+    this.preferredChange();
   }
 
   detectChanges() {

@@ -11,14 +11,14 @@
     <li *ngFor="let hashtag of visibleHashtags">
       <a
         class="m-hashtags--sidebar-selector-list-label"
-        [class.m-hashtags--sidebar-selector-list-label__visible]="currentHashtag === hashtag.value"
+        [class.m-hashtags--sidebar-selector-list-label__visible]="!disabled && currentHashtag === hashtag.value"
         [title]="'#' + hashtag.value"
         (click)="hashtagVisibilityChange(hashtag)"
       >#{{hashtag.value}}</a>
 
       <a
         class="m-hashtags--sidebar-selector-list-visibility"
-        [class.m-hashtags--sidebar-selector-list-visibility__visible]="currentHashtag === hashtag.value"
+        [class.m-hashtags--sidebar-selector-list-visibility__visible]="!disabled && currentHashtag === hashtag.value"
         (click)="hashtagVisibilityChange(hashtag)"
       ><i class="material-icons">visibility</i></a>
 
