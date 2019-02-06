@@ -9,8 +9,9 @@ import {
 } from "@angular/core";
 import { TopbarHashtagsService } from "../service/topbar.service";
 import { Tag } from "../types/tag";
+import { findLastIndex } from "../../../utils/array-utils";
 
-export type SideBarSelectorChange = { type: string, timestamp?: number, value?: any };
+export type SideBarSelectorChange = { type: string, value?: any };
 
 @Component({
   selector: 'm-hashtags--sidebar-selector',
@@ -62,10 +63,10 @@ export class SidebarSelectorComponent implements OnInit {
 
   calcFoldLength() {
     // Ensure user hashtags are always shown; checks the first non-user and uses index as size
-    const userLength = this.hashtags.findIndex(hashtag => hashtag.type !== 'user');
+    const userLength = findLastIndex(this.hashtags, hashtag => hashtag.type === 'user');
 
     // Ensure selected hashtags are always shown; checks the first non-selected and uses index + 5
-    const selectedLength = this.hashtags.findIndex(hashtag => !hashtag.selected) + 5;
+    const selectedLength = findLastIndex(this.hashtags, hashtag => hashtag.selected) + 5;
 
     // Ensure current hashtag position is always shown; uses index + 1 as size; only when not disabled
     const currentSelectedLength = !this.disabled ?
@@ -108,8 +109,7 @@ export class SidebarSelectorComponent implements OnInit {
     this.lastPreferredEmission = this.preferred;
 
     this.filterChange.emit({
-      type: this.preferred ? 'preferred' : 'all',
-      timestamp: this.preferred ? Date.now() : null,
+      type: this.preferred ? 'preferred' : 'all'
     });
   }
 
@@ -143,7 +143,6 @@ export class SidebarSelectorComponent implements OnInit {
   async toggleHashtag(hashtag) {
     try {
       await this.topbarHashtagsService.toggleSelection(hashtag, this);
-      this.hashtags = this.hashtags.sort(this.topbarHashtagsService._sortHashtags);
     } catch (e) {
       console.error('SidebarSelector', e);
       hashtag.selected = !hashtag.selected;

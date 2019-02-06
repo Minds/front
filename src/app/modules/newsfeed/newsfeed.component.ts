@@ -120,7 +120,7 @@ export class NewsfeedComponent {
       this.showPlusButton = false
     }
 
-    this.hashtagFilterChangeSubject.pipe(debounceTime(300)).subscribe(({ type, timestamp, value }) => {
+    this.hashtagFilterChangeSubject.pipe(debounceTime(300)).subscribe(({ type, value }) => {
       switch (type) {
         case 'single':
           this.hashtag = value;
@@ -139,7 +139,7 @@ export class NewsfeedComponent {
       }
 
       if (!this.legacySorting) {
-        this.updateSortRoute(timestamp);
+        this.updateSortRoute();
       }
     });
   }
@@ -205,7 +205,7 @@ export class NewsfeedComponent {
     this.updateSortRoute();
   }
 
-  updateSortRoute(timestamp: string | number = '') {
+  updateSortRoute() {
     let route;
 
     // TODO: Debounce
@@ -221,11 +221,7 @@ export class NewsfeedComponent {
       route.push({ all: 1 })
     }
 
-    if (timestamp) {
-      route.push( { _: timestamp } );
-    }
-
-    return this.router.navigate(route);
+    this.router.navigate(route);
   }
 
   /**

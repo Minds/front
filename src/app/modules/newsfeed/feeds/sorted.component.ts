@@ -37,6 +37,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   ratingSubscription: Subscription;
   reloadFeedSubscription: Subscription;
+  selectionChangeSubscription: Subscription;
 
   @ViewChild('poster') private poster: PosterComponent;
 
@@ -53,6 +54,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private overlayModal: OverlayModalService,
     private newsfeedService: NewsfeedService,
+    private topbarHashtagsService: TopbarHashtagsService,
   ) {
     this.title.setTitle('Newsfeed');
 
@@ -64,6 +66,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     });
 
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(() => {
+      this.load(true);
+    });
+
+    this.selectionChangeSubscription = this.topbarHashtagsService.selectionChange.subscribe(() => {
       this.load(true);
     });
 
@@ -107,6 +113,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
     if (this.reloadFeedSubscription) {
       this.reloadFeedSubscription.unsubscribe();
+    }
+
+    if (this.selectionChangeSubscription) {
+      this.selectionChangeSubscription.unsubscribe();
     }
   }
 
