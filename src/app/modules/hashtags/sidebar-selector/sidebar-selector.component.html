@@ -1,4 +1,4 @@
-<div class="m-hashtags--sidebar-selector-header">
+<div class="m-hashtagsSidebarSelector__header">
   <h3 i18n>Hashtags</h3>
 
   <span>
@@ -6,23 +6,23 @@
   </span>
 </div>
 
-<div class="m-hashtags--sidebar-selector-list">
+<div class="m-hashtagsSidebarSelector__list">
   <ul>
     <li *ngFor="let hashtag of visibleHashtags">
       <a
-        class="m-hashtags--sidebar-selector-list-label"
-        [class.m-hashtags--sidebar-selector-list-label__visible]="!disabled && currentHashtag === hashtag.value"
+        class="m-hashtagsSidebarSelectorList__label"
+        [class.m-hashtagsSidebarSelectorList__label--visible]="!disabled && currentHashtag === hashtag.value"
         [title]="'#' + hashtag.value"
         (click)="hashtagVisibilityChange(hashtag)"
       >#{{hashtag.value}}</a>
 
       <a
-        class="m-hashtags--sidebar-selector-list-visibility"
-        [class.m-hashtags--sidebar-selector-list-visibility__visible]="!disabled && currentHashtag === hashtag.value"
+        class="m-hashtagsSidebarSelectorList__visibility"
+        [class.m-hashtagsSidebarSelectorList__visiblilty--visible]="!disabled && currentHashtag === hashtag.value"
         (click)="hashtagVisibilityChange(hashtag)"
       ><i class="material-icons">visibility</i></a>
 
-      <span class="m-hashtags--sidebar-selector-list-switch">
+      <span class="m-hashtagsSidebarSelectorList__switch">
         <m-switch
           [disabled]="disabled || !preferred"
           [mModel]="hashtag.selected"
@@ -34,7 +34,7 @@
 
     <li *ngIf="!disabled && !loading && (!hasBelowTheFoldHashtags || showAll)">
       <input type="text"
-        class="m-hashtags--sidebar-selector-list-add-input"
+        class="m-hashtagsSidebarSelectorList__addInput"
         (keydown.enter)="addHashtag($event.target); $event.preventDefault()"
         (keydown.tab)="addHashtag($event.target); $event.preventDefault()"
         placeholder="#hashtag"
@@ -43,18 +43,18 @@
       />
 
       <a
-        class="m-hashtags--sidebar-selector-list-add-button"
+        class="m-hashtagsSidebarSelectorList__addButton"
         (click)="addHashtag(newHashtagInput)"
       ><i class="material-icons">check</i></a>
 
       <a
-        class="m-hashtags--sidebar-selector-list-add-button"
+        class="m-hashtagsSidebarSelectorList__addButton"
         (click)="resetAddHashtag(newHashtagInput)"
       ><i class="material-icons">close</i></a>
     </li>
   </ul>
 
-  <a (click)="toggleShowAll()" *ngIf="hasBelowTheFoldHashtags" class="m-hashtags--sidebar-selector-show-more-link">
+  <a (click)="toggleShowAll()" *ngIf="hasBelowTheFoldHashtags" class="m-hashtagsSidebarSelector__showMoreLink">
     <ng-container *ngIf="showAll; else showLess" i18n>Show less</ng-container>
     <ng-template #showLess i18n>Show more</ng-template>
   </a>

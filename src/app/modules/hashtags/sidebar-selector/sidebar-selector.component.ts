@@ -18,6 +18,7 @@ export type SideBarSelectorChange = { type: string, timestamp?: number, value?: 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarSelectorComponent implements OnInit {
+
   @Input() disabled: boolean;
   @Input() preferred: boolean = true;
   @Input() showAtLeast: number = 5;

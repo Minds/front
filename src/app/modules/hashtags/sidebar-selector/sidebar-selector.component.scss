@@ -2,7 +2,7 @@ m-hashtags--sidebar-selector {
   display: block;
   padding: 16px;
 
-  .m-hashtags--sidebar-selector-header {
+  .m-hashtagsSidebarSelector__header {
     display: flex;
     align-items: center;
     margin-bottom: 12px;
@@ -26,7 +26,7 @@ m-hashtags--sidebar-selector {
     }
   }
 
-  .m-hashtags--sidebar-selector-list {
+  .m-hashtagsSidebarSelector__list {
     > ul {
       margin: 0;
       padding: 0;
@@ -43,7 +43,7 @@ m-hashtags--sidebar-selector {
       }
     }
 
-    .m-hashtags--sidebar-selector-list-label {
+    .m-hashtagsSidebarSelectorList__label {
       flex-grow: 1;
       font-size: 13px;
       color: #666666;
@@ -52,12 +52,12 @@ m-hashtags--sidebar-selector {
       overflow: hidden;
       text-overflow: ellipsis;
 
-      &.m-hashtags--sidebar-selector-list-label__visible {
+      &.m-hashtagsSidebarSelectorList__label--visible {
         color: #4690df;
       }
     }
 
-    .m-hashtags--sidebar-selector-list-visibility {
+    .m-hashtagsSidebarSelectorList__visibility {
       flex-shrink: 0;
       width: 28px;
       color: #666666;
@@ -65,7 +65,7 @@ m-hashtags--sidebar-selector {
       cursor: pointer;
       user-select: none;
 
-      &.m-hashtags--sidebar-selector-list-visibility__visible {
+      &.m-hashtagsSidebarSelectorList__visibility--visible {
         color: #4690df;
       }
 
@@ -75,13 +75,13 @@ m-hashtags--sidebar-selector {
       }
     }
 
-    .m-hashtags--sidebar-selector-list-switch {
+    .m-hashtagsSidebarSelectorList__switch {
       flex-shrink: 0;
       width: 28px;
       text-align: right;
     }
 
-    .m-hashtags--sidebar-selector-list-add-input {
+    .m-hashtagsSidebarSelectorList__addInput {
       flex-grow: 1;
       appearance: none;
       color: #666666;
@@ -95,7 +95,7 @@ m-hashtags--sidebar-selector {
       }
     }
 
-    .m-hashtags--sidebar-selector-list-add-button {
+    .m-hashtagsSidebarSelectorList__addButton {
       flex-shrink: 0;
       width: 28px;
       color: #666666;
@@ -109,7 +109,7 @@ m-hashtags--sidebar-selector {
     }
   }
 
-  .m-hashtags--sidebar-selector-show-more-link {
+  .m-hashtagsSidebarSelector__showMoreLink {
     display: block;
     margin-top: 16px;
     color: #aaaaaa;
