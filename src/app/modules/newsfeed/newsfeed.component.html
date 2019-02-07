@@ -83,8 +83,6 @@
       <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
 
       <ng-container *mIfFeature="'top-feeds'">
-        <div class="minds-spacer minds-spacer-2x"></div>
-
         <div class="mdl-card mdl-color--white m-border">
           <m-hashtags--sidebar-selector
             [disabled]="!isSorted"
@@ -93,6 +91,7 @@
             (filterChange)="hashtagFilterChange($event)"
           ></m-hashtags--sidebar-selector>
         </div>
+        <div class="minds-spacer minds-spacer-2x"></div>
       </ng-container>
 
       <div class="m-page--sidebar--navigation">

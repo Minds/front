@@ -85,10 +85,12 @@ m-hashtags--sidebar-selector {
       flex-grow: 1;
       appearance: none;
       color: #666666;
-      border: 1px solid #888888;
+      border: 1px solid #ececec;
+      border-radius: 24px;
+      padding-left: 8px;
       font-family: inherit;
       font-size: 12px;
-      line-height: 1.2;
+      line-height: 24px;
 
       &::placeholder {
         color: #aaaaaa;
