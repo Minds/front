@@ -38,6 +38,16 @@
       Email already in use
     </ng-container>
     <ng-container
+      *ngSwitchCase="'RegistrationException::PasswordsMustMatch'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__PASSWORDS_MUST_MATCH">
+      Passwords must match
+    </ng-container>
+    <ng-container
+      *ngSwitchCase="'RegistrationException::YouNeedToAcceptTermsAndConditions'"
+      i18n="@@MINDS__REGISTER__EXCEPTION__ACCEPT_TERMS_AND_CONDITIONS">
+      To create an account you need to accept terms and conditions
+    </ng-container>
+    <ng-container
       *ngSwitchDefault
       i18n="@@MINDS__REGISTER__EXCEPTION__SORRY_THERE_WAS_AN_ERROR_PLEASE_TRY_AGAIN">
       Sorry, there was an error. Please try again.
