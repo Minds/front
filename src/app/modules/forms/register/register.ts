@@ -63,7 +63,7 @@ export class RegisterForm {
     e.preventDefault();
     this.errorMessage = '';
     if (!this.form.value.tos) {
-      this.errorMessage = 'To create an account you need to accept terms and conditions.';
+      this.errorMessage = 'RegistrationException::YouNeedToAcceptTermsAndConditions';
       return;
     }
 
@@ -75,7 +75,7 @@ export class RegisterForm {
         this.reCaptcha.reset();
       }
 
-      this.errorMessage = 'Passwords must match.';
+      this.errorMessage = 'RegistrationException::PasswordsMustMatch';
       return;
     }
 
