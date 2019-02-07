@@ -6,6 +6,7 @@ import { DropdownComponent } from "../dropdown/dropdown.component";
   templateUrl: './sort-selector.component.html',
 })
 export class SortSelectorComponent {
+
   algorithms: Array<{ id, label, icon?, help?, noPeriod? }> = [
     {
       id: 'hot',
@@ -58,11 +59,32 @@ export class SortSelectorComponent {
     },
   ];
 
+  customTypes: Array<{ id, label }> = [
+    {
+      id: 'activities',
+      label: 'All',
+    },
+    {
+      id: 'images',
+      label: 'Images',
+    },
+    {
+      id: 'videos',
+      label: 'Videos',
+    },
+    {
+      id: 'blogs',
+      label: 'Blogs',
+    },
+  ];
+
   @Input() isActive: boolean = false;
 
   @Input() algorithm: string;
 
   @Input() period: string;
+
+  @Input() customType: string;
 
   @Input() labelClass: string = "m--sort-selector-label";
 
@@ -70,17 +92,21 @@ export class SortSelectorComponent {
 
   @Input() except: Array<string> = [];
 
+  @Input() hideCustomTypes: boolean = false;
+
   @Input() caption: string = 'Sort';
 
   @Input() tooltipText: string;
 
-  @Output('onChange') onChangeEventEmitter = new EventEmitter<{ algorithm, period }>();
+  @Output('onChange') onChangeEventEmitter = new EventEmitter<{ algorithm, period, customType }>();
 
   @ViewChild('algorithmDropdown') algorithmDropdown: DropdownComponent;
 
   @ViewChild('periodDropdown') periodDropdown: DropdownComponent;
 
-  getVisibleAlgorithms()  {
+  @ViewChild('customTypeDropdown') customTypeDropdown: DropdownComponent;
+
+  getVisibleAlgorithms() {
     return this.algorithms.filter(algorithm => this.except.indexOf(algorithm.id) === -1)
   }
 
@@ -104,7 +130,7 @@ export class SortSelectorComponent {
     const currentAlgorithm = this.getCurrentAlgorithm();
 
     if (!currentAlgorithm) {
-      return 'Unknown';
+      return '';
     }
 
     return currentAlgorithm[prop];
@@ -146,10 +172,37 @@ export class SortSelectorComponent {
     return !currentAlgorithm.noPeriod;
   }
 
+  setCustomType(id: string) {
+    if (!this.customTypes.find(customType => id === customType.id)) {
+      console.error('Unknown custom type');
+      return false;
+    }
+
+    this.customType = id;
+    this.emit();
+
+    return true;
+  }
+
+  getCurrentCustomType() {
+    return this.customTypes.find(customType => this.customType === customType.id)
+  }
+
+  getCurrentCustomTypeLabel() {
+    const currentCustomType = this.getCurrentCustomType();
+
+    if (!currentCustomType) {
+      return 'All';
+    }
+
+    return currentCustomType.label;
+  }
+
   emit() {
     this.onChangeEventEmitter.emit({
       algorithm: this.algorithm,
       period: this.hasCurrentAlgorithmPeriod() ? this.period : null,
+      customType: this.customType,
     });
   }
 
@@ -160,6 +213,10 @@ export class SortSelectorComponent {
 
     if (this.periodDropdown) {
       this.periodDropdown.close();
+    }
+
+    if (this.customTypeDropdown) {
+      this.customTypeDropdown.close();
     }
   }
 }

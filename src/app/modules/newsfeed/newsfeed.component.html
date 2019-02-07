@@ -36,7 +36,8 @@
         [isActive]="isSorted"
         [algorithm]="algorithm"
         [period]="period"
-        (onChange)="setSort($event.algorithm, $event.period)"
+        [customType]="customType"
+        (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
         caption="Global"
         i18n-caption
         labelClass="m-topbar--navigation--item"

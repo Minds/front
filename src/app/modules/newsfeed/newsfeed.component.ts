@@ -59,6 +59,8 @@ export class NewsfeedComponent {
 
   period: string;
 
+  customType: string;
+
   hashtag: string;
 
   all: boolean;
@@ -104,6 +106,7 @@ export class NewsfeedComponent {
       if (!this.legacySorting && this.isSorted) {
         this.algorithm = params.algorithm || null;
         this.period = params.period || '12h';
+        this.customType = params.type || 'activities';
         this.hashtag = params.hashtag || null;
         this.all = Boolean(params.all);
       } else if (!this.legacySorting) {
@@ -111,6 +114,10 @@ export class NewsfeedComponent {
 
         if (!this.algorithm) {
           this.algorithm = 'hot';
+        }
+
+        if (!this.customType) {
+          this.customType = 'activities';
         }
       }
     });
@@ -198,29 +205,33 @@ export class NewsfeedComponent {
     this.hashtagFilterChangeSubject.next(filter);
   }
 
-  setSort(algorithm: string, period: string | null) {
+  setSort(algorithm: string, period: string | null, customType: string | null) {
     this.algorithm = algorithm;
     this.period = period;
+    this.customType = customType;
 
     this.updateSortRoute();
   }
 
   updateSortRoute() {
-    let route;
+    let route: any[] = ['newsfeed/global', this.algorithm];
+    const params: any = {};
 
-    // TODO: Debounce
     if (this.period) {
-      route = ['newsfeed/global', this.algorithm, this.period];
-    } else {
-      route = ['newsfeed/global', this.algorithm];
+      route.push(this.period);
+    }
+
+    if (this.customType && this.customType !== 'activities') {
+      params.type = this.customType;
     }
 
     if (this.hashtag) {
-      route.push({ hashtag: this.hashtag });
+      params.hashtag = this.hashtag;
     } else if (this.all) {
-      route.push({ all: 1 })
+      params.all = 1;
     }
 
+    route.push(params);
     this.router.navigate(route);
   }
 

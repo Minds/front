@@ -18,6 +18,7 @@
       <m-sort-selector
         [isActive]="isSorting"
         [algorithm]="algorithm"
+        [customType]="customType"
         [period]="period"
         [except]="['latest']"
         (onChange)="onChangeEmitter.emit($event)"

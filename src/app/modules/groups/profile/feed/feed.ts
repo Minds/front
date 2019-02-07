@@ -51,6 +51,7 @@ export class GroupsProfileFeed {
   isSorting: boolean;
   algorithm: string;
   period: string;
+  customType: string;
 
   @ViewChild('poster') private poster: PosterComponent;
 
@@ -71,6 +72,7 @@ export class GroupsProfileFeed {
       if (this.isSorting) {
         this.algorithm = params['algorithm'];
         this.period = params['period'] || '7d';
+        this.customType = params['type'] || 'activities';
       } else {
         if (!this.algorithm) {
           this.algorithm = 'top';
@@ -78,6 +80,10 @@ export class GroupsProfileFeed {
 
         if (!this.period) {
           this.period = '7d';
+        }
+
+        if (!this.customType) {
+          this.customType = 'activities';
         }
       }
 
@@ -252,7 +258,7 @@ export class GroupsProfileFeed {
 
   async loadSorted(refresh: boolean = false) {
     try {
-      const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/activities`, {
+      const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
         limit: 12,
         offset: this.offset,
         period: this.period,

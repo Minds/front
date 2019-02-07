@@ -24,6 +24,7 @@ import { TopbarHashtagsService } from "../../hashtags/service/topbar.service";
 export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   algorithm: string = 'hot';
   period: string = '12h';
+  customType: string = 'activities';
   hashtags: Array<string> = [];
   all: boolean = false;
   newsfeed: Array<Object>;
@@ -74,12 +75,9 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     });
 
     this.paramsSubscription = this.route.params.subscribe(params => {
-      if (params['algorithm']) {
-        this.algorithm = params['algorithm'];
-      }
-      if (params['period']) {
-        this.period = params['period'];
-      }
+      this.algorithm = params['algorithm'];
+      this.period = params['period'] || '';
+      this.customType = params['type'] || 'activities';
 
       if (typeof params['hashtag'] !== 'undefined') {
         this.hashtags = params['hashtag'] ? [params['hashtag']] : null;
@@ -135,7 +133,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
     this.inProgress = true;
 
-    this.client.get(`api/v2/feeds/global/${this.algorithm}/activities`, {
+    this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
       limit: 12,
       offset: this.offset || '',
       rating: this.rating || '',

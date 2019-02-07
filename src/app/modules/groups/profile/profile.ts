@@ -52,6 +52,7 @@ export class GroupsProfile {
   isSorting: boolean;
   algorithm: string = 'top';
   period: string = '7d';
+  customType: string = 'activities';
 
   @ViewChild('feed') private feed: GroupsProfileFeed;
   @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
@@ -177,6 +178,10 @@ export class GroupsProfile {
 
         if (component.period) {
           this.period = component.period;
+        }
+
+        if (component.customType) {
+          this.customType = component.customType;
         }
       }
     }, 0);
@@ -420,16 +425,24 @@ export class GroupsProfile {
     localStorage.setItem('groups:conversations:minimized', (!this.showRight).toString());
   }
 
-  setSort(algorithm: string, period: string | null) {
+  setSort(algorithm: string, period: string | null, customType: string | null) {
     this.algorithm = algorithm;
     this.period = period;
+    this.customType = customType;
 
-    // TODO: Debounce
+    let route: any[] = [ '/groups/profile', this.group.guid, 'sort', algorithm ];
+    const params: any = {};
+
     if (period) {
-      this.router.navigate(['/groups/profile', this.group.guid, 'sort', algorithm, period]);
-    } else {
-      this.router.navigate(['/groups/profile', this.group.guid, 'sort', algorithm]);
+      route.push(period);
     }
+
+    if (customType && customType !== 'activities') {
+      params.type = customType;
+    }
+
+    route.push(params);
+    return this.router.navigate(route);
   }
 
   detectChanges() {

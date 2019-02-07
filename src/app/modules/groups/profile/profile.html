@@ -245,8 +245,9 @@
       [filter]="filter"
       [isSorting]="isSorting"
       [algorithm]="algorithm"
+      [customType]="customType"
       [period]="period"
-      (onSortingChange)="setSort($event.algorithm, $event.period)"
+      (onSortingChange)="setSort($event.algorithm, $event.period, $event.customType)"
       *ngIf="group['is:member']"
     ></m-groups--filter-selector>
 

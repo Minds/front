@@ -42,6 +42,7 @@ export class ChannelComponent {
   isSorting: boolean = false;
   algorithm: string;
   period: string;
+  customType: string;
 
   @ViewChild('feed') private feed: ChannelFeedComponent;
 
@@ -93,11 +94,15 @@ export class ChannelComponent {
       this.isSorting = Boolean(params['algorithm']);
 
       if (this.isSorting) {
-        feedChanged = this.changed || this.algorithm !== params['algorithm'] || this.algorithm !== params['period'];
+        feedChanged = this.changed ||
+          this.algorithm !== params['algorithm'] ||
+          this.period !== params['period'] ||
+          this.customType !== (params['type'] || 'activities');
 
         this.filter = 'feed';
         this.algorithm = params['algorithm'];
         this.period = params['period'] || '7d';
+        this.customType = params['type'] || 'activities';
       } else {
         if (!this.algorithm) {
           this.algorithm = 'top';
@@ -105,6 +110,10 @@ export class ChannelComponent {
 
         if (!this.period) {
           this.period = '7d';
+        }
+
+        if (!this.customType) {
+          this.customType = 'activities';
         }
       }
 
@@ -224,16 +233,24 @@ export class ChannelComponent {
       .splice('recent', 50);
   }
 
-  setSort(algorithm: string, period: string | null) {
+  setSort(algorithm: string, period: string | null, customType: string | null) {
     this.algorithm = algorithm;
     this.period = period;
+    this.customType = customType;
 
-    // TODO: Debounce
+    let route: any[] = [ '/', this.username, 'sort', algorithm ];
+    const params: any = {};
+
     if (period) {
-      this.router.navigate([ '/', this.username, 'sort', algorithm, period ]);
-    } else {
-      this.router.navigate([ '/', this.username, 'sort', algorithm ]);
+      route.push(period);
     }
+
+    if (customType && customType !== 'activities') {
+      params.type = customType;
+    }
+
+    route.push(params);
+    this.router.navigate(route);
   }
 }
 

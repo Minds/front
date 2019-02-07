@@ -55,8 +55,9 @@
           [isActive]="isSorting"
           [algorithm]="algorithm"
           [period]="period"
+          [customType]="customType"
           [except]="['latest']"
-          (onChange)="setSort($event.algorithm, $event.period)"
+          (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
           caption="Sort by"
           i18n-caption
           labelClass="m-topbar--navigation--item"
@@ -67,7 +68,7 @@
       </div>
     </div>
 
-    <m-channel--feed [user]="user" [isSorting]="!isLegacySorting && isSorting" [algorithm]="algorithm" [period]="period" #feed></m-channel--feed>
+    <m-channel--feed [user]="user" [isSorting]="!isLegacySorting && isSorting" [algorithm]="algorithm" [period]="period" [customType]="customType" #feed></m-channel--feed>
   </section>
 
   <!-- Supporters list -->

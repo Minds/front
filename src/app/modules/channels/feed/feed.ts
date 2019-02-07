@@ -41,6 +41,7 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
   isSorting: boolean = false;
   algorithm: string;
   period: string;
+  customType: string;
 
   @ViewChild('poster') private poster: PosterComponent;
   @ViewChild('wire') private wire: WireChannelComponent;
@@ -66,6 +67,15 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
   @Input('period') set _period(period) {
     const changed = this.period !== period;
     this.period = period;
+
+    if (changed) {
+      this.loadFeedObservable.next(Date.now());
+    }
+  }
+
+  @Input('customType') set _customType(customType) {
+    const changed = this.customType !== customType;
+    this.customType = customType;
 
     if (changed) {
       this.loadFeedObservable.next(Date.now());
@@ -135,7 +145,7 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     params.offset = this.offset;
 
     try {
-      const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/activities`, params, { cache: true });
+      const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, params, { cache: true });
 
       if (!data.entities || !data.entities.length) {
         this.moreData = false;
