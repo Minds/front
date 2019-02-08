@@ -82,9 +82,16 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
     text-align: left;
     flex: 1;
     max-width: 100%;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 80%;
+    }
   }
 }
 
