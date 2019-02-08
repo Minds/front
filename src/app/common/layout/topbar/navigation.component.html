@@ -25,44 +25,49 @@
     </a>
   </div>
 
-  <div>
-    <a class="m-topbar--navigation--item"
-      routerLink="/media/videos"
-      routerLinkActive="m-topbar--navigation--item-active"
-      title="Videos"
-      i18n-title="@@M_TOPBAR_VIDEOS"
-    >
-      <i class="material-icons">videocam</i>
+  <ng-container *mIfFeature="'top-feeds-filter'; else mainFilters">
+  </ng-container>
+  <ng-template #mainFilters>
+    <div>
+      <a class="m-topbar--navigation--item"
+        routerLink="/media/videos"
+        routerLinkActive="m-topbar--navigation--item-active"
+        title="Videos"
+        i18n-title="@@M_TOPBAR_VIDEOS"
+      >
+        <i class="material-icons">videocam</i>
 
-      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_VIDEOS">Videos</span>
-    </a>
-  </div>
+        <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_VIDEOS">Videos</span>
+      </a>
+    </div>
 
-  <div>
-    <a class="m-topbar--navigation--item"
-      routerLink="/media/images"
-      routerLinkActive="m-topbar--navigation--item-active"
-      title="Images"
-      i18n-title="@@M_TOPBAR_IMAGES"
-    >
-      <i class="material-icons">photo</i>
+    <div>
+      <a class="m-topbar--navigation--item"
+        routerLink="/media/images"
+        routerLinkActive="m-topbar--navigation--item-active"
+        title="Images"
+        i18n-title="@@M_TOPBAR_IMAGES"
+      >
+        <i class="material-icons">photo</i>
 
-      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_IMAGES">Images</span>
-    </a>
-  </div>
+        <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_IMAGES">Images</span>
+      </a>
+    </div>
 
-  <div>
-    <a class="m-topbar--navigation--item"
-      routerLink="/blog"
-      routerLinkActive="m-topbar--navigation--item-active"
-      title="Blogs"
-      i18n-title="@@M_TOPBAR_BLOGS"
-    >
-      <i class="material-icons">subject</i>
+    <div>
+      <a class="m-topbar--navigation--item"
+        routerLink="/blog"
+        routerLinkActive="m-topbar--navigation--item-active"
+        title="Blogs"
+        i18n-title="@@M_TOPBAR_BLOGS"
+      >
+        <i class="material-icons">subject</i>
 
-      <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_BLOGS">Blogs</span>
-    </a>
-  </div>
+        <span class="m-topbar--navigation--text" i18n="@@M_TOPBAR_BLOGS">Blogs</span>
+      </a>
+    </div>
+
+  </ng-template>
 
   <div>
     <a class="m-topbar--navigation--item"
