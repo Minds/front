@@ -100,7 +100,7 @@ export class ChannelComponent {
           this.customType !== (params['type'] || 'activities');
 
         this.filter = 'feed';
-        this.algorithm = params['algorithm'];
+        this.algorithm = params['algorithm'] || 'top';
         this.period = params['period'] || '7d';
         this.customType = params['type'] || 'activities';
       } else {

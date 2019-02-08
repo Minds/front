@@ -70,7 +70,7 @@ export class GroupsProfileFeed {
       this.isSorting = Boolean(params['algorithm']);
 
       if (this.isSorting) {
-        this.algorithm = params['algorithm'];
+        this.algorithm = params['algorithm'] || 'top';
         this.period = params['period'] || '7d';
         this.customType = params['type'] || 'activities';
       } else {

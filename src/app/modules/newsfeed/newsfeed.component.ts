@@ -104,7 +104,7 @@ export class NewsfeedComponent {
       this.isSorted = this.legacySorting || path === 'global/:algorithm' || path === 'global/:algorithm/:period';
 
       if (!this.legacySorting && this.isSorted) {
-        this.algorithm = params.algorithm || null;
+        this.algorithm = params.algorithm || 'hot';
         this.period = params.period || '12h';
         this.customType = params.type || 'activities';
         this.hashtag = params.hashtag || null;
@@ -114,6 +114,10 @@ export class NewsfeedComponent {
 
         if (!this.algorithm) {
           this.algorithm = 'hot';
+        }
+
+        if (!this.period) {
+          this.period = '12h';
         }
 
         if (!this.customType) {

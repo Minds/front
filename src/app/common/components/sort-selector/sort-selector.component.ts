@@ -59,22 +59,26 @@ export class SortSelectorComponent {
     },
   ];
 
-  customTypes: Array<{ id, label }> = [
+  customTypes: Array<{ id, label, icon? }> = [
     {
       id: 'activities',
       label: 'All',
+      icon: 'view_stream',
     },
     {
       id: 'images',
       label: 'Images',
+      icon: 'photo',
     },
     {
       id: 'videos',
       label: 'Videos',
+      icon: 'videocam',
     },
     {
       id: 'blogs',
       label: 'Blogs',
+      icon: 'subject',
     },
   ];
 
@@ -188,14 +192,14 @@ export class SortSelectorComponent {
     return this.customTypes.find(customType => this.customType === customType.id)
   }
 
-  getCurrentCustomTypeLabel() {
-    const currentCustomType = this.getCurrentCustomType();
+  getCurrentCustomTypeProp(prop: string) {
+    const currentAlgorithm = this.getCurrentCustomType();
 
-    if (!currentCustomType) {
-      return 'All';
+    if (!currentAlgorithm) {
+      return '';
     }
 
-    return currentCustomType.label;
+    return currentAlgorithm[prop];
   }
 
   emit() {

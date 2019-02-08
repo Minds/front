@@ -36,6 +36,7 @@ import { WebtorrentService } from '../modules/webtorrent/webtorrent.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
 import { HttpClient } from "@angular/common/http";
+import { EntitiesService } from "./entities.service";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -186,5 +187,10 @@ export const MINDS_PROVIDERS : any[] = [
   { 
     provide: TimeDiffService,
     useFactory: TimeDiffService._
-  }
+  },
+  {
+    provide: EntitiesService,
+    useFactory: EntitiesService._,
+    deps: [ Client ],
+  },
 ];

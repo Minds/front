@@ -223,6 +223,7 @@
       class="mdl-button m-pin-button mdl-button--icon"
       (click)="togglePin()"
       [disabled]="session.getLoggedInUser().guid != activity.owner_guid || activity.dontPin"
+      *ngIf="!activity?.ephemeral"
     >
       <m-tooltip
         icon="turned_in"

@@ -24,9 +24,12 @@ m-sort-selector {
     -webkit-font-smoothing: antialiased;
   }
 
-  .m-topbar--navigation--item i.m-sort-selector--algorithm-icon {
-    font-size: 1em;
-    padding-right: 2px;
+  .m-topbar--navigation--item {
+    i.m-sort-selector--algorithm-icon,
+    i.m-sort-selector--custom-type-icon {
+      font-size: 1em;
+      padding-right: 2px;
+    }
   }
 
   .m-dropdown--list--item i.m-sort-selector--item-algorithm-icon {

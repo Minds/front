@@ -65,8 +65,8 @@ export class SidebarSelectorComponent implements OnInit {
     // Ensure user hashtags are always shown; checks the first non-user and uses index as size
     const userLength = findLastIndex(this.hashtags, hashtag => hashtag.type === 'user');
 
-    // Ensure selected hashtags are always shown; checks the first non-selected and uses index + 5
-    const selectedLength = findLastIndex(this.hashtags, hashtag => hashtag.selected) + 5;
+    // Ensure selected hashtags are always shown; checks the first non-selected and uses index + 10
+    const selectedLength = findLastIndex(this.hashtags, hashtag => hashtag.selected) + 10;
 
     // Ensure current hashtag position is always shown; uses index + 1 as size; only when not disabled
     const currentSelectedLength = !this.disabled ?

@@ -9,6 +9,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 
 type Option =
   'edit'
+  | 'view'
   | 'translate'
   | 'share'
   | 'follow'

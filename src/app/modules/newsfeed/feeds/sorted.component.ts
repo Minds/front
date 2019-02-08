@@ -75,8 +75,8 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     });
 
     this.paramsSubscription = this.route.params.subscribe(params => {
-      this.algorithm = params['algorithm'];
-      this.period = params['period'] || '';
+      this.algorithm = params['algorithm'] || 'hot';
+      this.period = params['period'] || '12h';
       this.customType = params['type'] || 'activities';
 
       if (typeof params['hashtag'] !== 'undefined') {
