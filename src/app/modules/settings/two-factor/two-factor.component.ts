@@ -60,9 +60,10 @@ export class SettingsTwoFactorComponent {
   }
 
   check(code: number) {
-    this.client.post('api/v1/twofactor/check/' + this.secret, {
+    this.client.post('api/v1/twofactor/check', {
       code: code,
-      telno: this.telno
+      telno: this.telno,
+      secret: this.secret,
     })
       .then((response: any) => {
         this.waitingForCheck = false;
