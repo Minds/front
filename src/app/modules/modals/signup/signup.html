@@ -12,26 +12,30 @@
         </div>
 
         <div class="mdl-card__supporting-text m-signup-buttons">
-            <button class="mdl-color--amber" (click)="do('register')">
-                <span class="m-signup-bulb-icon m-wiggle-animation"><img src="{{minds.cdn_assets_url}}assets/icon.png"></span>
-                <span class="m-signup-button-text">
-                <ng-container i18n="@@MODALS__SIGNUP__WITH_MINDS">Signin with Minds</ng-container>
-                </span>
-            </button>
+          <button
+            class="m-btn m-btn--action"
+            (click)="do('login')"
+          >
+            Login
+          </button>
+          <button
+            class="m-btn m-btn--action"
+            (click)="do('register')"
+          >
+            Register
+          </button>
         </div>
 
-        <div class="mdl-card__supporting-text m-modal-signup-apps">
+      <div class="mdl-card__supporting-text m-modal-signup-apps">
         <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6">
             <img src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg">
         </a>
-        <a href="https://play.google.com/store/apps/details?id=com.minds.mobile" align="center">
-            <img alt="Android app on Google Play" i18n-alt="@@MODALS__SIGNUP__ANDROID_APP_ALT" src="{{minds.cdn_url}}assets/ext/playstore.png">
-        </a>
-        </div>
+        <m-androidApp__download></m-androidApp__download>
+      </div>
 
-        <div class="mdl-card__supporting-text">
+      <div class="mdl-card__supporting-text">
         <span class="m-modal-signup-skip" (click)="close()" i18n="@@MODALS__SIGNUP__MAYBE_LATER">Maybe later</span>
-        </div>
+      </div>
     </div>
     <!-- Login Display -->
     <minds-form-login (done)="done('login')" (doneRegistered)="display = 'fb-complete'" (canceled)="close()" *ngIf="display == 'login'"></minds-form-login>

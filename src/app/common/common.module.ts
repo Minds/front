@@ -78,6 +78,7 @@ import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-fo
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
 import { HttpClient } from "@angular/common/http";
+import { AndroidAppDownloadComponent } from "./components/android-app-download-button/button.component";
 
 @NgModule({
   imports: [
@@ -157,6 +158,7 @@ import { HttpClient } from "@angular/common/http";
     GraphSVG,
     GraphPoints,
     DynamicFormComponent,
+    AndroidAppDownloadComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -228,6 +230,7 @@ import { HttpClient } from "@angular/common/http";
     LineGraph,
     PieGraph,
     DynamicFormComponent,
+    AndroidAppDownloadComponent,
   ],
   providers: [
     {

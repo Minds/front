@@ -62,111 +62,21 @@ m-modal-signup, m-modal-signup-on-action{
     margin: 0px 8px;
   }
 
-  .m-signup-buttons{
-    display:flex;
-    flex-flow:row nowrap;
+  .m-signup-buttons {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-flow: row nowrap;
     width: 100%;
     box-sizing: border-box;
 
-    button{
-
-      color: rgb(255, 255, 255);
-      font-size: 14px;
-      border: 0;
-      cursor:pointer;
-      text-transform: uppercase;
-      text-align: left;
-      padding: 0;
-      margin:2px;
-      flex: 1;
-
-      &.m-fb-login-button{
-        background: rgb(59, 89, 152);
-        .m-signup-button-text{
-          text-shadow:none;
-        }
-      }
-
-      .m-social-icons-icon-inline{
-        fill: rgb(255, 255, 255);
-        vertical-align: middle;
-        display: inline-block;
-      }
-
-      .m-signup-bulb-icon{
-        img{
-          width: 31px;
-          margin-top: -4px;
-          margin-left: 4px;
-          -webkit-filter: grayscale(0%) contrast(132%);
-          animation: glow 1.54s cubic-bezier(.36,.07,.19,.97) both infinite;
-        }
-      }
-
-      &.m-wiggle-animation {
-        animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both infinite;
-        transform: translate3d(0, 0, 0);
-        backface-visibility: hidden;
-        perspective: 1000px;
-      }
-
-      @keyframes shake {
-        10%, 90% {
-          transform: translate3d(-0.5px, 0, 0);
-        }
-
-        20%, 80% {
-          transform: translate3d(0.5px, 0, 0);
-        }
-
-        30%, 50%, 70% {
-          transform: translate3d(-1px, 0, 0);
-        }
-
-        40%, 60% {
-          transform: translate3d(1px, 0, 0);
-        }
-      }
-
-      @keyframes glow {
-        10%, 90% {
-          -webkit-filter: grayscale(0%) contrast(132%);
-        }
-
-        20%, 80% {
-          -webkit-filter: grayscale(0%) contrast(148%);
-        }
-
-        30%, 50%, 70% {
-          -webkit-filter: grayscale(0%) contrast(180%);
-        }
-
-        40%, 60% {
-          -webkit-filter: grayscale(0%) contrast(152%);
-        }
-      }
-
-      .m-signup-button-text{
-        display: inline-block;
-        vertical-align: middle;
-        font-size: 13px;
-        width: auto;
-        max-width: calc(100% - 55px);
-        letter-spacing: 0.1em;
-        padding-left: 8px;
-        text-shadow: -0.02em 0 0 #EEE;
-      }
+    & > button {
+      margin-left: $minds-padding;
     }
 
-    @media screen and (max-width:$min-tablet){
-      &{
-        padding:16px 0;
-      }
-      button{
-        .m-signup-button-text{
-          font-size: 11px;
-          padding-left: 0;
-        }
+    @media screen and (max-width: $min-tablet) {
+      & {
+        padding: 16px 0;
       }
     }
   }
