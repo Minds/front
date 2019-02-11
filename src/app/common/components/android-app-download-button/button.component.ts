@@ -1,18 +1,20 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from "@angular/router";
 
 @Component({
   selector: 'm-androidApp__download',
   template: `
-    <div class="m-androidApp__download__background">
-      <img [src]="minds.cdn_assets_url + 'assets/photos/circles.png'">
-    </div>
+    <a routerLink="/mobile" class="m-androidApp__download">
+      <div class="m-androidAppDownload__background">
+        <img [src]="minds.cdn_assets_url + 'assets/photos/circles.png'">
+      </div>
 
-    <h2>
-      Minds Android App
-    </h2>
+      <h2>
+        Minds Android App
+      </h2>
 
-    <i class="material-icons">android</i>
+      <i class="material-icons">android</i>
+    </a>
   `
 })
 
@@ -22,8 +24,5 @@ export class AndroidAppDownloadComponent {
   constructor(private router: Router) {
 
   }
-
-  @HostListener('click') onClick() {
-    window.location.href = this.minds.site_url + 'mobile';
-  }
+  
 }
