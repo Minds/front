@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Session } from '../../../services/session';
 import { ScrollService } from '../../../services/ux/scroll';
-import { AnalyticsService } from '../../../services/analytics';
 
 @Component({
   selector: 'm-modal-signup-on-scroll',
@@ -65,7 +64,7 @@ export class SignupOnScrollModal {
               break;
             default:
               this.scroll_listener = this.scroll.listen((e) => {
-                if (this.scroll.view.scrollTop > 100) {
+                if (this.scroll.view.scrollTop > 20) {
                   if (window.localStorage.getItem('hideSignupModal'))
                     this.open = false;
                   else
