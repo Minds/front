@@ -24,8 +24,8 @@
     <a (click)="menu.value = !menu.value">
       <img src="/icon/{{session.getLoggedInUser().guid}}/small/{{session.getLoggedInUser().icontime}}" />
     </a>
-    <ul class="minds-dropdown-menu m-dropdown--menu" [hidden]="!menu.value">
-      <li class="mdl-menu__item"
+    <ul class="m-dropdown__list" [hidden]="!menu.value">
+      <li class="m-dropdownList__item"
           *ngIf="session.isLoggedIn()"
           (click)="menu.value = false"
       >
@@ -33,10 +33,11 @@
           [routerLink]="['/', session.getLoggedInUser().username]"
           i18n="@@MINDS__TOPBAR__VIEW_CHANNEL"
         >
-          View Channel
+          <i class="material-icons">people</i>
+          <span>View Channel</span>
         </a>
       </li>
-      <li class="mdl-menu__item"
+      <li class="m-dropdownList__item"
           *ngIf="session.isLoggedIn() && session.isAdmin()"
           (click)="menu.value = false"
       >
@@ -44,10 +45,11 @@
           [routerLink]="['/admin/analytics']"
           i18n="@@MINDS__TOPBAR__ADMIN"
         >
-          Admin
+          <i class="material-icons">build</i>
+          <span>Admin</span>
         </a>
       </li>
-      <li class="mdl-menu__item"
+      <li class="m-dropdownList__item"
           *ngIf="session.isLoggedIn()"
           (click)="menu.value = false"
       >
@@ -55,39 +57,55 @@
           [routerLink]="['/settings/general']"
           i18n="@@MINDS__TOPBAR__SETTINGS"
         >
-          Settings
+          <i class="material-icons">settings</i>
+          <span>Settings</span>
         </a>
       </li>
-      <li class="mdl-menu__item"
+      <li class="m-dropdownList__item"
           (click)="menu.value = false"
       >
         <a
           [routerLink]="['/faq']"
           i18n="@@MINDS__TOPBAR__FAQ"
         >
-          FAQ
+          <i class="material-icons">help_outline</i>
+          <span>FAQ</span>
         </a>
       </li>
-      <li class="mdl-menu__item"
+      <li class="m-dropdownList__item"
           (click)="menu.value = false"
       >
         <a
           [routerLink]="['/groups/profile/', '100000000000000681']"
           i18n="@@MINDS__TOPBAR__HS_GROUP"
         >
-          Help & Support
+          <i class="material-icons">help_outline</i>
+          <span>Help & Support</span>
         </a>
       </li>
-      <li class="mdl-menu__item"
+      <li class="m-dropdownList__item"
       >
         <a
           target="_blank"
           [href]="minds.cdn_assets_url + 'assets/documents/Whitepaper-v0.3.pdf'"
         >
-          Whitepaper
+          <i class="material-icons">description</i>
+          <span>Whitepaper</span>
         </a>
       </li>
-      <li class="mdl-menu__item"
+      <li class="m-dropdownList__item"
+          *ngIf="session.isLoggedIn()"
+          (click)="menu.value = false"
+      >
+        <a
+          [routerLink]="['/canary']"
+          i18n="@@MINDS__TOPBAR__MENU__EXPERIMENTS"
+        >
+          <i class="material-icons">new_releases</i>
+          <span>Opt-in to Experiments</span>
+        </a>
+      </li>
+      <li class="m-dropdownList__item"
           *ngIf="session.isLoggedIn()"
           (click)="menu.value = false"
       >
@@ -95,7 +113,8 @@
           [routerLink]="['/logout']"
           i18n="@@MINDS__TOPBAR__LOGOUT"
         >
-          Logout
+          <i class="material-icons">exit_to_app</i>
+          <span>Logout</span>
         </a>
       </li>
     </ul>

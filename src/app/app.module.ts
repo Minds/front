@@ -54,6 +54,7 @@ import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
 import { MobileModule } from './modules/mobile/mobile.module';
+import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
@@ -111,6 +112,7 @@ import { HttpClientModule } from "@angular/common/http";
     JobsMarketingModule,
     HelpdeskModule,
     MobileModule,
+    CanaryModule,
 
     //last due to :username route
     ChannelsModule,
