@@ -8,13 +8,13 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
   selector: 'minds-button-subscribe',
   inputs: ['user'],
   template: `
-    <button class="m-btn m-btn--with-icon m-btn--subscribe" *ngIf="!_user.subscribed" (click)="subscribe()">
+    <button class="m-btn m-btn--with-icon m-btn--subscribe" *ngIf="!_user.subscribed" (click)="subscribe($event)">
       <i class="material-icons">person_add</i>
       <span>
         <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
       </span>
     </button>
-    <button class="m-btn m-btn--with-icon m-btn--subscribe subscribed" *ngIf="_user.subscribed" (click)="unSubscribe()">
+    <button class="m-btn m-btn--with-icon m-btn--subscribe subscribed" *ngIf="_user.subscribed" (click)="unSubscribe($event)">
       <i class="material-icons">close</i>
       <span>
         <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL">Unsubscribe</ng-container>
@@ -40,8 +40,9 @@ export class SubscribeButton {
     this._user = value;
   }
 
-  subscribe() {
-    var self = this;
+  subscribe(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
     if (!this.session.isLoggedIn()) {
       this.modal.setSubtitle('You need to have a channel in order to subscribe').open();
@@ -49,6 +50,7 @@ export class SubscribeButton {
     }
 
     this._user.subscribed = true;
+    
     this.client.post('api/v1/subscribe/' + this._user.guid, {})
       .then((response: any) => {
         if (response && response.error) {
@@ -63,8 +65,9 @@ export class SubscribeButton {
       });
   }
 
-  unSubscribe() {
-    var self = this;
+  unSubscribe(e) {
+    e.preventDefault();
+    e.stopPropagation();
     this._user.subscribed = false;
     this.client.delete('api/v1/subscribe/' + this._user.guid, {})
       .then((response: any) => {

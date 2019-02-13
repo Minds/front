@@ -133,6 +133,7 @@
     </div>
 
     <div class="mdl-cell mdl-cell--4-col m-newsfeed--boost-sidebar" *ngIf="showRightSidebar">
+      <m-suggestions__sidebar></m-suggestions__sidebar>
       <m-ads-boost limit="8" *ngIf="!(session.getLoggedInUser().plus && session.getLoggedInUser().disabled_boost)"></m-ads-boost>
       <div class="minds-spacer minds-spacer-2x"></div>
     </div>
