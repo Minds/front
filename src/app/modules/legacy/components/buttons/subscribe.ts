@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
@@ -6,7 +6,6 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
 
 @Component({
   selector: 'minds-button-subscribe',
-  inputs: ['user'],
   template: `
     <button class="m-btn m-btn--with-icon m-btn--subscribe" *ngIf="!_user.subscribed" (click)="subscribe($event)">
       <i class="material-icons">person_add</i>
@@ -32,10 +31,12 @@ export class SubscribeButton {
   _content: any;
   _listener: Function;
   showModal: boolean = false;
+  @Output('subscribed') onSubscribed: EventEmitter<any> = new EventEmitter();
 
   constructor(public session: Session, public client: Client, public modal: SignupModalService) {
   }
 
+  @Input('user')
   set user(value: any) {
     this._user = value;
   }
@@ -50,6 +51,7 @@ export class SubscribeButton {
     }
 
     this._user.subscribed = true;
+    this.onSubscribed.next();
     
     this.client.post('api/v1/subscribe/' + this._user.guid, {})
       .then((response: any) => {
