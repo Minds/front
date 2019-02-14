@@ -163,12 +163,12 @@ minds-card-image, minds-card-video {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        padding-right: 128px;
       }
 
       strong {
         display: inline-block;
         max-width: 100%;
+        max-width: calc(100% - 62px);
         vertical-align: middle;
         letter-spacing: 0.25px;
         font-family: 'Roboto';
