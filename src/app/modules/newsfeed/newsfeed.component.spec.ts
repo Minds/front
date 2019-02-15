@@ -42,6 +42,8 @@ describe('NewsfeedComponent', () => {
         MockComponent({ selector: 'm-tagcloud', inputs: ['options'], template: '' }),
         MockComponent({ selector: 'm-ads-boost', inputs: ['handler', 'limit'], template: '' }),
         MockComponent({ selector: 'm-topbar--hashtags', inputs: ['enabled'], outputs: ['selectionChange'], template: '' }),
+        MockComponent({ selector: 'm-suggestions__sidebar' }),
+        MockDirective({ selector: '[mIfFeature]', inputs: ['mIfFeature']}),
         NewsfeedComponent,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
