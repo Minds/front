@@ -9,6 +9,7 @@ import { ModalsModule } from '../modals/modals.module';
 import { MindsFormsModule } from '../forms/forms.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { AdsModule } from '../ads/ads.module';
+import { SuggestionsModule } from '../suggestions/suggestions.module';
 
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
@@ -52,6 +53,7 @@ const routes: Routes = [
     AdsModule,
     PosterModule,
     HashtagsModule,
+    SuggestionsModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,
