@@ -62,7 +62,7 @@
 
 <div class="mdl-grid m-newsfeed m-page">
 
-    <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar" >
+    <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar m-newsfeed__sidebar">
 
       <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
 
@@ -132,8 +132,10 @@
 
     </div>
 
-    <div class="mdl-cell mdl-cell--4-col m-newsfeed--boost-sidebar" *ngIf="showRightSidebar">
-      <m-suggestions__sidebar></m-suggestions__sidebar>
+    <div class="mdl-cell mdl-cell--4-col m-newsfeed--boost-sidebar m-newsfeed__sidebar" *ngIf="showRightSidebar">
+      <ng-container *mIfFeature="'suggested-users'">
+        <m-suggestions__sidebar></m-suggestions__sidebar>
+      </ng-container>
       <m-ads-boost limit="8" *ngIf="!(session.getLoggedInUser().plus && session.getLoggedInUser().disabled_boost)"></m-ads-boost>
       <div class="minds-spacer minds-spacer-2x"></div>
     </div>

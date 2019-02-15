@@ -10,8 +10,7 @@ import { SettingsService } from '../settings/settings.service';
   selector: 'm-ads-boost',
   inputs: ['handler', 'limit'],
   template: `
-    <h3 class="m-ad-boost-heading mdl-color-text--blue-grey-300">
-      <i class="material-icons">trending_up</i>
+    <h3 class="m-newsfeedSidebar__header">
       <ng-container i18n="@@ADS__BOOSTED_CONTENT">Boosted content</ng-container>
     </h3>
     <div class="m-ad-boost-entity" *ngFor="let entity of boosts">

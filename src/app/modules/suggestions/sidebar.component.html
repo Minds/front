@@ -1,5 +1,5 @@
 <div class="m-suggestions__sidebar">
-  <h3>Suggested channels</h3>
+  <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
   <ul class="m-suggestionsSidebar__list m-border">
     <li *ngFor="let suggestion of suggestions" class="m-suggestionsSidebarList__item">
       <a [routerLink]="['/', suggestion.entity.username]">

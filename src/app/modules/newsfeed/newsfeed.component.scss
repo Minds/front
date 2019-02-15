@@ -24,7 +24,15 @@
   .m-newsfeed--logged-out {
     margin: 0 auto;
   }
-  
+ 
+  .m-newsfeedSidebar__header {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 0 8px;
+    color: #444;
+  }
+
   .m-newsfeed--sidebar, .m-newsfeed--boost-sidebar{
     max-width:270px;
 
