@@ -27,6 +27,10 @@ export class FeaturesService {
       return true;
     }
 
+    if (this._features[feature] === 'canary' && this.session.getLoggedInUser().canary) {
+      return true;
+    }
+
     return this._features[feature] === true;
   }
 
