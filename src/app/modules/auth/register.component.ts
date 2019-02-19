@@ -63,10 +63,8 @@ export class RegisterComponent {
   }
 
   registered() {
-    this.onboarding.show();
-    this.modal.setDisplay('onboarding').open();
     this.loginReferrer.navigate({
-      defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
+      defaultUrl: '/' + this.session.getLoggedInUser().username
     });
   }
 

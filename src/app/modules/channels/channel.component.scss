@@ -123,7 +123,22 @@ m-channel{
       margin: 16px;
       cursor: pointer;
     }
- }
+  }
+
+  .m-channel__onboardingProgress {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: $minds-padding * 2 auto;
+
+    p {
+      margin: 0;
+    }
+
+    button {
+      margin: 8px auto;
+    }
+  }
 
 
  .m-channel--action-buttons{

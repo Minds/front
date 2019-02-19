@@ -43,7 +43,7 @@ import { TokenOnboardingService } from './onboarding.service';
     TokenIntroductionOnboardingComponent,
     TokenRewardsOnboardingComponent,
     TokenOnChainOnboardingComponent,
-    TokenCompletedOnboardingComponent,
+    TokenOnboardingComponent,
   ],
   providers: [
     {

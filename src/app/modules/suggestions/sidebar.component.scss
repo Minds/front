@@ -18,7 +18,7 @@
 .m-suggestionsSidebarList__item {
   border-bottom: 1px solid #e8e8e8;
 
-  &:last-of-type() {
+  &:last-of-type {
     border-bottom:0;
   }
 
@@ -74,7 +74,7 @@
     .m-btn {
       height: 30px;
       font-size: 10px;
-      letter-spacing: 1;
+      letter-spacing: 1px;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
 

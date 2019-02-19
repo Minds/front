@@ -4,15 +4,17 @@ import { Client } from '../../../services/api';
 
 @Component({
   selector: 'minds-avatar',
-  inputs: ['_object: object', '_src: src', '_editMode: editMode', 'waitForDoneSignal'],
+  inputs: ['_object: object', '_src: src', '_editMode: editMode', 'waitForDoneSignal', 'icon', 'showPrompt'],
   outputs: ['added'],
   template: `
   <div class="minds-avatar" [style.background-image]="'url(' + src + ')'">
     <img *ngIf="!src" src="{{minds.cdn_assets_url}}assets/avatars/blue/default-large.png" class="mdl-shadow--4dp" />
     <div *ngIf="editing" class="overlay">
-      <i class="material-icons">camera</i>
-      <span *ngIf="src" i18n="@@COMMON__AVATAR__CHANGE">Change avatar</span>
-      <span *ngIf="!src" i18n="@@COMMON__AVATAR__ADD">Add an avatar</span>
+      <i class="material-icons">{{icon}}</i>
+      <ng-container *ngIf="showPrompt">
+        <span *ngIf="src" i18n="@@COMMON__AVATAR__CHANGE">Change avatar</span>
+        <span *ngIf="!src" i18n="@@COMMON__AVATAR__ADD">Add an avatar</span>
+      </ng-container>
     </div>
     <input *ngIf="editing" type="file" #file (change)="add($event)"/>
   </div>
@@ -27,6 +29,8 @@ export class MindsAvatar {
   waitForDoneSignal: boolean = true;
   src: string = '';
   index: number = 0;
+  icon: string = 'camera';
+  showPrompt: boolean = true;
 
   file: any;
   added: EventEmitter<any> = new EventEmitter();
@@ -34,7 +38,7 @@ export class MindsAvatar {
   set _object(value: any) {
     if (!value)
       return;
-    
+
     value.icontime = value.icontime ? value.icontime : '';
     this.object = value;
     this.src = `${this.minds.cdn_url}fs/v1/avatars/${this.object.guid}/large/${this.object.icontime}`;

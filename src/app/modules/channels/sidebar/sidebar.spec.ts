@@ -1,8 +1,8 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import { DebugElement, EventEmitter } from '@angular/core';
 
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -21,6 +21,7 @@ import { ChannelSidebar } from './sidebar';
 import { AutoGrow } from '../../../common/directives/autogrow';
 import { Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { ChannelOnboardingService } from "../../onboarding/channel/onboarding.service";
 
 describe('ChannelSidebar', () => {
 
@@ -30,47 +31,48 @@ describe('ChannelSidebar', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock, 
-        MaterialSwitchMock, 
-        AbbrPipe, 
-        ChannelSidebar, 
-        MockComponent({ 
+        MaterialMock,
+        MaterialSwitchMock,
+        MockDirective({ selector: '[mdlUpload]', inputs: ['mdlUpload', 'progress'] }),
+        AbbrPipe,
+        ChannelSidebar,
+        MockComponent({
           selector: 'm-channel--social-profiles',
-          inputs: [ 'user', 'editing' ],
-        }), 
-        TagsPipe, 
-        MockComponent({ 
+          inputs: ['user', 'editing'],
+        }),
+        TagsPipe,
+        MockComponent({
           selector: 'm-wire-channel',
-          inputs: [ 'channel', 'editing', 'rewards' ],
+          inputs: ['channel', 'editing', 'rewards'],
         }),
-        MockComponent({ 
+        MockComponent({
           selector: 'minds-button-boost',
-          inputs: [ 'object' ],
-        }), 
-        MockComponent({ 
-          selector: 'minds-button-user-dropdown',
-          inputs: [ 'user' ],
+          inputs: ['object'],
         }),
-        MockComponent({ 
+        MockComponent({
+          selector: 'minds-button-user-dropdown',
+          inputs: ['user'],
+        }),
+        MockComponent({
           selector: 'm-channel--modules',
-          inputs: [ 'type', 'owner', 'linksTo', 'limit', 'container' ],
+          inputs: ['type', 'owner', 'linksTo', 'limit', 'container'],
         }),
         AutoGrow,
-        MockComponent({ 
+        MockComponent({
           selector: 'minds-avatar',
-          inputs: [ 'object', 'src', 'editMode', 'waitForDoneSignal' ],
+          inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
         }),
-        MockComponent({ 
+        MockComponent({
           selector: 'm-channel--badges',
-          inputs: [ 'user', 'badges' ],
+          inputs: ['user', 'badges'],
         }),
-        MockComponent({ 
+        MockComponent({
           selector: 'm-messenger--channel-button',
-          inputs: [ 'user' ],
+          inputs: ['user'],
         }),
-        MockComponent({ 
+        MockComponent({
           selector: 'minds-button-subscribe',
-          inputs: [ 'user' ],
+          inputs: ['user'],
         }),
         MockComponent({
           selector: 'm-hashtags-selector',
@@ -86,10 +88,16 @@ describe('ChannelSidebar', () => {
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
-        { provide: Session, useValue: sessionMock }
+        { provide: Session, useValue: sessionMock },
+        {
+          provide: ChannelOnboardingService, useValue: MockService(ChannelOnboardingService, {
+            checkProgress: Promise.resolve(),
+            onClose: new EventEmitter(),
+          })
+        },
       ]
     })
-      .compileComponents();  // compile template and css
+        .compileComponents();  // compile template and css
   }));
 
   beforeEach((done) => {
@@ -101,14 +109,26 @@ describe('ChannelSidebar', () => {
     clientMock.response = {};
     uploadMock.response = {};
     comp = fixture.componentInstance;
-    comp.user = { guid: 'guidguid', name: 'name', username: 'username',city: 'awasa', icontime: 11111, subscribers_count:182, impressions:18200};
+    comp.user = {
+      guid: 'guidguid',
+      name: 'name',
+      username: 'username',
+      city: 'awasa',
+      icontime: 11111,
+      subscribers_count: 182,
+      impressions: 18200
+    };
     comp.editing = false;
     uploadMock.response[`api/v1/channel/avatar`] = {
       'status': 'success',
     };
     clientMock.response[`api/v1/geolocation/list`] = {
-      "status":"success",
-      "results":[{"address":{"city":"Wichita","state":"Kansas, United States"},"lat":37.6650225,"lon":-97.33538500000002}]
+      "status": "success",
+      "results": [{
+        "address": { "city": "Wichita", "state": "Kansas, United States" },
+        "lat": 37.6650225,
+        "lon": -97.33538500000002
+      }]
     };
     window.Minds.user = {
       "guid": "732337264197111809",
@@ -153,7 +173,7 @@ describe('ChannelSidebar', () => {
       "spam": 0,
       "deleted": 0
     };
-    
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -243,15 +263,23 @@ describe('ChannelSidebar', () => {
   }));
 
   it('should set the city', () => {
-    comp.cities = [{"address":{"city":"Wichita","state":"Kansas, United States"},"lat":37.6650225,"lon":-97.33538500000002}];
-    comp.setCity({"address": {city:"Wichita","state":"Kansas, United States"}});
+    comp.cities = [{
+      "address": { "city": "Wichita", "state": "Kansas, United States" },
+      "lat": 37.6650225,
+      "lon": -97.33538500000002
+    }];
+    comp.setCity({ "address": { city: "Wichita", "state": "Kansas, United States" } });
     fixture.detectChanges();
     expect(comp.user.city).toBe("Wichita");
   });
 
   it('should set the city by town', () => {
-    comp.cities = [{"address":{"town":"Wichita","state":"Kansas, United States"},"lat":37.6650225,"lon":-97.33538500000002}];
-    comp.setCity({"address": {town:"Wichita","state":"Kansas, United States"}});
+    comp.cities = [{
+      "address": { "town": "Wichita", "state": "Kansas, United States" },
+      "lat": 37.6650225,
+      "lon": -97.33538500000002
+    }];
+    comp.setCity({ "address": { town: "Wichita", "state": "Kansas, United States" } });
     fixture.detectChanges();
     comp.setSocialProfile([]);
     comp.isOwner();

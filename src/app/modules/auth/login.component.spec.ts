@@ -106,12 +106,11 @@ describe('LoginComponent', () => {
 
   it('should redirect after registering', () => {
     comp.registered();
-    expect(onboardingServiceMock.show).toHaveBeenCalled();
     expect(signupModalServiceMock.setDisplay).toHaveBeenCalled();
     expect(signupModalServiceMock.setDisplay.calls.mostRecent().args[0]).toBe('categories');
     expect(signupModalServiceMock.open).toHaveBeenCalled();
     expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
-    expect(loginReferrerServiceMock.navigate.calls.mostRecent().args[0]).toEqual({ defaultUrl: '/test;onboarding=1' });
+    expect(loginReferrerServiceMock.navigate.calls.mostRecent().args[0]).toEqual({ defaultUrl: '/test' });
   });
 
 });

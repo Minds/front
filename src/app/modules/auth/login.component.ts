@@ -76,13 +76,12 @@ export class LoginComponent {
   }
 
   registered() {
-    this.onboarding.show();
     if (this.redirectTo)
       this.router.navigate([this.redirectTo]);
     else {
       this.modal.setDisplay('categories').open();
       this.loginReferrer.navigate({
-        defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
+        defaultUrl: '/' + this.session.getLoggedInUser().username
       });
     }
   }

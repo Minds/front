@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Inject } from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
 import { Material as MaterialService } from '../../../services/ui';
 
 @Directive({
@@ -22,6 +22,10 @@ export class MaterialUpload {
   set progress(value: number) {
     if (this.element && this.element.MaterialProgress)
       this.element.MaterialProgress.setProgress(value);
+    else
+      setTimeout(() => {
+        this.element.MaterialProgress.setProgress(value)
+      });
   }
 
 }
