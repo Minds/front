@@ -33,5 +33,7 @@
 
 <m-modal-signup-on-scroll></m-modal-signup-on-scroll>
 
+<m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
+
 <m-cookies-notice *ngIf="!session.isLoggedIn()">
 </m-cookies-notice>

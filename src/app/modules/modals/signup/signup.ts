@@ -129,7 +129,8 @@ export class SignupModal {
           this.loginReferrer.navigate({
             extraParams: `ref=signup-modal&ts=${Date.now()}`
           });
-          this.display = 'categories';
+          this.display = 'initial';
+          this.close();
         break;
       case 'fb':
         this.loginReferrer.navigate({

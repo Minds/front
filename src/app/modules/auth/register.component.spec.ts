@@ -25,7 +25,12 @@ describe('RegisterComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MockComponent(({selector: 'minds-form-register', template:'', inputs:['referrer'], outputs: ['done']})), RegisterComponent],
+      declarations: [MockComponent(({
+        selector: 'minds-form-register',
+        template: '',
+        inputs: ['referrer'],
+        outputs: ['done']
+      })), RegisterComponent],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
@@ -35,7 +40,7 @@ describe('RegisterComponent', () => {
         { provide: OnboardingService, useValue: onboardingServiceMock },
       ]
     })
-      .compileComponents();
+        .compileComponents();
   }));
 
   // synchronous beforeEach
@@ -65,7 +70,7 @@ describe('RegisterComponent', () => {
     expect(mp4Source.nativeElement.src).toBe('http://dev.minds.io/assets/videos/earth-1/earth-1.mp4');
   });
 
-  it('should have a register prompt and the form', ()=> {
+  it('should have a register prompt and the form', () => {
     const h3: DebugElement = fixture.debugElement.query(By.css('h3'));
     expect(h3).not.toBeNull();
     expect(h3.nativeElement.textContent).toBe('Not on Minds? Start a channel');
@@ -73,14 +78,10 @@ describe('RegisterComponent', () => {
     expect(fixture.debugElement.query(By.css('minds-form-register'))).not.toBeNull();
   });
 
-  it('should redirect when registered', ()=> {
+  it('should redirect when registered', () => {
     comp.registered();
-    expect(onboardingServiceMock.show).toHaveBeenCalled();
-    expect(signupModalServiceMock.setDisplay).toHaveBeenCalled();
-    expect(signupModalServiceMock.setDisplay.calls.mostRecent().args[0]).toBe('onboarding');
-    expect(signupModalServiceMock.open).toHaveBeenCalled();
 
     expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
-    expect(loginReferrerServiceMock.navigate.calls.mostRecent().args[0]).toEqual({defaultUrl: '/test;onboarding=1'});
+    expect(loginReferrerServiceMock.navigate.calls.mostRecent().args[0]).toEqual({ defaultUrl: '/test' });
   });
 });
