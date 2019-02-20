@@ -132,7 +132,6 @@ describe('GroupsProfileMembers', () => {
     const body = fixture.debugElement.query(By.css('.m-search-inline-list .m-body'));
     expect(body).not.toBeNull();
     expect(body.nativeElement.children[0].textContent).toContain('test3');
-    expect(body.nativeElement.children[1].textContent).toContain('Views: 3000 | Subscribers: 30');
   });
 
   it('should have a search input', () => {
