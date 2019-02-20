@@ -59,4 +59,15 @@ export class QuestionsComponent implements OnInit {
     }
   }
 
+  async delete() {
+    try {
+      if (confirm('Are you sure to delete ' + this.question['uuid'])) {
+        await this.client.delete(`api/v2/admin/helpdesk/questions/${this.question['uuid']}`);
+        this.router.navigate(['/help']);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
 }
