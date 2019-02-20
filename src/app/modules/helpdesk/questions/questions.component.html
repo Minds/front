@@ -48,16 +48,26 @@
   
     <div class="m-helpdeskQuestions__question m-helpdeskQuestions__question--full m-border">
       <h1>{{question.question}}</h1>
-      <a
-        class="m-helpdeskQuestions__editIcon"
-        [routerLink]="'/help/question/edit/' + question.uuid"
-        *ngIf="session.isAdmin()"
+      <div class="m-helpdeskQuestions__adminContainer"
+           *ngIf="session.isAdmin()"
       >
-        <i class="material-icons">
-          edit
-        </i>
-      </a>
-
+        <a
+          class="m-helpdeskQuestions__editIcon"
+          [routerLink]="'/help/question/edit/' + question.uuid"
+        >
+          <i class="material-icons">
+            edit
+          </i>
+        </a>
+        <a
+          class="m-helpdeskQuestions__deleteIcon"
+          (click)="delete()"
+        >
+          <i class="material-icons">
+            delete
+          </i>
+        </a>
+      </div>
       <p class="m-helpdeskQuestions__answer"
         [innerHTML]="question.answer | safe">
       </p>
