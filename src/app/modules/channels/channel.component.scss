@@ -140,6 +140,21 @@ m-channel{
     }
   }
 
+  .m-channelOnboardingProgress__buttonBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .m-channelOnboardingProgress__cta {
+    flex-grow: 1;
+  }
+
+  .m-channelOnboardingProgress__close {
+    font-size: 16px;
+    margin-left: 8px;
+    cursor: pointer;
+  }
 
  .m-channel--action-buttons{
     padding: 8px;

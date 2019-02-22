@@ -4,6 +4,7 @@ import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
 import { Tag } from '../../hashtags/types/tag';
 import { ChannelOnboardingService } from "../../onboarding/channel/onboarding.service";
+import { Storage } from '../../../services/storage';
 
 @Component({
   moduleId: module.id,
@@ -35,6 +36,7 @@ export class ChannelSidebar {
       public upload: Upload,
       public session: Session,
       public onboardingService: ChannelOnboardingService,
+      protected storage: Storage
   ) {
     if (onboardingService && onboardingService.onClose)
       onboardingService.onClose.subscribe(progress => {
@@ -55,6 +57,18 @@ export class ChannelSidebar {
 
   showOnboarding() {
     this.onboardingService.onOpen.emit();
+  }
+
+  shouldShowOnboardingProgress() {
+    return this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid === this.user.guid &&
+      !this.storage.get('onboarding_hide') &&
+      this.onboardingProgress !== -1 &&
+      this.onboardingProgress !== 100;
+  }
+
+  hideOnboardingForcefully() {
+    this.storage.set('onboarding_hide', '1');
   }
 
   isOwner() {
