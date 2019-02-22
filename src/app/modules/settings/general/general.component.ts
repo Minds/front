@@ -182,7 +182,11 @@ export class SettingsGeneralComponent {
         }
 
         this.inProgress = false;
-      });
+      }).catch(e=> {
+        this.inProgress = false;
+        this.changed = false;
+        this.error = e.message;
+      })
   }
 
   // Third Party Networks
