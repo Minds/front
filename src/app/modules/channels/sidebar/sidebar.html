@@ -103,14 +103,18 @@
   </div>
 
   <div class="m-channel__onboardingProgress"
-       *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid === user.guid&& onboardingProgress !== -1 && onboardingProgress !== 100"
+       *ngIf="shouldShowOnboardingProgress()"
   >
+
     Your profile is {{ onboardingProgress | number:'1.0-0'}}% complete
     <div class="mdl-progress mdl-js-progress"
          [mdlUpload]
          [progress]="onboardingProgress"
     ></div>
-    <button class="m-btn m-btn--slim" (click)="showOnboarding()">Complete your profile</button>
+    <div class="m-channelOnboardingProgress__buttonBar">
+      <button class="m-btn m-btn--slim m-channelOnboardingProgress__cta" (click)="showOnboarding()">Complete your profile</button>
+      <i class="material-icons m-channelOnboardingProgress__close" (click)="hideOnboardingForcefully()">close</i>
+    </div>
   </div>
 
   <div class="m-channel--action-buttons" >

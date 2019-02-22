@@ -22,6 +22,8 @@ import { AutoGrow } from '../../../common/directives/autogrow';
 import { Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ChannelOnboardingService } from "../../onboarding/channel/onboarding.service";
+import { Storage } from '../../../services/storage';
+import { storageMock } from "../../../../tests/storage-mock.spec";
 
 describe('ChannelSidebar', () => {
 
@@ -89,6 +91,7 @@ describe('ChannelSidebar', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
+        { provide: Storage, useValue: storageMock },
         {
           provide: ChannelOnboardingService, useValue: MockService(ChannelOnboardingService, {
             checkProgress: Promise.resolve(),
