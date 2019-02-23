@@ -51,6 +51,8 @@ export class ChannelOnboardingService {
   }
 
   async checkProgress() {
+    if (!this.session.isLoggedIn())
+      return;
     try {
       const response: any = await this.client.get('api/v2/onboarding/progress');
 
