@@ -11,6 +11,7 @@ export class SuggestionsSidebar {
   minds = window.Minds;
   suggestions: Array<any> = [];
   lastOffset = 0;
+  inProgress: boolean = false;
 
   constructor(
     private client: Client,
@@ -22,6 +23,7 @@ export class SuggestionsSidebar {
   }
 
   async load() {
+    this.inProgress = true;
     let limit: number = 5;
 
     if (this.suggestions.length)
@@ -30,12 +32,17 @@ export class SuggestionsSidebar {
     // Subscribe can not rely on next batch, so load further batch
     this.lastOffset = this.suggestions.length ? this.lastOffset + 11 : 0;
 
-    let response: any = await this.client.get('api/v2/suggestions/user', { 
-      limit,
-      offset: this.lastOffset,
-    });
-    for (let suggestion of response.suggestions) {
-      this.suggestions.push(suggestion);
+    try {
+      let response: any = await this.client.get('api/v2/suggestions/user', { 
+        limit,
+        offset: this.lastOffset,
+      });
+      for (let suggestion of response.suggestions) {
+        this.suggestions.push(suggestion);
+      }
+    } catch (err) {
+    } finally {
+      this.inProgress = false;
     }
   }
 

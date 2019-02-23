@@ -1,6 +1,9 @@
 <div class="m-suggestions__sidebar">
   <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
-  <ul class="m-suggestionsSidebar__list m-border">
+  <span *ngIf="!inProgress && !suggestions.length" class="m-suggestionsSidebar__empty">
+    You have no suggestions at this time
+  </span>
+  <ul class="m-suggestionsSidebar__list m-border" *ngIf="suggestions.length">
     <li *ngFor="let suggestion of suggestions" class="m-suggestionsSidebarList__item">
       <a [routerLink]="['/', suggestion.entity.username]">
         <div
@@ -23,4 +26,5 @@
       </a>
     </li>
   </ul>
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
 </div>
