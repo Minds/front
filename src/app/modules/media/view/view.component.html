@@ -86,12 +86,6 @@
                 <span [hidden]="entity.license" i18n="@@M__COMMON__LICENSE_ALL_RIGHT_RESERVED">All Rights Reserved</span>
               </div>
   
-              <a class="m-media-album--backlink"
-                [routerLink]="['/media', entity.container_guid]"
-                [hidden]="entity.subtype == 'album' || entity.container_guid == entity.owner_guid"
-              >
-                <i class="material-icons">photo_album</i> <ng-container i18n="@@MINDS__MEDIA__BACK_TO_ALBUM_ACTION">Back to album</ng-container>
-              </a>
             </div>
           </div>
 
