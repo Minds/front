@@ -197,6 +197,13 @@ m-helpdesk--questions {
   background: #FFF;
 }
 
+@media screen and(max-width: $max-mobile) {
+  .m-helpdeskQuestions__questions {
+    margin-left: 0;
+    margin-top: 36px;
+  }
+}
+
 .m-helpdeskQuestions__questions, .m-helpdeskQuestions__categories {
   background: #FFF;
   text-align: left;

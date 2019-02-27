@@ -49,8 +49,8 @@
 }
 
 .m-helpdesk__dashboardInput {
- 
-  position: relative; 
+
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -263,7 +263,15 @@
 
 }
 
-.m-helpdesk__dashboard .m-layout__hero  {
+@media screen and (max-width: $max-mobile) {
+  .m-helpdesk__dashboard {
+    .m-layout__inner {
+      flex-direction: column;
+    }
+  }
+}
+
+.m-helpdesk__dashboard .m-layout__hero {
   background-image: url('assets/photos/balloon.jpg');
 
   .m-layout__cell:nth-of-type(1) {
