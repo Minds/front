@@ -9,6 +9,11 @@ m-helpdesk--questions {
     & > .m-page--sidebar {
     //  width: 400px;
     }
+
+    @media screen and (max-width: $max-mobile) {
+      height: auto;
+      flex-direction: column-reverse;
+    }
   }
 
   .m-page--main {
@@ -183,7 +188,7 @@ m-helpdesk--questions {
   }
   .m-blog--image {
     img {
-      width: 100%;
+      width: 50%;
     }
   }
 }

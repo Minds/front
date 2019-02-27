@@ -3,6 +3,17 @@
 .m-helpdesk__dashboard {
   background: #FFF;
 
+  .m-helpdeskQuestions__questions {
+    margin-left: 32px;
+
+    @media screen and(max-width: $max-mobile) {
+      margin-left: 0;
+    }
+  }
+
+  .m-layout__cell {
+    max-width: 100%;
+  }
 
   .m-helpdeskSearch__results {
     position: relative;
