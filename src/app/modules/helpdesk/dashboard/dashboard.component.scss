@@ -83,6 +83,10 @@
     display: inline-block;
     box-sizing: border-box;
     line-height: 1.25;
+
+    @media screen and(max-width: $min-tablet) {
+      height: auto;
+    }
   }
 }
 
