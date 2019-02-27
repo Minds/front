@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
@@ -23,6 +23,8 @@ export class SearchBarComponent {
   searchContext: string | Promise<string> = '';
 
   @ViewChild('searchInput') searchInput: ElementRef;
+
+  @HostBinding('class.m-search--bar--default-sizes') @Input() defaultSizes: boolean = true;
 
   constructor(
     public router: Router,

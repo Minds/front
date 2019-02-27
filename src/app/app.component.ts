@@ -13,6 +13,7 @@ import { Client } from './services/api/client';
 import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { ChannelOnboardingService } from "./modules/onboarding/channel/onboarding.service";
+import { FeaturesService } from "./services/features.service";
 
 @Component({
   moduleId: module.id,
@@ -43,6 +44,7 @@ export class Minds {
     public webtorrent: WebtorrentService,
     public onboardingService: ChannelOnboardingService,
     public router: Router,
+    public featuresService: FeaturesService,
   ) {
     this.name = 'Minds';
   }

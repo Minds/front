@@ -81,6 +81,8 @@ import { SocketsService } from '../services/sockets';
 import { HttpClient } from "@angular/common/http";
 import { AndroidAppDownloadComponent } from "./components/android-app-download-button/button.component";
 import { SwitchComponent } from "./components/switch/switch.component";
+import {V2TopbarComponent} from "./layout/v2-topbar/v2-topbar.component";
+import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
 
 @NgModule({
   imports: [
@@ -97,6 +99,12 @@ import { SwitchComponent } from "./components/switch/switch.component";
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+
+    // V2 Layout
+    V2TopbarComponent,
+    UserMenuComponent,
+
+    //
 
     TooltipComponent,
     FooterComponent,
@@ -171,6 +179,12 @@ import { SwitchComponent } from "./components/switch/switch.component";
     TopbarComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+
+    // V2 Layout
+    V2TopbarComponent,
+    UserMenuComponent,
+
+    //
 
     TooltipComponent,
     FooterComponent,

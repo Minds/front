@@ -1,0 +1,229 @@
+m-v2-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: calc(100% - 48px);
+  min-width: 330px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid #eee;
+  min-height: 62px;
+  z-index: 9999;
+  transform: translateZ(0);
+  background: #ffffff;
+
+  @media screen and (max-width: 900px) {
+    // Markers sidebar
+    width: 100%;
+  }
+
+  m-search--bar {
+    > .mdl-textfield {
+      padding: 12px 0;
+      width: 270px;
+
+      @media screen and (min-width: 1296px) {
+        width: 180px;
+        transition: width ease-in-out 0.2s;
+
+        &.is-focused {
+          width: 360px;
+        }
+      }
+
+      @media screen and (max-width: 1080px) {
+        width: 100%;
+      }
+    }
+
+    .mdl-textfield__label {
+      display: none;
+    }
+
+    .m-search-bar-suggestions-list {
+      left: auto;
+      right: 0;
+      top: 52px;
+      width: 100%;
+      border-radius: 4px;
+      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14), 0 3px 3px -2px rgba(0, 0, 0, .2), 0 1px 8px 0 rgba(0, 0, 0, .12);
+    }
+  }
+
+  m-notifications--topbar-toggle {
+    position: relative;
+  }
+
+  m-notifications--flyout {
+    right: 0;
+  }
+
+  m-user-menu {
+    margin-left: 16px;
+  }
+}
+
+.m-v2-topbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1296px;
+  margin: 0 auto;
+
+  @media screen and (min-width: 1296px) {
+    width: 1296px;
+  }
+}
+
+.m-v2-topbar__Container--left,
+.m-v2-topbar__Container--right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.m-v2-topbar__Container--left {
+  justify-content: flex-start;
+}
+
+.m-v2-topbar__Container--right {
+  justify-content: flex-end;
+}
+
+.m-v2-topbar__Nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  @media screen and (max-width: 810px) {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.m-v2-topbarNav__Item {
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #4b4b4b;
+  border-top: 2px solid transparent;
+  text-decoration: none;
+
+  &.m-v2-topbarNav__Item--active {
+    border-color: #3ba0ff;
+    color: #3ba0ff;
+  }
+
+  &.m-v2-topbarNav__Item--no-padding {
+    padding: 0 12px;
+
+    @media screen and (max-width: 480px) {
+      padding: 0 4px;
+    }
+  }
+
+  > img {
+    height: 36px;
+  }
+
+  > i {
+    margin-right: 4px;
+  }
+
+  > span {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+
+    @media screen and (max-width: 810px) {
+      display: none;
+    }
+  }
+
+  &.m-v2-topbarNavItem__IosBanner {
+    > a > img {
+      height: 48px;
+
+      @media screen and (max-width: 480px) {
+        height: 32px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .m-androidApp__download {
+      zoom: 0.65;
+    }
+  }
+}
+
+.m-v2-topbarNavItem__Logo {
+  margin: 0 8px 0 16px;
+  padding: 0 12px;
+  height: 62px;
+  box-sizing: border-box;
+}
+
+.m-v2-topbar__Avatar {
+  cursor: pointer;
+
+  @media screen and (max-width: 810px) {
+    margin: 0 16px;
+  }
+
+  .minds-avatar {
+    margin: 6px 0;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #f3f3f3;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+  }
+
+  &.m-v2-topbar__Avatar--active .minds-avatar {
+    box-shadow: 0 0 0 2px #3ba0ff;
+  }
+}
+
+.m-v2-topbar__SearchBox {
+  margin: 0 16px;
+
+  @media screen and (max-width: 1081px) {
+    flex-grow: 1;
+  }
+}
+
+.m-v2-topbar__UserMenu {
+  min-width: 64px;
+}
+
+.m-v2-topbar__Container__LoginWrapper {
+  > a {
+    background: #fff;
+    border: 1px solid #4690d6;
+    color: #4690d6;
+    text-decoration: none;
+    height: 32px;
+    border-radius: 18px;
+    font-size: 12px;
+    letter-spacing: 1.25px;
+    box-shadow: none;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+  }
+}

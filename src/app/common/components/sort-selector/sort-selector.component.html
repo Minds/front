@@ -35,22 +35,20 @@
   </ul>
 </m-dropdown>
 
-<ng-container *mIfFeature="'top-feeds-filter'">
-  <m-dropdown *ngIf="isActive && !hideCustomTypes" #customTypeDropdown>
-    <label [ngClass]="[labelClass, (isActive && labelActiveClass) || '']">
-      <i class="material-icons m-dropdown--label-icon m-sort-selector--custom-type-icon" *ngIf="getCurrentCustomTypeProp('icon')">{{getCurrentCustomTypeProp('icon')}}</i>
-      <span>{{getCurrentCustomTypeProp('label')}}</span>
-      <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
-    </label>
+<m-dropdown *ngIf="isActive && !hideCustomTypes" #customTypeDropdown>
+  <label [ngClass]="[labelClass, (isActive && labelActiveClass) || '']">
+    <i class="material-icons m-dropdown--label-icon m-sort-selector--custom-type-icon" *ngIf="getCurrentCustomTypeProp('icon')">{{getCurrentCustomTypeProp('icon')}}</i>
+    <span>{{getCurrentCustomTypeProp('label')}}</span>
+    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+  </label>
 
-    <ul class="m-dropdown--list">
-      <li class="m-dropdown--list--item" *ngFor="let customType of customTypes" (click)="setCustomType(customType.id); closeDropdowns();">
-        <i class="material-icons m-dropdown--label-icon m-sort-selector--custom-type-icon" *ngIf="customType.icon">{{customType.icon}}</i>
-        <span [className]="labelClass">{{customType.label}}</span>
-      </li>
-    </ul>
-  </m-dropdown>
-</ng-container>
+  <ul class="m-dropdown--list">
+    <li class="m-dropdown--list--item" *ngFor="let customType of customTypes" (click)="setCustomType(customType.id); closeDropdowns();">
+      <i class="material-icons m-dropdown--label-icon m-sort-selector--custom-type-icon" *ngIf="customType.icon">{{customType.icon}}</i>
+      <span [className]="labelClass">{{customType.label}}</span>
+    </li>
+  </ul>
+</m-dropdown>
 
 <m-dropdown *ngIf="isActive && hasCurrentAlgorithmPeriod()" #periodDropdown>
   <label [ngClass]="[labelClass, (isActive && labelActiveClass) || '']">

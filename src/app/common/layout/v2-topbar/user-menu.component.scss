@@ -1,0 +1,51 @@
+m-user-menu {
+  display: inline-block;
+  position: relative;
+}
+
+.m-user-menu__Anchor {
+  cursor: pointer;
+}
+
+.m-user-menu__Dropdown {
+  position: absolute;
+  list-style: none;
+  padding: 16px;
+  margin: 10px 0 0;
+  width: 175px;
+  right: 0;
+  top: 100%;
+  background: #ffffff;
+  border: 1px solid #f3f3f3;
+  border-radius: 4px;
+  z-index: 9000;
+}
+
+.m-user-menuDropdown__Item {
+  display: block;
+  margin: 0 0 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  > a {
+    color: #4b4b4b;
+    text-decoration: none;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    > i.material-icons {
+      margin-right: 8px;
+    }
+
+    > span {
+      text-transform: uppercase;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 1.25px;
+      font-size: 12px;
+    }
+  }
+}
