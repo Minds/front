@@ -23,24 +23,44 @@
       </div>
 
       <div class="m-layout__cell">
-        <m-dropdown #dropdown>
-          <label i18n="@@HELPDESK__EDIT__CATEGORIES__TITLE">
-            Select a Category
-            <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
-            <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
-          </label>
+        <div class="m-layout__row">
+          <div class="m-layout__cell">
+            <strong>Category</strong>
+          </div>
+        </div>
+        <div class="m-layout__row">
+          <div class="m-layout__cell">
+            <m-dropdown #dropdown>
+              <label i18n="@@HELPDESK__EDIT__CATEGORIES__TITLE">
+                Select a Category
+                <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
+                <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
+              </label>
 
-          <ul class="m-dropdown--list">
-            <li
-              class="m-dropdown--list--item"
-              [class.m-dropdown--list--item--selected]="this.question.category_uuid === category.uuid"
-              *ngFor="let category of categories; trackBy:trackCategories"
-              (click)="selectCategory(category); dropdown.toggle()"
-            >
-              {{renderBranch(category)}}
-            </li>
-          </ul>
-        </m-dropdown>
+              <ul class="m-dropdown--list">
+                <li
+                  class="m-dropdown--list--item"
+                  [class.m-dropdown--list--item--selected]="this.question.category_uuid === category.uuid"
+                  *ngFor="let category of categories; trackBy:trackCategories"
+                  (click)="selectCategory(category); dropdown.toggle()"
+                >
+                  {{renderBranch(category)}}
+                </li>
+              </ul>
+            </m-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-layout__cell">
+      <div class="m-layout__row">
+        <div class="m-layout__cell">
+          <strong>Position</strong>
+        </div>
+        <div class="m-layout__cell">
+          <input class="m-input" placeholder="10" [(ngModel)]="question.position" name="position"/>
+        </div>
       </div>
     </div>
 

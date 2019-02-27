@@ -33,9 +33,13 @@ export class AllHelpdeskDashboardComponent implements OnInit {
     this.questions = response.questions;
 
     for (let category of this.categories) {
-      category.questions = this.questions.filter((question) => {
-        return category.uuid === question.category_uuid;
-      });
+      category.questions = this.questions
+        .filter((question) => {
+          return category.uuid === question.category_uuid;
+        })
+        .sort((a, b) => {
+          return a.position - b.position;
+        });
     }
   }
 
