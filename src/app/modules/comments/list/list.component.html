@@ -90,7 +90,7 @@
                   [disabled]="(ascendingInProgress || descendingInProgress) && attachment.hasFile()"
                   (click)="isLoggedIn()"
                   (keyup)="getPostPreview(content)"
-                  (keyup.enter)="post($event)"
+                  (keypress)="keypress($event)"
                   [placeholder]="conversation ? 'Enter your message' : 'Enter your comment'"
                 ></minds-textarea>
             </form>
