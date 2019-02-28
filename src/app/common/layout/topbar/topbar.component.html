@@ -61,27 +61,42 @@
           <span>Settings</span>
         </a>
       </li>
+      <ng-container *mIfFeature="'helpdesk'; else faq">
+      </ng-container>
+      <ng-template #faq>
+        <li class="m-dropdownList__item"
+          (click)="menu.value = false"
+        >
+          <a
+            [routerLink]="['/faq']"
+            i18n="@@MINDS__TOPBAR__FAQ"
+          >
+            <i class="material-icons">help_outline</i>
+            <span>FAQ</span>
+          </a>
+        </li>
+      </ng-template>
       <li class="m-dropdownList__item"
           (click)="menu.value = false"
       >
-        <a
-          [routerLink]="['/faq']"
-          i18n="@@MINDS__TOPBAR__FAQ"
-        >
-          <i class="material-icons">help_outline</i>
-          <span>FAQ</span>
-        </a>
-      </li>
-      <li class="m-dropdownList__item"
-          (click)="menu.value = false"
-      >
-        <a
-          [routerLink]="['/groups/profile/', '100000000000000681']"
-          i18n="@@MINDS__TOPBAR__HS_GROUP"
-        >
-          <i class="material-icons">help_outline</i>
-          <span>Help & Support</span>
-        </a>
+        <ng-container *mIfFeature="'helpdesk'; else helpAndSupport">
+          <a
+            routerLink="/help"
+            i18n="@@MINDS__TOPBAR__HELPDESK"
+          >
+            <i class="material-icons">help_outline</i>
+            <span>Help Desk</span>
+          </a>
+        </ng-container>
+        <ng-template #helpAndSupport>
+          <a
+            [routerLink]="['/groups/profile/', '100000000000000681']"
+            i18n="@@MINDS__TOPBAR__HS_GROUP"
+          >
+            <i class="material-icons">help_outline</i>
+            <span>Help & Support</span>
+          </a>
+        </ng-template>
       </li>
       <li class="m-dropdownList__item"
       >
