@@ -1,13 +1,10 @@
 @import "defaults";
 
-.m-topbar--navigation, m-sort-selector {
+.m-topbar--navigation {
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  &.m-topbar--navigation {
-    padding-left: 8px;
-  }
+  padding-left: 8px;
 
   @media screen and (max-width: $min-tablet){
     padding-left: 0;

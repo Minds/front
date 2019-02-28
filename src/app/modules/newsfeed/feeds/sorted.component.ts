@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,10 +11,10 @@ import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
-import { HashtagsSelectorModalComponent } from '../../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { TopbarHashtagsService } from "../../hashtags/service/topbar.service";
+import { NewsfeedHashtagSelectorService } from "../services/newsfeed-hashtag-selector.service";
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -25,7 +25,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   algorithm: string = 'hot';
   period: string = '12h';
   customType: string = 'activities';
-  hashtags: Array<string> = [];
+  hashtag: string | null = null;
   all: boolean = false;
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
@@ -39,6 +39,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   ratingSubscription: Subscription;
   reloadFeedSubscription: Subscription;
   selectionChangeSubscription: Subscription;
+  hashtagFilterChangeSubscription: Subscription;
 
   @ViewChild('poster') private poster: PosterComponent;
 
@@ -49,18 +50,20 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     public title: MindsTitle,
-    private storage: Storage,
-    private context: ContextService,
-    private session: Session,
-    private settingsService: SettingsService,
-    private overlayModal: OverlayModalService,
-    private newsfeedService: NewsfeedService,
-    private topbarHashtagsService: TopbarHashtagsService,
+    protected storage: Storage,
+    protected context: ContextService,
+    protected session: Session,
+    protected settingsService: SettingsService,
+    protected overlayModal: OverlayModalService,
+    protected newsfeedService: NewsfeedService,
+    protected topbarHashtagsService: TopbarHashtagsService,
+    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
   ) {
     this.title.setTitle('Newsfeed');
 
-    if (this.session.isLoggedIn())
+    if (this.session.isLoggedIn()) {
       this.rating = this.session.getLoggedInUser().boost_rating;
+    }
 
     this.ratingSubscription = settingsService.ratingChanged.subscribe((event) => {
       this.onRatingChanged(event);
@@ -80,13 +83,13 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       this.customType = params['type'] || 'activities';
 
       if (typeof params['hashtag'] !== 'undefined') {
-        this.hashtags = params['hashtag'] ? [params['hashtag']] : null;
+        this.hashtag = params['hashtag'] || null;
         this.all = false;
       } else if (typeof params['all'] !== 'undefined') {
-        this.hashtags = null;
+        this.hashtag = null;
         this.all = true;
       } else {
-        this.hashtags = null;
+        this.hashtag = null;
         this.all = false;
       }
 
@@ -96,8 +99,28 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.minds = window.Minds;
-
     this.context.set('activity');
+
+    this.hashtagFilterChangeSubscription = this.newsfeedHashtagSelectorService.subscribe(({ type, value }) => {
+      switch (type) {
+        case 'single':
+          this.hashtag = value;
+          this.all = false;
+          break;
+
+        case 'all':
+          this.hashtag = null;
+          this.all = true;
+          break;
+
+        case 'preferred':
+          this.hashtag = null;
+          this.all = false;
+          break;
+      }
+
+      this.updateSortRoute();
+    }, 300);
   }
 
   ngOnDestroy() {
@@ -115,6 +138,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
     if (this.selectionChangeSubscription) {
       this.selectionChangeSubscription.unsubscribe();
+    }
+
+    if (this.hashtagFilterChangeSubscription) {
+      this.hashtagFilterChangeSubscription.unsubscribe();
     }
   }
 
@@ -137,7 +164,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       limit: 12,
       offset: this.offset || '',
       rating: this.rating || '',
-      hashtags: this.hashtags || '',
+      hashtags: this.hashtag ? [this.hashtag] : '',
       period: this.period || '',
       all: this.all ? 1 : '',
     }, {
@@ -189,5 +216,35 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     this.rating = rating;
 
     this.load(true);
+  }
+
+  setSort(algorithm: string, period: string | null, customType: string | null) {
+    this.algorithm = algorithm;
+    this.period = period;
+    this.customType = customType;
+
+    this.updateSortRoute();
+  }
+
+  updateSortRoute() {
+    let route: any[] = ['newsfeed/global', this.algorithm];
+    const params: any = {};
+
+    if (this.period) {
+      params.period = this.period;
+    }
+
+    if (this.customType && this.customType !== 'activities') {
+      params.type = this.customType;
+    }
+
+    if (this.hashtag) {
+      params.hashtag = this.hashtag;
+    } else if (this.all) {
+      params.all = 1;
+    }
+
+    route.push(params);
+    this.router.navigate(route);
   }
 }

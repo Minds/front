@@ -35,39 +35,6 @@
   </section>
   <!-- Feed list -->
   <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="filter == 'feed'">
-    <div class="m-topbar--row m-channel--feed-sort" *mIfFeature="'top-feeds'">
-      <div class="m-topbar--navigation m-topbar--navigation--text-only">
-        <a class="m-topbar--navigation--item"
-           [routerLink]="['/', username]"
-           routerLinkActive="m-topbar--navigation--item-active"
-           [routerLinkActiveOptions]="{exact: true}"
-        >
-          <span>
-            <ng-container i18n>Latest</ng-container>
-
-            <m-tooltip icon="help" i18n>
-              Latest will sort the content based on its creation date.
-            </m-tooltip>
-          </span>
-        </a>
-
-        <m-sort-selector
-          [isActive]="isSorting"
-          [algorithm]="algorithm"
-          [period]="period"
-          [customType]="customType"
-          [except]="['latest']"
-          (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
-          caption="Sort by"
-          i18n-caption
-          labelClass="m-topbar--navigation--item"
-          labelActiveClass="m-topbar--navigation--item-active"
-          tooltipText="Sort content by various criteria."
-          i18n-tooltipText
-        ></m-sort-selector>
-      </div>
-    </div>
-
     <m-channel--feed [user]="user" [isSorting]="!isLegacySorting && isSorting" [algorithm]="algorithm" [period]="period" [customType]="customType" #feed></m-channel--feed>
   </section>
 

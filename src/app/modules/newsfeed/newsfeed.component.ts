@@ -1,5 +1,5 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,8 +13,8 @@ import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
 import { PosterComponent } from './poster/poster.component';
 import { NewsfeedService } from './services/newsfeed.service';
-import { debounceTime } from "rxjs/operators";
 import { SideBarSelectorChange } from "../hashtags/sidebar-selector/sidebar-selector.component";
+import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
 
 @Component({
   selector: 'm-newsfeed',
@@ -22,7 +22,6 @@ import { SideBarSelectorChange } from "../hashtags/sidebar-selector/sidebar-sele
 })
 
 export class NewsfeedComponent {
-
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: string = '';
@@ -55,19 +54,11 @@ export class NewsfeedComponent {
 
   legacySorting: boolean = false;
 
-  algorithm: string;
-
-  period: string;
-
-  customType: string;
-
   hashtag: string;
 
   all: boolean;
 
   @ViewChild('poster') private poster: PosterComponent;
-
-  protected hashtagFilterChangeSubject: Subject<SideBarSelectorChange> = new Subject<SideBarSelectorChange>();
 
   constructor(
     public session: Session,
@@ -77,10 +68,11 @@ export class NewsfeedComponent {
     public router: Router,
     public route: ActivatedRoute,
     public title: MindsTitle,
-    private storage: Storage,
-    private overlayModal: OverlayModalService,
-    private context: ContextService,
-    private newsfeedService: NewsfeedService,
+    protected storage: Storage,
+    protected overlayModal: OverlayModalService,
+    protected context: ContextService,
+    protected newsfeedService: NewsfeedService,
+    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
   ) {
 
     this.urlSubscription = this.route.url.subscribe(() => {
@@ -101,58 +93,15 @@ export class NewsfeedComponent {
       this.subscribed = path === 'subscribed';
 
       this.legacySorting = path === 'suggested';
-      this.isSorted = this.legacySorting || path === 'global/:algorithm' || path === 'global/:algorithm/:period';
-
-      if (!this.legacySorting && this.isSorted) {
-        this.algorithm = params.algorithm || 'hot';
-        this.period = params.period || '12h';
-        this.customType = params.type || 'activities';
-        this.hashtag = params.hashtag || null;
-        this.all = Boolean(params.all);
-      } else if (!this.legacySorting) {
-        // Default selections
-
-        if (!this.algorithm) {
-          this.algorithm = 'hot';
-        }
-
-        if (!this.period) {
-          this.period = '12h';
-        }
-
-        if (!this.customType) {
-          this.customType = 'activities';
-        }
-      }
+      this.isSorted = this.legacySorting || path === 'global/:algorithm';
+      this.hashtag = params.hashtag || null;
+      this.all = Boolean(params.all);
     });
 
     const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');
     if (showPlusButton != null) {
       this.showPlusButton = false
     }
-
-    this.hashtagFilterChangeSubject.pipe(debounceTime(300)).subscribe(({ type, value }) => {
-      switch (type) {
-        case 'single':
-          this.hashtag = value;
-          this.all = false;
-          break;
-
-        case 'all':
-          this.hashtag = null;
-          this.all = true;
-          break;
-
-        case 'preferred':
-          this.hashtag = null;
-          this.all = false;
-          break;
-      }
-
-      if (!this.legacySorting) {
-        this.updateSortRoute();
-      }
-    });
   }
 
   ngOnInit() {
@@ -206,37 +155,7 @@ export class NewsfeedComponent {
   }
 
   hashtagFilterChange(filter: SideBarSelectorChange) {
-    this.hashtagFilterChangeSubject.next(filter);
-  }
-
-  setSort(algorithm: string, period: string | null, customType: string | null) {
-    this.algorithm = algorithm;
-    this.period = period;
-    this.customType = customType;
-
-    this.updateSortRoute();
-  }
-
-  updateSortRoute() {
-    let route: any[] = ['newsfeed/global', this.algorithm];
-    const params: any = {};
-
-    if (this.period) {
-      route.push(this.period);
-    }
-
-    if (this.customType && this.customType !== 'activities') {
-      params.type = this.customType;
-    }
-
-    if (this.hashtag) {
-      params.hashtag = this.hashtag;
-    } else if (this.all) {
-      params.all = 1;
-    }
-
-    route.push(params);
-    this.router.navigate(route);
+    this.newsfeedHashtagSelectorService.emit(filter);
   }
 
   /**

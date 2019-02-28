@@ -1,6 +1,37 @@
 m-sort-selector {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  max-width: 100%;
+
+  > :last-child {
+    margin-left: auto;
+  }
+
   .m-dropdown--list--item {
     cursor: pointer;
+  }
+
+  .m-sort-selector--item-label-icon {
+    font-size: 18px;
+    margin-right: 4px;
+  }
+
+  .m-dropdown--expanded {
+    .m-dropdown--list--item--selected {
+      color: #3ba0ff;
+    }
+  }
+
+  .m-dropdown {
+    .m-dropdown--label-container {
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1.25px;
+      padding-left: 4px;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
   }
 
   .m-topbar--navigation--item {
@@ -11,10 +42,6 @@ m-sort-selector {
     }
   }
 
-  .m-sort-selector--algorithm-dropdown .m-dropdown--list {
-    width: 170px;
-  }
-
   .m-dropdown--list--item {
     text-transform: uppercase;
     font-size: 11px;
@@ -22,27 +49,5 @@ m-sort-selector {
     padding-left: 4px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-  }
-
-  .m-topbar--navigation--item {
-    i.m-sort-selector--algorithm-icon,
-    i.m-sort-selector--custom-type-icon {
-      font-size: 1em;
-      padding-right: 2px;
-    }
-  }
-
-  .m-dropdown--list--item i.m-sort-selector--item-algorithm-icon {
-    font-size: 24px;
-    padding-right: 2px;
-  }
-
-  m-tooltip i.material-icons {
-    font-size: 11px;
-    color: #777;
-  }
-
-  .m-tooltip--bubble {
-    min-width: 150px;
   }
 }

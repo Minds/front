@@ -1,37 +1,4 @@
 <ng-container *ngIf="group">
-  <div class="m-topbar--row m-group--feed-sort" *mIfFeature="'top-feeds'">
-    <div class="m-topbar--navigation m-topbar--navigation--text-only">
-      <a class="m-topbar--navigation--item"
-         [routerLink]="['/groups/profile', group.guid, 'feed']"
-         routerLinkActive="m-topbar--navigation--item-active"
-         [routerLinkActiveOptions]="{exact: true}"
-      >
-        <span>
-          <ng-container i18n>Latest</ng-container>
-
-          <m-tooltip icon="help" i18n>
-            Latest will sort the content based on its creation date.
-          </m-tooltip>
-        </span>
-      </a>
-
-      <m-sort-selector
-        [isActive]="isSorting"
-        [algorithm]="algorithm"
-        [customType]="customType"
-        [period]="period"
-        [except]="['latest']"
-        (onChange)="onChangeEmitter.emit($event)"
-        caption="Sort by"
-        i18n-caption
-        labelClass="m-topbar--navigation--item"
-        labelActiveClass="m-topbar--navigation--item-active"
-        tooltipText="Sort content by various criteria."
-        i18n-tooltipText
-      ></m-sort-selector>
-    </div>
-  </div>
-
   <div class="m-groups--filter-selector m-border" *ngIf="!isSorting">
     <a
       class="m-groups--filter-selector-item"

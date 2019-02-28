@@ -25,6 +25,7 @@ import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
 import { NewsfeedSortedComponent } from "./feeds/sorted.component";
+import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
 
 const routes: Routes = [
   {
@@ -35,7 +36,6 @@ const routes: Routes = [
       { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global/:algorithm', component: NewsfeedSortedComponent },
-      { path: 'global/:algorithm/:period', component: NewsfeedSortedComponent },
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
       { path: 'subscriptions', component: NewsfeedSubscribedComponent, canDeactivate: [CanDeactivateGuardService] },
       { path: 'boost', component: NewsfeedBoostComponent, canDeactivate: [CanDeactivateGuardService] },
@@ -75,6 +75,7 @@ const routes: Routes = [
   providers: [
     NewsfeedService,
     NewsfeedBoostService,
+    NewsfeedHashtagSelectorService,
   ],
   exports: [
     NewsfeedDropdownComponent,

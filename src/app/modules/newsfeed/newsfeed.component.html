@@ -1,7 +1,7 @@
-<div class="m-toolbar">
+<div class="m-toolbar" *mIfFeature="'!top-feeds'; else noToolbarSpacer">
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
-      <a class="m-topbar--navigation--item" *mIfFeature="'!top-feeds'"
+      <a class="m-topbar--navigation--item"
         routerLink="/newsfeed/suggested"
         routerLinkActive="m-topbar--navigation--item-active"
       >
@@ -32,20 +32,6 @@
         </m-tooltip>
       </a>
 
-      <m-sort-selector *mIfFeature="'top-feeds'"
-        [isActive]="isSorted"
-        [algorithm]="algorithm"
-        [period]="period"
-        [customType]="customType"
-        (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
-        caption="Global"
-        i18n-caption
-        labelClass="m-topbar--navigation--item"
-        labelActiveClass="m-topbar--navigation--item-active"
-        tooltipText="The Global feed contains all posts network-wide. You can sort by various criteria."
-        i18n-tooltipText
-      ></m-sort-selector>
-
       <div class="m-layout--spacer"></div>
 
       <a class="m-topbar--navigation--item m-topbar--navigation--item-active"
@@ -54,13 +40,11 @@
         <span>#{{tag}}</span>
       </a>
 
-      <ng-container *mIfFeature="'!top-feeds'">
-        <m-topbar--hashtags
-          (selectionChange)="reloadTopFeed($event)"
-          [enabled]="isSorted"
-          *ngIf="!preventHashtagOverflow"
-        ></m-topbar--hashtags>
-      </ng-container>
+      <m-topbar--hashtags
+        (selectionChange)="reloadTopFeed($event)"
+        [enabled]="isSorted"
+        *ngIf="!preventHashtagOverflow"
+      ></m-topbar--hashtags>
 
       <m-newsfeed--dropdown></m-newsfeed--dropdown>
     </div>
@@ -69,13 +53,16 @@
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <div class="m-layout--spacer"></div>
 
-      <m-topbar--hashtags *mIfFeature="'!top-feeds'"
+      <m-topbar--hashtags
         (selectionChange)="reloadTopFeed($event)"
         [enabled]="isSorted"
       ></m-topbar--hashtags>
     </div>
   </div>
 </div>
+<ng-template #noToolbarSpacer>
+  <div class="m-layout--vertical-spacer"></div>
+</ng-template>
 
 <div class="mdl-grid m-newsfeed m-page">
 

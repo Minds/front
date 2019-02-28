@@ -1,37 +1,40 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from "@angular/core";
 import { DropdownComponent } from "../dropdown/dropdown.component";
+import { Subject, Subscription } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: 'm-sort-selector',
   templateUrl: './sort-selector.component.html',
 })
-export class SortSelectorComponent {
-
-  algorithms: Array<{ id, label, icon?, help?, noPeriod? }> = [
+export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
+  algorithms: Array<{ id, label, icon?, noPeriod? }> = [
     {
       id: 'hot',
       label: 'Hot',
       icon: 'whatshot',
-      help: 'Hot will sort based on the difference between up and down votes, and the freshness of the content over the last hours.',
       noPeriod: true,
     },
     {
       id: 'top',
       label: 'Top',
-      icon: 'thumb_up',
-      help: 'Top will sort based on the number of up votes a content has over certain time period.',
-    },
-    {
-      id: 'controversial',
-      label: 'Controversial',
-      icon: 'thumbs_up_down',
-      help: 'Controversial will sort based on the balance of up and down votes a content has over certain time period.',
+      icon: 'trending_up',
     },
     {
       id: 'latest',
       label: 'Latest',
       icon: 'timelapse',
-      help: 'Latest will sort the content based on its creation date.',
       noPeriod: true,
     },
   ];
@@ -63,7 +66,7 @@ export class SortSelectorComponent {
     {
       id: 'activities',
       label: 'All',
-      icon: 'view_stream',
+      icon: 'all_inclusive',
     },
     {
       id: 'images',
@@ -82,8 +85,6 @@ export class SortSelectorComponent {
     },
   ];
 
-  @Input() isActive: boolean = false;
-
   @Input() algorithm: string;
 
   @Input() period: string;
@@ -92,17 +93,7 @@ export class SortSelectorComponent {
 
   @Input() labelClass: string = "m--sort-selector-label";
 
-  @Input() labelActiveClass: string = "m--sort-selector-label--active";
-
-  @Input() except: Array<string> = [];
-
-  @Input() hideCustomTypes: boolean = false;
-
-  @Input() caption: string = 'Sort';
-
-  @Input() tooltipText: string;
-
-  @Output('onChange') onChangeEventEmitter = new EventEmitter<{ algorithm, period, customType }>();
+  @Output() onChange: EventEmitter<{ algorithm, period, customType }> = new EventEmitter<{ algorithm, period, customType }>();
 
   @ViewChild('algorithmDropdown') algorithmDropdown: DropdownComponent;
 
@@ -110,8 +101,52 @@ export class SortSelectorComponent {
 
   @ViewChild('customTypeDropdown') customTypeDropdown: DropdownComponent;
 
-  getVisibleAlgorithms() {
-    return this.algorithms.filter(algorithm => this.except.indexOf(algorithm.id) === -1)
+  protected expandedAlgorithmDropdown: boolean = true;
+
+  protected expandedCustomTypeDropdown: boolean = true;
+
+  protected lastWidth: number;
+
+  protected resizeSubscription: Subscription;
+
+  protected resizeSubject: Subject<number> = new Subject<number>();
+
+  constructor(
+    protected elementRef: ElementRef
+  ) {
+  }
+
+  @HostListener('window:resize') _widthDetection() {
+    this.resizeSubject.next(Date.now());
+  }
+
+  ngOnInit() {
+    this.resizeSubscription = this.resizeSubject
+      .pipe(debounceTime(1000 / 30))
+      .subscribe(() => this.onResize());
+  }
+
+  ngAfterViewInit() {
+    this.resizeSubject.next(Date.now());
+  }
+
+  ngOnDestroy() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
+  }
+
+  onResize() {
+    const width = this.elementRef &&
+      this.elementRef.nativeElement &&
+      this.elementRef.nativeElement.clientWidth;
+
+    if (width && width !== this.lastWidth) {
+      this.lastWidth = width;
+
+      this.expandedAlgorithmDropdown = width >= 500;
+      this.expandedCustomTypeDropdown = width >= 580;
+    }
   }
 
   setAlgorithm(id: string) {
@@ -203,7 +238,7 @@ export class SortSelectorComponent {
   }
 
   emit() {
-    this.onChangeEventEmitter.emit({
+    this.onChange.emit({
       algorithm: this.algorithm,
       period: this.hasCurrentAlgorithmPeriod() ? this.period : null,
       customType: this.customType,
