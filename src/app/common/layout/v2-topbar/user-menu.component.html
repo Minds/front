@@ -1,10 +1,11 @@
-<div class="m-user-menu">
+<div class="m-user-menu m-dropdown">
   <a class="m-user-menu__Anchor" (click)="toggleMenu()"><i class="material-icons">menu</i></a>
 
-  <ul class="m-user-menu__Dropdown mdl-shadow--3dp" [hidden]="!isOpen">
-    <li class="m-user-menuDropdown__Item"
-        *ngIf="getCurrentUser()"
-        (click)="closeMenu()"
+  <ul class="m-dropdown__list m-user-menu__Dropdown mdl-shadow--3dp" [hidden]="!isOpen">
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
     >
       <a [routerLink]="['/', getCurrentUser()?.username]">
         <i class="material-icons">people</i>
@@ -12,9 +13,10 @@
       </a>
     </li>
 
-    <li class="m-user-menuDropdown__Item"
-        *ngIf="isAdmin()"
-        (click)="closeMenu()"
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="isAdmin()"
+      (click)="closeMenu()"
     >
       <a routerLink="/admin/analytics">
         <i class="material-icons">build</i>
@@ -22,9 +24,10 @@
       </a>
     </li>
 
-    <li class="m-user-menuDropdown__Item"
-        *ngIf="getCurrentUser()"
-        (click)="closeMenu()"
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
     >
       <a routerLink="/settings/general">
         <i class="material-icons">settings</i>
@@ -32,25 +35,41 @@
       </a>
     </li>
 
-    <li class="m-user-menuDropdown__Item"
+    <ng-container *mIfFeature="'helpdesk'; else supportPages">
+      <li
+        class="m-dropdownList__item m-user-menuDropdown__Item"
         (click)="closeMenu()"
-    >
-      <a routerLink="/faq">
-        <i class="material-icons">help_outline</i>
-        <span i18n>FAQ</span>
-      </a>
-    </li>
-
-    <li class="m-user-menuDropdown__Item"
+      >
+        <a routerLink="/help">
+          <i class="material-icons">help_outline</i>
+          <span i18n>Help Desk</span>
+        </a>
+      </li>
+    </ng-container>
+    <ng-template #supportPages>
+      <li
+        class="m-dropdownList__item m-user-menuDropdown__Item"
         (click)="closeMenu()"
-    >
-      <a routerLink="/groups/profile/100000000000000681">
-        <i class="material-icons">help_outline</i>
-        <span i18n>Help &amp; Support</span>
-      </a>
-    </li>
+      >
+        <a routerLink="/faq">
+          <i class="material-icons">help_outline</i>
+          <span i18n>FAQ</span>
+        </a>
+      </li>
 
-    <li class="m-user-menuDropdown__Item"
+      <li
+        class="m-dropdownList__item m-user-menuDropdown__Item"
+        (click)="closeMenu()"
+      >
+        <a routerLink="/groups/profile/100000000000000681">
+          <i class="material-icons">help_outline</i>
+          <span i18n>Help &amp; Support</span>
+        </a>
+      </li>
+    </ng-template>
+
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
       (click)="closeMenu()"
     >
       <a target="_blank" [href]="minds.cdn_assets_url + 'assets/documents/Whitepaper-v0.3.pdf'">
@@ -59,9 +78,10 @@
       </a>
     </li>
 
-    <li class="m-user-menuDropdown__Item"
-        *ngIf="getCurrentUser()"
-        (click)="closeMenu()"
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
     >
       <a routerLink="/canary">
         <i class="material-icons">new_releases</i>
@@ -72,9 +92,10 @@
       </a>
     </li>
 
-    <li class="m-user-menuDropdown__Item"
-        *ngIf="getCurrentUser()"
-        (click)="closeMenu()"
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
     >
       <a routerLink="/logout">
         <i class="material-icons">exit_to_app</i>
