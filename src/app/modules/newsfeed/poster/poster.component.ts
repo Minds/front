@@ -1,13 +1,14 @@
-import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, ViewChild } from '@angular/core';
 import { Session } from '../../../services/session';
 
 import { AttachmentService } from '../../../services/attachment';
-import { ThirdPartyNetworksSelector } from '../../third-party-networks/selector';
 import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
 import autobind from "../../../helpers/autobind";
+import { Subject, Subscription } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   moduleId: module.id,
@@ -32,7 +33,7 @@ export class PosterComponent {
     wire_threshold: null
   };
   tags = [];  
-  minds;
+  minds = window.Minds;
   load: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
 
@@ -44,8 +45,53 @@ export class PosterComponent {
 
   @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
 
-  constructor(public session: Session, public client: Client, public upload: Upload, public attachment: AttachmentService) {
-    this.minds = window.Minds;
+  showActionBarLabels: boolean = false;
+
+  protected lastWidth: number;
+
+  protected resizeSubscription: Subscription;
+
+  protected resizeSubject: Subject<number> = new Subject<number>();
+
+  constructor(
+    public session: Session,
+    public client: Client,
+    public upload: Upload,
+    public attachment: AttachmentService,
+    protected elementRef: ElementRef
+  ) {
+  }
+
+  @HostListener('window:resize') _widthDetection() {
+    this.resizeSubject.next(Date.now());
+  }
+
+  ngOnInit() {
+    this.resizeSubscription = this.resizeSubject
+      .pipe(debounceTime(1000 / 30))
+      .subscribe(() => this.onResize());
+  }
+
+  ngAfterViewInit() {
+    this.resizeSubject.next(Date.now());
+  }
+
+  ngOnDestroy() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
+  }
+
+  onResize() {
+    const width = this.elementRef &&
+      this.elementRef.nativeElement &&
+      this.elementRef.nativeElement.clientWidth;
+
+    if (width && width !== this.lastWidth) {
+      this.lastWidth = width;
+
+      this.showActionBarLabels = width >= 640;
+    }
   }
 
   set _container_guid(guid: any) {

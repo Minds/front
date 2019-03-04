@@ -21,7 +21,10 @@
         ></textarea>
       </mwl-text-input-autocomplete-container>
 
-      <div class="m-poster__ActionBar">
+      <div
+        class="m-poster__ActionBar"
+        [class.m-poster__Actionbar--hide-labels]="!showActionBarLabels"
+      >
         <a class="m-posterActionBar__CreateBlog" [routerLink]="['/blog/edit/new', { from_buffer: 1 }]">
           <i class="material-icons m-posterActionBar__Icon">subject</i>
           <span class="m-posterActionBar__Label">Create blog</span>

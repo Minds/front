@@ -1,6 +1,10 @@
 /**
  * Post form
  */
+minds-newsfeed-poster {
+  display: block;
+}
+
 .post {
 
   margin-bottom: $minds-padding * 2;
@@ -21,6 +25,7 @@
 
     .minds-avatar {
       margin: 16px 0 16px 16px;
+
       img {
         width: 30px;
         height: 30px;
@@ -39,6 +44,7 @@
         padding: 22px 16px;
         min-height: 92px;
       }
+
       .mdl-textfield__input:focus {
         outline: none;
       }
@@ -47,7 +53,7 @@
 
     .mdl-card__actions {
       text-align: right;
-      
+
       > * {
         margin-left: 4px;
         margin-right: 4px;
@@ -56,6 +62,7 @@
 
       .m-btn--with-icon {
         padding-right: 8px;
+
         i {
           margin-right: 0px;
           margin-left: 4px;
@@ -80,6 +87,7 @@
           cursor: pointer;
           vertical-align: middle;
         }
+
         span {
           font-size: 11px;
           text-transform: uppercase;
@@ -120,6 +128,7 @@
           cursor: pointer;
           opacity: 0;
         }
+
         input::-webkit-file-upload-button {
           cursor: pointer;
         }
@@ -144,6 +153,7 @@ m-hashtags-selector {
     a {
       width: 100%;
     }
+
     img {
       width: 100%;
     }
@@ -159,6 +169,7 @@ m-hashtags-selector {
   .mdl-spinner {
     margin: $minds-padding * 2 auto;
     display: block;
+
     &.attachment-preview-delete-in-progress {
       top: calc(50% - 20px);
       left: calc(50% - 20px);
@@ -174,6 +185,7 @@ m-hashtags-selector {
 
   .attachment-preview {
     width: 100%;
+
     &.video-placeholder {
       display: block;
       width: 100%;
@@ -181,6 +193,7 @@ m-hashtags-selector {
 
       align-items: center;
       -webkit-align-items: center;
+
       i {
         font-size: 40px;
         color: #FFF;
@@ -190,6 +203,7 @@ m-hashtags-selector {
       }
     }
   }
+
   .attachment-preview-delete {
     display: none;
     cursor: pointer;
@@ -208,6 +222,7 @@ m-hashtags-selector {
       z-index: 200;
       height: 100%;
       background: rgba(0, 0, 0, 0.6);
+
       i {
         font-size: 40px;
         color: #FFF;
@@ -326,6 +341,13 @@ m-hashtags-selector {
       .m-posterActionBar__IconAndLabel {
         position: relative;
         top: 1px;
+      }
+    }
+
+    &.m-poster__Actionbar--hide-labels {
+      .m-posterActionBar__Label,
+      .m-posterActionBar__IconAndLabel > span {
+        display: none;
       }
     }
   }
