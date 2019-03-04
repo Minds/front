@@ -14,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MockComponent } from '../../../utils/mock';
 import { SafePipe } from "../../../common/pipes/safe";
+import { MindsTitle } from '../../../services/ux/title';
+import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
 
 describe('QuestionsComponent', () => {
 
@@ -46,6 +48,7 @@ describe('QuestionsComponent', () => {
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
+        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Client, useValue: clientMock },
         { provide: ActivatedRoute, useValue: { params: of({ uuid: 'uuid1' }) } }
       ]
