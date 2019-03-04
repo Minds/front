@@ -11,6 +11,9 @@ export class HashtagsSelectorComponent {
 
   tagsValues: Tag[] = [];
 
+  @Input() buttonClass: string = 'm-btn m-btn--slim m-btn m-btn--with-icon';
+  @Input() labelPosition: 'left' | 'right' = 'left';
+
   @Output('tagsChange') tagsChange: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output('tagsAdded') tagsAdded: EventEmitter<Tag[]> = new EventEmitter<Tag[]>();
   @Output('tagsRemoved') tagsRemoved: EventEmitter<Tag[]> = new EventEmitter<Tag[]>();

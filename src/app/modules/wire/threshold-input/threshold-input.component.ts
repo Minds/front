@@ -24,6 +24,9 @@ export class WireThresholdInputComponent implements OnInit {
 
   @Input('disabled') disabled: boolean = false;
 
+  @Input() buttonClass: string = 'm-btn m-btn--slim m-btn m-btn--with-icon';
+  @Input() labelPosition: 'left' | 'right' = 'left';
+
   @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<WireThresholdStruc> = new EventEmitter<WireThresholdStruc>();
   @Output('validThreshold') validThresholdEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 

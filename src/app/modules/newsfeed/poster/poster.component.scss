@@ -222,5 +222,115 @@ m-hashtags-selector {
     text-align: center;
     color: red;
   }
+}
 
+.m-poster {
+  .m-poster__ActionBar {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    padding: 16px;
+    border-top: 1px solid #e8e8e8;
+
+    > * {
+      padding: 4px 12px;
+      border-right: 1px solid #e8e8e8;
+      position: relative;
+      white-space: nowrap;
+      text-decoration: none;
+      color: #505050;
+
+      &:first-child {
+        padding-left: 0;
+        margin-right: auto;
+        border-right: none;
+      }
+
+      &:last-child {
+        padding-right: 0;
+        border-right: none;
+      }
+
+      > * {
+        vertical-align: middle;
+      }
+
+      p {
+        white-space: normal;
+      }
+    }
+
+    .m-posterActionBar__IconAndLabel {
+      > * {
+        vertical-align: middle;
+      }
+    }
+
+    .fa.m-posterActionBar__Icon,
+    .m-posterActionBar__IconAndLabel .fa {
+      font-size: 18px;
+    }
+
+    .material-icons.m-posterActionBar__Icon,
+    .m-posterActionBar__IconAndLabel i.material-icons {
+      font-size: 20px;
+      transform: rotate(0.03deg) translateY(-1px); // Jagged lines hack
+    }
+
+    .m-posterActionBar__Label,
+    .m-posterActionBar__IconAndLabel > span {
+      font-size: 12px;
+      font-family: 'Roboto', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 400;
+      cursor: pointer;
+      margin-left: 4px;
+    }
+
+    .m-posterActionBar__Attach {
+      cursor: pointer;
+
+      > input {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: 1px;
+        height: 1px;
+        opacity: 0.01;
+        cursor: pointer;
+        overflow: hidden;
+      }
+    }
+
+    .m-posterActionBar__MatureButton {
+      cursor: pointer;
+    }
+
+    .m-posterActionBar__PostButton {
+      appearance: none;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+
+      .m-posterActionBar__Label {
+        margin-left: 0;
+        margin-right: 4px;
+      }
+    }
+
+    m-hashtags-selector {
+      line-height: 1;
+      height: auto;
+
+      .m-posterActionBar__IconAndLabel {
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+
+  .post-preview {
+    border-top: 1px solid #e8e8e8;
+  }
 }

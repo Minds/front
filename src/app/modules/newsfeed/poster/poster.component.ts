@@ -7,6 +7,7 @@ import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
+import autobind from "../../../helpers/autobind";
 
 @Component({
   moduleId: module.id,
@@ -208,6 +209,7 @@ export class PosterComponent {
     this.attachment.preview(message.value);
   }
 
+  @autobind()
   async findTrendingHashtags(searchText: string) {
     const response: any = await this.client.get('api/v2/search/suggest/tags', { q: searchText });
     return response.tags
