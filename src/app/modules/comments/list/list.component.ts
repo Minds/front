@@ -358,6 +358,12 @@ export class CommentsListComponent {
     return !this.descendingInProgress && !this.ascendingInProgress && this.canPost && ((this.content && this.content.trim() !== '') || this.attachment.has());
   }
 
+  keypress(e: KeyboardEvent) {
+    if (!e.shiftKey && e.charCode === 13) {
+      this.post(e);
+    }
+  }
+
   async post(e) {
     e.preventDefault();
 

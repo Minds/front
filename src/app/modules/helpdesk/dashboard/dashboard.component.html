@@ -47,13 +47,13 @@
           <a class="m-btn m-btn--slim" routerLink="/groups/profile/100000000000000681/feed">
             Help & Support Group
           </a>
-          <a class="m-btn m-btn--slim" routerLink="/report-a-bug">
+          <a class="m-btn m-btn--slim" routerLink="/report-a-bug" *ngIf="false">
             Report a bug
           </a>
         </div>
       </div>
       <div class="m-layout__cell">
-        <div class="m-helpdeskQuestions__questions m-border" style="margin-left: 36px">
+        <div class="m-helpdeskQuestions__questions m-border">
           <ul>
             <h4>Popular Questions</h4>
             <li class="m-helpdeskQuestions__question" *ngFor="let question of topQuestions">

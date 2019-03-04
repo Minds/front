@@ -1,3 +1,5 @@
+@import 'defaults.scss';
+
 .m-channel-bio-field {
   div > i {
     vertical-align: middle;
@@ -13,3 +15,10 @@
     display: inline-block;
   }
 }
+
+@media screen and (max-width: $max-mobile * 1.25) {
+  m-messenger--channel-button {
+    display: none; 
+  }
+}
+

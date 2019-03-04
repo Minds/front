@@ -1,5 +1,5 @@
 <div class="m-comment minds-comment minds-block"
-  [class.m-comment--error]="comment?.error"
+  [class.m-comment--error]="error"
 >
   <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
     <a [routerLink]="['/', comment.ownerObj.username]">
@@ -17,9 +17,9 @@
       <p [hidden]="editing" class="m-commentBubble__message" [innerHtml]="(comment.description || '') | tags ">
       </p>
 
-      <p class="m-comment--error-label" *ngIf="comment?.error">
+      <p class="m-comment--error-label" *ngIf="error">
         <i class="material-icons">warning</i>
-        <span>{{ comment.error }}</span>
+        <span>{{ error }}</span>
       </p>
   
       <m-translate

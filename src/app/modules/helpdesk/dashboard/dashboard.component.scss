@@ -3,6 +3,17 @@
 .m-helpdesk__dashboard {
   background: #FFF;
 
+  .m-helpdeskQuestions__questions {
+    margin-left: 32px;
+
+    @media screen and(max-width: $max-mobile) {
+      margin-left: 0;
+    }
+  }
+
+  .m-layout__cell {
+    max-width: 100%;
+  }
 
   .m-helpdeskSearch__results {
     position: relative;
@@ -49,8 +60,8 @@
 }
 
 .m-helpdesk__dashboardInput {
- 
-  position: relative; 
+
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -69,6 +80,18 @@
     padding: 16px 16px 16px 56px;
     background: #FFF;
   }
+
+  @media screen and(max-width: $min-tablet) {
+    & > i.material-icons {
+      font-size: 25px;
+      left: 4px;
+    }
+    & > input {
+      font-size: 16px;
+      padding-right: 2px;
+      padding-left: 33px;
+    }
+  }
 }
 
 .m-helpdesk__dashboardButtons {
@@ -83,6 +106,10 @@
     display: inline-block;
     box-sizing: border-box;
     line-height: 1.25;
+
+    @media screen and(max-width: $min-tablet) {
+      height: auto;
+    }
   }
 }
 
@@ -263,7 +290,15 @@
 
 }
 
-.m-helpdesk__dashboard .m-layout__hero  {
+@media screen and (max-width: $max-mobile) {
+  .m-helpdesk__dashboard {
+    .m-layout__inner {
+      flex-direction: column;
+    }
+  }
+}
+
+.m-helpdesk__dashboard .m-layout__hero {
   background-image: url('assets/photos/balloon.jpg');
 
   .m-layout__cell:nth-of-type(1) {

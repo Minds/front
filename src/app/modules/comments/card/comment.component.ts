@@ -48,7 +48,9 @@ export class CommentComponent implements OnChanges {
   canPost: boolean = true;
   triedToPost: boolean = false;
   inProgress: boolean = false;
+  error: string = '';
   showReplies: boolean = false;
+  changesDetected: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
   _saved: EventEmitter<any> = new EventEmitter();
@@ -269,6 +271,18 @@ export class CommentComponent implements OnChanges {
   //  console.log('[comment:card]: on changes', changes);
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  ngDoCheck() {
+    this.changesDetected = false;
+    if (this.comment.error != this.error) {
+        this.error = this.comment.error;
+        this.changesDetected = true;
+    }
+
+    if (this.changesDetected) {
+      this.cd.detectChanges();
+    }
   }
 
 }

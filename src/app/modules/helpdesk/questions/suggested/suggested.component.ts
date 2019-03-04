@@ -62,4 +62,10 @@ export class SuggestedQuestionsComponent implements OnInit {
     }
   }
 
+  sorted(questions) {
+    return questions.sort((a, b) => {
+      return a.position - b.position;
+    });
+  }
+
 }

@@ -13,7 +13,9 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';
+import { MindsTitle } from '../../../services/ux/title';
 import { MockComponent } from '../../../utils/mock';
+import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
 
 describe('HelpdeskDashboardComponent', () => {
 
@@ -36,6 +38,7 @@ describe('HelpdeskDashboardComponent', () => {
       imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
+        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Client, useValue: clientMock },
         { provide: ActivatedRoute, useValue: { params: of({ uuid: 'uuid1' }) } }
       ]
