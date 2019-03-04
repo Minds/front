@@ -90,7 +90,7 @@ export class PosterComponent {
     if (width && width !== this.lastWidth) {
       this.lastWidth = width;
 
-      this.showActionBarLabels = width >= 640;
+      this.showActionBarLabels = width >= 580;
     }
   }
 

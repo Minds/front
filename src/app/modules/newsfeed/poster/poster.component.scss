@@ -42,7 +42,7 @@ minds-newsfeed-poster {
         border: 0;
         font-size: 13px;
         padding: 22px 16px;
-        min-height: 92px;
+        min-height: 104px;
       }
 
       .mdl-textfield__input:focus {
@@ -244,11 +244,11 @@ m-hashtags-selector {
     display: flex;
     flex-direction: row;
     align-content: center;
-    padding: 16px;
+    padding: 8px 0;
     border-top: 1px solid #e8e8e8;
 
     > * {
-      padding: 4px 12px;
+      padding: 4px 8px;
       border-right: 1px solid #e8e8e8;
       position: relative;
       white-space: nowrap;
@@ -256,13 +256,13 @@ m-hashtags-selector {
       color: #505050;
 
       &:first-child {
-        padding-left: 0;
+        //padding-left: 0;
         margin-right: auto;
         border-right: none;
       }
 
       &:last-child {
-        padding-right: 0;
+        //padding-right: 0;
         border-right: none;
       }
 
