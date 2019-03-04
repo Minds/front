@@ -101,9 +101,9 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('customTypeDropdown') customTypeDropdown: DropdownComponent;
 
-  protected expandedAlgorithmDropdown: boolean = true;
+  expandedAlgorithmDropdown: boolean = true;
 
-  protected expandedCustomTypeDropdown: boolean = true;
+  expandedCustomTypeDropdown: boolean = true;
 
   protected lastWidth: number;
 
