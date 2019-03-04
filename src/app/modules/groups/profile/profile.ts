@@ -183,6 +183,8 @@ export class GroupsProfile {
         if (component.customType) {
           this.customType = component.customType;
         }
+      } else {
+        this.algorithm = 'latest';
       }
     }, 0);
   }
@@ -426,6 +428,29 @@ export class GroupsProfile {
   }
 
   setSort(algorithm: string, period: string | null, customType: string | null) {
+    if (algorithm === 'latest') {
+      // Cassandra listing.
+      // TODO: Remove when ElasticSearch is fully implemented
+      this.algorithm = algorithm;
+      this.period = null;
+      this.customType = customType;
+
+      let filter = '';
+
+      switch (customType) {
+        case 'images':
+          filter = 'image';
+          break;
+
+        case 'videos':
+          filter = 'video';
+          break;
+      }
+
+      this.router.navigate(['/groups/profile', this.group.guid, 'feed', filter]);
+      return;
+    }
+
     this.algorithm = algorithm;
     this.period = period;
     this.customType = customType;
@@ -434,7 +459,7 @@ export class GroupsProfile {
     const params: any = {};
 
     if (period) {
-      route.push(period);
+      params.period = period;
     }
 
     if (customType && customType !== 'activities') {

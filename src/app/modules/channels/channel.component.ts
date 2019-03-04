@@ -105,7 +105,7 @@ export class ChannelComponent {
         this.customType = params['type'] || 'activities';
       } else {
         if (!this.algorithm) {
-          this.algorithm = 'top';
+          this.algorithm = 'latest';
         }
 
         if (!this.period) {
@@ -234,6 +234,17 @@ export class ChannelComponent {
   }
 
   setSort(algorithm: string, period: string | null, customType: string | null) {
+    if (algorithm === 'latest') {
+      // Cassandra listing.
+      // TODO: Remove when ElasticSearch is fully implemented
+      this.algorithm = algorithm;
+      this.period = null;
+      this.customType = null;
+
+      this.router.navigate(['/', this.username]);
+      return;
+    }
+
     this.algorithm = algorithm;
     this.period = period;
     this.customType = customType;
@@ -242,7 +253,7 @@ export class ChannelComponent {
     const params: any = {};
 
     if (period) {
-      route.push(period);
+      params.period = period;
     }
 
     if (customType && customType !== 'activities') {

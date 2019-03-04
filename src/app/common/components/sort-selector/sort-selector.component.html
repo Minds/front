@@ -59,7 +59,7 @@
 
   <ul class="m-dropdown--list">
     <li
-      *ngFor="let item of customTypes"
+      *ngFor="let item of getCustomTypes()"
       class="m-dropdown--list--item"
       [class.m-dropdown--list--item--selected]="item.id === customType"
       (click)="setCustomType(item.id); closeDropdowns();"

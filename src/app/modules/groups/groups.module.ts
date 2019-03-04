@@ -37,7 +37,6 @@ const routes: Routes = [
       { path: 'feed', component: GroupsProfileFeed },
       { path: 'sort', redirectTo: 'sort/top', pathMatch: 'full' },
       { path: 'sort/:algorithm', component: GroupsProfileFeed },
-      { path: 'sort/:algorithm/:period', component: GroupsProfileFeed },
       { path: 'activity', redirectTo: 'feed' },
       { path: 'members', component: GroupsProfileMembers },
       { path: 'requests',  component: GroupsProfileRequests },

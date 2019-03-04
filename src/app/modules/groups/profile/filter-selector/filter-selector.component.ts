@@ -10,13 +10,6 @@ export class GroupsProfileFilterSelector {
   @Input() group: any;
   @Input() filter: string;
 
-  @Input() isSorting: boolean;
-  @Input() algorithm: string;
-  @Input() period: string;
-  @Input() customType: string;
-
-  @Output('onSortingChange') onChangeEmitter: EventEmitter<any> = new EventEmitter<any>();
-
   constructor(
     public videoChat: VideoChatService
   ) { }

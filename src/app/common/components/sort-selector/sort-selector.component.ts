@@ -93,6 +93,8 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() labelClass: string = "m--sort-selector-label";
 
+  @Input() hideCustomTypesOnLatest: string[] = [];
+
   @Output() onChange: EventEmitter<{ algorithm, period, customType }> = new EventEmitter<{ algorithm, period, customType }>();
 
   @ViewChild('algorithmDropdown') algorithmDropdown: DropdownComponent;
@@ -209,6 +211,14 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     return !currentAlgorithm.noPeriod;
+  }
+
+  getCustomTypes() {
+    if (this.hideCustomTypesOnLatest && this.algorithm === 'latest') {
+      return this.customTypes.filter(customType => this.hideCustomTypesOnLatest.indexOf(customType.id) === -1);
+    }
+
+    return this.customTypes;
   }
 
   setCustomType(id: string) {
