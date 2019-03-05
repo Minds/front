@@ -62,7 +62,7 @@ export class VideoChatComponent implements OnInit {
       interfaceConfigOverwrite: {
         // filmStripOnly: true,
         DEFAULT_REMOTE_DISPLAY_NAME: this.configs.username,
-        SHOW_JITSI_WATERMARK: false,
+        SHOW_JITSI_WATERMARK: true,
         JITSI_WATERMARK_LINK: '',
         SHOW_WATERMARK_FOR_GUESTS: false,
         APP_NAME: 'Minds',
