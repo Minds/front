@@ -229,7 +229,8 @@ export class MessengerConversation {
   send(e) {
     e.preventDefault();
 
-    if (this.blocked || !this.message) {
+    if (this.blocked || !this.message 
+      || this.message.split(/\r\n|\r|\n/).length >= 10) { //not more than 10 return characters.
       return;
     }
 
