@@ -137,6 +137,8 @@ describe('BoostConsoleCard', () => {
     reject.nativeElement.click();
     expect(boostServiceMock.reject).toHaveBeenCalled();
 
+    spyOn(window, 'confirm').and.callFake(function() { return true; });
+
     const accept = fixture.debugElement.query(By.css('.m-boost-card--manager-item--buttons button:nth-child(3)'));
     expect(accept).not.toBeNull();
     expect(accept.nativeElement.textContent).toContain('Accept');

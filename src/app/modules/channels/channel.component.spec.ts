@@ -1,8 +1,7 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
 
-import { Mock, MockComponent } from '../../utils/mock';
+import { MockComponent, MockDirective } from '../../utils/mock';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -26,9 +25,10 @@ import { recentServiceMock } from '../../../tests/minds-recent-service-mock.spec
 import { RecentService } from '../../services/ux/recent';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 import { ContextService } from '../../services/context.service';
-import { toObservable } from '@angular/forms/src/validators';
-import { Observable } from 'rxjs';
 import { from } from 'rxjs/internal/observable/from';
+import { IfFeatureDirective } from "../../common/directives/if-feature.directive";
+import { FeaturesService } from "../../services/features.service";
+import { featuresServiceMock } from "../../../tests/features-service-mock.spec";
 
 describe('ChannelComponent', () => {
 
@@ -36,7 +36,6 @@ describe('ChannelComponent', () => {
   let fixture: ComponentFixture<ChannelComponent>;
   
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MaterialMock, 
@@ -60,7 +59,7 @@ describe('ChannelComponent', () => {
         }), 
         MockComponent({ 
           selector: 'm-channel--feed',
-          inputs: [ 'user' ],
+          inputs: [ 'user', 'isSorting', 'algorithm', 'period', 'customType' ],
         }),
         MockComponent({ 
           selector: 'm-channel--sidebar',
@@ -70,7 +69,13 @@ describe('ChannelComponent', () => {
           selector: 'm-channel--explicit-overlay',
           inputs: [ 'channel' ]
         }),
-      ], 
+        MockComponent({
+          selector: 'm-sort-selector',
+          inputs: ['algorithm', 'period', 'customType', 'hideCustomTypesOnLatest'],
+          outputs: ['onChange'],
+        }),
+        IfFeatureDirective,
+      ],
       imports: [
         FormsModule,
         RouterTestingModule,
@@ -84,7 +89,8 @@ describe('ChannelComponent', () => {
         { provide: ScrollService, useValue: scrollServiceMock},
         { provide: RecentService, useValue: recentServiceMock},
         { provide: ContextService, useValue: contextServiceMock},
-        { provide: ActivatedRoute, useValue: { 'params': from([{ 'filter': 'feed', 'username': 'username' }]) } }
+        { provide: ActivatedRoute, useValue: { 'params': from([{ 'filter': 'feed', 'username': 'username' }]) } },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ]
     })
       .compileComponents();  // compile template and css
@@ -98,6 +104,7 @@ describe('ChannelComponent', () => {
     fixture = TestBed.createComponent(ChannelComponent);
     clientMock.response = {};
     uploadMock.response = {};
+    featuresServiceMock.mock('top-feeds', false);
     comp = fixture.componentInstance;
     comp.username = 'username';
     comp.user = { guid: 'guidguid', name: 'name', username: 'username', icontime: 11111, subscribers_count:182, impressions:18200};
@@ -110,7 +117,7 @@ describe('ChannelComponent', () => {
     };
 
     clientMock.response['api/v1/channel/info'] = {status: 'success'};
-    
+
     if (fixture.isStable()) {
       done();
     } else {
