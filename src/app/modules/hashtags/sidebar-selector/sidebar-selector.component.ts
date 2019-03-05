@@ -25,6 +25,7 @@ export class SidebarSelectorComponent implements OnInit {
   @Input() showAtLeast: number = 5;
   @Input() currentHashtag: string;
   @Output() filterChange: EventEmitter<SideBarSelectorChange> = new EventEmitter<SideBarSelectorChange>();
+  @Output() switchAttempt: EventEmitter<any> = new EventEmitter<any>();
 
   hashtags: Tag[] = [];
   showAll: boolean = false;

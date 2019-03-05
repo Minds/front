@@ -1,7 +1,12 @@
 <div class="m-hashtagsSidebarSelector__header">
   <h3 i18n>Hashtags</h3>
 
-  <span>
+  <span class="m-hashtagsSidebarSelector__SwitchComponent">
+    <span
+      *ngIf="disabled"
+      class="m-hashtagsSidebarSelectorSwitchComponent__Overlay"
+      (click)="switchAttempt.next()"
+    ></span>
     <m-switch [(mModel)]="preferred" (change)="preferredChange()" [disabled]="disabled" labelPosition="left" i18n>Preferred</m-switch>
   </span>
 </div>
@@ -33,7 +38,8 @@
     </li>
 
     <li *ngIf="!disabled && !loading && (!hasBelowTheFoldHashtags || showAll)">
-      <input type="text"
+      <input
+        type="text"
         class="m-hashtagsSidebarSelectorList__addInput"
         (keydown.enter)="addHashtag($event.target); $event.preventDefault()"
         (keydown.tab)="addHashtag($event.target); $event.preventDefault()"

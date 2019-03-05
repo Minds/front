@@ -26,6 +26,22 @@ m-hashtags--sidebar-selector {
     }
   }
 
+  .m-hashtagsSidebarSelector__SwitchComponent {
+    position: relative;
+  }
+
+  .m-hashtagsSidebarSelectorSwitchComponent__Overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: block;
+    cursor: pointer;
+
+  }
+
   .m-hashtagsSidebarSelector__list {
     > ul {
       margin: 0;

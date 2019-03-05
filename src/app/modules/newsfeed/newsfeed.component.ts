@@ -154,8 +154,28 @@ export class NewsfeedComponent {
     }
   }
 
-  hashtagFilterChange(filter: SideBarSelectorChange) {
+  async hashtagFilterChange(filter: SideBarSelectorChange) {
+    if (!this.isSorted && !this.legacySorting) {
+      switch (filter.type) {
+        case 'single':
+          await this.router.navigate(['/newsfeed/global/hot', { hashtag: filter.value }]);
+          break;
+
+        case 'preferred':
+          await this.router.navigate(['/newsfeed/global/hot']);
+          break;
+
+        case 'all':
+          await this.router.navigate(['/newsfeed/global/hot', { all: 1 }]);
+          break;
+      }
+    }
+
     this.newsfeedHashtagSelectorService.emit(filter);
+  }
+
+  async navigateToGlobal() {
+    await this.router.navigate(['/newsfeed/global']);
   }
 
   /**
