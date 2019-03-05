@@ -9,10 +9,11 @@ stages:
   - deploy
 
 test:
+  image: circleci/node:8-browsers
   stage: test
   script:
     - npm install # Should be cached...
-    - ng test
+    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
 build:
   stage: build
