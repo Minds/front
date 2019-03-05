@@ -4,7 +4,7 @@
   background: #FFF;
 }
 
-.m-marketing--header, .m-marketing--hero {
+.m-marketing--header, .m-marketing--hero, .m-marketing__hero {
   position:relative;
 
   background: #eee;
@@ -21,7 +21,9 @@
     padding:110px 0;
   }
 
-  .m-marketing--header-inner, .m-marketing--hero-inner, .m-marketing--hero--inner { 
+  .m-marketing--header-inner, .m-marketingHeader__inner,
+  .m-marketing--hero-inner, .m-marketingHero__inner,
+  .m-marketing--hero--inner { 
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -37,7 +39,7 @@
     }
   }
 
-  .m-marketing--hero--video {
+  .m-marketing--hero--video, .m-marketingHero__video {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -53,7 +55,7 @@
     }
   }
 
-  .m-marketing--hero--overlay {
+  .m-marketing--hero--overlay, .m-marketingHero__overlay {
     position: absolute;
     background: rgba(0,0,0,0.4);
     top: 0;
@@ -63,7 +65,7 @@
     z-index: 1;
   }
 
-  .m-marketing--hero--slogans{
+  .m-marketing--hero--slogans, .m-marketingHero__slogans {
     flex: 2;
     h1, h3, h4 {
       color: #FFF;
@@ -100,7 +102,7 @@
     z-index: 2;
   }
 
-  .m-marketing--hero--actions{
+  .m-marketing--hero--actions, .m-marketingHero__actions {
     flex: 1;
     margin-left: 16px;
     z-index: 2;
@@ -138,7 +140,7 @@
     }
   }
 
-  .m-marketing--action-button{
+  .m-marketing--action-button, .m-marketing__actionButton {
     margin-bottom: -80px;
     margin-top: 32px;
     button{
@@ -154,7 +156,7 @@
     z-index:2;
   }
 
-  .m-marketing--overlay{
+  .m-marketing--overlay, .m-marketing__overlay {
     display: block;
     background: rgba(0,0,0,0.5);
     position: absolute;
@@ -166,7 +168,7 @@
   }
 }
 
-.m-marketing--section {
+.m-marketing--section, .m-marketing__section {
   height: 300px;
   align-items: center;
   justify-content: center;
@@ -256,7 +258,7 @@
 
 }
 
-.m-marketing--section--grid {
+.m-marketing--section--grid, .m-marketing__sectionGrid {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
@@ -268,7 +270,7 @@
     flex-direction: column;
   }
 
-  .m-marketing--section--grid-col {
+  .m-marketing--section--grid-col, .m-marketingSectionGrid__col {
     flex: 1;
     padding: 0 16px;
     margin: 16px;
@@ -289,7 +291,7 @@
   }
 }
 
-.m-marketing--section--subsection {
+.m-marketing--section--subsection, .m-marketingSection__subsection {
 
   background-color: #FFF;
   border-bottom: 1px solid #ececec;
@@ -379,7 +381,7 @@
 
 }
 
-.m-marketing--contents {
+.m-marketing--contents, .m-marketing__contents {
   max-width:1280px;
   padding:64px 0 !important;
   margin: auto;
@@ -421,8 +423,8 @@
   }
 }
 
-.m-marketing--header,
-.m-marketing--hero {
+.m-marketing--header, .m-marketing__header
+.m-marketing--hero, .m-marketing__hero {
   position: relative;
   overflow: hidden;
 
@@ -544,7 +546,7 @@
   }
 }
 
-.m-marketing--section {
+.m-marketing--section, .m-marketing__section {
   background: #FFF;
 }
 

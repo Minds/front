@@ -7,6 +7,7 @@ import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ReportCreatorComponent } from './creator/creator.component';
 import { ReportConsoleComponent } from './console/console.component';
+import { ReportsMarketingComponent } from './marketing/marketing.component';
 import { CommentsModule } from '../comments/comments.module';
 
 
@@ -18,16 +19,21 @@ import { CommentsModule } from '../comments/comments.module';
     CommonModule,
     LegacyModule,
     CommentsModule,
+    RouterModule.forChild([
+      { path: 'moderation',  component: ReportsMarketingComponent }
+    ])
   ],
   declarations: [
     ReportCreatorComponent,
-    ReportConsoleComponent
+    ReportConsoleComponent,
+    ReportsMarketingComponent,
   ],
   exports: [
     ReportConsoleComponent
   ],
   entryComponents: [
-    ReportCreatorComponent
+    ReportCreatorComponent,
+    ReportsMarketingComponent
   ]
 })
 
