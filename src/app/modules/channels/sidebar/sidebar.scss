@@ -14,7 +14,25 @@
     border-radius: 3px;
     display: inline-block;
   }
+  .m-channel-bio-field__tags-container {
+    text-align: center;
+    
+    i {
+      vertical-align: middle;
+    }
+    
+    span {
+      vertical-align: middle;
+      font-size: 11px;
+      padding: 4px 7px;
+      margin: 2px 2px;
+      border: 1px solid rgb(238, 238, 238);
+      border-radius: 3px;
+      display: inline-block;
+    }
+  }
 }
+
 
 @media screen and (max-width: $max-mobile * 1.25) {
   m-messenger--channel-button {

@@ -46,7 +46,7 @@
 
 
     <div class="m-channel-bio-field mdl-color-text--blue-grey-300" *ngIf="user.tags && !editing">
-      <div [hidden]="editing || !user.tags">
+      <div [hidden]="editing || !user.tags" class="m-channel-bio-field__tags-container">
         <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
         <span *ngFor="let tag of user.tags">#{{tag}}</span>
       </div>
