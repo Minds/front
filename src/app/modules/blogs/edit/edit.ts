@@ -11,6 +11,7 @@ import { InlineEditorComponent } from '../../../common/components/editors/inline
 import { WireThresholdInputComponent } from '../../wire/threshold-input/threshold-input.component';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
+import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
 
 @Component({
   moduleId: module.id,
@@ -65,7 +66,15 @@ export class BlogEdit {
   @ViewChild('thresholdInput') thresholdInput: WireThresholdInputComponent;
   @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
 
-  constructor(public session: Session, public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public upload: Upload,
+    public router: Router,
+    public route: ActivatedRoute,
+    public title: MindsTitle,
+    protected inMemoryStorageService: InMemoryStorageService
+  ) {
     this.getCategories();
 
     window.addEventListener('attachment-preview-loaded', (event: CustomEvent) => {
@@ -119,6 +128,19 @@ export class BlogEdit {
 
         if (this.guid !== 'new') {
           this.load();
+        } else {
+          const description: string = this.inMemoryStorageService.once('newBlogContent');
+
+          if (description) {
+            let htmlDescription = description
+              .replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/\n+/g, '</p><p>');
+
+            this.blog.description = `<p>${htmlDescription}</p>`;
+          }
         }
       }
     });

@@ -9,6 +9,8 @@ import { Tag } from '../../hashtags/types/tag';
 import autobind from "../../../helpers/autobind";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
 
 @Component({
   moduleId: module.id,
@@ -58,7 +60,9 @@ export class PosterComponent {
     public client: Client,
     public upload: Upload,
     public attachment: AttachmentService,
-    protected elementRef: ElementRef
+    protected elementRef: ElementRef,
+    protected router: Router,
+    protected inMemoryStorageService: InMemoryStorageService
   ) {
   }
 
@@ -265,5 +269,19 @@ export class PosterComponent {
 
   getChoiceLabel(text: string) {
     return `#${text}`;
+  }
+
+  createBlog() {
+    if (this.meta && this.meta.message) {
+      const shouldNavigate = confirm(`Are you sure? The content will be moved to the blog editor.`);
+
+      if (!shouldNavigate) {
+        return;
+      }
+
+      this.inMemoryStorageService.set('newBlogContent', this.meta.message);
+    }
+
+    this.router.navigate(['/blog/edit/new']);
   }
 }

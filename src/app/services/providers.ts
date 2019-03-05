@@ -37,6 +37,7 @@ import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
 import { HttpClient } from "@angular/common/http";
 import { EntitiesService } from "./entities.service";
+import { InMemoryStorageService } from "./in-memory-storage.service";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -192,5 +193,9 @@ export const MINDS_PROVIDERS : any[] = [
     provide: EntitiesService,
     useFactory: EntitiesService._,
     deps: [ Client ],
+  },
+  {
+    provide: InMemoryStorageService,
+    useFactory: InMemoryStorageService._,
   },
 ];
