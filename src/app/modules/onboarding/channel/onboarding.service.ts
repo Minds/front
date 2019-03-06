@@ -28,11 +28,11 @@ export class ChannelOnboardingService {
   onSlideChanged: EventEmitter<number> = new EventEmitter<number>();
 
   completedPercentage: number = -1;
-  completedItems: Array<string>;
+  completedItems: Array<string> = [];
   showOnboarding: boolean = false;
 
   // these are updated per each slide when calculating the next one, except for the first time onboarding
-  pendingItems: Array<string>;
+  pendingItems: Array<string> = [];
 
   static _(client: Client, session: Session) {
     return new ChannelOnboardingService(client, session);
