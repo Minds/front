@@ -117,7 +117,7 @@ export class PosterComponent {
     if (!this.meta.message && !this.attachment.has()) {
       return;
     }
-    if (this.hashtagsSelector.tags.length > 5) {
+    if (this.hashtagsSelector.tags.length > 5 || this.tooManyTags === true) {
       this.showTagsError();
       return;
     }
