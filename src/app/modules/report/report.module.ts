@@ -8,6 +8,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ReportCreatorComponent } from './creator/creator.component';
 import { ReportConsoleComponent } from './console/console.component';
 import { ReportsMarketingComponent } from './marketing/marketing.component';
+import { JuryDutySessionComponent } from './juryduty/session/session.component';
 import { CommentsModule } from '../comments/comments.module';
 
 
@@ -20,20 +21,24 @@ import { CommentsModule } from '../comments/comments.module';
     LegacyModule,
     CommentsModule,
     RouterModule.forChild([
-      { path: 'moderation',  component: ReportsMarketingComponent }
+      { path: 'moderation',  component: ReportsMarketingComponent },
+      { path: 'moderation/juryduty', redirectTo: '/moderation/juryduty/appeal' },
+      { path: 'moderation/juryduty/:jury', component: JuryDutySessionComponent, },
     ])
   ],
   declarations: [
     ReportCreatorComponent,
     ReportConsoleComponent,
     ReportsMarketingComponent,
+    JuryDutySessionComponent,
   ],
   exports: [
     ReportConsoleComponent
   ],
   entryComponents: [
     ReportCreatorComponent,
-    ReportsMarketingComponent
+    ReportsMarketingComponent,
+    JuryDutySessionComponent,
   ]
 })
 

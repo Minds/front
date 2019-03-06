@@ -1,6 +1,14 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { 
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef, 
+} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Client } from '../../../common/api/client.service';
+
 
 @Component({
   selector: 'm-reports__marketing',
@@ -16,7 +24,12 @@ export class ReportsMarketingComponent {
   constructor(
     private client: Client,
     private cd: ChangeDetectorRef,
+    private router: Router,
   ) {
+  }
+
+  startJuryDuty() {
+    this.router.navigate(['/moderation/juryduty/appeals']);
   }
 
 }
