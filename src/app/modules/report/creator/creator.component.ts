@@ -119,15 +119,11 @@ export class ReportCreatorComponent implements AfterViewInit {
       });
 
       this.inProgress = false;
-      if (response.done) {
-        this.success = true;
-      } else {
-        this.overlayModal.dismiss();
-        alert('There was an error sending your report.');
-      }
+      this.success = true;
     } catch (e) {
       this.inProgress = false;
-      //this.overlayModal.dismiss();
+      //this.overlayModal.dismiss();\
+      alert('There was an error sending your report.');
       alert(e.message ? e.message : e);
     }
   }
