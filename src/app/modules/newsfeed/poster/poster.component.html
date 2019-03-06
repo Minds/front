@@ -61,7 +61,7 @@
         <button
           type="submit"
           class="m-btn m-btn--slim m-btn m-btn--with-icon"
-          [disabled]="!canPost || !validThreshold || inProgress"
+          [disabled]="!canPost || !validThreshold || inProgress || this.hashtagsSelector.tags.length > 5"
         >
           <span i18n="Action of posting@@MINDS__POSTER__POST_ACTION">Post</span>
           <i class="material-icons">send</i>

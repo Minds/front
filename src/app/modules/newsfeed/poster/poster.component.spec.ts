@@ -189,6 +189,24 @@ describe('PosterComponent', () => {
   it('should have a post button', () => {
     expect(getPostButton()).not.toBeNull();
   });
+  
+  it('should display an error when more than 6 hashtags are selected', fakeAsync(() => {
+    const postButton: DebugElement = getPostButton();
+    comp.meta.message = 'test #tags ';
+    comp.hashtagsSelector.parseTags('#test1 #test2 #test3 #test4 #test5 #test6');
+    comp.tags = comp.hashtagsSelector.tags
+    tick();
+
+    spyOn(comp, 'post').and.callThrough();
+    postButton.nativeElement.click();
+    tick();
+
+    expect(comp.hashtagsSelector.tags.length).toBe(6);
+    expect(comp.tags.length).toBe(6);
+    expect(comp.tooManyTags).toBeTruthy();
+    expect(this.error).not.toBeNull();
+  }));
+
   it('clicking on the post button should call api/v1/newsfeed', fakeAsync(() => {
     comp.meta.message = 'test #tags ';
     comp.hashtagsSelector.parseTags(comp.meta.message);
