@@ -26,6 +26,7 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
 import { NewsfeedSortedComponent } from "./feeds/sorted.component";
 import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
+import { SearchModule } from "../search/search.module";
 
 const routes: Routes = [
   {
@@ -60,6 +61,7 @@ const routes: Routes = [
     PosterModule,
     HashtagsModule,
     SuggestionsModule,
+    SearchModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,

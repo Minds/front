@@ -4,6 +4,17 @@
   <ul class="m-dropdown__list m-user-menu__Dropdown mdl-shadow--3dp" [hidden]="!isOpen">
     <li
       class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="!getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/login">
+        <i class="material-icons">vpn_key</i>
+        <span i18n>Login</span>
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >

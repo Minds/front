@@ -1,4 +1,6 @@
 <div class="minds-list">
+  <m-search--bar [defaultSizes]="false" class="m-feeds-sorted__SearchBox"></m-search--bar>
+
   <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
 
   <div class="m-feeds-sorted__Filter m-border">

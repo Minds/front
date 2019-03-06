@@ -17,6 +17,10 @@
   flex-wrap: nowrap;
   padding-top: 0;
 
+  @media screen and (max-width: 480px) {
+    padding: 0;
+  }
+
   .mdl-cell {
     margin-top: 0;
   }
