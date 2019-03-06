@@ -16,6 +16,8 @@ import { WireChannelComponent } from '../../modules/wire/channel/channel.compone
 import { ChannelFeedComponent } from './feed/feed'
 import { ContextService } from '../../services/context.service';
 import { PosterComponent } from '../newsfeed/poster/poster.component';
+import { Observable } from 'rxjs';
+import { DialogService } from  '../../common/services/confirm-leave-dialog.service'
 
 @Component({
   moduleId: module.id,
@@ -51,7 +53,8 @@ export class ChannelComponent {
     public title: MindsTitle,
     public scroll: ScrollService,
     private recent: RecentService,
-    private context: ContextService
+    private context: ContextService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -193,6 +196,22 @@ export class ChannelComponent {
     this.recent
       .store('recent', this.user, (entry) => entry.guid == this.user.guid)
       .splice('recent', 50);
+  }
+  
+  /**
+    * canDeactivate() 
+    * Determines whether a page can be deactivated.
+    * In this instance, a confirmation is needed  from the user 
+    * when requesting a new page if editing === true
+    *   
+    * @returns { Observable<boolean> | boolean }    
+    */
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.editing) {
+      return true;
+    }
+
+    return this.dialogService.confirm('Discard changes?');
   }
 }
 
