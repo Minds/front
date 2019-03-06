@@ -12,12 +12,13 @@
   box-sizing: border-box;
   width: 100%;
   max-width: 990px;
-  padding: ($minds-padding * 4) ($minds-padding * 8);
+  padding: ($minds-padding * 4);
 
-  background: none rgba(248, 248, 248, 0.975);
+  //background: none rgba(248, 248, 248, 0.975);
+  background: #FFF;
   color: #555;
   outline: 0;
-  border-radius: 3px;
+  border-radius: 6px;
 
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

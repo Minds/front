@@ -25,21 +25,80 @@ export const ACCESS : Array<any> = [
 ];
 
 export const REASONS : Array<any> = [
-  { value: 1 , label: 'Illegal' },
-  { value: 2, label: 'Should be marked as explicit' },
-  { value: 3, label: 'Encourages or incites violence' },
-  { value: 4, label: 'Threatens, harasses, bullies or encourages others to do so' },
-  { value: 5, label: 'Personal and confidential information' },
-  { value: 6, label: 'Maliciously targets users (@name, links, images or videos)' },
-  { value: 7, label: 'Impersonates someone in a misleading or deceptive manner' },
-  { value: 8, label: 'Spam' },
-  { value: 10, label: 'This infringes my copyright' },
-  { value: 11, label: 'Another reason' }
+  { 
+    value: 1,
+    label: 'Illegal',
+    hasMore: false,
+  },
+  { 
+    value: 2, 
+    label: 'NSFW (not safe for work)',
+    hasMore: true,
+    reasons: [ // Explicit reasons
+      { value: 1, label: 'Nudity' },
+      { value: 2, label: 'Pronography' },
+      { value: 3, label: 'Profanity' },
+      { value: 4, label: 'Violance and Gore' },
+      { value: 5, label: 'Race and Religion' },
+    ],
+  },
+  { 
+    value: 3,
+    label: 'Encourages or incites violence',
+    hasMore: false,
+  },
+  { 
+    value: 4,
+    label: 'Threatens, harasses or bullies',
+    hasMore: false,
+  },
+  { 
+    value: 5,
+    label: 'Personal and confidential information',
+    hasMore: false,
+  },
+  { 
+    value: 6,
+    label: 'Maliciously targets users (@name, links, images or videos)',
+    hasMore: false,
+  },
+  { 
+    value: 7,
+    label: 'Impersonates someone in a misleading or deceptive manner',
+    hasMore: false,
+  },
+  { 
+    value: 8,
+    label: 'Spam',
+    hasMore: false,
+  },
+  { 
+    value: 10,
+    label: 'This infringes my copyright',
+    hasMore: true,
+  },
+  { 
+    value: 12,
+    label: 'Incorrect use of hashtags',
+    hasMore: false,
+  },
+  { value: 11,
+    label: 'Another reason',
+    hasMore: true,
+  },  
 ];
 
 export const READABLE_REASONS : Array<any> = [
   { value: 1 , label: 'is illegal' },
-  { value: 2, label: 'Should be marked as explicit' },
+  { value: 2, label: 'Should be marked as explicit',
+    reasons: [ // Explicit reasons
+      { value: 1, label: 'Nudity' },
+      { value: 2, label: 'Pronography' },
+      { value: 3, label: 'Profanity' },
+      { value: 4, label: 'Violance and Gore' },
+      { value: 5, label: 'Race and Religion' },
+    ]
+  },
   { value: 3, label: 'Encourages or incites violence' },
   { value: 4, label: 'Threatens, harasses, bullies or encourages others to do so' },
   { value: 5, label: 'contains personal and confidential info' },
@@ -47,7 +106,8 @@ export const READABLE_REASONS : Array<any> = [
   { value: 7, label: 'Impersonates someone in a misleading or deceptive manner' },
   { value: 8, label: 'is spam' },
   { value: 10, label: 'is a copyright infringement' },
-  { value: 11, label: 'Another reason' }
+  { value: 11, label: 'Another reason' },
+  { value: 12, label: 'Incorrect use of hashtags' },
 ];
 
 export const REPORT_ACTIONS = {

@@ -12,7 +12,14 @@ import { REASONS } from '../../../services/list-options';
 
 export class ReportCreatorComponent implements AfterViewInit {
 
-  subject: number = 0;
+  subject = {
+    value: null,
+    hasMore: false,
+  };
+  subReason = {
+    value: null,
+  };
+
   note: string = '';
   guid: string = '';
 
@@ -48,6 +55,12 @@ export class ReportCreatorComponent implements AfterViewInit {
       return false;
       //throw new Error('You cannot report this.');
     }
+    if (this.subject.value == 2 
+      && this.next
+      && !this.subReason.value
+    ) {
+      return false;
+    }
     return true;
   }
 
@@ -75,10 +88,17 @@ export class ReportCreatorComponent implements AfterViewInit {
     }
   }
 
-
-  onSelectionChange(item) {
-    this.subject = item.value;
+  setSubject(subject) {
+    this.subject = subject;
   }
+
+  setSubReason(reason) {
+    this.subReason = reason;
+  }
+
+  //onSelectionChange(item) {
+  //  this.subject = item.value;
+  //}
 
   close() {
     this.overlayModal.dismiss();
@@ -89,13 +109,17 @@ export class ReportCreatorComponent implements AfterViewInit {
    */
   submit() {
     let guid = this.guid;
-    let subject = this.subject;
+    let subject = this.subject.value;
     let note = this.note;
 
 
     this.inProgress = true;
 
-    this.client.post(`api/v1/entities/report/${guid}`, { subject, note })
+    this.client.post(`api/v1/entities/report/${guid}`, { 
+        subject,
+        note,
+        subReason: this.subReason.value,
+      })
       .then((response: any) => {
         this.inProgress = false;
         if (response.done) {
