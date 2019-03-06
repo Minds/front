@@ -107,32 +107,28 @@ export class ReportCreatorComponent implements AfterViewInit {
   /**
    * Submits the report to the appropiate server endpoint using the current settings
    */
-  submit() {
-    let guid = this.guid;
-    let subject = this.subject.value;
-    let note = this.note;
-
-
+  async submit() {
     this.inProgress = true;
 
-    this.client.post(`api/v1/entities/report/${guid}`, { 
-        subject,
-        note,
-        subReason: this.subReason.value,
-      })
-      .then((response: any) => {
-        this.inProgress = false;
-        if (response.done) {
-          this.success = true;
-        } else {
-          this.overlayModal.dismiss();
-          alert('There was an error sending your report.');
-        }
-      })
-      .catch(e => {
-        this.inProgress = false;
-        //this.overlayModal.dismiss();
-        alert(e.message ? e.message : e);
+    try {
+      let response: any = await this.client.post(`api/v2/moderation/report`, {
+        entity_guid: this.guid, 
+        reason_code: this.subject.value,
+        note: this.note,
+        sub_reason_code: this.subReason.value,
       });
+
+      this.inProgress = false;
+      if (response.done) {
+        this.success = true;
+      } else {
+        this.overlayModal.dismiss();
+        alert('There was an error sending your report.');
+      }
+    } catch (e) {
+      this.inProgress = false;
+      //this.overlayModal.dismiss();
+      alert(e.message ? e.message : e);
+    }
   }
 }

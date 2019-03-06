@@ -36,7 +36,7 @@ export const REASONS : Array<any> = [
     hasMore: true,
     reasons: [ // Explicit reasons
       { value: 1, label: 'Nudity' },
-      { value: 2, label: 'Pronography' },
+      { value: 2, label: 'Pornography' },
       { value: 3, label: 'Profanity' },
       { value: 4, label: 'Violance and Gore' },
       { value: 5, label: 'Race and Religion' },
@@ -93,7 +93,7 @@ export const READABLE_REASONS : Array<any> = [
   { value: 2, label: 'Should be marked as explicit',
     reasons: [ // Explicit reasons
       { value: 1, label: 'Nudity' },
-      { value: 2, label: 'Pronography' },
+      { value: 2, label: 'Ponography' },
       { value: 3, label: 'Profanity' },
       { value: 4, label: 'Violance and Gore' },
       { value: 5, label: 'Race and Religion' },
