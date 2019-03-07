@@ -28,7 +28,13 @@ export const REASONS : Array<any> = [
   { 
     value: 1,
     label: 'Illegal',
-    hasMore: false,
+    hasMore: true,
+    reasons: [ // Illegal reasons
+      { value: 1, label: 'Terrorism' },
+      { value: 2, label: 'Paedophilia' },
+      { value: 3, label: 'Extortion' },
+      { value: 4, label: 'Fraud' },
+    ],
   },
   { 
     value: 2, 
@@ -58,13 +64,8 @@ export const REASONS : Array<any> = [
     hasMore: false,
   },
   { 
-    value: 6,
-    label: 'Maliciously targets users (@name, links, images or videos)',
-    hasMore: false,
-  },
-  { 
     value: 7,
-    label: 'Impersonates someone in a misleading or deceptive manner',
+    label: 'Impersonates',
     hasMore: false,
   },
   { 
@@ -74,12 +75,17 @@ export const REASONS : Array<any> = [
   },
   { 
     value: 10,
-    label: 'This infringes my copyright',
+    label: 'Infringes my copyright',
     hasMore: true,
   },
   { 
     value: 12,
     label: 'Incorrect use of hashtags',
+    hasMore: false,
+  },
+  { 
+    value: 13,
+    label: 'Malware',
     hasMore: false,
   },
   { value: 11,
