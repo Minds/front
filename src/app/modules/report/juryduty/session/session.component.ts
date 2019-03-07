@@ -5,7 +5,6 @@ import { Session } from '../../../../services/session';
 import { REASONS } from '../../../../services/list-options';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-juryduty__session',
   templateUrl: 'session.component.html'
 })

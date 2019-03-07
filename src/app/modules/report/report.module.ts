@@ -10,6 +10,9 @@ import { ReportConsoleComponent } from './console/console.component';
 import { ReportsMarketingComponent } from './marketing/marketing.component';
 import { JuryDutySessionComponent } from './juryduty/session/session.component';
 import { CommentsModule } from '../comments/comments.module';
+import { JuryDutySessionListComponent } from './juryduty/session/list.component';
+import { JurySessionService } from './juryduty/session/session.service';
+import { JuryDutySessionContentComponent } from './juryduty/session/content.component';
 
 
 @NgModule({
@@ -31,6 +34,8 @@ import { CommentsModule } from '../comments/comments.module';
     ReportConsoleComponent,
     ReportsMarketingComponent,
     JuryDutySessionComponent,
+    JuryDutySessionListComponent,
+    JuryDutySessionContentComponent,
   ],
   exports: [
     ReportConsoleComponent
@@ -39,6 +44,9 @@ import { CommentsModule } from '../comments/comments.module';
     ReportCreatorComponent,
     ReportsMarketingComponent,
     JuryDutySessionComponent,
+  ],
+  providers: [
+    JurySessionService,
   ]
 })
 
