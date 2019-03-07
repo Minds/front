@@ -139,6 +139,19 @@
 
     <div class="mdl-cell mdl-cell--8-col m-newsfeed--feed"  [ngClass]="{ 'm-newsfeed--logged-out' : !session.getLoggedInUser()}">
 
+      <ng-container *mIfFeature="'top-feeds'">
+        <div class="mdl-card m-newsfeed__CompactHashtagSelector">
+          <m-hashtags--sidebar-selector
+            [compact]="true"
+            [disabled]="!isSorted"
+            [currentHashtag]="hashtag"
+            [preferred]="!all && !hashtag"
+            (filterChange)="hashtagFilterChange($event)"
+            (switchAttempt)="navigateToGlobal()"
+          ></m-hashtags--sidebar-selector>
+        </div>
+      </ng-container>
+
       <router-outlet></router-outlet>
 
     </div>

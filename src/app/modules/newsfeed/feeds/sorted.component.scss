@@ -18,6 +18,11 @@
 
 .m-feeds-sorted__SearchBox {
   width: 100%;
+  display: none;
+
+  @media screen and (max-width: 480px) {
+    display: block;
+  }
 
   > .mdl-textfield {
     margin: 0 0 16px;

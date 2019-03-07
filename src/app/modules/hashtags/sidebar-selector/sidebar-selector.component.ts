@@ -20,6 +20,7 @@ export type SideBarSelectorChange = { type: string, value?: any };
 })
 export class SidebarSelectorComponent implements OnInit {
 
+  @Input() compact: boolean = false;
   @Input() disabled: boolean;
   @Input() preferred: boolean = true;
   @Input() showAtLeast: number = 5;
@@ -30,6 +31,7 @@ export class SidebarSelectorComponent implements OnInit {
   hashtags: Tag[] = [];
   showAll: boolean = false;
   loading: boolean;
+  showExtendedList: boolean = false;
 
   protected lastPreferredEmission: boolean;
 
@@ -152,6 +154,14 @@ export class SidebarSelectorComponent implements OnInit {
     this.detectChanges();
 
     this.preferredChange();
+  }
+
+  toggleShowExtendedList() {
+    this.showExtendedList = !this.showExtendedList;
+  }
+
+  closeExtendedList() {
+    this.showExtendedList = false;
   }
 
   detectChanges() {
