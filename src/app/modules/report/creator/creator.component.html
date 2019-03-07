@@ -23,12 +23,12 @@
     </div>
   </div>
 
-  <div class="m-reportCreator__explicitReasons" *ngIf="next && !success && subject.value === 2">
-    <p>Please select the reason why you think this should be marked as NSFW (not safe for work):</p>
+  <div class="m-reportCreator__explicitReasons" *ngIf="next && !success && subject.hasMore">
+    <p>Please select the reason why you think this should be marked as {{subject.label}}:</p>
     <ul class="m-reportCreator__subjects">
         <li class="m-reportCreatorSubjects__subject"
           [class.m-reportCreatorSubjects__subject--active]="subReason.value == item.value"
-          *ngFor="let item of subjects[1].reasons"
+          *ngFor="let item of subject.reasons"
           (click)="setSubReason(item)"
         >
             <span class="">{{ item.label }}</span>
