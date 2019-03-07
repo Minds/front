@@ -255,10 +255,7 @@ m-media--grid{
 }
 
 .m-media-content--meta {
-
   .m-media-content--title {
-
-    display: flex;
 
     h1 {
       font-family: 'Roboto', sans-serif;
@@ -268,6 +265,10 @@ m-media--grid{
       padding-left: $minds-padding * 1.5;
       flex: 1;
     }
+
+    @media screen and (min-width: $min-huge) {
+      display: flex;;
+    }
   
     @media screen and (max-width: $max-mobile) {
       flex-wrap: wrap;
@@ -276,7 +277,6 @@ m-media--grid{
     @media screen and (max-width: $min-tablet) {
       flex-wrap: wrap;
     }
-  
   }
 
   h1.m-media-content--heading{
