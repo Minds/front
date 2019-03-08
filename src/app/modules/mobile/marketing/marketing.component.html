@@ -2,7 +2,7 @@
 
   <div class="m-marketing--hero">
     <div class="m-marketing--hero--video">
-        <img [src]="minds.cdn_assets_url + 'assets/photos/circles.png'">
+      <img [src]="minds.cdn_assets_url + 'assets/photos/circles.png'">
     </div>
 
     <div class="m-marketing--hero--inner">
@@ -28,63 +28,58 @@
     <div class="m-marketing--section--subsection m-marketing--section--subsection--first">
       <div class="m-marketing--section--subsection-container">
         <div class="m-marketing--section--subsection-left m-marketing--section--subsection-text">
-          <div class = "mdl-grid">
-            <div class = "mdl-cell mdl-cell--12-col ">
-              <h2>Latest - 3.2.0</h2>
-              <p>Released: 18th February 2019 -
-                <a href="https://cdn-assets.minds.com/android/minds-3_2_01.apk?ref=com" target="_blank">
-                  Download
-                </a>
-              </p>
-              <p class="m-marketing-show-mobile">You need to tap and hold the download link</p>
-              <a href="https://gitlab.com/minds/mobile-native/commits/v3.2.0" target="_blank" class="m-mobile--marketing--codelink">
-                Check out the #changelog
-              </a>
-              <ul class="m-mobile--marketing--list">
-                <li>React native updated to 0.58.4</li>
-                <li>UI improvements</li>
-                <li>Improved connectivity error handling</li>
-                <li>Search screen completely refactored</li>
-                <li>Password reset screen and deep link added</li>
-                <li>Bug fixes</li>
-              </ul>
-              <ul class="m-mobile--marketing--list m-mobile--marketing--list--hashes">
-                <li>MD5: fb423d7970f1f9014b7634908c60b8b9</li>
-                <li>SHA256: 625a6e5a9fcfa52930c0308e27e9b17c76bcc1553168735b8e51ef3adea01558</li>
-                <li>SHA512: 7470335fa8a66f93692c956132034491340c460b4eafdd37201bc115acedbd880d04b9d16b289b293f256dc34b7abd94a97fa2ab4bf41e70f8a38ebcdbe84dde</li>
-              </ul>
+          <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--12-col m-mobile--marketing--spinner" *ngIf="inProgress">
+              <div class="mdl-spinner mdl-js-spinner is-active"></div>
             </div>
-            <div class = "mdl-cell mdl-cell--12-col ">
-              <h2>Latest - 3.1.2</h2>
-              <p>Released: 28th January 2019 -
-                <a href="https://cdn-assets.minds.com/android/minds-3_1_2.apk?ref=com" target="_blank">
+
+            <div class="mdl-cell mdl-cell--12-col" *ngIf="error">
+              <p class="m-mobile--marketing--error">Oops! There was an issue retrieving mobile releases: <i>{{error}}</i></p>
+            </div>
+
+            <div class="mdl-cell mdl-cell--12-col" *ngFor="let release of releases">
+              <h2>
+                <ng-container *ngIf="release.latest">Latest -</ng-container>
+                <ng-container *ngIf="release.unstable">Canary -</ng-container>
+                {{release.version}}
+              </h2>
+
+              <p>Released: {{release.timestamp * 1000 | date:'longDate'}} -
+                <a [href]="release.href" target="_blank">
                   Download
                 </a>
               </p>
+
               <p class="m-marketing-show-mobile">You need to tap and hold the download link</p>
-              <a href="https://gitlab.com/minds/mobile-native/commits/v3.1.2" target="_blank" class="m-mobile--marketing--codelink">
-                Check out the #changelog
+
+              <p *ngIf="release.unstable" class="m-mobile--marketing--canary-note">
+                Disclaimer: This is a Canary version of the app targeted to test users. It might contain bugs or
+                unfinished features. Use at your own risk.
+              </p>
+
+              <a *ngIf="release.sourceHref" [href]="release.sourceHref" target="_blank" class="m-mobile--marketing--codelink">
+                Check out the #changelog:
               </a>
-              <ul class="m-mobile--marketing--list">
-                <li>Bug fixes</li>
+
+              <ul class="m-mobile--marketing--list" *ngIf="release.changelog">
+                <li *ngFor="let entry of release.changelog">{{entry}}</li>
               </ul>
-              <ul class="m-mobile--marketing--list m-mobile--marketing--list--hashes">
-                <li>MD5: 1a7c3ced78e957460e475473b265f100</li>
-                <li>SHA256: 9f262c97b822884e1f19150d994b8edca425b5de8a8c9b1e9f0d3d230499e7f0</li>
-                <li>SHA512: 8413a6c6ec7ec2292bc8adbc6d1e720047d9d071be03cd28ac65eadff3939993d9b9982330db9decabedc5122d76f4f1ed41d601c97c93c575347c4402d6cfaa</li>
+
+              <ul class="m-mobile--marketing--list m-mobile--marketing--list--hashes" *ngIf="release.hashes">
+                <li *ngFor="let hash of release.hashes">{{ hash.type | uppercase }}: {{hash.value}}</li>
               </ul>
             </div>
           </div>
 
         </div>
-        <div class="m-marketing--section--subsection-right m-marketing--section--subsection-image" style="text-align: center">
-          <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.jpg'" />
+        <div class="m-marketing--section--subsection-right m-marketing--section--subsection-image"
+             style="text-align: center">
+          <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.jpg'"/>
         </div>
       </div>
     </div>
 
   </section>
-
 
 
 </div>
