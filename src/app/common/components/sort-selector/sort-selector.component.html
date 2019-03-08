@@ -27,7 +27,7 @@
   </ul>
 </m-dropdown>
 
-<m-dropdown *ngIf="hasCurrentAlgorithmPeriod()" #periodDropdown>
+<m-dropdown class="m-sort-selector--period-dropdown" *ngIf="hasCurrentAlgorithmPeriod()" #periodDropdown>
   <label [ngClass]="[labelClass]">
     <span>{{getCurrentPeriodLabel()}}</span>
 
@@ -45,7 +45,7 @@
   </ul>
 </m-dropdown>
 
-<m-dropdown [expanded]="expandedCustomTypeDropdown" #customTypeDropdown>
+<m-dropdown class="m-sort-selector--custom-type-dropdown" [expanded]="expandedCustomTypeDropdown" #customTypeDropdown>
   <label [ngClass]="[labelClass]">
     <i
       *ngIf="getCurrentCustomTypeProp('icon')"

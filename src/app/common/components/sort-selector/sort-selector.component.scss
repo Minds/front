@@ -50,4 +50,18 @@ m-sort-selector {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
+
+  .m-sort-selector--algorithm-dropdown,
+  .m-sort-selector--period-dropdown {
+    .m-dropdown--list {
+      right: auto;
+      left: 0;
+    }
+  }
+
+  .m-sort-selector--custom-type-dropdown {
+    .m-dropdown {
+      margin-right: 8px;
+    }
+  }
 }
