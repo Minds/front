@@ -92,10 +92,12 @@
   height: 52px;
   max-width: 1296px;
   margin: 0 auto;
-  padding-right: 46px;
+  padding: 0 8px;
+  //padding-right: 46px;
+  box-sizing: border-box;
 
   @media screen and (min-width: 1296px) {
-    width: 1296px;
+    padding: 0 46px 0 0;
   }
 
   @media screen and (max-width: 480px) {
@@ -197,7 +199,7 @@
 }
 
 .m-v2-topbarNavItem__Logo {
-  margin: 0 8px 0 16px;
+  margin: 0 8px 0 0;
   padding: 0 12px;
   //height: 62px;
   box-sizing: border-box;
