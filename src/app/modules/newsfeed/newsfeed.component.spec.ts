@@ -48,7 +48,7 @@ describe('NewsfeedComponent', () => {
         MockComponent({ selector: 'm-ads-boost', inputs: ['handler', 'limit'], template: '' }),
         MockComponent({ selector: 'm-topbar--hashtags', inputs: ['enabled'], outputs: ['selectionChange'], template: '' }),
         MockComponent({ selector: 'm-suggestions__sidebar' }),
-        MockComponent({ selector: 'm-hashtags--sidebar-selector', inputs: ['disabled', 'currentHashtag', 'preferred'], outputs: ['filterChange', 'switchAttempt']}),
+        MockComponent({ selector: 'm-hashtags--sidebar-selector', inputs: ['disabled', 'currentHashtag', 'preferred', 'compact'], outputs: ['filterChange', 'switchAttempt']}),
         IfFeatureDirective,
         NewsfeedComponent,
       ],
