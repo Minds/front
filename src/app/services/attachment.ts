@@ -394,6 +394,9 @@ export class AttachmentService {
         this.attachment.mime = 'video';
 
         this.checkVideoDuration(file).then(duration => {
+          if (window.Minds.user.plus) {
+            window.Minds.max_video_length = window.Minds.max_video_length * 2; // Hacky
+          }
           if (duration > window.Minds.max_video_length) {
             return reject({ message: 'Error: Video duration exceeds ' + window.Minds.max_video_length / 60 + ' minutes' });
           }
