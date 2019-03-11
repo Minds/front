@@ -3,9 +3,18 @@
     <div [ngSwitch]="field.type">
       <div *ngSwitchCase="'text'">
         <div>
-          <div class="mdl-textfield mdl-js-textfield">
-            <input [id]="field.key" [formControlName]="field.key" class="mdl-textfield__input" type="text">
-            <label class="mdl-textfield__label" [for]="field.key">{{field.label}}</label>
+          <div class="m-dynamicForm__row">
+            <label class="m-dynamicForm__label" *ngIf="field.label">{{field.label}}:</label>
+            <input [id]="field.key" [formControlName]="field.key" class="m-dynamicForm__input m-input" type="text">
+          </div>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'textarea'">
+        <div>
+          <div class="m-dynamicForm__row">
+            <label class="m-dynamicForm__label" *ngIf="field.label">{{field.label}}:</label>
+            <textarea [id]="field.key" [formControlName]="field.key" class="m-dynamicForm__textarea m-input" type="text"></textarea>
           </div>
         </div>
       </div>
