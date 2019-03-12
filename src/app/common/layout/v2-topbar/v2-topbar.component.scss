@@ -180,22 +180,6 @@
       display: none;
     }
   }
-
-  &.m-v2-topbarNavItem__IosBanner {
-    > a > img {
-      height: 48px;
-
-      @media screen and (max-width: 480px) {
-        height: 32px;
-      }
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    .m-androidApp__download {
-      zoom: 0.65;
-    }
-  }
 }
 
 .m-v2-topbarNavItem__Logo {

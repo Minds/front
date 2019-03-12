@@ -22,6 +22,27 @@
     @media screen and (max-width: $max-mobile) {
       padding: 62px 12px;
     }
+
+    .m-homepage--app-buttons {
+      display: flex;
+      justify-content: space-around;
+
+      .m-homepage--app-buttons__iosBanner {
+        > a > img {
+          height: 48px;
+
+          @media screen and (max-width: 480px) {
+            height: 32px;
+          }
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .m-androidApp__download {
+          zoom: 0.65;
+        }
+      }
+    }
   }
 
   .m-homepage--hero--video {
