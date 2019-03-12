@@ -2,6 +2,7 @@ import {
   Component,
   ComponentFactoryResolver,
   ComponentRef,
+  ChangeDetectorRef,
   Input,
   OnDestroy,
   OnInit,
@@ -21,7 +22,10 @@ export class NewsfeedEntityComponent {
   @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
   entity;
 
-  constructor(protected componentFactoryResolver: ComponentFactoryResolver,) { }
+  constructor(
+    protected componentFactoryResolver: ComponentFactoryResolver,
+    protected cd: ChangeDetectorRef,
+  ) { }
 
   @Input('entity') set setEntity(entity) {
     this.entity = entity;
@@ -35,7 +39,10 @@ export class NewsfeedEntityComponent {
 
   // Clear the view container
   clear() {
-    this.host.viewContainerRef.clear();
+    this.cd.detectChanges();
+    this.cd.markForCheck();
+    if (this.host)
+      this.host.viewContainerRef.clear();
   }
 
   // Update the component

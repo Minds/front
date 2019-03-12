@@ -66,10 +66,11 @@
     >
       <i
         class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+        [title]="item.label"
         *ngIf="item.icon"
       >{{item.icon}}</i>
 
-      <span [className]="labelClass">{{item.label}}</span>
+      <span [className]="labelClass" *ngIf="!expandedCustomTypeDropdown || item.id === customType">{{item.label}}</span>
     </li>
   </ul>
 </m-dropdown>

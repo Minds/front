@@ -1,10 +1,9 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 
-import { Component, Input } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ComponentFixture, async, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
@@ -12,11 +11,14 @@ import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { RecentService } from '../../../services/ux/recent';
 import { recentServiceMock } from '../../../mocks/services/ux/recent-mock.spec';
-import { ContextService, ContextServiceResponse } from '../../../services/context.service';
+import { ContextService } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
 import { SearchBarSuggestionsComponent } from './suggestions.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
+import { FeaturesService } from "../../../services/features.service";
+import { featuresServiceMock } from "../../../../tests/features-service-mock.spec";
+import { IfFeatureDirective } from "../../../common/directives/if-feature.directive";
 
 /* tslint:disable */
 
@@ -36,19 +38,22 @@ describe('SearchBarSuggestionsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        IfFeatureDirective,
         SearchBarSuggestionsComponent
       ],
       imports: [
         NgCommonModule,
         RouterTestingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        // CommonModule,
       ],
       providers: [
-        { provide: Session, useValue: sessionMock},
+        { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: RecentService, useValue: recentServiceMock },
-        { provide: ContextService, useValue: contextServiceMock }
+        { provide: ContextService, useValue: contextServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ]
     }).compileComponents();
   }));
@@ -62,6 +67,8 @@ describe('SearchBarSuggestionsComponent', () => {
     comp = fixture.componentInstance;
 
     spyOn(comp.session, 'getLoggedInUser').and.returnValue({ guid: 1234 });
+
+    featuresServiceMock.mock('top-feeds', false);
 
     fixture.detectChanges();
 
@@ -105,3 +112,4 @@ describe('SearchBarSuggestionsComponent', () => {
   });
 
 });
+

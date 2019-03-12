@@ -83,6 +83,16 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
       label: 'Blogs',
       icon: 'subject',
     },
+    {
+      id: 'channels',
+      label: 'Channels',
+      icon: 'people',
+    },
+    {
+      id: 'groups',
+      label: 'Groups',
+      icon: 'group_work',
+    },
   ];
 
   @Input() algorithm: string;

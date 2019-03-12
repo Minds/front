@@ -40,6 +40,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   reloadFeedSubscription: Subscription;
   selectionChangeSubscription: Subscription;
   hashtagFilterChangeSubscription: Subscription;
+  query: string = '';
 
   @ViewChild('poster') private poster: PosterComponent;
 
@@ -81,6 +82,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       this.algorithm = params['algorithm'] || 'hot';
       this.period = params['period'] || '12h';
       this.customType = params['type'] || 'activities';
+      this.query = params['query'] || '';
 
       if (typeof params['hashtag'] !== 'undefined') {
         this.hashtag = params['hashtag'] || null;
@@ -88,6 +90,9 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       } else if (typeof params['all'] !== 'undefined') {
         this.hashtag = null;
         this.all = true;
+      } else if (params['query']) {
+        this.all = true;
+        this.updateSortRoute();
       } else {
         this.hashtag = null;
         this.all = false;
@@ -167,6 +172,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       hashtags: this.hashtag ? [this.hashtag] : '',
       period: this.period || '',
       all: this.all ? 1 : '',
+      query: this.query || '',
     }, {
       cache: true
     })
@@ -242,6 +248,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       params.hashtag = this.hashtag;
     } else if (this.all) {
       params.all = 1;
+    }
+
+    if (this.query) {
+      params.query = this.query;
     }
 
     route.push(params);

@@ -3,6 +3,10 @@
 
   <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
 
+  <div class="m-feeds-sorted__query" *ngIf="query">
+    <span>Showing results for: <strong>{{ query | slice:0:12}}</strong></span>
+  </div>
+
   <div class="m-feeds-sorted__Filter m-border">
     <m-sort-selector
       [algorithm]="algorithm"
