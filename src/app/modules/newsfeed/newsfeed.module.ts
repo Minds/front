@@ -24,7 +24,8 @@ import { PosterModule } from './poster/poster.module';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
-import { NewsfeedSortedComponent } from "./feeds/sorted.component";
+import { NewsfeedSortedComponent } from './feeds/sorted.component';
+import { NewsfeedEntityComponent } from './feeds/entity.component';
 import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
 import { SearchModule } from "../search/search.module";
 
@@ -73,6 +74,7 @@ const routes: Routes = [
     NewsfeedBoostComponent,
     NewsfeedTagsComponent,
     NewsfeedSortedComponent,
+    NewsfeedEntityComponent,
   ],
   providers: [
     NewsfeedService,

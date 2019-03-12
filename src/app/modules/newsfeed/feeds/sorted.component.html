@@ -16,20 +16,18 @@
     </div>
   </div>
 
-  <minds-activity
-    *ngFor="let activity of newsfeed"
-    [object]="activity"
-    [boostToggle]="activity.boostToggle"
-    (delete)="delete(activity)"
-    [showRatingToggle]="true"
-    class="mdl-card m-border item"
-  ></minds-activity>
+  <div class="m-feeds-sorted__List">
+    <m-newsfeed__entity
+      *ngFor="let entity of newsfeed"
+      [entity]="entity"
+    ></m-newsfeed__entity>
 
-  <infinite-scroll
-    distance="25%"
-    (load)="load()"
-    [moreData]="moreData"
-    [inProgress]="inProgress"
-  >
-  </infinite-scroll>
+    <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress"
+    >
+    </infinite-scroll>
+  </div>
 </div>
