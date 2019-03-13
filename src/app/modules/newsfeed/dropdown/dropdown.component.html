@@ -1,4 +1,10 @@
 <m-topbar--navigation--options>
+  <ng-container *mIfFeature="'top-feeds'">
+    <m-nsfw-selector
+      [consumer]="true"
+      (selected)="onNSFWSelected($event)"
+    ></m-nsfw-selector>
+  </ng-container>
   <ng-container *ngIf="showBoostOptions">
     <li class="m-dropdown--list--item" *ngIf="boostService.getBoostRating() == 2 && boostService.isBoostEnabled()">
       <span i18n="@@M__COMMON__EXPLICIT">Explicit</span>

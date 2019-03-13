@@ -4,7 +4,7 @@
   <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
 
   <div class="m-feeds-sorted__query" *ngIf="query">
-    <span>Showing results for: <strong>{{ query | slice:0:12}}</strong></span>
+    <span>Showing results for: <strong>{{ query | slice:0:50 }}</strong></span>
   </div>
 
   <div class="m-feeds-sorted__Filter m-border">
@@ -16,7 +16,7 @@
     ></m-sort-selector>
 
     <div>
-      <m-newsfeed--dropdown></m-newsfeed--dropdown>
+      <m-newsfeed--dropdown [showBoost]="false"></m-newsfeed--dropdown>
     </div>
   </div>
 

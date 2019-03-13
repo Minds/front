@@ -22,6 +22,11 @@ import { ReadMoreDirective } from './read-more/read-more.directive';
 import { ReadMoreButtonComponent } from './read-more/button.component';
 import { ChannelBadgesComponent } from './components/badges/badges.component';
 import { NSFWSelectorComponent } from './components/nsfw-selector/nsfw-selector.component';
+import { 
+  NSFWSelectorService,
+  NSFWSelectorConsumerService,
+  NSFWSelectorCreatorService,
+} from './components/nsfw-selector/nsfw-selector.service';
 
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
@@ -79,6 +84,7 @@ import { SortSelectorComponent } from "./components/sort-selector/sort-selector.
 
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
+import { Storage } from '../services/storage';
 import { HttpClient } from "@angular/common/http";
 import { AndroidAppDownloadComponent } from "./components/android-app-download-button/button.component";
 import { SwitchComponent } from "./components/switch/switch.component";
@@ -272,6 +278,16 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
       useFactory: MindsHttpClient._,
       deps: [HttpClient]
     },
+    {
+      provide: NSFWSelectorCreatorService,
+      useFactory: (_storage) => new NSFWSelectorCreatorService(_storage),
+      deps: [ Storage ],
+    },
+    {
+      provide: NSFWSelectorConsumerService,
+      useFactory: (_storage) => new NSFWSelectorConsumerService(_storage),
+      deps: [ Storage ],
+    }, 
   ],
   entryComponents: [
     NotificationsToasterComponent

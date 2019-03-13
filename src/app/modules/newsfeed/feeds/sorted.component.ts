@@ -173,6 +173,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       period: this.period || '',
       all: this.all ? 1 : '',
       query: this.query || '',
+      nsfw: this.newsfeedService.nsfw,
     }, {
       cache: true
     })
