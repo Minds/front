@@ -110,6 +110,10 @@ export class AttachmentService {
     return this.setMature(!this.isMature());
   }
 
+  setNSFW(nsfw) {
+    this.meta.nsfw = nsfw.map(reason => reason.value);
+  }
+
   upload(fileInput: HTMLInputElement) {
     this.reset();
 

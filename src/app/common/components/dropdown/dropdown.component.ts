@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'm-dropdown',
   template: `
     <ng-template #dropdownListContent>
-      <ng-content select=".m-dropdown--list"></ng-content>
+      <ng-content select=".m-dropdown--list,.m-dropdown__list"></ng-content>
     </ng-template>
 
     <ng-container *ngIf="!expanded; else expandedView">

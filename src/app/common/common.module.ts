@@ -21,6 +21,7 @@ import { StateInputComponent } from './components/forms/state-input/state-input.
 import { ReadMoreDirective } from './read-more/read-more.directive';
 import { ReadMoreButtonComponent } from './read-more/button.component';
 import { ChannelBadgesComponent } from './components/badges/badges.component';
+import { NSFWSelectorComponent } from './components/nsfw-selector/nsfw-selector.component';
 
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
@@ -170,6 +171,7 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
+    NSFWSelectorComponent,
 
     SwitchComponent,
   ],
@@ -252,6 +254,7 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
     AndroidAppDownloadComponent,
     SortSelectorComponent,
     SwitchComponent,
+    NSFWSelectorComponent,
   ],
   providers: [
     {

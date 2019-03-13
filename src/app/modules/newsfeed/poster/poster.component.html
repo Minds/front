@@ -37,16 +37,25 @@
           <input type="file" id="attachment-input-poster" #file name="attachment" (change)="uploadAttachment(file, $event)" />
         </label>
 
-        <a
-          class="m-mature-button m-posterActionBar__MatureButton"
-          [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-          (click)="attachment.toggleMature()"
-          title="Rating"
-          i18n-title
-        >
-          <i class="material-icons m-posterActionBar__Icon">explicit</i>
-          <span class="m-posterActionBar__Label">Rating</span>
-        </a>
+        <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
+          <m-nsfw-selector
+            (selected)="onNSWFSelections($event)"
+          >
+          </m-nsfw-selector>
+        </ng-container>
+        
+        <ng-template #oldNSFW>
+          <a
+            class="m-mature-button m-posterActionBar__MatureButton"
+            [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+            (click)="attachment.toggleMature()"
+            title="Rating"
+            i18n-title
+          >
+            <i class="material-icons m-posterActionBar__Icon">explicit</i>
+            <span class="m-posterActionBar__Label">Rating</span>
+          </a>
+        </ng-template>
 
         <m-hashtags-selector
           class="m-posterActionBar__HashtagSelector"
