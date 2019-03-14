@@ -90,7 +90,8 @@ export class EntitiesService {
 
     try {
       const { entities }: any = await this.client.get('api/v2/entities', {
-        urns
+        urns,
+        as_activities: 1,
       }, { cache: true });
 
       const entityDocs = entities.map(entity => ({
