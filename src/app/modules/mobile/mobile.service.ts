@@ -15,7 +15,8 @@ export class MobileService {
   }
 
   async getReleases() {
-    this.releases = (<{ versions }>await this.client.get(RELEASES_JSON_URL).toPromise()).versions;
+    const timestamp = Date.now();
+    this.releases = (<{ versions }>await this.client.get(`${RELEASES_JSON_URL}?t=${timestamp}`).toPromise()).versions;
 
     const latest = this.releases.findIndex(release => !release.unstable);
     if (latest > -1) {
