@@ -13,6 +13,7 @@ import { JurySessionService } from './session.service';
 export class JuryDutySessionContentComponent {
 
   @Input() report;
+  decided: boolean = false;
 
   constructor(
     private sessionService: JurySessionService,
@@ -48,12 +49,14 @@ export class JuryDutySessionContentComponent {
     return friendlyString;
   }
 
-  overturn() {
-      alert('no?');
+ async overturn() {
+    this.decided = true;
+    await this.sessionService.overturn(this.report);
   }
 
-  uphold() {
-      alert('oh...');
+  async uphold() {
+    this.decided = true;
+    await this.sessionService.uphold(this.report);
   }
 
 }

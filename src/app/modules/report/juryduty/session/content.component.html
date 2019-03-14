@@ -1,31 +1,39 @@
 <div class="m-juryDutySession__content m-border">
 
-    <h3>
-        <span>Should be</span>
-        <b> {{ getAction(report) }} </b>
-        <span>for</span>
-        <b> {{ getReasonString(report) }} </b>
-    </h3>
+    <ng-container *ngIf="!decided; else whenDecided">
+        <h3>
+            <span>Should be</span>
+            <b> {{ getAction(report) }} </b>
+            <span>for</span>
+            <b> {{ getReasonString(report) }} </b>
+        </h3>
 
-    <minds-card *ngIf="report.entity"
-        class=""
-        [object]="report.entity"
-        hostClass="mdl-card m-border"
-    ></minds-card>
+        <minds-card *ngIf="report.entity"
+            class=""
+            [object]="report.entity"
+            hostClass="mdl-card m-border"
+        ></minds-card>
 
-    <div class="m-juryDutySessionContent__options">
-        <button
-            class="m-btn m-btn--slim"
-            (click)="uphold()"
-        >
-            Uphold
-        </button>
-        <button
-            class="m-btn m-btn--slim"
-            (click)="overturn()"
-        >
-            Overturn
-        </button>
-    </div>
+        <div class="m-juryDutySessionContent__options">
+            <button
+                class="m-btn m-btn--slim"
+                (click)="uphold()"
+            >
+                Uphold
+            </button>
+            <button
+                class="m-btn m-btn--slim"
+                (click)="overturn()"
+            >
+                Overturn
+            </button>
+        </div>
+    </ng-container>
+
+    <ng-template #whenDecided>
+        <p>
+            Thanks for casting your vote.
+        </p>
+    </ng-template>
 
 </div>
