@@ -54,6 +54,7 @@ import { NodesMarketingModule } from './modules/nodes/nodes.module';
 import { JobsMarketingModule } from './modules/jobs/jobs.module';
 import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
 import { MobileModule } from './modules/mobile/mobile.module';
+import { IssuesModule } from './modules/issues/issues.module';
 import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from "@angular/common/http";
 
@@ -104,7 +105,7 @@ import { HttpClientModule } from "@angular/common/http";
     NewsfeedModule,
     MediaModule,
     AuthModule,
-    BlockchainModule,    
+    BlockchainModule,
     BlockchainMarketingModule,
     NodesMarketingModule,
     BrandingModule,
@@ -112,6 +113,7 @@ import { HttpClientModule } from "@angular/common/http";
     JobsMarketingModule,
     HelpdeskModule,
     MobileModule,
+    IssuesModule,
     CanaryModule,
 
     //last due to :username route

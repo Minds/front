@@ -79,7 +79,7 @@
         <button
           type="submit"
           class="m-posterActionBar__PostButton"
-          [disabled]="!canPost || !validThreshold || inProgress"
+          [disabled]="!canPost || !validThreshold || inProgress || this.hashtagsSelector.tags.length > 5"
         >
           <span class="m-posterActionBar__Label" i18n="Action of posting@@MINDS__POSTER__POST_ACTION">Post</span>
           <i class="material-icons m-posterActionBar__Icon">send</i>

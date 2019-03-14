@@ -120,6 +120,14 @@
       }
       .minds-button-edit{
         padding:0 $minds-padding;
+
+        & > button {
+          color: white;
+
+          &:hover {
+            color: white;
+          }
+        }
       }
 
     }

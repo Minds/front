@@ -3,6 +3,9 @@
 $layout-header-height: 52px;
 $layout-sidebar-width: 80px;
 
+.hidden {
+  display: none;
+}
 m-topbar{
   position:fixed;
   top:0;

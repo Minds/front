@@ -14,6 +14,9 @@ import { MindsChannelResponse } from '../../interfaces/responses';
 import { ChannelFeedComponent } from './feed/feed'
 import { ContextService } from '../../services/context.service';
 import { FeaturesService } from "../../services/features.service";
+import { PosterComponent } from '../newsfeed/poster/poster.component';
+import { Observable } from 'rxjs';
+import { DialogService } from  '../../common/services/confirm-leave-dialog.service'
 
 @Component({
   moduleId: module.id,
@@ -56,7 +59,8 @@ export class ChannelComponent {
     public features: FeaturesService,
     private route: ActivatedRoute,
     private recent: RecentService,
-    private context: ContextService
+    private context: ContextService,
+    private dialogService: DialogService
   ) { }
 
   ngOnInit() {
@@ -262,6 +266,23 @@ export class ChannelComponent {
 
     route.push(params);
     this.router.navigate(route);
+
+  }
+
+  /**
+    * canDeactivate() 
+    * Determines whether a page can be deactivated.
+    * In this instance, a confirmation is needed  from the user 
+    * when requesting a new page if editing === true
+    *   
+    * @returns { Observable<boolean> | boolean }    
+    */
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.editing) {
+      return true;
+    }
+
+    return this.dialogService.confirm('Discard changes?');
   }
 }
 

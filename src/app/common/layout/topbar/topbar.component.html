@@ -138,7 +138,7 @@
   </div>
 
 
-  <button class="m-btn m-btn--action m-btn--login m-btn--slim" *ngIf="!session.isLoggedIn()" [routerLink]="['/login']">
+  <button class="m-btn m-btn--action m-btn--login m-btn--slim" *ngIf="!session.isLoggedIn()" [routerLink]="['/login']" routerLinkActive="hidden">
     <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
   </button>
 </div>
