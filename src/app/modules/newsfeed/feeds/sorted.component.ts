@@ -15,6 +15,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { TopbarHashtagsService } from "../../hashtags/service/topbar.service";
 import { NewsfeedHashtagSelectorService } from "../services/newsfeed-hashtag-selector.service";
+import { FeedsService } from "../../../common/services/feeds.service";
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -29,7 +30,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   all: boolean = false;
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
-  offset: string = '';
+  offset: number = 0;
   inProgress: boolean = false;
   moreData: boolean = true;
   rating: number = 1;
@@ -59,6 +60,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected topbarHashtagsService: TopbarHashtagsService,
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
+    protected feedsService: FeedsService,
   ) {
     this.title.setTitle('Newsfeed');
 
@@ -159,43 +161,42 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
     if (refresh) {
       this.moreData = true;
-      this.offset = '';
+      this.offset = 0;
       this.newsfeed = [];
     }
 
     this.inProgress = true;
 
-    this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
-      limit: 12,
-      offset: this.offset || '',
-      rating: this.rating || '',
-      hashtags: this.hashtag ? [this.hashtag] : '',
-      period: this.period || '',
-      all: this.all ? 1 : '',
-      query: this.query || '',
-      nsfw: this.newsfeedService.nsfw,
-    }, {
-      cache: true
-    })
-      .then((data: any) => {
-        if (!data.entities || !data.entities.length) {
-          this.moreData = false;
-          this.inProgress = false;
-
-          return false;
-        }
-        if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.entities);
-        } else {
-          this.newsfeed = data.entities;
-        }
-        this.offset = data['load-next'];
-        this.inProgress = false;
-      })
-      .catch((e) => {
-        console.log(e);
-        this.inProgress = false;
+    try {
+      const { entities, next } = await this.feedsService.get({
+        filter: 'global',
+        algorithm: this.algorithm,
+        customType: this.customType,
+        limit: 12,
+        offset: this.offset,
+        hashtags: this.hashtag ? [this.hashtag] : null,
+        period: this.period,
+        all: this.all,
+        query: this.query || '',
+        nsfw: this.newsfeedService.nsfw,
       });
+
+      if (this.newsfeed && !refresh) {
+        this.newsfeed.push(...entities);
+      } else {
+        this.newsfeed = entities;
+      }
+
+      this.offset = next;
+
+      if (!this.offset) {
+        this.moreData = false;
+      }
+    } catch (e) {
+      console.error('SortedComponent', e);
+    }
+
+    this.inProgress = false;
   }
 
   delete(activity) {

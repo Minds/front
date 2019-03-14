@@ -17,6 +17,7 @@ import { FeaturesService } from "../../services/features.service";
 import { PosterComponent } from '../newsfeed/poster/poster.component';
 import { Observable } from 'rxjs';
 import { DialogService } from  '../../common/services/confirm-leave-dialog.service'
+import { BlockListService } from "../../common/services/block-list.service";
 
 @Component({
   moduleId: module.id,
@@ -60,7 +61,8 @@ export class ChannelComponent {
     private route: ActivatedRoute,
     private recent: RecentService,
     private context: ContextService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private blockListService: BlockListService,
   ) { }
 
   ngOnInit() {
@@ -221,6 +223,7 @@ export class ChannelComponent {
     this.client.delete('api/v1/block/' + this.user.guid, {})
       .then((response: any) => {
         this.user.blocked = false;
+        this.blockListService.remove(`${this.user.guid}`);
       })
       .catch((e) => {
         this.user.blocked = true;
@@ -235,6 +238,22 @@ export class ChannelComponent {
     this.recent
       .store('recent', this.user, (entry) => entry.guid == this.user.guid)
       .splice('recent', 50);
+  }
+
+  /**
+    * canDeactivate() 
+    * Determines whether a page can be deactivated.
+    * In this instance, a confirmation is needed  from the user 
+    * when requesting a new page if editing === true
+    *   
+    * @returns { Observable<boolean> | boolean }    
+    */
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.editing) {
+      return true;
+    }
+
+    return this.dialogService.confirm('Discard changes?');
   }
 
   setSort(algorithm: string, period: string | null, customType: string | null) {
@@ -266,24 +285,8 @@ export class ChannelComponent {
 
     route.push(params);
     this.router.navigate(route);
-
   }
 
-  /**
-    * canDeactivate() 
-    * Determines whether a page can be deactivated.
-    * In this instance, a confirmation is needed  from the user 
-    * when requesting a new page if editing === true
-    *   
-    * @returns { Observable<boolean> | boolean }    
-    */
-  canDeactivate(): Observable<boolean> | boolean {
-    if (!this.editing) {
-      return true;
-    }
-
-    return this.dialogService.confirm('Discard changes?');
-  }
 }
 
 export { ChannelSubscribers } from './subscribers/subscribers';

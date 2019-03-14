@@ -3,9 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
+import { EntitiesService } from "../../../common/services/entities.service";
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -23,12 +23,11 @@ export class NewsfeedSingleComponent {
   focusedCommentGuid: string = '';
 
   constructor(
-    public client: Client,
-    public upload: Upload,
     public router: Router,
     public route: ActivatedRoute,
     public context: ContextService,
-    public session: Session
+    public session: Session,
+    public entitiesService: EntitiesService,
   ) {
   }
 
@@ -57,10 +56,10 @@ export class NewsfeedSingleComponent {
   load(guid: string) {
     this.context.set('activity');
 
-    this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
-      .then((data: any) => {
+    this.entitiesService.single(guid)
+      .then((activity: any) => {
 
-        this.activity = data.activity;
+        this.activity = activity;
 
         switch (this.activity.subtype) {
           case 'image':

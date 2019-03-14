@@ -28,7 +28,7 @@ import { TooltipComponentMock } from '../../../../../mocks/common/components/too
 import { TokenPipe } from '../../../../../common/pipes/token.pipe';
 import { ExcerptPipe } from '../../../../../common/pipes/excerpt';
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
-import { EntitiesService } from "../../../../../services/entities.service";
+import { EntitiesService } from "../../../../../common/services/entities.service";
 import { entitiesServiceMock } from "../../../../../../tests/entities-service-mock.spec";
 /* tslint:disable */
 // START MOCKS

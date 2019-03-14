@@ -36,8 +36,10 @@ import { WebtorrentService } from '../modules/webtorrent/webtorrent.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
 import { HttpClient } from "@angular/common/http";
-import { EntitiesService } from "./entities.service";
+import { BlockListService } from "../common/services/block-list.service";
+import { EntitiesService } from "../common/services/entities.service";
 import { InMemoryStorageService } from "./in-memory-storage.service";
+import { FeedsService } from "../common/services/feeds.service";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -185,14 +187,24 @@ export const MINDS_PROVIDERS : any[] = [
     useFactory: WebtorrentService._,
     deps: WebtorrentService._deps,
   },
-  { 
+  {
     provide: TimeDiffService,
     useFactory: TimeDiffService._
+  },
+  {
+    provide: BlockListService,
+    useFactory: BlockListService._,
+    deps: [ Client, Session ],
   },
   {
     provide: EntitiesService,
     useFactory: EntitiesService._,
     deps: [ Client ],
+  },
+  {
+    provide: FeedsService,
+    useFactory: FeedsService._,
+    deps: [ Client, Session, EntitiesService, BlockListService ],
   },
   {
     provide: InMemoryStorageService,

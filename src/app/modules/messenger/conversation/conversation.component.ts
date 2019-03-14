@@ -9,6 +9,7 @@ import { MessengerEncryptionService } from '../encryption/encryption.service';
 
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
 import { MessengerSounds } from '../sounds/service';
+import { BlockListService } from "../../../common/services/block-list.service";
 
 @Component({
   moduleId: module.id,
@@ -71,6 +72,7 @@ export class MessengerConversation {
     private renderer: Renderer,
     public encryption: MessengerEncryptionService,
     public dockpanes: MessengerConversationDockpanesService,
+    protected blockListService: BlockListService,
   ) {
     this.buildTabId();
   }
@@ -304,8 +306,10 @@ export class MessengerConversation {
     this.conversation.participants.forEach((participant: any) => {
       if (this.blocked) {
         blocks.push(this.client.delete(`api/v1/block/${participant.guid}`, {}));
+        this.blockListService.remove(`${participant.guid}`);
       } else {
         blocks.push(this.client.put(`api/v1/block/${participant.guid}`, {}));
+        this.blockListService.add(`${participant.guid}`);
       }
     });
 

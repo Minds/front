@@ -10,7 +10,7 @@ import { BoostCreatorComponent } from '../../../../boost/creator/creator.compone
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
-import { EntitiesService } from "../../../../../services/entities.service";
+import { EntitiesService } from "../../../../../common/services/entities.service";
 import { Router } from "@angular/router";
 
 @Component({
