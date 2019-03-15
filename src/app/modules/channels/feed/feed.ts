@@ -145,6 +145,9 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     }
 
     let params: any = {
+      filter: 'global',
+      algorithm: this.algorithm,
+      customType: this.customType,
       container_guid: this.user.guid,
       limit: 12,
       offset: null,
@@ -157,11 +160,7 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     params.offset = this.offset;
 
     try {
-      const { entities, next } = await this.feedsService.get({
-        algorithm: this.algorithm,
-        customType: this.customType,
-        ...params,
-      });
+      const { entities, next } = await this.feedsService.get(params);
 
       if (!entities || !entities.length) {
         this.moreData = false;

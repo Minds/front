@@ -22,7 +22,7 @@ export type FeedsServiceSyncOptions = {
   limit?: number,
   offset?: number,
   hashtags?: string[],
-  all?: boolean,
+  all?: boolean | 1,
   query?: string,
   nsfw?: Array<number>,
 }

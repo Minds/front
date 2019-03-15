@@ -7,6 +7,8 @@ import { Session } from '../../../../services/session';
 import { PosterComponent } from '../../../newsfeed/poster/poster.component';
 import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
+import { FeaturesService } from "../../../../services/features.service";
+import { FeedsService } from "../../../../common/services/feeds.service";
 
 interface MindsGroupResponse {
   group: MindsGroup;
@@ -34,7 +36,7 @@ export class GroupsProfileFeed {
 
   activity: Array<any> = [];
   pinned: Array<any> = [];
-  offset: string = '';
+  offset: string|number = '';
   inProgress: boolean = false;
   moreData: boolean = true;
 
@@ -55,7 +57,14 @@ export class GroupsProfileFeed {
 
   @ViewChild('poster') private poster: PosterComponent;
 
-  constructor(public session: Session, public client: Client, public service: GroupsService, private route: ActivatedRoute) { }
+  constructor(
+    public session: Session,
+    public client: Client,
+    public service: GroupsService,
+    private route: ActivatedRoute,
+    protected featuresService: FeaturesService,
+    protected feedsService: FeedsService,
+  ) { }
 
   ngOnInit() {
     this.$group = this.service.$group.subscribe((group) => {
@@ -257,12 +266,59 @@ export class GroupsProfileFeed {
   }
 
   async loadSorted(refresh: boolean = false) {
+    if (this.featuresService.has('sync-feeds')) {
+      return await this.loadSortedFromFeedsService(refresh);
+    } else {
+      return await this.loadSortedLegacy(refresh);
+    }
+  }
+
+  async loadSortedFromFeedsService(refresh: boolean = false) {
+    try {
+      const { entities, next } = await this.feedsService.get({
+        filter: 'global',
+        algorithm: this.algorithm,
+        customType: this.customType,
+        period: this.period,
+        limit: 12,
+        offset: <number>this.offset,
+        container_guid: this.guid,
+        all: 1,
+      });
+
+      if (!entities || !entities.length) {
+        this.moreData = false;
+        this.inProgress = false;
+
+        return false;
+      }
+
+      if (refresh) {
+        this.activity = [];
+      }
+
+      this.activity.push(...entities);
+
+      this.offset = next;
+      this.inProgress = false;
+    } catch (e) {
+      console.log(e);
+      this.inProgress = false;
+    }
+  }
+
+  /**
+   * @deprecated
+   * @param refresh
+   */
+  async loadSortedLegacy(refresh: boolean = false) {
     try {
       const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
         limit: 12,
         offset: this.offset,
         period: this.period,
         container_guid: this.guid,
+        all: 1,
       }, {
         cache: true
       });
