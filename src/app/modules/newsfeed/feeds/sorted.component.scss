@@ -1,3 +1,44 @@
+@import "defaults";
+
+m-newsfeed--sorted {
+  .m-feeds-sorted__list {
+
+    &.m-feeds-sortedList__flex {
+      display: flex;
+      flex-direction: row;
+      flex-flow: row wrap;
+      max-width: 680px;
+      margin: auto;
+
+      m-newsfeed__entity {
+        display: contents;
+
+        m-channels--tile, m-groups--tile {
+          display: contents;
+        }
+
+        .m-channels--tile, .m-groups--tile {
+          margin: 0 4px 16px;
+          flex-basis: calc(50% - 16px);
+          max-width: calc(50% - 16px);
+
+          @media screen and (max-width: 500px) {
+            flex-basis: calc(100% - 16px);
+            max-width: calc(100% - 16px);
+          }
+        }
+      }
+    }
+
+  }
+}
+
+.m-feeds-sorted__query {
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 12px 4px;
+}
+
 .m-feeds-sorted__Filter {
   display: flex;
   flex-direction: row;
