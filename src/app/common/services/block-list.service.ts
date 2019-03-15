@@ -1,22 +1,39 @@
+import { Injectable } from "@angular/core";
 import { Client } from "../../services/api/client";
 import { Session } from "../../services/session";
+import Dexie from 'dexie';
+
 import AsyncLock from "../../helpers/async-lock";
-import Dexie from "dexie";
 
+import MindsClientHttpAdapter from "../../lib/minds-sync/adapters/MindsClientHttpAdapter.js";
+import DexieStorageAdapter from "../../lib/minds-sync/adapters/DexieStorageAdapter.js";
+import BlockListSync from "../../lib/minds-sync/services/BlockListSync.js";
+
+@Injectable()
 export class BlockListService {
-
-  protected db: Dexie;
-
   protected syncLock = new AsyncLock();
+
+  protected blockListSync: BlockListSync;
 
   constructor(
     protected client: Client,
     protected session: Session,
   ) {
-    this.db = new Dexie('minds_block');
+    this.blockListSync = new BlockListSync(
+      new MindsClientHttpAdapter(this.client),
+      new DexieStorageAdapter(new Dexie('minds-block-190314')),
+    );
 
-    this.db.version(2).stores({
-      list: '&guid'
+    this.blockListSync.setUp();
+
+    // Prune on session changes
+
+    this.session.isLoggedIn((is: boolean) => {
+      if (is) {
+        this.sync();
+      } else {
+        this.prune();
+      }
     });
   }
 
@@ -26,48 +43,33 @@ export class BlockListService {
     }
 
     this.syncLock.lock();
+    this.blockListSync.sync();
+    this.syncLock.unlock();
+  }
 
-    try {
-      const response: any = await this.client.get(`api/v1/block`, {
-        sync: 1,
-        limit: 10000,
-      });
-
-      if (!response || !response.guids) {
-        throw new Error('Invalid server response');
-      }
-
-      await this.prune();
-
-      const blockListDocs = response.guids.map(guid => ({
-        guid
-      }));
-
-      await this.db.table('list').bulkPut(blockListDocs);
-    } catch (e) {
-      console.warn(e);
+  async prune() {
+    if (this.syncLock.isLocked()) {
+      return false;
     }
 
+    this.syncLock.lock();
+    this.blockListSync.prune();
     this.syncLock.unlock();
   }
 
   async getList() {
     await this.syncLock.untilUnlocked();
-    return (await this.db.table('list').toArray()).map(row => row.guid);
+    return await this.blockListSync.getList();
   }
 
   async add(guid: string) {
     await this.syncLock.untilUnlocked();
-    return await this.db.table('list').put({ guid });
+    return await this.blockListSync.add(guid);
   }
 
   async remove(guid: string) {
     await this.syncLock.untilUnlocked();
-    return await this.db.table('list').delete(guid);
-  }
-
-  protected async prune() {
-    this.db.table('list').clear();
+    return await this.blockListSync.remove(guid);
   }
 
   static _(client: Client, session: Session) {

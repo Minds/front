@@ -2,19 +2,32 @@ import { Injectable } from "@angular/core";
 import { Client } from "../../services/api";
 import Dexie from 'dexie';
 
-const STALE_AFTER = 2 * 60; // 2 minutes cache
+import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
+import DexieStorageAdapter from '../../lib/minds-sync/adapters/DexieStorageAdapter.js';
+import EntitiesSync from '../../lib/minds-sync/services/EntitiesSync.js';
 
 @Injectable()
 export class EntitiesService {
+
   protected db: Dexie;
+
+  protected entitiesSync: EntitiesSync;
 
   constructor(
     protected client: Client
   ) {
-    this.db = new Dexie('minds_entities');
-    this.db.version(2).stores({
-      entities: '&urn'
-    });
+    this.entitiesSync = new EntitiesSync(
+      new MindsClientHttpAdapter(this.client),
+      new DexieStorageAdapter(new Dexie('minds-entities-190314')),
+      15,
+    );
+
+    this.entitiesSync.setUp();
+
+    // Garbage collection
+
+    this.entitiesSync.gc();
+    setTimeout(() => this.entitiesSync.gc(), 15 * 60 * 1000); // Every 15 minutes
   }
 
   async single(guid: string): Promise<Object | false> {
@@ -32,81 +45,24 @@ export class EntitiesService {
     }
   }
 
-  async fetch(guids: string[], opts: { prefetch?: boolean } = {}): Promise<Object[]> {
+  async fetch(guids: string[]): Promise<Object[]> {
     if (!guids || !guids.length) {
       return [];
     }
 
     const urns = guids.map(guid => `urn:entity:${guid}`);
 
-    const wasSynced = await this.sync(urns);
-
-    if (!wasSynced) {
-      console.info('Cannot sync, using cache');
-    }
-
-    if (opts.prefetch) {
-      return [];
-    }
-
-    // Fetch entity as-is on DB
-
-    const entities = await this.db.table('entities')
-      .where('urn').anyOf(urns)
-      .toArray();
-
-    // Sort and filter
-
-    const result = urns
-      .map(urn => entities.find(entity => entity.urn === urn))
-      .filter(entity => Boolean(entity));
-
-    //
-
-    return result;
+    return await this.entitiesSync.get(urns);
   }
 
-  async sync(urns: string[]): Promise<boolean> {
-    if (!urns || !urns.length) {
+  async prefetch(guids: string[]): Promise<boolean> {
+    if (!guids || !guids.length) {
       return true;
     }
 
-    // Only sync stale entities
+    const urns = guids.map(guid => `urn:entity:${guid}`);
 
-    const cachedEntities = await this.db.table('entities')
-      .where('urn').anyOf(urns)
-      .toArray();
-
-    urns = urns.filter(urn => {
-      const cached = cachedEntities.find(entity => entity.urn === urn);
-      return !cached || !cached._sync || (cached._sync + (STALE_AFTER * 1000)) < Date.now();
-    });
-
-    if (!urns || !urns.length) {
-      return true;
-    }
-
-    //
-
-    try {
-      const { entities }: any = await this.client.get('api/v2/entities', {
-        urns,
-        as_activities: 1,
-      }, { cache: true });
-
-      const entityDocs = entities.map(entity => ({
-        ...entity,
-        urn: `urn:entity:${entity.guid}`,
-        _sync: Date.now(),
-      }));
-
-      await this.db.table('entities').bulkPut(entityDocs);
-    } catch (e) {
-      console.warn('EntitiesService.fetch', e);
-      return false;
-    }
-
-    return true;
+    return await this.entitiesSync.sync(urns);
   }
 
   static _(client: Client) {
