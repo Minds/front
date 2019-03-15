@@ -1,19 +1,23 @@
 import { Injectable } from "@angular/core";
+import Dexie from 'dexie';
+
 import { Client } from "../../services/api/client";
-import hashCode from "../../helpers/hash-code";
 import { Session } from "../../services/session";
+
 import { EntitiesService } from "./entities.service";
 import { BlockListService } from "./block-list.service";
-import Dexie from 'dexie';
 
 import MindsClientHttpAdapter from "../../lib/minds-sync/adapters/MindsClientHttpAdapter.js";
 import DexieStorageAdapter from "../../lib/minds-sync/adapters/DexieStorageAdapter.js";
 import FeedsSync from '../../lib/minds-sync/services/FeedsSync.js';
 
+import hashCode from "../../helpers/hash-code";
+
 export type FeedsServiceSyncOptions = {
   filter: string,
   algorithm: string,
   customType: string,
+  container_guid?: string,
   period?: string,
   limit?: number,
   offset?: number,

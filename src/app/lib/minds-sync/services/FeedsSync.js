@@ -151,6 +151,7 @@ export default class FeedsSync {
       const response = await this.http.get(`api/v2/feeds/global/${opts.algorithm}/${opts.customType}`, {
         sync: 1,
         limit: this.limit,
+        container_guid: opts.container_guid || '',
         period: opts.period || '',
         hashtags: opts.hashtags || '',
         all: opts.all ? 1 : '',
@@ -220,6 +221,7 @@ export default class FeedsSync {
 
     return await this.resolvers.stringHash(JSON.stringify([
       userGuid,
+      opts.container_guid || '',
       opts.algorithm || '',
       opts.customType || '',
       opts.period || '',
