@@ -97,7 +97,7 @@ export class SearchBarComponent {
     }
 
     if (this.featureService.has('top-feeds')) {
-      this.router.navigate(['/newsfeed/global/top', { query: this.q } ]);
+      this.router.navigate(['/newsfeed/global/top', { query: this.q, period: '24h' } ]);
     } else {
       this.router.navigate(['search', qs]);
     }
