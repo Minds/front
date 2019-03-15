@@ -133,3 +133,8 @@ m-notifications--topbar-toggle{
     z-index: 998;
   }
 }
+
+.m-v2-topbar__UserMenu m-notifications--topbar-toggle .m-notifications--topbar-toggle--icon--active::after {
+  top: -12px;
+  right: 0px;
+}
