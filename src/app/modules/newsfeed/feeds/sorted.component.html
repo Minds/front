@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <div class="m-feeds-sorted__List">
+  <div class="m-feeds-sorted__List" [class.m-feeds-sortedList__flex]="customType == 'channels' || customType == 'groups'">
     <m-newsfeed__entity
       *ngFor="let entity of newsfeed"
       [entity]="entity"
