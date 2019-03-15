@@ -16,6 +16,7 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { TopbarHashtagsService } from "../../hashtags/service/topbar.service";
 import { NewsfeedHashtagSelectorService } from "../services/newsfeed-hashtag-selector.service";
 import { FeedsService } from "../../../common/services/feeds.service";
+import { FeaturesService } from "../../../services/features.service";
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -61,6 +62,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected topbarHashtagsService: TopbarHashtagsService,
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
     protected feedsService: FeedsService,
+    protected featuresService: FeaturesService,
   ) {
     this.title.setTitle('Newsfeed');
 
@@ -153,12 +155,24 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Load newsfeed
+   * @param {Boolean} refresh
    */
   async load(refresh: boolean = false) {
-    if (this.inProgress)
+    if (this.inProgress) {
       return false;
+    }
 
+    if (this.featuresService.has('sync-feeds')) {
+      return await this.loadFromFeedsService(refresh);
+    } else {
+      return await this.loadLegacy(refresh);
+    }
+  }
+
+  /**
+   * @param {Boolean} refresh
+   */
+  async loadFromFeedsService(refresh: boolean = false) {
     if (refresh) {
       this.moreData = true;
       this.offset = 0;
@@ -197,6 +211,52 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     }
 
     this.inProgress = false;
+  }
+
+  /**
+   * @deprecated
+   * @param {Boolean} refresh
+   */
+  loadLegacy(refresh: boolean = false) {
+    if (refresh) {
+      this.moreData = true;
+      this.offset = null;
+      this.newsfeed = [];
+    }
+
+    this.inProgress = true;
+
+    this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
+      limit: 12,
+      offset: this.offset || '',
+      rating: this.rating || '',
+      hashtags: this.hashtag ? [this.hashtag] : '',
+      period: this.period || '',
+      all: this.all ? 1 : '',
+      query: this.query || '',
+      nsfw: this.newsfeedService.nsfw,
+    }, {
+      cache: true
+    })
+      .then((data: any) => {
+        if (!data.entities || !data.entities.length) {
+          this.moreData = false;
+          this.inProgress = false;
+
+          return false;
+        }
+        if (this.newsfeed && !refresh) {
+          this.newsfeed = this.newsfeed.concat(data.entities);
+        } else {
+          this.newsfeed = data.entities;
+        }
+        this.offset = data['load-next'];
+        this.inProgress = false;
+      })
+      .catch((e) => {
+        console.log(e);
+        this.inProgress = false;
+      });
   }
 
   delete(activity) {
