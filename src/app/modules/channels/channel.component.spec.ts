@@ -1,7 +1,7 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { MockComponent, MockDirective } from '../../utils/mock';
+import { MockComponent, MockDirective, MockService } from '../../utils/mock';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -29,6 +29,7 @@ import { from } from 'rxjs/internal/observable/from';
 import { IfFeatureDirective } from "../../common/directives/if-feature.directive";
 import { FeaturesService } from "../../services/features.service";
 import { featuresServiceMock } from "../../../tests/features-service-mock.spec";
+import { BlockListService } from '../../common/services/block-list.service';
 
 describe('ChannelComponent', () => {
 
@@ -91,6 +92,7 @@ describe('ChannelComponent', () => {
         { provide: ContextService, useValue: contextServiceMock},
         { provide: ActivatedRoute, useValue: { 'params': from([{ 'filter': 'feed', 'username': 'username' }]) } },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: BlockListService, useValue: MockService(BlockListService) }
       ]
     })
       .compileComponents();  // compile template and css
@@ -105,6 +107,7 @@ describe('ChannelComponent', () => {
     clientMock.response = {};
     uploadMock.response = {};
     featuresServiceMock.mock('top-feeds', false);
+    featuresServiceMock.mock('channel-filter-feeds', false);
     comp = fixture.componentInstance;
     comp.username = 'username';
     comp.user = { guid: 'guidguid', name: 'name', username: 'username', icontime: 11111, subscribers_count:182, impressions:18200};

@@ -48,7 +48,6 @@ export class TagsPipe implements PipeTransform  {
 
   constructor(
     private featureService: FeaturesService,
-    private sanitizer: DomSanitizer,
   ) { }
 
   /**

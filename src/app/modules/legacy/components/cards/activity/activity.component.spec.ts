@@ -1,6 +1,6 @@
 ///<reference path="../../../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement, Directive, EventEmitter, Input, Output } from '@angular/core';
+import { Component, DebugElement, Directive, EventEmitter, Input, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { Activity } from './activity';
 import { FormsModule } from '@angular/forms';
@@ -30,6 +30,11 @@ import { ExcerptPipe } from '../../../../../common/pipes/excerpt';
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 import { EntitiesService } from "../../../../../common/services/entities.service";
 import { entitiesServiceMock } from "../../../../../../tests/entities-service-mock.spec";
+import { MockComponent, MockDirective, MockService } from '../../../../../utils/mock';
+import { IfFeatureDirective } from '../../../../../common/directives/if-feature.directive';
+import { NSFWSelectorConsumerService } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
+import { FeaturesService } from '../../../../../services/features.service';
+
 /* tslint:disable */
 // START MOCKS
 @Component({
@@ -412,6 +417,8 @@ describe('Activity', () => {
     return fixture.debugElement.query(By.css(`.m-activity--metrics .m-activity--metrics-metric:nth-child(${i}) > span`));
   }
 
+  let NSFWSelectorServiceMock:any = MockService(NSFWSelectorConsumerService, {});
+
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
@@ -448,6 +455,19 @@ describe('Activity', () => {
         Activity,
         TokenPipe,
         SafeToggleComponentMock,
+        MockComponent({ 
+          selector: 'm-nsfw-selector',
+          inputs: [ 'selected' ],
+          outputs: [ 'selected'],
+        }),
+        MockDirective({
+          selector: '[mIfFeature]',
+          inputs: [ 'mIfFeature' ],
+        }),
+        MockDirective({
+          selector: '[mIfFeatureElse]',
+          inputs: [ 'mIfFeatureElse' ],
+        }),
       ], // declare the test component
       imports: [
         RouterTestingModule,
@@ -461,8 +481,17 @@ describe('Activity', () => {
         { provide: TranslationService, useValue: translationServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: EntitiesService, useValue: entitiesServiceMock },
+        {
+          provide: NSFWSelectorConsumerService,
+          useValue: NSFWSelectorServiceMock,
+        },
+        {
+          provide: FeaturesService,
+          useValue: MockService(FeaturesService),
+        },
         NewsfeedService,
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();  // compile template and css
   }));

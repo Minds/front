@@ -14,6 +14,7 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BlockListService } from '../../services/block-list.service';
 /* tslint:disable */
 
 /* Mock section */
@@ -92,7 +93,8 @@ describe('PostMenuComponent', () => {
         { provide: SignupModalService, useValue: scrollServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock }
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        BlockListService,
       ]
     })
       .compileComponents();  // compile template and css
