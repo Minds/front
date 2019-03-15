@@ -336,6 +336,11 @@ export class AttachmentService {
       return false;
     }
 
+    if (typeof object.nsfw !== 'undefined') {
+      let res = [ 1, 2, 4 ].filter(nsfw => { return object.nsfw.indexOf(nsfw) > -1}).length;
+      if (res) return true;
+    }
+
     if (typeof object.flags !== 'undefined') {
       return !!object.flags.mature;
     }

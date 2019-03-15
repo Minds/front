@@ -31,6 +31,12 @@ export class NSFWSelectorComponent {
     return this.consumer ? this.consumerService.build() : this.creatorService.build();
   }
 
+  @Input('selected') set selected(selected: Array<number>) {
+    for (let i in this.service.reasons) {
+      this.creatorService.reasons[i].selected = selected.indexOf(this.creatorService.reasons[i].value) > -1;
+    }
+  }
+
   toggle(reason) {
     this.service.toggle(reason);
 

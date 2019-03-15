@@ -141,7 +141,9 @@ export class Activity {
     console.log('trying to save your changes to the server', this.activity);
     this.editing = false;
     this.activity.edited = true;
-    this.client.post('api/v1/newsfeed/' + this.activity.guid, this.activity);
+
+    let data = Object.assign(this.activity, this.attachment.exportMeta());
+    this.client.post('api/v1/newsfeed/' + this.activity.guid, data);
   }
 
   delete($event: any = {}) {
@@ -311,6 +313,10 @@ export class Activity {
           this.activity.custom_data.mature = oldValue;
         }
       });
+  }
+
+  onNSWFSelections(reasons: Array<{ value, label, selected}>) {
+    this.attachment.setNSFW(reasons);
   }
 
   private viewed:boolean = false;
