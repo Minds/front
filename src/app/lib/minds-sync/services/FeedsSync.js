@@ -31,10 +31,11 @@ export default class FeedsSync {
     this.db.schema(2, {
       feeds: {
         primaryKey: 'id',
-        indexes: ['*key']
+        indexes: ['*key'],
       },
       syncAt: {
         primaryKey: 'key',
+        indexes: ['sync'],
       },
     });
 
@@ -229,7 +230,17 @@ export default class FeedsSync {
     ]));
   }
 
+  /**
+   * @returns {Promise<boolean>}
+   */
   async gc() {
+    const maxTimestamp = Date.now() - (this.stale_after_ms * 10);
 
+    await Promise.all(
+      (await this.db.getAllLesserThan('syncAt', 'sync', maxTimestamp))
+        .map(row => this.prune(row.key))
+    );
+
+    return true;
   }
 }

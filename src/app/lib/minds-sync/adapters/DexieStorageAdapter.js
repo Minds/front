@@ -138,6 +138,18 @@ export default class DexieStorageAdapter {
   }
 
   /**
+   * @param {String} table
+   * @param {String} field
+   * @param {String|Number} value
+   * @returns {Promise<Array<any>>}
+   */
+  async getAllLesserThan(table, field, value) {
+    return await this.db.table(table)
+      .where(field).below(value)
+      .toArray();
+  }
+
+  /**
    * @param {string} table
    * @returns {Promise<*[]>}
    */
