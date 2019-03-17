@@ -93,6 +93,7 @@ describe('NewsfeedSingleComponent', () => {
     };
 
     sessionMock.user.admin = false;
+    featuresServiceMock.mock('sync-feeds', false);
 
     fixture.detectChanges();
 
