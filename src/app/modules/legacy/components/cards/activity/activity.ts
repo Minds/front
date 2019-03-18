@@ -65,7 +65,7 @@ export class Activity {
       if (this.showBoostMenuOptions)  {
         return ['edit', 'translate', 'share', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
       } else {
-        return ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
+        return ['edit', 'translate', 'share', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
       }
     } else {
       return ['view', 'translate', 'share', 'follow', 'feature', 'report', 'set-explicit', 'block', 'rating']
