@@ -243,24 +243,14 @@ export class BlogEdit {
           });
       })
         .catch(() => {
-          this.client.post('api/v1/blog/' + this.guid, this.blog)
-            .then((response: any) => {
-              if (response.guid) {
-                this.router.navigate(response.route ? ['/' + response.route]: ['/blog/view', response.guid]);
-              }
-              this.inProgress = false;
-              this.canSave = true;
-            })
-            .catch((e) => {
-              this.inProgress = false;
-              this.canSave = true;
-            });
+          this.error = 'error:no-banner';
+          this.inProgress = false;
+          this.canSave = true;
         });
     })
   }
 
   add_banner(banner: any) {
-    var self = this;
     this.banner = banner.file;
     this.blog.header_top = banner.top;
   }
@@ -274,6 +264,8 @@ export class BlogEdit {
       if (this.banner)
         return resolve(true);
       setTimeout(() => {
+        this.banner_prompt = false;
+
         if (this.banner)
           return resolve(true);
         else
