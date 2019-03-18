@@ -241,13 +241,15 @@
     </div> <!-- END INFO WRAPPER -->
 
     <div class="m-group-profile__Filter m-border" *mIfFeature="'top-feeds'; else legacyFilter">
-      <m-sort-selector
-        [algorithm]="algorithm"
-        [period]="period"
-        [customType]="customType"
-        [hideCustomTypesOnLatest]="['blogs']"
-        (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
-      ></m-sort-selector>
+      <ng-container *ngIf="false">
+        <m-sort-selector
+          [algorithm]="algorithm"
+          [period]="period"
+          [customType]="customType"
+          [hideCustomTypesOnLatest]="['blogs']"
+          (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
+        ></m-sort-selector>
+     </ng-container>
     </div>
     <ng-template #legacyFilter>
       <m-groups--filter-selector
