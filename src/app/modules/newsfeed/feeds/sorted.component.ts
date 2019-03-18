@@ -75,11 +75,11 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     });
 
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(() => {
-      this.load(true);
+      this.load(true, true);
     });
 
     this.selectionChangeSubscription = this.topbarHashtagsService.selectionChange.subscribe(() => {
-      this.load(true);
+      this.load(true, true);
     });
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -159,14 +159,15 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
   /**
    * @param {Boolean} refresh
+   * @param {Boolean} forceSync
    */
-  async load(refresh: boolean = false) {
+  async load(refresh: boolean = false, forceSync: boolean = false) {
     if (this.inProgress) {
       return false;
     }
 
     if (this.featuresService.has('sync-feeds')) {
-      return await this.loadFromFeedsService(refresh);
+      return await this.loadFromFeedsService(refresh, forceSync);
     } else {
       return await this.loadLegacy(refresh);
     }
@@ -174,8 +175,15 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
   /**
    * @param {Boolean} refresh
+   * @param {Boolean} forceSync
    */
-  async loadFromFeedsService(refresh: boolean = false) {
+  async loadFromFeedsService(refresh: boolean = false, forceSync: boolean = false) {
+    if (forceSync) {
+      // TODO: Find a selective way to do it, in the future
+      await this.feedsService.destroy();
+      refresh = true;
+    }
+
     if (refresh) {
       this.moreData = true;
       this.offset = 0;
@@ -196,6 +204,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
         all: this.all,
         query: this.query || '',
         nsfw: this.newsfeedService.nsfw,
+        forceSync: forceSync,
       });
 
       if (this.newsfeed && !refresh) {

@@ -100,14 +100,16 @@
           <i class="material-icons">shopping_cart</i>
           <span>Buy Tokens</span>
         </a>
-    
-        <a class="m-page--sidebar--navigation--item"
-          routerLink="/wallet"
-          *ngIf="session.isLoggedIn()"
-        >
-          <i class="material-icons">account_balance</i>
-          <span>Wallet</span>
-        </a>
+
+        <ng-container *mIfFeature="'!top-feeds'">
+          <a class="m-page--sidebar--navigation--item"
+            routerLink="/wallet"
+            *ngIf="session.isLoggedIn()"
+          >
+            <i class="material-icons">account_balance</i>
+            <span>Wallet</span>
+          </a>
+        </ng-container>
 
         <a class="m-page--sidebar--navigation--item"
           routerLink="/login"

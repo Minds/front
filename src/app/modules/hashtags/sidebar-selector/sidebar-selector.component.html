@@ -26,13 +26,17 @@
     <h3 i18n>Hashtags</h3>
 
     <span class="m-hashtagsSidebarSelector__SwitchComponent">
-    <span
-      *ngIf="disabled"
-      class="m-hashtagsSidebarSelectorSwitchComponent__Overlay"
-      (click)="switchAttempt.next()"
-    ></span>
-    <m-switch [(mModel)]="preferred" (change)="preferredChange()" [disabled]="disabled" labelPosition="left" i18n>Preferred</m-switch>
-  </span>
+      <span
+        *ngIf="disabled"
+        class="m-hashtagsSidebarSelectorSwitchComponent__Overlay"
+        (click)="switchAttempt.next()"
+      ></span>
+      <m-switch [(mModel)]="preferred" (change)="preferredChange()" [disabled]="disabled" labelPosition="left" i18n>Preferred</m-switch>
+    </span>
+  </div>
+
+  <div class="m-hashtagsSidebarSelector__spinner" *ngIf="loading">
+    <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]></div>
   </div>
 
   <div class="m-hashtagsSidebarSelector__list">
@@ -61,7 +65,7 @@
       </span>
       </li>
 
-      <li *ngIf="!disabled && !loading && (!hasBelowTheFoldHashtags || showAll)">
+      <li *ngIf="initialized && !disabled && (!hasBelowTheFoldHashtags || showAll)">
         <input
           type="text"
           class="m-hashtagsSidebarSelectorList__addInput"
@@ -86,10 +90,15 @@
       </li>
     </ul>
 
-    <a (click)="toggleShowAll()" *ngIf="hasBelowTheFoldHashtags" class="m-hashtagsSidebarSelector__showMoreLink">
-      <ng-container *ngIf="showAll; else showLess" i18n>Show less</ng-container>
-      <ng-template #showLess i18n>Show more</ng-template>
+    <a (click)="toggleTrending()" class="m-hashtagsSidebarSelector__showMoreLink">
+      <ng-container *ngIf="showTrending; else showTrendingTextTemplate" i18n>Show suggested</ng-container>
+      <ng-template #showTrendingTextTemplate i18n>Show trending</ng-template>
     </a>
+
+    <!--<a (click)="toggleShowAll()" *ngIf="hasBelowTheFoldHashtags" class="m-hashtagsSidebarSelector__showMoreLink">-->
+      <!--<ng-container *ngIf="showAll; else showLess" i18n>Show less</ng-container>-->
+      <!--<ng-template #showLess i18n>Show more</ng-template>-->
+    <!--</a>-->
   </div>
 </div>
 
