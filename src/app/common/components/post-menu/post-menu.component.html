@@ -43,6 +43,16 @@
     <li class="mdl-menu__item" [hidden]="entity.mature" (click)="setExplicit(true)" i18n="@@COMMON__POST_MENU__SET_AS_EXPLICIT">Set as Explicit</li>
     <li class="mdl-menu__item" [hidden]="!entity.mature" (click)="setExplicit(false)" i18n="@@COMMON__POST_MENU__REMOVE_EXPLICIT">Remove Explicit</li>
   </ng-container>
+  <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && session.isAdmin()">
+    <li class="mdl-menu__item m-postMenu__item--nsfw">
+      <m-nsfw-selector
+        service="editing"
+        [selected]="entity.nsfw"
+        (selected)="onNSFWSelected($event)"
+      >
+      </m-nsfw-selector>
+    </li>
+  </ng-container>
   <ng-container *ngIf="options.indexOf('rating') !== -1 && session.isAdmin()">
     <li class="mdl-menu__item" [hidden]="entity.rating === 1" (click)="setRating(1)" i18n="@@COMMON__POST_MENU__MARK_AS_SAFE">Mark as Safe</li>
     <li class="mdl-menu__item" [hidden]="entity.rating === 2" (click)="setRating(2)" i18n="@@COMMON__POST_MENU__MARK_AS_OPEN">Mark as Open</li>

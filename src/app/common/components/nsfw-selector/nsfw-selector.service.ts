@@ -47,3 +47,11 @@ export class NSFWSelectorCreatorService extends NSFWSelectorService {
 export class NSFWSelectorConsumerService extends NSFWSelectorService { 
   cacheKey: string = 'consumer';
 }
+export class NSFWSelectorEditingService extends NSFWSelectorService {
+  cacheKey: string = 'editing';
+
+  build(): NSFWSelectorService {
+    return this;
+  }
+
+}

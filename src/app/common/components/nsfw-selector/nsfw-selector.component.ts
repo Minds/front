@@ -7,6 +7,7 @@ import {
 import { 
   NSFWSelectorCreatorService,
   NSFWSelectorConsumerService,
+  NSFWSelectorEditingService,
 } from './nsfw-selector.service';
 import { Storage } from '../../../services/storage';
 
@@ -17,23 +18,30 @@ import { Storage } from '../../../services/storage';
 
 export class NSFWSelectorComponent {
 
+  @Input('service') serviceRef: string = 'consumer';
   @Input('consumer') consumer: false;
   @Output('selected') onSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(
     public creatorService: NSFWSelectorCreatorService,
     public consumerService: NSFWSelectorConsumerService,
+    private editingService: NSFWSelectorEditingService,
     private storage: Storage,
   ) {
   }
 
   get service() {
+    switch (this.serviceRef) {
+      case 'editing':
+        return this.editingService.build();
+        break;
+    }
     return this.consumer ? this.consumerService.build() : this.creatorService.build();
   }
 
   @Input('selected') set selected(selected: Array<number>) {
     for (let i in this.service.reasons) {
-      this.creatorService.reasons[i].selected = selected.indexOf(this.creatorService.reasons[i].value) > -1;
+      this.service.reasons[i].selected = selected.indexOf(this.service.reasons[i].value) > -1;
     }
   }
 
