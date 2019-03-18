@@ -322,4 +322,11 @@ export class PostMenuComponent {
       });
     this.selectOption('rating');
   }
+
+  onNSFWSelected(reasons: Array<{ label, value, selected}>) {
+    const nsfw = reasons.map(reason => reason.value);
+    this.client.post(`api/v2/admin/nsfw/${this.entity.guid}`, { nsfw });
+    this.entity.nsfw = nsfw;
+  }
+
 }

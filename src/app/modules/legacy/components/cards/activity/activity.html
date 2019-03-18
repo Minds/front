@@ -76,6 +76,7 @@
 
     <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
         <m-nsfw-selector
+          service="editing"
           [selected]="activity.nsfw"
           (selected)="onNSWFSelections($event)"
         >

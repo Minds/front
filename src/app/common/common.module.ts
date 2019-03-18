@@ -26,6 +26,7 @@ import {
   NSFWSelectorService,
   NSFWSelectorConsumerService,
   NSFWSelectorCreatorService,
+  NSFWSelectorEditingService,
 } from './components/nsfw-selector/nsfw-selector.service';
 
 import { Scheduler } from './components/scheduler/scheduler';
@@ -287,7 +288,12 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
       provide: NSFWSelectorConsumerService,
       useFactory: (_storage) => new NSFWSelectorConsumerService(_storage),
       deps: [ Storage ],
-    }, 
+    },
+    {
+      provide: NSFWSelectorEditingService,
+      useFactory: (_storage) => new NSFWSelectorEditingService(_storage),
+      deps: [ Storage ],
+    },
   ],
   entryComponents: [
     NotificationsToasterComponent
