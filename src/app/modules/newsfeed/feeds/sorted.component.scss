@@ -26,6 +26,14 @@ m-newsfeed--sorted {
             flex-basis: calc(100% - 16px);
             max-width: calc(100% - 16px);
           }
+
+          .body {
+            & h3, & span {
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            }
+          }
         }
       }
     }
