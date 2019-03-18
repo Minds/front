@@ -28,10 +28,12 @@ export class SidebarSelectorComponent implements OnInit {
   @Output() filterChange: EventEmitter<SideBarSelectorChange> = new EventEmitter<SideBarSelectorChange>();
   @Output() switchAttempt: EventEmitter<any> = new EventEmitter<any>();
 
+  initialized: boolean = false;
   hashtags: Tag[] = [];
-  showAll: boolean = false;
+  showAll: boolean = true;
   loading: boolean;
   showExtendedList: boolean = false;
+  showTrending: boolean = false;
 
   protected lastPreferredEmission: boolean;
 
@@ -43,7 +45,14 @@ export class SidebarSelectorComponent implements OnInit {
 
   ngOnInit() {
     this.lastPreferredEmission = this.preferred;
-    this.load();
+    this.init();
+  }
+
+  async init() {
+    await this.load();
+
+    this.initialized = true;
+    this.detectChanges();
   }
 
   async load() {
@@ -52,9 +61,9 @@ export class SidebarSelectorComponent implements OnInit {
 
     try {
       this.hashtags = await this.topbarHashtagsService.loadAll({
-        softLimit: 20,
-        trending: true,
-        defaults: true,
+        softLimit: 25,
+        trending: this.showTrending,
+        defaults: !this.showTrending,
       });
     } catch (e) {
       console.error('SidebarSelector', e);
@@ -162,6 +171,13 @@ export class SidebarSelectorComponent implements OnInit {
 
   closeExtendedList() {
     this.showExtendedList = false;
+  }
+
+  toggleTrending() {
+    this.showTrending = !this.showTrending;
+    this.hashtags = [];
+
+    this.load();
   }
 
   detectChanges() {

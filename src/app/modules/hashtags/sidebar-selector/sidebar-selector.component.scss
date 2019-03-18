@@ -45,6 +45,11 @@ m-hashtags--sidebar-selector {
 
   }
 
+  .m-hashtagsSidebarSelector__spinner {
+    margin: 16px 0;
+    text-align: center;
+  }
+
   .m-hashtagsSidebarSelector__list {
     > ul {
       margin: 0;
