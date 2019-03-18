@@ -289,11 +289,6 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
       useFactory: (_storage) => new NSFWSelectorConsumerService(_storage),
       deps: [ Storage ],
     },
-    {
-      provide: NSFWSelectorEditingService,
-      useValue: (_storage) => new NSFWSelectorEditingService(_storage),
-      deps: [ Storage ],
-    },
   ],
   entryComponents: [
     NotificationsToasterComponent

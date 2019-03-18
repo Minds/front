@@ -14,6 +14,13 @@ import { Storage } from '../../../services/storage';
 @Component({
   selector: 'm-nsfw-selector',
   templateUrl: 'nsfw-selector.component.html',
+  providers: [
+    {
+      provide: NSFWSelectorEditingService,
+      useFactory: (_storage) => new NSFWSelectorEditingService(_storage),
+      deps: [ Storage ],
+    },
+  ],
 })
 
 export class NSFWSelectorComponent {
