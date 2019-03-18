@@ -56,7 +56,7 @@ export default class FeedsSync {
   }
 
   /**
-   * @param opts
+   * @param {Object} opts
    * @returns {Promise<{next: Number, entities: *[]}>}
    */
   async get(opts) {
@@ -64,9 +64,9 @@ export default class FeedsSync {
 
     const key = await this.buildKey(opts);
 
-    // If it's the first page, attempt to sync
+    // If it's the first page or a forced refresh is needed, attempt to sync
 
-    if (!opts.offset) {
+    if (!opts.offset || opts.forceSync) {
       const wasSynced = await this.sync(opts);
 
       if (!wasSynced) {
@@ -140,9 +140,12 @@ export default class FeedsSync {
 
     // Is sync needed?
 
-    const lastSync = await this.db.get('syncAt', key);
-    if (lastSync && lastSync.sync && (lastSync.sync + this.stale_after_ms) >= Date.now()) {
-      return true;
+    if (!opts.forceSync) {
+      const lastSync = await this.db.get('syncAt', key);
+
+      if (lastSync && lastSync.sync && (lastSync.sync + this.stale_after_ms) >= Date.now()) {
+        return true;
+      }
     }
 
     // Sync
@@ -204,6 +207,23 @@ export default class FeedsSync {
 
       await this.db
         .delete('syncAt', key);
+
+      return true;
+    } catch (e) {
+      console.error('FeedsSync.prune', e);
+      throw e;
+    }
+  }
+
+  /**
+   * @returns {Promise<boolean>}
+   */
+  async destroy() {
+    try {
+      await Promise.all([
+        this.db.truncate('feeds'),
+        this.db.truncate('syncAt'),
+      ]);
 
       return true;
     } catch (e) {

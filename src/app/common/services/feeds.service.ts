@@ -19,12 +19,15 @@ export type FeedsServiceSyncOptions = {
   customType: string,
   container_guid?: string,
   period?: string,
-  limit?: number,
-  offset?: number,
   hashtags?: string[],
   all?: boolean | 1,
   query?: string,
   nsfw?: Array<number>,
+
+  //
+  limit?: number,
+  offset?: number,
+  forceSync?: boolean,
 }
 
 export type FeedsServiceGetResponse = {
@@ -78,6 +81,10 @@ export class FeedsService {
       console.error('FeedsService.get', e);
       throw e;
     }
+  }
+
+  async destroy() {
+    return await this.feedsSync.destroy();
   }
 
   static _(
