@@ -115,16 +115,19 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
         case 'single':
           this.hashtag = value;
           this.all = false;
+          this.query = '';
           break;
 
         case 'all':
           this.hashtag = null;
           this.all = true;
+          this.query = '';
           break;
 
         case 'preferred':
           this.hashtag = null;
           this.all = false;
+          this.query = '';
           break;
       }
 
@@ -313,6 +316,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     }
 
     if (this.query) {
+      params.hashtag = null;
       params.query = this.query;
     }
 
