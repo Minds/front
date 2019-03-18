@@ -2,14 +2,16 @@
 
   <m-dropdown class="m-topbar--navigation--options" #dropdown>
     <label
-      class="m-btn m-btn--slim m-btn m-btn--with-icon m-hashtags-selector--toggle"
+      [ngClass]="buttonClass"
+      class="m-hashtags-selector--toggle"
       [class.m-hashtags-selector--toggle-enabled]="enabled"
     >
-      <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS">Hashtags</span>
+      <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS" *ngIf="labelPosition === 'left'">Hashtags</span>
       <m-tooltip>
-        <i m-tooltip--anchor class="material-icons">label</i>
+        <i m-tooltip--anchor class="fa fa-fw fa-hashtag m-hashtags-selector__Icon"></i>
         <ng-container i18n="@@M__FEATURE__WIRE">Click to add tags</ng-container>
       </m-tooltip>
+      <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS" *ngIf="labelPosition === 'right'">Hashtags</span>
     </label>
 
     <ul class="m-dropdown--list">

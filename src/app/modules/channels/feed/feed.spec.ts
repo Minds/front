@@ -2,7 +2,7 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
-import { Mock, MockComponent } from '../../../utils/mock';
+import { Mock, MockComponent, MockService } from '../../../utils/mock';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -22,6 +22,9 @@ import { scrollServiceMock } from '../../../../tests/scroll-service-mock.spec';
 import { Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ScrollService } from '../../../services/ux/scroll';
+import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { FeedsService } from '../../../common/services/feeds.service';
 
 describe('ChannelFeed', () => {
 
@@ -64,7 +67,9 @@ describe('ChannelFeed', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
-        { provide: ScrollService, useValue: scrollServiceMock}
+        { provide: ScrollService, useValue: scrollServiceMock},
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: FeedsService, useValue: MockService(FeedsService) },
       ]
     })
       .compileComponents();  // compile template and css

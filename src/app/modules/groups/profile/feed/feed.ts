@@ -7,6 +7,8 @@ import { Session } from '../../../../services/session';
 import { PosterComponent } from '../../../newsfeed/poster/poster.component';
 import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
+import { FeaturesService } from "../../../../services/features.service";
+import { FeedsService } from "../../../../common/services/feeds.service";
 
 interface MindsGroupResponse {
   group: MindsGroup;
@@ -34,7 +36,7 @@ export class GroupsProfileFeed {
 
   activity: Array<any> = [];
   pinned: Array<any> = [];
-  offset: string = '';
+  offset: string|number = '';
   inProgress: boolean = false;
   moreData: boolean = true;
 
@@ -48,9 +50,21 @@ export class GroupsProfileFeed {
   kickUser: any;
   paramsSubscription: Subscription;
 
+  isSorting: boolean;
+  algorithm: string;
+  period: string;
+  customType: string;
+
   @ViewChild('poster') private poster: PosterComponent;
 
-  constructor(public session: Session, public client: Client, public service: GroupsService, private route: ActivatedRoute) { }
+  constructor(
+    public session: Session,
+    public client: Client,
+    public service: GroupsService,
+    private route: ActivatedRoute,
+    protected featuresService: FeaturesService,
+    protected feedsService: FeedsService,
+  ) { }
 
   ngOnInit() {
     this.$group = this.service.$group.subscribe((group) => {
@@ -62,12 +76,34 @@ export class GroupsProfileFeed {
     this.paramsSubscription = this.route.params.subscribe(params => {
       this.filter = params['filter'] ? params['filter'] : 'activity';
 
+      this.isSorting = Boolean(params['algorithm']);
+
+      if (this.isSorting) {
+        this.algorithm = params['algorithm'] || 'top';
+        this.period = params['period'] || '7d';
+        this.customType = params['type'] || 'activities';
+      } else {
+        if (!this.algorithm) {
+          this.algorithm = 'top';
+        }
+
+        if (!this.period) {
+          this.period = '7d';
+        }
+
+        if (!this.customType) {
+          this.customType = 'activities';
+        }
+      }
+
       this.load(true);
       this.setUpPoll();
     });
   }
 
   setUpPoll() {
+    clearInterval(this.pollingTimer);
+
     this.pollingTimer = setInterval(() => {
       this.client.get('api/v1/newsfeed/container/' + this.guid, { offset: this.pollingOffset, count: true }, { cache: true })
         .then((response: any) => {
@@ -229,6 +265,85 @@ export class GroupsProfileFeed {
       });
   }
 
+  async loadSorted(refresh: boolean = false) {
+    if (this.featuresService.has('sync-feeds')) {
+      return await this.loadSortedFromFeedsService(refresh);
+    } else {
+      return await this.loadSortedLegacy(refresh);
+    }
+  }
+
+  async loadSortedFromFeedsService(refresh: boolean = false) {
+    try {
+      const { entities, next } = await this.feedsService.get({
+        filter: 'global',
+        algorithm: this.algorithm,
+        customType: this.customType,
+        period: this.period,
+        limit: 12,
+        offset: <number>this.offset,
+        container_guid: this.guid,
+        all: 1,
+      });
+
+      if (!entities || !entities.length) {
+        this.moreData = false;
+        this.inProgress = false;
+
+        return false;
+      }
+
+      if (refresh) {
+        this.activity = [];
+      }
+
+      this.activity.push(...entities);
+
+      this.offset = next;
+      this.inProgress = false;
+    } catch (e) {
+      console.log(e);
+      this.inProgress = false;
+    }
+  }
+
+  /**
+   * @deprecated
+   * @param refresh
+   */
+  async loadSortedLegacy(refresh: boolean = false) {
+    try {
+      const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
+        limit: 12,
+        offset: this.offset,
+        period: this.period,
+        container_guid: this.guid,
+        all: 1,
+      }, {
+        cache: true
+      });
+
+      if (!data.entities || !data.entities.length) {
+        this.moreData = false;
+        this.inProgress = false;
+
+        return false;
+      }
+
+      if (refresh) {
+        this.activity = [];
+      }
+
+      this.activity.push(...data.entities);
+
+      this.offset = data['load-next'];
+      this.inProgress = false;
+    } catch (e) {
+      console.log(e);
+      this.inProgress = false;
+    }
+  }
+
   /**
    * Load a groups newsfeed
    */
@@ -248,13 +363,17 @@ export class GroupsProfileFeed {
       this.activity = [];
     }
 
-    switch(this.filter) {
-      case 'activity':
-      case 'review':
-        return this.loadActivities(refresh);
-      case 'image':
-      case 'video':
-        return this.loadMedia(refresh);
+    if (this.isSorting) {
+      this.loadSorted(refresh);
+    } else {
+      switch(this.filter) {
+        case 'activity':
+        case 'review':
+          return this.loadActivities(refresh);
+        case 'image':
+        case 'video':
+          return this.loadMedia(refresh);
+      }
     }
   }
 

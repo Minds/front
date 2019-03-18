@@ -1,12 +1,16 @@
-import { Component, EventEmitter, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, ViewChild } from '@angular/core';
 import { Session } from '../../../services/session';
 
 import { AttachmentService } from '../../../services/attachment';
-import { ThirdPartyNetworksSelector } from '../../third-party-networks/selector';
 import { Upload } from '../../../services/api/upload';
 import { Client } from '../../../services/api/client';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
+import autobind from "../../../helpers/autobind";
+import { Subject, Subscription } from "rxjs";
+import { debounceTime } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
 
 @Component({
   moduleId: module.id,
@@ -31,7 +35,7 @@ export class PosterComponent {
     wire_threshold: null
   };
   tags = [];  
-  minds;
+  minds = window.Minds;
   load: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
 
@@ -43,8 +47,55 @@ export class PosterComponent {
 
   @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
 
-  constructor(public session: Session, public client: Client, public upload: Upload, public attachment: AttachmentService) {
-    this.minds = window.Minds;
+  showActionBarLabels: boolean = false;
+
+  protected lastWidth: number;
+
+  protected resizeSubscription: Subscription;
+
+  protected resizeSubject: Subject<number> = new Subject<number>();
+
+  constructor(
+    public session: Session,
+    public client: Client,
+    public upload: Upload,
+    public attachment: AttachmentService,
+    protected elementRef: ElementRef,
+    protected router: Router,
+    protected inMemoryStorageService: InMemoryStorageService
+  ) {
+  }
+
+  @HostListener('window:resize') _widthDetection() {
+    this.resizeSubject.next(Date.now());
+  }
+
+  ngOnInit() {
+    this.resizeSubscription = this.resizeSubject
+      .pipe(debounceTime(1000 / 30))
+      .subscribe(() => this.onResize());
+  }
+
+  ngAfterViewInit() {
+    this.resizeSubject.next(Date.now());
+  }
+
+  ngOnDestroy() {
+    if (this.resizeSubscription) {
+      this.resizeSubscription.unsubscribe();
+    }
+  }
+
+  onResize() {
+    const width = this.elementRef &&
+      this.elementRef.nativeElement &&
+      this.elementRef.nativeElement.clientWidth;
+
+    if (width && width !== this.lastWidth) {
+      this.lastWidth = width;
+
+      this.showActionBarLabels = width >= 580;
+    }
   }
 
   set _container_guid(guid: any) {
@@ -208,6 +259,7 @@ export class PosterComponent {
     this.attachment.preview(message.value);
   }
 
+  @autobind()
   async findTrendingHashtags(searchText: string) {
     const response: any = await this.client.get('api/v2/search/suggest/tags', { q: searchText });
     return response.tags
@@ -217,5 +269,23 @@ export class PosterComponent {
 
   getChoiceLabel(text: string) {
     return `#${text}`;
+  }
+
+  createBlog() {
+    if (this.meta && this.meta.message) {
+      const shouldNavigate = confirm(`Are you sure? The content will be moved to the blog editor.`);
+
+      if (!shouldNavigate) {
+        return;
+      }
+
+      this.inMemoryStorageService.set('newBlogContent', this.meta.message);
+    }
+
+    this.router.navigate(['/blog/edit/new']);
+  }
+
+  onNSWFSelections(reasons: Array<{ value, label, selected}>) {
+    this.attachment.setNSFW(reasons); 
   }
 }

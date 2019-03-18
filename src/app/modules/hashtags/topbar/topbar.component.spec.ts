@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { TopbarHashtagsComponent } from './topbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +20,7 @@ describe('TopbarHashtagsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         MockComponent({ selector: 'm-tooltip', template: '<ng-content></ng-content>' }),
-        MockComponent({ selector: 'm-dropdown', template: '<ng-content></ng-content>' }),
+        MockComponent({ selector: 'm-dropdown', template: '<ng-content></ng-content>' }, ['toggle']),
         TopbarHashtagsComponent
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
@@ -62,7 +62,7 @@ describe('TopbarHashtagsComponent', () => {
     }
   });
 
-  it('should have an #all option that lets the feed know to ignore user selected hashtags', () => {
+  it('should have an #all option that lets the feed know to ignore user selected hashtags', fakeAsync(() => {
     let all = fixture.debugElement.query(By.css('.m-topbar--hashtags--hashtag--all'));
 
     expect(all).not.toBeNull();
@@ -72,30 +72,36 @@ describe('TopbarHashtagsComponent', () => {
     expect(comp.all).toBeFalsy();
 
     all.nativeElement.click();
+    tick();
 
     expect(comp.all).toBeTruthy();
-  });
+  }));
 
-  it('should have two hashtags, and one should be selected', () => {
-    let hashtag1 = fixture.debugElement.query(By.css('.m-topbar--hashtags > span.m-topbar--hashtags--hashtag.m-topbar--hashtags--hashtag--selected:not(.m-topbar--hashtags--hashtag--all)'));
+  it('should have two hashtags, and one should be selected', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    let hashtag1 = fixture.debugElement.query(By.css('span.m-topbar--hashtags--hashtag.m-topbar--hashtags--hashtag--selected:not(.m-topbar--hashtags--hashtag--all)'));
     expect(hashtag1).not.toBeNull();
     expect(hashtag1.nativeElement.textContent).toContain('#hashtag1');
 
-
-    let hashtag2 = fixture.debugElement.query(By.css('.m-topbar--hashtags > span.m-topbar--hashtags--hashtag:not(.m-topbar--hashtags--hashtag--selected):not(.m-topbar--hashtags--hashtag--all)'));
+    let hashtag2 = fixture.debugElement.query(By.css('span.m-topbar--hashtags--hashtag:not(.m-topbar--hashtags--hashtag--selected):not(.m-topbar--hashtags--hashtag--all)'));
     expect(hashtag2).not.toBeNull();
     expect(hashtag2.nativeElement.textContent).toContain('#hashtag2');
-  });
+  }));
 
-  it('should toggle the hashtag when clicked', () => {
-    let hashtag1 = fixture.debugElement.query(By.css('.m-topbar--hashtags > span.m-topbar--hashtags--hashtag.m-topbar--hashtags--hashtag--selected'));
+  it('should toggle the hashtag when clicked', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    let hashtag1 = fixture.debugElement.query(By.css('span.m-topbar--hashtags--hashtag.m-topbar--hashtags--hashtag--selected'));
 
     hashtag1.nativeElement.click();
-
     fixture.detectChanges();
+    tick();
 
     expect(topbarHashtagsServiceMock.toggleSelection).toHaveBeenCalled();
-  });
+  }));
 
   it('should have a MORE button', () => {
     let button = fixture.debugElement.query(By.css('span.m-topbar--hashtags--select-more'));

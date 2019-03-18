@@ -1,0 +1,94 @@
+<ng-template #navLinks>
+  <a class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
+    routerLink="/newsfeed/subscriptions"
+    routerLinkActive="m-v2-topbarNav__Item--active"
+    title="Newsfeed"
+    i18n-title
+  >
+    <i class="material-icons">home</i>
+    <span class="m-v2-topbarNavItem__Text" i18n>Newsfeed</span>
+  </a>
+
+  <a class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
+    routerLink="/newsfeed/global"
+    routerLinkActive="m-v2-topbarNav__Item--active"
+    title="Discovery"
+    i18n-title
+  >
+    <i class="material-icons">search</i>
+    <span class="m-v2-topbarNavItem__Text" i18n>Discovery</span>
+  </a>
+
+  <a class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
+    routerLink="/wallet"
+    routerLinkActive="m-v2-topbarNav__Item--active"
+    title="Wallet"
+    i18n-title
+  >
+    <i class="material-icons">account_balance</i>
+    <span class="m-v2-topbarNavItem__Text" i18n>Wallet</span>
+  </a>
+</ng-template>
+
+<div class="m-v2-topbar__Top">
+  <div class="m-v2-topbar">
+    <div class="m-v2-topbar__Container--left">
+      <nav class="m-v2-topbar__Nav">
+        <ng-container *ngIf="getCurrentUser(); else loggedOutLeftContainer">
+          <a class="m-v2-topbarNav__Item m-v2-topbarNavItem__Logo"
+            routerLink="/"
+            title="Home"
+            i18n-title
+          >
+            <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"/>
+          </a>
+
+          <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+        </ng-container>
+        <ng-template #loggedOutLeftContainer>
+          <a class="m-v2-topbarNav__Item m-v2-topbarNavItem__Logo"
+            routerLink="/login"
+            title="Login"
+            i18n-title
+          >
+            <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"/>
+          </a>
+        </ng-template>
+      </nav>
+    </div>
+
+    <a class="m-v2-topbar__Avatar" *ngIf="getCurrentUser()"
+      [routerLink]="['/', getCurrentUser()?.username]"
+      routerLinkActive="m-v2-topbar__Avatar--active"
+    >
+      <minds-avatar [object]="getCurrentUser()" [editMode]="false"></minds-avatar>
+    </a>
+
+    <div class="m-v2-topbar__Container--right">
+      <ng-container *ngIf="getCurrentUser(); else loggedOutRightContainer">
+        <div class="m-v2-topbar__SearchBox">
+          <ng-content select="[search]"></ng-content>
+        </div>
+      </ng-container>
+      <ng-template #loggedOutRightContainer>
+        <div class="m-v2-topbar__Container__LoginWrapper">
+          <a routerLink="/login"
+            title="Login"
+            i18n-title
+          >
+            Login
+          </a>
+        </div>
+      </ng-template>
+
+      <div class="m-v2-topbar__UserMenu">
+        <ng-content select="[icons]"></ng-content>
+        <m-user-menu></m-user-menu>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="m-v2-topbar__Bottom">
+  <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+</div>

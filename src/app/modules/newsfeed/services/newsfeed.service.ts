@@ -1,15 +1,26 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
+import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service'; 
 
 @Injectable()
 export class NewsfeedService {
   allHashtags: boolean = false;
   onReloadFeed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private client: Client, private session: Session) {
+  constructor(
+    private client: Client,
+    private session: Session,
+    private nsfwSelectorService: NSFWSelectorConsumerService,
+  ) {
   }
 
+  get nsfw(): Array<number> {
+    return this.nsfwSelectorService.build().reasons
+      .filter(reason => reason.selected)
+      .map(reason => reason.value);
+  }
+  
   public async recordView(entity, visible: boolean = true, channel = null) {
     if (!this.session.isLoggedIn()) {
       return;
@@ -34,6 +45,10 @@ export class NewsfeedService {
   public reloadFeed(allHashtags: boolean = false) {
     this.allHashtags = allHashtags;
     this.onReloadFeed.emit(allHashtags);
+  }
+
+  setNSFW(reasons: Array<{ value, label, selected }>) {
+    this.onReloadFeed.emit(this.allHashtags);
   }
 
 }

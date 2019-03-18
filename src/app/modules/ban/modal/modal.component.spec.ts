@@ -163,6 +163,8 @@ describe('BanModalComponent', () => {
       'message': 'error message',
     };
 
+    spyOn(window, 'alert').and.callFake(function() { return true });
+
     const item = getSubjectItem(1);
     item.nativeElement.click();
     fixture.detectChanges();

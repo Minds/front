@@ -22,23 +22,48 @@
     </a>
   </ng-container>
 
-  <ng-container *ngIf="q && currentContext">
-    <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.entity"
-      [routerLink]="[ '/search', { q: q, ref: 'top-suggestion-id', type: currentContext.product, id: currentContext.entity.id } ]"
-    >
-      <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.entity.label }}:</b> <span>{{ q }}</span>
-    </a>
+  <ng-container *mIfFeature="'top-feeds'; else oldSearch">
+    <ng-container *ngIf="q && currentContext">
+      <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.entity"
+        [routerLink]="['/newsfeed/global', { query: q, type: currentContext.product, id: currentContext.entity.id }]"
+      >
+        <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.entity.label }}:</b> <span>{{ q }}</span>
+      </a>
 
-    <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.product"
-      [routerLink]="[ '/search', { q: q, ref: 'top-suggestion', type: currentContext.product } ]"
+      <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.product"
+        [routerLink]="['/newsfeed/global', { query: q, type: currentContext.product }]"
+      >
+        <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.label }}:</b> <span>{{ q }}</span>
+      </a>
+    </ng-container>
+
+    <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="q"
+      [routerLink]="['/newsfeed/global/top', { query: q }]"
     >
-      <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.label }}:</b> <span>{{ q }}</span>
+      <b i18n="@@SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL">Search Minds:</b> <span>{{ q }}</span>
     </a>
   </ng-container>
 
-  <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="q"
-    [routerLink]="[ '/search', { q: q, ref: 'top' } ]"
-  >
-    <b i18n="@@SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL">Search Minds:</b> <span>{{ q }}</span>
-  </a>
+  <ng-template #oldSearch>
+    <ng-container *ngIf="q && currentContext">
+      <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.entity"
+         [routerLink]="[ '/search', { q: q, ref: 'top-suggestion-id', type: currentContext.product, id: currentContext.entity.id } ]"
+      >
+        <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.entity.label }}:</b> <span>{{ q }}</span>
+      </a>
+
+      <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.product"
+         [routerLink]="[ '/search', { q: q, ref: 'top-suggestion', type: currentContext.product } ]"
+      >
+        <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.label }}:</b> <span>{{ q }}</span>
+      </a>
+    </ng-container>
+
+    <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="q"
+       [routerLink]="[ '/search', { q: q, ref: 'top' } ]"
+    >
+      <b i18n="@@SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL">Search Minds:</b> <span>{{ q }}</span>
+    </a>
+  </ng-template>
 </div>
+

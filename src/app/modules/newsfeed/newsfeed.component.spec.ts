@@ -26,6 +26,11 @@ import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mo
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { NewsfeedService } from './services/newsfeed.service';
 import { newsfeedServiceMock } from '../../mocks/modules/newsfeed/services/newsfeed-service.mock';
+import { IfFeatureDirective } from "../../common/directives/if-feature.directive";
+import { FeaturesService } from "../../services/features.service";
+import { featuresServiceMock } from "../../../tests/features-service-mock.spec";
+import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
+import { newsfeedHashtagSelectorServiceMock } from "../../../tests/newsfeed-hashtag-selector-service-mock.spec";
 
 describe('NewsfeedComponent', () => {
 
@@ -43,7 +48,8 @@ describe('NewsfeedComponent', () => {
         MockComponent({ selector: 'm-ads-boost', inputs: ['handler', 'limit'], template: '' }),
         MockComponent({ selector: 'm-topbar--hashtags', inputs: ['enabled'], outputs: ['selectionChange'], template: '' }),
         MockComponent({ selector: 'm-suggestions__sidebar' }),
-        MockDirective({ selector: '[mIfFeature]', inputs: ['mIfFeature']}),
+        MockComponent({ selector: 'm-hashtags--sidebar-selector', inputs: ['disabled', 'currentHashtag', 'preferred', 'compact'], outputs: ['filterChange', 'switchAttempt']}),
+        IfFeatureDirective,
         NewsfeedComponent,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
@@ -65,6 +71,8 @@ describe('NewsfeedComponent', () => {
         { provide: Navigation, useValue: navigationMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: NewsfeedService, useValue: newsfeedServiceMock },
+        { provide: NewsfeedHashtagSelectorService, useValue: newsfeedHashtagSelectorServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ]
     })
       .compileComponents();  // compile template and css
@@ -80,6 +88,8 @@ describe('NewsfeedComponent', () => {
     comp = fixture.componentInstance; // NewsfeedComponent test instance
 
     clientMock.response = {};
+    featuresServiceMock.mock('top-feeds', false);
+    featuresServiceMock.mock('suggested-users', false);
 
     sessionMock.user.admin = false;
     sessionMock.loggedIn = true;
@@ -115,7 +125,7 @@ describe('NewsfeedComponent', () => {
     expect(topTooltip.nativeElement.textContent).toContain('Top displays your top suggested content on Minds based on hashtags');
 
     expect(subscribed).not.toBeNull();
-    expect(subscribed.nativeElement.textContent).toContain('Subscribed');
+    expect(subscribed.nativeElement.textContent).toContain('Subscriptions');
     expect(subscribedTooltip.nativeElement.textContent).toContain('Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network');
 
 

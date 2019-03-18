@@ -1,0 +1,37 @@
+<div class="minds-list">
+  <m-search--bar [defaultSizes]="false" class="m-feeds-sorted__SearchBox"></m-search--bar>
+
+  <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
+
+  <div class="m-feeds-sorted__query" *ngIf="query">
+    <span>Showing results for: <strong>{{ query | slice:0:50 }}</strong></span>
+  </div>
+
+  <div class="m-feeds-sorted__Filter m-border">
+    <m-sort-selector
+      [algorithm]="algorithm"
+      [period]="period"
+      [customType]="customType"
+      (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
+    ></m-sort-selector>
+
+    <div>
+      <m-newsfeed--dropdown [showBoost]="false"></m-newsfeed--dropdown>
+    </div>
+  </div>
+
+  <div class="m-feeds-sorted__List" [class.m-feeds-sortedList__flex]="customType == 'channels' || customType == 'groups'">
+    <m-newsfeed__entity
+      *ngFor="let entity of newsfeed"
+      [entity]="entity"
+    ></m-newsfeed__entity>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress"
+    >
+    </infinite-scroll>
+  </div>
+</div>

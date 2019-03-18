@@ -3,6 +3,8 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
 import { TopbarHashtagsService } from '../service/topbar.service';
+import { Subject } from "rxjs";
+import { debounceTime } from "rxjs/operators";
 
 type Hashtag = {
   value: string, selected: boolean
@@ -22,10 +24,15 @@ export class HashtagsSelectorModalComponent {
   input: string = '';
   addingHashtag: boolean = false;
 
+  showTrending: boolean = false;
+  showDefaults: boolean = true;
+
   _opts: any;
   set opts(opts: any) {
     this._opts = opts;
   }
+
+  filterChangeSubject: Subject<any> = new Subject<any>();
 
   constructor(
     public session: Session,
@@ -36,23 +43,38 @@ export class HashtagsSelectorModalComponent {
   }
 
   ngOnInit() {
-    this.load();
+    this.load(true);
+
+    this.filterChangeSubject
+      .pipe(debounceTime(750))
+      .subscribe(() => this.load(true));
   }
 
   close() {
     this.overlayModal.dismiss();
   }
 
-  async load() {
+  async load(refresh: boolean = false) {
     this.inProgress = true;
 
+    if (this.inProgress && !refresh) {
+      return;
+    }
+
     try {
-      this.hashtags = await this.service.load(50);
+      this.hashtags = await this.service.load(50, {
+        trending: this.showTrending,
+        defaults: this.showDefaults,
+      });
     } catch (e) {
       console.error(e);
     }
 
     this.inProgress = false;
+  }
+
+  filterChange() {
+    this.filterChangeSubject.next(Date.now());
   }
 
   keyUp(e) {
@@ -89,6 +111,5 @@ export class HashtagsSelectorModalComponent {
     if (this._opts && this._opts.onSelected) {
       this._opts.onSelected();
     }
-
   }
 }

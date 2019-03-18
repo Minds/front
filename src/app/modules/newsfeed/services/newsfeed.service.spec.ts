@@ -1,16 +1,30 @@
 import { NewsfeedService } from './newsfeed.service';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { fakeAsync } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
+import { NSFWSelectorComponent } from '../../../common/components/nsfw-selector/nsfw-selector.component';
+import { MockService } from '../../../utils/mock';
+import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 
 describe('NewsfeedService', () => {
 
   let service: NewsfeedService;
+  let NSFWSelectorServiceMock:any = MockService(NSFWSelectorConsumerService, {});
 
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    service = new NewsfeedService(clientMock, sessionMock);
+
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          value: NSFWSelectorConsumerService,
+          useValue: NSFWSelectorServiceMock,
+        },
+      ],
+    });
+
+    service = new NewsfeedService(clientMock, sessionMock, NSFWSelectorServiceMock);
     clientMock.response = {};
   });
 

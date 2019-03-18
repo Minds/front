@@ -68,7 +68,7 @@ describe('WireThresholdInputComponent', () => {
   }));
 
   // synchronous beforeEach
-  beforeEach(() => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 1;
     fixture = TestBed.createComponent(WireThresholdInputComponent);
 
@@ -97,6 +97,16 @@ describe('WireThresholdInputComponent', () => {
       'type': 'tokens',
       'min': 0
     };
+
+    fixture.detectChanges();
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        done();
+      });
+    }
   });
 
   it('should have a m-dropdown', () => {

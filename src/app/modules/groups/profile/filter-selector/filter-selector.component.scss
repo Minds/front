@@ -1,6 +1,7 @@
 m-groups--filter-selector {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   margin: auto;
   position: relative;
   max-width: 780px;
@@ -8,6 +9,16 @@ m-groups--filter-selector {
 
   @media screen and (max-width: 840px) {
     text-align: center;
+  }
+
+  .m-group--feed-sort {
+    flex-grow: 1;
+
+    .m-topbar--navigation--item {
+      border-top: none !important;
+      border-bottom: none !important;
+      padding: 4px 8px 5px;
+    }
   }
 
   .m-groups--filter-selector {

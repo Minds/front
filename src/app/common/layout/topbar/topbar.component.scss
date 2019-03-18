@@ -175,19 +175,28 @@ m-topbar{
     > * {
       vertical-align: middle;
     }
-
-    m-tooltip {
-      margin-left: 4px;
-      i {
-        font-size: 11px;
-        color: #777;
-      }
-    }
   }
 }
 
 @media screen and (max-width: $max-mobile){
   .m-btn--boost {
     display:none;
+  }
+}
+
+.m-topbar--navigation--item {
+  m-tooltip {
+    margin-left: 4px;
+
+    .m-tooltip--bubble {
+      min-width: 120px;
+    }
+
+    i {
+      font-size: 11px;
+      color: #777;
+      vertical-align: middle;
+      line-height: 1.1;
+    }
   }
 }

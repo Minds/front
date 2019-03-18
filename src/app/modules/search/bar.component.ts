@@ -1,8 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
 import { Session } from '../../services/session';
+import { FeaturesService } from "../../services/features.service";
 
 @Component({
   selector: 'm-search--bar',
@@ -24,9 +25,12 @@ export class SearchBarComponent {
 
   @ViewChild('searchInput') searchInput: ElementRef;
 
+  @HostBinding('class.m-search--bar--default-sizes') @Input() defaultSizes: boolean = true;
+
   constructor(
     public router: Router,
     private context: ContextService,
+    private featureService: FeaturesService,
     public session: Session
   ) { }
 
@@ -92,7 +96,11 @@ export class SearchBarComponent {
       qs.id = this.id;
     }
 
-    this.router.navigate(['search', qs]);
+    if (this.featureService.has('top-feeds')) {
+      this.router.navigate(['/newsfeed/global/top', { query: this.q, period: '24h' } ]);
+    } else {
+      this.router.navigate(['search', qs]);
+    }
   }
 
 
@@ -137,3 +145,4 @@ export class SearchBarComponent {
     });
   }
 }
+

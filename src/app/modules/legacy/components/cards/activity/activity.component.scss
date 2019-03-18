@@ -38,6 +38,22 @@ minds-activity {
       }
     }
   }
+  m-nsfw-selector {
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 24px;
+    padding: 3px 16px;
+
+    .m-nsfwSelector__label {
+      > * {
+       vertical-align: middle;
+     }
+     > span {
+       font-size: 13px;
+       padding-left: 4px;
+     }
+   }
+  }
 }
 
 .m-activity--metrics{

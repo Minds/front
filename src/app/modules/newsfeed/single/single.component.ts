@@ -3,9 +3,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
+import { EntitiesService } from "../../../common/services/entities.service";
+import { Client } from "../../../services/api/client";
+import { FeaturesService } from "../../../services/features.service";
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -23,12 +25,13 @@ export class NewsfeedSingleComponent {
   focusedCommentGuid: string = '';
 
   constructor(
-    public client: Client,
-    public upload: Upload,
     public router: Router,
     public route: ActivatedRoute,
     public context: ContextService,
-    public session: Session
+    public session: Session,
+    public entitiesService: EntitiesService,
+    protected client: Client,
+    protected featuresService: FeaturesService,
   ) {
   }
 
@@ -51,43 +54,45 @@ export class NewsfeedSingleComponent {
     this.paramsSubscription.unsubscribe();
   }
 
-	/**
-	 * Load newsfeed
-	 */
+  /**
+   * Load newsfeed
+   */
   load(guid: string) {
     this.context.set('activity');
 
-    this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
-      .then((data: any) => {
+    const fetchSingleGuid = this.featuresService.has('sync-feeds') ?
+      this.loadFromFeedsService(guid) :
+      this.loadLegacy(guid);
 
-        this.activity = data.activity;
+    fetchSingleGuid.then((activity: any) => {
+      this.activity = activity;
 
-        switch (this.activity.subtype) {
-          case 'image':
-          case 'video':
-          case 'album':
-            this.router.navigate(['/media', this.activity.guid], { replaceUrl: true });
-            break;
-          case 'blog':
-            this.router.navigate(['/blog/view', this.activity.guid], { replaceUrl: true });
-            break;
-        }
+      switch (this.activity.subtype) {
+        case 'image':
+        case 'video':
+        case 'album':
+          this.router.navigate(['/media', this.activity.guid], { replaceUrl: true });
+          break;
+        case 'blog':
+          this.router.navigate(['/blog/view', this.activity.guid], { replaceUrl: true });
+          break;
+      }
 
-        if (this.activity.ownerObj) {
-          this.context.set('activity', {
-            label: `@${this.activity.ownerObj.username} posts`,
-            nameLabel: `@${this.activity.ownerObj.username}`,
-            id: this.activity.ownerObj.guid
-          });
-        } else if (this.activity.owner_guid) {
-          this.context.set('activity', {
-            label: `this user's posts`,
-            id: this.activity.owner_guid
-          });
-        } else {
-          this.context.reset();
-        }
-      })
+      if (this.activity.ownerObj) {
+        this.context.set('activity', {
+          label: `@${this.activity.ownerObj.username} posts`,
+          nameLabel: `@${this.activity.ownerObj.username}`,
+          id: this.activity.ownerObj.guid
+        });
+      } else if (this.activity.owner_guid) {
+        this.context.set('activity', {
+          label: `this user's posts`,
+          id: this.activity.owner_guid
+        });
+      } else {
+        this.context.reset();
+      }
+    })
       .catch(e => {
         if (e.status === 0) {
           this.error = 'Sorry, there was a timeout error.';
@@ -96,6 +101,14 @@ export class NewsfeedSingleComponent {
         }
         this.inProgress = false;
       });
+  }
+
+  async loadFromFeedsService(guid: string) {
+    return await this.entitiesService.single(guid);
+  }
+
+  async loadLegacy(guid: string) {
+    return (<any>await this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })).activity;
   }
 
   delete(activity) {

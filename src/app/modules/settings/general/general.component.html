@@ -80,7 +80,7 @@
 <!-- END: PASSWORD -->
 
 <!-- START: MATURE CONTENT -->
-<div class="m-settings--section m-border m-settings--mature">
+<div class="m-settings--section m-border m-settings--mature" *mIfFeature="'!top-feeds'">
   <h4 i18n="@@MINDS__SETTINGS__MATURE_CONTENT_TITLE">Mature Content</h4>
   <div class="mdl-card__supporting-text">
     <input type="checkbox"

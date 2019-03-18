@@ -1,0 +1,76 @@
+<m-dropdown class="m-sort-selector--algorithm-dropdown" [expanded]="expandedAlgorithmDropdown" #algorithmDropdown>
+  <label [ngClass]="[labelClass]">
+    <i
+      *ngIf="getCurrentAlgorithmProp('icon')"
+      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+    >{{getCurrentAlgorithmProp('icon')}}</i>
+
+    <span>{{getCurrentAlgorithmProp('label')}}</span>
+
+    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+  </label>
+
+  <ul class="m-dropdown--list">
+    <li
+      *ngFor="let item of algorithms"
+      class="m-dropdown--list--item"
+      [class.m-dropdown--list--item--selected]="item.id === algorithm"
+      (click)="setAlgorithm(item.id); closeDropdowns();"
+    >
+      <i
+        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+        *ngIf="item.icon"
+      >{{item.icon}}</i>
+
+      <span [className]="labelClass">{{item.label}}</span>
+    </li>
+  </ul>
+</m-dropdown>
+
+<m-dropdown class="m-sort-selector--period-dropdown" *ngIf="hasCurrentAlgorithmPeriod()" #periodDropdown>
+  <label [ngClass]="[labelClass]">
+    <span>{{getCurrentPeriodLabel()}}</span>
+
+    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+  </label>
+
+  <ul class="m-dropdown--list">
+    <li
+      class="m-dropdown--list--item" *ngFor="let item of periods"
+      [class.m-dropdown--list--item--selected]="item.id === period"
+      (click)="setPeriod(item.id); closeDropdowns();"
+    >
+      <span [className]="labelClass">{{item.label}}</span>
+    </li>
+  </ul>
+</m-dropdown>
+
+<m-dropdown class="m-sort-selector--custom-type-dropdown" [expanded]="expandedCustomTypeDropdown" #customTypeDropdown>
+  <label [ngClass]="[labelClass]">
+    <i
+      *ngIf="getCurrentCustomTypeProp('icon')"
+      class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+    >{{getCurrentCustomTypeProp('icon')}}</i>
+
+    <span>{{getCurrentCustomTypeProp('label')}}</span>
+
+    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+  </label>
+
+  <ul class="m-dropdown--list">
+    <li
+      *ngFor="let item of getCustomTypes()"
+      class="m-dropdown--list--item"
+      [class.m-dropdown--list--item--selected]="item.id === customType"
+      (click)="setCustomType(item.id); closeDropdowns();"
+    >
+      <i
+        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+        [title]="item.label"
+        *ngIf="item.icon"
+      >{{item.icon}}</i>
+
+      <span [className]="labelClass" *ngIf="!expandedCustomTypeDropdown || item.id === customType">{{item.label}}</span>
+    </li>
+  </ul>
+</m-dropdown>
