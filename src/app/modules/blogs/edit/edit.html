@@ -58,6 +58,12 @@
       >
         Error: You must provide a description
       </h1>
+      <h1 class="m-blog--edit--error"
+          i18n="@@BLOGS__EDIT__NO_BANNER_ERROR"
+          *ngSwitchCase="'error:no-banner'"
+      >
+        Error: You must upload a banner
+      </h1>
       <h1
         class="m-blog--edit--error"
         *ngSwitchDefault
