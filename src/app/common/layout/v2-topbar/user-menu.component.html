@@ -46,6 +46,17 @@
       </a>
     </li>
 
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/boost/console">
+        <i class="material-icons">trending_up</i>
+        <span i18n>Boost Console</span>
+      </a>
+    </li>
+
     <ng-container *mIfFeature="'helpdesk'; else supportPages">
       <li
         class="m-dropdownList__item m-user-menuDropdown__Item"
