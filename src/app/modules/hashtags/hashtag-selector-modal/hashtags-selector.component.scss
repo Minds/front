@@ -21,6 +21,15 @@
 
   .m-hashtags-selector--header {
     padding-left: 8px;
+
+    > * {
+      vertical-align: middle;
+    }
+  }
+
+  .m-hashtags-selector--header-switches {
+    display: inline-block;
+    margin-left: 24px;
   }
 
   .m-hashtags-selector--subtext {
@@ -99,6 +108,14 @@
 
     &.m-hashtag-selector-section--last {
       margin-top: 8px;
+
+      > * {
+        vertical-align: middle;
+      }
+
+      > .m-hashtag-selector--button {
+        margin-right: 16px;
+      }
     }
   }
 

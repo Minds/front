@@ -4,4 +4,15 @@ m-newsfeed--dropdown {
     position: relative;
     display: block;
   }
+
+  .m-nsfwSelector__label {
+    width: 100%;
+    padding: 8px 0;
+    display: block;
+    cursor: pointer; 
+
+    m-tooltip {
+      vertical-align: middle;
+    }
+  }
 }

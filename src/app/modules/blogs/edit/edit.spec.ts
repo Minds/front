@@ -18,6 +18,8 @@ import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
 import { MockComponent } from '../../../utils/mock';
+import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
+import { inMemoryStorageServiceMock } from "../../../../tests/in-memory-storage-service-mock.spec";
 
 @Component({
   selector: 'minds-banner',
@@ -248,7 +250,8 @@ describe('BlogEdit', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: MindsTitle, useValue: mindsTitleMock },
-        { provide: HovercardService, useValue: hovercardServiceMock }
+        { provide: HovercardService, useValue: hovercardServiceMock },
+        { provide: InMemoryStorageService, useValue: inMemoryStorageServiceMock },
       ]
     })
       .compileComponents();  // compile template and css

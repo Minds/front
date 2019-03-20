@@ -10,6 +10,8 @@ import { BoostCreatorComponent } from '../../../../boost/creator/creator.compone
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
+import { EntitiesService } from "../../../../../common/services/entities.service";
+import { Router } from "@angular/router";
 
 @Component({
   moduleId: module.id,
@@ -37,18 +39,8 @@ export class Activity {
   showBoostOptions: boolean = false;
   @Input() boost: boolean = false;
   @Input('boost-toggle')
-  private _showBoostMenuOptions: boolean = false;
+  @Input() showBoostMenuOptions: boolean = false;
 
-  @Input()
-  set showBoostMenuOptions(value: boolean) {
-    this._showBoostMenuOptions = value;
-
-    if (!value) {
-      this.menuOptions = this.defaultMenuOptions;
-    }
-
-    this.menuOptions = this.menuOptions.slice();
-  }
   type: string;
   element: any;
   visible: boolean = false;
@@ -68,8 +60,17 @@ export class Activity {
   canDelete: boolean = false;
   showRatingToggle: boolean = false;
 
-  private defaultMenuOptions: Array<string> = ['edit', 'translate', 'share', 'mute', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
-  menuOptions: Array<string> = ['edit', 'translate', 'share', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
+  get menuOptions(): Array<string> {
+    if (!this.activity || !this.activity.ephemeral) {
+      if (this.showBoostMenuOptions)  {
+        return ['edit', 'translate', 'share', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
+      } else {
+        return ['edit', 'translate', 'share', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
+      }
+    } else {
+      return ['view', 'translate', 'share', 'follow', 'feature', 'report', 'set-explicit', 'block', 'rating']
+    }
+  }
 
   @ViewChild('player') player: MindsVideoComponent;
 
@@ -82,7 +83,9 @@ export class Activity {
     public attachment: AttachmentService,
     public translationService: TranslationService,
     private overlayModal: OverlayModalService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private entitiesService: EntitiesService,
+    private router: Router,
   ) {
 
     this.element = _element.nativeElement;
@@ -138,7 +141,9 @@ export class Activity {
     console.log('trying to save your changes to the server', this.activity);
     this.editing = false;
     this.activity.edited = true;
-    this.client.post('api/v1/newsfeed/' + this.activity.guid, this.activity);
+
+    let data = Object.assign(this.activity, this.attachment.exportMeta());
+    this.client.post('api/v1/newsfeed/' + this.activity.guid, data);
   }
 
   delete($event: any = {}) {
@@ -213,8 +218,18 @@ export class Activity {
     }
   }
 
-  showBoost() {
-    const boostModal = this.overlayModal.create(BoostCreatorComponent, this.activity);
+  async showBoost() {
+    let activity = this.activity;
+
+    if (activity.ephemeral) {
+      activity = await this.entitiesService.single(activity.entity_guid);
+
+      if (!activity) {
+        throw new Error('Invalid entity');
+      }
+    }
+
+    const boostModal = this.overlayModal.create(BoostCreatorComponent, activity);
 
     boostModal.onDidDismiss(() => {
       this.showBoostOptions = false;
@@ -223,10 +238,20 @@ export class Activity {
     boostModal.present();
   }
 
-  showWire() {
+  async showWire() {
     if(this.session.getLoggedInUser().guid !== this.activity.owner_guid) {
+      let activity = this.activity;
+
+      if (activity.ephemeral) {
+        activity = await this.entitiesService.single(activity.entity_guid);
+
+        if (!activity) {
+          throw new Error('Invalid entity');
+        }
+      }
+
       this.overlayModal.create(WireCreatorComponent,
-        this.activity.remind_object ? this.activity.remind_object : this.activity,
+        activity.remind_object ? activity.remind_object : activity,
         { onComplete: wire => this.wireSubmitted(wire) })
           .present();
     }
@@ -243,6 +268,9 @@ export class Activity {
 
   menuOptionSelected(option: string) {
     switch (option) {
+      case 'view':
+        this.router.navigate(['/newsfeed', this.activity.guid ]);
+        break;
       case 'edit':
         this.editing = true;
         break;
@@ -285,6 +313,10 @@ export class Activity {
           this.activity.custom_data.mature = oldValue;
         }
       });
+  }
+
+  onNSWFSelections(reasons: Array<{ value, label, selected}>) {
+    this.attachment.setNSFW(reasons);
   }
 
   private viewed:boolean = false;

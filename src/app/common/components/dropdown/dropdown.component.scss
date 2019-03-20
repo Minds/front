@@ -1,6 +1,5 @@
-.m-dropdown--list-container {
+.m-dropdown--list-container, .m-dropdown--expanded-list-container {
   position: relative;
-
 }
 
 .m-dropdown--label-container {
@@ -33,17 +32,6 @@
 
 .m-dropdown--list, .m-dropdown__list {
   padding: 0;
-  width: 150px;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
-  border-radius: 3px;
-  border: 1px solid #ececec;
-  position: absolute;
-  z-index: 1000;
-  top: 0;
-  right: 0;
-  background-color: #FFF;
-  overflow: visible;
-  display: block;
   margin: 0;
   list-style: none;
 
@@ -51,21 +39,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-
+    padding: 0 8px 0 0;
     list-style: none;
-    opacity:1;
-    text-overflow:ellipsis;
-    padding: 8px;
-    border-bottom: 1px solid #ececec;
+    opacity: 1;
+    text-overflow: ellipsis;
     text-align: left;
-
-    &.m-dropdown--list--item--selected, .m-dropdownList__item--selected {
-      background-color: #4690D6;
-      color: white;
-    }
 
     a {
       text-decoration: none;
+      width: 100%;
       color: #555;
       font-weight: 400;
     }
@@ -84,9 +66,44 @@
       vertical-align: middle;
     }
   }
-
-  li:last-of-type {
-    border-bottom: none !important;
-  }
-
 }
+
+.m-dropdown {
+  .m-dropdown--list, .m-dropdown__list {
+    width: 150px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    border-radius: 3px;
+    border: 1px solid #ececec;
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    background-color: #FFF;
+    overflow: visible;
+    display: block;
+
+    .m-dropdown--list--item, .m-dropdownList__item {
+      padding: 8px;
+      border-bottom: 1px solid #ececec;
+
+      &.m-dropdown--list--item--selected, .m-dropdownList__item--selected {
+        background-color: #4690D6;
+        color: white;
+      }
+    }
+
+    li:last-of-type {
+      border-bottom: none !important;
+    }
+  }
+}
+
+.m-dropdown--expanded {
+  .m-dropdown--list, .m-dropdown__list {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+

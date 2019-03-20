@@ -3,6 +3,7 @@
 </button>
 
 <ul class="minds-dropdown-menu" [hidden]="!opened">
+  <li class="mdl-menu__item" *ngIf="options.indexOf('view') !== -1" (click)="selectOption('view')" i18n="@@M__ACTION__VIEW">View</li>
   <li class="mdl-menu__item" *ngIf="options.indexOf('edit') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="selectOption('edit')" i18n="@@M__ACTION__EDIT">Edit</li>
   <li class="mdl-menu__item" *ngIf="options.indexOf('share') !== -1" (click)="share()" i18n="@@M__ACTION__SHARE">Share</li>
   <li class="mdl-menu__item" *ngIf="options.indexOf('translate') !== -1  && isTranslatable" (click)="selectOption('translate')" i18n="@@M__ACTION__TRANSLATE">Translate</li>
@@ -41,6 +42,16 @@
   <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && (entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin())">
     <li class="mdl-menu__item" [hidden]="entity.mature" (click)="setExplicit(true)" i18n="@@COMMON__POST_MENU__SET_AS_EXPLICIT">Set as Explicit</li>
     <li class="mdl-menu__item" [hidden]="!entity.mature" (click)="setExplicit(false)" i18n="@@COMMON__POST_MENU__REMOVE_EXPLICIT">Remove Explicit</li>
+  </ng-container>
+  <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && session.isAdmin()">
+    <li class="mdl-menu__item m-postMenu__item--nsfw">
+      <m-nsfw-selector
+        service="editing"
+        [selected]="entity.nsfw"
+        (selected)="onNSFWSelected($event)"
+      >
+      </m-nsfw-selector>
+    </li>
   </ng-container>
   <ng-container *ngIf="options.indexOf('rating') !== -1 && session.isAdmin()">
     <li class="mdl-menu__item" [hidden]="entity.rating === 1" (click)="setRating(1)" i18n="@@COMMON__POST_MENU__MARK_AS_SAFE">Mark as Safe</li>

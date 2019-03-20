@@ -21,6 +21,13 @@ import { StateInputComponent } from './components/forms/state-input/state-input.
 import { ReadMoreDirective } from './read-more/read-more.directive';
 import { ReadMoreButtonComponent } from './read-more/button.component';
 import { ChannelBadgesComponent } from './components/badges/badges.component';
+import { NSFWSelectorComponent } from './components/nsfw-selector/nsfw-selector.component';
+import { 
+  NSFWSelectorService,
+  NSFWSelectorConsumerService,
+  NSFWSelectorCreatorService,
+  NSFWSelectorEditingService,
+} from './components/nsfw-selector/nsfw-selector.service';
 
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
@@ -74,11 +81,16 @@ import { PieGraph } from './components/graphs/pie-graph';
 import { GraphSVG } from './components/graphs/svg';
 import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
+import { SortSelectorComponent } from "./components/sort-selector/sort-selector.component";
 
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
+import { Storage } from '../services/storage';
 import { HttpClient } from "@angular/common/http";
 import { AndroidAppDownloadComponent } from "./components/android-app-download-button/button.component";
+import { SwitchComponent } from "./components/switch/switch.component";
+import {V2TopbarComponent} from "./layout/v2-topbar/v2-topbar.component";
+import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
 
 @NgModule({
   imports: [
@@ -95,6 +107,12 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
     TopbarNavigationComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+
+    // V2 Layout
+    V2TopbarComponent,
+    UserMenuComponent,
+
+    //
 
     TooltipComponent,
     FooterComponent,
@@ -159,6 +177,10 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
     GraphPoints,
     DynamicFormComponent,
     AndroidAppDownloadComponent,
+    SortSelectorComponent,
+    NSFWSelectorComponent,
+
+    SwitchComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -166,6 +188,12 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
     TopbarComponent,
     SidebarNavigationComponent,
     TopbarOptionsComponent,
+
+    // V2 Layout
+    V2TopbarComponent,
+    UserMenuComponent,
+
+    //
 
     TooltipComponent,
     FooterComponent,
@@ -231,6 +259,9 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
     PieGraph,
     DynamicFormComponent,
     AndroidAppDownloadComponent,
+    SortSelectorComponent,
+    SwitchComponent,
+    NSFWSelectorComponent,
   ],
   providers: [
     {
@@ -247,6 +278,16 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
       deps: [HttpClient]
+    },
+    {
+      provide: NSFWSelectorCreatorService,
+      useFactory: (_storage) => new NSFWSelectorCreatorService(_storage),
+      deps: [ Storage ],
+    },
+    {
+      provide: NSFWSelectorConsumerService,
+      useFactory: (_storage) => new NSFWSelectorConsumerService(_storage),
+      deps: [ Storage ],
     },
   ],
   entryComponents: [

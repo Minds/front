@@ -24,14 +24,22 @@ import { PosterModule } from './poster/poster.module';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
+import { NewsfeedSortedComponent } from './feeds/sorted.component';
+import { NewsfeedEntityComponent } from './feeds/entity.component';
+import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
+import { SearchModule } from "../search/search.module";
 
 const routes: Routes = [
   {
     path: 'newsfeed', component: NewsfeedComponent,
     children: [
-      { path: '', redirectTo: 'subscribed', pathMatch: 'full' },
+      { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
       { path: 'suggested', component: NewsfeedTopComponent },
-      { path: 'subscribed', component: NewsfeedSubscribedComponent, canDeactivate: [CanDeactivateGuardService] },
+      { path: 'top', redirectTo: 'global/top', pathMatch: 'full' },
+      { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
+      { path: 'global/:algorithm', component: NewsfeedSortedComponent },
+      { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
+      { path: 'subscriptions', component: NewsfeedSubscribedComponent, canDeactivate: [CanDeactivateGuardService] },
       { path: 'boost', component: NewsfeedBoostComponent, canDeactivate: [CanDeactivateGuardService] },
       { path: 'tag/:tag', component: NewsfeedTagsComponent },
     ],
@@ -54,6 +62,7 @@ const routes: Routes = [
     PosterModule,
     HashtagsModule,
     SuggestionsModule,
+    SearchModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,
@@ -64,10 +73,13 @@ const routes: Routes = [
     NewsfeedSubscribedComponent,
     NewsfeedBoostComponent,
     NewsfeedTagsComponent,
+    NewsfeedSortedComponent,
+    NewsfeedEntityComponent,
   ],
   providers: [
     NewsfeedService,
     NewsfeedBoostService,
+    NewsfeedHashtagSelectorService,
   ],
   exports: [
     NewsfeedDropdownComponent,

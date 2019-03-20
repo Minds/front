@@ -49,7 +49,7 @@
 
   @media screen and (min-width: 500px) {
     .m-marketing--hero--slogans h2 {
-      font-size: 62px !important;
+      font-size: 60px !important;
       line-height: 1.25;
     }
     .m-marketing-show-mobile {
@@ -65,6 +65,19 @@
       line-height: 2.5;
       color: #666;
     }
+  }
+
+  .m-mobile--marketing--canary-note {
+    font-size: 12px !important;
+    color: #cc0000 !important;
+  }
+
+  .m-mobile--marketing--error {
+    color: #cc0000 !important;
+  }
+
+  .m-mobile--marketing--spinner {
+    text-align: center;
   }
 
   .m-mobile--marketing--list--hashes {

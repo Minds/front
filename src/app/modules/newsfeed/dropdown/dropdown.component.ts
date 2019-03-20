@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Session } from '../../../services/session';
 import { NewsfeedBoostService } from '../newsfeed-boost.service';
+import { NewsfeedService } from '../services/newsfeed.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,12 +13,13 @@ export class NewsfeedDropdownComponent implements OnInit {
 
   boostRating: number = 2;
   plus: boolean = false;
-  showBoostOptions: boolean = true;
+  @Input('showBoost') showBoostOptions: boolean = true;
 
   constructor(
     public session: Session,
     public router: Router,
-    public boostService: NewsfeedBoostService
+    public boostService: NewsfeedBoostService,
+    private newsfeedService: NewsfeedService,
   ) {
   }
 
@@ -46,4 +48,7 @@ export class NewsfeedDropdownComponent implements OnInit {
     this.router.navigate(['/settings/general', 'categories']);
   }
 
+  onNSFWSelected(reasons) {
+    this.newsfeedService.setNSFW(reasons);    
+  }
 }

@@ -11,6 +11,7 @@ import { InlineEditorComponent } from '../../../common/components/editors/inline
 import { WireThresholdInputComponent } from '../../wire/threshold-input/threshold-input.component';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
+import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
 
 @Component({
   moduleId: module.id,
@@ -65,7 +66,15 @@ export class BlogEdit {
   @ViewChild('thresholdInput') thresholdInput: WireThresholdInputComponent;
   @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
 
-  constructor(public session: Session, public client: Client, public upload: Upload, public router: Router, public route: ActivatedRoute, public title: MindsTitle) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public upload: Upload,
+    public router: Router,
+    public route: ActivatedRoute,
+    public title: MindsTitle,
+    protected inMemoryStorageService: InMemoryStorageService
+  ) {
     this.getCategories();
 
     window.addEventListener('attachment-preview-loaded', (event: CustomEvent) => {
@@ -119,6 +128,19 @@ export class BlogEdit {
 
         if (this.guid !== 'new') {
           this.load();
+        } else {
+          const description: string = this.inMemoryStorageService.once('newBlogContent');
+
+          if (description) {
+            let htmlDescription = description
+              .replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;')
+              .replace(/\n+/g, '</p><p>');
+
+            this.blog.description = `<p>${htmlDescription}</p>`;
+          }
         }
       }
     });
@@ -221,24 +243,14 @@ export class BlogEdit {
           });
       })
         .catch(() => {
-          this.client.post('api/v1/blog/' + this.guid, this.blog)
-            .then((response: any) => {
-              if (response.guid) {
-                this.router.navigate(response.route ? ['/' + response.route]: ['/blog/view', response.guid]);
-              }
-              this.inProgress = false;
-              this.canSave = true;
-            })
-            .catch((e) => {
-              this.inProgress = false;
-              this.canSave = true;
-            });
+          this.error = 'error:no-banner';
+          this.inProgress = false;
+          this.canSave = true;
         });
     })
   }
 
   add_banner(banner: any) {
-    var self = this;
     this.banner = banner.file;
     this.blog.header_top = banner.top;
   }
@@ -252,6 +264,8 @@ export class BlogEdit {
       if (this.banner)
         return resolve(true);
       setTimeout(() => {
+        this.banner_prompt = false;
+
         if (this.banner)
           return resolve(true);
         else

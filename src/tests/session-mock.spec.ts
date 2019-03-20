@@ -1,6 +1,7 @@
 /**
  * Created by Nicolas on 10/10/2017.
  */
+import { EventEmitter } from "@angular/core";
 
 export let sessionMock = new function () {
   this.user = {
@@ -13,14 +14,16 @@ export let sessionMock = new function () {
   };
   this.loggedIn = true;
   this.isAdmin = () => {
-      return this.user.admin;
+    return this.user.admin;
   };
+
+  this.userEmitter = new EventEmitter<any>();
 
   this.getLoggedInUser = () => {
     return this.user;
   };
 
-  this.isLoggedIn = (fn) => {
+  this.isLoggedIn = () => {
     return this.loggedIn;
   };
 

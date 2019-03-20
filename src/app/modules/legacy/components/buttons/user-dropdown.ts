@@ -6,6 +6,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { BanModalComponent } from '../../../ban/modal/modal.component';
 import { ReportCreatorComponent } from '../../../report/creator/creator.component';
 import { Router } from '@angular/router';
+import { BlockListService } from "../../../../common/services/block-list.service";
 
 @Component({
   selector: 'minds-button-user-dropdown',
@@ -142,7 +143,8 @@ export class UserDropdownButton {
     public session: Session,
     public client: Client,
     public overlayService: OverlayModalService,
-    public router: Router
+    public router: Router,
+    protected blockListService: BlockListService,
   ) {
   }
 
@@ -159,6 +161,7 @@ export class UserDropdownButton {
     this.client.put('api/v1/block/' + this.user.guid, {})
       .then((response: any) => {
         self.user.blocked = true;
+        this.blockListService.add(`${this.user.guid}`);
       })
       .catch((e) => {
         self.user.blocked = false;
@@ -172,6 +175,7 @@ export class UserDropdownButton {
     this.client.delete('api/v1/block/' + this.user.guid, {})
       .then((response: any) => {
         self.user.blocked = false;
+        this.blockListService.remove(`${this.user.guid}`);
       })
       .catch((e) => {
         self.user.blocked = true;

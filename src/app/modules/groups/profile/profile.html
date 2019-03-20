@@ -240,14 +240,25 @@
       </div> <!-- END INFO -->
     </div> <!-- END INFO WRAPPER -->
 
-    <m-groups--filter-selector
-      [group]="group"
-      [filter]="filter"
-      *ngIf="group['is:member']"
-    ></m-groups--filter-selector>
+    <div class="m-group-profile__Filter m-border" *mIfFeature="'channel-filter-feeds'; else legacyFilter">
+      <m-sort-selector
+        [algorithm]="algorithm"
+        [period]="period"
+        [customType]="customType"
+        [hideCustomTypesOnLatest]="['blogs']"
+        (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
+      ></m-sort-selector>
+    </div>
+    <ng-template #legacyFilter>
+      <m-groups--filter-selector
+        [group]="group"
+        [filter]="filter"
+        *ngIf="group['is:member']"
+      ></m-groups--filter-selector>
+    </ng-template>
 
     <div class="m-group__feeds">
-      <router-outlet></router-outlet> 
+      <router-outlet (activate)="onOutletActivation($event)"></router-outlet>
     </div> <!-- End Feeds -->
   </div> <!-- END LEFT BLOCK -->
 

@@ -3,7 +3,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
-import { ComponentFixture, async, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ContextService } from '../../services/context.service';
@@ -12,6 +12,9 @@ import { Session } from '../../services/session';
 import { SearchBarComponent } from './bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { sessionMock } from '../../../tests/session-mock.spec';
+import { FeaturesService } from "../../services/features.service";
+import { featuresServiceMock } from "../../../tests/features-service-mock.spec";
+
 // Mocks
 
 @Component({
@@ -26,7 +29,7 @@ class SearchBarSuggestionsMock {
 
 // Spec
 
-describe('Search', () => {
+describe('SearchBarComponent', () => {
   let fixture: ComponentFixture<SearchBarComponent>;
   let comp: SearchBarComponent;
 
@@ -44,7 +47,7 @@ describe('Search', () => {
     TestBed.configureTestingModule({
       declarations: [
         SearchBarSuggestionsMock,
-        SearchBarComponent
+        SearchBarComponent,
       ],
       imports: [
         NgCommonModule,
@@ -53,8 +56,9 @@ describe('Search', () => {
         ReactiveFormsModule
       ],
       providers: [
-        { provide: Session, useValue: sessionMock},
-        { provide: ContextService, useValue: contextServiceMock }
+        { provide: Session, useValue: sessionMock },
+        { provide: ContextService, useValue: contextServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock }
       ]
     }).compileComponents();
   }));
@@ -66,6 +70,8 @@ describe('Search', () => {
 
     fixture = TestBed.createComponent(SearchBarComponent);
     comp = fixture.componentInstance;
+
+    featuresServiceMock.mock('top-feeds', false);
 
     fixture.detectChanges();
 
@@ -171,7 +177,7 @@ describe('Search', () => {
     comp.search();
     tick();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith([ 'search', { q: 'test', ref: 'top' } ]);
+    expect(comp.router.navigate).toHaveBeenCalledWith(['search', { q: 'test', ref: 'top' }]);
 
   }));
 
@@ -184,7 +190,7 @@ describe('Search', () => {
     comp.search();
     tick();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith([ 'search', { q: 'test', ref: 'top', 'id': '5000' } ]);
+    expect(comp.router.navigate).toHaveBeenCalledWith(['search', { q: 'test', ref: 'top', 'id': '5000' }]);
 
   }));
 
@@ -201,3 +207,4 @@ describe('Search', () => {
   });
 
 });
+

@@ -1,6 +1,6 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -14,6 +14,7 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BlockListService } from '../../services/block-list.service';
 /* tslint:disable */
 
 /* Mock section */
@@ -92,8 +93,12 @@ describe('PostMenuComponent', () => {
         { provide: SignupModalService, useValue: scrollServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock }
-      ]
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        BlockListService,
+      ],
+      schemas: [
+        NO_ERRORS_SCHEMA,
+      ],
     })
       .compileComponents();  // compile template and css
   }));

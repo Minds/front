@@ -1,16 +1,28 @@
-<m-topbar class="m-noshadow mdl-color--white mdl-color-text--grey-600">
+<m-v2-topbar *mIfFeature="'top-feeds'; else legacyTopbar">
   <ng-container search>
-    <m-search--bar></m-search--bar>
+    <m-search--bar [defaultSizes]="false"></m-search--bar>
   </ng-container>
+
   <ng-container icons>
-    <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
-    <m-wallet--topbar-toggle></m-wallet--topbar-toggle>
+    <m-notifications--topbar-toggle *ngIf="session.isLoggedIn()"></m-notifications--topbar-toggle>
   </ng-container>
-</m-topbar>
+</m-v2-topbar>
+<ng-template #legacyTopbar>
+  <m-topbar class="m-noshadow mdl-color--white mdl-color-text--grey-600">
+    <ng-container search>
+      <m-search--bar></m-search--bar>
+    </ng-container>
 
-<m-sidebar--markers></m-sidebar--markers>
+    <ng-container icons>
+      <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
+      <m-wallet--topbar-toggle></m-wallet--topbar-toggle>
+    </ng-container>
+  </m-topbar>
+</ng-template>
 
-<m-body class="mdl-color--grey-100">
+<m-sidebar--markers [class.has-v2-navbar]="featuresService.has('top-feeds')"></m-sidebar--markers>
+
+<m-body class="mdl-color--grey-100" [class.has-v2-navbar]="featuresService.has('top-feeds')">
   <m-announcement [id]="'blockchain:sale'" *ngIf="false">
     <span class="m-blockchain--wallet-address-notice--action"
       routerLink="/tokens" 

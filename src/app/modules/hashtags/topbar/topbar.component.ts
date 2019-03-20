@@ -65,7 +65,11 @@ export class TopbarHashtagsComponent implements OnInit {
 
   async load() {
     try {
-      this.hashtags = await this.service.load(5);
+      const hashtags = await this.service.load(5, {
+        defaults: true
+      });
+
+      this.hashtags = (hashtags || []).slice(0, 5);
     } catch (e) {
       console.error(e);
     }

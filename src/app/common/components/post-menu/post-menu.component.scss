@@ -3,4 +3,20 @@ m-post-menu {
   .minds-dropdown-menu {
     z-index: 10000;
   }
+
+  .m-postMenu__item--nsfw {
+    overflow: visible;
+
+    m-nsfw-selector {
+      border: 0;
+      width: 100%;
+      padding: 0;
+
+      .m-nsfwSelector__label {
+        m-tooltip {
+          display: none;
+        }  
+      }
+    }
+  }
 }

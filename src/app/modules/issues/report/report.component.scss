@@ -1,0 +1,31 @@
+.m-issues__report {
+  display: block;
+  width: 100%;
+  padding: 16px 0;
+
+  .m-issuesReport__container {
+    margin: 0 auto;
+    max-width: 600px;
+    margin: auto;
+    background: #FFF;
+    padding: 16px;
+
+    h2 {
+      margin: 0;
+      margin-bottom: 16px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    p {
+      color: #666;
+    }    
+  }
+    .mdl-textfield {
+        width: 600px;
+    }
+
+    textarea {
+        min-height: 100px;
+    }
+}

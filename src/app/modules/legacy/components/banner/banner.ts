@@ -50,6 +50,7 @@ export class MindsBanner {
   object;
   editing: boolean = false;
   src: string = '';
+  originalSrc: string = '';
   index: number = 0;
 
   file: any;
@@ -65,11 +66,11 @@ export class MindsBanner {
     if (!value)
       return;
     this.object = value;
-    this.src = '/fs/v1/banners/' + this.object.guid + '/' + this.top + '/' + this.object.banner;
+    this.originalSrc = this.src = '/fs/v1/banners/' + this.object.guid + '/' + this.top + '/' + this.object.banner;
   }
 
   set _src(value: any) {
-    this.src = value;
+    this.originalSrc = this.src = value;
   }
 
   set _top(value: number) {
@@ -103,6 +104,7 @@ export class MindsBanner {
 
   cancel() {
     this.file = null;
+    this.src = this.originalSrc;
   }
 
   /**

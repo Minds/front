@@ -1,7 +1,7 @@
 @import "defaults";
 
 
-m-search--bar{
+m-search--bar {
   width:200px;
 
   .mdl-textfield {
@@ -21,25 +21,28 @@ m-search--bar{
     }
   }
 
-  @media screen and (max-width: 1080px){
-    width: 180px;
-  }
+  &.m-search--bar--default-sizes {
+    @media screen and (max-width: 1080px){
+      width: 180px;
+    }
 
-  @media screen and (max-width: $min-desktop){
-    width:45%;
-  }
-  @media screen and (max-width: $min-tablet){
-    width:auto;
-    max-width: 30%;
+    @media screen and (max-width: $min-desktop){
+      width:45%;
+    }
 
-    input{
-      border:0 !important;
-      &:focus{
-        border: 1px solid rgba(0, 0, 0, 0.12) !important;
-        width: 75vw;
+    @media screen and (max-width: $min-tablet){
+      width:auto;
+      max-width: 30%;
 
-        & + .mdl-textfield__label {
+      input{
+        border:0 !important;
+        &:focus{
+          border: 1px solid rgba(0, 0, 0, 0.12) !important;
           width: 75vw;
+
+          & + .mdl-textfield__label {
+            width: 75vw;
+          }
         }
       }
     }

@@ -6,6 +6,10 @@
   height : 100%;
   background: #FFF;
   top: 52px;
+
+  .has-v2-navbar & {
+    //top: 62px;
+  }
 }
 .has-markers-sidebar {
   margin-right: 46px;

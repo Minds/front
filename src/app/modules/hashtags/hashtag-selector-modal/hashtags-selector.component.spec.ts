@@ -14,6 +14,10 @@ import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { TopbarHashtagsService } from '../service/topbar.service';
 import { topbarHashtagsServiceMock } from '../../../mocks/modules/hashtags/service/topbar.service.mock';
+import { MockComponent } from "../../../utils/mock";
+import { IfFeatureDirective } from "../../../common/directives/if-feature.directive";
+import { FeaturesService } from "../../../services/features.service";
+import { featuresServiceMock } from "../../../../tests/features-service-mock.spec";
 
 describe('HashtagsSelectorModalComponent', () => {
 
@@ -28,12 +32,19 @@ describe('HashtagsSelectorModalComponent', () => {
         MaterialSwitchMock,
         AbbrPipe,
         HashtagsSelectorModalComponent,
+        MockComponent({
+          selector: 'm-switch',
+          inputs: ['mModel', 'disabled', 'labelPosition'],
+          outputs: ['mModelChange', 'change'],
+        }),
+        IfFeatureDirective,
       ],
       imports: [FormsModule, RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: TopbarHashtagsService, useValue: topbarHashtagsServiceMock }
+        { provide: TopbarHashtagsService, useValue: topbarHashtagsServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ]
     })
       .compileComponents();
@@ -44,6 +55,8 @@ describe('HashtagsSelectorModalComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(HashtagsSelectorModalComponent);
+
+    featuresServiceMock.mock('top-feeds', false);
 
     comp = fixture.componentInstance;
 

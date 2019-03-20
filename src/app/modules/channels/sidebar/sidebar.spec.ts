@@ -24,6 +24,8 @@ import { Session } from '../../../services/session';
 import { ChannelOnboardingService } from "../../onboarding/channel/onboarding.service";
 import { Storage } from '../../../services/storage';
 import { storageMock } from "../../../../tests/storage-mock.spec";
+import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 
 describe('ChannelSidebar', () => {
 
@@ -98,6 +100,10 @@ describe('ChannelSidebar', () => {
             onClose: new EventEmitter(),
           })
         },
+        {
+          provide: FeaturesService,
+          useValue: featuresServiceMock,
+        }
       ]
     })
         .compileComponents();  // compile template and css

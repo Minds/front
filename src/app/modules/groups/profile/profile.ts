@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, HostListener, Input } from '@angular/core';
 import { ActivatedRoute, ChildActivationEnd, NavigationEnd, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -48,6 +48,11 @@ export class GroupsProfile {
 
   socketRoomName: string;
   newConversationMessages: boolean = false;
+
+  isSorting: boolean;
+  algorithm: string = 'top';
+  period: string = '7d';
+  customType: string = 'activities';
 
   @ViewChild('feed') private feed: GroupsProfileFeed;
   @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
@@ -149,7 +154,7 @@ export class GroupsProfile {
       this.queryParamsSubscripton.unsubscribe();
 
     if (this.videoChatActiveSubscription)
-      this.videoChatActiveSubscription.unsubscribe(); 
+      this.videoChatActiveSubscription.unsubscribe();
 
     if (this.updateMarkersSubscription)
       this.updateMarkersSubscription.unsubscribe();
@@ -162,13 +167,35 @@ export class GroupsProfile {
     }
   }
 
+  onOutletActivation(component) {
+    setTimeout(() => {
+      this.isSorting = Boolean(component && component.isSorting);
+
+      if (this.isSorting) {
+        if (component.algorithm) {
+          this.algorithm = component.algorithm;
+        }
+
+        if (component.period) {
+          this.period = component.period;
+        }
+
+        if (component.customType) {
+          this.customType = component.customType;
+        }
+      } else {
+        this.algorithm = 'latest';
+      }
+    }, 0);
+  }
+
   async load() {
     this.resetMarkers();
     this.error = "";
     this.group = null;
 
     // Load group
-    try { 
+    try {
       this.group = await this.service.load(this.guid);
     } catch (e) {
       this.error = e.message;
@@ -181,8 +208,8 @@ export class GroupsProfile {
     this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe(marker => {
       if (!marker)
         return;
-        
-      let hasMarker = 
+
+      let hasMarker =
         (marker.read_timestamp < marker.updated_timestamp)
         && (marker.entity_guid == this.group.guid)
         && (marker.marker != 'gathering-heartbeat');
@@ -400,9 +427,51 @@ export class GroupsProfile {
     localStorage.setItem('groups:conversations:minimized', (!this.showRight).toString());
   }
 
+  setSort(algorithm: string, period: string | null, customType: string | null) {
+    if (algorithm === 'latest') {
+      // Cassandra listing.
+      // TODO: Remove when ElasticSearch is fully implemented
+      this.algorithm = algorithm;
+      this.period = null;
+      this.customType = customType;
+
+      let filter = '';
+
+      switch (customType) {
+        case 'images':
+          filter = 'image';
+          break;
+
+        case 'videos':
+          filter = 'video';
+          break;
+      }
+
+      this.router.navigate(['/groups/profile', this.group.guid, 'feed', filter]);
+      return;
+    }
+
+    this.algorithm = algorithm;
+    this.period = period;
+    this.customType = customType;
+
+    let route: any[] = [ '/groups/profile', this.group.guid, 'sort', algorithm ];
+    const params: any = {};
+
+    if (period) {
+      params.period = period;
+    }
+
+    if (customType && customType !== 'activities') {
+      params.type = customType;
+    }
+
+    route.push(params);
+    return this.router.navigate(route);
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

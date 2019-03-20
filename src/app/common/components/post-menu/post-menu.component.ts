@@ -5,10 +5,12 @@ import { Client } from '../../../services/api/client';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { MindsUser } from '../../../interfaces/entities';
 import { SignupModalService } from '../../../modules/modals/signup/service';
+import { BlockListService } from "../../services/block-list.service";
 
 
 type Option =
   'edit'
+  | 'view'
   | 'translate'
   | 'share'
   | 'follow'
@@ -57,7 +59,14 @@ export class PostMenuComponent {
 
   categories: Array<any> = [];
 
-  constructor(public session: Session, private client: Client, private cd: ChangeDetectorRef, private overlayModal: OverlayModalService, public signupModal: SignupModalService) {
+  constructor(
+    public session: Session,
+    private client: Client,
+    private cd: ChangeDetectorRef,
+    private overlayModal: OverlayModalService,
+    public signupModal: SignupModalService,
+    protected blockListService: BlockListService,
+  ) {
     this.initCategories();
   }
 
@@ -165,6 +174,8 @@ export class PostMenuComponent {
       .then((response: any) => {
         this.asyncBlock = false;
         this.detectChanges();
+
+        this.blockListService.remove(`${this.entity.ownerObj.guid}`);
       })
       .catch((e) => {
         this.asyncBlock = true;
@@ -178,6 +189,8 @@ export class PostMenuComponent {
       .then((response: any) => {
         this.asyncBlock = true;
         this.detectChanges();
+
+        this.blockListService.add(`${this.entity.ownerObj.guid}`);
       })
       .catch((e) => {
         this.asyncBlock = false;
@@ -309,4 +322,11 @@ export class PostMenuComponent {
       });
     this.selectOption('rating');
   }
+
+  onNSFWSelected(reasons: Array<{ label, value, selected}>) {
+    const nsfw = reasons.map(reason => reason.value);
+    this.client.post(`api/v2/admin/nsfw/${this.entity.guid}`, { nsfw });
+    this.entity.nsfw = nsfw;
+  }
+
 }
