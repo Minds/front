@@ -8,6 +8,11 @@
             <b> {{ getReasonString(report) }} </b>
         </h3>
 
+        <div class="m-juryDutySessionContent__appealNote" *ngIf="report.appeal_note">
+            <b>Appeal note:</b>
+            <p>{{report.appeal_note}}</p>
+        </div>
+
         <minds-card *ngIf="report.entity"
             class=""
             [object]="report.entity"

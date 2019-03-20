@@ -1,5 +1,6 @@
 import { Client } from "../../../../services/api";
 import { Injectable } from "@angular/core";
+import { REASONS } from '../../../../services/list-options';
 
 @Injectable()
 export class JurySessionService {
@@ -39,6 +40,33 @@ export class JurySessionService {
         break;
     }
     return id;
+  }
+
+  getReasonString(report) {
+    let friendlyString = 'removed';
+    
+    switch (report.reason_code) {
+      case 1: 
+        friendlyString = 'being illegal (todo)';
+        break;
+      case 2:
+        friendlyString = REASONS[1].reasons[report.sub_reason_code-1].label;
+        break;
+    }
+
+    return friendlyString;
+  }
+
+  getAction(report) {
+    let friendlyString = report.entity.type == 'user' ? 'banned' : 'removed';
+    
+    switch (report.reason_code) {
+      case 2: 
+        friendlyString = 'marked NSFW';
+        break;
+    }
+
+    return friendlyString;
   }
 
 }

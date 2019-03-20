@@ -13,4 +13,17 @@
     margin-top: 16px;
     max-width: 600px;
   }
+
+}
+
+.m-juryDutySessionContent__appealNote {
+  padding-top: 8px;
+
+  > b {
+    color: #666;
+  }
+  > p {
+    display: inline;
+    padding-left: 8px;
+  }
 }

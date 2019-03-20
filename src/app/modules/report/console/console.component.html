@@ -11,17 +11,11 @@
 
   <div class="m-report-console--header mdl-color--blue mdl-color-text--white">
     <b>{{ appeal.time_created * 1000 | date: 'short' }}</b>
-    <p [ngSwitch]="appeal.reason">
-      <span *ngSwitchCase="1" i18n="@@REPORT__CONSOLE__REASON_ILLEGAL_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>is illegal </b>.</span>
-      <span *ngSwitchCase="2" i18n="@@REPORT__CONSOLE__REASON_EXPLICIT_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>should be marked as explicit </b>.</span>
-      <span *ngSwitchCase="3" i18n="@@REPORT__CONSOLE__REASON_VIOLENCE_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>encourages or incites violence</b>.</span>
-      <span *ngSwitchCase="4" i18n="@@REPORT__CONSOLE__REASON_BULLY_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>threatens, harasses, bullies or encourages others to do so</b>.</span>
-      <span *ngSwitchCase="5" i18n="@@REPORT__CONSOLE__REASON_CONFIDENTIAL_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>contains personal and confidential info</b>.</span>
-      <span *ngSwitchCase="6" i18n="@@REPORT__CONSOLE__REASON_MALICIOUS_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>maliciously targets users (@name, links, images or videos)</b>.</span>
-      <span *ngSwitchCase="7" i18n="@@REPORT__CONSOLE__REASON_IMPERSONATES_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>impersonates someone in a misleading or deceptive manner</b>.</span>
-      <span *ngSwitchCase="8" i18n="@@REPORT__CONSOLE__REASON_SPAM_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>is spam</b>.</span>
-      <span *ngSwitchCase="10" i18n="@@REPORT__CONSOLE__REASON_COPYRIGHT_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>is a copyright infringement</b>.</span>
-      <span *ngSwitchCase="11" i18n="@@REPORT__CONSOLE__REASON_ANOTHER_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because <b>another reason</b>.</span>
+    <p>
+      <span>Should be</span>
+      <b> {{ service.getAction(appeal.report) }} </b>
+      <span>for</span>
+      <b> {{ service.getReasonString(appeal.report) }} </b>
     </p>
   </div>
 
@@ -37,16 +31,16 @@
         Appeal
       </button>
     </div>
-    <div class="m-report-console--appeal-note" *ngIf="appeal.appeal_note">
+    <div class="m-report-console--appeal-note" *ngIf="appeal.note">
       <p>{{appeal.appeal_note}}</p>  
     </div>    
   </div>
 
 
 
-  <minds-card *ngIf="appeal.entityObj && appeal.entityObj.type != 'comment'"
+  <minds-card *ngIf="appeal.report.entity && appeal.report.entity.type != 'comment'"
     class="m-report-console--card"
-    [object]="appeal.entityObj"
+    [object]="appeal.report.entity"
     hostClass="mdl-card"
   ></minds-card>
 
@@ -65,9 +59,9 @@
 
 </div>
 
-<infinite-scroll
+<!--<infinite-scroll
   distance="25%"
   (load)="load()"
   [moreData]="moreData"
   [inProgress]="inProgress">
-</infinite-scroll>
+</infinite-scroll>-->
