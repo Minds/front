@@ -47,11 +47,7 @@ export default class FeedsSync {
    * @returns {FeedsSync}
    */
   setResolvers(resolvers) {
-    this.resolvers = {
-      ...this.resolvers,
-      ...resolvers,
-    };
-
+    this.resolvers = Object.assign(this.resolvers, resolvers);
     return this;
   }
 
@@ -178,11 +174,16 @@ export default class FeedsSync {
 
       const entities = response.entities
         .filter(feedSyncEntity => blockedList.indexOf(feedSyncEntity.owner_guid) === -1)
-        .map((feedSyncEntity, index) => ({
-          key,
-          id: `${key}:${`${index}`.padStart(24, '0')}`,
-          ...feedSyncEntity,
-        }));
+        .map((feedSyncEntity, index) => {
+          let obj = {
+            key,
+              id: `${key}:${`${index}`.padStart(24, '0')}`,
+          };
+
+          obj = Object.assign(obj, feedSyncEntity);
+
+          return obj;
+        });
 
       // Insert onto DB
 

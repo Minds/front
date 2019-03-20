@@ -17,7 +17,7 @@ export default class EntitiesSync {
     this.db.schema(1, {
       entities: {
         primaryKey: 'urn',
-        indexes: [ '_syncAt' ]
+        indexes: ['_syncAt']
       },
     });
 
@@ -88,12 +88,15 @@ export default class EntitiesSync {
         throw new Error('Invalid server response');
       }
 
-      const entities = response.entities.map(entity => ({
-        urn: `urn:entity:${entity.guid}`,
-        _syncAt: Date.now(),
-        ...entity,
-      }));
-
+      const entities = response.entities.map(entity => {
+        let obj =
+          {
+            urn: `urn:entity:${entity.guid}`,
+            _syncAt: Date.now(),
+          };
+        obj = Object.assign(obj, entity);
+        return obj;
+      });
       await this.db.bulkInsert('entities', entities);
     } catch (e) {
       console.warn('EntitiesService.fetch', e);
