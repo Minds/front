@@ -1,7 +1,7 @@
 export default class EntitiesSync {
   /**
    * @param {MindsClientHttpAdapter|MindsMobileClientHttpAdapter} http
-   * @param {DexieStorageAdapter|SqliteStorageAdapter} db
+   * @param {DexieStorageAdapter|InMemoryStorageAdapter|SqliteStorageAdapter} db
    * @param {Number} stale_after
    */
   constructor(http, db, stale_after) {

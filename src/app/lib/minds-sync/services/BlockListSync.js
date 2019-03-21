@@ -1,7 +1,7 @@
 export default class BlockListSync {
   /**
    * @param {MindsClientHttpAdapter|MindsMobileClientHttpAdapter} http
-   * @param {DexieStorageAdapter|SqliteStorageAdapter} db
+   * @param {DexieStorageAdapter|InMemoryStorageAdapter|SqliteStorageAdapter} db
    */
   constructor(http, db) {
     this.http = http;
