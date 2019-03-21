@@ -1,6 +1,7 @@
 Minds Front
 ===========
-[![Build Status](http://drone.minds.io/api/badges/Minds/front-internal/status.svg)](http://drone.minds.io/Minds/front-internal)
+[![Gitlab CI Status](https://www.gitlab.com/minds/front/badges/master/pipeline.svg)](https://www.gitlab.com/minds/front)
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=T2NvVEVqQnJ5Qm1hVno1SGw2U2R6Z21paVlGR2lHdzNWZTgrWHRWZWN4WT0tLWRtS29ibHBuRk16c0dpbng2aXE3TVE9PQ==--f52d73f47d51343c6e9416cf27400c5f9202fabc)](https://www.browserstack.com/automate/public-build/T2NvVEVqQnJ5Qm1hVno1SGw2U2R6Z21paVlGR2lHdzNWZTgrWHRWZWN4WT0tLWRtS29ibHBuRk16c0dpbng2aXE3TVE9PQ==--f52d73f47d51343c6e9416cf27400c5f9202fabc)
 
 Front-end web application for Minds. Please run inside of [the Minds repo](https://github.com/minds/minds).
 
