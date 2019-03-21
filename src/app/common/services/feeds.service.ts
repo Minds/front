@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import Dexie from 'dexie';
 
 import { Client } from "../../services/api/client";
 import { Session } from "../../services/session";
@@ -8,10 +7,11 @@ import { EntitiesService } from "./entities.service";
 import { BlockListService } from "./block-list.service";
 
 import MindsClientHttpAdapter from "../../lib/minds-sync/adapters/MindsClientHttpAdapter.js";
-import DexieStorageAdapter from "../../lib/minds-sync/adapters/DexieStorageAdapter.js";
+import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
 import FeedsSync from '../../lib/minds-sync/services/FeedsSync.js';
 
 import hashCode from "../../helpers/hash-code";
+import AsyncStatus from "../../helpers/async-status";
 
 export type FeedsServiceSyncOptions = {
   filter: string,
@@ -40,15 +40,21 @@ export class FeedsService {
 
   protected feedsSync: FeedsSync;
 
+  protected status = new AsyncStatus();
+
   constructor(
     protected client: Client,
     protected session: Session,
     protected entitiesService: EntitiesService,
     protected blockListService: BlockListService,
   ) {
+    this.setUp();
+  }
+
+  async setUp() {
     this.feedsSync = new FeedsSync(
       new MindsClientHttpAdapter(this.client),
-      new DexieStorageAdapter(new Dexie('minds-feeds-190314')),
+      await browserStorageAdapterFactory('minds-feeds-190314'),
       15,
       600,
     );
@@ -63,6 +69,10 @@ export class FeedsService {
 
     this.feedsSync.setUp();
 
+    //
+
+    this.status.done();
+
     // Garbage collection
 
     this.feedsSync.gc();
@@ -70,6 +80,8 @@ export class FeedsService {
   }
 
   async get(opts: FeedsServiceSyncOptions): Promise<FeedsServiceGetResponse> {
+    await this.status.untilReady();
+
     try {
       const { entities, next } = await this.feedsSync.get(opts);
 
@@ -84,6 +96,7 @@ export class FeedsService {
   }
 
   async destroy() {
+    await this.status.untilReady();
     return await this.feedsSync.destroy();
   }
 

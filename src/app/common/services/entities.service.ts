@@ -1,28 +1,36 @@
 import { Injectable } from "@angular/core";
 import { Client } from "../../services/api";
-import Dexie from 'dexie';
 
 import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
-import DexieStorageAdapter from '../../lib/minds-sync/adapters/DexieStorageAdapter.js';
+import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
 import EntitiesSync from '../../lib/minds-sync/services/EntitiesSync.js';
+import AsyncStatus from "../../helpers/async-status";
 
 @Injectable()
 export class EntitiesService {
 
-  protected db: Dexie;
-
   protected entitiesSync: EntitiesSync;
+
+  protected status = new AsyncStatus();
 
   constructor(
     protected client: Client
   ) {
+    this.setUp();
+  }
+
+  async setUp() {
     this.entitiesSync = new EntitiesSync(
       new MindsClientHttpAdapter(this.client),
-      new DexieStorageAdapter(new Dexie('minds-entities-190314')),
+      await browserStorageAdapterFactory('minds-entities-190314'),
       15,
     );
 
     this.entitiesSync.setUp();
+
+    //
+
+    this.status.done();
 
     // Garbage collection
 
@@ -31,6 +39,8 @@ export class EntitiesService {
   }
 
   async single(guid: string): Promise<Object | false> {
+    await this.status.untilReady();
+
     try {
       const entities = await this.fetch([guid]);
 
@@ -46,6 +56,8 @@ export class EntitiesService {
   }
 
   async fetch(guids: string[]): Promise<Object[]> {
+    await this.status.untilReady();
+
     if (!guids || !guids.length) {
       return [];
     }
@@ -56,6 +68,8 @@ export class EntitiesService {
   }
 
   async prefetch(guids: string[]): Promise<boolean> {
+    await this.status.untilReady();
+
     if (!guids || !guids.length) {
       return true;
     }

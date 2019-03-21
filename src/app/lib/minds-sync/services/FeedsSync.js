@@ -5,7 +5,7 @@ const E_NO_RESOLVER = function () {
 export default class FeedsSync {
   /**
    * @param {MindsClientHttpAdapter|MindsMobileClientHttpAdapter} http
-   * @param {DexieStorageAdapter|SqliteStorageAdapter} db
+   * @param {DexieStorageAdapter|InMemoryStorageAdapter|SqliteStorageAdapter} db
    * @param {Number} stale_after
    * @param {Number} limit
    */

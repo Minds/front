@@ -45,5 +45,6 @@ interface Window {
   twoOhSix?: any;
   web3?: any;
   sale?: boolean | string;
+  _inMemoryStorageAdapterDb?: any;
 }
 declare var window: Window;
