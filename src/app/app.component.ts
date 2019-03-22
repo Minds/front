@@ -61,6 +61,10 @@ export class Minds {
           console.log('[app]:: language change', this.minds.user.language, this.minds.language);
           window.location.reload(true);
         }
+        if(this.minds.user.canary) {
+          console.log('[app]:: experiments on');
+          window.location.reload(true);
+        }
       }
     });
 
