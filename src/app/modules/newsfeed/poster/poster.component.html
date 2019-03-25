@@ -34,7 +34,7 @@
         <label for="attachment-input-poster" class="attachment-button m-posterActionBar__Attach" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
           <i class="material-icons m-posterActionBar__Icon">attachment</i>
           <span class="m-posterActionBar__Label">Attach</span>
-          <input type="file" id="attachment-input-poster" #file name="attachment" (change)="uploadAttachment(file, $event)" />
+          <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)" accept="image/*, video/*"/>
         </label>
 
         <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
