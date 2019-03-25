@@ -429,6 +429,7 @@ export class AttachmentService {
         reader.readAsDataURL(file);
       } else {
         this.attachment.mime = 'unknown';
+        reject({message: 'Invalid file type'});
       }
     });
   }
