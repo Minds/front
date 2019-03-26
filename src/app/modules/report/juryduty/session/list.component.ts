@@ -14,6 +14,7 @@ export class JuryDutySessionListComponent implements AfterViewInit {
 
   @Input() juryType = 'appeal';
   reports: Array<any> = [];
+  inProgress: boolean = true;
 
   constructor(
     private sessionService: JurySessionService,
@@ -26,10 +27,11 @@ export class JuryDutySessionListComponent implements AfterViewInit {
   }
 
   async load(refresh: boolean = false) {
+    this.inProgress = true;
     let result: any = await this.sessionService.getList({
       juryType: this.juryType,
     });
-
+    this.inProgress = false;
     this.reports = result.reports;
   }
 

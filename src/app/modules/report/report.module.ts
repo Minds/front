@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
+import { TokenOnboardingModule } from '../wallet/tokens/onboarding/onboarding.module';
 import { ReportCreatorComponent } from './creator/creator.component';
 import { ReportConsoleComponent } from './console/console.component';
 import { ReportsMarketingComponent } from './marketing/marketing.component';
@@ -25,9 +26,10 @@ import { JuryDutySessionContentComponent } from './juryduty/session/content.comp
     CommentsModule,
     RouterModule.forChild([
       { path: 'moderation',  component: ReportsMarketingComponent },
-      { path: 'moderation/juryduty', redirectTo: '/moderation/juryduty/appeal' },
+      //{ path: 'moderation/juryduty', redirectTo: '/moderation/juryduty/appeal' },
       { path: 'moderation/juryduty/:jury', component: JuryDutySessionComponent, },
-    ])
+    ]),
+    TokenOnboardingModule,
   ],
   declarations: [
     ReportCreatorComponent,

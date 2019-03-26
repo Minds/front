@@ -22,12 +22,15 @@ export class JuryDutySessionContentComponent {
   }
 
   getReasonString(report) {
-    let friendlyString = 'remved';
-    REASONS
+    let friendlyString = 'removed';
     
     switch (report.reason_code) {
-      case 1: 
-        friendlyString = 'being illegal (todo)';
+      case 1:
+        if (report.sub_reason_code) {
+          friendlyString = REASONS[0].reasons[report.sub_reason_code-1].label;
+          break;
+        }
+        friendlyString = 'being illegal';
         break;
       case 2:
         friendlyString = REASONS[1].reasons[report.sub_reason_code-1].label;

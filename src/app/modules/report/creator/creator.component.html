@@ -99,7 +99,7 @@
     </p>
   </div>
 
-  <div class="m-report-creator--close" *ngIf="success || (next && subject === 10)">
+  <div class="m-report-creator--close" *ngIf="success || (next && subject.value === 10)">
     <button class="m-reportCreator__button m-btn m-btn--slim m-btn--action" (click)="close()">
     <ng-container i18n="@@M__ACTION__CLOSE__CAPS">CLOSE</ng-container>
     </button>
