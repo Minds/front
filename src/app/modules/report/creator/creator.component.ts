@@ -55,7 +55,7 @@ export class ReportCreatorComponent implements AfterViewInit {
       return false;
       //throw new Error('You cannot report this.');
     }
-    if (this.subject.value == 2 
+    if (this.subject.hasMore 
       && this.next
       && !this.subReason.value
     ) {

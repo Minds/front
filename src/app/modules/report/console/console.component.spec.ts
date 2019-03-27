@@ -16,6 +16,7 @@ import { ScrollService } from '../../../services/ux/scroll';
 import {$it, $beforeAll, $beforeEach, $afterEach, $afterAll} from 'jasmine-ts-async';
 
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
+import { JurySessionService } from '../juryduty/session/session.service';
 /* tslint:disable */
 describe('ReportConsoleComponent', () => {
   let comp: ReportConsoleComponent;
@@ -28,6 +29,7 @@ describe('ReportConsoleComponent', () => {
       imports: [ FormsModule, RouterTestingModule ],
       providers: [
         { provide: Client, useValue: clientMock },
+        JurySessionService,
       ]
     })
       .compileComponents();  // compile template and css
@@ -43,13 +45,31 @@ describe('ReportConsoleComponent', () => {
     fixture.detectChanges();
     comp = fixture.componentInstance;
     appeals = [];
-    clientMock.response[ `api/v1/entities/report/appeal/review` ] = {
+    clientMock.response[ `api/v2/moderation/appeals/review` ] = {
       "status":"success",
       "load-next":'',
-      "data":[
-        {"guid":"756593195889987599","entity_guid":"755121974073626627", "entityObj": { "type" : "comment"} },
-        {"guid":"756593195889987599","entity_guid":"755121974073626627", "entityObj": { "type" : "comment"} },
-        {"guid":"756593195889987599","entity_guid":"755121974073626627", "entityObj": { "type" : "comment"} }
+      "appeals":[
+        {
+          "report": {
+            "guid":"756593195889987599",
+            "entity_guid":"755121974073626627",
+            "entity": { "type" : "comment"}
+          }
+        },
+        {
+          "report": {
+            "guid":"756593195889987599",
+            "entity_guid":"755121974073626627",
+            "entity": { "type" : "comment"}
+          }
+        },
+        {
+          "report": {
+            "guid":"756593195889987599",
+            "entity_guid":"755121974073626627",
+            "entity": { "type" : "comment"} 
+          }
+        }
       ]
     };
 
