@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -7,7 +7,6 @@ import { Session } from './services/session';
 import { LoginReferrerService } from './services/login-referrer.service';
 import { ScrollToTopService } from './services/scroll-to-top.service';
 import { ContextService } from './services/context.service';
-import { BlockchainService } from './modules/blockchain/blockchain.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
 import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
@@ -61,7 +60,7 @@ export class Minds {
           console.log('[app]:: language change', this.minds.user.language, this.minds.language);
           window.location.reload(true);
         }
-        if(this.minds.user.canary) {
+        if (this.minds.user.canary) {
           console.log('[app]:: experiments on');
           window.location.reload(true);
         }
