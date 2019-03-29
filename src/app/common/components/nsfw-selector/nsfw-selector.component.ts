@@ -10,7 +10,7 @@ import {
   NSFWSelectorEditingService,
 } from './nsfw-selector.service';
 import { Storage } from '../../../services/storage';
-import last from 'lodash'
+
 @Component({
   selector: 'm-nsfw-selector',
   templateUrl: 'nsfw-selector.component.html',
@@ -28,7 +28,6 @@ export class NSFWSelectorComponent {
   @Input('consumer') consumer: false;
   @Output('selected') onSelected: EventEmitter<any> = new EventEmitter();
   @Input() user: any;
-
   constructor(
     public creatorService: NSFWSelectorCreatorService,
     public consumerService: NSFWSelectorConsumerService,
@@ -40,6 +39,7 @@ export class NSFWSelectorComponent {
   ngAfterViewInit() {
     this.toggleDefaultNSFW();
   }
+
   get service() {
     switch (this.serviceRef) {
       case 'editing':
