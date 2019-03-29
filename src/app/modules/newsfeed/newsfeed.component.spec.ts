@@ -31,6 +31,7 @@ import { FeaturesService } from "../../services/features.service";
 import { featuresServiceMock } from "../../../tests/features-service-mock.spec";
 import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
 import { newsfeedHashtagSelectorServiceMock } from "../../../tests/newsfeed-hashtag-selector-service-mock.spec";
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('NewsfeedComponent', () => {
 
@@ -73,7 +74,8 @@ describe('NewsfeedComponent', () => {
         { provide: NewsfeedService, useValue: newsfeedServiceMock },
         { provide: NewsfeedHashtagSelectorService, useValue: newsfeedHashtagSelectorServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ],
     })
       .compileComponents();  // compile template and css
   }));
