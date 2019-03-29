@@ -1,5 +1,8 @@
-<div class="m-notices__sidebar">
-  <h3 class="m-newsfeedSidebar__header">Notices</h3>
+<div class="m-notices__sidebar" *ngIf="!hidden">
+  <h3 class="m-newsfeedSidebar__header">
+    <span>Notices</span> 
+    <i (click)="hide()" class="material-icons">close</i>
+  </h3>
   <span *ngIf="!inProgress && !notices.length" class="m-noticesSidebar__empty">
     There are no notices
   </span>
