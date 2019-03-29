@@ -10,6 +10,7 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { AdsModule } from '../ads/ads.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { NoticesModule } from '../notices/notices.module';
 
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
@@ -62,6 +63,7 @@ const routes: Routes = [
     PosterModule,
     HashtagsModule,
     SuggestionsModule,
+    NoticesModule,
     SearchModule,
   ],
   declarations: [
