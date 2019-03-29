@@ -24,10 +24,12 @@ import { Storage } from '../../../services/storage';
 })
 
 export class NSFWSelectorComponent {
+    
   @Input('service') serviceRef: string = 'consumer';
   @Input('consumer') consumer: false;
   @Output('selected') onSelected: EventEmitter<any> = new EventEmitter();
   @Input() user: any;
+  
   constructor(
     public creatorService: NSFWSelectorCreatorService,
     public consumerService: NSFWSelectorConsumerService,
