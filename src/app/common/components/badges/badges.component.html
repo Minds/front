@@ -5,7 +5,13 @@
     </m-tooltip>
   </li>
 
-  <li *ngIf="(user.verified || session.isAdmin()) && badges.indexOf('verified') > -1" (click)="verify($event)">
+  <li *ngIf="user.is_admin && badges.indexOf('admin') > -1">
+    <m-tooltip icon="verified_user" [iconClass]="{'admin__badge': user.is_admin}" i18n="Admin as user status@@COMMON__BADGES__ADMIN">
+      Admin
+    </m-tooltip>
+  </li>
+
+  <li *ngIf="(user.verified && !user.is_admin) && badges.indexOf('verified') > -1" (click)="verify($event)">
     <m-tooltip icon="verified_user" [iconClass]="{'selected': user.verified}" i18n="Verified as user status@@COMMON__BADGES__VERIFIED">
       Verified
     </m-tooltip>

@@ -23,7 +23,7 @@ export interface SocialProfileMeta {
 export class ChannelBadgesComponent {
 
   @Input() user;
-  @Input() badges: Array<string> = [ 'verified', 'plus', 'founder' ];
+  @Input() badges: Array<string> = [ 'verified', 'plus', 'founder', 'admin' ];
 
   constructor(public session: Session, private client: Client, private router: Router) { }
 
