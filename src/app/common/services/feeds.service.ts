@@ -56,7 +56,7 @@ export class FeedsService {
       new MindsClientHttpAdapter(this.client),
       await browserStorageAdapterFactory('minds-feeds-190314'),
       15,
-      600,
+      1500,
     );
 
     this.feedsSync.setResolvers({
