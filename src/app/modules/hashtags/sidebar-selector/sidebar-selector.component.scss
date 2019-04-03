@@ -61,6 +61,10 @@ m-hashtags--sidebar-selector {
         align-items: center;
         margin-bottom: 8px;
 
+        @media screen and (max-width: 480px) {
+          margin-bottom: 12px;
+        }
+
         &:last-child {
           margin-bottom: 0;
         }
@@ -76,6 +80,11 @@ m-hashtags--sidebar-selector {
       overflow: hidden;
       text-overflow: ellipsis;
 
+      @media screen and (max-width: 480px) {
+        font-size: 15px;
+        letter-spacing: 0.1px;
+      }
+
       &.m-hashtagsSidebarSelectorList__label--visible {
         color: #4690df;
       }
@@ -88,6 +97,10 @@ m-hashtags--sidebar-selector {
       text-align: center;
       cursor: pointer;
       user-select: none;
+
+      @media screen and (max-width: 480px) {
+        display: none;
+      }
 
       &.m-hashtagsSidebarSelectorList__visibility--visible {
         color: #4690df;
