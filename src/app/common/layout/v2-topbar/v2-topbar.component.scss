@@ -280,3 +280,10 @@
     justify-content: center;
   }
 }
+
+.m-v2-topbar__NotificationsToaster {
+  .m-notifications--toaster {
+    z-index: 500;
+    right: 65px;
+  }
+}
