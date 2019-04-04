@@ -73,6 +73,10 @@ export class CommentsThreadComponent {
     this.listen();
   }
 
+  get guid(): string {
+    return this.entity.entity_guid ? this.entity.entity_guid : this.entity.guid;
+  }
+
   async load(refresh: boolean = false, direction: string = 'desc') {
     if (refresh) {
       this.comments = [];
@@ -94,7 +98,7 @@ export class CommentsThreadComponent {
     const previousScrollHeightMinusTop = el.scrollHeight - el.scrollTop;
 
     let response: any = (<{ comments, 'load-next', 'load-previous', socketRoomName }>await this.commentsService.get({
-       entity_guid: this.entity.guid,
+       entity_guid: this.guid,
        parent_path,
        level: this.level,
        limit: 12,
@@ -151,7 +155,7 @@ export class CommentsThreadComponent {
 
   listen() {
     this.socketSubscriptions.comment = this.sockets.subscribe('comment', async (entity_guid, owner_guid, guid) => {
-      if (entity_guid !== this.entity.guid) {
+      if (entity_guid !== this.guid) {
         return;
       }
 
@@ -165,7 +169,7 @@ export class CommentsThreadComponent {
 
       try {
         let comment: any = await this.commentsService.single({
-            entity_guid: this.entity.guid,
+            entity_guid: this.guid,
             guid: guid,
             parent_path: parent_path,
         });

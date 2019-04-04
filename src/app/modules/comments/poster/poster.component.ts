@@ -100,7 +100,7 @@ export class CommentPosterComponent {
     this.detectChanges();
 
     try {
-      let response: any = await this.client.post('api/v1/comments/' + this.entity.guid, data);
+      let response: any = await this.client.post('api/v1/comments/' + this.guid, data);
       this.posted$.next({ comment: response.comment, index: this.currentIndex });
     } catch (e) {
       comment.error = (e && e.message) || 'There was an error';
