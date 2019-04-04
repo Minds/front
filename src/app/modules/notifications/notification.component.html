@@ -75,7 +75,7 @@
       <!-- Activity -->
       <a *ngIf="notification.entityObj.type == 'activity'"
         [routerLink]="['/newsfeed', notification.entityObj.guid]"
-        [queryParams]="{ comment_guid: notification.params?.parent_path === '0:0:0' ? notification.params?.comment_guid : null }">
+        [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }">
         <p *ngIf="notification.entityObj.owner_guid == session.getLoggedInUser().guid && !notification.entityObj.title">
           <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENT_ACTIVITY_OWN">{{notification.fromObj.name}} commented on <span class="pseudo-link mdl-color-text--blue-grey-400">your activity</span></ng-container>
         </p>
@@ -99,7 +99,7 @@
         <div *ngIf="notification.entityObj.subtype != 'blog'">
             <a
               [routerLink]="['/media', notification.entityObj.guid]"
-              [queryParams]="{ comment_guid: notification.params?.parent_path == '0:0:0' ? notification.params?.comment_guid : null }">
+              [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }">
             <p>
               <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON" 
                 *ngIf="!notification.params?.is_reply">
@@ -122,7 +122,7 @@
         <div>
           <a
               [routerLink]="['/groups/profile', notification.entityObj.guid]"
-              [queryParams]="{ comment_guid: notification.params?.parent_path == '0:0:0' ? notification.params?.comment_guid : null }">
+              [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }">
             <p>
             <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION" 
                 *ngIf="notification.params?.is_reply">
@@ -163,7 +163,11 @@
       </a>
 
       <ng-container *ngIf="notification.entityObj.type == 'comment'">
-        <a [routerLink]="['/newsfeed', notification.entityObj.entity_guid]" *ngIf="notification.params?.parent?.type != 'group'">
+        <a 
+          [routerLink]="['/newsfeed', notification.entityObj.entity_guid]"
+          [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }"
+          *ngIf="notification.params?.parent?.type != 'group'"
+          >
           <p>
             <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_COMMENT">
               {{notification.fromObj.name}} voted up
@@ -173,7 +177,11 @@
           </p>
         </a>
 
-        <a [routerLink]="['/groups/profile', notification.entityObj.entity_guid, 'conversation']" *ngIf="notification.params?.parent?.type == 'group'">
+        <a 
+          [routerLink]="['/groups/profile', notification.entityObj.entity_guid]" 
+          [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }"
+          *ngIf="notification.params?.parent?.type == 'group'"
+          >
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__LIKE__VOTED_UP_CONVERSATION">
             <span class="pseudo-link mdl-color-text--blue-grey-400" >{{notification.fromObj.name}}</span> voted up your message in
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{ notification.params.parent.name }}</span>'s conversation
@@ -275,7 +283,7 @@
       <ng-container *ngIf="notification.entityObj.type == 'comment'">
         <a
           [routerLink]="['/newsfeed', notification.params?.parent?.guid]"
-          [queryParams]="{ comment_guid: notification.entityObj.parent_path === '0:0:0' ? notification.entityObj._guid : null }"
+          [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }"
           *ngIf="notification.params?.parent?.type != 'group'"
           >
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_COMMENT">{{notification.fromObj.name}} tagged you in a comment</p>
@@ -283,7 +291,7 @@
 
         <a 
           [routerLink]="['/groups/profile', notification.params?.parent?.guid, 'feed']"
-          [queryParams]="{ comment_guid: notification.entityObj.parent_path === '0:0:0' ? notification.entityObj._guid : null }"
+          [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }"
           *ngIf="notification.params?.parent?.type == 'group'"
           >
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_CONVERSATION">
