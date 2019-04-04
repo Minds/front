@@ -374,4 +374,14 @@ describe('BlogEdit', () => {
     expect(threshold).not.toBeNull();
     expect(threshold.nativeElement.disabled).toBeFalsy();
   });
+
+  it('should know if a banner already exists', () => {
+    expect(comp.existingBanner).toBeFalsy();
+  })
+
+  it('should not allow initial submission without a banner', () => {
+      const publish = fixture.debugElement.query(By.css('.m-button.m-button--submit'));
+      publish.nativeElement.click();
+      expect(comp.existingBanner).toBeFalsy();
+  })
 });
