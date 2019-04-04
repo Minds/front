@@ -30,7 +30,7 @@ minds-groups-profile-conversation {
     width: 100%;
   }
 
-  .m-group__chat {
+  .m-group__chat, .m-group__chat > m-comments__thread {
     background: #FFF;
     height: 100%;
     height: calc(100vh - 45px);
@@ -42,7 +42,7 @@ minds-groups-profile-conversation {
     box-sizing: border-box;
     padding-bottom: 24px;
 
-    .minds-comments-container {
+    .minds-comments-container, .m-comments__thread {
       overflow-y: auto;
       max-height: none;
       flex: 1;

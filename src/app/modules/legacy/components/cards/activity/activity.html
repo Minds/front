@@ -215,14 +215,12 @@
   </div>
 </div>
 
-<minds-comments 
+<m-comments__tree
   *ngIf="commentsToggle"
-  [object]="activity"
-  [focusOnInit]="true"
-  [focusedCommentGuid]="focusedCommentGuid"
+  [entity]="activity"
   [canEdit]="canDelete"
   >
-</minds-comments>
+</m-comments__tree>
 
 <div class="m-activity--boost-notice mdl-card__supporting-text mdl-color--blue-grey-50" *ngIf="showBoostOptions" i18n="@@MINDS__CARDS__ACTIVITY__BOOST_NOTICE">
   Boost this post to reach more people!
