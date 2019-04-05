@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Client } from '../../../services/api';
+import { Storage } from '../../../services/storage';
 
 @Component({
   selector: 'm-suggestions__sidebar',
@@ -15,6 +16,7 @@ export class SuggestionsSidebar {
 
   constructor(
     private client: Client,
+    private storage: Storage,
   ) {
   }
 
@@ -33,12 +35,15 @@ export class SuggestionsSidebar {
     this.lastOffset = this.suggestions.length ? this.lastOffset + 11 : 0;
 
     try {
-      let response: any = await this.client.get('api/v2/suggestions/user', { 
+      let response: any = await this.client.get('api/v2/suggestions/user', {
         limit,
         offset: this.lastOffset,
       });
       for (let suggestion of response.suggestions) {
-        this.suggestions.push(suggestion);
+        const removed = this.storage.get(`user:suggestion:${suggestion.entity_guid}:removed`);
+        if (!removed) {
+          this.suggestions.push(suggestion);
+        }
       }
     } catch (err) {
     } finally {
@@ -50,6 +55,7 @@ export class SuggestionsSidebar {
     e.preventDefault();
     e.stopPropagation();
     this.suggestions.splice(this.suggestions.indexOf(suggestion), 1);
+    this.storage.set(`user:suggestion:${suggestion.entity_guid}:removed`, suggestion.entity_guid);
     await this.client.put(`api/v2/suggestions/pass/${suggestion.entity_guid}`);
 
     // load more
@@ -58,7 +64,7 @@ export class SuggestionsSidebar {
 
   remove(suggestion) {
     this.suggestions.splice(this.suggestions.indexOf(suggestion), 1);
-
+    this.storage.set(`user:suggestion:${suggestion.entity_guid}:removed`, suggestion.entity_guid);
     // load more
     this.load();
   }
