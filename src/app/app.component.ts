@@ -91,7 +91,9 @@ export class Minds {
 
     this.webtorrent.setUp();
 
-    this.blockListService.sync();
+    if (this.session.isLoggedIn()) {
+      this.blockListService.sync();
+    }
   }
 
   ngOnDestroy() {
