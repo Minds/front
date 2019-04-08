@@ -9,6 +9,13 @@ export class FeaturesService {
 
   constructor(private session: Session, private router: Router) {
     this._features = window.Minds.features || {};
+
+    this.session.isLoggedIn((is) => {
+      if (window.Minds.user.canary) {
+        console.log('[app]:: experiments on');
+        window.location.reload(true);
+      }
+    })
   }
 
   has(feature: string) {
