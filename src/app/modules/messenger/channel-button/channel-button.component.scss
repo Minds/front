@@ -19,5 +19,10 @@ m-messenger--channel-button{
       padding-bottom: 1px;
       vertical-align:middle;
     }
+    @media screen and (max-width: $min-desktop) and (min-width: $min-tablet){
+      span {
+        display:none;
+      }
+    }
   }
 }
