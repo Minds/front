@@ -436,7 +436,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     }
 
     if (this.boost.priority && this.boost.currency !== 'usd') {
-      throw new VisibleBoostError('The only supported payment method for priority boosts is credit card')
+      throw new VisibleBoostError('The only supported payment method for priority boosts is credit card');
     }
 
     if (this.boost.type === 'p2p') {
@@ -456,9 +456,21 @@ export class BoostCreatorComponent implements AfterViewInit {
         throw new VisibleBoostError('Boost target should participate in the Rewards program.');
       }
     } else {
-      if (this.boost.amount < this.rates.min || this.boost.amount > this.rates.cap) {
+      if (this.boost.currency === 'offchain'
+        && (this.boost.amount < this.rates.min
+          || this.boost.amount > this.rates.cap
+      )) {
         throw new VisibleBoostError(`You must boost between ${this.rates.min} and ${this.rates.cap} views.`);
+
       }
+
+      if (this.boost.currency === 'onchain'
+          && (this.boost.amount < this.rates.min
+            || this.boost.amount > (this.rates.cap * 2)
+      )) {
+        throw new VisibleBoostError(`You must boost between ${this.rates.min} and ${this.rates.cap * 2} views.`);
+      }
+
 
       //if (!this.boost.categories.length) {
       //  throw new Error('You should select a category.');
