@@ -131,8 +131,11 @@ export class NotificationsComponent {
   }
 
   changeFilter(filter) {
-      this._filter = filter;
+      if(this.inProgress){
+        return false;
+      }
       this.notifications = [];
+      this._filter = filter;
       this.load(true);
   }
 }
