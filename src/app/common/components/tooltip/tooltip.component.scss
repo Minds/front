@@ -28,6 +28,10 @@ m-tooltip {
     bottom: 24px;
   }
 
+  &.m-tooltip--bubble--fixed {
+    position: fixed;
+  }
+
   &.m-tooltip--bubble--anchor-left {
     left: 0;
     right: auto;

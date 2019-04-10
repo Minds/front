@@ -207,6 +207,22 @@ textarea {
   background-color: rgba(248,248,248,1) !important;
 }
 
+.m-scroll__thin {
+  scrollbar-width: thin; // firefox only
+}
+
+.m-scroll__thin::-webkit-scrollbar, .m-scroll__thin::-webkit-scrollbar:horizontal {
+  width: 10px;
+}
+
+.m-scroll__thin::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.m-scroll__thin::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+}
+
 blockquote { quotes: ''; }
 blockquote:before { content: '\201C'; }
 blockquote:after { content: '\201D'; }

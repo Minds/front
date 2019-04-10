@@ -1,19 +1,72 @@
+@import "defaults";
+
 .m-groupSidebarMarkers__list {
-    display: block;
-    margin: auto;
-    max-width: 1280px;
-    padding: 0;
+  display: block;
+  margin: auto;
+  max-width: 1280px;
+  padding: 0;
   min-height: 100%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  padding-bottom: 20px;
+  padding-right: 20px;
+  width: 90px;
+  overflow-y: auto;
+
+  @media screen and(max-width: $min-desktop) {
+    padding-right: 0;
+  }
+
+  infinite-scroll {
+    padding: 2px 0;
+
+    @media screen and(min-width: $min-desktop) {
+      width: 48px;
+    }
+
+    .m-infinite-scroll-manual {
+      font-size: 10px;
+      padding: 2px;
+      background-color: transparent !important;
+    }
+  }
+
+  @media screen and(max-width: $min-desktop) {
+    max-width: initial;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 48px;
+    display: flex;
+
+    infinite-scroll {
+      width: initial;
+      padding: 12px;
+
+      .m-infinite-scroll-manual {
+        white-space: nowrap;
+        transform: rotate(-90deg);
+      }
+    }
+  }
 
   li {
-    display: block;
     margin: 0;
     padding: 0;
     border-bottom: 1px solid #eee;
     vertical-align: middle;
     line-height: 1;
+    width: 48px;
+    height: 48px;
     position: relative;
+
+    @media screen and(max-width: $min-desktop) {
+      border-bottom: none;
+
+      &:not(:last-child) {
+        border-right: 1px solid #eee;
+      }
+    }
 
     a {
       display: block;
@@ -26,6 +79,16 @@
       }
     }
 
+    i.material-icons {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 1px solid #ececec;
+    }
+
     img {
       width: 30px;
       height: 30px;
@@ -33,6 +96,7 @@
       vertical-align: middle;
       border: 1px solid #ececec;
     }
+
     span {
       font-size: 11px;
       vertical-align: middle;

@@ -1,8 +1,25 @@
-<ul class="m-groupSidebarMarkers__list">
+<ul class="m-groupSidebarMarkers__list m-scroll__thin" #list>
+  <li style="display:flex">
+    <a [routerLink]="['/groups/create']">
+      <m-tooltip
+        anchor="right"
+        [useParentPosition]="true"
+      >
+        <i class="material-icons" m-tooltip--anchor>add</i>
+        <span i18n="@@M__COMMON__NEW_GROUP">New group</span>
+
+        <ng-container i18n="@@M__COMMON__NEW_GROUP">
+          New group
+        </ng-container>
+      </m-tooltip>
+    </a>
+  </li>
+
   <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker" [class.has-gathering]="group.hasGathering$ | async">
     <a [routerLink]="['/groups/profile', group.guid]">
       <m-tooltip
         anchor="right"
+        [useParentPosition]="true"
       >
         <img [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime" m-tooltip--anchor/>
         <span>{{group.name}}</span>
@@ -19,6 +36,7 @@
     <a [routerLink]="['/groups/top']">
       <m-tooltip
         anchor="right"
+        [useParentPosition]="true"
       >
         <img src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg" m-tooltip--anchor/>
         <span>Noname</span>
@@ -30,9 +48,14 @@
     </a>
   </li>
 
-  <li *ngIf="inProgress">
-    <div style="width:100%; text-align:center;">
-      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
-    </div>
-  </li>
+  <infinite-scroll
+    distance="25%"
+    [scrollSource]="list"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+    [iconOnly]="true"
+    *ngIf="moreData"
+  >
+  </infinite-scroll>
 </ul>

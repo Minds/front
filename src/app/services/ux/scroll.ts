@@ -8,6 +8,7 @@ export class ScrollService {
   view: any;
   viewListener;
   viewEmitter: EventEmitter<any> = new EventEmitter();
+  scrollSource;
 
   static _() {
     return new ScrollService();
@@ -17,6 +18,12 @@ export class ScrollService {
     this.view = document.getElementsByTagName('body')[0];
     this.view.scrollTop = 0;
     this.scroll = fromEvent(window, 'scroll');
+  }
+
+  setScrollSource(scrollSource) {
+    this.view = scrollSource;
+    this.view.scrollTop = 0;
+    this.scroll = fromEvent(scrollSource, 'scroll');
   }
 
   listen(callback: (value: any) => any, debounce: number = 0, throttle: number = 0): any {

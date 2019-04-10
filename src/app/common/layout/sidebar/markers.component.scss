@@ -1,16 +1,32 @@
+@import "defaults";
+
 .m-sidebarMarkers__container {
+  top: 52px;
   right: 0;
   position: fixed;
   z-index: 999;
-  width: 48px;
-  height : 100%;
   background: #FFF;
-  top: 52px;
+  width: 48px;
+  height: calc(100% - 52px);
+
+  @media screen and(max-width: $min-desktop) {
+    left: 0;
+    height: 48px;
+    width: 100%;
+    overflow-y: hidden;
+    border-bottom: #e8e8e8;
+  }
 
   .has-v2-navbar & {
     //top: 62px;
   }
 }
+
 .has-markers-sidebar {
-  margin-right: 46px;
+  margin-right: 48px;
+
+  @media screen and(max-width: $min-desktop) {
+    margin-top:  calc(52px + 48px) !important;
+    margin-right: 0;
+  }
 }
