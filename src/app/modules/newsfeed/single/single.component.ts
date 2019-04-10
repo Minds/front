@@ -104,7 +104,13 @@ export class NewsfeedSingleComponent {
   }
 
   async loadFromFeedsService(guid: string) {
-    return await this.entitiesService.single(guid);
+    const activity = await this.entitiesService.single(guid);
+
+    if (!activity) {
+      throw new Error('Activity not found');
+    }
+
+    return activity;
   }
 
   async loadLegacy(guid: string) {
