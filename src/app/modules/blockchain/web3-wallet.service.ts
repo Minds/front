@@ -26,12 +26,16 @@ export class Web3WalletService {
 
   // Wallet
 
-  async getWallets() {
+  async getWallets(forceAuthorization: boolean = false) {
     try {
       await this.ready();
 
       if (!await this.isSameNetwork()) {
         return false;
+      }
+
+      if (forceAuthorization && window.ethereum) {
+        await window.ethereum.enable();
       }
 
       return await this.eth.accounts();
@@ -40,8 +44,8 @@ export class Web3WalletService {
     }
   }
 
-  async getCurrentWallet(): Promise<string | false> {
-    let wallets = await this.getWallets();
+  async getCurrentWallet(forceAuthorization: boolean = false): Promise<string | false> {
+    let wallets = await this.getWallets(forceAuthorization);
 
     if (!wallets || !wallets.length) {
       return false;
@@ -76,6 +80,7 @@ export class Web3WalletService {
       await this.localWallet.unlock();
     }
 
+    await this.getCurrentWallet(true);
     return !(await this.isLocked());
   }
 
@@ -137,7 +142,7 @@ export class Web3WalletService {
     this.EthJS = Eth;
 
     // MetaMask found
-    this.eth = new Eth(window.web3.currentProvider);
+    this.eth = new Eth(window.ethereum || window.web3.currentProvider);
     this.local = false;
   }
 
