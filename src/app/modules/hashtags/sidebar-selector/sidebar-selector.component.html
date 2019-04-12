@@ -32,14 +32,13 @@
         (click)="switchAttempt.next()"
       ></span>
       <m-switch
-        [mModel]="!preferred && !currentHashtag"
-        (mModelChange)="preferred = !$event"
+        [(mModel)]="preferred"
         (change)="preferredChange()"
         [disabled]="disabled"
         labelPosition="left"
         i18n
         >
-        Show all
+        On
       </m-switch>
     </span>
   </div>
