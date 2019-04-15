@@ -84,7 +84,7 @@ export default class InMemoryStorageAdapter {
   /**
    * @param {string} table
    * @param {Object} data
-   * @returns {Promise<any>}
+   * @returns {Promise<*>}
    */
   async insert(table, data) {
     const row = Object.assign({}, data);
@@ -94,6 +94,40 @@ export default class InMemoryStorageAdapter {
       this.db.data[table][index] = row;
     } else {
       this.db.data[table].push(row);
+    }
+
+    return true;
+  }
+
+  /**
+   * @param {string} table
+   * @param {string} id
+   * @param {Object} changes
+   * @returns {Promise<number>}
+   */
+  async update(table, id, changes) {
+    const index = this._getIndexByPrimaryKey(table, id);
+
+    if (index > -1) {
+      this.db.data[table][index] = Object.assign(this.db.data[table][index], changes);
+      return 1;
+    }
+
+    return 0;
+  }
+
+  /**
+   * @param {string} table
+   * @param {string} id
+   * @param {Object} data
+   * @param {Object} initialData
+   * @returns {Promise<boolean>}
+   */
+  async upsert(table, id, data, initialData = {}) {
+    const updatedRows = await this.update(table, id, data);
+
+    if (!updatedRows) {
+      await this.insert(table, Object.assign(initialData, data));
     }
 
     return true;
@@ -123,7 +157,7 @@ export default class InMemoryStorageAdapter {
   /**
    * @param {String} table
    * @param {*[]} rows
-   * @returns {Promise<any>}
+   * @returns {Promise<*>}
    */
   async bulkInsert(table, rows) {
     for (const row of rows) {
@@ -139,7 +173,7 @@ export default class InMemoryStorageAdapter {
    * @param {number} value
    * @returns {Promise<number>}
    */
-  async deleteLesserThan(table, field, value) {
+  async deleteLessThan(table, field, value) {
     const currentSize = this.db.data[table].length;
 
     this.db.data[table] = this.db.data[table]
@@ -165,6 +199,21 @@ export default class InMemoryStorageAdapter {
 
   /**
    * @param {String} table
+   * @param {String} index
+   * @param {*[]} values
+   * @returns {Promise<number>}
+   */
+  async deleteAnyOf(table, index, values) {
+    const currentSize = this.db.data[table].length;
+
+    this.db.data[table] = this.db.data[table]
+      .filter(row => values.indexOf(row[index]) === -1);
+
+    return currentSize - this.db.data[table].length;
+  }
+
+  /**
+   * @param {String} table
    * @param {String} key
    * @returns {Promise<Object>}
    */
@@ -183,7 +232,7 @@ export default class InMemoryStorageAdapter {
    * @param {String} field
    * @param {String|Number} value
    * @param {Object} opts
-   * @returns {Promise<Array<any>>}
+   * @returns {Promise<Array<*>>}
    */
   async getAllSliced(table, field, value, opts) {
     let collection = this.db.data[table]
@@ -204,12 +253,27 @@ export default class InMemoryStorageAdapter {
    * @param {String} table
    * @param {String} field
    * @param {String|Number} value
-   * @returns {Promise<Array<any>>}
+   * @param {{ sortBy }} opts
+   * @returns {Promise<Array<*>>}
    */
-  async getAllLesserThan(table, field, value) {
-    return this.db.data[table]
+  async getAllLessThan(table, field, value, opts = {}) {
+    const collection = this.db.data[table]
       .filter(row => row[field] < value)
       .map(row => Object.assign({}, row));
+
+    if (opts.sortBy) {
+      return collection.sort((a, b) => {
+        const aIndex = a[opts.sortBy];
+        const bIndex = b[opts.sortBy];
+
+        if (aIndex < bIndex) return -1;
+        else if (bIndex > aIndex) return -1;
+
+        return 0;
+      });
+    }
+
+    return collection;
   }
 
   /**
