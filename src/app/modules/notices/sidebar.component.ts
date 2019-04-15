@@ -12,6 +12,7 @@ export class NoticesSidebarComponent {
   minds = window.Minds;
   hidden: boolean = false;
   notices: Array<any> = [ ];
+  displayLimit: number = 3;
   inProgress: boolean = false;
 
   constructor(
@@ -48,6 +49,10 @@ export class NoticesSidebarComponent {
   hide() {
     this.hidden = true;
     this.storage.set('hide-notices-ts', this.notices[0].timestamp);
+  }
+
+  showAll() {
+    this.displayLimit = 999999;
   }
 
 }

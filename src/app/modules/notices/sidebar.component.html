@@ -7,7 +7,7 @@
     There are no notices
   </span>
   <ul class="m-noticesSidebar__list m-border" *ngIf="notices.length">
-    <li *ngFor="let notice of notices" class="m-noticesSidebarList__item">
+    <li *ngFor="let notice of notices.slice(0, displayLimit)" class="m-noticesSidebarList__item">
       <a [routerLink]="notice.cta.routerLink" class="m-notices__notice" [class.m-notices__notice--recent]="isRecent(notice)">
         <h3>{{ notice.timestamp | date:'mediumDate' }}</h3>
         <span class="m-noticesNotice__cta">{{ notice.cta.label }}</span>
@@ -16,4 +16,10 @@
     </li>
   </ul>
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+  <span class="m-notices__loadMore"
+    (click)="showAll()"
+    *ngIf="displayLimit === 3"
+    >
+    Show more
+  </span>
 </div> 
