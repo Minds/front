@@ -219,7 +219,7 @@ export class CommentsThreadComponent {
            this.detectChanges();
          }
        }
-     }); 
+     });
   }
 
   joinSocketRoom() {
@@ -245,6 +245,17 @@ export class CommentsThreadComponent {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * Removed the comment from the thread at the specified index.
+   * @input {int} index of comment.
+   */
+  delete(i) {
+    this.comments.splice(i, 1);
+    this.comments[i].replies_count--;
+    this.detectChanges();
+    return true;
   }
 
   ngOnChanges(changes) {
