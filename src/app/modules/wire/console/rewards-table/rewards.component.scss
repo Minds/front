@@ -1,5 +1,7 @@
 m-wire-console-rewards--container {
-.m-wire-console--rewards {
-  background: #FFF;
-}
+  .m-wire-console--rewards {
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
+  }
 }

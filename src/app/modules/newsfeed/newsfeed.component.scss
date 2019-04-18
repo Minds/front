@@ -28,13 +28,15 @@
   .m-newsfeed--logged-out {
     margin: 0 auto;
   }
- 
+
   .m-newsfeedSidebar__header {
     margin: 0;
     font-size: 13px;
     font-weight: 600;
     padding: 0 8px;
-    color: #444;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   .m-newsfeed--sidebar, .m-newsfeed--boost-sidebar{
@@ -132,8 +134,10 @@
   padding: 16px;
   margin-bottom: 16px;
   border-radius: 3px;
-  color: #4690D6;
-  border: 1px solid #4690D6;
+  @include m-theme(){
+    color: themed($m-blue);
+    border: 1px solid themed($m-blue);
+  }
 
   span {
     vertical-align: middle;

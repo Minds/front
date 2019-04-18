@@ -24,12 +24,14 @@ m-groups--filter-selector {
   .m-groups--filter-selector {
     padding: $minds-padding;
     //margin-bottom: $minds-margin;
-    background: #FFF;
     border-radius: 24px;
     font-size: 11px;
     line-height: 1;
     text-align: right;
     display: inline-block;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     @media screen and (max-width: 840px) {
       position: inherit;
@@ -40,20 +42,24 @@ m-groups--filter-selector {
     .m-groups--filter-selector-item {
       display: inline-block;
       padding: 0 1.5em;
-      color: #4a4a4a;
-      border-right: 1px solid rgba(151, 151, 151, 0.25);
       font-weight: 400;
       text-transform: uppercase;
       text-decoration: none;
       letter-spacing: 2px;
       cursor: pointer;
+      @include m-theme(){
+        color: themed($m-grey-800);
+        border-right: 1px solid rgba(themed($m-grey-300), 0.25);
+      }
 
       &:last-child {
         border-right: none;
       }
 
       &:hover, &.m-groups--filter-selector-active {
-        color: #417cb2;
+        @include m-theme(){
+          color: themed($m-blue);
+        }
       }
 
       > * {

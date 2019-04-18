@@ -20,7 +20,9 @@
     padding:8px;
 
     &.admin__badge {
-      color: #4caf50;
+      @include m-theme(){
+        color: themed($m-green);
+      }
     }
   }
 

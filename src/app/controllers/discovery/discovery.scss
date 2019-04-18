@@ -31,8 +31,9 @@
         text-align: center;
         vertical-align: middle;
         padding: 8px;
-        background: #EEE;
-
+        @include m-theme(){
+          background-color: themed($m-grey-50);
+        }
         img{
           height:100%;
         }
@@ -49,11 +50,15 @@
 
         .body {
           h3 {
-            color: #222222;
+            @include m-theme(){
+              color: themed($m-grey-950);
+            }
           }
 
           > span {
-            color: #78909c;
+            @include m-theme(){
+              color: themed($m-blue-grey-400);
+            }
           }
         }
 
@@ -68,7 +73,9 @@
       @media screen and (max-width:400px){
         .minds-usercard-block{
           display: block;
-          color: #222;
+          @include m-theme(){
+            color: themed($m-grey-950);
+          }
         }
         .avatar{
            width: 100%;
@@ -86,7 +93,9 @@
         display: flex;
         padding: 8px;
         margin-top:16px;
-        color:#222;
+        @include m-theme(){
+          color: themed($m-grey-950);
+        }
 
         > div{
           font-size:12px;
@@ -192,16 +201,24 @@
           width:80px
         }
         &::-webkit-input-placeholder{
-          color:#FFF;
+          @include m-theme(){
+            color: themed($m-white);
+          }
         }
         &::-moz-placeholder{
-          color:#FFF;
+          @include m-theme(){
+            color: themed($m-white);
+          }
         }
         &:-moz-placeholder{
-          color:#FFF;
+          @include m-theme(){
+            color: themed($m-white);
+          }
         }
         &:-ms-input-placeholder {
-          color:#FFF;
+          @include m-theme(){
+            color: themed($m-white);
+          }
         }
       }
     }
@@ -222,7 +239,9 @@
         list-style: none;
         padding: 12px 0;
         cursor: pointer;
-        border-bottom: 1px solid #EEE;
+        @include m-theme(){
+           border-bottom: 1px solid themed($m-grey-50);
+        }
       }
 
     }
@@ -233,7 +252,9 @@
 
 .m-discovery-suggested-channels {
   minds-button-feature {
-    background: #ffffff;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 
   .m-discovery-suggested-actions {
@@ -249,22 +270,30 @@
     }
 
     .m-button-pass {
-      background: #E53935;
-      color: #ffffff;
-      border-color: #ffffff;
+      @include m-theme(){
+        color: themed($m-white);
+        border-color: themed($m-white);
+        background-color: themed($m-red);
+      }
 
       &:hover {
-        background: #C62828;
+        @include m-theme(){
+          background-color: themed($m-red-dark);
+        }
       }
     }
 
     .minds-subscribe-button {
-      background: #43A047;
-      color: #ffffff;
-      border-color: #ffffff;
+      @include m-theme(){
+        color: themed($m-white);
+        border-color: themed($m-white);
+        background-color: themed($m-green);
+      }
 
       &:hover {
-        background: #2E7D32;
+        @include m-theme(){
+          background-color: themed($m-green-dark);
+        }
       }
     }
   }

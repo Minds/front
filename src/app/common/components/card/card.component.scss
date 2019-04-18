@@ -1,4 +1,6 @@
 minds-card {
   display: block;
-  background: #ffffff;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }

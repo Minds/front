@@ -6,12 +6,14 @@
   max-width: 1280px;
   padding: 0;
   min-height: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   height: 100%;
   padding-bottom: 20px;
   padding-right: 20px;
   width: 90px;
   overflow-y: auto;
+  @include m-theme(){
+    box-shadow: 0 2px 5px rgba(themed($m-black),0.2);
+  }
 
   @media screen and(max-width: $min-desktop) {
     padding-right: 0;
@@ -53,18 +55,22 @@
   li {
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid #eee;
     vertical-align: middle;
     line-height: 1;
     width: 48px;
     height: 48px;
     position: relative;
+    @include m-theme(){
+      border-bottom: 1px solid themed($m-grey-50);
+    }
 
     @media screen and(max-width: $min-desktop) {
       border-bottom: none;
 
       &:not(:last-child) {
-        border-right: 1px solid #eee;
+        @include m-theme(){
+           border-right: 1px solid themed($m-grey-50);
+        }
       }
     }
 
@@ -86,7 +92,9 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      border: 1px solid #ececec;
+      @include m-theme(){
+         border: 1px solid themed($m-grey-50);
+      }
     }
 
     img {
@@ -94,7 +102,9 @@
       height: 30px;
       border-radius: 50%;
       vertical-align: middle;
-      border: 1px solid #ececec;
+      @include m-theme(){
+        border: 1px solid themed($m-grey-50);
+      }
     }
 
     span {
@@ -115,10 +125,12 @@
     margin: 2px;
     //margin: -15% -15%;
     border-radius: 50%;
-    background-color: #2196f3;
-    background-color: red;
     animation: pulse-ring 1.25s cubic-bezier(0.215, 0.5, 0.355, 1) infinite;
     content: "";
+    @include m-theme(){
+      background-color: themed($m-blue); //two background colors?
+      background-color: themed($m-red);
+    }
   }
 
     @keyframes pulse-ring {
@@ -134,7 +146,6 @@
     }
 
   .has-marker::after {
-    background: #4690df;
     border-radius: 50%;
     display: block;
     height: 8px;
@@ -143,6 +154,9 @@
     position: absolute;
     top: 4px;
     left: 4px;
+    @include m-theme(){
+      background-color: themed($m-blue);
+    }
   }
 
   .m-tooltip--bubble--anchor-right {

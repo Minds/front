@@ -14,7 +14,6 @@
     .m-messenger--conversation-message-bubble {
       display: inline-block;
       padding: $minds-padding;
-      background: #EEE;
       border-radius: 3px;
       font-size: 12px;
       margin: $minds-margin/2 $minds-margin;
@@ -26,6 +25,9 @@
       word-wrap: break-word;
       cursor:pointer;
       white-space: pre-line;
+      @include m-theme(){
+        background-color: themed($m-grey-50);
+      }
     }
     .m-messenger--conversation-messages-message{
       text-align:right;
@@ -40,8 +42,10 @@
       &.odd{
         text-align:left;
         .m-messenger--conversation-message-bubble{
-          background:#cfd8dc !important;
           //color:#FFF !important;
+          @include m-theme(){
+            background-color: themed($m-blue-grey-100) !important;
+          }
         }
         img{
           margin-right:0;

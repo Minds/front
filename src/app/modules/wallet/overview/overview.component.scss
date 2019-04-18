@@ -8,7 +8,7 @@
 
   }
 
-  
+
 }
 
 .m-wallet--overview-wire {
@@ -30,7 +30,9 @@
   width: calc(30% - 8px);
   margin: 4px;
   padding: 16px;
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   h3 {
     font-weight: 600;

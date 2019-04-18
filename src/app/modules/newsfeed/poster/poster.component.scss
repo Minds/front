@@ -99,11 +99,13 @@ minds-newsfeed-poster {
       }
 
       .attachment-button:before {
-        color: #888;
         font-family: 'material icons';
         position: absolute;
         top: 7px;
         left: 6px;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
       }
 
       .attachment-button {
@@ -119,7 +121,6 @@ minds-newsfeed-poster {
 
         input {
           position: absolute;
-          color: #888;
           position: absolute;
           height: 100%;
           width: 100%;
@@ -127,6 +128,9 @@ minds-newsfeed-poster {
           left: 0;
           cursor: pointer;
           opacity: 0;
+          @include m-theme(){
+            color: themed($m-grey-400);
+          }
         }
 
         input::-webkit-file-upload-button {
@@ -196,10 +200,12 @@ m-hashtags-selector {
 
       i {
         font-size: 40px;
-        color: #FFF;
         top: calc(50% - 20px);
         left: calc(50% - 20px);
         position: absolute;
+        @include m-theme(){
+          color: themed($m-white-always);
+        }
       }
     }
   }
@@ -221,11 +227,15 @@ m-hashtags-selector {
       width: 100%;
       z-index: 200;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6);
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.6);
+      }
 
       i {
         font-size: 40px;
-        color: #FFF;
+        @include m-theme(){
+          color: themed($m-white);
+        }
       }
     }
 
@@ -235,7 +245,9 @@ m-hashtags-selector {
     margin-bottom: 1em;
     font-size: 12px;
     text-align: center;
-    color: red;
+    @include m-theme(){
+      color: themed($m-red);
+    }
   }
 }
 
@@ -245,15 +257,19 @@ m-hashtags-selector {
     flex-direction: row;
     align-content: center;
     padding: 8px 0;
-    border-top: 1px solid #e8e8e8;
+    @include m-theme(){
+       border-top: 1px solid themed($m-grey-50);
+    }
 
     > * {
       padding: 4px 8px;
-      border-right: 1px solid #e8e8e8;
       position: relative;
       white-space: nowrap;
       text-decoration: none;
-      color: #505050;
+      @include m-theme(){
+         border-right: 1px solid themed($m-grey-50);
+         color: themed($m-grey-700);
+      }
 
       &:first-child {
         //padding-left: 0;
@@ -273,6 +289,9 @@ m-hashtags-selector {
       p {
         white-space: normal;
       }
+    }
+    .m-posterActionBar__CreateBlog {
+      cursor: pointer;
     }
 
     .m-posterActionBar__IconAndLabel {
@@ -324,7 +343,7 @@ m-hashtags-selector {
 
     .m-posterActionBar__PostButton {
       appearance: none;
-      border: none;
+      border: none !important;
       background: transparent;
       cursor: pointer;
 
@@ -358,7 +377,9 @@ m-hashtags-selector {
   }
 
   .post-preview {
-    border-top: 1px solid #e8e8e8;
+    @include m-theme(){
+       border-top: 1px solid themed($m-grey-50);
+    }
   }
 
   .minds-bg-overlay {

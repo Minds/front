@@ -16,11 +16,12 @@
   }
 
   h1, h3{
-    color: #FFF;
-
     font-family: 'Roboto';
-    text-shadow: 0 0 3px #333;
 
+    @include m-theme(){
+      color: themed($m-white);
+      text-shadow: 0 0 3px themed($m-grey-900);
+    }
     @media only screen and (max-width: 400px) {
       margin:0;
     }
@@ -57,20 +58,24 @@
       padding: 0 24px;
       font-weight: 300;
       font-family: 'Roboto';
-      color: #FFF;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
     z-index:2;
   }
 
   .m-rewards--overlay{
     display: block;
-    background: rgba(0,0,0,0.15);
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     z-index: 0;
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.15);
+    }
   }
 }
 
@@ -131,20 +136,21 @@
   }
 
   textarea {
-    border: 1px solid #EEE;
     padding: 16px;
-    width: 100%; 
+    width: 100%;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+    }
   }
 
   select {
     padding: 8px;
     /* -webkit-appearance: none; */
     font-size: 16px;
-    margin-left: 8px;  
+    margin-left: 8px;
   }
 
   button {
-    color: #FFF !important;
     padding: 8px 16px;
     max-height: none;
     height: auto;
@@ -152,5 +158,8 @@
     letter-spacing: 2.5px;
     font-size: 16px;
     margin: 16px;
+    @include m-theme(){
+      color: themed($m-white) !important;
+    }
   }
 }

@@ -1,7 +1,9 @@
 m--tree {
   display: block;
-  color: black;
   font-size: 14px;
+  @include m-theme(){
+    color: themed($m-black);
+  }
 
   .m-tree--items {
     display: flex;
@@ -11,11 +13,13 @@ m--tree {
       width: 10px;
       line-height: 10px;
       height: 10px;
-      border: 1px solid black;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       margin-right: 3px;
+      @include m-theme(){
+         border: 1px solid themed($m-black);
+      }
 
       cursor: pointer;
       user-select: none;
@@ -27,7 +31,9 @@ m--tree {
       cursor: pointer;
 
       &:hover {
-        background-color: 	#2196f3;
+        @include m-theme(){
+          background-color: themed($m-blue);
+        }
       }
     }
   }

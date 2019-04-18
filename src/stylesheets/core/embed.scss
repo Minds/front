@@ -1,7 +1,9 @@
 @import "defaults";
 
 .m-embed-video {
-  background: #000;
+  @include m-theme(){
+    background-color: themed($m-black-always);
+  }
 
   video {
     min-height: 320px;
@@ -31,10 +33,12 @@
     height: calc(2.5em + ($minds-padding * 2));
     box-sizing: border-box;
     appearance: none;
-    border: 1px solid #ddd;
     resize: none;
     padding: $minds-padding;
     font-family: monospace;
     font-size: 12px;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-100);
+    }
   }
 }

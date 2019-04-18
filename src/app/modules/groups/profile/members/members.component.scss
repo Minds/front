@@ -1,12 +1,16 @@
 .m-groupMembers__search {
   margin-bottom: 8px;
   input {
-    background: #FFF;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 }
 
 .m-groupMembers__list {
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }
 .m-groupMembers__memberCard {
   .mdl-card {

@@ -5,9 +5,11 @@ m-modal{
     top: 0;
     left: 0;
     position: fixed;
-    background: rgba(0,0,0,.8);
     cursor:pointer;
     z-index: 9999995;
+    @include m-theme(){
+      background-color: rgba(themed($m-black-always), 0.8);
+    }
   }
 
   .m-modal-container{

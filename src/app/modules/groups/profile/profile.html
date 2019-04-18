@@ -22,7 +22,7 @@
       [ngClass]="[ 'm-group--' + filter + '-view' ]"
       [class.m-group--view-mode]="!editing"
     >
-      <minds-banner 
+      <minds-banner
         [object]="group"
         [editMode]="editing"
         [top]="group.banner_position"
@@ -40,7 +40,7 @@
           (added)="upload_avatar($event)"
           >
         </minds-avatar>
-      
+
         <minds-groups-settings-button
           [(group)]="group"
           class="m-button"
@@ -62,7 +62,7 @@
               </a>
             </h1>
             <div class="m-groupInfo__actionButtons">
-            <minds-groups-join-button 
+            <minds-groups-join-button
               [group]="group"
               (membership)="change_membership($event)"
               *ngIf="(!group['is:creator'] || (session.isAdmin()) && !group['is:invited'])"
@@ -88,7 +88,7 @@
         [innerHtml]="group.briefdescription | tags"
         >
       </p>
-      
+
       <p
         class="m-groupInfo__description"
         *ngIf="editing && group['is:owner']"
@@ -108,7 +108,7 @@
           </textarea>
         </mwl-text-input-autocomplete-container>
       </p>
-      
+
       <ng-container *ngIf="false">
 
       <!-- Tags -->
@@ -125,7 +125,7 @@
             (tagsAdded)="onTagsAdded($event)"
             (tagsRemoved)="onTagsRemoved($event)"
             *ngIf="editing && group['is:owner']"
-          ></m-hashtags-selector> 
+          ></m-hashtags-selector>
         </div>
 
       </div>
@@ -274,12 +274,10 @@
     (click)="toggleConversations()">
      <i class="material-icons" style="
       font-size: 32px;
-      color: #888;
       " *ngIf="showRight">keyboard_arrow_right</i>
      <i class="material-icons" style="
       font-size: 32px;
-      color: #888;
-      " *ngIf="!showRight">keyboard_arrow_left</i> 
+      " *ngIf="!showRight">keyboard_arrow_left</i>
     </div>
 
   <div class="m-groupGrid__right" [hidden]="!showRight">

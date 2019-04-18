@@ -12,10 +12,12 @@ m-admin--purchases {
     .m-admin--pledges--table {
       margin-right: 8px;
       padding: 8px;
-      background: #FFF;
       display: block;
       width: 300px;
       flex: 1;
+      @include m-theme(){
+        background-color: themed($m-white);
+      }
 
       h3 {
         margin: 0 8px;
@@ -30,8 +32,10 @@ m-admin--purchases {
 
 
         td {
-          border: 1px solid #ececec;
           font-size: 14px;
+          @include m-theme(){
+             border: 1px solid themed($m-grey-50);
+          }
 
           &.m-admin--pledges--actions {
             text-align: center;
@@ -47,9 +51,10 @@ m-admin--purchases {
           }
         }
         th {
-          border: 1px solid #ececec;
-          border-top: 0;
-
+          @include m-theme(){
+             border: 1px solid themed($m-grey-50);
+             border-top: 0;
+          }
           &:first-child {
             border-left: 0;
           }

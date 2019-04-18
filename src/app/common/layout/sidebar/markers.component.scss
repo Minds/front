@@ -5,16 +5,20 @@
   right: 0;
   position: fixed;
   z-index: 999;
-  background: #FFF;
   width: 48px;
   height: calc(100% - 52px);
+  @include m-theme(){
+     background-color: themed($m-white);
+   }
 
   @media screen and(max-width: $min-desktop) {
     left: 0;
     height: 48px;
     width: 100%;
     overflow-y: hidden;
-    border-bottom: #e8e8e8;
+    @include m-theme(){
+       border-bottom: 1px solid themed($m-grey-50);
+    }
   }
 
   .has-v2-navbar & {

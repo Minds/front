@@ -24,13 +24,17 @@
       display: inline-block;
       padding: 0 0.15em;
       font-weight: bold;
-      border: 1px solid #ccc;
       border-radius: 8px;
+      @include m-theme(){
+         border: 1px solid themed($m-grey-100);
+      }
     }
 
     .m-date {
       font-size: 11px;
-      color: #999999;
+      @include m-theme(){
+        color: themed($m-grey-300);
+      }
     }
   }
 
@@ -40,7 +44,9 @@
     .m-message {
       text-decoration: none;
       font-size: 14px;
-      color: #999999;
+      @include m-theme(){
+        color: themed($m-grey-300);
+      }
 
       a {
         text-decoration: none;
@@ -56,8 +62,10 @@
   .m-note {
     width: 100%;
     font-size: 11px;
-    color: #999999;
     text-align: center;
     margin-bottom: $minds-padding;
+    @include m-theme(){
+      color: themed($m-grey-300);
+    }
   }
 }

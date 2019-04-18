@@ -14,8 +14,6 @@
   max-width: 990px;
   padding: ($minds-padding * 4) ($minds-padding * 8);
 
-  background: none rgba(248, 248, 248, 0.975);
-  color: #555;
   outline: 0;
   border-radius: 3px;
 
@@ -23,6 +21,11 @@
   -webkit-overflow-scrolling: touch;
 
   font-family: 'Roboto', sans-serif;
+
+  @include m-theme(){
+    color: themed($m-grey-700);
+    background: none rgba(themed($m-white), 0.95);
+  }
 
   &.m-overlay-modal--large {
     max-width: 990px;
@@ -37,9 +40,11 @@
   }
 
   &.m-overlay-modal--small {
-    background: #FFF;
     max-width: 480px;
     padding: 16px;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 
   &.m-overlay-modal--no-padding {
@@ -87,10 +92,12 @@
   padding: $minds-padding;
   border-radius: 4px;
 
-  background: rgba(0, 0, 0, 0.05);
-  color: #888;
-
   cursor: pointer;
+
+  @include m-theme(){
+    background-color: rgba(themed($m-black), 0.05);
+    color: themed($m-grey-400);
+  }
 
   @media screen and (max-width: $max-mobile) {
     right: $minds-padding;
@@ -111,6 +118,8 @@ body.m-overlay-modal--shown {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
   z-index: 9999998;
+  @include m-theme(){
+    background-color: rgba(themed($m-black-always), 0.5);
+  }
 }

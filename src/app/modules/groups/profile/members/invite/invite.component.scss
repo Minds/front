@@ -1,6 +1,8 @@
 .m-groupMemberInvite {
   padding: 16px;
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }
 
 .m-groupMemberInvite__title {

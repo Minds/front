@@ -3,8 +3,10 @@
 }
 
 .m-comment--focused {
-  border-left: 4px solid #4690df;
   margin-left: -4px;
+  @include m-theme(){
+    border-left: 4px solid themed($m-blue);
+  }
 }
 
 .m-comment--poster {
@@ -12,12 +14,14 @@
 }
 
 .m-comment__bubble {
-  background: #f1f1f1;
   display: inline-block;
   border-radius: 24px;
   padding: 8px 16px;
   max-width: 75%;
   white-space: pre-line;
+  @include m-theme(){
+    background-color: rgba(themed($m-grey-50), 0.7);
+  }
 }
 
 .m-commentBubble__username {
@@ -81,11 +85,16 @@
     .material-icons {
       font-size: 16px;
       vertical-align: middle;
-      //color: #666;
+      // @include m-theme(){
+      //   color: themed($m-grey-600);
+      // }
     }
 
     &.m-clickable {
-      color: #666;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
+      
       .material-icons {
         margin-top: -2px;
       }
@@ -110,15 +119,19 @@
   font-size: 10px;
   text-transform: uppercase;
   line-height: 13px;
-  color: #888;
   font-weight: 500;
+  @include m-theme(){
+    color: themed($m-grey-400);
+  }
 }
 
 .m-commentToolbar__timestamp {
   font-size: 10px;
   vertical-align: middle;
   line-height: 13px;
-  color: #aaa;
+  @include m-theme(){
+    color: themed($m-grey-200);
+  }
 }
 
 
@@ -136,12 +149,16 @@
   -webkit-appearance: none;
   border: 0;
   font-size: 16px;
-  color: #888;
   cursor: pointer;
   outline: none;
+  @include m-theme(){
+    color: themed($m-grey-400);
+  }
 
   &:hover {
-    color: #aaa;
+    @include m-theme(){
+      color: themed($m-grey-200);
+    }
   }
 
   &.m-comment__ribbonBtn--collapsed {
@@ -174,7 +191,9 @@
     line-height: 16px;
     vertical-align: middle;
     margin-right: 8px;
-    color: #888;
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
 
     i {
       font-size: 16px;
@@ -205,7 +224,9 @@
   }
 
   .m-comment--error-label {
-    color: #c00;
+    @include m-theme(){
+      color: themed($m-red);
+    }
 
     i.material-icons {
       font-size: 1.2em;

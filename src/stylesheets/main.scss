@@ -1,6 +1,17 @@
 @import 'defaults';
 @import 'fonts';
 
+
+body.m-theme__light {
+   color: rgba(0, 0, 0, 0.87);
+   background-color: #fff;
+ }
+
+body.m-theme__dark {
+   color: rgba(255, 255, 255, 0.87);
+   background-color: #080808;
+ }
+
 h1,h2,h3,h4{
   font-family:'Roboto';
   -webkit-font-smoothing: antialiased;
@@ -20,8 +31,10 @@ p {
 }
 
 .m-border {
-  border: 1px solid #e8e8e8;
   border-radius: 6px;
+  @include m-theme(){
+     border: 1px solid themed($m-grey-50);
+  }
 }
 
 minds-topbar{
@@ -111,7 +124,9 @@ minds-topbar{
 }
 
 .mdl-tabs__tab.is-active{
-  border-bottom:2px solid $minds-amber;
+  @include m-theme(){
+     border-bottom: 2px solid themed($m-amber);
+  }
 }
 
 .mdl-textfield__label{
@@ -124,18 +139,13 @@ minds-topbar{
   word-wrap: break-word;
 
   textarea{
-    color: rgba(0,0,0,.87);
     font-size: 13px;
     line-height: 18px;
     resize:none;
+    @include m-theme(){
+      color: rgba(themed($m-black), 0.87);
+    }
   }
-}
-
-.mdl-shadow--2dp {
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.07),0 3px 1px -2px rgba(0,0,0,.1),0 1px 5px 0 rgba(0,0,0,.07);
-}
-.mdl-shadow--4dp {
-  box-shadow: 0 4px 4px 0 rgba(0,0,0,.07),0 3px 1px -2px rgba(0,0,0,.1),0 1px 5px 0 rgba(0,0,0,.07);
 }
 
 .coming-soon{
@@ -195,16 +205,16 @@ minds-topbar{
 textarea {
    font-family: inherit;
    font-size: inherit;
+   @include m-theme(){
+     background-color: themed($m-white);
+     color: rgba(themed($m-black), 0.87);
+   }
 }
 
 .m-isomorphic-link {
   color: inherit;
   text-decoration: inherit;
   font-weight: inherit;
-}
-
-.mdl-color--grey-100 {
-  background-color: rgba(248,248,248,1) !important;
 }
 
 .m-scroll__thin {
@@ -216,11 +226,15 @@ textarea {
 }
 
 .m-scroll__thin::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  @include m-theme(){
+    background-color: rgba(themed($m-grey-50), 0.7);
+  }
 }
 
 .m-scroll__thin::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  @include m-theme(){
+    background-color: themed($m-grey-100);
+  }
 }
 
 blockquote { quotes: ''; }
@@ -255,4 +269,15 @@ blockquote:after { content: '\201D'; }
 
 .cf:after {
     clear: both;
+}
+
+body.m-theme-in-transition,
+body.m-theme-in-transition *,
+body.m-theme-in-transition *:before,
+body.m-theme-in-transition *:after 
+{
+  transition-delay: 0s !important;
+  transition-duration: .75s !important;
+  transition-property: background-color, border-color, box-shadow, stroke, fill !important;
+  transition-timing-function: ease !important;  
 }

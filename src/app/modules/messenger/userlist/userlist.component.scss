@@ -8,8 +8,10 @@
     height: 30px;
     width: 100%;
     padding:0;
-    background: rgba(255,255,255,1);
     box-sizing: border-box;
+    @include m-theme(){
+      background-color: rgba(themed($m-white), 1);
+    }
 
     > i {
       vertical-align: middle;

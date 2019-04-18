@@ -131,7 +131,6 @@
        <m-video
           width="100%"
           height="300px"
-          style="background:#000;"
           [muted]="false"
           [poster]="activity.custom_data.thumbnail_src"
           [src]="[{ 'res': '360', 'uri': 'api/v1/media/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
@@ -228,7 +227,7 @@
 
 <div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ngIf="!hideTabs">
 	<button
-      class="mdl-button m-pin-button mdl-button--icon"
+      class="mdl-button m-pin-button mdl-button--icon mdl-color-text--blue-grey-300"
       (click)="togglePin()"
       [disabled]="session.getLoggedInUser().guid != activity.owner_guid || activity.dontPin"
       *ngIf="!activity?.ephemeral"
@@ -249,7 +248,7 @@
       </m-tooltip>
     </button>
     <m-safe-toggle *ngIf="showRatingToggle && session.isAdmin()" [(entity)]="activity"></m-safe-toggle>
-	<button class="mdl-button m-translate-button mdl-button--icon" *ngIf="isTranslatable" (click)="translateToggle = true;">
+	<button class="mdl-button m-translate-button mdl-button--icon mdl-color-text--blue-grey-300" *ngIf="isTranslatable" (click)="translateToggle = true;">
 			<i class="material-icons">public</i>
 	</button>
 	<m-post-menu [entity]="activity" [canDelete]="canDelete" [isTranslatable]="isTranslatable" [options]="menuOptions" (optionSelected)="menuOptionSelected($event)">

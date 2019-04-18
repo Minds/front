@@ -1,24 +1,30 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { Session } from "../../../services/session";
+import { ThemeService } from "../../../common/services/theme.service";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-user-menu',
   templateUrl: 'user-menu.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserMenuComponent implements OnInit {
   isOpen: boolean = false;
 
   minds = window.Minds;
-
+  isDark: boolean = false; 
+  themeSubscription: Subscription;
+  
   constructor(
     protected session: Session,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private themeService: ThemeService,
   ) {
   }
 
   ngOnInit() {
     this.session.isLoggedIn(() => this.detectChanges());
+    this.themeSubscription = this.themeService.isDark$.subscribe(isDark => this.isDark = isDark);
   }
 
   getCurrentUser() {
@@ -40,5 +46,15 @@ export class UserMenuComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+    this.themeService.applyThemePreference();
   }
+  
+  toggleTheme(){
+    this.themeService.toggleUserThemePreference();
+  }
+
+  ngOnDestroy() {
+    this.themeSubscription.unsubscribe();
+  }
+
 }

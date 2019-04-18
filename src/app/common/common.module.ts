@@ -97,6 +97,7 @@ import { BoostedContentService } from "./services/boosted-content.service";
 import { EntitiesService } from "./services/entities.service";
 import { BlockListService } from "./services/block-list.service";
 import { SettingsService } from "../modules/settings/settings.service";
+import { ThemeService } from "./services/theme.service";
 
 @NgModule({
   imports: [

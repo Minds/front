@@ -48,8 +48,10 @@
     a {
       text-decoration: none;
       width: 100%;
-      color: #555;
       font-weight: 400;
+      @include m-theme(){
+        color: themed($m-grey-700);
+      }
     }
 
     i {
@@ -71,24 +73,31 @@
 .m-dropdown {
   .m-dropdown--list, .m-dropdown__list {
     width: 150px;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
     border-radius: 3px;
-    border: 1px solid #ececec;
     position: absolute;
     z-index: 1000;
     top: 0;
     right: 0;
-    background-color: #FFF;
     overflow: visible;
     display: block;
 
+    @include m-theme(){
+      box-shadow: 0 2px 2px 0 rgba(themed($m-black), .14), 0 3px 1px -2px rgba(themed($m-black), .2), 0 1px 5px 0 rgba(themed($m-black), .12);
+      background-color: themed($m-white);
+      border: 1px solid themed($m-grey-50);
+    }
+
     .m-dropdown--list--item, .m-dropdownList__item {
       padding: 8px;
-      border-bottom: 1px solid #ececec;
+      @include m-theme(){
+         border-bottom: 1px solid themed($m-grey-50);
+      }
 
       &.m-dropdown--list--item--selected, .m-dropdownList__item--selected {
-        background-color: #4690D6;
-        color: white;
+        @include m-theme(){
+          color: themed($m-white);
+          background-color: themed($m-blue);
+        }
       }
     }
 
@@ -106,4 +115,3 @@
     justify-content: space-between;
   }
 }
-

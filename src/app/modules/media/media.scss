@@ -21,17 +21,20 @@ m-media--view{
 m-media--theatre{
   display: block;
   width: 100%;
-  background-color: #222;
+
   align-items: text;
   -webkit-align-items: text;
   overflow: hidden;
   position: relative;
   height: auto;
+  @include m-theme(){
+    background-color: themed($m-grey-950);
+  }
 
   @media screen and (max-width: $max-mobile){
     min-height: 200px;
   }
-  
+
   &:before{
     display: block;
     content: " ";
@@ -53,9 +56,11 @@ m-media--theatre{
     position: absolute;
     top: 50%;
     margin-top: -32px;
-    color: #FFF !important;
     font-size: 64px;
     cursor:pointer;
+    @include m-theme(){
+      color: themed($m-white) !important;
+    }
 
     &.left{
       left: 0;
@@ -86,7 +91,9 @@ m-media--theatre{
       height:100%;
     }
     m-video{
-      background:#000;
+      @include m-theme(){
+        background-color: themed($m-black-always);
+      }
       video{
         max-width:100%;
         height:100%;
@@ -98,7 +105,9 @@ m-media--theatre{
 m-media--edit {
   display: block;
   height:100%;
-  background-color: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
   .m-h1-input {
     padding: 0;
     font-weight: 600;
@@ -123,10 +132,12 @@ m-media--edit {
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
     font-family: 'Roboto';
-    color: rgba(0, 0, 0, .84);
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    @include m-theme(){
+      color: rgba(themed($m-black), .84);
+    }
 
     &:first-of-type {
       margin-top: 0;
@@ -175,12 +186,14 @@ m-media--grid{
       max-height: 100%;
     }
     span{
-      color: #FFF;
       font-size: 72px !important;
       text-align: center;
       width: 100%;
       position: absolute;
       top: calc(50% - 36px);
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
 
     > i.material-icons {
@@ -189,8 +202,10 @@ m-media--grid{
 
     &.m-mature-thumbnail {
       transform-style: preserve-3d;
-      background-color: rgba(0, 0, 0, 0.65);
       overflow: hidden;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.65);
+      }
 
       > img {
         filter: blur(5px) grayscale(100%);
@@ -205,7 +220,9 @@ m-media--grid{
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 3em;
-        color: #fff;
+        @include m-theme(){
+          color: themed($m-white);
+        }
       }
     }
 
@@ -269,7 +286,7 @@ m-media--grid{
     @media screen and (min-width: $min-huge) {
       display: flex;;
     }
-  
+
     @media screen and (max-width: $max-mobile) {
       flex-wrap: wrap;
     }
@@ -281,11 +298,11 @@ m-media--grid{
 
   h1.m-media-content--heading{
     word-break: break-word;
-    
+
     @media screen and (max-width: $min-tablet) {
       font-size: 26px;
     }
-    
+
     @media screen and (max-width: $max-mobile) {
       font-size: 16px;
     }
@@ -298,14 +315,16 @@ m-media--grid{
   }
 
   .m-media-content--info {
-    
+
     display: flex;
     align-items: center;
     font-size: 10px;
 
     a {
       cursor: pointer;
-      color: #666666;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
     }
 
     > * {
@@ -313,14 +332,16 @@ m-media--grid{
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-left: $minds-margin;
-      color: #666;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
 
       > * {
         vertical-align: middle;
       }
     }
 
-    i.material-icons{  
+    i.material-icons{
       @media screen and (max-width: $min-tablet) {
         font-size: 22px;
       }
@@ -339,7 +360,7 @@ m-media--grid{
         font-size: 7px;
       }
     }
-  
+
   }
 
   .m-media-content--actions {
@@ -349,7 +370,9 @@ m-media--grid{
 
     m-post-menu {
       i {
-        color: #607d8b !important;
+        @include m-theme(){
+          color: themed($m-blue-grey-500) !important;
+        }
       }
     }
 
@@ -365,7 +388,7 @@ m-media--grid{
         padding: $minds-padding;
         vertical-align: middle;
       }
-  
+
       span {
         padding: $minds-padding 0;
         vertical-align: middle;
@@ -384,7 +407,7 @@ m-media--grid{
       letter-spacing: 0.5px;
       line-height: 1;
     }
-    
+
   }
 
   .m-media-content--owner {
@@ -392,14 +415,16 @@ m-media--grid{
     align-items: center;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-  
+
     .minds-avatar {
       background: transparent;
 
       img {
-        background: #ffffff;
         width: 50px;
         border-radius: 50%;
+        @include m-theme(){
+          background-color: themed($m-white);
+        }
       }
     }
 
@@ -422,7 +447,9 @@ m-media--grid{
     .m-media--info {
       display: flex;
       align-items: center;
-      color: #999999;
+      @include m-theme(){
+        color: themed($m-grey-300);
+      }
 
       .material-icons {
         font-size: inherit;
@@ -433,7 +460,7 @@ m-media--grid{
         display: flex;
         align-items: center;
         margin-left: 0.7em;
-  
+
         &:first-child {
           margin-left: 0;
         }
@@ -473,7 +500,9 @@ m-media--grid{
   margin: $minds-margin * 2;
   margin-bottom: 50px;
   box-sizing: border-box;
-  border: 1px solid #EEE;
+  @include m-theme(){
+    border: 1px solid themed($m-grey-50);
+  }
 
   minds-comments {
     margin-top: 0;
@@ -499,7 +528,9 @@ m-media--grid{
   .m-media-content--container {
     flex-grow: 1;
     max-width: 100%;
-    background: #FFF;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 
   .m-media-content--recommended {
@@ -513,10 +544,12 @@ m-media--grid{
   top: 50px;
   width: 100%;
   text-align: center;
-  color: white;
-  background-color: black;
   opacity: .8;
   padding: 16px 0 16px 0;
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: themed($m-black);
+  }
 }
 
 .m-media-theater--toggle {
@@ -524,13 +557,17 @@ m-media--grid{
   left: $minds-padding;
   top: $minds-padding;
   cursor: pointer;
-  color: #ffffff;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.65);
   opacity: 0.35;
   visibility: hidden;
+  @include m-theme(){
+    color: themed($m-white);
+    text-shadow: 1px 1px 3px rgba(themed($m-black), 0.65);
+  }
 
   &.m-media-theater--toggle-active {
-    color: #2196f3;
+    @include m-theme(){
+      color: themed($m-blue);
+    }
   }
 
   m-media--theatre:hover & {

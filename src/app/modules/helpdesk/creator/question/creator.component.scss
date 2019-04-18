@@ -1,5 +1,7 @@
 .m-helpdesk--question-creator--error {
-  color: #F44336;
+  @include m-theme(){
+    color: themed($m-red);
+  }
 }
 
 m-helpdesk--question-creator {

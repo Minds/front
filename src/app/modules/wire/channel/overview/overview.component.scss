@@ -1,3 +1,9 @@
+body.m-theme__dark .m-wire-channel--overview {
+    background-color: #232323;
+    color: #fff;
+}
+
+
 .m-wire-channel--overview{
   border-radius: 3px;
 
@@ -6,6 +12,9 @@
   display:flex;
   align-items:center;
   font-family: 'Roboto';
+  
+  background-color: #4690df;
+  color: #fff;
 
   @media only screen and (max-width: 400px) {
     padding:0;

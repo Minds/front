@@ -4,7 +4,11 @@ m-plus--subscription {
   margin: -120px auto 0;
   z-index: 5;
   position: relative;
-
+  
+  button.mdl-color--green {
+    height: auto !important;
+  }
+  
   .m-plus--subscription--select-payment-option {
     margin: 10px;
     letter-spacing: 0.5px;
@@ -45,12 +49,16 @@ m-plus--subscription {
   m--crypto-token-symbol {
     font-size: 32px;
     .m--crypto-token-symbol--stroke {
-      stroke: #555;
+      @include m-theme(){
+        stroke: themed($m-grey-700);
+      }
     }
 
     .m--crypto-token-symbol--fill {
-      fill: #555;
+      @include m-theme(){
+        fill: themed($m-grey-700);
+      }
     }
   }
-  
+
 }

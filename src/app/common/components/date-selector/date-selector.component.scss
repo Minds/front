@@ -4,20 +4,23 @@ m-date-selector {
     letter-spacing: 2.5px;
     align-self: center;
     font-size: 12px;
-    color: #666;
+    @include m-theme(){
+      color: themed($m-grey-600);
+    }
   }
 
   .m-date-selector--input {
     display: flex;
     align-items: center;
-    background-color: #FFF;
-    color: #666;
-    border: 1px solid #DEDEDE;
+    @include m-theme(){
+      color: themed($m-grey-600);
+      background-color: themed($m-white);
+      //border: 1px solid themed($m-grey-100);
+    }
 
     input {
       font-size: 12px;
       text-transform: uppercase;
-      color: rgba(0, 0, 0, .54);
       background-color: transparent;
       padding: 8px 0;
       border: none;
@@ -25,6 +28,9 @@ m-date-selector {
       width: auto;
       height: auto;
       align-self: center;
+      @include m-theme(){
+        color: rgba(themed($m-black), 0.54);
+      }
     }
 
     i {

@@ -1,6 +1,8 @@
 .m-blockchain--options {
   max-width:900px;
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-blockchain--options-wallet {
     width: 100%;
@@ -45,11 +47,13 @@
 
   .m-blockchain--options--local-wallets--refresh {
     cursor: pointer;
-    color: #cccccc !important;
     vertical-align: text-top;
     font-size: 1em;
     position: relative;
     top: 0.1em;
+    @include m-theme(){
+      color: themed($m-grey-100) !important;
+    }
   }
 
   .m-blockchain--options--wallet-selector {

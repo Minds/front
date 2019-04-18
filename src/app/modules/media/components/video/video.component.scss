@@ -16,29 +16,33 @@
 
   .minds-video-bar-min{
     position: absolute;
-    background-color: rgba(0,0,0,0.4);
     bottom: 8px;
     left: 8px;
     width: auto;
-    color: #FFF;
     padding: 4px 8px;
     font-size: 11px;
     border-radius: 3px;
     font-weight: bold;
+    @include m-theme(){
+      background-color: rgba(themed($m-black-always), 0.4);
+      color: themed($m-white-always);
+    }
+
   }
   .minds-video-bar-top{
     position:absolute;
-    background-color: rgba(0,0,0,0.4);
-    color:#FFF;
     top:0;
     left:0;
     width:100%;
     box-sizing:border-box;
     padding:$minds-padding;
     text-align:center;
+    @include m-theme(){
+      background-color: rgba(themed($m-black-always), 0.4);
+      color:themed($m-white-always);
+    }
   }
   .minds-video-play-icon{
-    color: #fff;
     display: block;
     text-align: center;
     top: 50%;
@@ -47,12 +51,13 @@
     position: absolute;
     cursor: pointer;
     width: 100%;
+    @include m-theme(){
+      color: themed($m-white-always);
+    }
   }
   .minds-video-bar-full{
     display: none;
     position: absolute;
-    background-color: rgba(0,0,0,0.4);
-    color:#FFF;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -60,6 +65,10 @@
     //padding: $minds-padding;
     text-align: center;
     align-items: center;
+    @include m-theme(){
+      color:themed($m-white-always);
+      background-color: rgba(themed($m-black-always), 0.4);
+    }
 
     .mdl-spinner {
       margin: 0 8px;
@@ -85,14 +94,16 @@
     position: absolute;
     top: 8px;
     left: 8px;
-    background: rgba(0, 0, 0, 0.65);
-    color: rgba(255, 255, 255, 0.65);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     padding: 8px;
-    font-size: 12px
+    font-size: 12px;
+    @include m-theme(){
+      background-color: rgba(themed($m-black-always), 0.65);
+      color: rgba(themed($m-white-always), 0.65);
+    }
   }
 
   .m-video--torrent-info--cell {
@@ -108,7 +119,9 @@
       font-size: 16px;
       line-height: 1;
       margin-right: 4px;
-      color: rgba(255, 255, 255, 0.85);
+      @include m-theme(){
+        color: rgba(themed($m-white-always), 0.85);
+      }
     }
   }
 

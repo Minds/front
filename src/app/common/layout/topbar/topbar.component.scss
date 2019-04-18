@@ -23,14 +23,17 @@ m-topbar{
   margin: 0;
   padding: 0;
   border: none;
-  border-bottom: 1px solid #EEE;
   min-height: $layout-header-height;
   max-height: 1000px;
   z-index: 9999;
 
   transform: translateZ(0);
 
-  background: #FFF;
+  @include m-theme(){
+    color: themed($m-grey-500);
+    background-color: themed($m-white);
+    border-bottom: 1px solid themed($m-grey-50);
+  }
 
   .m-topbar--row {
     margin: auto;
@@ -38,12 +41,14 @@ m-topbar{
   }
 
   .m-topbar--logo {
-    background: #FFF;
     width: 52px;
     height: 100%;
     //margin-right: 16px;
     text-align: center;
-    
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
+
     img {
       max-height: 36px;
       margin-top: 8px;
@@ -113,8 +118,10 @@ m-topbar{
 
     img {
       border-radius: 50%;
-      border: 1px solid #EEE;
       max-height: 30px;
+      @include m-theme(){
+        border: 1px solid themed($m-grey-50);
+      }
     }
 
     .m-dropdown--menu, .m-dropdown__list {
@@ -124,9 +131,11 @@ m-topbar{
         > a {
           padding: 0 $minds-padding * 2;
           text-decoration: none;
-          color: rgba(0,0,0,.87);
           font-weight: 400;
           display: block;
+          @include m-theme(){
+            color: rgba(themed($m-black), 0.87);
+          }
         }
       }
     }
@@ -150,7 +159,9 @@ m-topbar{
     i.material-icons {
       font-size: 20px;
       vertical-align: middle;
-      color: #555;
+      @include m-theme(){
+        color: themed($m-grey-700);
+      }
     }
     m-notifications--topbar-toggle {
      position: relative;
@@ -168,9 +179,9 @@ m-topbar{
     margin: auto;
   }
   .m-topbar--navigation--item {
-    border: 0;
     cursor: pointer;
     line-height: 15px;
+      border: 0 !important;
 
     > * {
       vertical-align: middle;
@@ -194,9 +205,11 @@ m-topbar{
 
     i {
       font-size: 11px;
-      color: #777;
       vertical-align: middle;
       line-height: 1.1;
+      @include m-theme(){
+        color: themed($m-grey-500);
+      }
     }
   }
 }

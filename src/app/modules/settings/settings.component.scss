@@ -13,9 +13,11 @@
 }
 
 .m-settings--section {
-  background: #FFF;
   margin-bottom: 8px;
   padding: 16px;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   h4 {
     margin: 0;
@@ -32,7 +34,9 @@
 }
 
 .minds-settings-data-text-container{
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  @include m-theme(){
+    border-bottom: 1px solid rgba(themed($m-black), 0.12);
+  }
 }
 
 .minds-settings-data-text{
@@ -48,9 +52,11 @@
 ul.minds-settings--list {
   list-style: none;
   font-weight: 500;
-  color: #666;
   margin: 0;
   padding: 0;
+  @include m-theme(){
+    color: themed($m-grey-600);
+  }
 
   li.minds-settings--list-item {
     cursor: pointer;
@@ -59,12 +65,16 @@ ul.minds-settings--list {
     padding: 0 6px;
 
     &:not(.selected):hover {
-      color: #333;
+      @include m-theme(){
+        color: themed($m-grey-900);
+      }
     }
   }
 }
 
 .m-settings--created-date {
-  color: #888;
   padding: 8px;
+  @include m-theme(){
+    color: themed($m-grey-400);
+  }
 }
