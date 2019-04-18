@@ -4,7 +4,7 @@
   //padding: 4px;
 
   a {
-    background-color: #444;
+
     background-position: center center;
     background-size: cover;
 
@@ -13,6 +13,9 @@
     //1:1 ratio (square)
     height: 320px;
     width: 100%;
+    @include m-theme(){
+      background-color: themed($m-grey-800);
+    }
   }
 
   m-safe-toggle {
@@ -27,7 +30,9 @@
 
   &.m-tile-mature-thumbnail {
     transform-style: preserve-3d;
-    background-color: rgba(0, 0, 0, 0.65);
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.65);
+    }
 
     > a {
       filter: blur(5px) grayscale(100%);
@@ -42,7 +47,9 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 3em;
-      color: #fff;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
   }
 }

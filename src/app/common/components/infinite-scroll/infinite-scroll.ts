@@ -7,7 +7,9 @@ export type ScrollOrientation = 'vertical' | 'horizontal';
   selector: 'infinite-scroll',
   template: `
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
-    <div class="m-infinite-scroll-manual mdl-color--blue-grey-200 mdl-color-text--blue-grey-500"
+    <div class="m-infinite-scroll-manual"
+         [class.mdl-color--blue-grey-200]="!iconOnly"
+         [class.mdl-color-text--blue-grey-500]="!iconOnly"
          [hidden]="inProgress || !moreData"
          (click)="manualLoad()"
          *ngIf="!hideManual">
@@ -16,7 +18,9 @@ export type ScrollOrientation = 'vertical' | 'horizontal';
        <i class="material-icons" *ngIf="iconOnly && orientation == 'vertical'">keyboard_arrow_down</i>
        <i class="material-icons" *ngIf="iconOnly && orientation == 'horizontal'">keyboard_arrow_right</i>
     </div>
-    <div class="m-infinite-scroll-manual mdl-color--blue-grey-200 mdl-color-text--blue-grey-500"
+    <div class="m-infinite-scroll-manual"
+         [class.mdl-color--blue-grey-200]="!iconOnly"
+         [class.mdl-color-text--blue-grey-500]="!iconOnly"
          [hidden]="moreData"
          *ngIf="!hideManual">
       <ng-container i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE">Nothing more to load</ng-container>

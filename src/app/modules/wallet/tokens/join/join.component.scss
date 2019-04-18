@@ -1,8 +1,10 @@
 .m-token-join{
-  background: #FFF;
   padding: 16px;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
-  h2 { 
+  h2 {
     margin: 0;
     font-weight: 600;
   }
@@ -32,11 +34,13 @@
   }
 
   .m-token-join--form--error {
-    color: #f44336 !important;
     font-weight: 600;
     padding: 8px;
     margin: 16px 0;
     border-radius: 3px;
     text-transform: capitalize;
+    @include m-theme(){
+      color: themed($m-red) !important;
+    }
   }
 }

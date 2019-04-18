@@ -84,9 +84,10 @@ minds-capture{
     }
 
     .m-album{
-      border-bottom:1px solid #DDD;
       cursor:pointer;
-
+      @include m-theme(){
+         border-bottom: 1px solid themed($m-grey-100);
+      }
       h2{
         margin:0;
         font-size:14px;
@@ -109,9 +110,11 @@ minds-capture{
         outline: none;
         border: 0;
         font-size: 14px;
-        border-right: 1px solid #DDD;
-        background:rgba(255,255,255,0.2);
-        color:#FFF;
+        @include m-theme(){
+          color: themed($m-white);
+          background-color: rgba(themed($m-white), 0.2);
+          border-right: 1px solid themed($m-grey-100);
+        }
       }
 
       button{
@@ -132,8 +135,6 @@ minds-capture{
     }
 
     input{
-      position: absolute;
-       color: #888;
        position: absolute;
        height: 100%;
        width: 100%;
@@ -141,6 +142,9 @@ minds-capture{
        left: 0;
        cursor: pointer;
        opacity: 0;
+       @include m-theme(){
+         color: themed($m-grey-400);
+       }
     }
     input::-webkit-file-upload-button{
       cursor:pointer;
@@ -153,7 +157,9 @@ minds-capture{
       outline: none;
       border: 0;
       font-size: 14px;
-      border-right: 1px solid #DDD;
+      @include m-theme(){
+        border-right: 1px solid themed($m-grey-100);
+      }
     }
     .mdl-progress{
       width:100%;

@@ -1,5 +1,5 @@
 m-faq--page {
-  //background: #FFF;
+  //background-color: themed($m-white);
   width: 100%;
   min-height: 100%;
   display: block;
@@ -12,8 +12,10 @@ m-faq--page {
   h2 {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    color: #444;
     padding-bottom: 16px;
     font-weight: 600;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 }

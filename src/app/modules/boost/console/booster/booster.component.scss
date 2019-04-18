@@ -1,8 +1,10 @@
 m-boost-console-booster {
-  border: 1px solid #e8e8e8;
   border-radius: 3px;
   display: block;
-  background: #FFF;
+  @include m-theme(){
+     border: 1px solid themed($m-grey-50);
+     background-color: themed($m-white);
+  }
 
   .m-boost-console-booster--cta {
     display: flex;

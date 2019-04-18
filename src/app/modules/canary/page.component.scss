@@ -5,6 +5,15 @@
     background-image: url(/assets/photos/canary.jpg);
     background-position: center right;
     background-size: cover;
+    
+    .m-marketing--hero--slogans {
+      h1, h3 {
+        @include m-theme(){
+          color: themed($m-white-always);
+        }
+      }
+    }
+    
   }
 
   .m-marketing--hero--video img {
@@ -39,7 +48,9 @@
     li {
       font-size: 16px;
       line-height: 2.5;
-      color: #666;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
     }
   }
 
@@ -49,6 +60,9 @@
   padding: 16px 0;
 
   .m-btn {
-    color: #FFF;
+    @include m-theme(){
+      color: themed($m-white-always);
+      border-color: rgba(themed($m-white-always), 0.7);
+    }
   }
 }

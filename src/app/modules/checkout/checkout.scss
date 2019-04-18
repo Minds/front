@@ -55,9 +55,11 @@ minds-payments-checkout, minds-payments-stripe-checkout{
       text-transform: uppercase;
       letter-spacing: 2px;
       font-family: 'Roboto';
-      border: 1px solid #DDD;
       margin: 16px;
       border-radius: 3px;
+      @include m-theme(){
+        border: 1px solid themed($m-grey-100);
+      }
 
       > *{
         padding:8px;
@@ -66,8 +68,10 @@ minds-payments-checkout, minds-payments-stripe-checkout{
       .m-payments--saved-card-item-select{
         flex:auto;
         text-align:right;
-        color: #888;
         cursor: pointer;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
       }
     }
 

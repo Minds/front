@@ -10,7 +10,9 @@
   .m-report-creator--subjects-subject{
     padding: 12px 0;
     letter-spacing: 1.5px;
-    border-bottom: 1px solid #DDD;
+    @include m-theme(){
+       border-bottom: 1px solid themed($m-grey-100);
+    }
 
     &:last-child{
       border-bottom: none;
@@ -45,11 +47,13 @@
 .m-report-creator--appeals {
   textarea {
     width: 100%;
-    background: rgba(255,255,255,0.5);
-    border: 1px solid #EEE;
     padding: 16px;
     font-size: 16px;
     letter-spacing: 1px;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+       background-color: rgba(themed($m-white), 0.5);
+    }
   }
 }
 
@@ -64,14 +68,16 @@
     appearance: none;
     padding: 8px 32px;
     background: none;
-    border: 1px solid #555;
     border-radius: 0;
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
     text-transform: uppercase;
-    color: #555;
     cursor: pointer;
+    @include m-theme(){
+      border: 1px solid themed($m-grey-700);
+      color: themed($m-grey-700);
+    }
 
     &[disabled] {
       cursor: default;
@@ -90,9 +96,11 @@
   }
 
   .m-report-creator--submit-error {
-    color: #ff0000;
     font-size: 12px;
     font-weight: 500;
+    @include m-theme(){
+      color: themed($m-red);
+    }
   }
 
   .m-report-creator--section {

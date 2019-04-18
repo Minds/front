@@ -111,7 +111,9 @@ m-modal-share, m-modal-invite {
     font-size: 28px;
     padding: $minds-padding*2;
     width: calc(100% - 34px);
-    border: 1px solid #eee;
+    @include m-theme(){
+      border: 1px solid themed($m-grey-50);
+    }
   }
   .m-social-share-buttons {
     padding: $minds-padding*2;
@@ -120,13 +122,15 @@ m-modal-share, m-modal-invite {
       margin: 0 4px;
     }
     .m-social-share-twitter {
-      background: #4099FF;
+      background: #4099FF !important;
     }
     .m-social-share-fb {
-      background: #335795;
+      background: #335795 !important;
     }
     .m-social-share-email {
-      color: #333 !important;
+      @include m-theme(){
+        color: themed($m-grey-900) !important;
+      }
     }
   }
 
@@ -135,5 +139,5 @@ m-modal-share, m-modal-invite {
       width: calc(90% - 20px);
     }
   }
-  
+
 }

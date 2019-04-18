@@ -25,7 +25,7 @@
 
     <div class="mdl-card mdl-shadow--4dp m-report" *ngFor="let report of reports; let i = index">
 
-      <div class="m-report-meta mdl-color-text--blue-grey-500">
+      <div class="m-report-meta">
         <p *ngIf="report?.reporterObj?.username">
           <span i18n="@@MINDS__ADMIN__REPORTS__REPORTED_BY_LABEL">Reported by:</span>
           <a [routerLink]="['/', report.reporterObj.username]" target="_blank">
@@ -75,7 +75,7 @@
         <ng-container *ngIf="filter == 'reports'">
           <ng-container *ngIf="type == 'review'">
             <button type="button"a
-              class="mdl-button mdl-button--raised mdl-button--colored mdl-color--amber"
+              class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber"
               (click)="archive(report, i)"
               i18n="@@MINDS__ADMIN__REPORTS__ARCHIVE_ACTION"
             >Archive</button>
@@ -83,23 +83,23 @@
 
           <ng-container *ngIf="type == 'review' || type == 'archived'">
             <button type="button"
-              class="mdl-button mdl-button--raised mdl-button--colored mdl-color--orange"
+              class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber-dark"
               (click)="explicit(report, i)"
               i18n="@@MINDS__ADMIN__REPORTS__MARK_AS_EXPLICIT_ACTION"
             >Mark as <i class="material-icons">explicit</i></button>
 
             <button type="button"
-              *ngIf="report.entityObj 
+              *ngIf="report.entityObj
                 && report.entityObj.type != 'comment'
                 && report.entityObj.type != 'user'
                 "
-              class="mdl-button mdl-button--raised mdl-button--colored mdl-color--orange"
+              class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber-dark"
               (click)="spam(report, i)"
               i18n="@@M__ACTION__MARK_SPAM"
             >Mark as spam</button>
 
             <button type="button"
-              class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red"
+              class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
               (click)="delete(report, i)"
               i18n="@@M__ACTION__DELETE"
             >Delete</button>
@@ -108,13 +108,13 @@
 
         <ng-container *ngIf="type == 'appealed'">
           <button type="button"
-            class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green"
+            class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--green"
             (click)="approveAppeal(report, i)"
             i18n="@@M__ACTION__APPROVE"
           >Approve</button>
 
           <button type="button"
-            class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red"
+            class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
             (click)="rejectAppeal(report, i)"
             i18n="@@M__ACTION__REJECT"
           >Reject</button>

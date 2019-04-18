@@ -16,7 +16,7 @@
         </p>
         <p class="m-date">{{ payout.ts * 1000 | date:'medium' }}</p>
       </div>
-      
+
       <div class="m-payout-cta" *ngIf="reviewing !== i">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
           (click)="review(i)"
@@ -25,7 +25,7 @@
         >Review</button>
       </div>
       <div class="m-payout-cta" *ngIf="reviewing === i">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green"
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
           (click)="pay(i)"
           [disabled]="inProgress"
           i18n="@@MINDS__ADMIN__PAYOUTS__PAY_ACTION"

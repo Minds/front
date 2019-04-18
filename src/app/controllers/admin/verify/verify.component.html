@@ -19,13 +19,13 @@
 
 
       <div class="m-admin--verify-requests-cta">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green"
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
           (click)="verify(i)"
           [disabled]="inProgress"
           i18n="@@MINDS__ADMIN__VERIFY__VERIFY_ACTION"
         >Verify</button>
 
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--red"
           (click)="reject(i)"
           [disabled]="inProgress"
           i18n="@@M__ACTION__REJECT"

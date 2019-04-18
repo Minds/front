@@ -1,8 +1,10 @@
 @import "defaults";
 
 m-channel--onboarding {
-  color: #333333;
   user-select: none;
+  @include m-theme(){
+    color: themed($m-grey-900);
+  }
 
   m-modal .m-modal-container .mdl-card {
     border-radius: 6px;
@@ -23,7 +25,9 @@ m-channel--onboarding {
   font-size: 24px;
   line-height: 1.5em;
   padding-top: 24px;
-  background-color: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-channelOnboarding__logo {
     text-align: center;
@@ -56,19 +60,25 @@ m-channel--onboarding {
     }
 
     p {
-      color: #444;
       font-size: 16px;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
 
       &.m-channelOnboardingSlide__info {
         vertical-align: middle;
         font-size: 16px;
         font-weight: bold;
-        color: #444;
         text-align: center;
         margin-top: 24px;
+        @include m-theme(){
+          color: themed($m-grey-800);
+        }
 
         i.material-icons {
-          color: $minds-blue;
+          @include m-theme(){
+            color: themed($m-blue);
+          }
         }
       }
     }
@@ -113,13 +123,15 @@ m-channel--onboarding {
     }
 
     .m-channelOnboardingSlideRewards__error {
-      color: #f44336 !important;
       font-weight: 600;
       padding: 8px;
       margin: 16px 0;
       border-radius: 3px;
       text-transform: capitalize;
       text-align: center;
+      @include m-theme(){
+        color: themed($m-red) !important;
+      }
     }
 
 
@@ -130,9 +142,11 @@ m-channel--onboarding {
       margin: 16px 0;
 
       label {
-        color: #444;
         font-size: 16px;
         font-weight: bold;
+        @include m-theme(){
+          color: themed($m-grey-800);
+        }
       }
 
       minds-avatar {
@@ -151,7 +165,9 @@ m-channel--onboarding {
           width: 64px;
           height: 64px;
           border-radius: 50%;
-          border: 1px solid #e8e8e8;
+          @include m-theme(){
+             border: 1px solid themed($m-grey-50);
+          }
 
           .overlay {
             display: flex;
@@ -175,16 +191,20 @@ m-channel--onboarding {
 
       input {
         border-radius: 20px;
-        border: 1px solid #e8e8e8;
         font-weight: normal;
         font-size: 16px;
         min-width: 220px;
         text-align: center;
         padding: 8px 16px;
+        @include m-theme(){
+           border: 1px solid themed($m-grey-50);
+        }
 
         &:focus {
           outline: 0;
-          border-color: #bbb;
+          @include m-theme(){
+             border-color: themed($m-grey-200);
+          }
         }
       }
     }
@@ -194,17 +214,21 @@ m-channel--onboarding {
       width: 120px;
       border-radius: 3px;
       -webkit-appearance: none;
-      border: 1px solid #e8e8e8;
       font-size: 13px;
       font-weight: 600;
       text-transform: lowercase;
-      color: #555
+      @include m-theme(){
+        border: 1px solid themed($m-grey-50);
+        color: themed($m-grey-700);
+      }
     }
 
     i {
-      color: #888;
       font-size: 16px;
       cursor: pointer;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
 
     .mdl-spinner {
@@ -220,7 +244,9 @@ m-channel--onboarding {
       line-height: 14px;
       border-radius: 24px;
       padding: 8px 12px;
-      border: 1px solid #e8e8e8;
+      @include m-theme(){
+         border: 1px solid themed($m-grey-50);
+      }
 
       &li {
         list-style:none;
@@ -244,18 +270,22 @@ m-channel--onboarding {
           width: 120px;
           border-radius: 3px;
           -webkit-appearance: none;
-          border: 1px solid #ddd;
           border-radius: 24px;
           font-size: 13px;
           font-weight: 600;
           text-transform: lowercase;
           margin-right: 8px;
+          @include m-theme(){
+             border: 1px solid themed($m-grey-100);
+          }
         }
 
         i {
-          color: #888;
           font-size: 16px;
           cursor: pointer;
+          @include m-theme(){
+            color: themed($m-grey-400);
+          }
         }
       }
 
@@ -274,7 +304,9 @@ m-channel--onboarding {
     }
 
     .selected {
-      color: #4690DF;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
 
     @media screen and (max-width: $max-mobile) {
@@ -293,7 +325,9 @@ m-channel--onboarding {
       text-align: center;
       font-weight: bold;
       line-height: 42px;
-      color: #444;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
 
     .m-channelOnboardingSlide__subtext {
@@ -352,13 +386,17 @@ m-channel--onboarding {
         width: 100%;
         padding: 8px 16px;
         cursor: pointer;
-        color: #444;
-        border-bottom: 1px solid #e8e8e8;
+        @include m-theme(){
+          color: themed($m-grey-800);
+          border-bottom: 1px solid themed($m-grey-50);
+        }
       }
 
       i {
         line-height: 1;
-        color: $minds-blue;
+        @include m-theme(){
+          color: themed($m-blue);
+        }
       }
 
       p {
@@ -366,7 +404,9 @@ m-channel--onboarding {
         margin-bottom: 0;
         font-size: 12px;
         line-height: 14px;
-        color: #888;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
       }
 
     }
@@ -394,7 +434,7 @@ m-channel--onboarding {
       display: flex;
       flex-direction: row;
       flex-flow: row wrap;
-      //background: #FFF;
+      //background-color: themed($m-white);
       max-width: 1280px;
       margin: auto;
 
@@ -437,8 +477,10 @@ m-channel--onboarding {
     .m-channelOnboarding__previous, .m-channelOnboarding__next {
       font-size: 14px;
       cursor: pointer;
-      color: #444;
       font-weight: bold;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
 
     .m-channelOnboarding__next {

@@ -1,8 +1,10 @@
 .m-messenger--onboarding--setup--input {
   .m-input {
     max-width: 400px;
-    background: #FFF;
     margin-bottom: 8px;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 
   m-tooltip {
@@ -19,4 +21,3 @@
   font-size: 160px;
   text-align: center;
 }
-

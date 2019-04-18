@@ -59,7 +59,7 @@ export class NotificationService {
   getNotifications() {
     var self = this;
     setInterval(function () {
-      console.log('getting notifications');
+      // console.log('getting notifications');
 
       if (!self.session.isLoggedIn())
         return;

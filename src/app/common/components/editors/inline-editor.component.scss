@@ -22,11 +22,16 @@ m-inline-editor {
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(255, 255, 255, 0.8);
+      @include m-theme(){
+        background-color: rgba(themed($m-white), 0.8);
+      }
     }
 
     .medium-insert-image-active {
-      border: 2px solid #2196F3;
+      @include m-theme(){
+         border: 2px solid themed($m-blue);
+      }
+
     }
     .m-blog--image-caption {
       min-width: 100px;
@@ -118,9 +123,11 @@ m-inline-editor {
 }
 
 .medium-editor-anchor-preview a {
-  color: #fff;
   display: inline-block;
   margin: 5px 5px 10px;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .medium-editor-anchor-preview-active {
@@ -128,17 +135,21 @@ m-inline-editor {
 }
 
 .medium-editor-dragover {
-  background: #ddd;
+  @include m-theme(){
+    background-color: themed($m-grey-100);
+  }
 }
 
 .medium-editor-image-loading {
   -webkit-animation: medium-editor-image-loading 1s infinite ease-in-out;
   animation: medium-editor-image-loading 1s infinite ease-in-out;
-  background-color: #333;
   border-radius: 100%;
   display: inline-block;
   height: 40px;
   width: 40px;
+  @include m-theme(){
+    background-color: themed($m-grey-900);
+  }
 }
 
 .medium-editor-placeholder {
@@ -355,33 +366,43 @@ m-inline-editor {
 
 // THEME!
 .medium-toolbar-arrow-under:after {
-  border-color: #242424 transparent transparent transparent;
   top: 50px;
+  @include m-theme(){
+     border-color: themed($m-grey-950) transparent transparent transparent;
+  }
 }
 
 .medium-toolbar-arrow-over:before {
-  border-color: transparent transparent #242424 transparent;
+  @include m-theme(){
+     border-color: transparent transparent themed($m-grey-950) transparent;
+  }
   top: -8px;
 }
 
 .medium-editor-toolbar {
-  background-color: rgba(0, 0, 0, 0.99);
   border-radius: 3px;
+  @include m-theme(){
+    background-color: rgba(themed($m-black), 0.99);
+  }
 }
 
 .medium-editor-toolbar li button {
   background: transparent;
   border: 0;
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  color: #FFF;
   height: 50px;
   min-width: 50px;
   -webkit-transition: background-color .2s ease-in;
   transition: background-color .2s ease-in;
+  @include m-theme(){
+    color: themed($m-white);
+    border-right: 1px solid rgba(themed($m-black), 0.5);;
+  }
 }
 
 .medium-editor-toolbar li button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  @include m-theme(){
+    background-color: rgba(themed($m-white), 0.2);
+  }
 }
 
 .medium-editor-toolbar li .medium-editor-button-first {
@@ -395,35 +416,47 @@ m-inline-editor {
 }
 
 .medium-editor-toolbar li .medium-editor-button-active {
-  color: #4690D6;
+  @include m-theme(){
+    color: themed($m-blue);
+  }
 }
 
 .medium-editor-toolbar-form {
-  background-color: rgba(0, 0, 0, 0.99);
   border-radius: 5px;
-  color: #FFF;
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: rgba(themed($m-black), 0.99);
+  }
 }
 
 .medium-editor-toolbar-form .medium-editor-toolbar-input {
-  background-color: rgba(0, 0, 0, 0.99);
   box-sizing: border-box;
   border-radius: 5px;
-  color: #FFF;
   height: 50px;
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: rgba(themed($m-black), 0.99);
+  }
 }
 
 .medium-editor-toolbar-form a {
-  color: #FFF;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .medium-editor-toolbar-anchor-preview {
-  background-color: rgba(0, 0, 0, 0.99);
   border-radius: 5px;
-  color: #FFF;
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: rgba(themed($m-black), 0.99);
+  }
 }
 
 .medium-editor-placeholder:after {
-  color: #b3b3b1;
+  @include m-theme(){
+    color: themed($m-grey-200);
+  }
 }
 
 .medium-insert-embeds {
@@ -468,48 +501,56 @@ m-inline-editor {
     .medium-media-buttons-upload {
       display: block;
       cursor: pointer;
-      color: #bbb;
-      background: #fff;
       width: 32px;
       height: 32px;
       box-sizing: border-box;
       border-radius: 20px;
-      border: 1px solid #ddd;
       line-height: 30px;
       text-align: center;
       padding: 0;
       font-family: Arial;
       margin: 0 10px 0 0;
+      @include m-theme(){
+        color: themed($m-grey-200);
+        background-color: themed($m-white);
+        border: 1px solid themed($m-grey-100);
+      }
     }
     .medium-insert-link-input {
-      border: 1px solid #EEE;
       border-radius: 3px;
       font-size: 12px;
       font-family: 'Roboto';
-      color: #888;
       padding: 8px;
       flex-grow: 1;
+      @include m-theme(){
+        color: themed($m-grey-400);
+        border: 1px solid themed($m-grey-50);
+      }
     }
   }
 
   .medium-insert-buttons {
     position: absolute;
-    color: #bbb;
     font-size: 0.9em;
+    @include m-theme(){
+      color: themed($m-grey-200);
+    }
     button {
       display: block;
       cursor: pointer;
-      color: #bbb;
-      background: #fff;
       width: 32px;
       height: 32px;
       box-sizing: border-box;
       border-radius: 20px;
-      border: 1px solid #ddd;
       line-height: 30px;
       text-align: center;
       padding: 0;
       font-family: Arial;
+      @include m-theme(){
+        color: themed($m-grey-200);
+        background-color: themed($m-white);
+        border: 1px solid themed($m-grey-100);
+      }
     }
 
     .medium-insert-buttons-show {

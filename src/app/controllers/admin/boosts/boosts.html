@@ -3,7 +3,7 @@
     <a [routerLink]="['/admin/boosts/content']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'content'}" i18n="@@MINDS__ADMIN__BOOSTS__CONTENT_TAB">Content ({{content_count}})</a>
 </div>
 
-<div class="mdl-grid mdl-card mdl-shadow--4dp mdl-color--blue-grey-800 m-admin-boosts-statistics"
+<div class="mdl-grid mdl-card mdl-shadow--4dp m-admin-boosts-statistics"
   *ngIf="statistics"
 >
   <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
@@ -81,11 +81,11 @@
       </div>
 
       <div class="mdl-card__supporting-text action-buttons" *ngIf="boost.state == 'created'">
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-300 m-admin-boosts--accept-button" (click)="accept(boost, false)" i18n="@@M__ACTION__ACCEPT">Accept</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500 m-admin-boosts--open-button" (click)="accept(boost, true)" i18n="safe boost|Open as a safe boost@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN">Open</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--green-500 m-admin-boosts--e-tag-button-accept" (click)="accept(boost, true, { mature: 1 })" i18n="Open as an explicit boost@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN_EXPLICIT">Open (E-tag)</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red m-admin-boosts--reject-button" (click)="openReasonsModal(boost)" i18n="@@M__ACTION__REJECT">Reject</button>
-        <button class="mdl-button mdl-button--raised mdl-button--colored mdl-color--red m-admin-boosts--e-tag-button" (click)="eTag(boost)" i18n="E-tag as mark as explicit@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_EXPLICIT">E-tag</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--accept-button m-admin-button--green" (click)="accept(boost, false)" i18n="@@M__ACTION__ACCEPT">Accept</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--open-button m-admin-button--green-dark" (click)="accept(boost, true)" i18n="safe boost|Open as a safe boost@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN">Open</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--e-tag-button-accept m-admin-button--green-dark" (click)="accept(boost, true, { mature: 1 })" i18n="Open as an explicit boost@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN_EXPLICIT">Open (E-tag)</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--reject-button m-admin-button--red" (click)="openReasonsModal(boost)" i18n="@@M__ACTION__REJECT">Reject</button>
+        <button class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--e-tag-button m-admin-button--red" (click)="eTag(boost)" i18n="E-tag as mark as explicit@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_EXPLICIT">E-tag</button>
       </div>
 
     </div>

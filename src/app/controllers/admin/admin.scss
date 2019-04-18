@@ -13,7 +13,9 @@ minds-admin-analytics{
       .row{
         flex:1;
         padding:$minds-padding;
-        border-bottom:1px solid #EEE;
+        @include m-theme(){
+           border-bottom: 1px solid themed($m-grey-50);
+        }
 
         > label{
          width:60%;
@@ -23,7 +25,9 @@ minds-admin-analytics{
       .cell{
         display:table-cell;
         flex:1;
-        border-right:1px solid #EEE;
+        @include m-theme(){
+           border-right: 1px solid themed($m-grey-50);
+        }
         &:last-child{
           border-right:0;
         }
@@ -132,10 +136,12 @@ minds-admin-boosts{
   }
 
   .m-report-meta {
-    border-bottom: 2px solid #ddd;
     width: 100%;
     padding: 16px;
     box-sizing: border-box;
+    @include m-theme(){
+       border-bottom: 2px solid themed($m-grey-100);
+    }
 
     p {
       margin: 0 0 0.35em;
@@ -148,5 +154,31 @@ minds-admin-boosts{
         text-decoration: none;
       }
     }
+  }
+}
+
+.m-admin-button--green {
+  @include m-theme(){
+    background-color: themed($m-green);
+  }
+}
+.m-admin-button--green-dark {
+  @include m-theme(){
+    background-color: themed($m-green-dark);
+  }
+}
+.m-admin-button--amber{
+  @include m-theme(){
+    background-color: themed($m-amber);
+  }
+}
+.m-admin-button--amber-dark {
+  @include m-theme(){
+    background-color: themed($m-amber-dark);
+  }
+}
+.m-admin-button--red {
+  @include m-theme(){
+    background-color: themed($m-red);
   }
 }

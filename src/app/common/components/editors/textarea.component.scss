@@ -6,9 +6,11 @@ minds-textarea {
   width: 100%;
   padding: $minds-padding;
   box-sizing: border-box;
-  background: #ffffff;
-  border: 1px solid #dddddd;
   overflow: hidden;
+  @include m-theme(){
+    background-color: themed($m-white);
+    border: 1px solid themed($m-grey-100);
+  }
 
   > .m-editor {
     display: inline-block;
@@ -26,7 +28,9 @@ minds-textarea {
     -moz-user-modify: read-write;
 
     &.m-editor-disabled {
-      color: #999999;
+      @include m-theme(){
+        color: themed($m-grey-300);
+      }
       -webkit-user-modify: initial;
       -moz-user-modify: initial;
     }
@@ -44,7 +48,9 @@ minds-textarea {
     padding: inherit;
     width: 100%;
 
-    color: #999999;
+    @include m-theme(){
+      color: themed($m-grey-300);
+    }
 
     pointer-events: none;
   }

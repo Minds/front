@@ -3,11 +3,13 @@
 m-notifications--flyout{
   
   z-index: 999;
-  background-color: lightgray;
   width: 320px;
   position: absolute;
   top: 24px;
   right: -160px;
+  @include m-theme(){
+    background-color: themed($m-grey-100);
+  }
   
   @media screen and (max-width: $max-mobile){
     right: -80px;
@@ -54,7 +56,9 @@ m-notifications--flyout{
       minds-notification {
         margin-bottom: 0;
         padding: 16px 8px; 
-        border-bottom: 1px solid #EFEFEF;
+        @include m-theme(){
+           border-bottom: 1px solid themed($m-grey-50);
+        }
 
         .body {
           padding: 0 8px;

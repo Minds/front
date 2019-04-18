@@ -38,10 +38,12 @@
       display: inline-block;
       font-family: Roboto, sans-serif;
       font-size: 24px;
-      color: #333;
       padding: 16px;
       line-height: 1.2;
       font-weight: 300;
+      @include m-theme(){
+        color: themed($m-grey-900);
+      }
     }
 
     > input {
@@ -51,19 +53,25 @@
       font-weight: 400;
       appearance: none;
       border-radius: 3px;
-      background: rgba(0, 0, 0, 0.1);
       flex: 1;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.1);
+      }
     }
 
     m--crypto-token-symbol {
       font-size: 1.2em;
 
       .m--crypto-token-symbol--stroke {
-        stroke: #333;
+        @include m-theme(){
+          stroke: themed($m-grey-900);
+        }
       }
 
       .m--crypto-token-symbol--fill {
-        fill: #333;
+        @include m-theme(){
+          fill: themed($m-grey-900);
+        }
       }
     }
   }
@@ -74,14 +82,16 @@
   appearance: none;
   padding: 8px 32px;
   background: none;
-  border: 1px solid #555;
   border-radius: 0;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   text-transform: uppercase;
-  color: #555;
   cursor: pointer;
+  @include m-theme(){
+    color: themed($m-grey-700);
+    border: 1px solid themed($m-grey-700);
+  }
 
   &[disabled] {
     cursor: default;
@@ -90,5 +100,8 @@
 }
 
 .m-blockchain--tde-buy--error {
-  color: #c00;
+  @include m-theme(){
+    color: themed($m-red);
+  }
+
 }

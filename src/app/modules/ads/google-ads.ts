@@ -7,7 +7,7 @@ import { Component, EventEmitter, ElementRef } from '@angular/core';
     <ins
        *ngIf="type == 'square'"
        class="adsbygoogle"
-       style="display:block;width:336px;height:280px;margin: auto; padding: 8px; background: #EEE;"
+       style="display:block;width:336px;height:280px;margin: auto; padding: 8px;"
        data-ad-client="ca-pub-9303771378013875"
        data-ad-slot="5788264423"></ins>
    <ins

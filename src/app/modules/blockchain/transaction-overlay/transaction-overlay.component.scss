@@ -8,9 +8,12 @@ m--blockchain--transaction-overlay {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255,255,255,0.99);
-  color: #333333;
+
   user-select: none;
+  @include m-theme(){
+    background-color: rgba(themed($m-white), 0.99);
+    color: themed($m-grey-900);
+  }
 
   .m--blockchain--transaction-overlay--coloured-button {
     display: flex;
@@ -23,9 +26,11 @@ m--blockchain--transaction-overlay {
     font-weight: 500;
     cursor: pointer;
     text-decoration: none;
-    background-color: #4caf50;
-    color: white;
     margin-bottom: 12px;
+    @include m-theme(){
+      color: themed($m-white);
+      background-color: themed($m-green);
+    }
 
     span {
       text-align: center;
@@ -38,10 +43,12 @@ m--blockchain--transaction-overlay {
   .m--blockchain--transaction-overlay--balance {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    color: #444;
     font-weight: 600;
     font-size: 14px;
     margin-bottom: $minds-padding * 5;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
 
     .m--blockchain--transaction-overlay--balance--subtext {
       display: block;
@@ -73,30 +80,38 @@ m--blockchain--transaction-overlay {
       margin-bottom: 16px;
       font-weight: bold;
       line-height: 42px;
-      color: #444;    
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
     .m--blockchain--transaction-overlay--subtitle {
       text-transform: uppercase;
-      color: #444;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       font-size: 16px;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
     .m--blockchain--transaction-overlay--help {
       display: flex;
       align-items: center;
       min-height: 200px;
-      color: #aaaaaa;
       text-transform: uppercase;
+      @include m-theme(){
+        color: themed($m-grey-200);
+      }
       a {
         cursor: pointer;
         text-decoration: none;
       }
     }
     .m--blockchain--transaction-overlay--note {
-      color: #444;
       line-height: 20px;
       font-size: 16px;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
   }
 }
@@ -105,24 +120,29 @@ m--blockchain--transaction-overlay {
   margin: ($minds-padding * 2) 0;
 
   .mdl-checkbox {
-    $cb-color: rgba(0, 0, 0, 0.15);
 
     .mdl-checkbox__label {
       font-size: inherit;
     }
 
     .mdl-checkbox__box-outline {
-      border-color: $cb-color;
-      background-color: $cb-color;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.15);
+        border-color: rgba(themed($m-black), 0.15);
+      }
     }
 
     &.is-checked .mdl-checkbox__tick-outline {
-      background-color: $cb-color;
       mask: none;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.15);
+      }
     }
 
     .mdl-checkbox__ripple-container .mdl-ripple {
-      background-color: $cb-color;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.15);
+      }
     }
   }
 }
@@ -135,12 +155,16 @@ m--blockchain--transaction-overlay {
 }
 
 .m--blockchain--transaction-overlay--info {
-  color: #00c;
+  @include m-theme(){
+    color: themed($m-blue-dark);
+  }
 }
 
 .m--blockchain--transaction-overlay--warning {
-  color: #c00;
   font-size: 13px;
+  @include m-theme(){
+    color: themed($m-red-dark);
+  }
 }
 
 .m--blockchain--transaction-overlay--field-label {
@@ -150,20 +174,24 @@ m--blockchain--transaction-overlay {
   letter-spacing: 1px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  color: #444;
   font-weight: 600;
+  @include m-theme(){
+    color: themed($m-grey-800);
+  }
 }
 
 .m--blockchain--transaction-overlay--checkbox-label {
   font-size: 14px;
   span {
     text-transform: uppercase;
-    color: #444;
     letter-spacing: 0.25px;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-weight: 600;
     font-size: 14px;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 }
 
@@ -171,14 +199,18 @@ m--blockchain--transaction-overlay {
 .m--blockchain--transaction-overlay--field-input {
   padding: $minds-padding * 2;
   -webkit-appearance: none;
-  border: 1px solid #ececec;
-  background: #FFF;
   border-radius: 4px;
   font-size: 18px;
-  color: #444;
+  @include m-theme(){
+    color: themed($m-grey-800);
+    background-color: themed($m-white);
+    border: 1px solid themed($m-grey-50);
+  }
 
   &.m--blockchain--transaction-overlay--dropping {
-    box-shadow: inset 0 0 10px #00c;
+    @include m-theme(){
+      box-shadow: inset 0 0 10px themed($m-blue-dark);
+    }
   }
 }
 
@@ -197,14 +229,18 @@ m--blockchain--transaction-overlay {
   appearance: none;
   padding: $minds-padding ($minds-padding * 4);
   background: none;
-  border: 1px solid #555;
   border-radius: 3;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   text-transform: uppercase;
-  color: #555;
   cursor: pointer;
+  @include m-theme(){
+    color: themed($m-grey-700);
+    border: 1px solid themed($m-grey-700);
+  }
+
+
 
   &[disabled] {
     cursor: default !important;

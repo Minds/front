@@ -1,7 +1,7 @@
 .m-group--conversation {
   max-width: 1600px;
 
-  
+
   .m-group--sidebar {
     @media screen and (max-width: $min-tablet) {
       margin: 0 auto;
@@ -31,7 +31,6 @@ minds-groups-profile-conversation {
   }
 
   .m-group__chat, .m-group__chat > m-comments__thread {
-    background: #FFF;
     height: 100%;
     height: calc(100vh - 45px);
     position: relative;
@@ -41,6 +40,9 @@ minds-groups-profile-conversation {
     flex-direction: column;
     box-sizing: border-box;
     padding-bottom: 24px;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     .minds-comments-container, .m-comments__thread {
       overflow-y: auto;

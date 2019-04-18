@@ -1,4 +1,4 @@
-import { NgZone } from '@angular/core';
+import { NgZone, RendererFactory2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
@@ -40,6 +40,7 @@ import { BlockListService } from "../common/services/block-list.service";
 import { EntitiesService } from "../common/services/entities.service";
 import { InMemoryStorageService } from "./in-memory-storage.service";
 import { FeedsService } from "../common/services/feeds.service";
+import { ThemeService } from "../common/services/theme.service";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -209,5 +210,10 @@ export const MINDS_PROVIDERS : any[] = [
   {
     provide: InMemoryStorageService,
     useFactory: InMemoryStorageService._,
+  },
+  {
+    provide: ThemeService,
+    useFactory: ThemeService._,
+    deps: [ RendererFactory2, Client, Session , Storage ],
   },
 ];

@@ -8,7 +8,9 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: #444;
+    @include m-theme(){
+      background-color: themed($m-grey-800);
+    }
   }
 
   div.minds-banner-img{
@@ -18,7 +20,9 @@
     background-position: 0, 0;
     background-size: cover;
     background-repeat: no-repeat;
-    background-color: #444;
+    @include m-theme(){
+      background-color: themed($m-grey-800);
+    }
 
     &.m-banner--img-cover {
       background-position: center;
@@ -55,7 +59,9 @@
     height:100%;
     top:0;
     left:0;
-    background:linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8));
+    @include m-theme(){
+      background:linear-gradient(rgba(themed($m-black),0), rgba(themed($m-black),0.8));
+    }
   }
 
   &.minds-banner-editing{
@@ -69,13 +75,15 @@
       left: 0;
       width: 100%;
       height: 100%;
-      color: #FFF;
-      background: rgba(0, 0, 0, 0.3);
       /* align-items: center; */
       /* display: flex; */
       text-align: center;
       padding-top: 116px;
       cursor: pointer;
+      @include m-theme(){
+        color: themed($m-white);
+        background-color: rgba(themed($m-black), 0.3);
+      }
 
       i{
         font-size: 62px;
@@ -96,7 +104,9 @@
       height:60px;
       bottom:0;
       top:initial;
-      background:rgba(0,0,0,0.6);
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.6);
+      }
     }
     .add-button{
       display:none;
@@ -107,25 +117,33 @@
       bottom: 0;
       right: 0;
       padding:$minds-padding $minds-padding*2;
-      background-color: rgba(0,0,0,0.5);
       display: flex;
       align-items: flex-end;
       -webkit-align-item: flex-end;
       flex-direction: row;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.5);
+      }
 
       p{
         margin: 0;
         padding: 4px 16px;
-        color: #FFF;
+        @include m-theme(){
+          color: themed($m-white);
+        }
       }
       .minds-button-edit{
         padding:0 $minds-padding;
 
         & > button {
-          color: white;
+          @include m-theme(){
+            color: themed($m-white);
+          }
 
           &:hover {
-            color: white;
+            @include m-theme(){
+              color: themed($m-white);
+            }
           }
         }
       }

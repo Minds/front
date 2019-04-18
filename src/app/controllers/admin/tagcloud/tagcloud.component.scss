@@ -1,11 +1,20 @@
 .m-admin-tagcloud {
+  p {
+    @include m-theme(){
+      color: themed($m-blue-grey-300);
+    }
+
+  }
   .m-admin-tagcloud-tag, .m-admin-tagcloud-hidden-tag {
     display: inline-block;
     font-size: 16px;
     margin: 0 0.35em 0.35em 0;
     padding: 2px 8px;
-    background: #ddd;
     border-radius: 8px;
+    @include m-theme(){
+      background-color: themed($m-grey-100);
+      color: themed($m-blue-grey-600);
+    }
   }
 
   .m-admin-tagcloud-hidden-tag {
@@ -25,5 +34,9 @@
 
   .m-admin-tagcloud-resync {
     cursor: pointer;
+    @include m-theme(){
+      color: themed($m-blue-grey-200);
+    }
+
   }
 }

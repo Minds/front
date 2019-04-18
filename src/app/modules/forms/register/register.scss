@@ -22,7 +22,6 @@ minds-form-register{
 
   //this is exactly the same as modal.scss
   .m-fb-register-button{
-    background: #FFF;
     color: #3b5998;
     width: 170px;
     border: 0;
@@ -33,6 +32,9 @@ minds-form-register{
     margin: 0;
     margin-left: 8px;
     border: 1px solid #3b5998;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     .m-social-icons-icon-inline{
       fill: #3b5998;
@@ -71,14 +73,18 @@ minds-form-register{
     position: absolute;
     right: 15px;
     top: 20px;
-    color: red;
+    @include m-theme(){
+      color: themed($m-red);
+    }
   }
 
   .m-register--username-available {
     position: absolute;
     right: 15px;
     top: 20px;
-    color: green;
+    @include m-theme(){
+      color: themed($m-green);
+    }
   }
 
   .mdl-checkbox {

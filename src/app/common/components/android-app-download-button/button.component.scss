@@ -34,7 +34,6 @@
     padding-left: 4px;
     margin: 0;
 
-    color: #FFF;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.25px;
@@ -43,10 +42,15 @@
     -webkit-font-smoothing: antialiased;
 
     z-index: 2;
+    @include m-theme(){
+      color: themed($m-white);
+    }
   }
 
   i.material-icons {
-    color: #FFF;
+    @include m-theme(){
+      color: themed($m-white);
+    }
     z-index: 2;
   }
 }

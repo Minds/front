@@ -9,6 +9,7 @@ import {
 import { Session } from "../../../services/session";
 import { DynamicHostDirective } from "../../directives/dynamic-host.directive";
 import { NotificationsToasterComponent } from "../../../modules/notifications/toaster.component";
+import { ThemeService } from "../../../common/services/theme.service";
 
 @Component({
   selector: 'm-v2-topbar',
@@ -17,6 +18,7 @@ import { NotificationsToasterComponent } from "../../../modules/notifications/to
 })
 export class V2TopbarComponent implements OnInit {
   minds = window.Minds;
+  timeout;
 
   @ViewChild(DynamicHostDirective) notificationsToasterHost: DynamicHostDirective;
 
@@ -26,6 +28,7 @@ export class V2TopbarComponent implements OnInit {
   constructor(
     protected session: Session,
     protected cd: ChangeDetectorRef,
+    private themeService: ThemeService,
     protected componentFactoryResolver: ComponentFactoryResolver
   ) {
   }
@@ -33,6 +36,7 @@ export class V2TopbarComponent implements OnInit {
   ngOnInit() {
     this.loadComponent();
     this.session.isLoggedIn(() => this.detectChanges());
+  
   }
 
   getCurrentUser() {
@@ -53,4 +57,21 @@ export class V2TopbarComponent implements OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+  mouseEnter() {
+    this.timeout = setTimeout(() => {
+      this.themeService.toggleUserThemePreference();
+    }, 5000);
+    
+  }
+  
+  mouseLeave() {
+    clearTimeout(this.timeout);
+  }
+
+  ngOnDestroy() {
+    if (this.timeout)
+      clearTimeout(this.timeout);
+  }
+
 }

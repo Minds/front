@@ -9,12 +9,14 @@ m-categories--selected {
       display: inline-flex;
       justify-content: space-around;
       align-items: center;
-      background-color: rgba(0, 0, 0, 0.15);
       border: 1px solid transparent;
       border-radius: 5px;
       box-sizing: border-box;
       margin: 0 1px;
-      color: black;
+      @include m-theme(){
+        color: themed($m-black);
+        background-color: rgba(themed($m-black), 0.15);
+      }
     }
   }
 }
