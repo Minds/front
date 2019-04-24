@@ -44,7 +44,7 @@ export class LoginForm {
 
     this.errorMessage = '';
     this.inProgress = true;
-    this.client.post('api/v1/authenticate', { username: this.form.value.username, password: this.form.value.password })
+    this.client.post('api/v1/authenticate', { username: this.form.value.username.trim(), password: this.form.value.password })
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
         this.inProgress = false;
