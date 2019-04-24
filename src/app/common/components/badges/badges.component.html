@@ -1,5 +1,5 @@
 <ul class="m-channel--badges">
-    <li *ngIf="user.plus && badges.indexOf('plus') > -1" routerLink="/plus">
+  <li *ngIf="user.plus && badges.indexOf('plus') > -1" routerLink="/plus">
     <m-tooltip icon="add_circle_outline" iconClass="selected" i18n="Plus as user status@@COMMON__BADGES__PLUS">
       Plus
     </m-tooltip>
@@ -11,7 +11,7 @@
     </m-tooltip>
   </li>
 
-  <li *ngIf="((user.verified && !user.is_admin) || (session.isAdmin() && user.guid !== session.getLoggedInUser().guid)) && badges.indexOf('verified') > -1" (click)="verify($event)">
+  <li *ngIf="shouldShowVerifiedBadge()" (click)="verify($event)">
     <m-tooltip icon="verified_user" [iconClass]="{'selected': user.verified}" i18n="Verified as user status@@COMMON__BADGES__VERIFIED">
       Verified
     </m-tooltip>

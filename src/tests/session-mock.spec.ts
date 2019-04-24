@@ -7,6 +7,7 @@ export let sessionMock = new function () {
   this.user = {
     guid: '1000',
     admin: true,
+    is_admin: true,
     plus: false,
     disabled_boost: false,
     username: 'test',
