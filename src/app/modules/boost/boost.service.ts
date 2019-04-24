@@ -108,7 +108,7 @@ export class BoostService {
     }
 
     try {
-      if (boost.currency == 'tokens') {
+      if (this.isOnChain(boost)) {
         let tx = await this.boostContractService.revoke(boost.guid);
 
         if (!tx) {
@@ -154,5 +154,10 @@ export class BoostService {
   isIncoming(boost): boolean {
     return boost.destination.guid === this.session.getLoggedInUser().guid;
   }
+
+  /**
+   * Returns true if the transactionid indicates that the transaction is onChain;
+   */
+  isOnChain = (boost: any)  => boost.transactionId.startsWith('0x');
 
 }
