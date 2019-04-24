@@ -194,4 +194,13 @@ describe('BoostService', () => {
     expect(boostContractServiceMock.revoke.calls.mostRecent().args[0]).toBe('1234');
   }));
 
+  fit('should be able to differentiate onchain and offchain transactions', fakeAsync(() => {
+    const onChain = service.isOnChain({ transactionId: '0x0000000000' });
+    const offChain = service.isOnChain({ transactionId: 'oc' });
+
+    jasmine.clock().tick(10);
+    expect(onChain).toBeTruthy();
+    expect(offChain).toBeFalsy();
+  }));
+
 });
