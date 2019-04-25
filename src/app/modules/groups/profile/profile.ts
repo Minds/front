@@ -271,6 +271,7 @@ export class GroupsProfile {
 
   save() {
     this.group.videoChatDisabled = parseInt(this.group.videoChatDisabled);
+    this.group.conversationDisabled = parseInt(this.group.conversationDisabled);
 
     this.service.save(this.group);
 

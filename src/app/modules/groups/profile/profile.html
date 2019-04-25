@@ -271,7 +271,8 @@
     z-index: 99;
     cursor: pointer;
     "
-    (click)="toggleConversations()">
+    (click)="toggleConversations()"
+    *ngIf="group.conversationDisabled == 0">
      <i class="material-icons" style="
       font-size: 32px;
       " *ngIf="showRight">keyboard_arrow_right</i>
@@ -280,7 +281,7 @@
       " *ngIf="!showRight">keyboard_arrow_left</i>
     </div>
 
-  <div class="m-groupGrid__right" [hidden]="!showRight">
+  <div class="m-groupGrid__right" [hidden]="!showRight" *ngIf="group.conversationDisabled == 0">
     <!-- Conversation filter -->
     <minds-groups-profile-conversation [group]="group">
     </minds-groups-profile-conversation>

@@ -22,6 +22,9 @@ import { Session } from '../../../services/session';
           <ng-container *ngIf="editing">Save</ng-container>
       </li>
 
+      <li class="mdl-menu__item" *ngIf="group['is:owner'] && group.conversationDisabled" (click)="toggleConversation(true)">Enable Conversation</li>
+      <li class="mdl-menu__item" *ngIf="group['is:owner'] && !group.conversationDisabled" (click)="toggleConversation(false)">Disable Conversation</li>
+
       <li class="mdl-menu__item" *ngIf="group['is:owner'] && group.videoChatDisabled" (click)="toggleVideoChat(true)">Enable Gathering</li>
       <li class="mdl-menu__item" *ngIf="group['is:owner'] && !group.videoChatDisabled" (click)="toggleVideoChat(false)">Disable Gathering</li>
 
@@ -228,6 +231,12 @@ export class GroupsSettingsButton {
   toggleEdit() {
     this.editing = !this.editing;
     this.change.emit({ editing: this.editing });
+  }
+
+  toggleConversation(enabled: boolean) {
+    this.group.conversationDisabled = enabled ? 0 : 1;
+    this.client.post(`api/v1/groups/group/${this.group.guid}`, { conversationDisabled: this.group.conversationDisabled });
+    this.groupChange.next(this.group);
   }
 
   toggleVideoChat(enabled: boolean) {
