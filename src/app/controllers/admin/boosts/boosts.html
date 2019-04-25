@@ -71,13 +71,19 @@
       <span class="mdl-card__supporting-text impressions">
         <span *ngIf="boost.impressions" i18n="@@M__COMMON__VIEWS_WITH_COUNT">{{ boost.impressions | number }} views</span>
         |
-        <span *ngIf="boost.bidType == 'points'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_POINTS_LABEL">Bid: {{ boost.bid | number }} points</span>
-        <span *ngIf="boost.bidType == 'usd'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_USD_LABEL">Bid: {{ boost.bid / 100 | currency:'USD':true }} USD </span>
-        <span *ngIf="boost.bidType == 'tokens'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_TOKENS_LABEL">Bid: {{ boost.bid | token:18 | number:'1.0-4' }} Tokens</span>
+        <span *ngIf="boost.bid_type == 'points'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_POINTS_LABEL">Bid: {{ boost.bid | number }} points</span>
+        <span *ngIf="boost.bid_type == 'usd'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_USD_LABEL">Bid: {{ boost.bid / 100 | currency:'USD':true }} USD </span>
+        <span *ngIf="boost.bid_type == 'tokens'" i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_TOKENS_LABEL">Bid: {{ boost.bid | token: 18 | number:'1.0-4' }} Tokens</span>
+        |
+        <span>Created: {{ boost['@created'] | date:'medium' }}</span>
       </span>
 
       <div class="mdl-card__supporting-text action-buttons" *ngIf="boost.state != 'created'" i18n="@@MINDS__ADMIN__BOOSTS__NOT_REVIEW_STATE">
         This boost is in {{ boost.state }} state.
+      </div>
+
+      <div class="mdl-card__supporting-text action-buttons" *ngIf="boost.transaction_id && boost.transaction_id.indexOf('0x') === 0">
+        <a href="https://etherscan.com/tx/{{boost.transaction_id}}" target="_blank">Etherscan: {{boost.transaction_id}}</a>
       </div>
 
       <div class="mdl-card__supporting-text action-buttons" *ngIf="boost.state == 'created'">
