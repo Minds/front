@@ -11,7 +11,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
   inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a class="mdl-color-text--blue-grey-500" (click)="thumb()" [ngClass]="{'selected': has() }">
+    <a (click)="thumb()" [ngClass]="{'selected': has() }">
       <i class="material-icons">thumb_up</i>
       <span class="minds-counter" *ngIf="object['thumbs:up:count'] > 0">{{object['thumbs:up:count'] | number}}</span>
     </a>

@@ -1233,7 +1233,7 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color-text--blue-200,
 .mdl-color-text--blue-300 {
   @include m-theme(){
-    color: themed($m-blue-light);
+    color: themed($m-blue-light) !important;
   }
 }
 .mdl-color-text--blue,
@@ -1242,14 +1242,14 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color-text--blue-600,
  {
   @include m-theme(){
-    color: themed($m-blue);
+    color: themed($m-blue) !important;
   }
 }
 .mdl-color-text--blue-700,
 .mdl-color-text--blue-800,
 .mdl-color-text--blue-900 {
   @include m-theme(){
-    color: themed($m-blue-dark);
+    color: themed($m-blue-dark) !important;
   }
 }
 //---------------------------------------
@@ -1382,62 +1382,62 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color-text--blue-grey-50
  {
   @include m-theme(){
-    color: themed($m-blue-grey-50);
+    color: themed($m-blue-grey-50) !important;
   }
 }
 .mdl-color-text--blue-grey-100
  {
   @include m-theme(){
-    color: themed($m-blue-grey-100);
+    color: themed($m-blue-grey-100) !important;
   }
 }
 .mdl-color-text--blue-grey-200
  {
   @include m-theme(){
-    color: themed($m-blue-grey-200);
+    color: themed($m-blue-grey-200) !important;
   }
 }
 .mdl-color-text--blue-grey-300
  {
   @include m-theme(){
-    color: themed($m-blue-grey-300);
+    color: themed($m-blue-grey-300) !important;
   }
 }
 .mdl-color-text--blue-grey-400
  {
   @include m-theme(){
-    color: themed($m-blue-grey-400);
+    color: themed($m-blue-grey-400) !important;
   }
 }
 .mdl-color-text--blue-grey,
 .mdl-color-text--blue-grey-500
  {
   @include m-theme(){
-    color: themed($m-blue-grey-500);
+    color: themed($m-blue-grey-500) !important;
   }
 }
 .mdl-color-text--blue-grey-600
  {
   @include m-theme(){
-    color: themed($m-blue-grey-600);
+    color: themed($m-blue-grey-600) !important;
   }
 }
 .mdl-color-text--blue-grey-700
  {
   @include m-theme(){
-    color: themed($m-blue-grey-700);
+    color: themed($m-blue-grey-700) !important;
   }
 }
 .mdl-color-text--blue-grey-800
  {
   @include m-theme(){
-    color: themed($m-blue-grey-800);
+    color: themed($m-blue-grey-800) !important;
   }
 }
 .mdl-color-text--blue-grey-900
  {
   @include m-theme(){
-    color: themed($m-blue-grey-900);
+    color: themed($m-blue-grey-900) !important;
   }
 }
 

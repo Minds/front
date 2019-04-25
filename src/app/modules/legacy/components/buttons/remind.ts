@@ -10,7 +10,7 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
   inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a class="mdl-color-text--blue-grey-500" (click)="remind()" [ngClass]="{'selected': object.reminded }">
+    <a (click)="remind()" [ngClass]="{'selected': object.reminded }">
       <i class="material-icons">repeat</i>
       <span class="minds-counter" *ngIf="object.reminds > 0">{{object.reminds | number}}</span>
     </a>
