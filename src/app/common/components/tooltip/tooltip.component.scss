@@ -23,7 +23,7 @@ m-tooltip {
   text-transform: none;
   @include m-theme(){
     color: themed($m-white);
-    background-color: themed($m-grey-950);
+    background-color: themed($m-grey-900);
   }
 
   &.m-tooltip--bubble--anchor-bottom {

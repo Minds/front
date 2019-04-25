@@ -116,3 +116,10 @@ minds-button-remind {
   height: 100vh;
   cursor: default;
 }
+
+minds-button-comment a,
+minds-button-remind a {
+  @include m-theme(){
+    color: themed($m-blue-grey-500);
+  }
+}

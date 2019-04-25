@@ -43,3 +43,10 @@ minds-graph-pie svg {
     }
   }
 }
+
+minds-button-thumbs-up a,
+minds-button-thumbs-down a {
+  @include m-theme(){
+    color: themed($m-blue-grey-500);
+  }
+}
