@@ -33,7 +33,7 @@ describe('NotificationsComponent', () => {
         }),
         MockComponent({
           selector: 'infinite-scroll',
-          inputs: [ 'inProgress', 'moreData', 'inProgress', 'scrollSource' ],
+          inputs: [ 'inProgress', 'moreData', 'inProgress' ],
         }),
         MockComponent({
           selector: 'm-tooltip',

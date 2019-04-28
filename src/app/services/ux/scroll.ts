@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injector } from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, throttleTime } from 'rxjs/operators';
 
@@ -8,12 +8,17 @@ export class ScrollService {
   view: any;
   viewListener;
   viewEmitter: EventEmitter<any> = new EventEmitter();
+  scrollSource;
 
   static _() {
     return new ScrollService();
   }
 
-  constructor() { }
+  constructor() {
+    this.view = document.getElementsByTagName('body')[0];
+    this.view.scrollTop = 0;
+    this.scroll = fromEvent(window, 'scroll');
+  }
 
   setScrollSource(scrollSource) {
     this.view = scrollSource;
@@ -22,9 +27,6 @@ export class ScrollService {
   }
 
   listen(callback: (value: any) => any, debounce: number = 0, throttle: number = 0): any {
-    if (!this.scroll) {
-      this.setScrollSource(document.getElementsByTagName('body')[0]);
-    }
     if (debounce) {
       return this.scroll
         .pipe(debounceTime(debounce))
@@ -44,9 +46,6 @@ export class ScrollService {
   }
 
   listenForView() {
-    if (!this.scroll) {
-      this.setScrollSource(document.getElementsByTagName('body')[0]);
-    }
     if (!this.viewListener) {
       this.viewListener = this.scroll
         .pipe(debounceTime(500))
