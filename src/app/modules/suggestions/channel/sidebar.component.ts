@@ -13,6 +13,7 @@ export class SuggestionsSidebar {
   suggestions: Array<any> = [];
   lastOffset = 0;
   inProgress: boolean = false;
+  error: string;
 
   constructor(
     private client: Client,
@@ -20,11 +21,12 @@ export class SuggestionsSidebar {
   ) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.load();
   }
 
   async load() {
+    this.error = null;
     this.inProgress = true;
     let limit: number = 5;
 
@@ -35,7 +37,7 @@ export class SuggestionsSidebar {
     this.lastOffset = this.suggestions.length ? this.lastOffset + 11 : 0;
 
     try {
-      let response: any = await this.client.get('api/v2/suggestions/user', {
+      const response: any = await this.client.get('api/v2/suggestions/user', {
         limit,
         offset: this.lastOffset,
       });
@@ -46,6 +48,7 @@ export class SuggestionsSidebar {
         }
       }
     } catch (err) {
+      this.error = err.message;
     } finally {
       this.inProgress = false;
     }
