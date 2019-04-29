@@ -20,6 +20,8 @@ export class WalletBalanceTokensComponent implements OnInit {
   testnetBalance: number = 0;
   addresses: Array<any> = [];
   minds = window.Minds;
+  isLocal:boolean = false;
+ 
 
   constructor(
     protected client: Client,
@@ -36,10 +38,12 @@ export class WalletBalanceTokensComponent implements OnInit {
   async load() {
     await this.loadRemote();
     await this.loadLocal();
+    this.isLocal = await this.web3Wallet.isLocal();
+    this.detectChanges();
   }
 
   async loadLocal() {
-   
+
     try {
       const address = await this.web3Wallet.getCurrentWallet();
       if (!address) 

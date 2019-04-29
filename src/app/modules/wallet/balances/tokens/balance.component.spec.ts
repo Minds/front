@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { WalletBalanceTokensComponent } from './balance.component';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
@@ -12,7 +12,7 @@ import { DebugElement } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
 
-describe('WalletBalanceTokensComponent', () => {
+fdescribe('WalletBalanceTokensComponent', () => {
 
   let comp: WalletBalanceTokensComponent;
   let fixture: ComponentFixture<WalletBalanceTokensComponent>;
@@ -33,9 +33,25 @@ describe('WalletBalanceTokensComponent', () => {
     return fixture.debugElement.query(By.css(`.m-wallet--balance--addresses .m-wallet--balance--addresses-address:nth-child(${i}) .m-wallet--balance--addresses-address-col span.m-wallet--balance--addresses-address-balance`));
   }
 
+  function getMetamaskDownload(): DebugElement {
+    return fixture.debugElement.query(By.css(`.m-wallet--balance--metamask`));
+  }
+
   const Web3WalletServiceMock = new function () {
     this.getCurrentWallet = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
       return '0xONCHAIN';
+    });
+    this.isLocal = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
+      return false;
+    });
+  }
+
+  const Web3WalletLocalServiceMock = new function () {
+    this.getCurrentWallet = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
+      return '0xONCHAIN';
+    });
+    this.isLocal = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
+      return true;
     });
   }
 
@@ -119,6 +135,15 @@ describe('WalletBalanceTokensComponent', () => {
     expect(getAddressLabel(3).nativeElement.textContent).toContain('OffChain');
     expect(getAddressAddress(3).nativeElement.textContent).toContain('0xoffchain');
     expect(getAddressBalance(3).nativeElement.textContent).toContain('9');
+  });
+
+  it('should have a metamask download', () => {
+    expect(getMetamaskDownload()).not.toBeNull;
+  });
+
+  it('should not have a metamask download with a local wallet', () => {
+      TestBed.overrideProvider(Web3WalletService, { useValue: Web3WalletLocalServiceMock});
+      expect(getMetamaskDownload()).toBeNull;
   });
 
   xit('should have an onchainaddress', () => {
