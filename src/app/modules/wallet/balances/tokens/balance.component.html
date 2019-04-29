@@ -84,7 +84,7 @@
 
       <div class="m-wallet--balance--addresses-address-col">
         <span class="m-wallet--balance--addresses-address-balance">
-         {{ ethBalance }}
+         {{ ethBalance | token: 18 | number }}
        </span>
      </div>
 
