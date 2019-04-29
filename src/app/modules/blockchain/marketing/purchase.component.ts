@@ -153,6 +153,13 @@ export class BlockchainPurchaseComponent implements OnInit {
     }, 2000);*/
   }
 
+  purchaseEth() {
+    let win = window.open('/checkout');
+    win.onload = function() {
+      alert('opened');
+    }
+  }
+
   closeLoginModal() {
     this.showPledgeModal = true;
     this.showLoginModal = false;

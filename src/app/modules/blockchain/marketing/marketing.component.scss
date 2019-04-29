@@ -67,6 +67,7 @@ m-blockchain--marketing {
           border: 0;
           margin: 16px 0;
           margin-left: 12px;
+          white-space: nowrap;
           @include m-theme(){
             color: themed($m-white) !important;
             background-color: rgba(themed($m-white), 0.3) !important;
