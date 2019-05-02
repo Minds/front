@@ -205,9 +205,13 @@ export class GroupsProfile {
     if (this.updateMarkersSubscription)
       this.updateMarkersSubscription.unsubscribe();
 
-    this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe(marker => {
+    this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe((marker => {
       if (!marker)
         return;
+
+      this.group.hasGathering = marker && marker.entity_guid == this.group.guid
+        && marker.marker == 'gathering-heartbeat'
+        && marker.updated_timestamp > (Date.now() / 1000) - 60;
 
       let hasMarker =
         (marker.read_timestamp < marker.updated_timestamp)
@@ -216,7 +220,7 @@ export class GroupsProfile {
 
       if (hasMarker)
         this.resetMarkers();
-    });
+    }).bind(this));
 
     // Check for comment updates
     this.joinCommentsSocketRoom();

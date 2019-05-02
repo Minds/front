@@ -116,37 +116,6 @@
     }
   }
 
-  .has-gathering::before {
-    position: absolute;
-    display: block;
-    //top: 0;
-    //left: 0;
-    width: 44px;
-    height: 44px;
-    box-sizing: border-box;
-    margin: 2px;
-    //margin: -15% -15%;
-    border-radius: 50%;
-    animation: pulse-ring 1.25s cubic-bezier(0.215, 0.5, 0.355, 1) infinite;
-    content: "";
-    @include m-theme(){
-      background-color: themed($m-blue); //two background colors?
-      background-color: themed($m-red);
-    }
-  }
-
-    @keyframes pulse-ring {
-      0% {
-        transform: scale(.33);
-      }
-      40% {
-        opacity: 0.5;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-
   .has-marker::after {
     border-radius: 50%;
     display: block;
