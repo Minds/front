@@ -12,7 +12,7 @@ import { DebugElement } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
 
-fdescribe('WalletBalanceTokensComponent', () => {
+describe('WalletBalanceTokensComponent', () => {
 
   let comp: WalletBalanceTokensComponent;
   let fixture: ComponentFixture<WalletBalanceTokensComponent>;
