@@ -15,13 +15,13 @@
     </a>
   </li>
 
-  <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker" [class.has-gathering]="group.hasGathering$ | async">
+  <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker">
     <a [routerLink]="['/groups/profile', group.guid]">
       <m-tooltip
         anchor="right"
         [useParentPosition]="true"
       >
-        <img [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime" m-tooltip--anchor/>
+        <img [class.m-pulsating--small]="group.hasGathering$ | async" [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime" m-tooltip--anchor/>
         <span>{{group.name}}</span>
 
         <ng-container>
