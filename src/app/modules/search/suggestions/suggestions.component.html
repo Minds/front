@@ -23,7 +23,7 @@
   </ng-container>
 
   <ng-container *mIfFeature="'top-feeds'; else oldSearch">
-    <ng-container *ngIf="q && currentContext">
+    <!-- <ng-container *ngIf="q && currentContext">
       <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="currentContext.entity"
         [routerLink]="['/newsfeed/global', { query: q, type: currentContext.product, id: currentContext.entity.id }]"
       >
@@ -35,8 +35,7 @@
       >
         <b i18n="@@SEARCH_CONTEXT_COLON">Search {{ currentContext.label }}:</b> <span>{{ q }}</span>
       </a>
-    </ng-container>
-
+    </ng-container>-->
     <a class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context" *ngIf="q"
       [routerLink]="['/newsfeed/global/top', { query: q }]"
     >
