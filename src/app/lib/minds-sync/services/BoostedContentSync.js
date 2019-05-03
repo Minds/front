@@ -28,6 +28,8 @@ export default class BoostedContentSync {
     this.synchronized = null;
 
     this.locks = [];
+
+    this.inSync = false;
   }
 
   /**
@@ -91,15 +93,32 @@ export default class BoostedContentSync {
 
     await this.prune();
 
-    // Check if a sync is needed
+    if (!this.inSync) {
+      // Check if a sync is needed
 
-    if (opts.forceSync || !this.synchronized || (this.synchronized <= Date.now() - this.cooldown_ms)) {
-      const wasSynced = await this.sync(opts);
+      if (opts.forceSync || !this.synchronized || (this.synchronized <= Date.now() - this.stale_after_ms)) {
+        const wasSynced = await this.sync(opts);
 
-      if (!wasSynced) {
-        console.info('Cannot sync, using cache');
-      } else {
-        this.synchronized = Date.now();
+        if (!wasSynced) {
+          console.info('Cannot sync, using cache');
+        } else {
+          this.synchronized = Date.now();
+        }
+      }
+    } else {
+      // Wait for sync to finish (max 100 iterations * 100ms = 10secs)
+
+      let count = 0;
+
+      while (true) {
+        count++;
+
+        if (!this.inSync || count >= 100) {
+          console.info('Sync finished. Fetching.');
+          break;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
 
@@ -162,6 +181,10 @@ export default class BoostedContentSync {
   async sync(opts) {
     await this.db.ready();
 
+    // Set flag
+
+    this.inSync = true;
+
     // Sync
 
     try {
@@ -198,12 +221,43 @@ export default class BoostedContentSync {
         impressions: 0,
         lastImpression: 0
       })));
+
+      // Remove stale entries
+
+      await this.pruneStaleBoosts();
+
+      // Remove flag
+
+      this.inSync = false;
+
+      // Return
+
+      return true;
     } catch (e) {
+      // Remove flag
+
+      this.inSync = false;
+
+      // Warn
       console.warn('BoostedContentSync.sync', e);
+
+      // Return
+
       return false;
     }
+  }
 
-    return true;
+  /**
+   * @returns {Promise<void>}
+   */
+  async pruneStaleBoosts() {
+    try {
+      this.db
+        .deleteLessThan('boosts', 'sync', Date.now() - this.stale_after_ms);
+    } catch (e) {
+      console.error('BoostedContentSync.pruneStaleBoosts', e);
+      throw e;
+    }
   }
 
   /**
@@ -211,8 +265,7 @@ export default class BoostedContentSync {
    */
   async prune() {
     try {
-      await this.db
-        .deleteLessThan('boosts', 'sync', Date.now() - this.stale_after_ms);
+      await this.pruneStaleBoosts();
 
       await this.db
         .deleteAnyOf('boosts', 'owner_guid', (await this.resolvers.blockedUserGuids()) || []);

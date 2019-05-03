@@ -34,8 +34,8 @@ export class BoostedContentService {
     this.boostedContentSync = new BoostedContentSync(
       new MindsClientHttpAdapter(this.client),
       await browserStorageAdapterFactory('minds-boosted-content-190314'),
-      6 * 60 * 60,
-      5 * 60,
+      5 * 60 * 60, // Stale after 5 minutes
+      15 * 60 * 60, // Cooldown of 15 minutes
       500,
     );
 
@@ -69,7 +69,7 @@ export class BoostedContentService {
 
     // Garbage collection
     this.boostedContentSync.gc();
-    setTimeout(() => this.boostedContentSync.gc(), 30 * 60 * 1000); // Every 30 minutes
+    setTimeout(() => this.boostedContentSync.gc(), 5 * 60 * 1000); // Every 5 minutes
 
     // Rating changes hook
     this.settingsService.ratingChanged.subscribe(rating => this.boostedContentSync.changeRating(rating));
