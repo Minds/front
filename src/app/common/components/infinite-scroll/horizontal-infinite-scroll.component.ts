@@ -3,7 +3,7 @@ import { GlobalScrollService, ScrollSubscription } from "../../../services/ux/gl
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'infinite-scroll',
+  selector: 'infinite-scroll--horizontal',
   template: `
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
     <div class="m-infinite-scroll-manual"
@@ -14,7 +14,7 @@ import { Subscription } from "rxjs";
          *ngIf="!hideManual">
       <ng-container i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE" *ngIf="!iconOnly">Click to load more</ng-container>
 
-      <i class="material-icons" *ngIf="iconOnly">keyboard_arrow_down</i>
+      <i class="material-icons" *ngIf="iconOnly">keyboard_arrow_right</i>
     </div>
     <div class="m-infinite-scroll-manual"
          [class.mdl-color--blue-grey-200]="!iconOnly"
@@ -27,7 +27,7 @@ import { Subscription } from "rxjs";
 })
 
 
-export class InfiniteScroll {
+export class HorizontalInfiniteScroll {
   @Input() on: any;
   @Input() scrollSource: any; // if not provided, it defaults to window
   @Input() iconOnly: boolean = false;
@@ -57,20 +57,20 @@ export class InfiniteScroll {
     }
     this.subscription = this.scroll.listen(this.scrollSource, ((subscription, e) => {
       if (this.moreData) {
-        let clientHeight, scrollTop;
+        let clientWidth, scrollLeft;
         if (this.scrollSource === document) {
-          clientHeight = document.body.clientHeight;
-          scrollTop = document.body.scrollTop;
+          clientWidth = document.body.clientWidth;
+          scrollLeft = document.body.scrollLeft;
         } else {
-          clientHeight = subscription.element.clientHeight;
-          scrollTop = subscription.element.scrollTop;
+          clientWidth = subscription.element.clientWidth;
+          scrollLeft = subscription.element.scrollLeft;
         }
 
         if (
-          this.element.offsetTop
-          - this.element.clientHeight
-          - clientHeight
-          <= scrollTop
+          this.element.offsetLeft
+          - this.element.clientWidth
+          - clientWidth
+          <= scrollLeft
         ) {
           this.loadHandler.next(true);
         }
