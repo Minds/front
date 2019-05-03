@@ -98,6 +98,7 @@ import { EntitiesService } from "./services/entities.service";
 import { BlockListService } from "./services/block-list.service";
 import { SettingsService } from "../modules/settings/settings.service";
 import { ThemeService } from "./services/theme.service";
+import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizontal-infinite-scroll.component";
 
 @NgModule({
   imports: [
@@ -124,6 +125,7 @@ import { ThemeService } from "./services/theme.service";
     TooltipComponent,
     FooterComponent,
     InfiniteScroll,
+    HorizontalInfiniteScroll,
     CountryInputComponent,
     DateInputComponent,
     StateInputComponent,
@@ -207,6 +209,7 @@ import { ThemeService } from "./services/theme.service";
     TooltipComponent,
     FooterComponent,
     InfiniteScroll,
+    HorizontalInfiniteScroll,
     CountryInputComponent,
     DateInputComponent,
     CityFinderComponent,

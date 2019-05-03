@@ -124,4 +124,27 @@ context('Login', () => {
     cy.get('.minds-list > minds-activity:first-child m-post-menu .minds-dropdown-menu .mdl-menu__item:nth-child(4)').click();
     cy.get('.minds-list > minds-activity:first-child m-post-menu m-modal-confirm .mdl-button--colored').click();
   })
+
+  it('should record a view when the user scrolls and an activity is visible', async () => {
+    cy.server();
+    cy.route("POST", "**/api/v2/analytics/views/activity/*").as("view");
+    // create the post
+    cy.get('minds-newsfeed-poster textarea').type('This is a post that will record a view');
+
+    cy.get('.m-posterActionBar__PostButton').click();
+
+    cy.wait(200);
+
+    cy.scrollTo(0, '20px');
+
+    cy.wait('@view', { requestTimeout: 2000 }).then((xhr) => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body).to.deep.equal({ status: 'success' });
+    });
+
+    // cleanup
+    cy.get('.minds-list > minds-activity:first-child m-post-menu .minds-more').click();
+    cy.get('.minds-list > minds-activity:first-child m-post-menu .minds-dropdown-menu .mdl-menu__item:nth-child(4)').click();
+    cy.get('.minds-list > minds-activity:first-child m-post-menu m-modal-confirm .mdl-button--colored').click();
+  })
 })

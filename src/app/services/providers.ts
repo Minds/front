@@ -41,6 +41,7 @@ import { EntitiesService } from "../common/services/entities.service";
 import { InMemoryStorageService } from "./in-memory-storage.service";
 import { FeedsService } from "../common/services/feeds.service";
 import { ThemeService } from "../common/services/theme.service";
+import { GlobalScrollService } from "./ux/global-scroll.service";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -48,8 +49,13 @@ export const MINDS_PROVIDERS : any[] = [
      useFactory: ScrollService._,
      deps: []
    },
-   {
-     provide: SocketsService,
+  {
+    provide: GlobalScrollService,
+    useFactory: GlobalScrollService._,
+    deps: []
+  },
+  {
+    provide: SocketsService,
      useFactory: SocketsService._,
      deps: [ Session, NgZone ]
    },
