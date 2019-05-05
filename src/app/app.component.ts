@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ChannelOnboardingService } from "./modules/onboarding/channel/onboarding.service";
 import { BlockListService } from "./common/services/block-list.service";
 import { FeaturesService } from "./services/features.service";
+import { ThemeService } from "./common/services/theme.service";
 
 @Component({
   moduleId: module.id,
@@ -47,6 +48,7 @@ export class Minds {
     public router: Router,
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
+    public themeService: ThemeService,
   ) {
     this.name = 'Minds';
   }
@@ -90,8 +92,12 @@ export class Minds {
     this.web3Wallet.setUp();
 
     this.webtorrent.setUp();
+    
+    this.themeService.setUp();
 
-    this.blockListService.sync();
+    if (this.session.isLoggedIn()) {
+      this.blockListService.sync();
+    }
   }
 
   ngOnDestroy() {

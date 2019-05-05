@@ -1,3 +1,5 @@
+@import "./src/stylesheets/defaults.scss";
+
 .m-issues__report {
   display: block;
   width: 100%;
@@ -7,19 +9,25 @@
     margin: 0 auto;
     max-width: 600px;
     margin: auto;
-    background: #FFF;
     padding: 16px;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     h2 {
       margin: 0;
       margin-bottom: 16px;
       font-weight: 600;
-      color: #555;
+      @include m-theme(){
+        color: themed($m-grey-700);
+      }
     }
 
     p {
-      color: #666;
-    }    
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
+    }
   }
     .mdl-textfield {
         width: 600px;

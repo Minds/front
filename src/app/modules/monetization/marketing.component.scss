@@ -13,10 +13,12 @@
   }
 
   h1, h3{
-    color: #FFF;
-
     font-family: 'Roboto';
-    text-shadow: 0 0 3px #333;
+
+    @include m-theme(){
+      color: themed($m-white);
+      text-shadow: 0 0 3px themed($m-grey-900);
+    }
 
     @media only screen and (max-width: 400px) {
       margin:0;
@@ -53,7 +55,9 @@
       padding: 0 24px;
       font-weight: 300;
       font-family: 'Roboto';
-      color: #FFF;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
   }
 }
@@ -107,8 +111,10 @@
   max-width: 600px;
   margin: 16px auto;
   display: block;
-  background: #FFF;
   padding: 16px;
   max-height: 600px;
   overflow: scroll;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }

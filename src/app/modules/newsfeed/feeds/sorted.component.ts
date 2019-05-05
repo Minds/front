@@ -332,4 +332,12 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     route.push(params);
     this.router.navigate(route);
   }
+
+  shouldShowBoost(i: number) {
+    if (this.query) {
+      return false;
+    }
+
+    return (i > 0 && (i % 8) === 0 && i <= 40) || i === 2;
+  }
 }

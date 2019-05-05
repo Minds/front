@@ -10,8 +10,6 @@ m-tooltip {
 .m-tooltip--bubble {
   position: absolute;
   font-size: 13px;
-  background: rgba(0, 0, 0, 0.9);
-  color: #fff;
   padding: 12px;
   border-radius: 3px;
   z-index: 999;
@@ -23,9 +21,17 @@ m-tooltip {
   white-space: normal;
   text-align: left;
   text-transform: none;
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: themed($m-grey-900);
+  }
 
   &.m-tooltip--bubble--anchor-bottom {
     bottom: 24px;
+  }
+
+  &.m-tooltip--bubble--fixed {
+    position: fixed;
   }
 
   &.m-tooltip--bubble--anchor-left {

@@ -14,7 +14,9 @@
       cursor:pointer;
 
       &.is-active{
-        border-left: 3px solid #ffca28;
+        @include m-theme(){
+          border-left: 3px solid themed($m-amber);
+        }
       }
 
     }
@@ -41,7 +43,9 @@
       cursor:pointer;
       font-size:11px;
       padding:0 $minds-padding;
-      color: #888;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
   }
 }

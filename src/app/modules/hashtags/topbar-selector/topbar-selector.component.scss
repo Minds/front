@@ -4,13 +4,15 @@ m-hashtags--topbar-selector, m-hashtags--topbar-selector m-dropdown {
     display: inline-flex;
     flex-direction: row;
     align-items: center;
-    color: #222;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     text-decoration: none;
     font-family: 'Roboto';
     cursor: pointer;
+    @include m-theme(){
+      color: themed($m-grey-950);
+    }
   }
 
   label {
@@ -33,11 +35,15 @@ m-hashtags--topbar-selector, m-hashtags--topbar-selector m-dropdown {
     }
 
     &.m-topbar--hashtags--hashtag--selected {
-      color: #4690DF;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
 
     &.m-topbar--hashtags--hashtag--disabled {
-      color: #666;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
     }
 
     &.m-topbar--hashtags--select-more {

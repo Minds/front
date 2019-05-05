@@ -4,8 +4,10 @@
   border: 0;
   border-radius: 0;
   padding: 0;
-  color: #4690d6;
   cursor: pointer;
+  @include m-theme(){
+    color: themed($m-blue);
+  }
 
   > .ion-icon {
     transform: scale(1.6);

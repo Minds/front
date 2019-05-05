@@ -89,7 +89,7 @@ export class WalletTokenTestnetComponent {
     this.inProgress = true;
     await this.web3Wallet.ready();
 
-    const wallet = await this.web3Wallet.getCurrentWallet();
+    const wallet = await this.web3Wallet.getCurrentWallet(true);
     if (wallet)
       this.address = wallet;
 

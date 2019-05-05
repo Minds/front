@@ -28,7 +28,6 @@
     }
 
     input{
-      background: #FFF;
       border: 0;
       border-radius: 0;
       font-size: 16px;
@@ -36,12 +35,18 @@
       /* font-weight: 700; */
       text-align: right;
       padding: 16px;
-      -webkit-box-shadow: inset 0 0 3px #888;
-      box-shadow: inset 0 0 3px #888;
       width: 100%;
+      @include m-theme(){
+        background-color: themed($m-white);
+        -webkit-box-shadow: inset 0 0 3px themed($m-grey-400);
+        box-shadow: inset 0 0 3px themed($m-grey-400);
+      }
     }
     input:disabled{
-      background:#FAFAFA;
+      @include m-theme(){
+        background-color: themed($m-grey-50);
+      }
+
     }
     label {
       font-weight: 200;
@@ -63,5 +68,8 @@
 }
 
 .m-boost-button-fat{
-  background:$minds-blue !important;
+  @include m-theme(){
+    background-color: themed($m-blue) !important;
+  }
+
 }

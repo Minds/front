@@ -73,7 +73,9 @@
   .m-monetization--overview-title-action{
     padding-left:32px;
     font-size:11px;
-    color: rgba(255,255,255,0.5);
     text-decoration:none;
+    @include m-theme(){
+      color: rgba(themed($m-white), 0.5);
+    }
   }
 }

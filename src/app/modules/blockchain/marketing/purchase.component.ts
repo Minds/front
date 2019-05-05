@@ -140,7 +140,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     let response = await this.client.post('api/v2/blockchain/purchase', {
         tx: tx,
         amount: amount.toString(),
-        wallet_address: await this.web3Wallet.getCurrentWallet()
+        wallet_address: await this.web3Wallet.getCurrentWallet(true)
     });
 
     this.confirming = false;

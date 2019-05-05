@@ -1,7 +1,9 @@
+import normalizeUrn from "../../../helpers/normalize-urn";
+
 export default class EntitiesSync {
   /**
    * @param {MindsClientHttpAdapter|MindsMobileClientHttpAdapter} http
-   * @param {DexieStorageAdapter|SqliteStorageAdapter} db
+   * @param {DexieStorageAdapter|InMemoryStorageAdapter|SqliteStorageAdapter} db
    * @param {Number} stale_after
    */
   constructor(http, db, stale_after) {
@@ -91,7 +93,7 @@ export default class EntitiesSync {
       const entities = response.entities.map(entity => {
         let obj =
           {
-            urn: `urn:entity:${entity.guid}`,
+            urn: normalizeUrn(entity.urn || entity.guid),
             _syncAt: Date.now(),
           };
         obj = Object.assign(obj, entity);
@@ -111,6 +113,6 @@ export default class EntitiesSync {
    */
   async gc() {
     await this.db.ready();
-    return await this.db.deleteLesserThan('entities', '_syncAt', Date.now() - this.stale_after_ms);
+    return await this.db.deleteLessThan('entities', '_syncAt', Date.now() - this.stale_after_ms);
   }
 }

@@ -12,7 +12,7 @@
   <div class="body">
     <a [routerLink]="['/', activity.ownerObj.username]">
       <strong title={{activity.ownerObj.name}}>{{activity.ownerObj.name}}</strong>
-      <m-channel--badges class="m-channel--badges-activity" [user]="activity.ownerObj" badges="[ 'verified' ]"></m-channel--badges>
+      <m-channel--badges class="m-channel--badges-activity" [user]="activity.ownerObj" badges="[ 'admin', 'verified' ]"></m-channel--badges>
     </a>
     <a *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
       [routerLink]="['/groups/profile', activity.containerObj.guid]"
@@ -131,7 +131,6 @@
        <m-video
           width="100%"
           height="300px"
-          style="background:#000;"
           [muted]="false"
           [poster]="activity.custom_data.thumbnail_src"
           [src]="[{ 'res': '360', 'uri': 'api/v1/media/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
@@ -215,14 +214,12 @@
   </div>
 </div>
 
-<minds-comments 
+<m-comments__tree
   *ngIf="commentsToggle"
-  [object]="activity"
-  [focusOnInit]="true"
-  [focusedCommentGuid]="focusedCommentGuid"
+  [entity]="activity"
   [canEdit]="canDelete"
   >
-</minds-comments>
+</m-comments__tree>
 
 <div class="m-activity--boost-notice mdl-card__supporting-text mdl-color--blue-grey-50" *ngIf="showBoostOptions" i18n="@@MINDS__CARDS__ACTIVITY__BOOST_NOTICE">
   Boost this post to reach more people!
@@ -230,7 +227,7 @@
 
 <div class="mdl-card__menu mdl-color-text--blue-grey-300" #toggle *ngIf="!hideTabs">
 	<button
-      class="mdl-button m-pin-button mdl-button--icon"
+      class="mdl-button m-pin-button mdl-button--icon mdl-color-text--blue-grey-300"
       (click)="togglePin()"
       [disabled]="session.getLoggedInUser().guid != activity.owner_guid || activity.dontPin"
       *ngIf="!activity?.ephemeral"
@@ -251,7 +248,7 @@
       </m-tooltip>
     </button>
     <m-safe-toggle *ngIf="showRatingToggle && session.isAdmin()" [(entity)]="activity"></m-safe-toggle>
-	<button class="mdl-button m-translate-button mdl-button--icon" *ngIf="isTranslatable" (click)="translateToggle = true;">
+	<button class="mdl-button m-translate-button mdl-button--icon mdl-color-text--blue-grey-300" *ngIf="isTranslatable" (click)="translateToggle = true;">
 			<i class="material-icons">public</i>
 	</button>
 	<m-post-menu [entity]="activity" [canDelete]="canDelete" [isTranslatable]="isTranslatable" [options]="menuOptions" (optionSelected)="menuOptionSelected($event)">

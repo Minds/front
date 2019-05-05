@@ -3,12 +3,14 @@
 .m-lite--header {
   margin: auto;
   padding: 16px;
-  background: #FFF;
   max-width: 990px;
   display: flex;
   flex-direction: row;
   align-items: center;
   //border-bottom: 1px solid #EDEDEA;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-lite--logo {
     flex: 1;

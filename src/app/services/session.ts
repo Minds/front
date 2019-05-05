@@ -1,5 +1,5 @@
 /**
- * Sesions
+ * Sessions
  */
 import { EventEmitter } from '@angular/core';
 

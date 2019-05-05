@@ -11,7 +11,9 @@ m-hashtags-selector, .m-hashtags-selector {
 
   .m-hashtags-selector--toggle {
     &.m-hashtags-selector--toggle-enabled {
-      color: #4690D6;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
   }
 
@@ -56,9 +58,11 @@ m-hashtags-selector, .m-hashtags-selector {
       m-form-tags-input {
         display: inline-block;
         padding: 0;
-        color: #555;
         border: 0;
         flex-grow: 1;
+        @include m-theme(){
+          color: themed($m-grey-700);
+        }
 
         .m-form-tags-input-tags-tag {
           display: flex;
@@ -68,15 +72,19 @@ m-hashtags-selector, .m-hashtags-selector {
           opacity: 1;
           text-overflow: ellipsis;
           padding: 4px 0;
-          border-bottom: 1px solid #ececec;
           border-radius: 0;
           text-align: left;
+          @include m-theme(){
+            border-bottom: 1px solid themed($m-grey-50);
+          }
 
           .m-form-tags-input-tags--check {
             font-size: 18px;
             vertical-align: middle;
-            color: #eee;
             margin-right: 4px;
+            @include m-theme(){
+              color: themed($m-grey-50);
+            }
           }
 
           .m-form-tags-input-tags--check--visible {

@@ -246,7 +246,8 @@ export class AttachmentService {
       attachment_guid: null,
       mature: 0,
       container_guid: this.getContainer().guid,
-      access_id: this.getAccessId()
+      access_id: this.getAccessId(),
+      nsfw: this.meta.nsfw
     };
   }
 
@@ -428,6 +429,7 @@ export class AttachmentService {
         reader.readAsDataURL(file);
       } else {
         this.attachment.mime = 'unknown';
+        reject({message: 'Invalid file type'});
       }
     });
   }

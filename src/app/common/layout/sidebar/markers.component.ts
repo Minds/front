@@ -39,7 +39,7 @@ export class SidebarMarkersComponent {
   }
 
   checkSidebarVisibility(isLoggedIn) {
-    const showMarkerSidebar = isLoggedIn && window.innerWidth >= 900;
+    const showMarkerSidebar = isLoggedIn /*&& window.innerWidth >= 900*/;
 
     if (showMarkerSidebar === this.showMarkerSidebar) {
       return;
@@ -57,9 +57,9 @@ export class SidebarMarkersComponent {
     this.showMarkerSidebar = showMarkerSidebar;
   }
 
-  @HostListener('window:resize') detectWidth() {
-    this.checkSidebarVisibility(this.session.isLoggedIn());
-  }
+  // @HostListener('window:resize') detectWidth() {
+  //   this.checkSidebarVisibility(this.session.isLoggedIn());
+  // }
 
   createGroupsSideBar() {
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(GroupsSidebarMarkersComponent),

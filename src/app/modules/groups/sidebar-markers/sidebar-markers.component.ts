@@ -17,16 +17,29 @@ export class GroupsSidebarMarkersComponent {
   $updateMarker;
   markers = [];
   groups = [];
+  offset = 0;
+  moreData: boolean = true;
+
+  @ViewChild('list') list;
 
   constructor(
     private client: Client,
     public session: Session,
     private updateMarkers: UpdateMarkersService,
-  ) { }
+    private cd: ChangeDetectorRef,
+  ) {
+  }
 
   async ngOnInit() {
-    await this.load();
-    
+    await this.load(true);
+    this.listenForMarkers();
+  }
+  
+  listenForMarkers() {
+
+    if (this.$updateMarker)
+      this.$updateMarker.unsubscribe();
+
     this.$updateMarker = this.updateMarkers.markers.subscribe(markers => {
       if (!markers)
         return;
@@ -55,11 +68,38 @@ export class GroupsSidebarMarkersComponent {
     this.$updateMarker.unsubscribe();
   }
 
-  async load() {
+  async load(refresh: boolean = false) {
+    if (this.inProgress) 
+      return false;
     this.inProgress = true;
-    const response: any = await this.client.get('api/v1/groups/member');
-    this.groups = response.entities;
-    this.inProgress = false;
+    try {
+      const response: any = await this.client.get('api/v1/groups/member', { offset: this.offset });
+
+      if (!response.entities && this.offset) {
+        this.moreData = false;
+        throw "No entities found";
+      }
+
+      if (refresh) {
+        this.groups = response.entities;
+      } else {
+        this.groups = this.groups.concat(response.entities);
+      }
+
+      this.listenForMarkers();
+ 
+      this.offset = response['load-next'];
+      this.moreData = response.entities && response.entities.length;
+    } catch (e) {
+
+    } finally {
+      this.inProgress = false;
+    }
+
+  }
+
+  ngDoCheck() {
+    this.cd.detectChanges();
   }
 
 }

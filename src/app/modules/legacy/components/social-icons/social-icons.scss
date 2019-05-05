@@ -19,28 +19,34 @@
   }
 
   .m-social-icons-icon-inline{
-    fill: #FFF;
     display:inline-block;
     width:100%;
     cursor:pointer;
+    @include m-theme(){
+      fill: themed($m-white);
+    }
   }
   .m-social-icons-icon--facebook .m-social-icons-icon-inline{
-    background-color: #3067a3;
+    background-color: #3067a3 !important;
   }
   .m-social-icons-icon--twitter .m-social-icons-icon-inline{
-    background-color: #03b3ee;
+    background-color: #03b3ee !important;
   }
   .m-social-icons-icon--email .m-social-icons-icon-inline{
-    background-color: #767676;
+    @include m-theme(){
+      background-color: themed($m-grey-500);
+    }
   }
   .m-social-icons-icon--linkedin .m-social-icons-icon-inline{
-    background-color: #0071a1;
+    background-color: #0071a1 !important;
   }
   .m-social-icons-icon--gplus .m-social-icons-icon-inline{
-    background-color: #e15440;
+    background-color: #e15440 !important;
   }
   .m-social-icons-icon--embed .m-social-icons-icon-inline{
-    background-color: #767676;
+    @include m-theme(){
+      background-color: themed($m-grey-500);
+    }
   }
 }
 

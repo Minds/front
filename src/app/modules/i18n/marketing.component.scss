@@ -14,7 +14,9 @@
                 padding: 8px 24px;
                 font-weight: 300;
                 font-family: Roboto;
-                color: #fff;
+                @include m-theme(){
+                  color: themed($m-white);
+                }
             }
         }
     }

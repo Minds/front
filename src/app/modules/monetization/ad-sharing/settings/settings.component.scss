@@ -3,7 +3,9 @@
     font-size: 12px;
     font-weight: 300;
     text-align: center;
-    color: #aaa;
+    @include m-theme(){
+      color: themed($m-grey-200);
+    }
   }
 
   .m-ad-sharing-switches {

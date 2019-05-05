@@ -1,12 +1,19 @@
 <div class="m-boost-rotator-tools">
   <div class="m-layout--spacer"></div>
-  <ul class="m-boost-rotator-tabs" *ngIf="boosts.length > 0 && !disabled">
-    <li (click)="prev()">
-      <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
-    </li>
-    <li (click)="next()">
-      <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
-    </li>
+  <ul class="m-boost-rotator-tabs">
+    <ng-container *ngIf="boosts.length > 0; else noBoosts">
+      <li (click)="prev()">
+        <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
+      </li>
+      <li (click)="next()">
+        <i class="material-icons mdl-color-text--blue-grey-400">chevron_right</i>
+      </li>
+    </ng-container>
+    <ng-template #noBoosts>
+      <li>
+        <i style="height: 32px;display: block;"></i>
+      </li>
+    </ng-template>
     <li>
       <m-newsfeed--dropdown [showBoost]="true"></m-newsfeed--dropdown>
     </li>

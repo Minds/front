@@ -14,8 +14,10 @@ minds-onboarding-categories-selector{
       font-size: 11px;
       padding: 0px 8px;
       margin: 4px;
-      border: 1px solid #EEE;
       cursor: pointer;
+      @include m-theme(){
+        border: 1px solid themed($m-grey-50);
+      }
     }
   }
 

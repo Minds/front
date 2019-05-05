@@ -22,7 +22,7 @@ import { ReadMoreDirective } from './read-more/read-more.directive';
 import { ReadMoreButtonComponent } from './read-more/button.component';
 import { ChannelBadgesComponent } from './components/badges/badges.component';
 import { NSFWSelectorComponent } from './components/nsfw-selector/nsfw-selector.component';
-import { 
+import {
   NSFWSelectorService,
   NSFWSelectorConsumerService,
   NSFWSelectorCreatorService,
@@ -91,6 +91,14 @@ import { AndroidAppDownloadComponent } from "./components/android-app-download-b
 import { SwitchComponent } from "./components/switch/switch.component";
 import {V2TopbarComponent} from "./layout/v2-topbar/v2-topbar.component";
 import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
+import { FeaturedContentComponent } from "./components/featured-content/featured-content.component";
+import { FeaturedContentService } from "./components/featured-content/featured-content.service";
+import { BoostedContentService } from "./services/boosted-content.service";
+import { EntitiesService } from "./services/entities.service";
+import { BlockListService } from "./services/block-list.service";
+import { SettingsService } from "../modules/settings/settings.service";
+import { ThemeService } from "./services/theme.service";
+import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizontal-infinite-scroll.component";
 
 @NgModule({
   imports: [
@@ -117,6 +125,7 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
     TooltipComponent,
     FooterComponent,
     InfiniteScroll,
+    HorizontalInfiniteScroll,
     CountryInputComponent,
     DateInputComponent,
     StateInputComponent,
@@ -181,6 +190,8 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
     NSFWSelectorComponent,
 
     SwitchComponent,
+
+    FeaturedContentComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -198,6 +209,7 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
     TooltipComponent,
     FooterComponent,
     InfiniteScroll,
+    HorizontalInfiniteScroll,
     CountryInputComponent,
     DateInputComponent,
     CityFinderComponent,
@@ -262,6 +274,7 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
     SortSelectorComponent,
     SwitchComponent,
     NSFWSelectorComponent,
+    FeaturedContentComponent,
   ],
   providers: [
     {
@@ -289,6 +302,16 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
       useFactory: (_storage) => new NSFWSelectorConsumerService(_storage),
       deps: [ Storage ],
     },
+    {
+      provide: BoostedContentService,
+      useFactory: (client, session, entitiesService, blockListService, settingsService) => new BoostedContentService(client, session, entitiesService, blockListService, settingsService),
+      deps: [ Client, Session, EntitiesService, BlockListService, SettingsService ]
+    },
+    {
+      provide: FeaturedContentService,
+      useFactory: boostedContentService => new FeaturedContentService(boostedContentService),
+      deps: [ BoostedContentService ],
+    }
   ],
   entryComponents: [
     NotificationsToasterComponent

@@ -33,7 +33,7 @@ export class NewsfeedBoostRotatorComponent {
   rotator;
   running: boolean = false;
   paused: boolean = false;
-  interval: number = 3;
+  interval: number = 6;
   channel: MindsUser;
   currentPosition: number = 0;
   lastTs: number = Date.now();

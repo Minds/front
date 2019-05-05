@@ -9,10 +9,14 @@ m--crypto-token-symbol {
   }
 
   .m--crypto-token-symbol--stroke {
-    stroke: #ffffff;
+    @include m-theme(){
+      stroke: themed($m-white);
+    }
   }
 
   .m--crypto-token-symbol--fill {
-    fill: #ffffff;
+    @include m-theme(){
+      fill: themed($m-white);
+    }
   }
 }

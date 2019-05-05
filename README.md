@@ -1,6 +1,7 @@
 Minds Front
 ===========
-[![Build Status](http://drone.minds.io/api/badges/Minds/front-internal/status.svg)](http://drone.minds.io/Minds/front-internal)
+[![Gitlab CI Status](https://www.gitlab.com/minds/front/badges/master/pipeline.svg)](https://www.gitlab.com/minds/front)
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=T2NvVEVqQnJ5Qm1hVno1SGw2U2R6Z21paVlGR2lHdzNWZTgrWHRWZWN4WT0tLWRtS29ibHBuRk16c0dpbng2aXE3TVE9PQ==--f52d73f47d51343c6e9416cf27400c5f9202fabc)](https://www.browserstack.com/automate/public-build/T2NvVEVqQnJ5Qm1hVno1SGw2U2R6Z21paVlGR2lHdzNWZTgrWHRWZWN4WT0tLWRtS29ibHBuRk16c0dpbng2aXE3TVE9PQ==--f52d73f47d51343c6e9416cf27400c5f9202fabc)
 
 Front-end web application for Minds. Please run inside of [the Minds repo](https://github.com/minds/minds).
 
@@ -9,6 +10,14 @@ Documentation for Minds can be found at [minds.org/docs](https://www.minds.org/d
 
 ### Building
 Please see the documentation on Minds.org for instructions on how to [build the Minds Front-end](https://www.minds.org/docs/install/preparation.html#front-end).
+
+### Unit Tests
+Run `npm run test`
+
+### Integration Tests
+For integration tests you need to run:
+
+`npm run e2e --config baseUrl=http://localhost --env username=minds,password=Pa$$w0rd`
 
 ## Contributing
 If you'd like to contribute to the Minds project, check out the [Contribution](https://www.minds.org/docs/contributing.html) section of Minds.org or head right over to the [Minds Open Source Community](https://www.minds.com/groups/profile/365903183068794880).  If you've found or fixed a bug, let us know in the [Minds Help and Support Group](https://www.minds.com/groups/profile/100000000000000681/activity)!

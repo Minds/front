@@ -34,10 +34,12 @@
   cursor: pointer;
 
   span{
-    color: #FFF;
     font-size: 72px;
     text-align: center;
     width: 100%;
+    @include m-theme(){
+      color: themed($m-white-always);
+    }
   }
 }
 
@@ -72,12 +74,22 @@
   a {
     text-decoration:none;
     font-weight:500;
-    color:#333;
+    @include m-theme(){
+      color: themed($m-grey-900);
+    }
+  }
+
+  .permalink {
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
   }
 
   span {
-    color:#888;
     font-size:11px;
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
   }
 
   img {
@@ -89,7 +101,9 @@
   padding: 8px 16px;
   width: 100%;
   box-sizing: border-box;
-  background-color: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   &.m-title-block-fixed{
     position:absolute;
@@ -140,8 +154,10 @@
       }
     }
     span {
-      color: #888;
       font-size: 11px;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
   }
 }
@@ -163,11 +179,13 @@
 .search-users-list > div img{
 	vertical-align: middle;
 	border-radius:2px;
-	box-shadow:0 0 3px #888;
 	width:35px;
 	height:35px;
 	overflow:hidden;
 	position:relative;
+  @include m-theme(){
+	   box-shadow:0 0 3px themed($m-grey-400);
+  }
 }
 .search-results{
 

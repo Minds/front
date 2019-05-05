@@ -11,7 +11,8 @@
     "build-dev": "ng build --output-path dist/en --deploy-url=/en/ --watch=true",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "e2e": "cypress run --debug",
+    "e2e-open": "cypress open",
     "postinstall": "node patch.js"
   },
   "private": true,
@@ -54,6 +55,7 @@
     "@types/jasminewd2": "~2.0.4",
     "@types/node": "~10.12.18",
     "codelyzer": "^4.5.0",
+    "cypress": "^3.2.0",
     "gulp": "~4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-css-globbing": "^0.2.2",

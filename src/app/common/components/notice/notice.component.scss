@@ -13,11 +13,13 @@ m-cookies-notice {
   align-items: center;
   justify-content: space-between;
 
-  background-color: #FFF;
-  color: #555;
   padding: $minds-padding * 2 $minds-padding * 2;
-  border: 1px solid #ddd;
   border-radius: 3px;
+  @include m-theme(){
+    color: themed($m-grey-700);
+    background-color: themed($m-white);
+    border: 1px solid themed($m-grey-100);
+  }
 
   @media screen and (max-width: $max-mobile) {
     width: 100vw;
@@ -28,15 +30,19 @@ m-cookies-notice {
 
   .m-notice--message {
     a {
-      color: #64B5F6;
+      @include m-theme(){
+        color: themed($m-blue-light);
+      }
     }
   }
 
   .m-btn.m-btn--slim {
-    border: 1px solid #ccc;
-    background-color: white !important;
     white-space: nowrap;
     margin-left: 8px;
+    @include m-theme(){
+      background-color: themed($m-white) !important;
+      border: 1px solid themed($m-grey-100);
+    }
   }
 
 }

@@ -10,7 +10,6 @@ m-categories--selector {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: rgba(0, 0, 0, 0.15);
     color: inherit;
     font-family: inherit;
     font-size: inherit;
@@ -18,17 +17,22 @@ m-categories--selector {
     border: none;
     border-radius: 4px;
     margin: 0;
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.15);
+    }
   }
 
   .m-categories--selector--suggestions-list {
     position: absolute;
     z-index: 5000;
-    background-color: white;
     margin: 0;
     padding: 0;
     max-height: 300px;
     overflow-y: visible;
     overflow-x: auto;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     .mdl-menu__item {
       opacity: 1;

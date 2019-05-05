@@ -1,30 +1,41 @@
 import { Injectable } from "@angular/core";
 import { Client } from "../../services/api/client";
 import { Session } from "../../services/session";
-import Dexie from 'dexie';
 
 import AsyncLock from "../../helpers/async-lock";
 
 import MindsClientHttpAdapter from "../../lib/minds-sync/adapters/MindsClientHttpAdapter.js";
-import DexieStorageAdapter from "../../lib/minds-sync/adapters/DexieStorageAdapter.js";
+import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
 import BlockListSync from "../../lib/minds-sync/services/BlockListSync.js";
+import AsyncStatus from "../../helpers/async-status";
 
 @Injectable()
 export class BlockListService {
-  protected syncLock = new AsyncLock();
 
   protected blockListSync: BlockListSync;
+
+  protected syncLock = new AsyncLock();
+
+  protected status = new AsyncStatus();
 
   constructor(
     protected client: Client,
     protected session: Session,
   ) {
+    this.setUp();
+  }
+
+  async setUp() {
     this.blockListSync = new BlockListSync(
       new MindsClientHttpAdapter(this.client),
-      new DexieStorageAdapter(new Dexie('minds-block-190314')),
+      await browserStorageAdapterFactory('minds-block-190314'),
     );
 
     this.blockListSync.setUp();
+
+    //
+
+    this.status.done();
 
     // Prune on session changes
 
@@ -38,6 +49,8 @@ export class BlockListService {
   }
 
   async sync() {
+    await this.status.untilReady();
+
     if (this.syncLock.isLocked()) {
       return false;
     }
@@ -48,6 +61,8 @@ export class BlockListService {
   }
 
   async prune() {
+    await this.status.untilReady();
+
     if (this.syncLock.isLocked()) {
       return false;
     }
@@ -58,17 +73,23 @@ export class BlockListService {
   }
 
   async getList() {
+    await this.status.untilReady();
     await this.syncLock.untilUnlocked();
+
     return await this.blockListSync.getList();
   }
 
   async add(guid: string) {
+    await this.status.untilReady();
     await this.syncLock.untilUnlocked();
+
     return await this.blockListSync.add(guid);
   }
 
   async remove(guid: string) {
+    await this.status.untilReady();
     await this.syncLock.untilUnlocked();
+
     return await this.blockListSync.remove(guid);
   }
 

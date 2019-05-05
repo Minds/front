@@ -44,6 +44,8 @@ interface Window {
   google?: any;
   twoOhSix?: any;
   web3?: any;
+  ethereum?: any;
   sale?: boolean | string;
+  _inMemoryStorageAdapterDb?: any;
 }
 declare var window: Window;

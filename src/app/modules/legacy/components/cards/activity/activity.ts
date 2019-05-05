@@ -142,7 +142,10 @@ export class Activity {
     this.editing = false;
     this.activity.edited = true;
 
-    let data = Object.assign(this.activity, this.attachment.exportMeta());
+    let data = this.activity;
+    if (this.attachment.has()) {
+      data = Object.assign(this.activity, this.attachment.exportMeta());
+    }
     this.client.post('api/v1/newsfeed/' + this.activity.guid, data);
   }
 

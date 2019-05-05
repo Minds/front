@@ -60,6 +60,7 @@ export class BlogEdit {
 
   licenses = LICENSES;
   access = ACCESS;
+  existingBanner: boolean;
 
   paramsSubscription: Subscription;
   @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
@@ -125,6 +126,7 @@ export class BlogEdit {
         this.banner_prompt = false;
         this.editing = true;
         this.canSave = true;
+        this.existingBanner = false;
 
         if (this.guid !== 'new') {
           this.load();
@@ -173,7 +175,9 @@ export class BlogEdit {
           this.blog = response.blog;
           this.guid = response.blog.guid;
           this.title.setTitle(this.blog.title);
-
+          
+          if(this.blog.thumbnail_src)
+            this.existingBanner = true;
           //this.hashtagsSelector.setTags(this.blog.tags);
           // draft
           if (!this.blog.published && response.blog.draft_access_id) {
@@ -259,14 +263,15 @@ export class BlogEdit {
   check_for_banner() {
     if (!this.banner)
       this.banner_prompt = true;
-
     return new Promise((resolve, reject) => {
+      
       if (this.banner)
         return resolve(true);
+
       setTimeout(() => {
         this.banner_prompt = false;
 
-        if (this.banner)
+        if (this.banner || this.existingBanner)
           return resolve(true);
         else
           return reject(false);

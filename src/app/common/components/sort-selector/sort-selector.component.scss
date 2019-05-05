@@ -19,7 +19,9 @@ m-sort-selector {
 
   .m-dropdown--expanded {
     .m-dropdown--list--item--selected {
-      color: #3ba0ff;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
   }
 

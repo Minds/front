@@ -18,6 +18,12 @@
   i{
     font-size:28px;
     padding:8px;
+
+    &.admin__badge {
+      @include m-theme(){
+        color: themed($m-green);
+      }
+    }
   }
 
 }

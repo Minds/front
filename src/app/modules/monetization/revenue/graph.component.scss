@@ -9,17 +9,25 @@ m-revenue--graph{
     fill: transparent;
   }
   text{
-    fill:#FFF;
     font-family: 'Roboto';
+    @include m-theme(){
+      fill: themed($m-white);
+    }
   }
   path{
-    stroke:#FFF;
     stroke-width:3;
+    @include m-theme(){
+      stroke: themed($m-white);
+    }
   }
   line{
-    stroke: rgba(255,255,255,0.3);
+    @include m-theme(){
+      stroke: rgba(themed($m-white), 0.3);
+    }
   }
   circle{
-    fill:#FFF;
+    @include m-theme(){
+      fill: themed($m-white);
+    }
   }
 }

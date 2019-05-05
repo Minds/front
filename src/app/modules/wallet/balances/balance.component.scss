@@ -7,7 +7,9 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
   min-height: 0;
   padding: ($minds-padding * 2) $minds-padding;
   text-align: center;
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-wallet--balance--logo {
     width: 100px;
@@ -16,13 +18,17 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
 
   h3 {
     font-weight: 600;
-    color: #444;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   h2 {
     text-align: center;
     font-weight: 600;
-    color: #4690DF;
+    @include m-theme(){
+      color: themed($m-blue);
+    }
   }
 }
 
@@ -34,8 +40,10 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
     font-size: 11px;
     display: block;
     margin-bottom: 8px;
-    color: #555;
     font-weight: 500;
+    @include m-theme(){
+      color: themed($m-grey-700);
+    }
   }
 
   > div:nth-of-type(1) {
@@ -52,20 +60,26 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
       font-weight: 600;
       font-family: 'Roboto';
       letter-spacing: 0.25px;
-      color: #444;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
 
-      m-tooltip { 
+      m-tooltip {
         vertical-align: middle;
         i {
           font-size: 12px;
-          color: #777 !important;
+          @include m-theme(){
+            color: themed($m-grey-500) !important;
+          }
         }
       }
     }
     .m-wallet--balance--addresses-address-address {
       font-size: 10px;
-      color: #888;
       font-weight: 400;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
     > * {
       text-rendering: optimizeLegibility;
@@ -74,8 +88,10 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
     .m-wallet--balance--addresses-address-balance {
       font-size: 16px;
       font-weight: 600;
-      color: #4690DF;
       text-align: right;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
   }
   .m-wallet--balance--addresses-address-col {
@@ -85,7 +101,7 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    
+
     span {
       white-space: nowrap;
       overflow: hidden;
@@ -104,6 +120,31 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
     font-size: 12px;
     line-height: 1.25;
     margin: 0;
-    color: #666;
+    @include m-theme(){
+      color: themed($m-grey-600);
+    }
   }
 }
+
+
+  .m-wallet--balance--metamask {
+    margin-top: 16px;
+
+    .m-wallet--balance--metamask-logo {
+      width: 50px;
+    }
+
+    .m-btn--slim {
+      height: 30px;
+      margin: 0 0 0 28px;
+      color: #888; 
+    }
+
+    p {
+      text-align: left;
+      margin: 0;
+      padding: 0 8px;
+      color: #666;
+    }
+
+  }

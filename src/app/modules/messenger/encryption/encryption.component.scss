@@ -26,11 +26,13 @@
     padding: $minds-padding;
   }
   .m-messenger--encryption-setup-help {
-    color: #455a64;
     font-size: 11px;
     line-height: 1.35;
     margin: 0;
     padding: $minds-padding;
+    @include m-theme(){
+      color: themed($m-blue-grey-700);
+    }
   }
   .m-messenger--encryption-rekey{
     p {

@@ -10,7 +10,10 @@
   justify-content: flex-end;
   padding: 8px;
   margin-bottom: 8px;
-  background: #FFF;
+
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   m-date-selector {
     margin-left: 8px;

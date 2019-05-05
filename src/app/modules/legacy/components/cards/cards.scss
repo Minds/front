@@ -30,7 +30,9 @@ minds-card-user, .minds-banner-card{
       height: 100%;
       background: none no-repeat center center transparent;
       background-size: cover;
-      background-color: #444;
+      @include m-theme(){
+        background-color: themed($m-grey-800);
+      }
     }
 
     .minds-banner-overlay{
@@ -39,7 +41,9 @@ minds-card-user, .minds-banner-card{
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(transparent, rgba(0,0,0,0.4));
+      @include m-theme(){
+        background: linear-gradient(transparent, rgba(themed($m-black),0.4));
+      }
     }
   }
 
@@ -49,10 +53,14 @@ minds-card-user, .minds-banner-card{
     position:relative;
     display:flex;
     text-decoration: none;
-    color:$minds-white;
+    @include m-theme(){
+      color: themed($m-white-always);
+    }
 
-    img { 
-      border: 1px solid #EEE;
+    img {
+      @include m-theme(){
+        border: 1px solid themed($m-grey-50);
+      }
     }
 
     .body{
@@ -68,14 +76,18 @@ minds-card-user, .minds-banner-card{
         line-height: 18px;
         padding: 0;
         margin: 0;
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        @include m-theme(){
+          text-shadow: -1px -1px 0 themed($m-black-always), 1px -1px 0 themed($m-black-always), -1px 1px 0 themed($m-black-always), 1px 1px 0 themed($m-black-always);
+        }
       }
       span {
         display: block;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+        @include m-theme(){
+          text-shadow: -1px -1px 0 themed($m-black-always), 1px -1px 0 themed($m-black-always), -1px 1px 0 themed($m-black-always), 1px 1px 0 themed($m-black-always);
+        }
       }
       button{
         margin-top:$minds-margin;
@@ -145,6 +157,12 @@ minds-card-image, minds-card-video {
   .m-mature-thumbnail-overlay > i.material-icons {
     transform: translate(-50%, calc(-50% - 36px));
   }
+
+  .minds-video-thumbnail {
+    @include m-theme(){
+      background-color: rgba(themed($m-black-always), 0.9);
+    }
+  }
 }
 
 .mdl-card{
@@ -185,6 +203,9 @@ minds-card-image, minds-card-video {
         letter-spacing: 0.75px;
         text-rendering: optimizeLegibility;
         text-overflow: unset;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
 
         &:hover {
           text-decoration: underline;
@@ -196,6 +217,13 @@ minds-card-image, minds-card-video {
 
 minds-card-album{
   min-height:260px !important;
+
+  .minds-media-albums-card {
+    @include m-theme(){
+      background-color: themed($m-grey-900);
+    }
+  }
+
   .minds-album-tiles{
     margin: -16px;
     height: 200px;
@@ -246,7 +274,9 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     font-family: Roboto;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    color: rgba(0,0,0,0.8);
+    @include m-theme(){
+      color: rgba(themed($m-black),0.8);
+    }
 
     a{
       text-decoration: none;
@@ -256,6 +286,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     white-space: pre-line;
     word-wrap: break-word;
     padding-top: 0;
+    word-break: break-word;
   }
 
   textarea.mdl-card__supporting-text.message{
@@ -328,7 +359,9 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
         }
     }
     .mdl-card__menu{
-      background: #FFF;
+      @include m-theme(){
+        background-color: themed($m-white);
+      }
     }
     minds-card-comment:hover{
       .m-comment-carrot{
@@ -414,13 +447,15 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   }
 
   .is-boosted{
-    color:#888;
     display: inline-block;
     font-size: 11px;
     padding: 0;
     padding-left: 8px;
     line-height: 1;
     vertical-align: middle;
+    @include m-theme(){
+      color:themed($m-grey-400);
+    }
 
     i{
       font-size: 18px;
@@ -428,9 +463,11 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
       vertical-align: middle;
     }
     a{
-      color:#888;
       font-weight:bold;
       vertical-align: middle;
+      @include m-theme(){
+        color:themed($m-grey-400);
+      }
     }
   }
 
@@ -449,10 +486,12 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   }
 
   .m-activity--pending {
-    background: #ffffdd;
     padding: $minds-padding ($minds-padding * 2);
     font-size: 12px;
     font-weight: 400;
+    @include m-theme(){
+      background-color: themed($m-amber-light);
+    }
   }
 
 }
@@ -495,7 +534,9 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     max-width:40px;
   }
   .selected{
-    color:$minds-blue !important;
+    @include m-theme(){
+      color: themed($m-blue) !important;
+    }
   }
   i{
     vertical-align: middle;
@@ -525,9 +566,11 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   width:100%;
 
   textarea{
-    border:1px solid #DDD;
     padding:$minds-padding;
     color: inherit;
+    @include m-theme(){
+      border:1px solid themed($m-grey-100);
+    }
   }
 
   button{

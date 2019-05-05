@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Session } from '../../../services/session';
 import { NewsfeedBoostService } from '../newsfeed-boost.service';
 import { NewsfeedService } from '../services/newsfeed.service';
+import { SettingsService } from '../../settings/settings.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,6 +21,7 @@ export class NewsfeedDropdownComponent implements OnInit {
     public router: Router,
     public boostService: NewsfeedBoostService,
     private newsfeedService: NewsfeedService,
+    private settingsService: SettingsService,
   ) {
   }
 
@@ -51,4 +53,22 @@ export class NewsfeedDropdownComponent implements OnInit {
   onNSFWSelected(reasons) {
     this.newsfeedService.setNSFW(reasons);    
   }
+
+  toggleRating(e) {
+    switch (this.rating) {
+      case 1:
+        this.settingsService.setRating(2);
+        break;
+      case 2:
+      default:
+        this.settingsService.setRating(1);
+        break;
+    }
+    e.stopPropagation();
+  }
+
+  get rating(): number {
+    return this.session.getLoggedInUser().boost_rating;
+  }
 }
+

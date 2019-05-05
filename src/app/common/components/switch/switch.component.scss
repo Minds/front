@@ -28,8 +28,10 @@ m-switch {
     width: 20px;
     height: 10px;
     border-radius: 8px;
-    border: 1px solid #d8d8d8;
     transition: border-color 0.15s ease-out;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-100);
+    }
 
     .m-switch__thumb {
       position: absolute;
@@ -37,19 +39,25 @@ m-switch {
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: #d8d8d8;
       transform: translate(-100%, -50%); // -4px
       top: 50%;
       left: calc(50% - 2px); // exact center
       transition: transform 0.15s ease-out, background 0.15s ease-out;
+      @include m-theme(){
+         background-color: themed($m-grey-100);
+      }
     }
   }
 
   .m-switch--enabled.m-switch--toggled .m-switch__track {
-    border-color: #4690df;
+    @include m-theme(){
+       border-color: themed($m-blue);
+    }
 
     .m-switch__thumb {
-      background: #4690df;
+      @include m-theme(){
+         background-color: themed($m-blue);
+      }
     }
   }
 

@@ -17,6 +17,14 @@ minds-activity {
     margin-bottom: 8px;
   }
 
+  .m-activity--video {
+    m-video {
+      @include m-theme(){
+        background-color: themed($m-black-always);
+      }
+    }
+  }
+
   m-safe-toggle {
     .m-safe-toggle {
       display: inline-block;
@@ -30,7 +38,7 @@ minds-activity {
         width: 24px;
         min-width: 24px;
         min-height: 24px;
-      
+
         i {
           font-size: 18px;
           cursor: pointer;
@@ -40,9 +48,11 @@ minds-activity {
   }
   m-nsfw-selector {
     display: inline-block;
-    border: 1px solid #ddd;
     border-radius: 24px;
     padding: 3px 16px;
+    @include m-theme(){
+      border: 1px solid themed($m-grey-100);
+    }
 
     .m-nsfwSelector__label {
       > * {
@@ -72,11 +82,9 @@ minds-activity {
     padding-left: 8px;
     margin: auto;
 
-    background-color: #FFF;
     padding: 3px 0 3px 8px;
     font-size: 14px;
     line-height: 9px;
-    color: #666;
     border-radius: 3px;
     vertical-align: middle;
     //text-align: center;
@@ -85,13 +93,22 @@ minds-activity {
     max-width: 300px;
     //box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.07), 0 4px 2px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.07);
 
+    @include m-theme(){
+      background-color: themed($m-white);
+      color: themed($m-grey-600);
+    }
+
     m--crypto-token-symbol {
       .m--crypto-token-symbol--stroke {
-        stroke: #666;
+        @include m-theme(){
+          stroke: themed($m-grey-600);
+        }
       }
 
       .m--crypto-token-symbol--fill {
-        fill: #666;
+        @include m-theme(){
+          fill: themed($m-grey-600);
+        }
       }
     }
   }

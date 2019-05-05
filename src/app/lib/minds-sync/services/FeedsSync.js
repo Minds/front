@@ -5,7 +5,7 @@ const E_NO_RESOLVER = function () {
 export default class FeedsSync {
   /**
    * @param {MindsClientHttpAdapter|MindsMobileClientHttpAdapter} http
-   * @param {DexieStorageAdapter|SqliteStorageAdapter} db
+   * @param {DexieStorageAdapter|InMemoryStorageAdapter|SqliteStorageAdapter} db
    * @param {Number} stale_after
    * @param {Number} limit
    */
@@ -260,7 +260,7 @@ export default class FeedsSync {
     const maxTimestamp = Date.now() - (this.stale_after_ms * 10);
 
     await Promise.all(
-      (await this.db.getAllLesserThan('syncAt', 'sync', maxTimestamp))
+      (await this.db.getAllLessThan('syncAt', 'sync', maxTimestamp))
         .map(row => this.prune(row.key))
     );
 

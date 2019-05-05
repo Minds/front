@@ -57,6 +57,7 @@
         formControlName="username"
         placeholder="Username"
         i18n-placeholder="@@M__COMMON__USERNAME"
+        autocomplete="username"
         (keydown.enter)="login(); $event.preventDefault();"
         />
     </div>
@@ -68,6 +69,7 @@
         formControlName="password"
         placeholder="Password"
         i18n-placeholder="@@M__COMMON__PASSWORD"
+        autocomplete="current-password"
         (keydown.enter)="login(); $event.preventDefault();"
         />
     </div>

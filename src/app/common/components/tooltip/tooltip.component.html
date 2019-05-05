@@ -5,6 +5,8 @@
   <ng-content select="[m-tooltip--anchor]"></ng-content>
 
   <div class="m-tooltip--bubble"
+    [class.m-tooltip--bubble--fixed]="useParentPosition"
+    [style.top.px]="useParentPosition ? offsetTop : false"
     [class.m-tooltip--bubble--anchor-bottom]="anchor == 'bottom'"
     [class.m-tooltip--bubble--anchor-left]="anchor == 'left'"
     [class.m-tooltip--bubble--anchor-right]="anchor == 'right'"
