@@ -71,6 +71,16 @@ import { BlockListService } from "../../../../common/services/block-list.service
       >
         Remove Explicit
       </li>
+      <li class="mdl-menu__item m-user-dropdown__item--nsfw"
+        *ngIf="session.isAdmin()"
+      >
+        <m-nsfw-selector
+          service="editing"
+          [selected]="user.nsfw_lock"
+          (selected)="setNSFWLock($event)"
+        >
+        </m-nsfw-selector>
+      </li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
         (click)="reindex(); showMenu = false"
@@ -250,6 +260,7 @@ export class UserDropdownButton {
     }
     this.showMenu = true;
     var self = this;
+
     this.client.get('api/v1/block/' + this.user.guid)
       .then((response: any) => {
         self.user.blocked = response.blocked;
@@ -291,6 +302,12 @@ export class UserDropdownButton {
     } catch (e) {
       this.user.is_mature = !value;
     }
+  }
+
+  async setNSFWLock(reasons: Array<{ label, value, selected}>) {
+    const nsfw = reasons.map(reason => reason.value);
+    this.client.post(`api/v2/admin/nsfw/${this.user.guid}`, { nsfw });
+    this.user.nsfw = nsfw;
   }
 
   async setRating(rating: number) {

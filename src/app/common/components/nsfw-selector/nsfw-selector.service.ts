@@ -5,12 +5,12 @@ export class NSFWSelectorService {
   cacheKey: string = '';
 
   reasons: Array<any> = [
-    { value: 1, label: 'Nudity', selected: false, },
-    { value: 2, label: 'Pornography', selected: false, },
-    { value: 3, label: 'Profanity', selected: false, },
-    { value: 4, label: 'Violence and Gore', selected: false, },
-    { value: 5, label: 'Race and Religion', selected: false, },
-    { value: 6, label: 'Other', selected: false, }
+    { value: 1, label: 'Nudity', selected: false, locked: false },
+    { value: 2, label: 'Pornography', selected: false, locked: false },
+    { value: 3, label: 'Profanity', selected: false, locked: false },
+    { value: 4, label: 'Violence and Gore', selected: false, locked: false },
+    { value: 5, label: 'Race and Religion', selected: false, locked: false },
+    { value: 6, label: 'Other', selected: false, locked: false }
   ]; 
 
   constructor(
@@ -30,6 +30,9 @@ export class NSFWSelectorService {
   }
 
   toggle(reason) {
+    if (reason.locked) {
+      return;
+    }
     for (let r of this.reasons) {
       if (r.value === reason.value)
         r.selected = !r.selected;
