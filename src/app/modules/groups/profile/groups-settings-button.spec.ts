@@ -39,6 +39,11 @@ describe('GroupsSettingsButton', () => {
           inputs: ['open'],
           outputs: ['closed']
         }),
+        MockComponent({ 
+          selector: 'm-nsfw-selector',
+          inputs: [ 'selected' ],
+          outputs: [ 'selected'],
+        }),
         GroupsSettingsButton],
       imports: [RouterTestingModule, FormsModule],
       providers: [

@@ -40,6 +40,15 @@ import { Session } from '../../../services/session';
       <li class="mdl-menu__item" *ngIf="session.isAdmin() && group.mature" (click)="setExplicit(false)" i18n="@@M__ACTION__REMOVE_EXPLICIT">Remove Explicit</li>
       <li class="mdl-menu__item" (click)="report(); showMenu = false" i18n="@@M__ACTION__REPORT">Report</li>
       <li class="mdl-menu__item" *ngIf="group['is:creator']" [hidden]="group.deleted" (click)="deletePrompt()" i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP">Delete Group</li>
+      
+      <li class="mdl-menu__item m-groups-settings-dropdown__item--nsfw" *ngIf="session.isAdmin()">
+        <m-nsfw-selector
+          service="editing"
+          [selected]="group.nsfw"
+          (selected)="onNSFWSelected($event)"
+        >
+        </m-nsfw-selector>
+      </li>
     </ul>
     <div class="minds-bg-overlay" (click)="toggleMenu($event)" [hidden]="!showMenu"></div>
 
@@ -247,5 +256,13 @@ export class GroupsSettingsButton {
     this.client.post(`api/v1/groups/group/${this.group.guid}`, { membership: this.group.membership })
     this.groupChange.next(this.group);
   }
+
+  onNSFWSelected(reasons: Array<{ label, value, selected}>) {
+    console.log("group", this.group);
+    const nsfw = reasons.map(reason => reason.value);
+    this.client.post(`api/v2/admin/nsfw/${this.group.guid}`, { nsfw });
+    this.group.nsfw = nsfw;
+  }
+
 
 }
