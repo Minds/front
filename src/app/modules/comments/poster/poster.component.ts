@@ -124,17 +124,19 @@ export class CommentPosterComponent {
 
     this.attachment.setHidden(true);
     this.attachment.setContainer(this.entity);
-    this.attachment.upload(file)
+    this.attachment.upload(file, this.detectChanges.bind(this))
       .then(guid => {
         this.canPost = true;
         this.triedToPost = false;
         file.value = null;
+        this.detectChanges();
       })
       .catch(e => {
         console.error(e);
         this.canPost = true;
         this.triedToPost = false;
         file.value = null;
+        this.detectChanges();
       });
 
     this.detectChanges();
