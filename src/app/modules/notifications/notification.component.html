@@ -426,9 +426,11 @@
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REQUEST__IS_OFFERING"><b>@{{notification.from.username}}</b> is offering</ng-container>
         <b>
           {{notification.params.bid | token:18}}
-          <span [hidden]="notification.params.type != 'pro'" i18n="@@M__COMMON__USD">USD</span>
-          <span [hidden]="notification.params.type != 'points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</span>
-          <span [hidden]="notification.params.currency != 'tokens'" i18n="@@M__COMMON__POINTS_SUFFIX">tokens</span>
+          <span *ngIf="notification.params.type == 'pro'" i18n="@@M__COMMON__USD">USD</span>
+          <ng-container *ngIf="notification.params.type != 'pro'">
+            <span *ngIf="notification.params.type == 'points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</span>
+            <span *ngIf="notification.params.currency == 'tokens'" i18n="@@M__COMMON__TOKENS_SUFFIX">tokens</span>
+          </ng-container>
         </b>
         <span *ngIf="notification.entityObj" i18n="@@NOTIFICATIONS__NOTIFICATION__FOR_WORD"> for </span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title | excerpt}}</span>
@@ -446,9 +448,11 @@
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_ACCEPTED__ACCEPTED_BID"><b>@{{notification.from.username}}</b> accepted your bid of</ng-container>
         <b>
           {{notification.params.bid | token:18}}
-          <span [hidden]="notification.params.type != 'pro'" i18n="@@M__COMMON__USD">USD</span>
-          <span [hidden]="notification.params.type != 'points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</span>
-          <span [hidden]="notification.params.currency != 'tokens'" i18n="@@M__COMMON__POINTS_SUFFIX">tokens</span>
+          <span *ngIf="notification.params.type == 'pro'" i18n="@@M__COMMON__USD">USD</span>
+          <ng-container *ngIf="notification.params.type != 'pro'">
+            <span *ngIf="notification.params.type == 'points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</span>
+            <span *ngIf="notification.params.currency == 'tokens'" i18n="@@M__COMMON__TOKENS_SUFFIX">tokens</span>
+          </ng-container>
         </b>
         <span *ngIf="notification.entityObj">for </span>
         <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entity.title | excerpt}}</span>
@@ -465,14 +469,16 @@
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__DECLINED_BID"><b>@{{notification.from.username}}</b> declined your bid of</ng-container>
         <b>
           {{notification.params.bid | token:18}}
-          <span [hidden]="notification.params.type != 'pro'" i18n="@@M__COMMON__USD">USD</span>
-          <span [hidden]="notification.params.type != 'points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</span>
-          <span [hidden]="notification.params.currency != 'tokens'" i18n="@@M__COMMON__POINTS_SUFFIX">tokens</span>
+          <span *ngIf="notification.params.type == 'pro'" i18n="@@M__COMMON__USD">USD</span>
+          <ng-container *ngIf="notification.params.type != 'pro'">
+            <span *ngIf="notification.params.type == 'points'" i18n="@@M__COMMON__POINTS_SUFFIX">points</span>
+            <span *ngIf="notification.params.currency == 'tokens'" i18n="@@M__COMMON__TOKENS_SUFFIX">tokens</span>
+          </ng-container>
         </b>
         <span *ngIf="notification.entityObj" i18n="X points _for_ entity@@NOTIFICATIONS__NOTIFICATION__FOR_WORD">for </span>
         <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entity.title | excerpt}}</span>
-        <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'" i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_POST">your post</span>
-        <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'" i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_CHANNEL">your channel</span>
+        <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type !== 'user'" i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_POST">your post. </span>
+        <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.type === 'user'" i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_CHANNEL">your channel. </span>
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__NOT_CHARGED">You have not been charged.</ng-container>
       </p>
     </a>
@@ -690,4 +696,3 @@
 
   <span class="ts mdl-color-text--grey">{{ notification.time_created * 1000 | date : 'medium' }}</span>
 
-</div>
