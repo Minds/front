@@ -185,7 +185,15 @@ export class GroupsSettingsButton {
       .present();
   }
 
-  deletePrompt() {
+  /**
+   * deletePrompt
+   * Displays the delete prompt if deletion is possible
+   */
+  async deletePrompt() {
+    if (await this.service.countMembers(this.group.guid) !== 1) {
+      alert("You cannot delete a group that has members.")  
+      return;
+    }
     this.isGoingToBeDeleted = true;
   }
 
