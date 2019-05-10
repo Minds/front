@@ -167,6 +167,10 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
 
+    if (this.isDisabled(id)) {
+      return false;
+    }
+
     this.algorithm = id;
     this.emit();
 
@@ -278,4 +282,12 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customTypeDropdown.close();
     }
   }
+
+  isDisabled(id) {
+    return (id != 'top' 
+      && (this.customType === 'channels'
+        || this.customType === 'groups')
+    );
+  }
+
 }

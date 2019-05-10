@@ -15,6 +15,7 @@
       *ngFor="let item of algorithms"
       class="m-dropdown--list--item"
       [class.m-dropdown--list--item--selected]="item.id === algorithm"
+      [class.m-dropdown--list--item--disabled]="isDisabled(item.id)"
       (click)="setAlgorithm(item.id); closeDropdowns();"
     >
       <i

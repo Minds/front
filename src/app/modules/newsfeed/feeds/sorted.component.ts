@@ -102,6 +102,13 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
         this.all = false;
       }
 
+      if (this.algorithm != 'top' 
+        && (this.customType === 'channels' || this.customType === 'groups')
+      ) {
+        this.algorithm = 'top';
+        this.updateSortRoute();
+      } 
+
       this.load(true);
     });
   }
