@@ -8,6 +8,7 @@ m-channel--onboarding {
 
   m-modal .m-modal-container .mdl-card {
     border-radius: 6px;
+    overflow: visible;
   }
 
   @media screen and(max-width: $max-mobile) {
