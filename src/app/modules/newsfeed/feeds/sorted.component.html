@@ -20,11 +20,13 @@
     </div>
   </div>
 
-  <div class="m-feeds-sorted__List" [class.m-feeds-sortedList__flex]="customType == 'channels' || customType == 'groups'">
+  <div class="m-feeds-sorted__List" [class.m-feeds-sortedList__flex]="!isActivityFeed()">
     <ng-container *ngFor="let entity of newsfeed; let i = index">
-      <m-featured-content
-        *ngIf="shouldShowBoost(i)"
-      ></m-featured-content>
+      <ng-container *ngIf="isActivityFeed()">
+        <m-featured-content
+          *ngIf="shouldShowBoost(i)"
+        ></m-featured-content>
+      </ng-container>
 
       <m-newsfeed__entity
         [entity]="entity"

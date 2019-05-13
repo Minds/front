@@ -39,20 +39,24 @@
     <span>{{ error }}</span>
   </p>
 
+  <p class="m-commentsThread__blockedComment" *ngIf="isThreadBlocked()" i18n>
+    This thread contains replies from blocked channels.
+  </p>
+
   <div class="m-layout--spacer"></div>
-  <m-comment
-    *ngFor="let comment of comments; let i = index"
-    [comment]="comment"
-    [entity]="entity"
-    [parent]="parent"
-    [level]="level"
-    [canEdit]="canEdit"
-    [showReplies]="comment.show_replies"
-    (delete)="delete(i)"
-    (saved)="edited(i, $event)"
-    (onReply)="reply($event.comment)"
-  >
-  </m-comment>
+  <ng-container *ngFor="let comment of getComments(); let i = index">
+    <m-comment
+      [comment]="comment"
+      [entity]="entity"
+      [parent]="parent"
+      [level]="level"
+      [canEdit]="canEdit"
+      [showReplies]="comment.show_replies"
+      (delete)="delete(i)"
+      (saved)="edited(i, $event)"
+      (onReply)="reply($event.comment)"
+    ></m-comment>
+  </ng-container>
 
   <div class="mdl-color-text--blue-grey-500 m-comments-load-more"
      (click)="load(false, 'asc')"

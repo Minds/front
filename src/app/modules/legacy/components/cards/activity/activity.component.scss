@@ -134,3 +134,29 @@ minds-activity {
 minds-groups-profile-feed .m-pin-button {
   //display: none;
 }
+
+.m-activity__blockedRemind {
+  margin: 0 16px;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+
+  @include m-theme(){
+    background-color: rgba(themed($m-grey-50), 0.7);
+  }
+
+  .m-activityBlockedRemind__title,
+  .m-activityBlockedRemind__description {
+    opacity: 0.75;
+  }
+
+  .m-activityBlockedRemind__title {
+    font-weight: 600;
+  }
+
+  .m-activityBlockedRemind__description {
+    font-size: 13px;
+  }
+}

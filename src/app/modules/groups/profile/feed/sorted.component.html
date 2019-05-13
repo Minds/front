@@ -1,0 +1,70 @@
+<minds-newsfeed-poster
+  *ngIf="isMember()"
+  (load)="prepend($event)"
+  [containerGuid]="group.guid"
+  [accessId]="group.guid"
+  #poster
+></minds-newsfeed-poster>
+
+<div class="minds-list">
+  <div>
+    <m-sort-selector
+      class="m-group--sorted__SortSelector m-border"
+      [allowedAlgorithms]="false"
+      [allowedPeriods]="false"
+      [allowedCustomTypes]="['activities', 'images', 'videos']"
+      [customType]="type"
+      (onChange)="setFilter($event.customType)"
+    ></m-sort-selector>
+
+    <ng-container
+      *ngIf="isActivityFeed() && (group['is:owner'] || group['is:moderator']) && group['adminqueue:count']"
+    >
+      <a
+        class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
+        routerLink="review"
+      >
+        <i class="material-icons">rate_review</i>
+        {{ group['adminqueue:count'] }} new {{ group['adminqueue:count'] === 1 ? 'post' : 'posts' }} in review queue
+      </a>
+    </ng-container>
+
+    <ng-container *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView">
+      <m-newsfeed__tiles
+        [entities]="getAllEntities()"
+      ></m-newsfeed__tiles>
+    </ng-container>
+    <ng-template #entityListView>
+      <minds-activity
+        *ngFor="let entity of getAllEntities(); let i = index"
+        class="mdl-card item"
+        [object]="entity"
+        [canDelete]="group['is:owner'] || group['is:moderator']"
+        (delete)="delete(entity)"
+      >
+        <!-- Menu Actions -->
+
+        <li
+          post-menu
+          class="mdl-menu__item"
+          *ngIf="group['is:owner']"
+          (click)="kick(entity?.ownerObj)"
+          i18n="@@GROUPS__PROFILE__FEED__REMOVE_USER"
+        >Remove user</li>
+      </minds-activity>
+    </ng-template>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress"
+    ></infinite-scroll>
+  </div>
+</div>
+
+<m-groups__kick-modal *ngIf="kicking"
+  [user]="kicking"
+  [group]="group"
+  (closed)="kick(null)"
+></m-groups__kick-modal>

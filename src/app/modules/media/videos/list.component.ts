@@ -10,6 +10,7 @@ import { ContextService } from '../../../services/context.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ModalPosterComponent } from '../../newsfeed/poster/poster-modal.component';
 import { HashtagsSelectorModalComponent } from '../../hashtags/hashtag-selector-modal/hashtags-selector.component';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   moduleId: module.id,
@@ -43,7 +44,8 @@ export class MediaVideosListComponent {
     public title: MindsTitle,
     private context: ContextService,
     public session: Session,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    protected featuresService: FeaturesService,
   ) {
   }
 
@@ -75,12 +77,16 @@ export class MediaVideosListComponent {
             break;
           case 'my':
             this.filter = 'owner';
-            this.owner = this.session.getLoggedInUser().guid;
+            this.owner = this.session.getLoggedInUser().username;
             break;
-          case 'owner':
+          // case 'owner': // This case never worked
           default:
             this.owner = this.filter;
             this.filter = 'owner';
+        }
+
+        if (this.featuresService.has('es-feeds') && this.filter === 'owner') {
+          this.router.navigate(['/', this.owner, 'images'], { replaceUrl: true });
         }
       }
 

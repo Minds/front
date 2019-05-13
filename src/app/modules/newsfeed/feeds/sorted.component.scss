@@ -58,6 +58,10 @@ m-newsfeed--sorted {
     background-color: themed($m-white);
   }
 
+  &.m-feeds-sorted__Filter--end {
+    justify-content: flex-end;
+  }
+
   m-sort-selector {
     flex-grow: 1;
   }

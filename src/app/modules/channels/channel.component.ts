@@ -11,13 +11,12 @@ import { RecentService } from '../../services/ux/recent';
 
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
-import { ChannelFeedComponent } from './feed/feed'
 import { ContextService } from '../../services/context.service';
 import { FeaturesService } from "../../services/features.service";
-import { PosterComponent } from '../newsfeed/poster/poster.component';
 import { Observable } from 'rxjs';
 import { DialogService } from  '../../common/services/confirm-leave-dialog.service'
 import { BlockListService } from "../../common/services/block-list.service";
+import { ChannelSortedComponent } from './sorted/sorted.component';
 
 @Component({
   moduleId: module.id,
@@ -42,13 +41,7 @@ export class ChannelComponent {
   changed: boolean = false;
   paramsSubscription: Subscription;
 
-  isLegacySorting: boolean = false;
-  isSorting: boolean = false;
-  algorithm: string;
-  period: string;
-  customType: string;
-
-  @ViewChild('feed') private feed: ChannelFeedComponent;
+  @ViewChild('feed') private feed: ChannelSortedComponent;
 
   constructor(
     public session: Session,
@@ -69,8 +62,6 @@ export class ChannelComponent {
     this.title.setTitle('Channel');
     this.context.set('activity');
     this.onScroll();
-
-    this.isLegacySorting = !this.features.has('top-feeds');
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       let feedChanged = false;
@@ -95,32 +86,6 @@ export class ChannelComponent {
 
       if (params['editToggle']) {
         this.editing = true;
-      }
-
-      this.isSorting = Boolean(params['algorithm']);
-
-      if (this.isSorting) {
-        feedChanged = this.changed ||
-          this.algorithm !== params['algorithm'] ||
-          this.period !== params['period'] ||
-          this.customType !== (params['type'] || 'activities');
-
-        this.filter = 'feed';
-        this.algorithm = params['algorithm'] || 'top';
-        this.period = params['period'] || '7d';
-        this.customType = params['type'] || 'activities';
-      } else {
-        if (!this.algorithm) {
-          this.algorithm = 'latest';
-        }
-
-        if (!this.period) {
-          this.period = '7d';
-        }
-
-        if (!this.customType) {
-          this.customType = 'activities';
-        }
       }
 
       if (this.changed) {
@@ -170,6 +135,27 @@ export class ChannelComponent {
 
   isOwner() {
     return this.session.getLoggedInUser().guid === this.user.guid;
+  }
+
+  shouldShowFeeds() {
+    return ['feed', 'images', 'videos', 'blogs'].indexOf(this.filter.toLowerCase()) > -1;
+  }
+
+  getFeedType() {
+    if (this.filter === 'feed') {
+      return 'activities';
+    }
+
+    return this.filter;
+  }
+
+  setFeedType(type: string | null = '') {
+    const route = ['/', this.user.username];
+    if (type && type !== 'activities') {
+      route.push(type);
+    }
+
+    this.router.navigate(route);
   }
 
   toggleEditing() {
@@ -246,47 +232,15 @@ export class ChannelComponent {
     * In this instance, a confirmation is needed  from the user 
     * when requesting a new page if editing === true
     *   
-    * @returns { Observable<boolean> | boolean }    
+    * @returns { Observable<boolean> | boolean }
     */
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.editing) {
-      return true;
+    if (this.feed && this.feed.canDeactivate && !this.feed.canDeactivate()) {
+      return false;
     }
 
-    return this.dialogService.confirm('Discard changes?');
+    return !this.editing || this.dialogService.confirm('Discard changes?');
   }
-
-  setSort(algorithm: string, period: string | null, customType: string | null) {
-    if (algorithm === 'latest') {
-      // Cassandra listing.
-      // TODO: Remove when ElasticSearch is fully implemented
-      this.algorithm = algorithm;
-      this.period = null;
-      this.customType = null;
-
-      this.router.navigate(['/', this.username]);
-      return;
-    }
-
-    this.algorithm = algorithm;
-    this.period = period;
-    this.customType = customType;
-
-    let route: any[] = [ '/', this.username, 'sort', algorithm ];
-    const params: any = {};
-
-    if (period) {
-      params.period = period;
-    }
-
-    if (customType && customType !== 'activities') {
-      params.type = customType;
-    }
-
-    route.push(params);
-    this.router.navigate(route);
-  }
-
 }
 
 export { ChannelSubscribers } from './subscribers/subscribers';

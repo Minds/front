@@ -61,6 +61,10 @@ export class ActivityPreview {
     return;
   }
 
+  isUnlisted(entity: any) {
+    return false;
+  }
+
   save() { /* NOOP */ }
 
   openComments() { /* NOOP */ }

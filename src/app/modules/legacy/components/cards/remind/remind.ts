@@ -82,6 +82,10 @@ export class Remind {
     }
   }
 
+  isUnlisted(entity: any) {
+    return entity && (entity.access_id === '0' || entity.access_id === 0);
+  }
+
   ngOnDestroy() {
     if (this.eventsSubscription) {
       this.eventsSubscription.unsubscribe();
