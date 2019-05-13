@@ -34,8 +34,8 @@ export class BoostedContentService {
     this.boostedContentSync = new BoostedContentSync(
       new MindsClientHttpAdapter(this.client),
       await browserStorageAdapterFactory('minds-boosted-content-190314'),
-      5 * 60 * 60, // Stale after 5 minutes
-      15 * 60 * 60, // Cooldown of 15 minutes
+      5 * 60, // Stale after 5 minutes
+      15 * 60, // Cooldown of 15 minutes
       500,
     );
 
