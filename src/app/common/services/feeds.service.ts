@@ -13,21 +13,17 @@ import FeedsSync from '../../lib/minds-sync/services/FeedsSync.js';
 import hashCode from "../../helpers/hash-code";
 import AsyncStatus from "../../helpers/async-status";
 
-export type FeedsServiceSyncOptions = {
-  filter: string,
-  algorithm: string,
-  customType: string,
-  container_guid?: string,
-  period?: string,
-  hashtags?: string[],
-  all?: boolean | 1,
-  query?: string,
-  nsfw?: Array<number>,
+export type FeedsServiceGetParameters = {
+  endpoint: string;
+  timebased: boolean;
 
   //
-  limit?: number,
-  offset?: number,
-  forceSync?: boolean,
+  limit: number;
+  offset?: number;
+
+  //
+  syncPageSize?: number;
+  forceSync?: boolean;
 }
 
 export type FeedsServiceGetResponse = {
@@ -56,7 +52,6 @@ export class FeedsService {
       new MindsClientHttpAdapter(this.client),
       await browserStorageAdapterFactory('minds-feeds-190314'),
       15,
-      1500,
     );
 
     this.feedsSync.setResolvers({
@@ -64,12 +59,11 @@ export class FeedsService {
       currentUser: () => this.session.getLoggedInUser() && this.session.getLoggedInUser().guid,
       blockedUserGuids: async () => await this.blockListService.getList(),
       fetchEntities: async guids => await this.entitiesService.fetch(guids),
-      prefetchEntities: async guids => await this.entitiesService.prefetch(guids),
     });
 
     this.feedsSync.setUp();
 
-    //
+    // Mark as done
 
     this.status.done();
 
@@ -79,7 +73,7 @@ export class FeedsService {
     setTimeout(() => this.feedsSync.gc(), 15 * 60 * 1000); // Every 15 minutes
   }
 
-  async get(opts: FeedsServiceSyncOptions): Promise<FeedsServiceGetResponse> {
+  async get(opts: FeedsServiceGetParameters): Promise<FeedsServiceGetResponse> {
     await this.status.untilReady();
 
     try {

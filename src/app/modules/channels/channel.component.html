@@ -33,20 +33,26 @@
   <section class="mdl-cell mdl-cell--4-col m-channel-sidebar">
     <m-channel--sidebar [user]="user" [editing]="editing" (changeEditing)="toggleEditing($event)"></m-channel--sidebar>
   </section>
+  
   <!-- Feed list -->
-  <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="filter == 'feed'">
-    <m-channel--feed [user]="user" [isSorting]="!isLegacySorting && isSorting" [algorithm]="algorithm" [period]="period" [customType]="customType" #feed>
-      <div class="m-channel-feed__Filter m-border" *mIfFeature="'channel-filter-feeds'">
-        <m-sort-selector
-          [algorithm]="algorithm"
-          [period]="period"
-          [customType]="customType"
-          [hideCustomTypesOnLatest]="['images', 'videos', 'blogs', 'channels', 'groups']"
-          (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
-        ></m-sort-selector>
-      </div>
-    </m-channel--feed>
-  </section>
+  
+  <ng-container *mIfFeature="'es-feeds'; else legacyFeed">
+    <section class="mdl-cell mdl-cell--8-col" *ngIf="shouldShowFeeds()">
+      <m-channel--sorted
+        [channel]="user"
+        [type]="getFeedType()"
+        (onChangeType)="setFeedType($event)"
+      ></m-channel--sorted>
+    </section>
+  </ng-container>
+  <ng-template #legacyFeed>
+    <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="filter == 'feed'">
+      <m-channel--feed 
+        [user]="user"
+        #feed
+      ></m-channel--feed>
+    </section>
+  </ng-template>
 
   <!-- Supporters list -->
   <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'supporters'">

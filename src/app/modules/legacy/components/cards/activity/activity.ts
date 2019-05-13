@@ -12,6 +12,7 @@ import { MindsVideoComponent } from '../../../../media/components/video/video.co
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 import { EntitiesService } from "../../../../../common/services/entities.service";
 import { Router } from "@angular/router";
+import { BlockListService } from "../../../../../common/services/block-list.service";
 
 @Component({
   moduleId: module.id,
@@ -60,6 +61,8 @@ export class Activity {
   canDelete: boolean = false;
   showRatingToggle: boolean = false;
 
+  blockedUsers: string[] = [];
+
   get menuOptions(): Array<string> {
     if (!this.activity || !this.activity.ephemeral) {
       if (this.showBoostMenuOptions)  {
@@ -86,6 +89,7 @@ export class Activity {
     private cd: ChangeDetectorRef,
     private entitiesService: EntitiesService,
     private router: Router,
+    protected blockListService: BlockListService,
   ) {
 
     this.element = _element.nativeElement;
@@ -343,6 +347,14 @@ export class Activity {
     });
   }
 
+  isUnlisted() {
+    return this.activity.access_id === '0' || this.activity.access_id === 0;
+  }
+
+  ngOnInit() {
+    this.loadBlockedUsers();
+  }
+
   ngOnDestroy() {
     this.scroll.unListen(this.scroll_listener);
   }
@@ -360,6 +372,21 @@ export class Activity {
     if (this.player) {
       this.player.pause();
     }
+  }
+
+  async loadBlockedUsers() {
+    try {
+      this.blockedUsers = (await this.blockListService.getList()) || [];
+      this.detectChanges();
+    } catch (e) {
+      console.warn('Activity.loadBlockedUsers', e);
+    }
+
+    return true;
+  }
+
+  isOwnerBlocked(activity) {
+    return activity && this.blockedUsers.indexOf(activity.owner_guid) > -1;
   }
 
   detectChanges() {

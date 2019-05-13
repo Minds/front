@@ -145,32 +145,66 @@
 
 <div class="minds-spacer-2x"></div>
 
-<!-- images  -->
-<m-channel--modules [owner]="user" type="image" [linksTo]="['/media/images', user.username]">
+<ng-container *mIfFeature="'es-feeds'; else legacyModules">
+  <m-channels--sorted-module
+    title="Images"
+    i18n-title
+    type="images"
+    [channel]="user"
+    [linksTo]="['/', user.username, 'images']"
+    [size]="9"
+  ></m-channels--sorted-module>
 
-  <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/images', user.username]">
-    <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
-  </a>
-</m-channel--modules>
+  <div class="minds-spacer-2x"></div>
 
-<div class="minds-spacer-2x"></div>
+  <m-channels--sorted-module
+    title="Videos"
+    i18n-title
+    type="videos"
+    [channel]="user"
+    [linksTo]="['/', user.username, 'videos']"
+    [size]="9"
+  ></m-channels--sorted-module>
 
-<!-- videos  -->
-<m-channel--modules [owner]="user" type="video" limit="9" [linksTo]="['/media/videos', user.username]">
+  <div class="minds-spacer-2x"></div>
 
-  <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/videos', user.username]">
-    <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
-  </a>
-</m-channel--modules>
+  <m-channels--sorted-module
+    title="Blogs"
+    i18n-title
+    type="blogs"
+    [channel]="user"
+    [linksTo]="['/', user.username, 'blogs']"
+    [size]="3"
+  ></m-channels--sorted-module>
+</ng-container>
+<ng-template #legacyModules>
+  <!-- images  -->
+  <m-channel--modules [owner]="user" type="image" [linksTo]="['/media/images', user.username]">
 
-<div class="minds-spacer-2x"></div>
+    <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/images', user.username]">
+      <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
+    </a>
+  </m-channel--modules>
 
-<!-- Blogs  -->
-<m-channel--modules [owner]="user" type="blog" limit="3" [linksTo]="['/blog', user.username]">
+  <div class="minds-spacer-2x"></div>
 
-  <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/blog', user.username]">
-    <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
-  </a>
-</m-channel--modules>
+  <!-- videos  -->
+  <m-channel--modules [owner]="user" type="video" limit="9" [linksTo]="['/media/videos', user.username]">
 
-<div class="minds-spacer-2x"></div>
+    <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/videos', user.username]">
+      <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
+    </a>
+  </m-channel--modules>
+
+  <div class="minds-spacer-2x"></div>
+
+  <!-- Blogs  -->
+  <m-channel--modules [owner]="user" type="blog" limit="3" [linksTo]="['/blog', user.username]">
+
+    <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/blog', user.username]">
+      <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
+    </a>
+  </m-channel--modules>
+
+  <div class="minds-spacer-2x"></div>
+</ng-template>

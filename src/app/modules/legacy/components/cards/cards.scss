@@ -461,6 +461,11 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
       font-size: 18px;
       position: relative;
       vertical-align: middle;
+
+      &.unlisted {
+        font-size: 16px;
+        margin-right: 4px;
+      }
     }
     a{
       font-weight:bold;

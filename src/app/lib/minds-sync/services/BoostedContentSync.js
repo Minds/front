@@ -82,12 +82,29 @@ export default class BoostedContentSync {
     return true;
   }
 
+  async fetch(opts = {}) {
+    const boosts = await this.get(Object.assign(opts, {
+      limit: 1
+    }));
+
+    return boosts[0] || null;
+  }
+
   /**
    * @param {Object} opts
-   * @returns {Promise<*>}
+   * @returns {Promise<*[]>}
    */
-  async fetch(opts = {}) {
+  async get(opts = {}) {
     await this.db.ready();
+
+    // Default options
+
+    opts = Object.assign({
+      limit: 1,
+      offset: 0,
+      passive: false,
+      forceSync: false,
+    }, opts);
 
     // Prune list
 
@@ -124,53 +141,82 @@ export default class BoostedContentSync {
 
     // Fetch
 
-    let lockedUrn;
+    let lockedUrns = [];
 
     try {
-      const rows = (await this.db.getAllLessThan('boosts', 'lastImpression', Date.now() - this.cooldown_ms, { sortBy: 'impressions' }))
-        .filter(row => row && row.urn && (this.locks.indexOf(row.urn) === -1));
+      let rows;
 
-      if (!rows || !rows.length) {
-        return null;
+      if (!opts.passive) {
+        rows = await this.db
+          .getAllLessThan('boosts', 'lastImpression', Date.now() - this.cooldown_ms, { sortBy: 'impressions' });
+      } else {
+        rows = await this.db
+          .all('boosts', { sortBy: 'impressions' });
       }
 
-      // Pick first unlocked result
+      rows = rows.filter(row => row && row.urn && (this.locks.indexOf(row.urn) === -1));
 
-      const { urn, impressions } = rows[0];
+      if (opts.exclude) {
+        rows = rows.filter(row => opts.exclude.indexOf(row.urn) === -1);
+      }
 
-      // lock this URN
+      if (!rows || !rows.length) {
+        return [];
+      }
 
-      lockedUrn = urn;
-      this.locks.push(lockedUrn);
+      // Data set
 
-      // Increase counter
+      const dataSet = rows.slice(opts.offset || 0, opts.limit);
 
-      await this.db.update('boosts', urn, {
-        impressions: impressions + 1,
-        lastImpression: Date.now(),
-      });
+      if (!dataSet.length) {
+        return [];
+      }
 
-      // Release lock
+     // Lock data set URNs
 
-      if (lockedUrn) {
-        this.locks = this.locks.filter(lock => lock !== lockedUrn);
+      lockedUrns = [...dataSet.map(row => row.urn)];
+      this.locks.push(...lockedUrns);
+
+      // Process rows
+
+      for (let i = 0; i < dataSet.length; i++) {
+        const { urn, impressions, passiveImpressions } = dataSet[i];
+
+        // Increase counters
+
+        if (!opts.passive) {
+          await this.db.update('boosts', urn, {
+            impressions: (impressions || 0) + 1,
+            lastImpression: Date.now(),
+          });
+        } else {
+          await this.db.update('boosts', urn, {
+            passiveImpressions: (passiveImpressions || 0) + 1,
+          });
+        }
+      }
+
+      // Release locks
+
+      if (lockedUrns) {
+        this.locks = this.locks.filter(lock => lockedUrns.indexOf(lock) === -1);
       }
 
       // Hydrate entities
 
-      return await this.resolvers.fetchEntity(urn);
+      return await this.resolvers.fetchEntities(dataSet.map(row => row.urn));
     } catch (e) {
       console.error('BoostedContentSync.fetch', e);
 
-      // Release lock
+      // Release locks
 
-      if (lockedUrn) {
-        this.locks = this.locks.filter(lock => lock !== lockedUrn);
+      if (lockedUrns) {
+        this.locks = this.locks.filter(lock => lockedUrns.indexOf(lock) === -1);
       }
 
       // Return empty
 
-      return null;
+      return [];
     }
   }
 
@@ -219,7 +265,8 @@ export default class BoostedContentSync {
 
       await Promise.all(entities.map(entity => this.db.upsert('boosts', entity.urn, entity, {
         impressions: 0,
-        lastImpression: 0
+        lastImpression: 0,
+        passiveImpressions: 0,
       })));
 
       // Remove stale entries

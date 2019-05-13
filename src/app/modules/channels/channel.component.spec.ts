@@ -72,8 +72,13 @@ describe('ChannelComponent', () => {
         }),
         MockComponent({
           selector: 'm-sort-selector',
-          inputs: ['algorithm', 'period', 'customType', 'hideCustomTypesOnLatest'],
+          inputs: ['algorithm', 'period', 'customType'],
           outputs: ['onChange'],
+        }),
+        MockComponent({
+          selector: 'm-channel--sorted',
+          inputs: ['channel', 'type'],
+          outputs: ['onChangeType'],
         }),
         IfFeatureDirective,
       ],
@@ -106,6 +111,7 @@ describe('ChannelComponent', () => {
     fixture = TestBed.createComponent(ChannelComponent);
     clientMock.response = {};
     uploadMock.response = {};
+    featuresServiceMock.mock('es-feeds', false);
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('channel-filter-feeds', false);
     comp = fixture.componentInstance;

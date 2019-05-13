@@ -200,18 +200,20 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     this.inProgress = true;
 
     try {
+      const limit = 12;
+
+      const hashtags = this.hashtag ? encodeURIComponent(this.hashtag) : '';
+      const period = this.period || '';
+      const all = this.all ? '1' : '';
+      const query = this.query || '';
+      const nsfw = (this.newsfeedService.nsfw || []).join(',');
+
       const { entities, next } = await this.feedsService.get({
-        filter: 'global',
-        algorithm: this.algorithm,
-        customType: this.customType,
-        limit: 12,
-        offset: this.offset,
-        hashtags: this.hashtag ? [this.hashtag] : null,
-        period: this.period,
-        all: this.all,
-        query: this.query || '',
-        nsfw: this.newsfeedService.nsfw,
-        forceSync: forceSync,
+        endpoint: `api/v2/feeds/global/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}&query=${query}&nsfw=${nsfw}`,
+        timebased: false,
+        limit,
+        offset: <number> this.offset,
+        forceSync,
       });
 
       if (this.newsfeed && !refresh) {
@@ -338,6 +340,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
     route.push(params);
     this.router.navigate(route);
+  }
+
+  isActivityFeed() {
+    return this.customType != 'channels' && this.customType !== 'groups';
   }
 
   shouldShowBoost(i: number) {

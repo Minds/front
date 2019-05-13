@@ -10,6 +10,8 @@ import { Activity } from '../../../modules/legacy/components/cards/activity/acti
 import { NewsfeedService } from '../services/newsfeed.service';
 import { NewsfeedBoostService } from '../newsfeed-boost.service';
 import { SettingsService } from '../../settings/settings.service';
+import { FeaturesService } from "../../../services/features.service";
+import { BoostedContentService } from "../../../common/services/boosted-content.service";
 
 @Component({
   moduleId: module.id,
@@ -59,7 +61,9 @@ export class NewsfeedBoostRotatorComponent {
     private storage: Storage,
     public element: ElementRef,
     public service: NewsfeedBoostService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    protected featuresService: FeaturesService,
+    protected boostedContentService: BoostedContentService,
   ) {
 
     this.subscriptions = [
@@ -82,10 +86,55 @@ export class NewsfeedBoostRotatorComponent {
     this.paused = this.service.isBoostPaused();
   }
 
+  async load() {
+    if (this.featuresService.has('es-feeds')) {
+      return await this.loadFromService();
+    } else {
+      return await this.loadLegacy();
+    }
+  }
+
+  async loadFromService() {
+    try {
+      const boosts = await this.boostedContentService.get({
+        limit: 10,
+        offset: 8,
+        exclude: this.boosts.map(boost => boost.urn),
+        passive: true,
+      });
+
+      if (!boosts || !boosts.length) {
+        throw new Error(''); // Legacy behavior
+      }
+
+      this.boosts.push(...boosts);
+
+      if (this.boosts.length >= 40) {
+        this.boosts.splice(0, 20);
+        this.currentPosition = 0;
+      }
+
+      if (!this.running) {
+        this.recordImpression(this.currentPosition, true);
+        this.start();
+        this.isVisible();
+      }
+    } catch (e) {
+      if (e && e.message) {
+        console.warn(e);
+      }
+
+      throw e;
+    }
+
+    this.inProgress = false;
+    return true;
+  }
+
   /**
    * Load newsfeed
    */
-  load() {
+  loadLegacy() {
     return new Promise((resolve, reject) => {
       if (this.inProgress) {
         return reject(false);

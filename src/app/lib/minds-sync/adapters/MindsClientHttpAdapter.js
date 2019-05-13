@@ -12,7 +12,7 @@ export default class MindsClientHttpAdapter {
    * @param {boolean} cache
    * @returns {Promise<Object>}
    */
-  async get(endpoint, data = {}, cache = true) {
+  async get(endpoint, data = null, cache = true) {
     try {
       const response = await this.http.get(endpoint, data, { cache });
 
