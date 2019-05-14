@@ -74,16 +74,8 @@ export class GroupsProfileReviewComponent implements OnInit {
         this.group['adminqueue:count'] = response['adminqueue:count'];
       }
 
-      const entities = (response || {}).activity;
+      const entities = (response || {}).activity || [];
       const next = (response || {})['load-next'] || '';
-
-      if (!entities || !entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-        this.detectChanges();
-
-        return false;
-      }
 
       if (this.entities && !refresh) {
         this.entities.push(...entities);
