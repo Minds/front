@@ -79,6 +79,11 @@ m-app {
     }
   }
 
+  &.m-page--wrapped {
+    max-width: 1280px;
+    margin: auto;
+  }
+
   .m-page--main, .m-page__main {
     padding: 16px;
     flex: 1;

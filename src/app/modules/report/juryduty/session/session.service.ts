@@ -17,29 +17,16 @@ export class JurySessionService {
 
   async overturn(report) {
     const juryType = report.is_appeal ? 'appeal' : 'initial';
-    return await this.client.post(`api/v2/moderation/jury/${juryType}/${report.entity_guid}`, {
-      decision: 'overturn',
+    return await this.client.post(`api/v2/moderation/jury/${juryType}/${report.urn}`, {
+      uphold: false,
     });
   }
 
   async uphold(report) {
     const juryType = report.is_appeal ? 'appeal' : 'initial';
-    return await this.client.post(`api/v2/moderation/jury/${juryType}/${report.entity_guid}`, {
-      decision: juryType === 'appeal' ? 'uphold' : this.getActionId(report),
+    return await this.client.post(`api/v2/moderation/jury/${juryType}/${report.urn}`, {
+      uphold: true,
     });
-  }
-
-  private getActionId(report) {
-    let id = report.reason_code;
-    switch (report.reason_code) {
-      case 1:
-        id = "1." + report.sub_reason_code;
-        break;
-      case 2:
-        id = "2." + report.sub_reason_code;
-        break;
-    }
-    return id;
   }
 
   getReasonString(report) {
@@ -58,7 +45,7 @@ export class JurySessionService {
   }
 
   getAction(report) {
-    let friendlyString = report.entity.type == 'user' ? 'banned' : 'removed';
+    let friendlyString = report.entity && report.entity.type == 'user' ? 'banned' : 'removed';
     
     switch (report.reason_code) {
       case 2: 

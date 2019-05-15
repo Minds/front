@@ -14,7 +14,7 @@ import { CommentsModule } from '../comments/comments.module';
 import { JuryDutySessionListComponent } from './juryduty/session/list.component';
 import { JurySessionService } from './juryduty/session/session.service';
 import { JuryDutySessionContentComponent } from './juryduty/session/content.component';
-
+import { StrikesComponent } from './strikes/strikes.component';
 
 @NgModule({
   imports: [
@@ -28,6 +28,7 @@ import { JuryDutySessionContentComponent } from './juryduty/session/content.comp
       { path: 'moderation',  component: ReportsMarketingComponent },
       //{ path: 'moderation/juryduty', redirectTo: '/moderation/juryduty/appeal' },
       { path: 'moderation/juryduty/:jury', component: JuryDutySessionComponent, },
+      { path: 'settings/reported-content/strikes', component: StrikesComponent, },
     ]),
     TokenOnboardingModule,
   ],
@@ -38,6 +39,7 @@ import { JuryDutySessionContentComponent } from './juryduty/session/content.comp
     JuryDutySessionComponent,
     JuryDutySessionListComponent,
     JuryDutySessionContentComponent,
+    StrikesComponent,
   ],
   exports: [
     ReportConsoleComponent
@@ -46,6 +48,7 @@ import { JuryDutySessionContentComponent } from './juryduty/session/content.comp
     ReportCreatorComponent,
     ReportsMarketingComponent,
     JuryDutySessionComponent,
+    StrikesComponent,
   ],
   providers: [
     JurySessionService,

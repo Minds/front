@@ -75,7 +75,7 @@ export class ReportConsoleComponent implements OnInit {
     appeal.inProgress = true;
 
     try {
-      let response: any = await this.client.post(`api/v2/moderation/appeals/${appeal.report.entity_guid}`, {
+      let response: any = await this.client.post(`api/v2/moderation/appeals/${appeal.report.urn}`, {
         note: content
       });
 
