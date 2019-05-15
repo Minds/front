@@ -17,6 +17,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
+import { BlockListService } from "../../../common/services/block-list.service";
 
 @Component({
   selector: 'm-comments__thread',
@@ -45,6 +46,7 @@ export class CommentsThreadComponent {
   autoloadBlocked: boolean = false;
 
   comments: Array<any> = [];
+  blockedUsers: string[] = [];
   inProgress: boolean = false;
   error: string = '';
 
@@ -63,6 +65,7 @@ export class CommentsThreadComponent {
     private commentsService: CommentsService,
     public sockets: SocketsService,
     private renderer: Renderer,
+    protected blockListService: BlockListService,
     private cd: ChangeDetectorRef
   ) {
     this.minds = window.Minds;
@@ -85,7 +88,9 @@ export class CommentsThreadComponent {
       if (this.socketRoomName) {
         this.sockets.leave(this.socketRoomName);
       }
-      this.socketRoomName = void 0; 
+      this.socketRoomName = void 0;
+
+      await this.loadBlockedUsers();
     }
 
     this.inProgress = true;
@@ -140,6 +145,29 @@ export class CommentsThreadComponent {
     this.detectChanges(); 
   }
 
+  async loadBlockedUsers() {
+    try {
+      this.blockedUsers = (await this.blockListService.getList()) || [];
+    } catch (e) {
+      console.warn('CommentsThreadComponent.loadBlockedUsers', e);
+    }
+
+    return true;
+  }
+
+  isOwnerBlocked(comment) {
+    return comment && this.blockedUsers.indexOf(comment.owner_guid) > -1;
+  }
+
+  getComments() {
+    return this.comments
+      .filter(comment => !this.isOwnerBlocked(comment));
+  }
+
+  isThreadBlocked() {
+    return this.comments.length > 0 && this.getComments().length === 0;
+  }
+
   autoloadPrevious() {
     if (!this.morePrevious || this.autoloadBlocked) {
       return;
@@ -174,8 +202,10 @@ export class CommentsThreadComponent {
             parent_path: parent_path,
         });
         
-        if (comment)
+        if (comment) {
+          await this.loadBlockedUsers();
           this.comments.push(comment);
+        }
 
         this.detectChanges();
 

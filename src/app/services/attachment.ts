@@ -114,7 +114,7 @@ export class AttachmentService {
     this.meta.nsfw = nsfw.map(reason => reason.value);
   }
 
-  upload(fileInput: HTMLInputElement) {
+  upload(fileInput: HTMLInputElement, detectChangesFn?: Function) {
     this.reset();
 
     this.attachment.progress = 0;
@@ -136,6 +136,9 @@ export class AttachmentService {
         // Upload and return the GUID
         return this.uploadService.post('api/v1/media', [file], this.meta, (progress) => {
           this.attachment.progress = progress;
+          if (detectChangesFn) {
+            detectChangesFn();
+          }
         }, this.xhr);
       })
       .then((response: any) => {

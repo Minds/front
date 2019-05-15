@@ -34,6 +34,7 @@ import { MockComponent, MockDirective, MockService } from '../../../../../utils/
 import { IfFeatureDirective } from '../../../../../common/directives/if-feature.directive';
 import { NSFWSelectorConsumerService } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
 import { FeaturesService } from '../../../../../services/features.service';
+import { BlockListService } from "../../../../../common/services/block-list.service";
 
 /* tslint:disable */
 // START MOCKS
@@ -490,6 +491,10 @@ describe('Activity', () => {
           useValue: MockService(FeaturesService),
         },
         NewsfeedService,
+        {
+          provide: BlockListService,
+          useValue: MockService(BlockListService),
+        }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

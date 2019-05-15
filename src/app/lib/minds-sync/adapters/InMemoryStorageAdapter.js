@@ -278,11 +278,26 @@ export default class InMemoryStorageAdapter {
 
   /**
    * @param {string} table
+   * @param {{ sortBy }} opts
    * @returns {Promise<*[]>}
    */
-  async all(table) {
-    return this.db.data[table]
+  async all(table, opts = {}) {
+    const collection = this.db.data[table]
       .map(row => Object.assign({}, row));
+
+    if (opts.sortBy) {
+      return collection.sort((a, b) => {
+        const aIndex = a[opts.sortBy];
+        const bIndex = b[opts.sortBy];
+
+        if (aIndex < bIndex) return -1;
+        else if (bIndex > aIndex) return -1;
+
+        return 0;
+      });
+    }
+
+    return collection;
   }
 
   /**

@@ -25,6 +25,12 @@ m-sort-selector {
     }
   }
 
+  .m-dropdown--list--item--disabled {
+    @include m-theme(){
+      color: themed($m-grey-300);
+    }
+  }
+
   .m-dropdown {
     .m-dropdown--label-container {
       text-transform: uppercase;

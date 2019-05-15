@@ -356,6 +356,27 @@ minds-button-user-dropdown{
     position: absolute;
     text-transform: capitalize;
   }
+
+  .m-user-dropdown__item--nsfw {
+    overflow: visible;
+    
+    m-nsfw-selector {
+      border: 0;
+      width: 100%;
+      padding: 0;
+
+      .m-nsfwSelector__label {
+        m-tooltip {
+          display: none;
+        }  
+      }
+
+      .m-dropdown .m-dropdown__list {
+        width: 210px;
+      }
+    }
+  }
+  
 }
 
 .m-error-splash{

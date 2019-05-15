@@ -1,7 +1,5 @@
 <minds-newsfeed-poster (load)="prepend($event)" *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid" #poster></minds-newsfeed-poster>
 
-<ng-content select=".m-channel-feed__Filter"></ng-content>
-
 <div class="minds-list">
   <m-onboarding-feed *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid == user.guid"></m-onboarding-feed>
   <m-newsfeed--boost-rotator [channel]="user" interval="12" *ngIf="user.guid !== session.getLoggedInUser().guid && user.show_boosts"></m-newsfeed--boost-rotator>

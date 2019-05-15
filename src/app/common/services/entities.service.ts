@@ -68,18 +68,6 @@ export class EntitiesService {
     return await this.entitiesSync.get(urns);
   }
 
-  async prefetch(guids: string[]): Promise<boolean> {
-    await this.status.untilReady();
-
-    if (!guids || !guids.length) {
-      return true;
-    }
-
-    const urns = guids.map(guid => normalizeUrn(guid));
-
-    return await this.entitiesSync.sync(urns);
-  }
-
   static _(client: Client) {
     return new EntitiesService(client);
   }

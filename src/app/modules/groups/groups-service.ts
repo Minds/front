@@ -295,4 +295,12 @@ export class GroupsService {
       return !!response.done;
     });
   }
+
+  /**
+   * Returns the number of users belonging to a group
+   */
+  countMembers(guid: any){
+    return this.clientService.get(`api/v1/groups/membership/${guid}`)
+        .then(res => res['members'].length)
+  }
 }

@@ -97,13 +97,17 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() algorithm: string;
 
+  @Input() allowedAlgorithms: string[] | boolean = true;
+
   @Input() period: string;
+
+  @Input() allowedPeriods: string[] | boolean = true;
 
   @Input() customType: string;
 
-  @Input() labelClass: string = "m--sort-selector-label";
+  @Input() allowedCustomTypes: string[] | boolean = true;
 
-  @Input() hideCustomTypesOnLatest: string[] = [];
+  @Input() labelClass: string = "m--sort-selector-label";
 
   @Output() onChange: EventEmitter<{ algorithm, period, customType }> = new EventEmitter<{ algorithm, period, customType }>();
 
@@ -161,9 +165,28 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  getAlgorithms() {
+    if (this.allowedAlgorithms === true) {
+      return this.algorithms;
+    } else if (!this.allowedAlgorithms) {
+      return [];
+    }
+
+    return this.algorithms
+      .filter(algorithm => (<string[]>this.allowedAlgorithms).indexOf(algorithm.id) > -1);
+  }
+
+  shouldShowAlgorithms() {
+    return this.getAlgorithms().length > 0;
+  }
+
   setAlgorithm(id: string) {
     if (!this.algorithms.find(algorithm => id === algorithm.id)) {
       console.error('Unknown algorithm');
+      return false;
+    }
+
+    if (this.isDisabled(id)) {
       return false;
     }
 
@@ -185,6 +208,21 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     return currentAlgorithm[prop];
+  }
+
+  getPeriods() {
+    if (this.allowedPeriods === true) {
+      return this.periods;
+    } else if (!this.allowedPeriods) {
+      return [];
+    }
+
+    return this.periods
+      .filter(period => (<string[]>this.allowedPeriods).indexOf(period.id) > -1);
+  }
+
+  shouldShowPeriods() {
+    return this.getPeriods().length > 0;
   }
 
   setPeriod(id: string) {
@@ -224,11 +262,18 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getCustomTypes() {
-    if (this.hideCustomTypesOnLatest && this.algorithm === 'latest') {
-      return this.customTypes.filter(customType => this.hideCustomTypesOnLatest.indexOf(customType.id) === -1);
+    if (this.allowedCustomTypes === true) {
+      return this.customTypes;
+    } else if (!this.allowedCustomTypes) {
+      return [];
     }
 
-    return this.customTypes;
+    return this.customTypes
+      .filter(customType => (<string[]>this.allowedCustomTypes).indexOf(customType.id) > -1);
+  }
+
+  shouldShowCustomTypes() {
+    return this.getCustomTypes().length > 0;
   }
 
   setCustomType(id: string) {
@@ -278,4 +323,12 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
       this.customTypeDropdown.close();
     }
   }
+
+  isDisabled(id) {
+    return (id != 'top' 
+      && (this.customType === 'channels'
+        || this.customType === 'groups')
+    );
+  }
+
 }

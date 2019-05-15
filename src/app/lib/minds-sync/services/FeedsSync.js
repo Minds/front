@@ -1,3 +1,5 @@
+import asyncSleep from "../../../helpers/async-sleep";
+
 const E_NO_RESOLVER = function () {
   throw new Error('Resolver not set')
 };
@@ -13,14 +15,12 @@ export default class FeedsSync {
     this.http = http;
     this.db = db;
     this.stale_after_ms = stale_after * 1000;
-    this.limit = limit;
 
     this.resolvers = {
       stringHash: E_NO_RESOLVER,
       currentUser: E_NO_RESOLVER,
       blockedUserGuids: E_NO_RESOLVER,
       fetchEntities: E_NO_RESOLVER,
-      prefetchEntities: E_NO_RESOLVER,
     }
   }
 
@@ -60,36 +60,50 @@ export default class FeedsSync {
 
     const key = await this.buildKey(opts);
 
-    // If it's the first page or a forced refresh is needed, attempt to sync
-
-    if (!opts.offset || opts.forceSync) {
-      const wasSynced = await this.sync(opts);
-
-      if (!wasSynced) {
-        console.info('Cannot sync, using cache');
-      }
-    }
-
     // Fetch
 
     try {
-      const rows = await this.db.getAllSliced('feeds', 'key', key, {
-        offset: opts.offset,
-        limit: opts.limit,
-      });
-
+      let entities;
       let next;
-      if (rows.length > 0) {
-        next = (opts.offset || 0) + opts.limit;
+      let attempts = 0;
+
+      while (true) {
+        try {
+          const wasSynced = await this._sync(key, opts);
+
+          if (!wasSynced) {
+            console.info('Sync not needed, using cache');
+          }
+        } catch (e) {
+          console.warn('Cannot sync, using cache');
+        }
+
+        const rows = await this.db.getAllSliced('feeds', 'key', key, {
+          offset: opts.offset,
+          limit: opts.limit,
+        });
+
+        if (!rows || !rows.length) {
+          break;
+        }
+
+        // Hydrate entities
+        entities = await this.resolvers.fetchEntities(rows.map(row => row.guid));
+
+        // Calculate offset
+        opts.offset = (opts.offset || 0) + opts.limit;
+        next = opts.offset;
+
+        if (entities && entities.length) {
+          break;
+        }
+
+        if (attempts++ > 15) {
+          break;
+        }
+
+        await asyncSleep(100); // Throttle a bit
       }
-
-      // Hydrate entities
-
-      const entities = await this.resolvers.fetchEntities(rows.map(row => row.guid));
-
-      // Prefetch
-
-      this.prefetch(opts, next);
 
       //
 
@@ -104,67 +118,71 @@ export default class FeedsSync {
   }
 
   /**
-   * @param {Object} opts
-   * @param {Number} futureOffset
+   * @param key
+   * @param opts
    * @returns {Promise<boolean>}
+   * @private
    */
-  async prefetch(opts, futureOffset) {
-    if (!futureOffset) {
+  async _sync(key, opts) {
+    await this.db.ready();
+
+    // Read row (if no refresh is needed), else load defaults
+
+    const _syncAtRow = await this.db.get('syncAt', key);
+
+    const syncAt = opts.offset && _syncAtRow ? _syncAtRow : {
+      rows: 0,
+      moreData: true,
+      next: '',
+    };
+
+    if (!opts.offset) { // Check if first-page sync is needed
+      const stale = !syncAt.sync || (syncAt.sync + this.stale_after_ms) < Date.now();
+
+      if (!stale && !opts.forceSync) {
+        return false;
+      }
+    } else if (opts.timebased && (!syncAt.moreData || syncAt.rows >= (opts.offset + opts.limit))) { // Check if non-first-page sync is needed
+      return false;
+    } else if (!opts.timebased && opts.offset) { // If non-first-page and not timebased, sync is not needed
       return false;
     }
 
-    const key = await this.buildKey(opts);
-
-    const rows = await this.db.getAllSliced('feeds', 'key', key, {
-      offset: futureOffset,
-      limit: opts.limit,
-    });
-
-    await this.resolvers.prefetchEntities(rows.map(row => row.guid));
-
-    return true;
-  }
-
-  /**
-   * @param {Object} opts
-   * @returns {Promise<boolean>}
-   */
-  async sync(opts) {
-    await this.db.ready();
-
-    const key = await this.buildKey(opts);
-
-    // Is sync needed?
-
-    if (!opts.forceSync) {
-      const lastSync = await this.db.get('syncAt', key);
-
-      if (lastSync && lastSync.sync && (lastSync.sync + this.stale_after_ms) >= Date.now()) {
-        return true;
-      }
-    }
-
-    // Sync
+    // Request
 
     try {
-      const response = await this.http.get(`api/v2/feeds/global/${opts.algorithm}/${opts.customType}`, {
-        sync: 1,
-        limit: this.limit,
-        container_guid: opts.container_guid || '',
-        period: opts.period || '',
-        hashtags: opts.hashtags || '',
-        all: opts.all ? 1 : '',
-        query: opts.query || '',
-        nsfw: opts.nsfw || '',
-      }, true);
+      // Setup parameters
+
+      const syncPageSize = Math.max(opts.syncPageSize || 10000, opts.limit);
+      const qs = ['sync=1', `limit=${syncPageSize}`];
+
+      if (syncAt.next) {
+        qs.push(`from_timestamp=${syncAt.next}`);
+      }
+
+      // Setup endpoint (with parameters)
+
+      const endpoint = `${opts.endpoint}${opts.endpoint.indexOf('?') > -1 ? '&' : '?'}${qs.join('&')}`;
+
+      // Perform request
+
+      const response = await this.http.get(endpoint, null, true);
+
+      // Check if valid response
 
       if (!response.entities || typeof response.entities.length === 'undefined') {
         throw new Error('Invalid server response');
       }
 
-      // Prune old list
+      // Check if offset response
 
-      await this.prune(key);
+      const next = opts.timebased && response['load-next'];
+
+      // Prune list, if necessary
+
+      if (!syncAt.next) {
+        await this.prune(key);
+      }
 
       // Read blocked list
 
@@ -173,25 +191,29 @@ export default class FeedsSync {
       // Setup rows
 
       const entities = response.entities
+        .filter(feedSyncEntity => Boolean(feedSyncEntity))
         .filter(feedSyncEntity => blockedList.indexOf(feedSyncEntity.owner_guid) === -1)
-        .map((feedSyncEntity, index) => {
-          let obj = {
-            key,
-              id: `${key}:${`${index}`.padStart(24, '0')}`,
-          };
+        .map((feedSyncEntity, index) => Object.assign(feedSyncEntity, {
+          key,
+          id: `${key}:${`${syncAt.rows + index}`.padStart(24, '0')}`,
+        }));
 
-          obj = Object.assign(obj, feedSyncEntity);
-
-          return obj;
-        });
-
-      // Insert onto DB
+      // Insert entity refs
 
       await this.db.bulkInsert('feeds', entities);
-      await this.db.insert('syncAt', { key, sync: Date.now() });
+
+      // Update syncAt
+
+      await this.db.upsert('syncAt', key, {
+        key,
+        rows: syncAt.rows + entities.length,
+        moreData: Boolean(next && entities.length),
+        next: next || '',
+        sync: Date.now(),
+      });
     } catch (e) {
       console.warn('FeedsSync.sync', e);
-      return false;
+      throw e;
     }
 
     return true;
@@ -242,14 +264,7 @@ export default class FeedsSync {
 
     return await this.resolvers.stringHash(JSON.stringify([
       userGuid,
-      opts.container_guid || '',
-      opts.algorithm || '',
-      opts.customType || '',
-      opts.period || '',
-      opts.hashtags || '',
-      Boolean(opts.all),
-      opts.query || '',
-      opts.nsfw || '',
+      opts.endpoint,
     ]));
   }
 

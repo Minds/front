@@ -10,6 +10,7 @@ import {
   NSFWSelectorEditingService,
 } from './nsfw-selector.service';
 import { Storage } from '../../../services/storage';
+import { ifError } from 'assert';
 
 @Component({
   selector: 'm-nsfw-selector',
@@ -52,7 +53,18 @@ export class NSFWSelectorComponent {
     }
   }
 
+  @Input('locked') set locked(locked: Array<number>) {
+    for (let i in this.service.reasons) {
+      if (this.service.reasons[i].selected) {
+        this.service.reasons[i].locked = locked.indexOf(this.service.reasons[i].value) > -1;
+      }
+    }
+  }
+
   toggle(reason) {
+    if(reason.locked) {
+      return;
+    }
     this.service.toggle(reason);
 
     const reasons = this.service.reasons.filter(r => r.selected);

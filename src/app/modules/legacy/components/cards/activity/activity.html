@@ -26,6 +26,10 @@
         <i class="material-icons">trending_up</i>
         <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
       </div>
+      <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
+        <i class="material-icons unlisted">visibility_off</i>
+        <a i18n>Unlisted</a>
+      </div>
     </a>
     <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink"
       *ngIf="!activity.guid && activity.entity_guid && !activity.remind_object">
@@ -34,6 +38,10 @@
       <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
         <i class="material-icons">trending_up</i>
         <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
+      </div>
+      <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
+        <i class="material-icons unlisted">visibility_off</i>
+        <a i18n>Unlisted</a>
        </div>
      </a>
   </div>
@@ -78,6 +86,7 @@
         <m-nsfw-selector
           service="editing"
           [selected]="activity.nsfw"
+          [locked]="activity.ownerObj.nsfw_lock"
           (selected)="onNSWFSelections($event)"
         >
       </m-nsfw-selector>
@@ -178,7 +187,15 @@
   </div>
   <!-- Reminds -->
   <div *ngIf="activity.remind_object">
-    <minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" [boosted]="activity.boosted"></minds-remind>
+    <ng-container *ngIf="!isOwnerBlocked(activity.remind_object); else blockedRemindTemplate">
+      <minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" [boosted]="activity.boosted"></minds-remind>
+    </ng-container>
+    <ng-template #blockedRemindTemplate>
+      <div class="m-activity__blockedRemind">
+        <div class="m-activityBlockedRemind__title" i18n>This content is unavailable.</div>
+        <div class="m-activityBlockedRemind__description" i18n>You have blocked the author of this activity.</div>
+      </div>
+    </ng-template>
   </div>
 </ng-container>
 

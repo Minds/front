@@ -1,0 +1,41 @@
+<minds-newsfeed-poster
+  *ngIf="isOwner()"
+  (load)="prepend($event)"
+  #poster
+></minds-newsfeed-poster>
+
+<div class="minds-list">
+  <div>
+    <m-sort-selector
+      class="m-channel--sorted__SortSelector m-border"
+      [allowedAlgorithms]="false"
+      [allowedPeriods]="false"
+      [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
+      [customType]="type"
+      (onChange)="setFilter($event.customType)"
+    ></m-sort-selector>
+
+    <m-onboarding-feed
+      *ngIf="isOwner()"
+    ></m-onboarding-feed>
+
+    <ng-container *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView">
+      <m-newsfeed__tiles
+        [entities]="getAllEntities()"
+      ></m-newsfeed__tiles>
+    </ng-container>
+    <ng-template #entityListView>
+      <m-newsfeed__entity
+        *ngFor="let entity of getAllEntities()"
+        [entity]="entity"
+      ></m-newsfeed__entity>
+    </ng-template>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress"
+    ></infinite-scroll>
+  </div>
+</div>

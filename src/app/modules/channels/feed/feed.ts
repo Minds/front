@@ -11,8 +11,6 @@ import { MindsUser } from '../../../interfaces/entities';
 import { PosterComponent } from '../../../modules/newsfeed/poster/poster.component';
 import { WireChannelComponent } from '../../../modules/wire/channel/channel.component';
 import { debounceTime } from "rxjs/operators";
-import { FeaturesService } from "../../../services/features.service";
-import { FeedsService } from "../../../common/services/feeds.service";
 
 @Component({
   moduleId: module.id,
@@ -40,49 +38,8 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
 
   paramsSubscription: Subscription;
 
-  isSorting: boolean = false;
-  algorithm: string;
-  period: string;
-  customType: string;
-
   @ViewChild('poster') private poster: PosterComponent;
   @ViewChild('wire') private wire: WireChannelComponent;
-
-  @Input('isSorting') set _isSorting(isSorting: boolean) {
-    const changed = this.isSorting !== isSorting;
-    this.isSorting = isSorting;
-
-    if (changed) {
-      this.loadFeedObservable.next(Date.now());
-    }
-  }
-
-  @Input('algorithm') set _algorithm(algorithm) {
-    const changed = this.algorithm !== algorithm;
-    this.algorithm = algorithm;
-
-    if (changed) {
-      this.loadFeedObservable.next(Date.now());
-    }
-  }
-
-  @Input('period') set _period(period) {
-    const changed = this.period !== period;
-    this.period = period;
-
-    if (changed) {
-      this.loadFeedObservable.next(Date.now());
-    }
-  }
-
-  @Input('customType') set _customType(customType) {
-    const changed = this.customType !== customType;
-    this.customType = customType;
-
-    if (changed) {
-      this.loadFeedObservable.next(Date.now());
-    }
-  }
 
   protected loadFeedObservable: Subject<any> = new Subject();
   protected loadFeedObservableSubscription: Subscription;
@@ -92,8 +49,6 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     public client: Client,
     public upload: Upload,
     public scroll: ScrollService,
-    protected featuresService: FeaturesService,
-    protected feedsService: FeedsService,
   ) { }
 
   ngOnInit() {
@@ -120,118 +75,6 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    if (this.isSorting) {
-      this.loadTopFeed(refresh);
-    } else {
-      return this.loadLatestFeed(refresh);
-    }
-  }
-
-  async loadTopFeed(refresh: boolean = false) {
-    if (this.featuresService.has('sync-feeds')) {
-      return await this.loadTopFeedFromFeedsService(refresh);
-    } else {
-      return await this.loadTopFeedLegacy(refresh);
-    }
-  }
-
-  /**
-   * @param refresh
-   */
-  async loadTopFeedFromFeedsService(refresh: boolean = false) {
-    if (refresh) {
-      this.feed = [];
-      this.offset = '';
-    }
-
-    let params: any = {
-      filter: 'global',
-      algorithm: this.algorithm,
-      customType: this.customType,
-      container_guid: this.user.guid,
-      limit: 12,
-      offset: null,
-      period: this.period,
-      all: 1,
-    };
-
-    this.inProgress = true;
-
-    params.offset = this.offset;
-
-    try {
-      const { entities, next } = await this.feedsService.get(params);
-
-      if (!entities || !entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-
-        return false;
-      }
-
-      if (this.feed && !refresh) {
-        this.feed.push(...entities);
-      } else {
-        this.feed = entities;
-      }
-
-      this.offset = next;
-      this.inProgress = false;
-
-      return true;
-    } catch (e) {
-      this.inProgress = false;
-      return false;
-    }
-  }
-
-  /**
-   * @deprecated
-   * @param {Boolean} refresh
-   */
-  async loadTopFeedLegacy(refresh) {
-    if (refresh) {
-      this.feed = [];
-      this.offset = '';
-    }
-
-    let params: any = {
-      container_guid: this.user.guid,
-      limit: 12,
-      offset: '',
-      period: this.period,
-      all: 1,
-    };
-
-    this.inProgress = true;
-
-    params.offset = this.offset;
-
-    try {
-      const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, params, { cache: true });
-
-      if (!data.entities || !data.entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-
-        return false;
-      }
-      if (this.feed && !refresh) {
-        this.feed.push(...data.entities);
-      } else {
-        this.feed = data.entities;
-      }
-      this.offset = data['load-next'];
-      this.inProgress = false;
-
-      return true;
-    } catch (e) {
-      this.inProgress = false;
-      return false;
-    }
-  }
-
-  loadLatestFeed(refresh?: boolean) {
     if (refresh) {
       this.feed = [];
       this.offset = '';

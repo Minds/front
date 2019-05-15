@@ -199,11 +199,18 @@ export default class DexieStorageAdapter {
 
   /**
    * @param {string} table
+   * @param {{ sortBy }} opts
    * @returns {Promise<*[]>}
    */
-  async all(table) {
-    return await this.db.table(table)
-      .toArray();
+  async all(table, opts = {}) {
+    const collection = this.db.table(table)
+      .toCollection();
+
+    if (opts.sortBy) {
+      return await collection.sortBy(opts.sortBy);
+    }
+
+    return await collection.toArray();
   }
 
   /**

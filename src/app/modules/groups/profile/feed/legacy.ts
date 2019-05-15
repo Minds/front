@@ -7,8 +7,6 @@ import { Session } from '../../../../services/session';
 import { PosterComponent } from '../../../newsfeed/poster/poster.component';
 import { Subscription } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { FeaturesService } from "../../../../services/features.service";
-import { FeedsService } from "../../../../common/services/feeds.service";
 
 interface MindsGroupResponse {
   group: MindsGroup;
@@ -23,10 +21,10 @@ interface MindsGroup {
 @Component({
   moduleId: module.id,
   selector: 'minds-groups-profile-feed',
-  templateUrl: 'feed.html'
+  templateUrl: 'legacy.html'
 })
 
-export class GroupsProfileFeed {
+export class GroupsProfileLegacyFeed {
 
   guid;
   group: any;
@@ -44,16 +42,8 @@ export class GroupsProfileFeed {
   pollingOffset: string = '';
   pollingNewPosts: number = 0;
 
-  kickPrompt: boolean = false;
-  kickBan: boolean = false;
-  kickSuccess: boolean = false;
-  kickUser: any;
+  kicking: any;
   paramsSubscription: Subscription;
-
-  isSorting: boolean;
-  algorithm: string;
-  period: string;
-  customType: string;
 
   @ViewChild('poster') private poster: PosterComponent;
 
@@ -62,8 +52,6 @@ export class GroupsProfileFeed {
     public client: Client,
     public service: GroupsService,
     private route: ActivatedRoute,
-    protected featuresService: FeaturesService,
-    protected feedsService: FeedsService,
   ) { }
 
   ngOnInit() {
@@ -75,26 +63,6 @@ export class GroupsProfileFeed {
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       this.filter = params['filter'] ? params['filter'] : 'activity';
-
-      this.isSorting = Boolean(params['algorithm']);
-
-      if (this.isSorting) {
-        this.algorithm = params['algorithm'] || 'top';
-        this.period = params['period'] || '7d';
-        this.customType = params['type'] || 'activities';
-      } else {
-        if (!this.algorithm) {
-          this.algorithm = 'top';
-        }
-
-        if (!this.period) {
-          this.period = '7d';
-        }
-
-        if (!this.customType) {
-          this.customType = 'activities';
-        }
-      }
 
       this.load(true);
       this.setUpPoll();
@@ -136,12 +104,6 @@ export class GroupsProfileFeed {
   loadActivities(refresh: boolean = false) {
     this.inProgress = true;
 
-    let endpoint = `api/v1/newsfeed/container/${this.guid}`;
-
-    if (this.filter == 'review') {
-      endpoint = `api/v1/groups/review/${this.guid}`;
-    }
-
     const currentFilter = this.filter;
 
     let opts:any = {
@@ -153,7 +115,7 @@ export class GroupsProfileFeed {
       opts.pinned = this.group.pinned_posts;
     }
 
-    this.client.get(endpoint, opts)
+    this.client.get(`api/v1/newsfeed/container/${this.guid}`, opts)
       .then((response: any) => {
         if (this.filter !== currentFilter) {
           return; // Prevents race condition
@@ -265,85 +227,6 @@ export class GroupsProfileFeed {
       });
   }
 
-  async loadSorted(refresh: boolean = false) {
-    if (this.featuresService.has('sync-feeds')) {
-      return await this.loadSortedFromFeedsService(refresh);
-    } else {
-      return await this.loadSortedLegacy(refresh);
-    }
-  }
-
-  async loadSortedFromFeedsService(refresh: boolean = false) {
-    try {
-      const { entities, next } = await this.feedsService.get({
-        filter: 'global',
-        algorithm: this.algorithm,
-        customType: this.customType,
-        period: this.period,
-        limit: 12,
-        offset: <number>this.offset,
-        container_guid: this.guid,
-        all: 1,
-      });
-
-      if (!entities || !entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-
-        return false;
-      }
-
-      if (refresh) {
-        this.activity = [];
-      }
-
-      this.activity.push(...entities);
-
-      this.offset = next;
-      this.inProgress = false;
-    } catch (e) {
-      console.log(e);
-      this.inProgress = false;
-    }
-  }
-
-  /**
-   * @deprecated
-   * @param refresh
-   */
-  async loadSortedLegacy(refresh: boolean = false) {
-    try {
-      const data: any = await this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
-        limit: 12,
-        offset: this.offset,
-        period: this.period,
-        container_guid: this.guid,
-        all: 1,
-      }, {
-        cache: true
-      });
-
-      if (!data.entities || !data.entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-
-        return false;
-      }
-
-      if (refresh) {
-        this.activity = [];
-      }
-
-      this.activity.push(...data.entities);
-
-      this.offset = data['load-next'];
-      this.inProgress = false;
-    } catch (e) {
-      console.log(e);
-      this.inProgress = false;
-    }
-  }
-
   /**
    * Load a groups newsfeed
    */
@@ -363,17 +246,12 @@ export class GroupsProfileFeed {
       this.activity = [];
     }
 
-    if (this.isSorting) {
-      this.loadSorted(refresh);
-    } else {
-      switch(this.filter) {
-        case 'activity':
-        case 'review':
-          return this.loadActivities(refresh);
-        case 'image':
-        case 'video':
-          return this.loadMedia(refresh);
-      }
+    switch(this.filter) {
+      case 'activity':
+        return this.loadActivities(refresh);
+      case 'image':
+      case 'video':
+        return this.loadMedia(refresh);
     }
   }
 
@@ -397,83 +275,9 @@ export class GroupsProfileFeed {
     return true;
   }
 
-  // admin queue
-
-  async approve(activity, index: number) {
-    if (!activity) {
-      return;
-    }
-
-    this.activity.splice(index, 1);
-
-    try {
-      await this.client.put(`api/v1/groups/review/${this.group.guid}/${activity.guid}`);
-
-      this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
-    } catch (e) {
-      alert((e && e.message) || 'Internal server error');
-    }
-  }
-
-  async reject(activity, index: number) {
-    if (!activity) {
-      return;
-    }
-
-    this.activity.splice(index, 1);
-
-    try {
-      await this.client.delete(`api/v1/groups/review/${this.group.guid}/${activity.guid}`);
-
-      this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
-    } catch (e) {
-      alert((e && e.message) || 'Internal server error');
-    }
-  }
-
   // kick & ban
 
-  removePrompt(user: any) {
-    if (!user) {
-      console.error(user);
-      return;
-    }
-
-    this.kickSuccess = false;
-    this.kickPrompt = true;
-    this.kickBan = false;
-    this.kickUser = user;
+  kick(user: any) {
+    this.kicking = user;
   }
-
-  cancelRemove() {
-    this.kickSuccess = false;
-    this.kickPrompt = false;
-    this.kickBan = false;
-    this.kickUser = void 0;
-  }
-
-  kick(ban: boolean = false) {
-    if (!this.kickUser) {
-      return;
-    }
-
-    let action;
-
-    this.kickPrompt = false;
-
-    if (ban) {
-      action = this.service.ban(this.group, this.kickUser.guid);
-    } else {
-      action = this.service.kick(this.group, this.kickUser.guid);
-    }
-
-    this.kickUser = void 0;
-
-    action.then(() => {
-      this.kickPrompt = false;
-      this.kickBan = false;
-      this.kickSuccess = true;
-    });
-  }
-
 }
