@@ -28,7 +28,7 @@
   }
 }
 
-.m-reportMarketing__stats  {
+.m-reportMarketing__stats, .m-reportMarketing__section  {
 
   padding: 32px !important;
 
@@ -42,8 +42,15 @@
     color: #666;
   }
 
+  .m-layout__row {
+    flex-wrap: wrap;
+  }
+
   .m-layout__cell {
     text-align: center;
+    @media screen and (max-width: 900px) {
+      padding: 32px;
+    }
   }
 
   b {
@@ -63,4 +70,42 @@
     display: block;
   }
 
+}
+
+.m-reportMarketing__list {
+  list-style: decimal;
+  font-size: 24px;
+  font-weight: 800;
+  color: #aaa;
+
+  li {
+    padding: 16px;
+
+    p {
+      font-size: 24px;
+      color: #555;
+      font-weight: 500;
+    }
+  }
+
+}
+
+.m-reportMarketingList__sublist {
+  display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 740px;
+
+  li {
+    width: 50%;
+    color: #888;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    cursor: default;
+    padding: 0;
+
+    @media screen and (max-width: 890px) {
+      width: 100%;
+    }
+  }
 }

@@ -34,6 +34,8 @@ export const REASONS : Array<any> = [
       { value: 2, label: 'Paedophilia' },
       { value: 3, label: 'Extortion' },
       { value: 4, label: 'Fraud' },
+      { value: 5, label: 'Revenge Porn' },
+      { value: 6, label: 'Sex trafficking' }, 
     ],
   },
   { 
@@ -45,7 +47,7 @@ export const REASONS : Array<any> = [
       { value: 2, label: 'Pornography' },
       { value: 3, label: 'Profanity' },
       { value: 4, label: 'Violance and Gore' },
-      { value: 5, label: 'Race and Religion' },
+      { value: 5, label: 'Race, Religion, Gender' },
     ],
   },
   { 
@@ -55,7 +57,7 @@ export const REASONS : Array<any> = [
   },
   { 
     value: 4,
-    label: 'Threatens, harasses or bullies',
+    label: 'Harassment',
     hasMore: false,
   },
   { 
@@ -88,10 +90,20 @@ export const REASONS : Array<any> = [
     label: 'Malware',
     hasMore: false,
   },
-  { value: 11,
-    label: 'Another reason',
-    hasMore: true,
-  },  
+  {
+    value: 15,
+    label: 'Trademark infringement',
+    hasMore: false,
+  },
+  {
+    value: 16,
+    label: 'Token manipulation',
+    hasMore: false,
+  },
+  //{ value: 11,
+  //  label: 'Another reason',
+  //  hasMore: true,
+  //},  
 ];
 
 export const READABLE_REASONS : Array<any> = [
@@ -102,11 +114,11 @@ export const READABLE_REASONS : Array<any> = [
       { value: 2, label: 'Ponography' },
       { value: 3, label: 'Profanity' },
       { value: 4, label: 'Violance and Gore' },
-      { value: 5, label: 'Race and Religion' },
+      { value: 5, label: 'Race, Religion, Gender, etc' },
     ]
   },
   { value: 3, label: 'Encourages or incites violence' },
-  { value: 4, label: 'Threatens, harasses, bullies or encourages others to do so' },
+  { value: 4, label: 'Harassment' },
   { value: 5, label: 'contains personal and confidential info' },
   { value: 6, label: 'Maliciously targets users (@name, links, images or videos)' },
   { value: 7, label: 'Impersonates someone in a misleading or deceptive manner' },
@@ -114,6 +126,9 @@ export const READABLE_REASONS : Array<any> = [
   { value: 10, label: 'is a copyright infringement' },
   { value: 11, label: 'Another reason' },
   { value: 12, label: 'Incorrect use of hashtags' },
+  { value: 13, label: 'Malware' },
+  { value: 15, label: 'Trademark infringement' },
+  { value: 16, label: 'Token manipulation' },
 ];
 
 export const REPORT_ACTIONS = {

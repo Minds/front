@@ -30,18 +30,16 @@ export class JurySessionService {
   }
 
   getReasonString(report) {
-    let friendlyString = 'removed';
-    
-    switch (report.reason_code) {
-      case 1: 
-        friendlyString = 'being illegal (todo)';
-        break;
-      case 2:
-        friendlyString = REASONS[1].reasons[report.sub_reason_code-1].label;
-        break;
-    }
-
-    return friendlyString;
+    return REASONS.filter((item) => {
+      if (item.hasMore && item.reasons) {
+        return item.reasons[report.sub_reason_code].value === report.sub_reason_code;
+      }
+      return item.value === report.reason_code;
+    })
+    .map((item) => {
+      return item.label;
+    })
+    .join(', ');
   }
 
   getAction(report) {

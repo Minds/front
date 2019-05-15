@@ -132,7 +132,8 @@ export class NewsfeedComponent {
 
   ngOnDestroy() {
     clearInterval(this.pollingTimer);
-    this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) 
+      this.paramsSubscription.unsubscribe();
   }
 
   reloadTopFeed(all: boolean = false) {

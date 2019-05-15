@@ -21,6 +21,29 @@
       </div>
     </div>
   </div>
+  
+  <div class="m-marketing__contents m-reportMarketing__section">
+    <h4>How it works</h4>
+    <ul class="m-reportMarketing__list">
+      <li>
+        <p>Users report content or channels that may violate the Minds Terms of Service.</p>
+        <ul class="m-reportMarketingList__sublist">
+          <li *ngFor="let reason of reasons">
+            {{ reason.label }}
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>Reports are reviewed by Minds admins (eventually this step could be done by a Minds jury).</p>
+      </li>
+      <li>
+        <p>If an action is taken, the user in violation is properly notified and provided with a chance to appeal the decision.</p>
+      </li>
+      <li>
+        <p>Appeals are reviewed by a Minds jury of 12 unique users. Over 75% of the jury must approve the appeal to reverse a decision.</p>
+      </li>
+    </ul>
+  </div>
 
   <div class="m-marketing__contents m-reportMarketing__stats">
     <h4>Last 30 days</h4>

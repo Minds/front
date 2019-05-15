@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../common/api/client.service';
 import { MindsTitle } from '../../../services/ux/title';
+import { REASONS as REASONS_LIST } from '../../../services/list-options';
+
 
 @Component({
   selector: 'm-reports__marketing',
@@ -26,6 +28,7 @@ export class ReportsMarketingComponent {
     appealedPct: 0,
     upheldPct: 0,
   };
+  reasons = REASONS_LIST;
 
   constructor(
     private client: Client,

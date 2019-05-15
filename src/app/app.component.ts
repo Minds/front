@@ -16,6 +16,7 @@ import { ChannelOnboardingService } from "./modules/onboarding/channel/onboardin
 import { BlockListService } from "./common/services/block-list.service";
 import { FeaturesService } from "./services/features.service";
 import { ThemeService } from "./common/services/theme.service";
+import { BannedService } from './modules/report/banned/banned.service';
 
 @Component({
   moduleId: module.id,
@@ -49,6 +50,7 @@ export class Minds {
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
     public themeService: ThemeService,
+    private bannedService: BannedService,
   ) {
     this.name = 'Minds';
   }

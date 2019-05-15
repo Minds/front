@@ -15,6 +15,8 @@ import { JuryDutySessionListComponent } from './juryduty/session/list.component'
 import { JurySessionService } from './juryduty/session/session.service';
 import { JuryDutySessionContentComponent } from './juryduty/session/content.component';
 import { StrikesComponent } from './strikes/strikes.component';
+import { BannedService } from './banned/banned.service';
+import { BannedComponent } from './banned/banned.component';
 
 @NgModule({
   imports: [
@@ -29,6 +31,7 @@ import { StrikesComponent } from './strikes/strikes.component';
       //{ path: 'moderation/juryduty', redirectTo: '/moderation/juryduty/appeal' },
       { path: 'moderation/juryduty/:jury', component: JuryDutySessionComponent, },
       { path: 'settings/reported-content/strikes', component: StrikesComponent, },
+      { path: 'moderation/banned', component: BannedComponent },
     ]),
     TokenOnboardingModule,
   ],
@@ -40,6 +43,7 @@ import { StrikesComponent } from './strikes/strikes.component';
     JuryDutySessionListComponent,
     JuryDutySessionContentComponent,
     StrikesComponent,
+    BannedComponent,
   ],
   exports: [
     ReportConsoleComponent
@@ -49,9 +53,11 @@ import { StrikesComponent } from './strikes/strikes.component';
     ReportsMarketingComponent,
     JuryDutySessionComponent,
     StrikesComponent,
+    BannedComponent,
   ],
   providers: [
     JurySessionService,
+    BannedService,
   ]
 })
 

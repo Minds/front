@@ -15,7 +15,7 @@
     display: inline-flex;
     /* width: 100%; */
     @include m-theme() {
-      border-bottom: 1px solid themed($m-grey-100);
+      border: 1px solid themed($m-grey-100);
     }
     border-radius: 24px;
     font-weight: 600;
@@ -91,17 +91,16 @@
     font-size: 14px;
     letter-spacing: 2.33px;
     appearance: none;
-    padding: 8px 32px;
+    //padding: 8px 32px;
     background: none;
-    border-radius: 0;
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
     text-transform: uppercase;
     cursor: pointer;
     @include m-theme(){
-      border: 1px solid themed($m-grey-700);
-      color: themed($m-grey-700);
+    //  border: 1px solid themed($m-grey-700);
+    //  color: themed($m-grey-700);
     }
 
     &[disabled] {
