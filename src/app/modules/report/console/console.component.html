@@ -6,57 +6,12 @@
   <a routerLink="strikes" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'strikes' }" i18n="@@M__COMMON__REJECTED">Strikes</a>
 </div>
 
-<div *ngFor="let appeal of appeals; let i = index"
-  class="mdl-card mdl-shadow--2dp m-report-console--item"
->
+<div *ngFor="let appeal of appeals; let i = index">
 
-  <div class="m-report-console--header mdl-color--blue mdl-color-text--white">
-    <b>{{ appeal.time_created * 1000 | date: 'short' }}</b>
-    <p>
-      <span>Should be</span>
-      <b> {{ service.getAction(appeal.report) }} </b>
-      <span>for</span>
-      <b> {{ service.getReasonString(appeal.report) }} </b>
-    </p>
-  </div>
-
-  <div class="m-report-console--appeal">
-    <div class="m-report-console--appeal--composer" *ngIf="filter == 'review'">
-      <textarea #appealContent placeholder="Please type in this box if you wish to appeal this decision, explaining your reasons" i18n="@@REPORT__CONSOLE__APPEAL_COMPOSER_PLACEHOLDER"></textarea>
-
-      <button class="m-report-console--appeal--button"
-        [disabled]="appeal.inProgress"
-        (click)="sendAppeal(appeal, appealContent.value, i)"
-        i18n="@@REPORT__CONSOLE__APPEAL_ACTION"
-      >
-        Appeal
-      </button>
-    </div>
-    <div class="m-report-console--appeal-note" *ngIf="appeal.note">
-      <p>{{appeal.appeal_note}}</p>  
-    </div>    
-  </div>
-
-
-
-  <minds-card *ngIf="appeal.report.entity && appeal.report.entity.type != 'comment'"
-    class="m-report-console--card"
-    [object]="appeal.report.entity"
-    hostClass="mdl-card"
-  ></minds-card>
-
-  <div *ngIf="appeal.entityObj && appeal.entityObj.type == 'comment'" class="m-comment-wrapper">
-    <div class="m-report-console--comment-note">
-      <a target="_blank" [routerLink]="['/newsfeed', appeal.entityObj.parent_guid]" i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD">View parent and its comment thread</a>
-    </div>
-    <minds-card-comment [object]="appeal.entityObj" class="mdl-card"></minds-card-comment>
-  </div>
-
-  <div *ngIf="!appeal.entityObj" class="m-comment-wrapper">
-    <div class="m-report-console--comment-note" i18n="@@M__COMMON__POST_NOT_FOUND">
-      Post not found
-    </div>
-  </div>
+  <m-moderation__appeal
+    [appeal]="appeal"
+  >
+  </m-moderation__appeal>
 
 </div>
 

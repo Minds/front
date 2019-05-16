@@ -21,10 +21,26 @@ import { JurySessionService } from '../juryduty/session/session.service';
 export class BannedComponent {
 
   minds = window.Minds;
+  appeals = [];
 
   constructor(
+    private client: Client,
     private sessionService: JurySessionService,
+    private cd: ChangeDetectorRef,
   ) { } 
+
+  ngOnInit() {
+    this.loadAppeal();
+  }
+
+  async loadAppeal() {
+    try {
+      let response: any = await this.client.get(`api/v2/moderation/appeals/review`);
+      this.appeals = response.appeals;
+      this.detectChanges();
+    } catch (e) {
+    }
+  }
 
   get reason() {
     const parts = this.minds.user.ban_reason.split('.');
@@ -39,6 +55,11 @@ export class BannedComponent {
     }
 
     return friendlyString + this.sessionService.getReasonString({ reason_code: reasonCode, sub_reason_code: subReasonCode });
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
 }

@@ -17,6 +17,7 @@ import { JuryDutySessionContentComponent } from './juryduty/session/content.comp
 import { StrikesComponent } from './strikes/strikes.component';
 import { BannedService } from './banned/banned.service';
 import { BannedComponent } from './banned/banned.component';
+import { ModerationAppealComponent } from './console/appeal.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { BannedComponent } from './banned/banned.component';
     JuryDutySessionContentComponent,
     StrikesComponent,
     BannedComponent,
+    ModerationAppealComponent,
   ],
   exports: [
     ReportConsoleComponent
