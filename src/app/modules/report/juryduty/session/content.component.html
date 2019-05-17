@@ -24,13 +24,15 @@
                 class="m-btn m-btn--slim"
                 (click)="uphold()"
             >
-                Uphold Report
+              <ng-container *ngIf="report.is_appeal; else upholdLabel">Reject Appeal</ng-container>
+              <ng-template #upholdLabel>Uphold Report</ng-template>
             </button>
             <button
                 class="m-btn m-btn--slim"
                 (click)="overturn()"
             >
-                Overturn Report
+              <ng-container *ngIf="report.is_appeal; else overturnLabel">Accept Appeal</ng-container>
+              <ng-template #overturnLabel>Overturn Report</ng-template>
             </button>
         </div>
     </ng-container>
