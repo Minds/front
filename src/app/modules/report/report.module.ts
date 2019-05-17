@@ -29,7 +29,8 @@ import { ModerationAppealComponent } from './console/appeal.component';
     LegacyModule,
     CommentsModule,
     RouterModule.forChild([
-      { path: 'moderation',  component: ReportsMarketingComponent },
+      { path: 'moderation',  redirectTo: '/content-policy' },
+      { path: 'content-policy', component: ReportsMarketingComponent },
       //{ path: 'moderation/juryduty', redirectTo: '/moderation/juryduty/appeal' },
       { path: 'moderation/juryduty/:jury', component: JuryDutySessionComponent, },
       { path: 'settings/reported-content/strikes', component: StrikesComponent, },

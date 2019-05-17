@@ -70,7 +70,7 @@ export class JuryDutySessionSummonsComponent {
   }
 
   async accept() {
-    if (!confirm("I am 18 years old and volunteer to participate in this jury. I acknowledge that I may be exposed to content not safe for work (NSFW) and understand that the purpose of the trial is to enforce the site content policy.")) {
+    if (!confirm("I am at least 18 years of age and volunteer to participate in this jury. I acknowledge that I may be exposed to content that is Not Safe for Work (NSFW) and understand the purpose of this jury is to enforce the content policy on Minds.")) {
       return;
     }
     this.accepted = true;
