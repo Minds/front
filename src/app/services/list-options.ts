@@ -46,7 +46,7 @@ export const REASONS : Array<any> = [
       { value: 1, label: 'Nudity' },
       { value: 2, label: 'Pornography' },
       { value: 3, label: 'Profanity' },
-      { value: 4, label: 'Violance and Gore' },
+      { value: 4, label: 'Violence and Gore' },
       { value: 5, label: 'Race, Religion, Gender' },
     ],
   },
