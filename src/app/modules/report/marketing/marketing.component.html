@@ -11,7 +11,7 @@
           The Minds Jury decides on what content is within the terms of service.
         </h3>
       
-        <button class="m-btn m-btn--slim" (click)="startJuryDuty()">
+        <button class="m-btn m-btn--slim" (click)="startJuryDuty()" *ngIf="session.isAdmin()">
           Start Jury Duty
         </button>
       </div>
@@ -53,11 +53,11 @@
         <span>Content Reported</span>
       </div>
       <div class="m-layout__cell">
-        <b>{{ stats.appealedPct }}%</b>
+        <b>{{ stats.appealedPct | number }}%</b>
         <span>Appealed</span>
       </div>
       <div class="m-layout__cell">
-        <b>{{ stats.upheldPct }}%</b>
+        <b>{{ stats.upheldPct | number }}%</b>
         <span>Upheld by Community Jury</span>
       </div>
     </div>

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { Client } from '../../../common/api/client.service';
 import { MindsTitle } from '../../../services/ux/title';
 import { REASONS as REASONS_LIST } from '../../../services/list-options';
-
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-reports__marketing',
@@ -35,6 +35,7 @@ export class ReportsMarketingComponent {
     private cd: ChangeDetectorRef,
     private router: Router,
     private title: MindsTitle,
+    public session: Session,
   ) {
     title.setTitle('Community Moderation');
   }
@@ -44,7 +45,7 @@ export class ReportsMarketingComponent {
   }
 
   startJuryDuty() {
-    this.router.navigate(['/moderation/juryduty/appeal']);
+    this.router.navigate(['/moderation/juryduty/initial']);
   }
 
   async loadStats() {

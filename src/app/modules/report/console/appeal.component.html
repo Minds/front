@@ -13,20 +13,21 @@
     <div class="m-moderationAppeal__composer" *ngIf="!appeal.note">
       <textarea
         #appealContent
+        [(ngModel)]="note"
         placeholder="Please type in this box if you wish to appeal this decision, explaining your reasons"
         i18n="@@REPORT__CONSOLE__APPEAL_COMPOSER_PLACEHOLDER"
       ></textarea>
 
       <button class="m-moderationAppeal__button"
         [disabled]="appeal.inProgress"
-        (click)="sendAppeal(appeal, appealContent.value, i)"
+        (click)="sendAppeal()"
         i18n="@@REPORT__CONSOLE__APPEAL_ACTION"
       >
         Appeal
       </button>
     </div>
     <div class="m-moderationAppeal__appealNote" *ngIf="appeal.note">
-      <p>{{appeal.appeal_note}}</p>
+      <p>{{appeal.note}}</p>
     </div>
   </div>
 

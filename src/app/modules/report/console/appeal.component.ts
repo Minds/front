@@ -2,6 +2,7 @@ import {
   Component,
   OnInit,
   Input,
+  ChangeDetectorRef,
 } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
@@ -20,6 +21,7 @@ export class ModerationAppealComponent {
   constructor(
     private client: Client,
     public service: JurySessionService,
+    private cd: ChangeDetectorRef,
   ) { }
 
   async sendAppeal() {
@@ -31,8 +33,12 @@ export class ModerationAppealComponent {
       });
 
       this.appeal.note = this.note;
+
+      this.detectChanges();
     } catch (e) {
       alert((e && e.message) || 'Error sending appeal');
+    } finally {
+      this.appeal.inProgress = false;
     }
   }
 
@@ -42,4 +48,8 @@ export class ModerationAppealComponent {
       action;
   }
 
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
 }

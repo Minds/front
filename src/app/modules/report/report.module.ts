@@ -14,6 +14,7 @@ import { CommentsModule } from '../comments/comments.module';
 import { JuryDutySessionListComponent } from './juryduty/session/list.component';
 import { JurySessionService } from './juryduty/session/session.service';
 import { JuryDutySessionContentComponent } from './juryduty/session/content.component';
+import { JuryDutySessionSummonsComponent } from './juryduty/session/summons.component';
 import { StrikesComponent } from './strikes/strikes.component';
 import { BannedService } from './banned/banned.service';
 import { BannedComponent } from './banned/banned.component';
@@ -43,17 +44,20 @@ import { ModerationAppealComponent } from './console/appeal.component';
     JuryDutySessionComponent,
     JuryDutySessionListComponent,
     JuryDutySessionContentComponent,
+    JuryDutySessionSummonsComponent,
     StrikesComponent,
     BannedComponent,
     ModerationAppealComponent,
   ],
   exports: [
-    ReportConsoleComponent
+    ReportConsoleComponent,
+    JuryDutySessionSummonsComponent,
   ],
   entryComponents: [
     ReportCreatorComponent,
     ReportsMarketingComponent,
     JuryDutySessionComponent,
+    JuryDutySessionSummonsComponent,
     StrikesComponent,
     BannedComponent,
   ],
