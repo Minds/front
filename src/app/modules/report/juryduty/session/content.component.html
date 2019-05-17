@@ -2,6 +2,7 @@
 
     <ng-container *ngIf="!decided; else whenDecided">
         <h3>
+            <b *ngIf="report.is_appeal">Action taken: </b>
             <span>Should be</span>
             <b> {{ getAction(report) }} </b>
             <span>for</span>

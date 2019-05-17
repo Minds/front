@@ -4,12 +4,14 @@
   *ngIf="showModal"
 >
     <div class="m-juryDutySession__summons">
-        <h2>You've been selected for Jury Duty</h2>
+        <ng-container *ngIf="!report">
+            <h2>You've been selected for Jury Duty</h2>
 
-        <p>
-          The Minds Jury decides on what content is within the terms of service.
-          We randomly select 12 members of the community to uphold or overturn decisions made. 
-        </p>
+            <p>
+                The Minds Jury decides on what content is within our <a routerLink="/content-policy" target="_blank">Content Policy</a>.
+                We randomly select 12 members of the community to uphold or overturn decisions made. 
+            </p>
+        </ng-container>
 
         <div class="m-juryDutySessionSummons__buttons" *ngIf="!accepted">
             <button

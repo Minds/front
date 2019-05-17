@@ -36,6 +36,8 @@ export class JuryDutySessionSummonsComponent {
   ngOnInit() {
     this.socketsService.join(`moderation_summon`);
     this.socketsService.subscribe(`moderation_summon`, (summons) => {
+      this.report = null;
+      this.accepted = false;
       this.summons = JSON.parse(summons);
       this.startSummons();
     });
@@ -96,6 +98,8 @@ export class JuryDutySessionSummonsComponent {
   }  
 
   onClose(e) {
+    this.accepted = false;
+    this.report = null;
     this.showModal = false;
     this.detectChanges();
   }

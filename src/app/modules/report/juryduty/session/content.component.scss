@@ -5,8 +5,26 @@
 
   h3 {
     margin: 0;
-    font-weight: 500;
-    color: #444;
+    font-size: 16px;
+    line-height: 1.5;
+    text-rendering: unset;
+    -webkit-font-smoothing: unset;
+    font-size: 16px;
+
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+
+    > * {
+      line-height: 1;
+    }
+    > b:first-child {
+       @include m-theme() {
+         color: themed($m-grey-600);
+       }
+       display: block;
+       line-height: 1.5;
+    }
   }
 
   minds-card {
@@ -20,11 +38,17 @@
   padding-top: 8px;
 
   > b {
-    color: #666;
+    @include m-theme() {
+      color: themed($m-grey-600);
+    }
+    display: block;
   }
   > p {
     display: inline;
-    padding-left: 8px;
+    @include m-theme() {
+      color: themed($m-grey-600);
+    }
+    //padding-left: 8px;
   }
 }
 
