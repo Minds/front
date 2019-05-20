@@ -6,7 +6,7 @@
 <div class="minds-list">
   <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" [showRatingToggle]="true" class="mdl-card m-border item"></minds-activity>
 
-  <m-newsfeed--boost-rotator interval="8" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
+  <m-newsfeed--boost-rotator interval="4" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
 
   <ng-container *ngFor="let activity of newsfeed; let i = index">
     <ng-container *mIfFeature="'es-feeds'">
