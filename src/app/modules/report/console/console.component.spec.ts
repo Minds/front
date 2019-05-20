@@ -1,6 +1,6 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import { Component, DebugElement, EventEmitter, Input, Output, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReportConsoleComponent } from './console.component';
 import { Client } from '../../../services/api/client';
@@ -30,7 +30,8 @@ describe('ReportConsoleComponent', () => {
       providers: [
         { provide: Client, useValue: clientMock },
         JurySessionService,
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ],
     })
       .compileComponents();  // compile template and css
   }));
@@ -86,9 +87,9 @@ describe('ReportConsoleComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have 4 tabs', fakeAsync(() => {
+  it('should have 5 tabs', fakeAsync(() => {
     const tabs = fixture.debugElement.queryAll(By.css('.m-report-console--tabs .mdl-tabs__tab'));
-    expect(tabs.length).toBe(4);
+    expect(tabs.length).toBe(5);
   }));
 
   it('should load appeal textarea if filter is review', fakeAsync(() => {
@@ -102,7 +103,7 @@ describe('ReportConsoleComponent', () => {
     expect(clientMock.get.calls.mostRecent().args[1]).toEqual({ limit: 12, offset: ''});
     expect(comp.appeals.length).toBe(3);
     fixture.detectChanges();
-    const items = fixture.debugElement.queryAll(By.css('.m-report-console--item'));
+    const items = fixture.debugElement.queryAll(By.css('m-moderation__appeal'));
     expect(items.length).toBe(3);
   }));
 

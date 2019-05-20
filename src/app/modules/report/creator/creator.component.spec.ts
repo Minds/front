@@ -88,7 +88,7 @@ describe('ReportCreatorComponent', () => {
     const subjectList = fixture.debugElement.query(By.css('.m-reportCreator__subjects'));
     const subjectListInputs = fixture.debugElement.queryAll(By.css('.m-reportCreatorSubjects__subject'));
     expect(subjectList).not.toBeNull();
-    expect(subjectListInputs.length).toBe(11);
+    expect(subjectListInputs.length).toBe(12);
   });
 
   it('once a item is clicked submit shouldnt be disabled', () => {
