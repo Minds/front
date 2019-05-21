@@ -61,4 +61,23 @@ export class StrikesComponent implements OnInit {
     }
   }
 
+  friendlyState(report) {
+    switch (report.state) {
+      case 'initial_jury_decided':
+        return 'Available to appeal';
+        break;
+      case 'appealed':
+        return 'Awaiting appeal jury';
+        break;
+      case 'appeal_jury_decided':
+        if (report.upheld) {
+          return 'Appeal rejected';
+        } else {
+          return 'Appeal accepted'; // Strike should have been removed by this stage
+        }
+        break;
+      }
+      return 'Unknown';
+  }
+
 }

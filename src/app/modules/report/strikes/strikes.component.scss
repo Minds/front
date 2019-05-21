@@ -15,3 +15,10 @@ m-moderation__strikes h2 {
   padding: 16px;
   margin-bottom: 16px;
 }
+
+.m-moderationStrike__info {
+  margin-bottom: 16px;
+  > * {
+    display: block;
+  }
+}
