@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('login', (canary) => {
-  cy.visit('/');
+  cy.visit('/login');
 
   cy.get('.m-btn--login').click();
 
