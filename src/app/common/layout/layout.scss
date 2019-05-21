@@ -4,7 +4,7 @@ m-body {
   min-height: 100%;
   
   @media screen and (max-width: $max-mobile) {
-    margin-bottom: 60px;
+    padding-bottom: 60px;
   }
   
   &.has-v2-navbar {
