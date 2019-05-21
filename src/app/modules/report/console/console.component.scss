@@ -1,5 +1,7 @@
 .m-report-console--tabs {
   margin-bottom: $minds-padding * 2;
+  flex-wrap: wrap;
+  height: auto;
   a.mdl-tabs__tab {
     cursor: pointer;
 
