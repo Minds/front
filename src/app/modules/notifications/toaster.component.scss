@@ -9,6 +9,11 @@ m-notifications--toaster {
     max-width: 100vw;
     max-height: 75vh;
 
+    // don't coincide with the groups bar when it's on top
+    @media screen and (max-width: $min-desktop) {
+      top: 115px;
+    }
+
     @media screen and (max-width: $max-mobile) {
       right: 0;
     }
