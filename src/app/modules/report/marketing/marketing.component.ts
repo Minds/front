@@ -25,8 +25,13 @@ export class ReportsMarketingComponent {
   stats = {
     reported: 0,
     reportedPct: 0,
+    actioned: 0,
+    actionedPct: 0,
     appealedPct: 0,
+    appealed: 0,
     upheldPct: 0,
+    upheld: 0,
+    overturned: 0,
   };
   reasons = REASONS_LIST;
 
