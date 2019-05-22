@@ -36,12 +36,13 @@ export class JuryDutySessionSummonsComponent {
   ngOnInit() {
     this.socketsService.join(`moderation_summon`);
     this.socketsService.subscribe(`moderation_summon`, (summons) => {
+      if (this.showModal)
+        return; // Already open
       this.report = null;
       this.accepted = false;
       this.summons = JSON.parse(summons);
       this.startSummons();
     });
-  
   }
 
   startSummons() {
