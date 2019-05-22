@@ -36,7 +36,6 @@ export class V2TopbarComponent implements OnInit {
   ngOnInit() {
     this.loadComponent();
     this.session.isLoggedIn(() => this.detectChanges());
-  
   }
 
   getCurrentUser() {
@@ -59,12 +58,13 @@ export class V2TopbarComponent implements OnInit {
   }
 
   mouseEnter() {
-    this.timeout = setTimeout(() => {
-      this.themeService.toggleUserThemePreference();
-    }, 5000);
-    
+    if (this.session.isLoggedIn()) {
+      this.timeout = setTimeout(() => {
+        this.themeService.toggleUserThemePreference();
+      }, 5000);
+    }
   }
-  
+
   mouseLeave() {
     clearTimeout(this.timeout);
   }
