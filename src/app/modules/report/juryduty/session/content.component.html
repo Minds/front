@@ -14,11 +14,16 @@
             <p>{{report.appeal_note}}</p>
         </div>
 
-        <minds-card *ngIf="report.entity"
-            class=""
-            [object]="report.entity"
-            hostClass="mdl-card m-border"
-        ></minds-card>
+        <ng-container *ngIf="report.entity; else noEntity">
+            <minds-card *ngIf="report.entity"
+                class=""
+                [object]="report.entity"
+                hostClass="mdl-card m-border"
+            ></minds-card>
+        </ng-container>
+        <ng-template #noEntity>
+          <p>The post could not be loaded. Please overturn the report</p>
+        </ng-template>
 
         <div class="m-juryDutySessionContent__options">
             <button

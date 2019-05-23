@@ -26,7 +26,7 @@ export class JuryDutySessionContentComponent {
   }
 
   getAction(report) {
-    let friendlyString = report.entity.type == 'user' ? 'banned' : 'removed';
+    let friendlyString = report.entity && report.entity.type == 'user' ? 'banned' : 'removed';
     
     switch (report.reason_code) {
       case 2: 
