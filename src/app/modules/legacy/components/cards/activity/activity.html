@@ -192,8 +192,9 @@
     </ng-container>
     <ng-template #blockedRemindTemplate>
       <div class="m-activity__blockedRemind">
-        <div class="m-activityBlockedRemind__title" i18n>This content is unavailable.</div>
-        <div class="m-activityBlockedRemind__description" i18n>You have blocked the author of this activity.</div>
+        <div class="m-activityBlockedRemind__description" i18n>
+          This remind is not available because you blocked <a target="_blank" [routerLink]="['/', activity.remind_object.ownerObj.username]">@{{activity.remind_object.ownerObj.username}}</a>.
+        </div>
       </div>
     </ng-template>
   </div>
