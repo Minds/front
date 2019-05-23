@@ -1,6 +1,6 @@
 m-blog-view-infinite {
   display: block;
-  height: 100%;
+  min-height: 100%;
   @include m-theme(){
     background-color: themed($m-white);
   }
