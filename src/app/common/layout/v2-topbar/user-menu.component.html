@@ -132,6 +132,17 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
+      <a routerLink="/content-policy">
+        <i class="material-icons">gavel</i>
+        <span i18n>Content Policy</span>
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
       <a routerLink="/logout">
         <i class="material-icons">exit_to_app</i>
         <span i18n>Logout</span>

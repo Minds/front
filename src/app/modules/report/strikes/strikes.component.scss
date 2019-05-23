@@ -1,0 +1,24 @@
+m-moderation__strikes h2 {
+  font-weight: 600;
+}
+
+.m-moderationStrike__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.m-moderation__strike {
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.m-moderationStrike__info {
+  margin-bottom: 16px;
+  > * {
+    display: block;
+  }
+}

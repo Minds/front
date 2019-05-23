@@ -1,25 +1,10 @@
-.m-report-console--tabs {
-  margin-bottom: $minds-padding * 2;
-  flex-wrap: wrap;
-  height: auto;
-  a.mdl-tabs__tab {
-    cursor: pointer;
-
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    @media screen and (max-width: $max-mobile) {
-      line-height: 20px;
-      padding: 0 12px;
-    }
-  }
-}
-
-.m-report-console--item {
+.m-moderation__appeal {
   margin-bottom: 8px;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
-  .m-report-console--header {
+  .m-moderationAppeal__header {
     margin: 16px;
     padding: 16px;
     font-family: 'Roboto';
@@ -40,7 +25,7 @@
     }
   }
 
-  .m-report-console--meta {
+  .m-moderationAppeal__meta {
     display: flex;
     align-items: center;
     margin: ($minds-padding * 2) ($minds-padding * 2) 0;
@@ -54,7 +39,7 @@
         font-weight: 300;
       }
 
-      .m-report-console--meta--time {
+      .m-moderationAppealMeta__time {
         font-size: 12px;
         margin-bottom: $minds-padding;
         @include m-theme(){
@@ -62,7 +47,7 @@
         }
       }
 
-      .m-report-console--meta--appeal-note {
+      .m-moderationAppealMeta__appealNote {
         margin: $minds-padding 0 0 1em;
         padding: $minds-padding ($minds-padding * 2);
         font-style: italic;
@@ -82,16 +67,12 @@
     }
   }
 
-  .m-report-console--card {
-    margin: ($minds-padding * 2) ($minds-padding * 2) 0;
-  }
-
   .m-comment-wrapper {
     .m-ribbon {
       display: none;
     }
 
-    .m-report-console--comment-note {
+    .m-moderationAppeal__commentNote {
       padding: 16px;
       text-align: center;
       font-family: 'Roboto', sans-serif;
@@ -109,10 +90,10 @@
   }
 }
 
-.m-report-console--appeal {
+.m-moderationAppeal__appeal {
   margin: $minds-padding ($minds-padding * 2) 0;
 
-  .m-report-console--appeal--composer {
+  .m-moderationAppeal__composer {
     margin-bottom: $minds-padding;
 
     textarea {
@@ -138,7 +119,6 @@
       font-size: 13px;
       letter-spacing: 2.5px;
       background: none;
-      float: right;
       margin: 8px 0;
       @include m-theme(){
         border: 1px solid themed($m-grey-100);
@@ -151,7 +131,7 @@
     }
   }
 
-  .m-report-console--appeal-note {
+  .m-moderationAppeal__appealNote {
     padding: 16px;
     @include m-theme(){
        border: 1px solid themed($m-grey-50);
@@ -164,4 +144,5 @@
       letter-spacing: 1px;
     }
   }
+
 }

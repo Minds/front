@@ -1,63 +1,65 @@
-<div class="m-report-creator">
+<div class="m-report__creator">
 
-  <div class="m-report-creator--header">
+  <div class="m-reportCreator__header">
     <h2>
       <span i18n="Report as flag something@@M__COMMON__REPORT">Report</span>
     </h2>
   </div>
 
-  <div *ngIf="!inProgress && !success && !next" class="m-report-creator--subjects">
-    <div class="m-report-creator--subjects-subject mdl-color-text--blue-grey-700"
+  <ul *ngIf="!inProgress && !success && !next" class="m-reportCreator__subjects">
+    <li class="m-reportCreatorSubjects__subject"
+      [class.m-reportCreatorSubjects__subject--active]="subject.value == item.value"
       *ngFor="let item of subjects"
+      (click)="setSubject(item)"
     >
-      <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect"
-        [mdlRadio]
-        [mdlRadioValue]="item.value"
-        #materialRadioButton
-        [checked]="subject"
-        [for]="'report-modal-reason-' + item.value"
-        (click)="onSelectionChange(item)"
-      >
-        <input type="radio"
-          class="mdl-radio__button"
-          [disabled]="inProgress"
-          [checked]="subject == item.value"
-          name="subject"
-          value="{{ item.value }}"
-          [id]="'report-modal-reason-' + item.value"
-          />
-        <span class="mdl-radio__label">{{ item.label }}</span>
-      </label>
-    </div>
-  </div>
+        <span class="">{{ item.label }}</span>
+        <i class="material-icons">chevron_right</i>
+    </li>
+  </ul>
 
-  <div class="m-report-creator--appeals" *ngIf="next && !success && subject === 11">
+  <div class="m-report-creator--appeals" *ngIf="next && !success && subject.value === 11">
     <div class="m-report-creator--note">
       <textarea [(ngModel)]="note" placeholder="Please explain why you think this content should not be on Minds." i18n-placeholder="@@REPORT__CREATOR__REPORT_NOTE_PLACEHOLDER"></textarea>
     </div>
   </div>
 
-  <div class="m-report-creator--copyright" *ngIf="next && subject === 10">
+  <div class="m-reportCreator__explicitReasons" *ngIf="next && !success && subject.hasMore">
+    <p>Please select the reason why you think this should be marked as {{subject.label}}:</p>
+    <ul class="m-reportCreator__subjects">
+        <li class="m-reportCreatorSubjects__subject"
+          [class.m-reportCreatorSubjects__subject--active]="subReason.value == item.value"
+          *ngFor="let item of subject.reasons"
+          (click)="setSubReason(item)"
+        >
+            <span class="">{{ item.label }}</span>
+        </li>
+      </ul>
+  </div>
+
+  <div class="m-report-creator--copyright" *ngIf="next && subject.value === 10">
     <p i18n="@@REPORT__CREATOR__DMCA_NOTICE">
       Please submit a DMCA notice to copyright@minds.com.
     </p>
   </div>
 
   <!-- Submit or Next -->
-  <div *ngIf="!success && ( (next && subject === 11) || (!next && subject < 10) )">
+  <div *ngIf="!success && ((next && subject.hasMore) || (!next && !subject.hasMore))">
     <section class="m-report-creator--section m-report-creator--section--last"
       (mouseenter)="showErrors()"
     >
-      <div class="m-report-creator--submit">
+      <div class="m-reportCreator__submit">
+
+        <div class="m-layout__spacer"></div>
+
         <button type="button" 
-          class="m-report-creator--button m-report-creator--button-submit"
+          class="m-reportCreator__button m-reportCreator__button--submit m-btn m-btn--slim m-btn--action"
           [disabled]="!canSubmit() || inProgress || success"
           (click)="submit()"
           i18n="@@REPORT__CREATOR__SUBMIT_ACTION"
         >
           SUBMIT
         </button>
-  
+
         <div *ngIf="inProgress" class="m-report-creator--submit-label mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   
         <div *ngIf="!inProgress && error" class="m-report-creator--submit-error">
@@ -69,11 +71,14 @@
   </div>
 
   <!-- SHOW FOR MORE OR COPYRIGHT -->
-  <div *ngIf="!success && !next && (subject === 11 || subject === 10)">
+  <div *ngIf="!success && !next && subject.hasMore">
     <section class="m-report-creator--section m-report-creator--section--last">
-      <div class="m-report-creator--submit">
+      <div class="m-reportCreator__submit">
+
+        <div class="m-layout__spacer"></div>
+
         <button type="button" 
-            class="m-report-creator--button m-report-creator--button-next"
+          class="m-reportCreator__button m-reportCreator__button--next m-btn m-btn--slim m-btn--action"
           [disabled]="!canSubmit() || inProgress || success"
           (click)="next = true"
           i18n="@@REPORT__CREATOR__NEXT_ACTION"
@@ -94,8 +99,8 @@
     </p>
   </div>
 
-  <div class="m-report-creator--close" *ngIf="success || (next && subject === 10)">
-    <button class="m-report-creator--button" (click)="close()">
+  <div class="m-report-creator--close" *ngIf="success || (next && subject.value === 10)">
+    <button class="m-reportCreator__button m-reportCreator__button--close m-btn m-btn--slim m-btn--action" (click)="close()">
     <ng-container i18n="@@M__ACTION__CLOSE__CAPS">CLOSE</ng-container>
     </button>
   </div>
