@@ -166,3 +166,10 @@
 
   </div>
 </m-modal>
+
+<m-blockchain__eth-modal
+  *ngIf="showEthModal"
+  [rate]="rate"
+  (close)="closePurchaseEth()"
+  >
+</m-blockchain__eth-modal>

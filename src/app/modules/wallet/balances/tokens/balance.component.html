@@ -98,9 +98,8 @@
        >
        Buy Tokens
     </a>
-    <a href="/checkout"
+    <a [routerLink]="['/token', { 'purchaseEth': 'open' }]"
       class="m-btn m-btn--slim m-btn--action"
-      target="_blank"
       >
       Buy ETH
     </a>

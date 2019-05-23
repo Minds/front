@@ -14,6 +14,7 @@ import { BlockchainPurchaseComponent } from './purchase.component';
 import { BlockchainMarketingOnboardComponent } from './onboard.component';
 import { BlockchainMarketingBlogsComponent } from './blogs.component';
 import { BlockchainMarketingCountdownComponent } from './countdown.component';
+import { BlockchainEthModalComponent } from './eth-modal.component';
 import { ModalsModule } from '../../modals/modals.module';
 
 const routes: Routes = [
@@ -46,6 +47,7 @@ const routes: Routes = [
     BlockchainPurchaseComponent,
     BlockchainMarketingBlogsComponent,
     BlockchainMarketingCountdownComponent,
+    BlockchainEthModalComponent,
   ],
   exports: [
     BlockchainMarketingComponent,
