@@ -9,7 +9,8 @@ import { TokenContractService } from '../../blockchain/contracts/token-contract.
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
-
+import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
+import { Router } from '@angular/router';
 
 type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
@@ -112,7 +113,8 @@ export class BoostCreatorComponent implements AfterViewInit {
     private tokensContract: TokenContractService,
     private boostContract: BoostContractService,
     private web3Wallet: Web3WalletService,
-    private offchainPayment: OffchainPaymentService
+    private offchainPayment: OffchainPaymentService,
+    protected router: Router,
   ) { }
 
   ngOnInit() {
@@ -554,7 +556,22 @@ export class BoostCreatorComponent implements AfterViewInit {
 
             if (this.web3Wallet.isUnavailable()) {
               throw new Error('No Ethereum wallets available on your browser.');
-            } else if (!(await this.web3Wallet.unlock())) {
+            }
+
+            if (await this.web3Wallet.isLocal()) {
+              const action = await this.web3Wallet.setupMetamask();
+              switch (action) {
+                case GetMetamaskComponent.ACTION_CREATE:
+                  this.router.navigate(['/wallet']);
+                  this.inProgress = false;
+                  this.overlayModal.dismiss();
+                  break;
+                case GetMetamaskComponent.ACTION_CANCEL:
+                  return;
+              }
+            }
+
+            if (!(await this.web3Wallet.unlock())) {
               throw new Error('Your Ethereum wallet is locked or connected to another network.');
             }
 

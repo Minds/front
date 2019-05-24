@@ -35,9 +35,14 @@
       You can not purchase more than $50 worth of ETH
     </p>
 
-    <button class="m-btn m-btn--slim m-btn--action" (click)="buy()">
+    <button class="m-btn m-btn--slim m-btn--action" (click)="buy()" *ngIf="hasMetamask">
       Buy with SendWyre
     </button>
 
+    <a href="https://metamask.io/" target="_blank" *ngIf="!hasMetamask">
+      <button class="m-btn m-btn--slim m-btn--action">Download Metamask</button>
+    </a>
+
   </div> 
+
 </m-modal>

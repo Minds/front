@@ -10,6 +10,21 @@ export class TransactionOverlayService {
     this.comp = comp;
   }
 
+  waitForSetupMetaMask(): Promise<string> {
+    const compEventEmitter = this.comp.show(this.comp.COMP_SETUP_METAMASK);
+
+    return new Promise((resolve, reject) => {
+      const subscription: Subscription = compEventEmitter.subscribe(data => {
+        subscription.unsubscribe();
+        if (data && !(data instanceof Error)) {
+          resolve(data);
+        } else {
+          reject((data && data.message) || 'User cancelled');
+        }
+      });
+    });
+  }
+
   waitForAccountUnlock(): Promise<{ privateKey, account, secureMode }> {
     let compEventEmitter = this.comp.show(this.comp.COMP_UNLOCK);
 

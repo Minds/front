@@ -39,6 +39,10 @@ export class LocalWalletService {
     return cb(null, accounts);
   }
 
+  async setupMetamask() {
+    return await this.transactionOverlay.waitForSetupMetaMask();
+  }
+
   async unlock() {
     if (this.account && this.privateKey) {
       return Promise.resolve(true);
@@ -46,7 +50,7 @@ export class LocalWalletService {
 
     try {
       const { privateKey, secureMode } = await this.transactionOverlay.waitForAccountUnlock(),
-        account = ethAccount.privateToAccount(privateKey).address;
+      account = ethAccount.privateToAccount(privateKey).address;
 
       this.privateKey = privateKey;
       this.account = account;

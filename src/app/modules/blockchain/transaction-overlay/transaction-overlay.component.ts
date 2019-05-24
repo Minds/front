@@ -15,6 +15,7 @@ import { TransactionOverlayService } from './transaction-overlay.service';
 import { TokenContractService } from '../contracts/token-contract.service';
 import { Router } from '@angular/router';
 import { Web3WalletService } from '../web3-wallet.service';
+import { GetMetamaskComponent } from '../metamask/getmetamask.component';
 
 @Component({
   moduleId: module.id,
@@ -49,6 +50,7 @@ export class TransactionOverlayComponent implements OnInit {
   readonly COMP_METAMASK = 1;
   readonly COMP_LOCAL = 2;
   readonly COMP_UNLOCK = 3;
+  readonly COMP_SETUP_METAMASK = 4;
 
   constructor(
     protected service: TransactionOverlayService,
@@ -334,5 +336,14 @@ export class TransactionOverlayComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  handleMetamaskAction($event) {
+    let next = $event;
+    if ($event === GetMetamaskComponent.ACTION_CANCEL) {
+      next = false;
+    }
+    this.eventEmitter.next($event);
+    this.hide();
   }
 }

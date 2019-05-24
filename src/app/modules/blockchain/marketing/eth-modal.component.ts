@@ -31,9 +31,21 @@ export class BlockchainEthModalComponent implements OnInit {
 
   error: string = '';
   usd: number = 40;
+  hasMetamask: boolean = true; // True by default
+
+  constructor(
+    private web3Wallet: Web3WalletService,
+    private cd: ChangeDetectorRef,
+  ) { }
 
   ngOnInit() {
     // grab latest ETH rate
+    this.detectMetamask();
+  }
+
+  async detectMetamask() {
+    this.hasMetamask = !await this.web3Wallet.isLocal();
+    this.detectChanges();
   }
 
   get ethRate(): number {
@@ -51,14 +63,30 @@ export class BlockchainEthModalComponent implements OnInit {
     this.usd = eth * this.ethRate;
   }
 
-  buy() {
+  async buy() {
     this.error = '';
+    this.detectChanges();
+
+    if (!this.hasMetamask) {
+      this.error = 'You need to install metamask';
+      this.detectChanges();
+      return;
+    }
+
     if (this.usd > 40) {
       this.usd = 40;
       this.error = 'You can not purchase more than $40';
+      this.detectChanges();
+      return;
     }
+
     let win = window.open('/checkout?usd=' + this.usd);
     this.close.next(true);
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
 }

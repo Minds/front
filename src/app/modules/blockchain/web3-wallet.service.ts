@@ -21,7 +21,7 @@ export class Web3WalletService {
 
   constructor(
     protected localWallet: LocalWalletService,
-    protected transactionOverlay: TransactionOverlayService
+    protected transactionOverlay: TransactionOverlayService,
   ) { }
 
   // Wallet
@@ -75,6 +75,12 @@ export class Web3WalletService {
   async isLocal() {
     await this.ready();
     return this.local;
+  }
+
+  async setupMetamask() {
+    if (await this.isLocal()) {
+      return await this.localWallet.setupMetamask();
+    }
   }
 
   async unlock() {

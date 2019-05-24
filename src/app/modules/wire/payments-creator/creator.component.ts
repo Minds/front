@@ -7,6 +7,7 @@ import { Session } from '../../../services/session';
 import { WireService } from '../wire.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
+import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { MindsUser } from '../../../interfaces/entities';
 import { Router } from '@angular/router';
 
@@ -370,6 +371,19 @@ export class WirePaymentsCreatorComponent {
       this.inProgress = true;
       this.submitted = true;
       this.error = '';
+
+      if (await this.web3Wallet.isLocal()) {
+        const action = await this.web3Wallet.setupMetamask();
+        switch (action) {
+          case GetMetamaskComponent.ACTION_CREATE:
+            this.router.navigate(['/wallet']);
+            this.inProgress = false;
+            this.overlayModal.dismiss();
+            break;
+          case GetMetamaskComponent.ACTION_CANCEL:
+            return;
+        }
+      }
 
       let { done } = await this.wireService.submitWire(this.wire);
 
