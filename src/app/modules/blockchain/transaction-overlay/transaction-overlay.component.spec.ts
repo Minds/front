@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
 import { Web3WalletService } from '../web3-wallet.service';
+import { GetMetamaskComponent } from '../metamask/getmetamask.component';
 
 describe('TransactionOverlayComponent', () => {
 
@@ -19,8 +20,8 @@ describe('TransactionOverlayComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [MaterialSwitchMock, TransactionOverlayComponent],
-      imports: [RouterTestingModule, FormsModule],
+      declarations: [MaterialSwitchMock, TransactionOverlayComponent, GetMetamaskComponent],
+      imports: [RouterTestingModule, FormsModule ],
       providers: [
         { provide: TransactionOverlayService, useValue: transactionOverlayService },
         { provide: TokenContractService, useValue: TokenContractService },
@@ -56,6 +57,14 @@ describe('TransactionOverlayComponent', () => {
     const havingIssues: DebugElement = fixture.debugElement.query(By.css('.m--blockchain--transaction-overlay--help > a'));
     expect(havingIssues).not.toBeNull();
     expect(havingIssues.nativeElement.href).toMatch(/https?:\/\/.*\/token/);
+  });
+
+  it('should display get metamask component', () => {
+    comp.comp = comp.COMP_SETUP_METAMASK;
+    comp.detectChanges();
+    fixture.detectChanges();
+    const note: DebugElement = fixture.debugElement.query(By.css('.m-get-metamask--title'));
+    expect(note.nativeElement.textContent.trim()).toContain('Setup Your OnChain Address to buy, send and receive crypto');
   });
 
 });

@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 import { WalletBalanceTokensComponent } from './balance.component';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
@@ -12,7 +13,8 @@ import { DebugElement } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
 
-fdescribe('WalletBalanceTokensComponent', () => {
+
+describe('WalletBalanceTokensComponent', () => {
 
   let comp: WalletBalanceTokensComponent;
   let fixture: ComponentFixture<WalletBalanceTokensComponent>;
@@ -44,6 +46,9 @@ fdescribe('WalletBalanceTokensComponent', () => {
     this.isLocal = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
       return false;
     });
+    this.getBalance = jasmine.createSpy('getBalance').and.callFake(async() => {
+      return 0;
+    });
   }
 
   const Web3WalletLocalServiceMock = new function () {
@@ -64,6 +69,7 @@ fdescribe('WalletBalanceTokensComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule ],
       declarations: [
         TokenPipe,
         TooltipComponentMock,
