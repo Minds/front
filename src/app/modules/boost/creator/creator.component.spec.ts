@@ -28,6 +28,7 @@ import { TransactionOverlayService } from '../../blockchain/transaction-overlay/
 import { localWalletServiceMock } from '../../../../tests/local-wallet-service-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
+import { RouterTestingModule } from '@angular/router/testing';
 
 /* tslint:disable */
 @Component({
@@ -111,6 +112,7 @@ let web3WalletServiceMock = new function () {
   this.onChainInterfaceLabel = 'Metamask';
   this.unavailable = false;
   this.locked = false;
+  this.localWallet = false;
 
   this.isUnavailable = jasmine.createSpy('isUnavailable').and.callFake(() => {
     return this.unavailable;
@@ -133,6 +135,11 @@ let web3WalletServiceMock = new function () {
   this.getBalance = jasmine.createSpy('getBalance').and.callFake(async () => {
     return this.balance;
   });
+
+  this.isLocal = jasmine.createSpy('isLocal').and.callFake(async () => {
+    return this.isLocalWallet;
+  });
+
 
   this.getOnChainInterfaceLabel = jasmine.createSpy('getOnChainInterfaceLabel').and.callFake(() => {
     return this.onChainInterfaceLabel ? this.onChainInterfaceLabel: 'Metamask';
@@ -368,7 +375,7 @@ describe('BoostCreatorComponent', () => {
         BoostP2PSearchMock,
         BoostCheckoutMock,
       ],
-      imports: [FormsModule],
+      imports: [FormsModule, RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },

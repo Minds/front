@@ -18,6 +18,7 @@ export class WalletBalanceTokensComponent implements OnInit {
   inProgress: boolean = false;
   balance: number = 0;
   testnetBalance: number = 0;
+  ethBalance: string = '0';
   addresses: Array<any> = [];
   minds = window.Minds;
   isLocal:boolean = false;
@@ -38,6 +39,7 @@ export class WalletBalanceTokensComponent implements OnInit {
   async load() {
     await this.loadRemote();
     await this.loadLocal();
+    await this.loadEth();
     this.isLocal = await this.web3Wallet.isLocal();
     this.detectChanges();
   }
@@ -65,10 +67,20 @@ export class WalletBalanceTokensComponent implements OnInit {
         'address': address,
         'balance': balance[0].toString(),
       });
+
       this.detectChanges();
     } catch (e) {
       console.log(e);
     }
+  }
+
+  async loadEth() {
+    const address = await this.web3Wallet.getCurrentWallet();
+    if (!address)
+      return;
+    const ethBalance = await this.web3Wallet.getBalance(address);
+    this.ethBalance = ethBalance ? ethBalance : '0';
+    this.detectChanges();
   }
 
   async loadRemote() {

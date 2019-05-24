@@ -1,0 +1,48 @@
+<m-modal
+  open="true"
+  (closed)="close.next(true)"
+  >
+
+  <div class="m-blockchain--marketing--modal">
+
+    <h2>Buy ETH</h2>
+
+    <div class="m-layout__row m-blockchainEthModal__form">
+      <div class="m-layout__cell">
+        <input type="number"
+          class="m-input"
+          [(ngModel)]="usd"
+          max="50"
+          />
+        <label>USD</label>
+      </div>
+      <div class="m-layout__cell m-blockchainEthModal__eq">
+        <span>=</span>
+      </div>
+      <div class="m-layout__cell">
+        <input type="number"
+          class="m-input"
+          [ngModel]="eth"
+          (ngModelChange)="setEth($event)"
+          />
+        <label>ETH</label>
+      </div>
+    </div>
+
+    <p>ETH is estimated at 1 ETH = <b>$</b>{{ ethRate }}. The checkout process will produce a more accurate ETH value.</p>
+
+    <p class="m-error mdl-color-text--red" *ngIf="usd > 50">
+      You can not purchase more than $50 worth of ETH
+    </p>
+
+    <button class="m-btn m-btn--slim m-btn--action" (click)="buy()" *ngIf="hasMetamask">
+      Buy with SendWyre
+    </button>
+
+    <a href="https://metamask.io/" target="_blank" *ngIf="!hasMetamask">
+      <button class="m-btn m-btn--slim m-btn--action">Download Metamask</button>
+    </a>
+
+  </div> 
+
+</m-modal>

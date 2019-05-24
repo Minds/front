@@ -126,25 +126,35 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
   }
 }
 
+.m-wallet--balance--metamask {
+  margin-top: 16px;
 
-  .m-wallet--balance--metamask {
-    margin-top: 16px;
-
-    .m-wallet--balance--metamask-logo {
-      width: 50px;
-    }
-
-    .m-btn--slim {
-      height: 30px;
-      margin: 0 0 0 28px;
-      color: #888; 
-    }
-
-    p {
-      text-align: left;
-      margin: 0;
-      padding: 0 8px;
-      color: #666;
-    }
-
+  .m-wallet--balance--metamask-logo {
+    width: 50px;
   }
+
+  .m-btn--slim {
+    height: 30px;
+    margin: 0 0 0 28px;
+    color: #888; 
+  }
+
+  p {
+    text-align: left;
+    margin: 0;
+    padding: 0 8px;
+    color: #666;
+  }
+
+}
+
+.m-walletBalance__purchaseBtns {
+  margin: 16px;
+  box-sizing: border-box;
+
+  .m-btn {
+    line-height: 32px;
+    text-decoration: none;
+    margin: 8px;
+  }
+}

@@ -48,7 +48,7 @@
     <tr style="height:16px;">
       <td class="m-blockchain--marketing--pledges--amounts--label">
       </td>
-      <td class="m-blockchain--marketing--pledge--input">
+      <td class="m-blockchain--marketing--pledge--input" style="text-align: left">
         <m-tooltip anchor="left" i18n="@@MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP">
           <span m-tooltip--anchor class="m-blockchain--marketing--pledges--eth-subtext">1 Token = $0.15 USD = {{ 1 / rate}} ETH</span>
 
@@ -56,6 +56,12 @@
             ETH amount is based on the current USD/ETH rate and is updated in regular intervals
           </ng-container>
         </m-tooltip>
+        <span class="m-layout__spacer"></span> 
+        <button 
+          (click)="purchaseEth()"
+          class="m-btn m-btn--action">
+          Buy ETH
+        </button>
       </td>
     </tr>
   </table>
@@ -160,3 +166,10 @@
 
   </div>
 </m-modal>
+
+<m-blockchain__eth-modal
+  *ngIf="showEthModal"
+  [rate]="rate"
+  (close)="closePurchaseEth()"
+  >
+</m-blockchain__eth-modal>

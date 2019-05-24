@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
 import { WalletBalanceTokensComponent } from './balance.component';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
@@ -44,6 +45,9 @@ describe('WalletBalanceTokensComponent', () => {
     this.isLocal = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
       return false;
     });
+    this.getBalance = jasmine.createSpy('getBalance').and.callFake(async() => {
+      return 0;
+    });
   }
 
   const Web3WalletLocalServiceMock = new function () {
@@ -64,6 +68,7 @@ describe('WalletBalanceTokensComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule ],
       declarations: [
         TokenPipe,
         TooltipComponentMock,

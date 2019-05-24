@@ -7,6 +7,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { Client } from '../../../services/api/client';
 import { MindsTitle } from '../../../services/ux/title';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
@@ -44,6 +47,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   minds = window.Minds;
   showPledgeModal: boolean = false;
   showLoginModal: boolean = false;
+  showEthModal: boolean = false;
   confirming: boolean = false;
   confirmed: boolean = false;
   error: string;
@@ -52,6 +56,8 @@ export class BlockchainPurchaseComponent implements OnInit {
   inProgress: boolean = false;
   rate: number = 0;
 
+  paramsSubscription: Subscription;
+
   constructor(
     protected client: Client,
     protected changeDetectorRef: ChangeDetectorRef,
@@ -59,7 +65,8 @@ export class BlockchainPurchaseComponent implements OnInit {
     protected overlayModal: OverlayModalService,
     protected web3Wallet: Web3WalletService,
     protected tde: TokenDistributionEventService,
-    public session: Session
+    public session: Session,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -67,6 +74,17 @@ export class BlockchainPurchaseComponent implements OnInit {
     this.load().then(() => {
       this.amount = 0.25;
     });
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params.purchaseEth) {
+        this.purchaseEth();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   get amount() {
@@ -151,6 +169,20 @@ export class BlockchainPurchaseComponent implements OnInit {
       this.closePledgeModal();
       this.confirmed = false;
     }, 2000);*/
+  }
+
+  purchaseEth() {
+    this.showEthModal = true;
+    this.detectChanges();
+  //let win = window.open('/checkout');
+  //win.onload = function() {
+  //  alert('opened');
+  //}
+  }
+
+  closePurchaseEth() {
+    this.showEthModal = false;
+    this.detectChanges();
   }
 
   closeLoginModal() {

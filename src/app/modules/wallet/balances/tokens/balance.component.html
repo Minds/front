@@ -70,7 +70,41 @@
 
     </div>
 
+    <div class="m-wallet--balance--addresses-address">
+
+      <div class="m-wallet--balance--addresses-address-col">
+        <label class="m-wallet--balance--addresses-address-label">
+          <span i18n="@@WALLET__BALANCES__TOKENS__ADDRESS_LABEL">ETH Balance</span>
+
+          <m-tooltip icon="help">
+            ETH is required to purchase Minds Token and to fund OnChain transactions
+          </m-tooltip>
+        </label>
+      </div>
+
+      <div class="m-wallet--balance--addresses-address-col">
+        <span class="m-wallet--balance--addresses-address-balance">
+         {{ ethBalance | token: 18 | number }}
+       </span>
+     </div>
+
+    </div>
+
   </div>
+
+  <div class="m-walletBalance__purchaseBtns" *ngIf="!isLocal">
+    <a routerLink="/tokens"
+      class="m-btn m-btn--slim m-btn--action"
+       >
+       Buy Tokens
+    </a>
+    <a [routerLink]="['/token', { 'purchaseEth': 'open' }]"
+      class="m-btn m-btn--slim m-btn--action"
+      >
+      Buy ETH
+    </a>
+  </div>
+
   <div class="m-wallet--balance--metamask" *ngIf="isLocal">
       <p>Setup Your OnChain Address to buy send and receive crypto</p>
       <img class="m-wallet--balance--metamask-logo" [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'" />

@@ -21,7 +21,7 @@ export class Web3WalletService {
 
   constructor(
     protected localWallet: LocalWalletService,
-    protected transactionOverlay: TransactionOverlayService
+    protected transactionOverlay: TransactionOverlayService,
   ) { }
 
   // Wallet
@@ -56,7 +56,9 @@ export class Web3WalletService {
 
   async getBalance(address): Promise<string | false> {
     return new Promise<string | false>((resolve, reject) => {
-      this.eth.getBalance(address, (error, result) => {
+      if (!window.web3 && !window.web3.eth)
+        return reject(false);
+      window.web3.eth.getBalance(address, (error, result) => {
         if (error) {
           console.log(error);
           return reject(false);
@@ -73,6 +75,12 @@ export class Web3WalletService {
   async isLocal() {
     await this.ready();
     return this.local;
+  }
+
+  async setupMetamask() {
+    if (await this.isLocal()) {
+      return await this.localWallet.setupMetamask();
+    }
   }
 
   async unlock() {
