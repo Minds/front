@@ -34,30 +34,18 @@
   <div class="m-v2-topbar">
     <div class="m-v2-topbar__Container--left">
       <nav class="m-v2-topbar__Nav">
-        <ng-container *ngIf="getCurrentUser(); else loggedOutLeftContainer">
-          <a class="m-v2-topbarNav__Item m-v2-topbarNavItem__Logo"
-            routerLink="/"
-            title="Home"
-            i18n-title
-          >
-            <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
-             (mouseenter) ="mouseEnter()"  
-             (mouseleave) ="mouseLeave()"
-            />
-          </a>
+        <a class="m-v2-topbarNav__Item m-v2-topbarNavItem__Logo"
+           routerLink="/"
+           title="Home"
+           i18n-title
+        >
+          <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
+               (mouseenter)="mouseEnter()"
+               (mouseleave)="mouseLeave()"
+          />
+        </a>
 
-          <ng-container *ngTemplateOutlet="navLinks"></ng-container>
-        </ng-container>
-        <ng-template #loggedOutLeftContainer>
-          <a class="m-v2-topbarNav__Item m-v2-topbarNavItem__Logo"
-            routerLink="/login"
-            title="Login"
-            i18n-title
-          >
-            <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
-            />
-          </a>
-        </ng-template>
+        <ng-container *ngTemplateOutlet="navLinks"></ng-container>
       </nav>
     </div>
 
