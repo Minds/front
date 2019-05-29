@@ -35,6 +35,7 @@ export class NewsfeedBoostRotatorComponent {
   rotator;
   running: boolean = false;
   paused: boolean = false;
+  windowFocused: boolean = true;
   interval: number = 6;
   channel: MindsUser;
   currentPosition: number = 0;
@@ -115,7 +116,9 @@ export class NewsfeedBoostRotatorComponent {
       }
 
       if (!this.running) {
-        this.recordImpression(this.currentPosition, true);
+        if (this.currentPosition === 0) {
+          this.recordImpression(this.currentPosition, true);
+        }
         this.start();
         this.isVisible();
       }
@@ -167,7 +170,9 @@ export class NewsfeedBoostRotatorComponent {
             this.currentPosition = 0;
           }
           if (!this.running) {
-            this.recordImpression(this.currentPosition, true);
+            if (this.currentPosition === 0) {
+              this.recordImpression(this.currentPosition, true);
+            }
             this.start();
             this.isVisible();
           }
@@ -206,8 +211,12 @@ export class NewsfeedBoostRotatorComponent {
   start() {
     if (this.rotator)
       window.clearInterval(this.rotator);
+
     this.running = true;
     this.rotator = setInterval((e) => {
+      if (!this.windowFocused) {
+        return;
+      }
       if (this.paused) {
         return;
       }
@@ -236,17 +245,21 @@ export class NewsfeedBoostRotatorComponent {
     //ensure was seen for at least 1 second
     if ((Date.now() > this.lastTs + 1000 || force) && this.boosts[position].boosted_guid) {
       this.newsfeedService.recordView(this.boosts[position], true, this.channel);
+      console.log('Boost rotator recording impressions for ' + position + ' ' + this.boosts[position].boosted_guid, this.windowFocused);
     }
     this.lastTs = Date.now();
     window.localStorage.setItem('boost-rotator-offset', this.boosts[position].boosted_guid);
   }
 
   active() {
+    this.windowFocused = true;
     this.isVisible();
+    this.next(); // Show a new boost when we open our window again
   }
 
   inActive() {
     this.running = false;
+    this.windowFocused = false;
     window.clearInterval(this.rotator);
   }
 
@@ -268,17 +281,16 @@ export class NewsfeedBoostRotatorComponent {
     this.recordImpression(this.currentPosition, false);
   }
 
-  next() {
+  async next() {
     this.activities.toArray()[this.currentPosition].hide();
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       //this.currentPosition = 0;
-      this.load()
-        .then(() => {
-          this.currentPosition++;
-        })
-        .catch(() => {
-          this.currentPosition = 0;
-        });
+      try {
+        await this.load();
+        this.currentPosition++;
+      } catch(e) {
+        this.currentPosition = 0;
+      }
     } else {
       this.currentPosition++;
     }
