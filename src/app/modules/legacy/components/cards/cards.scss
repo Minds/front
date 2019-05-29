@@ -203,6 +203,12 @@ minds-card-image, minds-card-video {
         letter-spacing: 0.75px;
         text-rendering: optimizeLegibility;
         text-overflow: unset;
+        white-space: pre-wrap;
+
+        > * {
+          padding-right: 8px;
+        }
+
         @include m-theme(){
           color: themed($m-grey-400);
         }
@@ -325,7 +331,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
 
   .m-edited-text {
     text-transform: uppercase;
-    padding-left: 8px;
+    padding-right: 8px;
     font-weight: bold;
     letter-spacing: 0.5px;
   }
@@ -448,9 +454,10 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
 
   .is-boosted{
     display: inline-block;
+    width: auto;
     font-size: 11px;
     padding: 0;
-    padding-left: 8px;
+    padding-right: 8px;
     line-height: 1;
     vertical-align: middle;
     @include m-theme(){
@@ -472,6 +479,18 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
       vertical-align: middle;
       @include m-theme(){
         color:themed($m-grey-400);
+      }
+    }
+  }
+
+  .is-boosted.is-onchain {
+    @include m-theme(){
+      color:themed($m-blue);
+    }
+
+    a {
+      @include m-theme(){
+        color:themed($m-blue);
       }
     }
   }

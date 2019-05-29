@@ -22,9 +22,14 @@
     <a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid && !activity.remind_object">
       <span>{{activity.time_created * 1000 | date:'medium'}}</span>
       <span *ngIf="activity.edited" class="m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
-      <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
+      <div
+        class="mdl-card__supporting-text is-boosted"
+        *ngIf="boosted"
+        [class.is-onchain]="activity.boosted_onchain"
+        >
         <i class="material-icons">trending_up</i>
-        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL" [hidden]="activity.boosted_onchain">Boosted</a>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN" [hidden]="!activity.boosted_onchain">Boosted Onchain</a>
       </div>
       <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
         <i class="material-icons unlisted">visibility_off</i>
