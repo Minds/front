@@ -1,18 +1,26 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  EventEmitter,
+  ElementRef,
+  Input,
+  ViewChild,
+  OnInit
+} from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
-import { ScrollService } from '../../../../../services/ux/scroll';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
-import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 import { EntitiesService } from "../../../../../common/services/entities.service";
 import { Router } from "@angular/router";
 import { BlockListService } from "../../../../../common/services/block-list.service";
+import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.service";
 
 @Component({
   moduleId: module.id,
@@ -22,11 +30,12 @@ import { BlockListService } from "../../../../../common/services/block-list.serv
   },
   inputs: ['object', 'commentsToggle', 'focusedCommentGuid', 'visible', 'canDelete', 'showRatingToggle'],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
+  providers: [ActivityAnalyticsOnViewService],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class Activity {
+export class Activity implements OnInit {
 
   minds = window.Minds;
 
@@ -42,6 +51,16 @@ export class Activity {
   @Input('boost-toggle')
   @Input() showBoostMenuOptions: boolean = false;
 
+  visibilityEvents: boolean = true;
+  @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
+    this.visibilityEvents = visibilityEvents;
+
+    if (this.activityAnalyticsOnViewService) {
+      this.activityAnalyticsOnViewService
+        .setEnabled(this.visibilityEvents);
+    }
+  }
+
   type: string;
   element: any;
   visible: boolean = false;
@@ -52,7 +71,6 @@ export class Activity {
   _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();
   @Input() focusedCommentGuid: string;
-  scroll_listener;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
   onViewed: EventEmitter<{activity, visible}> = new EventEmitter<{activity, visible}>();
@@ -80,9 +98,6 @@ export class Activity {
   constructor(
     public session: Session,
     public client: Client,
-    public scroll: ScrollService,
-    public newsfeedService: NewsfeedService,
-    _element: ElementRef,
     public attachment: AttachmentService,
     public translationService: TranslationService,
     private overlayModal: OverlayModalService,
@@ -90,10 +105,21 @@ export class Activity {
     private entitiesService: EntitiesService,
     private router: Router,
     protected blockListService: BlockListService,
+    protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
+    elementRef: ElementRef,
   ) {
+    this.activityAnalyticsOnViewService
+      .setElementRef(elementRef)
+      .onView(() => {
+        this.onViewed.emit({activity: this.activity, visible: true});
+      });
+  }
 
-    this.element = _element.nativeElement;
-    this.isVisible();
+  ngOnInit() {
+    this.activityAnalyticsOnViewService
+      .setEnabled(this.visibilityEvents);
+
+    this.loadBlockedUsers();
   }
 
   set object(value: any) {
@@ -101,6 +127,8 @@ export class Activity {
       return;
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
+
+    this.activityAnalyticsOnViewService.setEntity(this.activity);
 
     if (
       this.activity.custom_type == 'batch' 
@@ -326,37 +354,8 @@ export class Activity {
     this.attachment.setNSFW(reasons);
   }
 
-  private viewed:boolean = false;
-
-  isVisible() {
-    if (this.visible) {
-      this.onViewed.emit({activity: this.activity, visible: true});
-      return true;
-    }
-    this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
-      if (this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible) {
-        //stop listening
-        this.scroll.unListen(this.scroll_listener);
-        //make visible
-        this.visible = true;
-
-        //this.onViewed.emit({activity: this.activity, visible: true});
-        //update the analytics
-        this.newsfeedService.recordView(this.activity);
-      }
-    });
-  }
-
   isUnlisted() {
     return this.activity.access_id === '0' || this.activity.access_id === 0;
-  }
-
-  ngOnInit() {
-    this.loadBlockedUsers();
-  }
-
-  ngOnDestroy() {
-    this.scroll.unListen(this.scroll_listener);
   }
 
   propagateTranslation($event) {
