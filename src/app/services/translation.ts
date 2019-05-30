@@ -126,7 +126,7 @@ export class TranslationService {
           this.purgeLanguagesCache();
         }
 
-        if (!response.translation) {
+        if (!response.translation || Object.keys(response.translation).length == 0) {
           throw new Error('No translation available');
         }
 
