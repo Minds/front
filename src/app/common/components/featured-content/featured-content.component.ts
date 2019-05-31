@@ -4,15 +4,20 @@ import {
   Component,
   ComponentFactoryResolver,
   ComponentRef,
+  Injector,
+  Input,
   OnInit,
+  SkipSelf,
   ViewChild
 } from "@angular/core";
 import { FeaturedContentService } from "./featured-content.service";
 import { DynamicHostDirective } from "../../directives/dynamic-host.directive";
 import { Activity } from "../../../modules/legacy/components/cards/activity/activity";
+import { ClientMetaService } from "../../services/client-meta.service";
 
 @Component({
   selector: 'm-featured-content',
+  providers: [ ClientMetaService ],
   templateUrl: 'featured-content.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -20,13 +25,20 @@ export class FeaturedContentComponent implements OnInit {
 
   entity: any;
 
+  @Input() slot: number = -1;
+
   @ViewChild(DynamicHostDirective) dynamicHost: DynamicHostDirective;
 
   constructor(
     protected featuredContentService: FeaturedContentService,
     protected componentFactoryResolver: ComponentFactoryResolver,
     protected cd: ChangeDetectorRef,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setMedium('featured-content');
   }
 
   ngOnInit() {
@@ -78,6 +90,7 @@ export class FeaturedContentComponent implements OnInit {
         component: Activity,
         injector: (componentRef, entity) => {
           componentRef.instance.object = entity;
+          componentRef.instance.slot = this.slot;
           componentRef.changeDetectorRef.detectChanges();
         }
       };

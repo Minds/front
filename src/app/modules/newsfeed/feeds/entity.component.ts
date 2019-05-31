@@ -37,6 +37,8 @@ export class NewsfeedEntityComponent {
     return type === 'user' ? ChannelsTileComponent : GroupsTileComponent;
   }
 
+  @Input() slot: number;
+
   // Clear the view container
   clear() {
     this.cd.detectChanges();

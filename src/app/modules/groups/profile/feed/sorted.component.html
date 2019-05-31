@@ -41,6 +41,7 @@
         [object]="entity"
         [canDelete]="group['is:owner'] || group['is:moderator']"
         (delete)="delete(entity)"
+        [slot]="i + 1"
       >
         <!-- Menu Actions -->
 

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,10 +15,12 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { FeaturesService } from "../../../services/features.service";
 import { FeedsService } from "../../../common/services/feeds.service";
 import { NewsfeedService } from "../services/newsfeed.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  templateUrl: 'subscribed.component.html'
+  providers: [ ClientMetaService ],
+  templateUrl: 'subscribed.component.html',
 })
 
 export class NewsfeedSubscribedComponent {
@@ -61,8 +63,15 @@ export class NewsfeedSubscribedComponent {
     protected featuresService: FeaturesService,
     protected feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
     this.title.setTitle('Newsfeed');
+
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('feed/subscribed')
+      .setMedium('feed');
   }
 
   ngOnInit() {

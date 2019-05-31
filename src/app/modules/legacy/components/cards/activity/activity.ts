@@ -6,7 +6,9 @@ import {
   ElementRef,
   Input,
   ViewChild,
-  OnInit
+  OnInit,
+  SkipSelf,
+  Injector,
 } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
@@ -21,6 +23,8 @@ import { EntitiesService } from "../../../../../common/services/entities.service
 import { Router } from "@angular/router";
 import { BlockListService } from "../../../../../common/services/block-list.service";
 import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.service";
+import { NewsfeedService } from "../../../../newsfeed/services/newsfeed.service";
+import { ClientMetaService } from "../../../../../common/services/client-meta.service";
 
 @Component({
   moduleId: module.id,
@@ -30,7 +34,7 @@ import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.ser
   },
   inputs: ['object', 'commentsToggle', 'focusedCommentGuid', 'visible', 'canDelete', 'showRatingToggle'],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
-  providers: [ActivityAnalyticsOnViewService],
+  providers: [ ClientMetaService, ActivityAnalyticsOnViewService ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -50,6 +54,7 @@ export class Activity implements OnInit {
   @Input() boost: boolean = false;
   @Input('boost-toggle')
   @Input() showBoostMenuOptions: boolean = false;
+  @Input() slot: number = -1;
 
   visibilityEvents: boolean = true;
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
@@ -106,12 +111,23 @@ export class Activity implements OnInit {
     private router: Router,
     protected blockListService: BlockListService,
     protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
+    protected newsfeedService: NewsfeedService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
     elementRef: ElementRef,
   ) {
+    this.clientMetaService
+      .inherit(injector);
+
     this.activityAnalyticsOnViewService
       .setElementRef(elementRef)
-      .onView(() => {
-        this.onViewed.emit({activity: this.activity, visible: true});
+      .onView(activity => {
+        this.newsfeedService.recordView(activity, true, null, this.clientMetaService.build({
+          campaign: activity.boosted_guid ? activity.urn : '',
+          position: this.slot,
+        }));
+
+        this.onViewed.emit({ activity: activity, visible: true });
       });
   }
 

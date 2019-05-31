@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector, SkipSelf } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -8,9 +8,11 @@ import { ContextService } from '../../../services/context.service';
 import { EntitiesService } from "../../../common/services/entities.service";
 import { Client } from "../../../services/api/client";
 import { FeaturesService } from "../../../services/features.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-newsfeed--single',
+  providers: [ ClientMetaService ],
   templateUrl: 'single.component.html'
 })
 
@@ -32,7 +34,13 @@ export class NewsfeedSingleComponent {
     public entitiesService: EntitiesService,
     protected client: Client,
     protected featuresService: FeaturesService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
   }
 
   ngOnInit() {

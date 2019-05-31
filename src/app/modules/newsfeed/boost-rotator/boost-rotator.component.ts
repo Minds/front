@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Injector, QueryList, SkipSelf, ViewChildren } from '@angular/core';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client } from '../../../services/api';
@@ -12,6 +12,7 @@ import { NewsfeedBoostService } from '../newsfeed-boost.service';
 import { SettingsService } from '../../settings/settings.service';
 import { FeaturesService } from "../../../services/features.service";
 import { BoostedContentService } from "../../../common/services/boosted-content.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   moduleId: module.id,
@@ -23,7 +24,8 @@ import { BoostedContentService } from "../../../common/services/boosted-content.
     '(mouseout)': 'mouseOut()'
   },
   inputs: ['interval', 'channel'],
-  templateUrl: 'boost-rotator.component.html'
+  providers: [ ClientMetaService ],
+  templateUrl: 'boost-rotator.component.html',
 })
 
 export class NewsfeedBoostRotatorComponent {
@@ -65,6 +67,8 @@ export class NewsfeedBoostRotatorComponent {
     private cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
     protected boostedContentService: BoostedContentService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
 
     this.subscriptions = [
@@ -74,7 +78,9 @@ export class NewsfeedBoostRotatorComponent {
       this.service.explicitChanged.subscribe((event) => this.onExplicitChanged(event))
     ];
 
-
+    this.clientMetaService
+      .inherit(injector)
+      .setMedium('boost-rotator');
   }
 
   ngOnInit() {
@@ -244,7 +250,11 @@ export class NewsfeedBoostRotatorComponent {
   recordImpression(position: number, force: boolean) {
     //ensure was seen for at least 1 second
     if ((Date.now() > this.lastTs + 1000 || force) && this.boosts[position].boosted_guid) {
-      this.newsfeedService.recordView(this.boosts[position], true, this.channel);
+      this.newsfeedService.recordView(this.boosts[position], true, this.channel, this.clientMetaService.build({
+        position: position + 1,
+        campaign: this.boosts[position].urn,
+      }));
+
       console.log('Boost rotator recording impressions for ' + position + ' ' + this.boosts[position].boosted_guid, this.windowFocused);
     }
     this.lastTs = Date.now();

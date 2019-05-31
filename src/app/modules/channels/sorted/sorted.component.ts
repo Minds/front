@@ -1,12 +1,23 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, Input, OnInit, Output, EventEmitter, ViewChild } from "@angular/core";
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+  SkipSelf, Injector
+} from "@angular/core";
 import { FeedsService } from "../../../common/services/feeds.service";
 import { Session } from "../../../services/session";
 import { PosterComponent } from "../../newsfeed/poster/poster.component";
 import { SortedService } from "./sorted.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-channel--sorted',
-  providers: [SortedService],
+  providers: [SortedService, ClientMetaService],
   templateUrl: 'sorted.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -55,8 +66,14 @@ export class ChannelSortedComponent implements OnInit {
     protected feedsService: FeedsService,
     protected service: SortedService,
     protected session: Session,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
     protected cd: ChangeDetectorRef,
   ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('feed/channel')
+      .setMedium('feed');
   }
 
   ngOnInit() {

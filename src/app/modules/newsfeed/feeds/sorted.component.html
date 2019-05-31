@@ -25,11 +25,13 @@
       <ng-container *ngIf="isActivityFeed()">
         <m-featured-content
           *ngIf="shouldShowBoost(i)"
+          [slot]="i + 1"
         ></m-featured-content>
       </ng-container>
 
       <m-newsfeed__entity
         [entity]="entity"
+        [slot]="i + 1"
       ></m-newsfeed__entity>
     </ng-container>
 

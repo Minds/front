@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit, SkipSelf, ViewChild } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,10 +17,12 @@ import { TopbarHashtagsService } from "../../hashtags/service/topbar.service";
 import { NewsfeedHashtagSelectorService } from "../services/newsfeed-hashtag-selector.service";
 import { FeedsService } from "../../../common/services/feeds.service";
 import { FeaturesService } from "../../../services/features.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-newsfeed--sorted',
-  templateUrl: 'sorted.component.html'
+  providers: [ ClientMetaService ],
+  templateUrl: 'sorted.component.html',
 })
 
 export class NewsfeedSortedComponent implements OnInit, OnDestroy {
@@ -63,8 +65,15 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
     protected feedsService: FeedsService,
     protected featuresService: FeaturesService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
     this.title.setTitle('Newsfeed');
+
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('feed/discovery')
+      .setMedium('feed');
 
     if (this.session.isLoggedIn()) {
       this.rating = this.session.getLoggedInUser().boost_rating;

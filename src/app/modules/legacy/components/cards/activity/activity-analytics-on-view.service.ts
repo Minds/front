@@ -3,7 +3,6 @@ import { debounceTime } from "rxjs/operators";
 import { Subject, Subscription } from "rxjs";
 
 import { ScrollService } from "../../../../../services/ux/scroll";
-import { NewsfeedService } from "../../../../newsfeed/services/newsfeed.service";
 
 @Injectable()
 export class ActivityAnalyticsOnViewService implements OnDestroy {
@@ -20,13 +19,12 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
 
   protected visible: boolean = false;
 
-  protected onViewFn: () => void;
+  protected onViewFn: (entity) => void;
 
   protected enabled: boolean = true;
 
   constructor(
     protected scroll: ScrollService,
-    protected newsfeedService: NewsfeedService,
   ) {
     this.init();
   }
@@ -41,7 +39,7 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
     return this;
   }
 
-  onView(fn: () => void) {
+  onView(fn: (entity) => void) {
     this.onViewFn = fn;
     return this;
   }
@@ -57,10 +55,11 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
       .subscribe(() => {
         if (this.entity && this.visible) {
           this.scroll.unListen(this.scroll$);
-          this.newsfeedService.recordView(this.entity);
 
           if (this.onViewFn) {
-            this.onViewFn();
+            this.onViewFn(this.entity);
+          } else {
+            console.warn('Missing onView handler for Activity');
           }
         }
       });
