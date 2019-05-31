@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector, Input, OnDestroy, OnInit, SkipSelf, ViewChild } from '@angular/core';
 
 import { Subject, Subscription } from 'rxjs';
 
@@ -11,10 +11,12 @@ import { MindsUser } from '../../../interfaces/entities';
 import { PosterComponent } from '../../../modules/newsfeed/poster/poster.component';
 import { WireChannelComponent } from '../../../modules/wire/channel/channel.component';
 import { debounceTime } from "rxjs/operators";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   moduleId: module.id,
   selector: 'm-channel--feed',
+  providers: [ ClientMetaService ],
   templateUrl: 'feed.html'
 })
 
@@ -49,7 +51,14 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     public client: Client,
     public upload: Upload,
     public scroll: ScrollService,
-  ) { }
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('feed/channel')
+      .setMedium('feed');
+  }
 
   ngOnInit() {
     this.loadFeedObservableSubscription = this.loadFeedObservable

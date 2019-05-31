@@ -26,11 +26,12 @@
     <div class="minds-list" [class.m-groupProfileFeed__mediaList]="filter !== 'activity'">
 
         <minds-activity
-            *ngFor="let activity of pinned"
+            *ngFor="let activity of pinned; let i = index"
             [object]="activity"
             [canDelete]="group['is:owner'] || group['is:moderator']"
             (delete)="delete(activity)"
             [showRatingToggle]="true"
+            [slot]="i + 1"
             class="mdl-card item">
         </minds-activity>
 
@@ -40,6 +41,7 @@
           [object]="a"
           [canDelete]="group['is:owner'] || group['is:moderator']"
           (delete)="delete(a)"
+          [slot]="i + pinned.length + 1"
         >
           <!-- Menu Actions -->
           <li post-menu

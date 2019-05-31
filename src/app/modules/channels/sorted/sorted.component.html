@@ -26,8 +26,9 @@
     </ng-container>
     <ng-template #entityListView>
       <m-newsfeed__entity
-        *ngFor="let entity of getAllEntities()"
+        *ngFor="let entity of getAllEntities(); let i = index"
         [entity]="entity"
+        [slot]="i + 1"
       ></m-newsfeed__entity>
     </ng-template>
 

@@ -12,6 +12,7 @@
     <ng-container *mIfFeature="'es-feeds'">
       <m-featured-content
         *ngIf="(i > 0 && (i % 8) === 0 && i <= 40) || i === 2"
+        [slot]="i + 1"
       ></m-featured-content>
     </ng-container>
 
@@ -21,6 +22,7 @@
       [boostToggle]="activity.boostToggle"
       (delete)="delete(activity)"
       [showRatingToggle]="true"
+      [slot]="i + 1"
     ></minds-activity>
   </ng-container>
 
