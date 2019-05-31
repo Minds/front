@@ -41,7 +41,7 @@
           [object]="a"
           [canDelete]="group['is:owner'] || group['is:moderator']"
           (delete)="delete(a)"
-          [slot]="i + pinned.length + 1"
+          [slot]="i + (pinned?.length || 0) + 1"
         >
           <!-- Menu Actions -->
           <li post-menu
