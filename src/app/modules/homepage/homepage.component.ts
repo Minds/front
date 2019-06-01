@@ -40,7 +40,7 @@ export class HomepageComponent {
     private loginReferrer: LoginReferrerService,
     public session: Session
   ) {
-    this.title.setTitle('Home');
+    this.title.setTitle('');
     this.loadStream();
     
     if (this.session.isLoggedIn()) {
