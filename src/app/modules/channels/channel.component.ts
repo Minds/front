@@ -116,7 +116,7 @@ export class ChannelComponent {
         if (!(this.session.getLoggedInUser() && this.session.getLoggedInUser().guid === this.user.guid)) {
           this.editing = false;
         }
-        this.title.setTitle(this.user.username);
+        this.title.setTitle(`${this.user.name} (@${this.user.username})`);
 
         this.context.set('activity', { label: `@${this.user.username} posts`, nameLabel: `@${this.user.username}`, id: this.user.guid });
         if (this.session.getLoggedInUser()) {
