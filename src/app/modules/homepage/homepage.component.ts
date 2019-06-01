@@ -40,7 +40,7 @@ export class HomepageComponent {
     private loginReferrer: LoginReferrerService,
     public session: Session
   ) {
-    this.title.setTitle('');
+    this.title.setTitle('Minds Social Network', false);
     this.loadStream();
     
     if (this.session.isLoggedIn()) {
