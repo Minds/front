@@ -95,11 +95,12 @@
   }
 }
 
-.m-boost-rotator-tabs{
-  margin:0;
-  padding:0;
+.m-boost-rotator-tabs {
+  margin: 0;
+  padding: 0;
   list-style: none;
-  display:flex;
+  display: flex;
+  align-items: center;
   z-index: 1;
 
   .m-boost-rotator-tabs-tab{
@@ -112,10 +113,15 @@
     cursor:pointer;
   }
 
-  li > i{
-    margin-top:-10px;
-    cursor:pointer;
+  li {
+    & > a {
+      cursor: pointer;
+    }
 
+    & > i {
+      margin-top: -10px;
+      cursor: pointer;
+    }
   }
   .m-boost-rotator-paused{
     margin-top:-8px !important;

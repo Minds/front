@@ -6,10 +6,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Client, Upload } from '../../../services/api';
 import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
-import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
+import { FeaturesService } from "../../../services/features.service";
+import { BoostedContentService } from "../../../common/services/boosted-content.service";
 
 @Component({
   selector: 'm-newsfeed--boost',
@@ -21,6 +22,7 @@ export class NewsfeedBoostComponent {
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: string = '';
+  exclude: string[] = [];
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
@@ -43,7 +45,8 @@ export class NewsfeedBoostComponent {
     public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
-    private session: Session,
+    protected featuresService: FeaturesService,
+    protected boostedContentService: BoostedContentService,
   ) {
     this.title.setTitle('Boost Newsfeed');
   }
@@ -70,7 +73,60 @@ export class NewsfeedBoostComponent {
     this.paramsSubscription.unsubscribe();
   }
 
-  load(refresh: boolean = false) {
+  async load(refresh: boolean = false) {
+    if (this.featuresService.has('es-feeds')) {
+      return await this.loadFromService(refresh);
+    } else {
+      return await this.loadLegacy(refresh);
+    }
+  }
+
+  async loadFromService(refresh: boolean = false) {
+    if (this.inProgress)
+      return false;
+
+    if (refresh) {
+      this.exclude = [];
+    }
+
+    if (this.storage.get('boost:exclude:boostfeed')) {
+      this.exclude = JSON.parse(this.storage.get('boost:exclude:boostfeed'));
+    }
+
+    try {
+      const data = await this.boostedContentService.get({
+        limit: 10,
+        offset: 8,
+        exclude: this.exclude,
+        passive: true,
+      });
+
+      if (!data || !data.length) {
+        this.moreData = false;
+        this.inProgress = false;
+        return false;
+      }
+
+      if (this.newsfeed && !refresh) {
+        this.newsfeed = this.newsfeed.concat(data);
+      } else {
+        this.newsfeed = data.boosts;
+      }
+
+      this.exclude = this.newsfeed.map((boost: any) => boost.urn);
+
+      this.storage.set('boost:exclude:boostfeed', this.exclude);
+      this.inProgress = false;
+    } catch (e) {
+      if (e && e.message) {
+        console.warn(e);
+      }
+    }
+
+    this.inProgress = false;
+  }
+
+  async loadLegacy(refresh: boolean = false) {
     if (this.inProgress)
       return false;
 
@@ -84,25 +140,27 @@ export class NewsfeedBoostComponent {
 
     this.inProgress = true;
 
-    this.client.get('api/v1/boost/fetch/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
-      .then((data: any) => {
-        if (!data.boosts) {
-          this.moreData = false;
-          this.inProgress = false;
-          return false;
-        }
-        if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.boosts);
-        } else {
-          this.newsfeed = data.boosts;
-        }
-        this.offset = data['load-next'];
-        this.storage.set('boost:offset:boostfeed', this.offset);
+    try {
+      const data: any = await this.client.get('api/v1/boost/fetch/newsfeed', {
+        limit: 12,
+        offset: this.offset
+      }, { cache: true });
+      if (!data.boosts) {
+        this.moreData = false;
         this.inProgress = false;
-      })
-      .catch((e) => {
-        this.inProgress = false;
-      });
+        return false;
+      }
+      if (this.newsfeed && !refresh) {
+        this.newsfeed = this.newsfeed.concat(data.boosts);
+      } else {
+        this.newsfeed = data.boosts;
+      }
+      this.offset = data['load-next'];
+      this.storage.set('boost:offset:boostfeed', this.offset);
+      this.inProgress = false;
+    } catch (e) {
+      this.inProgress = false;
+    }
   }
 
   delete(activity) {
