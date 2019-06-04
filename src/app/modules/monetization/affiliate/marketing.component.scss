@@ -9,7 +9,7 @@
   box-sizing: border-box;
 
   h1, h3{
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     @include m-theme(){
       text-shadow: 0 0 3px themed($m-grey-900);
       color: themed($m-white);
@@ -49,7 +49,7 @@
     span{
       padding:8px;
       letter-spacing:1px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       font-size: 16px;
       font-weight: 300;
       text-transform: uppercase;
@@ -69,7 +69,7 @@
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       @include m-theme(){
         color: themed($m-white);
       }
@@ -92,13 +92,13 @@
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 38px;
     }
     span{
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 1px;
     }
   }
@@ -117,7 +117,7 @@
     padding: 16px 16px 0 32px;
     margin: 0;
     font-size: 16px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     letter-spacing: 0.5px;
     font-weight: 300;
   }
@@ -130,7 +130,7 @@
 .m-affiliate--marketing-faq {
   max-width:900px;
   margin: auto;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
 
 }
 

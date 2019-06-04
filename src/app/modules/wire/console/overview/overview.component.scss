@@ -1,7 +1,7 @@
 .m-wire-console--overview {
   padding: 16px;
   margin: auto;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
   
   @include m-theme(){
     color: themed($m-white);
@@ -55,7 +55,7 @@
 
     label{
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing:1px;
       font-size:14px;
       font-weight: 600;

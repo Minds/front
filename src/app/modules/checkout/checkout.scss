@@ -5,7 +5,7 @@ minds-payments-checkout, minds-payments-stripe-checkout{
 
   .m-error{
     padding: 16px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
   }
 
   .m-checkout-loading{
@@ -54,7 +54,7 @@ minds-payments-checkout, minds-payments-stripe-checkout{
       padding: 8px;
       text-transform: uppercase;
       letter-spacing: 2px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       margin: 16px;
       border-radius: 3px;
       @include m-theme(){

@@ -1,5 +1,5 @@
 .m-monetization--onboarding {
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
 
   label{
     display: block;
@@ -15,7 +15,7 @@
       font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       font-weight: 300;
       @include m-theme(){
         color: themed($m-grey-500);
