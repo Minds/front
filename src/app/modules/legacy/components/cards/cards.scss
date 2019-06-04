@@ -277,7 +277,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   .mdl-card__supporting-text{
     width:100%;
     box-sizing: border-box;
-    font-family: Roboto;
+    font-family: 'Roboto', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     @include m-theme(){
