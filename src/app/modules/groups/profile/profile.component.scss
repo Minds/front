@@ -1,3 +1,5 @@
+@import "defaults";
+
 .m-group__grid {
   display: flex;
   flex-direction: row;
@@ -23,14 +25,24 @@
   }
 
   .m-groupGrid__toggleBtn {
+    display: block;
+    z-index: 99;
+    cursor: pointer;
+    position: fixed;
+    right: 65px;
+    top: 55px;
+    @media screen and (max-width: $min-desktop) {
+      right: 8px;
+      top: 106px;
+    }
+    i {
+      font-size: 32px;
+    }
     .material-icons {
       @include m-theme(){
         text-shadow: 0px 0px 1px themed($m-white), 0px 0px 1px themed($m-white);
         color: themed($m-grey-400);
       }
-    }
-    @media screen and (max-width: 900px) {
-      right: 8px !important;
     }
   }
 }
