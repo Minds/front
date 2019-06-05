@@ -17,6 +17,7 @@ import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
+import isMobile from '../../../helpers/is-mobile';
 import * as BN from 'bn.js';
 
 @Component({
@@ -87,6 +88,10 @@ export class BlockchainEthModalComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  isMobile() {
+    return isMobile();
   }
 
 }

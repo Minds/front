@@ -1,6 +1,14 @@
 .m-blockchainEthModal__form {
   margin: 36px 0;
 
+  &.m-layout__row {
+    @media screen and (max-width: 900px) {
+      flex-wrap: wrap;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
   .m-input {
     padding: 16px;
     font-size: 24px;
@@ -25,3 +33,14 @@
     padding: 0 16px;
   }
 }
+
+.m-blockchain__ethModal {
+  .m-btn.m-btn--slim {
+    height: auto;
+  }
+  .m-blockchainEthModal__ethPrice {
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
+  }
+}   
