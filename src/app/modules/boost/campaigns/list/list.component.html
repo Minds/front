@@ -1,0 +1,53 @@
+<div class="m-page--section m-border">
+  <div class="m-page--section-button-bar">
+    <a routerLink="/boost/campaigns/create" class="m-btn m-btn--slim m-btn--action">New Campaign</a>
+  </div>
+
+  <div class="m-boost-campaigns-list__Table">
+    <table class="m-table" cellspacing="0" cellpadding="0" border="0" width="100%">
+      <thead>
+        <tr>
+          <th>
+            <span i18n>Name</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th>
+            <span i18n>Delivery</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th class="m-table--numeric-cell">
+            <span i18n>Budget</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th class="m-table--numeric-cell">
+            <span i18n>Impressions</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th class="m-table--numeric-cell">
+            <span i18n>CPM</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th class="m-table--numeric-cell">
+            <span i18n>Max Surge</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th>
+            <span i18n>Schedule</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let campaign of campaigns">
+          <td><a [routerLink]="['/boost/campaigns', campaign.guid]">{{campaign.name}}</a></td>
+          <td>{{campaign.delivery}}</td>
+          <td class="m-table--numeric-cell">{{campaign.budget | token:18 | number}} Tk</td>
+          <td class="m-table--numeric-cell">{{campaign.impressions | number}}</td>
+          <td class="m-table--numeric-cell">{{campaign.cpm | number}}</td>
+          <td class="m-table--numeric-cell">{{campaign.max_surge}} %</td>
+          <td>{{campaign.start | date:'MMM dd'}} - {{campaign.end | date:'MMM dd'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

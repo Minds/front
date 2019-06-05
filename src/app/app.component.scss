@@ -125,4 +125,81 @@ m-app {
       padding-left: 8px;
     }
   }
+
+  .m-page--section {
+    margin: 4px 8px 8px;
+    padding: 16px;
+
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
+
+    .m-page--section-button-bar {
+      text-align: right;
+      margin: 8px 0 24px;
+      padding: 0 8px;
+    }
+  }
+}
+
+.m-table {
+  border-radius: 6px;
+
+  @include m-theme(){
+    background-color: themed($m-white);
+    border: 1px solid themed($m-grey-50);
+  }
+
+  thead {
+    th {
+      padding: 16px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+
+      @include m-theme(){
+        color: themed($m-grey-800);
+        border-bottom: 1px solid themed($m-grey-50);
+      }
+
+      &.m-table--numeric-cell {
+        text-align: right;
+      }
+
+      i.material-icons {
+        font-size: inherit;
+        margin-left: 4px;
+        vertical-align: middle;
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
+
+  tbody {
+    td {
+      padding: 16px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+
+      @include m-theme(){
+        color: themed($m-grey-600);
+        border-bottom: 1px solid themed($m-grey-50);
+      }
+
+      &.m-table--numeric-cell {
+        text-align: right;
+      }
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none;
+  }
 }

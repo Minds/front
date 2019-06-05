@@ -8,9 +8,11 @@ m-user-menu {
   // cursor: pointer;
 }
 
-.m-user-menu__Dropdown {
+.m-dropdown .m-dropdown__list.m-user-menu__Dropdown {
   list-style: none;
   margin: 34px 0 0;
+  width: 180px;
+
   @include m-theme(){
     background-color: themed($m-white);
     color: themed($m-grey-700);

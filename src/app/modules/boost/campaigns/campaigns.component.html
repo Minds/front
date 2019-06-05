@@ -1,0 +1,36 @@
+<div class="m-boost-campaigns m-page m-page--wrapped">
+  <div class="m-page--sidebar">
+    <div class="m-page--sidebar--navigation">
+      <a
+        class="m-page--sidebar--navigation--item"
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+        routerLink="/boost/campaigns/overview"
+      >
+        <i class="material-icons">trending_up</i>
+        <span>Overview</span>
+      </a>
+
+      <a
+        class="m-page--sidebar--navigation--item"
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+        routerLink="/boost/campaigns/list"
+      >
+        <i class="material-icons">folder_special</i>
+        <span>Campaigns</span>
+      </a>
+
+      <a
+        class="m-page--sidebar--navigation--item"
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+        routerLink="/boost/console"
+      >
+        <i class="material-icons">restore</i>
+        <span>Boosts</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="m-page--main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

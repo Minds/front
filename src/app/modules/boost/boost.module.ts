@@ -28,6 +28,11 @@ import { BoostPublisherEarningsComponent } from './publisher/earnings/earnings.c
 import { BoostPublisherPayoutsComponent } from './publisher/payouts/payouts.component';
 import { BoostPublisherSettingsComponent } from './publisher/settings/settings.component';
 import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
+import { BoostCampaignsComponent } from "./campaigns/campaigns.component";
+import { BoostCampaignsOverviewComponent } from "./campaigns/overview/overview.component";
+import { BoostCampaignsCreatorComponent } from "./campaigns/creator/creator.component";
+import { BoostCampaignsViewComponent } from "./campaigns/view/view.component";
+import { BoostCampaignsListComponent } from "./campaigns/list/list.component";
 
 const boostRoutes: Routes = [
   { path: 'boost/console', component: BoostConsoleComponent,
@@ -51,6 +56,37 @@ const boostRoutes: Routes = [
         ]
       },
     ]
+  },
+  {
+    path: 'boost/campaigns',
+    component: BoostCampaignsComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full'
+      },
+      {
+        path: 'overview',
+        component: BoostCampaignsOverviewComponent,
+      },
+      {
+        path: 'list',
+        component: BoostCampaignsListComponent,
+      },
+      {
+        path: 'create',
+        component: BoostCampaignsCreatorComponent,
+      },
+      {
+        path: 'edit/:id',
+        component: BoostCampaignsCreatorComponent,
+      },
+      {
+        path: ':id',
+        component: BoostCampaignsViewComponent,
+      },
+    ],
   },
   { path: 'boost', component: BoostMarketingComponent }
 ];
@@ -86,6 +122,11 @@ const boostRoutes: Routes = [
     BoostPublisherPayoutsComponent,
     BoostPublisherSettingsComponent,
     BoostPublisherLedgerComponent,
+    BoostCampaignsComponent,
+    BoostCampaignsOverviewComponent,
+    BoostCampaignsListComponent,
+    BoostCampaignsCreatorComponent,
+    BoostCampaignsViewComponent,
   ],
   exports: [
     BoostConsoleNetworkListComponent,
@@ -96,6 +137,7 @@ const boostRoutes: Routes = [
   entryComponents: [
     BoostCreatorComponent,
     BoostConsoleComponent,
+    BoostCampaignsComponent,
     BoostMarketingComponent,
   ]
 })
