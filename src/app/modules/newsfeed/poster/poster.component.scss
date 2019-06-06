@@ -13,6 +13,11 @@ minds-newsfeed-poster {
 
   .mdl-card__supporting-text {
     overflow: visible;
+    
+    textarea {
+      background-color: transparent;
+    }
+    
   }
 
   > div {
