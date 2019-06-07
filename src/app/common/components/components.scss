@@ -49,4 +49,9 @@ minds-button-thumbs-down a {
   @include m-theme(){
     color: themed($m-blue-grey-500);
   }
+  &:hover {
+    @include m-theme(){
+      color: themed($m-blue);
+    }
+  }
 }

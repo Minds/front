@@ -561,6 +561,12 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     @include m-theme(){
       color: themed($m-blue) !important;
     }
+    
+    &:hover {
+      @include m-theme(){
+        color: rgba(themed($m-blue-dark),0.9) !important;
+      }
+    }
   }
   i{
     vertical-align: middle;
