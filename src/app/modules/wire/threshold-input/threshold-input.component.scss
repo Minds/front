@@ -30,7 +30,6 @@ m-wire-threshold-input, .m-wire-threshold-input {
 
     .m-dropdown--list--item {
       flex-wrap: wrap;
-      cursor: pointer;
 
       b {
         flex-basis: 100%;
@@ -59,12 +58,20 @@ m-wire-threshold-input, .m-wire-threshold-input {
 
         i {
           font-size: 18px;
+        }
+        
+        i.selected {
           cursor: pointer;
         }
+        
+        i.m-wire-threshold-input--type {
+          cursor: default;
+        }
+        
         input {
           padding: 6px;
           margin: 0 8px;
-          min-width: 132px;
+          min-width: 122px;
         }
         span {
           margin-right: 8px;

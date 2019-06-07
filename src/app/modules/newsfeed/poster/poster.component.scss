@@ -13,6 +13,11 @@ minds-newsfeed-poster {
 
   .mdl-card__supporting-text {
     overflow: visible;
+    
+    textarea {
+      background-color: transparent;
+    }
+    
   }
 
   > div {
@@ -295,6 +300,9 @@ m-hashtags-selector {
     }
 
     .m-posterActionBar__IconAndLabel {
+      
+      cursor:pointer;
+      
       > * {
         vertical-align: middle;
       }
