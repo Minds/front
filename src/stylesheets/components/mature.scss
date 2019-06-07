@@ -69,7 +69,7 @@
     z-index: 250;
     cursor: pointer;
     @include m-theme(){
-      background-color: themed($grey-700);
+      background-color: themed($m-grey-700);
     }
 
     .m-mature-overlay-note {
