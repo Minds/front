@@ -1,63 +1,16 @@
-<?php
-    $meta = Minds\Core\SEO\Manager::get();
-?>
-
-<?php
-    if (!defined('__MINDS_CONTEXT__')) {
-        define('__MINDS_CONTEXT__', 'app');
-    }
-?>
 <html>
   <head>
     <base href="/" />
 
     <meta charset="utf-8">
-    <link rel="icon" type="image/svg" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-16x16.png">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-    <?php
-      foreach($meta as $name => $content){
-        $name = strip_tags($name);
-        $content = str_replace(['"'], '\'', $content);
-        switch($name){
-          case "title":
-            echo "<title>$content</title>\n";
-            break;
-          case strpos($name, "smartbanner") !== FALSE:
-            echo "<meta name=\"$name\" content=\"$content\">\n";
-            break;
-          case strpos($name, ":") !== FALSE:
-            echo "<meta property=\"$name\" content=\"$content\">\n";
-            break;
-          default:
-            echo "<meta name=\"$name\" content=\"$content\">\n";
-        }
-      }
-    ?>
-
 
     <!-- inject:css -->
     <!-- endinject -->
 
-    <script>
-      var ua = window.navigator.userAgent;
-      if(ua.indexOf("MSIE") > -1 ||
-        (ua.indexOf("Android 4.3") > -1 && !(ua.indexOf('Chrome') > -1)) //android 4.3, but not chrome browser
-        ){
-          window.location.href = window.location.href.replace('<?= Minds\Core\Config::_()->get('site_url') ?>', 'https://www.minds.com/not-supported');
-      }
-    </script>
-
   </head>
-  <body>
+  <body class="m-theme__light">
 
-
-    <?php if (__MINDS_CONTEXT__ === 'embed'): ?>
-        <!-- The embed component created in embed.ts -->
-        <minds-embed></minds-embed>
-    <?php else: ?>
         <!-- The app component created in app.ts -->
         <m-app class="">
           <div class="mdl-progress mdl-progress__indeterminate initial-loading is-upgraded">
@@ -91,8 +44,6 @@
             </div>
           </div>
         </m-app>
-    <?php endif; ?>
-
 
       <script>
       // Fixes undefined module function in SystemJS bundle
@@ -106,42 +57,7 @@
     <!-- endinject -->
 
     <script>
-      <?php
-          $minds = [
-              "MindsContext" => __MINDS_CONTEXT__,
-              "LoggedIn" => Minds\Core\Session::isLoggedIn() ? true : false,
-              "Admin" => Minds\Core\Session::isAdmin() ? true : false,
-              "cdn_url" => Minds\Core\Config::_()->get('cdn_url') ?: Minds\Core\Config::_()->cdn_url,
-              "cdn_assets_url" => Minds\Core\Config::_()->get('cdn_assets_url'),
-              "site_url" => Minds\Core\Config::_()->get('site_url') ?: Minds\Core\Config::_()->site_url,
-              "cinemr_url" => Minds\Core\Config::_()->get('cinemr_url') ?: Minds\Core\Config::_()->cinemr_url,
-              "socket_server" => Minds\Core\Config::_()->get('sockets-server-uri') ?: 'ha-socket-io-us-east-1.minds.com:3030',
-              "navigation" => Minds\Core\Navigation\Manager::export(),
-              "thirdpartynetworks" => Minds\Core\Di\Di::_()->get('ThirdPartyNetworks\Manager')->availableNetworks(),
-              'language' => Minds\Core\Di\Di::_()->get('I18n')->getLanguage(),
-              'languages' => Minds\Core\Di\Di::_()->get('I18n')->getLanguages(),
-              "categories" => Minds\Core\Config::_()->get('categories') ?: [],
-              "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
-              "recaptchaKey" => Minds\Core\Config::_()->get('google')['recaptcha']['site_key'],
-              "max_video_length" => Minds\Core\Config::_()->get('max_video_length'),
-              "features" => (object) (Minds\Core\Config::_()->get('features') ?: []),
-              "blockchain" => (object) Minds\Core\Di\Di::_()->get('Blockchain\Manager')->getPublicSettings(),
-              "sale" => Minds\Core\Config::_()->get('blockchain')['sale'],
-              "last_tos_update" => Minds\Core\Config::_()->get('last_tos_update') ?: time(),
-              "tags" => Minds\Core\Config::_()->get('tags') ?: []
-          ];
-
-          if(Minds\Core\Session::isLoggedIn()){
-              $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
-              $minds['user']['rewards'] = !!Minds\Core\Session::getLoggedinUser()->getPhoneNumberHash();
-              $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
-          }
-
-          if (__MINDS_CONTEXT__ === 'embed') {
-              $minds['MindsEmbed'] = $embedded_entity;
-          }
-      ?>
-      window.Minds = <?= json_encode($minds) ?>;
+      window.Minds = <!-- MINDS_GLOBALS -->;
     </script>
   
   </body>

@@ -1,4 +1,11 @@
-import { Directive, ElementRef, EventEmitter } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import { Observable, Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -26,7 +33,10 @@ export class CommentsScrollDirective {
 
   private emitterSubscription: Subscription;
 
-  constructor(private elementRef: ElementRef) {
+  constructor(
+    private elementRef: ElementRef,
+    @Inject(PLATFORM_ID) private platformId,
+  ) {
     this.scroll = fromEvent(elementRef.nativeElement, 'scroll');
   }
 
@@ -35,6 +45,9 @@ export class CommentsScrollDirective {
       console.error('Not an emitter');
       return;
     }
+
+    if (isPlatformServer(this.platformId))
+      return;
 
     if (this.emitterSubscription) {
       this.emitterSubscription.unsubscribe();
@@ -115,8 +128,9 @@ export class CommentsScrollDirective {
     // Refresh timer
     if (this.stickInterval) {
       clearInterval(this.stickInterval);
-    }
-    this.stickInterval = setInterval(() => this.stick(), this.STICK_INTERVAL_MS);
+      }
+    if (isPlatformBrowser(this.platformId))
+      this.stickInterval = setInterval(() => this.stick(), this.STICK_INTERVAL_MS);
   }
 
   top(run?: boolean, stick?: boolean) {

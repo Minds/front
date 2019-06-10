@@ -11,7 +11,7 @@ import MindsClientHttpAdapter from "../../lib/minds-sync/adapters/MindsClientHtt
 import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
 import BoostedContentSync from '../../lib/minds-sync/services/BoostedContentSync.js';
 
-import AsyncStatus from "../../helpers/async-status";
+import { AsyncStatus } from "../../helpers/async-status";
 
 @Injectable()
 export class BoostedContentService {
@@ -69,7 +69,7 @@ export class BoostedContentService {
 
     // Garbage collection
     this.boostedContentSync.gc();
-    setTimeout(() => this.boostedContentSync.gc(), 5 * 60 * 1000); // Every 5 minutes
+    //setTimeout(() => this.boostedContentSync.gc(), 5 * 60 * 1000); // Every 5 minutes
 
     // Rating changes hook
     this.settingsService.ratingChanged.subscribe(rating => this.boostedContentSync.changeRating(rating));

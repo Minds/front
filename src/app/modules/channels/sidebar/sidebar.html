@@ -153,6 +153,7 @@
     [channel]="user"
     [linksTo]="['/', user.username, 'images']"
     [size]="9"
+    *mIfBrowser
   ></m-channels--sorted-module>
 
   <div class="minds-spacer-2x"></div>
@@ -164,6 +165,7 @@
     [channel]="user"
     [linksTo]="['/', user.username, 'videos']"
     [size]="9"
+    *mIfBrowser
   ></m-channels--sorted-module>
 
   <div class="minds-spacer-2x"></div>
@@ -175,11 +177,17 @@
     [channel]="user"
     [linksTo]="['/', user.username, 'blogs']"
     [size]="3"
+    *mIfBrowser
   ></m-channels--sorted-module>
 </ng-container>
 <ng-template #legacyModules>
   <!-- images  -->
-  <m-channel--modules [owner]="user" type="image" [linksTo]="['/media/images', user.username]">
+  <m-channel--modules
+    [owner]="user"
+    type="image"
+    [linksTo]="['/media/images', user.username]"
+    *mIfBrowser
+    >
 
     <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/images', user.username]">
       <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
@@ -189,7 +197,13 @@
   <div class="minds-spacer-2x"></div>
 
   <!-- videos  -->
-  <m-channel--modules [owner]="user" type="video" limit="9" [linksTo]="['/media/videos', user.username]">
+  <m-channel--modules 
+    [owner]="user"
+    type="video"
+    limit="9"
+    [linksTo]="['/media/videos', user.username]"
+    *mIfBrowser
+    >
 
     <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/media/videos', user.username]">
       <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
@@ -199,7 +213,13 @@
   <div class="minds-spacer-2x"></div>
 
   <!-- Blogs  -->
-  <m-channel--modules [owner]="user" type="blog" limit="3" [linksTo]="['/blog', user.username]">
+  <m-channel--modules
+    [owner]="user"
+    type="blog"
+    limit="3"
+    [linksTo]="['/blog', user.username]"
+    *mIfBrowser
+    >
 
     <a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="['/blog', user.username]">
       <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>

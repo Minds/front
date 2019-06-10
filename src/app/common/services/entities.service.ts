@@ -4,7 +4,7 @@ import { Client } from "../../services/api";
 import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
 import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
 import EntitiesSync from '../../lib/minds-sync/services/EntitiesSync.js';
-import AsyncStatus from "../../helpers/async-status";
+import { AsyncStatus } from "../../helpers/async-status";
 import normalizeUrn from "../../helpers/normalize-urn";
 
 @Injectable()
@@ -12,10 +12,9 @@ export class EntitiesService {
 
   protected entitiesSync: EntitiesSync;
 
-  protected status = new AsyncStatus();
-
   constructor(
-    protected client: Client
+    protected client: Client,
+    protected status: AsyncStatus,
   ) {
     this.setUp();
   }
@@ -36,7 +35,7 @@ export class EntitiesService {
     // Garbage collection
 
     this.entitiesSync.gc();
-    setTimeout(() => this.entitiesSync.gc(), 15 * 60 * 1000); // Every 15 minutes
+    //setTimeout(() => this.entitiesSync.gc(), 15 * 60 * 1000); // Every 15 minutes
   }
 
   async single(guid: string): Promise<Object | false> {
@@ -65,10 +64,13 @@ export class EntitiesService {
 
     const urns = guids.map(guid => normalizeUrn(guid));
 
+    if (!this.entitiesSync) 
+      await this.setUp();
+
     return await this.entitiesSync.get(urns);
   }
 
-  static _(client: Client) {
-    return new EntitiesService(client);
+  static _(client: Client, status: AsyncStatus) {
+    return new EntitiesService(client, status);
   }
 }

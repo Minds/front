@@ -1,7 +1,7 @@
-import { NgZone, RendererFactory2 } from '@angular/core';
+import { NgZone, RendererFactory2, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Title } from '@angular/platform-browser';
+import { Title, TransferState } from '@angular/platform-browser';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -42,6 +42,7 @@ import { InMemoryStorageService } from "./in-memory-storage.service";
 import { FeedsService } from "../common/services/feeds.service";
 import { ThemeService } from "../common/services/theme.service";
 import { GlobalScrollService } from "./ux/global-scroll.service";
+import { AsyncStatus } from "../helpers/async-status";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -62,7 +63,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: Client,
      useFactory: Client._,
-     deps: [ HttpClient ]
+     deps: [ HttpClient, PLATFORM_ID, TransferState ]
    },
    {
      provide: Upload,
@@ -199,6 +200,10 @@ export const MINDS_PROVIDERS : any[] = [
     useFactory: TimeDiffService._
   },
   {
+    provide: AsyncStatus,
+    useFactory: AsyncStatus._,
+  },
+  {
     provide: BlockListService,
     useFactory: BlockListService._,
     deps: [ Client, Session ],
@@ -206,12 +211,12 @@ export const MINDS_PROVIDERS : any[] = [
   {
     provide: EntitiesService,
     useFactory: EntitiesService._,
-    deps: [ Client ],
+    deps: [ Client, AsyncStatus ],
   },
   {
     provide: FeedsService,
     useFactory: FeedsService._,
-    deps: [ Client, Session, EntitiesService, BlockListService ],
+    deps: [ Client, Session, EntitiesService, BlockListService, AsyncStatus, ],
   },
   {
     provide: InMemoryStorageService,

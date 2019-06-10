@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
  */
 export class MindsHttpClient {
 
-  base: string = '/';
+  base: string = 'https://eggman.minds.com/';
   cookie: Cookie = new Cookie();
 
   static _(http: HttpClient) {

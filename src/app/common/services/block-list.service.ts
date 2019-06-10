@@ -7,7 +7,7 @@ import AsyncLock from "../../helpers/async-lock";
 import MindsClientHttpAdapter from "../../lib/minds-sync/adapters/MindsClientHttpAdapter.js";
 import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
 import BlockListSync from "../../lib/minds-sync/services/BlockListSync.js";
-import AsyncStatus from "../../helpers/async-status";
+import { AsyncStatus } from "../../helpers/async-status";
 
 @Injectable()
 export class BlockListService {
@@ -39,13 +39,13 @@ export class BlockListService {
 
     // Prune on session changes
 
-    this.session.isLoggedIn((is: boolean) => {
+    /*this.session.isLoggedIn((is: boolean) => {
       if (is) {
         this.sync();
       } else {
         this.prune();
       }
-    });
+      });*/
   }
 
   async sync() {

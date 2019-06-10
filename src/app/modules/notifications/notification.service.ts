@@ -1,4 +1,6 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { timer, Subscription } from 'rxjs';
 import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
@@ -9,12 +11,19 @@ export class NotificationService {
     notification: null
   };
   onReceive: EventEmitter<any> = new EventEmitter();
+  polling$: Subscription;
 
-  static _(session: Session, client: Client, sockets: SocketsService, title: MindsTitle) {
-    return new NotificationService(session, client, sockets, title);
+  static _(session: Session, client: Client, sockets: SocketsService, title: MindsTitle, platformId) {
+    return new NotificationService(session, client, sockets, title, platformId);
   }
 
-  constructor(public session: Session, public client: Client, public sockets: SocketsService, public title: MindsTitle) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public sockets: SocketsService,
+    public title: MindsTitle,
+    @Inject(PLATFORM_ID) private platformId,
+  ) {
     if (!window.Minds.notifications_count)
       window.Minds.notifications_count = 0;
 
@@ -34,7 +43,10 @@ export class NotificationService {
             this.onReceive.next(response.notification);
           }
         });
-    });
+     });
+     if (isPlatformBrowser(this.platformId)) {
+       this.initPolling();
+     }
   }
 
   /**
@@ -56,23 +68,22 @@ export class NotificationService {
   /**
    * Return the notifications
    */
-  getNotifications() {
-    var self = this;
-    setInterval(function () {
+  initPolling() {
+    this.polling$ = timer(1000, 6000).subscribe(() => {
       // console.log('getting notifications');
 
-      if (!self.session.isLoggedIn())
+      if (!this.session.isLoggedIn())
         return;
 
       if (!window.Minds.notifications_count)
         window.Minds.notifications_count = 0;
 
-      self.client.get('api/v1/notifications/count', {})
+      this.client.get('api/v1/notifications/count', {})
         .then((response: any) => {
           window.Minds.notifications_count = response.count;
-          self.sync();
+          this.sync();
         });
-    }, 60000);
+    });
   }
 
   /**
@@ -85,7 +96,6 @@ export class NotificationService {
       }
     }
     this.title.setCounter(window.Minds.notifications_count);
-
   }
 
 }

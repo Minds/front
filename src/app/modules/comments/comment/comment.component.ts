@@ -8,8 +8,11 @@ import {
   ChangeDetectionStrategy,
   OnChanges,
   Input,
+  Inject,
   ElementRef,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Session } from '../../../services/session';
 import { Upload } from '../../../services/api/upload';
@@ -90,13 +93,16 @@ export class CommentComponentV2 implements OnChanges {
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
     private timeDiffService: TimeDiffService,
-    private el: ElementRef
+    private el: ElementRef,
+    @Inject(PLATFORM_ID) private platformId,
   ) {}
 
   ngOnInit() {
-    this.commentAge$ = this.timeDiffService.source.pipe(map(secondsElapsed => {
-      return (this.comment.time_created - secondsElapsed) * 1000;
-    }));
+    if (isPlatformBrowser(this.platformId)) {
+      this.commentAge$ = this.timeDiffService.source.pipe(map(secondsElapsed => {
+        return (this.comment.time_created - secondsElapsed) * 1000;
+      }));
+    }
   }
 
   ngAfterViewInit() {

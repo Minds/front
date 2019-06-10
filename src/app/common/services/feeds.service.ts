@@ -11,7 +11,7 @@ import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-
 import FeedsSync from '../../lib/minds-sync/services/FeedsSync.js';
 
 import hashCode from "../../helpers/hash-code";
-import AsyncStatus from "../../helpers/async-status";
+import { AsyncStatus } from "../../helpers/async-status";
 
 export type FeedsServiceGetParameters = {
   endpoint: string;
@@ -34,26 +34,28 @@ export type FeedsServiceGetResponse = {
 @Injectable()
 export class FeedsService {
 
-  protected feedsSync: FeedsSync;
-
-  protected status = new AsyncStatus();
+  //protected feedsSync: FeedsSync;
 
   constructor(
     protected client: Client,
     protected session: Session,
     protected entitiesService: EntitiesService,
     protected blockListService: BlockListService,
+    protected status: AsyncStatus,
+    protected feedsSync: FeedsSync,
   ) {
+    console.log('constructed feeds sync');
     this.setUp();
   }
 
   async setUp() {
+    console.log('setup called');
     this.feedsSync = new FeedsSync(
       new MindsClientHttpAdapter(this.client),
       await browserStorageAdapterFactory('minds-feeds-190314'),
       15,
     );
-
+     console.log('setup completed');
     this.feedsSync.setResolvers({
       stringHash: value => hashCode(value),
       currentUser: () => this.session.getLoggedInUser() && this.session.getLoggedInUser().guid,
@@ -70,12 +72,12 @@ export class FeedsService {
     // Garbage collection
 
     this.feedsSync.gc();
-    setTimeout(() => this.feedsSync.gc(), 15 * 60 * 1000); // Every 15 minutes
+    //setTimeout(() => this.feedsSync.gc(), 15 * 60 * 1000); // Every 15 minutes
   }
 
   async get(opts: FeedsServiceGetParameters): Promise<FeedsServiceGetResponse> {
     await this.status.untilReady();
-
+    
     try {
       const { entities, next } = await this.feedsSync.get(opts);
 
@@ -99,7 +101,9 @@ export class FeedsService {
     session: Session,
     entitiesService: EntitiesService,
     blockListService: BlockListService,
+    status: AsyncStatus,
+    feedsSync: FeedsSync,
   ) {
-    return new FeedsService(client, session, entitiesService, blockListService);
+    return new FeedsService(client, session, entitiesService, blockListService, status, feedsSync);
   }
 }

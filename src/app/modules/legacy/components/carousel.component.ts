@@ -1,4 +1,6 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Client } from '../../../services/api';
 
@@ -40,11 +42,14 @@ export class CarouselComponent {
   delete_event = new EventEmitter();
   done: boolean = false; //if set to true, tells the child component to return "added"
   rotate: boolean = true; //if set to true enabled rotation
-  rotate_timeout; //the timeout for the rotator
+  rotator$: Subscription;
   interval: number = 3000; //the interval for each banner to stay before rotating
   index: number = 0; //the current visible index of the carousel.
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId) {
+  }
+
+  ngOnInit() {
     this.run();
   }
 
@@ -175,9 +180,12 @@ export class CarouselComponent {
   }
 
   run() {
-    if (this.rotate_timeout)
-      clearTimeout(this.rotate_timeout);
-    this.rotate_timeout = setTimeout(() => {
+    if (!isPlatformBrowser(this.platformId))
+      return;
+    if (this.rotator$)
+      this.rotator$.unsubscribe();
+  
+    this.rotator$ = interval(this.interval).subscribe(() => {
       if (this.rotate) {
         var max = this.banners.length - 1;
         if (this.index >= max)
@@ -185,12 +193,12 @@ export class CarouselComponent {
         else
           this.index++;
       }
-      this.run();
-    }, this.interval);
+    });
   }
 
   ngOnDestroy() {
-    clearTimeout(this.rotate_timeout);
+    if (this.rotator$)
+      this.rotator$.unsubscribe();
   }
 
 }

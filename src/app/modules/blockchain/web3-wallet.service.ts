@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import * as Eth from 'ethjs';
 import * as SignerProvider from 'ethjs-provider-signer';
 
@@ -22,6 +23,7 @@ export class Web3WalletService {
   constructor(
     protected localWallet: LocalWalletService,
     protected transactionOverlay: TransactionOverlayService,
+    @Inject(PLATFORM_ID) private platformId,
   ) { }
 
   // Wallet
@@ -131,7 +133,7 @@ export class Web3WalletService {
   private waitForWeb3(resolve, reject) {
     this._web3LoadAttempt++;
 
-    if (this._web3LoadAttempt > 3) {
+    if (this._web3LoadAttempt > 3 || isPlatformServer(this.platformId)) {
       this.loadLocal();
       return resolve(true);
     }
@@ -260,7 +262,7 @@ export class Web3WalletService {
 
   // Service provider
 
-  static _(localWallet: LocalWalletService, transactionOverlay: TransactionOverlayService) {
-    return new Web3WalletService(localWallet, transactionOverlay);
+  static _(localWallet: LocalWalletService, transactionOverlay: TransactionOverlayService, platformId) {
+    return new Web3WalletService(localWallet, transactionOverlay, platformId);
   }
 }

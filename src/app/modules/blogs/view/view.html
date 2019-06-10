@@ -85,12 +85,14 @@
 
 <m-wire--lock-screen [(entity)]="blog" *ngIf="blog.paywall" #lockScreen></m-wire--lock-screen>
 
-<div class="mdl-grid blogs-grid" style="max-width:660px" *ngIf="blog.guid">
-  <m-comments__tree 
-    [entity]="blog"
-    >
-  </m-comments__tree>
-</div>
+<ng-container *mIfBrowser>
+  <div class="mdl-grid blogs-grid" style="max-width:660px" *ngIf="blog.guid">
+    <m-comments__tree 
+      [entity]="blog"
+      >
+    </m-comments__tree>
+  </div>
+</ng-container>
 
 <m-modal-confirm *ngIf="deleteToggle"
   [open]="true"

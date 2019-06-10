@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -69,12 +69,13 @@ import { HttpClientModule } from "@angular/common/http";
     MINDS_PLUGIN_DECLARATIONS,
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
+    BrowserModule.withServerTransition({ appId: 'm-app' }),
+    BrowserTransferStateModule,
+    //BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(MindsAppRoutes),
+    RouterModule.forRoot(MindsAppRoutes, { initialNavigation: 'enabled' }),
     CaptchaModule,
     CommonModule,
     WalletModule,

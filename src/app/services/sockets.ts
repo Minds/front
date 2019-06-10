@@ -136,6 +136,8 @@ export class SocketsService {
   }
 
   subscribe(name: string, callback: Function) {
+    if (!this.socket) 
+      return;
     if (!this.subscriptions[name]) {
       this.subscriptions[name] = new EventEmitter();
 

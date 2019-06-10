@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_ID } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -39,7 +39,7 @@ import { NotificationsToasterComponent } from './toaster.component';
     {
       provide: NotificationService,
       useFactory: NotificationService._,
-      deps: [ Session, Client, SocketsService, MindsTitle ]
+      deps: [ Session, Client, SocketsService, MindsTitle, PLATFORM_ID ]
     }
   ],
   exports: [

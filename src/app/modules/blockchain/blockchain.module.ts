@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
@@ -65,7 +65,7 @@ const cryptoRoutes: Routes = [
     {
       provide: Web3WalletService,
       useFactory: Web3WalletService._,
-      deps: [ LocalWalletService, TransactionOverlayService ]
+      deps: [ LocalWalletService, TransactionOverlayService, PLATFORM_ID ]
     },
     {
       provide: TokenContractService,

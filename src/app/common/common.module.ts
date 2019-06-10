@@ -59,6 +59,7 @@ import { InlineEditorComponent } from './components/editors/inline-editor.compon
 import { AttachmentService } from "../services/attachment";
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 import { IfFeatureDirective } from './directives/if-feature.directive';
+import { IfBrowserDirective } from './directives/if-browser.directive';
 import { MindsEmoji } from './components/emoji/emoji';
 import { CategoriesSelectorComponent } from './components/categories/selector/selector.component';
 import { CategoriesSelectedComponent } from './components/categories/selected/selected.component';
@@ -166,6 +167,7 @@ import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizonta
     MaterialBoundSwitchComponent,
 
     IfFeatureDirective,
+    IfBrowserDirective,
 
     CategoriesSelectorComponent,
     CategoriesSelectedComponent,
@@ -250,6 +252,7 @@ import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizonta
     MaterialBoundSwitchComponent,
 
     IfFeatureDirective,
+    IfBrowserDirective,
 
     CategoriesSelectorComponent,
     CategoriesSelectedComponent,

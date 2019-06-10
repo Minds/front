@@ -12,7 +12,12 @@ export class Navigation {
 
 	getItems(container: string = 'sidebar'): Array<any> {
 
-		var navigation: Array<any> = window.Minds.navigation;
+        var navigation: Array<any> = window.Minds.navigation;
+
+        if (!navigation) {
+          return [];
+        }
+
 		var items: Array<any> = navigation[container];
 		if (!items)
 			return [];

@@ -1,19 +1,26 @@
 import { Cookie } from '../cookie';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 
 /**
  * API Class
  */
 export class Client {
 
-  base: string = '/';
+  base: string = 'https://eggman.minds.com/';
   cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient) {
-    return new Client(http);
+  static _(http: HttpClient, platformId, transferState: TransferState) {
+    return new Client(http, platformId, transferState);
   }
 
-  constructor(public http: HttpClient) {
+  constructor(
+    public http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId,
+    private transferState: TransferState,
+  ) {
   }
 
   /**
@@ -23,6 +30,15 @@ export class Client {
     if (data) {
       endpoint += '?' + this.buildParams(data);
     }
+
+    const STATE_KEY = makeStateKey(`http-${endpoint}` + JSON.stringify(options));
+    
+    if (this.transferState.hasKey(STATE_KEY)) {
+      const result = this.transferState.get(STATE_KEY, null);
+      this.transferState.remove(STATE_KEY);
+      return Promise.resolve(JSON.parse(result));
+    }
+
     return new Promise((resolve, reject) => {
       this.http.get(
         this.base + endpoint,
@@ -34,6 +50,11 @@ export class Client {
             if (!data || data.status !== 'success')
               return reject(data);
 
+            if (isPlatformServer(this.platformId)) {
+              const dump = JSON.stringify(data);
+              if (dump.length < 10000)
+                this.transferState.set(STATE_KEY, dump);
+            }
             return resolve(data);
           },
           err => {
@@ -178,6 +199,9 @@ export class Client {
    * Build the options
    */
   private buildOptions(options: Object) {
+    if (isPlatformServer(this.platformId)) {
+      return options; // TODO: support XSRF on universal
+    }
     const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
 
     const headers = new HttpHeaders({

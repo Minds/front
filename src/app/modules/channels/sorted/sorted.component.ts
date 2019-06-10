@@ -7,8 +7,12 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  SkipSelf, Injector
+  SkipSelf,
+  Injector,
+  Inject,
+  PLATFORM_ID,
 } from "@angular/core";
+import { isPlatformBrowser } from '@angular/common';
 import { FeedsService } from "../../../common/services/feeds.service";
 import { Session } from "../../../services/session";
 import { PosterComponent } from "../../newsfeed/poster/poster.component";
@@ -69,6 +73,7 @@ export class ChannelSortedComponent implements OnInit {
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,
     protected cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId,
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -111,7 +116,7 @@ export class ChannelSortedComponent implements OnInit {
     }
 
     try {
-      const limit = 12;
+      const limit = isPlatformBrowser(this.platformId) ? 12 : 2; // Only load a couple posts with SSR
 
       const { entities, next } = await this.feedsService.get({
         endpoint: `api/v2/feeds/container/${this.channel.guid}/${this.type}`,

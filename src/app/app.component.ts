@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { 
+  ChangeDetectorRef,
+  Component,
+  NgZone,
+  PLATFORM_ID,
+  Inject,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -51,13 +58,12 @@ export class Minds {
     public featuresService: FeaturesService,
     public themeService: ThemeService,
     private bannedService: BannedService,
+    @Inject(PLATFORM_ID) private platformId,
   ) {
     this.name = 'Minds';
   }
 
   async ngOnInit() {
-    this.notificationService.getNotifications();
-
     this.session.isLoggedIn(async (is) => {
       if (is) {
         this.showOnboarding = await this.onboardingService.showModal();
@@ -97,7 +103,7 @@ export class Minds {
     
     this.themeService.setUp();
 
-    if (this.session.isLoggedIn()) {
+    if (isPlatformBrowser(this.platformId) && this.session.isLoggedIn()) {
       this.blockListService.sync();
     }
   }
@@ -105,6 +111,6 @@ export class Minds {
   ngOnDestroy() {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
-    this.paramsSubscription.unsubscribe();
+    //this.paramsSubscription.unsubscribe();
   }
 }

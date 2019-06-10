@@ -95,7 +95,7 @@ export class ThemeService {
       this.renderer.removeClass(document.body, 'm-theme__dark');
       this.renderer.addClass(document.body, 'm-theme__light');
     }
-    this.clearTransitions();
+    //this.clearTransitions();
   }
   
   clearTransitions(){
