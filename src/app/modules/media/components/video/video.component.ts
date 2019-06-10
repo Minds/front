@@ -63,6 +63,7 @@ export class MindsVideoComponent {
 
   private availableQualities: string[] = [];
   private currentQuality: string = '';
+  transcodingError = null;
 
   constructor(
     public scroll: ScrollService,
@@ -231,7 +232,10 @@ export class MindsVideoComponent {
 
     if (!success) {
       let response: any = await this.client.get(`api/v1/media/transcoding/${this.guid}`);
-      this.transcoding = true || response.transcoding; // TODO: Handle this correctly
+      this.transcoding = response.transcoding;
+      if (response.error) {
+        this.transcodingError = response.error;
+      }
     }
 
     this.detectChanges();
