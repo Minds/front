@@ -2,7 +2,7 @@
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <a class="m-topbar--navigation--item"
-        routerLink="/admin/analytics"
+        routerLink="/analytics/admin"
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span i18n="@@M__ADMIN_NAV__ANALYTICS">Analytics</span>
@@ -82,7 +82,6 @@
     </div>
   </div>
 </div>
-<minds-admin-analytics *ngIf="filter == 'analytics'"></minds-admin-analytics>
 <m-admin--interactions *ngIf="filter == 'interactions'"></m-admin--interactions>
 <minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>
 <minds-admin-pages *ngIf="filter == 'pages'"></minds-admin-pages>

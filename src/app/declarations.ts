@@ -1,4 +1,3 @@
-import {AdminAnalytics} from './controllers/admin/analytics/analytics';
 import {AdminReportsDownload} from './controllers/admin/reports-download/reports-download';
 import {AdminBoosts} from './controllers/admin/boosts/boosts';
 import {AdminPages} from './controllers/admin/pages/pages';
@@ -20,7 +19,6 @@ export const MINDS_DECLARATIONS: any[] = [
   InteractionsTableComponent,
 
   // Controllers; Controller-based directives
-  AdminAnalytics,
   AdminInteractions,
   RejectionReasonModalComponent,
   AdminBoosts,

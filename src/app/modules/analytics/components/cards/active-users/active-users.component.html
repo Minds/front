@@ -1,0 +1,52 @@
+<m-analytics__card
+  [title]="'Active Users'"
+  [options]="['hourly', 'daily', 'monthly']"
+  #card>
+  <div class="m-analytics__averages">
+
+    <ng-container *ngIf="card.selectedOption=='hourly'">
+      <div class="m-analytics__average">
+        <h6>AVG HAU (Unique)</h6>
+        <h5>{{hauUnique | number : '1.0-0'}}</h5>
+      </div>
+
+      <div class="m-analytics__average">
+        <h6>AVG HAU (Logged In)</h6>
+        <h5>{{hauLoggedIn | number : '1.0-0'}}</h5>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="card.selectedOption=='daily'">
+      <div class="m-analytics__average">
+        <h6>AVG DAU (Unique)</h6>
+        <h5>{{dauUnique | number : '1.0-0'}}</h5>
+      </div>
+
+      <div class="m-analytics__average">
+        <h6>AVG DAU (Logged In)</h6>
+        <h5>{{dauLoggedIn | number : '1.0-0'}}</h5>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="card.selectedOption=='monthly'">
+      <div class="m-analytics__average">
+        <h6>AVG MAU (Unique)</h6>
+        <h5>{{mauUnique | number : '1.0-0'}}</h5>
+      </div>
+
+      <div class="m-analytics__average">
+        <h6>AVG MAU (Logged In)</h6>
+        <h5>{{mauLoggedIn | number : '1.0-0'}}</h5>
+      </div>
+
+      <div class="m-analytics__average">
+        <h6>Total Pageviews</h6>
+        <h5>{{total | number : '1.0-0'}}</h5>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__activeusers [timespan]="card.selectedOption"></m-analyticscharts__activeusers>
+  </div>
+</m-analytics__card>

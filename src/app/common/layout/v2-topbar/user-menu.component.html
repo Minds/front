@@ -29,9 +29,20 @@
       *ngIf="isAdmin()"
       (click)="closeMenu()"
     >
-      <a routerLink="/admin/analytics">
+      <a routerLink="/admin/interactions">
         <i class="material-icons">build</i>
         <span i18n>Admin</span>
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="isAdmin()"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/analytics/admin/network">
+        <i class="material-icons">timeline</i>
+        <span i18n>Analytics</span>
       </a>
     </li>
 
@@ -113,7 +124,7 @@
         </ng-template>
       </a>
     </li>
-    
+
     <ng-container *mIfFeature="'dark-mode'">
       <li
         class="m-dropdownList__item m-user-menuDropdown__Item"
@@ -121,10 +132,10 @@
         (click)="toggleTheme()"
       >
         <i class="material-icons" *ngIf="isDark">brightness_7</i>
-        <i class="material-icons" *ngIf="!isDark">brightness_2</i>      
+        <i class="material-icons" *ngIf="!isDark">brightness_2</i>
         <span i18n *ngIf="isDark">Light Mode</span>
         <span i18n *ngIf="!isDark">Dark Mode</span>
-     </li>
+      </li>
     </ng-container>
 
     <li
