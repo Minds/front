@@ -46,6 +46,7 @@ export class CommentPosterComponent {
   comments: Array<any> = []; // TODO: remove this
   canPost: boolean = true;
   inProgress: boolean = false;
+  maxLength: number = 1500;
 
   constructor(
     public session: Session,
@@ -66,6 +67,10 @@ export class CommentPosterComponent {
 
   async post(e) {
     e.preventDefault();
+
+    if (this.content.length > this.maxLength) {
+      return;
+    }
 
     if (this.inProgress)
       return;
@@ -107,7 +112,6 @@ export class CommentPosterComponent {
       this.posted$.next({ comment, index: this.currentIndex });
       console.error('Error posting', e);
     }
-
     this.inProgress = false;
     this.detectChanges();
   }
@@ -176,6 +180,9 @@ export class CommentPosterComponent {
   }
 
   postEnabled() {
+    if (this.content.length > this.maxLength) {
+      return false;
+    }
     return true; // TODO: fix
   }
 
