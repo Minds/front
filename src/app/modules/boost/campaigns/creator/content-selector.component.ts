@@ -8,10 +8,10 @@ import {
   Output
 } from '@angular/core';
 import { CampaignType } from '../campaigns.type';
-import { CampaignsService } from '../campaigns.service';
+import { CampaignContentsService } from '../campaign-contents.service';
 
 @Component({
-  providers: [CampaignsService],
+  providers: [CampaignContentsService],
   selector: 'm-boost-campaigns-creator--content-selector',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'content-selector.component.html',
@@ -41,7 +41,7 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
   protected initialized: boolean = false;
 
   constructor(
-    protected service: CampaignsService,
+    protected contentsService: CampaignContentsService,
     protected cd: ChangeDetectorRef,
   ) {
   }
@@ -63,7 +63,7 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
     this.detectChanges();
 
     try {
-      const result = await this.service.getContent(this.type, this.query);
+      const result = await this.contentsService.getContent(this.type, this.query);
 
       this.result = result || void 0;
       this.contentChange.emit(this.result && this.result.urn ? [this.result.urn] : []);

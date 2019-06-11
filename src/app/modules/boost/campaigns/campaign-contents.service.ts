@@ -25,7 +25,7 @@ const matchTypeOrNull = (type: CampaignType, content) => {
 };
 
 @Injectable()
-export class CampaignsService {
+export class CampaignContentsService {
 
   constructor(
     protected session: Session,
