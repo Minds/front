@@ -33,6 +33,7 @@ import { BoostCampaignsOverviewComponent } from "./campaigns/overview/overview.c
 import { BoostCampaignsCreatorComponent } from "./campaigns/creator/creator.component";
 import { BoostCampaignsViewComponent } from "./campaigns/view/view.component";
 import { BoostCampaignsListComponent } from "./campaigns/list/list.component";
+import { BoostCampaignsCreatorContentSelectorComponent } from './campaigns/creator/content-selector.component';
 
 const boostRoutes: Routes = [
   { path: 'boost/console', component: BoostConsoleComponent,
@@ -63,7 +64,7 @@ const boostRoutes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'overview',
+        redirectTo: 'list',
         pathMatch: 'full'
       },
       {
@@ -126,6 +127,7 @@ const boostRoutes: Routes = [
     BoostCampaignsOverviewComponent,
     BoostCampaignsListComponent,
     BoostCampaignsCreatorComponent,
+    BoostCampaignsCreatorContentSelectorComponent,
     BoostCampaignsViewComponent,
   ],
   exports: [

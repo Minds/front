@@ -1,0 +1,15 @@
+<div class="m-border m-boost-campaigns-creator--content-selector">
+  <div class="m-boost-campaigns-creator--content-selector--search-bar">
+    <input type="text">
+    <button class="m-btn m-btn--slim m-btn--action">Search</button>
+  </div>
+
+  <ng-container *ngIf="mModel.length; else noContent">
+
+  </ng-container>
+  <ng-template #noContent>
+    <div class="m-boost-campaigns-creator--content-selector--no-content" i18n>
+      Search for some content...
+    </div>
+  </ng-template>
+</div>

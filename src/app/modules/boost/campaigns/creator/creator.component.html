@@ -1,1 +1,161 @@
-<p>Creator</p>
+<div class="m-page--section m-border">
+  <div class="m-page--section-button-bar">
+    <h1>New Campaign</h1>
+
+    <div class="m-page--section-button-bar--buttons">
+      <button class="m-btn m-btn--slim m-btn--action" [disabled]="!canSubmit() || inProgress">Save</button>
+    </div>
+  </div>
+
+  <form class="m-form">
+    <div class="m-form--field">
+      <label class="m-form--field-label" for="boost-creator__name">
+        <span i18n>Name</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </label>
+
+      <input id="boost-creator__name" type="text" name="name" [(ngModel)]="campaign.name">
+    </div>
+
+    <div class="m-form--field">
+      <label class="m-form--field-label">
+        <span i18n>Type</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </label>
+
+      <ng-container *ngFor="let type of getCampaignTypes()">
+        <label
+          class="m-form--selector m-btn m-btn--slim m-btn--action"
+          [class.m-btn--inactive]="type.id !== campaign.type"
+          [class.m-btn--disabled]="type.disabled"
+          [for]="'type__' + type.id"
+          [tabindex]="!type.disabled ? 0 : -1"
+          (keydown.space)="campaign.type = type.id"
+        >
+          <input
+            type="radio"
+            [id]="'type__' + type.id"
+            [value]="type.id"
+            [checked]="type.id === campaign.type"
+            [disabled]="type.disabled"
+            (change)="campaign.type = type.id"
+            name="type"
+          >
+
+          <span>{{type.label}}</span>
+        </label>
+      </ng-container>
+    </div>
+
+    <div class="m-form--field">
+      <label class="m-form--field-label" [ngSwitch]="campaign.type">
+        <ng-container *ngSwitchCase="'newsfeed'">
+          <span i18n>Posts</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'content'">
+          <span i18n>Content</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'banner'">
+          <span i18n>Banner</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'video'">
+          <span i18n>Video</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+        </ng-container>
+      </label>
+
+      <m-boost-campaigns-creator--content-selector
+        *ngIf="campaign.type === 'newsfeed' || campaign.type === 'content'"
+        [type]="campaign.type"
+        [(mModel)]="campaign.content"
+      ></m-boost-campaigns-creator--content-selector>
+    </div>
+
+    <div class="m-form--field">
+      <label for="boost-creator__hashtags" class="m-form--field-label">
+        <span i18n>Targeting</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </label>
+
+      <input id="boost-creator__hashtags" type="text" name="name" [(ngModel)]="campaign.hashtags">
+    </div>
+
+    <div class="m-form--fieldset">
+      <div class="m-form--field">
+        <label for="boost-creator__start" class="m-form--field-label">
+          <span i18n>Start</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+        </label>
+
+        <div class="m-date-selector--input" mdl-datetime-picker [date]="campaign.start" (dateChange)="campaign.start = $event">
+          <input id="boost-creator__start" type="text" placeholder="Now" i18n [value]="campaign.start | date:'MMM dd'" readonly>
+          <i class="material-icons">keyboard_arrow_down</i>
+        </div>
+      </div>
+
+      <div class="m-form--field">
+        <label for="boost-creator__end" class="m-form--field-label">
+          <span i18n>End</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+        </label>
+
+        <div class="m-date-selector--input" mdl-datetime-picker [date]="campaign.end" (dateChange)="campaign.end = $event">
+          <input id="boost-creator__end" type="text" placeholder="End of times" i18n [value]="campaign.end | date:'MMM dd'" readonly>
+          <i class="material-icons">keyboard_arrow_down</i>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <label class="m-form--field-label" for="boost-creator__budget">
+        <span i18n>Budget</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </label>
+
+      <div class="m-form--composite-input">
+        <input
+          id="boost-creator__budget"
+          type="number"
+          name="budget"
+          [ngModel]="campaign.budget"
+          (ngModelChange)="campaign.budget = $event; calcImpressions()"
+        >
+
+        <span>TOKENS</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <label class="m-form--field-label">
+        <span i18n>Impressions</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </label>
+
+      <div class="m-form--read-only-value">
+        <span>{{campaign.impressions | number}}</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <label class="m-form--field-label" for="boost-creator__max_surge">
+        <span i18n>Max Surge</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </label>
+
+      <div class="m-form--composite-input">
+        <input id="boost-creator__max_surge" type="number" name="max_surge" [(ngModel)]="campaign.max_surge">
+        <span>%</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <button class="m-btn m-btn--slim m-btn--action" [disabled]="!canSubmit() || inProgress">Save</button>
+    </div>
+  </form>
+</div>

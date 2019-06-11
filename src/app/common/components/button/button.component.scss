@@ -41,6 +41,14 @@ minds-button {
       border: 1px solid themed($m-grey-100);
     }
   }
+
+  &:focus {
+    outline: none !important;
+
+    @include m-theme(){
+      box-shadow: 0 0  3px 1px transparentize(themed($m-grey-100), 0.5);
+    }
+  }
 }
 
 a.m-btn {
@@ -65,11 +73,36 @@ a.m-btn {
     }
   }
 
-  &[disabled] {
+  &:focus {
     @include m-theme(){
+      box-shadow: 0 0  3px 1px transparentize(themed($m-blue), 0.5);
+    }
+  }
+
+  &.m-btn--inactive {
+    @include m-theme() {
+      color: themed($m-grey-600) !important;
+      border-color: themed($m-grey-600) !important;
+
+      &:focus {
+        box-shadow: 0 0  3px 1px transparentize(themed($m-grey-600), 0.5) !important;
+      }
+    }
+  }
+
+  &[disabled], &.m-btn--disabled {
+    @include m-theme() {
       color: themed($m-grey-200) !important;
       border-color: themed($m-grey-200) !important;
+
+      &:focus {
+        box-shadow: none !important;
+      }
     }
+  }
+
+  &.m-btn--disabled {
+    cursor: not-allowed;
   }
 }
 

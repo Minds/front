@@ -1,0 +1,22 @@
+.m-boost-campaigns-creator--content-selector {
+  padding: 16px;
+  max-height: 400px;
+  overflow: auto;
+
+  .m-boost-campaigns-creator--content-selector--search-bar {
+    margin-bottom: 16px;
+
+    button {
+      margin-left: 16px;
+    }
+  }
+
+  .m-boost-campaigns-creator--content-selector--no-content {
+    padding: 8px 0;
+    font-style: italic;
+
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+}

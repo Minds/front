@@ -15,6 +15,7 @@ export class MaterialDateTimePickerDirective {
   constructor(public datePipe: DatePipe) { }
 
   @HostListener('click')
+  @HostListener('keydown.enter')
   onHostClick() {
     if (!this.open) {
       this.picker = new DateTimePicker()

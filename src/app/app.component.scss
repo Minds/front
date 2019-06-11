@@ -135,9 +135,24 @@ m-app {
     }
 
     .m-page--section-button-bar {
-      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       margin: 8px 0 24px;
-      padding: 0 8px;
+      padding: 0 4px;
+
+      h1 {
+        flex-grow: 1;
+        margin: 0;
+        padding: 0;
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1;
+      }
+
+      .m-page--section-button-bar--buttons {
+        text-align: right;
+      }
     }
   }
 }
@@ -201,5 +216,157 @@ m-app {
   a {
     color: inherit !important;
     text-decoration: none;
+  }
+}
+
+.m-form {
+  > .m-form--field,
+  > .m-form--fieldset {
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  input[type=text],
+  input[type=password],
+  input[type=number],
+  input[type=email],
+  textarea {
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  }
+
+  .m-form--field {
+    label.m-form--field-label {
+      display: block;
+      padding: 0 4px;
+      margin-bottom: 8px;
+
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
+
+      span {
+        text-align: left;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      i.material-icons {
+        font-size: inherit;
+        margin-left: 4px;
+        vertical-align: middle;
+        position: relative;
+        top: -1px;
+      }
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=number],
+    input[type=email] {
+      appearance: none;
+      width: calc(20em + 24px);
+      max-width: 100%;
+      padding: 8px 12px;
+      border-radius: 16px;
+
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
+      }
+
+      &:focus {
+        outline: none;
+
+        @include m-theme() {
+          border-color: themed($m-blue);
+          box-shadow: 0 0 3px 1px transparentize(themed($m-blue), 0.5);
+        }
+      }
+    }
+
+    .m-form--composite-input {
+      input[type=text],
+      input[type=password],
+      input[type=number],
+      input[type=email] {
+        width: 10em;
+        max-width: 100%;
+      }
+
+      span {
+        margin-left: 8px;
+        font-size: 12px;
+        font-weight: 600;
+
+        @include m-theme(){
+          color: themed($m-grey-600);
+        }
+      }
+    }
+
+    .m-form--selector {
+      display: inline-block;
+      margin-right: 16px;
+      height: auto;
+      line-height: 1.2;
+      text-transform: inherit;
+      user-select: none;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      input[type=radio],
+      input[type=checkbox] {
+        display: none;
+      }
+    }
+
+    .m-form--read-only-value {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 4px;
+    }
+  }
+
+  .m-form--fieldset {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    > .m-form--field {
+      margin-right: 24px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      input[type=text],
+      input[type=password],
+      input[type=number],
+      input[type=email] {
+        width: 10em;
+        max-width: 100%;
+      }
+    }
+  }
+
+  .m-date-selector--input {
+    position: relative;
+
+    i.material-icons {
+      position: absolute;
+      top: calc(50% + 1px);
+      right: 5px;
+      transform: translateY(-50%);
+
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
+    }
   }
 }
