@@ -1,0 +1,39 @@
+<m-analytics__card
+  [title]="'Posts'"
+  [options]="['hourly', 'daily', 'monthly']"
+  #posts>
+
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__posts [timespan]="posts.selectedOption"></m-analyticscharts__posts>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Comments'"
+  [options]="['hourly', 'daily', 'monthly']"
+  #comments>
+
+  <div class="m-analyticsCard__charts">     
+    <m-analyticscharts__comments [timespan]="comments.selectedOption"></m-analyticscharts__comments>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Votes'"
+  [options]="['hourly', 'daily', 'monthly']"
+  #votes>
+
+  <div class="m-analyticsCard__charts"> 
+    <m-analyticscharts__votes [timespan]="votes.selectedOption"></m-analyticscharts__votes>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Reminds'"
+  [options]="['hourly', 'daily', 'monthly']"
+  #reminds>
+
+  <div class="m-analyticsCard__charts"> 
+    <m-analyticscharts__reminds [timespan]="reminds.selectedOption"></m-analyticscharts__reminds>
+  </div>
+</m-analytics__card>

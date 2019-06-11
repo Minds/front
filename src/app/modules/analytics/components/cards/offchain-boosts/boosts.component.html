@@ -1,0 +1,79 @@
+<m-analytics__card
+  [title]="'Offchain Boosts: Completed'"
+  [options]="['daily', 'monthly']"
+  #completed
+>
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__offchainboosts [analytics]="'completed'" [timespan]="completed.selectedOption"></m-analyticscharts__offchainboosts>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Offchain Boosts: Not completed'"
+  [options]="['daily', 'monthly']"
+  #notcompleted
+>
+  <div class="m-analyticsCard__charts"> 
+    <m-analyticscharts__offchainboosts [analytics]="'not_completed'" [timespan]="notcompleted.selectedOption"></m-analyticscharts__offchainboosts>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Offchain Boosts: Revoked'"
+  [options]="['daily', 'monthly']"
+  #revoked
+>
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__offchainboosts [analytics]="'revoked'" [timespan]="revoked.selectedOption"></m-analyticscharts__offchainboosts>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Offchain Boosts: Rejected'"
+  [options]="['daily', 'monthly']"
+  #rejected
+>
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__offchainboosts [analytics]="'rejected'" [timespan]="rejected.selectedOption"></m-analyticscharts__offchainboosts>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Offchain Boosts: Users (Completed)'"
+  [options]="['daily', 'monthly']"
+  #userscompleted
+>   
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__offchainboosts [analytics]="'users_who_completed'" [timespan]="userscompleted.selectedOption"></m-analyticscharts__offchainboosts>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Offchain Boosts: Users (Pending)'"
+  [options]="['daily', 'monthly']"
+  #userspending
+>   
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__offchainboosts [analytics]="'users_waiting_for_completion'" [timespan]="userspending.selectedOption"></m-analyticscharts__offchainboosts>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Offchain Boosts: Reclaimed Tokens'"
+  [options]="['daily', 'monthly']"
+  #reclaimedtokens
+>   
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__offchainboosts [analytics]="'reclaimed_tokens'" [timespan]="reclaimedtokens.selectedOption"></m-analyticscharts__offchainboosts>
+  </div>
+</m-analytics__card>
+
+<m-analytics__card
+  [title]="'Offchain Boosts: Impressions Served'"
+  [options]="['daily', 'monthly']"
+  #impressions
+>   
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__offchainboosts [analytics]="'impressions_served'" [timespan]="impressions.selectedOption"></m-analyticscharts__offchainboosts>
+  </div>
+</m-analytics__card>
