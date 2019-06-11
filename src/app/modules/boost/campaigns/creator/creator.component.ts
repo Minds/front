@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { Campaign, CampaignType } from "../campaign.type";
+import { Campaign, CampaignType } from "../campaigns.type";
 
 @Component({
   selector: 'm-boost-campaigns-creator',
@@ -16,7 +16,7 @@ export class BoostCampaignsCreatorComponent implements OnInit {
     this.reset();
   }
 
-  getCampaignTypes(): { id: CampaignType, label: string, disabled?: boolean }[] {
+  getCampaignTypes(): Array<{ id: CampaignType, label: string, disabled?: boolean }> {
     return [
       {
         id: 'newsfeed',

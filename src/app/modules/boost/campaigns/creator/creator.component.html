@@ -73,7 +73,7 @@
       <m-boost-campaigns-creator--content-selector
         *ngIf="campaign.type === 'newsfeed' || campaign.type === 'content'"
         [type]="campaign.type"
-        [(mModel)]="campaign.content"
+        [(content)]="campaign.content"
       ></m-boost-campaigns-creator--content-selector>
     </div>
 

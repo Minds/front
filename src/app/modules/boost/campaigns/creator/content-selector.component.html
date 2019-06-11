@@ -1,15 +1,33 @@
 <div class="m-border m-boost-campaigns-creator--content-selector">
   <div class="m-boost-campaigns-creator--content-selector--search-bar">
-    <input type="text">
-    <button class="m-btn m-btn--slim m-btn--action">Search</button>
+    <input
+      type="text"
+      [(ngModel)]="query"
+      (keydown.enter)="search(); $event.preventDefault()"
+    >
+
+    <button
+      class="m-btn m-btn--slim m-btn--action"
+      (click)="search()"
+      i18n
+    >Search</button>
   </div>
 
-  <ng-container *ngIf="mModel.length; else noContent">
-
+  <ng-container *ngIf="result; else noResult">
+    <minds-card
+      [object]="result"
+      [flags]="{ hideTabs: true }"
+      hostClass="mdl-card mdl-shadow--2dp"
+    ></minds-card>
   </ng-container>
-  <ng-template #noContent>
-    <div class="m-boost-campaigns-creator--content-selector--no-content" i18n>
-      Search for some content...
-    </div>
+  <ng-template #noResult>
+    <ng-container *ngIf="inProgress; else empty">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </ng-container>
+    <ng-template #empty>
+      <div class="m-boost-campaigns-creator--content-selector--no-content" i18n>
+        Search for some content...
+      </div>
+    </ng-template>
   </ng-template>
 </div>
