@@ -80,11 +80,11 @@ const boostRoutes: Routes = [
         component: BoostCampaignsCreatorComponent,
       },
       {
-        path: 'edit/:id',
+        path: 'edit/:urn',
         component: BoostCampaignsCreatorComponent,
       },
       {
-        path: ':id',
+        path: ':urn',
         component: BoostCampaignsViewComponent,
       },
     ],

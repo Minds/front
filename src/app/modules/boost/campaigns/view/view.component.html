@@ -1,1 +1,13 @@
-<p>View</p>
+<div class="m-page--section m-border">
+  <div class="m-page--section-button-bar">
+    <h1 *ngIf="campaign">{{campaign.name}}</h1>
+
+    <div class="m-page--section-button-bar--buttons">
+      <a [routerLink]="['/boost/campaigns/edit', campaign.urn]" class="m-btn m-btn--slim m-btn--action" *ngIf="campaign">Edit</a>
+    </div>
+  </div>
+
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
+
+  <pre *ngIf="!inProgress">{{campaign | json}}</pre>
+</div>
