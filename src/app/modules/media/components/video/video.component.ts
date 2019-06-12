@@ -231,10 +231,11 @@ export class MindsVideoComponent {
     const success = this.pickNextBestSource();
 
     if (!success) {
-      let response: any = await this.client.get(`api/v1/media/transcoding/${this.guid}`);
-      this.transcoding = response.transcoding;
-      if (response.error) {
-        this.transcodingError = response.error;
+      try {
+        let response: any = await this.client.get(`api/v1/media/transcoding/${this.guid}`);
+        this.transcoding = response.transcoding;
+      } catch (e) {
+        this.transcodingError = e.error;
       }
     }
 
