@@ -89,6 +89,11 @@ describe('ChannelSidebar', () => {
           inputs: ['title', 'type', 'channel', 'linksTo', 'size'],
           outputs: [],
         }),
+        MockComponent({
+          selector: 'm-nsfw-selector',
+          inputs: ['service', 'consumer', 'expanded', 'selected', 'locked'],
+          outputs: ['selected'],
+        }),
         IfFeatureDirective,
       ],
       imports: [
@@ -113,7 +118,7 @@ describe('ChannelSidebar', () => {
         }
       ]
     })
-        .compileComponents();  // compile template and css
+      .compileComponents();
   }));
 
   beforeEach((done) => {

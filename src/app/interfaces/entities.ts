@@ -67,6 +67,8 @@ export interface MindsUser {
   is_mature?: boolean;
   mature_lock?: boolean;
   tags?: Array<string>;
+  nsfw?: Array<number>;
+  nsfw_lock?: Array<number>;
 }
 
 export interface MindsGroup {

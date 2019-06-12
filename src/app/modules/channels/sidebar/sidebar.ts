@@ -140,6 +140,10 @@ export class ChannelSidebar {
 
   onTagsRemoved(tags: Tag[]) {}
 
+  onNSWFSelections(reasons: Array<{ value, label, selected }>) {
+    this.user.nsfw = reasons.map(reason => reason.value);
+  }
+
   setSocialProfile(value: any) {
     this.user.social_profiles = value;
   }
