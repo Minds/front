@@ -1,5 +1,6 @@
 import {AdminReportsDownload} from './controllers/admin/reports-download/reports-download';
 import {AdminBoosts} from './controllers/admin/boosts/boosts';
+import {AdminFirehoseComponent} from './controllers/admin/firehose/firehose.component';
 import {AdminPages} from './controllers/admin/pages/pages';
 import {AdminReports} from './controllers/admin/reports/reports';
 import {AdminMonetization} from './controllers/admin/monetization/monetization';
@@ -22,6 +23,7 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminInteractions,
   RejectionReasonModalComponent,
   AdminBoosts,
+  AdminFirehoseComponent,
   AdminPages,
   AdminReports,
   AdminMonetization,

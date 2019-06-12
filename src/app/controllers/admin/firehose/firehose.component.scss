@@ -1,0 +1,42 @@
+.m-firehose {
+    max-width: 1280px;
+
+    .m-firehose__moderatorAction {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin-bottom: 25px;
+        max-width: 270px;
+       
+
+        &.m-firehose__moderatorAction--leftButton {
+            justify-content: right;
+        } 
+
+        &.m-firehose__moderatorAction--rightButton {
+            justify-content: left;
+        }
+    }
+
+    .m-firehose__sort-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        margin-bottom: 16px;
+        @include m-theme(){
+            background-color: themed($m-white);
+        }
+
+        m-sort-selector {
+            flex-grow: 1;
+        }
+    }
+
+    .m-firehose__spinner {
+       text-align: center;
+    }
+
+}
