@@ -3,6 +3,7 @@ import { Campaign } from "../campaigns.type";
 import { CampaignsService } from '../campaigns.service';
 
 @Component({
+  providers: [CampaignsService],
   selector: 'm-boost-campaigns-creator',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'creator.component.html',
