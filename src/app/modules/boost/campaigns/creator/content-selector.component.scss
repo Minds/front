@@ -19,4 +19,8 @@
       color: themed($m-grey-400);
     }
   }
+
+  .m-boost-campaigns-creator--no-interactive {
+    pointer-events: none;
+  }
 }

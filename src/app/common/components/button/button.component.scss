@@ -88,7 +88,7 @@ a.m-btn {
       border-color: themed($m-grey-600) !important;
 
       &:focus {
-        box-shadow: 0 0  3px 1px transparentize(themed($m-grey-600), 0.5) !important;
+        box-shadow: 0 0  3px 1px transparentize(themed($m-grey-600), 0.5);
       }
     }
   }
@@ -106,6 +106,16 @@ a.m-btn {
 
   &.m-btn--disabled {
     cursor: not-allowed;
+  }
+
+  &.m-btn--readonly {
+    cursor: default;
+
+    @include m-theme() { // theme mixin is needed for cascade priorities
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
   }
 }
 
