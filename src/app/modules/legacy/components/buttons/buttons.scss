@@ -133,7 +133,7 @@ minds-button-comment > a,
 minds-button-remind > a {
   &:hover {
     @include m-theme(){
-      color: themed($m-blue);
+      color: themed($m-blue-grey-800);
     }
   }
 }
