@@ -128,7 +128,7 @@ m-app {
 
   .m-page--section {
     margin: 4px 8px 8px;
-    padding: 16px;
+    padding: 16px 16px 24px;
 
     @include m-theme(){
       background-color: themed($m-white);
@@ -220,6 +220,9 @@ m-app {
 }
 
 .m-form {
+  margin: 0;
+  padding: 0;
+
   > .m-form--field,
   > .m-form--fieldset {
     margin-bottom: 24px;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Campaign } from './campaigns.type';
+import { Campaign, CampaignType } from './campaigns.type';
 import { Client } from '../../../services/api/client';
 
 export type CampaignsServiceListOptions = {
@@ -38,5 +38,28 @@ export class CampaignsService {
     }
 
     return await this.client.post(`api/v2/boost/campaigns/${campaign.urn}`, campaign) as Campaign;
+  }
+
+  getCampaignTypes(): Array<{ id: CampaignType, label: string, disabled?: boolean }> {
+    return [
+      {
+        id: 'newsfeed',
+        label: 'Newsfeed'
+      },
+      {
+        id: 'content',
+        label: 'Content'
+      },
+      {
+        id: 'banner',
+        label: 'Banner',
+        disabled: true
+      },
+      {
+        id: 'video',
+        label: 'Video',
+        disabled: true
+      }
+    ];
   }
 }

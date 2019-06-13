@@ -23,7 +23,7 @@
         <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </label>
 
-      <ng-container *ngFor="let type of getCampaignTypes()">
+      <ng-container *ngFor="let type of campaignTypes">
         <label
           class="m-form--selector m-btn m-btn--slim m-btn--action"
           [class.m-btn--inactive]="type.id !== campaign.type"

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { Campaign, CampaignType } from "../campaigns.type";
+import { Campaign } from "../campaigns.type";
+import { CampaignsService } from '../campaigns.service';
 
 @Component({
   selector: 'm-boost-campaigns-creator',
@@ -12,31 +13,13 @@ export class BoostCampaignsCreatorComponent implements OnInit {
 
   inProgress: boolean = false;
 
-  ngOnInit() {
-    this.reset();
+  constructor(
+    protected service: CampaignsService,
+  ) {
   }
 
-  getCampaignTypes(): Array<{ id: CampaignType, label: string, disabled?: boolean }> {
-    return [
-      {
-        id: 'newsfeed',
-        label: 'Newsfeed'
-      },
-      {
-        id: 'content',
-        label: 'Content'
-      },
-      {
-        id: 'banner',
-        label: 'Banner',
-        disabled: true
-      },
-      {
-        id: 'video',
-        label: 'Video',
-        disabled: true
-      }
-    ];
+  ngOnInit() {
+    this.reset();
   }
 
   reset() {
@@ -70,5 +53,9 @@ export class BoostCampaignsCreatorComponent implements OnInit {
       this.campaign.end &&
       this.campaign.start <= this.campaign.end &&
       this.campaign.max_surge >= 0;
+  }
+
+  get campaignTypes() {
+    return this.service.getCampaignTypes();
   }
 }

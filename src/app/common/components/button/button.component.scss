@@ -52,8 +52,11 @@ minds-button {
 }
 
 a.m-btn {
-  text-decoration: none;
+  display: inline-block;
+  height: auto;
   font-weight: inherit;
+  line-height: 1.2;
+  text-decoration: none;
 }
 
 .m-btn--slim {
