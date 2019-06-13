@@ -1,5 +1,5 @@
 <div class="m-border m-boost-campaigns-creator--content-selector">
-  <div class="m-boost-campaigns-creator--content-selector--search-bar">
+  <div class="m-boost-campaigns-creator--content-selector--search-bar" *ngIf="!readonly">
     <input
       type="text"
       [(ngModel)]="query"

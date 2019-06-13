@@ -9,5 +9,108 @@
 
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
 
-  <pre *ngIf="!inProgress">{{campaign | json}}</pre>
+  <div class="m-form" *ngIf="campaign">
+    <div class="m-form--field">
+      <div class="m-form--field-label">
+        <span i18n>Type</span>
+      </div>
+
+      <div class="m-form--read-only-value">
+        <span>{{campaign.type}}</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <span class="m-form--field-label" [ngSwitch]="campaign.type">
+        <ng-container *ngSwitchCase="'newsfeed'">
+          <span i18n>Posts</span>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'content'">
+          <span i18n>Content</span>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'banner'">
+          <span i18n>Banner</span>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'video'">
+          <span i18n>Video</span>
+        </ng-container>
+      </span>
+
+      <m-boost-campaigns-creator--content-selector
+        *ngIf="campaign.type === 'newsfeed' || campaign.type === 'content'"
+        [type]="campaign.type"
+        [content]="campaign.content"
+        [readonly]="true"
+      ></m-boost-campaigns-creator--content-selector>
+    </div>
+
+    <div class="m-form--field">
+      <div class="m-form--field-label">
+        <span i18n>Targeting</span>
+      </div>
+
+      <div class="m-form--read-only-value">
+        <span>{{campaign.hashtags}}</span>
+      </div>
+    </div>
+
+    <div class="m-form--fieldset">
+      <div class="m-form--field">
+        <div class="m-form--field-label">
+          <span i18n>Start</span>
+        </div>
+
+        <div class="m-form--read-only-value">
+          <span>{{campaign.start | date:'MMM dd'}}</span>
+        </div>
+      </div>
+
+      <div class="m-form--field">
+        <div class="m-form--field-label">
+          <span i18n>End</span>
+        </div>
+
+        <div class="m-form--read-only-value">
+          <span>{{campaign.end | date:'MMM dd'}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <div class="m-form--field-label">
+        <span i18n>Budget</span>
+      </div>
+
+      <div class="m-form--read-only-value">
+        <span>{{campaign.budget | number}} TOKENS</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <div class="m-form--field-label">
+        <span i18n>Impressions</span>
+      </div>
+
+      <div class="m-form--read-only-value">
+        <span>{{campaign.impressions | number}}</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <div class="m-form--field-label">
+        <span i18n>Max Surge</span>
+      </div>
+
+      <div class="m-form--read-only-value">
+        <span>{{campaign.max_surge | number}}%</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <a [routerLink]="['/boost/campaigns/edit', campaign.urn]" class="m-btn m-btn--slim m-btn--action">Edit</a>
+    </div>
+  </div>
 </div>

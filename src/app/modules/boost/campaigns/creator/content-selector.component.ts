@@ -30,6 +30,8 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
 
   @Input() content: string[];
 
+  @Input() readonly: boolean;
+
   @Output() contentChange: EventEmitter<string[]> = new EventEmitter();
 
   query: string = '';
@@ -59,23 +61,29 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
   async search() {
     this.inProgress = true;
     this.result = void 0;
-    this.contentChange.emit([]);
+    this.emit([]);
     this.detectChanges();
 
     try {
       const result = await this.contentsService.getContent(this.type, this.query);
 
       this.result = result || void 0;
-      this.contentChange.emit(this.result && this.result.urn ? [this.result.urn] : []);
+      this.emit(this.result && this.result.urn ? [this.result.urn] : []);
     } catch (e) {
       this.result = void 0;
-      this.contentChange.emit([]);
+      this.emit([]);
 
       console.error('BoostCampaignsCreatorContentSelectorComponent', e);
     }
 
     this.inProgress = false;
     this.detectChanges();
+  }
+
+  emit(content: string[]) {
+    if (!this.readonly) {
+      this.contentChange.emit(content);
+    }
   }
 
   detectChanges() {
