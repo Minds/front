@@ -1,18 +1,14 @@
 .mdl-card__actions {
-    .attachment-button {
+    a, div {
       @include m-theme(){
         color: themed($m-blue-grey-700);
       }
-    }
-    
-    .attachment-button,
-    .m-mature-button,
-    .m-post-button {
-        &:hover {
-            @include m-theme(){
-                color: themed($m-blue-grey-900);
-            }
+
+      &:hover {
+        @include m-theme(){
+            color: themed($m-blue-grey-900);
         }
+      }
     }
-    
+ 
 }
