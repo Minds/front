@@ -2,7 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output, 
+  Output,
 } from '@angular/core';
 import { 
   NSFWSelectorCreatorService,
@@ -28,6 +28,7 @@ export class NSFWSelectorComponent {
 
   @Input('service') serviceRef: string = 'consumer';
   @Input('consumer') consumer: false;
+  @Input('expanded') expanded: false;
   @Output('selected') onSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -77,5 +78,4 @@ export class NSFWSelectorComponent {
         return true;
     }
   }
-
 }

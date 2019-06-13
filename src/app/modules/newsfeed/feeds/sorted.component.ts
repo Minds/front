@@ -214,7 +214,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       const hashtags = this.hashtag ? encodeURIComponent(this.hashtag) : '';
       const period = this.period || '';
       const all = this.all ? '1' : '';
-      const query = this.query || '';
+      const query = this.query ? encodeURIComponent(this.query) : '';
       const nsfw = (this.newsfeedService.nsfw || []).join(',');
 
       const { entities, next } = await this.feedsService.get({
@@ -263,7 +263,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       hashtags: this.hashtag ? [this.hashtag] : '',
       period: this.period || '',
       all: this.all ? 1 : '',
-      query: this.query || '',
+      query: this.query ? encodeURIComponent(this.query) : '',
       nsfw: this.newsfeedService.nsfw,
     }, {
       cache: true

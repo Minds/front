@@ -2,7 +2,7 @@
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <a class="m-topbar--navigation--item"
-        routerLink="/admin/analytics"
+        routerLink="/analytics/admin"
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span i18n="@@M__ADMIN_NAV__ANALYTICS">Analytics</span>
@@ -18,6 +18,12 @@
         routerLinkActive="m-topbar--navigation--item-active"
         >
           <span i18n="@@M__ADMIN_NAV__BOOSTS">Boosts</span>
+      </a>
+      <a class="m-topbar--navigation--item"
+        routerLink="/admin/firehose"
+        routerLinkActive="m-topbar--navigation--item-active"
+        >
+          <span i18n="@@M__ADMIN_NAV__FIREHOSE">Firehose</span>
       </a>
       <a class="m-topbar--navigation--item"
         routerLink="/admin/pages"
@@ -82,9 +88,9 @@
     </div>
   </div>
 </div>
-<minds-admin-analytics *ngIf="filter == 'analytics'"></minds-admin-analytics>
 <m-admin--interactions *ngIf="filter == 'interactions'"></m-admin--interactions>
 <minds-admin-boosts *ngIf="filter == 'boosts'"></minds-admin-boosts>
+<minds-admin-firehose *ngIf="filter == 'firehose'"></minds-admin-firehose>
 <minds-admin-pages *ngIf="filter == 'pages'"></minds-admin-pages>
 <minds-admin-reports *ngIf="filter == 'reports' || filter == 'appeals'"></minds-admin-reports>
 <minds-admin-monetization *ngIf="filter == 'monetization'"></minds-admin-monetization>

@@ -37,6 +37,10 @@
       <span i18n="@@MEDIA__VIDEO__TRANSCODING_NOTICE">The video is being transcoded</span>
     </div>
 
+    <div *ngIf="transcodingError" class="minds-video-bar-top">
+      <span i18n="@@MEDIA__VIDEO__TRANSCODING_NOTICE">{{transcodingError}}</span>
+    </div>
+
     <div class="minds-video-bar-full">
       <i class="material-icons" *ngIf="!playerRef.isLoading(); else loadingSpinner"
         (click)="playerRef.toggle()"
