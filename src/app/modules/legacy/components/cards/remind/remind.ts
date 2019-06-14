@@ -106,6 +106,10 @@ export class Remind {
 
   save() { /* NOOP */ }
 
+  isPending(activity) {
+    return activity && activity.pending && activity.pending !== '0';
+  }
+
   openComments() { /* NOOP */ }
 
   showBoost() { /* NOOP */ }
