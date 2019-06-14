@@ -101,3 +101,15 @@
     color: themed($m-white);
   }
 }
+
+.m-marketing--section--downloadContainer {
+
+  .m-marketing--section--downloadButton--ios {
+    width: 165px;
+  }
+
+  a .m-marketing--section--downloadButton {
+    max-width: 200px;
+    min-width: unset !important;
+  }
+}
