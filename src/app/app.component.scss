@@ -206,6 +206,14 @@ m-app {
       &.m-table--numeric-cell {
         text-align: right;
       }
+
+      &.m-table--link-cell {
+        a {
+          @include m-theme(){
+            border-bottom: 1px dashed themed($m-grey-100);
+          }
+        }
+      }
     }
 
     tr:last-child td {

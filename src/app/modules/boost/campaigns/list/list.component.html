@@ -14,7 +14,7 @@
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </th>
         <th>
-          <span i18n>Delivery</span>
+          <span i18n>Type</span>
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </th>
         <th class="m-table--numeric-cell">
@@ -25,29 +25,24 @@
           <span i18n>Impressions</span>
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </th>
-        <th class="m-table--numeric-cell">
-          <span i18n>CPM</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
-        </th>
-        <th class="m-table--numeric-cell">
-          <span i18n>Max Surge</span>
+        <th>
+          <span i18n>Schedule</span>
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </th>
         <th>
-          <span i18n>Schedule</span>
+          <span i18n>Delivery</span>
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let campaign of campaigns">
-        <td><a [routerLink]="['/boost/campaigns', campaign.urn]">{{campaign.name}}</a></td>
-        <td>{{campaign.delivery}}</td>
-        <td class="m-table--numeric-cell">{{campaign.budget | number}} Tk</td>
+        <td class="m-table--link-cell"><a [routerLink]="['/boost/campaigns', campaign.urn]">{{campaign.name}}</a></td>
+        <td>{{getType(campaign)}}</td>
+        <td class="m-table--numeric-cell">{{campaign.budget | number}} TK</td>
         <td class="m-table--numeric-cell">{{campaign.impressions | number}}</td>
-        <td class="m-table--numeric-cell">{{campaign.cpm | number}}</td>
-        <td class="m-table--numeric-cell">{{campaign.max_surge}} %</td>
         <td>{{campaign.start | date:'MMM dd'}} - {{campaign.end | date:'MMM dd'}}</td>
+        <td>{{getDeliveryStatus(campaign)}}</td>
       </tr>
       </tbody>
     </table>

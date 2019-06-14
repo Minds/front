@@ -16,7 +16,17 @@
       </div>
 
       <div class="m-form--read-only-value">
-        <span>{{getCampaignType()}}</span>
+        <span>{{getType()}}</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <div class="m-form--field-label">
+        <span i18n>Delivery Status</span>
+      </div>
+
+      <div class="m-form--read-only-value">
+        <span>{{getDeliveryStatus()}}</span>
       </div>
     </div>
 
@@ -42,7 +52,7 @@
       <m-boost-campaigns-creator--content-selector
         *ngIf="campaign.type === 'newsfeed' || campaign.type === 'content'"
         [type]="campaign.type"
-        [content]="campaign.content"
+        [content]="campaign.entity_urns"
         [readonly]="true"
       ></m-boost-campaigns-creator--content-selector>
     </div>
@@ -96,16 +106,6 @@
 
       <div class="m-form--read-only-value">
         <span>{{campaign.impressions | number}}</span>
-      </div>
-    </div>
-
-    <div class="m-form--field">
-      <div class="m-form--field-label">
-        <span i18n>Max Surge</span>
-      </div>
-
-      <div class="m-form--read-only-value">
-        <span>{{campaign.max_surge | number}}%</span>
       </div>
     </div>
 

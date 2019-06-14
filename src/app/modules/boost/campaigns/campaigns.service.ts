@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Campaign, CampaignType } from './campaigns.type';
+import { Campaign, CampaignDeliveryStatus, CampaignType } from './campaigns.type';
 import { Client } from '../../../services/api/client';
 
 export type CampaignsServiceListOptions = {
@@ -40,7 +40,7 @@ export class CampaignsService {
     return await this.client.post(`api/v2/boost/campaigns/${campaign.urn}`, campaign) as Campaign;
   }
 
-  getCampaignTypes(): Array<{ id: CampaignType, label: string, disabled?: boolean }> {
+  getTypes(): Array<{ id: CampaignType, label: string, disabled?: boolean }> {
     return [
       {
         id: 'newsfeed',
@@ -48,7 +48,7 @@ export class CampaignsService {
       },
       {
         id: 'content',
-        label: 'Content'
+        label: 'Sidebar'
       },
       {
         id: 'banner',
@@ -60,6 +60,43 @@ export class CampaignsService {
         label: 'Video',
         disabled: true
       }
+    ];
+  }
+
+  getDeliveryStatuses(): Array<{ id: CampaignDeliveryStatus, label: string }> {
+    return [
+      {
+        id: 'pending',
+        label: 'Pending',
+      },
+      {
+        id: 'created',
+        label: 'Created',
+      },
+      {
+        id: 'failed',
+        label: 'Failed',
+      },
+      {
+        id: 'approved',
+        label: 'Approved',
+      },
+      {
+        id: 'accepted',
+        label: 'Accepted',
+      },
+      {
+        id: 'rejected',
+        label: 'Rejected',
+      },
+      {
+        id: 'revoked',
+        label: 'Revoked',
+      },
+      {
+        id: 'completed',
+        label: 'Completed',
+      },
     ];
   }
 }

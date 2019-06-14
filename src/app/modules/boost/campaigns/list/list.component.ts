@@ -59,6 +59,16 @@ export class BoostCampaignsListComponent implements OnInit {
     this.detectChanges();
   }
 
+  getType(campaign: Campaign) {
+    const type = this.service.getTypes().find(campaignType => campaignType.id === campaign.type);
+    return type ? type.label : campaign.type;
+  }
+
+  getDeliveryStatus(campaign: Campaign) {
+    const deliveryStatus = this.service.getDeliveryStatuses().find(deliveryStatus => deliveryStatus.id === campaign.delivery_status);
+    return deliveryStatus ? deliveryStatus.label : campaign.delivery_status;
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

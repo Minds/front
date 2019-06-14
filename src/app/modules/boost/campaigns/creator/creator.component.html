@@ -26,7 +26,7 @@
         <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </label>
 
-      <ng-container *ngFor="let type of campaignTypes">
+      <ng-container *ngFor="let type of types">
         <label
           class="m-form--selector m-btn m-btn--slim m-btn--action"
           [class.m-btn--inactive]="type.id !== campaign.type"
@@ -77,7 +77,7 @@
       <m-boost-campaigns-creator--content-selector
         *ngIf="campaign.type === 'newsfeed' || campaign.type === 'content'"
         [type]="campaign.type"
-        [(content)]="campaign.content"
+        [(content)]="campaign.entity_urns"
         [readonly]="isEditing"
       ></m-boost-campaigns-creator--content-selector>
     </div>
@@ -144,18 +144,6 @@
 
       <div class="m-form--read-only-value">
         <span>{{campaign.impressions | number}}</span>
-      </div>
-    </div>
-
-    <div class="m-form--field">
-      <label class="m-form--field-label" for="boost-creator__max_surge">
-        <span i18n>Max Surge</span>
-        <m-tooltip icon="help" i18n>TBD</m-tooltip>
-      </label>
-
-      <div class="m-form--composite-input">
-        <input id="boost-creator__max_surge" type="number" name="max_surge" [(ngModel)]="campaign.max_surge">
-        <span>%</span>
       </div>
     </div>
 

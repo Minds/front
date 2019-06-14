@@ -77,11 +77,10 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       name: '',
       type: 'newsfeed',
       budget: 5,
-      content: [],
+      entity_urns: [],
       hashtags: '',
       start: Date.now(),
       end: Date.now() + (5 * 24 * 60 * 60 * 1000),
-      max_surge: 100,
       impressions: 0,
     };
 
@@ -98,16 +97,15 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       this.campaign.type &&
       this.campaign.budget &&
       this.campaign.budget > 0 &&
-      this.campaign.content &&
-      this.campaign.content.length &&
+      this.campaign.entity_urns &&
+      this.campaign.entity_urns.length &&
       this.campaign.start &&
       this.campaign.end &&
-      this.campaign.start <= this.campaign.end &&
-      this.campaign.max_surge >= 0;
+      this.campaign.start <= this.campaign.end;
   }
 
-  get campaignTypes() {
-    return this.service.getCampaignTypes();
+  get types() {
+    return this.service.getTypes();
   }
 
   detectChanges() {

@@ -66,9 +66,14 @@ export class BoostCampaignsViewComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
-  getCampaignType() {
-    const campaignType = this.service.getCampaignTypes().find(campaignType => campaignType.id === this.campaign.type);
+  getType() {
+    const campaignType = this.service.getTypes().find(campaignType => campaignType.id === this.campaign.type);
     return campaignType ? campaignType.label : this.campaign.type;
+  }
+
+  getDeliveryStatus() {
+    const deliveryStatus = this.service.getDeliveryStatuses().find(deliveryStatus => deliveryStatus.id === this.campaign.delivery_status);
+    return deliveryStatus ? deliveryStatus.label : this.campaign.delivery_status;
   }
 
   detectChanges() {
