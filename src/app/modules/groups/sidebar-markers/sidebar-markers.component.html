@@ -2,7 +2,7 @@
   <li style="display:flex">
     <a [routerLink]="['/groups/create']">
       <m-tooltip
-        anchor="right"
+        [anchor]="tooltipsAnchor"
         [useParentPosition]="true"
       >
         <i class="material-icons" m-tooltip--anchor>add</i>
@@ -18,7 +18,7 @@
   <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker">
     <a [routerLink]="['/groups/profile', group.guid]">
       <m-tooltip
-        anchor="right"
+        [anchor]="tooltipsAnchor"
         [useParentPosition]="true"
       >
         <img [class.m-pulsating--small]="group.hasGathering$ | async" [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime" m-tooltip--anchor/>
@@ -35,7 +35,7 @@
   <li *ngIf="(!groups || groups.length === 0) && !inProgress">
     <a [routerLink]="['/groups/top']">
       <m-tooltip
-        anchor="right"
+        [anchor]="tooltipsAnchor"
         [useParentPosition]="true"
       >
         <img src="https://cdn-assets.minds.com/front/dist/en/assets/logos/bulb.svg" m-tooltip--anchor/>
