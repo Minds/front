@@ -41,7 +41,10 @@
         <td>{{getType(campaign)}}</td>
         <td class="m-table--numeric-cell">{{campaign.budget | number}} TK</td>
         <td class="m-table--numeric-cell">{{campaign.impressions | number}}</td>
-        <td>{{campaign.start | date:'MMM dd'}} - {{campaign.end | date:'MMM dd'}}</td>
+        <td>
+          <ng-container *ngIf="campaign.end > 0; else noEndTime">{{campaign.start | date:'MMM dd'}} &rarr; {{campaign.end | date:'MMM dd'}}</ng-container>
+          <ng-template #noEndTime>{{campaign.start | date:'MMM dd'}} &rarr; &infin;</ng-template>
+        </td>
         <td>{{getDeliveryStatus(campaign)}}</td>
       </tr>
       </tbody>

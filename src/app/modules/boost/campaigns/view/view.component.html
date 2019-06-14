@@ -84,7 +84,8 @@
         </div>
 
         <div class="m-form--read-only-value">
-          <span>{{campaign.end | date:'MMM dd'}}</span>
+          <span *ngIf="campaign.end > 0; else noEndTime">{{campaign.end | date:'MMM dd'}}</span>
+          <ng-template #noEndTime i18n>Until Completion</ng-template>
         </div>
       </div>
     </div>

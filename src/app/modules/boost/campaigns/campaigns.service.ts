@@ -25,7 +25,7 @@ export class CampaignsService {
   }
 
   async get(urn: string): Promise<Campaign> {
-    return (await this.client.get(`api/v2/boost/campaigns/${urn}`) as any).campaign;
+    return (await this.client.get(`api/v2/boost/campaigns/${urn}`) as any).campaigns[0];
   }
 
   async create(campaign: Campaign): Promise<Campaign> {
@@ -79,7 +79,7 @@ export class CampaignsService {
       },
       {
         id: 'approved',
-        label: 'Approved',
+        label: 'Active',
       },
       {
         id: 'accepted',
