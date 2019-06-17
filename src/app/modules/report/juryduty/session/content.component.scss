@@ -1,4 +1,3 @@
-
 .m-juryDutySession__content {
   background: #FFF;
   padding: 16px;
@@ -30,6 +29,34 @@
   minds-card {
     margin-top: 16px;
     max-width: 600px;
+
+    .m-mature-thumbnail-overlay {
+      display: none !important;
+    }
+
+    .m-mature-thumbnail {
+      filter: none !important;
+    }
+
+    .m-mature-text-toggle {
+      display: none !important;
+    }
+
+    .m-mature-text {
+      filter: none !important;
+    }
+
+    .m-mature-content {
+      position: relative !important;
+
+      .m-mature-overlay {
+        display: none !important;
+
+        .m-mature-overlay-note {
+          display: none !important;
+        }
+      }
+    }
   }
 
 }
