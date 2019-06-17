@@ -36,6 +36,12 @@ m-modal-remind-composer {
       position: absolute;
       right: $minds-padding * 3;
       bottom: $minds-padding * 3;
+
+      a:hover {
+        @include m-theme(){
+          color: themed($m-blue-grey-700);
+        }
+      }
     }
   }
 
@@ -83,6 +89,14 @@ m-modal-remind-composer {
   //      }
   //    }
   //  }
+  }
+
+  .mdl-card__menu {
+    i:hover {
+      @include m-theme(){
+        color: themed($m-blue-grey-500) !important;
+      }
+    }
   }
 
 }

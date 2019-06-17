@@ -89,11 +89,18 @@
 
     &.m-clickable {
       @include m-theme(){
-        color: themed($m-grey-600);
+        color: themed($m-blue-grey-500);
       }
       .material-icons {
         margin-top: -2px;
       }
+
+      &:hover {
+        @include m-theme(){
+          color: themed($m-blue-grey-700);
+        }
+      }
+
       span {
         vertical-align: middle;
         line-height: 16px;
@@ -154,7 +161,7 @@
 
   &:hover {
     @include m-theme(){
-      color: themed($m-grey-200);
+      color: themed($m-grey-600);
     }
   }
 
@@ -190,6 +197,12 @@
     margin-right: 8px;
     @include m-theme(){
       color: themed($m-grey-400);
+    }
+
+    &:hover {
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
     }
 
     i {

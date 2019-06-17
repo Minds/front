@@ -304,6 +304,8 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   }
 
   .m-owner-block--remind{
+    overflow: visible;
+    
     i{
       font-size: 18px;
       margin-right: 12px;
@@ -560,6 +562,12 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   .selected{
     @include m-theme(){
       color: themed($m-blue) !important;
+    }
+    
+    &:hover {
+      @include m-theme(){
+        color: rgba(themed($m-blue-dark),0.9) !important;
+      }
     }
   }
   i{
