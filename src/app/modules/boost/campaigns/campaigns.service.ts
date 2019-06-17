@@ -28,8 +28,28 @@ export class CampaignsService {
     return (await this.client.get(`api/v2/boost/campaigns/${urn}`) as any).campaigns[0];
   }
 
+  validate(campaign: Campaign): boolean {
+    // TODO: Validate data ranges, etc
+
+    return campaign &&
+      campaign &&
+      campaign.name &&
+      campaign.type &&
+      campaign.budget &&
+      campaign.budget > 0 &&
+      campaign.entity_urns &&
+      campaign.entity_urns.length &&
+      campaign.start &&
+      campaign.end &&
+      campaign.start <= campaign.end;
+  }
+
   async create(campaign: Campaign): Promise<Campaign> {
-    return await this.client.post(`api/v2/boost/campaigns`, campaign) as Campaign;
+    if (!this.validate(campaign)) {
+      throw new Error('Campaign is invalid');
+    }
+
+    return (await this.client.post(`api/v2/boost/campaigns`, campaign) as any).campaign;
   }
 
   async update(campaign: Campaign): Promise<Campaign> {
@@ -37,7 +57,11 @@ export class CampaignsService {
       throw new Error('Missing campaign URN');
     }
 
-    return await this.client.post(`api/v2/boost/campaigns/${campaign.urn}`, campaign) as Campaign;
+    if (!this.validate(campaign)) {
+      throw new Error('Campaign is invalid');
+    }
+
+    return (await this.client.post(`api/v2/boost/campaigns/${campaign.urn}`, campaign) as any).campaign;
   }
 
   getTypes(): Array<{ id: CampaignType, label: string, disabled?: boolean }> {

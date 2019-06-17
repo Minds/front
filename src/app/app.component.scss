@@ -366,6 +366,23 @@ m-app {
     }
   }
 
+  .m-form--spinner {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 16px;
+  }
+
+  .m-form--error {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+    font-weight: 300;
+
+    @include m-theme(){
+      color: themed($m-red);
+    }
+  }
+
   .m-date-selector--input {
     position: relative;
 
@@ -379,5 +396,16 @@ m-app {
         color: themed($m-grey-600);
       }
     }
+  }
+}
+
+.m-error {
+  margin: 8px;
+  padding: 32px;
+  font-weight: 300;
+
+  @include m-theme(){
+    color: themed($m-red);
+    background-color: themed($m-white);
   }
 }

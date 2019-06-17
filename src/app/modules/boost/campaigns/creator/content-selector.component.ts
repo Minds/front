@@ -58,7 +58,12 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
     this.initialized = true;
   }
 
-  async search() {
+  async search($event) {
+    if ($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
+
     this.inProgress = true;
     this.result = void 0;
     this.emit([]);

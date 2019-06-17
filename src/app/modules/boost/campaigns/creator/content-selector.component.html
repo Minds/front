@@ -3,12 +3,12 @@
     <input
       type="text"
       [(ngModel)]="query"
-      (keydown.enter)="search(); $event.preventDefault()"
+      (keydown.enter)="search($event)"
     >
 
     <button
       class="m-btn m-btn--slim m-btn--action"
-      (click)="search()"
+      (click)="search($event)"
       i18n
     >Search</button>
   </div>

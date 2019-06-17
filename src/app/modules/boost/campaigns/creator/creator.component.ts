@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Campaign } from "../campaigns.type";
 import { CampaignsService } from '../campaigns.service';
 import { Subscription } from 'rxjs';
@@ -20,10 +20,13 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
 
   inProgress: boolean = false;
 
+  currentError: string = '';
+
   protected route$: Subscription;
 
   constructor(
     protected service: CampaignsService,
+    protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
   ) {
@@ -63,12 +66,11 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       this.campaign = campaign;
     } catch (e) {
       console.error('BoostCampaignsCreatorComponent', e);
-      // TODO: Add error UX
+      this.currentError = (e && e.message) || 'Unknown error. Check your browser console.';
       this.campaign = void 0;
     }
 
     this.inProgress = false;
-
     this.detectChanges();
   }
 
@@ -84,6 +86,8 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       impressions: 0,
     };
 
+    this.currentError = '';
+
     this.calcImpressions();
   }
 
@@ -92,20 +96,36 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
   }
 
   canSubmit() {
-    return this.campaign &&
-      this.campaign.name &&
-      this.campaign.type &&
-      this.campaign.budget &&
-      this.campaign.budget > 0 &&
-      this.campaign.entity_urns &&
-      this.campaign.entity_urns.length &&
-      this.campaign.start &&
-      this.campaign.end &&
-      this.campaign.start <= this.campaign.end;
+    return this.service.validate(this.campaign);
   }
 
   get types() {
     return this.service.getTypes();
+  }
+
+  async submit() {
+    if (!this.canSubmit() || this.inProgress) {
+      return;
+    }
+
+    this.currentError = '';
+    this.inProgress = true;
+    this.detectChanges();
+
+    try {
+      const campaign = !this.isEditing ?
+        await this.service.create(this.campaign) :
+        await this.service.update(this.campaign);
+
+      this.router.navigate(['/boost/campaigns/edit', campaign.urn]);
+      // NOTE: Keep inProgress true until redirection happens
+    } catch (e) {
+      console.error('BoostCampaignsCreatorComponent', e);
+      this.currentError = (e && e.message) || 'Unknown error. Check your browser console.';
+      this.inProgress = false;
+    }
+
+    this.detectChanges();
   }
 
   detectChanges() {
