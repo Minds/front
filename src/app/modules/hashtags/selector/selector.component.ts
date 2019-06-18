@@ -13,6 +13,7 @@ export class HashtagsSelectorComponent {
 
   @Input() buttonClass: string = 'm-btn m-btn--slim m-btn m-btn--with-icon';
   @Input() labelPosition: 'left' | 'right' = 'left';
+  @Input() useContent: boolean = false;
 
   @Output('tagsChange') tagsChange: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output('tagsAdded') tagsAdded: EventEmitter<Tag[]> = new EventEmitter<Tag[]>();

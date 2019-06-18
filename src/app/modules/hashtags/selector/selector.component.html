@@ -6,12 +6,17 @@
       class="m-hashtags-selector--toggle"
       [class.m-hashtags-selector--toggle-enabled]="enabled"
     >
-      <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS" *ngIf="labelPosition === 'left'">Hashtags</span>
-      <m-tooltip>
-        <i m-tooltip--anchor class="fa fa-fw fa-hashtag m-hashtags-selector__Icon"></i>
-        <ng-container i18n="@@M__FEATURE__WIRE">Add tags</ng-container>
-      </m-tooltip>
-      <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS" *ngIf="labelPosition === 'right'">Hashtags</span>
+      <ng-container *ngIf="useContent; else useDefaultTemplate">
+        <ng-content></ng-content>
+      </ng-container>
+      <ng-template #useDefaultTemplate>
+        <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS" *ngIf="labelPosition === 'left'">Hashtags</span>
+        <m-tooltip>
+          <i m-tooltip--anchor class="fa fa-fw fa-hashtag m-hashtags-selector__Icon"></i>
+          <ng-container i18n="@@M__FEATURE__WIRE">Add tags</ng-container>
+        </m-tooltip>
+        <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS" *ngIf="labelPosition === 'right'">Hashtags</span>
+      </ng-template>
     </label>
 
     <ul class="m-dropdown--list">

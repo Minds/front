@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Campaign } from "../campaigns.type";
 import { CampaignsService } from '../campaigns.service';
 import { Subscription } from 'rxjs';
+import { Tag } from '../../../hashtags/types/tag';
 
 @Component({
   providers: [CampaignsService],
@@ -93,6 +94,31 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
 
   calcImpressions() {
     this.campaign.impressions = (this.campaign.budget || 0) * 1000;
+  }
+
+  getCampaignTags() {
+    return this.campaign.hashtags
+      .trim()
+      .split(' ')
+      .map(hashtag => hashtag.replace(/[^a-zA-Z_]/g, ''))
+      .filter(Boolean);
+  }
+
+  onTagsAdded(tags: Tag[]) {
+    for (let tag of tags) {
+      this.campaign.hashtags = `${this.campaign.hashtags} #${tag.value}`
+        .replace(/[ ]{2,}/g, ' ')
+        .trim();
+    }
+  }
+
+  onTagsRemoved(tags: Tag[]) {
+    for (let tag of tags) {
+      this.campaign.hashtags = this.campaign.hashtags
+        .replace(`#${tag.value}`, '')
+        .replace(/[ ]{2,}/g, ' ')
+        .trim();
+    }
   }
 
   onStartDateChange(date) {

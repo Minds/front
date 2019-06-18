@@ -89,6 +89,16 @@
       </label>
 
       <input id="boost-creator__hashtags" type="text" name="hashtags" [(ngModel)]="campaign.hashtags">
+
+      <m-hashtags-selector
+        buttonClass="m-boost-campaigns-creator--hashtag-selector-button"
+        [useContent]="true"
+        [tags]="getCampaignTags()"
+        (tagsAdded)="onTagsAdded($event)"
+        (tagsRemoved)="onTagsRemoved($event)"
+      >
+        <i class="material-icons">check</i>
+      </m-hashtags-selector>
     </div>
 
     <div class="m-form--fieldset">
