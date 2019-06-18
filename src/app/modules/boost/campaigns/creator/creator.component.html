@@ -98,7 +98,7 @@
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </label>
 
-        <div class="m-date-selector--input" mdl-datetime-picker [date]="campaign.start" (dateChange)="campaign.start = $event">
+        <div class="m-date-selector--input" mdl-datetime-picker [date]="campaign.start" (dateChange)="onStartDateChange($event)">
           <input id="boost-creator__start" type="text" placeholder="Now" i18n [value]="campaign.start | date:'MMM dd'" readonly>
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
@@ -110,7 +110,7 @@
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </label>
 
-        <div class="m-date-selector--input" mdl-datetime-picker [date]="campaign.end" (dateChange)="campaign.end = $event">
+        <div class="m-date-selector--input" mdl-datetime-picker [date]="campaign.end" (dateChange)="onEndDateChange($event)">
           <input id="boost-creator__end" type="text" placeholder="End of times" i18n [value]="campaign.end | date:'MMM dd'" readonly>
           <i class="material-icons">keyboard_arrow_down</i>
         </div>

@@ -95,6 +95,14 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.campaign.impressions = (this.campaign.budget || 0) * 1000;
   }
 
+  onStartDateChange(date) {
+    this.campaign.start = Date.parse(date);
+  }
+
+  onEndDateChange(date) {
+    this.campaign.end = Date.parse(date);
+  }
+
   canSubmit() {
     return this.service.validate(this.campaign);
   }
