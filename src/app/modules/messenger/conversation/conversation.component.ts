@@ -100,8 +100,6 @@ export class MessengerConversation {
 
     opts = (<any>Object).assign({
       limit: 12,
-      offset: '',
-      finish: ''
     }, opts);
 
     let scrollView = opts.container;
@@ -169,7 +167,7 @@ export class MessengerConversation {
           fromSelf = true;
         }
 
-        this.load({ finish: message.guid });
+        this.load({ limit: 1, finish: message.guid });
 
         if (!fromSelf) {
           this.invalid = false;
@@ -231,7 +229,7 @@ export class MessengerConversation {
   send(e) {
     e.preventDefault();
 
-    if (this.blocked || !this.message 
+    if (this.blocked || !this.message
       || this.message.split(/\r\n|\r|\n/).length >= 10) { //not more than 10 return characters.
       return;
     }
