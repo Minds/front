@@ -3,6 +3,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { REASONS } from '../../../services/list-options';
+import { EventEmitter } from "@angular/core";
 
 @Component({
   moduleId: module.id,
@@ -34,6 +35,12 @@ export class ReportCreatorComponent implements AfterViewInit {
 
   @Input('object') set data(object) {
     this.guid = object ? object.guid : null;
+  }
+
+  _opts: any;
+
+  set opts(opts: any) {
+    this._opts = opts;
   }
 
   constructor(
@@ -112,7 +119,7 @@ export class ReportCreatorComponent implements AfterViewInit {
 
     try {
       let response: any = await this.client.post(`api/v2/moderation/report`, {
-        entity_guid: this.guid, 
+        entity_guid: this.guid,
         reason_code: this.subject.value,
         note: this.note,
         sub_reason_code: this.subReason.value,
@@ -120,6 +127,14 @@ export class ReportCreatorComponent implements AfterViewInit {
 
       this.inProgress = false;
       this.success = true;
+
+      if (this.session.isAdmin()) {
+        this.close();
+      }
+
+      if (this._opts && this._opts.onReported) {
+        this._opts.onReported(this.guid, this.subject.value, this.subReason.value);
+      }
     } catch (e) {
       this.inProgress = false;
       //this.overlayModal.dismiss();\

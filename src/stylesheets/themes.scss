@@ -113,6 +113,8 @@ $themes: (
     m-white-always:  $white,    
     m-body-bg:       #f8f8f8,
 
+    m-warn-bg:     $amber-light,
+    m-warn-fg:     $black,
   ),
   dark: (
     
@@ -160,7 +162,9 @@ $themes: (
     m-red-dark:     lighten($red-dark, $percent),
     m-red:          lighten($red, $percent),
     m-red-light:    lighten($red-light, $percent),
-    
+
+    m-warn-bg:     $grey-900,
+    m-warn-fg:     $white,
   ),
 );
 
@@ -211,3 +215,6 @@ $m-amber-light:  'm-amber-light';
 $m-red-dark:     'm-red-dark';
 $m-red:          'm-red';
 $m-red-light:    'm-red-light';
+
+$m-warn-bg:      'm-warn-bg';
+$m-warn-fg:      'm-warn-fg';

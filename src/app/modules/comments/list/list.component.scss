@@ -232,6 +232,8 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
       minds-textarea {
         font-family: inherit;
         font-size: 12px;
+        width: 0;
+        min-width: 0;
         flex: 1;
         margin-bottom: $minds-padding;
         border-radius: 25px;
@@ -422,4 +424,5 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
 
 .m-comment--poster .minds-body {
   overflow: hidden;
+  min-height: 50px;
 }

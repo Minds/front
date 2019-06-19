@@ -108,6 +108,12 @@
       vertical-align: middle;
       cursor:pointer;
       overflow:hidden;
+
+      &:hover {
+        @include m-theme{
+          color: themed($m-blue-grey-800) !important;
+        }
+      }
     }
   }
 }

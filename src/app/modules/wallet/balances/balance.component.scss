@@ -129,6 +129,10 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
 .m-wallet--balance--metamask {
   margin-top: 16px;
 
+  @media screen and (max-width: $max-mobile) {
+    display: none;
+  }
+
   .m-wallet--balance--metamask-logo {
     width: 50px;
   }

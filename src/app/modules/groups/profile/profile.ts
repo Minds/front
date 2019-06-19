@@ -57,6 +57,8 @@ export class GroupsProfile {
   private videoChatActiveSubscription;
   private updateMarkersSubscription;
 
+  private lastWidth: number;
+
   constructor(
     public session: Session,
     public service: GroupsService,
@@ -75,7 +77,7 @@ export class GroupsProfile {
   ngOnInit() {
     this.context.set('activity');
     this.listenForNewMessages();
-    this.detectWidth();
+    this.detectWidth(true);
     this.detectConversationsState();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -376,8 +378,11 @@ export class GroupsProfile {
       this.save();
   }
 
-  @HostListener('window:resize') detectWidth() {
-    this.showRight = window.innerWidth > 900;
+  @HostListener('window:resize') detectWidth(force: boolean = false) {
+    if (force || (window.innerWidth !== this.lastWidth)) {
+      this.showRight = window.innerWidth > 900;
+      this.lastWidth = window.innerWidth;
+    }
   }
 
   resetMarkers() {

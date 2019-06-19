@@ -82,6 +82,12 @@ minds-button-remind {
   @include m-theme(){
     background-color: themed($m-blue) !important;
   }
+  
+  &:hover {
+    @include m-theme(){
+      background-color: rgba(themed($m-blue-dark),0.9) !important;
+    }
+  }
 }
 
 .selected{
@@ -121,5 +127,13 @@ minds-button-comment a,
 minds-button-remind a {
   @include m-theme(){
     color: themed($m-blue-grey-500);
+  }
+}
+minds-button-comment > a,
+minds-button-remind > a {
+  &:hover {
+    @include m-theme(){
+      color: themed($m-blue-grey-800);
+    }
   }
 }

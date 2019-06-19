@@ -1,3 +1,13 @@
+@import "defaults";
+
+m-wire--marketing {
+  .m-layout--row {
+    @media screen and(max-width: $min-tablet) {
+      flex-wrap: wrap;
+    }
+  }
+}
+
 .m-wire--marketing-header{
   background: url('<%= APP_CDN %>/assets/photos/blown-bulb.jpg') center;
   width: 100%;

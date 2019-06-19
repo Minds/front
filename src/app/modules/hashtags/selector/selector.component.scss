@@ -37,16 +37,15 @@ m-hashtags-selector, .m-hashtags-selector {
 
     .m-dropdown--list--item {
       flex-wrap: wrap;
-      cursor: pointer;
 
       b {
         flex-basis: 100%;
-        text-transform: uppercase;
         letter-spacing: 0.25px;
         font-family: 'Roboto';
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         font-size: 11px;
+        font-weight: 400;
       }
 
       p {
@@ -68,7 +67,6 @@ m-hashtags-selector, .m-hashtags-selector {
           display: flex;
           align-items: center;
           flex-direction: row;
-
           opacity: 1;
           text-overflow: ellipsis;
           padding: 4px 0;
@@ -76,6 +74,10 @@ m-hashtags-selector, .m-hashtags-selector {
           text-align: left;
           @include m-theme(){
             border-bottom: 1px solid themed($m-grey-50);
+          }
+          
+          &:not(.custom) {
+            cursor: pointer;
           }
 
           .m-form-tags-input-tags--check {

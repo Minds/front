@@ -3,9 +3,15 @@
 }
 .m-pin-button {
   overflow: visible;
-
+  
   .m-tooltip--bubble {
     width:100px;
+  }
+}
+
+.m-pin-button[disabled]:hover {
+  @include m-theme(){
+    background-color: transparent;
   }
 }
 
@@ -117,7 +123,6 @@ minds-activity {
     font-size: 10px;
     display: inline-block;
     vertical-align: middle;
-    cursor: pointer;
 
     > * {
       vertical-align: middle;

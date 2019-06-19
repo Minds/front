@@ -207,7 +207,7 @@
 
 <ng-content select="[bottom-content]"></ng-content>
 
-<div class="tabs" *ngIf="!hideTabs">
+<div class="tabs" *ngIf="!hideTabs && !isPending(activity)">
 	<minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
   <m-wire-button *ngIf="session.getLoggedInUser().guid != (activity.remind_object ? activity.remind_object.owner_guid : activity.owner_guid)"
@@ -280,6 +280,6 @@
 </div>
 
 <!-- Pending block -->
-<div class="mdl-card__supporting-text m-activity--pending" *ngIf="activity.pending && session.getLoggedInUser()?.guid == activity.owner_guid" i18n="@@MINDS__CARDS__ACTIVITY__AWAITING_MODERATION">
+<div class="mdl-card__supporting-text m-activity--pending" *ngIf="isPending(activity)" i18n="@@MINDS__CARDS__ACTIVITY__AWAITING_MODERATION">
   This post is awaiting moderation.
 </div>

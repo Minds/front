@@ -404,6 +404,10 @@ export class Activity implements OnInit {
     return activity && this.blockedUsers.indexOf(activity.owner_guid) > -1;
   }
 
+  isPending(activity) {
+    return activity && activity.pending && activity.pending !== '0';
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
