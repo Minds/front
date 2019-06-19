@@ -1,12 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { async, ComponentFixture, TestBed, tick } from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { CommonModule } from '@angular/common';
 
-import { MockComponent, MockDirective } from '../../../utils/mock';
+import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { By } from '@angular/platform-browser';
 import { NewsfeedBoostComponent } from './boost.component';
 import { Session } from '../../../services/session';
@@ -23,27 +22,29 @@ import { storageMock } from '../../../../tests/storage-mock.spec';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
+import { FeaturesService } from "../../../services/features.service";
+import { BoostedContentService } from "../../../common/services/boosted-content.service";
 
-@Component({
-  selector: 'm-newsfeed--boost-rotator',
-  template: ''
-})
-class NewsfeedBoostRotatorComponentMock {
-  @Input() interval: any;
-  @Input() channel: any;
-}
-
-@Component({
-  selector: 'minds-activity',
-  template: ''
-})
-class MindsActivityMock {
-  @Input() object: any;
-  @Input() boostToggle;
-  @Input() boost;
-  @Input() showBoostMenuOptions: boolean;
-  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
-}
+let boostedContentServiceMock: any = MockService(BoostedContentService, {
+  get: [
+    {
+      'guid': '1',
+      'type': 'activity',
+      'time_created': '1525457795',
+      'time_updated': '1525457795',
+      'title': '',
+      'message': 'test',
+      'boosted': true,
+      'boosted_guid': '1'
+    }, {
+      'guid': '2',
+      'type': 'activity',
+      'message': 'test2',
+      'boosted': true,
+      'boosted_guid': 2
+    }
+  ]
+});
 
 describe('NewsfeedBoostComponent', () => {
 
@@ -56,11 +57,16 @@ describe('NewsfeedBoostComponent', () => {
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         MockComponent({ selector: 'm-newsfeed--boost-rotator', template: '', inputs: ['interval', 'channel'] }),
-        MindsActivityMock,
+        MockComponent({
+          selector: 'minds-activity',
+          inputs: ['object', 'boostToggle', 'boost', 'slot', 'showBoostMenuOptions', 'commentsToggle', 'focusedCommentGuid', 'visible', 'canDelete', 'showRatingToggle'],
+          outputs: ['_delete: delete', 'commentsOpened', 'onViewed']
+        }),
         MockComponent({
           selector: 'infinite-scroll',
           inputs: ['inProgress', 'moreData', 'inProgress'],
         }),
+
         NewsfeedBoostComponent
       ],
       imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
@@ -72,6 +78,10 @@ describe('NewsfeedBoostComponent', () => {
         { provide: Upload, useValue: uploadMock },
         { provide: Storage, useValue: storageMock },
         { provide: ContextService, useValue: contextServiceMock },
+        { provide: FeaturesService, useValue: MockService(FeaturesService, { has: () => true }) },
+        {
+          provide: BoostedContentService, useValue: boostedContentServiceMock
+        },
       ]
     })
       .compileComponents();
@@ -79,37 +89,16 @@ describe('NewsfeedBoostComponent', () => {
 
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
+    jasmine.clock().uninstall();
     jasmine.clock().install();
 
     fixture = TestBed.createComponent(NewsfeedBoostComponent);
 
     comp = fixture.componentInstance;
 
-    clientMock.response = {};
-    clientMock.response['api/v1/boost/fetch/newsfeed'] = {
-      status: 'success',
-      boosts: [
-        {
-          'guid': '1',
-          'type': 'activity',
-          'time_created': '1525457795',
-          'time_updated': '1525457795',
-          'title': '',
-          'message': 'test',
-          'boosted': true,
-          'boosted_guid': '1'
-        }, {
-          'guid': '2',
-          'type': 'activity',
-          'message': 'test2',
-          'boosted': true,
-          'boosted_guid': 2
-        }
-      ],
-      'load-next': ''
-    };
-
     fixture.detectChanges();
+
+    jasmine.clock().tick(300);
 
     if (fixture.isStable()) {
       done();
@@ -135,14 +124,17 @@ describe('NewsfeedBoostComponent', () => {
   });
 
   it('should have a list of activities', () => {
-    expect(clientMock.get).toHaveBeenCalled();
-    const call = clientMock.get.calls.mostRecent();
-    expect(call.args[0]).toBe('api/v1/boost/fetch/newsfeed');
-    expect(call.args[1]).toEqual({ limit: 12, offset: '' });
-    expect(call.args[2]).toEqual({ cache: true });
+    expect(boostedContentServiceMock.get).toHaveBeenCalled();
+    const call = boostedContentServiceMock.get.calls.mostRecent();
+    expect(call.args[0]).toEqual({
+      limit: 10,
+      offset: 8,
+      exclude: [],
+      passive: true
+    });
 
     const list = fixture.debugElement.query(By.css('.minds-list'));
-    expect(list.nativeElement.children.length).toBe(4); // 2 activities + boost rotator + infinite-scroll
+    expect(list.nativeElement.children.length).toBe(2); // 2 activities + boost rotator + infinite-scroll
   });
 
 });
