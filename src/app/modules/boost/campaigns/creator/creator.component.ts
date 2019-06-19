@@ -37,6 +37,10 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.reset();
 
     this.route$ = this.route.params.subscribe(params => {
+      if (params.from || params.type) {
+        this.createFrom(params as { from, type });
+      }
+
       if (params.urn && this.urn !== params.urn) {
         this.urn = params.urn;
         this.load();
@@ -46,6 +50,21 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.route$.unsubscribe();
+  }
+
+  createFrom({ type, from }) {
+    this.reset();
+
+    if (type) {
+      // TODO: Validate that it's a valid type
+      this.campaign.type = type;
+    }
+
+    if (from) {
+      this.campaign.entity_urns = [from];
+    }
+
+    this.detectChanges();
   }
 
   async load() {

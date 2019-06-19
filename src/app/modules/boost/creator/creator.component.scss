@@ -431,6 +431,27 @@
         color: themed($m-red);
       }
     }
+
+    .m-boost--creator--submit-campaign-link {
+      margin-left: auto;
+      font-size: 13px;
+
+      a {
+        font-weight: 300;
+        text-decoration: none;
+        vertical-align: middle;
+      }
+
+      m-tooltip {
+        margin-left: 4px;
+        vertical-align: middle;
+
+        i.material-icons {
+          font-size: 1.2em;
+          line-height: 1;
+        }
+      }
+    }
   }
 
   .m-boost--creator--target-facebook {

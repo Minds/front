@@ -11,6 +11,7 @@ import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
+import normalizeUrn from '../../../helpers/normalize-urn';
 
 type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
@@ -676,4 +677,21 @@ export class BoostCreatorComponent implements AfterViewInit {
     return { guid, checksum };
   }
 
+  get campaignCreatorRoute(): Array<any> | null {
+    if (!this.boost || this.boost.type === 'p2p' || !this.object) {
+      return null;
+    }
+
+    const urn = normalizeUrn(this.object.urn || this.object.guid);
+
+    if (!urn) {
+      return null;
+    }
+
+    return ['/boost/campaigns/create', { type: this.boost.type, from: urn }]
+  }
+
+  dismissSelf() {
+    this.overlayModal.dismiss();
+  }
 }

@@ -204,6 +204,11 @@
         <i class="material-icons">close</i>
         <span>{{ error }}</span>
       </div>
+
+      <div *ngIf="campaignCreatorRoute && !inProgress && !success && !error" class="m-boost--creator--submit-campaign-link">
+        <a [routerLink]="campaignCreatorRoute" (click)="dismissSelf()" target="_blank" i18n>Create a Campaign</a>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </div>
     </div>
   </section>
 </div>
