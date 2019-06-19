@@ -9,26 +9,24 @@
     <div class="m-marketing--hero--inner">
       <div class="m-marketing--hero--slogans">
         <h2>
-          Minds Android App
+          Minds Mobile App
         </h2>
       </div>
-
       <div class="m-marketing--hero--actions">
-        <i class="material-icons m-mobile__giantDroid">android</i>
-        <div class="m-marketing--hero--actions">
-            <i class="material-icons m-mobile__giantDroid">android</i>
+        <div class="m-marketing--hero--logos">
+            <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'">
         </div>
-    
         <div class="mdl-card__supporting-text m-marketing--section--downloadContainer">
-          <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6">
+          <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6" target="_blank">
             <img class="m-marketing--section--downloadButton m-marketing--section--downloadButton--ios"  
-                  src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg">
+                  src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"/>
           </a>
-          <a href='https://play.google.com/store/apps/details?id=com.minds.mobile&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
-            <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'
-                  class="m-marketing--section--downloadButton" />
+          <a [href]="latestUrl">
+            <img alt='Get it for Android' 
+              [src]="minds.cdn_assets_url + 'assets/photos/android-download.png'"
+              class="m-marketing--section--downloadButton m-marketing--section--downloadButton--android"/>
           </a>
-        </div>      
+        </div>
       </div>
     </div>
   </div>
@@ -42,7 +40,12 @@
             <div class="mdl-cell mdl-cell--12-col m-mobile--marketing--spinner" *ngIf="inProgress">
               <div class="mdl-spinner mdl-js-spinner is-active"></div>
             </div>
-
+            <span class="m-mobile--marketing--play-store">
+              A limited version is also available via
+              <a href="https://play.google.com/store/apps/details?id=com.minds.mobile&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+                target="_blank">
+                Google Play.</a>
+            </span>
             <div class="mdl-cell mdl-cell--12-col" *ngIf="error">
               <p class="m-mobile--marketing--error">Oops! There was an issue retrieving mobile releases: <i>{{error}}</i></p>
             </div>

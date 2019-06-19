@@ -27,8 +27,14 @@
     padding-top: 32px !important;
   }
 
-  .m-marketing--hero--actions img {
-    max-height: 250px;
+  .m-marketing--hero--actions {
+    text-align: center;
+
+    img {
+      max-width: 180px;
+      max-height: 160px;
+      margin: 0 4px;
+    }
   }
 
   @media screen and (max-width: 662px) {
@@ -41,6 +47,7 @@
       margin-top: 16px;
       margin-left: 0;
       text-align: center;
+
     }
     .m-marketing--section {
       padding: 16px;
@@ -93,6 +100,16 @@
     }
   }
 
+  .m-mobile--marketing--play-store {
+    color: #444;
+    margin: 16px 0;
+    font-size: 56px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 1.25px;
+    font-size: 12pt;
+    margin-left: 12px;
+  }
 }
 
 .m-mobile__giantDroid {
@@ -107,9 +124,12 @@
   .m-marketing--section--downloadButton--ios {
     width: 165px;
   }
-
+  .m-marketing--section--downloadButton--android {
+    width: 165px;
+  }
   a .m-marketing--section--downloadButton {
     max-width: 200px;
+    max-height: 55px;
     min-width: unset !important;
   }
 }
