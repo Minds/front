@@ -57,6 +57,7 @@ describe('NewsfeedBoostComponent', () => {
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         MockComponent({ selector: 'm-newsfeed--boost-rotator', template: '', inputs: ['interval', 'channel'] }),
+        MockComponent({ selector: 'minds-newsfeed-poster', template: '', inputs: ['interval', 'channel'] }),
         MockComponent({
           selector: 'minds-activity',
           inputs: ['object', 'boostToggle', 'boost', 'slot', 'showBoostMenuOptions', 'commentsToggle', 'focusedCommentGuid', 'visible', 'canDelete', 'showRatingToggle'],
@@ -134,7 +135,7 @@ describe('NewsfeedBoostComponent', () => {
     });
 
     const list = fixture.debugElement.query(By.css('.minds-list'));
-    expect(list.nativeElement.children.length).toBe(2); // 2 activities + boost rotator + infinite-scroll
+    expect(list.nativeElement.children.length).toBe(3);
   });
 
 });
