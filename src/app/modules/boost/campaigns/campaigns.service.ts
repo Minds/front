@@ -25,7 +25,13 @@ export class CampaignsService {
   }
 
   async get(urn: string): Promise<Campaign> {
-    return (await this.client.get(`api/v2/boost/campaigns/${urn}`) as any).campaigns[0];
+    const campaigns: Campaign[] = (await this.client.get(`api/v2/boost/campaigns/${urn}`) as any).campaigns;
+
+    if (typeof campaigns[0] === 'undefined') {
+      return null;
+    }
+
+    return campaigns[0];
   }
 
   validate(campaign: Campaign): boolean {

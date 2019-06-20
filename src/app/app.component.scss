@@ -397,6 +397,24 @@ m-app {
       }
     }
   }
+
+  .m-form--edit-tag-badges {
+    display: inline-block;
+    min-width: 250px; // Tag selector width
+  }
+
+  .m-form--tag-badge {
+    display: inline-block;
+    margin-right: 0.35em;
+    padding: 2px 8px;
+    font-size: 13px;
+    font-weight: 400;
+    border-radius: 10px;
+
+    @include m-theme() {
+      background-color: themed($m-grey-100);
+    }
+  }
 }
 
 .m-error {

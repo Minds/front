@@ -6,7 +6,7 @@ export type Campaign = {
   name: string,
   type: CampaignType,
   entity_urns: string[],
-  hashtags: string,
+  hashtags: string[],
   start: number,
   end: number,
   budget: number,

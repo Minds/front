@@ -83,22 +83,29 @@
     </div>
 
     <div class="m-form--field">
-      <label for="boost-creator__hashtags" class="m-form--field-label">
+      <label class="m-form--field-label">
         <span i18n>Targeting</span>
         <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </label>
 
-      <input id="boost-creator__hashtags" type="text" name="hashtags" [(ngModel)]="campaign.hashtags">
+      <div class="m-form--read-only-value">
+        <span class="m-form--edit-tag-badges">
+          <span
+            *ngFor="let hashtag of campaign.hashtags"
+            class="m-form--tag-badge"
+          >{{hashtag}}</span>
+        </span>
 
-      <m-hashtags-selector
-        buttonClass="m-boost-campaigns-creator--hashtag-selector-button"
-        [useContent]="true"
-        [tags]="getCampaignTags()"
-        (tagsAdded)="onTagsAdded($event)"
-        (tagsRemoved)="onTagsRemoved($event)"
-      >
-        <i class="material-icons">check</i>
-      </m-hashtags-selector>
+        <m-hashtags-selector
+          buttonClass="m-boost-campaigns-creator--hashtag-selector-button"
+          [useContent]="true"
+          [tags]="campaign.hashtags"
+          (tagsAdded)="onTagsAdded($event)"
+          (tagsRemoved)="onTagsRemoved($event)"
+        >
+          <i class="material-icons">check</i>
+        </m-hashtags-selector>
+      </div>
     </div>
 
     <div class="m-form--fieldset">

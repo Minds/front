@@ -63,7 +63,10 @@
       </div>
 
       <div class="m-form--read-only-value">
-        <span>{{campaign.hashtags}}</span>
+        <span
+          *ngFor="let hashtag of campaign.hashtags"
+          class="m-form--tag-badge"
+        >#{{hashtag}}</span>
       </div>
     </div>
 

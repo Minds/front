@@ -100,7 +100,7 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       type: 'newsfeed',
       budget: 5,
       entity_urns: [],
-      hashtags: '',
+      hashtags: [],
       start: Date.now(),
       end: Date.now() + (5 * 24 * 60 * 60 * 1000),
       impressions: 0,
@@ -115,29 +115,16 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.campaign.impressions = (this.campaign.budget || 0) * 1000;
   }
 
-  getCampaignTags() {
-    return this.campaign.hashtags
-      .trim()
-      .split(' ')
-      .map(hashtag => hashtag.replace(/[^a-zA-Z_]/g, ''))
-      .filter(Boolean);
-  }
-
   onTagsAdded(tags: Tag[]) {
-    for (let tag of tags) {
-      this.campaign.hashtags = `${this.campaign.hashtags} #${tag.value}`
-        .replace(/[ ]{2,}/g, ' ')
-        .trim();
-    }
+    const tagValues = tags.map(tag => tag.value);
+
+    this.campaign.hashtags.push(...tagValues);
   }
 
   onTagsRemoved(tags: Tag[]) {
-    for (let tag of tags) {
-      this.campaign.hashtags = this.campaign.hashtags
-        .replace(`#${tag.value}`, '')
-        .replace(/[ ]{2,}/g, ' ')
-        .trim();
-    }
+    const tagValues = tags.map(tag => tag.value);
+
+    this.campaign.hashtags = this.campaign.hashtags.filter(hashtag => tagValues.indexOf(hashtag) === -1)
   }
 
   onStartDateChange(date) {
