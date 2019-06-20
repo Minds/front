@@ -19,6 +19,8 @@ import { Session } from '../../../services/session';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
 import * as BN from 'bn.js';
+import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-blockchain--purchase',
@@ -67,6 +69,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     protected tde: TokenDistributionEventService,
     public session: Session,
     private route: ActivatedRoute,
+    protected router: Router,
   ) { }
 
   ngOnInit() {
@@ -127,6 +130,16 @@ export class BlockchainPurchaseComponent implements OnInit {
   async purchase() {
     await this.load();
     if (this.session.isLoggedIn()) {
+      if (await this.web3Wallet.isLocal()) {
+        const action = await this.web3Wallet.setupMetamask();
+        switch (action) {
+          case GetMetamaskComponent.ACTION_CREATE:
+            this.router.navigate(['/wallet']);
+            this.inProgress = false;
+            this.overlayModal.dismiss();
+            return;
+        }
+      }
       this.showPledgeModal = true;
     } else {
       this.showLoginModal = true;
