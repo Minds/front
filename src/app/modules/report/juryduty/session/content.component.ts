@@ -14,6 +14,7 @@ export class JuryDutySessionContentComponent {
 
   @Input() report;
   decided: boolean = false;
+  modalOpened: boolean = false;
 
   constructor(
     private sessionService: JurySessionService,
@@ -27,9 +28,9 @@ export class JuryDutySessionContentComponent {
 
   getAction(report) {
     let friendlyString = report.entity && report.entity.type == 'user' ? 'banned' : 'removed';
-    
+
     switch (report.reason_code) {
-      case 2: 
+      case 2:
         friendlyString = 'marked NSFW';
         break;
     }
@@ -37,12 +38,17 @@ export class JuryDutySessionContentComponent {
     return friendlyString;
   }
 
- async overturn() {
+  async overturn() {
     this.decided = true;
     await this.sessionService.overturn(this.report);
   }
 
-  async uphold() {
+  uphold() {
+    this.modalOpened = true;
+  }
+
+  async confirmVote() {
+    this.modalOpened = false;
     this.decided = true;
     await this.sessionService.uphold(this.report);
   }

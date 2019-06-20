@@ -3,10 +3,7 @@
     <ng-container *ngIf="!decided; else whenDecided">
         <h3>
             <b *ngIf="report.is_appeal">Action taken: </b>
-            <span>Should be</span>
-            <b> {{ getAction(report) }} </b>
-            <span>for</span>
-            <b> {{ getReasonString(report) }} </b>
+            Does this content contain <b> {{ getReasonString(report) }} </b>?
         </h3>
 
         <div class="m-juryDutySessionContent__appealNote" *ngIf="report.appeal_note">
@@ -27,18 +24,16 @@
 
         <div class="m-juryDutySessionContent__options">
             <button
-                class="m-btn m-btn--slim"
+                class="m-btn m-btn--slim m-juryDutySessionContentOptions__uphold"
                 (click)="uphold()"
             >
-              <ng-container *ngIf="report.is_appeal; else upholdLabel">Reject Appeal</ng-container>
-              <ng-template #upholdLabel>Uphold Report</ng-template>
+              Yes, it does
             </button>
             <button
-                class="m-btn m-btn--slim"
+                class="m-btn m-btn--slim m-juryDutySessionContentOptions__overturn"
                 (click)="overturn()"
             >
-              <ng-container *ngIf="report.is_appeal; else overturnLabel">Accept Appeal</ng-container>
-              <ng-template #overturnLabel>Overturn Report</ng-template>
+              No, it doesn't
             </button>
         </div>
     </ng-container>
@@ -48,5 +43,33 @@
             Thanks for casting your vote.
         </p>
     </ng-template>
+
+  <m-modal [open]="modalOpened" [allowClose]="false">
+    <h5 i18n="@@JURYDUTY__SESSION__THANK_YOU_FOR_YOUR_VOTE">
+      Thank you for your vote!
+    </h5>
+
+    <div class="mdl-card__supporting-text">
+      <p>
+        By selecting "Yes", you are voting that this post should be <strong>{{ getAction(report) }}</strong>.
+        <ng-container *ngIf="report.reason_code == 2">
+          This means it will only be viewable by people subscribed to the user or opted-in to view explicit content.
+        </ng-container>
+      </p>
+      <p *ngIf="report.reason_code == 2">Regardless of the outcome, the post will <strong>not</strong> be removed and
+        the
+        channel will <strong>not</strong> be banned.</p>
+    </div>
+
+    <div class="m-juryDutySessionContent__options">
+      <button (click)="confirmVote()" class="m-btn m-btn--slim m-juryDutySessionContentOptions__uphold">
+        <ng-container i18n="@@M__ACTION__CONFIRM_VOTE">Confirm Vote</ng-container>
+      </button>
+      <button (click)="modalOpened = false" class="m-btn m-btn--slim m-juryDutySessionContentOptions__overturn">
+        <ng-container i18n="@@M__ACTION__GO_BACK">Go Back</ng-container>
+      </button>
+    </div>
+  </m-modal>
+
 
 </div>
