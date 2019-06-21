@@ -112,10 +112,6 @@ export class CampaignsService {
         label: 'Active',
       },
       {
-        id: 'accepted',
-        label: 'Accepted',
-      },
-      {
         id: 'rejected',
         label: 'Rejected',
       },

@@ -1,5 +1,5 @@
 export type CampaignType = 'newsfeed' | 'content' | 'banner' | 'video';
-export type CampaignDeliveryStatus = 'pending' | 'created' | 'failed' | 'approved' | 'accepted' | 'rejected' | 'revoked' | 'completed';
+export type CampaignDeliveryStatus = 'pending' | 'created' | 'failed' | 'approved' | 'rejected' | 'revoked' | 'completed';
 
 export type Campaign = {
   // User provided
