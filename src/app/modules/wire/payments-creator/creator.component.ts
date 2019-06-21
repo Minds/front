@@ -191,7 +191,7 @@ export class WirePaymentsCreatorComponent {
   }
 
   setDefaults() {
-    this.wire.recurring = false;
+    this.wire.recurring = true;
     let payloadType = localStorage.getItem('preferred-payment-method');
     if (['onchain', 'offchain'].indexOf(payloadType) === -1) {
       payloadType = 'offchain';
