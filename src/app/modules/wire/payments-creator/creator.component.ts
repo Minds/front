@@ -372,7 +372,7 @@ export class WirePaymentsCreatorComponent {
       this.submitted = true;
       this.error = '';
 
-      if (await this.web3Wallet.isLocal()) {
+      if (await this.web3Wallet.isLocal() && this.wire.payloadType === 'onchain') {
         const action = await this.web3Wallet.setupMetamask();
         switch (action) {
           case GetMetamaskComponent.ACTION_CREATE:
