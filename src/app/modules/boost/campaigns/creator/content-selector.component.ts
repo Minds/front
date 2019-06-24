@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { CampaignType } from '../campaigns.type';
 import { CampaignContentsService } from '../campaign-contents.service';
+import { Session } from '../../../../services/session';
 
 @Component({
   providers: [CampaignContentsService],
@@ -44,6 +45,7 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
 
   constructor(
     protected contentsService: CampaignContentsService,
+    protected session: Session,
     protected cd: ChangeDetectorRef,
   ) {
   }
@@ -83,6 +85,18 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
 
     this.inProgress = false;
     this.detectChanges();
+  }
+
+  searchUser() {
+    const user = this.session.getLoggedInUser();
+
+    this.query = `urn:entity:${user.guid}`;
+    this.search();
+  }
+
+  get username() {
+    const user = this.session.getLoggedInUser();
+    return user && user.username;
   }
 
   emit(content: string[]) {

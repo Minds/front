@@ -11,6 +11,14 @@
       (click)="search($event)"
       i18n
     >Search</button>
+
+    <ng-container *ngIf="type === 'content' && username">
+      <a
+        class="m-btn m-btn--slim m-btn--action m-boost-campaigns-creator--content-selector--pick-self"
+        (click)="searchUser()"
+        i18n
+      >Use @{{username}}</a>
+    </ng-container>
   </div>
 
   <ng-container *ngIf="result; else noResult">

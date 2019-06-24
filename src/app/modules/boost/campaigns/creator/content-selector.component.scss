@@ -4,10 +4,17 @@
   overflow: auto;
 
   .m-boost-campaigns-creator--content-selector--search-bar {
+    display: flex;
+    flex-direction: row;
     margin-bottom: 16px;
 
     button {
       margin-left: 16px;
+    }
+
+    .m-boost-campaigns-creator--content-selector--pick-self {
+      margin-left: auto;
+      text-transform: initial;
     }
   }
 
