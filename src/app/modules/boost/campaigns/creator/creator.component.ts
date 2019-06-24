@@ -171,6 +171,42 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
+  async cancel($event?) {
+    if ($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
+
+    if (this.inProgress) {
+      return;
+    }
+
+    // TODO: Use a nice modal
+    if (!confirm(`Are you sure? There's no UNDO from cancelling a campaign. You will receive a refund.`)) {
+      return;
+    }
+
+    this.currentError = '';
+    this.inProgress = true;
+    this.detectChanges();
+
+    try {
+      await this.service.cancel(this.campaign);
+
+      // NOTE: Keeping inProgress true until redirection happens
+      setTimeout(() => {
+        // TODO: Use RxJS as timer, little delay so we wait for ES to be updated
+        this.router.navigate(['/boost/campaigns', this.campaign.urn]);
+      }, 1000);
+    } catch (e) {
+      console.error('BoostCampaignsCreatorComponent', e);
+      this.currentError = (e && e.message) || 'Unknown error. Check your browser console.';
+      this.inProgress = false;
+    }
+
+    this.detectChanges();
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

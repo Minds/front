@@ -177,6 +177,15 @@
 
       <div class="m-form--error" *ngIf="currentError && !inProgress">{{currentError}}</div>
     </div>
+
+    <div class="m-form--field" *ngIf="isEditing">
+      <button
+        type="button"
+        (click)="cancel($event);"
+        class="m-btn m-btn--slim m-btn--destructive"
+        [disabled]="inProgress"
+      >Cancel Campaign</button>
+    </div>
   </form>
 </div>
 

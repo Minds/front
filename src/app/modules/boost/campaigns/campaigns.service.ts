@@ -70,6 +70,14 @@ export class CampaignsService {
     return (await this.client.post(`api/v2/boost/campaigns/${campaign.urn}`, campaign) as any).campaign;
   }
 
+  async cancel(campaign: Campaign): Promise<Campaign> {
+    if (!campaign.urn) {
+      throw new Error('Missing campaign URN');
+    }
+
+    return (await this.client.delete(`api/v2/boost/campaigns/${campaign.urn}`) as any).campaign;
+  }
+
   getTypes(): Array<{ id: CampaignType, label: string, disabled?: boolean }> {
     return [
       {
@@ -117,7 +125,7 @@ export class CampaignsService {
       },
       {
         id: 'revoked',
-        label: 'Revoked',
+        label: 'Cancelled',
       },
       {
         id: 'completed',
