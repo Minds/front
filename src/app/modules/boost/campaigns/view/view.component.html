@@ -13,6 +13,7 @@
     <div class="m-form--field">
       <div class="m-form--field-label">
         <span i18n>Type</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </div>
 
       <div class="m-form--read-only-value">
@@ -23,6 +24,7 @@
     <div class="m-form--field">
       <div class="m-form--field-label">
         <span i18n>Delivery Status</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </div>
 
       <div class="m-form--read-only-value">
@@ -34,19 +36,23 @@
       <span class="m-form--field-label" [ngSwitch]="campaign.type">
         <ng-container *ngSwitchCase="'newsfeed'">
           <span i18n>Posts</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </ng-container>
 
         <ng-container *ngSwitchCase="'content'">
           <span i18n>Content</span>
-        </ng-container>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </ng-container>
 
         <ng-container *ngSwitchCase="'banner'">
           <span i18n>Banner</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </ng-container>
 
         <ng-container *ngSwitchCase="'video'">
           <span i18n>Video</span>
-        </ng-container>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </ng-container>
       </span>
 
       <m-boost-campaigns-creator--content-selector
@@ -60,6 +66,7 @@
     <div class="m-form--field">
       <div class="m-form--field-label">
         <span i18n>Targeting</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </div>
 
       <div class="m-form--read-only-value">
@@ -74,6 +81,7 @@
       <div class="m-form--field">
         <div class="m-form--field-label">
           <span i18n>Start</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </div>
 
         <div class="m-form--read-only-value">
@@ -84,6 +92,7 @@
       <div class="m-form--field">
         <div class="m-form--field-label">
           <span i18n>End</span>
+          <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </div>
 
         <div class="m-form--read-only-value">
@@ -96,6 +105,7 @@
     <div class="m-form--field">
       <div class="m-form--field-label">
         <span i18n>Budget</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </div>
 
       <div class="m-form--read-only-value">
@@ -106,10 +116,22 @@
     <div class="m-form--field">
       <div class="m-form--field-label">
         <span i18n>Impressions</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </div>
 
       <div class="m-form--read-only-value">
         <span>{{campaign.impressions | number}}</span>
+      </div>
+    </div>
+
+    <div class="m-form--field">
+      <div class="m-form--field-label">
+        <span i18n>Fulfilled Impressions</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </div>
+
+      <div class="m-form--read-only-value">
+        <span>{{(campaign.impressions_met || 0) | number}}</span>
       </div>
     </div>
 

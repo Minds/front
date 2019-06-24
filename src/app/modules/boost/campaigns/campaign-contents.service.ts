@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { EntitiesService } from '../../../common/services/entities.service';
 import { CampaignType } from './campaigns.type';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
+import normalizeUrn from '../../../helpers/normalize-urn';
 
 const matchTypeOrNull = (type: CampaignType, content) => {
   if (!content) {
@@ -30,7 +30,6 @@ export class CampaignContentsService {
   constructor(
     protected session: Session,
     protected client: Client,
-    protected entitiesService: EntitiesService,
   ) {
   }
 
@@ -47,7 +46,7 @@ export class CampaignContentsService {
   }
 
   async getContentByGuidOrUrn(guidOrUrn: string) {
-    return await this.entitiesService.single(guidOrUrn);
+    return (await this.getEntities([guidOrUrn]))[0];
   }
 
   async getContentByRouteLink(href: string) {
@@ -58,7 +57,7 @@ export class CampaignContentsService {
       return null;
     }
 
-    return await this.entitiesService.single(matches[1]);
+    return (await this.getEntities([matches[1]]))[0];
   }
 
   async getContentByQuery(type: CampaignType, query: string) {
@@ -93,7 +92,7 @@ export class CampaignContentsService {
       entityIds.push(...result.entities.map(entity => entity.urn || entity.guid).filter(Boolean))
     }
 
-    const entities: Array<any> = await this.entitiesService.fetch(entityIds);
+    const entities: Array<any> = await this.getEntities(entityIds);
 
     if (!entities || !entities.length) {
       return null;
@@ -108,5 +107,21 @@ export class CampaignContentsService {
     }
 
     return result;
+  }
+
+  async getEntities(urns: string[]) {
+    // TODO: Replace with a better Entities Sync service (w/ caching)
+
+    const entities = (await this.client.get(`api/v2/entities`, {
+      urns: urns.join(','),
+      as_activities: '',
+    }) as any).entities || [];
+
+    return entities
+      .filter(Boolean)
+      .map(entity => ({
+        ...entity,
+        urn: normalizeUrn(entity.urn || entity.guid)
+      }));
   }
 }

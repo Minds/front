@@ -13,7 +13,15 @@ export type Campaign = {
 
   // Engine
   urn?: string,
+
+  // Read Only
   delivery_status?: CampaignDeliveryStatus,
-  impressions?: number, // For display only
-  cpm?: number, // For display only
+  impressions?: number,
+  impressions_met?: number,
+  cpm?: number,
+  created_timestamp?: number,
+  reviewed_timestamp?: number,
+  revoked_timestamp?: number,
+  rejected_timestamp?: number,
+  completed_timestamp?: number,
 };

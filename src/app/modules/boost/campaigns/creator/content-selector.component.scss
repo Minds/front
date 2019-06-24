@@ -20,7 +20,11 @@
     }
   }
 
-  .m-boost-campaigns-creator--no-interactive {
+  .m-boost-campaigns-creator--card {
     pointer-events: none;
+  }
+
+  .m-boost-campaigns-creator--content-card {
+    max-width: 270px;
   }
 }
