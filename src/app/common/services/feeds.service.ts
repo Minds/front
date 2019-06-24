@@ -12,7 +12,7 @@ import FeedsSync from '../../lib/minds-sync/services/FeedsSync.js';
 
 import hashCode from "../../helpers/hash-code";
 import AsyncStatus from "../../helpers/async-status";
-import { BehaviorSubject, Observable, of, forkJoin } from "rxjs";
+import { BehaviorSubject, Observable, of, forkJoin, combineLatest } from "rxjs";
 import { take, switchMap, map, tap } from "rxjs/operators";
 
 export type FeedsServiceGetParameters = {
@@ -68,9 +68,14 @@ export class FeedsService {
         }
       }),
     );
-    this.hasMore = this.rawFeed.pipe(
-      map(feed => {
-        return this.inProgress.getValue() || (this.limit.getValue() + this.offset.getValue()) < feed.length;
+    this.hasMore = combineLatest(this.rawFeed, this.inProgress, this.limit, this.offset).pipe(
+      map(values => {
+        const feed = values[0];
+        const inProgress = values[1];
+        const limit = values[2];
+        const offset = values[3];
+        return inProgress
+          ? true : (limit + offset) <= feed.length;
       }),
     );
   }
