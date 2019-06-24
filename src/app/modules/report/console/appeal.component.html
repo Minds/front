@@ -33,9 +33,11 @@
     </div>
   </div>
 
-  <minds-card *ngIf="appeal.report.entity && appeal.report.entity.type != 'comment'"
+  <minds-card
+    *ngIf="appeal.report.entity && appeal.report.entity.type != 'comment'"
     class="m-report-console--card"
     [object]="appeal.report.entity"
+    [target]="'_blank'"
     hostClass="mdl-card"
   ></minds-card>
 

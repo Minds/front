@@ -45,6 +45,8 @@ export class MindsCard implements AfterViewInit {
     private _componentFactoryResolver: ComponentFactoryResolver
   ) { }
 
+  @Input() target : '_blank' | '_self' = '_self';
+
   @Input('object') set _object(value: any) {
     const oldType = this.type;
 
@@ -140,6 +142,10 @@ export class MindsCard implements AfterViewInit {
       if (this.object.type === 'activity') {
         (<Activity>this.componentInstance).hideTabs = this.flags.hideTabs || false;
       }
+    }
+
+    if (!!this.componentInstance.target) {
+      this.componentInstance.target = this.target;
     }
 
     this.componentRef.changeDetectorRef.detectChanges();

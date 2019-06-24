@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Client } from '../../../../../../services/api';
 import { Session } from '../../../../../../services/session';
@@ -19,12 +19,14 @@ export class VideoCard {
   entity: any;
   minds: {};
 
-  constructor(public session: Session, public client: Client, public attachment: AttachmentService) {
-    this.minds = window.Minds;
+  @Input() target: '_blank' | '_self' = '_self';
+
+  @Input('object') set object(value: any) {
+    this.entity = value;
   }
 
-  set object(value: any) {
-    this.entity = value;
+  constructor(public session: Session, public client: Client, public attachment: AttachmentService) {
+    this.minds = window.Minds;
   }
 
 }
