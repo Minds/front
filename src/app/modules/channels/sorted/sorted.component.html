@@ -21,12 +21,12 @@
 
     <ng-container *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView">
       <m-newsfeed__tiles
-        [entities]="getAllEntities()"
+        [entities]="feedsService.feed | async"
       ></m-newsfeed__tiles>
     </ng-container>
     <ng-template #entityListView>
       <m-newsfeed__entity
-        *ngFor="let entity of getAllEntities(); let i = index"
+        *ngFor="let entity of (feedsService.feed | async); let i = index"
         [entity]="entity"
         [slot]="i + 1"
       ></m-newsfeed__entity>
@@ -34,9 +34,9 @@
 
     <infinite-scroll
       distance="25%"
-      (load)="load()"
-      [moreData]="moreData"
-      [inProgress]="inProgress"
+      (load)="loadNext()"
+      [moreData]="feedsService.hasMore | async"
+      [inProgress]="feedsService.inProgress | async"
     ></infinite-scroll>
   </div>
 </div>

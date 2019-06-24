@@ -14,58 +14,58 @@ export class EntitiesService {
 
   protected status = new AsyncStatus();
 
+  entities: Object = {};
+
   constructor(
     protected client: Client
   ) {
-    this.setUp();
   }
 
-  async setUp() {
-    this.entitiesSync = new EntitiesSync(
-      new MindsClientHttpAdapter(this.client),
-      await browserStorageAdapterFactory('minds-entities-190314'),
-      15,
-    );
+  async getFromFeed(feed): Promise<Object[]> {
 
-    this.entitiesSync.setUp();
-
-    //
-
-    this.status.done();
-
-    // Garbage collection
-
-    this.entitiesSync.gc();
-    setTimeout(() => this.entitiesSync.gc(), 15 * 60 * 1000); // Every 15 minutes
-  }
-
-  async single(guid: string): Promise<Object | false> {
-    await this.status.untilReady();
-
-    try {
-      const entities = await this.fetch([guid]);
-
-      if (!entities || !entities[0]) {
-        return false;
-      }
-
-      return entities[0];
-    } catch (e) {
-      console.error('EntitiesService.get', e);
-      return false;
-    }
-  }
-
-  async fetch(guids: string[]): Promise<Object[]> {
-    await this.status.untilReady();
-
-    if (!guids || !guids.length) {
+    if (!feed || !feed.length) {
       return [];
     }
 
-    const urns = guids.map(guid => normalizeUrn(guid));
+    const urnsToFetch = [];
+    const entities = [];
 
-    return await this.entitiesSync.get(urns);
+    for (const feedItem of feed) {
+      if (!this.entities[feed.urn]) {
+        urnsToFetch.push(feed.urn);
+      }
+    }
+
+    await this.fetch(urnsToFetch);
+
+    for (const feedItem of feed) {
+      entities.push(this.entities[feed.urn]);
+    }
+    
+    return entities;
+  }
+
+  /**
+   * Return and fetch a single entity via a urn
+   * @param urn string
+   * @return Object
+   */
+  async single(urn: string): Promise<Object | false> {
+    if (!this.entities[urn]) {
+      await this.fetch([ urn ]);
+    }
+    return this.entities[urn];
+  }
+
+  async fetch(urns: string[]): Promise<Array<Object>> {
+
+    const response: any = this.client.get('api/v2/entities/', { urns });
+
+    for (let entity of response.entities) {
+      this.entities[entity.urn] = entity;
+    }
+
+    return response.entities;
   }
 
   static _(client: Client) {

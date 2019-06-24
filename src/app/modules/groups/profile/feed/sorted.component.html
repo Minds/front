@@ -31,12 +31,12 @@
 
     <ng-container *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView">
       <m-newsfeed__tiles
-        [entities]="getAllEntities()"
+        [entities]="feedsService.feed | async"
       ></m-newsfeed__tiles>
     </ng-container>
     <ng-template #entityListView>
       <minds-activity
-        *ngFor="let entity of getAllEntities(); let i = index"
+        *ngFor="let entity of (feedsService.feed | async); let i = index"
         class="mdl-card item"
         [object]="entity"
         [canDelete]="group['is:owner'] || group['is:moderator']"
@@ -58,8 +58,8 @@
     <infinite-scroll
       distance="25%"
       (load)="load()"
-      [moreData]="moreData"
-      [inProgress]="inProgress"
+      [moreData]="feedsService.hasMore | async"
+      [inProgress]="feedsService.inProgress | async"
     ></infinite-scroll>
   </div>
 </div>

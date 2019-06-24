@@ -1,5 +1,5 @@
 import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -19,13 +19,17 @@ import { ClientMetaService } from "../../../common/services/client-meta.service"
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [ ClientMetaService ],
+  providers: [
+    ClientMetaService,
+    FeedsService,
+  ],
   templateUrl: 'subscribed.component.html',
 })
 
 export class NewsfeedSubscribedComponent {
 
   newsfeed: Array<Object>;
+  feed: BehaviorSubject<Array<Object>> = new BehaviorSubject([]);
   prepended: Array<any> = [];
   offset: string | number = '';
   showBoostRotator: boolean = true;
@@ -114,15 +118,17 @@ export class NewsfeedSubscribedComponent {
     }
   }
 
-  async loadFromService(refresh: boolean = false, forceSync: boolean = false) {
-    if (forceSync) {
-      this.inProgress = true;
-      // TODO: Find a selective way to do it, in the future
-      await this.feedsService.destroy();
-      refresh = true;
+  loadNext() {
+    if (this.featuresService.has('es-feeds')) {
+      this.feedsService.setOffset(this.feedsService.offset.getValue() + 12);
+    } else {
+      this.loadLegacy();
     }
+  }
 
-    if (!refresh && this.inProgress) {
+  async loadFromService(refresh: boolean = false, forceSync: boolean = false) {
+
+    if (!refresh) {
       return;
     }
 
@@ -135,72 +141,47 @@ export class NewsfeedSubscribedComponent {
     this.inProgress = true;
 
     try {
-      const limit = 12;
+      this.feedsService
+        .setEndpoint(`api/v2/feeds/container/subscribed/activities`)
+        .setLimit(12)
+        .fetch();
 
-      const { entities, next } = await this.feedsService.get({
-        endpoint: `api/v2/feeds/subscribed/activities`,
-        timebased: true,
-        limit,
-        offset: <number> this.offset,
-        syncPageSize: limit * 20,
-        forceSync,
-      });
-
-      if (!entities || !entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-
-        return false;
-      }
-
-      if (this.newsfeed && !refresh) {
-        this.newsfeed.push(...entities);
-      } else {
-        this.newsfeed = entities;
-      }
-
-      this.offset = next;
-
-      if (!this.offset) {
-        this.moreData = false;
-      }
     } catch (e) {
       console.error('SortedComponent', e);
     }
 
-    this.inProgress = false;
   }
 
   /**
    * Load newsfeed
    */
   loadLegacy(refresh: boolean = false) {
-    if (this.inProgress)
+    if (this.feedsService.inProgress.getValue())
       return false;
 
     if (refresh) {
       this.offset = '';
     }
 
-    this.inProgress = true;
+    this.feedsService.inProgress.next(true);
 
     this.client.get('api/v1/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
       .then((data: MindsActivityObject) => {
         if (!data.activity) {
           this.moreData = false;
-          this.inProgress = false;
+          this.feedsService.inProgress.next(false);
           return false;
         }
         if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.activity);
+          this.feedsService.rawFeed.next([...this.feedsService.rawFeed.getValue(), ...data.activity]);
         } else {
-          this.newsfeed = data.activity;
+          this.feedsService.rawFeed.next(data.activity);
         }
         this.offset = data['load-next'];
-        this.inProgress = false;
+        this.feedsService.inProgress.next(false);
       })
       .catch((e) => {
-        this.inProgress = false;
+        this.feedsService.inProgress.next(false);
       });
   }
 
