@@ -29,7 +29,7 @@ import { BoostPublisherEarningsComponent } from './publisher/earnings/earnings.c
 import { BoostPublisherPayoutsComponent } from './publisher/payouts/payouts.component';
 import { BoostPublisherSettingsComponent } from './publisher/settings/settings.component';
 import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
-import { BoostCampaignsComponent } from "./campaigns/campaigns.component";
+import { BoostRootComponent } from "./root.component";
 import { BoostCampaignsOverviewComponent } from "./campaigns/overview/overview.component";
 import { BoostCampaignsCreatorComponent } from "./campaigns/creator/creator.component";
 import { BoostCampaignsViewComponent } from "./campaigns/view/view.component";
@@ -37,60 +37,100 @@ import { BoostCampaignsListComponent } from "./campaigns/list/list.component";
 import { BoostCampaignsCreatorContentSelectorComponent } from './campaigns/creator/content-selector.component';
 
 const boostRoutes: Routes = [
-  { path: 'boost/console', component: BoostConsoleComponent,
+  { path: 'boost', component: BoostMarketingComponent, pathMatch: 'full' },
+  {
+    path: 'boost',
+    component: BoostRootComponent,
     children: [
-      { path: '', redirectTo: 'newsfeed/history', pathMatch: 'full' },
-      { path: 'publisher', component: BoostPublisherComponent,
-        children: [
-          { path: '', redirectTo: 'earnings', pathMatch: 'full' },
-          { path: 'earnings', component: BoostPublisherEarningsComponent },
-          { path: 'payouts', component: BoostPublisherPayoutsComponent },
-          { path: 'settings', component: BoostPublisherSettingsComponent },
-        ]
+      {
+        path: 'campaigns',
+        redirectTo: 'campaigns/list',
+        pathMatch: 'full'
       },
-      { path: 'publisher/:filter', component: BoostPublisherComponent },
-      { path: ':type', component: BoostConsoleTypesComponent,
+      {
+        path: 'campaigns/overview',
+        component: BoostCampaignsOverviewComponent,
+      },
+      {
+        path: 'campaigns/list',
+        component: BoostCampaignsListComponent,
+      },
+      {
+        path: 'campaigns/create',
+        component: BoostCampaignsCreatorComponent,
+      },
+      {
+        path: 'campaigns/edit/:urn',
+        component: BoostCampaignsCreatorComponent,
+      },
+      {
+        path: 'campaigns/:urn',
+        component: BoostCampaignsViewComponent,
+      },
+      {
+        path: 'console',
+        component: BoostConsoleComponent,
         children: [
-          { path: '', redirectTo: 'history', pathMatch: 'full' },
-          { path: 'create', component: BoostConsoleBooster },
-          { path: 'history', component: BoostConsoleHistoryComponent },
-          { path: 'history/:filter', component: BoostConsoleHistoryComponent },
+          {
+            path: '',
+            redirectTo: 'newsfeed/history',
+            pathMatch: 'full'
+          },
+          {
+            path: 'publisher',
+            component: BoostPublisherComponent,
+            children: [
+              {
+                path: '',
+                redirectTo: 'earnings',
+                pathMatch: 'full'
+              },
+              {
+                path: 'earnings',
+                component:
+                BoostPublisherEarningsComponent
+              },
+              {
+                path: 'payouts',
+                component: BoostPublisherPayoutsComponent
+              },
+              {
+                path: 'settings',
+                component: BoostPublisherSettingsComponent
+              },
+            ]
+          },
+          {
+            path: 'publisher/:filter',
+            component: BoostPublisherComponent
+          },
+          {
+            path: ':type',
+            component: BoostConsoleTypesComponent,
+            children: [
+              {
+                path: '',
+                redirectTo: 'history',
+                pathMatch: 'full'
+              },
+              {
+                path: 'create',
+                component: BoostConsoleBooster
+              },
+              {
+                path: 'history',
+                component: BoostConsoleHistoryComponent
+              },
+              {
+                path: 'history/:filter',
+                component: BoostConsoleHistoryComponent
+              },
+            ]
+          },
         ]
       },
     ]
   },
-  {
-    path: 'boost/campaigns',
-    component: BoostCampaignsComponent,
-    children: [
-      {
-        path: '',
-        redirectTo: 'list',
-        pathMatch: 'full'
-      },
-      {
-        path: 'overview',
-        component: BoostCampaignsOverviewComponent,
-      },
-      {
-        path: 'list',
-        component: BoostCampaignsListComponent,
-      },
-      {
-        path: 'create',
-        component: BoostCampaignsCreatorComponent,
-      },
-      {
-        path: 'edit/:urn',
-        component: BoostCampaignsCreatorComponent,
-      },
-      {
-        path: ':urn',
-        component: BoostCampaignsViewComponent,
-      },
-    ],
-  },
-  { path: 'boost', component: BoostMarketingComponent }
 ];
 
 @NgModule({
@@ -125,7 +165,7 @@ const boostRoutes: Routes = [
     BoostPublisherPayoutsComponent,
     BoostPublisherSettingsComponent,
     BoostPublisherLedgerComponent,
-    BoostCampaignsComponent,
+    BoostRootComponent,
     BoostCampaignsOverviewComponent,
     BoostCampaignsListComponent,
     BoostCampaignsCreatorComponent,
@@ -139,9 +179,9 @@ const boostRoutes: Routes = [
     BoostConsoleBooster
   ],
   entryComponents: [
+    BoostRootComponent,
     BoostCreatorComponent,
     BoostConsoleComponent,
-    BoostCampaignsComponent,
     BoostMarketingComponent,
   ]
 })

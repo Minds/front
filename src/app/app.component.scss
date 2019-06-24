@@ -88,6 +88,10 @@ m-app {
     padding: 16px;
     flex: 1;
     overflow: auto;
+
+    &.m-page--nested-main {
+      padding: 8px;
+    }
   }
 
   .m-page--sidebar, .m-page__sidebar {
