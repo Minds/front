@@ -205,7 +205,14 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       const nsfw = (this.newsfeedService.nsfw || []).join(',');
 
       this.feedsService
-        .setEndpoint(`api/v2/feeds/global/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}&query=${query}&nsfw=${nsfw}`)
+        .setEndpoint(`api/v2/feeds/global/${this.algorithm}/${this.customType}`)
+        .setParams({
+          hashtags,
+          period,
+          all,
+          query,
+          nsfw,
+        })
         .setLimit(12)
         .fetch();
 
@@ -217,8 +224,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   }
 
   loadMore() {
-    console.log('loading more');
-    //this.feedsService.setOffset(this.feedsService.offset.getValue() + 12);
+    this.feedsService.loadMore();
   }
 
   delete(activity) {

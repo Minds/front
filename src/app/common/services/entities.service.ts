@@ -31,15 +31,20 @@ export class EntitiesService {
     const entities = [];
 
     for (const feedItem of feed) {
-      if (!this.entities[feed.urn]) {
-        urnsToFetch.push(feed.urn);
+      if (feedItem.entity) {
+        this.entities[feedItem.urn] = feedItem.entity;
+      }
+      if (!this.entities[feedItem.urn]) {
+        urnsToFetch.push(feedItem.urn);
       }
     }
 
-    await this.fetch(urnsToFetch);
+    if (urnsToFetch.length) {
+      await this.fetch(urnsToFetch);
+    }
 
     for (const feedItem of feed) {
-      entities.push(this.entities[feed.urn]);
+      entities.push(this.entities[feedItem.urn]);
     }
     
     return entities;
@@ -51,6 +56,10 @@ export class EntitiesService {
    * @return Object
    */
   async single(urn: string): Promise<Object | false> {
+    if (urn.indexOf('urn:') < 0) { // not a urn, so treat as a guid
+      urn = `urn:activity:${urn}`; // and assume activity
+    }
+
     if (!this.entities[urn]) {
       await this.fetch([ urn ]);
     }
@@ -59,9 +68,9 @@ export class EntitiesService {
 
   async fetch(urns: string[]): Promise<Array<Object>> {
 
-    const response: any = this.client.get('api/v2/entities/', { urns });
+    const response: any = await this.client.get('api/v2/entities/', { urns });
 
-    for (let entity of response.entities) {
+    for (const entity of response.entities) {
       this.entities[entity.urn] = entity;
     }
 

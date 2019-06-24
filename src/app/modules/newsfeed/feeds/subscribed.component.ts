@@ -120,7 +120,7 @@ export class NewsfeedSubscribedComponent {
 
   loadNext() {
     if (this.featuresService.has('es-feeds')) {
-      this.feedsService.setOffset(this.feedsService.offset.getValue() + 12);
+      this.feedsService.loadMore();
     } else {
       this.loadLegacy();
     }
@@ -142,7 +142,7 @@ export class NewsfeedSubscribedComponent {
 
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/container/subscribed/activities`)
+        .setEndpoint(`api/v2/feeds/subscribed/activities`)
         .setLimit(12)
         .fetch();
 
@@ -156,14 +156,17 @@ export class NewsfeedSubscribedComponent {
    * Load newsfeed
    */
   loadLegacy(refresh: boolean = false) {
-    if (this.feedsService.inProgress.getValue())
-      return false;
+
+    if (this.inProgress)
+      return;
 
     if (refresh) {
       this.offset = '';
+      this.feedsService.clear();
     }
 
     this.feedsService.inProgress.next(true);
+    this.inProgress = true;
 
     this.client.get('api/v1/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
       .then((data: MindsActivityObject) => {
@@ -172,16 +175,31 @@ export class NewsfeedSubscribedComponent {
           this.feedsService.inProgress.next(false);
           return false;
         }
-        if (this.newsfeed && !refresh) {
-          this.feedsService.rawFeed.next([...this.feedsService.rawFeed.getValue(), ...data.activity]);
-        } else {
-          this.feedsService.rawFeed.next(data.activity);
+
+        const feedItems = [];
+        for (const entity of data.activity) {
+            feedItems.push({
+              urn: entity.urn,
+              guid: entity.guid,
+              owner_guid: entity.owner_guid,
+              entity: entity,
+            });
         }
+
+        this.feedsService.setOffset(this.feedsService.offset.getValue() + 12); // Hacky!
+
+        if (this.feedsService.rawFeed.getValue() && !refresh) {
+          this.feedsService.rawFeed.next([...this.feedsService.rawFeed.getValue(), ...feedItems]);
+        } else {
+          this.feedsService.rawFeed.next(feedItems);
+        }
+        
         this.offset = data['load-next'];
-        this.feedsService.inProgress.next(false);
+        this.inProgress = false;
       })
       .catch((e) => {
-        this.feedsService.inProgress.next(false);
+        console.error(e);
+        this.inProgress = false;
       });
   }
 
