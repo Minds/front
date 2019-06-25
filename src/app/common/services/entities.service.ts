@@ -11,15 +11,12 @@ import AsyncStatus from "../../helpers/async-status";
 import normalizeUrn from "../../helpers/normalize-urn";
 
 type EntityObservable = BehaviorSubject<Object>;
-
-interface EntityObservables {
-   [key: string]: EntityObservable 
-}
+type EntityObservables = Map<string, EntityObservable>
 
 @Injectable()
 export class EntitiesService {
 
-  entities: EntityObservables = {};
+entities: EntityObservables = new Map<string, EntityObservable>();
 
   constructor(
     protected client: Client,
@@ -42,10 +39,10 @@ export class EntitiesService {
       if (feedItem.entity) {
         this.addEntity(feedItem.entity);
       }
-      if (!this.entities[feedItem.urn]) {
+      if (!this.entities.has(feedItem.urn)) {
         urnsToFetch.push(feedItem.urn);
       }
-      if (this.entities[feedItem.urn] && !feedItem.entity) {
+      if (this.entities.has(feedItem.urn) && !feedItem.entity) {
         urnsToResync.push(feedItem.urn);
       }
     }
@@ -64,7 +61,7 @@ export class EntitiesService {
 
     for (const feedItem of feed) {
       if (blockedGuids.indexOf(feedItem.owner_guid) < 0)
-        entities.push(this.entities[feedItem.urn]);
+        entities.push(this.entities.get(feedItem.urn));
     }
     
     return entities;
@@ -80,11 +77,11 @@ export class EntitiesService {
       urn = `urn:activity:${urn}`; // and assume activity
     }
 
-    this.entities[urn] = new BehaviorSubject(null);
+    this.entities.set(urn, new BehaviorSubject(null));
 
     this.fetch([ urn ]); // Update in the background
 
-    return this.entities[urn];
+    return this.entities.get(urn);
   }
 
   /**
@@ -119,10 +116,10 @@ export class EntitiesService {
    * @return void
    */
   addEntity(entity): void {
-    if (this.entities[entity.urn]) {
-      this.entities[entity.urn].next(entity);
+    if (this.entities.has(entity.urn)) {
+      this.entities.get(entity.urn).next(entity);
     } else {
-      this.entities[entity.urn] = new BehaviorSubject(entity);
+      this.entities.set(entity.urn, new BehaviorSubject(entity));
     }
   }
 
@@ -132,10 +129,10 @@ export class EntitiesService {
    * @return void
    */
   addNotFoundEntity(urn): void {
-    if (!this.entities[urn]) {
-      this.entities[urn] = new BehaviorSubject(null);
+    if (!this.entities.has(urn)) {
+      this.entities.set(urn, new BehaviorSubject(null));
     }
-    this.entities[urn].error("Not found");
+    this.entities.get(urn).error("Not found");
   }
 
   static _(client: Client, blockListService: BlockListService) {
