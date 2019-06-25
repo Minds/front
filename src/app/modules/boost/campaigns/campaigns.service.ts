@@ -35,6 +35,11 @@ export class CampaignsService {
     return campaigns[0];
   }
 
+  isEditable(campaign: Campaign): boolean {
+    return (['pending', 'created', 'approved'] as CampaignDeliveryStatus[])
+      .indexOf(campaign.delivery_status) > -1;
+  }
+
   validate(campaign: Campaign): boolean {
     // TODO: Validate data ranges, etc
 

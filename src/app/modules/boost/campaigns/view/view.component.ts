@@ -76,6 +76,10 @@ export class BoostCampaignsViewComponent implements OnInit, OnDestroy {
     return deliveryStatus ? deliveryStatus.label : this.campaign.delivery_status;
   }
 
+  get isEditable() {
+    return this.campaign && this.service.isEditable(this.campaign);
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
