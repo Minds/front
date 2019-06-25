@@ -26,6 +26,9 @@
     }
   }
 
+  .admin__badge + .m-tooltip--bubble {
+    cursor: default;
+  }
 }
 
 .m-channel--badges-activity{

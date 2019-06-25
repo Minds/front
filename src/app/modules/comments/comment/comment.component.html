@@ -42,7 +42,7 @@
       
     <ul class="m-comment__ribbon" [hidden]="!toggle.value" #toggle>
       <li class="m-commentRibbon__item"
-        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()"
+        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || canEdit"
         (click)="editing = !editing; toggle.value = false"
         title="Edit"
         i18n-title="@@M__ACTION__EDIT"

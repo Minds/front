@@ -48,7 +48,6 @@ export class RegisterForm {
       tos: [false],
       exclusive_promotions: [false],
       captcha: [''],
-      Homepage121118: experiments.getExperimentBucket('Homepage121118'),
     });
 
   }

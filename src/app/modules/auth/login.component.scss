@@ -12,7 +12,7 @@ m-login {
   display: flex;
   max-width: 990px;
   flex-direction: row;
-  height: 100%;
+  min-height: 100%;
 
   @media screen and (max-width: $max-mobile) {
     flex-direction: column;

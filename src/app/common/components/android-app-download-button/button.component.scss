@@ -1,47 +1,36 @@
 .m-androidApp__download {
   box-sizing: border-box;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 8px;
+  background: #111;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+  display: block;
   position: relative;
   text-decoration: none;
 
-  width: 136px;
   height: 48px;
+  padding: 0 8px;
   margin: auto;
 
   cursor: pointer;
 
-  .m-androidAppDownload__background {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-
-    border-radius: 8px;
-
-    img {
-      width: auto;
-      max-width: 300%;
-    }
+  > * {
+    display: inline;
+    vertical-align: middle;
+    line-height: 42px;
   }
 
   h2 {
     padding-left: 4px;
     margin: 0;
 
-    font-size: 10px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.25px;
 
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 
-    z-index: 2;
     @include m-theme(){
       color: themed($m-white);
     }
@@ -51,6 +40,5 @@
     @include m-theme(){
       color: themed($m-white);
     }
-    z-index: 2;
   }
 }

@@ -35,7 +35,8 @@ export class Upload {
 
     for (let key in data) {
       if (data[key] !== null) {
-        formData.append(key, data[key]);
+        const field = typeof data[key] == 'object' ? JSON.stringify(data[key]) : data[key];
+        formData.append(key, field);
       }
     }
 

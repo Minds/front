@@ -65,6 +65,10 @@ export class ActivityPreview {
     return false;
   }
 
+  isPending(activity) {
+    return false;
+  }
+
   save() { /* NOOP */ }
 
   openComments() { /* NOOP */ }

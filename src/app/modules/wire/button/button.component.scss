@@ -8,7 +8,13 @@
   @include m-theme(){
     color: themed($m-blue);
   }
-
+  
+  &:hover {
+    @include m-theme(){
+      color: rgba(themed($m-blue-dark),0.9);
+    }
+  }
+  
   > .ion-icon {
     transform: scale(1.6);
   }
