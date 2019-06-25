@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Campaign, CampaignDeliveryStatus, CampaignType } from './campaigns.type';
 import { Client } from '../../../services/api/client';
+import isInt from '../../../helpers/is-int';
 
 export type CampaignsServiceListOptions = {
   limit?: number;
@@ -43,6 +44,7 @@ export class CampaignsService {
       campaign.type &&
       campaign.budget &&
       campaign.budget > 0 &&
+      isInt(campaign.budget) &&
       campaign.entity_urns &&
       campaign.entity_urns.length &&
       campaign.start &&
