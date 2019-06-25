@@ -18,7 +18,7 @@
 
     <minds-activity
       class="mdl-card m-border item"
-      [object]="activity"
+      [object]="activity | async"
       [boostToggle]="activity.boostToggle"
       (delete)="delete(activity)"
       [showRatingToggle]="true"

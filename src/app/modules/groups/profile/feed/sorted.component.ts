@@ -65,7 +65,7 @@ export class GroupProfileFeedSortedComponent {
 
   constructor(
     protected service: GroupsService,
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected sortedService: SortedService,
     protected session: Session,
     protected router: Router,

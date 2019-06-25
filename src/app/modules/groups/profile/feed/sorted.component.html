@@ -38,7 +38,7 @@
       <minds-activity
         *ngFor="let entity of (feedsService.feed | async); let i = index"
         class="mdl-card item"
-        [object]="entity"
+        [object]="entity | async"
         [canDelete]="group['is:owner'] || group['is:moderator']"
         (delete)="delete(entity)"
         [slot]="i + 1"

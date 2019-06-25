@@ -13,7 +13,7 @@ import FeedsSync from '../../lib/minds-sync/services/FeedsSync.js';
 import hashCode from "../../helpers/hash-code";
 import AsyncStatus from "../../helpers/async-status";
 import { BehaviorSubject, Observable, of, forkJoin, combineLatest } from "rxjs";
-import { take, switchMap, map, tap } from "rxjs/operators";
+import { take, switchMap, map, tap, skipWhile, first, filter } from "rxjs/operators";
 
 export type FeedsServiceGetParameters = {
   endpoint: string;
@@ -36,17 +36,14 @@ export type FeedsServiceGetResponse = {
 @Injectable()
 export class FeedsService {
 
-  protected feedsSync: FeedsSync;
-
-  protected status = new AsyncStatus();
-
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
+  pageSize: Observable<number>;  
   endpoint: string = '';
   params: any = { sync: 1 };
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
-  feed: Observable<Object[]>;
+  feed: Observable<BehaviorSubject<Object>[]>;
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasMore: Observable<boolean>;
 
@@ -56,26 +53,29 @@ export class FeedsService {
     protected entitiesService: EntitiesService,
     protected blockListService: BlockListService,
   ) {
+    this.pageSize = this.offset.pipe(
+      map(offset => this.limit.getValue() + offset)
+    );
     this.feed = this.rawFeed.pipe(
-      tap(() => {
-        this.inProgress.next(true);
+      tap(feed => {
+        if (feed.length)
+          this.inProgress.next(true);
       }),
-      map(feed => feed.slice(0, this.limit.getValue() + this.offset.getValue())),
+      switchMap(async feed => {
+        return feed.slice(0, await this.pageSize.pipe(first()).toPromise())
+      }),
       switchMap(feed => this.entitiesService.getFromFeed(feed)),
-      tap(() => {
-        if (this.offset.getValue() > 0) {
+      tap(feed => {
+        if (feed.length) // We should have skipped but..
           this.inProgress.next(false);
-        }
       }),
     );
-    this.hasMore = combineLatest(this.rawFeed, this.inProgress, this.limit, this.offset).pipe(
+    this.hasMore = combineLatest(this.rawFeed, this.inProgress, this.offset).pipe(
       map(values => {
         const feed = values[0];
         const inProgress = values[1];
-        const limit = values[2];
-        const offset = values[3];
-        return inProgress
-          ? true : (limit + offset) <= feed.length;
+        const offset = values[2];
+        return inProgress || feed.length > offset;
       }),
     );
   }
@@ -107,6 +107,7 @@ export class FeedsService {
     this.inProgress.next(true);
     this.client.get(this.endpoint, {...this.params, ...{ limit: 150 }}) // Over 12 scrolls
       .then((response: any) => {
+        this.inProgress.next(false);
         this.rawFeed.next(response.entities);
       })
       .catch(err => {
@@ -115,14 +116,15 @@ export class FeedsService {
   }
 
   loadMore(): FeedsService {
-    this.setOffset(this.limit.getValue() + this.offset.getValue());
-    this.rawFeed.next(this.rawFeed.getValue());
+    if (!this.inProgress.getValue()) {
+      this.setOffset(this.limit.getValue() + this.offset.getValue());
+      this.rawFeed.next(this.rawFeed.getValue());
+    }
     return this;
   }
 
   clear(): FeedsService {
     this.offset.next(0);
-    this.inProgress.next(true);
     this.rawFeed.next([]);
     return this;
   }
@@ -132,8 +134,6 @@ export class FeedsService {
   }
 
   async destroy() {
-    await this.status.untilReady();
-    return await this.feedsSync.destroy();
   }
 
   static _(

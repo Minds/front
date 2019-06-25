@@ -66,7 +66,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected topbarHashtagsService: TopbarHashtagsService,
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,

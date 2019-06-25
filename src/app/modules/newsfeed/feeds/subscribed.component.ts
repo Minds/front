@@ -65,7 +65,7 @@ export class NewsfeedSubscribedComponent {
     private storage: Storage,
     private context: ContextService,
     protected featuresService: FeaturesService,
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,

@@ -30,7 +30,7 @@
       </ng-container>
 
       <m-newsfeed__entity
-        [entity]="entity"
+        [entity]="entity | async"
         [slot]="i + 1"
       ></m-newsfeed__entity>
     </ng-container>

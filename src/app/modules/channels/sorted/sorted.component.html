@@ -27,7 +27,7 @@
     <ng-template #entityListView>
       <m-newsfeed__entity
         *ngFor="let entity of (feedsService.feed | async); let i = index"
-        [entity]="entity"
+        [entity]="entity | async"
         [slot]="i + 1"
       ></m-newsfeed__entity>
     </ng-template>

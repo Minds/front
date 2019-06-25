@@ -68,7 +68,7 @@ export class ChannelSortedComponent implements OnInit {
   @ViewChild('poster') protected poster: PosterComponent;
 
   constructor(
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected service: SortedService,
     protected session: Session,
     protected clientMetaService: ClientMetaService,
@@ -111,8 +111,8 @@ export class ChannelSortedComponent implements OnInit {
     this.detectChanges();
   }
 
-  loadMore() {
-    this.feedsService.setOffset(this.feedsService.offset.getValue() + 12);
+  loadNext() {
+    this.feedsService.loadMore();
   }
 
   setFilter(type: string) {
