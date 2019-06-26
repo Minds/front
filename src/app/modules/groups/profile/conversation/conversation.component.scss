@@ -31,8 +31,9 @@ minds-groups-profile-conversation {
   }
 
   .m-group__chat, .m-group__chat > m-comments__thread {
-    height: 100%;
+    max-height: calc(100% - 100px);
     height: calc(100vh - 45px);
+    overflow-y: scroll;
     position: relative;
     padding: 0;
     margin: 0;
