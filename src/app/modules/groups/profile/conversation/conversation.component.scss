@@ -42,7 +42,6 @@ minds-groups-profile-conversation {
     box-sizing: border-box;
     padding-bottom: 24px;
     margin-bottom: 45px;
-    
     @include m-theme(){
       background-color: themed($m-white);
     }
@@ -50,7 +49,6 @@ minds-groups-profile-conversation {
     .minds-comments-container, .m-comments__thread {
       margin-top: 50px;
       overflow-y: auto;
-//      margin-bottom: 100px;
       flex: 1;
       display: flex;
       flex-direction: column;
