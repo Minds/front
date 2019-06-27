@@ -11,7 +11,8 @@
             <m-sort-selector
                 [algorithm]="algorithm"
                 [period]="period"
-                [customType]="customType"
+                [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
+            
                 (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
             ></m-sort-selector>
         </div>
