@@ -60,7 +60,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
         this.algorithm = 'top';
         this.updateSortRoute();
       }
-
+      this.entity = null;
       this.load();
     });
 
@@ -83,7 +83,6 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
 
     try {
       const url = `api/v2/admin/firehose/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}`;
-      console.log(url);
       const response: any = await this.client.get(url);
       this.entities = response.entities;
 
