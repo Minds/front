@@ -29,6 +29,7 @@ import { localWalletServiceMock } from '../../../../tests/local-wallet-service-m
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponent } from '../../../utils/mock';
 
 /* tslint:disable */
 @Component({
@@ -374,6 +375,11 @@ describe('BoostCreatorComponent', () => {
         BoostCategorySelectorMock,
         BoostP2PSearchMock,
         BoostCheckoutMock,
+        MockComponent({
+          selector: 'm-tooltip',
+          template: '<ng-content></ng-content>',
+          inputs: ['icon']
+        }),
       ],
       imports: [FormsModule, RouterTestingModule],
       providers: [
