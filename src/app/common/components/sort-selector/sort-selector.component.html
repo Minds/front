@@ -18,7 +18,7 @@
   <ul class="m-dropdown--list">
     <li
       *ngFor="let item of getAlgorithms()"
-      class="m-dropdown--list--item"
+      class="m-dropdown--list--item m-sort-selector--algorithm-item"
       [class.m-dropdown--list--item--selected]="item.id === algorithm"
       [class.m-dropdown--list--item--disabled]="isDisabled(item.id)"
       (click)="setAlgorithm(item.id); closeDropdowns();"
@@ -38,12 +38,6 @@
   class="m-sort-selector--period-dropdown"
   #periodDropdown
 >
-  <label [ngClass]="[labelClass]">
-    <span>{{getCurrentPeriodLabel()}}</span>
-
-    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
-  </label>
-
   <ul class="m-dropdown--list">
     <li
       class="m-dropdown--list--item" *ngFor="let item of getPeriods()"
@@ -53,6 +47,11 @@
       <span [className]="labelClass">{{item.label}}</span>
     </li>
   </ul>
+  <label [ngClass]="[labelClass]">
+    <span>{{getCurrentPeriodLabel()}}</span>
+
+    <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
+  </label>
 </m-dropdown>
 
 <m-dropdown
@@ -71,21 +70,19 @@
 
     <i class="material-icons m-dropdown--label-icon">keyboard_arrow_down</i>
   </label>
-
   <ul class="m-dropdown--list">
     <li
       *ngFor="let item of getCustomTypes()"
-      class="m-dropdown--list--item"
+      class="m-dropdown--list--item m-sort-selector--custom-type-item"
       [class.m-dropdown--list--item--selected]="item.id === customType"
       (click)="setCustomType(item.id); closeDropdowns();"
     >
       <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
-        [title]="item.label"
-        *ngIf="item.icon"
-      >{{item.icon}}</i>
-
-      <span [className]="labelClass" *ngIf="!expandedCustomTypeDropdown || item.id === customType">{{item.label}}</span>
+    	class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+    	[title]="item.label"
+    	*ngIf="item.icon"
+    	>{{item.icon}}</i>
+      <span [className]="labelClass" class="m-dropdown--list--item">{{item.label}}</span>
     </li>
   </ul>
 </m-dropdown>

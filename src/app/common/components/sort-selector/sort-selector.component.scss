@@ -7,9 +7,31 @@ m-sort-selector {
   > :last-child {
     margin-left: auto;
   }
-
+  
   .m-dropdown--list--item {
     cursor: pointer;
+    &.m-sort-selector--custom-type-item,
+    &.m-sort-selector--algorithm-item {
+      width: auto;
+      display: block;
+      text-align: center;
+      .m-sort-selector--item-label-icon {
+      	margin-right: 0px;
+      	margin-inline: 8px;
+      }
+  	}
+  }
+
+  .m-sort-selector--period-dropdown {
+    .m-dropdown {
+      width: max-content;
+    }
+    .m-dropdown--label-container {
+      display: inline-block;
+      .m--sort-selector-label {
+        display: inline;
+      }
+    }
   }
 
   .m-sort-selector--item-label-icon {
@@ -61,15 +83,21 @@ m-sort-selector {
 
   .m-sort-selector--algorithm-dropdown,
   .m-sort-selector--period-dropdown {
-    .m-dropdown--list {
+    .li {
       right: auto;
       left: 0;
     }
+  }
+  
+  .m-sort-selector--algorithm-dropdown {
+    text-align: center;
+    display: block;
   }
 
   .m-sort-selector--custom-type-dropdown {
     .m-dropdown {
       margin-right: 8px;
+      text-align: center;
     }
   }
 }
