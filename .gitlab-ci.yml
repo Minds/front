@@ -6,7 +6,14 @@ services:
 stages:
   - test
   - build
+  - prepare
   - deploy
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - dist
+  policy: pull
 
 test:
   image: circleci/node:8-browsers
@@ -15,7 +22,28 @@ test:
     - npm install # Should be cached...
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
-build:
+build:staging:
+  stage: build
+  script:
+    - npm install # TODO: Why is this needed?
+    - npm run postinstall
+    - npm install -g gulp-cli
+    - gulp build.sass && gulp build.sass ##weird build needs to be run twice for now
+    - sh build/base-locale.sh dist
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - dist
+    policy: push
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /-subdomain/
+  except:
+    refs:
+      - master
+      - test/gitlab-ci
+
+build:production:en:
   stage: build
   script:
     - npm install # TODO: Why is this needed?
@@ -25,6 +53,7 @@ build:
     - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
     - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
   cache:
+    key: "$CI_COMMIT_REF_SLUG"
     paths:
       - dist
     policy: push
@@ -33,17 +62,72 @@ build:
       - master
       - test/gitlab-ci
 
-deploy:
-  stage: deploy
+build:production:i18n:
+  stage: build
   script:
-    - apk add --no-cache python py-pip
-    - pip install awscli
-    - aws s3 sync dist $REPOSITORY_URL
-    - aws ecs update-service --service=$SERVICE --force-new-deployment --region us-east-1 --cluster=$CLUSTER
+    - npm install # TODO: Why is this needed?
+    - npm run postinstall
+    - npm install -g gulp-cli
+    - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
+    - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
   cache:
+    key: "$CI_COMMIT_REF_SLUG"
     paths:
       - dist
-    policy: pull
+    policy: push
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
+
+prepare:
+  stage: prepare
+  image: minds/ci:latest
+  script:
+    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY} 
+    - docker build -t $CI_REGISTRY_IMAGE/front-init:$CI_BUILD_REF -f containers/front-init/Dockerfile dist/.
+    - docker push $CI_REGISTRY_IMAGE/front-init:$CI_BUILD_REF
+  environment:
+    name: staging
+  except:
+    refs:
+      - master
+      - test/gitlab-ci
+
+deploy:staging:
+  stage: deploy
+  image: minds/helm-eks:latest
+  script:
+    - aws eks update-kubeconfig --name=sandbox
+    - STAGING_SUBDOMAIN=$(echo $CI_COMMIT_MESSAGE | sed -n 's/.* -subdomain=\([^ ]*\).*/\1/p')
+    - echo "Subdomain will be setup at $STAGING_SUBDOMAIN"
+    - git clone --branch=sandbox-wip https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
+    - "helm upgrade \
+        --install \
+        --reuse-values \
+        --set frontInit.image.repository=$CI_REGISTRY_IMAGE/front-init \
+        --set frontInit.image.tag=$CI_BUILD_REF \
+        --set domain=$STAGING_SUBDOMAIN.$STAGING_DOMAIN \
+        --set elasticsearch.clusterName=$STAGING_SUBDOMAIN-elasticsearch \
+        --wait \
+        $STAGING_SUBDOMAIN \
+        ./helm-charts/minds"
+  environment:
+    name: staging
+  only:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /-subdomain/
+  except: 
+    refs:
+      - master
+      - test/gitlab-ci
+
+deploy:production:
+  stage: deploy
+  image: minds/ci:latest
+  script:
+    - aws s3 sync dist $REPOSITORY_URL
+    - aws ecs update-service --service=$SERVICE --force-new-deployment --region us-east-1 --cluster=$CLUSTER
   only:
     refs:
       - master
