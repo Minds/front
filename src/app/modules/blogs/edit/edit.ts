@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { MindsTitle } from '../../../services/ux/title';
 import { ACCESS, LICENSES } from '../../../services/list-options';
@@ -12,6 +12,7 @@ import { WireThresholdInputComponent } from '../../wire/threshold-input/threshol
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
+import { DialogService } from "../../../common/services/confirm-leave-dialog.service";
 
 @Component({
   moduleId: module.id,
@@ -74,7 +75,8 @@ export class BlogEdit {
     public router: Router,
     public route: ActivatedRoute,
     public title: MindsTitle,
-    protected inMemoryStorageService: InMemoryStorageService
+    protected inMemoryStorageService: InMemoryStorageService,
+    private dialogService: DialogService
   ) {
     this.getCategories();
 
@@ -146,6 +148,14 @@ export class BlogEdit {
         }
       }
     });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.editing) {
+      return true;
+    }
+
+    return this.dialogService.confirm('Discard changes?');
   }
 
   ngOnDestroy() {
