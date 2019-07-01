@@ -3,13 +3,15 @@ export type CampaignDeliveryStatus = 'pending' | 'created' | 'failed' | 'approve
 
 export type Campaign = {
   // User provided
-  name: string,
   type: CampaignType,
+  name: string,
   entity_urns: string[],
   hashtags: string[],
+  nsfw: number[],
   start: number,
   end: number,
   budget: number,
+  budget_type: string,
 
   // Engine
   urn?: string,
@@ -20,15 +22,15 @@ export type Campaign = {
   original_campaign?: Campaign,
 
   // Read Only
-  delivery_status?: CampaignDeliveryStatus,
   impressions?: number,
   impressions_met?: number,
-  cpm?: number,
   created_timestamp?: number,
   reviewed_timestamp?: number,
   revoked_timestamp?: number,
   rejected_timestamp?: number,
   completed_timestamp?: number,
+  delivery_status?: CampaignDeliveryStatus,
+  cpm?: number,
 };
 
 export type CampaignPayment = {
