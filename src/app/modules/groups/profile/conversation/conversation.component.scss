@@ -31,8 +31,9 @@ minds-groups-profile-conversation {
   }
 
   .m-group__chat, .m-group__chat > m-comments__thread {
-    height: 100%;
-    height: calc(100vh - 45px);
+    max-height: 100%;
+    height: 100vh;
+    overflow-y: scroll;
     position: relative;
     padding: 0;
     margin: 0;
@@ -40,13 +41,14 @@ minds-groups-profile-conversation {
     flex-direction: column;
     box-sizing: border-box;
     padding-bottom: 24px;
+    margin-bottom: 45px;
     @include m-theme(){
       background-color: themed($m-white);
     }
 
     .minds-comments-container, .m-comments__thread {
+      margin-top: 50px;
       overflow-y: auto;
-      max-height: none;
       flex: 1;
       display: flex;
       flex-direction: column;
