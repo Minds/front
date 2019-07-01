@@ -15,7 +15,8 @@ export class MobileMarketingComponent {
   releases: any[] = [];
   inProgress: boolean = false;
   error: string;
-
+  latestUrl: string;
+  
   constructor(
     protected title: MindsTitle,
     protected session: Session,
@@ -38,6 +39,7 @@ export class MobileMarketingComponent {
       this.detectChanges();
 
       this.releases = await this.service.getReleases();
+      this.latestUrl = this.releases[0].href;
     } catch (e) {
       console.error(e);
       this.error = e.message || 'Unknown error';
