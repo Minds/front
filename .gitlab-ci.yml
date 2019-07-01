@@ -6,7 +6,15 @@ services:
 stages:
   - test
   - build
+  - prepare
   - deploy
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - dist/en
+    - dist/vi
+  policy: pull
 
 test:
   image: circleci/node:8-browsers
@@ -15,7 +23,25 @@ test:
     - npm install # Should be cached...
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
-build:
+build:review:
+  stage: build
+  script:
+    - npm install # TODO: Why is this needed?
+    - npm run postinstall
+    - npm install -g gulp-cli
+    - gulp build.sass && gulp build.sass ##weird build needs to be run twice for now
+    - sh build/base-locale.sh dist
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - dist
+    policy: push
+  except:
+    refs:
+      - master
+      - test/gitlab-ci
+
+build:production:en:
   stage: build
   script:
     - npm install # TODO: Why is this needed?
@@ -25,25 +51,95 @@ build:
     - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
     - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
   cache:
+    key: "$CI_COMMIT_REF_SLUG"
     paths:
-      - dist
+      - dist/en
     policy: push
   only:
     refs:
       - master
       - test/gitlab-ci
 
-deploy:
-  stage: deploy
+build:production:i18n:
+  stage: build
   script:
-    - apk add --no-cache python py-pip
-    - pip install awscli
+    - npm install # TODO: Why is this needed?
+    - npm run postinstall
+    - npm install -g gulp-cli
+    - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
+    - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - dist/vi
+    policy: push
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
+
+prepare:
+  stage: prepare
+  image: minds/ci:latest
+  script:
+    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY} 
+    - docker build -t $CI_REGISTRY_IMAGE/front-init:$CI_BUILD_REF -f containers/front-init/Dockerfile dist/.
+    - docker push $CI_REGISTRY_IMAGE/front-init:$CI_BUILD_REF
+  except:
+    refs:
+      - master
+      - test/gitlab-ci
+
+deploy:review:
+  stage: deploy
+  image: minds/helm-eks:latest
+  script:
+    - aws eks update-kubeconfig --name=sandbox
+    - git clone --branch=sandbox-wip https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
+    - "helm upgrade \
+        --install \
+        --reuse-values \
+        --set frontInit.image.repository=$CI_REGISTRY_IMAGE/front-init \
+        --set frontInit.image.tag=$CI_BUILD_REF \
+        --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN \
+        --set elasticsearch.clusterName=$CI_BUILD_REF_SLUG--elasticsearch \
+        --wait \
+        $CI_BUILD_REF_SLUG \
+        ./helm-charts/minds"
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+    on_stop: deploy:review:stop
+  except: 
+    refs:
+      - master
+      - test/gitlab-ci
+
+deploy:review:stop:
+  stage: deploy
+  image: minds/helm-eks:latest
+  script:
+    - aws eks update-kubeconfig --name=sandbox
+    - helm del --purge $CI_BUILD_REF_SLUG
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+    action: stop
+  variables:
+    GIT_STRATEGY: none
+  when: manual
+  except: 
+    refs:
+      - master
+      - test/gitlab-ci
+
+
+deploy:production:
+  stage: deploy
+  image: minds/ci:latest
+  script:
     - aws s3 sync dist $REPOSITORY_URL
     - aws ecs update-service --service=$SERVICE --force-new-deployment --region us-east-1 --cluster=$CLUSTER
-  cache:
-    paths:
-      - dist
-    policy: pull
   only:
     refs:
       - master
