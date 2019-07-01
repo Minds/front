@@ -12,7 +12,8 @@ stages:
 cache:
   key: "$CI_COMMIT_REF_SLUG"
   paths:
-    - dist
+    - dist/en
+    - dist/vi
   policy: pull
 
 test:
@@ -52,7 +53,7 @@ build:production:en:
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
-      - dist
+      - dist/en
     policy: push
   only:
     refs:
@@ -70,7 +71,7 @@ build:production:i18n:
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
-      - dist
+      - dist/vi
     policy: push
   only:
     refs:
