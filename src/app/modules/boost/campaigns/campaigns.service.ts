@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Campaign, CampaignDeliveryStatus, CampaignType } from './campaigns.type';
+import { Campaign, CampaignDeliveryStatus, CampaignPayment, CampaignType } from './campaigns.type';
 import { Client } from '../../../services/api/client';
 import isInt from '../../../helpers/is-int';
+import getGuidFromUrn from '../../../helpers/get-guid-from-urn';
 
 export type CampaignsServiceListOptions = {
   limit?: number;
@@ -32,7 +33,10 @@ export class CampaignsService {
       return null;
     }
 
-    return campaigns[0];
+    return {
+      ...campaigns[0],
+      original_campaign: JSON.parse(JSON.stringify(campaigns[0])),
+    };
   }
 
   isEditable(campaign: Campaign): boolean {
@@ -57,15 +61,37 @@ export class CampaignsService {
       campaign.start <= campaign.end;
   }
 
-  async create(campaign: Campaign): Promise<Campaign> {
+  async prepare(campaign: Campaign): Promise<{ checksum: string, guid: string }> {
+    if (campaign.entity_urns.length !== 1) {
+      throw new Error('Campaigns without a single entity are unsupported');
+    }
+
+    const entityGuid = getGuidFromUrn(campaign.entity_urns[0]);
+
+    const { guid, checksum } = await this.client.get(`api/v2/boost/prepare/${entityGuid}`) as any;
+
+    if (!guid) {
+      throw new Error('Cannot generate GUID');
+    }
+
+    return { guid, checksum };
+  }
+
+  async create(campaign: Campaign, payment?: CampaignPayment): Promise<Campaign> {
     if (!this.validate(campaign)) {
       throw new Error('Campaign is invalid');
     }
 
-    return (await this.client.post(`api/v2/boost/campaigns`, campaign) as any).campaign;
+    const data = { ...campaign };
+
+    if (payment) {
+      data['nonce'] = payment;
+    }
+
+    return (await this.client.post(`api/v2/boost/campaigns`, data) as any).campaign;
   }
 
-  async update(campaign: Campaign): Promise<Campaign> {
+  async update(campaign: Campaign, payment?: CampaignPayment): Promise<Campaign> {
     if (!campaign.urn) {
       throw new Error('Missing campaign URN');
     }
@@ -74,7 +100,13 @@ export class CampaignsService {
       throw new Error('Campaign is invalid');
     }
 
-    return (await this.client.post(`api/v2/boost/campaigns/${campaign.urn}`, campaign) as any).campaign;
+    const data = { ...campaign };
+
+    if (payment) {
+      data['nonce'] = payment;
+    }
+
+    return (await this.client.post(`api/v2/boost/campaigns/${campaign.urn}`, data) as any).campaign;
   }
 
   async cancel(campaign: Campaign): Promise<Campaign> {

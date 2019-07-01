@@ -13,6 +13,11 @@ export type Campaign = {
 
   // Engine
   urn?: string,
+  checksum?: string,
+
+  // Client-side
+  client_guid?: string,
+  original_campaign?: Campaign,
 
   // Read Only
   delivery_status?: CampaignDeliveryStatus,
@@ -24,4 +29,9 @@ export type Campaign = {
   revoked_timestamp?: number,
   rejected_timestamp?: number,
   completed_timestamp?: number,
+};
+
+export type CampaignPayment = {
+  address: string,
+  txHash: string,
 };

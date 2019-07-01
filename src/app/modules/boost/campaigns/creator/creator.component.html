@@ -1,3 +1,8 @@
+<ng-template #isEditingSaveButtonTemplate>
+  <ng-container *ngIf="amountDue > 0; else isEditingSaveButtonTemplateNoPayment" i18n>Pay and Update</ng-container>
+  <ng-template #isEditingSaveButtonTemplateNoPayment><ng-container i18n>Save</ng-container></ng-template>
+</ng-template>
+
 <div class="m-page--section m-border">
   <div class="m-page--section-button-bar">
     <h1>
@@ -6,7 +11,9 @@
     </h1>
 
     <div class="m-page--section-button-bar--buttons">
-      <button class="m-btn m-btn--slim m-btn--action" [disabled]="!canSubmit() || inProgress">Save</button>
+      <button class="m-btn m-btn--slim m-btn--action" [disabled]="!canSubmit() || inProgress">
+        <ng-container *ngIf="!isEditing; else isEditingSaveButtonTemplate" i18n>Pay and Create</ng-container>
+      </button>
     </div>
   </div>
 
@@ -165,11 +172,9 @@
     </div>
 
     <div class="m-form--field">
-      <button
-        type="submit"
-        class="m-btn m-btn--slim m-btn--action"
-        [disabled]="!canSubmit() || inProgress"
-      >Save</button>
+      <button type="submit" class="m-btn m-btn--slim m-btn--action" [disabled]="!canSubmit() || inProgress">
+        <ng-container *ngIf="!isEditing; else isEditingSaveButtonTemplate" i18n>Pay and Create</ng-container>
+      </button>
 
       <div class="m-form--spinner" *ngIf="inProgress">
         <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>

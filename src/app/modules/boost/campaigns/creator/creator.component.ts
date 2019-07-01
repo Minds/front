@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
-import { Campaign } from "../campaigns.type";
+import { Campaign, CampaignPayment } from "../campaigns.type";
 import { CampaignsService } from '../campaigns.service';
 import { Subscription } from 'rxjs';
 import { Tag } from '../../../hashtags/types/tag';
+import { CampaignPaymentsService } from '../campaign-payments.service';
 
 @Component({
-  providers: [CampaignsService],
+  providers: [CampaignsService, CampaignPaymentsService],
   selector: 'm-boost-campaigns-creator',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'creator.component.html',
@@ -27,6 +28,7 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
 
   constructor(
     protected service: CampaignsService,
+    protected payments: CampaignPaymentsService,
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
@@ -153,9 +155,31 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.detectChanges();
 
     try {
+      if (!this.isEditing && (!this.campaign.checksum || !this.campaign.client_guid)) {
+        const { guid, checksum } = await this.service.prepare(this.campaign);
+
+        this.campaign.client_guid = guid;
+        this.campaign.checksum = checksum;
+      }
+
+      let payment: CampaignPayment = null;
+      let amountDue = this.payments.calculateAmountDue(this.campaign, this.isEditing);
+
+      if (amountDue > 0) {
+        payment = await this.payments.pay(this.campaign, amountDue);
+
+        if (!payment) {
+          this.currentError = '';
+          this.inProgress = false;
+
+          this.detectChanges();
+          return;
+        }
+      }
+
       const campaign = !this.isEditing ?
-        await this.service.create(this.campaign) :
-        await this.service.update(this.campaign);
+        await this.service.create(this.campaign, payment) :
+        await this.service.update(this.campaign, payment);
 
       // NOTE: Keeping inProgress true until redirection happens
       setTimeout(() => {
@@ -205,6 +229,10 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     }
 
     this.detectChanges();
+  }
+
+  get amountDue(): number {
+    return this.payments.calculateAmountDue(this.campaign, this.isEditing);
   }
 
   detectChanges() {
