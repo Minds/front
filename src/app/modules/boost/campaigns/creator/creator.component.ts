@@ -100,8 +100,10 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.campaign = {
       name: '',
       type: 'newsfeed',
+      budget_type: 'tokens',
       budget: 5,
       entity_urns: [],
+      nsfw: [],
       hashtags: [],
       start: Date.now(),
       end: Date.now() + (5 * 24 * 60 * 60 * 1000),
