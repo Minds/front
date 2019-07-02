@@ -15,8 +15,8 @@ export class CategoriesSelectorComponent {
   categories: Array<Category> = [];
   menuOpened: boolean = false;
   q: string = '';
-  @ViewChild('input', { read: ElementRef }) input: ElementRef;
-  @ViewChild('list', { read: ElementRef }) list: ElementRef;
+  @ViewChild('input', { read: ElementRef, static: true }) input: ElementRef;
+  @ViewChild('list', { read: ElementRef, static: true }) list: ElementRef;
 
   @Output('selected') onSelected: EventEmitter<Array<Category>> = new EventEmitter<Array<Category>>();
 

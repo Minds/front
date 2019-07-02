@@ -12,7 +12,7 @@ import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-m
 })
 export class SidebarMarkersComponent {
 
-  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
   minds = window.Minds;
   showMarkerSidebar = false;

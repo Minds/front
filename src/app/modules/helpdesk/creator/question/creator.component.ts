@@ -9,7 +9,7 @@ import { InlineEditorComponent } from "../../../../common/components/editors/inl
 })
 
 export class QuestionCreatorComponent implements OnInit {
-  @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
+  @ViewChild('inlineEditor', { static: true }) inlineEditor: InlineEditorComponent;
 
   categories: Array<any> = [];
 

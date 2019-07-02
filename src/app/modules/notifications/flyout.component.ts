@@ -14,7 +14,7 @@ export class NotificationsFlyoutComponent {
   @Input() visible:boolean = false;
   @Output('close') closeEvt: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('notifications') notificationList: any
+  @ViewChild('notifications', { static: true }) notificationList: any
 
   close() {
     this.closeEvt.emit(true);

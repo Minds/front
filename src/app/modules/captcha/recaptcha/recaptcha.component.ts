@@ -27,7 +27,7 @@ export class ReCaptchaComponent implements OnInit, ControlValueAccessor {
     @Output() captchaResponse = new EventEmitter<string>();
     @Output() captchaExpired = new EventEmitter();
 
-    @ViewChild('target') targetRef: ElementRef;
+    @ViewChild('target', { static: true }) targetRef: ElementRef;
     widgetId: any = null;
 
     onChange: Function = () => {

@@ -39,7 +39,7 @@ import { Modal } from "../../../common/components/modal/modal.component";
 export class ChannelOnboardingComponent {
   minds = window.Minds;
 
-  @ViewChild(DynamicHostDirective) host;
+  @ViewChild(DynamicHostDirective, { static: true }) host;
 
   inProgress: boolean = false;
   closeSubscription;

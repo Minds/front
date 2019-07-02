@@ -25,9 +25,9 @@ export class MindsVideoComponent {
 
   @Output('finished') finished: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('progressBar') progressBar: MindsVideoProgressBar;
-  @ViewChild('volumeSlider') volumeSlider: MindsVideoVolumeSlider;
-  @ViewChild('player') playerRef: MindsPlayerInterface;
+  @ViewChild('progressBar', { static: false }) progressBar: MindsVideoProgressBar;
+  @ViewChild('volumeSlider', { static: false }) volumeSlider: MindsVideoVolumeSlider;
+  @ViewChild('player', { static: false }) playerRef: MindsPlayerInterface;
 
   src: any[];
   @Input('src') set _src(src) {

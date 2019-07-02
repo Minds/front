@@ -40,8 +40,8 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
 
   paramsSubscription: Subscription;
 
-  @ViewChild('poster') private poster: PosterComponent;
-  @ViewChild('wire') private wire: WireChannelComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
+  @ViewChild('wire', { static: false }) private wire: WireChannelComponent;
 
   protected loadFeedObservable: Subject<any> = new Subject();
   protected loadFeedObservableSubscription: Subscription;

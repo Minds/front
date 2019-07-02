@@ -32,7 +32,7 @@ export class BoostCreatorP2PSearchComponent {
   searching: boolean = false;
   private throttle;
 
-  @ViewChild('input') private input: ElementRef;
+  @ViewChild('input', { static: true }) private input: ElementRef;
 
   constructor(
     private client: Client,

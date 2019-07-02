@@ -98,7 +98,7 @@ export class Activity implements OnInit {
     }
   }
 
-  @ViewChild('player') player: MindsVideoComponent;
+  @ViewChild('player', { static: false }) player: MindsVideoComponent;
 
   constructor(
     public session: Session,

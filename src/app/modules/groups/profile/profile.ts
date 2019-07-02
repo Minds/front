@@ -49,8 +49,8 @@ export class GroupsProfile {
   socketRoomName: string;
   newConversationMessages: boolean = false;
 
-  @ViewChild('feed') private feed: GroupsProfileLegacyFeed;
-  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
+  @ViewChild('feed', { static: false }) private feed: GroupsProfileLegacyFeed;
+  @ViewChild('hashtagsSelector', { static: false }) hashtagsSelector: HashtagsSelectorComponent;
 
   private reviewCountInterval: any;
   private socketSubscription: any;

@@ -20,7 +20,7 @@ export class NotificationsComponent {
   @Input() params: any;
   @Input() count: number;
   @Input() loadOnDemand: boolean;
-  @ViewChild('notificationGrid') notificationList: ElementRef;
+  @ViewChild('notificationGrid', { static: true }) notificationList: ElementRef;
   notifications: Array<Object> = [];
   entity;
   moreData: boolean = true;

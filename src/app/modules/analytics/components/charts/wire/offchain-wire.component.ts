@@ -18,7 +18,7 @@ import { timespanOption } from "../timespanOption";
 })
 
 export class OffchainWireChartComponent implements OnInit {
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   timespan: timespanOption;
   init: boolean = false;

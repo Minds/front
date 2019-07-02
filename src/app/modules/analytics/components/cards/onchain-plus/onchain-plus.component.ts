@@ -8,7 +8,7 @@ import { AnalyticsCardComponent } from "../card/card.component";
 })
 
 export class OnChainPlusCardComponent {
-  @ViewChild('card') card: AnalyticsCardComponent;
+  @ViewChild('card', { static: true }) card: AnalyticsCardComponent;
 
   reclaimedTokens: number = 0;
   users: number = 0;

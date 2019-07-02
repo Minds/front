@@ -14,7 +14,7 @@ import { NotificationsToasterComponent } from '../../../modules/notifications/to
 
 export class TopbarComponent {
 
-  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
   minds = window.Minds;
 

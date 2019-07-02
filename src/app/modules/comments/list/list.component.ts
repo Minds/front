@@ -39,8 +39,8 @@ export class CommentsListComponent {
 
   focusOnInit: boolean = false;
   scrollable: boolean = false;
-  @ViewChild('message') textareaControl: Textarea;
-  @ViewChild('scrollArea') scrollView: ElementRef;
+  @ViewChild('message', { static: false }) textareaControl: Textarea;
+  @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
 
   editing: boolean = false;
 

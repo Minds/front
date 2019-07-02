@@ -9,7 +9,7 @@ import { Subscription } from "rxjs";
 })
 
 export class OnchainWireCardComponent implements OnInit {
-  @ViewChild('card') card: AnalyticsCardComponent;
+  @ViewChild('card', { static: true }) card: AnalyticsCardComponent;
 
   subscription: Subscription;
 

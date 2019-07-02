@@ -63,9 +63,9 @@ export class BlogEdit {
   existingBanner: boolean;
 
   paramsSubscription: Subscription;
-  @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
-  @ViewChild('thresholdInput') thresholdInput: WireThresholdInputComponent;
-  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
+  @ViewChild('inlineEditor', { static: false }) inlineEditor: InlineEditorComponent;
+  @ViewChild('thresholdInput', { static: false }) thresholdInput: WireThresholdInputComponent;
+  @ViewChild('hashtagsSelector', { static: false }) hashtagsSelector: HashtagsSelectorComponent;
 
   constructor(
     public session: Session,

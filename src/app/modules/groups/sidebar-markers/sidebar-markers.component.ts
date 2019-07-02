@@ -21,7 +21,7 @@ export class GroupsSidebarMarkersComponent {
   moreData: boolean = true;
   tooltipsAnchor: string = 'right';
 
-  @ViewChild('list') list;
+  @ViewChild('list', { static: true }) list;
 
   constructor(
     private client: Client,

@@ -19,7 +19,7 @@ import { DynamicHostDirective } from "../../../common/directives/dynamic-host.di
 })
 
 export class NewsfeedEntityComponent {
-  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: false }) host: DynamicHostDirective;
   entity;
 
   constructor(

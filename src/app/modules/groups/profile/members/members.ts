@@ -17,7 +17,7 @@ import { Session } from '../../../../services/session';
 export class GroupsProfileMembers {
 
 minds = window.Minds;
-@ViewChild('el') el;
+@ViewChild('el', { static: true }) el;
 
   group: any;
   $group;

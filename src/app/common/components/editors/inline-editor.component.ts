@@ -38,7 +38,7 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
   @Input() placeholder: string;
   el: ElementRef;
   editor: MediumEditor;
-  @ViewChild('host') host: any;
+  @ViewChild('host', { static: true }) host: any;
 
   @Input() reset() {
     this.editor.setContent('');

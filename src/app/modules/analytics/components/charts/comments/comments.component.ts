@@ -19,7 +19,7 @@ import { timespanOption } from "../timespanOption";
 })
 
 export class CommentsChartComponent implements OnInit {
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   @Input() user: MindsUser;
 
