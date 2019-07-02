@@ -16,7 +16,7 @@ type EntityObservables = Map<string, EntityObservable>
 @Injectable()
 export class EntitiesService {
 
-entities: EntityObservables = new Map<string, EntityObservable>();
+  entities: EntityObservables = new Map<string, EntityObservable>();
 
   constructor(
     protected client: Client,
