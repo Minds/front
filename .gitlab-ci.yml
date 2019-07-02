@@ -49,7 +49,6 @@ build:production:en:
     - npm install -g gulp-cli
     - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
     - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
-    - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
   cache:
     key: "$CI_COMMIT_REF_SLUG"
     paths:
