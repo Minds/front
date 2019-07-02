@@ -49,7 +49,7 @@ export class NewsfeedSubscribedComponent {
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: true }) private poster: PosterComponent;
 
   constructor(
     public client: Client,

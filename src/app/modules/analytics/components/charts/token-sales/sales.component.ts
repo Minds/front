@@ -19,7 +19,7 @@ import { timespanOption } from "../timespanOption";
 
 export class TokenSalesChartComponent implements OnInit {
   @Input() analytics: 'rates' | 'sales';
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   timespan: timespanOption;
   init: boolean = false;

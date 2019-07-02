@@ -10,7 +10,7 @@ import { TokenRewardsOnboardingComponent } from '../../wallet/tokens/onboarding/
 })
 export class BlockchainMarketingOnboardComponent implements OnInit {
 
-  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
   componentRef;
   componentInstance: TokenRewardsOnboardingComponent;

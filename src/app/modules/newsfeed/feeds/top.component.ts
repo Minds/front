@@ -35,7 +35,7 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
   ratingSubscription: Subscription;
   reloadFeedSubscription: Subscription;
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
     public client: Client,

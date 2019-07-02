@@ -13,7 +13,7 @@ import { Client } from '../../../services/api';
 
 export class GroupsMembersModuleComponent {
 members: Array<any> = [];
-  @ViewChild('el') el;
+  @ViewChild('el', { static: true }) el;
 
   group: any;
   limit: number = 21;

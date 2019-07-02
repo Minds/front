@@ -60,7 +60,7 @@ export class ChannelSortedComponent implements OnInit {
 
   initialized: boolean = false;
 
-  @ViewChild('poster') protected poster: PosterComponent;
+  @ViewChild('poster', { static: false }) protected poster: PosterComponent;
 
   constructor(
     protected feedsService: FeedsService,

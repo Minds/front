@@ -57,7 +57,7 @@ export class GroupProfileFeedSortedComponent {
 
   kicking: any;
 
-  @ViewChild('poster') protected poster: PosterComponent;
+  @ViewChild('poster', { static: false }) protected poster: PosterComponent;
 
   constructor(
     protected service: GroupsService,

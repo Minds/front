@@ -21,7 +21,7 @@ import { timespanOption } from "../timespanOption";
 export class RemindsChartComponent implements OnInit {
   @Input() user: MindsUser;
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   timespan: timespanOption;
   init: boolean = false;

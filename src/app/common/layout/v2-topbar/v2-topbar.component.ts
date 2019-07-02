@@ -20,7 +20,7 @@ export class V2TopbarComponent implements OnInit {
   minds = window.Minds;
   timeout;
 
-  @ViewChild(DynamicHostDirective) notificationsToasterHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) notificationsToasterHost: DynamicHostDirective;
 
   componentRef;
   componentInstance: NotificationsToasterComponent;

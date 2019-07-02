@@ -27,7 +27,7 @@ import { Storage } from '../../../../services/storage';
 })
 export class TokenOnboardingVideoComponent {
 
-  @ViewChild('video') videoEl;
+  @ViewChild('video', { static: true }) videoEl;
   @Input() src: string;
 
   constructor(
