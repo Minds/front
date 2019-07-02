@@ -224,7 +224,7 @@
   </a>
 </div>
 
-<div class="impressions-tag m-activity--metrics" [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid" *ngIf="!hideTabs">
+<div class="impressions-tag m-activity--metrics" [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid" *ngIf="!activity.hide_impressions && !hideTabs">
   <div class="m-activity--metrics-inner m-border">
     <div class="m-activity--metrics-metric" (click)="showWire()">
   		<i class="ion-icon ion-flash"></i>
