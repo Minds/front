@@ -11,7 +11,6 @@ import { OnboardingFeedComponent } from './feed.component';
 import { OnboardingService } from './onboarding.service';
 import { OnboardingModalComponent } from './modal.component';
 import { ChannelOnboardingService } from "./channel/onboarding.service";
-import { WelcomeOnboardingComponent } from "./channel/welcome/welcome.component";
 import { TopicsOnboardingComponent } from "./channel/topics/topics.component";
 import { ChannelOnboardingComponent } from "./channel/onboarding.component";
 import { SubscriptionsOnboardingComponent } from "./channel/subscriptions/subscriptions.component";
@@ -41,7 +40,6 @@ import { Session } from "../../services/session";
     OnboardingFeedComponent,
     OnboardingModalComponent,
     ChannelOnboardingComponent,
-    WelcomeOnboardingComponent,
     TopicsOnboardingComponent,
     SubscriptionsOnboardingComponent,
     GroupsOnboardingComponent,
@@ -63,7 +61,6 @@ import { Session } from "../../services/session";
   ],
   entryComponents: [
     OnboardingModalComponent,
-    WelcomeOnboardingComponent,
     TopicsOnboardingComponent,
     SubscriptionsOnboardingComponent,
     ChannelsTileComponent,
