@@ -20,8 +20,8 @@ import { Modal } from "../../../common/components/modal/modal.component";
       </div>
       <ng-template dynamic-host></ng-template>
 
-      <div class="m-channelOnboarding__buttons" *ngIf="service.currentSlide > 0">
-        <div class="m-channelOnboarding__previous" (click)="service.previous()">
+      <div class="m-channelOnboarding__buttons">
+        <div class="m-channelOnboarding__previous" (click)="service.previous()" [ngStyle]="{'visibility': service.currentSlide === 0 ? 'hidden' : 'visible'}">
           Previous
         </div>
         <div class="m-channelOnboarding__next" *ngIf="service.currentSlide +1 < service.slides.length"
