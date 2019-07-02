@@ -66,8 +66,11 @@
   }
 
   .m-boost--creator-section {
-    padding: 16px 0;
     font-weight: 400;
+    padding: 16px 0;
+    @media screen and (max-width: $max-mobile) {
+      padding: 8px 0;
+    }
   }
 
   .m-boost--creator-section-row {
