@@ -7,6 +7,7 @@ import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { NotificationService } from './notification.service';
+import { InfiniteScroll } from "../../common/components/infinite-scroll/infinite-scroll";
 
 @Component({
   moduleId: module.id,
@@ -20,6 +21,7 @@ export class NotificationsComponent {
   @Input() params: any;
   @Input() count: number;
   @Input() loadOnDemand: boolean;
+  @Input() useOwnScrollSource: boolean;
   @ViewChild('notificationGrid', { static: true }) notificationList: ElementRef;
   notifications: Array<Object> = [];
   entity;
