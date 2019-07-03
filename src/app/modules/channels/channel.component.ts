@@ -41,7 +41,7 @@ export class ChannelComponent {
   changed: boolean = false;
   paramsSubscription: Subscription;
 
-  @ViewChild('feed') private feed: ChannelSortedComponent;
+  @ViewChild('feed', { static: false }) private feed: ChannelSortedComponent;
 
   constructor(
     public session: Session,

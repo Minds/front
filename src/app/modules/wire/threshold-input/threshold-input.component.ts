@@ -36,7 +36,7 @@ export class WireThresholdInputComponent implements OnInit {
 
   typeLabels = WireTypeLabels;
 
-  @ViewChild('minAmountInput') minAmountInput: ElementRef;
+  @ViewChild('minAmountInput', { static: true }) minAmountInput: ElementRef;
 
   constructor(public session: Session) { }
 

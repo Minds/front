@@ -58,7 +58,7 @@ export class NewsfeedComponent {
 
   all: boolean;
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
     public session: Session,

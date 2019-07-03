@@ -46,7 +46,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   hashtagFilterChangeSubscription: Subscription;
   query: string = '';
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
     public client: Client,

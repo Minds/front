@@ -34,7 +34,7 @@ export class AdminBoosts {
 
   paramsSubscription: Subscription;
 
-  @ViewChild('reasonModal') modal: RejectionReasonModalComponent;
+  @ViewChild('reasonModal', { static: false }) modal: RejectionReasonModalComponent;
 
   constructor(public client: Client, private route: ActivatedRoute) {
   }

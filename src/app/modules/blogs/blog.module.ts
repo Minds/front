@@ -17,11 +17,12 @@ import { BlogTileComponent } from './tile/tile.component';
 import { WireModule } from '../wire/wire.module';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
+import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
   { path: 'blog/view/:guid', component: BlogViewInfinite },
-  { path: 'blog/edit/:guid', component: BlogEdit },
+  { path: 'blog/edit/:guid', component: BlogEdit, canDeactivate: [CanDeactivateGuardService]},
   { path: 'blog/:filter', component: BlogListComponent },
   { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },
   { path: ':username/blog/:slugid', component: BlogViewInfinite },

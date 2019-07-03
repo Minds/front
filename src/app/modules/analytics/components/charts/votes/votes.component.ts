@@ -19,7 +19,7 @@ import { MindsUser } from "../../../../../interfaces/entities";
 })
 
 export class VotesChartComponent implements OnInit {
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   @Input() user: MindsUser;
 

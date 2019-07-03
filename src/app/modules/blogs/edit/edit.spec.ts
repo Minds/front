@@ -161,7 +161,7 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
 class InlineEditorComponentMock {
   @Input() options: any;
   @Input() placeholder: string;
-  @ViewChild('host') host: HTMLDivElement;
+  @ViewChild('host', { static: false }) host: HTMLDivElement;
 
   @Input()
   reset() {

@@ -24,7 +24,7 @@ export class BoostConsoleBooster {
   componentRef;
   componentInstance: PosterComponent;
 
-  @ViewChild('poster', { read: ViewContainerRef }) poster: ViewContainerRef;
+  @ViewChild('poster', { read: ViewContainerRef, static: false }) poster: ViewContainerRef;
 
   constructor(public client: Client,
               public session: Session,

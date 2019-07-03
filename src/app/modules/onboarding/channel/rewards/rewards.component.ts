@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Client } from "../../../../services/api/client";
 import { Session } from "../../../../services/session";
-import { Router } from "@angular/router";
 
 @Component({
   selector: 'm-channel--onboarding--rewards',
@@ -89,7 +88,6 @@ export class TokenRewardsOnboardingComponent {
       protected client: Client,
       protected cd: ChangeDetectorRef,
       protected session: Session,
-      protected router: Router,
   ) {
   }
 

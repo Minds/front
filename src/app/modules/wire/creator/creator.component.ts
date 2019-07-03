@@ -104,7 +104,7 @@ export class WireCreatorComponent {
     this.setDefaults();
   }
 
-  @ViewChild('amountEditor') private _amountEditor: ElementRef;
+  @ViewChild('amountEditor', { static: true }) private _amountEditor: ElementRef;
 
   balances = {
     onchain: null,
