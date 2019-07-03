@@ -11,7 +11,7 @@ import { DynamicHostDirective } from '../../../../common/directives/dynamic-host
 
 export class WalletTokenSettingsComponent implements AfterViewInit {
 
-  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
   componentRef;
   componentInstance: BlockchainConsoleComponent;

@@ -1,4 +1,3 @@
-import { WelcomeOnboardingComponent } from "./welcome/welcome.component";
 import { TopicsOnboardingComponent } from "./topics/topics.component";
 import { SubscriptionsOnboardingComponent } from "./subscriptions/subscriptions.component";
 import { ChannelSetupOnboardingComponent } from "./channel/channel.component";
@@ -10,7 +9,6 @@ import { Session } from "../../../services/session";
 export class ChannelOnboardingService {
 
   slides = [
-    WelcomeOnboardingComponent,
     TopicsOnboardingComponent,
     SubscriptionsOnboardingComponent,
     // GroupsOnboardingComponent,

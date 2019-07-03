@@ -19,7 +19,7 @@ export class OverlayModalComponent implements AfterViewInit {
   hidden: boolean = true;
   class: string = '';
 
-  @ViewChild(DynamicHostDirective)
+  @ViewChild(DynamicHostDirective, { static: true })
   private host: DynamicHostDirective;
 
   private componentRef: ComponentRef<{}>;

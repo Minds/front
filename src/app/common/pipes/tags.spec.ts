@@ -79,6 +79,14 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a class="tag"');
   });
 
+  it('should transform when @ followed by `.com`', () => {
+    const pipe = new TagsPipe(featuresServiceMock);
+    const string = 'textstring @name.com';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a class="tag"');
+    expect(transformedString).toContain('@name.com');
+  });
+
   it('should transform to an email', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'textstring@name.com';
@@ -90,7 +98,6 @@ describe('TagPipe', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'textstring name';
     const transformedString = pipe.transform(<any>string);
-
     expect(transformedString).toEqual(string);
     expect(transformedString).not.toContain('<a class="tag"');
   });

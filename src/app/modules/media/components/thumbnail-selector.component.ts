@@ -1,8 +1,5 @@
 import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 
-import { Client } from '../../../services/api';
-import { forEach } from '@angular/router/src/utils/collection';
-
 export class ThumbnailEvent {
      constructor(public source: any,
                 public seconds: any) { }
@@ -17,7 +14,7 @@ export class ThumbnailEvent {
 
 export class ThumbnailSelectorComponent {
 
-  @ViewChild('thumbnailInput') thumbnailInput: ElementRef;
+  @ViewChild('thumbnailInput', { static: true }) thumbnailInput: ElementRef;
   element: any;
   src: Array<any> = [];
   thumbnailSec: number = 0;

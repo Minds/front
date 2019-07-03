@@ -12,7 +12,7 @@ import { Session } from '../../../services/session';
   `
 })
 export class WalletUSDComponent {
-  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
   componentRef;
   componentInstance: RevenueConsoleComponent;

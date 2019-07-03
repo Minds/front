@@ -92,4 +92,7 @@ export class HomepageComponent {
     });
   }
 
+  onSourceError() {
+    console.log('video failed');
+  }
 }

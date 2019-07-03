@@ -13,7 +13,7 @@ import { FaqComponent } from './faq.component';
 
 export class FaqPage implements OnInit {
 
-  @ViewChild(FaqComponent) faq: FaqComponent;
+  @ViewChild(FaqComponent, { static: true }) faq: FaqComponent;
   category: string = 'all';
   inProgress: boolean = false;
 

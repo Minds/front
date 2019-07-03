@@ -22,7 +22,7 @@ export class ActiveUsersChartComponent implements OnInit {
 
   timespan: timespanOption;
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   @Input('timespan') set _timespan(value: timespanOption) {
     this.timespan = value;

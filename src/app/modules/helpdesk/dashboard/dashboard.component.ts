@@ -17,7 +17,7 @@ export class HelpdeskDashboardComponent implements OnInit {
   searching: boolean = false;
   private throttle;
 
-  @ViewChild('input') private input: ElementRef;
+  @ViewChild('input', { static: false }) private input: ElementRef;
 
   topQuestions = [];
 

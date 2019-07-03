@@ -20,7 +20,7 @@ export class NotificationsComponent {
   @Input() params: any;
   @Input() count: number;
   @Input() loadOnDemand: boolean;
-  @ViewChild('notificationGrid') notificationList: ElementRef;
+  @ViewChild('notificationGrid', { static: true }) notificationList: ElementRef;
   notifications: Array<Object> = [];
   entity;
   moreData: boolean = true;
@@ -94,7 +94,7 @@ export class NotificationsComponent {
 
     this.inProgress = true;
 
-    this.client.get(`api/v1/notifications/${this._filter}`, { limit: 24, offset: this.offset })
+    this.client.get(`api/v1/notifications/${this._filter}`, { limit: 12, offset: this.offset })
       .then((data: any) => {
 
         if (!data.notifications) {

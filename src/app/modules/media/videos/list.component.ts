@@ -64,10 +64,12 @@ export class MediaVideosListComponent {
             this.filter = 'network';
             break;
           case 'top':
-            this.filter = 'trending';
-            if (!this.session.isLoggedIn()) {
-              this.router.navigate(['/login']);
-            } 
+            this.router.navigate(['/newsfeed/global/top', { 'type': 'videos' }]);
+
+            // this.filter = 'trending';
+            // if (!this.session.isLoggedIn()) {
+            //   this.router.navigate(['/login']);
+            // }
             break;
           case 'suggested':
             if (!this.session.isLoggedIn()) {

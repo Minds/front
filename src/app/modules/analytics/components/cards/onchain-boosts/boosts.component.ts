@@ -10,7 +10,7 @@ import { timespanOption } from "../../charts/timespanOption";
 })
 
 export class OnChainBoostsCardComponent {
-  @ViewChild('card') card: AnalyticsCardComponent;
+  @ViewChild('card', { static: true }) card: AnalyticsCardComponent;
 
   subscription: Subscription;
 

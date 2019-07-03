@@ -44,8 +44,9 @@
                (mouseleave)="mouseLeave()"
           />
         </a>
-
-        <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+        <ng-container *ngIf="getCurrentUser()">
+            <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+        </ng-container>
       </nav>
     </div>
 
@@ -68,12 +69,12 @@
             title="Login"
             i18n-title
           >
-            Login
+            Login / Signup
           </a>
         </div>
       </ng-template>
 
-      <div class="m-v2-topbar__UserMenu">
+      <div class="m-v2-topbar__UserMenu" *ngIf="getCurrentUser()">
         <ng-content select="[icons]"></ng-content>
         <m-user-menu></m-user-menu>
       </div>

@@ -38,7 +38,7 @@ export class MediaEditComponent {
   licenses = LICENSES;
   access = ACCESS;
 
-  @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
+  @ViewChild('inlineEditor', { static: true }) inlineEditor: InlineEditorComponent;
 
   paramsSubscription: Subscription;
 

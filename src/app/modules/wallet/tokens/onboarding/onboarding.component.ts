@@ -15,7 +15,7 @@ import { Storage } from '../../../../services/storage';
 })
 export class TokenOnboardingComponent {
 
-  @ViewChild(DynamicHostDirective) host;
+  @ViewChild(DynamicHostDirective, { static: true }) host;
 
   inProgress: boolean = false;
   error: string;

@@ -41,7 +41,7 @@ export class CommentsThreadComponent {
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(true);
 
   @Input() scrollable: boolean = false;  
-  @ViewChild('scrollArea') scrollView: ElementRef;
+  @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
   autoloadBlocked: boolean = false;
 

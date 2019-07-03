@@ -34,7 +34,7 @@ export class NewsfeedBoostComponent {
 
   boostFeed: boolean = false;
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
     public client: Client,
