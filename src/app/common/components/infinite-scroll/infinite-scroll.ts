@@ -1,4 +1,4 @@
-fimport { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { GlobalScrollService, ScrollSubscription } from "../../../services/ux/global-scroll.service";
 import { Subscription } from "rxjs";
 
