@@ -117,11 +117,17 @@
   }
 
   .m-wire--creator-section {
-    padding: 16px 0;
     font-weight: 400;
+    padding: 16px 0;
+    @media screen and (max-width: $min-tablet) {
+      padding: unset;
+    }
 
     &.m-wire--creator-section--last {
       margin-top: 8px;
+        @media screen and (max-width: $min-tablet) {
+          margin-top: 0px;
+        }
     }
   }
 
