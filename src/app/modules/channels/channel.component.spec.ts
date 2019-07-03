@@ -116,7 +116,14 @@ describe('ChannelComponent', () => {
     featuresServiceMock.mock('channel-filter-feeds', false);
     comp = fixture.componentInstance;
     comp.username = 'username';
-    comp.user = { guid: 'guidguid', name: 'name', username: 'username', icontime: 11111, subscribers_count:182, impressions:18200};
+    comp.user = {
+      guid: 'guidguid',
+      name: 'name',
+      username: 'username',
+      icontime: 11111,
+      subscribers_count: 182,
+      impressions: 18200
+    };
     comp.editing = false;
     fixture.detectChanges();
 

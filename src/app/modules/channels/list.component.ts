@@ -53,12 +53,14 @@ export class ChannelsListComponent {
             this.uri = 'entities/all/channels';
             break;
           case 'top':
-            if (!this.session.isLoggedIn()) {
-              this.router.navigate(['/login']);
-            }
-            this.version = 'v2';
-            this.filter = 'trending';
-            this.uri = 'entities/suggested/channels';
+            this.router.navigate(['/newsfeed/global/top', { 'type': 'channels' }]);
+
+            // if (!this.session.isLoggedIn()) {
+            //   this.router.navigate(['/login']);
+            // }
+            // this.version = 'v2';
+            // this.filter = 'trending';
+            // this.uri = 'entities/suggested/channels';
             break;
           case 'suggested':
             if (!this.session.isLoggedIn()) {

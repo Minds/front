@@ -63,10 +63,12 @@ export class MediaImagesListComponent {
             this.filter = 'network';
             break;
           case 'top':
-            if (!this.session.isLoggedIn()) {
-              this.router.navigate(['/login']);
-            }
-            this.filter = 'trending';
+            this.router.navigate(['/newsfeed/global/top', {'type': 'images'}]);
+
+            // if (!this.session.isLoggedIn()) {
+            //   this.router.navigate(['/login']);
+            // }
+            // this.filter = 'trending';
             break;
           case 'suggested':
             if (!this.session.isLoggedIn()) {
