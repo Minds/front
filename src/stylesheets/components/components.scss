@@ -506,6 +506,9 @@ minds-tooltip .m-bubble-popup {
 }
 
 m-translate {
+  a {
+    cursor: pointer;
+  }
   .m-translate-select {
     cursor: pointer;
     position: relative;
