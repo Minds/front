@@ -10,7 +10,7 @@ import { Client } from '../../common/api/client.service';
 })
 
 export class PlusMarketingComponent {
-  @ViewChild('subscription') private subscription: PlusSubscriptionComponent;
+  @ViewChild('subscription', { static: false }) private subscription: PlusSubscriptionComponent;
 
   user = window.Minds.user;
   minds = window.Minds;

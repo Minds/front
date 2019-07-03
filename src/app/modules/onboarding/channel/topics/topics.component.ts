@@ -9,7 +9,11 @@ type Hashtag = {
   selector: 'm-onboarding--topics',
   template: `
     <div class="m-channelOnboarding__slide">
-      <h2>What topics are you most interested in?</h2>
+      <h2>Welcome to Minds!</h2>
+
+      <h2  class="m-channelOnboardingSlide__subtext">
+        What topics are you most interested in?
+      </h2>
 
       <ul class="m-channelOnboardingSlideSection__list">
         <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>

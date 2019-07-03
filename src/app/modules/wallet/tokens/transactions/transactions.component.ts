@@ -28,7 +28,6 @@ export class WalletTokenTransactionsComponent {
     'withdraw',
     'wire',
     'offchain:wire',
-    'plus',
     'token',
     'offchain:reward',
   ];

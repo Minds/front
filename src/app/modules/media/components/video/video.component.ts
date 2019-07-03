@@ -25,9 +25,9 @@ export class MindsVideoComponent {
 
   @Output('finished') finished: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('progressBar') progressBar: MindsVideoProgressBar;
-  @ViewChild('volumeSlider') volumeSlider: MindsVideoVolumeSlider;
-  @ViewChild('player') playerRef: MindsPlayerInterface;
+  @ViewChild('progressBar', { static: false }) progressBar: MindsVideoProgressBar;
+  @ViewChild('volumeSlider', { static: false }) volumeSlider: MindsVideoVolumeSlider;
+  @ViewChild('player', { static: false }) playerRef: MindsPlayerInterface;
 
   src: any[];
   @Input('src') set _src(src) {
@@ -63,6 +63,7 @@ export class MindsVideoComponent {
 
   private availableQualities: string[] = [];
   private currentQuality: string = '';
+  transcodingError = null;
 
   constructor(
     public scroll: ScrollService,
@@ -230,8 +231,12 @@ export class MindsVideoComponent {
     const success = this.pickNextBestSource();
 
     if (!success) {
-      let response: any = await this.client.get(`api/v1/media/transcoding/${this.guid}`);
-      this.transcoding = true || response.transcoding; // TODO: Handle this correctly
+      try {
+        let response: any = await this.client.get(`api/v1/media/transcoding/${this.guid}`);
+        this.transcoding = response.transcoding;
+      } catch (e) {
+        this.transcodingError = e.error;
+      }
     }
 
     this.detectChanges();

@@ -98,7 +98,7 @@ export class Activity implements OnInit {
     }
   }
 
-  @ViewChild('player') player: MindsVideoComponent;
+  @ViewChild('player', { static: false }) player: MindsVideoComponent;
 
   constructor(
     public session: Session,
@@ -402,6 +402,10 @@ export class Activity implements OnInit {
 
   isOwnerBlocked(activity) {
     return activity && this.blockedUsers.indexOf(activity.owner_guid) > -1;
+  }
+
+  isPending(activity) {
+    return activity && activity.pending && activity.pending !== '0';
   }
 
   detectChanges() {

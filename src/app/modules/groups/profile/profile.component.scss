@@ -178,6 +178,10 @@ m-groups--profile .m-group__grid header {
   minds-banner .minds-banner {
     max-height: 268px;
     height: 268px;
+
+    .minds-banner-overlay {
+      display: none;
+    }
   }
 }
 

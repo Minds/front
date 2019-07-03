@@ -61,8 +61,8 @@ export class ChannelSetupOnboardingComponent {
   minds = window.Minds;
   user: MindsUser;
 
-  @ViewChild('displayNameInput') displayNameInput: ElementRef;
-  @ViewChild('descriptionInput') descriptionInput: ElementRef;
+  @ViewChild('displayNameInput', { static: true }) displayNameInput: ElementRef;
+  @ViewChild('descriptionInput', { static: true }) descriptionInput: ElementRef;
 
   displayNameSubscription: Subscription;
   descriptionSubscription: Subscription;

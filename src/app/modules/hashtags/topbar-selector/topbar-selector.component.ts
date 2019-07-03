@@ -27,7 +27,7 @@ export class HashtagsTopbarSelectorComponent implements OnInit {
   all: boolean = false;
   showMenu: boolean = false;
 
-  @ViewChild('dropdown') dropdown: DropdownComponent;
+  @ViewChild('dropdown', { static: false }) dropdown: DropdownComponent;
 
   constructor(
     public overlayModal: OverlayModalService,

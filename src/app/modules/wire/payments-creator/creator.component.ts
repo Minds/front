@@ -191,7 +191,7 @@ export class WirePaymentsCreatorComponent {
   }
 
   setDefaults() {
-    this.wire.recurring = false;
+    this.wire.recurring = true;
     let payloadType = localStorage.getItem('preferred-payment-method');
     if (['onchain', 'offchain'].indexOf(payloadType) === -1) {
       payloadType = 'offchain';
@@ -372,7 +372,7 @@ export class WirePaymentsCreatorComponent {
       this.submitted = true;
       this.error = '';
 
-      if (await this.web3Wallet.isLocal()) {
+      if (await this.web3Wallet.isLocal() && this.wire.payloadType === 'onchain') {
         const action = await this.web3Wallet.setupMetamask();
         switch (action) {
           case GetMetamaskComponent.ACTION_CREATE:

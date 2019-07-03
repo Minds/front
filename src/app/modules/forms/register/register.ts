@@ -31,7 +31,7 @@ export class RegisterForm {
 
   @Output() done: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
+  @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
 
   constructor(
     public session: Session,
@@ -48,7 +48,6 @@ export class RegisterForm {
       tos: [false],
       exclusive_promotions: [false],
       captcha: [''],
-      Homepage121118: experiments.getExperimentBucket('Homepage121118'),
     });
 
   }

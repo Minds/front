@@ -19,7 +19,7 @@ import { Client } from "../../../../../services/api/client";
 export class ChannelBoostsComponent implements OnInit {
   @Input() analytics: 'totals' | 'monthly';
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   inProgress: boolean = false;
   data: any;

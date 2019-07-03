@@ -87,8 +87,9 @@ describe('TopicsOnboardingComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have a title', () => {
-    expect(fixture.debugElement.query(By.css('h2')).nativeElement.textContent).toBe('What topics are you most interested in?');
+  it('should have text', () => {
+    expect(fixture.debugElement.query(By.css('h2:first-child')).nativeElement.textContent).toContain('Welcome to Minds!');
+    expect(fixture.debugElement.query(By.css('h2.m-channelOnboardingSlide__subtext')).nativeElement.textContent).toContain('What topics are you most interested in?');
   });
 
   it('should create a hashtag', () => {

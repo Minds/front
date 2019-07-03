@@ -19,7 +19,7 @@ import { timespanOption } from "../timespanOption";
 export class OnChainBoostsChartComponent implements OnInit {
   timespan: timespanOption;
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   init: boolean = false;
   inProgress: boolean = false;

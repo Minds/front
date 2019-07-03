@@ -244,6 +244,7 @@ export class GroupsSettingsButton {
 
   toggleEdit() {
     this.editing = !this.editing;
+    this.showMenu = false;
     this.change.emit({ editing: this.editing });
   }
 

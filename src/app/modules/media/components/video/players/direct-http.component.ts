@@ -11,7 +11,7 @@ import { MindsPlayerInterface } from './player.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlayerInterface {
-  @ViewChild('player') player: ElementRef;
+  @ViewChild('player', { static: true }) player: ElementRef;
 
   @Input() muted: boolean = false;
   @Input() poster: string = '';

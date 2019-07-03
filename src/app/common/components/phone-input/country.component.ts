@@ -18,8 +18,8 @@ export class PhoneInputCountryComponent {
   phoneNumber: string;
   countryCodeData = new CountryCode();
 
-  @ViewChild('input') input: ElementRef;
-  @ViewChild('dropdownMenu') dropdownMenu: ElementRef;
+  @ViewChild('input', { static: false }) input: ElementRef;
+  @ViewChild('dropdownMenu', { static: true }) dropdownMenu: ElementRef;
 
   showDropdownMenu: boolean = false;
   allowedKeyCodes: Array<number> = [8, 33, 34, 35, 36, 37, 39, 46];

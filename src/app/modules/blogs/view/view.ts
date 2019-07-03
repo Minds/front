@@ -42,7 +42,7 @@ export class BlogView {
 
   menuOptions: Array<string> = ['edit', 'follow', 'feature', 'delete', 'report', 'subscribe', 'set-explicit', 'remove-explicit', 'rating'];
 
-  @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
+  @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
 
 
   constructor(

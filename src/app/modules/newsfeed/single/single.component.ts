@@ -68,6 +68,8 @@ export class NewsfeedSingleComponent {
   load(guid: string) {
     this.context.set('activity');
 
+    this.inProgress = true;
+
     const fetchSingleGuid = this.featuresService.has('sync-feeds') ?
       this.loadFromFeedsService(guid) :
       this.loadLegacy(guid);
@@ -86,6 +88,8 @@ export class NewsfeedSingleComponent {
           break;
       }
 
+      this.inProgress = false;
+
       if (this.activity.ownerObj) {
         this.context.set('activity', {
           label: `@${this.activity.ownerObj.username} posts`,
@@ -102,12 +106,13 @@ export class NewsfeedSingleComponent {
       }
     })
       .catch(e => {
+        this.inProgress = false;
+
         if (e.status === 0) {
           this.error = 'Sorry, there was a timeout error.';
         } else {
           this.error = 'Sorry, we couldn\'t load the activity';
         }
-        this.inProgress = false;
       });
   }
 

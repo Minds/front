@@ -20,7 +20,7 @@ export class OffChainBoostsChartComponent implements OnInit {
   @Input() analytics: 'completed' | 'not_completed' | 'revoked' | 'rejected' | 'users_who_completed' | 'users_waiting_for_completion' | 'reclaimed_tokens' | 'impressions_served';
   timespan: timespanOption;
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   init: boolean = false;
   inProgress: boolean = false;

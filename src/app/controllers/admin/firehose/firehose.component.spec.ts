@@ -28,7 +28,7 @@ class MindsActivityMockComponent {
 class MindsSortSelectorMockComponent {
   @Input() algorithm: string;
   @Input() period: string;
-  @Input() customType: string;
+  @Input() allowedCustomTypes: Array<string>;
   @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
 }
 

@@ -1,7 +1,7 @@
-import { Component, ViewChild, ChangeDetectorRef, HostListener, Input } from '@angular/core';
-import { ActivatedRoute, ChildActivationEnd, NavigationEnd, Router } from '@angular/router';
+import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 
 import { GroupsService } from '../groups-service';
 
@@ -16,7 +16,7 @@ import { Client } from '../../../services/api';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { VideoChatService } from '../../videochat/videochat.service';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
-import { filter } from "rxjs/operators";
+import { filter, map, startWith, throttle } from "rxjs/operators";
 
 @Component({
   selector: 'm-groups--profile',
@@ -49,13 +49,15 @@ export class GroupsProfile {
   socketRoomName: string;
   newConversationMessages: boolean = false;
 
-  @ViewChild('feed') private feed: GroupsProfileLegacyFeed;
-  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
+  @ViewChild('feed', { static: false }) private feed: GroupsProfileLegacyFeed;
+  @ViewChild('hashtagsSelector', { static: false }) hashtagsSelector: HashtagsSelectorComponent;
 
   private reviewCountInterval: any;
   private socketSubscription: any;
   private videoChatActiveSubscription;
   private updateMarkersSubscription;
+
+  private lastWidth: number;
 
   constructor(
     public session: Session,
@@ -75,7 +77,7 @@ export class GroupsProfile {
   ngOnInit() {
     this.context.set('activity');
     this.listenForNewMessages();
-    this.detectWidth();
+    this.detectWidth(true);
     this.detectConversationsState();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -179,12 +181,18 @@ export class GroupsProfile {
       this.updateMarkersSubscription.unsubscribe();
 
     this.updateMarkersSubscription = this.updateMarkers.getByEntityGuid(this.guid).subscribe((marker => {
+    // this.updateMarkersSubscription = this.updateMarkers.markers.subscribe(markers => {
       if (!marker)
         return;
 
-      this.group.hasGathering = marker && marker.entity_guid == this.group.guid
-        && marker.marker == 'gathering-heartbeat'
-        && marker.updated_timestamp > (Date.now() / 1000) - 60;
+      this.group.hasGathering$ = interval(1000).pipe(
+        throttle(() => interval(2000)), //only allow once per 2 seconds
+        startWith(0),
+        map(() => [marker].filter(marker => marker.entity_guid == this.group.guid
+          && marker.marker == 'gathering-heartbeat'
+          && marker.updated_timestamp > (Date.now() / 1000) - 60 //1 minute tollerance
+        ).length > 0)
+      );
 
       let hasMarker =
         (marker.read_timestamp < marker.updated_timestamp)
@@ -376,8 +384,11 @@ export class GroupsProfile {
       this.save();
   }
 
-  @HostListener('window:resize') detectWidth() {
-    this.showRight = window.innerWidth > 900;
+  @HostListener('window:resize') detectWidth(force: boolean = false) {
+    if (force || (window.innerWidth !== this.lastWidth)) {
+      this.showRight = window.innerWidth > 900;
+      this.lastWidth = window.innerWidth;
+    }
   }
 
   resetMarkers() {

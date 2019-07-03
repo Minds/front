@@ -149,6 +149,9 @@
 }
 
 m-boost--marketing {
+  .m-marketing--hero--action-button {
+    white-space: nowrap;
+  }
   .m-layout--row {
     @media screen and(max-width: $max-mobile) {
       flex-wrap: wrap;
