@@ -7,6 +7,7 @@ import { Subscription } from "rxjs";
   template: `
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
     <div class="m-infinite-scroll-manual"
+         [class.m-infinite-scroll-manual__loadMore]="!iconOnly"
          [class.mdl-color--blue-grey-200]="!iconOnly"
          [class.mdl-color-text--blue-grey-500]="!iconOnly"
          [hidden]="inProgress || !moreData"
@@ -17,6 +18,7 @@ import { Subscription } from "rxjs";
       <i class="material-icons" *ngIf="iconOnly">keyboard_arrow_right</i>
     </div>
     <div class="m-infinite-scroll-manual"
+         [class.m-infinite-scroll-manual__noMore]="!iconOnly"
          [class.mdl-color--blue-grey-200]="!iconOnly"
          [class.mdl-color-text--blue-grey-500]="!iconOnly"
          [hidden]="moreData"
