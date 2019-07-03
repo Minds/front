@@ -39,9 +39,9 @@ export class TagsPipe implements PipeTransform  {
       }
     },
     at: {
-      rule: /(^|\W)@([a-z0-9_\-\.]+[a-z0-9_])(\W|$)/gmi,
+      rule: /(^|\s|\W)@(\w*[a-zA-Z_-]+\w*)/gim,
       replace: (m) => {
-        return `${m.match[1]}<a class="tag" href="/${m.match[2]}" target="_blank">@${m.match[2]}</a>${m.match[3]}`;
+        return `${m.match[1]}<a class="tag" href="/${m.match[2]}" target="_blank">@${m.match[2]}</a>`;
       }
     }
   };
