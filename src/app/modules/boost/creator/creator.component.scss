@@ -173,9 +173,12 @@
       .m-boost--creator-selector--selected-label,
       .m-boost--creator-selector--description {
         display: block;
-        font-size: 13px;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
+        font-size: 13px;
+        @media screen and (max-width: $min-tablet){
+          font-size: 10px;
+        }
       }
 
       .m-boost--creator-selector--cta,
