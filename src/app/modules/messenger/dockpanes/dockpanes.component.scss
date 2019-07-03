@@ -37,7 +37,6 @@
     @include m-theme(){
       background-color: themed($m-white);
       color: themed($m-grey-800);
-      border: 1px solid themed($m-grey-50);
     }
 
     .m-messenger--dockpane-tab-title{
@@ -63,7 +62,6 @@
     }
 
     .m-messenger--dockpane-tab-actions{
-      display: inline-block;
       text-align: right;
       vertical-align: middle;
       float: right;
@@ -75,10 +73,9 @@
         line-height: 12px;
         border-radius: 0 3px 0 0;
 
-        &:hover,
-        &.m-status-active{
+        &:hover{
           @include m-theme(){
-            color: themed($m-blue-grey-700) !important;
+            color: themed($m-grey-500) !important;
           }
         }
       }
@@ -121,6 +118,17 @@
       padding-bottom: 8px;
       cursor: pointer;
 
+      &:hover{
+        @include m-theme(){
+          color: themed($m-blue-grey-500) !important;
+        }
+        > i {
+          @include m-theme(){
+            color: themed($m-blue-grey-500) !important;
+          }
+        }
+      }
+
       > i{
         width: 100%;
         font-size: 16px;
@@ -128,12 +136,6 @@
         line-height: 12px;
         border-radius: 0 3px 0 0;
         cursor: pointer;
-
-        &:hover{
-          @include m-theme(){
-            color: themed($m-blue-grey-700) !important;
-          }
-        }
       }
     }
   }
