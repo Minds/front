@@ -70,7 +70,6 @@ export class Minds {
 
     this.onboardingService.onClose.subscribe(() => {
       this.showOnboarding = false;
-      this.router.navigate(['/newsfeed']);
     });
 
     this.onboardingService.onOpen.subscribe(async () => {
