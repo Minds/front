@@ -201,7 +201,10 @@ export class CommentsThreadComponent {
             guid: guid,
             parent_path: parent_path,
         });
-        
+
+        // if the list is scrolled to the bottom
+        let scrolledToBottom = this.scrollView.nativeElement.scrollTop + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
+
         if (comment) {
           await this.loadBlockedUsers();
           this.comments.push(comment);
@@ -209,8 +212,11 @@ export class CommentsThreadComponent {
 
         this.detectChanges();
 
-        this.commentsScrollEmitter.emit('bottom');
-        this.scrollToBottom.next(true);
+        if (scrolledToBottom) {
+          this.commentsScrollEmitter.emit('bottom');
+          this.scrollToBottom.next(true);
+        }
+
       } catch (err) { };
     });
 
