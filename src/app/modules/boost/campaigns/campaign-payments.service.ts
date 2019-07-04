@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
-import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Campaign, CampaignPayment } from './campaigns.type';
+import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 
 @Injectable()
 export class CampaignPaymentsService {
+  campaignWallet: string;
+
   constructor(
     protected web3Wallet: Web3WalletService,
-    protected boostContract: BoostContractService,
+    protected tokenContract: TokenContractService,
     protected overlayModal: OverlayModalService,
   ) {
+    this.campaignWallet = window.Minds.blockchain.boost_campaigns_wallet_address;
   }
 
   calculateAmountDue(campaign: Campaign, isEditing: boolean): number {
@@ -31,36 +34,33 @@ export class CampaignPaymentsService {
   }
 
   async pay(campaign: Campaign, amount: number): Promise<CampaignPayment> {
-    return {
-      address: '0x',
-      txHash: '',
-    };
+    await this.web3Wallet.ready();
 
-    // await this.web3Wallet.ready();
-    //
-    // if (this.web3Wallet.isUnavailable()) {
-    //   throw new Error('No Ethereum wallets available on your browser.');
-    // }
-    //
-    // if (await this.web3Wallet.isLocal()) {
-    //   const action = await this.web3Wallet.setupMetamask();
-    //   switch (action) {
-    //     case GetMetamaskComponent.ACTION_CREATE:
-    //       // this.router.navigate(['/wallet']);
-    //       this.overlayModal.dismiss();
-    //       break;
-    //     case GetMetamaskComponent.ACTION_CANCEL:
-    //       return;
-    //   }
-    // }
-    //
-    // if (!(await this.web3Wallet.unlock())) {
-    //   throw new Error('Your Ethereum wallet is locked or connected to another network.');
-    // }
-    //
-    // return {
-    //   address: await this.web3Wallet.getCurrentWallet(true) as string,
-    //   txHash: await this.boostContract.create(campaign.client_guid, amount, campaign.checksum),
-    // };
+    if (this.web3Wallet.isUnavailable()) {
+      throw new Error('No Ethereum wallets available on your browser.');
+    } else if (!this.campaignWallet) {
+      throw new Error('Campaign Wallet is not setup.');
+    }
+
+    if (await this.web3Wallet.isLocal()) {
+      const action = await this.web3Wallet.setupMetamask();
+      switch (action) {
+        case GetMetamaskComponent.ACTION_CREATE:
+          // this.router.navigate(['/wallet']);
+          this.overlayModal.dismiss();
+          break;
+        case GetMetamaskComponent.ACTION_CANCEL:
+          return;
+      }
+    }
+
+    if (!(await this.web3Wallet.unlock())) {
+      throw new Error('Your Ethereum wallet is locked or connected to another network.');
+    }
+
+    return {
+      address: await this.web3Wallet.getCurrentWallet(true) as string,
+      txHash: await this.tokenContract.transfer(this.campaignWallet, amount),
+    };
   }
 }
