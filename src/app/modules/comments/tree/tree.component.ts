@@ -56,6 +56,7 @@ export class CommentsTreeComponent {
   @Input() scrollable: boolean = false;
   @Input() readonly: boolean = false;
   @Input() canEdit: boolean = false;
+  @Input() canDelete: boolean = false;
 
   private shouldReuseRouteFn;
 

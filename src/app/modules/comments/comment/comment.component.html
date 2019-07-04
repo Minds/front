@@ -58,7 +58,7 @@
         <i class="material-icons">public</i>
       </li>
       <li class="m-commentRibbon__item"
-        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid || canEdit"
+        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid || canDelete"
         (click)="delete(); toggle.value = false"
         title="Delete"
         i18n-title="@@M__ACTION__DELETE"
