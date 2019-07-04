@@ -33,6 +33,7 @@ export class CommentsThreadComponent {
   @Input() entity;
   @Input() entityGuid;
   @Input() canEdit: boolean = false;
+  @Input() canDelete: boolean = false;
   @Input() readonly: boolean = false;
   @Input() conversation: boolean = false;
   @Input() limit: number = 12;
