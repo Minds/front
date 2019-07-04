@@ -90,8 +90,8 @@ export class CommentsTreeComponent {
     if (this.entity.entity_guid)
       this.guid = this.entity.entity_guid;
     this.parent = this.entity;
-    if (!this.canEdit) {
-      this.canEdit = this.entity.owner_guid == this.session.getLoggedInUser().guid;
+    if (!this.canDelete) {
+      this.canDelete = this.entity.owner_guid == this.session.getLoggedInUser().guid;
     }
   }
 
