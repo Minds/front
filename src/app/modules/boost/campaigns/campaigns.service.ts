@@ -85,7 +85,7 @@ export class CampaignsService {
     const data = { ...campaign };
 
     if (payment) {
-      data['nonce'] = payment;
+      data['payment'] = payment;
     }
 
     return (await this.client.post(`api/v2/boost/campaigns`, data) as any).campaign;
@@ -103,7 +103,7 @@ export class CampaignsService {
     const data = { ...campaign };
 
     if (payment) {
-      data['nonce'] = payment;
+      data['payment'] = payment;
     }
 
     return (await this.client.post(`api/v2/boost/campaigns/${campaign.urn}`, data) as any).campaign;

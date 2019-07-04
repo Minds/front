@@ -1,4 +1,5 @@
 export type CampaignType = 'newsfeed' | 'content' | 'banner' | 'video';
+export type CampaignBudgetType = 'tokens';
 export type CampaignDeliveryStatus = 'pending' | 'created' | 'failed' | 'approved' | 'rejected' | 'revoked' | 'completed';
 
 export type Campaign = {
@@ -11,11 +12,12 @@ export type Campaign = {
   start: number,
   end: number,
   budget: number,
-  budget_type: string,
+  budget_type: CampaignBudgetType,
 
   // Engine
   urn?: string,
   checksum?: string,
+  payments?: any[],
 
   // Client-side
   client_guid?: string,

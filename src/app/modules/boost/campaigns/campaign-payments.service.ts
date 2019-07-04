@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
-import { Campaign, CampaignPayment } from './campaigns.type';
+import { Campaign, CampaignBudgetType, CampaignPayment } from './campaigns.type';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 
 @Injectable()

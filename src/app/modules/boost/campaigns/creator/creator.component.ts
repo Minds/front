@@ -83,9 +83,7 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.detectChanges();
 
     try {
-      const campaign = await this.service.get(this.urn);
-
-      this.campaign = campaign;
+      this.campaign = await this.service.get(this.urn);
     } catch (e) {
       console.error('BoostCampaignsCreatorComponent', e);
       this.currentError = (e && e.message) || 'Unknown error. Check your browser console.';
