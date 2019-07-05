@@ -125,9 +125,9 @@
 
     &.m-wire--creator-section--last {
       margin-top: 8px;
-        @media screen and (max-width: $min-tablet) {
-          margin-top: 0px;
-        }
+      @media screen and (max-width: $min-tablet) {
+        margin-top: 0px;
+      }
     }
   }
 
