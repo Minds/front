@@ -11,5 +11,8 @@ m-body {
   
   &.has-v2-navbar {
     margin-top: 52px;
+    @media screen and (max-width: $max-mobile) {
+      margin: 52px 0 51px 0;
+    }
   }
 }
