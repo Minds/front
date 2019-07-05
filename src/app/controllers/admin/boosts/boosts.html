@@ -1,6 +1,6 @@
 <div class="mdl-tabs__tab-bar">
-    <a [routerLink]="['/admin/boosts/newsfeed']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'newsfeed'}" i18n="@@MINDS__ADMIN__BOOSTS__NEWSFEED_TAB">Newsfeed ({{newsfeed_count}})</a>
-    <a [routerLink]="['/admin/boosts/content']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'content'}" i18n="@@MINDS__ADMIN__BOOSTS__CONTENT_TAB">Content ({{content_count}})</a>
+  <a [routerLink]="['/admin/boosts/newsfeed']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'newsfeed'}" i18n="@@MINDS__ADMIN__BOOSTS__NEWSFEED_TAB">Newsfeed ({{newsfeed_count}})</a>
+  <a [routerLink]="['/admin/boosts/content']" class="mdl-tabs__tab" [ngClass]="{'is-active': type == 'content'}" i18n="@@MINDS__ADMIN__BOOSTS__CONTENT_TAB">Content ({{content_count}})</a>
 </div>
 
 <div class="mdl-grid mdl-card mdl-shadow--4dp m-admin-boosts-statistics"
@@ -98,7 +98,8 @@
   </div>
 
 </div>
-<m--rejection-reason-modal #reasonModal
+<m--rejection-reason-modal
+  #reasonModal
   *ngIf="reasonModalOpened"
   [boost]="selectedBoost"
   [closeAfterAction]="true"
