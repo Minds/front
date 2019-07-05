@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
-import { Campaign, CampaignBudgetType, CampaignPayment } from './campaigns.type';
+import { Campaign, CampaignPayment } from './campaigns.type';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 
 @Injectable()
@@ -61,6 +61,7 @@ export class CampaignPaymentsService {
     return {
       address: await this.web3Wallet.getCurrentWallet(true) as string,
       txHash: await this.tokenContract.transfer(this.campaignWallet, amount),
+      amount,
     };
   }
 }

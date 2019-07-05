@@ -38,4 +38,5 @@ export type Campaign = {
 export type CampaignPayment = {
   address: string,
   txHash: string,
+  amount: number,
 };
