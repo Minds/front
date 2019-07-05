@@ -19,7 +19,7 @@ import { NotificationService } from './notification.service';
 export class NotificationsToasterComponent implements OnInit {
   notifications: Array<any> = [];
 
-  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: false }) host: DynamicHostDirective;
 
   constructor(
     public notification: NotificationService,

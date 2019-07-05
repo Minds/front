@@ -13,11 +13,13 @@ export class MindsTitle {
 
   constructor(public title: Title) { }
 
-  setTitle(value: string) {
+  setTitle(value: string, join = true) {
     let title;
 
-    if (value) {
+    if (value && join) {
       title = [value, this.default_title].join(this.sep);
+    } else if (value) {
+      title = value;
     } else {
       title = this.default_title;
     }

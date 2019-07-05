@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Injector, OnDestroy, OnInit, SkipSelf, ViewChild } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,10 +17,12 @@ import { TopbarHashtagsService } from "../../hashtags/service/topbar.service";
 import { NewsfeedHashtagSelectorService } from "../services/newsfeed-hashtag-selector.service";
 import { FeedsService } from "../../../common/services/feeds.service";
 import { FeaturesService } from "../../../services/features.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-newsfeed--sorted',
-  templateUrl: 'sorted.component.html'
+  providers: [ ClientMetaService ],
+  templateUrl: 'sorted.component.html',
 })
 
 export class NewsfeedSortedComponent implements OnInit, OnDestroy {
@@ -44,7 +46,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   hashtagFilterChangeSubscription: Subscription;
   query: string = '';
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
     public client: Client,
@@ -63,8 +65,15 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
     protected feedsService: FeedsService,
     protected featuresService: FeaturesService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
     this.title.setTitle('Newsfeed');
+
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('feed/discovery')
+      .setMedium('feed');
 
     if (this.session.isLoggedIn()) {
       this.rating = this.session.getLoggedInUser().boost_rating;
@@ -101,6 +110,13 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
         this.hashtag = null;
         this.all = false;
       }
+
+      if (this.algorithm != 'top' 
+        && (this.customType === 'channels' || this.customType === 'groups')
+      ) {
+        this.algorithm = 'top';
+        this.updateSortRoute();
+      } 
 
       this.load(true);
     });
@@ -193,18 +209,20 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     this.inProgress = true;
 
     try {
+      const limit = 12;
+
+      const hashtags = this.hashtag ? encodeURIComponent(this.hashtag) : '';
+      const period = this.period || '';
+      const all = this.all ? '1' : '';
+      const query = this.query ? encodeURIComponent(this.query) : '';
+      const nsfw = (this.newsfeedService.nsfw || []).join(',');
+
       const { entities, next } = await this.feedsService.get({
-        filter: 'global',
-        algorithm: this.algorithm,
-        customType: this.customType,
-        limit: 12,
-        offset: this.offset,
-        hashtags: this.hashtag ? [this.hashtag] : null,
-        period: this.period,
-        all: this.all,
-        query: this.query || '',
-        nsfw: this.newsfeedService.nsfw,
-        forceSync: forceSync,
+        endpoint: `api/v2/feeds/global/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}&query=${query}&nsfw=${nsfw}`,
+        timebased: false,
+        limit,
+        offset: <number> this.offset,
+        forceSync,
       });
 
       if (this.newsfeed && !refresh) {
@@ -245,7 +263,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       hashtags: this.hashtag ? [this.hashtag] : '',
       period: this.period || '',
       all: this.all ? 1 : '',
-      query: this.query || '',
+      query: this.query ? encodeURIComponent(this.query) : '',
       nsfw: this.newsfeedService.nsfw,
     }, {
       cache: true
@@ -331,5 +349,17 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
     route.push(params);
     this.router.navigate(route);
+  }
+
+  isActivityFeed() {
+    return this.customType != 'channels' && this.customType !== 'groups';
+  }
+
+  shouldShowBoost(i: number) {
+    if (this.query) {
+      return false;
+    }
+
+    return (i > 0 && (i % 8) === 0 && i <= 40) || i === 2;
   }
 }

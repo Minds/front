@@ -3,71 +3,21 @@
   <a (click)="setFilter('pending')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'pending' }" i18n="@@REPORT__CONSOLE__APPEALED_TAB">Appealed</a>
   <a (click)="setFilter('approved')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'approved' }" i18n="@@M__COMMON__APPROVED">Approved</a>
   <a (click)="setFilter('rejected')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'rejected' }" i18n="@@M__COMMON__REJECTED">Rejected</a>
+  <a routerLink="strikes" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'strikes' }" i18n="@@M__COMMON__REJECTED">Strikes</a>
 </div>
 
-<div *ngFor="let appeal of appeals; let i = index"
-  class="mdl-card mdl-shadow--2dp m-report-console--item"
->
+<div *ngFor="let appeal of appeals; let i = index">
 
-  <div class="m-report-console--header mdl-color--blue mdl-color-text--white">
-    <b>{{ appeal.time_created * 1000 | date: 'short' }}</b>
-    <p [ngSwitch]="appeal.reason">
-      <span *ngSwitchCase="1" i18n="@@REPORT__CONSOLE__REASON_ILLEGAL_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>is illegal </b>.</span>
-      <span *ngSwitchCase="2" i18n="@@REPORT__CONSOLE__REASON_EXPLICIT_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>should be marked as explicit </b>.</span>
-      <span *ngSwitchCase="3" i18n="@@REPORT__CONSOLE__REASON_VIOLENCE_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>encourages or incites violence</b>.</span>
-      <span *ngSwitchCase="4" i18n="@@REPORT__CONSOLE__REASON_BULLY_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>threatens, harasses, bullies or encourages others to do so</b>.</span>
-      <span *ngSwitchCase="5" i18n="@@REPORT__CONSOLE__REASON_CONFIDENTIAL_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>contains personal and confidential info</b>.</span>
-      <span *ngSwitchCase="6" i18n="@@REPORT__CONSOLE__REASON_MALICIOUS_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>maliciously targets users (@name, links, images or videos)</b>.</span>
-      <span *ngSwitchCase="7" i18n="@@REPORT__CONSOLE__REASON_IMPERSONATES_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>impersonates someone in a misleading or deceptive manner</b>.</span>
-      <span *ngSwitchCase="8" i18n="@@REPORT__CONSOLE__REASON_SPAM_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>is spam</b>.</span>
-      <span *ngSwitchCase="10" i18n="@@REPORT__CONSOLE__REASON_COPYRIGHT_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because it <b>is a copyright infringement</b>.</span>
-      <span *ngSwitchCase="11" i18n="@@REPORT__CONSOLE__REASON_ANOTHER_LABEL">The following post has been <b>{{ parseAction(appeal.action) }}</b> because <b>another reason</b>.</span>
-    </p>
-  </div>
-
-  <div class="m-report-console--appeal">
-    <div class="m-report-console--appeal--composer" *ngIf="filter == 'review'">
-      <textarea #appealContent placeholder="Please type in this box if you wish to appeal this decision, explaining your reasons" i18n="@@REPORT__CONSOLE__APPEAL_COMPOSER_PLACEHOLDER"></textarea>
-
-      <button class="m-report-console--appeal--button"
-        [disabled]="appeal.inProgress"
-        (click)="sendAppeal(appeal, appealContent.value, i)"
-        i18n="@@REPORT__CONSOLE__APPEAL_ACTION"
-      >
-        Appeal
-      </button>
-    </div>
-    <div class="m-report-console--appeal-note" *ngIf="appeal.appeal_note">
-      <p>{{appeal.appeal_note}}</p>  
-    </div>    
-  </div>
-
-
-
-  <minds-card *ngIf="appeal.entityObj && appeal.entityObj.type != 'comment'"
-    class="m-report-console--card"
-    [object]="appeal.entityObj"
-    hostClass="mdl-card"
-  ></minds-card>
-
-  <div *ngIf="appeal.entityObj && appeal.entityObj.type == 'comment'" class="m-comment-wrapper">
-    <div class="m-report-console--comment-note">
-      <a target="_blank" [routerLink]="['/newsfeed', appeal.entityObj.parent_guid]" i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD">View parent and its comment thread</a>
-    </div>
-    <minds-card-comment [object]="appeal.entityObj" class="mdl-card"></minds-card-comment>
-  </div>
-
-  <div *ngIf="!appeal.entityObj" class="m-comment-wrapper">
-    <div class="m-report-console--comment-note" i18n="@@M__COMMON__POST_NOT_FOUND">
-      Post not found
-    </div>
-  </div>
+  <m-moderation__appeal
+    [appeal]="appeal"
+  >
+  </m-moderation__appeal>
 
 </div>
 
-<infinite-scroll
+<!--<infinite-scroll
   distance="25%"
   (load)="load()"
   [moreData]="moreData"
   [inProgress]="inProgress">
-</infinite-scroll>
+</infinite-scroll>-->

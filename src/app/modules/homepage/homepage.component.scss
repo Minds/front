@@ -18,6 +18,7 @@
 
     @media screen and (max-width: 1000px){
       padding: 120px 16px;
+      flex-wrap: wrap;
     }
     @media screen and (max-width: $max-mobile) {
       padding: 62px 12px;
@@ -121,7 +122,8 @@
     margin-left: 16px;
 
     @media screen and (max-width: 1000px){
-      display:none;
+      flex-basis: 100%;
+      margin-left: 0;
     }
     minds-form-register{
       .mdl-card{

@@ -22,9 +22,18 @@
     <a [routerLink]="['/newsfeed', activity.guid]" class="permalink" *ngIf="activity.guid && !activity.remind_object">
       <span>{{activity.time_created * 1000 | date:'medium'}}</span>
       <span *ngIf="activity.edited" class="m-edited-text" i18n="@@M__COMMON__EDITED">edited</span>
-      <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
+      <div
+        class="mdl-card__supporting-text is-boosted"
+        *ngIf="boosted"
+        [class.is-onchain]="activity.boosted_onchain"
+        >
         <i class="material-icons">trending_up</i>
-        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL" [hidden]="activity.boosted_onchain">Boosted</a>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN" [hidden]="!activity.boosted_onchain">Boosted Onchain</a>
+      </div>
+      <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
+        <i class="material-icons unlisted">visibility_off</i>
+        <a i18n>Unlisted</a>
       </div>
     </a>
     <a [routerLink]="['/newsfeed/', activity.entity_guid]" class="permalink"
@@ -34,6 +43,10 @@
       <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
         <i class="material-icons">trending_up</i>
         <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
+      </div>
+      <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
+        <i class="material-icons unlisted">visibility_off</i>
+        <a i18n>Unlisted</a>
        </div>
      </a>
   </div>
@@ -78,6 +91,7 @@
         <m-nsfw-selector
           service="editing"
           [selected]="activity.nsfw"
+          [locked]="activity.ownerObj.nsfw_lock"
           (selected)="onNSWFSelections($event)"
         >
       </m-nsfw-selector>
@@ -178,13 +192,22 @@
   </div>
   <!-- Reminds -->
   <div *ngIf="activity.remind_object">
-    <minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" [boosted]="activity.boosted"></minds-remind>
+    <ng-container *ngIf="!isOwnerBlocked(activity.remind_object); else blockedRemindTemplate">
+      <minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" [boosted]="activity.boosted"></minds-remind>
+    </ng-container>
+    <ng-template #blockedRemindTemplate>
+      <div class="m-activity__blockedRemind">
+        <div class="m-activityBlockedRemind__description" i18n>
+          This remind is not available because you blocked <a target="_blank" [routerLink]="['/', activity.remind_object.ownerObj.username]">@{{activity.remind_object.ownerObj.username}}</a>.
+        </div>
+      </div>
+    </ng-template>
   </div>
 </ng-container>
 
 <ng-content select="[bottom-content]"></ng-content>
 
-<div class="tabs" *ngIf="!hideTabs">
+<div class="tabs" *ngIf="!hideTabs && !isPending(activity)">
 	<minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
   <m-wire-button *ngIf="session.getLoggedInUser().guid != (activity.remind_object ? activity.remind_object.owner_guid : activity.owner_guid)"
@@ -201,7 +224,7 @@
   </a>
 </div>
 
-<div class="impressions-tag m-activity--metrics" [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid" *ngIf="!hideTabs">
+<div class="impressions-tag m-activity--metrics" [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid" *ngIf="!activity.hide_impressions && !hideTabs">
   <div class="m-activity--metrics-inner m-border">
     <div class="m-activity--metrics-metric" (click)="showWire()">
   		<i class="ion-icon ion-flash"></i>
@@ -217,7 +240,7 @@
 <m-comments__tree
   *ngIf="commentsToggle"
   [entity]="activity"
-  [canEdit]="canDelete"
+  [canDelete]="canDelete"
   >
 </m-comments__tree>
 
@@ -257,6 +280,6 @@
 </div>
 
 <!-- Pending block -->
-<div class="mdl-card__supporting-text m-activity--pending" *ngIf="activity.pending && session.getLoggedInUser()?.guid == activity.owner_guid" i18n="@@MINDS__CARDS__ACTIVITY__AWAITING_MODERATION">
+<div class="mdl-card__supporting-text m-activity--pending" *ngIf="isPending(activity)" i18n="@@MINDS__CARDS__ACTIVITY__AWAITING_MODERATION">
   This post is awaiting moderation.
 </div>

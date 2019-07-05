@@ -60,7 +60,7 @@
     top:0;
     left:0;
     @include m-theme(){
-      background:linear-gradient(rgba(themed($m-black),0), rgba(themed($m-black),0.8));
+      background:linear-gradient(rgba(themed($m-black),0), rgba(themed($m-black),0.6));
     }
   }
 

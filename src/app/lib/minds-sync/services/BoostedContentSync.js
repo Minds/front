@@ -28,6 +28,8 @@ export default class BoostedContentSync {
     this.synchronized = null;
 
     this.locks = [];
+
+    this.inSync = false;
   }
 
   /**
@@ -80,78 +82,141 @@ export default class BoostedContentSync {
     return true;
   }
 
+  async fetch(opts = {}) {
+    const boosts = await this.get(Object.assign(opts, {
+      limit: 1
+    }));
+
+    return boosts[0] || null;
+  }
+
   /**
    * @param {Object} opts
-   * @returns {Promise<*>}
+   * @returns {Promise<*[]>}
    */
-  async fetch(opts = {}) {
+  async get(opts = {}) {
     await this.db.ready();
+
+    // Default options
+
+    opts = Object.assign({
+      limit: 1,
+      offset: 0,
+      passive: false,
+      forceSync: false,
+    }, opts);
 
     // Prune list
 
     await this.prune();
 
-    // Check if a sync is needed
+    if (!this.inSync) {
+      // Check if a sync is needed
 
-    if (opts.forceSync || !this.synchronized || (this.synchronized <= Date.now() - this.cooldown_ms)) {
-      const wasSynced = await this.sync(opts);
+      if (opts.forceSync || !this.synchronized || (this.synchronized <= Date.now() - this.stale_after_ms)) {
+        const wasSynced = await this.sync(opts);
 
-      if (!wasSynced) {
-        console.info('Cannot sync, using cache');
-      } else {
-        this.synchronized = Date.now();
+        if (!wasSynced) {
+          console.info('Cannot sync, using cache');
+        } else {
+          this.synchronized = Date.now();
+        }
+      }
+    } else {
+      // Wait for sync to finish (max 100 iterations * 100ms = 10secs)
+
+      let count = 0;
+
+      while (true) {
+        count++;
+
+        if (!this.inSync || count >= 100) {
+          console.info('Sync finished. Fetching.');
+          break;
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 100));
       }
     }
 
     // Fetch
 
-    let lockedUrn;
+    let lockedUrns = [];
 
     try {
-      const rows = (await this.db.getAllLessThan('boosts', 'lastImpression', Date.now() - this.cooldown_ms, { sortBy: 'impressions' }))
-        .filter(row => row && row.urn && (this.locks.indexOf(row.urn) === -1));
+      let rows;
 
-      if (!rows || !rows.length) {
-        return null;
+      if (!opts.passive) {
+        rows = await this.db
+          .getAllLessThan('boosts', 'lastImpression', Date.now() - this.cooldown_ms, { sortBy: 'impressions' });
+      } else {
+        rows = await this.db
+          .all('boosts', { sortBy: 'impressions' });
       }
 
-      // Pick first unlocked result
+      rows = rows.filter(row => row && row.urn && (this.locks.indexOf(row.urn) === -1));
 
-      const { urn, impressions } = rows[0];
+      if (opts.exclude) {
+        rows = rows.filter(row => opts.exclude.indexOf(row.urn) === -1);
+      }
 
-      // lock this URN
+      if (!rows || !rows.length) {
+        return [];
+      }
 
-      lockedUrn = urn;
-      this.locks.push(lockedUrn);
+      // Data set
 
-      // Increase counter
+      const dataSet = rows.slice(opts.offset || 0, opts.limit);
 
-      await this.db.update('boosts', urn, {
-        impressions: impressions + 1,
-        lastImpression: Date.now(),
-      });
+      if (!dataSet.length) {
+        return [];
+      }
 
-      // Release lock
+     // Lock data set URNs
 
-      if (lockedUrn) {
-        this.locks = this.locks.filter(lock => lock !== lockedUrn);
+      lockedUrns = [...dataSet.map(row => row.urn)];
+      this.locks.push(...lockedUrns);
+
+      // Process rows
+
+      for (let i = 0; i < dataSet.length; i++) {
+        const { urn, impressions, passiveImpressions } = dataSet[i];
+
+        // Increase counters
+
+        if (!opts.passive) {
+          await this.db.update('boosts', urn, {
+            impressions: (impressions || 0) + 1,
+            lastImpression: Date.now(),
+          });
+        } else {
+          await this.db.update('boosts', urn, {
+            passiveImpressions: (passiveImpressions || 0) + 1,
+          });
+        }
+      }
+
+      // Release locks
+
+      if (lockedUrns) {
+        this.locks = this.locks.filter(lock => lockedUrns.indexOf(lock) === -1);
       }
 
       // Hydrate entities
 
-      return await this.resolvers.fetchEntity(urn);
+      return await this.resolvers.fetchEntities(dataSet.map(row => row.urn));
     } catch (e) {
       console.error('BoostedContentSync.fetch', e);
 
-      // Release lock
+      // Release locks
 
-      if (lockedUrn) {
-        this.locks = this.locks.filter(lock => lock !== lockedUrn);
+      if (lockedUrns) {
+        this.locks = this.locks.filter(lock => lockedUrns.indexOf(lock) === -1);
       }
 
       // Return empty
 
-      return null;
+      return [];
     }
   }
 
@@ -161,6 +226,10 @@ export default class BoostedContentSync {
    */
   async sync(opts) {
     await this.db.ready();
+
+    // Set flag
+
+    this.inSync = true;
 
     // Sync
 
@@ -196,14 +265,46 @@ export default class BoostedContentSync {
 
       await Promise.all(entities.map(entity => this.db.upsert('boosts', entity.urn, entity, {
         impressions: 0,
-        lastImpression: 0
+        lastImpression: 0,
+        passiveImpressions: 0,
       })));
+
+      // Remove stale entries
+
+      await this.pruneStaleBoosts();
+
+      // Remove flag
+
+      this.inSync = false;
+
+      // Return
+
+      return true;
     } catch (e) {
+      // Remove flag
+
+      this.inSync = false;
+
+      // Warn
       console.warn('BoostedContentSync.sync', e);
+
+      // Return
+
       return false;
     }
+  }
 
-    return true;
+  /**
+   * @returns {Promise<void>}
+   */
+  async pruneStaleBoosts() {
+    try {
+      this.db
+        .deleteLessThan('boosts', 'sync', Date.now() - this.stale_after_ms);
+    } catch (e) {
+      console.error('BoostedContentSync.pruneStaleBoosts', e);
+      throw e;
+    }
   }
 
   /**
@@ -211,8 +312,7 @@ export default class BoostedContentSync {
    */
   async prune() {
     try {
-      await this.db
-        .deleteLessThan('boosts', 'sync', Date.now() - this.stale_after_ms);
+      await this.pruneStaleBoosts();
 
       await this.db
         .deleteAnyOf('boosts', 'owner_guid', (await this.resolvers.blockedUserGuids()) || []);

@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 
 import { Client } from '../../../services/api/client';
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
+import { JurySessionService } from '../juryduty/session/session.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-report-console',
   templateUrl: 'console.component.html'
 })
@@ -18,7 +18,10 @@ export class ReportConsoleComponent implements OnInit {
   offset: string = '';
   moreData: boolean = true;
 
-  constructor(private client: Client) { }
+  constructor(
+    private client: Client,
+    public service: JurySessionService,
+  ) { }
 
   ngOnInit() {
     this.load(true);
@@ -39,7 +42,11 @@ export class ReportConsoleComponent implements OnInit {
     this.inProgress = true;
 
     try {
-      let response: any = await this.client.get(`api/v1/entities/report/appeal/${this.filter}`, {
+      /*let response: any = await this.client.get(`api/v1/entities/report/appeal/${this.filter}`, {
+        limit: 12,
+        offset: this.offset
+      });*/
+      let response: any = await this.client.get(`api/v2/moderation/appeals/${this.filter}`, {
         limit: 12,
         offset: this.offset
       });
@@ -48,8 +55,8 @@ export class ReportConsoleComponent implements OnInit {
         this.appeals = [];
       }
 
-      if (response.data) {
-        this.appeals.push(...response.data);
+      if (response.appeals) {
+        this.appeals.push(...response.appeals);
       }
 
       if (response['load-next']) {
@@ -68,7 +75,7 @@ export class ReportConsoleComponent implements OnInit {
     appeal.inProgress = true;
 
     try {
-      let response: any = await this.client.post(`api/v1/entities/report/appeal/${appeal.guid}`, {
+      let response: any = await this.client.post(`api/v2/moderation/appeals/${appeal.report.urn}`, {
         note: content
       });
 

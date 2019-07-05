@@ -70,6 +70,12 @@
       background-color: rgba(themed($m-black-always), 0.4);
     }
 
+    .m-video-full-page {
+      @include m-theme() {
+        color:themed($m-white-always);
+      }
+    }
+    
     .mdl-spinner {
       margin: 0 8px;
     }

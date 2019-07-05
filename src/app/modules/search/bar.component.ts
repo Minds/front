@@ -23,7 +23,7 @@ export class SearchBarComponent {
   hasSearchContext: boolean = false;
   searchContext: string | Promise<string> = '';
 
-  @ViewChild('searchInput') searchInput: ElementRef;
+  @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
 
   @HostBinding('class.m-search--bar--default-sizes') @Input() defaultSizes: boolean = true;
 

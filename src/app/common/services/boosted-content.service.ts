@@ -34,15 +34,15 @@ export class BoostedContentService {
     this.boostedContentSync = new BoostedContentSync(
       new MindsClientHttpAdapter(this.client),
       await browserStorageAdapterFactory('minds-boosted-content-190314'),
-      6 * 60 * 60,
-      5 * 60,
+      5 * 60, // Stale after 5 minutes
+      15 * 60, // Cooldown of 15 minutes
       500,
     );
 
     this.boostedContentSync.setResolvers({
       currentUser: () => this.session.getLoggedInUser() && this.session.getLoggedInUser().guid,
       blockedUserGuids: async () => await this.blockListService.getList(),
-      fetchEntity: async guid => await this.entitiesService.single(guid),
+      fetchEntities: async guids => await this.entitiesService.fetch(guids),
     });
 
     //
@@ -69,15 +69,21 @@ export class BoostedContentService {
 
     // Garbage collection
     this.boostedContentSync.gc();
-    setTimeout(() => this.boostedContentSync.gc(), 30 * 60 * 1000); // Every 30 minutes
+    setTimeout(() => this.boostedContentSync.gc(), 5 * 60 * 1000); // Every 5 minutes
 
     // Rating changes hook
     this.settingsService.ratingChanged.subscribe(rating => this.boostedContentSync.changeRating(rating));
   }
 
-  async fetch() {
+  async get(opts = {}) {
     await this.status.untilReady();
 
-    return await this.boostedContentSync.fetch();
+    return await this.boostedContentSync.get(opts);
+  }
+
+  async fetch(opts = {}) {
+    await this.status.untilReady();
+
+    return await this.boostedContentSync.fetch(opts);
   }
 }

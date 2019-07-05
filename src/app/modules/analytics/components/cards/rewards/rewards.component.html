@@ -1,0 +1,9 @@
+<m-analytics__card
+  [title]="'Rewards'"
+  [options]="['daily', 'monthly']"
+  #card>
+
+  <div class="m-analyticsCard__charts">
+    <m-analyticscharts__rewards [timespan]="card.selectedOption"></m-analyticscharts__rewards>
+  </div>
+</m-analytics__card>

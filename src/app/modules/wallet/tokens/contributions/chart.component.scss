@@ -2,7 +2,7 @@
   padding: 16px;
   margin-bottom: 8px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 0;
   grid-auto-rows: minmax(100px, auto);
   @include m-theme(){

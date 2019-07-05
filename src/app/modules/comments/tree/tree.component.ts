@@ -56,6 +56,7 @@ export class CommentsTreeComponent {
   @Input() scrollable: boolean = false;
   @Input() readonly: boolean = false;
   @Input() canEdit: boolean = false;
+  @Input() canDelete: boolean = false;
 
   private shouldReuseRouteFn;
 
@@ -89,6 +90,9 @@ export class CommentsTreeComponent {
     if (this.entity.entity_guid)
       this.guid = this.entity.entity_guid;
     this.parent = this.entity;
+    if (!this.canDelete) {
+      this.canDelete = this.entity.owner_guid == this.session.getLoggedInUser().guid;
+    }
   }
 
   onScrollToBottom() {

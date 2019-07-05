@@ -68,3 +68,11 @@
     color: themed($m-red);
   }
 }
+
+minds-admin-boosts {
+  .minds-boosts {
+    .boost {
+      overflow: initial;
+    }
+  }
+}

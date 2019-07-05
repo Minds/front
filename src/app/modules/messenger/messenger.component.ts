@@ -29,8 +29,8 @@ export class Messenger {
   minds: Minds = window.Minds;
   storage: Storage = new Storage();
 
-  @ViewChild('userList') userList: MessengerUserlist;
-  @ViewChild('setupChat') setupChat: MessengerSetupChat;
+  @ViewChild('userList', { static: true }) userList: MessengerUserlist;
+  @ViewChild('setupChat', { static: false }) setupChat: MessengerSetupChat;
 
   constructor(
     public session: Session,

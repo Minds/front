@@ -1,4 +1,3 @@
-
 <div class="m-comment m-comment--poster minds-block" *ngIf="!readonly">
 
     <div class="minds-avatar">
@@ -8,8 +7,8 @@
     </div>
 
     <div class="minds-body">
-
         <div class="m-comments-composer">
+
             <form (submit)="post($event)">
                 <minds-textarea
                   #message="Textarea"
@@ -27,6 +26,7 @@
 
             <div class="mdl-card__actions">
               <!-- Attachements -->
+
               <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
                 <i class="material-icons">attachment</i>
                 <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)"/>
@@ -47,6 +47,17 @@
               >
                 <i class="material-icons">send</i>
               </a>
+
+              <div
+                [class.hidden]="content.length === 0"
+                class="m-commentPoster__limit"
+                [class.m-commentPoster__limit--maxed]="content.length > 1500"
+                >
+                <span class="m-commentPosterLimit__inputed">
+                  {{ content.length }}
+                </span>
+                <span> / 1500</span>
+              </div>
             </div>
 
             <!-- Rich embed preview -->
@@ -79,7 +90,6 @@
               </div>
             </div>
         </div>
-
     </div>
 
 </div>

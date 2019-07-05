@@ -7,6 +7,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { Client } from '../../../services/api/client';
 import { MindsTitle } from '../../../services/ux/title';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
@@ -16,6 +19,8 @@ import { Session } from '../../../services/session';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
 import * as BN from 'bn.js';
+import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-blockchain--purchase',
@@ -32,7 +37,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   };
 
   //amount: number = 0.25;
-  tokens: number = 500;
+  tokens: number = 30;
 
   address: string = '';
   ofac: boolean = false;
@@ -44,6 +49,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   minds = window.Minds;
   showPledgeModal: boolean = false;
   showLoginModal: boolean = false;
+  showEthModal: boolean = false;
   confirming: boolean = false;
   confirmed: boolean = false;
   error: string;
@@ -52,6 +58,8 @@ export class BlockchainPurchaseComponent implements OnInit {
   inProgress: boolean = false;
   rate: number = 0;
 
+  paramsSubscription: Subscription;
+
   constructor(
     protected client: Client,
     protected changeDetectorRef: ChangeDetectorRef,
@@ -59,7 +67,9 @@ export class BlockchainPurchaseComponent implements OnInit {
     protected overlayModal: OverlayModalService,
     protected web3Wallet: Web3WalletService,
     protected tde: TokenDistributionEventService,
-    public session: Session
+    public session: Session,
+    private route: ActivatedRoute,
+    protected router: Router,
   ) { }
 
   ngOnInit() {
@@ -67,6 +77,17 @@ export class BlockchainPurchaseComponent implements OnInit {
     this.load().then(() => {
       this.amount = 0.25;
     });
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      if (params.purchaseEth) {
+        this.purchaseEth();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   get amount() {
@@ -109,6 +130,16 @@ export class BlockchainPurchaseComponent implements OnInit {
   async purchase() {
     await this.load();
     if (this.session.isLoggedIn()) {
+      if (await this.web3Wallet.isLocal()) {
+        const action = await this.web3Wallet.setupMetamask();
+        switch (action) {
+          case GetMetamaskComponent.ACTION_CREATE:
+            this.router.navigate(['/wallet']);
+            this.inProgress = false;
+            this.overlayModal.dismiss();
+            return;
+        }
+      }
       this.showPledgeModal = true;
     } else {
       this.showLoginModal = true;
@@ -151,6 +182,20 @@ export class BlockchainPurchaseComponent implements OnInit {
       this.closePledgeModal();
       this.confirmed = false;
     }, 2000);*/
+  }
+
+  purchaseEth() {
+    this.showEthModal = true;
+    this.detectChanges();
+  //let win = window.open('/checkout');
+  //win.onload = function() {
+  //  alert('opened');
+  //}
+  }
+
+  closePurchaseEth() {
+    this.showEthModal = false;
+    this.detectChanges();
   }
 
   closeLoginModal() {

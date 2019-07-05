@@ -29,6 +29,7 @@ import { NewsfeedSortedComponent } from './feeds/sorted.component';
 import { NewsfeedEntityComponent } from './feeds/entity.component';
 import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
 import { SearchModule } from "../search/search.module";
+import { NewsfeedTilesComponent } from './feeds/tiles.component';
 
 const routes: Routes = [
   {
@@ -77,6 +78,7 @@ const routes: Routes = [
     NewsfeedTagsComponent,
     NewsfeedSortedComponent,
     NewsfeedEntityComponent,
+    NewsfeedTilesComponent,
   ],
   providers: [
     NewsfeedService,
@@ -86,6 +88,8 @@ const routes: Routes = [
   exports: [
     NewsfeedDropdownComponent,
     NewsfeedBoostRotatorComponent,
+    NewsfeedEntityComponent,
+    NewsfeedTilesComponent,
   ],
   entryComponents: [
     NewsfeedComponent,

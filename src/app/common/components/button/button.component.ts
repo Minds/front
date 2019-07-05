@@ -21,7 +21,7 @@ import { BoostButton } from '../../../modules/legacy/components/buttons/boost';
   `
 })
 export class MindsButton implements AfterViewInit {
-  @ViewChild(DynamicHostDirective) cardHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) cardHost: DynamicHostDirective;
 
   object: any = {};
   @Input() type: string;

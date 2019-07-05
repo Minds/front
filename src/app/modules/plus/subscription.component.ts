@@ -77,6 +77,7 @@ export class PlusSubscriptionComponent {
 
     this.payment.period = period;
     this.payment.amount = amount;
+    this.payment.recurring = true;
     this.payment.entity_guid = '730071191229833224';
     this.payment.receiver = this.blockchain.plus_address;
 

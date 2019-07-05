@@ -3,9 +3,15 @@
 }
 .m-pin-button {
   overflow: visible;
-
+  
   .m-tooltip--bubble {
     width:100px;
+  }
+}
+
+.m-pin-button[disabled]:hover {
+  @include m-theme(){
+    background-color: transparent;
   }
 }
 
@@ -117,7 +123,6 @@ minds-activity {
     font-size: 10px;
     display: inline-block;
     vertical-align: middle;
-    cursor: pointer;
 
     > * {
       vertical-align: middle;
@@ -133,4 +138,25 @@ minds-activity {
 
 minds-groups-profile-feed .m-pin-button {
   //display: none;
+}
+
+.m-activity__blockedRemind {
+  margin: 0 16px;
+  border-radius: 6px;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+
+  @include m-theme(){
+    background-color: rgba(themed($m-grey-50), 0.7);
+  }
+
+  .m-activityBlockedRemind__description {
+    opacity: 0.75;
+
+    a {
+      text-decoration: none;
+    }
+  }
 }

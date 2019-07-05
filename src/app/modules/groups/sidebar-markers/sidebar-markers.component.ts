@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
 import { interval, timer } from 'rxjs';
 import { startWith, map, tap, throttle } from 'rxjs/operators';
 
@@ -19,8 +19,9 @@ export class GroupsSidebarMarkersComponent {
   groups = [];
   offset = 0;
   moreData: boolean = true;
+  tooltipsAnchor: string = 'right';
 
-  @ViewChild('list') list;
+  @ViewChild('list', { static: true }) list;
 
   constructor(
     private client: Client,
@@ -31,6 +32,7 @@ export class GroupsSidebarMarkersComponent {
   }
 
   async ngOnInit() {
+    this.onResize();
     await this.load(true);
     this.listenForMarkers();
   }
@@ -100,6 +102,10 @@ export class GroupsSidebarMarkersComponent {
 
   ngDoCheck() {
     this.cd.detectChanges();
+  }
+
+  @HostListener('window:resize') onResize() {
+    this.tooltipsAnchor = window.innerWidth <= 992 ? 'top' : 'right';
   }
 
 }

@@ -1,4 +1,9 @@
-<m-dropdown class="m-sort-selector--algorithm-dropdown" [expanded]="expandedAlgorithmDropdown" #algorithmDropdown>
+<m-dropdown
+  *ngIf="shouldShowAlgorithms()"
+  class="m-sort-selector--algorithm-dropdown"
+  [expanded]="expandedAlgorithmDropdown"
+  #algorithmDropdown
+>
   <label [ngClass]="[labelClass]">
     <i
       *ngIf="getCurrentAlgorithmProp('icon')"
@@ -12,9 +17,10 @@
 
   <ul class="m-dropdown--list">
     <li
-      *ngFor="let item of algorithms"
+      *ngFor="let item of getAlgorithms()"
       class="m-dropdown--list--item"
       [class.m-dropdown--list--item--selected]="item.id === algorithm"
+      [class.m-dropdown--list--item--disabled]="isDisabled(item.id)"
       (click)="setAlgorithm(item.id); closeDropdowns();"
     >
       <i
@@ -27,7 +33,11 @@
   </ul>
 </m-dropdown>
 
-<m-dropdown class="m-sort-selector--period-dropdown" *ngIf="hasCurrentAlgorithmPeriod()" #periodDropdown>
+<m-dropdown
+  *ngIf="shouldShowPeriods() && hasCurrentAlgorithmPeriod()"
+  class="m-sort-selector--period-dropdown"
+  #periodDropdown
+>
   <label [ngClass]="[labelClass]">
     <span>{{getCurrentPeriodLabel()}}</span>
 
@@ -36,7 +46,7 @@
 
   <ul class="m-dropdown--list">
     <li
-      class="m-dropdown--list--item" *ngFor="let item of periods"
+      class="m-dropdown--list--item" *ngFor="let item of getPeriods()"
       [class.m-dropdown--list--item--selected]="item.id === period"
       (click)="setPeriod(item.id); closeDropdowns();"
     >
@@ -45,7 +55,12 @@
   </ul>
 </m-dropdown>
 
-<m-dropdown class="m-sort-selector--custom-type-dropdown" [expanded]="expandedCustomTypeDropdown" #customTypeDropdown>
+<m-dropdown
+  *ngIf="shouldShowCustomTypes()"
+  class="m-sort-selector--custom-type-dropdown"
+  [expanded]="expandedCustomTypeDropdown"
+  #customTypeDropdown
+>
   <label [ngClass]="[labelClass]">
     <i
       *ngIf="getCurrentCustomTypeProp('icon')"

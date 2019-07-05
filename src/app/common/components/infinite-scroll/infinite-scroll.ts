@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { ScrollService } from '../../../services/ux/scroll';
-
-export type ScrollOrientation = 'vertical' | 'horizontal';
+import { GlobalScrollService, ScrollSubscription } from "../../../services/ux/global-scroll.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'infinite-scroll',
@@ -13,10 +12,9 @@ export type ScrollOrientation = 'vertical' | 'horizontal';
          [hidden]="inProgress || !moreData"
          (click)="manualLoad()"
          *ngIf="!hideManual">
-       <ng-container i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE" *ngIf="!iconOnly">Click to load more</ng-container>
+      <ng-container i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE" *ngIf="!iconOnly">Click to load more</ng-container>
 
-       <i class="material-icons" *ngIf="iconOnly && orientation == 'vertical'">keyboard_arrow_down</i>
-       <i class="material-icons" *ngIf="iconOnly && orientation == 'horizontal'">keyboard_arrow_right</i>
+      <i class="material-icons" *ngIf="iconOnly">keyboard_arrow_down</i>
     </div>
     <div class="m-infinite-scroll-manual"
          [class.mdl-color--blue-grey-200]="!iconOnly"
@@ -32,7 +30,6 @@ export type ScrollOrientation = 'vertical' | 'horizontal';
 export class InfiniteScroll {
   @Input() on: any;
   @Input() scrollSource: any; // if not provided, it defaults to window
-  @Input() orientation: ScrollOrientation = 'vertical';
   @Input() iconOnly: boolean = false;
 
   @Output('load') loadHandler: EventEmitter<any> = new EventEmitter(true);
@@ -44,11 +41,9 @@ export class InfiniteScroll {
   element: any;
 
   _content: any;
-  _listener;
+  subscription: [ScrollSubscription, Subscription];
 
-  private scroll: ScrollService;
-
-  constructor(_element: ElementRef) {
+  constructor(_element: ElementRef, private scroll: GlobalScrollService) {
     this.element = _element.nativeElement;
   }
 
@@ -57,36 +52,30 @@ export class InfiniteScroll {
   }
 
   init() {
-    this.scroll = new ScrollService();
-    if (this.scrollSource) {
-      this.scroll.setScrollSource(this.scrollSource);
+    if (!this.scrollSource) {
+      this.scrollSource = document;
     }
-    this._listener = this.scroll.listen((e) => {
+    this.subscription = this.scroll.listen(this.scrollSource, ((subscription, e) => {
       if (this.moreData) {
-        switch (this.orientation) {
-          case 'vertical':
-            if (
-              this.element.offsetTop
-              - this.element.clientHeight
-              - this.scroll.view.clientHeight
-              <= this.scroll.view.scrollTop
-            ) {
-              this.loadHandler.next(true);
-            }
-            break;
-          case 'horizontal':
-            if (
-              this.element.offsetLeft
-              - this.element.clientWidth
-              - this.scroll.view.clientWidth
-              <= this.scroll.view.scrollLeft
-            ) {
-              this.loadHandler.next(true);
-            }
-            break;
+        let clientHeight, scrollTop;
+        if (this.scrollSource === document) {
+          clientHeight = document.body.clientHeight;
+          scrollTop = document.body.scrollTop;
+        } else {
+          clientHeight = subscription.element.clientHeight;
+          scrollTop = subscription.element.scrollTop;
+        }
+
+        if (
+          this.element.offsetTop
+          - this.element.clientHeight
+          - clientHeight
+          <= scrollTop
+        ) {
+          this.loadHandler.next(true);
         }
       }
-    }, 100);
+    }).bind(this), 100);
   }
 
   manualLoad() {
@@ -94,8 +83,8 @@ export class InfiniteScroll {
   }
 
   ngOnDestroy() {
-    if (this._listener)
-      this.scroll.unListen(this._listener);
+    if (this.subscription)
+      this.scroll.unListen(this.subscription[0], this.subscription[1]);
   }
 
 }

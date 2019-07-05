@@ -72,8 +72,13 @@ describe('ChannelComponent', () => {
         }),
         MockComponent({
           selector: 'm-sort-selector',
-          inputs: ['algorithm', 'period', 'customType', 'hideCustomTypesOnLatest'],
+          inputs: ['algorithm', 'period', 'customType'],
           outputs: ['onChange'],
+        }),
+        MockComponent({
+          selector: 'm-channel--sorted',
+          inputs: ['channel', 'type'],
+          outputs: ['onChangeType'],
         }),
         IfFeatureDirective,
       ],
@@ -106,11 +111,19 @@ describe('ChannelComponent', () => {
     fixture = TestBed.createComponent(ChannelComponent);
     clientMock.response = {};
     uploadMock.response = {};
+    featuresServiceMock.mock('es-feeds', false);
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('channel-filter-feeds', false);
     comp = fixture.componentInstance;
     comp.username = 'username';
-    comp.user = { guid: 'guidguid', name: 'name', username: 'username', icontime: 11111, subscribers_count:182, impressions:18200};
+    comp.user = {
+      guid: 'guidguid',
+      name: 'name',
+      username: 'username',
+      icontime: 11111,
+      subscribers_count: 182,
+      impressions: 18200
+    };
     comp.editing = false;
     fixture.detectChanges();
 

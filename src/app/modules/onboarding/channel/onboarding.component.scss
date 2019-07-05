@@ -8,6 +8,7 @@ m-channel--onboarding {
 
   m-modal .m-modal-container .mdl-card {
     border-radius: 6px;
+    overflow: visible;
   }
 
   @media screen and(max-width: $max-mobile) {
@@ -335,6 +336,7 @@ m-channel--onboarding {
       line-height: 20px;
       margin: 8px 0 16px;
       padding: 0;
+      text-align: center;
 
       &.m-channelOnboardingSlide__subtext-note {
         font-size: 12px;

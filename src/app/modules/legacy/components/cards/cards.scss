@@ -203,6 +203,12 @@ minds-card-image, minds-card-video {
         letter-spacing: 0.75px;
         text-rendering: optimizeLegibility;
         text-overflow: unset;
+        white-space: pre-wrap;
+
+        > * {
+          padding-right: 8px;
+        }
+
         @include m-theme(){
           color: themed($m-grey-400);
         }
@@ -298,6 +304,8 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   }
 
   .m-owner-block--remind{
+    overflow: visible;
+    
     i{
       font-size: 18px;
       margin-right: 12px;
@@ -325,7 +333,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
 
   .m-edited-text {
     text-transform: uppercase;
-    padding-left: 8px;
+    padding-right: 8px;
     font-weight: bold;
     letter-spacing: 0.5px;
   }
@@ -448,9 +456,10 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
 
   .is-boosted{
     display: inline-block;
+    width: auto;
     font-size: 11px;
     padding: 0;
-    padding-left: 8px;
+    padding-right: 8px;
     line-height: 1;
     vertical-align: middle;
     @include m-theme(){
@@ -461,12 +470,29 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
       font-size: 18px;
       position: relative;
       vertical-align: middle;
+
+      &.unlisted {
+        font-size: 16px;
+        margin-right: 4px;
+      }
     }
     a{
       font-weight:bold;
       vertical-align: middle;
       @include m-theme(){
         color:themed($m-grey-400);
+      }
+    }
+  }
+
+  .is-boosted.is-onchain {
+    @include m-theme(){
+      color:themed($m-blue);
+    }
+
+    a {
+      @include m-theme(){
+        color:themed($m-blue);
       }
     }
   }
@@ -490,7 +516,8 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     font-size: 12px;
     font-weight: 400;
     @include m-theme(){
-      background-color: themed($m-amber-light);
+      color: themed($m-warn-fg);
+      background-color: themed($m-warn-bg);
     }
   }
 
@@ -536,6 +563,12 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   .selected{
     @include m-theme(){
       color: themed($m-blue) !important;
+    }
+    
+    &:hover {
+      @include m-theme(){
+        color: rgba(themed($m-blue-dark),0.9) !important;
+      }
     }
   }
   i{

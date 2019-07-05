@@ -79,6 +79,36 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a class="tag"');
   });
 
+  it('should transform when @ followed by `.com`', () => {
+    const pipe = new TagsPipe(featuresServiceMock);
+    const string = 'textstring @name.com';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('<a class="tag"');
+    expect(transformedString).toContain('@name.com');
+  });
+
+  it('should transform two adjacent tags', () => {
+    const pipe = new TagsPipe(featuresServiceMock);
+    const string = '@test1 @test2';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toEqual('<a class="tag" href="/test1" target="_blank">@test1</a> <a class="tag" href="/test2" target="_blank">@test2</a>');
+  });
+
+  fit('should transform many adjacent tags', () => {
+    const pipe = new TagsPipe(featuresServiceMock);
+    const string = '@test1 @test2 @test3 @test4 @test5 @test6 @test7 @test8 @test9 @test10 @test11 @test12 @test13 @test14 @test15';
+    console.log(string);
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toEqual(`<a class="tag" href="/test1" target="_blank">@test1</a> <a class="tag" href="/test2" target="_blank">@test2</a> `
+       + `<a class="tag" href="/test3" target="_blank">@test3</a> <a class="tag" href="/test4" target="_blank">@test4</a> `
+       + `<a class="tag" href="/test5" target="_blank">@test5</a> <a class="tag" href="/test6" target="_blank">@test6</a> `
+       + `<a class="tag" href="/test7" target="_blank">@test7</a> <a class="tag" href="/test8" target="_blank">@test8</a> `
+       + `<a class="tag" href="/test9" target="_blank">@test9</a> <a class="tag" href="/test10" target="_blank">@test10</a> `
+       + `<a class="tag" href="/test11" target="_blank">@test11</a> <a class="tag" href="/test12" target="_blank">@test12</a> `
+       + `<a class="tag" href="/test13" target="_blank">@test13</a> <a class="tag" href="/test14" target="_blank">@test14</a> `
+       + `<a class="tag" href="/test15" target="_blank">@test15</a>`);
+  });
+
   it('should transform to an email', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'textstring@name.com';
@@ -90,7 +120,6 @@ describe('TagPipe', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'textstring name';
     const transformedString = pipe.transform(<any>string);
-
     expect(transformedString).toEqual(string);
     expect(transformedString).not.toContain('<a class="tag"');
   });

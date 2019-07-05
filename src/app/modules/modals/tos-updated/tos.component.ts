@@ -17,7 +17,7 @@ export class TOSUpdatedModal {
 
   ngOnInit() {
     if (this.session.getLoggedInUser().last_accepted_tos < window.Minds.last_tos_update) {
-      this.showModal = false;
+      this.showModal = true;
     }
   }
 

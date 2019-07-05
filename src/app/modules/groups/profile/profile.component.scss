@@ -1,3 +1,5 @@
+@import "defaults";
+
 .m-group__grid {
   display: flex;
   flex-direction: row;
@@ -23,14 +25,24 @@
   }
 
   .m-groupGrid__toggleBtn {
+    display: block;
+    z-index: 99;
+    cursor: pointer;
+    position: fixed;
+    right: 65px;
+    top: 55px;
+    @media screen and (max-width: $min-desktop) {
+      right: 8px;
+      top: 106px;
+    }
+    i {
+      font-size: 32px;
+    }
     .material-icons {
       @include m-theme(){
         text-shadow: 0px 0px 1px themed($m-white), 0px 0px 1px themed($m-white);
         color: themed($m-grey-400);
       }
-    }
-    @media screen and (max-width: 900px) {
-      right: 8px !important;
     }
   }
 }
@@ -71,6 +83,27 @@
         font-size: 18px;
       }
     }
+
+    .m-groups-settings-dropdown__item--nsfw {
+      overflow: visible;
+      
+      m-nsfw-selector {
+        border: 0;
+        width: 100%;
+        padding: 0;
+  
+        .m-nsfwSelector__label {
+          m-tooltip {
+            display: none;
+          }  
+        }
+  
+        .m-dropdown .m-dropdown__list {
+          width: 210px;
+        }
+      }
+    }
+
   }
 
   minds-avatar{
@@ -145,6 +178,10 @@ m-groups--profile .m-group__grid header {
   minds-banner .minds-banner {
     max-height: 268px;
     height: 268px;
+
+    .minds-banner-overlay {
+      display: none;
+    }
   }
 }
 

@@ -1,17 +1,30 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  EventEmitter,
+  ElementRef,
+  Input,
+  ViewChild,
+  OnInit,
+  SkipSelf,
+  Injector,
+} from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
-import { ScrollService } from '../../../../../services/ux/scroll';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
-import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 import { EntitiesService } from "../../../../../common/services/entities.service";
 import { Router } from "@angular/router";
+import { BlockListService } from "../../../../../common/services/block-list.service";
+import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.service";
+import { NewsfeedService } from "../../../../newsfeed/services/newsfeed.service";
+import { ClientMetaService } from "../../../../../common/services/client-meta.service";
 
 @Component({
   moduleId: module.id,
@@ -21,11 +34,12 @@ import { Router } from "@angular/router";
   },
   inputs: ['object', 'commentsToggle', 'focusedCommentGuid', 'visible', 'canDelete', 'showRatingToggle'],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
+  providers: [ ClientMetaService, ActivityAnalyticsOnViewService ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class Activity {
+export class Activity implements OnInit {
 
   minds = window.Minds;
 
@@ -40,6 +54,17 @@ export class Activity {
   @Input() boost: boolean = false;
   @Input('boost-toggle')
   @Input() showBoostMenuOptions: boolean = false;
+  @Input() slot: number = -1;
+
+  visibilityEvents: boolean = true;
+  @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
+    this.visibilityEvents = visibilityEvents;
+
+    if (this.activityAnalyticsOnViewService) {
+      this.activityAnalyticsOnViewService
+        .setEnabled(this.visibilityEvents);
+    }
+  }
 
   type: string;
   element: any;
@@ -51,7 +76,6 @@ export class Activity {
   _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();
   @Input() focusedCommentGuid: string;
-  scroll_listener;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
   onViewed: EventEmitter<{activity, visible}> = new EventEmitter<{activity, visible}>();
@@ -59,6 +83,8 @@ export class Activity {
   isTranslatable: boolean;
   canDelete: boolean = false;
   showRatingToggle: boolean = false;
+
+  blockedUsers: string[] = [];
 
   get menuOptions(): Array<string> {
     if (!this.activity || !this.activity.ephemeral) {
@@ -72,24 +98,44 @@ export class Activity {
     }
   }
 
-  @ViewChild('player') player: MindsVideoComponent;
+  @ViewChild('player', { static: false }) player: MindsVideoComponent;
 
   constructor(
     public session: Session,
     public client: Client,
-    public scroll: ScrollService,
-    public newsfeedService: NewsfeedService,
-    _element: ElementRef,
     public attachment: AttachmentService,
     public translationService: TranslationService,
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
     private entitiesService: EntitiesService,
     private router: Router,
+    protected blockListService: BlockListService,
+    protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
+    protected newsfeedService: NewsfeedService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
+    elementRef: ElementRef,
   ) {
+    this.clientMetaService
+      .inherit(injector);
 
-    this.element = _element.nativeElement;
-    this.isVisible();
+    this.activityAnalyticsOnViewService
+      .setElementRef(elementRef)
+      .onView(activity => {
+        this.newsfeedService.recordView(activity, true, null, this.clientMetaService.build({
+          campaign: activity.boosted_guid ? activity.urn : '',
+          position: this.slot,
+        }));
+
+        this.onViewed.emit({ activity: activity, visible: true });
+      });
+  }
+
+  ngOnInit() {
+    this.activityAnalyticsOnViewService
+      .setEnabled(this.visibilityEvents);
+
+    this.loadBlockedUsers();
   }
 
   set object(value: any) {
@@ -97,6 +143,8 @@ export class Activity {
       return;
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
+
+    this.activityAnalyticsOnViewService.setEntity(this.activity);
 
     if (
       this.activity.custom_type == 'batch' 
@@ -142,7 +190,10 @@ export class Activity {
     this.editing = false;
     this.activity.edited = true;
 
-    let data = Object.assign(this.activity, this.attachment.exportMeta());
+    let data = this.activity;
+    if (this.attachment.has()) {
+      data = Object.assign(this.activity, this.attachment.exportMeta());
+    }
     this.client.post('api/v1/newsfeed/' + this.activity.guid, data);
   }
 
@@ -319,29 +370,8 @@ export class Activity {
     this.attachment.setNSFW(reasons);
   }
 
-  private viewed:boolean = false;
-
-  isVisible() {
-    if (this.visible) {
-      this.onViewed.emit({activity: this.activity, visible: true});
-      return true;
-    }
-    this.scroll_listener = this.scroll.listenForView().subscribe((view) => {
-      if (this.element.offsetTop - this.scroll.view.clientHeight <= this.scroll.view.scrollTop && !this.visible) {
-        //stop listening
-        this.scroll.unListen(this.scroll_listener);
-        //make visible
-        this.visible = true;
-
-        //this.onViewed.emit({activity: this.activity, visible: true});
-        //update the analytics
-        this.newsfeedService.recordView(this.activity);
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    this.scroll.unListen(this.scroll_listener);
+  isUnlisted() {
+    return this.activity.access_id === '0' || this.activity.access_id === 0;
   }
 
   propagateTranslation($event) {
@@ -357,6 +387,25 @@ export class Activity {
     if (this.player) {
       this.player.pause();
     }
+  }
+
+  async loadBlockedUsers() {
+    try {
+      this.blockedUsers = (await this.blockListService.getList()) || [];
+      this.detectChanges();
+    } catch (e) {
+      console.warn('Activity.loadBlockedUsers', e);
+    }
+
+    return true;
+  }
+
+  isOwnerBlocked(activity) {
+    return activity && this.blockedUsers.indexOf(activity.owner_guid) > -1;
+  }
+
+  isPending(activity) {
+    return activity && activity.pending && activity.pending !== '0';
   }
 
   detectChanges() {

@@ -275,9 +275,6 @@ body.m-theme-in-transition,
 body.m-theme-in-transition *,
 body.m-theme-in-transition *:before,
 body.m-theme-in-transition *:after 
-{
-  transition-delay: 0s !important;
-  transition-duration: .75s !important;
-  transition-property: background-color, border-color, box-shadow, stroke, fill !important;
-  transition-timing-function: ease !important;  
+{ 
+  transition: background-color 0.75s ease 0s, border-color 0.75s ease 0s, box-shadow 0.75s ease 0s, stroke 0.75s ease 0s, fill 0.75s ease 0s !important;
 }

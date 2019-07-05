@@ -799,11 +799,6 @@ minds-groups-create {
 minds-groups-profile-feed {
   z-index: 1;
 
-  .m-groups-feed--review-actions {
-    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
-    text-align: right;
-  }
-
   .minds-list.m-groupProfileFeed__mediaList {
     display: flex;
     flex-direction: row;
