@@ -36,6 +36,8 @@ export class AdminBoosts {
 
   paramsSubscription: Subscription;
 
+  readonly NON_REPORTABLE_REASONS = [7, 8, 12, 13]; // spam, appeals, onchain payment failed, original post removed
+
   @ViewChild('reasonModal', { static: false }) modal: RejectionReasonModalComponent;
 
   constructor(
@@ -131,7 +133,9 @@ export class AdminBoosts {
 
     this.reasonModalOpened = false;
 
-    this.report(this.selectedBoost);
+    if (this.NON_REPORTABLE_REASONS.indexOf(boost.rejection_reason) === -1) {
+      this.report(this.selectedBoost);
+    }
 
     this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/reject', { reason: boost.rejection_reason });
     this.pop(boost);
