@@ -2,7 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output, 
+  Output,
 } from '@angular/core';
 import { 
   NSFWSelectorCreatorService,
@@ -10,6 +10,7 @@ import {
   NSFWSelectorEditingService,
 } from './nsfw-selector.service';
 import { Storage } from '../../../services/storage';
+import { ifError } from 'assert';
 
 @Component({
   selector: 'm-nsfw-selector',
@@ -27,6 +28,7 @@ export class NSFWSelectorComponent {
     
   @Input('service') serviceRef: string = 'consumer';
   @Input('consumer') consumer: false;
+  @Input('expanded') expanded: false;
   @Output('selected') onSelected: EventEmitter<any> = new EventEmitter();
   @Input() user: any;
   
@@ -57,6 +59,14 @@ export class NSFWSelectorComponent {
     }
   }
 
+  @Input('locked') set locked(locked: Array<number>) {
+    for (let i in this.service.reasons) {
+      if (this.service.reasons[i].selected) {
+        this.service.reasons[i].locked = locked.indexOf(this.service.reasons[i].value) > -1;
+      }
+    }
+  }
+
   /**
    * Toggles on a reason in the selector -
    * See services for a list of reasons.
@@ -64,6 +74,9 @@ export class NSFWSelectorComponent {
    * @param { array } - one of the objects from the assosciated service.
    */
   toggle(reason) {
+    if(reason.locked) {
+      return;
+    }
     this.service.toggle(reason);
 
     const reasons = this.service.reasons.filter(r => r.selected);
@@ -87,5 +100,4 @@ export class NSFWSelectorComponent {
         return true;
     }
   }
-
 }

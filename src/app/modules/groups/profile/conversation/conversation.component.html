@@ -1,10 +1,11 @@
-<minds-comments *ngIf="group?.guid"
+<m-comments__tree
+  *ngIf="group?.guid"
   class="m-group__chat"
   [limit]="24"
-  [object]="group"
-  [focusOnInit]="true"
+  [entity]="group"
   [conversation]="true"
-  [scrollable]="true"
-  [canEdit]="group['is:moderator'] || group['is:creator']"
+  [canDelete]="group['is:moderator'] || group['is:creator']"
   [readonly]="!group['is:member']"
-></minds-comments>
+  [scrollable]="true"
+>
+</m-comments__tree>

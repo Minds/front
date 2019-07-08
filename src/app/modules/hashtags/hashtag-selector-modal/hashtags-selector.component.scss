@@ -2,11 +2,15 @@
 .m-overlay-modal--hashtag-selector {
 
   padding: $minds-padding * 2;
-  background-color: white;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
 
   .m-overlay-modal--close {
-    background-color: white;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
     i {
       font-size: 24px !important;
     }
@@ -33,9 +37,11 @@
   }
 
   .m-hashtags-selector--subtext {
-    color: #888;
     line-height: 1.5;
     padding-bottom: 0;
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
   }
 
   .m-hashtag-selector--section-row {
@@ -52,18 +58,22 @@
         width: 120px;
         border-radius: 3px;
         -webkit-appearance: none;
-        border: 1px solid #ddd;
         font-size: 13px;
         font-weight: 600;
         text-transform: lowercase;
+        @include m-theme(){
+          border: 1px solid themed($m-grey-100);
+        }
       }
       i {
-        color: #888;
         font-size: 16px;
         cursor: pointer;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
       }
     }
-    
+
     .m-hashtag--creator > * {
       vertical-align: middle;
     }
@@ -120,7 +130,9 @@
   }
 
   .selected {
-    color: #4690DF;
+    @include m-theme(){
+      color: themed($m-blue);
+    }
   }
 
   .m-hashtag-selector--submit {
@@ -134,21 +146,23 @@
       appearance: none;
       padding: 8px 32px;
       background: none;
-      border: 1px solid #555;
       border-radius: 0;
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
       text-transform: uppercase;
-      color: #555;
       cursor: pointer;
+      @include m-theme(){
+        color: themed($m-grey-700);
+        border: 1px solid themed($m-grey-700);
+      }
 
       &[disabled] {
         cursor: default;
         opacity: 0.35;
       }
     }
-    
+
     .m-hashtag-selector--submit-label,
     .m-hashtag-selector--submit-error {
       margin-left: $minds-padding;
@@ -160,9 +174,11 @@
     }
 
     .m-hashtag-selector--submit-error {
-      color: #ff0000;
       font-size: 12px;
       font-weight: 500;
+      @include m-theme(){
+        color: themed($m-red);
+      }
     }
   }
 

@@ -14,7 +14,11 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { GroupsService } from '../groups-service';
 
-let groupsServiceMock: any = MockService(GroupsService);
+let groupConfig = {
+  'countMembers': Promise.resolve(1)
+};
+
+let groupsServiceMock: any = MockService(GroupsService, groupConfig);
 
 describe('GroupsSettingsButton', () => {
 
@@ -38,6 +42,11 @@ describe('GroupsSettingsButton', () => {
           template: '<ng-content></ng-content>',
           inputs: ['open'],
           outputs: ['closed']
+        }),
+        MockComponent({ 
+          selector: 'm-nsfw-selector',
+          inputs: [ 'selected' ],
+          outputs: [ 'selected'],
         }),
         GroupsSettingsButton],
       imports: [RouterTestingModule, FormsModule],
@@ -181,11 +190,14 @@ describe('GroupsSettingsButton', () => {
     expect(getMenuItem(6)).toBeNull();
   });
 
-  it('should delete the group', fakeAsync(()=> {
+  it('should delete the group if there is one member', fakeAsync(()=> {
     const deleteGroup = getMenuItem(5);
 
     deleteGroup.nativeElement.click();
+
     fixture.detectChanges();
+    jasmine.clock().tick(10);
+
     expect(comp.isGoingToBeDeleted).toBeTruthy();
 
     const confirmButton = fixture.debugElement.query(By.css('m-modal button.mdl-button'));
@@ -197,6 +209,17 @@ describe('GroupsSettingsButton', () => {
 
     expect(comp.group.deleted).toBeTruthy();
     expect(groupsServiceMock.deleteGroup).toHaveBeenCalled();
+  }));
+
+  it('should not allow group deletion if there is more than one member', fakeAsync(()=> {
+    groupConfig.countMembers = Promise.resolve(2);
+    const deleteGroup = getMenuItem(5);
+
+    deleteGroup.nativeElement.click();
+    fixture.detectChanges();
+
+    expect(groupsServiceMock.countMembers).toHaveBeenCalled();
+    expect(comp.isGoingToBeDeleted).toBeFalsy();
   }));
 
 });

@@ -33,7 +33,7 @@ export class WireService {
           throw new Error('Your Ethereum wallet is locked or connected to another network.');
         }
 
-        if (payload.receiver == await this.web3Wallet.getCurrentWallet()) {
+        if (payload.receiver == await this.web3Wallet.getCurrentWallet(true)) {
           throw new Error('You cannot wire yourself.');
         }
 
@@ -46,7 +46,7 @@ export class WireService {
             );
           }
 
-          payload.address = await this.web3Wallet.getCurrentWallet();
+          payload.address = await this.web3Wallet.getCurrentWallet(true);
           payload.txHash = await this.wireContract.create(payload.receiver, wire.amount);
           payload.method = 'onchain';
         } catch (e) {

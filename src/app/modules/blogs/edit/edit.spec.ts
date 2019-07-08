@@ -161,7 +161,7 @@ export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
 class InlineEditorComponentMock {
   @Input() options: any;
   @Input() placeholder: string;
-  @ViewChild('host') host: HTMLDivElement;
+  @ViewChild('host', { static: false }) host: HTMLDivElement;
 
   @Input()
   reset() {
@@ -374,4 +374,14 @@ describe('BlogEdit', () => {
     expect(threshold).not.toBeNull();
     expect(threshold.nativeElement.disabled).toBeFalsy();
   });
+
+  it('should know if a banner already exists', () => {
+    expect(comp.existingBanner).toBeFalsy();
+  })
+
+  it('should not allow initial submission without a banner', () => {
+      const publish = fixture.debugElement.query(By.css('.m-button.m-button--submit'));
+      publish.nativeElement.click();
+      expect(comp.existingBanner).toBeFalsy();
+  })
 });

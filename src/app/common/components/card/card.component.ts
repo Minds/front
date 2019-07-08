@@ -27,7 +27,7 @@ import { BlogCard } from '../../../modules/blogs/card/card';
   `
 })
 export class MindsCard implements AfterViewInit {
-  @ViewChild(DynamicHostDirective) cardHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) cardHost: DynamicHostDirective;
 
   object: any = {};
   type: string;

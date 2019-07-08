@@ -68,9 +68,12 @@
 
     <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar m-newsfeed__sidebar">
 
-      <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border" style="margin-bottom:16px;"></minds-card-user>
+      <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border"></minds-card-user>
 
       <ng-container *mIfFeature="'top-feeds'">
+        <h3 class="m-newsfeedSidebar__header">
+          <span>Hashtags</span>
+        </h3>
         <div class="mdl-card mdl-color--white m-border">
           <m-hashtags--sidebar-selector
             [disabled]="!isSorted"

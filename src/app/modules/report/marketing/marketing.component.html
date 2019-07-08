@@ -1,0 +1,107 @@
+<div class="m-marketing m-reports__marketing">
+
+  <div class="m-marketing__hero">
+
+    <div class="m-marketingHero__inner">
+      <div class="m-marketingHero__overlay"></div>
+
+      <div class="m-marketingHero__slogans">
+        <h1 i18n="@@PLUS__MKT__PLUS_TITLE">Content Policy</h1>
+        <h3 i18n="@@PLUS__MKT__PLUS_DESC">
+          The goal of Minds is to have fair, transparent and ethical moderation practices.
+        </h3>
+      
+        <button class="m-btn m-btn--slim" (click)="startJuryDuty()" *ngIf="session.isAdmin()">
+          Start Admin Review 
+        </button>
+      </div>
+    
+      <div class="m-marketingHero__actions">
+        <i class="material-icons">gavel</i>
+      </div>
+    </div>
+  </div>
+  
+  <div class="m-marketing__contents m-reportMarketing__section">
+    <p>
+      To ensure that decisions are made as democratically as possible, we developed a Jury System based on the <a href="https://santaclaraprinciples.org/" target="_blank">Santa Clara Principles</a> to review appeals. The jury consists of 12 unique, active users whose objective is to vote on appeals. If 75% or more agree with the appeal, the administrative action is overturned. For more information about the jury system, <a href="https://www.minds.com/minds/blog/power-to-the-people-the-minds-jury-system-975486713993859072" target="_blank">read our blog</a>.
+    </p>
+
+    <p>The current content moderation system functions as follows:</p>
+
+    <img src="{{ minds.cdn_assets_url }}assets/screenshots/flow.png" style="max-width: 90%;"/>
+
+    <h4>Strike Offense</h4>
+    <p>
+      Users will receive a strike for certain violations of the Content Policy. Users will be notified about the strike, which term was violated, and which piece of content was in violation. All strikes can be appealed to a Minds Jury. Individual strikes will expire after 90 days.
+    </p>
+
+    <p>The following violations will result in a strike:</p>
+    <p>Untagged NSFW Post (three strikes required for each individual NSFW category)</p>
+    <ul>
+      <li>Strike 1 = Warning</li>
+      <li>Strike 2 = 2nd Warning</li>
+      <li>Strike 3 = Full channel marked with NSFW category</li>
+    </ul>
+
+    <p>Harassment and Spam</p>
+    <ul>
+      <li>Strike 1 = Warning</li>
+      <li>Strike 2 = 2nd Warning</li>
+      <li>Strike 3 = Ban</li>
+    </ul>
+
+    <p>Spam may result in an immediate ban if determined to be malicious or by use of a bot.</p>
+
+    <h4>Immediate Ban Offense</h4>
+
+    <p>Users will be immediately banned for certain violations of the Content Policy. Users will be notified about the ban and which term was violated, but they will not be able to see the content that was in violation as it will have to be removed from Minds. Appeals on immediate bans will be reviewed by the Minds admins and not a jury due to the nature of the content.</p>
+
+    <ul>
+      <li>Illegal (terrorism, paedophilia, extortion, fraud, revenge porn, sex trafficking)</li>
+      <li>Personal and confidential information (doxxing)</li>
+      <li>Malware</li>
+      <li>Token manipulation</li>
+      <li>Impersonation</li>
+      <li>Incites a true threat of violence</li>
+    </ul>
+
+    <h4>Boost Policy</h4>
+    <p>Boost is the advertising network on Minds.  Users may exchange Minds Tokens to “Boost” their content and receive views from the network. Users may not Boost any content that is in violation of our Content Policy. Additionally, users may not Boost content that: </p>
+
+    <ul>
+      <li>Appeals on a moderation decision</li>
+      <li>Exceeds Boost rate limits;</li>
+      <li>Is a Help & Support request;</li>
+      <li>Is selling Minds Tokens;</li>
+      <li>Contains content from a banned user</li>
+      <li>Onchain payment failed</li>
+      <li>Original post has been removed</li>
+    </ul>
+
+    <p>
+      If you would like to appeal a Boost rejection, you may do so by emailing info@minds.com with the post in question and the reasons for why you believe it should be accepted.
+    </p>
+  </div>
+
+  <div class="m-marketing__contents m-reportMarketing__stats">
+    <h4>Last 30 days</h4>
+    <div class="m-layout__row">
+      <div class="m-layout__cell">
+        <b>{{ stats.actioned | number  }}</b>
+        <span>Actions Taken by Minds</span>
+      </div>
+      <div class="m-layout__cell">
+        <b>{{ stats.appealed | number }}</b>
+        <span>Appeals</span>
+      </div>
+      <div class="m-layout__cell">
+        <b>{{ stats.overturned | number }}</b>
+        <span>Actions Overturned</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<m-footer></m-footer>

@@ -25,10 +25,12 @@ m-helpdesk--questions {
     margin: 0;
 
     h4 {
-      color: #444;
       font-size: 16px;
       font-weight: 600;
       margin: 0 8px 8px;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
   }
 
@@ -38,12 +40,14 @@ m-helpdesk--questions {
   }
 
   h1 {
-    color: #444;
     line-height: 1;
     font-size: 36px;
     margin-bottom: $minds-padding * 2;
     margin-top: $minds-padding * 2;
     font-weight: 600;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   .m-helpdeskQuestions__adminContainer {
@@ -58,8 +62,10 @@ m-helpdesk--questions {
   }
 
   p.m-helpdeskQuestions__answer {
-    color: #444;
     font-size: 16px;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
 
@@ -67,10 +73,12 @@ m-helpdesk--questions {
     display: flex;
     align-items: center;
     font-size: 13px;
-    color: #666;
     font-weight: bold;
     text-decoration: none;
     margin-bottom: 8px;
+    @include m-theme(){
+      color: themed($m-grey-600);
+    }
   }
 
   .m-helpdeskQuestions__input {
@@ -80,7 +88,7 @@ m-helpdesk--questions {
     align-items: center;
     justify-content: center;
     width: 100%;
-    position: relative; 
+    position: relative;
 
     & > i.material-icons {
       width: 60px;
@@ -88,15 +96,19 @@ m-helpdesk--questions {
       left: 6px;
       border: none;
       font-size: 24px;
-      color: #888;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
     & > input {
-      color: #444;
-      background: #FFF;
       font-size: 13px;
       flex-grow: 1;
       padding: 16px 16px 16px 36px;
-      border-color: #e8e8e8;
+      @include m-theme(){
+        border-color: themed($m-grey-50);
+        color: themed($m-grey-800);
+        background-color: themed($m-white);
+      }
     }
   }
 
@@ -107,11 +119,13 @@ m-helpdesk--questions {
     max-height: 300px;
     font-size: 16px;
     border-radius: 3px;
-    background: rgba(0,0,0,0.15);
     padding: $minds-padding;
     margin-top: $minds-padding * 1.5;
     overflow-y: auto;
     box-sizing: border-box;
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.15);
+    }
 
     &:after {
       bottom: 100%;
@@ -122,10 +136,12 @@ m-helpdesk--questions {
       width: 0;
       position: absolute;
       pointer-events: none;
-      border-color: rgba(102, 102, 102, 0);
-      border-bottom-color: #ffffff;
       border-width: 8px;
       margin-left: -8px;
+      @include m-theme(){
+        border-color: rgba(themed($m-grey-600), 0);
+        border-bottom-color: themed($m-white);
+      }
     }
 
     .m-helpdesk--search-autocomplete--result {
@@ -135,9 +151,11 @@ m-helpdesk--questions {
       justify-content: space-between;
 
       &:hover, &.m-helpdesk--search-autocomplete--result-highlight {
-        background: #ffffff;
-        color: #000;
         font-weight: 400;
+        @include m-theme(){
+          background-color: themed($m-white);
+          color: themed($m-black);
+        }
       }
 
       .m-helpdesk--search-autocomplete--result-content .material-icons {
@@ -153,7 +171,9 @@ m-helpdesk--questions {
     text-align: left;
     cursor: pointer;
     padding: $minds-padding * 2;
-    background: #FFF;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     img {
       width: 64px;
@@ -174,9 +194,11 @@ m-helpdesk--questions {
       .m-helpdeskQuestionsBigItem__subtext {
         font-size: 13px;
         line-height: 1.25;
-        color: #888;
         padding: 0;
         margin: 0;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
       }
     }
 
@@ -194,12 +216,14 @@ m-helpdesk--questions {
 }
 
 .m-helpdeskQuestions__question {
-  //background: #FFF;
+  //background-color: themed($m-white);
   padding: $minds-padding;
 }
 
 .m-helpdeskQuestions__question--full {
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }
 
 @media screen and(max-width: $max-mobile) {
@@ -210,15 +234,19 @@ m-helpdesk--questions {
 }
 
 .m-helpdeskQuestions__questions, .m-helpdeskQuestions__categories {
-  background: #FFF;
   text-align: left;
   position: relative;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   ul, li {
     margin: auto;
     padding: 0;
     list-style: none;
-    border-top: 1px solid #ececec;
+    @include m-theme(){
+      border-top: 1px solid themed($m-grey-50);
+    }
 
     .m-helpdeskQuestions__editIcon {
       position: absolute;
@@ -235,10 +263,12 @@ m-helpdesk--questions {
     font-size: 24px;
     line-height: 1.25;
     margin: 0;
-    color: #444;
     font-weight: bold;
     padding: $minds-padding * 2;
     padding-bottom: 8px;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   .m-helpdeskQuestions__question a {
@@ -249,12 +279,16 @@ m-helpdesk--questions {
     padding-top: $minds-padding;
     font-size: 13px;
     line-height: 18px;
-    color: #555;
     font-weight: 400;
     text-decoration: none;
+    @include m-theme(){
+      color: themed($m-grey-700);
+    }
 
     &:hover {
-      background-color: #f0f0f0; 
+      @include m-theme(){
+        background-color: themed($m-grey-50);
+      }
     }
   }
 }
@@ -266,7 +300,9 @@ m-helpdesk--questions {
     padding: $minds-padding;
     i.material-icons {
       font-size: 24px;
-      color: #666;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
     }
   }
 }

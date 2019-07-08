@@ -1,6 +1,9 @@
 <div class="m-suggestions__sidebar">
   <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
-  <span *ngIf="!inProgress && !suggestions.length" class="m-suggestionsSidebar__empty">
+  <span *ngIf="error && !inProgress" class="m-suggestionsSidebar__empty">
+    {{error}}
+  </span>
+  <span *ngIf="!error && !inProgress && !suggestions.length" class="m-suggestionsSidebar__empty">
     You have no suggestions at this time
   </span>
   <ul class="m-suggestionsSidebar__list m-border" *ngIf="suggestions.length">

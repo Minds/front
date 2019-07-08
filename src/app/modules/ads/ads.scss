@@ -13,8 +13,10 @@
 
   &.responsive{
     width: 100%;
-    background: #FFF;
     text-align: center;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     ins{
       display: block;
@@ -68,5 +70,12 @@
 
   > i{
     vertical-align: middle;
+  }
+}
+google-ad {
+  ins{
+    @include m-theme(){
+      background-color: themed($m-grey-50);
+    }
   }
 }

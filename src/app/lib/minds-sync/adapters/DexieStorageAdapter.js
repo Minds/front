@@ -43,11 +43,41 @@ export default class DexieStorageAdapter {
   /**
    * @param {string} table
    * @param {Object} data
-   * @returns {Promise<any>}
+   * @returns {Promise<*>}
    */
   async insert(table, data) {
     return await this.db.table(table)
       .put(data);
+  }
+
+  /**
+   * @param {string} table
+   * @param {string} id
+   * @param {Object} changes
+   * @returns {Promise<number>}
+   */
+  async update(table, id, changes) {
+    return await this.db.table(table)
+      .update(id, changes);
+  }
+
+  /**
+   * @param {string} table
+   * @param {string} id
+   * @param {Object} data
+   * @param {Object} initialData
+   * @returns {Promise<boolean>}
+   */
+  async upsert(table, id, data, initialData = {}) {
+    const updatedRows = await this.db.table(table)
+      .update(id, data);
+
+    if (!updatedRows) {
+      await this.db.table(table)
+        .put(Object.assign(initialData, data));
+    }
+
+    return true;
   }
 
   /**
@@ -72,7 +102,7 @@ export default class DexieStorageAdapter {
   /**
    * @param {String} table
    * @param {*[]} rows
-   * @returns {Promise<any>}
+   * @returns {Promise<*>}
    */
   async bulkInsert(table, rows) {
     return await this.db.table(table)
@@ -85,7 +115,7 @@ export default class DexieStorageAdapter {
    * @param {number} value
    * @returns {Dexie.Promise<number>}
    */
-  async deleteLesserThan(table, field, value) {
+  async deleteLessThan(table, field, value) {
     return await this.db.table(table)
       .where(field).below(value)
       .delete();
@@ -105,6 +135,18 @@ export default class DexieStorageAdapter {
 
   /**
    * @param {String} table
+   * @param {String} index
+   * @param {*[]} values
+   * @returns {Promise<number>}
+   */
+  async deleteAnyOf(table, index, values) {
+    return await this.db.table(table)
+      .where(index).anyOf(values)
+      .delete();
+  }
+
+  /**
+   * @param {String} table
    * @param {String} key
    * @returns {Promise<Object>}
    */
@@ -118,7 +160,7 @@ export default class DexieStorageAdapter {
    * @param {String} field
    * @param {String|Number} value
    * @param {Object} opts
-   * @returns {Promise<Array<any>>}
+   * @returns {Promise<Array<*>>}
    */
   async getAllSliced(table, field, value, opts) {
     let collection = this.db.table(table)
@@ -141,21 +183,34 @@ export default class DexieStorageAdapter {
    * @param {String} table
    * @param {String} field
    * @param {String|Number} value
-   * @returns {Promise<Array<any>>}
+   * @param {{ sortBy }} opts
+   * @returns {Promise<Array<*>>}
    */
-  async getAllLesserThan(table, field, value) {
-    return await this.db.table(table)
-      .where(field).below(value)
-      .toArray();
+  async getAllLessThan(table, field, value, opts = {}) {
+    const collection = this.db.table(table)
+      .where(field).below(value);
+
+    if (opts.sortBy) {
+      return await collection.sortBy(opts.sortBy);
+    }
+
+    return await collection.toArray();
   }
 
   /**
    * @param {string} table
+   * @param {{ sortBy }} opts
    * @returns {Promise<*[]>}
    */
-  async all(table) {
-    return await this.db.table(table)
-      .toArray();
+  async all(table, opts = {}) {
+    const collection = this.db.table(table)
+      .toCollection();
+
+    if (opts.sortBy) {
+      return await collection.sortBy(opts.sortBy);
+    }
+
+    return await collection.toArray();
   }
 
   /**

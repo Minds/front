@@ -63,17 +63,23 @@
     li {
       font-size: 16px;
       line-height: 2.5;
-      color: #666;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
     }
   }
 
   .m-mobile--marketing--canary-note {
     font-size: 12px !important;
-    color: #cc0000 !important;
+    @include m-theme(){
+      color: themed($m-red-dark) !important;
+    }
   }
 
   .m-mobile--marketing--error {
-    color: #cc0000 !important;
+    @include m-theme(){
+      color: themed($m-red-dark) !important;
+    }
   }
 
   .m-mobile--marketing--spinner {
@@ -91,5 +97,7 @@
 
 .m-mobile__giantDroid {
   font-size: 152px;
-  color: #FFF;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }

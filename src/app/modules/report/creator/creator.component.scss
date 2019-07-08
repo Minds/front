@@ -1,36 +1,63 @@
-.m-report-creator--header h2{
-  font-weight: 200;
+.m-reportCreator__header h2{
+  font-weight: 600;
   margin: 0;
   font-size: 36px;
 }
 
-.m-report-creator--subjects{
+.m-reportCreator__subjects{
   padding: 16px 0;
+  list-style: none;
+  margin: 0;
 
-  .m-report-creator--subjects-subject{
-    padding: 12px 0;
-    letter-spacing: 1.5px;
-    border-bottom: 1px solid #DDD;
+  .m-reportCreatorSubjects__subject{
+    padding: 8px 16px;
+    margin: 3px;
+    display: inline-flex;
+    /* width: 100%; */
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
+    }
+    border-radius: 24px;
+    font-weight: 600;
+    /* background: #fafafa; */
 
-    &:last-child{
-      border-bottom: none;
+    &.m-reportCreatorSubjects__subject--active {
+      border-color: #4690D6;
+      span {
+        color: #4690D6;
+      }
     }
 
-    label{
-      font-size: 13px;
+    span, i {
+      vertical-align: middle;
     }
+
+    span {
+      flex: 1;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      font-size: 16px;
+      font-weight: 500;
+      color: #555;
+      cursor: pointer;
+    }
+
+    i {
+      color: #888;
+      display: none;
+    }
+
+    //&:last-child{
+    //  border-bottom: none;
+    //}
   }
 }
 
-.m-report-creator {
+.m-report__Creator {
   font-weight: 400;
   max-width: 900px;
   margin: auto;
   position: relative;
-
-  h2 {
-    font-weight: 200;
-  }
 }
 
 .m-report-creator--success, .m-report-creator--copyright, .m-report-creator--appeals {
@@ -45,33 +72,36 @@
 .m-report-creator--appeals {
   textarea {
     width: 100%;
-    background: rgba(255,255,255,0.5);
-    border: 1px solid #EEE;
     padding: 16px;
     font-size: 16px;
     letter-spacing: 1px;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+       background-color: rgba(themed($m-white), 0.5);
+    }
   }
 }
 
-.m-report-creator--submit, .m-report-creator--close {
+.m-reportCreator__submit, .m-report-creator--close {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 
-  .m-report-creator--button {
+  .m-reportCreator__button {
     font-size: 14px;
     letter-spacing: 2.33px;
     appearance: none;
-    padding: 8px 32px;
+    //padding: 8px 32px;
     background: none;
-    border: 1px solid #555;
-    border-radius: 0;
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
     text-transform: uppercase;
-    color: #555;
     cursor: pointer;
+    @include m-theme(){
+    //  border: 1px solid themed($m-grey-700);
+    //  color: themed($m-grey-700);
+    }
 
     &[disabled] {
       cursor: default;
@@ -90,9 +120,11 @@
   }
 
   .m-report-creator--submit-error {
-    color: #ff0000;
     font-size: 12px;
     font-weight: 500;
+    @include m-theme(){
+      color: themed($m-red);
+    }
   }
 
   .m-report-creator--section {
@@ -102,5 +134,12 @@
     &.m-report-creator--section--last {
       margin-top: 8px;
     }
+  }
+}
+
+.m-reportCreator__explicitReasons {
+  p {
+    font-size: 16px;
+    margin: 16px 0 0;
   }
 }

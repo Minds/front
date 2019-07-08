@@ -1,0 +1,51 @@
+m-jurydutysession__summons .m-modal-container {
+  // overflow: auto;
+  // height: 95%;
+  // height: 95vh;
+}
+.m-juryDutySession__summons {
+  padding: 24px 16px;
+  max-height: 70%;
+  max-height: 70vh;
+  overflow: auto;
+
+  h2 {
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1;
+    margin: 0;
+  }
+
+  p {
+    line-height: 1.25;
+    font-size: 16px;
+    margin-top: 16px;
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+
+  .m-btn {
+    margin: 8px;
+
+    .countdown {
+      font-weight: bold;
+    }
+  }
+
+  .m-juryDutySession__content {
+      margin-top: 24px;
+  }
+}
+
+.m-juryDutySessionSummons__countdown {
+  padding: 16px 0;
+
+  span {
+    font-weight: 600;
+    font-size: 24px;
+    @include m-theme() {
+        color: themed($m-grey-300);
+    }
+  }
+}

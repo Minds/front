@@ -32,7 +32,7 @@ declare var tinymce;
 })
 
 export class Textarea implements OnChanges {
-  @ViewChild('editor') editorControl: ElementRef;
+  @ViewChild('editor', { static: true }) editorControl: ElementRef;
 
   @Input('mModel') model: string = '';
   @Output('mModelChange') update: EventEmitter<any> = new EventEmitter();

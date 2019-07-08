@@ -52,9 +52,15 @@ m-newsfeed--sorted {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
   padding: 12px;
   margin-bottom: 16px;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
+
+  &.m-feeds-sorted__Filter--end {
+    justify-content: flex-end;
+  }
 
   m-sort-selector {
     flex-grow: 1;
@@ -79,8 +85,10 @@ m-newsfeed--sorted {
 
     .mdl-textfield__input {
       outline: none;
-      border: 1px solid #e8e8e8;
       border-radius: 6px;
+      @include m-theme(){
+         border: 1px solid themed($m-grey-50);
+      }
     }
   }
 
@@ -88,8 +96,10 @@ m-newsfeed--sorted {
     width: 100%;
     margin-top: 1px;
     border-radius: 6px;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.26);
     max-height: 50vh;
+    @include m-theme(){
+       box-shadow: 1px 1px 1px rgba(themed($m-black), 0.26);
+    }
 
     .m-search-bar-suggestions-suggestion {
       padding: 16px 8px;
@@ -107,7 +117,9 @@ m-newsfeed--sorted {
   letter-spacing: 1px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  color: #444;
   padding: 8px;
   font-weight: 400;
+  @include m-theme(){
+    color: themed($m-grey-800);
+  }
 }

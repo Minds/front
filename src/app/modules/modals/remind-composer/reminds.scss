@@ -24,16 +24,24 @@ m-modal-remind-composer {
       display: block;
       width: calc(100% - 40px);
       height: 4em;
-      border: 1px solid #ddd;
       max-height: 150px;
       box-sizing: content-box;
       padding: $minds-padding (24px + $minds-padding) $minds-padding $minds-padding;
+      @include m-theme(){
+        border: 1px solid themed($m-grey-100);
+      }
     }
 
     .m-modal-remind-composer-buttons {
       position: absolute;
       right: $minds-padding * 3;
       bottom: $minds-padding * 3;
+
+      a:hover {
+        @include m-theme(){
+          color: themed($m-blue-grey-700);
+        }
+      }
     }
   }
 
@@ -81,6 +89,14 @@ m-modal-remind-composer {
   //      }
   //    }
   //  }
+  }
+
+  .mdl-card__menu {
+    i:hover {
+      @include m-theme(){
+        color: themed($m-blue-grey-500) !important;
+      }
+    }
   }
 
 }

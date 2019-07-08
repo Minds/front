@@ -87,8 +87,10 @@ m-channel{
       > * {
         margin-right: 4px;
         button{
-          color:#eceff1;
-          border:1px solid #eceff1;
+          @include m-theme(){
+            color: themed($m-blue-grey-50);
+            border: 1px solid themed($m-blue-grey-50);
+          }
         }
       }
     }
@@ -235,7 +237,9 @@ m-channel{
          font-size: 14px;
          text-align: center;
          letter-spacing: 1px;
-         color: #777;
+         @include m-theme(){
+           color: themed($m-grey-500);
+         }
        }
      }
      textarea{
@@ -311,8 +315,10 @@ m-channel{
        display: block;
        width: 100%;
        font-size: 20px;
-       border-top: 1px solid #eeeeee;
        box-sizing:border-box;
+       @include m-theme(){
+         border-top: 1px solid themed($m-grey-50);
+       }
 
        .m-channel-social-profile > a {
          display: inline-block;
@@ -340,27 +346,34 @@ m-channel{
        input{
          flex:1;
          padding:$minds-padding;
-         border: 1px solid #EEE;
          border-radius: 3px;
          background: transparent;
          font-size: 12px;
          font-family: inherit;
+         @include m-theme(){
+          border: 1px solid themed($m-grey-50);
+         }
        }
 
        &.m-channel-gender-input{
          a {
            flex:1;
-           color:#AAA;
            text-align:center;
            cursor:pointer;
+           @include m-theme(){
+            color:themed($m-grey-200);
+           }
          }
        }
 
        &.m-channel-social-profile-input {
           display: block;
           padding: $minds-padding;
-          border: 1px solid #eee;
+
           margin-top: $minds-padding;
+          @include m-theme(){
+            border: 1px solid themed($m-grey-50);
+          }
 
           &:first-child {
             margin-top: 0;
@@ -410,7 +423,9 @@ m-channel{
            list-style: none;
            padding: 12px 0;
            cursor: pointer;
-           border-bottom: 1px solid #EEE;
+           @include m-theme(){
+             border-bottom: 1px solid themed($m-grey-50);
+           }
          }
 
        }
@@ -426,7 +441,9 @@ m-channel{
   }
 
   .minds-channel-edit-upload-separator{
-    border-left: 1px solid #ccc;
+    @include m-theme(){
+      border-left: 1px solid themed($m-grey-100);
+    }
 
     input{
       padding: 16px;
@@ -501,8 +518,10 @@ m-channel{
 }
 
 .m-channel-feed__Filter {
-  background: #ffffff;
   padding: 8px;
   margin-bottom: 8px;
   position: relative;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }

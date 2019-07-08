@@ -10,6 +10,7 @@ import {
 import { TopbarHashtagsService } from "../service/topbar.service";
 import { Tag } from "../types/tag";
 import { findLastIndex } from "../../../utils/array-utils";
+import { Storage } from '../../../services/storage';
 
 export type SideBarSelectorChange = { type: string, value?: any };
 
@@ -40,6 +41,7 @@ export class SidebarSelectorComponent implements OnInit {
   constructor(
     protected topbarHashtagsService: TopbarHashtagsService,
     protected changeDetectorRef: ChangeDetectorRef,
+    protected storage: Storage,
   ) {
   }
 
@@ -94,7 +96,16 @@ export class SidebarSelectorComponent implements OnInit {
       return this.hashtags.slice(0, this.calcFoldLength());
     }
 
-    return this.hashtags;
+    return this.hashtags
+      .filter(hashtag => hashtag.type === 'user');
+  }
+
+  get moreHashtags() {
+    if (!this.showSuggested)
+      return [];
+    return this.hashtags
+      .filter(hashtag => hashtag.type !== 'user')
+      .slice(0, 12);
   }
 
   get hasBelowTheFoldHashtags() {
@@ -139,6 +150,7 @@ export class SidebarSelectorComponent implements OnInit {
       let hashtag: Tag = {
         value: this.topbarHashtagsService.cleanupHashtag(hashtagValue.toLowerCase()),
         selected: false,
+        type: 'user',
       };
 
       this.hashtags.push(hashtag);
@@ -178,6 +190,19 @@ export class SidebarSelectorComponent implements OnInit {
     this.hashtags = [];
 
     this.load();
+  }
+
+  toggleSuggested() {
+    if (this.showSuggested) {
+      this.storage.set('hide-suggested', true);
+    } else {
+      this.storage.destroy('hide-suggested');
+    }
+    this.detectChanges();
+  }
+
+  get showSuggested() {
+    return !this.storage.get('hide-suggested');
   }
 
   detectChanges() {

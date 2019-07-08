@@ -11,7 +11,7 @@
       <div class="m-commentBubble__username">
         <a [routerLink]="['/', comment.ownerObj.username]">
           <span title="{{comment.ownerObj.name}}">{{comment.ownerObj.name}}</span>
-          <m-channel--badges class="m-channel--badges-activity" [user]="comment.ownerObj" badges="[ 'verified' ]"></m-channel--badges>
+          <m-channel--badges class="m-channel--badges-activity" [user]="comment.ownerObj" badges="[ 'admin', 'verified' ]"></m-channel--badges>
         </a>
       </div>
       <p [hidden]="editing" class="m-commentBubble__message" [innerHtml]="(comment.description || '') | tags ">
@@ -21,7 +21,7 @@
         <i class="material-icons">warning</i>
         <span>{{ error }}</span>
       </p>
-  
+
       <m-translate
         [open]="translateToggle"
         [entity]="comment"
@@ -29,7 +29,7 @@
         (onTranslateError)="translateToggle = false"
         #translate
       ></m-translate>
-      
+
     </div>
 
     <button class="m-comment__ribbonBtn"
@@ -38,7 +38,7 @@
       >
       <i class="material-icons">{{ !toggle.value ? 'more_vert' : 'keyboard_arrow_left' }}</i>
     </button>
-      
+
     <ul class="m-comment__ribbon" [hidden]="!toggle.value" #toggle>
       <li class="m-commentRibbon__item"
         *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin()"
@@ -88,14 +88,14 @@
               <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
             </span>
           </div>
-  
+
           <minds-rich-embed
             [src]="comment"
             [maxheight]="240"
             [cropImage]="true"
           ></minds-rich-embed>
         </div>
-  
+
         <!-- Custom type ::  video -->
         <div class="item item-image item-image-video"
         [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(comment), 'm-mature-content-shown': attachment.isForcefullyShown(comment) }"
@@ -107,11 +107,10 @@
                 <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
               </span>
             </div>
-  
+
               <m-video
                 width="100%"
                 height="300px"
-                style="background:#000;"
                 controls="true"
                 muted="false"
                 [poster]="comment.custom_data.thumbnail_src"
@@ -123,7 +122,7 @@
               >
             </m-video>
           </div>
-  
+
         <!-- Custom type:: batch -->
         <div class="item item-image allow-select"
         [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(comment), 'm-mature-content-shown': attachment.isForcefullyShown(comment) }"
@@ -138,13 +137,13 @@
           <a target="_blank" [routerLink]="['/media', comment.attachment_guid]" *ngIf="comment.attachment_guid">
             <img [src]="comment.custom_data[0].src" class="mdl-shadow--2dp" (error)="comment.custom_data[0].src = minds.cdn_assets_url + 'assets/logos/medium.png'">
           </a>
-  
+
           <img *ngIf="!comment.attachment_guid" [src]="comment.custom_data[0].src" (error)="comment.custom_data[0].src = minds.cdn_assets_url + 'assets/logos/medium.png'">
         </div>
       </div>
-  
+
       <!-- Edit mode -->
-  
+
       <ng-container *ngIf="editing">
         <div class="minds-editable-container">
           <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
@@ -254,4 +253,3 @@
   </div>
 
 </div>
-

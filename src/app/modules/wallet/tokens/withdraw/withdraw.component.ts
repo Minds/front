@@ -22,7 +22,7 @@ export class WalletTokenWithdrawComponent {
 
   withholding: number = 0;
 
-  @ViewChild(WalletTokenWithdrawLedgerComponent)
+  @ViewChild(WalletTokenWithdrawLedgerComponent, { static: true })
   protected ledgerComponent: WalletTokenWithdrawLedgerComponent;
 
   constructor (

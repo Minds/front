@@ -193,7 +193,7 @@ describe('PosterComponent', () => {
     expect(fixture.debugElement.query(By.css('.attachment-button'))).not.toBeNull();
   });
   it('should have an input for attachments', () => {
-    expect(fixture.debugElement.query(By.css('label.attachment-button[for=attachment-input-poster] > input#attachment-input-poster'))).not.toBeNull();
+    expect(fixture.debugElement.query(By.css('.attachment-button > input'))).not.toBeNull();
   });
 
   xit('should have a mature toggle', () => {

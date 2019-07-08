@@ -8,7 +8,7 @@
   </ng-container>
 </m-v2-topbar>
 <ng-template #legacyTopbar>
-  <m-topbar class="m-noshadow mdl-color--white mdl-color-text--grey-600">
+  <m-topbar class="m-noshadow">
     <ng-container search>
       <m-search--bar></m-search--bar>
     </ng-container>
@@ -22,15 +22,15 @@
 
 <m-sidebar--markers [class.has-v2-navbar]="featuresService.has('top-feeds')"></m-sidebar--markers>
 
-<m-body class="mdl-color--grey-100" [class.has-v2-navbar]="featuresService.has('top-feeds')">
+<m-body [class.has-v2-navbar]="featuresService.has('top-feeds')">
   <m-announcement [id]="'blockchain:sale'" *ngIf="false">
     <span class="m-blockchain--wallet-address-notice--action"
-      routerLink="/tokens" 
+      routerLink="/tokens"
       i18n="@@BLOCKCHAIN__SALE__NOTICE"
     >
     The MINDS token is now live. Learn more here.
     </span>
-  </m-announcement>   
+  </m-announcement>
   <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
   <router-outlet></router-outlet>
 </m-body>
@@ -42,6 +42,7 @@
 <m-overlay-modal></m-overlay-modal>
 <m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>
 <m-modal--tos-updated *ngIf="session.isLoggedIn()"></m-modal--tos-updated>
+<m-juryDutySession__summons *ngIf="session.isLoggedIn()"></m-juryDutySession__summons>
 
 <m-modal-signup-on-scroll></m-modal-signup-on-scroll>
 

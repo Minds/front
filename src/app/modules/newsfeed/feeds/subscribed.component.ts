@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,17 +12,22 @@ import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { FeaturesService } from "../../../services/features.service";
+import { FeedsService } from "../../../common/services/feeds.service";
+import { NewsfeedService } from "../services/newsfeed.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  templateUrl: 'subscribed.component.html'
+  providers: [ ClientMetaService ],
+  templateUrl: 'subscribed.component.html',
 })
 
 export class NewsfeedSubscribedComponent {
 
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
-  offset: string = '';
+  offset: string | number = '';
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
@@ -42,8 +47,9 @@ export class NewsfeedSubscribedComponent {
   };
 
   paramsSubscription: Subscription;
+  reloadFeedSubscription: Subscription;
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: true }) private poster: PosterComponent;
 
   constructor(
     public client: Client,
@@ -54,14 +60,26 @@ export class NewsfeedSubscribedComponent {
     public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
-    private session: Session,
-    private overlayModal: OverlayModalService,
+    protected featuresService: FeaturesService,
+    protected feedsService: FeedsService,
+    protected newsfeedService: NewsfeedService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
     this.title.setTitle('Newsfeed');
+
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('feed/subscribed')
+      .setMedium('feed');
   }
 
   ngOnInit() {
-    this.load();
+    this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(() => {
+      this.load(true, true);
+    });
+
+    this.load(true, true);
     this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -85,12 +103,78 @@ export class NewsfeedSubscribedComponent {
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+    this.reloadFeedSubscription.unsubscribe();
+  }
+
+  load(refresh: boolean = false, forceSync: boolean = false) {
+    if (this.featuresService.has('es-feeds')) {
+      this.loadFromService(refresh, forceSync);
+    } else {
+      this.loadLegacy(refresh);
+    }
+  }
+
+  async loadFromService(refresh: boolean = false, forceSync: boolean = false) {
+    if (forceSync) {
+      this.inProgress = true;
+      // TODO: Find a selective way to do it, in the future
+      await this.feedsService.destroy();
+      refresh = true;
+    }
+
+    if (!refresh && this.inProgress) {
+      return;
+    }
+
+    if (refresh) {
+      this.moreData = true;
+      this.offset = 0;
+      this.newsfeed = [];
+    }
+
+    this.inProgress = true;
+
+    try {
+      const limit = 12;
+
+      const { entities, next } = await this.feedsService.get({
+        endpoint: `api/v2/feeds/subscribed/activities`,
+        timebased: true,
+        limit,
+        offset: <number> this.offset,
+        syncPageSize: limit * 20,
+        forceSync,
+      });
+
+      if (!entities || !entities.length) {
+        this.moreData = false;
+        this.inProgress = false;
+
+        return false;
+      }
+
+      if (this.newsfeed && !refresh) {
+        this.newsfeed.push(...entities);
+      } else {
+        this.newsfeed = entities;
+      }
+
+      this.offset = next;
+
+      if (!this.offset) {
+        this.moreData = false;
+      }
+    } catch (e) {
+      console.error('SortedComponent', e);
+    }
+
+    this.inProgress = false;
   }
 
   /**
    * Load newsfeed
    */
-  load(refresh: boolean = false) {
+  loadLegacy(refresh: boolean = false) {
     if (this.inProgress)
       return false;
 

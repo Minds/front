@@ -64,6 +64,8 @@ export class MessengerConversation {
   invitable: any[] | null = null;
   invited: boolean = false;
 
+  ribbonOpened: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -100,8 +102,6 @@ export class MessengerConversation {
 
     opts = (<any>Object).assign({
       limit: 12,
-      offset: '',
-      finish: ''
     }, opts);
 
     let scrollView = opts.container;
@@ -169,7 +169,7 @@ export class MessengerConversation {
           fromSelf = true;
         }
 
-        this.load({ finish: message.guid });
+        this.load({ limit: 1, finish: message.guid });
 
         if (!fromSelf) {
           this.invalid = false;
@@ -231,7 +231,7 @@ export class MessengerConversation {
   send(e) {
     e.preventDefault();
 
-    if (this.blocked || !this.message 
+    if (this.blocked || !this.message
       || this.message.split(/\r\n|\r|\n/).length >= 10) { //not more than 10 return characters.
       return;
     }
@@ -362,8 +362,22 @@ export class MessengerConversation {
         has = true;
       }
     });
-
     return has;
   }
 
+  // Open the conversation with the ribbon
+  ribbonToggle() {
+    if (!this.ribbonOpened && !this.conversation.open) {
+      this.dockpanes.open(this.conversation);
+    }
+    this.ribbonOpened = !this.ribbonOpened;
+  }
+
+  // Close the ribbon with the conversation
+  toggle() {
+    if (this.ribbonOpened) {
+      this.ribbonOpened = false;
+    }
+    this.dockpanes.toggle(this.conversation);
+  }
 }

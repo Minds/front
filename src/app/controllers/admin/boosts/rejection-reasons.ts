@@ -9,5 +9,7 @@ export const rejectionReasons: Array<Reason> = [
   { code: 5, label: 'Maliciously targets users (@name, links, images or videos)' },
   { code: 6, label: 'Impersonates someone in a misleading or deceptive manner' },
   { code: 7, label: 'Spam' },
-  { code: 8, label: 'Appeals on Boost decisions' }
+  { code: 8, label: 'Appeals on Boost decisions' },
+  { code: 12, label: 'Onchain payment failed' },
+  { code: 13, label: 'Original post removed' },
 ];

@@ -125,7 +125,8 @@ describe('BoostService', () => {
       guid: '1234',
       handler: 'newsfeed',
       state: 'created',
-      currency: 'usd'
+      currency: 'usd',
+      transactionId: 'oc'
     };
 
     const url = 'api/v2/boost/newsfeed/1234/revoke';
@@ -143,7 +144,8 @@ describe('BoostService', () => {
       guid: '1234',
       handler: 'newsfeed',
       state: 'created',
-      currency: 'tokens'
+      currency: 'tokens',
+      transactionId: '0x'
     };
 
     const url = 'api/v2/boost/newsfeed/1234/revoke';
@@ -162,7 +164,8 @@ describe('BoostService', () => {
       guid: '1234',
       handler: 'p2p',
       state: 'created',
-      currency: 'usd'
+      currency: 'usd',
+      transactionId: 'oc'
     };
 
     const url = 'api/v2/boost/peer/1234/revoke';
@@ -180,7 +183,8 @@ describe('BoostService', () => {
       guid: '1234',
       handler: 'p2p',
       state: 'created',
-      currency: 'tokens'
+      currency: 'tokens',
+      transactionId: '0x'
     };
 
     const url = 'api/v2/boost/peer/1234/revoke';
@@ -193,5 +197,15 @@ describe('BoostService', () => {
     expect(boostContractServiceMock.revoke).toHaveBeenCalled();
     expect(boostContractServiceMock.revoke.calls.mostRecent().args[0]).toBe('1234');
   }));
+
+  it('should be able to differentiate onchain and offchain transactions', fakeAsync(() => {
+    const onChain = service.isOnChain({ transactionId: '0x0000000000' });
+    const offChain = service.isOnChain({ transactionId: 'oc' });
+
+    jasmine.clock().tick(10);
+    expect(onChain).toBeTruthy();
+    expect(offChain).toBeFalsy();
+  }));
+
 
 });

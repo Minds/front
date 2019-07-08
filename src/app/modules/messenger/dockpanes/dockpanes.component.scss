@@ -15,23 +15,29 @@
       //height: 99px;
       display: block;
       position: relative;
-      background: rgba(255,255,255,1);
+      @include m-theme(){
+        background-color: rgba(themed($m-white), 1);
+      }
+
     }
     .m-messenger--dockpane-tab{
-      border-bottom: 1px solid #EAEAEA;
+      @include m-theme(){
+         border-bottom: 1px solid themed($m-grey-50);
+      }
     }
   }
 
   .m-messenger--dockpane-tab{
-    background: #FFF;
-    color: #444;
-    border: 1px solid #EEE;
     font-family: Roboto;
     border-radius: 3px 3px 0 0;
     height: 28px;
     width: 100%;
     display: block;
     cursor: pointer;
+    @include m-theme(){
+      background-color: themed($m-white);
+      color: themed($m-grey-800);
+    }
 
     .m-messenger--dockpane-tab-title{
       padding: 5px 12px;
@@ -56,7 +62,6 @@
     }
 
     .m-messenger--dockpane-tab-actions{
-      display: inline-block;
       text-align: right;
       vertical-align: middle;
       float: right;
@@ -68,9 +73,10 @@
         line-height: 12px;
         border-radius: 0 3px 0 0;
 
-        &:hover,
-        &.m-status-active{
-          color:#455a64 !important;
+        &:hover{
+          @include m-theme(){
+            color: themed($m-grey-500) !important;
+          }
         }
       }
     }
@@ -90,16 +96,19 @@
     width: 100%;
     top: 0;
     left: 0;
-    background: #ffffff;
     text-align: left;
     vertical-align: middle;
     padding: 0 $minds-padding;
-    border-bottom: 1px solid #EAEAEA;
     z-index:1;
 
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    @include m-theme(){
+      background-color: themed($m-white);
+      border-bottom: 1px solid themed($m-grey-50);
+    }
 
     .m-messenger--dockpane-tab-icon{
       text-align: center;
@@ -109,6 +118,17 @@
       padding-bottom: 8px;
       cursor: pointer;
 
+      &:hover{
+        @include m-theme(){
+          color: themed($m-blue-grey-500) !important;
+        }
+        > i {
+          @include m-theme(){
+            color: themed($m-blue-grey-500) !important;
+          }
+        }
+      }
+
       > i{
         width: 100%;
         font-size: 16px;
@@ -116,10 +136,6 @@
         line-height: 12px;
         border-radius: 0 3px 0 0;
         cursor: pointer;
-
-        &:hover{
-          color:#455a64 !important;
-        }
       }
     }
   }
@@ -138,25 +154,29 @@
   .m-conversation-online{
     width: 8px;
     height: 8px;
-    background-color: blue;
     border-radius: 50%;
     justify-self: flex-end;
     flex-shrink: 0;
     position: absolute;
     right: 0;
+    @include m-theme(){
+      background-color: themed($m-blue);
+    }
   }
 
   .m-conversation-new{
     width: 8px;
     height: 8px;
-    background-color: green;
     border-radius: 50%;
     justify-self: flex-end;
     flex-shrink: 0;
     position: absolute;
+    @include m-theme(){
+      background-color: themed($m-green);
+    }
   }
 
-} 
+}
 
 
 m-messenger--dockpane{

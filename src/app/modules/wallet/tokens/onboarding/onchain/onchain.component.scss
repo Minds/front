@@ -6,7 +6,7 @@
   @media screen and(max-width: $max-mobile) {
     flex-wrap: wrap;
   }
-  
+
   li {
     min-width: 350px;
 
@@ -31,8 +31,10 @@
 
       span {
         font-size: 11px;
-        color: #444;
         padding: 0 8px;
+        @include m-theme(){
+          color: themed($m-grey-800);
+        }
       }
 
       .m-token--onboarding--onchain-selections--buttons-input {
@@ -40,12 +42,14 @@
         flex-grow: 1;
         margin-right: 16px;
         padding: 6px 8px;
-        border: 1px solid #eee;
         border-radius: 4px;
         font-family: 'Roboto', sans-serif;
         font-size: 15px;
         letter-spacing: 1px;
         font-weight: 300;
+        @include m-theme(){
+           border: 1px solid themed($m-grey-50);
+        }
       }
 
       span.m-token--onboarding--onchain-selections--buttons-input {
@@ -62,7 +66,7 @@
     }
 
   }
-  
+
 }
 
 .m-token--onboarding-setup-options {

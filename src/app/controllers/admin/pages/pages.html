@@ -59,7 +59,7 @@
         <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="save(page, false)" [hidden]="status == 'saving'" i18n="@@MINDS__ADMIN__PAGES__SAVE_AND_PUBLISH_ACTION">Save & Publish</button>
         <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="false" [hidden]="status != 'saving'" i18n="@@MINDS__ADMIN__PAGES__SAVING">Saving</button>
 
-        <button class="mdl-button mdl-button--colored mdl-color-text--red" (click)="delete(page)" i18n="@@M__ACTION__DELETE">Delete</button>
+        <button class="mdl-button mdl-button--colored m-button--delete" (click)="delete(page)" i18n="@@M__ACTION__DELETE">Delete</button>
       </div>
   </div>
 

@@ -8,8 +8,10 @@ m-channel--explicit-overlay {
   left: 0;
   width: 100%;
   height: calc(100% - 53px);
-  background: rgba(255,255,255,0.99);
-  color: #333333;
+  @include m-theme(){
+    color: themed($m-grey-900);
+    background-color: rgba(themed($m-white), 0.99);
+  }
   user-select: none;
 
   .m-channel--explicit-overlay--content {
@@ -24,7 +26,9 @@ m-channel--explicit-overlay {
     h3 {
       letter-spacing: 0.75px;
       font-weight: 600;
-      color: #444;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
 
     .m-channel--explicit-overlay--action {
@@ -34,7 +38,7 @@ m-channel--explicit-overlay {
       margin: auto;
       /* font-size: 22px; */
       margin-top: 16px;
-      font-weight: 600; 
+      font-weight: 600;
     }
   }
 }

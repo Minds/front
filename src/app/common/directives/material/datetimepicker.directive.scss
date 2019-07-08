@@ -4,10 +4,12 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.541176);
   opacity: 0;
   transition: 200ms ease opacity;
   will-change: opacity;
+  @include m-theme(){
+    background-color: rgba(themed($m-black-always),  0.541176);
+  }
 }
 
 .c-scrim--shown {
@@ -20,17 +22,19 @@
   left: 50%;
   top: 45%;
   transform: translate(-50%, -50%);
-  background: white;
   border: 0;
   width: 300px;
   text-align: center;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.25), 0 10px 18px rgba(0, 0, 0, 0.22);
   border-radius: 2px;
   opacity: 0;
   will-change: opacity;
   transition: 200ms ease-in-out opacity, 200ms ease-in-out top;
   z-index: 9999;
+  @include m-theme(){
+    background-color: themed($m-white);
+    box-shadow: 0 14px 45px rgba(themed($m-black), .25), 0 10px 18px rgba(themed($m-black), .22);
+  }
 }
 
 .c-datepicker--open {
@@ -44,12 +48,14 @@
 
 .c-datepicker__header-day {
   height: 32px;
-  background: #0097a7;
-  color: white;
   line-height: 32px;
   font-size: 12px;
   font-weight: 200;
   letter-spacing: 0.3px;
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__header::after {
@@ -59,9 +65,11 @@
 }
 
 .c-datepicker__header-date {
-  background: #00bcd4;
   height: 150px;
   padding: 16px 0;
+  @include m-theme(){
+    background-color: rgba(themed($m-blue), .9);
+  }
 }
 
 .rd-month-label {
@@ -74,7 +82,6 @@
 .c-datepicker__back, .c-datepicker__next, .c-datepicker__toggle {
   position: absolute;
   border: 0;
-  background: white;
   font-family: 'Material Icons';
   text-rendering: optimizeLegibility;
   font-feature-settings: "liga" 1;
@@ -88,6 +95,9 @@
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   cursor: pointer;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }
 
 .c-datepicker__back:focus, .c-datepicker__next:focus, .c-datepicker__toggle:focus {
@@ -104,29 +114,42 @@
 
 .c-datepicker__back:before {
   content: 'chevron_left';
+  @include m-theme(){
+    color: rgba(themed($m-black), 0.87);
+  }
+  
 }
 
 .c-datepicker__next:after {
   content: 'chevron_right';
+  @include m-theme(){
+    color: rgba(themed($m-black), 0.87);
+  }
 }
 
 .c-datepicker--show-time:after {
   content: 'access_time';
-  color: white;
   visibility: visible;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .c-datepicker--show-calendar:after {
   content: 'grid_on';
-  color: white;
   visibility: visible;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .c-datepicker__header-date span {
   display: block;
-  color: white;
   margin: 0;
   transition: opacity 100ms ease-in-out;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .c-datepicker__header-date__month {
@@ -180,15 +203,19 @@
 
 .c-datepicker__day-body {
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.8);
   width: 36px;
   height: 36px;
   cursor: pointer;
   position: relative;
+  @include m-theme(){
+    color: rgba(themed($m-black), 0.8);
+  }
 }
 
 .c-datepicker__day-body:hover {
-  /* color: white; */
+  // @include m-theme(){
+  //   color: themed($m-white);
+  // }
 }
 
 .c-datepicker__day--selected::after {
@@ -200,13 +227,17 @@
   height: 35px;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.05);
+  @include m-theme(){
+    background-color: rgba(themed($m-black), 0.05);
+  }
 }
 
 .c-datepicker__day-head {
-  color: rgba(0, 0, 0, 0.54);
   font-size: 12px;
   height: 36px;
+  @include m-theme(){
+    color: rgba(themed($m-black), 0.54);
+  }
 }
 
 .c-datepicker__day-head, c-datepicker__day-body {
@@ -251,8 +282,10 @@
 .c-datepicker__header-toggle {
   position: absolute;
   top: 50%;
-  color: white;
   cursor: pointer;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .c-datepicker__header-toggle i {
@@ -337,7 +370,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(1).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(1):hover ~ .c-datepicker__clock-hands {
@@ -346,7 +381,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(1):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(2) {
@@ -359,7 +396,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(2).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(2):hover ~ .c-datepicker__clock-hands {
@@ -368,7 +407,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(2):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(3) {
@@ -381,7 +422,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(3).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(3):hover ~ .c-datepicker__clock-hands {
@@ -390,7 +433,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(3):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(4) {
@@ -403,7 +448,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(4).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(4):hover ~ .c-datepicker__clock-hands {
@@ -412,7 +459,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(4):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(5) {
@@ -425,7 +474,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(5).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(5):hover ~ .c-datepicker__clock-hands {
@@ -434,7 +485,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(5):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(6) {
@@ -447,7 +500,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(6).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(6):hover ~ .c-datepicker__clock-hands {
@@ -456,7 +511,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(6):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(7) {
@@ -469,7 +526,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(7).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(7):hover ~ .c-datepicker__clock-hands {
@@ -478,7 +537,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(7):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(8) {
@@ -491,7 +552,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(8).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(8):hover ~ .c-datepicker__clock-hands {
@@ -500,7 +563,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(8):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(9) {
@@ -513,7 +578,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(9).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(9):hover ~ .c-datepicker__clock-hands {
@@ -522,7 +589,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(9):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(10) {
@@ -535,7 +604,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(10).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(10):hover ~ .c-datepicker__clock-hands {
@@ -544,7 +615,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(10):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(11) {
@@ -557,7 +630,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(11).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(11):hover ~ .c-datepicker__clock-hands {
@@ -566,7 +641,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(11):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(12) {
@@ -579,7 +656,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(12).c-datepicker__clock__num--active:not(.hide-hand) ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(12):hover ~ .c-datepicker__clock-hands {
@@ -588,7 +667,9 @@
 
 .c-datepicker__clock .c-datepicker__clock__num:nth-of-type(12):hover ~ .c-datepicker__clock-hands .c-datepicker__hour-hand {
   opacity: 1;
-  background: #00bcd4;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock::before {
@@ -598,8 +679,10 @@
   left: -20px;
   width: 240px;
   height: 240px;
-  background: rgba(0, 0, 0, 0.05);
   border-radius: 50%;
+  @include m-theme(){
+    background-color: rgba(themed($m-black), 0.05);
+  }
 }
 
 .u-hover-ball-effect, .c-datepicker__day-body, .c-datepicker__clock__num, .c-datepicker__clock__am-pm-toggle label {
@@ -620,25 +703,33 @@
 }
 
 .u-hover-ball-effect:hover, .c-datepicker__day-body:hover, .c-datepicker__clock__num:hover, .c-datepicker__clock__am-pm-toggle label:hover {
-  color: white;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .u-hover-ball-effect:hover:before, .c-datepicker__day-body:hover:before, .c-datepicker__clock__num:hover:before, .c-datepicker__clock__am-pm-toggle label:hover:before {
-  background: #00bcd4;
   width: 35px;
   height: 35px;
   z-index: -1;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__day-body--active:not(.hide-hand), .c-datepicker__clock__num--active:not(.hide-hand) {
-  color: white;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .c-datepicker__day-body--active:not(.hide-hand):before, .c-datepicker__clock__num--active:not(.hide-hand):before {
-  background: #00bcd4;
   width: 35px;
   height: 35px;
   z-index: -1;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock-hands {
@@ -649,7 +740,9 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #0097a7;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__hour-hand {
@@ -657,9 +750,11 @@
   opacity: 0;
   height: 78px;
   width: 2px;
-  background: #00bcd4;
   left: 4px;
   top: 10px;
+  @include m-theme(){
+    background-color: themed($m-blue);
+  }
 }
 
 .c-datepicker__clock__minutes {
@@ -767,5 +862,8 @@
   width: 36px;
   height: 36px;
   z-index: -1;
-  background: rgba(0, 0, 0, 0.05);
+  @include m-theme(){
+    background-color: rgba(themed($m-black), 0.05);
+  }
+
 }

@@ -4,8 +4,10 @@
     padding: 24px;
     display: flex;
     flex-direction: row;
-    background: #FFF;
     margin-bottom: 16px;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     h2 {
       font-size: 42px;
@@ -13,7 +15,9 @@
       margin-bottom: 16px;
       font-weight: bold;
       line-height: 42px;
-      color: #444;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
 
     .m-token--onboarding--subtext {
@@ -63,7 +67,9 @@
       i {
         font-size: 52px;
         line-height: 1;
-        color: #555;
+        @include m-theme(){
+          color: themed($m-grey-700);
+        }
       }
 
       h4 {
@@ -79,7 +85,9 @@
         margin-bottom: 0;
         font-size: 12px;
         line-height: 14px;
-        color: #888;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
       }
 
     }

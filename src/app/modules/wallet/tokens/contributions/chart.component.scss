@@ -1,11 +1,13 @@
 .m-token-contributions--chart {
   padding: 16px;
   margin-bottom: 8px;
-  background: #fff;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-gap: 0;
   grid-auto-rows: minmax(100px, auto);
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   @media screen and (max-width: 1105px) {
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
@@ -23,12 +25,17 @@
 
     i.material-icons {
       font-size: 42px;
-      color: #5f7d8b;
+      @include m-theme(){
+        color: themed($m-blue-grey-600);
+      }
     }
 
     svg {
       width: 60px;
       height: 60px;
+      @include m-theme(){
+        color: themed($m-blue-grey-600);
+      }
     }
 
     .m-token-contributions--chart--contribution-text {
@@ -42,7 +49,9 @@
       }
 
       & > span:last-child {
-        color: #4CAF50;
+        @include m-theme(){
+          color: themed($m-green);
+        }
         font-size: 14px;
         font-weight: 800;
       }

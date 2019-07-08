@@ -44,10 +44,12 @@ minds-groups-profile{
       width:calc(100% / 3);
       padding: 1px;
       box-sizing: border-box;
-      background-color:#333;
       background-position:
       center center;
       background-size:cover;
+      @include m-theme(){
+        background-color:themed($m-grey-900);
+      }
     }
     img{
       width: 100%;
@@ -123,12 +125,12 @@ minds-groups-profile{
       height: 150px;
       margin: -75px auto 0;
       padding: 0;
-   
+
       .minds-avatar{
         margin:0;
         background-position: center center;
         background-size: cover;
-        width: 100%;   
+        width: 100%;
         height: 100%;
         border-radius: 50%;
       }
@@ -298,7 +300,9 @@ minds-groups-profile-members-invite {
       width: 100%;
       padding: $minds-padding;
       vertical-align: middle;
-      border: 1px solid #ddd;
+      @include m-theme(){
+        border: 1px solid themed($m-grey-100);
+      }
 
       &.h1 {
         font-size: 26px;
@@ -362,9 +366,11 @@ minds-groups-profile-members-invite {
         font-size: 11px;
         padding: 4px 7px;
         margin: 2px 2px;
-        border: 1px solid rgb(238, 238, 238);
         border-radius: 3px;
         display: inline-block;
+        @include m-theme(){
+          border: 1px solid themed($m-grey-50);
+        }
       }
     }
 
@@ -378,7 +384,9 @@ minds-groups-profile-members-invite {
       width: 100%;
       padding: $minds-padding;
       vertical-align: middle;
-      border: 1px solid #ddd;
+      @include m-theme(){
+        border: 1px solid themed($m-grey-100);
+      }
 
       &.h1 {
         font-size: 26px;
@@ -439,7 +447,9 @@ minds-groups-profile-members-invite {
         font-size: 13px;
         color: inherit;
         text-decoration: none;
-        border-bottom: 1px dotted #ddd;
+        @include m-theme(){
+          border-bottom: 1px dotted themed($m-grey-100);
+        }
       }
     }
 
@@ -462,7 +472,6 @@ minds-groups-create{
     width:100%;
     height:100%;
     position:fixed;
-    background:rgba(0,0,0,0.8);
 
     text-align: center;
     padding-top: 30%;
@@ -470,6 +479,9 @@ minds-groups-create{
     padding-top: calc(50vh - 50px);
 
     z-index:999;
+    @include m-theme(){
+      background:rgba(themed($m-black),0.8);
+    }
   }
 
   .minds-banner{
@@ -578,7 +590,9 @@ minds-groups-create{
     padding:$minds-padding 0;
 
     .m-btn.subscribed {
-      color: #444 !important;
+      @include m-theme(){
+        color: themed($m-grey-800) !important;
+      }
     }
   }
 }
@@ -638,14 +652,16 @@ minds-groups-profile-requests{
 }
 
 .m-groups-button-badge {
-  color: #45565E;
   font-size: 14px;
   position: absolute;
   bottom: 0;
   right: 0;
-  background: #ffffff;
   border-radius: 2px;
   opacity: 0.65;
+  @include m-theme(){
+    background-color: themed($m-white);
+    color: themed($m-blue-grey-700);
+  }
 }
 
 .m-group-closed{
@@ -709,25 +725,31 @@ minds-groups-card-user-actions-button {
 }
 
 .minds-dropdown-menu .minds-menu-info-item {
-  color: #999999;
+  @include m-theme(){
+    color: themed($m-grey-300);
+  }
 }
 
 minds-groups-create {
 
   .invitees {
     > span {
-      background: #ddd;
       display: inline-block;
       padding: 1px 6px 2px;
       border-radius: 2px;
       margin-right: 0.35em;
+      @include m-theme(){
+        background-color: themed($m-grey-100);
+      }
 
       .m-remove-invitee {
         font-size: inherit;
         position: relative;
         top: 2px;
         cursor: pointer;
-        color: #999;
+        @include m-theme(){
+          color: themed($m-grey-300);
+        }
       }
     }
   }
@@ -767,18 +789,15 @@ minds-groups-create {
     display: inline-block;
     width: 8px;
     height: 8px;
-    background: green;
     border-radius: 50%;
+    @include m-theme(){
+      background-color: themed($m-green);
+    }
   }
 }
 
 minds-groups-profile-feed {
   z-index: 1;
-
-  .m-groups-feed--review-actions {
-    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
-    text-align: right;
-  }
 
   .minds-list.m-groupProfileFeed__mediaList {
     display: flex;

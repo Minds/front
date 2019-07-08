@@ -21,7 +21,7 @@ export class NewsfeedService {
       .map(reason => reason.value);
   }
   
-  public async recordView(entity, visible: boolean = true, channel = null) {
+  public async recordView(entity, visible: boolean = true, channel = null, clientMeta = {}) {
     if (!this.session.isLoggedIn()) {
       return;
     }
@@ -36,10 +36,14 @@ export class NewsfeedService {
       if (!visible)
         url += `/stop`;
 
-      return await this.client.post(url);
+      return await this.client.post(url, {
+        client_meta: clientMeta,
+      });
     }
 
-    return await this.client.post(`api/v2/analytics/views/activity/${entity.guid}`);
+    return await this.client.post(`api/v2/analytics/views/activity/${entity.guid}`, {
+      client_meta: clientMeta,
+    });
   }
 
   public reloadFeed(allHashtags: boolean = false) {

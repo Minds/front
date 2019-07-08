@@ -9,7 +9,8 @@ import { TokenContractService } from '../../blockchain/contracts/token-contract.
 import { BoostContractService } from '../../blockchain/contracts/boost-contract.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
-
+import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
+import { Router } from '@angular/router';
 
 type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
@@ -101,7 +102,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     this.object = object;
   }
 
-  @ViewChild('amountEditor') private _amountEditor: ElementRef;
+  @ViewChild('amountEditor', { static: false }) private _amountEditor: ElementRef;
 
   constructor(
     public session: Session,
@@ -112,7 +113,8 @@ export class BoostCreatorComponent implements AfterViewInit {
     private tokensContract: TokenContractService,
     private boostContract: BoostContractService,
     private web3Wallet: Web3WalletService,
-    private offchainPayment: OffchainPaymentService
+    private offchainPayment: OffchainPaymentService,
+    protected router: Router,
   ) { }
 
   ngOnInit() {
@@ -436,7 +438,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     }
 
     if (this.boost.priority && this.boost.currency !== 'usd') {
-      throw new VisibleBoostError('The only supported payment method for priority boosts is credit card')
+      throw new VisibleBoostError('The only supported payment method for priority boosts is credit card');
     }
 
     if (this.boost.type === 'p2p') {
@@ -456,9 +458,21 @@ export class BoostCreatorComponent implements AfterViewInit {
         throw new VisibleBoostError('Boost target should participate in the Rewards program.');
       }
     } else {
-      if (this.boost.amount < this.rates.min || this.boost.amount > this.rates.cap) {
+      if (this.boost.currency === 'offchain'
+        && (this.boost.amount < this.rates.min
+          || this.boost.amount > this.rates.cap
+      )) {
         throw new VisibleBoostError(`You must boost between ${this.rates.min} and ${this.rates.cap} views.`);
+
       }
+
+      if (this.boost.currency === 'onchain'
+          && (this.boost.amount < this.rates.min
+            || this.boost.amount > (this.rates.cap * 2)
+      )) {
+        throw new VisibleBoostError(`You must boost between ${this.rates.min} and ${this.rates.cap * 2} views.`);
+      }
+
 
       //if (!this.boost.categories.length) {
       //  throw new Error('You should select a category.');
@@ -542,14 +556,29 @@ export class BoostCreatorComponent implements AfterViewInit {
 
             if (this.web3Wallet.isUnavailable()) {
               throw new Error('No Ethereum wallets available on your browser.');
-            } else if (!(await this.web3Wallet.unlock())) {
+            }
+
+            if (await this.web3Wallet.isLocal()) {
+              const action = await this.web3Wallet.setupMetamask();
+              switch (action) {
+                case GetMetamaskComponent.ACTION_CREATE:
+                  this.router.navigate(['/wallet']);
+                  this.inProgress = false;
+                  this.overlayModal.dismiss();
+                  break;
+                case GetMetamaskComponent.ACTION_CANCEL:
+                  return;
+              }
+            }
+
+            if (!(await this.web3Wallet.unlock())) {
               throw new Error('Your Ethereum wallet is locked or connected to another network.');
             }
 
             this.boost.nonce = {
               method: 'onchain',
               txHash: await this.boostContract.create(guid, amount, this.boost.checksum),
-              address: await this.web3Wallet.getCurrentWallet()
+              address: await this.web3Wallet.getCurrentWallet(true)
             };
             break;
 
@@ -586,7 +615,7 @@ export class BoostCreatorComponent implements AfterViewInit {
             this.boost.nonce = {
               method: 'onchain',
               txHash: await this.boostContract.createPeer(this.boost.target.eth_wallet, guid, <number>this.boost.amount, this.boost.checksum),
-              address: await this.web3Wallet.getCurrentWallet()
+              address: await this.web3Wallet.getCurrentWallet(true)
             };
             break;
 

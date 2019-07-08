@@ -67,6 +67,7 @@
     distance="25%"
     (load)="load()"
     [moreData]="moreData"
+    [scrollSource]="useOwnScrollSource ? notificationGrid : null"
     [inProgress]="inProgress"
     *ngIf="visible"
     >

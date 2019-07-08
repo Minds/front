@@ -1,11 +1,14 @@
 m-blockchain--marketing {
-  
+
 }
 
 .m-error--text {
   margin-left: 8px;
   font-size: 11px;
-  color: red;
+  @include m-theme(){
+    color: themed($m-red);
+  }
+
 }
 
 .m-blockchain--marketing {
@@ -17,13 +20,13 @@ m-blockchain--marketing {
     }
 
     .m-marketing--hero--slogans {
-  
+
       h1 {
         font-size: 86px;
       }
-  
+
     }
-  
+
     .m-marketing--hero--actions {
       text-align: right;
       flex-basis: 85px;
@@ -38,40 +41,51 @@ m-blockchain--marketing {
         text-align: right;
 
         i {
-          color: #FFF;
           font-size: 36px;
+          @include m-theme(){
+            color: themed($m-white);
+          }
         }
 
         .m-input {
-          background: rgba(255,255,255,0.2);
           border: 0;
           padding: 12px 16px;
           font-size: 26px;
-          color: #fff;
           letter-spacing: 2.5px;
           font-weight: 600;
           text-align: right;
           min-width: 105px;
+          @include m-theme(){
+            color: themed($m-white);
+            background-color: rgba(themed($m-white), 0.2);
+          }
         }
-      
+
         .m-btn {
           height: auto;
           padding: 20px;
           border: 0;
-          background-color: rgba(255,255,255,0.3) !important;
-          color: #FFF !important;
           margin: 16px 0;
           margin-left: 12px;
+          white-space: nowrap;
+          @include m-theme(){
+            color: themed($m-white) !important;
+            background-color: rgba(themed($m-white), 0.3) !important;
+          }
         }
 
         .m-blockchain--marketing--pledges--eth-label {
           font-size: 22px;
           margin: 0 0 0 0.35em;
-          color: #ffffff;
+          @include m-theme(){
+            color: themed($m-white);
+          }
         }
         .m-blockchain--marketing--pledges--eth-subtext {
-          color: #FFF;
           font-size: 11px;
+          @include m-theme(){
+            color: themed($m-white);
+          }
         }
       }
 
@@ -79,19 +93,21 @@ m-blockchain--marketing {
         button.mdl-button {
           width: 200px;
           font-size: 20px;
-          background-color: #4690D6 !important;
-          color: white;
+          @include m-theme(){
+            color: themed($m-white);
+            background-color: themed($m-blue) !important;
+          }
         }
       }
     }
-  
+
   }
-  
+
   .m-blockchain--marketing--pledges {
     display: flex;
     flex-direction: row;
 
-    
+
     .m-blockchain--marketing--pledges--amounts {
       padding: 24px 12px;
       text-align: left;
@@ -105,18 +121,22 @@ m-blockchain--marketing {
         line-height: 52px;
         font-size: 52px;
         font-weight: 600;
-        color: #FFF;
         text-align: right;
+        @include m-theme(){
+          color: themed($m-white);
+        }
       }
 
       .m-blockchain--marketing--pledges--amounts--label {
         font-size: 14px;
         font-weight: 600;
-        color: #EEE;
         width: 100px;
         text-transform: uppercase;
         letter-spacing: 1.5px;
         font-weight: 400;
+        @include m-theme(){
+          color: themed($m-grey-50);
+        }
 
         @media screen and (max-width: 1000px) {
             display: none;
@@ -134,7 +154,9 @@ m-blockchain--marketing {
   }
 
   m-video .minds-video-play-icon {
-    text-shadow: 0 0 3px #333;
+    @include m-theme(){
+      text-shadow: 0 0 3px themed($m-grey-900);
+    }
   }
 
 }
@@ -156,8 +178,10 @@ m-blockchain--marketing {
   padding: 24px;
 
   h2 {
-    color: #444 !important;
     font-size: 30px;
+    @include m-theme(){
+      color: themed($m-grey-800) !important;
+    }
   }
 
   m-blockchain--marketing--onboard {
@@ -173,7 +197,7 @@ m-blockchain--marketing {
 
       > div:nth-of-type(1) {
         width: 100% !important;
-      } 
+      }
       > div:nth-of-type(2) {
         display: none;
       }
@@ -201,17 +225,22 @@ m-blockchain--marketing {
     display: block;
     width: 100%;
     border-radius: 4px;
-    border: 1px solid #eee;
     font-size: 16px;
     padding: 8px;
     letter-spacing: 1px;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+    }
   }
 }
 
 .m-blockchain--marketing--pledge--address-warn {
   font-size: 0.85em;
-  color: #888;
   padding-bottom: 16px;
+  @include m-theme(){
+    color: themed($m-grey-400);
+  }
+
 }
 
 .m-blockchain--marketing--pledge--note {
@@ -221,7 +250,9 @@ m-blockchain--marketing {
 .m-blockchain--marketing--pledge--note,
 .m-blockchain--marketing--pledge--check-label {
   line-height: 1.35;
-  color: #444;
+  @include m-theme(){
+    color: themed($m-grey-800);
+  }
 }
 
 .m-blockchain--marketing--pledge--wallet-label {
@@ -251,7 +282,9 @@ m-blockchain--marketing {
     font-size: 52px;
     letter-spacing: 2px;
     line-height: 1.5;
-    color: #4690D6;
+    @include m-theme(){
+      color: themed($m-blue);
+    }
   }
 
   .m-blockchain--marketing-label {
@@ -260,7 +293,9 @@ m-blockchain--marketing {
     font-weight: 300;
     line-height: 1.5;
     text-transform: uppercase;
-    color: #888;
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
     @media screen and (max-width: $max-mobile) {
       text-align: center;
     }
@@ -278,10 +313,12 @@ m-blockchain--marketing {
   }
   li {
     font-size: 16px;
-    color: #555;
     letter-spacing: 0.25px;
     padding: 16px 0;
-    border-bottom: 1px solid #ececec;
+    @include m-theme(){
+      color: themed($m-grey-700);
+      border-bottom: 1px solid themed($m-grey-50);
+    }
   }
 }
 
@@ -295,7 +332,7 @@ m-blockchain--marketing {
     align-items: center;
     @media screen and (max-width: 500px) {
       flex-wrap: wrap;
-      flex-direction: row;          
+      flex-direction: row;
     }
   }
   .m-marketing--section--grid-col {
@@ -349,7 +386,9 @@ m-blockchain--marketing {
     background-position: center;
     background-size: cover;
     border-radius: 50%;
-    border: 1px solid #ececec;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+    }
   }
 
   .m-blockchain--marketing-person-name,
@@ -370,7 +409,9 @@ m-blockchain--marketing {
 
   .m-blockchain--marketing-person-title {
     font-size: 14px;
-    color: #888;
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
   }
 
   &.m-blockchain--marketing--team--more {
@@ -409,7 +450,7 @@ m-blockchain--marketing {
   m-blog--tile {
     margin: 8px;
     height: 200px;
-    width: 320px;   
+    width: 320px;
     display: block;
     text-align: left;
   }
@@ -427,4 +468,22 @@ m-blockchain--purchase m-modal {
 
 m-blockchain--pre-register {
   padding: 0 !important;
+}
+
+.m-marketing--section--subsection-video {
+  @include m-theme(){
+     border: 1px solid themed($m-grey-100);
+  }
+
+  m-video {
+    @include m-theme(){
+      background-color: themed($m-grey-50);
+    }
+  }
+}
+
+.m-marketing--section-economy {
+  @include m-theme(){
+    background-color: themed($m-grey-50);
+  }
 }

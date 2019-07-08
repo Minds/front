@@ -1,0 +1,220 @@
+
+// Create css selectors for themes
+// Colors change when .theme__light/.theme__dark classes are toggled on body tag
+@mixin m-theme() {
+  @each $theme, $colors in $themes {
+    body.m-theme__#{$theme} & {
+      $theme-map: () !global;
+      @each $color-name, $color in $colors {
+        $value: map-get(map-get($themes, $theme), '#{$color-name}');
+        $theme-map: map-merge($theme-map, ($color-name: $value)) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($color-name) {
+  @return map-get($theme-map, $color-name);
+}
+
+// Dark theme lighten percentage
+$percent: 5%;
+
+// Color palette
+$grey-990: #161616;
+$grey-950: #222;
+$grey-900: #333;
+$grey-800: #444;
+$grey-700: #555;
+$grey-600: #666;
+$grey-500: #777;
+$grey-400: #888;
+$grey-300: #999;
+$grey-200: #aaa;
+$grey-100: #ddd;
+$grey-50:  #e8e8e8;
+
+$blue-grey-950: #171f23;
+$blue-grey-900: #263238;
+$blue-grey-800: #37474f;
+$blue-grey-700: #455a64;
+$blue-grey-600: #546e7a;
+$blue-grey-500: #607d8b;
+$blue-grey-400: #78909c;
+$blue-grey-300: #90a4ae;
+$blue-grey-200: #b0bec5;
+$blue-grey-100: #cfd8dc;
+$blue-grey-50:  #eceff1;
+
+$blue-dark:   #206ab9;
+$blue:        #4690df;
+$blue-bright: #44aaff;
+$blue-light:  #71aae7;
+$green-dark:  #388e3c;
+$green:       #4caf50;
+$green-light: #8BC34A;
+$amber-dark:  #ffa000;
+$amber:       #ffc108;
+$amber-light: #ffecb3;
+$red-dark:    #c62828;
+$red:         #f44336;
+$red-light:   #e57373;
+
+$black:       #000;
+$white:       #fff;
+
+// Theme maps
+$themes: (
+  light: (
+    m-grey-950: $grey-950,
+    m-grey-900: $grey-900,
+    m-grey-800: $grey-800,
+    m-grey-700: $grey-700,
+    m-grey-600: $grey-600,
+    m-grey-500: $grey-500,
+    m-grey:     $grey-500,
+    m-grey-400: $grey-400,
+    m-grey-300: $grey-300,
+    m-grey-200: $grey-200,
+    m-grey-100: $grey-100,
+    m-grey-50:  $grey-50,
+
+    m-blue-grey-950: $blue-grey-950,
+    m-blue-grey-900: $blue-grey-900,
+    m-blue-grey-800: $blue-grey-800,
+    m-blue-grey-700: $blue-grey-700,
+    m-blue-grey-600: $blue-grey-600,
+    m-blue-grey-500: $blue-grey-500,
+    m-blue-grey:     $blue-grey-500,
+    m-blue-grey-400: $blue-grey-400,
+    m-blue-grey-300: $blue-grey-300,
+    m-blue-grey-200: $blue-grey-200,
+    m-blue-grey-100: $blue-grey-100,
+    m-blue-grey-50:  $blue-grey-50,
+
+    m-blue-dark:     $blue-dark,
+    m-blue:          $blue,
+    m-blue-light:    $blue-light,
+    m-green-dark:    $green-dark,
+    m-green:         $green,
+    m-green-light:   $green-light,
+    m-amber-dark:    $amber-dark,
+    m-amber:         $amber,
+    m-amber-light:   $amber-light,
+    m-red-dark:      $red-dark,
+    m-red:           $red,
+    m-red-light:     $red-light,    
+
+    m-black:         $black,
+    m-black-always:  $black,
+    m-white:         $white,
+    m-white-always:  $white,    
+    m-body-bg:       #f8f8f8,
+
+    m-warn-bg:     $amber-light,
+    m-warn-fg:     $black,
+  ),
+  dark: (
+    
+    m-grey-950: lighten($grey-50, $percent),
+    m-grey-900: lighten($grey-100, $percent),
+    m-grey-800: lighten($grey-200, $percent),
+    m-grey-700: lighten($grey-300, $percent),
+    m-grey-600: lighten($grey-400, $percent),
+    m-grey-500: lighten($grey-500, $percent),
+    m-grey:     lighten($grey-500, $percent),
+    m-grey-400: lighten($grey-600, $percent),
+    m-grey-300: lighten($grey-700, $percent),
+    m-grey-200: lighten($grey-800, $percent),
+    m-grey-100: lighten($grey-900, $percent),
+    m-grey-50:  lighten($grey-950, $percent),
+
+    m-blue-grey-950: lighten($blue-grey-50, $percent),
+    m-blue-grey-900: lighten($blue-grey-100, $percent),
+    m-blue-grey-800: lighten($blue-grey-200, $percent),
+    m-blue-grey-700: lighten($blue-grey-300, $percent),
+    m-blue-grey-600: lighten($blue-grey-400, $percent),
+    m-blue-grey-500: lighten($blue-grey-500, $percent),
+    m-blue-grey:     lighten($blue-grey-500, $percent),
+    m-blue-grey-400: lighten($blue-grey-600, $percent),
+    m-blue-grey-300: lighten($blue-grey-700, $percent),
+    m-blue-grey-200: lighten($blue-grey-800, $percent),
+    m-blue-grey-100: lighten($blue-grey-900, $percent),
+    m-blue-grey-50:  lighten($blue-grey-950, $percent),
+    
+    m-black:         $white,
+    m-black-always:  $black,
+    m-white:         lighten($grey-990, $percent),
+    m-white-always:  $white,    
+    m-body-bg:       lighten(#080808, $percent), 
+
+    m-blue-dark:    lighten($blue-dark, $percent),
+    m-blue:         $blue-bright,
+    m-blue-light:   lighten($blue-bright, 10%),
+    m-green-dark:   lighten($green-dark, $percent),
+    m-green:        lighten($green, $percent),
+    m-green-light:  lighten($green-light, $percent),
+    m-amber-dark:   lighten($amber-dark, $percent),
+    m-amber:        lighten($amber, $percent),
+    m-amber-light:  lighten($amber-light, $percent),
+    m-red-dark:     lighten($red-dark, $percent),
+    m-red:          lighten($red, $percent),
+    m-red-light:    lighten($red-light, $percent),
+
+    m-warn-bg:     $grey-900,
+    m-warn-fg:     $white,
+  ),
+);
+
+// Enable use of vars in scss (in addition to strings)
+// e.g. background-color: themed($m-grey-950)
+// OR   background-color: themed('m-grey-950')
+$m-grey-950: 'm-grey-950';
+$m-grey-900: 'm-grey-900';
+$m-grey-800: 'm-grey-800';
+$m-grey-700: 'm-grey-700';
+$m-grey-600: 'm-grey-600';
+$m-grey:     'm-grey';
+$m-grey-500: 'm-grey-500';
+$m-grey-400: 'm-grey-400';
+$m-grey-300: 'm-grey-300';
+$m-grey-200: 'm-grey-200';
+$m-grey-100: 'm-grey-100';
+$m-grey-50:  'm-grey-50';
+
+$m-blue-grey-950: 'm-blue-grey-950';
+$m-blue-grey-900: 'm-blue-grey-900';
+$m-blue-grey-800: 'm-blue-grey-800';
+$m-blue-grey-700: 'm-blue-grey-700';
+$m-blue-grey-600: 'm-blue-grey-600';
+$m-blue-grey:     'm-blue-grey';
+$m-blue-grey-500: 'm-blue-grey-500';
+$m-blue-grey-400: 'm-blue-grey-400';
+$m-blue-grey-300: 'm-blue-grey-300';
+$m-blue-grey-200: 'm-blue-grey-200';
+$m-blue-grey-100: 'm-blue-grey-100';
+$m-blue-grey-50:  'm-blue-grey-50';
+
+$m-black:        'm-black';
+$m-black-always: 'm-black-always';
+$m-white:        'm-white';
+$m-white-always: 'm-white-always';
+$m-body-bg:      'm-body-bg';
+
+$m-blue-dark:    'm-blue-dark';
+$m-blue:         'm-blue';
+$m-blue-light:   'm-blue-light';
+$m-green-dark:   'm-green-dark';
+$m-green:        'm-green';
+$m-green-light:  'm-green-light';
+$m-amber-dark:   'm-amber-dark';
+$m-amber:        'm-amber';
+$m-amber-light:  'm-amber-light';
+$m-red-dark:     'm-red-dark';
+$m-red:          'm-red';
+$m-red-light:    'm-red-light';
+
+$m-warn-bg:      'm-warn-bg';
+$m-warn-fg:      'm-warn-fg';

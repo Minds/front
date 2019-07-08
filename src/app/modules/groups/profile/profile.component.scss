@@ -1,3 +1,5 @@
+@import "defaults";
+
 .m-group__grid {
   display: flex;
   flex-direction: row;
@@ -9,7 +11,9 @@
     flex: 1;
     min-width: 33%;
     width: 33%;
-    border-left: 1px solid #e8e8e8;
+    @include m-theme(){
+      border-left: 1px solid themed($m-grey-50);
+    }
   }
 
   @media screen and (max-width: 700px) {
@@ -21,11 +25,24 @@
   }
 
   .m-groupGrid__toggleBtn {
-    .material-icons {
-      text-shadow: 0px 0px 1px white, 0px 0px 1px white;
+    display: block;
+    z-index: 99;
+    cursor: pointer;
+    position: fixed;
+    right: 65px;
+    top: 55px;
+    @media screen and (max-width: $min-desktop) {
+      right: 8px;
+      top: 106px;
     }
-    @media screen and (max-width: 900px) {
-      right: 8px !important;
+    i {
+      font-size: 32px;
+    }
+    .material-icons {
+      @include m-theme(){
+        text-shadow: 0px 0px 1px themed($m-white), 0px 0px 1px themed($m-white);
+        color: themed($m-grey-400);
+      }
     }
   }
 }
@@ -43,12 +60,14 @@
 }
 
 .m-group__info {
-  background: #FFF;
   margin: auto;
   padding: 16px;
   position: relative;
   max-width: 780px;
   box-sizing: border-box;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   minds-groups-settings-button.m-button {
     position: absolute;
@@ -64,6 +83,27 @@
         font-size: 18px;
       }
     }
+
+    .m-groups-settings-dropdown__item--nsfw {
+      overflow: visible;
+      
+      m-nsfw-selector {
+        border: 0;
+        width: 100%;
+        padding: 0;
+  
+        .m-nsfwSelector__label {
+          m-tooltip {
+            display: none;
+          }  
+        }
+  
+        .m-dropdown .m-dropdown__list {
+          width: 210px;
+        }
+      }
+    }
+
   }
 
   minds-avatar{
@@ -138,6 +178,10 @@ m-groups--profile .m-group__grid header {
   minds-banner .minds-banner {
     max-height: 268px;
     height: 268px;
+
+    .minds-banner-overlay {
+      display: none;
+    }
   }
 }
 
@@ -166,9 +210,11 @@ m-groups--profile .m-group__grid header {
 
   .m-groupSplash__error {
     text-transform: uppercase;
-    color: #f44336;
     letter-spacing: 0.1em;
     font-weight: bold;
+    @include m-theme(){
+      color: themed($m-red);
+    }
   }
 }
 
@@ -177,5 +223,7 @@ m-groups--profile .m-group__grid header {
   margin: 8px auto;
   padding: 8px;
   box-sizing: border-box;
-  background: #ffffff;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }

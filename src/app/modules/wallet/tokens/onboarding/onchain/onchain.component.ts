@@ -174,7 +174,7 @@ export class TokenOnChainOnboardingComponent {
   }
 
   async detectExternal() {
-    const address: string = (await this.web3Wallet.getCurrentWallet()) || '';
+    const address: string = (await this.web3Wallet.getCurrentWallet(true)) || '';
 
     if (this.providedAddress !== address) {
       this.providedAddress = address;

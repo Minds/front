@@ -25,8 +25,6 @@
 
   &.m-groupMemberPreviews__member--count {
     width: auto;
-    background: #e8e8e8;
-    color: #777;
     font-weight: 500;
     padding: 0 8px;
     line-height: 32px;
@@ -35,6 +33,10 @@
     box-sizing: border-box;
     text-align: center;
     cursor: pointer;
+    @include m-theme(){
+      background-color: themed($m-grey-50);
+      color: themed($m-grey-500);
+    }
 
     span {
       vertical-align: middle;
@@ -47,4 +49,3 @@
     height: 32px;
   }
 }
-

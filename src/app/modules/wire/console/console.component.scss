@@ -1,7 +1,10 @@
 .m-wire-console--hero{
   border-radius: 3px;
-  background: #4690DF;
-  color: #FFF;
+
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: themed($m-blue);
+  }
 
   .m-wire-console--hero-header{
     display: flex;
@@ -23,20 +26,26 @@
   }
 
   m-date-selector {
-    color: white;
     font-size: 25px;
     justify-content: flex-end;
     margin: 0px 30px;
     display: flex;
+    @include m-theme(){
+      color: themed($m-white);
+    }
     div {
-      background-color: rgba(255, 255, 255, 0.1);
       border: none;
-      color: white;
+      @include m-theme(){
+        color: themed($m-white);
+        background-color: rgba(themed($m-white), 0.1);
+      }
     }
     input {
-      color: white;
       font-size: 25px;
       width: 250px;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
   }
 }
@@ -45,7 +54,9 @@
   padding: $minds-padding * 2;
   margin-top: $minds-padding;
   border-radius: 4px;
-  background: #ffffff;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-wire-console--options-toggle {
     text-align: right;
@@ -53,5 +64,7 @@
 }
 
 .m-wire-console--rewards {
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }

@@ -23,7 +23,7 @@ describe('NotificationsFlyoutComponent', () => {
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
         MockComponent({
           selector: 'minds-notifications',
-          inputs: ['loadOnDemand', 'hidden', 'visible'],
+          inputs: ['loadOnDemand', 'hidden', 'visible', 'useOwnScrollSource'],
         }, ['onVisible']),
         NotificationsFlyoutComponent,
       ],

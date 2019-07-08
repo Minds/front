@@ -42,7 +42,7 @@ export class RemindComposerModal {
 
   message: string = '';
 
-  @ViewChild(DynamicHostDirective) cardHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) cardHost: DynamicHostDirective;
 
   constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
 

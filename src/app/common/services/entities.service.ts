@@ -5,6 +5,7 @@ import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHtt
 import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
 import EntitiesSync from '../../lib/minds-sync/services/EntitiesSync.js';
 import AsyncStatus from "../../helpers/async-status";
+import normalizeUrn from "../../helpers/normalize-urn";
 
 @Injectable()
 export class EntitiesService {
@@ -62,21 +63,9 @@ export class EntitiesService {
       return [];
     }
 
-    const urns = guids.map(guid => `urn:entity:${guid}`);
+    const urns = guids.map(guid => normalizeUrn(guid));
 
     return await this.entitiesSync.get(urns);
-  }
-
-  async prefetch(guids: string[]): Promise<boolean> {
-    await this.status.untilReady();
-
-    if (!guids || !guids.length) {
-      return true;
-    }
-
-    const urns = guids.map(guid => `urn:entity:${guid}`);
-
-    return await this.entitiesSync.sync(urns);
   }
 
   static _(client: Client) {

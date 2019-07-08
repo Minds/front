@@ -1,5 +1,8 @@
 minds-admin-pages {
-  background-color: white;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
+
   .m-form {
     .m-h1-input {
       width: 100%;
@@ -26,13 +29,18 @@ minds-admin-pages {
       letter-spacing: 0.5px;
       letter-spacing: -.003em;
       font-family: 'Roboto';
-      color: rgba(0, 0, 0, .84);
       margin-top: 29px;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
+      @include m-theme(){
+        color: rgba(themed($m-black), 0.84);
+      }
     }
   }
   .m-button.m-button--delete {
-    color: #f44336;
+    @include m-theme(){
+      color: themed($m-red);
+    }
+
   }
 }

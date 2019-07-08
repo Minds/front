@@ -3,9 +3,11 @@ m-blockchain--wallet-selector {
 }
 
 .m-blockchain--wallet-selector--info {
-  border: 1px solid #eeeeee;
   padding: $minds-padding * 2;
   font-size: 14px;
+  @include m-theme(){
+     border: 1px solid themed($m-grey-50);
+  }
 }
 
 .m-blockchain--wallet-selector--list {
@@ -13,13 +15,16 @@ m-blockchain--wallet-selector {
   padding: 0;
 
   .m-blockchain--wallet-selector--item {
-    border: 1px solid #eeeeee;
     padding: $minds-padding * 2;
     cursor: pointer;
-
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+    }
     &.m-blockchain--wallet-selector--item-active {
-      color: #cccccc;
       cursor: default;
+      @include m-theme(){
+         color: themed($m-grey-100);
+      }
     }
 
     .material-icons {

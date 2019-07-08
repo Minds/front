@@ -17,7 +17,7 @@
         </p>
         <p class="m-date">{{ application.time_created * 1000 | date:'medium' }}</p>
       </div>
-      
+
       <div class="m-application-info">
         <p class="m-message">
           {{ application.message }}
@@ -32,13 +32,13 @@
         >Review</button>
       </div>
       <div class="m-application-cta" *ngIf="reviewing === i">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--green"
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
           (click)="accept(i)"
           [disabled]="inProgress"
           i18n="@@M__ACTION__ACCEPT"
         >Accept</button>
 
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--red"
           (click)="reject(i)"
           [disabled]="inProgress"
           i18n="@@M__ACTION__REJECT"

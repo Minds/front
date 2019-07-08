@@ -1,6 +1,10 @@
 @import 'defaults.scss';
 
 .m-messenger--conversation{
+  border-radius: 3px 3px 0 0;
+  @include m-theme(){
+    box-shadow: 0 2px 4px 0 rgba(themed($m-black), .15), 0 1px 0px -2px rgba(themed($m-black), .15), 0 1px 5px 0 rgba(themed($m-black), .15);
+  }
 
   .m-messenger--conversation-messages{
     max-height:240px;
@@ -14,7 +18,6 @@
     .m-messenger--conversation-message-bubble {
       display: inline-block;
       padding: $minds-padding;
-      background: #EEE;
       border-radius: 3px;
       font-size: 12px;
       margin: $minds-margin/2 $minds-margin;
@@ -26,6 +29,9 @@
       word-wrap: break-word;
       cursor:pointer;
       white-space: pre-line;
+      @include m-theme(){
+        background-color: themed($m-grey-50);
+      }
     }
     .m-messenger--conversation-messages-message{
       text-align:right;
@@ -40,8 +46,10 @@
       &.odd{
         text-align:left;
         .m-messenger--conversation-message-bubble{
-          background:#cfd8dc !important;
           //color:#FFF !important;
+          @include m-theme(){
+            background-color: themed($m-blue-grey-100) !important;
+          }
         }
         img{
           margin-right:0;
@@ -79,6 +87,15 @@
         margin-bottom: $minds-padding * 2;
         line-height: 1.35;
       }
+
+      button:not([disabled]) {
+        &:hover {
+          @include m-theme(){
+            background-color: themed($m-blue-grey-700);
+          }
+        }
+
+      }
     }
   }
   .m-messenger--conversation-composer{
@@ -104,6 +121,12 @@
       vertical-align: middle;
       cursor:pointer;
       overflow:hidden;
+
+      &:hover {
+        @include m-theme{
+          color: themed($m-blue-grey-800) !important;
+        }
+      }
     }
   }
 }

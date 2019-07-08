@@ -21,17 +21,21 @@ export class Web3WalletService {
 
   constructor(
     protected localWallet: LocalWalletService,
-    protected transactionOverlay: TransactionOverlayService
+    protected transactionOverlay: TransactionOverlayService,
   ) { }
 
   // Wallet
 
-  async getWallets() {
+  async getWallets(forceAuthorization: boolean = false) {
     try {
       await this.ready();
 
       if (!await this.isSameNetwork()) {
         return false;
+      }
+
+      if (forceAuthorization && window.ethereum) {
+        await window.ethereum.enable();
       }
 
       return await this.eth.accounts();
@@ -40,8 +44,8 @@ export class Web3WalletService {
     }
   }
 
-  async getCurrentWallet(): Promise<string | false> {
-    let wallets = await this.getWallets();
+  async getCurrentWallet(forceAuthorization: boolean = false): Promise<string | false> {
+    let wallets = await this.getWallets(forceAuthorization);
 
     if (!wallets || !wallets.length) {
       return false;
@@ -52,7 +56,9 @@ export class Web3WalletService {
 
   async getBalance(address): Promise<string | false> {
     return new Promise<string | false>((resolve, reject) => {
-      this.eth.getBalance(address, (error, result) => {
+      if (!window.web3 && !window.web3.eth)
+        return reject(false);
+      window.web3.eth.getBalance(address, (error, result) => {
         if (error) {
           console.log(error);
           return reject(false);
@@ -71,11 +77,18 @@ export class Web3WalletService {
     return this.local;
   }
 
+  async setupMetamask() {
+    if (await this.isLocal()) {
+      return await this.localWallet.setupMetamask();
+    }
+  }
+
   async unlock() {
     if ((await this.isLocal()) && (await this.isLocked())) {
       await this.localWallet.unlock();
     }
 
+    await this.getCurrentWallet(true);
     return !(await this.isLocked());
   }
 
@@ -137,7 +150,7 @@ export class Web3WalletService {
     this.EthJS = Eth;
 
     // MetaMask found
-    this.eth = new Eth(window.web3.currentProvider);
+    this.eth = new Eth(window.ethereum || window.web3.currentProvider);
     this.local = false;
   }
 

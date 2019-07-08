@@ -1,3 +1,13 @@
+@import "defaults";
+
+m-wire--marketing {
+  .m-layout--row {
+    @media screen and(max-width: $min-tablet) {
+      flex-wrap: wrap;
+    }
+  }
+}
+
 .m-wire--marketing-header{
   background: url('<%= APP_CDN %>/assets/photos/blown-bulb.jpg') center;
   width: 100%;
@@ -14,10 +24,11 @@
   }
 
   h1, h3{
-    color: #FFF;
-
     font-family: 'Roboto';
-    text-shadow: 0 0 3px #333;
+    @include m-theme(){
+      color: themed($m-white);
+      text-shadow: 0 0 3px themed($m-grey-900);
+    }
 
     @media only screen and (max-width: 400px) {
       margin:0;
@@ -55,20 +66,24 @@
       padding: 0 24px;
       font-weight: 300;
       font-family: 'Roboto';
-      color: #FFF;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
     z-index:2;
   }
 
   .m-wire--overlay{
     display: block;
-    background: rgba(0,0,0,0.5);
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     z-index: 0;
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.5);
+    }
   }
 }
 
@@ -84,7 +99,9 @@
     max-width: 500px;
 
     &:nth-of-type(1) {
-      border-right: 1px solid rgba(255,255,255,0.15);
+      @include m-theme(){
+        border-right: 1px solid rgba(themed($m-white), 0.15);
+      }
     }
 
     i{
@@ -130,8 +147,10 @@
   max-width: 600px;
   margin: 16px auto;
   display: block;
-  background: #FFF;
   padding: 16px;
   max-height: 600px;
   overflow: scroll;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }

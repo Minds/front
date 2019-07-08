@@ -45,7 +45,7 @@ export class PosterComponent {
 
   errorMessage: string = null;
 
-  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
+  @ViewChild('hashtagsSelector', { static: false }) hashtagsSelector: HashtagsSelectorComponent;
 
   showActionBarLabels: boolean = false;
 

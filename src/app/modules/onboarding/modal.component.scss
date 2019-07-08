@@ -1,7 +1,9 @@
 .m-onboarding--modal-wrapper{
-  background: #FFF;
   padding: 0;
   overflow: visible;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-overlay-modal--close {
     display: none;

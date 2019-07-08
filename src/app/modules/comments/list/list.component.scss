@@ -1,7 +1,7 @@
 @import "defaults";
 
-minds-comments, .m-comment-wrapper {
-  margin-top: 50px;
+minds-comments, m-comments__tree, .m-comment-wrapper {
+  //margin-top: 50px;
   width: 100%;
 
   .minds-comment {
@@ -10,7 +10,7 @@ minds-comments, .m-comment-wrapper {
     padding: $minds-padding $minds-padding*1.5;
     background-color: transparent;
     overflow: visible;
-    //border-bottom:1px solid #DDD;
+    //border-bottom:1px solid themed($m-grey-100);
 
     .m-comment-message {
       white-space: pre-line;
@@ -122,10 +122,12 @@ minds-comments, .m-comment-wrapper {
     background: transparent;
 
     .m-rich-embed {
-      background: #fff;
       text-align: left;
-      border: 1px solid #ddd;
       margin: 0 0 $minds-padding;
+      @include m-theme(){
+        background-color: themed($m-white);
+        border: 1px solid themed($m-grey-100);
+      }
 
       minds-rich-embed .m-rich-embed-src {
         position: relative;
@@ -230,6 +232,8 @@ minds-comments, .m-comment-wrapper {
       minds-textarea {
         font-family: inherit;
         font-size: 12px;
+        width: 0;
+        min-width: 0;
         flex: 1;
         margin-bottom: $minds-padding;
         border-radius: 25px;
@@ -245,7 +249,9 @@ minds-comments, .m-comment-wrapper {
   .minds-editable-container textarea {
     width: 100%;
     padding: $minds-padding ($minds-padding + 88px) $minds-padding $minds-padding;
-    background: #fff;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 
   .m-comments-composer .mdl-card__actions {
@@ -293,11 +299,13 @@ minds-comments, .m-comment-wrapper {
     }
 
     .attachment-button:before {
-      color: #888;
       font-family: 'material icons';
       position: absolute;
       top: 7px;
       left: 6px;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
 
     .attachment-button {
@@ -313,7 +321,6 @@ minds-comments, .m-comment-wrapper {
 
       input {
         position: absolute;
-        color: #888;
         position: absolute;
         height: 100%;
         width: 100%;
@@ -321,6 +328,9 @@ minds-comments, .m-comment-wrapper {
         left: 0;
         cursor: pointer;
         opacity: 0;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
       }
       input::-webkit-file-upload-button {
         cursor: pointer;
@@ -390,14 +400,18 @@ minds-comments, .m-comment-wrapper {
   font-size: 12px;
   text-align: center;
   margin: ($minds-padding * 2) 0;
-  color: #999999;
+  @include m-theme(){
+    color: themed($m-grey-300);
+  }
 }
 
 .m-comments--load-error-label {
   font-size: 12px;
   text-align: center;
   margin: ($minds-padding * 2) 0;
-  color: #c00;
+  @include m-theme(){
+    color: themed($m-red-dark);
+  }
 
   i.material-icons {
     font-size: 1.2em;
@@ -410,5 +424,5 @@ minds-comments, .m-comment-wrapper {
 
 .m-comment--poster .minds-body {
   overflow: hidden;
+  min-height: 50px;
 }
-

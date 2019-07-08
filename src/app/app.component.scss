@@ -1,11 +1,12 @@
 @import "defaults";
+@import "themes";
 
 html, body {
   font-family: 'Roboto', Helvetica, sans-serif !important;
 }
 
 m-app {
-    
+
   //width: 100%;
   //min-width: $min-mobile;
   //height: 100%;
@@ -22,7 +23,10 @@ m-app {
     margin-top: 100px;
   }
 
-  //m-body {
+  m-body {
+    @include m-theme(){
+      background-color: themed($m-body-bg);
+    }
   //  display: inline-block;
   //  overflow:visible;
   //  flex-grow: 1;
@@ -30,11 +34,11 @@ m-app {
   //  margin-top: $layout-header-height;
   //  margin-left: $layout-sidebar-width;
   //  width: 100%;
-
+  //
   // @media screen and (max-width: $min-tablet){
   //   margin-left:0;
   //  }
-  //}
+  }
 
   p {
     font-family: 'Roboto', Helvetica, sans-serif;
@@ -43,11 +47,14 @@ m-app {
   }
 
   .mdl-card__title-text {
-    color: rgba(0,0,0,0.75);
     font-weight: 400;
     font-size: 20px;
     line-height: 20px;
     overflow: visible;
+    @include m-theme(){
+      color: rgba(themed($m-black), 0.75);
+    }
+
   }
   .mdl-card__supporting-text{
     font-family: 'Roboto';
@@ -72,6 +79,11 @@ m-app {
     }
   }
 
+  &.m-page--wrapped {
+    max-width: 1280px;
+    margin: auto;
+  }
+
   .m-page--main, .m-page__main {
     padding: 16px;
     flex: 1;
@@ -86,9 +98,7 @@ m-app {
   .m-page--sidebar--navigation--item {
     cursor: pointer;
     display: block;
-    border: 1px solid #EEE;
     margin: 4px 0;
-    background: #FFF;
     border-radius: 3px;
     padding: 12px;
     text-transform: uppercase;
@@ -96,8 +106,15 @@ m-app {
     text-decoration: none;
     font-size: 13px;
 
+    @include m-theme(){
+      background-color: themed($m-white);
+      border: 1px solid themed($m-grey-50);
+    }
+
     &.m-page--sidebar--navigation--item-active {
-      color: #4690DF;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
 
     i, span {
@@ -108,4 +125,9 @@ m-app {
       padding-left: 8px;
     }
   }
+}
+.m-loader {
+  width: 100% ;
+  padding: 16px;
+  text-align: center;
 }

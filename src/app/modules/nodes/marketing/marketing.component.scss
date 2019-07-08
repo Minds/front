@@ -2,7 +2,9 @@ m-nodes--marketing {
   .m-error--text {
     margin-left: 8px;
     font-size: 11px;
-    color: red;
+    @include m-theme(){
+      color: themed($m-red);
+    }
   }
 
   .m-nodes--marketing {
@@ -35,35 +37,43 @@ m-nodes--marketing {
           text-align: right;
 
           i {
-            color: #FFF;
             font-size: 36px;
+            @include m-theme(){
+              color: themed($m-white);
+            }
           }
 
           .m-input {
-            background: rgba(255, 255, 255, 0.2);
             border: 0;
             padding: 12px 16px;
             font-size: 26px;
-            color: #fff;
             letter-spacing: 2.5px;
             font-weight: 600;
             text-align: right;
+            @include m-theme(){
+              color: themed($m-white);
+              background-color: rgba(themed($m-white), 0.2);
+            }
           }
 
           .m-btn {
             height: auto;
             padding: 20px;
             border: 0;
-            background-color: rgba(255, 255, 255, 0.3) !important;
-            color: #FFF !important;
             margin: 16px 0;
             margin-left: 12px;
+            @include m-theme(){
+              color: themed($m-white) !important;
+              background-color: rgba(themed($m-white), 0.3) !important;
+            }
           }
 
           .m-nodes--marketing--pledges--eth-label {
             font-size: 22px;
             margin: 0 0 0 0.35em;
-            color: #ffffff;
+            @include m-theme(){
+              color: themed($m-white);
+            }
           }
         }
 
@@ -71,8 +81,11 @@ m-nodes--marketing {
           button.mdl-button {
             width: 200px;
             font-size: 20px;
-            background-color: #4690D6 !important;
-            color: white;
+
+            @include m-theme(){
+              color: themed($m-white);
+              background-color: themed($m-blue) !important;
+            }
           }
         }
       }
@@ -96,18 +109,22 @@ m-nodes--marketing {
           line-height: 52px;
           font-size: 52px;
           font-weight: 600;
-          color: #FFF;
           text-align: right;
+          @include m-theme(){
+            color: themed($m-white);
+          }
         }
 
         .m-nodes--marketing--pledges--amounts--label {
           font-size: 14px;
           font-weight: 600;
-          color: #EEE;
           width: 116px;
           text-transform: uppercase;
           letter-spacing: 1.5px;
           font-weight: 400;
+          @include m-theme(){
+            color: themed($m-grey-50);
+          }
         }
       }
     }
@@ -121,7 +138,9 @@ m-nodes--marketing {
     }
 
     m-video .minds-video-play-icon {
-      text-shadow: 0 0 3px #333;
+      @include m-theme(){
+        text-shadow: 0 0 3px themed($m-grey-900);
+      }
     }
 
   }
@@ -138,8 +157,10 @@ m-nodes--marketing {
     padding: 24px;
 
     h2 {
-      color: #444 !important;
       font-size: 30px;
+      @include m-theme(){
+        color: themed($m-grey-800) !important;
+      }
     }
 
     m-nodes--marketing--onboard {
@@ -183,17 +204,21 @@ m-nodes--marketing {
       display: block;
       width: 100%;
       border-radius: 4px;
-      border: 1px solid #eee;
       font-size: 16px;
       padding: 8px;
       letter-spacing: 1px;
+      @include m-theme(){
+         border: 1px solid themed($m-grey-50);
+      }
     }
   }
 
   .m-nodes--marketing--pledge--address-warn {
     font-size: 0.85em;
-    color: #888;
     padding-bottom: 16px;
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
   }
 
   .m-nodes--marketing--pledge--note {
@@ -203,7 +228,9 @@ m-nodes--marketing {
   .m-nodes--marketing--pledge--note,
   .m-nodes--marketing--pledge--check-label {
     line-height: 1.35;
-    color: #444;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   .m-nodes--marketing--pledge--wallet-label {
@@ -233,7 +260,9 @@ m-nodes--marketing {
       font-size: 52px;
       letter-spacing: 2px;
       line-height: 1.5;
-      color: #4690D6;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
 
     .m-nodes--marketing-label {
@@ -242,7 +271,9 @@ m-nodes--marketing {
       font-weight: 300;
       line-height: 1.5;
       text-transform: uppercase;
-      color: #888;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
       @media screen and (max-width: $max-mobile) {
         text-align: center;
       }
@@ -260,10 +291,12 @@ m-nodes--marketing {
     }
     li {
       font-size: 16px;
-      color: #555;
       letter-spacing: 0.25px;
       padding: 16px 0;
-      border-bottom: 1px solid #ececec;
+      @include m-theme(){
+        color: themed($m-grey-700);
+        border-bottom: 1px solid themed($m-grey-50);
+      }
     }
   }
 
@@ -331,7 +364,9 @@ m-nodes--marketing {
       background-position: center;
       background-size: cover;
       border-radius: 50%;
-      border: 1px solid #ececec;
+      @include m-theme(){
+         border: 1px solid themed($m-grey-50);
+      }
     }
 
     .m-nodes--marketing-person-name,
@@ -352,7 +387,9 @@ m-nodes--marketing {
 
     .m-nodes--marketing-person-title {
       font-size: 14px;
-      color: #888;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
 
     &.m-nodes--marketing--team--more {

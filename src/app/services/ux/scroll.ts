@@ -1,4 +1,4 @@
-import { EventEmitter, Injector } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, throttleTime } from 'rxjs/operators';
 

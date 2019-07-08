@@ -8,9 +8,11 @@ minds-form-city-finder{
     list-style: none;
 
     li{
-      border-bottom: 1px solid #DDD;
       padding: 8px;
       cursor:pointer;
+      @include m-theme(){
+         border-bottom: 1px solid themed($m-grey-100);
+      }
     }
   }
 

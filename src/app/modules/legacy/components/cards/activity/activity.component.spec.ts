@@ -34,6 +34,9 @@ import { MockComponent, MockDirective, MockService } from '../../../../../utils/
 import { IfFeatureDirective } from '../../../../../common/directives/if-feature.directive';
 import { NSFWSelectorConsumerService } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
 import { FeaturesService } from '../../../../../services/features.service';
+import { BlockListService } from "../../../../../common/services/block-list.service";
+import { ClientMetaService } from "../../../../../common/services/client-meta.service";
+import { clientMetaServiceMock } from "../../../../../../tests/client-meta-service-mock.spec";
 
 /* tslint:disable */
 // START MOCKS
@@ -481,6 +484,7 @@ describe('Activity', () => {
         { provide: TranslationService, useValue: translationServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: EntitiesService, useValue: entitiesServiceMock },
+        { provide: ClientMetaService, useValue: clientMetaServiceMock },
         {
           provide: NSFWSelectorConsumerService,
           useValue: NSFWSelectorServiceMock,
@@ -490,6 +494,10 @@ describe('Activity', () => {
           useValue: MockService(FeaturesService),
         },
         NewsfeedService,
+        {
+          provide: BlockListService,
+          useValue: MockService(BlockListService),
+        }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

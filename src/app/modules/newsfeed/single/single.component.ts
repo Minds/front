@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injector, SkipSelf } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -8,9 +8,11 @@ import { ContextService } from '../../../services/context.service';
 import { EntitiesService } from "../../../common/services/entities.service";
 import { Client } from "../../../services/api/client";
 import { FeaturesService } from "../../../services/features.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-newsfeed--single',
+  providers: [ ClientMetaService ],
   templateUrl: 'single.component.html'
 })
 
@@ -32,7 +34,13 @@ export class NewsfeedSingleComponent {
     public entitiesService: EntitiesService,
     protected client: Client,
     protected featuresService: FeaturesService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
   }
 
   ngOnInit() {
@@ -60,6 +68,8 @@ export class NewsfeedSingleComponent {
   load(guid: string) {
     this.context.set('activity');
 
+    this.inProgress = true;
+
     const fetchSingleGuid = this.featuresService.has('sync-feeds') ?
       this.loadFromFeedsService(guid) :
       this.loadLegacy(guid);
@@ -78,6 +88,8 @@ export class NewsfeedSingleComponent {
           break;
       }
 
+      this.inProgress = false;
+
       if (this.activity.ownerObj) {
         this.context.set('activity', {
           label: `@${this.activity.ownerObj.username} posts`,
@@ -94,17 +106,24 @@ export class NewsfeedSingleComponent {
       }
     })
       .catch(e => {
+        this.inProgress = false;
+
         if (e.status === 0) {
           this.error = 'Sorry, there was a timeout error.';
         } else {
           this.error = 'Sorry, we couldn\'t load the activity';
         }
-        this.inProgress = false;
       });
   }
 
   async loadFromFeedsService(guid: string) {
-    return await this.entitiesService.single(guid);
+    const activity = await this.entitiesService.single(guid);
+
+    if (!activity) {
+      throw new Error('Activity not found');
+    }
+
+    return activity;
   }
 
   async loadLegacy(guid: string) {

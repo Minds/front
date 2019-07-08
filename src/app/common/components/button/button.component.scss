@@ -3,14 +3,16 @@ minds-button {
 }
 .m-button.m-button--text {
   -webkit-appearance: none;
-  border: 1px solid #EEE;
-  color: #777;
   background: transparent;
   padding: 12px 16px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-size: 14px;
   font-family: 'Roboto';
+  @include m-theme(){
+    color: themed($m-grey-500);
+    border: 1px solid themed($m-grey-50);
+  }
 }
 
 .m-topbar .m-btn {
@@ -19,20 +21,25 @@ minds-button {
 
 .m-btn {
   background: transparent !important;
-  border: 1px solid #ececec;
   border-radius: 18px;
   font-size: 12px;
   height: 42px;
   letter-spacing: 1.25px;
-  color: #444;
   box-shadow: none;
   text-transform: uppercase;
   padding: 8px 16px;
   font-family: 'Roboto';
   cursor: pointer;
 
+  @include m-theme(){
+    color: themed($m-grey-800);
+    border: 1px solid themed($m-grey-50);
+  }
+
   &:hover {
-    border: 1px solid #ccc;
+    @include m-theme(){
+      border: 1px solid themed($m-grey-100);
+    }
   }
 }
 
@@ -41,32 +48,44 @@ minds-button {
 }
 
 .m-btn--action {
-  background: #FFF;
-  border: 1px solid #4690D6;
-  color: #4690D6 !important;
+  @include m-theme(){
+    background-color: themed($m-white);
+    color: themed($m-blue) !important;
+    border: 1px solid themed($m-blue);
+  }
 
   &:hover {
-    border: 1px solid #4690D6;
+    @include m-theme(){
+      border: 1px solid themed($m-blue);
+    }
   }
 
   &[disabled] {
-    color: #aaa !important;
-    border-color: #aaa !important;
+    @include m-theme(){
+      color: themed($m-grey-200) !important;
+      border-color: themed($m-grey-200) !important;
+    }
   }
 }
 
 .m-btn--destructive {
-  background: #FFF;
-  border: 1px solid #CC0000;
-  color: #CC0000 !important;
+  @include m-theme(){
+    background-color: themed($m-white);
+    color: themed($m-red) !important;
+    border: 1px solid themed($m-red);
+  }
 
   &:hover {
-    border: 1px solid #CC0000;
+    @include m-theme(){
+      border: 1px solid themed($m-red);
+    }
   }
 
   &[disabled] {
-    color: #aaa !important;
-    border-color: #aaa !important;
+    @include m-theme(){
+      color: themed($m-grey-200) !important;
+      border-color: themed($m-grey-200) !important;
+    }
   }
 }
 
@@ -75,7 +94,7 @@ minds-button {
   padding-right: 12px;
 
   &.m-btn--slim {
-    padding-left: 16px;
+    padding-left: 8px;
     padding-right: 16px;
   }
 
@@ -91,6 +110,6 @@ minds-button {
 
   &.m-btn--slim > i {
     margin-left: 4px;
-    margin-right: 0;
+    margin-right: 4px;
   }
 }

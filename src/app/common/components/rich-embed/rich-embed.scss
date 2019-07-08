@@ -16,7 +16,9 @@ minds-rich-embed {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    @include m-theme(){
+      background-color: rgba(themed($m-black-always), 0.2);
+    }
 
     &:hover {
       background: transparent;
@@ -27,9 +29,11 @@ minds-rich-embed {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: #ffffff;
       font-size: 4em;
       line-height: 1em;
+      @include m-theme(){
+        color: themed($m-white-always);
+      }
     }
   }
 
@@ -43,7 +47,9 @@ minds-rich-embed {
   }
 
   .m-rich-embed-thumbnail-placeholder {
-    background-color: #000000;
+    @include m-theme(){
+      background-color: themed($m-black-always);
+    }
   }
 
   .m-rich-embed-video-iframe {

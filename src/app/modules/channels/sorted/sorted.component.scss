@@ -1,0 +1,9 @@
+.m-channel--sorted__SortSelector {
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
+
+  position: relative;
+  padding: 8px;
+  margin-bottom: 16px;
+}
