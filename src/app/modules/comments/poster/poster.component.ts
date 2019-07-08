@@ -78,6 +78,7 @@ export class CommentPosterComponent {
     this.inProgress = true;
 
     if (!this.content && !this.attachment.has()) {
+      this.inProgress = false;
       return;
     }
 
