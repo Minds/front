@@ -46,10 +46,13 @@ export class Upload {
       }
       xhr.open('POST', this.base + endpoint, true);
       xhr.upload.addEventListener('progress', function (e: any) {
-        progress(e.loaded / e.total * 100);
+        if (e.lengthComputable) {
+          progress((e.loaded / (e.total) * 99));
+        }
       });
       xhr.onload = function (this: XMLHttpRequest) {
         if (this.status === 200) {
+          progress(100);
           resolve(JSON.parse(this.response));
         } else {
           reject(this.response);
