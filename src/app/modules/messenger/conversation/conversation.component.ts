@@ -64,6 +64,8 @@ export class MessengerConversation {
   invitable: any[] | null = null;
   invited: boolean = false;
 
+  ribbonOpened: boolean = false;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -360,8 +362,22 @@ export class MessengerConversation {
         has = true;
       }
     });
-
     return has;
   }
 
+  // Open the conversation with the ribbon
+  ribbonToggle() {
+    if (!this.ribbonOpened && !this.conversation.open) {
+      this.dockpanes.open(this.conversation);
+    }
+    this.ribbonOpened = !this.ribbonOpened;
+  }
+
+  // Close the ribbon with the conversation
+  toggle() {
+    if (this.ribbonOpened) {
+      this.ribbonOpened = false;
+    }
+    this.dockpanes.toggle(this.conversation);
+  }
 }
