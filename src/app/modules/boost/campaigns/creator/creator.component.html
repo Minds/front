@@ -101,6 +101,8 @@
             *ngFor="let hashtag of campaign.hashtags"
             class="m-form--tag-badge"
           >#{{hashtag}}</span>
+
+          <span *ngIf="!campaign.hashtags || !campaign.hashtags.length">&nbsp;</span>
         </span>
 
         <m-hashtags-selector

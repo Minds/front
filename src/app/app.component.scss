@@ -405,6 +405,12 @@ m-app {
   .m-form--edit-tag-badges {
     display: inline-block;
     min-width: 250px; // Tag selector width
+    border-radius: 16px;
+    padding: 7px 12px 5px;
+
+    @include m-theme(){
+      border: 1px solid themed($m-grey-50);;
+    }
   }
 
   .m-form--tag-badge {
