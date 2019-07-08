@@ -1,0 +1,25 @@
+.m-form .m-form--field .m-form--read-only-value.m-boost-campaigns-view--payment-row {
+  display: block;
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .m-boost-campaigns-view--payment-row-amount {
+    margin-bottom: 4px;
+
+    span {
+      font-weight: 300;
+    }
+  }
+
+  .m-boost-campaigns-view--payment-row-tx {
+    font-size: 12px;
+    font-weight: 300;
+
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+}

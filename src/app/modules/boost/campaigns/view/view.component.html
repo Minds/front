@@ -74,6 +74,13 @@
           *ngFor="let hashtag of campaign.hashtags"
           class="m-form--tag-badge"
         >#{{hashtag}}</span>
+
+        <span
+          *ngIf="campaign.hashtags && !campaign.hashtags.length"
+          class="m-form--tag-badge"
+        >
+          #all
+        </span>
       </div>
     </div>
 
@@ -109,7 +116,7 @@
       </div>
 
       <div class="m-form--read-only-value">
-        <span>{{campaign.budget | number}} TOKENS</span>
+        <span i18n>{{campaign.budget | number}} TOKENS</span>
       </div>
     </div>
 
@@ -133,6 +140,25 @@
       <div class="m-form--read-only-value">
         <span>{{(campaign.impressions_met || 0) | number}}</span>
       </div>
+    </div>
+
+    <div class="m-form--field" *ngIf="campaign.payments && campaign.payments.length">
+      <div class="m-form--field-label">
+        <span i18n>Payment</span>
+        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+      </div>
+
+      <ng-container *ngFor="let payment of campaign.payments">
+        <div class="m-form--read-only-value m-boost-campaigns-view--payment-row">
+          <div class="m-boost-campaigns-view--payment-row-amount">
+            {{payment.amount | number}} <span i18n>TOKEN(S)</span>
+          </div>
+
+          <div class="m-boost-campaigns-view--payment-row-tx">
+            {{payment.tx}}
+          </div>
+        </div>
+      </ng-container>
     </div>
 
     <div class="m-form--field">
