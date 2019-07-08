@@ -36,8 +36,6 @@ export class SidebarSelectorComponent implements OnInit {
   showExtendedList: boolean = false;
   showTrending: boolean = false;
 
-  protected lastPreferredEmission: boolean;
-
   constructor(
     protected topbarHashtagsService: TopbarHashtagsService,
     protected changeDetectorRef: ChangeDetectorRef,
@@ -46,7 +44,8 @@ export class SidebarSelectorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lastPreferredEmission = this.preferred;
+    let preferredState = this.storage.get('preferred_hashtag_state');
+    this.preferred = (preferredState === null) ? true : preferredState === '1';
     this.init();
   }
 
@@ -122,15 +121,12 @@ export class SidebarSelectorComponent implements OnInit {
       });
     } else {
       this.currentHashtag = null;
-      this.preferred = this.lastPreferredEmission;
-
       this.preferredChange();
     }
   }
 
   preferredChange() {
-    this.lastPreferredEmission = this.preferred;
-
+    this.storage.set('preferred_hashtag_state', this.preferred ? '1' : '0');
     this.filterChange.emit({
       type: this.preferred ? 'preferred' : 'all'
     });
