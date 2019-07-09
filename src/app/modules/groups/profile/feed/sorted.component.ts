@@ -105,8 +105,8 @@ export class GroupProfileFeedSortedComponent {
     this.detectChanges();
   }
 
-  loadNext() {
-    this.feedsService.setOffset(this.feedsService.offset.getValue() + 12);
+  loadMore() {
+    this.feedsService.loadMore();
   }
 
   setFilter(type: string) {

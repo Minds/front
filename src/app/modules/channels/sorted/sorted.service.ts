@@ -23,7 +23,9 @@ export class SortedService {
         throw new Error('Invalid server response');
       }
 
-      return response.entities;
+      return response.entities.map(entity => {
+        return entity.entity
+      });
     } catch (e) {
       console.error('SortedService.getMedia', e);
       return [];
