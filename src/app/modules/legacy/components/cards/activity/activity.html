@@ -29,7 +29,7 @@
         >
         <i class="material-icons">trending_up</i>
         <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL" [hidden]="activity.boosted_onchain">Boosted</a>
-        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN" [hidden]="!activity.boosted_onchain" [routerLink]="['/token']">Boosted Onchain</a>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN" [hidden]="!activity.boosted_onchain">Boosted Onchain</a>
       </div>
       <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
         <i class="material-icons unlisted">visibility_off</i>
@@ -52,6 +52,12 @@
   </div>
 
 </div>
+
+<div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp" style="min-height:0;" *ngIf="errorString && editing">
+  <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50"> 
+    {{errorString}}    
+  </div>
+</div> 
 
 <m-wire--lock-screen [(entity)]="activity" *ngIf="activity.paywall && !editing"></m-wire--lock-screen>
 

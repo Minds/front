@@ -88,4 +88,22 @@ export class TopbarHashtagsService {
     }
     return result;
   }
+
+  /**
+   * Gets a list of all hashtags in a given string.
+   * @input {string} inputText - The text to be searched.
+   * @returns {Array<string>} - array of each hashtag (as a string).
+
+   *  Credit to Arnaud Valensi - http://geekcoder.org/js-extract-hashtags-from-text/
+   */
+  sliceHashTags(inputText: any) {  
+    const regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
+    let matches = [];
+    let match;
+    while ((match = regex.exec(inputText))) {
+        matches.push(match[1]);
+    }
+    return matches;
+  }
+
 }

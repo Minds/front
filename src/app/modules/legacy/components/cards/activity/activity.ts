@@ -25,6 +25,7 @@ import { BlockListService } from "../../../../../common/services/block-list.serv
 import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.service";
 import { NewsfeedService } from "../../../../newsfeed/services/newsfeed.service";
 import { ClientMetaService } from "../../../../../common/services/client-meta.service";
+import { TopbarHashtagsService } from "../../../../hashtags/service/topbar.service";
 
 @Component({
   moduleId: module.id,
@@ -34,7 +35,7 @@ import { ClientMetaService } from "../../../../../common/services/client-meta.se
   },
   inputs: ['object', 'commentsToggle', 'focusedCommentGuid', 'visible', 'canDelete', 'showRatingToggle'],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
-  providers: [ ClientMetaService, ActivityAnalyticsOnViewService ],
+  providers: [ ClientMetaService, ActivityAnalyticsOnViewService, TopbarHashtagsService ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -44,6 +45,7 @@ export class Activity implements OnInit {
   minds = window.Minds;
 
   activity: any;
+  errorString : string = ''; 
   boosted: boolean = false;
   commentsToggle: boolean = false;
   shareToggle: boolean = false;
@@ -113,6 +115,7 @@ export class Activity implements OnInit {
     protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
+    private hashtagsService: TopbarHashtagsService,
     @SkipSelf() injector: Injector,
     elementRef: ElementRef,
   ) {
@@ -187,6 +190,13 @@ export class Activity implements OnInit {
 
   save() {
     console.log('trying to save your changes to the server', this.activity);
+    if(this.hashtagsService.sliceHashTags(this.activity.message).length > 5){
+      this.editing = true;
+      this.errorString = `You have exceeded the maximum 5 hashtags in a post`;
+      this.detectChanges();
+      return;
+    }
+    
     this.editing = false;
     this.activity.edited = true;
 
