@@ -129,10 +129,6 @@ export class FeedsService {
     return this;
   }
 
-  hydrateEntities(): FeedsService {
-    return this;
-  }
-
   async destroy() {
   }
 
