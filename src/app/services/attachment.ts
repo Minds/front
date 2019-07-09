@@ -404,8 +404,11 @@ export class AttachmentService {
   private checkFileType(file): Promise<any> {
     return new Promise((resolve, reject) => {
       if (file.type && file.type.indexOf('video/') === 0) {
+        if (file.size > 1900000000) {
+          throw new Error('File exceeds 1.9GB maximum size. Please try compressing your file.');
+        }
+        
         this.attachment.mime = 'video';
-
         this.checkVideoDuration(file).then(duration => {
           if (window.Minds.user.plus) {
             window.Minds.max_video_length = window.Minds.max_video_length * 2; // Hacky
