@@ -22,7 +22,7 @@ export interface SocialProfileMeta {
 export class ChannelBadgesComponent {
 
   @Input() user;
-  @Input() badges: Array<string> = [ 'verified', 'plus', 'founder', 'admin' ];
+  @Input() badges: Array<string> = [ 'verified', 'plus', 'founder', 'admin', 'onchain_booster' ];
 
   constructor(public session: Session, private client: Client, private router: Router) { }
 
@@ -82,6 +82,12 @@ export class ChannelBadgesComponent {
       .catch(() => {
         this.user.founder = true;
       });
+  }
+
+  showOnchainBadge() { 
+    return this.user.onchain_booster
+      && this.user.onchain_booster * 1000 > Date.now() 
+      && this.badges.indexOf('onchain_booster') > -1;
   }
 
 }

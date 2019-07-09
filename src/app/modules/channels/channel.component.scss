@@ -172,6 +172,14 @@ m-channel{
      margin-right: 8px;
    }
 
+   > *:last-child {
+     margin-right: 0;
+   }
+
+   .m-channel--badges {
+     min-width: 124px;
+   }
+
    .m-channel--edit-button-wrapper {
      flex-shrink: 0;
    }
