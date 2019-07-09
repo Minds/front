@@ -15,7 +15,7 @@
     left: 0;
     height: 48px;
     width: 100%;
-    overflow-y: hidden;
+    overflow-y: visible;
     @include m-theme(){
        border-bottom: 1px solid themed($m-grey-50);
     }
