@@ -14,7 +14,6 @@ import { Session } from "../../../services/session";
 import { PosterComponent } from "../../newsfeed/poster/poster.component";
 import { SortedService } from "./sorted.service";
 import { ClientMetaService } from "../../../common/services/client-meta.service";
-import { Observable } from "rxjs";
 
 @Component({
   selector: 'm-channel--sorted',
