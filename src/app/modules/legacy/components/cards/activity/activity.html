@@ -29,7 +29,7 @@
         >
         <i class="material-icons">trending_up</i>
         <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL" [hidden]="activity.boosted_onchain">Boosted</a>
-        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN" [hidden]="!activity.boosted_onchain">Boosted Onchain</a>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN" [hidden]="!activity.boosted_onchain" [routerLink]="['/token']">Boosted Onchain</a>
       </div>
       <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
         <i class="material-icons unlisted">visibility_off</i>
