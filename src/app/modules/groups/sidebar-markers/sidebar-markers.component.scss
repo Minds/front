@@ -12,9 +12,10 @@
   width: 90px;
   overflow-y: auto;
   list-style-type: none;
-
-  @include m-theme(){
-    box-shadow: 0 2px 5px rgba(themed($m-black),0.2);
+  @media screen and(min-width: $min-desktop) {
+    @include m-theme(){
+      box-shadow: 0 2px 5px rgba(themed($m-black),0.2);
+    }
   }
 
   @media screen and(max-width: $min-desktop) {
