@@ -166,6 +166,11 @@ export class NewsfeedSubscribedComponent {
     }
 
     this.feedsService.inProgress.next(true);
+    if (!this.offset) {
+      this.feedsService.setOffset(0);
+    } else {
+      this.feedsService.setOffset(this.feedsService.rawFeed.getValue().length);
+    }
     this.inProgress = true;
 
     this.client.get('api/v1/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
@@ -186,14 +191,14 @@ export class NewsfeedSubscribedComponent {
             });
         }
 
-        this.feedsService.setOffset(this.feedsService.offset.getValue() + 12); // Hacky!
-
         if (this.feedsService.rawFeed.getValue() && !refresh) {
           this.feedsService.rawFeed.next([...this.feedsService.rawFeed.getValue(), ...feedItems]);
         } else {
           this.feedsService.rawFeed.next(feedItems);
         }
-        
+
+        this.feedsService.inProgress.next(false);
+        //this.feedsService.setOffset(this.feedsService.offset.getValue() + 12); // Hacky!
         this.offset = data['load-next'];
         this.inProgress = false;
       })
