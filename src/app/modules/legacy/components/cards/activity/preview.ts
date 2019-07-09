@@ -21,8 +21,9 @@ export class ActivityPreview {
   minds = window.Minds;
   activity: any;
   hideTabs: boolean;
-
+  
   editing: boolean = false;
+  errorString: string = null;
   commentsToggle: boolean = false;
   showBoostOptions: boolean = false;
   translateToggle: any;

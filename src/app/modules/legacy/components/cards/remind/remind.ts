@@ -15,7 +15,7 @@ import { AttachmentService } from '../../../../../services/attachment';
 export class Remind {
 
   minds = window.Minds;
-
+  errorString: string = '';
   activity: any;
   @Input() boosted: boolean = false;
   hideTabs: boolean;

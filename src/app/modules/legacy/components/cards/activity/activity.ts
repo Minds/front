@@ -45,7 +45,6 @@ export class Activity implements OnInit {
   minds = window.Minds;
 
   activity: any;
-  errorString : string = ''; 
   boosted: boolean = false;
   commentsToggle: boolean = false;
   shareToggle: boolean = false;
@@ -57,21 +56,22 @@ export class Activity implements OnInit {
   @Input('boost-toggle')
   @Input() showBoostMenuOptions: boolean = false;
   @Input() slot: number = -1;
-
+  
   visibilityEvents: boolean = true;
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
     this.visibilityEvents = visibilityEvents;
-
+    
     if (this.activityAnalyticsOnViewService) {
       this.activityAnalyticsOnViewService
-        .setEnabled(this.visibilityEvents);
+      .setEnabled(this.visibilityEvents);
     }
   }
-
+  
   type: string;
   element: any;
   visible: boolean = false;
-
+  
+  errorString : string = '';
   editing: boolean = false;
   @Input() hideTabs: boolean;
 
@@ -156,7 +156,7 @@ export class Activity implements OnInit {
     ) {
       this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
     }
-    
+
     if (!this.activity.message) {
       this.activity.message = '';
     }
@@ -190,13 +190,15 @@ export class Activity implements OnInit {
 
   save() {
     console.log('trying to save your changes to the server', this.activity);
-    if(this.hashtagsService.sliceHashTags(this.activity.message).length > 5){
+    console.log("hello");
+    if (this.hashtagsService.sliceHashTags(this.activity.message).length > 5) {
       this.editing = true;
       this.errorString = `You have exceeded the maximum 5 hashtags in a post`;
       this.detectChanges();
       return;
     }
-    
+
+    this.errorString = '';
     this.editing = false;
     this.activity.edited = true;
 
