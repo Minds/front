@@ -27,6 +27,14 @@
           </div>
         </div>
 
+        <div *ngIf="noResults"
+           class="m-helpdeskSearch__results m-border"
+        >
+          <div class="m-helpdeskSearch__result">
+            <span i18n="@@HELPDESK__DASHBOARD_NO_RESULTS">No Results Found</span>
+          </div>
+        </div>
+
         <div class="m-helpdesk__dashboardButtons" *ngIf="session.isAdmin()">
           <button
             class="m-btn m-btn--slim"
