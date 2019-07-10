@@ -407,7 +407,13 @@ m-blockchain--marketing {
     font-weight: 800;
 
     img {
-      max-width: 30px;
+      max-width: 16px;
+      filter: grayscale(1);
+      opacity: 0.62;
+      &:hover {
+         filter: initial;
+         opacity: 1;
+      }
     }
   }
 
