@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -49,6 +49,9 @@ describe('HelpdeskDashboardComponent', () => {
   beforeEach((done) => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
 
+    jasmine.clock().uninstall();
+    jasmine.clock().install();
+
     clientMock.response = {};
     clientMock.response['api/v2/helpdesk/questions/top'] = {
       'status': 'success',
@@ -89,6 +92,10 @@ describe('HelpdeskDashboardComponent', () => {
           done();
         });
     }
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
   it("should have a 'How can we help you @username?' title", () => {
@@ -151,4 +158,56 @@ describe('HelpdeskDashboardComponent', () => {
     expect(subtext.nativeElement.textContent).toContain('Support with purchasing the Minds Token or your hosted Minds Node');
   });
 
+  it('should have a list of questions', fakeAsync(() => {
+    clientMock.get.calls.reset();
+    clientMock.response['api/v2/helpdesk/questions/search'] = {
+      status: 'success',
+      entities: [
+        {
+          uuid: 'aab9b00d-2481-4bbc-b4b0-bfe861867336',
+          question: 'How can I tell if I have a message?',
+          answer: 'look at it',
+          category_uuid: 'e101ff2e-6fb8-48c3-9902-53f3063ed7ea'
+        },
+        {
+          uuid: '74fdd3b7-9e43-4312-ae2c-f0d0eab66bbe',
+          question: 'How can I tell if someone is online?',
+          answer: 'an icon',
+          category_uuid: 'e101ff2e-6fb8-48c3-9902-53f3063ed7ea'
+        }
+      ]
+    };
+    comp.query = 'how to';
+    comp.search();
+    fixture.detectChanges();
+    tick();
+    expect(clientMock.get).toHaveBeenCalled();
+    expect(clientMock.get.calls.mostRecent().args[1]).toEqual({
+      q: 'how to',
+      limit: 8
+    });
+    expect(comp.noResults).toBe(false);
+    expect(comp.results.length).toBe(2);
+    expect(comp.results[0].question).toBe('How can I tell if I have a message?');
+    expect(comp.results[1].question).toBe('How can I tell if someone is online?');
+  }));
+
+  it('should display message when no search results', fakeAsync(() => {
+    clientMock.get.calls.reset();
+    clientMock.response['api/v2/helpdesk/questions/search'] = {
+      status: 'success',
+      entities: []
+    };
+    comp.query = 'tell me';
+    comp.search();
+    fixture.detectChanges();
+    tick();
+    expect(clientMock.get).toHaveBeenCalled();
+    expect(clientMock.get.calls.mostRecent().args[1]).toEqual({
+      q: 'tell me',
+      limit: 8
+    });
+    expect(comp.noResults).toBe(true);
+    expect(comp.results.length).toBe(0);
+  }));
 });
