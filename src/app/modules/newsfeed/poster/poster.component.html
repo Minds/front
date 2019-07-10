@@ -10,7 +10,7 @@
           name="message"
           [ngModel]="meta.message"
           (ngModelChange)="onMessageChange($event)"
-          (keyup)="getPostPreview(message);"
+          (keyup)="getPostPreview(message); onTagsChange($event)"
           placeholder="Speak your mind..."
           i18n-placeholder="@@MINDS__POSTER__SPEAK_YOUR_MIND"
           [autoGrow]
