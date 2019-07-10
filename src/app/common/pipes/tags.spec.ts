@@ -94,10 +94,9 @@ describe('TagPipe', () => {
     expect(transformedString).toEqual('<a class="tag" href="/test1" target="_blank">@test1</a> <a class="tag" href="/test2" target="_blank">@test2</a>');
   });
 
-  fit('should transform many adjacent tags', () => {
+  it('should transform many adjacent tags', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = '@test1 @test2 @test3 @test4 @test5 @test6 @test7 @test8 @test9 @test10 @test11 @test12 @test13 @test14 @test15';
-    console.log(string);
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toEqual(`<a class="tag" href="/test1" target="_blank">@test1</a> <a class="tag" href="/test2" target="_blank">@test2</a> `
        + `<a class="tag" href="/test3" target="_blank">@test3</a> <a class="tag" href="/test4" target="_blank">@test4</a> `
