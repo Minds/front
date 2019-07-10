@@ -405,7 +405,7 @@ export class AttachmentService {
     return new Promise((resolve, reject) => {
       if (file.type && file.type.indexOf('video/') === 0) {
         if (file.size > 3900000000) {
-          throw new Error('File exceeds 1.9GB maximum size. Please try compressing your file.');
+          throw new Error('File exceeds 3.9GB maximum size. Please try compressing your file.');
         }
         
         this.attachment.mime = 'video';
