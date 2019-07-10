@@ -404,7 +404,7 @@ export class AttachmentService {
   private checkFileType(file): Promise<any> {
     return new Promise((resolve, reject) => {
       if (file.type && file.type.indexOf('video/') === 0) {
-        if (file.size > 1900000000) {
+        if (file.size > 3900000000) {
           throw new Error('File exceeds 1.9GB maximum size. Please try compressing your file.');
         }
         
