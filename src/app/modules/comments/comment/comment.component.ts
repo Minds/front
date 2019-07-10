@@ -96,7 +96,7 @@ export class CommentComponentV2 implements OnChanges {
 
   ngOnInit() {
     this.commentAge$ = this.timeDiffService.source.pipe(map(secondsElapsed => {
-      return (this.comment.time_created - secondsElapsed) * 1000;
+      return (this.comment.time_created - secondsElapsed * 0.01) * 1000;
     }));
   }
 
