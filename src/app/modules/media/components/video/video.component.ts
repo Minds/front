@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
 import { MindsVideoProgressBar } from './progress-bar/progress-bar.component';
 import { MindsVideoVolumeSlider } from './volume-slider/volume-slider.component';
 
@@ -28,6 +28,25 @@ export class MindsVideoComponent {
   @ViewChild('progressBar', { static: false }) progressBar: MindsVideoProgressBar;
   @ViewChild('volumeSlider', { static: false }) volumeSlider: MindsVideoVolumeSlider;
   @ViewChild('player', { static: false }) playerRef: MindsPlayerInterface;
+  @ViewChild('playButton', { static: false }) playButton: ElementRef;
+
+  @HostListener('window:scroll')
+  checkScroll() {
+    if (!this.isInView(this.playButton.nativeElement) && this.playerRef.isPlaying()) {
+      this.playerRef.pause();
+    }
+  }
+
+  isInView(element) {
+    var rect = element.getBoundingClientRect();
+
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+    );
+  }
 
   src: any[];
   @Input('src') set _src(src) {
@@ -37,7 +56,7 @@ export class MindsVideoComponent {
       this.changeSources();
     }
   }
-
+  
   torrent: any[];
   @Input('torrent') set _torrent(torrent) {
     this.torrent = torrent;
@@ -64,6 +83,7 @@ export class MindsVideoComponent {
   private availableQualities: string[] = [];
   private currentQuality: string = '';
   transcodingError = null;
+
 
   constructor(
     public scroll: ScrollService,
@@ -179,29 +199,29 @@ export class MindsVideoComponent {
     setTimeout(() => this.playerRef.resumeFromTime(time), 0);
   }
 
-  // isVisible() {
-  //   if (this.autoplay)
-  //     return;
-  //   // if (!this.visibleplay)
-  //   //   return;
-  //   if (!this.guid)
-  //     return;
-  //   if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-  //     this.muted = false;
-  //     return;
-  //   }
-  //   /*var bounds = this.element.getBoundingClientRect();
-  //   if (bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0) {
-  //     if (!this.torrentVideo.isPlaying()) {
-  //       this.torrentVideo.play();
-  //     }
-  //   } else {
-  //     if (this.torrentVideo.isPlaying()) {
-  //       // this.element.muted = true;
-  //       this.torrentVideo.pause();
-  //     }
-  //   }*/
-  // }
+  isVisible() {
+    if (this.autoplay)
+      return;
+    // if (!this.visibleplay)
+    //   return;
+    if (!this.guid)
+      return;
+    if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+      this.muted = false;
+      return;
+    }
+    /*var bounds = this.element.getBoundingClientRect();
+    if (bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0) {
+      if (!this.torrentVideo.isPlaying()) {
+        this.torrentVideo.play();
+      }
+    } else {
+      if (this.torrentVideo.isPlaying()) {
+        // this.element.muted = true;
+        this.torrentVideo.pause();
+      }
+    }*/
+  }
 
   toggleTorrentInfo() {
     this.torrentInfo = !this.torrentInfo;

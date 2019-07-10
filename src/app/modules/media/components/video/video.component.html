@@ -29,6 +29,7 @@
     <i *ngIf="!playerRef.isPlaying() && !playerRef.isLoading()"
       class="material-icons minds-video-play-icon"
       (click)="playerRef.play()"
+      #playButton
     >play_circle_outline</i>
 
     <ng-content></ng-content>
