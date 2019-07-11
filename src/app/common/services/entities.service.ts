@@ -17,6 +17,7 @@ type EntityObservables = Map<string, EntityObservable>
 export class EntitiesService {
 
   entities: EntityObservables = new Map<string, EntityObservable>();
+  castToActivites: boolean = false;
 
   constructor(
     protected client: Client,
@@ -92,6 +93,16 @@ export class EntitiesService {
   }
 
   /**
+   * Cast to activities or not
+   * @param cast boolean
+   * @return EntitiesService
+   */
+  setCastToActivities(cast: boolean): EntitiesService {
+    this.castToActivites = cast;
+    return this;
+  }
+
+  /**
    * Fetch entities
    * @param urns string[]
    * @return []
@@ -99,7 +110,10 @@ export class EntitiesService {
   async fetch(urns: string[]): Promise<Array<Object>> {
 
     try {
-      const response: any = await this.client.get('api/v2/entities/', { urns });
+      const response: any = await this.client.get('api/v2/entities/', {
+        urns,
+        as_activities: this.castToActivites ? 1 : 0,
+      });
 
       if (!response.entities.length) {
         for (const urn of urns) {

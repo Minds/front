@@ -41,6 +41,7 @@ export class FeedsService {
   pageSize: Observable<number>;  
   endpoint: string = '';
   params: any = { sync: 1 };
+  castToActivities: boolean = false;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -64,7 +65,9 @@ export class FeedsService {
       switchMap(async feed => {
         return feed.slice(0, await this.pageSize.pipe(first()).toPromise())
       }),
-      switchMap(feed => this.entitiesService.getFromFeed(feed)),
+      switchMap(feed => this.entitiesService
+        .setCastToActivities(this.castToActivities)
+        .getFromFeed(feed)),
       tap(feed => {
         if (feed.length) // We should have skipped but..
           this.inProgress.next(false);
@@ -103,9 +106,19 @@ export class FeedsService {
     return this;
   }
 
+  setCastToActivities(cast: boolean): FeedsService {
+    this.castToActivities = cast;
+    return this;
+  }
+
   fetch(): FeedsService {
     this.inProgress.next(true);
-    this.client.get(this.endpoint, {...this.params, ...{ limit: 150 }}) // Over 12 scrolls
+    this.client.get(this.endpoint, {
+      ...this.params, 
+      ...{ 
+        limit: 150, // Over 12 scrolls
+        as_activities: this.castToActivities ? 1 : 0,
+      }})
       .then((response: any) => {
         this.inProgress.next(false);
         this.rawFeed.next(response.entities);

@@ -214,6 +214,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
           nsfw,
         })
         .setLimit(12)
+        .setCastToActivities(true)
         .fetch();
 
     } catch (e) {
