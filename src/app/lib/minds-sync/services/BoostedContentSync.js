@@ -243,7 +243,7 @@ export default class BoostedContentSync {
         params.rating = this.rating;
       }
 
-      const response = await this.http.get(`api/v2/boost/fetch`, params, true);
+      const response = await this.http.get(`api/v2/boost/fetch/campaigns`, params, true);
 
       if (!response.boosts || typeof response.boosts.length === 'undefined') {
         throw new Error('Invalid server response');
