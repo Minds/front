@@ -138,7 +138,14 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
   }
 
   canSubmit() {
-    return this.service.validate(this.campaign);
+    this.currentError = '';
+
+    try {
+      return this.service.validate(this.campaign);
+    } catch (e) {
+      this.currentError = e.message;
+      return false;
+    }
   }
 
   get types() {
