@@ -13,7 +13,7 @@ import { BlockListService } from "../../../../common/services/block-list.service
   inputs: ['user'],
   outputs: ['userChanged'],
   template: `
-    <button class="material-icons" (click)="toggleMenu($event)">settings</button>
+    <button class="material-icons" (click)="toggleMenu($event)">more_vert</button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
       <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BLOCK">Block @{{user.username}}</li>

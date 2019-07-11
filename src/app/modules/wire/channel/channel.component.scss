@@ -42,13 +42,12 @@ m-wire-channel {
       background: transparent;
       cursor: pointer;
       @include m-theme(){
-        color: themed($m-blue-grey-400);
+        color: themed($m-grey-400);
       }
 
       &:hover {
         @include m-theme(){
-          color: themed($m-white);
-          background-color: themed($m-blue-grey-400);
+          color: themed($m-grey-600);
         }
       }
     }
@@ -114,7 +113,6 @@ m-wire-channel {
   .m-wire-channel--reward-description > textarea {
     margin-top: 8px;
     margin-bottom: 16px;
-    /* min-height: 51px; */
     font-size: 11px;
     padding: 8px;
     font-weight: 500;
@@ -127,7 +125,6 @@ m-wire-channel {
 
   .m-wire-channel--rewards {
     width: 100%;
-    //margin-top: $minds-padding * 2;
     @include m-theme(){
       color: themed($m-grey-800);
     }
@@ -178,9 +175,6 @@ m-wire-channel {
     text-align: right;
     @include m-theme(){
       color: themed($m-blue);
-    }
-    & > i {
-      //transform: scale(1.6);
     }
   }
 
