@@ -133,6 +133,19 @@ export class ChannelSortedComponent implements OnInit {
     }
 
     this.entities.unshift(activity);
+
+    let feedItem = {
+      entity: activity,
+      urn: activity.urn,
+      guid: activity.guid
+    };
+
+    // Todo: Move to FeedsService
+    this.feedsService.rawFeed.next([
+      ... [ feedItem ],
+      ... this.feedsService.rawFeed.getValue()
+    ]);
+
     this.detectChanges();
   }
 
