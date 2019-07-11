@@ -79,7 +79,14 @@ export class EntitiesService {
 
     this.entities.set(urn, new BehaviorSubject(null));
 
-    this.fetch([ urn ]); // Update in the background
+    this.fetch([ urn ]) // Update in the background
+      .then((response: any) => {
+        const entity = response.entities[0];
+        if (entity.urn !== urn) { // urns may differn so fix this
+          entity.urn = urn;
+          this.addEntity(entity);
+        }
+      });
 
     return this.entities.get(urn);
   }
