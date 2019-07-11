@@ -19,14 +19,6 @@ import { BlockListService } from "../../../../common/services/block-list.service
       <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BLOCK">Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBLOCK">Un-Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNSUBSCRIBE">Unsubscribe</li>
-      <li class="mdl-menu__item"
-        *ngIf="session.isAdmin()"
-        [hidden]="user.banned === 'yes'"
-        (click)="banToggle = true; showMenu = false"
-        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_GLOBALLY"
-        >
-        Ban globally
-      </li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_GLOBALLY">Un-ban globally</li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
