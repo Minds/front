@@ -32,11 +32,7 @@ import { map } from "rxjs/operators";
   },
   templateUrl: 'comment.component.html',
   providers: [
-    {
-        provide: AttachmentService,
-        useFactory: AttachmentService._,
-        deps: [Session, Client, Upload]
-    },
+    AttachmentService,
     {
       provide: CommentsListComponent,
       useValue: forwardRef(() => CommentsListComponent),

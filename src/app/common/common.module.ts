@@ -280,7 +280,7 @@ import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizonta
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
+      deps: [Session, Client, Upload, HttpClient ]
     },
     {
       provide: UpdateMarkersService,

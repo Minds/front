@@ -20,13 +20,7 @@ import { SocketsService } from '../../../services/sockets';
 @Component({
   selector: 'm-comment__poster',
   templateUrl: 'poster.component.html',
-  providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
-    }
-  ],
+  providers: [ AttachmentService ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

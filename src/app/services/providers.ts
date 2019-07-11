@@ -126,7 +126,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: AttachmentService,
      useFactory: AttachmentService._,
-     deps: [ Session, Client, Upload ]
+     deps: [ Session, Client, Upload, HttpClient ]
    },
    {
      provide: Sidebar,
