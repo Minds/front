@@ -2,7 +2,7 @@
   <h4 i18n>Blocked Channels</h4>
 
   <div class="m-settingsBlockedChannels__List">
-    <div *ngFor="let channel of channels" class="m-settingsBlockedChannels__Channel m-border">
+    <div *ngFor="let channel of channels | async" class="m-settingsBlockedChannels__Channel m-border">
       <div class="m-settingsBlockedChannelsChannel__Avatar">
         <a [routerLink]="['/', channel.username]">
           <img [src]="getChannelIcon(channel)" />
@@ -33,7 +33,7 @@
 
   <infinite-scroll
     distance="25%"
-    (load)="load()"
+    (load)="loadMore()"
     [moreData]="moreData"
     [inProgress]="inProgress">
   </infinite-scroll>

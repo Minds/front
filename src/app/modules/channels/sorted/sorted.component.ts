@@ -17,7 +17,11 @@ import { ClientMetaService } from "../../../common/services/client-meta.service"
 
 @Component({
   selector: 'm-channel--sorted',
-  providers: [SortedService, ClientMetaService],
+  providers: [
+    SortedService,
+    ClientMetaService,
+    FeedsService,
+  ],
   templateUrl: 'sorted.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -63,7 +67,7 @@ export class ChannelSortedComponent implements OnInit {
   @ViewChild('poster', { static: false }) protected poster: PosterComponent;
 
   constructor(
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected service: SortedService,
     protected session: Session,
     protected clientMetaService: ClientMetaService,
@@ -81,88 +85,33 @@ export class ChannelSortedComponent implements OnInit {
     this.load(true);
   }
 
-  getAllEntities() {
-    const pinned = this.channel.pinned_posts || [];
-
-    return [
-      ...this.pinned,
-      ...this.entities.filter(entity => pinned.indexOf(entity.guid) === -1),
-    ];
-  }
-
   async load(refresh: boolean = false) {
-    if (!refresh && this.inProgress) {
+    if (!refresh) {
       return;
     }
 
     if (refresh) {
-      this.entities = [];
-      this.moreData = true;
-      this.offset = '';
+      this.feedsService.clear();
     }
-
-    this.inProgress = true;
 
     this.detectChanges();
 
-    if (!this.offset) {
-      // Load Pinned posts in parallel
-      this.loadPinned();
-    }
-
     try {
-      const limit = 12;
 
-      const { entities, next } = await this.feedsService.get({
-        endpoint: `api/v2/feeds/container/${this.channel.guid}/${this.type}`,
-        timebased: true,
-        limit,
-        offset: this.offset,
-        syncPageSize: limit * 20,
-      });
+      this.feedsService
+        .setEndpoint(`api/v2/feeds/container/${this.channel.guid}/${this.type}`)
+        .setLimit(12)
+        .fetch();
 
-      if (!entities || !entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-        this.detectChanges();
-
-        return false;
-      }
-
-      if (this.entities && !refresh) {
-        this.entities.push(...entities);
-      } else {
-        this.entities = entities;
-      }
-
-      if (!next) {
-        this.moreData = false;
-      }
-
-      this.offset = next;
     } catch (e) {
       console.error('ChannelsSortedComponent.load', e);
     }
 
-    this.inProgress = false;
     this.detectChanges();
   }
 
-  async loadPinned() {
-    this.pinned = [];
-
-    if (!this.isActivityFeed()) {
-      this.detectChanges();
-      return;
-    }
-
-    try {
-      this.pinned = (await this.service.getPinnedPosts(this.channel)) || [];
-    } catch (e) {
-      console.error('ChannelsSortedComponent.loadPinned', e);
-    }
-
-    this.detectChanges();
+  loadNext() {
+    this.feedsService.loadMore();
   }
 
   setFilter(type: string) {
