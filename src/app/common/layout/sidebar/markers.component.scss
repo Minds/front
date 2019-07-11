@@ -7,7 +7,7 @@
   z-index: 999;
   width: 48px;
   height: calc(100% - 52px);
-  overflow: hidden;
+  
   
   @include m-theme(){
      background-color: themed($m-white);
@@ -17,7 +17,12 @@
     left: 0;
     height: 48px;
     width: 100%;
-    overflow-y: visible;
+    overflow: -moz-scrollbars-none; //hide mozilla
+    -ms-overflow-style: none; //hide IE
+    ::-webkit-scrollbar { //hide webkit
+      width: 0px;
+      background: transparent; /* make scrollbar transparent */
+    }
     @include m-theme(){
        border-bottom: 1px solid themed($m-grey-50);
     }
