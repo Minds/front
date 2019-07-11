@@ -27,11 +27,7 @@ import { CommentsService } from '../comments.service';
   selector: 'm-comments__tree',
   templateUrl: 'tree.component.html',
   providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
-    },
+    AttachmentService,
     {
       provide: CommentsService,
       useFactory: (_route, _client) => { return new CommentsService(_route, _client); },
