@@ -54,6 +54,8 @@ export class SidebarSelectorComponent implements OnInit {
 
     this.initialized = true;
     this.detectChanges();
+
+    this.detectChanges();
   }
 
   async load() {
@@ -69,7 +71,8 @@ export class SidebarSelectorComponent implements OnInit {
     } catch (e) {
       console.error('SidebarSelector', e);
     }
-
+    this.preferredChange();
+    this.preferredChange();
     this.loading = false;
     this.detectChanges();
   }
@@ -121,7 +124,6 @@ export class SidebarSelectorComponent implements OnInit {
       });
     } else {
       this.currentHashtag = null;
-      this.preferredChange();
     }
   }
 
