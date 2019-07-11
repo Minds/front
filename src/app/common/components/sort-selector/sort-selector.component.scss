@@ -10,16 +10,21 @@ m-sort-selector {
   
   .m-dropdown--list--item {
     cursor: pointer;
+    
+    @include m-theme(){
+      color: themed($m-grey-700);
+    }
+    
     &.m-sort-selector--custom-type-item,
     &.m-sort-selector--algorithm-item {
       width: auto;
       display: block;
       text-align: center;
       .m-sort-selector--item-label-icon {
-      	margin-right: 0px;
-      	margin-inline: 8px;
+        margin-right: 0px;
+        margin-inline: 8px;
       }
-  	}
+    }
   }
 
   .m-sort-selector--period-dropdown {
@@ -31,9 +36,14 @@ m-sort-selector {
       .m--sort-selector-label {
         display: inline;
       }
+      @include m-theme() {
+        color: themed($m-grey-700);
+      }
     }
+    margin-left: 4px;
+    margin-right: 4px;
   }
-
+  
   .m-sort-selector--item-label-icon {
     font-size: 18px;
     margin-right: 4px;
@@ -41,15 +51,15 @@ m-sort-selector {
 
   .m-dropdown--expanded {
     .m-dropdown--list--item--selected {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
   }
 
   .m-dropdown--list--item--disabled {
-    @include m-theme(){
-      color: themed($m-grey-300);
+    @include m-theme() {
+      color: themed($m-grey-400);
     }
   }
 
@@ -83,7 +93,7 @@ m-sort-selector {
 
   .m-sort-selector--algorithm-dropdown,
   .m-sort-selector--period-dropdown {
-    .li {
+    .m-dropdown--list {
       right: auto;
       left: 0;
     }
@@ -92,12 +102,18 @@ m-sort-selector {
   .m-sort-selector--algorithm-dropdown {
     text-align: center;
     display: block;
+    @include m-theme() {
+      border-right: 1px solid themed($m-grey-50);
+    }
   }
 
   .m-sort-selector--custom-type-dropdown {
     .m-dropdown {
       margin-right: 8px;
       text-align: center;
+    }
+    @include m-theme() {
+      border-left: 1px solid themed($m-grey-50);
     }
   }
 }
