@@ -27,12 +27,11 @@ export class MindsVideoComponent {
 
   @ViewChild('progressBar', { static: false }) progressBar: MindsVideoProgressBar;
   @ViewChild('volumeSlider', { static: false }) volumeSlider: MindsVideoVolumeSlider;
-  @ViewChild('player', { static: false }) playerRef: MindsPlayerInterface;
-  @ViewChild('playButton', { static: false }) playButton: ElementRef;
+  @ViewChild('player', { static: false }) playerRef: any;
 
   @HostListener('window:scroll')
   checkScroll() {
-    if (!this.isInView(this.playButton.nativeElement) && this.playerRef.isPlaying()) {
+    if (!this.isInView(this.playerRef.nativeElement) && this.playerRef.isPlaying()) {
       this.playerRef.pause();
     }
   }
