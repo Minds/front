@@ -198,29 +198,30 @@ export class MindsVideoComponent {
     setTimeout(() => this.playerRef.resumeFromTime(time), 0);
   }
 
-  isVisible() {
-    if (this.autoplay)
-      return;
-    // if (!this.visibleplay)
-    //   return;
-    if (!this.guid)
-      return;
-    if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-      this.muted = false;
-      return;
-    }
-    /*var bounds = this.element.getBoundingClientRect();
-    if (bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0) {
-      if (!this.torrentVideo.isPlaying()) {
-        this.torrentVideo.play();
-      }
-    } else {
-      if (this.torrentVideo.isPlaying()) {
-        // this.element.muted = true;
-        this.torrentVideo.pause();
-      }
-    }*/
-  }
+  // isVisible() {
+  //   if (this.autoplay)
+  //     return;
+  //   // if (!this.visibleplay)
+  //   //   return;
+  //   if (!this.guid)
+  //     return;
+  //   if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+  //     this.muted = false;
+  //     return;
+  //   }
+  //   /*var bounds = this.element.getBoundingClientRect();
+  //   if (bounds.top < this.scroll.view.clientHeight && bounds.top + (this.scroll.view.clientHeight / 2) >= 0) {
+  //     if (!this.torrentVideo.isPlaying()) {
+  //       this.torrentVideo.play();
+  //     }
+  //   } else {
+  //     if (this.torrentVideo.isPlaying()) {
+  //       // this.element.muted = true;
+  //       this.torrentVideo.pause();
+  //     }
+  //   }*/
+  // }
+
 
   toggleTorrentInfo() {
     this.torrentInfo = !this.torrentInfo;
