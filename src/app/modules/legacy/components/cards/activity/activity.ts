@@ -367,7 +367,10 @@ export class Activity implements OnInit {
   }
 
   onNSWFSelections(reasons: Array<{ value, label, selected}>) {
-    this.attachment.setNSFW(reasons);
+    if (this.attachment.has()) {
+      this.attachment.setNSFW(reasons);
+    }
+    this.activity.nsfw = reasons.map(reason => reason.value);
   }
 
   isUnlisted() {
