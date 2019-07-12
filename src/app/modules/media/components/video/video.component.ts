@@ -83,7 +83,6 @@ export class MindsVideoComponent {
   private currentQuality: string = '';
   transcodingError = null;
 
-
   constructor(
     public scroll: ScrollService,
     public client: Client,
@@ -221,7 +220,6 @@ export class MindsVideoComponent {
   //     }
   //   }*/
   // }
-
 
   toggleTorrentInfo() {
     this.torrentInfo = !this.torrentInfo;
