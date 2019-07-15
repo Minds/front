@@ -68,7 +68,7 @@
 
     <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar m-newsfeed__sidebar">
 
-      <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" class="mdl-card m-border"></minds-card-user>
+      <minds-card-user *ngIf="session.isLoggedIn()" [object]="session.getLoggedInUser()" [avatarSize]="'large'" class="mdl-card m-border"></minds-card-user>
 
       <ng-container *mIfFeature="'top-feeds'">
         <h3 class="m-newsfeedSidebar__header">
