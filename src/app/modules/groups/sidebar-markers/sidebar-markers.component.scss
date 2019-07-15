@@ -20,6 +20,9 @@
 
   @media screen and(max-width: $min-desktop) {
     padding-right: 0;
+    &::-webkit-scrollbar, &::-webkit-scrollbar:horizontal {
+      display: none;
+    }
   }
 
   infinite-scroll {
