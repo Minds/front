@@ -30,6 +30,11 @@
     margin-top: 16px;
     max-width: 600px;
 
+    m-comment {
+      border: none !important;
+      max-width: initial !important;
+    }
+
     .m-mature-thumbnail-overlay {
       display: none !important;
     }

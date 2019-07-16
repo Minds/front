@@ -19,6 +19,7 @@ import { ImageCard } from '../../../modules/legacy/components/cards/object/image
 import { VideoCard } from '../../../modules/legacy/components/cards/object/video/video';
 import { AlbumCard } from '../../../modules/legacy/components/cards/object/album/album';
 import { BlogCard } from '../../../modules/blogs/card/card';
+import { CommentComponentV2 } from "../../../modules/comments/comment/comment.component";
 
 @Component({
   selector: 'minds-card',
@@ -100,6 +101,8 @@ export class MindsCard implements AfterViewInit {
       return BlogCard;
     } else if (object.subtype === 'album') {
       return AlbumCard;
+    } else if (object.type === 'comment') {
+      return CommentComponentV2;
     }
 
     return null;
@@ -134,6 +137,11 @@ export class MindsCard implements AfterViewInit {
       (<GroupsCard>this.componentInstance).group = this.object;
     } else if (this.object.subtype === 'blog') {
       (<BlogCard>this.componentInstance)._blog = this.object;
+    } else if (this.object.type === 'comment') {
+      const commentComp: CommentComponentV2 = <CommentComponentV2>this.componentInstance;
+      commentComp.comment = this.object;
+      commentComp.canEdit = false;
+      commentComp.hideToolbar = this.flags.hideTabs || true;
     } else {
       this.componentInstance.object = this.object;
 
