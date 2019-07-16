@@ -7,7 +7,7 @@
   <div class="m-page--section-button-bar">
     <h1>
       <ng-container *ngIf="!isEditing; else titleIsEditing" i18n>New Campaign</ng-container>
-      <ng-template #titleIsEditing>Edit Campaign</ng-template>
+      <ng-template #titleIsEditing i18n>Edit Campaign</ng-template>
     </h1>
 
     <div class="m-page--section-button-bar--buttons">
@@ -185,7 +185,7 @@
       <div class="m-form--error" *ngIf="currentError && !inProgress">{{currentError}}</div>
     </div>
 
-    <div class="m-form--field" *ngIf="isEditing">
+    <div class="m-form--field" *ngIf="canCancel()">
       <button
         type="button"
         (click)="cancel($event);"

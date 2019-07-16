@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
-import { Campaign, CampaignPayment } from "../campaigns.type";
+import { Campaign, CampaignDeliveryStatus, CampaignPayment } from "../campaigns.type";
 import { CampaignsService } from '../campaigns.service';
 import { Subscription } from 'rxjs';
 import { Tag } from '../../../hashtags/types/tag';
@@ -146,6 +146,10 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       this.currentError = e.message;
       return false;
     }
+  }
+
+  canCancel() {
+    return this.isEditing && (['created', 'approved'] as CampaignDeliveryStatus[]).indexOf(this.campaign.delivery_status) > -1;
   }
 
   get types() {
