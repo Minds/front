@@ -4,7 +4,7 @@
   [limit]="24"
   [entity]="group"
   [conversation]="true"
-  [canEdit]="group['is:moderator'] || group['is:creator']"
+  [canDelete]="group['is:moderator'] || group['is:creator']"
   [readonly]="!group['is:member']"
   [scrollable]="true"
 >

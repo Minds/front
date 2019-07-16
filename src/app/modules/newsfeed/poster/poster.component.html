@@ -10,7 +10,7 @@
           name="message"
           [ngModel]="meta.message"
           (ngModelChange)="onMessageChange($event)"
-          (keyup)="getPostPreview(message);"
+          (keyup)="getPostPreview(message); onTagsChange($event)"
           placeholder="Speak your mind..."
           i18n-placeholder="@@MINDS__POSTER__SPEAK_YOUR_MIND"
           [autoGrow]
@@ -111,15 +111,15 @@
 
   <!-- Attachment preview -->
   <div
-    class="post-preview" *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"
+    class="post-preview" *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
     (click)="removeAttachment(file)"
   >
     <div
       class="mdl-progress mdl-js-progress"
       [mdlUpload]
-      [progress]="attachment.getUploadProgress()"
-      [hidden]="attachment.getUploadProgress() == 0"
-      [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
+      [progress]="attachment.progress | async"
+      [hidden]="(attachment.progress | async) == 0"
+      [ngClass]="{ 'complete': (attachment.progress | async) == 100 }"
     ></div>
     <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
       <i class="material-icons" *ngIf="!attachment.isPendingDelete()">videocam</i>

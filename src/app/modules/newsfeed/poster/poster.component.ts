@@ -17,13 +17,7 @@ import { InMemoryStorageService } from "../../../services/in-memory-storage.serv
   selector: 'minds-newsfeed-poster',
   inputs: ['_container_guid: containerGuid', 'accessId', 'message'],
   outputs: ['load'],
-  providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
-    }
-  ],
+  providers: [ AttachmentService ],
   templateUrl: 'poster.component.html',
 })
 

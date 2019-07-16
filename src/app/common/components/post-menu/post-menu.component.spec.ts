@@ -15,6 +15,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlockListService } from '../../services/block-list.service';
+import { storageMock } from '../../../../tests/storage-mock.spec';
 /* tslint:disable */
 
 /* Mock section */
@@ -94,7 +95,11 @@ describe('PostMenuComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        BlockListService,
+        { provide: Storage, useValue: storageMock },
+        { provide: BlockListService, useFactory: () => {
+            return BlockListService._(clientMock, sessionMock, storageMock);
+          }
+        }
       ],
       schemas: [
         NO_ERRORS_SCHEMA,

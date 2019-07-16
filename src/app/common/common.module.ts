@@ -94,6 +94,7 @@ import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
 import { FeaturedContentComponent } from "./components/featured-content/featured-content.component";
 import { FeaturedContentService } from "./components/featured-content/featured-content.service";
 import { BoostedContentService } from "./services/boosted-content.service";
+import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from "./services/entities.service";
 import { BlockListService } from "./services/block-list.service";
 import { SettingsService } from "../modules/settings/settings.service";
@@ -280,7 +281,7 @@ import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizonta
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
+      deps: [Session, Client, Upload, HttpClient ]
     },
     {
       provide: UpdateMarkersService,
@@ -310,7 +311,7 @@ import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizonta
     {
       provide: FeaturedContentService,
       useFactory: boostedContentService => new FeaturedContentService(boostedContentService),
-      deps: [ BoostedContentService ],
+      deps: [ FeedsService ],
     }
   ],
   entryComponents: [

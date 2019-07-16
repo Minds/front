@@ -76,7 +76,6 @@ export class ChannelSidebar {
   }
 
   toggleEditing() {
-
     if (this.tooManyTags) {
       return;
     }

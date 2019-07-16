@@ -5,7 +5,7 @@
     (click)="setBoostCurrency('onchain')"
     [class.m-boost--creator-selector--highlight]="!boost.currency || boost.currency == 'onchain'"
   >
-    <i class="material-icons m-boost--creator--payment-method--icon">check_circle</i>
+    <i class="material-icons m-boost--creator--payment-method--icon">link</i>
     <h5>
       <span i18n="@@M__COMMON__ONCHAIN">OnChain</span>
       <m-tooltip icon="help" i18n="@@BOOST__CREATOR__PAYMENT_METHODS__ONCHAIN_DESC">
@@ -35,6 +35,13 @@
         <ng-template #loadingOnchainBalance>&hellip;</ng-template>
       </ng-container>
     </span>
+
+    <ul class="m-boostCreatorSelector__bullets">
+      <li>Max 10k per boost</li>
+      <li>Stored on the blockchain</li>
+      <li>Stand out in the feeds</li>
+      <li>Gain "OnChain" badge</li>
+    </ul>
 
     <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
   </li>
@@ -69,6 +76,13 @@
         <ng-template #loadingOffchainBalance>&hellip;</ng-template>
       </ng-container>
     </span>
+
+    <ul class="m-boostCreatorSelector__bullets">
+      <li>Max 5k per boost</li>
+      <li>Stored on Minds servers</li>
+      <li>No transaction fee</li>
+      <li style="list-style:none">&nbsp;</li>
+    </ul>
 
     <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
   </li>
@@ -111,7 +125,4 @@
     <span class="m-boost--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
   </li>
 
-  <li class="m-layout--spacer"
-    *ngIf="boost.type === 'p2p'"
-  ></li>
 </ul>

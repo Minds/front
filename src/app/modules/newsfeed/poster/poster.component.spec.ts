@@ -26,6 +26,7 @@ import {TopbarHashtagsService} from "../../hashtags/service/topbar.service";
 import {topbarHashtagsServiceMock} from "../../../mocks/modules/hashtags/service/topbar.service.mock";
 import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
 import { inMemoryStorageServiceMock } from "../../../../tests/in-memory-storage-service-mock.spec";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
@@ -89,6 +90,7 @@ describe('PosterComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         TextInputAutocompleteModule,
+        HttpClientTestingModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
