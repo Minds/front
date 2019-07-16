@@ -8,13 +8,11 @@
       <button class="material-icons" [hidden]="!editing">done</button>
     </span>
     <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
-    
   </div>
   <div class="m-channel--username">
     <h2><span>@</span>{{user.username}}</h2>
   </div>
   <div class="mdl-card__supporting-text" id="bio" [hidden]="editing" style="white-space:pre-line; text-align:center;" [innerHtml]="user.briefdescription | tags"></div>
-
   <div class="minds-editable-container mdl-card__supporting-text" *ngIf="editing && isOwner()">
     <!-- OWNER EDIT FORM -->
       <textarea
@@ -48,7 +46,7 @@
 
 
     <div class="m-channel-bio-field mdl-color-text--blue-grey-300" *ngIf="user.tags && !editing">
-      <div [hidden]="editing || !user.tags" class="m-channel-bio-field__tags-container">
+      <div class="m-channel-bio-field__tags-container" [hidden]="editing || !user.tags">
         <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
         <span *ngFor="let tag of user.tags">#{{tag}}</span>
       </div>
@@ -119,10 +117,10 @@
     </div>
   </div>
 
-  <div class="m-channel--action-buttons" >
+  <div class="m-channel--action-buttons">
     <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked && !user.subscribed"></minds-button-subscribe>
     <m-messenger--channel-button [user]="user" *ngIf="user.subscribed && session.getLoggedInUser().guid != user.guid"></m-messenger--channel-button>
-    <div class="m-channel--edit-button-wrapper"  (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
+    <div *ngIf="session.getLoggedInUser().guid == user.guid" class="m-channel--edit-button-wrapper"  (click)="toggleEditing()">
       <button class="m-btn m-btn--with-icon m-btn--slim">
         <i [hidden]="editing" class="material-icons">edit</i>
         <i [hidden]="!editing" class="material-icons">done</i>
@@ -130,7 +128,7 @@
         <span [hidden]="!editing" i18n="@@M__ACTION__SAVE">Save</span>
       </button>
     </div>
-    <minds-button-boost [object]="user" *ngIf="session.getLoggedInUser().guid == user.guid"></minds-button-boost>
+    <minds-button-boost *ngIf="session.getLoggedInUser().guid == user.guid" [object]="user"></minds-button-boost>
     <m-channel--badges [user]="user"></m-channel--badges>
   </div>
 </div>

@@ -102,10 +102,6 @@ m-channel{
 
   }
 
-  .m-channel--city{
-    //margin:auto;
-  }
-
   .m-channel--blocked{
     margin: 100px auto;
     h3{
@@ -168,27 +164,39 @@ m-channel{
     justify-content: center;
     align-items: center;
     position: relative;
+    margin: auto;
 
     > * {
-      margin: 4px;
-    }   
-
-   > *:last-child {
-     margin-right: 0;
+     padding: 4px;
    }
 
    .m-channel--badges {
-     min-width: 118px;
+     justify-content: center;
+
+     > i {
+       padding: 4px;
+     }
    }
 
    .m-channel--edit-button-wrapper {
      flex-shrink: 0;
    }
 
+   minds-button-subscribe > button {
+     height: 32px;
+     padding: 8px 16px 8px 12px;
+   }
+
    .minds-button-edit > button, minds-button-user-dropdown > button{
      font-size: 16px;
      border:0;
    }
+
+   @media screen and (max-width: $max-mobile * 1.25) {
+      m-messenger--channel-button {
+        display: none;
+      }
+    }
  }
 
  .minds-channel-sidebar, .m-channel-sidebar{
@@ -198,28 +206,28 @@ m-channel{
      overflow:visible;
      min-height:0;
 
-      minds-button-user-dropdown {
-        > button {
-          position: relative;
-        }
-        .minds-dropdown-menu {
-          position: absolute;
-          top: 112px;
-          right: -124px;
-        }
+    minds-button-user-dropdown {
+      > button {
+        position: relative;
       }
-     
-     .minds-button-edit > button, minds-button-user-dropdown > button{
+      .minds-dropdown-menu {
+        position: absolute;
+        top: 112px;
+        right: -124px;
+      }
+    }
+
+    .minds-button-edit > button, minds-button-user-dropdown > button{
       @include m-theme(){
         color: rgba(themed($m-black), 0.3);
       }
-  
+
       &:hover {
         @include m-theme(){
           color: rgba(themed($m-black), 0.5);
         }
       }
-     }
+    }
 
      minds-avatar{
        margin:-75px auto 0;

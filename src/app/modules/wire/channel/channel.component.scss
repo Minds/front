@@ -226,7 +226,6 @@ m-wire-channel {
 
   .m-wire-channel--call-to-action {
     margin-bottom: $minds-margin * 2;
-    //margin-top: $minds-padding * 2;
 
     > button {
       display: flex;
@@ -255,9 +254,6 @@ m-wire-channel {
         transform: scale(1.5);
         margin: 0 24px 0 18px;
         color: #fff;
-        // @include m-theme(){
-        //   color: themed($m-white);
-        // }
       }
     }
 
