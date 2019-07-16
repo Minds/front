@@ -41,19 +41,3 @@
     }
   }
 }
-.m-channel--action-buttons {
-  // @media screen and (max-width: $min-desktop) and (min-width: $min-tablet){
-  //   m-messenger--channel-button {
-  //     span {
-  //       display:none;
-  //     }
-  //   }
-  // }
-
-
-  @media screen and (max-width: $max-mobile * 1.25) {
-    m-messenger--channel-button {
-      display: none;
-    }
-  }
-}
