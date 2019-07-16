@@ -39,17 +39,18 @@
     hostClass="mdl-card"
   ></minds-card>
 
-  <div *ngIf="appeal.entityObj && appeal.entityObj.type == 'comment'" class="m-comment-wrapper">
+  <div *ngIf="appeal.report.entity && appeal.report.entity.type == 'comment'" class="m-comment-wrapper">
     <div class="m-moderationAppeal__commentNote">
       <a target="_blank"
-        [routerLink]="['/newsfeed', appeal.entityObj.parent_guid]"
+        [routerLink]="['/newsfeed', appeal.report.entity.entity_guid]"
+        [queryParams]="{ focusedCommentUrn: appeal.report.entity_urn }"
         i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD"
       >
         View parent and its comment thread
       </a>
     </div>
     <minds-card-comment
-      [object]="appeal.entityObj"
+      [object]="appeal.report.entity"
       class="mdl-card"
     >
     </minds-card-comment>
