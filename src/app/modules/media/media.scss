@@ -314,6 +314,10 @@ m-media--grid{
     letter-spacing: 0.25px;
   }
 
+  h1.m-media-content--heading a {
+    text-decoration: none;
+  }
+
   .m-media-content--info {
 
     display: flex;
