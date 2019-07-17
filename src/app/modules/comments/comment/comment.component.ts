@@ -75,6 +75,7 @@ export class CommentComponentV2 implements OnChanges {
   commentAge$: Observable<number>;
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
+  @Input() hideToolbar: boolean = false;
 
   @Output() onReply = new EventEmitter();
 
