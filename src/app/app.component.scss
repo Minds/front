@@ -344,6 +344,18 @@ m-app {
       font-size: 16px;
       font-weight: bold;
       padding: 4px;
+
+      .m-tooltip i.material-icons {
+        vertical-align: middle;
+        font-size: 1em;
+        margin-left: 8px;
+        position: relative;
+        top: -1px;
+
+        @include m-theme(){
+          color: themed($m-red);
+        }
+      }
     }
   }
 

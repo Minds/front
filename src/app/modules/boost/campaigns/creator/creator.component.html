@@ -24,7 +24,13 @@
         <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </label>
 
-      <input id="boost-creator__name" type="text" name="name" [(ngModel)]="campaign.name">
+      <input
+        id="boost-creator__name"
+        type="text"
+        name="name"
+        [ngModel]="campaign.name"
+        (ngModelChange)="campaign.name = $event; triggerPreview()"
+      >
     </div>
 
     <div class="m-form--field">
@@ -41,7 +47,7 @@
           [class.m-btn--readonly]="isEditing"
           [for]="'type__' + type.id"
           [tabindex]="!type.disabled ? 0 : -1"
-          (keydown.space)="campaign.type = type.id"
+          (keydown.space)="campaign.type = type.id; triggerPreview()"
         >
           <input
             type="radio"
@@ -49,7 +55,7 @@
             [value]="type.id"
             [checked]="type.id === campaign.type"
             [disabled]="isEditing || type.disabled"
-            (change)="campaign.type = type.id"
+            (change)="campaign.type = type.id; triggerPreview()"
             name="type"
           >
 
@@ -84,7 +90,8 @@
       <m-boost-campaigns-creator--content-selector
         *ngIf="campaign.type === 'newsfeed' || campaign.type === 'content'"
         [type]="campaign.type"
-        [(content)]="campaign.entity_urns"
+        [content]="campaign.entity_urns"
+        (contentChange)="campaign.entity_urns = $event; triggerPreview()"
         [readonly]="isEditing"
       ></m-boost-campaigns-creator--content-selector>
     </div>
@@ -109,8 +116,8 @@
           buttonClass="m-boost-campaigns-creator--hashtag-selector-button"
           [useContent]="true"
           [tags]="campaign.hashtags"
-          (tagsAdded)="onTagsAdded($event)"
-          (tagsRemoved)="onTagsRemoved($event)"
+          (tagsAdded)="onTagsAdded($event); triggerPreview()"
+          (tagsRemoved)="onTagsRemoved($event); triggerPreview()"
         >
           <i class="material-icons">check</i>
         </m-hashtags-selector>
@@ -124,7 +131,12 @@
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </label>
 
-        <div class="m-date-selector--input" mdl-datetime-picker [date]="campaign.start" (dateChange)="onStartDateChange($event)">
+        <div
+          class="m-date-selector--input"
+          mdl-datetime-picker
+          [date]="campaign.start"
+          (dateChange)="onStartDateChange($event); triggerPreview()"
+        >
           <input id="boost-creator__start" type="text" placeholder="Now" i18n [value]="campaign.start | date:'MMM dd'" readonly>
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
@@ -136,7 +148,11 @@
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </label>
 
-        <div class="m-date-selector--input" mdl-datetime-picker [date]="campaign.end" (dateChange)="onEndDateChange($event)">
+        <div
+          class="m-date-selector--input"
+          mdl-datetime-picker [date]="campaign.end"
+          (dateChange)="onEndDateChange($event); triggerPreview()"
+        >
           <input id="boost-creator__end" type="text" placeholder="End of times" i18n [value]="campaign.end | date:'MMM dd'" readonly>
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
@@ -155,7 +171,7 @@
           type="number"
           name="budget"
           [ngModel]="campaign.budget"
-          (ngModelChange)="campaign.budget = $event; calcImpressions()"
+          (ngModelChange)="campaign.budget = $event; triggerPreview()"
         >
 
         <span>TOKENS</span>
@@ -169,7 +185,14 @@
       </label>
 
       <div class="m-form--read-only-value">
-        <span>{{campaign.impressions | number}}</span>
+        <span>
+          {{campaign.impressions | number}}
+
+          <m-tooltip icon="warning" *ngIf="preview?.cannot_fulfill_daily" i18n>
+            There might be issues trying to fulfill the impressions per day
+            goal for this campaign.
+          </m-tooltip>
+        </span>
       </div>
     </div>
 

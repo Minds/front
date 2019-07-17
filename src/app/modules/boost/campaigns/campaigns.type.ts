@@ -40,3 +40,7 @@ export type CampaignPayment = {
   txHash: string,
   amount: number,
 };
+
+export type CampaignPreview = {
+  cannot_fulfill_daily?: boolean,
+};

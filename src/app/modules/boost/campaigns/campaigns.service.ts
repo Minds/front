@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Campaign, CampaignDeliveryStatus, CampaignPayment, CampaignType } from './campaigns.type';
+import { Campaign, CampaignDeliveryStatus, CampaignPayment, CampaignPreview, CampaignType } from './campaigns.type';
 import { Client } from '../../../services/api/client';
 import isInt from '../../../helpers/is-int';
 import getGuidFromUrn from '../../../helpers/get-guid-from-urn';
@@ -82,6 +82,20 @@ export class CampaignsService {
     return campaign &&
       campaign &&
       !!campaign.type;
+  }
+
+  async preview(campaign: Campaign): Promise<CampaignPreview | false> {
+    if (
+      !campaign.type ||
+      !campaign.entity_urns ||
+      !campaign.entity_urns.length ||
+      !campaign.budget ||
+      !campaign.budget_type
+    ) {
+      return false;
+    }
+
+    return (await this.client.post(`api/v2/boost/campaigns/preview`, campaign) as any).preview;
   }
 
   async prepare(campaign: Campaign): Promise<{ checksum: string, guid: string }> {

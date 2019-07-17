@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
-import { Campaign, CampaignDeliveryStatus, CampaignPayment } from "../campaigns.type";
+import { Campaign, CampaignDeliveryStatus, CampaignPayment, CampaignPreview } from "../campaigns.type";
 import { CampaignsService } from '../campaigns.service';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Tag } from '../../../hashtags/types/tag';
 import { CampaignPaymentsService } from '../campaign-payments.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   providers: [CampaignsService, CampaignPaymentsService],
@@ -24,7 +25,13 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
 
   currentError: string = '';
 
+  preview: CampaignPreview = {};
+
   protected route$: Subscription;
+
+  protected previewSubject: Subject<Campaign> = new Subject();
+
+  protected preview$: Subscription;
 
   constructor(
     protected service: CampaignsService,
@@ -48,10 +55,18 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
         this.load();
       }
     });
+
+    this.preview$ = this.previewSubject
+      .pipe(debounceTime(600))
+      .subscribe(async (campaign: Campaign) => {
+        this.preview = (await this.service.preview(campaign)) || {};
+        this.detectChanges();
+      });
   }
 
   ngOnDestroy() {
     this.route$.unsubscribe();
+    this.preview$.unsubscribe();
   }
 
   createFrom({ type, from }) {
@@ -154,6 +169,11 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
 
   get types() {
     return this.service.getTypes();
+  }
+
+  triggerPreview() {
+    this.calcImpressions();
+    this.previewSubject.next(this.campaign);
   }
 
   async submit() {
