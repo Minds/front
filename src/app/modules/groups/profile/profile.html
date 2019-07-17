@@ -93,20 +93,20 @@
         class="m-groupInfo__description"
         *ngIf="editing && group['is:owner']"
         >
-        <mwl-text-input-autocomplete-container>
+        <m-text-input--autocomplete-container>
           <textarea
             name="briefdescription"
             [autoGrow]
             [(ngModel)]="group.briefdescription"
             placeholder="Enter a brief description"
             i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
-            mwlTextInputAutocomplete
+            mTextInputAutocomplete
             [findChoices]="findTrendingHashtags.bind(this)"
             [getChoiceLabel]="getChoiceLabel"
-            [triggerCharacter]="'#'"
+            [triggerCharacters]="['#']"
           >
           </textarea>
-        </mwl-text-input-autocomplete-container>
+        </m-text-input--autocomplete-container>
       </p>
 
       <ng-container *ngIf="false">

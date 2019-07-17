@@ -16,6 +16,8 @@ import { Upload } from '../../../services/api/upload';
 import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
+import autobind from "../../../helpers/autobind";
+import { AutocompleteSuggestionsService } from "../../suggestions/services/autocomplete-suggestions.service";
 
 @Component({
   selector: 'm-comment__poster',
@@ -47,6 +49,7 @@ export class CommentPosterComponent {
     public client: Client,
     public attachment: AttachmentService,
     public sockets: SocketsService,
+    public suggestions: AutocompleteSuggestionsService,
     private renderer: Renderer,
     private cd: ChangeDetectorRef
   ) {
