@@ -15,7 +15,7 @@
         font-weight: 300;
         line-height: 1.25em;
         margin: 0 0 1.61em 0;
-        font-family: 'Roboto';
+        font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 0.5px;
         @include m-theme(){
           color: themed($m-grey-50);
@@ -38,7 +38,7 @@
         }
       }
       .m-monetization--overview-period-tip{
-          font-family: Roboto;
+          font-family: 'Roboto', Helvetica, sans-serif;
           margin-top: -28px;
           font-size: 9px;
           letter-spacing:1px;
@@ -56,7 +56,7 @@
     text-align: left;
     padding: 8px;
     letter-spacing: 1px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     @include m-theme(){
       color: themed($m-grey-200);
     }
@@ -96,7 +96,7 @@
       table-layout: fixed;
 
       th {
-        font-family: Roboto;
+        font-family: 'Roboto', Helvetica, sans-serif;
         text-transform: uppercase;
         letter-spacing: 1px;
       }

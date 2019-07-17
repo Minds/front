@@ -71,7 +71,7 @@
     position: relative;
     label {
       font-weight: 800;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       font-size: 16px;
@@ -104,12 +104,12 @@
 
     a {
       text-decoration: none;
-      font-family: Roboto;
+      font-family: 'Roboto', Helvetica, sans-serif;
       text-transform: uppercase;
       letter-spacing: 1.25px;
       font-size: 10px;
       font-weight: 600;
-      font-family: Roboto;
+      font-family: 'Roboto', Helvetica, sans-serif;
     }
     img {
       border-radius: 50%;
@@ -118,7 +118,7 @@
       margin-right: 4px;
     }
     span {
-      font-family: Roboto;
+      font-family: 'Roboto', Helvetica, sans-serif;
       text-transform: uppercase;
       font-size: 10px;
       text-align: right;

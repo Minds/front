@@ -140,7 +140,7 @@
         font-weight: 600;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
-        font-family: Roboto;
+        font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 1px;
         //box-shadow: 0 0 6px rgba(255,255,255,0.22);
         @include m-theme(){
@@ -172,7 +172,7 @@
 
         .m-register-tac{
           padding-right:16px;
-          font-family: Roboto;
+          font-family: 'Roboto', Helvetica, sans-serif;
           @include m-theme(){
             color: rgba(themed($m-white),0.8);
           }
@@ -193,7 +193,7 @@
         }
       }
       .m-register-btn {
-        font-family: Roboto;
+        font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 1.25px;
         background: transparent;
         font-size: 12px;
@@ -354,7 +354,7 @@ m-homepage {
         }
         label{
           font-size: 18px;
-          font-family: 'Roboto';
+          font-family: 'Roboto', Helvetica, sans-serif;
           font-weight: 400;
           letter-spacing:2px;
           text-transform: uppercase;
@@ -363,7 +363,7 @@ m-homepage {
           }
         }
         p{
-          font-family: Roboto;
+          font-family: 'Roboto', Helvetica, sans-serif;
           line-height: 18px;
           font-size: 14px;
           margin: 24px 0;
@@ -392,7 +392,7 @@ m-homepage {
       }
       label{
         font-size: 18px;
-        font-family: Roboto;
+        font-family: 'Roboto', Helvetica, sans-serif;
         font-weight: 400;
         letter-spacing: 2px;
         @include m-theme(){
@@ -653,7 +653,7 @@ m-homepage {
     text-transform: uppercase;
     letter-spacing: 4px;
     flex:1;
-    font-family: Roboto;
+    font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 400;
   }
 }
@@ -682,7 +682,7 @@ m-homepage {
     letter-spacing: 2px;
     font-size: 14px;
     font-weight: 400;
-    font-family: Roboto;
+    font-family: 'Roboto', Helvetica, sans-serif;
     cursor: pointer;
     pointer-events: all;
   }

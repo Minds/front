@@ -203,7 +203,7 @@ minds-wallet-transactions {
   max-width:990px;
   display:flex;
   align-items:center;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
 
   @media only screen and (max-width: 400px) {
     padding:0;
@@ -246,7 +246,7 @@ minds-wallet-transactions {
 
     label{
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing:1px;
       font-size:14px;
     }
@@ -287,7 +287,7 @@ m-monetization--graph{
 
   .m-wire--overview-nav-item {
     padding: 16px 32px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 300;
     letter-spacing: 2px;
     cursor: pointer;

@@ -39,7 +39,7 @@
     }
     span {
       text-transform: uppercase;
-      font-family: Roboto;
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 0.25px;
       vertical-align: middle;
       @include m-theme(){

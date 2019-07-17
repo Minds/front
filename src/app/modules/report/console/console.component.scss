@@ -22,7 +22,7 @@
   .m-report-console--header {
     margin: 16px;
     padding: 16px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
 
     > b {
       font-size: 13px;
@@ -121,7 +121,7 @@
       resize: none;
       height: 5em;
       font-weight: 300;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       padding: 16px;
       font-size: 13px;
       letter-spacing: 1px;
@@ -159,7 +159,7 @@
 
     p {
       margin: 0;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       font-size: 14px;
       letter-spacing: 1px;
     }
