@@ -27,7 +27,7 @@ m-wallet--flyout {
       & > div {
         font-size: 26px;
         letter-spacing: 0.5px;
-        font-family: 'Roboto';
+        font-family: 'Roboto', Helvetica, sans-serif;
         line-height: 26px;
         flex: 1;
       }
@@ -65,7 +65,7 @@ m-wallet--flyout {
 
     label {
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 1px;
       font-size: 10px;
       display: inline-block;
@@ -97,7 +97,7 @@ m-wallet--flyout {
 
   .m-wallet--flyout--bottom-container {
     text-transform: uppercase;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     letter-spacing: 2.5px;
     text-rendering: optimizeLegibility;
     font-size: 12px;

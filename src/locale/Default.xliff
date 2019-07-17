@@ -7422,6 +7422,20 @@
           <context context-type="linenumber">133</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__TOASTER_TITLE" datatype="html">
+        <source>Notifications</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__TOASTER_LABEL" datatype="html">
+        <source>Enable toaster notifications</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings/general/general.component.ts</context>
+          <context context-type="linenumber">112</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="MINDS__SETTINGS__LANGUAGE_SETTINGS_TITLE" datatype="html">
         <source>Language Settings</source>
         <context-group purpose="location">

@@ -8,7 +8,7 @@ m-onboarding-card{
   }
 
   h3, h5{
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 300;
     @include m-theme(){
       color: themed($m-grey-800);

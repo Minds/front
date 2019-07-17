@@ -1,7 +1,14 @@
 <div class="mdl-card m-border post m-poster" *ngIf="session.isLoggedIn()">
   <div class="mdl-card__supporting-text">
     <form (submit)="post()">
-      <mwl-text-input-autocomplete-container>
+      <ng-template #itemTemplate let-choice="choice" let-selectChoice="selectChoice">
+        <m-post-autocomplete-item-renderer
+            [choice]="choice"
+            [selectChoice]="selectChoice"
+        ></m-post-autocomplete-item-renderer>
+      </ng-template>
+
+      <m-text-input--autocomplete-container>
         <textarea
           class="mdl-textfield__input"
           type="text"
@@ -14,12 +21,13 @@
           placeholder="Speak your mind..."
           i18n-placeholder="@@MINDS__POSTER__SPEAK_YOUR_MIND"
           [autoGrow]
-          mwlTextInputAutocomplete
-          [findChoices]="findTrendingHashtags"
-          [getChoiceLabel]="getChoiceLabel"
-          triggerCharacter="#"
+          mTextInputAutocomplete
+          [findChoices]="suggestions.findSuggestions"
+          [getChoiceLabel]="suggestions.getChoiceLabel"
+          [itemTemplate]="itemTemplate"
+          [triggerCharacters]="['#', '@']"
         ></textarea>
-      </mwl-text-input-autocomplete-container>
+      </m-text-input--autocomplete-container>
 
       <div
         class="m-poster__ActionBar"

@@ -224,7 +224,7 @@
 
     <div class="m-comment__toolbar" *ngIf="comment?.guid">
 
-      <div class="m-commentToolbar__buttons" [hidden]="editing">
+      <div class="m-commentToolbar__buttons" [hidden]="editing || hideToolbar">
         <minds-button-thumbs-up [object]="comment" [class.has-count]="comment['thumbs:up:count'] > 0"></minds-button-thumbs-up>
         <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
         <span class="m-clickable"

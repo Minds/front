@@ -11,7 +11,7 @@ body.m-theme__dark .m-wire-channel--overview {
   margin: auto auto 16px auto;
   display:flex;
   align-items:center;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
   
   background-color: #4690df;
   color: #fff;
@@ -41,7 +41,7 @@ body.m-theme__dark .m-wire-channel--overview {
 
     label{
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing:1px;
       font-size:14px;
     }

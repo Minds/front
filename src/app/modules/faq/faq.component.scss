@@ -1,6 +1,6 @@
 .m-faq--container--category {
   display: flex;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
   @include m-theme(){
     color: themed($m-grey-800);
   }
@@ -52,7 +52,7 @@
     }
 
     h3, p {
-      font-family: Roboto;
+      font-family: 'Roboto', Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
       letter-spacing: 0.50px;
       text-rendering: optimizeLegibility;

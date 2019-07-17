@@ -4,7 +4,7 @@
   border-radius: 2px;
   display:flex;
   align-items:center;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
 
   i{
     font-style: normal;
@@ -28,7 +28,7 @@
 
     label{
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing:1px;
       font-size:11px;
     }
@@ -56,7 +56,7 @@
   margin-top: -15px;
   text-transform: uppercase;
   letter-spacing: 1.4px;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
   font-weight: 300;
   text-align: left;
 
