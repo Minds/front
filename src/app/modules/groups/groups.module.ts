@@ -27,13 +27,13 @@ import { CommentsModule } from '../comments/comments.module';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { GroupMemberPreviews } from './profile/member-previews/member-previews.component';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 import { CanDeactivateGroupService } from './profile/can-deactivate/can-deactivate-group.service';
 import { GroupProfileFeedComponent } from './profile/feed/feed.component';
 import { GroupProfileFeedSortedComponent } from "./profile/feed/sorted.component";
 import { NewsfeedModule } from "../newsfeed/newsfeed.module";
 import { GroupsProfileReviewComponent } from "./profile/review/review.component";
 import { GroupsKickModalComponent } from "./kick-modal/kick-modal.component";
+import { TextInputAutocompleteModule } from "../../common/components/autocomplete";
 
 const routes: Routes = [
   { path: 'groups/profile/:guid', component: GroupsProfile, canDeactivate: [CanDeactivateGroupService], children: [

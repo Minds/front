@@ -7,6 +7,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { CommonModule } from '../../common/common.module';
 import { SuggestionsSidebar } from './channel/sidebar.component';
 import { GroupSuggestionsSidebarComponent } from "./groups/sidebar.component";
+import { AutocompleteSuggestionsService } from "./services/autocomplete-suggestions.service";
 
 @NgModule({
   imports: [
@@ -25,6 +26,9 @@ import { GroupSuggestionsSidebarComponent } from "./groups/sidebar.component";
     SuggestionsSidebar,
     GroupSuggestionsSidebarComponent,
   ],
+  providers: [
+    AutocompleteSuggestionsService,
+  ]
 })
 export class SuggestionsModule {
 }
