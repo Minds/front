@@ -33,8 +33,9 @@ export class CampaignContentsService {
   ) {
   }
 
-  async getContent(type: CampaignType, query: string) {
-    if (/^[0-9]+$/.test(query) || /^urn:entity:[0-9]+$/.test(query)) {
+
+async getContent(type: CampaignType, query: string) {
+    if (/^[0-9]+$/.test(query) || /^urn:[a-z0-9][a-z0-9-]{0,31}:[a-z0-9()+,\-.:=@;$_!*'%/?#]+$/.test(query)) {
       const content = await this.getContentByGuidOrUrn(query);
       return matchTypeOrNull(type, content);
     } else if (/\/newsfeed\/[0-9]+/.test(query)) {
