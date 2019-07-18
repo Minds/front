@@ -19,7 +19,7 @@ import { Session } from '../../../../services/session';
 })
 export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
 
-  type: CampaignType
+  type: CampaignType;
 
   @Input('type') set _type(type: CampaignType) {
     this.type = type;
