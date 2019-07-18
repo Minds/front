@@ -1,18 +1,19 @@
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { default as DateTimePicker } from 'material-datetime-picker';
+import * as moment from "moment";
 
 @Directive({
   selector: '[mdl-datetime-picker]',
-  providers: [ DatePipe ]
 })
 export class MaterialDateTimePickerDirective {
   @Input() date;
+  @Input() dateFormat: string = 'MM/DD/YY, h:mm';
+  @Input() useUTC: boolean = false;
   @Output() dateChange: EventEmitter<any> = new EventEmitter<any>();
   private open: boolean = false;
   private picker;
 
-  constructor(public datePipe: DatePipe) { }
+  readonly DEFAULT_FORMAT = 'MM/DD/YY, h:mm';
 
   @HostListener('click')
   @HostListener('keydown.enter')
@@ -27,7 +28,20 @@ export class MaterialDateTimePickerDirective {
   }
 
   private submitCallback(value) {
-    this.dateChange.emit(this.datePipe.transform(value.format(), 'short'));
+    let formatted;
+
+    if (this.useUTC) {
+      // get date without timezone
+      const noTimezone = value.format(this.DEFAULT_FORMAT);
+      // create a new UTC moment with the noTimezone date
+      const withTimezone = moment.utc(noTimezone, this.DEFAULT_FORMAT);
+      // get UTC date
+      formatted = withTimezone.format(this.dateFormat);
+    } else {
+      formatted = value.format(this.dateFormat);
+    }
+
+    this.dateChange.emit(formatted);
     this.close();
   }
 

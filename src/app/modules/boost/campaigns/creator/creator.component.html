@@ -134,10 +134,11 @@
         <div
           class="m-date-selector--input"
           mdl-datetime-picker
+          [dateFormat]="'MM/DD/YY, h:mm a Z'" [useUTC]="true"
           [date]="campaign.start"
           (dateChange)="onStartDateChange($event); triggerPreview()"
         >
-          <input id="boost-creator__start" type="text" placeholder="Now" i18n [value]="campaign.start | date:'MMM dd'" readonly>
+          <input id="boost-creator__start" type="text" placeholder="Now" i18n [value]="campaign.start | utcDate | date:'MMM dd'" readonly>
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
       </div>
@@ -153,7 +154,7 @@
           mdl-datetime-picker [date]="campaign.end"
           (dateChange)="onEndDateChange($event); triggerPreview()"
         >
-          <input id="boost-creator__end" type="text" placeholder="End of times" i18n [value]="campaign.end | date:'MMM dd'" readonly>
+          <input id="boost-creator__end" type="text" placeholder="End of times" i18n [value]="campaign.end | utcDate | date:'MMM dd'" readonly>
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
       </div>
