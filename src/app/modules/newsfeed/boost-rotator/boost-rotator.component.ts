@@ -114,7 +114,7 @@ export class NewsfeedBoostRotatorComponent {
     try {
 
       this.feedsService
-        .setEndpoint('api/v2/boost/feed')
+        .setEndpoint('api/v2/boost/fetch/campaigns')
         .setParams({
           rating: this.rating,
         })
