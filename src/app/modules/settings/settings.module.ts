@@ -9,6 +9,7 @@ import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
+import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
 
 import { SettingsComponent } from './settings.component';
 import { SettingsGeneralComponent } from './general/general.component';
@@ -58,6 +59,7 @@ const settingsRoutes : Routes = [
     ReportModule,
     PaymentsModule,
     WireModule,
+    ReferralsModule,
   ],
   declarations: [
     SettingsComponent,

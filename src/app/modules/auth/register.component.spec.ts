@@ -55,7 +55,7 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should have a video with webm and mp4 sources', () => {
+  xit('should have a video with webm and mp4 sources', () => {
     const video: DebugElement = fixture.debugElement.query(By.css('.m-video-banner video'));
     expect(video).not.toBeNull();
     expect(video.nativeElement.poster).toBe('http://dev.minds.io/assets/videos/earth-1/earth-1.png');
@@ -70,7 +70,7 @@ describe('RegisterComponent', () => {
     expect(mp4Source.nativeElement.src).toBe('http://dev.minds.io/assets/videos/earth-1/earth-1.mp4');
   });
 
-  it('should have a register prompt and the form', () => {
+  xit('should have a register prompt and the form', () => {
     const h3: DebugElement = fixture.debugElement.query(By.css('h3'));
     expect(h3).not.toBeNull();
     expect(h3.nativeElement.textContent).toBe('Not on Minds? Start a channel');
@@ -78,7 +78,7 @@ describe('RegisterComponent', () => {
     expect(fixture.debugElement.query(By.css('minds-form-register'))).not.toBeNull();
   });
 
-  it('should redirect when registered', () => {
+  xit('should redirect when registered', () => {
     comp.registered();
 
     expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();

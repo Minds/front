@@ -89,6 +89,14 @@
       <div class="m-page--sidebar--navigation">
 
         <a class="m-page--sidebar--navigation--item"
+          *ngIf="session.isLoggedIn()"
+          (click)="openReferralsModal()"
+        >
+          <i class="material-icons">people</i>
+          <span i18n="@@M__COMMON__REFER_FRIENDS">Refer Friends</span>
+        </a>
+
+        <a class="m-page--sidebar--navigation--item"
           routerLink="/plus"
           *ngIf="session.isLoggedIn() && !session.getLoggedInUser().plus && showPlusButton"
         >
