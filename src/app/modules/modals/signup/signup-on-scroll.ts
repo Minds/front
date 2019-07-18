@@ -49,7 +49,7 @@ export class SignupOnScrollModal {
             url = url.substr(1);
           }
 
-          const fragments = url.replace(/\//g, ';').split(';');
+          const fragments = url.replace(/\/|\?/g, ';').split(';');
 
           this.route = navigationEvent.urlAfterRedirects;
 

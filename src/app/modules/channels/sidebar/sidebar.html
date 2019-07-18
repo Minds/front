@@ -120,6 +120,13 @@
   <div class="m-channel--action-buttons">
     <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked && !user.subscribed"></minds-button-subscribe>
     <m-messenger--channel-button [user]="user" *ngIf="user.subscribed && session.getLoggedInUser().guid != user.guid"></m-messenger--channel-button>
+    <div *ngIf="session.getLoggedInUser().guid == user.guid"
+      (click)="openReferralsModal()">
+      <button class="m-btn m-btn--with-icon m-btn--slim">
+        <i class="material-icons">people</i>
+        <span i18n="@@M__COMMON__REFER_FRIENDS">Refer Friends</span>
+			</button>
+    </div>
     <div *ngIf="session.getLoggedInUser().guid == user.guid" class="m-channel--edit-button-wrapper"  (click)="toggleEditing()">
       <button class="m-btn m-btn--with-icon m-btn--slim">
         <i [hidden]="editing" class="material-icons">edit</i>

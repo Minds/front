@@ -7,7 +7,6 @@ import { CommonModule } from '../../common/common.module';
 import { MindsFormsModule } from '../forms/forms.module';
 
 import { ConfirmModal } from './confirm/confirm';
-import { InviteModal } from './invite/invite';
 import { RemindComposerModal } from './remind-composer/remind-composer';
 import { ShareModal } from './share/share';
 import { SignupOnActionModal } from './signup/signup-on-action';
@@ -23,11 +22,10 @@ import { TOSUpdatedModal } from './tos-updated/tos.component';
     RouterModule.forChild([]),
     FormsModule,
     ReactiveFormsModule,
-    MindsFormsModule
+    MindsFormsModule,
   ],
   declarations: [
     ConfirmModal,
-    InviteModal,
     RemindComposerModal,
     ShareModal,
     SignupOnActionModal,
@@ -41,7 +39,6 @@ import { TOSUpdatedModal } from './tos-updated/tos.component';
   ],
   exports: [
     ConfirmModal,
-    InviteModal,
     RemindComposerModal,
     ShareModal,
     SignupOnActionModal,

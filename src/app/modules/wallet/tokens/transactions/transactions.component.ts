@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
-import { InviteModal } from '../../../modals/invite/invite';
 
 @Component({
   moduleId: module.id,
@@ -179,7 +178,7 @@ export class WalletTokenTransactionsComponent {
 
       if (response) {
         this.transactions.push(...(response.transactions || []));
-        
+
         if (response['load-next']) {
           this.offset = response['load-next'];
         } else {

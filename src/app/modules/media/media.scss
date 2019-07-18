@@ -372,6 +372,19 @@ m-media--grid{
     align-items: center;
     flex-shrink: 0;
 
+    .minds-button-edit{
+      button {
+        @include m-theme(){
+          color: themed($m-blue-grey-500);
+        }
+        &:hover {
+          @include m-theme(){
+            color: themed($m-blue-grey-800);
+          }
+        }
+      }
+    }
+
     m-post-menu {
       i {
         @include m-theme(){
