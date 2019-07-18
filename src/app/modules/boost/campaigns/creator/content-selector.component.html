@@ -28,14 +28,22 @@
       [hostClass]="'mdl-card mdl-shadow--2dp m-boost-campaigns-creator--card m-boost-campaigns-creator--' + type + '-card'"
     ></minds-card>
   </ng-container>
+  
   <ng-template #noResult>
     <ng-container *ngIf="inProgress; else empty">
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
     </ng-container>
     <ng-template #empty>
-      <div class="m-boost-campaigns-creator--content-selector--no-content" i18n>
-        Search for some content...
+      <div class="m-boost-campaigns-creator--content-selector--no-content">
+        <ng-container *ngIf="query; else searchForSomeContent" i18n>
+          Not found
+        </ng-container>
       </div>
+      <ng-template #searchForSomeContent>
+        <ng-container i18n>
+          Search for some content...
+        </ng-container>
+      </ng-template>
     </ng-template>
   </ng-template>
 </div>
