@@ -11,12 +11,11 @@ export type JitsiConfig = {
 
 @Injectable()
 export class VideoChatService {
+  static heartBeatIntervalSeconds = 5;
 
   isActive: boolean;
   activate$: EventEmitter<JitsiConfig | false> = new EventEmitter<JitsiConfig | false>();
   heartBeatSubscription;
-
-  keepAliveInterval;
 
   constructor(
     private client: Client,
@@ -41,7 +40,7 @@ export class VideoChatService {
       if (this.heartBeatSubscription)
         this.heartBeatSubscription.unsubscribe();
 
-      this.heartBeatSubscription = interval(10000) //10 seconds
+      this.heartBeatSubscription = interval(VideoChatService.heartBeatIntervalSeconds * 1000)
         .pipe(startWith(0))
         .subscribe(() => this.heartBeat(entity.guid));
 
