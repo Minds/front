@@ -13,7 +13,7 @@ export class FeaturedContentService {
     this.feedsService
       .setLimit(50)
       .setOffset(0)
-      .setEndpoint('api/v2/boost/feed')
+      .setEndpoint('api/v2/boost/fetch/campaigns')
       .fetch();
   }
 
