@@ -6,6 +6,7 @@
   display: inline-flex;
 
   .m-phone-input--wrapper {
+    margin-bottom: $minds-padding;
     @include m-theme(){
       background-color: themed($m-white);
     }
@@ -53,6 +54,8 @@
     display: inline-flex;
     align-items: center;
     cursor: pointer;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
     @include m-theme(){
       background-color: themed($m-white);
     }

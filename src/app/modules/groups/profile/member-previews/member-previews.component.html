@@ -1,5 +1,5 @@
 <ul class="m-groupMemberPreviews__list">
-  <li class="m-groupMemberPreviews__member" *ngFor="let member of members">
+  <li class="m-groupMemberPreviews__member" [ngClass]="{'m-pulsating--small': member.inGathering }" *ngFor="let member of members">
     <a [routerLink]="['/', member.username]">
       <img [src]="minds.cdn_url + 'icon/' + member.guid + '/small'" />
     </a>

@@ -5,6 +5,8 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Tag } from '../../hashtags/types/tag';
 import { ChannelOnboardingService } from "../../onboarding/channel/onboarding.service";
 import { Storage } from '../../../services/storage';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ReferralsLinksComponent } from '../../wallet/tokens/referrals/links/links.component';
 
 @Component({
   moduleId: module.id,
@@ -36,7 +38,8 @@ export class ChannelSidebar {
       public upload: Upload,
       public session: Session,
       public onboardingService: ChannelOnboardingService,
-      protected storage: Storage
+      protected storage: Storage,
+      private overlayModal: OverlayModalService,
   ) {
     if (onboardingService && onboardingService.onClose)
       onboardingService.onClose.subscribe(progress => {
@@ -141,6 +144,12 @@ export class ChannelSidebar {
 
   setSocialProfile(value: any) {
     this.user.social_profiles = value;
+  }
+
+  openReferralsModal() {
+    this.overlayModal.create(ReferralsLinksComponent, {}, {
+      class: 'm-overlay-modal--referrals-links m-overlay-modal--medium'
+    }).present();
   }
 
 }

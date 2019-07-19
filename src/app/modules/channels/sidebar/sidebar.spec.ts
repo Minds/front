@@ -27,6 +27,8 @@ import { storageMock } from "../../../../tests/storage-mock.spec";
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from "../../../common/directives/if-feature.directive";
+import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 describe('ChannelSidebar', () => {
 
@@ -110,6 +112,10 @@ describe('ChannelSidebar', () => {
         {
           provide: FeaturesService,
           useValue: featuresServiceMock,
+        },
+        {
+          provide: OverlayModalService,
+          useValue: overlayModalServiceMock,
         }
       ]
     })

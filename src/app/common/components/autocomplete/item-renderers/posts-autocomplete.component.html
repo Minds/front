@@ -1,7 +1,7 @@
 <ng-container *ngIf="choice?.type == 'user'; else hashtagBlock">
     <a
         href="javascript:;"
-        (click)="selectChoice.next(choice.username)"
+        (click)="selectChoice.next(choice)"
     >
         <img
             class="m-postAutocompleteItemRenderer__avatar mdl-shadow--2dp"

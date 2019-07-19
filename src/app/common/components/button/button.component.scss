@@ -38,7 +38,7 @@ minds-button {
 
   &:hover {
     @include m-theme(){
-      border: 1px solid themed($m-grey-100);
+      border: 1px solid rgba(themed($m-grey-200), 0.6);
     }
   }
 

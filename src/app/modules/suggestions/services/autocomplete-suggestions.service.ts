@@ -34,7 +34,13 @@ export class AutocompleteSuggestionsService {
     return result.slice(0,5);
   }
 
-  getChoiceLabel(text: string, triggerCharacter: string) {
+  getChoiceLabel(choice: any, triggerCharacter: string) {
+    let text = '';
+    if (typeof choice === 'string') {
+      text = choice;
+    } else if (choice.type && choice.type == 'user') {
+      text = choice.username;
+    }
     return `${triggerCharacter}${text}`;
   }
 }

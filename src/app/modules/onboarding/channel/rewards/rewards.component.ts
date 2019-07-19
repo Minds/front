@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Client } from "../../../../services/api/client";
 import { Session } from "../../../../services/session";
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'm-channel--onboarding--rewards',
@@ -84,13 +86,15 @@ export class TokenRewardsOnboardingComponent {
   error: string;
   secret: string;
 
+  paramsSubscription: Subscription;
+
   constructor(
       protected client: Client,
       protected cd: ChangeDetectorRef,
       protected session: Session,
+      private route: ActivatedRoute,
   ) {
   }
-
 
   async verify() {
     this.inProgress = true;
@@ -137,4 +141,5 @@ export class TokenRewardsOnboardingComponent {
   join() {
     this.onClose.emit();
   }
+
 }

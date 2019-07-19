@@ -9,10 +9,32 @@
   <!-- subscribed -->
   <ng-template ngSwitchCase="friends">
     <a [routerLink]="['/', notification.fromObj.username || '']">
-      <p *ngIf="notification.fromObj.subscribed" i18n="@@NOTIFICATIONS__NOTIFICATION__FRIENDS_MATCH">You have a match! {{notification.fromObj.name}} subscribed to you</p>
-      <p *ngIf="!notification.fromObj.subscribed" i18n="@@NOTIFICATIONS__NOTIFICATION__FRIENDS">{{notification.fromObj.name}} subscribed to you</p>
+      <p *ngIf="notification.fromObj.subscribed" i18n="@@NOTIFICATIONS__NOTIFICATION__FRIENDS_MATCH">You have a match! <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.fromObj.name}}</span> subscribed to you</p>
+      <p *ngIf="!notification.fromObj.subscribed" i18n="@@NOTIFICATIONS__NOTIFICATION__FRIENDS"><span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.fromObj.name}}</span> subscribed to you</p>
     </a>
   </ng-template>
+
+  <!-- referral ping -->
+  <ng-template ngSwitchCase="referral_ping">
+    <a [routerLink]="['/wallet/tokens/contributions']">
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_PING">Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.fromObj.name}}</span> will earn tokens for your referral</p>
+    </a>
+  </ng-template>
+
+  <!-- referral pending -->
+  <ng-template ngSwitchCase="referral_pending">
+    <a [routerLink]="['/wallet/tokens/referrals']">
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_PENDING">You have a pending referral! <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.fromObj.name}}</span> used your referral link when they signed up for Minds. You'll get tokens once they join the rewards program and set up their wallet</p>
+    </a>
+  </ng-template>
+
+  <!-- referral complete -->
+  <ng-template ngSwitchCase="referral_complete">
+    <a [routerLink]="['/wallet/tokens/referrals']">
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REFERRAL_COMPLETE">You've earned tokens for the completed referral of <span class="pseudo-link mdl-color-text--blue-grey-400">{{notification.fromObj.name}}</span></p>
+    </a>
+  </ng-template>
+
 
   <!-- group inivite -->
   <ng-template ngSwitchCase="group_invite">
@@ -101,13 +123,13 @@
               [routerLink]="['/media', notification.entityObj.guid]"
               [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }">
             <p>
-              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON" 
+              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__COMMENTED_ON"
                 *ngIf="!notification.params?.is_reply">
                 {{notification.fromObj.name}} commented on
               </ng-container>
-              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO" 
+              <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO"
                 *ngIf="notification.params?.is_reply">
-                {{notification.fromObj.name}} replied to your comment on 
+                {{notification.fromObj.name}} replied to your comment on
               </ng-container>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.title" >{{notification.entityObj.title | excerpt}}</span>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.owner_guid != session.getLoggedInUser().guid && !notification.entityObj.title" i18n="object belonging to user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT">{{notification.entityObj.ownerObj.name}}'s {{notification.entityObj.subtype}}</span>
@@ -124,9 +146,9 @@
               [routerLink]="['/groups/profile', notification.entityObj.guid]"
               [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }">
             <p>
-            <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION" 
+            <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION"
                 *ngIf="notification.params?.is_reply">
-                {{notification.fromObj.name}} replied to your message in 
+                {{notification.fromObj.name}} replied to your message in
               </ng-container>
               <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj.name" >{{notification.entityObj.name | excerpt}}</span>'s conversation
             </p>
@@ -163,7 +185,7 @@
       </a>
 
       <ng-container *ngIf="notification.entityObj.type == 'comment'">
-        <a 
+        <a
           [routerLink]="['/newsfeed', notification.entityObj.entity_guid]"
           [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }"
           *ngIf="notification.params?.parent?.type != 'group'"
@@ -177,8 +199,8 @@
           </p>
         </a>
 
-        <a 
-          [routerLink]="['/groups/profile', notification.entityObj.entity_guid]" 
+        <a
+          [routerLink]="['/groups/profile', notification.entityObj.entity_guid]"
           [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }"
           *ngIf="notification.params?.parent?.type == 'group'"
           >
@@ -289,7 +311,7 @@
           <p i18n="@@NOTIFICATIONS__NOTIFICATION__TAG__IN_A_COMMENT">{{notification.fromObj.name}} tagged you in a comment</p>
         </a>
 
-        <a 
+        <a
           [routerLink]="['/groups/profile', notification.params?.parent?.guid, 'feed']"
           [queryParams]="{ focusedCommentUrn: notification.params?.focusedCommentUrn }"
           *ngIf="notification.params?.parent?.type == 'group'"
@@ -496,7 +518,7 @@
   <!-- Programs (accepted) -->
   <ng-template ngSwitchCase="program_accepted">
     <a routerLink="/wallet">
-      <p>  
+      <p>
       <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PROGRAM_ACCEPTED">Your application for {{ notification.params.program }} program was approved. Congratulations!</ng-container>
       </p>
     </a>
@@ -505,7 +527,7 @@
   <!-- Channel monetized -->
   <ng-template ngSwitchCase="channel_monetized">
     <a routerLink="/wallet">
-      <p>  
+      <p>
       <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__CHANNEL_MONETIZED">Your channel is now monetized. Congratulations!</ng-container>
       </p>
     </a>
@@ -514,7 +536,7 @@
   <!-- Programs (declined) -->
   <ng-template ngSwitchCase="program_declined">
     <a routerLink="/wallet">
-      <p>  
+      <p>
       <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__PROGRAM_DECLINED">Your application for {{ notification.params.program }} program was declined.</ng-container>
       </p>
     </a>
@@ -633,7 +655,7 @@
   <!-- report actioned notification -->
   <ng-template ngSwitchCase="report_actioned">
     <div *ngIf="notification.entityObj">
-          
+
       <!-- Activity -->
       <a *ngIf="notification.entityObj.type == 'activity'"
         target="_blank"
@@ -661,7 +683,7 @@
         <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__ERROR_VIEWING">There was an error viewing this notification.</ng-container>
         </p>
       </a>
-    </div> 
+    </div>
   </ng-template>
 
   <ng-template ngSwitchCase="contributions"></ng-template>

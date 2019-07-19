@@ -89,7 +89,7 @@ import { Storage } from '../services/storage';
 import { HttpClient } from "@angular/common/http";
 import { AndroidAppDownloadComponent } from "./components/android-app-download-button/button.component";
 import { SwitchComponent } from "./components/switch/switch.component";
-import {V2TopbarComponent} from "./layout/v2-topbar/v2-topbar.component";
+import { V2TopbarComponent } from "./layout/v2-topbar/v2-topbar.component";
 import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
 import { FeaturedContentComponent } from "./components/featured-content/featured-content.component";
 import { FeaturedContentService } from "./components/featured-content/featured-content.service";
@@ -100,6 +100,7 @@ import { BlockListService } from "./services/block-list.service";
 import { SettingsService } from "../modules/settings/settings.service";
 import { ThemeService } from "./services/theme.service";
 import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizontal-infinite-scroll.component";
+import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
 
 @NgModule({
   imports: [
@@ -315,7 +316,8 @@ import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizonta
     }
   ],
   entryComponents: [
-    NotificationsToasterComponent
+    NotificationsToasterComponent,
+    ReferralsLinksComponent,
   ]
 })
 
