@@ -194,14 +194,30 @@ m-channel--carousel{
     }
   }
 
+  .delete-button > button, .add-button{
+    &.mdl-button{
+      &:hover{
+        @include m-theme(){
+          background-color: themed($m-blue-grey-700);
+        }
+        cursor:pointer;
+      }
+      &:active{
+        @include m-theme(){
+          background-color: themed($m-blue-grey-600);
+        }
+      }
+    }
+  }
+
   .delete-button{
     position:absolute;
     top:8px;
     right:8px;
-    z-index:999;
+    z-index:998;
 
-    > *{
-      font-size:11px;
+    button{
+      font-size: 23px;
     }
   }
 
@@ -210,9 +226,9 @@ m-channel--carousel{
     position:absolute;
     top:8px;
     right:80px;
-    z-index:999;
+    z-index:998;
     i{
-      margin-top:6px;
+      margin-top:2px;
     }
   }
 
@@ -359,7 +375,7 @@ minds-button-user-dropdown{
 
   .m-user-dropdown__item--nsfw {
     overflow: visible;
-    
+
     m-nsfw-selector {
       border: 0;
       width: 100%;
@@ -368,7 +384,7 @@ minds-button-user-dropdown{
       .m-nsfwSelector__label {
         m-tooltip {
           display: none;
-        }  
+        }
       }
 
       .m-dropdown .m-dropdown__list {
@@ -376,7 +392,7 @@ minds-button-user-dropdown{
       }
     }
   }
-  
+
 }
 
 .m-error-splash{
