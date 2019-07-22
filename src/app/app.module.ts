@@ -58,6 +58,7 @@ import { IssuesModule } from './modules/issues/issues.module';
 import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from "@angular/common/http";
 import { AnalyticsModule } from "./modules/analytics/analytics.module";
+import { ProModule } from './modules/pro/pro.module';
 
 @NgModule({
   bootstrap: [
@@ -83,6 +84,7 @@ import { AnalyticsModule } from "./modules/analytics/analytics.module";
     //CheckoutModule,
     MonetizationModule,
     PlusModule,
+    ProModule,
     AdsModule,
     BoostModule,
     WireModule,
