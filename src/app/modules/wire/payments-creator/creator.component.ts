@@ -23,7 +23,7 @@ export interface WireStruc {
   guid: any;
   recurring: boolean;
   payload: any;
-  period: string;
+  tier: string | null;
 }
 
 @Component({
@@ -45,7 +45,7 @@ export class WirePaymentsCreatorComponent {
     guid: null,
     recurring: false,
     payload: null,
-    period: null
+    tier: null
   };
 
   owner: any;
@@ -80,10 +80,10 @@ export class WirePaymentsCreatorComponent {
 
   @Input('payment') set data(payment) {
     this.wire.amount = payment.amount;
-    this.wire.period = payment.period;
     this.wire.recurring = true;
     this.wire.guid = payment.entity_guid;
     this.receiver = payment.receiver;
+    this.wire.tier = payment.tier;
   }
 
   _opts: any;

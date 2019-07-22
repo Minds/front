@@ -9,7 +9,7 @@ import { FaqModule } from '../faq/faq.module';
 import { PlusMarketingComponent } from './marketing.component';
 import { PlusSubscriptionComponent } from './subscription.component';
 import { PlusVerifyComponent } from './verify/verify.component';
-
+import { PaymentPlanComponent } from './plan/payment-plan.component';
 
 const plusRoutes : Routes = [
   { path: 'plus',  component: PlusMarketingComponent }
@@ -28,7 +28,8 @@ const plusRoutes : Routes = [
   declarations: [
     PlusMarketingComponent,
     PlusSubscriptionComponent,
-    PlusVerifyComponent
+    PlusVerifyComponent,
+    PaymentPlanComponent,
   ],
   exports: [
     PlusSubscriptionComponent,
@@ -36,6 +37,7 @@ const plusRoutes : Routes = [
   ],
   entryComponents: [
     PlusMarketingComponent,
+    PaymentPlanComponent,
   ]
 })
 

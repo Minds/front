@@ -14,7 +14,7 @@ import { WireService } from '../wire/wire.service';
 import { WireStruc } from '../wire/creator/creator.component';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { SignupModalService } from '../modals/signup/service';
-import { WirePaymentsCreatorComponent } from '../wire/payments-creator/creator.component';
+import { PaymentPlanComponent } from './plan/payment-plan.component';
 import { Session } from '../../services/session';
 
 @Component({
@@ -74,14 +74,7 @@ export class PlusSubscriptionComponent {
       this.modal.open();
       return;
     }
-
-    this.payment.period = period;
-    this.payment.amount = amount;
-    this.payment.recurring = true;
-    this.payment.entity_guid = '730071191229833224';
-    this.payment.receiver = this.blockchain.plus_address;
-
-    const creator = this.overlayModal.create(WirePaymentsCreatorComponent, this.payment, {
+    const creator = this.overlayModal.create(PaymentPlanComponent, null, {
       default: this.payment,
       onComplete: (wire) => {
         this.completed = true;
