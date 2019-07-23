@@ -84,8 +84,29 @@
   ></m-translate>
 
   <div class="minds-editable-container" *ngIf="editing && (!activity.custom_type || (activity.custom_type && !activity.title))">
-    <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-    <textarea class="mdl-card__supporting-text message" name="message" [ngModel]="activity.message" #messageEdit [autoGrow]></textarea>
+    <ng-template #itemTemplate let-choice="choice" let-selectChoice="selectChoice">
+      <m-post-autocomplete-item-renderer
+        [choice]="choice"
+        [selectChoice]="selectChoice"
+      ></m-post-autocomplete-item-renderer>
+    </ng-template>
+
+    <m-text-input--autocomplete-container>
+      <!-- Please note the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+      <textarea
+        class="mdl-card__supporting-text message"
+        name="message"
+        [ngModel]="activity.message"
+        #messageEdit
+        [autoGrow]
+        mTextInputAutocomplete
+        [findChoices]="suggestions.findSuggestions"
+        [getChoiceLabel]="suggestions.getChoiceLabel"
+        [itemTemplate]="itemTemplate"
+        [triggerCharacters]="['#', '@']"
+      ></textarea>
+    </m-text-input--autocomplete-container>
+
 
     <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
         <m-nsfw-selector
