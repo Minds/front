@@ -73,27 +73,34 @@ m-modal-signup, m-modal-signup-on-action{
     & > button {
       margin-left: $minds-padding;
     }
-
-    @media screen and (max-width: $min-tablet) {
-      & {
-        padding: 16px 0;
-      }
-    }
   }
 
   .m-modal-signup-apps{
     display:flex;
     flex-flow:row nowrap;
     align-items:center;
-    padding:0 40px;
     width: 100%;
     box-sizing: border-box;
+    padding: 0 40px;
+    @media screen and (max-width: $max-mobile) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 30px;
+    }
+
+    .m-androidApp__download {
+        margin: 0;
+    }
 
     a{
-      flex:1;
+      @media screen and (min-width: $max-mobile) {
+        flex:1;
+      }
       margin:$minds-margin/2;
+
       img{
-        width:100%;
+        min-width: 130px;
       }
     }
   }
@@ -103,7 +110,7 @@ m-modal-signup, m-modal-signup-on-action{
   }
 }
 
-m-modal-share, m-modal-invite {
+m-modal-share {
   z-index: 1000;
   position: relative;
 

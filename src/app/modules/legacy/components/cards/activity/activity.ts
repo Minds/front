@@ -25,6 +25,7 @@ import { BlockListService } from "../../../../../common/services/block-list.serv
 import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.service";
 import { NewsfeedService } from "../../../../newsfeed/services/newsfeed.service";
 import { ClientMetaService } from "../../../../../common/services/client-meta.service";
+import { AutocompleteSuggestionsService } from "../../../../suggestions/services/autocomplete-suggestions.service";
 
 @Component({
   moduleId: module.id,
@@ -113,6 +114,7 @@ export class Activity implements OnInit {
     protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
+    public suggestions: AutocompleteSuggestionsService,
     @SkipSelf() injector: Injector,
     elementRef: ElementRef,
   ) {
@@ -367,7 +369,10 @@ export class Activity implements OnInit {
   }
 
   onNSWFSelections(reasons: Array<{ value, label, selected}>) {
-    this.attachment.setNSFW(reasons);
+    if (this.attachment.has()) {
+      this.attachment.setNSFW(reasons);
+    }
+    this.activity.nsfw = reasons.map(reason => reason.value);
   }
 
   isUnlisted() {

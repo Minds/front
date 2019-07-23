@@ -23,9 +23,9 @@
 
 <ng-container *ngIf="!disabled">
   <minds-activity
-    *ngFor="let boost of boosts; let i = index"
+    *ngFor="let boost of boosts; let i = index" 
     [object]="boost"
-    [boostToggle]="boost.boostToggle"
+    [boostToggle]="true"
     [class]="'mdl-card m-border item m-boost-rotator-item m-boost-rotator-item-' + i"
     visible="true"
     [hidden]="i != currentPosition"

@@ -11,6 +11,8 @@ import { MaterialSliderMock } from '../../../../tests/material-slider.mock.spec'
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
+import { OverlayModalService } from "../../../services/ux/overlay-modal";
+import { overlayModalServiceMock } from "../../../../tests/overlay-modal-service-mock.spec";
 
 @Component({
   selector: 'minds-card-video',
@@ -124,7 +126,8 @@ describe('AdminBoosts', () => {
         FormsModule
       ],
       providers: [
-        { provide: Client, useValue: clientMock }
+        { provide: Client, useValue: clientMock },
+        { provide: OverlayModalService, useValue: overlayModalServiceMock }
       ]
     })
       .compileComponents();  // compile template and css

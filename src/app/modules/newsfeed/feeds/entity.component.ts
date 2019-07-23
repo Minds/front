@@ -49,7 +49,9 @@ export class NewsfeedEntityComponent {
 
   // Update the component
   updateComponents() {
-    if (this.entity.type === 'user' || this.entity.type === 'group') {
+    if (this.entity 
+      && (this.entity.type === 'user' || this.entity.type === 'group')
+    ) {
       this.clear();
 
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent(this.entity.type));

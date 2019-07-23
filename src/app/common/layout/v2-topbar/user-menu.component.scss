@@ -4,10 +4,6 @@ m-user-menu {
   cursor: pointer;
 }
 
-.m-user-menu__Anchor {
-  // cursor: pointer;
-}
-
 .m-user-menu__Dropdown {
   list-style: none;
   margin: 34px 0 0;
@@ -18,7 +14,7 @@ m-user-menu {
 
   li:hover {
     @include m-theme(){
-      background-color: themed($m-grey-50);
+      background-color: rgba(themed($m-grey-50), 0.5);
     }
   }
 

@@ -98,6 +98,24 @@
 </div>
 <!-- END: MATURE CONTENT -->
 
+<!-- START: TOASTER NOTIFICATIONS -->
+<div class="m-settings--section m-border m-settings--toaster">
+  <h4 i18n="@@MINDS__SETTINGS__TOASTER_TITLE">Notifications</h4>
+  <div class="mdl-card__supporting-text">
+    <input type="checkbox"
+      id="flag_toaster"
+      (click)="change()"
+      name="toaster_notifications"
+      [(ngModel)]="toaster_notifications"
+      />
+      <label for="flag_toaster">
+          <ng-container i18n="@@MINDS__SETTINGS__TOASTER_LABEL">Enable toaster notifications</ng-container>
+      </label>
+  </div>
+
+</div>
+<!-- END: TOASTER NOTIFICATIONS -->
+
 
 <!-- START: LANGUAGE  -->
 <div class="m-settings--section m-border m-settings--language">

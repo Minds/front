@@ -17,6 +17,7 @@ export class OffchainWireCardComponent implements OnInit {
   transactions: number = 0;
   receivers: number = 0;
   senders: number = 0;
+  currents: { name: string, value: number }[];
 
   constructor(private client: Client) {
   }
@@ -35,29 +36,15 @@ export class OffchainWireCardComponent implements OnInit {
 
   private async getAvgData() {
     try {
-      let avgs: Array<any> = await Promise.all([
-        this.client.get('api/v2/analytics/offchainwire', {
-          key: 'average_tokens',
-          timespan: this.card.selectedOption
-        }),
-        this.client.get('api/v2/analytics/offchainwire', {
-          key: 'average',
-          timespan: this.card.selectedOption
-        }),
-        this.client.get('api/v2/analytics/offchainwire', {
-          key: 'average_receivers',
-          timespan: this.card.selectedOption
-        }),
-        this.client.get('api/v2/analytics/offchainwire', {
-          key: 'average_senders',
-          timespan: this.card.selectedOption
-        }),
-      ]);
+      const response: any = await this.client.get('api/v2/analytics/offchainwire', {
+        key: 'avg',
+        timespan: this.card.selectedOption
+      });
 
-      this.tokens = avgs[0].data;
-      this.transactions = avgs[1].data;
-      this.receivers = avgs[2].data;
-      this.senders = avgs[3].data;
+      this.tokens = response.data.tokens;
+      this.transactions = response.data.transactions;
+      this.receivers = response.data.receivers;
+      this.senders = response.data.senders;
     } catch (e) {
       console.error(e);
     }

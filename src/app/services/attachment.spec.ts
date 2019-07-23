@@ -1,4 +1,7 @@
 import { AttachmentService } from './attachment';
+import { HttpClient } from "@angular/common/http";
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
 import { Inject } from '@angular/core';
 import { Client, Upload } from './api';
 import { Session } from './session';
@@ -13,20 +16,25 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 describe('Service: Attachment Service', () => {
   let service: AttachmentService;
   let mockObject;
+  let httpMock;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AttachmentService ],
+      imports: [
+        HttpClientTestingModule,
+      ],
+      //declarations: [ AttachmentService ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Upload, useValue: uploadMock },
-        { provide: Client, useValue: clientMock }
+        { provide: Client, useValue: clientMock },
       ]
     });
     clientMock.response = {};
 
     clientMock.response[`/api/v1/newsfeed/preview`] = { 'status': 'success' };
 
-    service = new AttachmentService(sessionMock, clientMock, uploadMock);
+    httpMock = TestBed.get(HttpTestingController);
+    service = new AttachmentService(sessionMock, clientMock, uploadMock, httpMock);
 
     clientMock.get.calls.reset();
     clientMock.post.calls.reset();

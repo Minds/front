@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from 'rxjs';
 import { Client } from "../../services/api/client";
 import { Session } from "../../services/session";
+import { Storage } from '../../services/storage';
 
 import AsyncLock from "../../helpers/async-lock";
 
@@ -12,88 +14,60 @@ import AsyncStatus from "../../helpers/async-status";
 @Injectable()
 export class BlockListService {
 
-  protected blockListSync: BlockListSync;
-
-  protected syncLock = new AsyncLock();
-
-  protected status = new AsyncStatus();
+  blocked: BehaviorSubject<string[]>;
 
   constructor(
     protected client: Client,
     protected session: Session,
+    protected storage: Storage
   ) {
-    this.setUp();
+    this.blocked = new BehaviorSubject(JSON.parse(this.storage.get('blocked')));
+    this.fetch();
   }
 
-  async setUp() {
-    this.blockListSync = new BlockListSync(
-      new MindsClientHttpAdapter(this.client),
-      await browserStorageAdapterFactory('minds-block-190314'),
-    );
+  fetch() {
+    this.client.get('api/v1/block', { sync: 1, limit: 10000 })
+      .then((response: any) => {
+        if (response.guids !== this.blocked.getValue())
+          this.blocked.next(response.guids); // re-emit as we have a change
 
-    this.blockListSync.setUp();
-
-    //
-
-    this.status.done();
-
-    // Prune on session changes
-
-    this.session.isLoggedIn((is: boolean) => {
-      if (is) {
-        this.sync();
-      } else {
-        this.prune();
-      }
-    });
+        this.storage.set('blocked', JSON.stringify(response.guids)); // save to storage
+      });
+    return this;
   }
 
   async sync() {
-    await this.status.untilReady();
-
-    if (this.syncLock.isLocked()) {
-      return false;
-    }
-
-    this.syncLock.lock();
-    this.blockListSync.sync();
-    this.syncLock.unlock();
   }
 
   async prune() {
-    await this.status.untilReady();
+  }
 
-    if (this.syncLock.isLocked()) {
-      return false;
-    }
-
-    this.syncLock.lock();
-    this.blockListSync.prune();
-    this.syncLock.unlock();
+  async get() {
   }
 
   async getList() {
-    await this.status.untilReady();
-    await this.syncLock.untilUnlocked();
-
-    return await this.blockListSync.getList();
+    return this.blocked.getValue();
   }
 
   async add(guid: string) {
-    await this.status.untilReady();
-    await this.syncLock.untilUnlocked();
-
-    return await this.blockListSync.add(guid);
+    const guids = this.blocked.getValue();
+    if (guids.indexOf(guid) < 0)
+      this.blocked.next([...guids, ...[ guid ]]);
+    this.storage.set('blocked', JSON.stringify(this.blocked.getValue()));
   }
 
   async remove(guid: string) {
-    await this.status.untilReady();
-    await this.syncLock.untilUnlocked();
+    const guids = this.blocked.getValue();
+    const index = guids.indexOf(guid);
+    if (index > -1) {
+      guids.splice(index, 1);
+    }
 
-    return await this.blockListSync.remove(guid);
+    this.blocked.next(guids);
+    this.storage.set('blocked', JSON.stringify(this.blocked.getValue()));
   }
 
-  static _(client: Client, session: Session) {
-    return new BlockListService(client, session);
+  static _(client: Client, session: Session, storage: Storage) {
+    return new BlockListService(client, session, storage);
   }
 }

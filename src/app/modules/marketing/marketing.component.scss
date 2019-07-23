@@ -118,7 +118,7 @@
 
 
   h1, h3, h2 {
-    font-family: Roboto;
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin: 0;
     @include m-theme(){
       color: themed($m-white);
@@ -160,7 +160,7 @@
       height: 48px;
       padding: 0 24px;
       font-weight: 400;
-      font-family: Roboto;
+      font-family: 'Roboto', Helvetica, sans-serif;
       @include m-theme(){
         color: themed($m-white);
       }

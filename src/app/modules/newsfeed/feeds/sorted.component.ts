@@ -1,5 +1,6 @@
 import { Component, Injector, OnDestroy, OnInit, SkipSelf, ViewChild } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { take, map, mergeMap } from 'rxjs/operators';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -21,7 +22,10 @@ import { ClientMetaService } from "../../../common/services/client-meta.service"
 
 @Component({
   selector: 'm-newsfeed--sorted',
-  providers: [ ClientMetaService ],
+  providers: [ 
+    ClientMetaService,
+    FeedsService, // Fresh feeds per component
+  ],
   templateUrl: 'sorted.component.html',
 })
 
@@ -31,7 +35,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   customType: string = 'activities';
   hashtag: string | null = null;
   all: boolean = false;
-  newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: number = 0;
   inProgress: boolean = false;
@@ -63,7 +66,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected topbarHashtagsService: TopbarHashtagsService,
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,
@@ -149,6 +152,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
 
       this.updateSortRoute();
     }, 300);
+
   }
 
   ngOnDestroy() {
@@ -178,15 +182,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
    * @param {Boolean} forceSync
    */
   async load(refresh: boolean = false, forceSync: boolean = false) {
-    if (this.inProgress) {
-      return false;
-    }
-
-    if (this.featuresService.has('sync-feeds')) {
-      return await this.loadFromFeedsService(refresh, forceSync);
-    } else {
-      return await this.loadLegacy(refresh);
-    }
+    return await this.loadFromFeedsService(refresh, forceSync);
   }
 
   /**
@@ -194,48 +190,33 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
    * @param {Boolean} forceSync
    */
   async loadFromFeedsService(refresh: boolean = false, forceSync: boolean = false) {
-    if (forceSync) {
-      // TODO: Find a selective way to do it, in the future
-      await this.feedsService.destroy();
-      refresh = true;
-    }
 
     if (refresh) {
-      this.moreData = true;
-      this.offset = 0;
-      this.newsfeed = [];
+      this.feedsService.clear();
     }
 
     this.inProgress = true;
 
     try {
-      const limit = 12;
-
       const hashtags = this.hashtag ? encodeURIComponent(this.hashtag) : '';
       const period = this.period || '';
       const all = this.all ? '1' : '';
       const query = this.query ? encodeURIComponent(this.query) : '';
       const nsfw = (this.newsfeedService.nsfw || []).join(',');
 
-      const { entities, next } = await this.feedsService.get({
-        endpoint: `api/v2/feeds/global/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}&query=${query}&nsfw=${nsfw}`,
-        timebased: false,
-        limit,
-        offset: <number> this.offset,
-        forceSync,
-      });
+      this.feedsService
+        .setEndpoint(`api/v2/feeds/global/${this.algorithm}/${this.customType}`)
+        .setParams({
+          hashtags,
+          period,
+          all,
+          query,
+          nsfw,
+        })
+        .setLimit(12)
+        .setCastToActivities(true)
+        .fetch();
 
-      if (this.newsfeed && !refresh) {
-        this.newsfeed.push(...entities);
-      } else {
-        this.newsfeed = entities;
-      }
-
-      this.offset = next;
-
-      if (!this.offset) {
-        this.moreData = false;
-      }
     } catch (e) {
       console.error('SortedComponent', e);
     }
@@ -243,50 +224,8 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     this.inProgress = false;
   }
 
-  /**
-   * @deprecated
-   * @param {Boolean} refresh
-   */
-  loadLegacy(refresh: boolean = false) {
-    if (refresh) {
-      this.moreData = true;
-      this.offset = null;
-      this.newsfeed = [];
-    }
-
-    this.inProgress = true;
-
-    this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
-      limit: 12,
-      offset: this.offset || '',
-      rating: this.rating || '',
-      hashtags: this.hashtag ? [this.hashtag] : '',
-      period: this.period || '',
-      all: this.all ? 1 : '',
-      query: this.query ? encodeURIComponent(this.query) : '',
-      nsfw: this.newsfeedService.nsfw,
-    }, {
-      cache: true
-    })
-      .then((data: any) => {
-        if (!data.entities || !data.entities.length) {
-          this.moreData = false;
-          this.inProgress = false;
-
-          return false;
-        }
-        if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.entities);
-        } else {
-          this.newsfeed = data.entities;
-        }
-        this.offset = data['load-next'];
-        this.inProgress = false;
-      })
-      .catch((e) => {
-        console.log(e);
-        this.inProgress = false;
-      });
+  loadMore() {
+    this.feedsService.loadMore();
   }
 
   delete(activity) {
@@ -297,12 +236,12 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
         return;
       }
     }
-    for (i in this.newsfeed) {
-      if (this.newsfeed[i] === activity) {
-        this.newsfeed.splice(i, 1);
-        return;
-      }
-    }
+    // for (i in this.newsfeed) {
+    //   if (this.newsfeed[i] === activity) {
+    //     this.newsfeed.splice(i, 1);
+    //     return;
+    //   }
+    // }
 
   }
 

@@ -33,6 +33,8 @@ export class NotificationsToasterComponent implements OnInit {
 
   listenForNotifications() {
     this.notification.onReceive.subscribe((notification: any) => {
+      if(this.isToasterDisabled()) return;
+
       this.notifications.unshift(notification);
       this.detectChanges();
 
@@ -61,5 +63,9 @@ export class NotificationsToasterComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  isToasterDisabled() {
+    return window.Minds.user && !window.Minds.user.toaster_notifications;
   }
 }

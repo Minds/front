@@ -135,6 +135,16 @@ m-channel--onboarding {
       }
     }
 
+    .m-channelOnboarding__rewardsReferralNotice {
+      border-radius: 8px;
+      padding: 16px;
+
+      @include m-theme(){
+        background-color: themed($m-blue-light);
+        color: white;
+      }
+    }
+
 
     .m-channelOnboardingSlide__component {
       display: flex;

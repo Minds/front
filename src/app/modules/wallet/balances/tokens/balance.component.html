@@ -1,6 +1,4 @@
 <div class="m-wallet--balance m-border">
-  <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'" class="m-wallet--balance--logo" />
-
   <ng-container *ngIf="!inProgress; else loading">
     <h2>{{ balance | token: 18 | number }}</h2>
   </ng-container>

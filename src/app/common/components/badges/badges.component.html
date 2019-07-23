@@ -28,4 +28,11 @@
       Founder
     </m-tooltip>
   </li>
+
+  <li *ngIf="showOnchainBadge()" routerLink="/tokens">
+    <m-tooltip icon="link" [iconClass]="{'selected': true }" i18n="Boosted OnChain in the last 7 days">
+      Boosted OnChain in the last 7 days
+    </m-tooltip>
+  </li>
+
 </ul>

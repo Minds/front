@@ -9,7 +9,7 @@ import { ThirdPartyNetworksModule } from '../../third-party-networks/third-party
 import { CommonModule } from '../../../common/common.module';
 import { RouterModule } from '@angular/router';
 import { HashtagsModule } from '../../hashtags/hashtags.module';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+import { TextInputAutocompleteModule } from "../../../common/components/autocomplete";
 
 @NgModule({
   imports: [

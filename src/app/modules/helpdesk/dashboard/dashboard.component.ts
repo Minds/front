@@ -14,7 +14,8 @@ export class HelpdeskDashboardComponent implements OnInit {
 
   query: string = '';
   results: any[] = [];
-  searching: boolean = false;
+  searching = false;
+  noResults = false;
   private throttle;
 
   @ViewChild('input', { static: false }) private input: ElementRef;
@@ -69,6 +70,7 @@ export class HelpdeskDashboardComponent implements OnInit {
    */
   onBlur() {
     this.searching = false;
+    this.noResults = false;
   }
 
   setQuestion(question, $event?) {
@@ -99,10 +101,12 @@ export class HelpdeskDashboardComponent implements OnInit {
         limit: 8,
       })
         .then(({ entities }) => {
-          if (!entities) {
+          if (!entities || entities.length === 0) {
+            this.noResults = true;
             return;
           }
 
+          this.noResults = false;
           this.results = entities;
         })
         .catch((e) => {
@@ -110,5 +114,4 @@ export class HelpdeskDashboardComponent implements OnInit {
         });
     });
   }
-
 }

@@ -29,7 +29,7 @@
         >
         <i class="material-icons">trending_up</i>
         <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL" [hidden]="activity.boosted_onchain">Boosted</a>
-        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN" [hidden]="!activity.boosted_onchain">Boosted Onchain</a>
+        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN" [hidden]="!activity.boosted_onchain" [routerLink]="['/token']">Boosted Onchain</a>
       </div>
       <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
         <i class="material-icons unlisted">visibility_off</i>
@@ -84,8 +84,29 @@
   ></m-translate>
 
   <div class="minds-editable-container" *ngIf="editing && (!activity.custom_type || (activity.custom_type && !activity.title))">
-    <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-    <textarea class="mdl-card__supporting-text message" name="message" [ngModel]="activity.message" #messageEdit [autoGrow]></textarea>
+    <ng-template #itemTemplate let-choice="choice" let-selectChoice="selectChoice">
+      <m-post-autocomplete-item-renderer
+        [choice]="choice"
+        [selectChoice]="selectChoice"
+      ></m-post-autocomplete-item-renderer>
+    </ng-template>
+
+    <m-text-input--autocomplete-container>
+      <!-- Please note the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+      <textarea
+        class="mdl-card__supporting-text message"
+        name="message"
+        [ngModel]="activity.message"
+        #messageEdit
+        [autoGrow]
+        mTextInputAutocomplete
+        [findChoices]="suggestions.findSuggestions"
+        [getChoiceLabel]="suggestions.getChoiceLabel"
+        [itemTemplate]="itemTemplate"
+        [triggerCharacters]="['#', '@']"
+      ></textarea>
+    </m-text-input--autocomplete-container>
+
 
     <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
         <m-nsfw-selector
@@ -240,7 +261,7 @@
 <m-comments__tree
   *ngIf="commentsToggle"
   [entity]="activity"
-  [canEdit]="canDelete"
+  [canDelete]="canDelete"
   >
 </m-comments__tree>
 

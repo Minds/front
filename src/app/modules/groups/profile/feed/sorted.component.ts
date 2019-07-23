@@ -12,10 +12,14 @@ import { Session } from "../../../../services/session";
 import { SortedService } from "./sorted.service";
 import { Client } from "../../../../services/api/client";
 import { GroupsService } from "../../groups-service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'm-group-profile-feed__sorted',
-  providers: [SortedService],
+  providers: [
+    SortedService,
+    FeedsService,
+  ],
   templateUrl: 'sorted.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -61,7 +65,7 @@ export class GroupProfileFeedSortedComponent {
 
   constructor(
     protected service: GroupsService,
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected sortedService: SortedService,
     protected session: Session,
     protected router: Router,
@@ -75,65 +79,24 @@ export class GroupProfileFeedSortedComponent {
     this.load(true);
   }
 
-  getAllEntities() {
-    const pinned = this.group.pinned_posts || [];
-
-    return [
-      ...this.pinned,
-      ...this.entities.filter(entity => pinned.indexOf(entity.guid) === -1),
-    ];
-  }
-
   async load(refresh: boolean = false) {
-    if (!refresh && this.inProgress) {
+    if (!refresh) {
       return;
     }
 
     if (refresh) {
-      this.entities = [];
-      this.moreData = true;
-      this.offset = '';
+      this.feedsService.clear();
     }
-
-    this.inProgress = true;
 
     this.detectChanges();
 
-    if (!this.offset) {
-      // Load Pinned posts in parallel
-      this.loadPinned();
-    }
-
     try {
-      const limit = 12;
-
-      const { entities, next } = await this.feedsService.get({
-        endpoint: `api/v2/feeds/container/${this.group.guid}/${this.type}`,
-        timebased: true,
-        limit,
-        offset: this.offset,
-        syncPageSize: limit * 20,
-      });
-
-      if (!entities || !entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-        this.detectChanges();
-
-        return false;
-      }
-
-      if (this.entities && !refresh) {
-        this.entities.push(...entities);
-      } else {
-        this.entities = entities;
-      }
-
-      if (!next) {
-        this.moreData = false;
-      }
-
-      this.offset = next;
+      
+      this.feedsService
+        .setEndpoint(`api/v2/feeds/container/${this.group.guid}/${this.type}`)
+        .setLimit(12)
+        .fetch();
+  
     } catch (e) {
       console.error('GroupProfileFeedSortedComponent.loadFeed', e);
     }
@@ -142,21 +105,8 @@ export class GroupProfileFeedSortedComponent {
     this.detectChanges();
   }
 
-  async loadPinned() {
-    this.pinned = [];
-
-    if (!this.isActivityFeed()) {
-      this.detectChanges();
-      return;
-    }
-
-    try {
-      this.pinned = (await this.sortedService.getPinnedPosts(this.group)) || [];
-    } catch (e) {
-      console.error('ChannelsSortedComponent.loadPinned', e);
-    }
-
-    this.detectChanges();
+  loadMore() {
+    this.feedsService.loadMore();
   }
 
   setFilter(type: string) {

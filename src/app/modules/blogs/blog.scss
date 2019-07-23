@@ -19,12 +19,12 @@
       display: block;
       text-decoration: none;
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 1.25px;
     }
     span {
       font-size: 11px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       text-transform: uppercase;
       letter-spacing: 1.25px;
       cursor: default;
@@ -63,7 +63,7 @@
       font-weight: 600;
       font-size: 42px;
       letter-spacing: 1.5px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
@@ -229,7 +229,7 @@ minds-blog-edit {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -319,7 +319,7 @@ minds-blog-edit {
     font-weight: 600;
     font-size: 42px;
     letter-spacing: 1.5px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     line-height: 1.2em;
@@ -328,7 +328,7 @@ minds-blog-edit {
   h1,h2,h3,h4 {
     font-weight: 600;
     letter-spacing: 1.5px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -340,7 +340,7 @@ minds-blog-edit {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

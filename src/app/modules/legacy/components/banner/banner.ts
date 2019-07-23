@@ -26,7 +26,7 @@ import { Client } from '../../../../services/api';
     </div>
     <div class="minds-banner-overlay"></div>
 
-    <button class="add-button mdl-button mdl-button--raised mdl-button--colored material-icons" (click)="onClick($event)">
+    <button class="add-button mdl-button mdl-button--raised mdl-button--colored material-icons" title="Upload image to current banner carousel slide" (click)="onClick($event)">
       <i class="material-icons">file_upload</i>
     </button>
 

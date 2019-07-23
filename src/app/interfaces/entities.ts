@@ -69,6 +69,7 @@ export interface MindsUser {
   tags?: Array<string>;
   nsfw?: Array<number>;
   nsfw_lock?: Array<number>;
+  toaster_notifications?: boolean;
 }
 
 export interface MindsGroup {

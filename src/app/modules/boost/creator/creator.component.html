@@ -175,6 +175,7 @@
 
   <!-- Submit -->
   <section class="m-boost--creator-section m-boost--creator-section-submit"
+    [class.m-boost--creator-section-submit--network]="boost.type != 'p2p'"
     (mouseenter)="showErrors()"
     *ngIf="step >= 1 || (boost.currency !== 'usd' && boost.currency !== 'creditcard')"
   >

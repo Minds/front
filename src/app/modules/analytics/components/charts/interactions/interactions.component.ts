@@ -1,5 +1,6 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
+import { removeCurrentUnits } from "../../../util";
 
 @Component({
   selector: 'm-analyticscharts__channelinteractions',
@@ -18,6 +19,7 @@ import { Client } from "../../../../../services/api/client";
 
 export class ChannelInteractionsComponent implements OnInit {
   @Input() analytics: 'totals' | 'monthly';
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
   @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
@@ -55,8 +57,10 @@ export class ChannelInteractionsComponent implements OnInit {
 
   async getData() {
     const response: any = await this.client.get(`api/v2/analytics/interactions/`, { key: this.analytics });
-    this.data = response.data;
+    const [data, current] = removeCurrentUnits(response.data);
+    this.data = data;
 
+    this.loaded.emit(current);
     switch (this.analytics) {
       case 'monthly':
         this.layout.title = 'Interactions';
