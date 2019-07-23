@@ -3,11 +3,13 @@
   <minds-avatar [object]="user" [editMode]="editing" (added)="upload_avatar($event)"></minds-avatar>
   <div class="m-channel--name">
     <h2>{{user.name}}</h2>
-    <span class="minds-button-edit" (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
-      <button class="material-icons" [hidden]="editing">edit</button>
-      <button class="material-icons" [hidden]="!editing">done</button>
-    </span>
-    <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
+    <div class="m-channelName--toolbar">
+      <span class="minds-button-edit" (click)="toggleEditing()" *ngIf="session.getLoggedInUser().guid == user.guid">
+        <button class="material-icons" [hidden]="editing">edit</button>
+        <button class="material-icons" [hidden]="!editing">done</button>
+      </span>
+      <minds-button-user-dropdown [(user)]="user"></minds-button-user-dropdown>
+    </div>
   </div>
   <div class="m-channel--username">
     <h2><span>@</span>{{user.username}}</h2>
@@ -65,28 +67,6 @@
       </div>
       <div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp" style="min-height:0;"
         *ngIf="errorMessage">
-        <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-          {{errorMessage}}
-        </div>
-      </div>
-    </div>
-
-    <div class="m-channel-bio-editor m-channel-nsfw-editor" *ngIf="editing && isOwner()">
-      <div class="m-channel-bio-input">
-        <i class="material-icons mdl-color-text--blue-grey-300">explicit</i>
-        <m-nsfw-selector
-          [selected]="user.nsfw"
-          [service]="'editing'"
-          [locked]="user.nsfw_lock"
-          (selected)="onNSWFSelections($event)"
-        >
-        </m-nsfw-selector>
-      </div>
-      <div
-        class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp"
-        style="min-height:0;"
-        *ngIf="errorMessage"
-      >
         <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
           {{errorMessage}}
         </div>
