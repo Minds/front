@@ -9,7 +9,7 @@ export type PayloadType = 'onchain' | 'offchain';
 
 @Component({
   providers: [CurrencyPipe],
-  selector: 'm-wire-payments--payment-plan',
+  selector: 'm-payment-plan',
   templateUrl: 'payment-plan.component.html'
 })
 

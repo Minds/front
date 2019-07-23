@@ -95,7 +95,7 @@ describe('WireService', () => {
     });
   }));
 
-  fit('should post the plus tier if one is selected', fakeAsync(() => {
+  it('should post the plus tier if one is selected', fakeAsync(() => {
     service.submitWire({
       amount: 10,
       guid: null,
