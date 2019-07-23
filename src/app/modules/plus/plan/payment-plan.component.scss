@@ -1,16 +1,35 @@
 @import "defaults";
+@import "themes";
 
 .m-plus-plan__container {
   .m-plus-plan__row {
     .m-plus-plan__section {
+      h1 {
+        font-size: 36px;
+        text-transform: none;
+        display: block;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 1.2px;
+        align-items: center;
+        margin: 16px 0 8px 40px;
+      }
+
       .m-plus-plan__subtitle {
         display: inline-flex;
         flex-direction: column;
-        maxwidth: 30%;
+        width: 30%;
         align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 1.2px;
+        align-items: center;
+        margin: 0 0 8px 0;
 
         i, .m-plus-plan__plus-logo {
           font-size: 50pt;
+          padding-top: $minds-padding * 2;
         }
       }
       .m-plus-plan__plans {
@@ -23,10 +42,17 @@
           border-style: solid;
           border-width: 0 0 0 2px;
           padding: $minds-padding * 2;
-          border-color: #e8e8e8;
+
+          @include m-theme(){
+            border-color: themed($m-grey-50);
+          }
 
           .m-plus-plan__period-title {
             display: block;
+            font-weight: bold;
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
           }
 
           .m-plus-plan__period-price {
@@ -35,6 +61,30 @@
           .m-plus-plan__period-buy-button {
             display: block;
             margin-top: $minds-padding * 4;
+            font-size: 14px;
+            padding: 8px 32px;
+            background: none;
+            border-radius: 0;
+            cursor: pointer;
+
+            @include m-theme(){
+              border: 1px solid themed($m-grey-700);
+              color: themed($m-grey-700);
+            }
+          }
+          .m-plus-plan__period-buy-button__blue {
+            display: block;
+            margin-top: $minds-padding * 4;
+            font-size: 14px;
+            padding: 8px 32px;
+            background: none;
+            border-radius: 0;
+            cursor: pointer;
+
+            @include m-theme(){
+              border: 1px solid themed($m-blue);
+              color: themed($m-blue);
+            }
           }
         }
       }
