@@ -111,6 +111,12 @@ export class ChannelSortedComponent implements OnInit {
   }
 
   loadNext() {
+    if (this.feedsService.canFetchMore
+      && !this.feedsService.inProgress.getValue()
+      && this.feedsService.offset.getValue()
+    ) {
+      this.feedsService.fetch(); // load the next 150 in the background
+    }
     this.feedsService.loadMore();
   }
 

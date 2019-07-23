@@ -39,6 +39,8 @@ export class FeedsService {
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
   pageSize: Observable<number>;  
+  pagingToken: string = '';
+  canFetchMore: boolean = true; 
   endpoint: string = '';
   params: any = { sync: 1 };
   castToActivities: boolean = false;
@@ -112,16 +114,26 @@ export class FeedsService {
   }
 
   fetch(): FeedsService {
-    this.inProgress.next(true);
+    if (!this.offset.getValue())
+      this.inProgress.next(true);
+  
     this.client.get(this.endpoint, {
       ...this.params, 
       ...{ 
         limit: 150, // Over 12 scrolls
         as_activities: this.castToActivities ? 1 : 0,
+        from_timestamp: this.pagingToken,
       }})
       .then((response: any) => {
-        this.inProgress.next(false);
-        this.rawFeed.next(response.entities);
+        if (!this.offset.getValue())
+          this.inProgress.next(false);
+  
+        if (response.entities.length) {
+          this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
+          this.pagingToken = response['load-next'];
+        } else {
+          this.canFetchMore = false;
+        }
       })
       .catch(err => {
       });
@@ -138,6 +150,7 @@ export class FeedsService {
 
   clear(): FeedsService {
     this.offset.next(0);
+    this.pagingToken = '';
     this.rawFeed.next([]);
     return this;
   }
