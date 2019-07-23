@@ -19,6 +19,8 @@ export class ProSubscriptionComponent implements OnInit {
 
   error: string = '';
 
+  minds = window.Minds;
+
   constructor(
     protected service: ProService,
     protected session: Session,
@@ -58,8 +60,10 @@ export class ProSubscriptionComponent implements OnInit {
     try {
       await this.service.enable();
       this.active = true;
+      this.minds.user.pro = true;
     } catch (e) {
       this.active = false;
+      this.minds.user.pro = false;
       this.error = (e && e.message) || 'Unknown error';
     }
 
@@ -75,8 +79,10 @@ export class ProSubscriptionComponent implements OnInit {
     try {
       await this.service.disable();
       this.active = false;
+      this.minds.user.pro = false;
     } catch (e) {
       this.active = true;
+      this.minds.user.pro = true;
       this.error = (e && e.message) || 'Unknown error';
     }
 
