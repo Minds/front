@@ -1,7 +1,8 @@
-import { Component, EventEmitter, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, ViewChild } from '@angular/core';
 
 import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
 import { ActivityPreview } from '../../legacy/components/cards/activity/preview';
+import { AutocompleteSuggestionsService } from "../../suggestions/services/autocomplete-suggestions.service";
 
 // had forwardRef(() => ActivityPreview)
 @Component({
@@ -14,12 +15,27 @@ import { ActivityPreview } from '../../legacy/components/cards/activity/preview'
       <div class="m-modal-remind-composer">
         <h3 class="m-modal-remind-title" i18n="@@MODALS__REMIND_COMPOSER__REMIND_TITLE">Remind</h3>
 
-        <textarea name="message"
-          [(ngModel)]="message"
-          placeholder="Enter your remind status here (optional)"
-          i18n-placeholder="@@MODALS__REMIND_COMPOSER__PLACEHOLDER"
-          [autoGrow]
+        <ng-template #itemTemplate let-choice="choice" let-selectChoice="selectChoice">
+          <m-post-autocomplete-item-renderer
+            [choice]="choice"
+            [selectChoice]="selectChoice"
+          ></m-post-autocomplete-item-renderer>
+        </ng-template>
+
+        <m-text-input--autocomplete-container>
+          <textarea
+            name="message"
+            [(ngModel)]="message"
+            placeholder="Enter your remind status here (optional)"
+            i18n-placeholder="@@MODALS__REMIND_COMPOSER__PLACEHOLDER"
+            [autoGrow]
+            mTextInputAutocomplete
+            [findChoices]="suggestions.findSuggestions"
+            [getChoiceLabel]="suggestions.getChoiceLabel"
+            [itemTemplate]="itemTemplate"
+            [triggerCharacters]="['#', '@']"
           ></textarea>
+        </m-text-input--autocomplete-container>
 
         <div class="m-modal-remind-composer-buttons">
           <a class="m-modal-remind-composer-send" (click)="send()">
@@ -44,7 +60,10 @@ export class RemindComposerModal {
 
   @ViewChild(DynamicHostDirective, { static: true }) cardHost: DynamicHostDirective;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(
+    public suggestions: AutocompleteSuggestionsService,
+    private _componentFactoryResolver: ComponentFactoryResolver,
+  ) { }
 
   set _object(object: any) {
     this.object = object;

@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { SignupOnScrollModal } from './signup/signup-on-scroll';
 import { ConfirmPasswordModalComponent } from './confirm-password/modal.component';
 import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
+import { TextInputAutocompleteModule } from "../../common/components/autocomplete";
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { TOSUpdatedModal } from './tos-updated/tos.component';
     FormsModule,
     ReactiveFormsModule,
     MindsFormsModule,
+    TextInputAutocompleteModule,
   ],
   declarations: [
     ConfirmModal,
