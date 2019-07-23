@@ -19,6 +19,7 @@ export class UserSegmentsCardComponent implements OnInit {
   core: number = 0;
   cold: number = 0;
   casual: number = 0;
+  currents: { name: string, value: number }[];
 
   constructor(private client: Client) {
   }
@@ -32,7 +33,8 @@ export class UserSegmentsCardComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription)
+      this.subscription.unsubscribe();
   }
 
   private async getAvgData() {

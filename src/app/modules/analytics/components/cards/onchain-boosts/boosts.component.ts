@@ -18,6 +18,7 @@ export class OnChainBoostsCardComponent {
   average: number = 0;
   averageReclaimedTokens: number = 0;
   averageUsers: number = 0;
+  currents: { name: string, value: number }[];
 
   constructor(private client: Client) {
   }
@@ -37,17 +38,16 @@ export class OnChainBoostsCardComponent {
 
   private async getAvgData() {
     try {
-      let avgs: Array<any> = await Promise.all([
-        this.client.get('api/v2/analytics/onchainboosts', { key: 'average', timespan: this.timespan }),
-        this.client.get('api/v2/analytics/onchainboosts', { key: 'average_reclaimed_tokens', timespan: this.timespan }),
-        this.client.get('api/v2/analytics/onchainboosts', { key: 'average_users', timespan: this.timespan }),
-      ]);
+      const response: any = await this.client.get('api/v2/analytics/onchainboosts', {
+        key: 'avg',
+        timespan: this.timespan
+      });
 
-      this.average = avgs[0].data;
+      this.average = response.data.transactions;
 
-      this.averageReclaimedTokens = avgs[1].data;
+      this.averageReclaimedTokens = response.data.reclaimedTokens;
 
-      this.averageUsers = avgs[2].data;
+      this.averageUsers = response.data.users;
     } catch (e) {
       console.error(e);
     }
