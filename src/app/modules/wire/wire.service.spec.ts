@@ -46,7 +46,8 @@ describe('WireService', () => {
       amount: 10,
       payload: { receiver: '0x1234', address: '0x123', method: 'onchain', txHash: 'hash' },
       method: 'tokens',
-      recurring: false
+      recurring: false,
+      tier: ''
     });
   }));
 
@@ -67,7 +68,8 @@ describe('WireService', () => {
       amount: 10,
       payload: { address: 'offchain', method: 'offchain' },
       method: 'tokens',
-      recurring: false
+      recurring: false,
+      tier: ''
     });
   }));
 
@@ -88,7 +90,8 @@ describe('WireService', () => {
       amount: 10,
       payload: { address: 'offchain', token: 'tok_KPte7942xySKBKyrBu11yEpf', method: 'creditcard' },
       method: 'tokens',
-      recurring: false
+      recurring: false,
+      tier: ''
     });
   }));
 });
