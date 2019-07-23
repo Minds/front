@@ -94,4 +94,26 @@ describe('WireService', () => {
       tier: ''
     });
   }));
+
+  fit('should post the plus tier if one is selected', fakeAsync(() => {
+    service.submitWire({
+      amount: 10,
+      guid: null,
+      payload: null,
+      payloadType: "offchain",
+      recurring: false
+    }, 'month');
+
+    tick();
+
+    expect(clientMock.post).toHaveBeenCalled();
+    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v1/wire/null`);
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      amount: 10,
+      payload: { address: 'offchain', method: 'offchain' },
+      method: 'tokens',
+      recurring: false,
+      tier: 'month'
+    });
+  }));
 });
