@@ -1,0 +1,52 @@
+<div class="m-plus-plan__container">
+ 
+    <section class="m-plus-plan__row">
+      <!-- Header -->
+      <section class="m-plus-plan__section">
+        <h1 i18n="@@PAYMENT_PLAN__TITLE" style="font-size: 36px; text-transform: none;">
+          Minds Plus
+        </h1>
+      </section>
+    </section>
+    
+    <!-- Plan Type -->
+    <section class="m-plus-plan__row">
+      <section class="m-plus-plan__section">
+        <div class="m-plus-plan__subtitle">
+          <h5>Subscription Plans</h5>
+          <i class="material-icons mdl-color-text--blue-grey-700 m-plus-plan__plus-logo">add_circle_outline</i>
+        </div>
+        <div class="m-plus-plan__plans">
+          <div class="m-plus-plan__period-container">
+            <h6 class="m-plus-plan__period-title">Monthly</h6>
+            <span class="m-plus-plan__period-price">20 MINDS /pm</span>
+            <button class="m-btn m-btn--action m-btn--slim m-plus-plan__period-buy-button"
+              (click)="onClick('month')"
+            >
+              <ng-container i18n="verb|@@M__ACTION__PURCHASE">Purchase</ng-container>
+            </button>
+          </div>
+          <div class="m-plus-plan__period-container">
+            <h6 class="m-plus-plan__period-title">Yearly</h6>
+            <span class="m-plus-plan__period-price">180 MINDS /pa</span>
+            <button class="m-btn m-btn--action m-btn--slim m-plus-plan__period-buy-button"
+              (click)="onClick('year')"
+            >
+              <ng-container i18n="verb|@@M__ACTION__PURCHASE">Purchase</ng-container>
+            </button>
+          </div>
+          <div class="m-plus-plan__period-container">
+            <h6 class="m-plus-plan__period-title">Lifetime</h6>
+            <span class="m-plus-plan__period-price">500 MINDS</span>
+            <button class="m-btn m-btn--action m-btn--slim m-plus-plan__period-buy-button"
+              (click)="onClick('lifetime')"
+            >
+              <ng-container i18n="verb|@@M__ACTION__PURCHASE">Purchase</ng-container>
+            </button>
+          </div>
+        </div>
+      </section>  
+    </section>
+  
+  </div>
+  

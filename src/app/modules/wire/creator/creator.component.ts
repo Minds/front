@@ -23,7 +23,6 @@ export interface WireStruc {
   guid: any;
   recurring: boolean;
   payload: any;
-  tier: any;
 }
 
 @Component({
@@ -41,7 +40,6 @@ export class WireCreatorComponent {
     payloadType: 'onchain',
     guid: null,
     recurring: false,
-    tier: '',
     // Payment
     payload: null
   };

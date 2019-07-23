@@ -1,0 +1,43 @@
+@import "defaults";
+
+.m-plus-plan__container {
+  .m-plus-plan__row {
+    .m-plus-plan__section {
+      .m-plus-plan__subtitle {
+        display: inline-flex;
+        flex-direction: column;
+        maxwidth: 30%;
+        align-items: center;
+
+        i, .m-plus-plan__plus-logo {
+          font-size: 50pt;
+        }
+      }
+      .m-plus-plan__plans {
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 70%;
+
+        .m-plus-plan__period-container {
+          border-style: solid;
+          border-width: 0 0 0 2px;
+          padding: $minds-padding * 2;
+          border-color: #e8e8e8;
+
+          .m-plus-plan__period-title {
+            display: block;
+          }
+
+          .m-plus-plan__period-price {
+            display: block;
+          }
+          .m-plus-plan__period-buy-button {
+            display: block;
+            margin-top: $minds-padding * 4;
+          }
+        }
+      }
+    }
+  }
+}

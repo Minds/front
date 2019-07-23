@@ -16,7 +16,7 @@ export class WireService {
     private web3Wallet: Web3WalletService
   ) { }
 
-  async submitWire(wire: WireStruc) {
+  async submitWire(wire: WireStruc, tier: string = '') {
     let payload = wire.payload;
 
     if (!wire.amount || wire.amount < 0) {
@@ -69,7 +69,8 @@ export class WireService {
         payload,
         method: 'tokens',
         amount: wire.amount,
-        recurring: wire.recurring
+        recurring: wire.recurring,
+        tier: tier
       });
 
       this.wireSent.next(wire);
