@@ -1,7 +1,8 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
 import { timespanOption } from "../timespanOption";
 import { MindsUser } from "../../../../../interfaces/entities";
+import { removeCurrentUnits } from "../../../util";
 
 @Component({
   selector: 'm-analyticscharts__votes',
@@ -19,6 +20,8 @@ import { MindsUser } from "../../../../../interfaces/entities";
 })
 
 export class VotesChartComponent implements OnInit {
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+
   @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   @Input() user: MindsUser;
@@ -83,7 +86,10 @@ export class VotesChartComponent implements OnInit {
 
     try {
       const response: any = await this.client.get(url, opts);
-      this.data = response.data;
+      const [data, current] = removeCurrentUnits(response.data);
+      this.data = data;
+
+      this.loaded.emit(current);
       this.data[0].type = 'lines';
     } catch (e) {
       console.error(e);

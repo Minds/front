@@ -3,38 +3,37 @@ import { Client } from "../../../../../services/api/client";
 import { AnalyticsCardComponent } from "../card/card.component";
 
 @Component({
-  selector: 'm-analyticsoffchainplus__card',
-  templateUrl: 'offchain-plus.component.html'
+  selector: 'm-analyticspageviews__card',
+  templateUrl: 'pageviews.component.html'
 })
 
-export class OffChainPlusCardComponent {
+export class PageviewsCardComponent {
   @ViewChild('card', { static: true }) card: AnalyticsCardComponent;
 
-  reclaimedTokens: number = 0;
-  users: number = 0;
-  transactions: number = 0;
   currents: { name: string, value: number }[];
+  avgPageviews: number = 0;
 
   constructor(private client: Client) {
   }
 
   ngOnInit() {
     this.getAvgData();
+
+    this.card.selectedOptionChange.subscribe(() => {
+      this.getAvgData();
+    });
   }
 
   private async getAvgData() {
     try {
-      const response: any = await this.client.get('api/v2/analytics/offchainplus', {
+      const response: any = await this.client.get('api/v2/analytics/pageviews', {
         key: 'avg',
-        timespan: this.card.selectedOption
+        timespan: this.card.selectedOption,
       });
 
-      this.reclaimedTokens = response.data.tokens;
-      this.users = response.data.users;
-      this.transactions = response.data.transactions;
+      this.avgPageviews = response.data.pageviews;
     } catch (e) {
       console.error(e);
     }
   }
-
 }
