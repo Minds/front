@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { ProService } from './pro.service';
 import { ProMarketingComponent } from './marketing.component';
+import { ProSubscriptionComponent } from './subscription.component';
 
 const routes: Routes = [
   {
@@ -26,9 +27,9 @@ const routes: Routes = [
   ],
   declarations: [
     ProMarketingComponent,
+    ProSubscriptionComponent,
   ],
-  exports: [
-  ],
+  exports: [],
   entryComponents: [
     ProMarketingComponent,
   ],
