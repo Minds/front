@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { filter, first, map, switchMap } from 'rxjs/operators';
+import { filter, first, map, switchMap, mergeMap, skip, take } from 'rxjs/operators';
 import { FeedsService } from "../../services/feeds.service";
 
 @Injectable()
@@ -18,14 +18,20 @@ export class FeaturedContentService {
   }
 
   async fetch() {
+    if (this.offset >= this.feedsService.rawFeed.getValue().length) {
+      this.offset = -1;
+    }
     return await this.feedsService.feed
       .pipe(
         filter(feed => feed.length > 0),
         first(),
-        map(feed => feed[this.offset++]),
+        mergeMap(feed => feed),
+        skip(this.offset++),
+        take(1),
         switchMap(async entity => {
-          if (!entity)
+          if (!entity) {
             return false;
+          }
           return await entity.pipe(first()).toPromise();
         }),
       ).toPromise();

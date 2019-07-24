@@ -66,11 +66,12 @@ export class FeaturedContentComponent implements OnInit {
   update() {
     this.clear();
 
+    const {component, injector} = this.resolve();
+
     if (!this.dynamicHost) {
+      console.log('tried to load a boost but no dynamicHost found', this.entity);
       return;
     }
-
-    const {component, injector} = this.resolve();
 
     if (component) {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
