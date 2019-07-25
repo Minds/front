@@ -1,7 +1,6 @@
 <div
   *ngIf="channel"
   class="m-pro--channel"
-  [ngStyle]="{ 'background-image': 'url(' + channel.pro_settings.background_image + ')' }"
 >
   <div class="m-proChannel__topbar">
     <img
@@ -14,10 +13,16 @@
     <a [routerLink]="['/pro', channel.username, 'videos']" routerLinkActive="active" i18n>Videos</a>
     <a [routerLink]="['/pro', channel.username, 'images']" routerLinkActive="active" i18n>Images</a>
     <a [routerLink]="['/pro', channel.username, 'articles']" routerLinkActive="active" i18n>Articles</a>
-<!--    <a [routerLink]="['/pro', channel.username, 'groups']" routerLinkActive="active" i18n>Groups</a>-->
+    <a [routerLink]="['/pro', channel.username, 'groups']" routerLinkActive="active" i18n>Groups</a>
     <a [routerLink]="['/pro', channel.username, 'feed']" routerLinkActive="active" i18n>Feed</a>
-<!--    <a [routerLink]="['/pro', username, 'donate']" routerLinkActive="active">Donate</a>-->
-<!--    <a [routerLink]="['/pro', username, 'signup']" routerLinkActive="active">Signup | Login</a>-->
+    <a [routerLink]="['/pro', channel.username, 'donate']" routerLinkActive="active">Donate</a>
+
+    <ng-container *ngIf="currentUser; else authLink">
+      <minds-avatar [object]="currentUser" [editMode]="false"></minds-avatar>
+    </ng-container>
+    <ng-template #authLink>
+      <a [routerLink]="['/pro', channel.username, 'signup']" routerLinkActive="active">Signup / Login</a>
+    </ng-template>
   </div>
 
   <div class="m-proChannel__body">

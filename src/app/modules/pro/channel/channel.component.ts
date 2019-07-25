@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Session } from "../../../services/session";
 import { Subscription } from "rxjs";
@@ -43,11 +43,6 @@ export class ProChannelComponent implements OnInit, OnDestroy {
         this.username = params['username'];
       }
 
-      // if (!this.session.isLoggedIn()) {
-      //   this.router.navigate(['/pro', this.username, 'signup']);
-      //   return;
-      // }
-
       if (this.username && (!this.channel || this.channel.username != this.username)) {
         this.load();
       }
@@ -86,5 +81,21 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
+    if (!this.channel) {
+      return 'none';
+    }
+
+    return `url(${this.channel.pro_settings.background_image})`;
+  }
+
+  get currentUser() {
+    if (!this.session.isLoggedIn()) {
+      return null;
+    }
+
+    return this.session.getLoggedInUser();
   }
 }

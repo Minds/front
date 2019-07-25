@@ -36,6 +36,15 @@
 <!--</div>-->
 <!--&lt;!&ndash; TODO: add infinite scroll or something to load more &ndash;&gt;-->
 
+<h1 [ngSwitch]="type">
+  <ng-template ngSwitchCase="videos" i18n>Videos</ng-template>
+  <ng-template ngSwitchCase="images" i18n>Images</ng-template>
+  <ng-template ngSwitchCase="blogs" i18n>Articles</ng-template>
+  <ng-template ngSwitchCase="groups" i18n>Groups</ng-template>
+  <ng-template ngSwitchCase="activities" i18n>Feed</ng-template>
+  <ng-template ngSwitchDefault>{{ type | titlecase }}</ng-template>
+</h1>
+
 <div class="m-proChannelList__content">
   <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
     <ul class="m-proChannelListContent__list">

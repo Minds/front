@@ -10,6 +10,7 @@ import { ProService } from "../../pro.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProChannelListComponent implements OnInit {
+
   type: string;
 
   params$: Subscription;

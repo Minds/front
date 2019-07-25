@@ -1,9 +1,15 @@
+m-pro--channel {
+  display: block;
+  background: none no-repeat center fixed;
+  background-size: cover;
+}
+
 .m-pro--channel {
+  max-width: 1296px;
+  margin: 0 auto;
   display: grid;
   grid-template-rows: repeat(2, 100px) 1fr;
   grid-template-columns: repeat(12, 1fr);
-  background: none no-repeat fixed;
-  background-size: cover;
   min-height: 100%;
 
   .m-proChannel__topbar {
@@ -12,8 +18,9 @@
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
-    padding-left: $minds-padding * 4;
+    padding-left: 32px;
 
     .m-proChannelTopbar__logo {
       max-height: 100%;
@@ -26,19 +33,28 @@
 
   a {
     text-decoration: none;
-    padding: $minds-padding * 2;
-    font-size: 24px;
+    padding: 16px;
+    font-size: 18px;
   }
 
   .m-proChannel__body {
     grid-row: 3 / span 1;
     grid-column: 1 / span 12;
-    padding: 0 $minds-padding * 4;
+    padding: 0 32px;
   }
 
   m-pro--channel h1 {
     font-size: 70px;
     font-weight: bold;
+  }
+
+  .minds-avatar {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
   }
 
   // colors

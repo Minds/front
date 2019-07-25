@@ -1,10 +1,13 @@
 m-pro--channel-list {
   h1 {
-    font-size: 90px;
-    font-weight: bold;
+    font-size: 72px;
+    font-weight: 600;
+    margin: 0 0 0.4em;
   }
 
   .m-proChannelList__content {
+    width: 85%;
+    margin: 0 auto;
     display: flex;
     //align-items: center;
     justify-content: center;
