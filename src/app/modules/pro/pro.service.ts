@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
+import { MindsUser } from "../../interfaces/entities";
+import { MindsChannelResponse } from "../../interfaces/responses";
 
 @Injectable()
 export class ProService {
+  currentChannel: MindsUser;
+
   constructor(
     protected client: Client,
   ) { }
@@ -26,5 +30,22 @@ export class ProService {
   async disable(): Promise<boolean> {
     await this.client.delete('api/v2/pro');
     return true;
+  }
+
+  async loadChannel(username: string) {
+    try {
+      const response: MindsChannelResponse = <MindsChannelResponse>await this.client.get(`api/v1/channel/${username}`);
+
+      this.currentChannel = response.channel;
+
+      return this.currentChannel;
+    } catch (e) {
+      if (e.status === 0) {
+        throw new Error('Sorry, there was a timeout error.');
+      } else {
+        console.log('couldn\'t load channel', e);
+        throw new Error('Sorry, the channel couldn\'t be found');
+      }
+    }
   }
 }

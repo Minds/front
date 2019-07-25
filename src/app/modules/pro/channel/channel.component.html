@@ -1,0 +1,15 @@
+<div class="m-proChannel__topbar">
+  <img class="m-proChannelTopbar__logo"
+       src="https://yt3.ggpht.com/a/AGF-l7-24Iy1c6QKw0mRaO56Fj5jUcGP5Al9J7_2FQ=s900-mo-c-c0xffffffff-rj-k-no">
+  <input>
+  <a routerLink="/pro/{{username}}/videos" [routerLinkActive]="'active'">Videos</a>
+  <a routerLink="/pro/{{username}}/images" [routerLinkActive]="'active'">Images</a>
+  <a routerLink="/pro/{{username}}/articles" [routerLinkActive]="'active'">Articles</a>
+  <a routerLink="/pro/{{username}}/groups" [routerLinkActive]="'active'">Groups</a>
+  <a routerLink="/pro/{{username}}/donate" [routerLinkActive]="'active'">Donate</a>
+  <a routerLink="/pro/{{username}}/signup" [routerLinkActive]="'active'">Signup | Login</a>
+</div>
+
+<div class="m-proChannel__body">
+  <router-outlet></router-outlet>
+</div>

@@ -6,11 +6,25 @@ import { CommonModule } from '../../common/common.module';
 import { ProService } from './pro.service';
 import { ProMarketingComponent } from './marketing.component';
 import { ProSubscriptionComponent } from './subscription.component';
+import { ProChannelComponent } from "./channel/channel.component";
+import { ProChannelSignupComponent } from "./channel/signup/signup.component";
+import { MindsFormsModule } from "../forms/forms.module";
+import { ProChannelListComponent } from "./channel/list/list.component";
 
 const routes: Routes = [
   {
     path: 'pro',
-    component: ProMarketingComponent,
+    children: [
+      { path: '', component: ProMarketingComponent, },
+      {
+        path: ':username', component: ProChannelComponent,
+        children: [
+          { path: '', redirectTo: 'articles', pathMatch: 'full' },
+          { path: 'signup', component: ProChannelSignupComponent },
+          { path: ':type', component: ProChannelListComponent },
+        ]
+      },
+    ]
   },
 ];
 
@@ -21,6 +35,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
+    MindsFormsModule,
   ],
   providers: [
     ProService,
@@ -28,10 +43,14 @@ const routes: Routes = [
   declarations: [
     ProMarketingComponent,
     ProSubscriptionComponent,
+    ProChannelComponent,
+    ProChannelSignupComponent,
+    ProChannelListComponent,
   ],
   exports: [],
   entryComponents: [
     ProMarketingComponent,
   ],
 })
-export class ProModule {}
+export class ProModule {
+}
