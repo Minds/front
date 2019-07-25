@@ -10,6 +10,7 @@ import { ProChannelComponent } from "./channel/channel.component";
 import { ProChannelSignupComponent } from "./channel/signup/signup.component";
 import { MindsFormsModule } from "../forms/forms.module";
 import { ProChannelListComponent } from "./channel/list/list.component";
+import { ProChannelDonateComponent } from './channel/donate/donate.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
         path: ':username', component: ProChannelComponent,
         children: [
           { path: '', redirectTo: 'articles', pathMatch: 'full' },
+          { path: 'donate', component: ProChannelDonateComponent },
           { path: 'signup', component: ProChannelSignupComponent },
           { path: ':type', component: ProChannelListComponent },
         ]
@@ -46,6 +48,7 @@ const routes: Routes = [
     ProChannelComponent,
     ProChannelSignupComponent,
     ProChannelListComponent,
+    ProChannelDonateComponent,
   ],
   exports: [],
   entryComponents: [
