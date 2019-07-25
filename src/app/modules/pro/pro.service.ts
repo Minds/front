@@ -23,7 +23,7 @@ export class ProService {
 
   async enable(): Promise<boolean> {
     // TODO: Payments
-    await this.client.post('api/v2/pro/enable');
+    await this.client.post('api/v2/pro');
     return true;
   }
 
@@ -32,9 +32,11 @@ export class ProService {
     return true;
   }
 
-  async loadChannel(username: string) {
+  async load(id: string) {
     try {
-      const response: MindsChannelResponse = <MindsChannelResponse>await this.client.get(`api/v1/channel/${username}`);
+      this.currentChannel = void 0;
+
+      const response: MindsChannelResponse = await this.client.get(`api/v1/channel/${id}`) as MindsChannelResponse;
 
       this.currentChannel = response.channel;
 

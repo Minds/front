@@ -1,0 +1,45 @@
+<!--&lt;!&ndash; TODO: i18n &ndash;&gt;-->
+<!--<h1>{{type | titlecase}}</h1>-->
+<!--<div class="m-proChannelList__content">-->
+<!--  <i class="material-icons">keyboard_arrow_left</i>-->
+<!--  <ul class="m-proChannelListContent__list">-->
+<!--    &lt;!&ndash;        <li *ngFor="let entity of (feedsService.feed | async); let i = index">&ndash;&gt;-->
+<!--    &lt;!&ndash; TODO: custom tile here &ndash;&gt;-->
+<!--    &lt;!&ndash;        </li>&ndash;&gt;-->
+<!--    <li>-->
+<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
+<!--    </li>-->
+
+<!--  </ul>-->
+<!--  <i class="material-icons">keyboard_arrow_right</i>-->
+<!--</div>-->
+<!--&lt;!&ndash; TODO: add infinite scroll or something to load more &ndash;&gt;-->
+
+<div class="m-proChannelList__content">
+  <ul class="m-proChannelListContent__list">
+    <li *ngFor="let entity of (feedsService.feed | async)">
+      <img style="max-height: 320px; width: 100%; height: 100%; object-fit: cover" [src]="(entity | async).thumbnail_src" alt="">
+    </li>
+  </ul>
+</div>

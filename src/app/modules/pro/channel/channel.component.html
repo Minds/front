@@ -1,15 +1,26 @@
-<div class="m-proChannel__topbar">
-  <img class="m-proChannelTopbar__logo"
-       src="https://yt3.ggpht.com/a/AGF-l7-24Iy1c6QKw0mRaO56Fj5jUcGP5Al9J7_2FQ=s900-mo-c-c0xffffffff-rj-k-no">
-  <input>
-  <a routerLink="/pro/{{username}}/videos" [routerLinkActive]="'active'">Videos</a>
-  <a routerLink="/pro/{{username}}/images" [routerLinkActive]="'active'">Images</a>
-  <a routerLink="/pro/{{username}}/articles" [routerLinkActive]="'active'">Articles</a>
-  <a routerLink="/pro/{{username}}/groups" [routerLinkActive]="'active'">Groups</a>
-  <a routerLink="/pro/{{username}}/donate" [routerLinkActive]="'active'">Donate</a>
-  <a routerLink="/pro/{{username}}/signup" [routerLinkActive]="'active'">Signup | Login</a>
-</div>
+<div
+  *ngIf="channel"
+  class="m-pro--channel"
+  [ngStyle]="{ 'background-image': 'url(' + channel.pro_settings.background_image + ')' }"
+>
+  <div class="m-proChannel__topbar">
+    <img
+      class="m-proChannelTopbar__logo"
+      [src]="channel.pro_settings.logo_image"
+    >
 
-<div class="m-proChannel__body">
-  <router-outlet></router-outlet>
+    <input type="search" placeholder="Search..." i18n>
+
+    <a [routerLink]="['/pro', channel.username, 'videos']" routerLinkActive="active" i18n>Videos</a>
+    <a [routerLink]="['/pro', channel.username, 'images']" routerLinkActive="active" i18n>Images</a>
+    <a [routerLink]="['/pro', channel.username, 'articles']" routerLinkActive="active" i18n>Articles</a>
+    <a [routerLink]="['/pro', channel.username, 'groups']" routerLinkActive="active" i18n>Groups</a>
+    <a [routerLink]="['/pro', channel.username, 'feed']" routerLinkActive="active" i18n>Feed</a>
+<!--    <a [routerLink]="['/pro', username, 'donate']" routerLinkActive="active">Donate</a>-->
+<!--    <a [routerLink]="['/pro', username, 'signup']" routerLinkActive="active">Signup | Login</a>-->
+  </div>
+
+  <div class="m-proChannel__body">
+    <router-outlet></router-outlet>
+  </div>
 </div>
