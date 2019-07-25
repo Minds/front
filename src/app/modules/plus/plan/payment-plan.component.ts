@@ -71,7 +71,7 @@ export class PaymentPlanComponent {
     }
 
     this.payment.recurring = true;
-    this.payment.entity_guid = '998622649192026120';
+    this.payment.entity_guid = this.minds.blockchain.plus_guid;
     this.payment.receiver = this.blockchain.plus_address;
     this.payment.period = tier;
     return this.payment;
