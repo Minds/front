@@ -710,6 +710,18 @@
     </a>
   </ng-template>
 
+  <ng-template ngSwitchCase="rewards_state_change">
+    <a
+      target="_blank"
+      routerLink="/wallet/tokens/contributions"
+    >
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__USER_STATE_CHANGE">
+        You just became a {{notification.params.state}} user.
+        Your new token reward multiplier is {{notification.params.reward_factor}}x
+      </p>
+    </a>
+  </ng-template>
+
   <!-- Default -->
   <ng-template ngSwitchDefault>
     <i i18n="@@NOTIFICATIONS__NOTIFICATION__GENERAL_ERROR_VIEWING">Sorry, there was an error viewing this notification</i>
