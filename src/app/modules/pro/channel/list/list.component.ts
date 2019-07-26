@@ -77,24 +77,6 @@ export class ProChannelListComponent implements OnInit {
     this.feedsService.loadMore();
   }
 
-  seeMore() {
-    let url = `${window.Minds.site_url}${this.proService.currentChannel.username}`;
-
-    let type = this.type;
-
-    if (this.type === 'feed') {
-      type = null;
-    }
-    else if (this.type === 'articles') {
-      type = 'blogs';
-    }
-
-    if (type) {
-      url += `/${type}`;
-    }
-    window.location.href = url;
-  }
-
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

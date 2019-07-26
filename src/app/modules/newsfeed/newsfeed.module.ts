@@ -92,6 +92,7 @@ const routes: Routes = [
     NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
+    NewsfeedComponent,
   ],
   entryComponents: [
     NewsfeedComponent,

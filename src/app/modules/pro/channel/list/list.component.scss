@@ -38,6 +38,26 @@ m-pro--channel-list {
       justify-content: center;
       align-items: center;
 
+      m-newsfeed__entity {
+        width: 100%;
+
+        .m-groups--tile {
+          width: 100%;
+
+          h3, i {
+            color: #444 !important;
+          }
+
+          .m-groups--tile-block {
+            margin-top: 0;
+          }
+
+          .m-groups--tile-buttons {
+            padding: 0 $minds-padding * 2;
+          }
+        }
+      }
+
       &.m-proChannelListContentList__seeMore {
         color: white;
         background-color: rgba(0, 0, 0, 0.7);

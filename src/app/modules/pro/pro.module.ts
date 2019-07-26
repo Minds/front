@@ -12,6 +12,7 @@ import { MindsFormsModule } from "../forms/forms.module";
 import { ProChannelListComponent } from "./channel/list/list.component";
 import { ProChannelDonateComponent } from './channel/donate/donate.component';
 import { ProTileComponent } from "./channel/tile/tile.component";
+import { NewsfeedModule } from "../newsfeed/newsfeed.module";
 
 const routes: Routes = [
   {
@@ -39,6 +40,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MindsFormsModule,
+    NewsfeedModule,
   ],
   providers: [
     ProService,

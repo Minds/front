@@ -9,21 +9,25 @@
 
 <div class="m-proChannelList__content">
   <ul class="m-proChannelListContent__list">
-    <li *ngFor="let entity of (feedsService.feed | async)">
+    <li *ngFor="let entity of (feedsService.feed | async) as feed">
       <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
         <m-pro--channel-tile
           [entity]="entity | async"
         ></m-pro--channel-tile>
       </ng-container>
+      <ng-container *ngIf="type === 'groups'">
+        <m-newsfeed__entity
+          [entity]="entity | async">
+
+        </m-newsfeed__entity>
+      </ng-container>
     </li>
-    <li class="m-proChannelListContentList__seeMore" (click)="seeMore()">See more</li>
+    <li class="m-proChannelListContentList__seeMore" [routerLink]="['/', proService.currentChannel.username]">
+      See more
+    </li>
   </ul>
   <ng-container *ngIf="type === 'activities'">
     <pre *ngFor="let entity of (feedsService.feed | async)">{{entity | async | json}}</pre>
     <!-- talk to Emi about this -->
-  </ng-container>
-  <ng-container *ngIf="type === 'groups'">
-    <pre *ngFor="let entity of (feedsService.feed | async)">{{entity | async | json}}</pre>
-    <!-- TODO: see if we can use old tile, or create a new one based on the old one // use name, avatar and banner -->
   </ng-container>
 </div>
