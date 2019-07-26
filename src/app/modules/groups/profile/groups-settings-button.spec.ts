@@ -37,6 +37,10 @@ describe('GroupsSettingsButton', () => {
     TestBed.configureTestingModule({
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        MockDirective({
+          selector: '[mIfFeature]',
+          inputs: [ 'mIfFeature' ],
+        }),
         MockComponent({
           selector: 'm-modal',
           template: '<ng-content></ng-content>',
