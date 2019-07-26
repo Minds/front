@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { FeedsService } from "../../../../common/services/feeds.service";
-import { ProService } from "../../pro.service";
+import { ProChannelService } from '../channel.service';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -17,7 +17,7 @@ export class ProChannelListComponent implements OnInit {
 
   constructor(
     public feedsService: FeedsService,
-    public proService: ProService,
+    protected channelService: ProChannelService,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
   ) {
@@ -62,8 +62,8 @@ export class ProChannelListComponent implements OnInit {
 
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/channel/${this.proService.currentChannel.guid}/${this.type}`)
-        .setLimit(8)
+        .setEndpoint(`api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}`)
+        .setLimit(9)
         .fetch();
 
     } catch (e) {
@@ -80,5 +80,9 @@ export class ProChannelListComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  get seeMoreRoute() {
+    return ['/', this.channelService.currentChannel.username];
   }
 }

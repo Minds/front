@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
-import { MindsUser } from "../../interfaces/entities";
-import { MindsChannelResponse } from "../../interfaces/responses";
 
 @Injectable()
 export class ProService {
-  currentChannel: MindsUser;
-
   constructor(
     protected client: Client,
   ) { }
@@ -32,22 +28,12 @@ export class ProService {
     return true;
   }
 
-  async load(id: string) {
-    try {
-      this.currentChannel = void 0;
+  async get(): Promise<{ isActive, settings }> {
+    return await this.client.get('api/v2/pro/settings', {}, {cache: false}) as any;
+  }
 
-      const response: MindsChannelResponse = await this.client.get(`api/v1/channel/${id}`) as MindsChannelResponse;
-
-      this.currentChannel = response.channel;
-
-      return this.currentChannel;
-    } catch (e) {
-      if (e.status === 0) {
-        throw new Error('Sorry, there was a timeout error.');
-      } else {
-        console.log('couldn\'t load channel', e);
-        throw new Error('Sorry, the channel couldn\'t be found');
-      }
-    }
+  async set(settings): Promise<boolean> {
+    await this.client.post('api/v2/pro/settings', settings);
+    return true;
   }
 }

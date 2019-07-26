@@ -13,17 +13,18 @@ import { Subscription } from "rxjs";
 import { MindsUser } from "../../../interfaces/entities";
 import { Client } from "../../../services/api/client";
 import { Title } from "@angular/platform-browser";
-import { ProService } from "../pro.service";
+import { ProChannelService } from './channel.service';
 
 @Component({
   providers: [
-    ProService,
+    ProChannelService,
   ],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProChannelComponent implements OnInit, OnDestroy {
+
   username: string;
 
   channel: MindsUser;
@@ -37,7 +38,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   constructor(
     protected element: ElementRef,
     protected session: Session,
-    protected proService: ProService,
+    protected channelService: ProChannelService,
     protected client: Client,
     protected title: Title,
     protected router: Router,
@@ -71,11 +72,11 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     this.detectChanges();
 
     try {
-      this.channel = await this.proService.load(this.username);
+      this.channel = await this.channelService.load(this.username);
 
-      let title = this.channel.pro_settings.title || this.channel.name;
+      let title = this.channel.pro_settings.title as string || this.channel.name;
 
-      this.setCustomStyles();
+      this.bindCssVariables();
 
       if (this.channel.pro_settings.headline) {
         title += ` - ${this.channel.pro_settings.headline}`;
@@ -89,14 +90,23 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
-  setCustomStyles() {
-    const styles = this.channel.pro_styles;
+  bindCssVariables() {
+    const styles = this.channel.pro_settings.styles;
 
-    for (let style in styles) {
-      if (styles.hasOwnProperty(style) && styles[style].trim() !== '') {
-        const styleAttr = style.replace(/_/g, "-");
-        document.body.style.setProperty(`--${styleAttr}`, styles[style]);
+    for (const style in styles) {
+      if (!styles.hasOwnProperty(style)) {
+        continue;
       }
+
+      let value = styles[style].trim();
+
+      if (!value) {
+        continue;
+      }
+
+      const styleAttr = style.replace(/_/g, "-");
+      this.element.nativeElement
+        .style.setProperty(`--${styleAttr}`, styles[style]);
     }
   }
 

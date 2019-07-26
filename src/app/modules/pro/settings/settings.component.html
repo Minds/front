@@ -1,0 +1,72 @@
+<div class="m-pro--settings">
+  <div class="m-page">
+    <div class="m-page--main m-pro--settings--page m-border">
+      <h4 i18n>Pro Settings</h4>
+
+      <div *ngIf="inProgress && !settings">
+        <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+      </div>
+
+      <ng-container *ngIf="settings">
+        <form (ngSubmit)="save()">
+          <div class="m-pro--settings--field">
+            <label for="domain" i18n>Domain</label>
+            <input type="text" id="domain" name="domain" [(ngModel)]="settings.domain">
+          </div>
+
+          <div class="m-pro--settings--field">
+            <label for="title" i18n>Title</label>
+            <input type="text" id="title" name="title" [(ngModel)]="settings.title">
+          </div>
+
+          <div class="m-pro--settings--field">
+            <label for="headline" i18n>Headline</label>
+            <input type="text" id="headline" name="headline" [(ngModel)]="settings.headline">
+          </div>
+
+          <div class="m-pro--settings--field">
+            <label for="text_color" i18n>Text Color</label>
+            <input type="color" id="text_color" name="text_color" [(ngModel)]="settings.text_color">
+          </div>
+
+          <div class="m-pro--settings--field">
+            <label for="primary_color" i18n>Primary Color</label>
+            <input type="color" id="primary_color" name="primary_color" [(ngModel)]="settings.primary_color">
+          </div>
+
+          <div class="m-pro--settings--field">
+            <label for="plain_background_color" i18n>Plain Background Color</label>
+            <input type="color" id="plain_background_color" name="plain_background_color" [(ngModel)]="settings.plain_background_color">
+          </div>
+
+          <div class="m-pro--settings--field">
+            <button
+              class="m-btn m-btn--slim m-btn--action"
+              type="submit"
+              [disabled]="inProgress"
+              i18n
+            >Save</button>
+
+            <span *ngIf="inProgress">
+              <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+            </span>
+
+            <a
+              *ngIf="saved"
+              class="m-btn m-link-btn m-btn--slim m-pro--settings--preview-btn"
+              [routerLink]="previewRoute"
+              i18n
+            >Preview your Pro site</a>
+          </div>
+
+          <div class="m-pro--settings--field">
+            <a
+              class="m-btn m-link-btn m-btn--slim m-btn--destructive"
+              routerLink="/pro"
+            >Cancel Pro</a>
+          </div>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+</div>

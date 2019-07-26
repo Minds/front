@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Session } from '../../services/session';
 import { ProService } from './pro.service';
 
@@ -8,6 +8,10 @@ import { ProService } from './pro.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProSubscriptionComponent implements OnInit {
+
+  @Output() onEnable: EventEmitter<any> = new EventEmitter();
+
+  @Output() onDisable: EventEmitter<any> = new EventEmitter();
 
   isLoggedIn: boolean = false;
 
@@ -61,6 +65,7 @@ export class ProSubscriptionComponent implements OnInit {
       await this.service.enable();
       this.active = true;
       this.minds.user.pro = true;
+      this.onEnable.emit(Date.now());
     } catch (e) {
       this.active = false;
       this.minds.user.pro = false;
@@ -80,6 +85,7 @@ export class ProSubscriptionComponent implements OnInit {
       await this.service.disable();
       this.active = false;
       this.minds.user.pro = false;
+      this.onDisable.emit(Date.now());
     } catch (e) {
       this.active = true;
       this.minds.user.pro = true;

@@ -69,8 +69,7 @@ export interface MindsUser {
   tags?: Array<string>;
   toaster_notifications?: boolean;
   pro?: boolean;
-  pro_settings?: { [key: string]: string };
-  pro_styles?: { [key: string]: string };
+  pro_settings?: { styles?: { [key: string]: string }, [key: string]: string | { [key: string]: string } };
 }
 
 export interface MindsGroup {

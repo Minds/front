@@ -13,19 +13,41 @@ import { ProChannelListComponent } from "./channel/list/list.component";
 import { ProChannelDonateComponent } from './channel/donate/donate.component';
 import { ProTileComponent } from "./channel/tile/tile.component";
 import { NewsfeedModule } from "../newsfeed/newsfeed.module";
+import { ProSettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
     path: 'pro',
     children: [
-      { path: '', component: ProMarketingComponent, },
       {
-        path: ':username', component: ProChannelComponent,
+        path: '',
+        component: ProMarketingComponent,
+      },
+      {
+        path: 'settings',
+        component: ProSettingsComponent,
+      },
+      {
+        path: ':username',
+        component: ProChannelComponent,
         children: [
-          { path: '', redirectTo: 'articles', pathMatch: 'full' },
-          { path: 'donate', component: ProChannelDonateComponent },
-          { path: 'signup', component: ProChannelSignupComponent },
-          { path: ':type', component: ProChannelListComponent },
+          {
+            path: '',
+            redirectTo: 'articles',
+            pathMatch: 'full'
+          },
+          {
+            path: 'donate',
+            component: ProChannelDonateComponent
+          },
+          {
+            path: 'signup',
+            component: ProChannelSignupComponent
+          },
+          {
+            path: ':type',
+            component: ProChannelListComponent
+          },
         ]
       },
     ]
@@ -47,6 +69,7 @@ const routes: Routes = [
   ],
   declarations: [
     ProMarketingComponent,
+    ProSettingsComponent,
     ProSubscriptionComponent,
     ProTileComponent,
     ProChannelComponent,

@@ -1,0 +1,66 @@
+.m-pro--settings {
+  max-width: 1280px;
+  margin: auto;
+}
+
+.m-pro--settings--page {
+  margin-top: 16px;
+  padding-bottom: 24px;
+
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+
+  h4 {
+    margin: 0 0 8px;
+  }
+
+  form {
+    margin: 0;
+    padding: 0;
+  }
+
+  .m-pro--settings--field {
+    margin: 0 0 24px;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 300;
+      margin-bottom: 4px;
+
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=search],
+    input[type=date] {
+      appearance: none;
+      border: 1px solid;
+      border-radius: 6px;
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      max-width: 40em;
+
+      @include m-theme() {
+        border-color: themed($m-grey-50);
+      }
+    }
+  }
+
+  .m-pro--settings--preview-btn {
+    margin-left: 0.35em;
+
+    @include m-theme() {
+      color: themed($m-grey-300);
+      border-color: themed($m-grey-300);
+    }
+  }
+}
