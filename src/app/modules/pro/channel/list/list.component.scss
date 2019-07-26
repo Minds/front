@@ -66,7 +66,10 @@ m-pro--channel-list {
       &:nth-child(2) {
         grid-column: 3 / span 2;
         margin-bottom: $minds-padding * 4;
-        justify-content: flex-end;
+
+        &:not(.m-proChannelListContentList__seeMore) {
+          justify-content: flex-end;
+        }
       }
 
       & > video {
