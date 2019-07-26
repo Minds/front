@@ -1,0 +1,49 @@
+@import "defaults";
+
+m-pro--channel-tile {
+  cursor: pointer;
+  position: relative;
+
+  img {
+    max-height: 320px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+
+  .m-proChannelTile__text {
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    color: black;
+    min-width: stretch;
+    padding: $minds-padding*2 $minds-padding*2 0;
+    font-size: 20px;
+
+    h2 {
+      font-size: 20px;
+      line-height: 20px;
+      overflow: visible;
+      color: rgba(0, 0, 0, .75) !important;
+      margin: 0;
+    }
+
+    p {
+      font-size: 13px;
+      text-overflow: ellipsis;
+      text-rendering: auto;
+      white-space: pre-wrap;
+      overflow: hidden;
+      max-height: 48px;
+      margin: 8px 0;
+      padding: 0;
+      line-height: 1.25;
+      color: #263238 !important;
+    }
+
+    a {
+      text-decoration: none;
+      color: #333;
+    }
+  }
+}

@@ -1,41 +1,3 @@
-<!--&lt;!&ndash; TODO: i18n &ndash;&gt;-->
-<!--<h1>{{type | titlecase}}</h1>-->
-<!--<div class="m-proChannelList__content">-->
-<!--  <i class="material-icons">keyboard_arrow_left</i>-->
-<!--  <ul class="m-proChannelListContent__list">-->
-<!--    &lt;!&ndash;        <li *ngFor="let entity of (feedsService.feed | async); let i = index">&ndash;&gt;-->
-<!--    &lt;!&ndash; TODO: custom tile here &ndash;&gt;-->
-<!--    &lt;!&ndash;        </li>&ndash;&gt;-->
-<!--    <li>-->
-<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
-<!--    </li>-->
-<!--    <li>-->
-<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
-<!--    </li>-->
-<!--    <li>-->
-<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
-<!--    </li>-->
-<!--    <li>-->
-<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
-<!--    </li>-->
-<!--    <li>-->
-<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
-<!--    </li>-->
-<!--    <li>-->
-<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
-<!--    </li>-->
-<!--    <li>-->
-<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
-<!--    </li>-->
-<!--    <li>-->
-<!--      <video src="https://cdn-cinemr.minds.com/cinemr_com/943902545938489353/720.mp4"></video>-->
-<!--    </li>-->
-
-<!--  </ul>-->
-<!--  <i class="material-icons">keyboard_arrow_right</i>-->
-<!--</div>-->
-<!--&lt;!&ndash; TODO: add infinite scroll or something to load more &ndash;&gt;-->
-
 <h1 [ngSwitch]="type">
   <ng-template ngSwitchCase="videos" i18n>Videos</ng-template>
   <ng-template ngSwitchCase="images" i18n>Images</ng-template>
@@ -46,17 +8,22 @@
 </h1>
 
 <div class="m-proChannelList__content">
-  <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
-    <ul class="m-proChannelListContent__list">
-      <li *ngFor="let entity of (feedsService.feed | async)">
-        <img style="max-height: 320px; width: 100%; height: 100%; object-fit: cover" [src]="(entity | async).thumbnail_src" alt="">
-      </li>
-    </ul>
-  </ng-container>
+  <ul class="m-proChannelListContent__list">
+    <li *ngFor="let entity of (feedsService.feed | async)">
+      <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
+        <m-pro--channel-tile
+          [entity]="entity | async"
+        ></m-pro--channel-tile>
+      </ng-container>
+    </li>
+    <li class="m-proChannelListContentList__seeMore" (click)="seeMore()">See more</li>
+  </ul>
   <ng-container *ngIf="type === 'activities'">
     <pre *ngFor="let entity of (feedsService.feed | async)">{{entity | async | json}}</pre>
+    <!-- talk to Emi about this -->
   </ng-container>
   <ng-container *ngIf="type === 'groups'">
     <pre *ngFor="let entity of (feedsService.feed | async)">{{entity | async | json}}</pre>
+    <!-- TODO: see if we can use old tile, or create a new one based on the old one // use name, avatar and banner -->
   </ng-container>
 </div>

@@ -38,8 +38,17 @@ m-pro--channel-list {
       justify-content: center;
       align-items: center;
 
-      //width: 100px;
-      //height:
+      &.m-proChannelListContentList__seeMore {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid #777;
+
+        font-size: 30px;
+        text-align: center;
+        vertical-align: middle;
+
+        cursor: pointer;
+      }
 
       &:nth-child(1), &:nth-child(2) {
         & > video {

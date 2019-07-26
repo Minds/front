@@ -11,6 +11,7 @@ import { ProChannelSignupComponent } from "./channel/signup/signup.component";
 import { MindsFormsModule } from "../forms/forms.module";
 import { ProChannelListComponent } from "./channel/list/list.component";
 import { ProChannelDonateComponent } from './channel/donate/donate.component';
+import { ProTileComponent } from "./channel/tile/tile.component";
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
   declarations: [
     ProMarketingComponent,
     ProSubscriptionComponent,
+    ProTileComponent,
     ProChannelComponent,
     ProChannelSignupComponent,
     ProChannelListComponent,

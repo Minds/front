@@ -51,7 +51,7 @@ export class ProChannelListComponent implements OnInit {
 
       this.load(true);
     });
-}
+  }
 
   async load(refresh: boolean = false) {
     if (refresh) {
@@ -62,7 +62,7 @@ export class ProChannelListComponent implements OnInit {
 
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/container/${this.proService.currentChannel.guid}/${this.type}`)
+        .setEndpoint(`api/v2/feeds/channel/${this.proService.currentChannel.guid}/${this.type}`)
         .setLimit(8)
         .fetch();
 
@@ -75,6 +75,24 @@ export class ProChannelListComponent implements OnInit {
 
   loadNext() {
     this.feedsService.loadMore();
+  }
+
+  seeMore() {
+    let url = `${window.Minds.site_url}${this.proService.currentChannel.username}`;
+
+    let type = this.type;
+
+    if (this.type === 'feed') {
+      type = null;
+    }
+    else if (this.type === 'articles') {
+      type = 'blogs';
+    }
+
+    if (type) {
+      url += `/${type}`;
+    }
+    window.location.href = url;
   }
 
   detectChanges() {
