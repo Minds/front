@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Session } from "../../../services/session";
 import { Subscription } from "rxjs";
@@ -27,6 +35,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   params$: Subscription;
 
   constructor(
+    protected element: ElementRef,
     protected session: Session,
     protected proService: ProService,
     protected client: Client,
@@ -66,6 +75,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
       let title = this.channel.pro_settings.title || this.channel.name;
 
+      this.setCustomStyles();
+
       if (this.channel.pro_settings.headline) {
         title += ` - ${this.channel.pro_settings.headline}`;
       }
@@ -76,6 +87,17 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     }
 
     this.detectChanges();
+  }
+
+  setCustomStyles() {
+    const styles = this.channel.pro_styles;
+
+    for (let style in styles) {
+      if (styles.hasOwnProperty(style) && styles[style].trim() !== '') {
+        const styleAttr = style.replace(/_/g, "-");
+        document.body.style.setProperty(`--${styleAttr}`, styles[style]);
+      }
+    }
   }
 
   detectChanges() {

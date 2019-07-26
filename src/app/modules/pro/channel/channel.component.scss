@@ -2,6 +2,10 @@ m-pro--channel {
   display: block;
   background: none no-repeat center fixed;
   background-size: cover;
+
+  --primary-color: #4690D6;
+  --plain-background-color: rgba(0, 0, 0, 0.7);
+  --text-color: #fff;
 }
 
 .m-pro--channel {
@@ -59,10 +63,10 @@ m-pro--channel {
 
   // colors
   a.active, a:hover {
-    color: #4690D6 !important;
+    color: var(--primary-color) !important;
   }
 
   a, h1, h2, h3, h4, h5, p, i {
-    color: white !important;
+    color: var(--text-color) !important;
   }
 }

@@ -70,6 +70,7 @@ export interface MindsUser {
   toaster_notifications?: boolean;
   pro?: boolean;
   pro_settings?: { [key: string]: string };
+  pro_styles?: { [key: string]: string };
 }
 
 export interface MindsGroup {

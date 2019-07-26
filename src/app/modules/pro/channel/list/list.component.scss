@@ -59,8 +59,8 @@ m-pro--channel-list {
       }
 
       &.m-proChannelListContentList__seeMore {
-        color: white;
-        background-color: rgba(0, 0, 0, 0.7);
+        color: var(--text-color);
+        background-color: var(--plain-background-color);
         border: 1px solid #777;
 
         font-size: 30px;
