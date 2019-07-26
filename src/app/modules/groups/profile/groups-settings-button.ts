@@ -22,8 +22,10 @@ import { Session } from '../../../services/session';
           <ng-container *ngIf="editing">Save</ng-container>
       </li>
 
-      <li class="mdl-menu__item" *ngIf="group['is:owner'] && group.conversationDisabled" (click)="toggleConversation(true)">Enable Conversation</li>
-      <li class="mdl-menu__item" *ngIf="group['is:owner'] && !group.conversationDisabled" (click)="toggleConversation(false)">Disable Conversation</li>
+      <ng-container *mIfFeature="'allow-disabling-groups-conversations'">
+        <li class="mdl-menu__item" *ngIf="group['is:owner'] && group.conversationDisabled" (click)="toggleConversation(true)">Enable Conversation</li>
+        <li class="mdl-menu__item" *ngIf="group['is:owner'] && !group.conversationDisabled" (click)="toggleConversation(false)">Disable Conversation</li>
+      </ng-container>
 
       <li class="mdl-menu__item" *ngIf="group['is:owner'] && group.videoChatDisabled" (click)="toggleVideoChat(true)">Enable Gathering</li>
       <li class="mdl-menu__item" *ngIf="group['is:owner'] && !group.videoChatDisabled" (click)="toggleVideoChat(false)">Disable Gathering</li>
