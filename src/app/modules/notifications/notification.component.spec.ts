@@ -566,11 +566,11 @@ describe('NotificationsComponent', () => {
     expect(notification.nativeElement.innerHTML).toBe('this is a mesage');
   });
 
-  it('Should load the notification rewards_state_change', () => {
+  it('Should load the notification rewards_state_increase', () => {
     comp.notification = {
       'type': 'notification',
       'guid': '843204301747658770',
-      'notification_view': 'rewards_state_change',
+      'notification_view': 'rewards_state_increase',
       'entityObj': null,
       'fromObj': {
         name: 'name'
@@ -582,12 +582,39 @@ describe('NotificationsComponent', () => {
         previous_state: null,
         activity_percentage: '0.29',
         reward_factor: 1.5,
-        previous_reward_factor: 1
+        previous_reward_factor: 1,
+        state_change: 3
       }
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('You just became a casual user.');
+    expect(notification.nativeElement.innerHTML).toContain('Congratulations! You just became a casual user');
+  });
+
+  it('Should load the notification rewards_state_decrease', () => {
+    comp.notification = {
+      'type': 'notification',
+      'guid': '843204301747658770',
+      'notification_view': 'rewards_state_decrease',
+      'entityObj': null,
+      'fromObj': {
+        name: 'name'
+      },
+      'params' : {
+        user_guid: '998551699243143177',
+        reference_date: 1563753600000,
+        state: 'casual',
+        previous_state: 'core',
+        activity_percentage: '0.29',
+        reward_factor: 1.5,
+        previous_reward_factor: 1,
+        state_change: -2
+      }
+    };
+    fixture.detectChanges();
+    expect(comp.notification).not.toBeNull();
+    const notification = fixture.debugElement.query(By.css('p'));
+    expect(notification.nativeElement.innerHTML).toContain('You just dropped down to a casual user');
   });
 });
