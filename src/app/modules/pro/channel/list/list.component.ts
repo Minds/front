@@ -17,8 +17,8 @@ export class ProChannelListComponent implements OnInit {
 
   constructor(
     public feedsService: FeedsService,
-    private proService: ProService,
-    private route: ActivatedRoute,
+    public proService: ProService,
+    protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
   ) {
   }
