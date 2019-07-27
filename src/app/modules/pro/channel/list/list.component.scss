@@ -17,6 +17,16 @@ m-pro--channel-list {
       margin-top: 100px;
       height: fit-content;
     }
+
+    .noFeeds {
+      max-width: 200px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px;
+      color: #90a4ae!important;
+      background-color: #eceff1!important;
+    }
   }
 
   ul.m-proChannelListContent__list {
