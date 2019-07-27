@@ -6,15 +6,24 @@ import { Session } from "../../../../services/session";
 @Component({
   selector: 'm-pro--channel-signup',
   template: `
-    <div class="m-ProChannelSignup__Text">
-      <!-- TODO: this text should be dynamic -->
-      <h2>Independent.</h2>
-      <h2>Community-owned.</h2>
-      <h2>Decentralized News</h2>
-    </div>
-    <div class="m-ProChannelSignup__SignupForm">
-      <minds-form-register (done)="registered()"></minds-form-register>
-    </div>
+    <section class="m-ProChannelSignup--hero">
+
+      <div class="m-ProChannelSignup--hero--inner">
+
+        <div class="m-ProChannelSignup--hero--slogans">
+          <!-- TODO: this text should be dynamic -->
+          <h1>Independent.</h1>
+          <h1>Community-owned.</h1>
+          <h1>Decentralized News</h1>
+        </div>
+
+        <div class="m-ProChannelSignup--signup">
+          <minds-form-register (done)="registered()"></minds-form-register>
+        </div>
+
+      </div>
+      
+    </section>
   `
 })
 

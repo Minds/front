@@ -1,0 +1,27 @@
+<div class="m-pro-user-menu m-dropdown">
+  <a class="m-pro-user-menu__Anchor" (click)="toggleMenu()"><i class="material-icons">menu</i></a>
+
+  <ul class="m-dropdown__list m-pro-user-menu__Dropdown mdl-shadow--3dp" [hidden]="!isOpen">
+    <li
+      class="m-dropdownList__item m-pro-user-menuDropdown__Item"
+      (click)="closeMenu()"
+    >
+      <a [routerLink]="['/', getCurrentUser()?.username]">
+        <i class="material-icons">remove_red_eye</i>
+        <span i18n>View on Minds</span>
+      </a>
+    </li>
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/logout">
+        <i class="material-icons">exit_to_app</i>
+        <span i18n>Logout</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isOpen"></div>

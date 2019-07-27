@@ -14,6 +14,7 @@ import { ProChannelDonateComponent } from './channel/donate/donate.component';
 import { ProTileComponent } from "./channel/tile/tile.component";
 import { NewsfeedModule } from "../newsfeed/newsfeed.module";
 import { ProSettingsComponent } from './settings/settings.component';
+import { ProUserMenuComponent } from "./channel/pro-user-menu/pro-user-menu.component";
 
 const routes: Routes = [
   {
@@ -76,6 +77,7 @@ const routes: Routes = [
     ProChannelSignupComponent,
     ProChannelListComponent,
     ProChannelDonateComponent,
+    ProUserMenuComponent
   ],
   exports: [],
   entryComponents: [
