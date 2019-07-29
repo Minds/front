@@ -8,7 +8,7 @@ m-pro--channel-list {
   .m-proChannelList__content {
     width: 85%;
     margin: 0 auto;
-    display: flex;
+    //display: flex;
     //align-items: center;
     justify-content: center;
 
@@ -28,6 +28,18 @@ m-pro--channel-list {
     padding: 8px;
     color: #90a4ae!important;
     background-color: #eceff1!important;
+  }
+
+  .m-proChannelListContentList__seeMore {
+    color: var(--text-color);
+    background-color: var(--plain-background-color);
+    border: 1px solid #777;
+
+    font-size: 30px;
+    text-align: center;
+    vertical-align: middle;
+
+    cursor: pointer;
   }
 
   ul.m-proChannelListContent__list {
@@ -67,18 +79,6 @@ m-pro--channel-list {
             padding: 0 $minds-padding * 2;
           }
         }
-      }
-
-      &.m-proChannelListContentList__seeMore {
-        color: var(--text-color);
-        background-color: var(--plain-background-color);
-        border: 1px solid #777;
-
-        font-size: 30px;
-        text-align: center;
-        vertical-align: middle;
-
-        cursor: pointer;
       }
 
       &:nth-child(1), &:nth-child(2) {
