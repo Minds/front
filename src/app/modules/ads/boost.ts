@@ -5,6 +5,9 @@ import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
+import { FeedsService } from "../../common/services/feeds.service";
+import { first } from "rxjs/operators";
+import { FeaturesService } from "../../services/features.service";
 
 @Component({
   selector: 'm-ads-boost',
@@ -32,7 +35,13 @@ export class BoostAds implements OnInit, OnDestroy {
 
   ratingSubscription: Subscription;
 
-  constructor(public client: Client, public session: Session, private storage: Storage, private settingsService: SettingsService) {
+  constructor(
+    public client: Client,
+    public session: Session,
+    public feedsService: FeedsService,
+    private featureService: FeaturesService,
+    private storage: Storage,
+    private settingsService: SettingsService) {
   }
 
   ngOnInit() {
@@ -40,6 +49,16 @@ export class BoostAds implements OnInit, OnDestroy {
     this.ratingSubscription = this.settingsService.ratingChanged.subscribe((rating) => {
       this.onRatingChanged(rating);
     });
+
+    this.feedsService.feed.subscribe(async boosts => {
+      if (!boosts.length)
+        return;
+      for (const boost of boosts) {
+        if (boost)
+          this.boosts.push(await boost.pipe(first()).toPromise());
+      }
+    });
+
     this.fetch();
   }
 
@@ -47,7 +66,7 @@ export class BoostAds implements OnInit, OnDestroy {
     this.ratingSubscription.unsubscribe();
   }
 
-  fetch() {
+  loadLegacy() {
     if (this.storage.get('boost:offset:sidebar'))
       this.offset = this.storage.get('boost:offset:sidebar');
     this.client.get('api/v1/boost/fetch/' + this.handler, {
@@ -66,9 +85,29 @@ export class BoostAds implements OnInit, OnDestroy {
       });
   }
 
+  load() {
+    this.feedsService
+      .setEndpoint('api/v2/boost/fetch/campaigns/content')
+      .setParams({
+        rating: this.rating,
+      })
+      .setLimit(this.limit)
+      .setOffset(0)
+      .fetch();
+  }
+
+  fetch() {
+    if (this.featureService.has('boost-campaigns')) {
+      this.load();
+    } else {
+      this.loadLegacy();
+    }
+  }
+
   onRatingChanged(rating: number) {
     this.rating = rating;
     this.storage.destroy('boost:offset:sidebar');
+    this.boosts = [];
     this.offset = '';
     this.fetch();
   }

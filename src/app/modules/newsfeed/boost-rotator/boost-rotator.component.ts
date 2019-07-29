@@ -66,13 +66,14 @@ export class NewsfeedBoostRotatorComponent {
     public scroll: ScrollService,
     public newsfeedService: NewsfeedService,
     public settingsService: SettingsService,
-    private storage: Storage,
     public element: ElementRef,
     public service: NewsfeedBoostService,
-    private cd: ChangeDetectorRef,
-    protected featuresService: FeaturesService,
     public feedsService: FeedsService,
+    private cd: ChangeDetectorRef,
+    private storage: Storage,
+    protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
+    protected featureService: FeaturesService,
     @SkipSelf() injector: Injector,
   ) {
 
@@ -112,9 +113,10 @@ export class NewsfeedBoostRotatorComponent {
 
   load() {
     try {
+      const url = this.featureService.has('boost-campaigns') ? 'api/v2/boost/fetch/campaigns' : 'api/v2/boost/feed';
 
       this.feedsService
-        .setEndpoint('api/v2/boost/fetch/campaigns')
+        .setEndpoint(url)
         .setParams({
           rating: this.rating,
         })
