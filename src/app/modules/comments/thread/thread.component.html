@@ -28,7 +28,8 @@
     *ngIf="!inProgress
       && !error
       && comments?.length === 0
-      && parent.type == 'activity'"
+      && parent.type == 'activity'
+      && (activityService.allowComment$ | async)"
     i18n="@@MINDS__COMMENTS__START_CONVERSATION"
     >
     Start the conversation!
@@ -80,6 +81,7 @@
 </div>
 
 <m-comment__poster
+  *ngIf="(activityService.allowComment$ | async)"
   [guid]="guid"
   [parent]="parent"
   [entity]="entity"

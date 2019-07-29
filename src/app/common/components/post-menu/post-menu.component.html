@@ -38,6 +38,11 @@
     <li class="mdl-menu__item" *ngIf="!asyncBlockInProgress && !asyncBlock" (click)="block()" i18n="@@COMMON__POST_MENU__BLOCK">Block user</li>
     <li class="mdl-menu__item" *ngIf="!asyncBlockInProgress && asyncBlock" (click)="unBlock()" i18n="@@COMMON__POST_MENU__UNBLOCK">Unblock user</li>
   </ng-container>
+  <!-- ALLOW COMMENTS -->
+  <ng-container *ngIf="featuresService.has('allow-comments-toggle') && options.indexOf('allow-comments') !== -1 && entity.ownerObj.guid == session.getLoggedInUser().guid ">
+    <li class="mdl-menu__item" *ngIf="!entity.allow_comments" (click)="allowComments(true)" i18n="@@COMMON__POST_MENU__ALLOW_COMMENTS">Allow Comments</li>
+    <li class="mdl-menu__item" *ngIf="entity.allow_comments" (click)="allowComments(false)" i18n="@@COMMON__POST_MENU__DISABLE_COMMENTS">Disable Comments</li>
+  </ng-container>
   <!-- ADMIN EDIT FLAGS -->
   <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && session.isAdmin()">
     <li class="mdl-menu__item m-postMenu__item--nsfw">
