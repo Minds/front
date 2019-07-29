@@ -31,7 +31,7 @@
       <a [routerLink]="['/pro', channel.username, 'signup']" routerLinkActive="active">Signup / Login</a>
     </ng-template>
 
-    <m-pro-user-menu></m-pro-user-menu>
+    <m-pro-user-menu [channelName]="channel.username"></m-pro-user-menu>
   </div>
 
   <div class="m-proChannel__body">

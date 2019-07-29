@@ -6,7 +6,7 @@
       class="m-dropdownList__item m-pro-user-menuDropdown__Item"
       (click)="closeMenu()"
     >
-      <a [routerLink]="['/', getCurrentUser()?.username]">
+      <a [routerLink]="['/', channelName]">
         <i class="material-icons">remove_red_eye</i>
         <span i18n>View on Minds</span>
       </a>

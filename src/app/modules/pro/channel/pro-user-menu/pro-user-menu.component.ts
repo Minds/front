@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from "@angular/core";
 import { Session } from "../../../../services/session";
 import { ThemeService } from "../../../../common/services/theme.service";
 
@@ -9,6 +9,8 @@ import { ThemeService } from "../../../../common/services/theme.service";
 })
 export class ProUserMenuComponent implements OnInit {
   isOpen: boolean = false;
+
+  @Input() channelName: string;
   
   constructor(protected session: Session, protected cd: ChangeDetectorRef, private themeService: ThemeService) {
   }
