@@ -6,6 +6,7 @@
     <img
       class="m-proChannelTopbar__logo"
       [src]="channel.pro_settings.logo_image"
+      [routerLink]="['/pro', channel.username]"
     >
 
     <div class="m-proChannelTopbar__SearchBox">
