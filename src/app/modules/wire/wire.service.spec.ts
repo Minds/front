@@ -116,4 +116,5 @@ describe('WireService', () => {
       tier: 'month'
     });
   }));
+
 });
