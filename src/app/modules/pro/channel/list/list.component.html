@@ -8,30 +8,27 @@
 </h1>
 
 <div class="m-proChannelList__content">
-  <ng-container *ngIf="(feedsService.feed | async) && (feedsService.feed | async).length; else noFeeds">
-    <ul class="m-proChannelListContent__list">
-      <li *ngFor="let entity of (feedsService.feed | async)">
-        <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
-          <m-pro--channel-tile
-            [entity]="entity | async"
-          ></m-pro--channel-tile>
-        </ng-container>
-        <ng-container *ngIf="type === 'groups'">
-          <m-newsfeed__entity
-            [entity]="entity | async">
+  <ul class="m-proChannelListContent__list">
+    <li *ngFor="let entity of (feedsService.feed | async) as feed">
+      <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
+        <m-pro--channel-tile
+          [entity]="entity | async"
+        ></m-pro--channel-tile>
+      </ng-container>
+      <ng-container *ngIf="type === 'groups'">
+        <m-newsfeed__entity
+          [entity]="entity | async">
 
-          </m-newsfeed__entity>
-        </ng-container>
-      </li>
-
-      <li class="m-proChannelListContentList__seeMore" [routerLink]="seeMoreRoute" i18n>
-        See more
-      </li>
-    </ul>
+        </m-newsfeed__entity>
+      </ng-container>
+    </li>
+    <li class="m-proChannelListContentList__seeMore" [routerLink]="seeMoreRoute" i18n>
+      See more
+    </li>
+  </ul>
+  <ng-container *ngIf="(feedsService.feed | async) && (feedsService.feed | async).length">
+    <div class="m-proChannelListContent__noContent" i18n>There's nothing to show</div>
   </ng-container>
-  <ng-template #noFeeds class="noFeeds">
-    <div class="noFeeds">No Feeds!</div>
-  </ng-template>
   <ng-container *ngIf="type === 'activities'">
     <pre *ngFor="let entity of (feedsService.feed | async)">{{entity | async | json}}</pre>
     <!-- talk to Emi about this -->
