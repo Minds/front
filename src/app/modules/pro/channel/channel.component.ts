@@ -130,4 +130,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
     return this.session.getLoggedInUser();
   }
+
+  search() {
+    return;
+  }
 }

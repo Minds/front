@@ -8,7 +8,13 @@
       [src]="channel.pro_settings.logo_image"
     >
 
-    <input type="search" placeholder="Search..." i18n>
+    <div class="m-proChannelTopbar__SearchBox">
+      <div class="mdl-textfield mdl-js-textfield">
+        <i class="material-icons">search</i>
+        <input autocomplete="off" class="mdl-textfield__input ng-pristine ng-valid ng-touched" type="text" (keyup)="search()">
+        <label class="mdl-textfield__label" for="search"></label>
+      </div>
+    </div>
 
     <a [routerLink]="['/pro', channel.username, 'videos']" routerLinkActive="active" i18n>Videos</a>
     <a [routerLink]="['/pro', channel.username, 'images']" routerLinkActive="active" i18n>Images</a>
