@@ -22,11 +22,11 @@ export class FeaturesService {
 
     if (typeof this._features[feature] === 'undefined') {
       if (isDevMode() && !this._hasWarned(feature)) {
-        console.warn(`[FeaturedService] Feature '${feature}' is not declared. Assuming true.`);
+        console.warn(`[FeaturedService] Feature '${feature}' is not declared. Assuming false.`);
         this._warnedCache[feature] = Date.now();
       }
 
-      return true;
+      return false;
     }
 
     if (this._features[feature] === 'admin' && this.session.isAdmin()) {

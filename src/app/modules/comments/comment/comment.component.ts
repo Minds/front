@@ -9,6 +9,9 @@ import {
   OnChanges,
   Input,
   ElementRef,
+  OnInit,
+  OnDestroy,
+  AfterViewInit
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
@@ -20,8 +23,9 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
-import { Observable } from 'rxjs';
-import { map } from "rxjs/operators";
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ActivityService } from '../../../common/services/activity.service';
 
 @Component({
   selector: 'm-comment',
@@ -40,7 +44,7 @@ import { map } from "rxjs/operators";
   ],
 })
 
-export class CommentComponentV2 implements OnChanges {
+export class CommentComponentV2 implements OnChanges, OnInit, OnDestroy, AfterViewInit {
 
   comment: any;
   editing: boolean = false;
@@ -73,6 +77,8 @@ export class CommentComponentV2 implements OnChanges {
   translationInProgress: boolean;
   translateToggle: boolean = false;
   commentAge$: Observable<number>;
+  canReply = true;
+
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
   @Input() hideToolbar: boolean = false;
@@ -88,7 +94,8 @@ export class CommentComponentV2 implements OnChanges {
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
     private timeDiffService: TimeDiffService,
-    private el: ElementRef
+    private el: ElementRef,
+    protected activityService: ActivityService
   ) {}
 
   ngOnInit() {
@@ -96,6 +103,7 @@ export class CommentComponentV2 implements OnChanges {
       return (this.comment.time_created - secondsElapsed * 0.01) * 1000;
     }));
   }
+
 
   ngAfterViewInit() {
     if (this.comment.focused) {
@@ -106,10 +114,13 @@ export class CommentComponentV2 implements OnChanges {
     }
   }
 
+  ngOnDestroy() {}
+
   @Input('comment')
   set _comment(value: any) {
-    if (!value)
+    if (!value) {
       return;
+    }
     this.comment = value;
     this.attachment.load(this.comment);
 
@@ -121,7 +132,9 @@ export class CommentComponentV2 implements OnChanges {
   }
 
   saveEnabled() {
-    return !this.inProgress && this.canPost && ((this.comment.description && this.comment.description.trim() !== '') || this.attachment.has());
+    return !this.inProgress
+      && this.canPost
+      && ((this.comment.description && this.comment.description.trim() !== '') || this.attachment.has());
   }
 
   save() {
@@ -131,7 +144,7 @@ export class CommentComponentV2 implements OnChanges {
       return;
     }
 
-    let data = this.attachment.exportMeta();
+    const data = this.attachment.exportMeta();
     data['comment'] = this.comment.description;
 
     this.editing = false;

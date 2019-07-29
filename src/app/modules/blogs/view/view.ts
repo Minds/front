@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
@@ -11,7 +11,9 @@ import { MindsBlogEntity } from '../../../interfaces/entities';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
+import { ActivityService } from '../../../common/services/activity.service';
 
+ 
 @Component({
   moduleId: module.id,
   selector: 'm-blog-view',
@@ -19,10 +21,11 @@ import { optimizedResize } from '../../../utils/optimized-resize';
   host: {
     'class': 'm-blog'
   },
-  templateUrl: 'view.html'
+  templateUrl: 'view.html',
+  providers: [ActivityService]
 })
 
-export class BlogView {
+export class BlogView implements OnInit, OnDestroy {
 
   minds;
   guid: string;
@@ -40,7 +43,10 @@ export class BlogView {
 
   scroll_listener;
 
-  menuOptions: Array<string> = ['edit', 'follow', 'feature', 'delete', 'report', 'subscribe', 'set-explicit', 'remove-explicit', 'rating'];
+  menuOptions: Array<string> = ['edit', 'follow', 'feature',
+    'delete', 'report', 'subscribe',
+    'set-explicit', 'remove-explicit', 'rating',
+    'allow-comments'];
 
   @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
 
@@ -55,7 +61,9 @@ export class BlogView {
     public attachment: AttachmentService,
     private context: ContextService,
     public analytics: AnalyticsService,
-    public analyticsService: AnalyticsService
+    public analyticsService: AnalyticsService,
+    protected activityService: ActivityService,
+    private cd: ChangeDetectorRef,
   ) {
     this.minds = window.Minds;
     this.element = _element.nativeElement;
@@ -69,7 +77,7 @@ export class BlogView {
   }
 
   isVisible() {
-    //listens every 0.6 seconds
+    // listens every 0.6 seconds
     this.scroll_listener = this.scroll.listen((e) => {
       const bounds = this.element.getBoundingClientRect();
       if (bounds.top < this.scroll.view.clientHeight && bounds.top + bounds.height > this.scroll.view.clientHeight) {
@@ -113,8 +121,9 @@ export class BlogView {
   }
 
   ngOnDestroy() {
-    if (this.scroll_listener)
+    if (this.scroll_listener) {
       this.scroll.unListen(this.scroll_listener);
+    }
   }
 
   menuOptionSelected(option: string) {
@@ -144,8 +153,9 @@ export class BlogView {
   }
 
   calculateLockScreenHeight() {
-    if (!this.lockScreen) 
+    if (!this.lockScreen) {
       return;
+    }
     const lockScreenOverlay = this.lockScreen.nativeElement.querySelector('.m-wire--lock-screen');
     if (lockScreenOverlay) {
       const rect = lockScreenOverlay.getBoundingClientRect();

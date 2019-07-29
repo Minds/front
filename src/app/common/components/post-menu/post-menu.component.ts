@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { MindsUser } from '../../../interfaces/entities';
 import { SignupModalService } from '../../../modules/modals/signup/service';
-import { BlockListService } from "../../services/block-list.service";
-
+import { BlockListService } from '../../services/block-list.service';
+import { ActivityService } from '../../../common/services/activity.service';
+import { FeaturesService } from '../../../services/features.service';
 
 type Option =
   'edit'
@@ -26,7 +27,8 @@ type Option =
   | 'subscribe'
   | 'unsubscribe'
   | 'rating'
-  | 'block';
+  | 'block'
+  | 'allow-comments';
 
 @Component({
   moduleId: module.id,
@@ -35,7 +37,7 @@ type Option =
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class PostMenuComponent {
+export class PostMenuComponent implements OnInit {
   @Input() entity: any;
   @Input() options: Array<Option>;
   @Output() optionSelected: EventEmitter<Option> = new EventEmitter<Option>();
@@ -66,9 +68,12 @@ export class PostMenuComponent {
     private overlayModal: OverlayModalService,
     public signupModal: SignupModalService,
     protected blockListService: BlockListService,
-  ) {
+    protected activityService: ActivityService,
+    public featuresService: FeaturesService) {
     this.initCategories();
   }
+
+  ngOnInit() {}
 
   initCategories() {
     for (let category in window.Minds.categories) {
@@ -327,6 +332,14 @@ export class PostMenuComponent {
     const nsfw = reasons.map(reason => reason.value);
     this.client.post(`api/v2/admin/nsfw/${this.entity.guid}`, { nsfw });
     this.entity.nsfw = nsfw;
+  }
+
+  async allowComments(areAllowed: boolean) {
+    this.entity.allow_comments = areAllowed;
+    const result = await this.activityService.toggleAllowComments(this.entity, areAllowed);
+    if (result !== areAllowed) {
+      this.entity.allow_comments = result;
+    }
   }
 
 }

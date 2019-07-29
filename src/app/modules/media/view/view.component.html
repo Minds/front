@@ -148,7 +148,7 @@
         </div>
 
         <!-- Don't show comments for albums -->
-        <div class="mdl-grid m-media-content--comments mdl-color--white" *ngIf="entity.guid && entity.subtype != 'album'">
+        <div class="mdl-grid m-media-content--comments mdl-color--white" *ngIf="canShowComments() && (activityService.allowComment$ | async)">
           <m-comments__tree
             [entity]="entity"
             >
