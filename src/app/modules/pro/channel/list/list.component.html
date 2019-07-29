@@ -22,13 +22,15 @@
         </m-newsfeed__entity>
       </ng-container>
     </li>
-    <li class="m-proChannelListContentList__seeMore" [routerLink]="seeMoreRoute" i18n>
-      See more
-    </li>
   </ul>
-  <ng-container *ngIf="(feedsService.feed | async) && (feedsService.feed | async).length">
+  <ng-container *ngIf="!(feedsService.feed | async) || (feedsService.feed | async).length == 0; else seeMore">
     <div class="m-proChannelListContent__noContent" i18n>There's nothing to show</div>
   </ng-container>
+  <ng-template #seeMore> 
+    <div class="m-proChannelListContentList__seeMore" [routerLink]="seeMoreRoute" i18n>
+      See more
+    </div>
+  </ng-template>
   <ng-container *ngIf="type === 'activities'">
     <pre *ngFor="let entity of (feedsService.feed | async)">{{entity | async | json}}</pre>
     <!-- talk to Emi about this -->
