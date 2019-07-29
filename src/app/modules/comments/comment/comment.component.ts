@@ -9,9 +9,6 @@ import {
   OnChanges,
   Input,
   ElementRef,
-  OnInit,
-  OnDestroy,
-  AfterViewInit
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
@@ -23,9 +20,8 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
-import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ActivityService } from '../../../common/services/activity.service';
+import { Observable } from 'rxjs';
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'm-comment',
@@ -44,7 +40,7 @@ import { ActivityService } from '../../../common/services/activity.service';
   ],
 })
 
-export class CommentComponentV2 implements OnChanges, OnInit, OnDestroy, AfterViewInit {
+export class CommentComponentV2 implements OnChanges {
 
   comment: any;
   editing: boolean = false;
@@ -77,8 +73,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, OnDestroy, AfterVi
   translationInProgress: boolean;
   translateToggle: boolean = false;
   commentAge$: Observable<number>;
-  canReply = true;
-
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
   @Input() hideToolbar: boolean = false;
@@ -94,8 +88,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, OnDestroy, AfterVi
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
     private timeDiffService: TimeDiffService,
-    private el: ElementRef,
-    protected activityService: ActivityService
+    private el: ElementRef
   ) {}
 
   ngOnInit() {
@@ -103,7 +96,6 @@ export class CommentComponentV2 implements OnChanges, OnInit, OnDestroy, AfterVi
       return (this.comment.time_created - secondsElapsed * 0.01) * 1000;
     }));
   }
-
 
   ngAfterViewInit() {
     if (this.comment.focused) {
@@ -114,13 +106,10 @@ export class CommentComponentV2 implements OnChanges, OnInit, OnDestroy, AfterVi
     }
   }
 
-  ngOnDestroy() {}
-
   @Input('comment')
   set _comment(value: any) {
-    if (!value) {
+    if (!value)
       return;
-    }
     this.comment = value;
     this.attachment.load(this.comment);
 
@@ -132,9 +121,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, OnDestroy, AfterVi
   }
 
   saveEnabled() {
-    return !this.inProgress
-      && this.canPost
-      && ((this.comment.description && this.comment.description.trim() !== '') || this.attachment.has());
+    return !this.inProgress && this.canPost && ((this.comment.description && this.comment.description.trim() !== '') || this.attachment.has());
   }
 
   save() {
@@ -144,7 +131,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, OnDestroy, AfterVi
       return;
     }
 
-    const data = this.attachment.exportMeta();
+    let data = this.attachment.exportMeta();
     data['comment'] = this.comment.description;
 
     this.editing = false;

@@ -232,9 +232,9 @@
           (click)="toggleReplies();"
           *ngIf="comment.can_reply"
         >
-          <i *ngIf="comment.replies_count > 0 || (activityService.allowComment$ | async)" class="material-icons">reply</i>
+          <i class="material-icons">reply</i>
           <span *ngIf="comment.replies_count > 0">{{ comment.replies_count }} Replies</span>
-          <span *ngIf="comment.replies_count <= 0 && (activityService.allowComment$ | async)">Reply</span>
+          <span *ngIf="comment.replies_count <= 0">Reply</span>
         </span>
       </div>
 

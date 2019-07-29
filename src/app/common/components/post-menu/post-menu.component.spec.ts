@@ -15,11 +15,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlockListService } from '../../services/block-list.service';
-import { ActivityService } from '../../services/activity.service';
-import { FeaturesService } from '../../../services/features.service';
-import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
 import { storageMock } from '../../../../tests/storage-mock.spec';
-import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 /* tslint:disable */
 
 /* Mock section */
@@ -99,8 +95,6 @@ describe('PostMenuComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-        { provide: ActivityService, useValue: activityServiceMock },
-        { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: Storage, useValue: storageMock },
         { provide: BlockListService, useFactory: () => {
             return BlockListService._(clientMock, sessionMock, storageMock);
@@ -116,7 +110,6 @@ describe('PostMenuComponent', () => {
 
   // synchronous beforeEach
   beforeEach(() => {
-    featuresServiceMock.mock('allow-comments-toggle', true);
     fixture = TestBed.createComponent(PostMenuComponent);
 
     comp = fixture.componentInstance;
@@ -124,9 +117,8 @@ describe('PostMenuComponent', () => {
     comp.entity = {};
     // comp.opened = true;
     comp.entity.ownerObj = { guid: '1' };
-    comp.cardMenuHandler();
+     comp.cardMenuHandler();
     fixture.detectChanges();
-    
   });
 
   it('should have dropdown', () => {
@@ -147,20 +139,5 @@ describe('PostMenuComponent', () => {
     comp.unBlock();
     fixture.detectChanges();
     expect(clientMock.delete.calls.mostRecent().args[0]).toEqual('api/v1/block/1');
-  });
-
-  it('should allow comments', () => {
-    spyOn(comp.optionSelected, 'emit');
-    comp.allowComments(true);
-    expect(activityServiceMock.toggleAllowComments).toHaveBeenCalledWith(comp.entity, true);
-    expect(comp.entity.allow_comments).toEqual(true);
-  });
-
-  it('should disable comments', () => {
-    spyOn(comp.optionSelected, 'emit');
-
-    comp.allowComments(false);
-    expect(activityServiceMock.toggleAllowComments).toHaveBeenCalledWith(comp.entity, false);
-    expect(comp.entity.allow_comments).toEqual(false);
   });
 });

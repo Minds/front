@@ -8,8 +8,6 @@ import {
   Output,
   Renderer,
   ViewChild,
-  OnInit,
-  OnDestroy
 } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
@@ -20,10 +18,6 @@ import { Textarea } from '../../../common/components/editors/textarea.component'
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
 import { BlockListService } from "../../../common/services/block-list.service";
-import { ActivityService } from '../../../common/services/activity.service';
-import { Subscription } from 'rxjs';
-import { TouchSequence } from 'selenium-webdriver';
-
 
 @Component({
   selector: 'm-comments__thread',
@@ -32,7 +26,7 @@ import { TouchSequence } from 'selenium-webdriver';
   providers: [ CommentsService ],
 })
 
-export class CommentsThreadComponent implements OnInit {
+export class CommentsThreadComponent {
 
   minds;
   @Input() parent;
@@ -66,15 +60,14 @@ export class CommentsThreadComponent implements OnInit {
   socketSubscriptions: any = {
     comment: null
   };
-
+  
   constructor(
     public session: Session,
     private commentsService: CommentsService,
     public sockets: SocketsService,
     private renderer: Renderer,
     protected blockListService: BlockListService,
-    private cd: ChangeDetectorRef,
-    public activityService: ActivityService
+    private cd: ChangeDetectorRef
   ) {
     this.minds = window.Minds;
   }
@@ -201,8 +194,7 @@ export class CommentsThreadComponent implements OnInit {
 
       const parent_path = this.parent.child_path || "0:0:0";
 
-      const scrolledToBottom = this.scrollView.nativeElement.scrollTop 
-        + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
+      let scrolledToBottom = this.scrollView.nativeElement.scrollTop + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
 
       try {
         let comment: any = await this.commentsService.single({
@@ -281,6 +273,8 @@ export class CommentsThreadComponent implements OnInit {
   }
 
   onPosted({ comment, index }) {
+    console.log('onPosted called');
+    console.log(comment, index);
     this.comments[index] = comment;
     this.detectChanges();
   }
@@ -299,6 +293,10 @@ export class CommentsThreadComponent implements OnInit {
     this.comments[i].replies_count--;
     this.detectChanges();
     return true;
+  }
+
+  ngOnChanges(changes) {
+  //  console.log('[comment:list]: on changes', changes);
   }
 
 }

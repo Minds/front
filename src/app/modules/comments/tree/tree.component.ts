@@ -7,8 +7,6 @@ import {
   Input,
   Output,
   Renderer,
-  OnInit,
-  OnDestroy
 } from '@angular/core';
 import { 
   ActivatedRoute,
@@ -39,7 +37,7 @@ import { CommentsService } from '../comments.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class CommentsTreeComponent implements OnInit, OnDestroy {
+export class CommentsTreeComponent {
 
   minds;
   entity;
