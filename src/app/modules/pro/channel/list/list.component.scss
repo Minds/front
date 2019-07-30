@@ -44,11 +44,9 @@ m-pro--channel-list {
 
   ul.m-proChannelListContent__list {
     display: grid;
-    //grid-template-rows: repeat(15, 1fr);
-    //grid-template-columns: repeat(17, 1fr);
-    //grid-template-rows: repeat(2, 1fr);
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: $minds-padding * 4 $minds-padding * 4;
+    grid-auto-rows: minmax(300px, auto);
+    grid-gap: 32px 32px;
     list-style: none;
     padding: 0;
 
