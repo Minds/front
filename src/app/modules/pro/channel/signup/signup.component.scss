@@ -3,15 +3,14 @@ m-pro--channel-signup {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @media screen and (max-width: $max-mobile) {
+    justify-content: center;
+  }
 }
 
 .m-ProChannelSignup--hero{
   position:relative;
-
-  //background-image: url(/assets/photos/circles.png);
-  background-image: url("<%= APP_CDN %>/assets/videos/what-1/what-1.jpg");
-  background-size: cover;
-  background-position: center center;
 
   .m-ProChannelSignup--hero--inner {
     display: flex;
@@ -160,16 +159,12 @@ m-pro--channel-signup {
         }
       }
       .m-login-box .mdl-checkbox__box-outline {
-        @include m-theme(){
-          border-color: themed($m-white);
-        }
+          border-color: var(--text-color);
       }
       .m-btn--action {
         margin-right: 16px;
-        @include m-theme(){
-          color: themed($m-white) !important;
-          border: 1px solid themed($m-white);
-        }
+        color: var(--text-color) !important;
+        border: 1px solid var(--text-color);
       }
       .mdl-card__actions{
         flex-direction:row-reverse;
@@ -178,13 +173,9 @@ m-pro--channel-signup {
         .m-register-tac{
           padding-right:16px;
           font-family: 'Roboto', Helvetica, sans-serif;
-          @include m-theme(){
-            color: rgba(themed($m-white),0.8);
-          }
+          color: var(--text-color) !important;
           a {
-            @include m-theme(){
-              color: themed($m-white);
-            }
+            color: var(--text-color) !important;
           }
         }
       }
