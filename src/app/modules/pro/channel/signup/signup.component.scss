@@ -1,4 +1,5 @@
 @import "defaults";
+
 m-pro--channel-signup {
   display: flex;
   align-items: center;
@@ -31,9 +32,11 @@ m-pro--channel-signup {
     .m-ProChannelSignup--app-buttons {
       display: flex;
       justify-content: flex-start;
+
       * {
         margin-left: 2px;
       }
+
       .m-ProChannelSignup--app-buttons__iosBanner {
         > a > img {
           height: 48px;
@@ -75,18 +78,19 @@ m-pro--channel-signup {
     width: 100%;
     height: 100%;
     z-index: 1;
-    @include m-theme(){
-      background-color: rgba(themed($m-black),0.4);
+    @include m-theme() {
+      background-color: rgba(themed($m-black), 0.4);
     }
   }
 
-  .m-ProChannelSignup--hero--slogans{
+  .m-ProChannelSignup--hero--slogans {
     flex: 2;
+
     h1, h3, h4 {
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       margin: 0;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
       }
     }
@@ -99,7 +103,7 @@ m-pro--channel-signup {
       //color: rgba(255,255,255,0.85);
       //color: rgba(0,0,0,0.85);
 
-      @media screen and (max-width: 720px){
+      @media screen and (max-width: 720px) {
         font-size: 42px;
       }
     }
@@ -113,65 +117,73 @@ m-pro--channel-signup {
       margin-top: 16px;
       padding-right: 70px;
 
-      @media screen and (max-width: 720px){
+      @media screen and (max-width: 720px) {
         padding-right: 8px;
         font-size: 16px;
       }
     }
+
     z-index: 2;
   }
 
-  .m-ProChannelSignup--signup{
+  .m-ProChannelSignup--signup {
     flex: 1;
     margin-left: 16px;
 
-    @media screen and (max-width: 1000px){
+    @media screen and (max-width: 1000px) {
       flex-basis: 100%;
       margin-left: 0;
     }
-    minds-form-register{
-      .mdl-card{
-        background:transparent;
-        padding:0;
+
+    minds-form-register {
+      .mdl-card {
+        background: transparent;
+        padding: 0;
       }
-      .mdl-card__title{
+
+      .mdl-card__title {
         //color: #FFF !important;
-        display:none;
+        display: none;
       }
-      .m-login-box input{
-        border:0;
-        border-radius:3px;
+
+      .m-login-box input {
+        border: 0;
+        border-radius: 3px;
         font-weight: 600;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
         font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 1px;
         //box-shadow: 0 0 6px rgba(255,255,255,0.22);
-        @include m-theme(){
-          background:rgba(themed($m-white),0.9);
-          color:themed($m-grey-800);
-          border:1px solid rgba(themed($m-white),0.25);
+        @include m-theme() {
+          background: rgba(themed($m-white), 0.9);
+          color: themed($m-grey-800);
+          border: 1px solid rgba(themed($m-white), 0.25);
         }
-        &::placeholder{
-          @include m-theme(){
+
+        &::placeholder {
+          @include m-theme() {
             color: themed($m-grey-800);
           }
         }
       }
+
       .m-login-box .mdl-checkbox__box-outline {
           border-color: var(--text-color);
       }
+
       .m-btn--action {
         margin-right: 16px;
         color: var(--text-color) !important;
         border: 1px solid var(--text-color);
       }
-      .mdl-card__actions{
-        flex-direction:row-reverse;
+
+      .mdl-card__actions {
+        flex-direction: row-reverse;
         padding-left: 8px;
 
-        .m-register-tac{
-          padding-right:16px;
+        .m-register-tac {
+          padding-right: 16px;
           font-family: 'Roboto', Helvetica, sans-serif;
           color: var(--text-color) !important;
           a {
@@ -179,45 +191,49 @@ m-pro--channel-signup {
           }
         }
       }
+
       .password-help {
         padding: 12px;
         border-radius: 4px;
         font-weight: 300;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
           background-color: themed($m-black);
         }
       }
+
       .m-register-btn {
         font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 1.25px;
         background: transparent;
         font-size: 12px;
         box-shadow: none !important;
-        @include m-theme(){
+        @include m-theme() {
           border: 1px solid themed($m-grey-50);
         }
       }
     }
+
     z-index: 2;
   }
 
-  @media (max-width: $max-mobile){
-    .m-ProChannelSignup--grid{
-      .m-ProChannelSignup--titles{
-        h1{
+  @media (max-width: $max-mobile) {
+    .m-ProChannelSignup--grid {
+      .m-ProChannelSignup--titles {
+        h1 {
           font-size: 32px;
-          line-height:32px;
+          line-height: 32px;
           //font-weight: 200;
           //margin:16px;
-          padding:0;
-          padding:0 $minds-padding*2;
+          padding: 0;
+          padding: 0 $minds-padding*2;
         }
-        h3{
-          font-size:16px;
+
+        h3 {
+          font-size: 16px;
           //font-weight: 200;
-          line-height:16px;
-          padding:16px 16px 0;
+          line-height: 16px;
+          padding: 16px 16px 0;
         }
       }
     }
@@ -226,9 +242,10 @@ m-pro--channel-signup {
     }
     .m-app-links {
       //max-width:60%;
-      margin:$minds-margin;
-      a{
-        flex:auto;
+      margin: $minds-margin;
+
+      a {
+        flex: auto;
       }
     }
   }
