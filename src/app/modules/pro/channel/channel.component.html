@@ -25,7 +25,9 @@
     <a [routerLink]="['/pro', channel.username, 'donate']" routerLinkActive="active">Donate</a>
 
     <ng-container *ngIf="currentUser; else authLink">
-      <minds-avatar [object]="currentUser" [editMode]="false"></minds-avatar>
+      <a [routerLink]="['/', channel.username]" routerLinkActive="active">
+        <minds-avatar [object]="currentUser" [editMode]="false"></minds-avatar>
+      </a>
     </ng-container>
     <ng-template #authLink>
       <a [routerLink]="['/pro', channel.username, 'signup']" routerLinkActive="active">Signup / Login</a>
