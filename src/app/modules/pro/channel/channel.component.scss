@@ -40,10 +40,11 @@ m-pro--channel {
     
       @media screen and (max-width: 1081px) {
         flex-grow: 1;
+        max-width: 300px;
       }
 
       div.mdl-textfield.mdl-js-textfield {
-        width: 180px;
+        width: 100%;
         transition: width ease-in-out .2s;
         padding: 8px 0;
 

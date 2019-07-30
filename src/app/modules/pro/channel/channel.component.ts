@@ -3,7 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding,
+  HostBinding, HostListener,
   OnDestroy,
   OnInit
 } from '@angular/core';
@@ -33,6 +33,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   error: string;
 
+  collapseNavItems: boolean;
+
   params$: Subscription;
 
   constructor(
@@ -57,6 +59,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
         this.load();
       }
     });
+
+    this.onResize();
   }
 
   ngOnDestroy() {
@@ -121,6 +125,10 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     }
 
     return `url(${this.channel.pro_settings.background_image})`;
+  }
+
+  @HostListener('window:resize') onResize() {
+    this.collapseNavItems = window.innerWidth <= 992 ? true : false;
   }
 
   get currentUser() {

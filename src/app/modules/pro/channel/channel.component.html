@@ -12,28 +12,34 @@
     <div class="m-proChannelTopbar__SearchBox">
       <div class="mdl-textfield mdl-js-textfield">
         <i class="material-icons">search</i>
-        <input autocomplete="off" class="mdl-textfield__input ng-pristine ng-valid ng-touched" type="text" (keyup)="search()">
+        <input
+          id="search"
+          autocomplete="off"
+          class="mdl-textfield__input ng-pristine ng-valid ng-touched"
+          type="text"
+          (keyup)="search()"
+        >
         <label class="mdl-textfield__label" for="search"></label>
       </div>
     </div>
 
-    <a [routerLink]="['/pro', channel.username, 'videos']" routerLinkActive="active" i18n>Videos</a>
-    <a [routerLink]="['/pro', channel.username, 'images']" routerLinkActive="active" i18n>Images</a>
-    <a [routerLink]="['/pro', channel.username, 'articles']" routerLinkActive="active" i18n>Articles</a>
-    <a [routerLink]="['/pro', channel.username, 'groups']" routerLinkActive="active" i18n>Groups</a>
-<!--    <a [routerLink]="['/pro', channel.username, 'feed']" routerLinkActive="active" i18n>Feed</a>-->
-    <a [routerLink]="['/pro', channel.username, 'donate']" routerLinkActive="active">Donate</a>
+    <ng-container *ngIf="!collapseNavItems">
+      <a [routerLink]="['/pro', channel.username, 'feed']" routerLinkActive="active" i18n>Feed</a>
+      <a [routerLink]="['/pro', channel.username, 'videos']" routerLinkActive="active" i18n>Videos</a>
+      <a [routerLink]="['/pro', channel.username, 'images']" routerLinkActive="active" i18n>Images</a>
+      <a [routerLink]="['/pro', channel.username, 'articles']" routerLinkActive="active" i18n>Articles</a>
+      <a [routerLink]="['/pro', channel.username, 'groups']" routerLinkActive="active" i18n>Groups</a>
+      <a [routerLink]="['/pro', channel.username, 'donate']" routerLinkActive="active">Donate</a>
+      <a [routerLink]="['/pro', channel.username, 'signup']" routerLinkActive="active" *ngIf="!currentUser">Signup / Login</a>
+    </ng-container>
 
-    <ng-container *ngIf="currentUser; else authLink">
+    <ng-container *ngIf="currentUser">
       <a [routerLink]="['/', channel.username]" routerLinkActive="active">
         <minds-avatar [object]="currentUser" [editMode]="false"></minds-avatar>
       </a>
     </ng-container>
-    <ng-template #authLink>
-      <a [routerLink]="['/pro', channel.username, 'signup']" routerLinkActive="active">Signup / Login</a>
-    </ng-template>
 
-    <m-pro-user-menu [channelName]="channel.username"></m-pro-user-menu>
+    <m-pro-user-menu [channelName]="channel.username" [showNavItems]="collapseNavItems"></m-pro-user-menu>
   </div>
 
   <div class="m-proChannel__body">

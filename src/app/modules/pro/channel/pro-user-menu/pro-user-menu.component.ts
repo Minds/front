@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from "@angular/core";
 import { Session } from "../../../../services/session";
 import { ThemeService } from "../../../../common/services/theme.service";
+import { ProChannelService } from "../channel.service";
 
 @Component({
   selector: 'm-pro-user-menu',
@@ -11,8 +12,18 @@ export class ProUserMenuComponent implements OnInit {
   isOpen: boolean = false;
 
   @Input() channelName: string;
-  
-  constructor(protected session: Session, protected cd: ChangeDetectorRef, private themeService: ThemeService) {
+  @Input() showNavItems: boolean;
+
+  get channel() {
+    return this.channelService.currentChannel;
+  }
+
+  constructor(
+    public channelService: ProChannelService,
+    protected session: Session,
+    protected cd: ChangeDetectorRef,
+    private themeService: ThemeService,
+  ) {
   }
 
   getCurrentUser() {
