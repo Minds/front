@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Session } from "../../../../services/session";
+import { ProChannelService } from "../channel.service";
 
 @Component({
   selector: 'm-pro--channel-signup',
@@ -11,10 +12,7 @@ import { Session } from "../../../../services/session";
       <div class="m-ProChannelSignup--hero--inner">
 
         <div class="m-ProChannelSignup--hero--slogans">
-          <!-- TODO: this text should be dynamic -->
-          <h1>Independent.</h1>
-          <h1>Community-owned.</h1>
-          <h1>Decentralized News</h1>
+          <h2>{{ headline }}</h2>
         </div>
 
         <div class="m-ProChannelSignup--signup">
@@ -22,18 +20,23 @@ import { Session } from "../../../../services/session";
         </div>
 
       </div>
-      
+
     </section>
   `
 })
 
-export class ProChannelSignupComponent implements OnInit {
+export class ProChannelSignupComponent {
   username: string;
 
   paramsSubscription: Subscription;
 
+  get headline() {
+    return this.service.currentChannel.pro_settings.headline || '';
+  }
+
   constructor(
     public session: Session,
+    public service: ProChannelService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
@@ -46,9 +49,6 @@ export class ProChannelSignupComponent implements OnInit {
         this.router.navigate(['/pro', this.username]);
       }
     });
-  }
-
-  ngOnInit() {
   }
 
   registered() {
