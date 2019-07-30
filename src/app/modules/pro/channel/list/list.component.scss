@@ -26,8 +26,8 @@ m-pro--channel-list {
     font-size: 14px;
     font-weight: 600;
     padding: 8px;
-    color: #90a4ae!important;
-    background-color: #eceff1!important;
+    color: #90a4ae !important;
+    background-color: #eceff1 !important;
   }
 
   .m-proChannelListContentList__seeMore {
@@ -107,8 +107,15 @@ m-pro--channel-list {
         width: 250px;
       }
     }
+  }
 
-    @media screen and (min-width: 1px) and (max-width: $max-mobile) {
+  @media screen and (min-width: 1px) and (max-width: $min-desktop) {
+    .m-proChannelList__content {
+      margin: 0;
+      width: 100%;
+    }
+
+    ul.m-proChannelListContent__list {
       grid-template-columns: 1fr;
 
       li {
