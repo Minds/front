@@ -58,7 +58,7 @@
         <i class="material-icons">public</i>
       </li>
       <li class="m-commentRibbon__item"
-        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid || canEdit"
+        *ngIf="comment.owner_guid == session.getLoggedInUser()?.guid || session.isAdmin() || parent.owner_guid == session.getLoggedInUser()?.guid || canDelete"
         (click)="delete(); toggle.value = false"
         title="Delete"
         i18n-title="@@M__ACTION__DELETE"
@@ -224,7 +224,7 @@
 
     <div class="m-comment__toolbar" *ngIf="comment?.guid">
 
-      <div class="m-commentToolbar__buttons" [hidden]="editing">
+      <div class="m-commentToolbar__buttons" [hidden]="editing || hideToolbar">
         <minds-button-thumbs-up [object]="comment" [class.has-count]="comment['thumbs:up:count'] > 0"></minds-button-thumbs-up>
         <minds-button-thumbs-down [object]="comment"></minds-button-thumbs-down>
         <span class="m-clickable"

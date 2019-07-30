@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
 import { timespanOption } from "../timespanOption";
+import { removeCurrentUnits } from "../../../util";
 
 @Component({
   selector: 'm-analyticscharts__onchainboosts',
@@ -17,9 +18,11 @@ import { timespanOption } from "../timespanOption";
 })
 
 export class OnChainBoostsChartComponent implements OnInit {
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+
   timespan: timespanOption;
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   init: boolean = false;
   inProgress: boolean = false;
@@ -70,7 +73,10 @@ export class OnChainBoostsChartComponent implements OnInit {
 
   async getData() {
     const response: any = await this.client.get(`api/v2/analytics/onchainboosts`, { timespan: this.timespan });
-    this.data = response.data;
+    const [data, current] = removeCurrentUnits(response.data);
+    this.data = data;
+
+    this.loaded.emit(current);
   }
 
   @HostListener('window:resize')

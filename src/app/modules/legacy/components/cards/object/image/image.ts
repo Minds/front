@@ -18,8 +18,6 @@ export class ImageCard {
   entity: any;
   minds: {};
 
-  @Input() target: '_blank' | '_self' = '_self';
-
   @Input('object') set object(value: any) {
     this.entity = value;
   }

@@ -15,6 +15,7 @@ import { PosterComponent } from './poster/poster.component';
 import { NewsfeedService } from './services/newsfeed.service';
 import { SideBarSelectorChange } from "../hashtags/sidebar-selector/sidebar-selector.component";
 import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
+import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
 
 @Component({
   selector: 'm-newsfeed',
@@ -58,7 +59,7 @@ export class NewsfeedComponent {
 
   all: boolean;
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
     public session: Session,
@@ -189,6 +190,12 @@ export class NewsfeedComponent {
     }
 
     return true;
+  }
+
+  openReferralsModal() {
+    this.overlayModal.create(ReferralsLinksComponent, {}, {
+      class: 'm-overlay-modal--referrals-links m-overlay-modal--medium'
+    }).present();
   }
 }
 

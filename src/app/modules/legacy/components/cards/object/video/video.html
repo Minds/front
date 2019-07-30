@@ -2,7 +2,7 @@
 	style="height:168px; background-size:cover;"
 	[ngStyle]="{background: 'url(' + entity.thumbnail_src + ') center center / cover'}"
   [routerLink]="['/media', entity.guid]"
-  [target]="target"
+  target="_blank"
 	[ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(entity) }"
 	>
 	<span class="material-icons"
@@ -16,12 +16,12 @@
 <!-- Owner block -->
 <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block" *ngIf="entity.ownerObj && entity.ownerObj.username">
 
-		<a [routerLink]="['/media', entity.guid]" [target]="target" [target]="target" class="mdl-color-text--blue-grey-700">
+		<a [routerLink]="['/media', entity.guid]" target="_blank" class="mdl-color-text--blue-grey-700">
 			<strong>{{ entity.title }}</strong>
 		</a>
 
 		<div class="m-inline-owner-block">
-			<a [routerLink]="['/', entity.ownerObj.username]" [target]="target" class="mdl-color-text--blue-grey-300">
+			<a [routerLink]="['/', entity.ownerObj.username]" target="_blank" class="mdl-color-text--blue-grey-300">
 				<img src="/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
 				{{entity.ownerObj.username}}
 			</a>

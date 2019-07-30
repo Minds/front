@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
 import { timespanOption } from "../timespanOption";
+import { removeCurrentUnits } from "../../../util";
 
 @Component({
   selector: 'm-analyticscharts__usersegments',
@@ -18,7 +19,9 @@ import { timespanOption } from "../timespanOption";
 })
 
 export class UserSegmentsChartComponent implements OnInit {
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   timespan: timespanOption;
   inProgress: boolean = false;
@@ -76,7 +79,10 @@ export class UserSegmentsChartComponent implements OnInit {
 
     try {
       const response: any = await this.client.get(url, opts);
-      this.data = response.data;
+      const [data, current] = removeCurrentUnits(response.data);
+      this.data = data;
+
+      this.loaded.emit(current);
       this.data[0].type = 'lines';
     } catch (e) {
       console.error(e);

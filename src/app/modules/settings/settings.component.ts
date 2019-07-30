@@ -9,6 +9,7 @@ import { Session } from '../../services/session';
 
 import { HashtagsSelectorModalComponent } from '../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
+import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
 
 @Component({
   selector: 'm-settings',
@@ -67,6 +68,12 @@ export class SettingsComponent {
   openHashtagsSelector() {
     this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
       class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large' 
+    }).present();
+  }
+
+  openReferralsModal() {
+    this.overlayModal.create(ReferralsLinksComponent, {}, {
+      class: 'm-overlay-modal--referrals-links m-overlay-modal--medium'
     }).present();
   }
 

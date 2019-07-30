@@ -12,7 +12,7 @@ type Hashtag = {
 
 @Component({
   moduleId: module.id,
-  selector: 'm-hastags-selector-modal',
+  selector: 'm-hashtags-selector-modal',
   templateUrl: 'hashtags-selector.component.html'
 })
 export class HashtagsSelectorModalComponent {

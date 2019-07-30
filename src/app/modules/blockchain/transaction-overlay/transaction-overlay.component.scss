@@ -119,6 +119,10 @@ m--blockchain--transaction-overlay {
 .m--blockchain--transaction-overlay--field {
   margin: ($minds-padding * 2) 0;
 
+  .m-btn {
+    margin-right: $minds-margin;
+  }
+
   .mdl-checkbox {
 
     .mdl-checkbox__label {

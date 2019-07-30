@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
 import { timespanOption } from "../timespanOption";
+import { removeCurrentUnits } from "../../../util";
 
 @Component({
   selector: 'm-analyticscharts__offchainboosts',
@@ -18,9 +19,11 @@ import { timespanOption } from "../timespanOption";
 
 export class OffChainBoostsChartComponent implements OnInit {
   @Input() analytics: 'completed' | 'not_completed' | 'revoked' | 'rejected' | 'users_who_completed' | 'users_waiting_for_completion' | 'reclaimed_tokens' | 'impressions_served';
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+
   timespan: timespanOption;
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   init: boolean = false;
   inProgress: boolean = false;
@@ -75,7 +78,10 @@ export class OffChainBoostsChartComponent implements OnInit {
       key: this.analytics,
       timespan: this.timespan
     });
-    this.data = response.data;
+    const [data, current] = removeCurrentUnits(response.data);
+    this.data = data;
+
+    this.loaded.emit(current);
   }
 
   @HostListener('window:resize')

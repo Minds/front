@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@
 import { Session } from "../../../services/session";
 import { ThemeService } from "../../../common/services/theme.service";
 import { Subscription } from 'rxjs';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ReferralsLinksComponent } from '../../../modules/wallet/tokens/referrals/links/links.component';
 
 @Component({
   selector: 'm-user-menu',
@@ -19,6 +21,7 @@ export class UserMenuComponent implements OnInit {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
+    private overlayModal: OverlayModalService,
   ) {
   }
 
@@ -55,6 +58,12 @@ export class UserMenuComponent implements OnInit {
 
   ngOnDestroy() {
     this.themeSubscription.unsubscribe();
+  }
+
+  openReferralsModal() {
+    this.overlayModal.create(ReferralsLinksComponent, {}, {
+      class: 'm-overlay-modal--referrals-links m-overlay-modal--medium'
+    }).present();
   }
 
 }

@@ -13,7 +13,7 @@
                 line-height: 35px;
                 padding: 8px 24px;
                 font-weight: 300;
-                font-family: Roboto;
+                font-family: 'Roboto', Helvetica, sans-serif;
                 @include m-theme(){
                   color: themed($m-white);
                 }

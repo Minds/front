@@ -13,7 +13,7 @@ export class NotificationsTopbarToggleComponent {
 
   toggled: boolean = false;
   minds: any = window.Minds;
-  @ViewChild('notificationsFlyout') flyout: any;
+  @ViewChild('notificationsFlyout', { static: false }) flyout: any;
   
   constructor(
     public session: Session,

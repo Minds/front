@@ -27,11 +27,7 @@ import { CommentsService } from '../comments.service';
   selector: 'm-comments__tree',
   templateUrl: 'tree.component.html',
   providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
-    },
+    AttachmentService,
     {
       provide: CommentsService,
       useFactory: (_route, _client) => { return new CommentsService(_route, _client); },
@@ -56,6 +52,7 @@ export class CommentsTreeComponent {
   @Input() scrollable: boolean = false;
   @Input() readonly: boolean = false;
   @Input() canEdit: boolean = false;
+  @Input() canDelete: boolean = false;
 
   private shouldReuseRouteFn;
 
@@ -89,8 +86,8 @@ export class CommentsTreeComponent {
     if (this.entity.entity_guid)
       this.guid = this.entity.entity_guid;
     this.parent = this.entity;
-    if (!this.canEdit) {
-      this.canEdit = this.entity.owner_guid == this.session.getLoggedInUser().guid;
+    if (!this.canDelete) {
+      this.canDelete = this.entity.owner_guid == this.session.getLoggedInUser().guid;
     }
   }
 

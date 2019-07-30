@@ -16,17 +16,13 @@ import { Upload } from '../../../services/api/upload';
 import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
+import autobind from "../../../helpers/autobind";
+import { AutocompleteSuggestionsService } from "../../suggestions/services/autocomplete-suggestions.service";
 
 @Component({
   selector: 'm-comment__poster',
   templateUrl: 'poster.component.html',
-  providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
-    }
-  ],
+  providers: [ AttachmentService ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -53,6 +49,7 @@ export class CommentPosterComponent {
     public client: Client,
     public attachment: AttachmentService,
     public sockets: SocketsService,
+    public suggestions: AutocompleteSuggestionsService,
     private renderer: Renderer,
     private cd: ChangeDetectorRef
   ) {
@@ -78,6 +75,7 @@ export class CommentPosterComponent {
     this.inProgress = true;
 
     if (!this.content && !this.attachment.has()) {
+      this.inProgress = false;
       return;
     }
 

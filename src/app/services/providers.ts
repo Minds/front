@@ -126,7 +126,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: AttachmentService,
      useFactory: AttachmentService._,
-     deps: [ Session, Client, Upload ]
+     deps: [ Session, Client, Upload, HttpClient ]
    },
    {
      provide: Sidebar,
@@ -201,12 +201,12 @@ export const MINDS_PROVIDERS : any[] = [
   {
     provide: BlockListService,
     useFactory: BlockListService._,
-    deps: [ Client, Session ],
+    deps: [ Client, Session, Storage ],
   },
   {
     provide: EntitiesService,
     useFactory: EntitiesService._,
-    deps: [ Client ],
+    deps: [ Client, BlockListService ],
   },
   {
     provide: FeedsService,

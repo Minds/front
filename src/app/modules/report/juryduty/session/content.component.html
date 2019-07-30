@@ -15,13 +15,12 @@
         </div>
 
         <ng-container *ngIf="report.entity; else noEntity">
-          <minds-card
-            *ngIf="report.entity"
-            class=""
-            [object]="report.entity"
-            [target]="'_blank'"
-            hostClass="mdl-card m-border"
-          ></minds-card>
+            <minds-card *ngIf="report.entity"
+                class=""
+                [object]="report.entity"
+                [flags]="{hideToolbar: true}"
+                hostClass="mdl-card m-border"
+            ></minds-card>
         </ng-container>
         <ng-template #noEntity>
           <p>The post could not be loaded. Please overturn the report</p>

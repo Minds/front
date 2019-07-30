@@ -113,7 +113,7 @@ m-media--edit {
     font-weight: 600;
     font-size: 42px;
     letter-spacing: 1.5px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     line-height: 1.2em;
@@ -131,7 +131,7 @@ m-media--edit {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -314,6 +314,10 @@ m-media--grid{
     letter-spacing: 0.25px;
   }
 
+  h1.m-media-content--heading a {
+    text-decoration: none;
+  }
+
   .m-media-content--info {
 
     display: flex;
@@ -367,6 +371,19 @@ m-media--grid{
     display: flex;
     align-items: center;
     flex-shrink: 0;
+
+    .minds-button-edit{
+      button {
+        @include m-theme(){
+          color: themed($m-blue-grey-500);
+        }
+        &:hover {
+          @include m-theme(){
+            color: themed($m-blue-grey-800);
+          }
+        }
+      }
+    }
 
     m-post-menu {
       i {

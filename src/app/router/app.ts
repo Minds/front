@@ -17,6 +17,7 @@ import { RewardsComponent } from '../controllers/rewards/rewards';
 export const MindsAppRoutes: Routes = [
 
   { path: 'capture', redirectTo: 'media/images/suggested' },
+  { path: 'about', redirectTo: 'p/about'},
 
   // redirectTo: 'media/:type/:filter
   { path: 'discovery/suggested/channels', redirectTo: 'channels/suggested'},

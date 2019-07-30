@@ -50,7 +50,7 @@ export class BlockchainEthModalComponent implements OnInit {
   }
 
   get ethRate(): number {
-    const tokenUsdRate = 0.15;
+    const tokenUsdRate = 1.25;
     const tokenUsd = 1 / tokenUsdRate;
     const usd = this.rate / tokenUsd;
     return usd;

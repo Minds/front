@@ -1,7 +1,8 @@
-import { Component, Injector, SkipSelf } from '@angular/core';
+import { Component, Injector, SkipSelf, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
@@ -74,7 +75,11 @@ export class NewsfeedSingleComponent {
       this.loadFromFeedsService(guid) :
       this.loadLegacy(guid);
 
-    fetchSingleGuid.then((activity: any) => {
+    fetchSingleGuid.subscribe((activity: any) => {
+      if (activity === null) {
+        return; // Not yet loaded
+      }
+
       this.activity = activity;
 
       switch (this.activity.subtype) {
@@ -104,30 +109,30 @@ export class NewsfeedSingleComponent {
       } else {
         this.context.reset();
       }
-    })
-      .catch(e => {
+    }, err => {
         this.inProgress = false;
 
-        if (e.status === 0) {
+        if (err.status === 0) {
           this.error = 'Sorry, there was a timeout error.';
         } else {
           this.error = 'Sorry, we couldn\'t load the activity';
         }
+    });
+  }
+
+  loadFromFeedsService(guid: string) {
+    return this.entitiesService.single(guid);
+  }
+
+  loadLegacy(guid: string) {
+    const fakeEmitter = new EventEmitter();
+
+    this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
+      .then((response: any) => {
+        fakeEmitter.next(response.activity);
       });
-  }
 
-  async loadFromFeedsService(guid: string) {
-    const activity = await this.entitiesService.single(guid);
-
-    if (!activity) {
-      throw new Error('Activity not found');
-    }
-
-    return activity;
-  }
-
-  async loadLegacy(guid: string) {
-    return (<any>await this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })).activity;
+    return fakeEmitter;
   }
 
   delete(activity) {

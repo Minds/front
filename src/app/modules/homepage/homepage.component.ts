@@ -42,7 +42,7 @@ export class HomepageComponent {
   ) {
     this.title.setTitle('Minds Social Network', false);
     this.loadStream();
-    
+
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;

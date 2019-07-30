@@ -11,19 +11,14 @@ import { Subject, Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
+import { AutocompleteSuggestionsService } from "../../suggestions/services/autocomplete-suggestions.service";
 
 @Component({
   moduleId: module.id,
   selector: 'minds-newsfeed-poster',
   inputs: ['_container_guid: containerGuid', 'accessId', 'message'],
   outputs: ['load'],
-  providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
-    }
-  ],
+  providers: [ AttachmentService ],
   templateUrl: 'poster.component.html',
 })
 
@@ -45,7 +40,7 @@ export class PosterComponent {
 
   errorMessage: string = null;
 
-  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
+  @ViewChild('hashtagsSelector', { static: false }) hashtagsSelector: HashtagsSelectorComponent;
 
   showActionBarLabels: boolean = false;
 
@@ -60,6 +55,7 @@ export class PosterComponent {
     public client: Client,
     public upload: Upload,
     public attachment: AttachmentService,
+    public suggestions: AutocompleteSuggestionsService,
     protected elementRef: ElementRef,
     protected router: Router,
     protected inMemoryStorageService: InMemoryStorageService
@@ -257,18 +253,6 @@ export class PosterComponent {
     }
 
     this.attachment.preview(message.value);
-  }
-
-  @autobind()
-  async findTrendingHashtags(searchText: string) {
-    const response: any = await this.client.get('api/v2/search/suggest/tags', { q: searchText });
-    return response.tags
-      .filter(item => item.toLowerCase().includes(searchText.toLowerCase()))
-      .slice(0, 5);
-  }
-
-  getChoiceLabel(text: string) {
-    return `#${text}`;
   }
 
   createBlog() {

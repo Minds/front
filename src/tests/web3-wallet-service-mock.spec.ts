@@ -1,5 +1,3 @@
-import { and } from "@angular/router/src/utils/collection";
-
 // TODO actually implement these mocks when necessary for testing
 
 export let web3WalletServiceMock = new function () {

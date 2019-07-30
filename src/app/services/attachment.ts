@@ -1,11 +1,24 @@
-import { Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpRequest,
+  HttpEvent,
+  HttpEventType,
+} from "@angular/common/http";
+import { BehaviorSubject } from 'rxjs';
+import { map, tap, last } from 'rxjs/operators';
+
 import { Client, Upload } from './api';
 import { Session } from './session';
 
+@Injectable()
 export class AttachmentService {
 
   private meta: any = {};
   private attachment: any = {};
+
+  public progress: BehaviorSubject<number> = new BehaviorSubject(0);
 
   private container: any = {};
   private accessId: any = 2;
@@ -16,11 +29,16 @@ export class AttachmentService {
 
   private xhr: XMLHttpRequest = null;
 
-  static _(session: Session, client: Client, upload: Upload) {
-    return new AttachmentService(session, client, upload);
+  static _(session: Session, client: Client, upload: Upload, http: HttpClient) {
+    return new AttachmentService(session, client, upload, http);
   }
 
-  constructor(@Inject(Session) public session: Session, @Inject(Client) public clientService: Client, @Inject(Upload) public uploadService: Upload) {
+  constructor(
+    public session: Session,
+    public clientService: Client,
+    public uploadService: Upload,
+    private http: HttpClient,
+  ) {
     this.reset();
   }
 
@@ -114,9 +132,10 @@ export class AttachmentService {
     this.meta.nsfw = nsfw.map(reason => reason.value);
   }
 
-  upload(fileInput: HTMLInputElement, detectChangesFn?: Function) {
+  async upload(fileInput: HTMLInputElement, detectChangesFn?: Function) {
     this.reset();
 
+    this.progress.next(0);
     this.attachment.progress = 0;
     this.attachment.mime = '';
     
@@ -131,34 +150,86 @@ export class AttachmentService {
     }
     this.xhr = new XMLHttpRequest();
 
-    return this.checkFileType(file)
-      .then(() => {
+    // Set the mimetype of the attachment (this.attachment.mime)
+    await this.checkFileType(file);
+
+    try {
+      if (this.attachment.mime === 'video') {
+        let response = await <any>this.uploadToS3(file);
+        this.meta.attachment_guid = response.guid ? response.guid : null;
+      } else {
         // Upload and return the GUID
-        return this.uploadService.post('api/v1/media', [file], this.meta, (progress) => {
+        let response = await <any>this.uploadService.post('api/v1/media', [file], this.meta, (progress) => {
           this.attachment.progress = progress;
+          this.progress.next(progress);
           if (detectChangesFn) {
             detectChangesFn();
           }
         }, this.xhr);
-      })
-      .then((response: any) => {
         this.meta.attachment_guid = response.guid ? response.guid : null;
+      }
 
-        if (!this.meta.attachment_guid) {
-          throw 'No GUID';
-        }
+      if (!this.meta.attachment_guid) {
+        throw 'No GUID';
+      }
 
-        return Promise.resolve(this.meta.attachment_guid);
-      })
-      .catch(e => {
-        this.meta.attachment_guid = null;
-        this.attachment.progress = 0;
-        this.attachment.preview = null;
+      return this.meta.attachment_guid;
+    } catch(e) {
+      this.meta.attachment_guid = null;
+      this.attachment.progress = 0;
+      this.progress.next(0);
+      this.attachment.preview = null;
 
-        return Promise.reject(e);
+      return Promise.reject(e);
+    }
+
+  }
+
+  async uploadToS3(file) {
+
+    // Prepare the upload
+    let { lease } = await <any>this.clientService.put(`api/v2/media/upload/prepare/${this.attachment.mime}`);
+
+    const headers = new HttpHeaders({
+      'Content-Type': file.type,
+    });
+    const req = new HttpRequest(
+      'PUT',
+      lease.presigned_url,
+      file,
+      {
+        headers: headers,
+        reportProgress: true, //This is required for track upload process
       });
 
+    // Upload directly to S3
+    const response = this.http.request(req);
 
+    // Track upload progress && wait for completion
+    await response.pipe(
+      map((event: HttpEvent<any>, file) => {
+        switch (event.type) {
+          case HttpEventType.Sent:
+            return 0;
+          case HttpEventType.UploadProgress:
+            return Math.round(100 * event.loaded / event.total);
+          case HttpEventType.Response:
+            return 100;
+          default:
+            return -1;
+        }
+      }),
+      tap(pct => {
+        if (pct >= 0)
+          this.progress.next(pct);
+      }),
+      last(),
+    ).toPromise();
+
+    // Complete the upload
+    await this.clientService.put(`api/v2/media/upload/complete/${lease.media_type}/${lease.guid}`);
+
+    return lease;
   }
 
   abort() {
@@ -166,6 +237,7 @@ export class AttachmentService {
       this.xhr.abort();
       this.xhr = null;
 
+      this.progress.next(0);
       this.attachment.progress = 0;
       this.attachment.mime = '';
       this.attachment.preview = null;
@@ -173,6 +245,7 @@ export class AttachmentService {
   }
 
   remove(fileInput: HTMLInputElement) {
+    this.progress.next(0);
     this.attachment.progress = 0;
     this.attachment.mime = '';
     this.attachment.preview = null;
@@ -233,6 +306,7 @@ export class AttachmentService {
   }
 
   reset() {
+    this.progress.next(0);
     this.attachment = {
       preview: null,
       progress: 0,
@@ -404,11 +478,16 @@ export class AttachmentService {
   private checkFileType(file): Promise<any> {
     return new Promise((resolve, reject) => {
       if (file.type && file.type.indexOf('video/') === 0) {
+        const maxFileSize = window.Minds.max_video_file_size;
+        if (file.size > maxFileSize) {
+          throw new Error(`File exceeds ${maxFileSize / Math.pow(1000, 3)}GB maximum size. Please try compressing your file.`);
+        }
+
         this.attachment.mime = 'video';
 
         this.checkVideoDuration(file).then(duration => {
           if (window.Minds.user.plus) {
-            window.Minds.max_video_length = window.Minds.max_video_length * 2; // Hacky
+            window.Minds.max_video_length = window.Minds.max_video_length * 3; // Hacky
           }
           if (duration > window.Minds.max_video_length) {
             return reject({ message: 'Error: Video duration exceeds ' + window.Minds.max_video_length / 60 + ' minutes' });

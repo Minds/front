@@ -10,7 +10,6 @@ import { AttachmentService } from '../../../../../../services/attachment';
   host: {
     'class': 'mdl-card mdl-shadow--2dp'
   },
-  inputs: ['object'],
   templateUrl: 'video.html',
 })
 
@@ -18,8 +17,6 @@ export class VideoCard {
 
   entity: any;
   minds: {};
-
-  @Input() target: '_blank' | '_self' = '_self';
 
   @Input('object') set object(value: any) {
     this.entity = value;

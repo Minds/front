@@ -16,7 +16,7 @@
   }
 
   h1, h3{
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
 
     @include m-theme(){
       color: themed($m-white);
@@ -57,7 +57,7 @@
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       @include m-theme(){
         color: themed($m-white);
       }
@@ -105,7 +105,7 @@
       font-size: 16px;
       text-transform: capitalize;
       letter-spacing: 1.25px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
     }
   }
 }
@@ -126,7 +126,7 @@
       font-size: 16px;
       text-transform: capitalize;
       letter-spacing: 1.25px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       padding: 8px;
     }
     p {
@@ -154,7 +154,7 @@
     padding: 8px 16px;
     max-height: none;
     height: auto;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     letter-spacing: 2.5px;
     font-size: 16px;
     margin: 16px;

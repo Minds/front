@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
 import { timespanOption } from "../timespanOption";
+import { removeCurrentUnits } from "../../../util";
 
 @Component({
   selector: 'm-analyticscharts__offchainwire',
@@ -18,7 +19,9 @@ import { timespanOption } from "../timespanOption";
 })
 
 export class OffchainWireChartComponent implements OnInit {
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   timespan: timespanOption;
   init: boolean = false;
@@ -70,7 +73,10 @@ export class OffchainWireChartComponent implements OnInit {
 
   async getData() {
     const response: any = await this.client.get(`api/v2/analytics/offchainwire`, { timespan: this.timespan });
-    this.data = response.data;
+    const [data, current] = removeCurrentUnits(response.data);
+    this.data = data;
+
+    this.loaded.emit(current);
   }
 
   @HostListener('window:resize')

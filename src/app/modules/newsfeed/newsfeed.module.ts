@@ -11,6 +11,7 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { AdsModule } from '../ads/ads.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
+import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
 
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
@@ -66,6 +67,7 @@ const routes: Routes = [
     SuggestionsModule,
     NoticesModule,
     SearchModule,
+    ReferralsModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,

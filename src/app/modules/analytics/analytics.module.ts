@@ -47,6 +47,8 @@ import { RewardsChartComponent } from "./components/charts/rewards/rewards.compo
 import { RewardsCardComponent } from "./components/cards/rewards/rewards.component";
 import { ActiveUsersChartComponent } from "./components/charts/active-users/active-users.component";
 import { Graph } from "./graph.component";
+import { PageviewsCardComponent } from "./components/cards/pageviews/pageviews.component";
+import { PageviewsChartComponent } from "./components/charts/pageviews/pageviews.component";
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -130,6 +132,8 @@ const routes: Routes = [
     UserSegmentsChartComponent,
     UserSegmentsCardComponent,
     EngagementCardComponent,
+    PageviewsChartComponent,
+    PageviewsCardComponent,
     Graph,
   ],
   providers: [],

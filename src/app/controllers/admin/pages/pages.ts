@@ -29,7 +29,7 @@ export class AdminPages {
   status: string = 'saved';
   headerFile: File;
   paramsSubscription: Subscription;
-  @ViewChild('inlineEditor') private editor: InlineEditorComponent;
+  @ViewChild('inlineEditor', { static: true }) private editor: InlineEditorComponent;
 
   constructor(public client: Client, public upload: Upload, private route: ActivatedRoute) {
   }

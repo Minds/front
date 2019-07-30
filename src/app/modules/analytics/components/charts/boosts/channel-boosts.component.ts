@@ -1,5 +1,6 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
+import { removeCurrentUnits } from "../../../util";
 
 @Component({
   selector: 'm-analyticscharts__channelboosts',
@@ -18,8 +19,9 @@ import { Client } from "../../../../../services/api/client";
 
 export class ChannelBoostsComponent implements OnInit {
   @Input() analytics: 'totals' | 'monthly';
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   inProgress: boolean = false;
   data: any;
@@ -60,7 +62,11 @@ export class ChannelBoostsComponent implements OnInit {
     switch (this.analytics) {
       case 'monthly':
         this.layout.title = 'Percentage of Interactions from Boosts';
-        this.data = response.data;
+        const [data, current] = removeCurrentUnits(response.data);
+        this.data = data;
+
+        this.loaded.emit(current);
+
         for (let i = 0; i < this.data.length; i++) {
           this.data[i].stackgroup = 'one';
           this.data[i].groupnorm = 'percent';

@@ -10,14 +10,28 @@
         <div class="m-comments-composer">
 
             <form (submit)="post($event)">
-                <minds-textarea
-                  #message="Textarea"
-                  [(mModel)]="content"
-                  [disabled]="(ascendingInProgress || descendingInProgress) && attachment.hasFile()"
-                  (keyup)="getPostPreview(content)"
-                  (keypress)="keypress($event)"
-                  [placeholder]="conversation ? 'Enter your message' : 'Enter your comment'"
-                ></minds-textarea>
+                <ng-template #itemTemplate let-choice="choice" let-selectChoice="selectChoice">
+                    <m-post-autocomplete-item-renderer
+                        [choice]="choice"
+                        [selectChoice]="selectChoice"
+                    ></m-post-autocomplete-item-renderer>
+                </ng-template>
+                <m-text-input--autocomplete-container>
+                    <minds-textarea
+                        #message="Textarea"
+                        [(mModel)]="content"
+                        [disabled]="(ascendingInProgress || descendingInProgress) && attachment.hasFile()"
+                        (keyup)="getPostPreview(content)"
+                        (keypress)="keypress($event)"
+                        [placeholder]="conversation ? 'Enter your message' : 'Enter your comment'"
+                        mTextInputAutocomplete
+                        [findChoices]="suggestions.findSuggestions"
+                        [getChoiceLabel]="suggestions.getChoiceLabel"
+                        [itemTemplate]="itemTemplate"
+                        [triggerCharacters]="['#', '@']"
+                    ></minds-textarea>
+                </m-text-input--autocomplete-container>
+
             </form>
 
             <div class="minds-comment-span mdl-color-text--red-500" *ngIf="!canPost && triedToPost">
@@ -74,12 +88,12 @@
             </div>
 
             <!-- Attachment preview -->
-            <div class="post-preview" *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"  (click)="removeAttachment(file)">
+            <div class="post-preview" *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"  (click)="removeAttachment(file)">
               <div class="mdl-progress mdl-js-progress"
                 [mdlUpload]
-                [progress]="attachment.getUploadProgress()"
-                [hidden]="attachment.getUploadProgress() == 0"
-                [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
+                [progress]="attachment.progress | async"
+                [hidden]="(attachment.progress | async) == 0"
+                [ngClass]="{ 'complete': (attachment.progress | async) == 100 }"
                 ></div>
               <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
                   <i class="material-icons">videocam</i>

@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Client } from "../../services/api";
+import { BlockListService } from './block-list.service';
 
 import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
 import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
@@ -7,68 +10,153 @@ import EntitiesSync from '../../lib/minds-sync/services/EntitiesSync.js';
 import AsyncStatus from "../../helpers/async-status";
 import normalizeUrn from "../../helpers/normalize-urn";
 
+type EntityObservable = BehaviorSubject<Object>;
+type EntityObservables = Map<string, EntityObservable>
+
 @Injectable()
 export class EntitiesService {
 
-  protected entitiesSync: EntitiesSync;
-
-  protected status = new AsyncStatus();
+  entities: EntityObservables = new Map<string, EntityObservable>();
+  castToActivites: boolean = false;
 
   constructor(
-    protected client: Client
+    protected client: Client,
+    protected blockListService: BlockListService,
   ) {
-    this.setUp();
   }
 
-  async setUp() {
-    this.entitiesSync = new EntitiesSync(
-      new MindsClientHttpAdapter(this.client),
-      await browserStorageAdapterFactory('minds-entities-190314'),
-      15,
-    );
+  async getFromFeed(feed): Promise<EntityObservable[]> {
 
-    this.entitiesSync.setUp();
-
-    //
-
-    this.status.done();
-
-    // Garbage collection
-
-    this.entitiesSync.gc();
-    setTimeout(() => this.entitiesSync.gc(), 15 * 60 * 1000); // Every 15 minutes
-  }
-
-  async single(guid: string): Promise<Object | false> {
-    await this.status.untilReady();
-
-    try {
-      const entities = await this.fetch([guid]);
-
-      if (!entities || !entities[0]) {
-        return false;
-      }
-
-      return entities[0];
-    } catch (e) {
-      console.error('EntitiesService.get', e);
-      return false;
-    }
-  }
-
-  async fetch(guids: string[]): Promise<Object[]> {
-    await this.status.untilReady();
-
-    if (!guids || !guids.length) {
+    if (!feed || !feed.length) {
       return [];
     }
 
-    const urns = guids.map(guid => normalizeUrn(guid));
+    const blockedGuids = await this.blockListService.blocked.pipe(first()).toPromise();
+    const urnsToFetch = [];
+    const urnsToResync = [];
+    const entities = [];
 
-    return await this.entitiesSync.get(urns);
+    for (const feedItem of feed) {
+      if (feedItem.entity) {
+        this.addEntity(feedItem.entity);
+      }
+      if (!this.entities.has(feedItem.urn)) {
+        urnsToFetch.push(feedItem.urn);
+      }
+      if (this.entities.has(feedItem.urn) && !feedItem.entity) {
+        urnsToResync.push(feedItem.urn);
+      }
+    }
+
+    // Fetch entities we don't have
+
+    if (urnsToFetch.length) {
+      await this.fetch(urnsToFetch);
+    }
+
+    // Fetch entities, asynchronously, with no need to wait
+
+    if (urnsToResync.length) {
+      this.fetch(urnsToResync);
+    }
+
+    for (const feedItem of feed) {
+      if (blockedGuids.indexOf(feedItem.owner_guid) < 0)
+        entities.push(this.entities.get(feedItem.urn));
+    }
+    
+    return entities;
   }
 
-  static _(client: Client) {
-    return new EntitiesService(client);
+  /**
+   * Return and fetch a single entity via a urn
+   * @param urn string
+   * @return Object
+   */
+  single(urn: string): EntityObservable {
+    if (urn.indexOf('urn:') < 0) { // not a urn, so treat as a guid
+      urn = `urn:activity:${urn}`; // and assume activity
+    }
+
+    this.entities.set(urn, new BehaviorSubject(null));
+
+    this.fetch([ urn ]) // Update in the background
+      .then((response: any) => {
+        const entity = response.entities[0];
+        if (entity.urn !== urn) { // urns may differn so fix this
+          entity.urn = urn;
+          this.addEntity(entity);
+        }
+      });
+
+    return this.entities.get(urn);
+  }
+
+  /**
+   * Cast to activities or not
+   * @param cast boolean
+   * @return EntitiesService
+   */
+  setCastToActivities(cast: boolean): EntitiesService {
+    this.castToActivites = cast;
+    return this;
+  }
+
+  /**
+   * Fetch entities
+   * @param urns string[]
+   * @return []
+   */
+  async fetch(urns: string[]): Promise<Array<Object>> {
+
+    try {
+      const response: any = await this.client.get('api/v2/entities/', {
+        urns,
+        as_activities: this.castToActivites ? 1 : 0,
+      });
+
+      if (!response.entities.length) {
+        for (const urn of urns) {
+          this.addNotFoundEntity(urn); 
+        }
+      }
+
+      for (const entity of response.entities) {
+        this.addEntity(entity); 
+      }
+
+      return response;
+    } catch (err) {
+      // TODO: find a good way of sending server errors to subscribers
+    }
+  }
+
+  /**
+   * Add or resync an entity
+   * @param entity
+   * @return void
+   */
+  addEntity(entity): void {
+    if (this.entities.has(entity.urn)) {
+      this.entities.get(entity.urn).next(entity);
+    } else {
+      this.entities.set(entity.urn, new BehaviorSubject(entity));
+    }
+  }
+
+  /**
+   * Register a urn as not found
+   * @param urn string
+   * @return void
+   */
+  addNotFoundEntity(urn): void {
+    if (!this.entities.has(urn)) {
+      this.entities.set(urn, new BehaviorSubject(null));
+    }
+    this.entities.get(urn).error("Not found");
+  }
+
+  static _(client: Client, blockListService: BlockListService) {
+    return new EntitiesService(client, blockListService);
   }
 }

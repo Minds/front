@@ -26,6 +26,7 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
   h2 {
     text-align: center;
     font-weight: 600;
+    margin-top: 8px;
     @include m-theme(){
       color: themed($m-blue);
     }
@@ -58,7 +59,7 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
 
     .m-wallet--balance--addresses-address-label {
       font-weight: 600;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 0.25px;
       @include m-theme(){
         color: themed($m-grey-800);

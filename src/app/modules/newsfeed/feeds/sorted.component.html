@@ -21,7 +21,7 @@
   </div>
 
   <div class="m-feeds-sorted__List" [class.m-feeds-sortedList__flex]="!isActivityFeed()">
-    <ng-container *ngFor="let entity of newsfeed; let i = index">
+    <ng-container *ngFor="let entity of (feedsService.feed | async); let i = index">
       <ng-container *ngIf="isActivityFeed()">
         <m-featured-content
           *ngIf="shouldShowBoost(i)"
@@ -30,16 +30,16 @@
       </ng-container>
 
       <m-newsfeed__entity
-        [entity]="entity"
+        [entity]="entity | async"
         [slot]="i + 1"
       ></m-newsfeed__entity>
     </ng-container>
 
     <infinite-scroll
       distance="25%"
-      (load)="load()"
-      [moreData]="moreData"
-      [inProgress]="inProgress"
+      (load)="loadMore()"
+      [moreData]="feedsService.hasMore | async"
+      [inProgress]="feedsService.inProgress | async"
     >
     </infinite-scroll>
   </div>
