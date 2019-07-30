@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { FeedsService } from "../../../../common/services/feeds.service";
 import { ProChannelService } from '../channel.service';
+import { first } from "rxjs/operators";
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -15,6 +16,8 @@ export class ProChannelListComponent implements OnInit {
 
   params$: Subscription;
 
+  entities: any[] = [];
+
   constructor(
     public feedsService: FeedsService,
     protected channelService: ProChannelService,
@@ -25,6 +28,7 @@ export class ProChannelListComponent implements OnInit {
 
   ngOnInit() {
     this.params$ = this.route.params.subscribe(params => {
+      this.entities = [];
       if (params['type']) {
         this.type = params['type'];
       }
@@ -51,6 +55,18 @@ export class ProChannelListComponent implements OnInit {
 
       this.load(true);
     });
+
+    this.feedsService.feed.subscribe(async entities => {
+      if (!entities.length)
+        return;
+
+      for (const entity of entities) {
+        if (entity)
+          this.entities.push(await entity.pipe(first()).toPromise());
+      }
+
+      this.detectChanges();
+    });
   }
 
   async load(refresh: boolean = false) {
@@ -69,8 +85,6 @@ export class ProChannelListComponent implements OnInit {
     } catch (e) {
       console.error('ProChannelListComponent.load', e);
     }
-
-    this.detectChanges();
   }
 
   loadNext() {

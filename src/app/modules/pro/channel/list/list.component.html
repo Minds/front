@@ -9,30 +9,32 @@
 
 <div class="m-proChannelList__content">
   <ul class="m-proChannelListContent__list">
-    <li *ngFor="let entity of (feedsService.feed | async) as feed">
+    <li *ngFor="let entity of entities">
       <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
         <m-pro--channel-tile
-          [entity]="entity | async"
+          [entity]="entity"
         ></m-pro--channel-tile>
       </ng-container>
       <ng-container *ngIf="type === 'groups'">
         <m-newsfeed__entity
-          [entity]="entity | async">
+          [entity]="entity">
 
         </m-newsfeed__entity>
       </ng-container>
+    <li
+      class="m-proChannelListContentList__seeMore"
+      *ngIf="entities.length != 0"
+      [routerLink]="seeMoreRoute"
+      i18n
+  >
+      See more
     </li>
   </ul>
-  <ng-container *ngIf="!(feedsService.feed | async) || (feedsService.feed | async).length == 0; else seeMore">
+  <ng-container *ngIf="entities.length == 0">
     <div class="m-proChannelListContent__noContent" i18n>There's nothing to show</div>
   </ng-container>
-  <ng-template #seeMore> 
-    <div class="m-proChannelListContentList__seeMore" [routerLink]="seeMoreRoute" i18n>
-      See more
-    </div>
-  </ng-template>
   <ng-container *ngIf="type === 'activities'">
-    <pre *ngFor="let entity of (feedsService.feed | async)">{{entity | async | json}}</pre>
+    <pre *ngFor="let entity of entities"></pre>
     <!-- talk to Emi about this -->
   </ng-container>
 </div>
