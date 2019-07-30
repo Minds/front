@@ -149,13 +149,13 @@ export class Activity implements OnInit {
     this.activityAnalyticsOnViewService.setEntity(this.activity);
 
     if (
-      this.activity.custom_type == 'batch' 
-      && this.activity.custom_data 
+      this.activity.custom_type == 'batch'
+      && this.activity.custom_data
       && this.activity.custom_data[0].src
     ) {
       this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
     }
-    
+
     if (!this.activity.message) {
       this.activity.message = '';
     }
@@ -411,6 +411,25 @@ export class Activity implements OnInit {
 
   isPending(activity) {
     return activity && activity.pending && activity.pending !== '0';
+  }
+
+  toggleMatureVisibility() {
+    this.activity.mature_visibility = !this.activity.mature_visibility;
+
+    if (this.activity.remind_object) {
+      // this.activity.remind_object.mature_visibility = !this.activity.remind_object.mature_visibility;
+
+      this.activity.remind_object = Object.assign({}, {
+        ...this.activity.remind_object,
+        mature_visibility: !this.activity.remind_object.mature_visibility
+      });
+    }
+
+    this.detectChanges();
+  }
+
+  onRemindMatureVisibilityChange() {
+    this.activity.mature_visibility = !this.activity.mature_visibility;
   }
 
   detectChanges() {

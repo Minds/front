@@ -75,7 +75,7 @@ import { AnalyticsModule } from "./modules/analytics/analytics.module";
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(MindsAppRoutes),
+    RouterModule.forRoot(MindsAppRoutes, { onSameUrlNavigation: "reload" }),
     CaptchaModule,
     CommonModule,
     AnalyticsModule,

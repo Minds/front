@@ -257,7 +257,7 @@ m-channel{
          display:inline-block;
          vertical-align:middle;
        }
-       h2{
+       h2 {
          letter-spacing: 0.25px;
          font-weight: 800;
          width: calc(100% - 64px);
@@ -267,6 +267,12 @@ m-channel{
          margin: 0 auto;
          grid-row: 1 / span 1;
          grid-column: 1 / span 2;
+       }
+       .minds-button-edit > button {
+         font-size:16px;
+       }
+       minds-user-dropdown > button {
+         font-size:24px;
        }
        button{
           border:0;

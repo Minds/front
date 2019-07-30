@@ -221,6 +221,7 @@ export class RemindMock {
   @Input() object;
   @Input() events;
   @Input() boosted;
+  @Output() matureVisibilityChange: EventEmitter<any> = new EventEmitter<any>();
 }
 
 @Component({

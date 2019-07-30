@@ -398,7 +398,7 @@
 
   <!-- Boost revoked -->
   <ng-template ngSwitchCase="boost_revoked">
-    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boost/console/content']">
+    <a [routerLink]="notification.entityObj && notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boost/console/content']">
       <p><ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__BOOST_FOR">You revoked your boost <span *ngIf="notification.entityObj">for </span></ng-container>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title | excerpt}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
