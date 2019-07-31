@@ -1,52 +1,52 @@
 <div class="m-plus-plan__container">
  
-    <section class="m-plus-plan__row">
-      <!-- Header -->
-      <section class="m-plus-plan__section">
-        <h1 i18n="@@PAYMENT_PLAN__TITLE" style="font-size: 36px; text-transform: none;">
-          Minds Plus
-        </h1>
-      </section>
+  <section class="m-plus-plan__row">
+    <!-- Header -->
+    <section class="m-plus-plan__section">
+      <h1 i18n="@@PAYMENT_PLAN__TITLE" style="font-size: 36px; text-transform: none;">
+        Minds Plus
+      </h1>
     </section>
-    
-    <!-- Plan Type -->
-    <section class="m-plus-plan__row">
-      <section class="m-plus-plan__section">
-        <div class="m-plus-plan__subtitle">
-          <h5>Subscription Plans</h5>
-          <i class="material-icons mdl-color-text--blue-grey-700 m-plus-plan__plus-logo">add_circle_outline</i>
-        </div>
-        <div class="m-plus-plan__plans">
+  </section>
+  
+  <!-- Plan Type -->
+  <section class="m-plus-plan__row">
+    <section class="m-plus-plan__section">
+      <div class="m-plus-plan__subtitle">
+        <h5>Subscription Plans</h5>
+        <i class="material-icons mdl-color-text--blue-grey-700 m-plus-plan__plus-logo">add_circle_outline</i>
+      </div>
+      <div class="m-plus-plan__plans">
+        <form class="m-plus-plan__paymentsForm" name="form" (ngSubmit)="submit()">
           <div class="m-plus-plan__period-container">
             <h6 class="m-plus-plan__period-title">Monthly</h6>
-            <span class="m-plus-plan__period-price">20 MINDS /pm</span>
-            <button class="m-plus-plan__period-buy-button"
-              (click)="onClick('month')"
-            >
-              <ng-container i18n="verb|@@M__ACTION__PURCHASE">Purchase</ng-container>
-            </button>
+            <span class="m-plus-plan__period-price"><strong>20 OffChain Tokens</strong><input [(ngModel)]="tier" type="radio" name="offchainMonthly" [value]="tiers.OFFCHAIN_MONTHLY"></span>
+            <span class="m-m-plus-plan__period-price"><em>OnChain not available</em></span>
+            <span class="m-m-plus-plan__period-price"><strong>5 USD</strong></span>
           </div>
           <div class="m-plus-plan__period-container">
-            <h6 class="m-plus-plan__period-title">Yearly</h6>
-            <span class="m-plus-plan__period-price">180 MINDS /pa</span>
-            <button class="m-plus-plan__period-buy-button"
-              (click)="onClick('year')"
-            >
-              <ng-container i18n="verb|@@M__ACTION__PURCHASE">Purchase</ng-container>
-            </button>
+            <h6 class="m-plus-plan__period-title">Annual</h6>
+            <span class="m-plus-plan__period-price"><strong>200 OffChain Tokens</strong><input [(ngModel)]="tier" type="radio" name="offchainYearly" [value]="tiers.OFFCHAIN_YEARLY"></span>
+            <span class="m-plus-plan__period-price"><strong>40 OnChain Tokens</strong><input [(ngModel)]="tier" type="radio" name="onchainYearly" [value]="tiers.ONCHAIN_YEARLY"></span>
+            <span class="m-plus-plan__period-price"><strong>50 USD</strong></span>
           </div>
           <div class="m-plus-plan__period-container">
             <h6 class="m-plus-plan__period-title">Lifetime</h6>
-            <span class="m-plus-plan__period-price">500 MINDS</span>
-            <button class="m-plus-plan__period-buy-button__blue"
-              (click)="onClick('lifetime')"
-            >
-              <ng-container i18n="verb|@@M__ACTION__PURCHASE">Purchase</ng-container>
-            </button>
+            <span class="m-plus-plan__period-price"><strong>5,000 OffChain Tokens</strong><input [(ngModel)]="tier" type="radio" name="offchainLife" [value]="tiers.OFFCHAIN_LIFETIME"></span>
+            <span class="m-plus-plan__period-price"><strong>400 OnChain Tokens</strong><input [(ngModel)]="tier" type="radio" name="onchainLife" [value]="tiers.ONCHAIN_LIFETIME"></span>
+            <span class="m-plus-plan__period-price"><strong>500 USD</strong></span>
           </div>
-        </div>
-      </section>  
-    </section>
-  
-  </div>
+        </form>
+      </div>
+    </section>  
+  </section>
+  <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">{{error}}</div>
+  <!-- Confirm Button -->
+  <section class="m-plus-tier__purchaseRow">
+    <button class="m-plus-plan__period-buy-button__blue"
+      (click)="submit(tier);"
+      type="submit"
+    >Purchase</button>
+  </section>
+</div>
   

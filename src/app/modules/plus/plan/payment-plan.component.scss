@@ -1,7 +1,9 @@
 @import "defaults";
 @import "themes";
 
-.m-plus-plan__container {
+.m-plus-plan__container {    
+  overflow: hidden;
+
   .m-plus-plan__row {
     .m-plus-plan__section {
       h1 {
@@ -13,11 +15,13 @@
         letter-spacing: 1.2px;
         align-items: center;
         margin: 16px 0 8px 40px;
+        @media screen and (max-width:$min-tablet) {
+          margin: 16px 0 8px 0px;
+        }
       }
 
       .m-plus-plan__subtitle {
         display: inline-flex;
-        flex-direction: column;
         width: 30%;
         align-items: center;
         font-size: 14px;
@@ -26,6 +30,13 @@
         letter-spacing: 1.2px;
         align-items: center;
         margin: 0 0 8px 0;
+        flex-direction: column;
+        @media screen and (max-width:$min-tablet) {
+          flex-direction: row;
+          display: flex;
+          justify-content: space-between;
+          width: 100%
+        }
 
         i, .m-plus-plan__plus-logo {
           font-size: 50pt;
@@ -34,59 +45,89 @@
       }
       .m-plus-plan__plans {
         display: inline-flex;
-        flex-direction: row;
-        justify-content: space-evenly;
         width: 70%;
-
-        .m-plus-plan__period-container {
-          border-style: solid;
-          border-width: 0 0 0 2px;
-          padding: $minds-padding * 2;
-
-          @include m-theme(){
-            border-color: themed($m-grey-50);
+        @media screen and (max-width:$min-tablet){
+          width: 100%;
+        }
+        .m-plus-plan__paymentsForm {          
+          display: inline-flex;
+          flex-direction: row;
+          justify-content: space-evenly;
+          width: 100%;
+          @media screen and (max-width:$min-tablet) {
+            flex-direction: column;
           }
 
-          .m-plus-plan__period-title {
-            display: block;
-            font-weight: bold;
-            font-size: 18px;
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-          }
 
-          .m-plus-plan__period-price {
-            display: block;
-          }
-          .m-plus-plan__period-buy-button {
-            display: block;
-            margin-top: $minds-padding * 4;
-            font-size: 14px;
-            padding: 8px 32px;
-            background: none;
-            border-radius: 0;
-            cursor: pointer;
-
-            @include m-theme(){
-              border: 1px solid themed($m-grey-700);
-              color: themed($m-grey-700);
+          .m-plus-plan__period-container {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            line-height: 32px;
+            border-style: solid;
+            border-width: 0 0 0 2px;
+            @media screen and (max-width:$min-tablet) {
+              border-width: 2px 0 0 0;
+              padding: 8px;
             }
-          }
-          .m-plus-plan__period-buy-button__blue {
-            display: block;
-            margin-top: $minds-padding * 4;
-            font-size: 14px;
-            padding: 8px 32px;
-            background: none;
-            border-radius: 0;
-            cursor: pointer;
-
             @include m-theme(){
-              border: 1px solid themed($m-blue);
-              color: themed($m-blue);
+              border-color: themed($m-grey-50);
+            }
+
+            .m-plus-plan__period-title {
+              display: block;
+              font-weight: bold;
+              font-size: 18px;
+              -webkit-font-smoothing: antialiased;
+              text-rendering: optimizeLegibility;
+              @media screen and (max-width:$min-tablet) {
+                margin-block-end: 10px;
+                margin-block-start: 10px;
+              }
+            }
+
+            .m-plus-plan__period-price {
+              display: flex;
+              width: 100%;
+              justify-content: space-between;
+
+              input {
+                align-self: center;
+                margin-left: 14px;
+                width: 16px;
+                height: 16px;
+                @media screen and (max-width:$min-tablet) {
+                  display: flex;
+                  width:24px;
+                }
+              }
             }
           }
         }
+      }
+    }
+  }
+
+  .m-plus-tier__purchaseRow {
+    display: flex;
+    justify-content: flex-end;
+
+    .m-plus-plan__period-buy-button__blue {
+      margin-top: $minds-padding * 4;
+      font-size: 14px;
+      padding: 8px 32px;
+      background: none;
+      border-radius: 0;
+      cursor: pointer;
+      margin-right: 40px;
+      @media screen and (max-width:$min-tablet) {
+        margin: 0 0 16px 0;
+        height: 100%;
+        width: 100%;
+      }
+      @include m-theme(){
+        border: 1px solid themed($m-blue);
+        color: themed($m-blue);
       }
     }
   }
