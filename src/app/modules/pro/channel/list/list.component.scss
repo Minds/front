@@ -5,6 +5,19 @@ m-pro--channel-list {
     margin: 0 0 0.4em;
   }
 
+  .m-proChannelList__algorithm {
+    background-color: var(--plain-background-color) !important;
+    width: fit-content;
+    margin-left: 20px;
+
+    i {
+      vertical-align: middle;
+      margin-right: 8px;
+      font-size: 18px;
+      color: #444!important;
+    }
+  }
+
   .m-proChannelList__content {
     width: 85%;
     margin: 0 auto;

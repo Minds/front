@@ -34,7 +34,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'articles',
+            redirectTo: 'articles/top',
             pathMatch: 'full'
           },
           {
@@ -46,8 +46,8 @@ const routes: Routes = [
             component: ProChannelSignupComponent
           },
           {
-            path: ':type',
-            component: ProChannelListComponent
+            path: ':type/:algorithm',
+            component: ProChannelListComponent,
           },
         ]
       },

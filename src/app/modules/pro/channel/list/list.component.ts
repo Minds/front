@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router  } from "@angular/router";
 import { Subscription } from "rxjs";
 import { FeedsService } from "../../../../common/services/feeds.service";
 import { ProChannelService } from '../channel.service';
@@ -18,10 +18,13 @@ export class ProChannelListComponent implements OnInit {
 
   entities: any[] = [];
 
+  algorithm: string;
+
   constructor(
     public feedsService: FeedsService,
     protected channelService: ProChannelService,
     protected route: ActivatedRoute,
+    protected router: Router,
     protected cd: ChangeDetectorRef,
   ) {
   }
@@ -53,6 +56,8 @@ export class ProChannelListComponent implements OnInit {
           throw new Error('Unknown type');
       }
 
+      this.algorithm = params['algorithm'] || 'top';
+
       this.load(true);
     });
 
@@ -78,7 +83,7 @@ export class ProChannelListComponent implements OnInit {
 
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}`)
+        .setEndpoint(`api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`)
         .setLimit(9)
         .fetch();
 
@@ -98,5 +103,33 @@ export class ProChannelListComponent implements OnInit {
 
   get seeMoreRoute() {
     return ['/', this.channelService.currentChannel.username];
+  }
+
+  /**
+   * Returns the feed type on par to routes
+   * @param type feed type
+   */
+  getTypeForRoute(type: string): string{
+    let routeType = '';
+    switch (type) {
+      case 'videos':
+        routeType = 'videos';
+        break;
+      case 'images':
+        routeType = 'images';
+        break;
+      case 'blogs':
+        routeType = 'articles';
+        break;
+      case 'groups':
+        routeType = 'groups';
+        break;
+      case 'activities':
+        routeType = 'feed';
+        break;
+      default:
+        throw new Error('Unknown type');
+    }
+    return routeType;
   }
 }

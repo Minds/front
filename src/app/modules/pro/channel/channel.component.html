@@ -24,11 +24,11 @@
     </div>
 
     <ng-container *ngIf="!collapseNavItems">
-      <a [routerLink]="['/pro', channel.username, 'feed']" routerLinkActive="active" i18n>Feed</a>
-      <a [routerLink]="['/pro', channel.username, 'videos']" routerLinkActive="active" i18n>Videos</a>
-      <a [routerLink]="['/pro', channel.username, 'images']" routerLinkActive="active" i18n>Images</a>
-      <a [routerLink]="['/pro', channel.username, 'articles']" routerLinkActive="active" i18n>Articles</a>
-      <a [routerLink]="['/pro', channel.username, 'groups']" routerLinkActive="active" i18n>Groups</a>
+      <a [routerLink]="['/pro', channel.username, 'feed', 'top']" routerLinkActive="active" i18n>Feed</a>
+      <a [routerLink]="['/pro', channel.username, 'videos', 'top']" routerLinkActive="active" i18n>Videos</a>
+      <a [routerLink]="['/pro', channel.username, 'images', 'top']" routerLinkActive="active" i18n>Images</a>
+      <a [routerLink]="['/pro', channel.username, 'articles', 'top']" routerLinkActive="active" i18n>Articles</a>
+      <a [routerLink]="['/pro', channel.username, 'groups', 'top']" routerLinkActive="active" i18n>Groups</a>
       <a [routerLink]="['/pro', channel.username, 'donate']" routerLinkActive="active">Donate</a>
       <a [routerLink]="['/pro', channel.username, 'signup']" routerLinkActive="active" *ngIf="!currentUser">Signup / Login</a>
     </ng-container>
