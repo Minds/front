@@ -21,7 +21,6 @@ export type PayloadType = 'onchain' | 'offchain';
 export class PaymentPlanComponent {
   minds = window.Minds;
   blockchain = window.Minds.blockchain;
-  receiver = window.Minds.blockchain.plus_address;
 
   payment = {
     period: null,
@@ -300,9 +299,9 @@ export class PaymentPlanComponent {
           balance = this.balances.offchain / Math.pow(10, 18);
 
         if (this.wire.amount > wireCap) {
-          throw new VisibleWireError(`You cannot spend more than ${wireCap} tokens today.`)
+          throw new VisibleWireError(`You cannot spend more than ${wireCap} tokens today.`);
         } else if (this.wire.amount > balance) {
-          throw new VisibleWireError(`You cannot spend more than ${balance} tokens.`)
+          throw new VisibleWireError(`You cannot spend more than ${balance} tokens.`);
         }
         break;
     }
@@ -351,7 +350,7 @@ export class PaymentPlanComponent {
    * Sets the onchain specific wire payment nonce
    */
   setOnchainNoncePayload(address: string) {
-    return this.setNoncePayload({ receiver: this.receiver, address })
+    return this.setNoncePayload({ receiver: this.blockchain.plus_address, address })
   }
 
   /**

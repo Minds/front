@@ -39,21 +39,13 @@ let overlayModal = new function () {
   });
 };
 
-describe('WirePaymentsCreatorComponent', () => {
+fdescribe('WirePaymentsCreatorComponent', () => {
 
   let comp: PaymentPlanComponent;
   let fixture: ComponentFixture<PaymentPlanComponent>;
 
-  function getMonthlyButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-plus-plan__plans > div:nth-child(1) > button'));
-  }
-
-  function getYearlyButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-plus-plan__plans > div:nth-child(2) > button'));
-  }
-
-  function getLifeButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-plus-plan__plans > div:nth-child(3) > button'));
+  function getButton(): DebugElement {
+    return fixture.debugElement.query(By.css('.m-plus-plan__period-buy-button__blue'));
   }
 
   beforeEach(async(() => {
@@ -96,6 +88,7 @@ describe('WirePaymentsCreatorComponent', () => {
     window.Minds.blockchain = {
         plus_address: 'oxtn'
     }
+    // comp.receiver = window.Minds.blockchain.plus_address;
     comp = fixture.componentInstance; // LoginForm test instance
 
     fixture.detectChanges();
@@ -113,55 +106,50 @@ describe('WirePaymentsCreatorComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have a buy monthly button', () => {
-    const monthlyButton = getMonthlyButton();
-    expect(monthlyButton).not.toBeNull();
+  it('should have a purchase button', () => {
+    const button = getButton();
+    expect(button).not.toBeNull();
   });
 
   it('should create the payment object for monthly', () => {
-    const monthlyButton = getMonthlyButton();
-    spyOn(comp, 'createPayment').and.stub();    
-    monthlyButton.nativeElement.click();
-    expect(comp.createPayment).toHaveBeenCalledWith('month');
+    const button = getButton();
+    spyOn(comp, 'submit').and.stub();    
+    button.nativeElement.click();
+    expect(comp.submit).toHaveBeenCalledWith('month');
   });
 
-  it('should set the amount correctly for monthly', () => {
-    const result = comp.createPayment('month');
-    expect(result.amount).toBe(20);
-  });
-
-  it('should have a buy yearly button', () => {
-    const yearlyButton = getYearlyButton();
-    expect(yearlyButton).not.toBeNull();
+  it('should set the amount correctly for monthly offchain', () => {
+    comp.createWire('offchain month');
+    expect(comp.wire.amount).toBe(20);
   });
 
   it('should create the payment object for yearly', () => {
-    const yearlyButton = getYearlyButton();
-    spyOn(comp, 'createPayment').and.stub();    
-    yearlyButton.nativeElement.click();
-    expect(comp.createPayment).toHaveBeenCalledWith('year');
+    const button = getButton();
+    spyOn(comp, 'submit').and.stub();    
+    button.nativeElement.click();
+    expect(comp.submit).toHaveBeenCalledWith('year');
   });
 
   it('should set the amount correctly for yearly', () => {
-    const result = comp.createPayment('year');
-    expect(result.amount).toBe(180);
+    comp.createWire('offchain month');
+    expect(comp.wire.amount).toBe(200);
   });
 
   it('should have a buy life button', () => {
-    const lifeButton = getLifeButton();
-    expect(lifeButton).not.toBeNull();
+    const button = getButton();
+    expect(button).not.toBeNull();
   });
 
   it('should create the payment object for life', () => {
-    const lifeButton = getLifeButton();
-    spyOn(comp, 'createPayment').and.stub();    
-    lifeButton.nativeElement.click();
-    expect(comp.createPayment).toHaveBeenCalledWith('lifetime')
+    const button = getButton();
+    spyOn(comp, 'submit').and.stub();    
+    button.nativeElement.click();
+    expect(comp.submit).toHaveBeenCalledWith('lifetime')
   });
   
   it('should set the amount correctly for lifetime', () => {
-    const result = comp.createPayment('lifetime');
-    expect(result.amount).toBe(500);
+    comp.createWire('offchain lifetime');
+    expect(comp.wire.amount).toBe(500);
   });
 
 });
