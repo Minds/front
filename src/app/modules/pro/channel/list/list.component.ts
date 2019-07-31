@@ -105,6 +105,10 @@ export class ProChannelListComponent implements OnInit {
     return ['/', this.channelService.currentChannel.username];
   }
 
+  get channelUsername() {
+    return this.channelService.currentChannel.username
+  }
+
   /**
    * Returns the feed type on par to routes
    * @param type feed type

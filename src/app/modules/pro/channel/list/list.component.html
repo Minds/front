@@ -8,17 +8,17 @@
 </h1>
 
 <div class="m-proChannelList__algorithm">
-  <a [routerLink]="['/pro', channelService.currentChannel.username, getTypeForRoute(type), 'hot']" routerLinkActive="active" i18n>
+  <a [routerLink]="['/pro', channelUsername, getTypeForRoute(type), 'hot']" routerLinkActive="active" i18n>
     <i class="material-icons">whatshot</i>
     <span i18n>HOT</span>
   </a>
 
-  <a [routerLink]="['/pro', channelService.currentChannel.username, getTypeForRoute(type), 'top']" routerLinkActive="active" i18n>
+  <a [routerLink]="['/pro', channelUsername, getTypeForRoute(type), 'top']" routerLinkActive="active" i18n>
     <i class="material-icons">trending_up</i>
     <span i18n>TOP</span>
   </a>
 
-  <a [routerLink]="['/pro', channelService.currentChannel.username, getTypeForRoute(type), 'latest']" routerLinkActive="active" i18n>
+  <a [routerLink]="['/pro', channelUsername, getTypeForRoute(type), 'latest']" routerLinkActive="active" i18n>
     <i class="material-icons">timelapse</i>
     <span i18n>LATEST</span>
   </a>
