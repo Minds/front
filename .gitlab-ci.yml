@@ -107,7 +107,7 @@ prepare:production:
     - docker push $CI_REGISTRY_IMAGE/front-init:$CI_BUILD_REF
   only:
     refs:
-      - production
+      - master
       - test/gitlab-ci
   dependencies:
     - build:production:en
