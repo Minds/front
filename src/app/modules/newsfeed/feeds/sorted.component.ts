@@ -295,10 +295,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   }
 
   shouldShowBoost(i: number) {
-    if (this.query) {
-      return false;
-    }
+    //if (this.query) {
+    //  return false;
+    //}
 
-    return (i > 0 && (i % 8) === 0 && i <= 40) || i === 2;
+    return (i > 0 && (i % 5) === 0 && i <= 80) || i === 1;
   }
 }

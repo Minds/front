@@ -76,7 +76,7 @@ import { ProModule } from './modules/pro/pro.module';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(MindsAppRoutes),
+    RouterModule.forRoot(MindsAppRoutes, { onSameUrlNavigation: "reload" }),
     CaptchaModule,
     CommonModule,
     AnalyticsModule,

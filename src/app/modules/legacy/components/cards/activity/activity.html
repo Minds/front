@@ -61,14 +61,14 @@
 
   <div m-read-more class="mdl-card__supporting-text message m-mature-message" [class.m-activity--message-remind]="activity.remind_object"
     [hidden]="!activity.message || editing">
-    <a class="m-mature-text-toggle" (click)="activity.mature_visibility = !activity.mature_visibility"
+    <a class="m-mature-text-toggle" (click)="toggleMatureVisibility()"
       *ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
       [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }">
       <i class="material-icons m-material-icons-inline">explicit</i>
     </a>
 
     <span class="m-mature-message-content" [innerHtml]="activity.message | tags" [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
-      (click)="activity.mature && !activity.mature_visibility ? activity.mature_visibility = !activity.mature_visibility : null">
+      (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null">
     </span>
     <m-read-more--button></m-read-more--button>
   </div>
@@ -84,8 +84,29 @@
   ></m-translate>
 
   <div class="minds-editable-container" *ngIf="editing && (!activity.custom_type || (activity.custom_type && !activity.title))">
-    <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-    <textarea class="mdl-card__supporting-text message" name="message" [ngModel]="activity.message" #messageEdit [autoGrow]></textarea>
+    <ng-template #itemTemplate let-choice="choice" let-selectChoice="selectChoice">
+      <m-post-autocomplete-item-renderer
+        [choice]="choice"
+        [selectChoice]="selectChoice"
+      ></m-post-autocomplete-item-renderer>
+    </ng-template>
+
+    <m-text-input--autocomplete-container>
+      <!-- Please note the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+      <textarea
+        class="mdl-card__supporting-text message"
+        name="message"
+        [ngModel]="activity.message"
+        #messageEdit
+        [autoGrow]
+        mTextInputAutocomplete
+        [findChoices]="suggestions.findSuggestions"
+        [getChoiceLabel]="suggestions.getChoiceLabel"
+        [itemTemplate]="itemTemplate"
+        [triggerCharacters]="['#', '@']"
+      ></textarea>
+    </m-text-input--autocomplete-container>
+
 
     <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
         <m-nsfw-selector
@@ -106,7 +127,7 @@
   <div class="m-rich-embed"
     *ngIf="activity.perma_url && activity.title"
     [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }">
-    <div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
       <span class="m-mature-overlay-note">
         <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
@@ -135,7 +156,7 @@
   <div class="item item-image item-image-video m-activity--video"
     [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
     *ngIf="activity.custom_type == 'video'">
-      <div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
         <span class="m-mature-overlay-note">
           <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
           <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
@@ -160,7 +181,7 @@
   <div class="item item-image allow-select m-activity--image"
    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
    *ngIf="activity.thumbnail_src && !activity.perma_url">
-    <div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
       <span class="m-mature-overlay-note">
         <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
@@ -176,7 +197,7 @@
   <div class="item item-image allow-select"
    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
    *ngIf="activity.custom_type == 'batch'">
-    <div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
       <span class="m-mature-overlay-note">
         <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
@@ -193,7 +214,12 @@
   <!-- Reminds -->
   <div *ngIf="activity.remind_object">
     <ng-container *ngIf="!isOwnerBlocked(activity.remind_object); else blockedRemindTemplate">
-      <minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" [boosted]="activity.boosted"></minds-remind>
+      <minds-remind
+        [object]="activity.remind_object"
+        [events]="childEventsEmitter"
+        [boosted]="activity.boosted"
+        (matureVisibilityChange)="onRemindMatureVisibilityChange()"
+      ></minds-remind>
     </ng-container>
     <ng-template #blockedRemindTemplate>
       <div class="m-activity__blockedRemind">

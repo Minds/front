@@ -15,12 +15,12 @@
     text-decoration:none;
   }
 
-  background-color: #3067a3 !important;
   padding:8px;
   font-weight:bold;
   cursor:pointer;
   @include m-theme(){
     color: themed($m-white);
+    background-color: themed($m-facebook) !important;
   }
 }
 
