@@ -46,7 +46,6 @@
       &.odd{
         text-align:left;
         .m-messenger--conversation-message-bubble{
-          //color:#FFF !important;
           @include m-theme(){
             background-color: themed($m-blue-grey-100) !important;
           }

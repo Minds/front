@@ -92,8 +92,6 @@
       font-weight: 800;
       letter-spacing: 1.25px;
       line-height: 1;
-      //color: rgba(255,255,255,0.85);
-      //color: rgba(0,0,0,0.85);
 
       @media screen and (max-width: 720px){
         font-size: 42px;
@@ -102,7 +100,6 @@
 
     h3 {
       font-size: 26px;
-      //color: rgba(255, 255, 255, 0.8);
       font-weight: 400;
       letter-spacing: 0.25px;
       line-height: 1.25;
@@ -131,7 +128,6 @@
         padding:0;
       }
       .mdl-card__title{
-        //color: #FFF !important;
         display:none;
       }
       .m-login-box input{
@@ -142,7 +138,6 @@
         text-rendering: optimizeLegibility;
         font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 1px;
-        //box-shadow: 0 0 6px rgba(255,255,255,0.22);
         @include m-theme(){
           background:rgba(themed($m-white),0.9);
           color:themed($m-grey-800);

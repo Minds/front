@@ -22,7 +22,6 @@ minds-form-register{
 
   //this is exactly the same as modal.scss
   .m-fb-register-button{
-    color: #3b5998;
     width: 170px;
     border: 0;
     cursor:pointer;
@@ -31,15 +30,18 @@ minds-form-register{
     padding: 0;
     margin: 0;
     margin-left: 8px;
-    border: 1px solid #3b5998;
     @include m-theme(){
       background-color: themed($m-white);
+      color: themed($m-facebook);
+      border: 1px solid themed($m-facebook);
     }
 
     .m-social-icons-icon-inline{
-      fill: #3b5998;
       vertical-align: middle;
       display: inline-block;
+      @include m-theme(){
+        fill: themed($m-facebook);
+      }
     }
 
     .m-signup-button-text{

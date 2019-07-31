@@ -145,19 +145,27 @@
     }
 
     .m-referrals-links__shareButton--twitter {
-      background-color: #03b3ee;
+      @include m-theme(){
+        background-color: themed($m-twitter);
+      }
     }
 
     .m-referrals-links__shareButton--messenger {
-      background-color: #0084ff;
+      @include m-theme(){
+        background-color: themed($m-messenger);
+      }
     }
 
     .m-referrals-links__shareButton--facebook {
-      background-color: #3b5998;
+      @include m-theme(){
+        background-color: themed($m-facebook);
+      }
     }
 
     .m-referrals-links__shareButton--whatsapp {
-      background-color: #25d366;
+      @include m-theme(){
+        background-color: themed($m-whatsapp);
+      }
     }
 
     .m-referrals-links__shareButton--sms,
