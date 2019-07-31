@@ -20,7 +20,6 @@ m-modal-signup, m-modal-signup-on-action{
   .mdl-card__title{
     flex-wrap: wrap;
     margin-bottom: 0;
-    //padding-bottom: 0;
 
     img{
       width: 168px;
@@ -129,10 +128,14 @@ m-modal-share {
       margin: 0 4px;
     }
     .m-social-share-twitter {
-      background: #4099FF !important;
+      @include m-theme(){
+        background: themed($m-twitter) !important;
+      }
     }
     .m-social-share-fb {
-      background: #335795 !important;
+      @include m-theme(){
+        background: themed($m-facebook) !important;
+      }
     }
     .m-social-share-email {
       @include m-theme(){

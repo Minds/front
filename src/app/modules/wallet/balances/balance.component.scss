@@ -141,14 +141,18 @@ m-wallet--balance-money, m-wallet--balance-reward, m-wallet--balance-tokens {
   .m-btn--slim {
     height: 30px;
     margin: 0 0 0 28px;
-    color: #888; 
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
   }
 
   p {
     text-align: left;
     margin: 0;
     padding: 0 8px;
-    color: #666;
+    @include m-theme(){
+      color: themed($m-grey-600);
+    }
   }
 
 }

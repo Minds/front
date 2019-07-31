@@ -24,10 +24,14 @@
     padding:24px 0 0;
 
     .m-affiliate--link-buttons-twitter{
-      background:#4099FF !important;
+      @include m-theme(){
+        background: themed($m-twitter) !important;
+      }
     }
     .m-affiliate--link-buttons-fb{
-      background:#335795 !important;
+      @include m-theme(){
+        background: themed($m-facebook) !important;
+      }
     }
     .m-affiliate--link-buttons-email{
       @include m-theme(){
