@@ -16,6 +16,7 @@ export class WithdrawCardComponent implements OnInit {
   tokens: number = 0;
   transactions: number = 0;
   users: number = 0;
+  currents: { name: string, value: number }[];
 
   constructor(private client: Client) {
   }
@@ -34,17 +35,16 @@ export class WithdrawCardComponent implements OnInit {
 
   private async getAvgData() {
     try {
-      let avgs: Array<any> = await Promise.all([
-        this.client.get('api/v2/analytics/withdraw', { key: 'average_tokens', timespan: this.card.selectedOption }),
-        this.client.get('api/v2/analytics/withdraw', { key: 'average', timespan: this.card.selectedOption }),
-        this.client.get('api/v2/analytics/withdraw', { key: 'average_users', timespan: this.card.selectedOption }),
-      ]);
+      const response: any = await this.client.get('api/v2/analytics/withdraw', {
+        key: 'avg',
+        timespan: this.card.selectedOption
+      });
 
-      this.tokens = avgs[0].data;
+      this.tokens = response.data.tokens;
 
-      this.transactions = avgs[1].data;
+      this.transactions = response.data.transactions;
 
-      this.users = avgs[2].data;
+      this.users = response.data.users;
     } catch (e) {
       console.error(e);
     }

@@ -1,9 +1,10 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
+import { timespanOption } from "../timespanOption";
 import { removeCurrentUnits } from "../../../util";
 
 @Component({
-  selector: 'm-analyticscharts__channelinteractions',
+  selector: 'm-analyticscharts__pageviews',
   template: `
     <div class="m-chart" #chartContainer>
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
@@ -17,12 +18,14 @@ import { removeCurrentUnits } from "../../../util";
   `
 })
 
-export class ChannelInteractionsComponent implements OnInit {
-  @Input() analytics: 'totals' | 'monthly';
+export class PageviewsChartComponent implements OnInit {
+  @Input() pie: boolean = false;
   @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
   @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
+  timespan: timespanOption;
+  init: boolean = false;
   inProgress: boolean = false;
   data: any;
 
@@ -42,9 +45,22 @@ export class ChannelInteractionsComponent implements OnInit {
       type: '-',
     },
     yaxis: {
-      type: 'log'
-    }
+      type: 'log',
+      dtick: 1,
+    },
+    margin: {
+      t: 16,
+      b: 32,
+      l: 32,
+    },
   };
+
+  @Input('timespan') set _timespan(value: timespanOption) {
+    this.timespan = value;
+    if (this.init) {
+      this.getData();
+    }
+  }
 
   constructor(private client: Client) {
 
@@ -53,23 +69,24 @@ export class ChannelInteractionsComponent implements OnInit {
   ngOnInit() {
     this.applyDimensions();
     this.getData();
+    this.init = true;
   }
 
   async getData() {
-    const response: any = await this.client.get(`api/v2/analytics/interactions/`, { key: this.analytics });
-    const [data, current] = removeCurrentUnits(response.data);
-    this.data = data;
+    const opts = { timespan: this.timespan };
 
-    this.loaded.emit(current);
-    switch (this.analytics) {
-      case 'monthly':
-        this.layout.title = 'Interactions';
-        this.data = [response.data[0]];
-        break;
-      case 'totals':
-        this.layout.title = 'Interactions by Type';
-        this.data[0].type = 'pie';
-        break;
+    if (this.pie) {
+      opts['key'] = 'routes';
+    }
+    const response: any = await this.client.get(`api/v2/analytics/pageviews`, opts);
+    if (this.pie) {
+      this.data = response.data;
+      this.data[0].type = 'pie';
+    } else {
+      const [data, current] = removeCurrentUnits(response.data);
+      this.data = data;
+
+      this.loaded.emit(current);
     }
   }
 

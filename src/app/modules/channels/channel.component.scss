@@ -262,9 +262,14 @@ m-channel{
          font-size: 28px;
          margin: 0;
        }
+       .minds-button-edit > button {
+         font-size:16px;
+       }
+       minds-user-dropdown > button {
+         font-size:24px;
+       }
        button{
           border:0;
-          font-size:16px;
           margin-right:-26px;
        }
      }

@@ -8,7 +8,7 @@
 
   <m-newsfeed--boost-rotator interval="4" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
 
-  <ng-container *ngFor="let activity of (feedsService.feed | async); let i = index">
+  <ng-container *ngFor="let activity$ of (feedsService.feed | async); let i = index">
     <ng-container *mIfFeature="'es-feeds'">
       <m-featured-content
         *ngIf="(i > 0 && (i % 8) === 0 && i <= 40) || i === 2"
@@ -17,8 +17,9 @@
     </ng-container>
 
     <minds-activity
+      *ngIf="(activity$ | async) as activity"
       class="mdl-card m-border item"
-      [object]="activity | async"
+      [object]="activity"
       [boostToggle]="activity.boostToggle"
       (delete)="delete(activity)"
       [showRatingToggle]="true"
