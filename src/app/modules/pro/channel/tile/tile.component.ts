@@ -33,7 +33,7 @@ export class ProTileComponent {
   getText() {
     switch (ProTileComponent.getType(this.entity)) {
       case 'object:blog':
-        return this.entity.description;
+        return this.entity.excerpt;
       case 'object:image':
       case 'object:video':
         return this.entity.description;
