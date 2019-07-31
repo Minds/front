@@ -21,6 +21,7 @@ export type PayloadType = 'onchain' | 'offchain';
 export class PaymentPlanComponent {
   minds = window.Minds;
   blockchain = window.Minds.blockchain;
+  receiver = window.Minds.blockchain.plus_address;
 
   payment = {
     period: null,
@@ -79,8 +80,6 @@ export class PaymentPlanComponent {
     this._opts = opts;
     this.setDefaults();
   }
-
-  @Input() receiver;
 
   constructor(
     public session: Session,
@@ -207,7 +206,6 @@ export class PaymentPlanComponent {
 
     this.wire.recurring = false;
     this.wire.guid = this.minds.blockchain.plus_guid;
-    this.wire.payload = '';
   }
 
   async submit() {
