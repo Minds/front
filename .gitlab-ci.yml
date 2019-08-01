@@ -19,6 +19,9 @@ cache:
     - node_modules
   policy: pull
 
+variables:
+  CYPRESS_INSTALL_BINARY: 0 # Speeds up the install process
+
 test:
   image: circleci/node:8-browsers
   stage: test:unit
@@ -34,6 +37,8 @@ test:
 e2e:
   image: cypress/base:10
   stage: test:e2e
+  variables:
+    CYPRESS_INSTALL_BINARY: 1
   script:
     - npm install
     - >
@@ -44,7 +49,8 @@ e2e:
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - $(npm bin)/cypress run --config CYPRESS_baseUrl=$E2E_DOMAIN
+    - $(npm bin)/cypress install # Binary needs reinstalling
+    - $(npm bin)/cypress run --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN
   artifacts:
     when: always
     paths:
