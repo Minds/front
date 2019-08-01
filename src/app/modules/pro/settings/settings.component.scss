@@ -1,10 +1,13 @@
 .m-pro--settings {
   max-width: 1280px;
   margin: auto;
+
+  .m-toolbar {
+    padding-top: 4px;
+  }
 }
 
 .m-pro--settings--page {
-  margin-top: 16px;
   padding-bottom: 24px;
 
   @include m-theme() {
@@ -49,6 +52,10 @@
       font-size: 16px;
       max-width: 40em;
 
+      @media screen and (max-width: 768px) {
+        max-width: 100%;
+      }
+
       @include m-theme() {
         border-color: themed($m-grey-50);
       }
@@ -61,6 +68,31 @@
     @include m-theme() {
       color: themed($m-grey-300);
       border-color: themed($m-grey-300);
+    }
+  }
+
+  .m-pro--settings--note {
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+
+  .m-pro--settings--flex-inputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 40em;
+
+    @media screen and (max-width: 768px) {
+      max-width: 100%;
+    }
+
+    > input {
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }

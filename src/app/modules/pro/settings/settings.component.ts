@@ -16,6 +16,8 @@ export class ProSettingsComponent implements OnInit {
 
   saved: boolean = false;
 
+  currentTab: 'general' | 'theme' | 'footer' | 'cancel' = 'general';
+
   constructor(
     protected service: ProService,
     protected session: Session,
@@ -54,6 +56,14 @@ export class ProSettingsComponent implements OnInit {
     this.saved = true;
     this.inProgress = false;
     this.detectChanges();
+  }
+
+  addBlankFooterLink() {
+    if (!this.settings) {
+      return;
+    }
+
+    this.settings.footer_links.push({ title: '', href: '' });
   }
 
   detectChanges() {
