@@ -1,51 +1,33 @@
-@import 'themes';
-
 .m-pulsating--small {
+  box-shadow: 0 0 0 red;
   animation: pulse--small 1.5s infinite;
-  @include m-theme(){
-    box-shadow: 0 0 0 themed($m-red);
-  }
 }
 
 .m-pulsating--big {
+  box-shadow: 0 0 0 red;
   animation: pulse--big 2s infinite;
-  @include m-theme(){
-    box-shadow: 0 0 0 themed($m-red);
-  }
 }
 
 @keyframes pulse--small {
   20% {
-    @include m-theme(){
-      box-shadow: 0 0 0 0 rgba(themed($m-red), 0.6);
-    }
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6);
   }
   99% {
-    @include m-theme(){
-      box-shadow: 0 0 0 7px rgba(themed($m-red), 0);
-    }
+    box-shadow: 0 0 0 7px rgba(244, 67, 54, 0);
   }
   100% {
-    @include m-theme(){
-      box-shadow: 0 0 0 0 rgba(themed($m-red), 0);
-    }
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
   }
 }
 
 @keyframes pulse--big {
   0% {
-    @include m-theme(){
-      box-shadow: 0 0 0 0 rgba(themed($m-red), 0.4);
-    }
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.4);
   }
   70% {
-    @include m-theme(){
-      box-shadow: 0 0 0 15px rgba(themed($m-red), 0);
-    }
+    box-shadow: 0 0 0 15px rgba(244, 67, 54, 0);
   }
   100% {
-    @include m-theme(){
-      box-shadow: 0 0 0 0 rgba(themed($m-red), 0);
-    }
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
   }
 }
