@@ -12,6 +12,14 @@ import { TokenContractService } from '../../blockchain/contracts/token-contract.
 
 export type PayloadType = 'onchain' | 'offchain';
 
+
+/**
+ * Component containing the logic for payment plan component,
+ * allowing users to select a plus tier, pay and subscribe.
+ *
+ * Based on the creator component.
+ * @author Ben Hayward
+ */
 @Component({
   providers: [CurrencyPipe],
   selector: 'm-payment-plan',
@@ -121,6 +129,9 @@ export class PaymentPlanComponent {
   }
 
 
+  /**
+   * Loads balances for the current wallet.
+   */
   async loadBalances() {
     try {
       let currentWallet = await this.web3Wallet.getCurrentWallet();
@@ -149,6 +160,11 @@ export class PaymentPlanComponent {
     }
   }
 
+
+  /**
+   * Loads current balance by wallet address.
+   * @param {string} address - wallet address
+   */
   async loadCurrentWalletBalance(address) {
     try {
       this.balances.onChainAddress = address;
@@ -162,6 +178,9 @@ export class PaymentPlanComponent {
     }
   }
 
+  /**
+   * Loads the current rate of tokens.
+   */
   async loadTokenRate() {
     let response: any = await this.client.get(`api/v2/blockchain/rate/tokens`);
 
@@ -169,6 +188,7 @@ export class PaymentPlanComponent {
       this.tokenRate = response.rate;
     }
   }
+
 
   /**
    * Populates the wire object
@@ -207,6 +227,10 @@ export class PaymentPlanComponent {
     this.wire.guid = this.minds.blockchain.plus_guid;
   }
 
+
+  /**
+   * Called on form submission. Submits the payment and returns success or an error.
+   */
   async submit() {
     this.createWire(this.tier);
 
@@ -257,6 +281,7 @@ export class PaymentPlanComponent {
     }
   }
 
+
   /**
    * Checks if the user can submit using the current settings
    */
@@ -271,7 +296,8 @@ export class PaymentPlanComponent {
     return false;
   }
 
-   /**
+
+  /**
    * Validates if the wire payment can be submitted using the current settings
    */
   validate() {
@@ -311,6 +337,10 @@ export class PaymentPlanComponent {
     }
   }
 
+
+  /**
+   * Resets to default values.
+   */
   setDefaults() {
     this.wire.recurring = true;
     let payloadType = localStorage.getItem('preferred-payment-method');
@@ -319,6 +349,7 @@ export class PaymentPlanComponent {
     }
     this.setPayloadType(<PayloadType>payloadType);
   }
+
 
   /**
    * Sets the wire currency
@@ -338,6 +369,7 @@ export class PaymentPlanComponent {
     this.showErrors();
   }
 
+
   /**
    * Sets the wire payment nonce
    */
@@ -346,6 +378,7 @@ export class PaymentPlanComponent {
     this.showErrors();
   }
 
+
   /**
    * Sets the onchain specific wire payment nonce
    */
@@ -353,12 +386,14 @@ export class PaymentPlanComponent {
     return this.setNoncePayload({ receiver: this.blockchain.plus_address, address })
   }
 
+
   /**
   * Round by 4
   */
   roundAmount() {
     this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
   }
+
 
   /**
    * Shows visible wire errors

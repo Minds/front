@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -39,13 +39,33 @@ let overlayModal = new function () {
   });
 };
 
-fdescribe('WirePaymentsCreatorComponent', () => {
+describe('WirePaymentsCreatorComponent', () => {
 
   let comp: PaymentPlanComponent;
   let fixture: ComponentFixture<PaymentPlanComponent>;
 
-  function getButton(): DebugElement {
+  function getPurchaseButton(): DebugElement {
     return fixture.debugElement.query(By.css('.m-plus-plan__period-buy-button__blue'));
+  }
+  
+  function getMonthlyOffchainButton(): DebugElement {
+    return fixture.debugElement.query(By.css('.m-plus-plan__plans div:nth-child(1) input'))
+  }
+
+  function getYearlyOnchainButton(): DebugElement {
+    return fixture.debugElement.query(By.css('.m-plus-plan__plans div:nth-child(2) span:nth-child(3) input'))
+  }
+
+  function getYearlyOffchainButton(): DebugElement {
+    return fixture.debugElement.query(By.css('.m-plus-plan__plans div:nth-child(2) span:nth-child(2) input'))
+  }
+
+  function getLifeOnchainButton(): DebugElement {
+    return fixture.debugElement.query(By.css('.m-plus-plan__plans div:nth-child(3) span:nth-child(3) input'))
+  }
+
+  function getLifeOffchainButton(): DebugElement {
+    return fixture.debugElement.query(By.css('.m-plus-plan__plans div:nth-child(3) span:nth-child(2) input'))
   }
 
   beforeEach(async(() => {
@@ -84,11 +104,31 @@ fdescribe('WirePaymentsCreatorComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
     fixture = TestBed.createComponent(PaymentPlanComponent);
     window.Minds.blockchain = {
-        plus_address: 'oxtn'
+        plus_address: '0x00000000000000'
     }
-    // comp.receiver = window.Minds.blockchain.plus_address;
+    clientMock.response = {};
+
+    clientMock.response[`api/v2/boost/rates`] = {
+      'balance': 301529,
+      'rate': 1,
+      'cap': 5000,
+      'min': 100,
+      'usd': 1000,
+      'tokens': 1
+    };
+    
+    clientMock.response['api/v2/blockchain/wallet/balance'] = {
+    addresses: [{
+        balance: 1
+      },
+      {
+        balance: 1
+      }]
+    };
+
     comp = fixture.componentInstance; // LoginForm test instance
 
     fixture.detectChanges();
@@ -103,53 +143,71 @@ fdescribe('WirePaymentsCreatorComponent', () => {
   });
 
   afterEach(() => {
+    TestBed.resetTestingModule();
     jasmine.clock().uninstall();
   });
 
   it('should have a purchase button', () => {
-    const button = getButton();
+    const button = getPurchaseButton();
     expect(button).not.toBeNull();
   });
 
-  it('should create the payment object for monthly', () => {
-    const button = getButton();
-    spyOn(comp, 'submit').and.stub();    
-    button.nativeElement.click();
-    expect(comp.submit).toHaveBeenCalledWith('month');
+  it('should have all radio buttons', () => {
+    expect(getMonthlyOffchainButton()).not.toBeNull();
+    expect(getYearlyOnchainButton()).not.toBeNull();
+    expect(getYearlyOffchainButton()).not.toBeNull();
+    expect(getLifeOnchainButton()).not.toBeNull();
+    expect(getLifeOffchainButton()).not.toBeNull();
   });
 
-  it('should set the amount correctly for monthly offchain', () => {
+  it('radio buttons should change tier value', () => {
+    getMonthlyOffchainButton().nativeElement.click();
+    expect(comp.tier).toBe('offchain month');
+    
+    getYearlyOffchainButton().nativeElement.click();
+    expect(comp.tier).toBe('offchain year');
+    
+    getYearlyOnchainButton().nativeElement.click();
+    expect(comp.tier).toBe('onchain year');
+    
+    getLifeOffchainButton().nativeElement.click();
+    expect(comp.tier).toBe('offchain lifetime');
+
+    getLifeOnchainButton().nativeElement.click();
+    expect(comp.tier).toBe('onchain lifetime');
+  });
+
+  it('should call submit on purchase button click', fakeAsync(() => {
+    spyOn(comp, 'submit').and.stub();
+
+    getMonthlyOffchainButton().nativeElement.click();
+    getPurchaseButton().nativeElement.click();
+    
+    expect(comp.submit).toHaveBeenCalled();
+  }));
+
+  it('should load the current balance', () => fakeAsync(() => {
+    comp.load();
+    tick();
+
+    expect(comp.inProgress).toBeFalsy();
+    expect(comp.rates).toBe({
+      'balance': 301529,
+      'rate': 1,
+      'cap': 5000,
+      'min': 100,
+      'usd': 1000,
+      'tokens': 1
+    });
+  }));
+
+  it('should create the wire object correctly', fakeAsync(() => {
     comp.createWire('offchain month');
+    tick();
+
+    expect(comp.wire).not.toBeNull();
     expect(comp.wire.amount).toBe(20);
-  });
-
-  it('should create the payment object for yearly', () => {
-    const button = getButton();
-    spyOn(comp, 'submit').and.stub();    
-    button.nativeElement.click();
-    expect(comp.submit).toHaveBeenCalledWith('year');
-  });
-
-  it('should set the amount correctly for yearly', () => {
-    comp.createWire('offchain month');
-    expect(comp.wire.amount).toBe(200);
-  });
-
-  it('should have a buy life button', () => {
-    const button = getButton();
-    expect(button).not.toBeNull();
-  });
-
-  it('should create the payment object for life', () => {
-    const button = getButton();
-    spyOn(comp, 'submit').and.stub();    
-    button.nativeElement.click();
-    expect(comp.submit).toHaveBeenCalledWith('lifetime')
-  });
-  
-  it('should set the amount correctly for lifetime', () => {
-    comp.createWire('offchain lifetime');
-    expect(comp.wire.amount).toBe(500);
-  });
-
+    expect(comp.wire.recurring).toBeFalsy();
+    expect(comp.wire.guid).not.toBeNull();
+  }));
 });
