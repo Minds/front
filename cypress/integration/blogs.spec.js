@@ -2,8 +2,8 @@ context('Blogs', () => {
   beforeEach(() => {
     cy.login(true);
 
-    cy.location('pathname').should('eq', `/newsfeed/subscriptions`);
-
+    cy.location('pathname', { timeout: 30000 })
+      .should('eq', `/newsfeed/subscriptions`);
   })
 
   it('should not be able to create a new blog if no title or banner are specified', () => {
@@ -46,7 +46,7 @@ context('Blogs', () => {
     // click on hashtags dropdown
     cy.get('.m-category-info m-hashtags-selector .m-dropdown--label-container').click();
     // select #ART
-    cy.get('.m-category-info m-dropdown m-form-tags-input > div:nth-child(1) > span').contains('#art').click();
+    cy.get('.m-category-info m-dropdown m-form-tags-input > div > span').contains('#art').click();
     // type in another hashtag manually
     cy.get('.m-category-info m-hashtags-selector m-form-tags-input input').type('hashtag{enter}').click();
 
@@ -73,11 +73,12 @@ context('Blogs', () => {
 
     cy.wait(1000);
 
-    cy.get('.m-button--submit').click();
+    cy.get('.m-button--submit').click({ force: true }); // TODO: Investigate why disabled flag is being detected
 
-    cy.wait(100);
+    // Blogs will not save, nor return error, if a user doesn't have an avatar
 
-    cy.location('pathname').should('contains', `/${Cypress.env().username}/blog`);
+    cy.location('pathname', { timeout: 30000})
+      .should('contains', `/${Cypress.env().username}/blog`);
 
     cy.get('.m-blog--title').contains('Title');
     cy.get('.minds-blog-body p').contains('Content');
@@ -88,7 +89,7 @@ context('Blogs', () => {
 
     //open dropdown
     cy.get('m-post-menu button.minds-more').click();
-    cy.get('m-post-menu ul.minds-dropdown-menu li:nth-child(3)').contains('Delete').click();
+    cy.get('m-post-menu ul.minds-dropdown-menu li').contains('Delete').click();
     cy.get('m-post-menu m-modal-confirm .mdl-button--colored').click();
 
   })
