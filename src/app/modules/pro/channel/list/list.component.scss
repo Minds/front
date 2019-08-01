@@ -39,8 +39,10 @@ m-pro--channel-list {
     font-size: 14px;
     font-weight: 600;
     padding: 8px;
-    color: #90a4ae !important;
-    background-color: #eceff1 !important;
+    margin: 0 auto;
+    text-align: center;
+    background-color: var(--plain-background-color);
+    color: var(--text-color);
   }
 
   .m-proChannelListContentList__seeMore {
