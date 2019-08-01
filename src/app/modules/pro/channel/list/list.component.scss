@@ -67,8 +67,7 @@ m-pro--channel-list {
       grid-template-columns: 1fr;
 
       & > li {
-        max-width: 680px;
-        min-width: 400px;
+        width: 500px;
         justify-self: center;
 
         minds-activity {
