@@ -7,6 +7,7 @@ import { CommonModule } from '../../common/common.module';
 import { MobileService } from "./mobile.service";
 import { HttpClient } from "@angular/common/http";
 import { FeaturesService } from "../../services/features.service";
+import { Session } from '../../services/session';
 
 const routes: Routes = [
   {
@@ -34,7 +35,7 @@ const routes: Routes = [
     {
       provide: MobileService,
       useFactory: MobileService._,
-      deps: [ HttpClient, FeaturesService ]
+      deps: [ HttpClient, FeaturesService, Session ]
     }
   ]
 })

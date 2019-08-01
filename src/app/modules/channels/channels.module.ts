@@ -23,6 +23,9 @@ import { PosterModule } from '../newsfeed/poster/poster.module';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ExplicitOverlayComponent } from './explicit-overlay/overlay.component';
 import { HashtagsModule } from '../hashtags/hashtags.module';
+import { ChannelSortedComponent } from './sorted/sorted.component';
+import { ChannelSortedModuleComponent } from './sorted/module.component';
+import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
 
 const routes: Routes = [
   { path: 'channels/:filter', component: ChannelsListComponent },
@@ -43,6 +46,7 @@ const routes: Routes = [
     PosterModule,
     NewsfeedModule,
     HashtagsModule,
+    ReferralsModule,
   ],
   declarations: [
     ChannelModulesComponent,
@@ -56,6 +60,8 @@ const routes: Routes = [
     ChannelFeedComponent,
     ChannelSidebar,
     ExplicitOverlayComponent,
+    ChannelSortedComponent,
+    ChannelSortedModuleComponent,
   ],
   exports: [
     ChannelModulesComponent,

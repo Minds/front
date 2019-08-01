@@ -2,7 +2,7 @@ m-channel--modules{
   > .mdl-card__title[href] {
     cursor: pointer;
   }
-  
+
   .minds-channel-media-sidebard{
       a {
         position: relative;
@@ -17,9 +17,11 @@ m-channel--modules{
           width: 100%;
           height: 100%;
           display: inline-block;
-          background-color:#333;
           background-position: center center;
           background-size:cover;
+          @include m-theme(){
+            background-color:themed($m-grey-900);
+          }
         }
 
         > i.material-icons {
@@ -28,7 +30,9 @@ m-channel--modules{
 
         &.m-mature-module-thumbnail {
           transform-style: preserve-3d;
-          background-color: rgba(0, 0, 0, 0.65);
+          @include m-theme(){
+            background-color: rgba(themed($m-black), 0.65);
+          }
 
           > .m-thumb-image {
             filter: blur(5px) grayscale(100%);
@@ -43,7 +47,9 @@ m-channel--modules{
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 3em;
-            color: #fff;
+            @include m-theme(){
+              color: themed($m-white);
+            }
           }
         }
       }

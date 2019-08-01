@@ -14,10 +14,12 @@
         font-size: 14px;
         font-weight: 300;
         line-height: 1.25em;
-        color: #EEE;
         margin: 0 0 1.61em 0;
-        font-family: 'Roboto';
+        font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 0.5px;
+        @include m-theme(){
+          color: themed($m-grey-50);
+        }
 
         .m-subnote {
           font-size: 12px;
@@ -27,19 +29,23 @@
       .m-value {
         font-size: 18px;
         font-weight: 300;
-        color: #FFF;
         text-align: left;
         font-family: 'Roboto', Helvetica;
         font-size: 26px;
         letter-spacing: 2px;
+        @include m-theme(){
+          color: themed($m-white);
+        }
       }
       .m-monetization--overview-period-tip{
-          color: #AAA;
-          font-family: Roboto;
+          font-family: 'Roboto', Helvetica, sans-serif;
           margin-top: -28px;
           font-size: 9px;
           letter-spacing:1px;
           position: absolute;
+          @include m-theme(){
+            color: themed($m-grey-200);
+          }
       }
     }
   }
@@ -48,10 +54,12 @@
     font-size: 13px;
     font-weight: 300;
     text-align: left;
-    color: #aaa;
     padding: 8px;
     letter-spacing: 1px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
+    @include m-theme(){
+      color: themed($m-grey-200);
+    }
   }
 
   .m-monetization-cta-wrapper {
@@ -72,7 +80,9 @@
 
     .m-note {
       font-size: 11px;
-      color: #999999;
+      @include m-theme(){
+        color: themed($m-grey-300);
+      }
     }
   }
 
@@ -84,9 +94,9 @@
     table {
       width: 100%;
       table-layout: fixed;
-      
+
       th {
-        font-family: Roboto;
+        font-family: 'Roboto', Helvetica, sans-serif;
         text-transform: uppercase;
         letter-spacing: 1px;
       }
@@ -99,10 +109,12 @@
         font-weight: 300;
 
         a{
-          color: #455a64;
           text-decoration: none;
           font-family: Helvetica;
           letter-spacing: 1px;
+          @include m-theme(){
+            color: themed($m-blue-grey-700);
+          }
         }
 
         &.mdl-data-table__cell--non-numeric {

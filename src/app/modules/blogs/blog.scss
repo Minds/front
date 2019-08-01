@@ -19,12 +19,12 @@
       display: block;
       text-decoration: none;
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 1.25px;
     }
     span {
       font-size: 11px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       text-transform: uppercase;
       letter-spacing: 1.25px;
       cursor: default;
@@ -63,7 +63,7 @@
       font-weight: 600;
       font-size: 42px;
       letter-spacing: 1.5px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
@@ -101,8 +101,10 @@
 
 minds-blog-view, m-blog-view {
   display: block;
-  background: #FFF;
   padding-top: 0;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   header {
     //position: relative;
@@ -141,7 +143,9 @@ minds-blog-view, m-blog-view {
   }
 
   a {
-    color: #111;
+    @include m-theme(){
+      color: themed($m-grey-950);
+    }
   }
   img {
     max-width: 100%;
@@ -161,12 +165,15 @@ m-blog-view, minds-blog-edit {
   }
 
   ul.m-blog--categories-list {
-    border-top: 1px solid #ddd;
     list-style: none;
     font-weight: 500;
-    color: #666;
     margin: 0;
     padding: 20px 0 0 0;
+    @include m-theme(){
+      color: themed($m-grey-600);
+      border-top: 1px solid themed($m-grey-100);
+    }
+
     li.m-blog--categories-list-item {
       cursor: pointer;
       display: inline-block;
@@ -174,7 +181,9 @@ m-blog-view, minds-blog-edit {
       padding: 0 6px;
 
       &:not(.selected):hover {
-        color: #333;
+        @include m-theme(){
+          color: themed($m-grey-900);
+        }
       }
     }
   }
@@ -185,7 +194,9 @@ minds-blog-edit {
     font-size: 14px;
     display: inline-block;
     margin: 8px;
-    color: #F44336;
+    @include m-theme(){
+      color: themed($m-red);
+    }
   }
 }
 
@@ -203,9 +214,11 @@ minds-blog-edit {
   br, p, ul, ol {
     font-size: 16px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    color: #6a6a6a;
     font-weight: 400;
     line-height: 30px;
+    @include m-theme(){
+      color: themed($m-grey-600);
+    }
   }
 
   p {
@@ -216,11 +229,13 @@ minds-blog-edit {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Roboto';
-    color: rgba(0,0,0,.84);
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    @include m-theme(){
+      color: rgba(themed($m-black), 0.84);
+    }
   }
 
   h1,h2,h3,h4,h5 {
@@ -237,7 +252,9 @@ minds-blog-edit {
 
   /*blockquote {
     padding: $minds-padding 0 $minds-padding 0.5em;
-    border-left: 2px solid #6a6a6a;
+    @include m-theme(){
+       border-left: 2px solid themed($m-grey-600);
+    }
 
     &:before, &:after {
       position: initial;
@@ -266,17 +283,21 @@ minds-blog-edit {
 // remove this from here soon
 .minds-blog-subscribe {
   background: transparent;
-  border: 1px solid #78909c;
-  color: #78909c;
   padding: 8px 16px;
   font-size: 12px;
   border-radius: 2px;
   text-transform: uppercase;
+  @include m-theme(){
+    color: themed($m-blue-grey-400);
+    border: 1px solid themed($m-blue-grey-400);
+  }
 }
 
 minds-blog-edit {
   display: block;
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   m-wire-threshold-input {
     position: relative;
@@ -298,7 +319,7 @@ minds-blog-edit {
     font-weight: 600;
     font-size: 42px;
     letter-spacing: 1.5px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     line-height: 1.2em;
@@ -307,7 +328,7 @@ minds-blog-edit {
   h1,h2,h3,h4 {
     font-weight: 600;
     letter-spacing: 1.5px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -319,11 +340,13 @@ minds-blog-edit {
     line-height: 1.58;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Roboto';
-    color: rgba(0,0,0,.84);
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    @include m-theme(){
+      color: rgba(themed($m-black), 0.84);
+    }
 
     &:first-of-type {
       margin-top: 0;
@@ -337,6 +360,12 @@ minds-blog-edit {
 minds-card-blog {
   min-height: 242px !important;
 
+  .mdl-card__title {
+    @include m-theme(){
+      background-color: themed($m-grey-900);
+    }
+  }
+
   .m-owner-block {
     padding: 16px;
     display: flex;
@@ -345,7 +374,9 @@ minds-card-blog {
     width: 100%;
     left: 0;
     box-sizing: border-box;
-    background-color: #FFF;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 }
 
@@ -357,8 +388,10 @@ minds-card-blog {
     display: inline-block;
     text-align: center;
     font-size: 16px;
-    color: #666;
     font-style: italic;
+    @include m-theme(){
+      color: themed($m-grey-600);
+    }
   }
 }
 
@@ -370,8 +403,10 @@ minds-blog-edit {
   }
   .m-button--draft, .m-button--submit {
     cursor: pointer;
-    color: rgb(66,66,66);
-    background-color: rgb(255,215,64);
+    @include m-theme(){
+      color: themed($m-grey-800);
+      background-color: themed($m-amber);
+    }
   }
 }
 
@@ -392,8 +427,10 @@ minds-blog-edit {
   }
 
   .m-blog-edit--fields {
-    border: 1px solid #eee;
     padding: $minds-padding * 2;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+    }
   }
 
   .m-blog-edit--field {
@@ -409,11 +446,13 @@ minds-blog-edit {
     input, textarea {
       width: 100%;
       padding: $minds-padding;
-      border: 1px solid #eee;
-      color: #333 !important;
       font-family: inherit;
       font-size: 14px;
       letter-spacing: inherit;
+      @include m-theme(){
+         border: 1px solid themed($m-grey-50);
+         color: themed($m-grey-900) !important;
+      }
     }
   }
 }

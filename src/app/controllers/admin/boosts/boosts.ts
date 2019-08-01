@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { Client } from '../../../services/api';
 import { RejectionReasonModalComponent } from './modal/rejection-reason-modal.component';
 import { Reason, rejectionReasons } from './rejection-reasons';
+import { ReportCreatorComponent } from "../../../modules/report/creator/creator.component";
+import { OverlayModalService } from "../../../services/ux/overlay-modal";
 
 @Component({
   moduleId: module.id,
@@ -34,9 +36,15 @@ export class AdminBoosts {
 
   paramsSubscription: Subscription;
 
-  @ViewChild('reasonModal') modal: RejectionReasonModalComponent;
+  readonly NON_REPORTABLE_REASONS = [7, 8, 12, 13]; // spam, appeals, onchain payment failed, original post removed
 
-  constructor(public client: Client, private route: ActivatedRoute) {
+  @ViewChild('reasonModal', { static: false }) modal: RejectionReasonModalComponent;
+
+  constructor(
+    public client: Client,
+    private overlayModal: OverlayModalService,
+    private route: ActivatedRoute,
+  ) {
   }
 
   ngOnInit() {
@@ -125,6 +133,10 @@ export class AdminBoosts {
 
     this.reasonModalOpened = false;
 
+    if (this.NON_REPORTABLE_REASONS.indexOf(boost.rejection_reason) === -1) {
+      this.report(this.selectedBoost);
+    }
+
     this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/reject', { reason: boost.rejection_reason });
     this.pop(boost);
   }
@@ -144,6 +156,15 @@ export class AdminBoosts {
     boost.rejection_reason = this.findReason('Explicit', 'label').code;
 
     this.reject(boost);
+  }
+
+  report(boost: any = null) {
+    if (!boost) {
+      boost = this.boosts[0];
+    }
+
+    this.overlayModal.create(ReportCreatorComponent, boost.entity)
+      .present();
   }
 
   /**
@@ -171,7 +192,7 @@ export class AdminBoosts {
 
     // numbers
 
-    switch(e.key.toLowerCase()) {
+    switch (e.key.toLowerCase()) {
       case '1':
       case '2':
       case '3':

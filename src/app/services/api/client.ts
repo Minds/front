@@ -20,7 +20,9 @@ export class Client {
    * Return a GET request
    */
   get(endpoint: string, data: Object = {}, options: Object = {}) {
-    endpoint += '?' + this.buildParams(data);
+    if (data) {
+      endpoint += '?' + this.buildParams(data);
+    }
     return new Promise((resolve, reject) => {
       this.http.get(
         this.base + endpoint,

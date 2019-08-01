@@ -16,7 +16,9 @@
     font-family:inherit;
 
     &.ng-invalid.ng-dirty{
-      border:1px solid red;
+      @include m-theme(){
+         border: 1px solid themed($m-red);
+      }
     }
   }
   p{
@@ -36,8 +38,10 @@
 .m-merchant-legal{
   font-size: 12px;
   padding: 16px;
-  border: 1px solid #DDD;
   margin: 16px 8px;
+  @include m-theme(){
+     border: 1px solid themed($m-grey-100);
+  }
 }
 
 .m-merchant-transactions{
@@ -74,8 +78,10 @@
 
   m-wire--lock-screen {
     display: block;
-    border: 1px solid #ddd;
     padding: $minds-padding;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-100);
+    }
   }
 }
 .m-merchant-plans-exclusive--inputs > div{

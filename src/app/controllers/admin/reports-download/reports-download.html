@@ -1,8 +1,8 @@
 <div class="m-admin--reports-download">
   <div class="mdl-grid m-admin--reports-download--container">
     <div class="mdl-cell mdl-cell--12-col">
-      <div class="mdl-grid mdl-card mdl-shadow--4dp mdl-color--blue-grey-800 m-admin--reports-download-selector">
-          <span class="mdl-color-text--white" i18n="@@M__ADMIN__REPORTS_DOWNLOAD__SELECT_REPORT">Select Report:</span>
+      <div class="mdl-grid mdl-card mdl-shadow--4dp m-admin--reports-download-selector">
+          <span i18n="@@M__ADMIN__REPORTS_DOWNLOAD__SELECT_REPORT">Select Report:</span>
           <select [ngModel]="selectedReport" (ngModelChange)="setReport($event)">
             <option *ngFor="let report of reports; let i = index" [value]="i">{{ report.name }}</option>
           </select>
@@ -13,7 +13,7 @@
         </div>
         <div class="mdl-card__supporting-text">
           <m-dynamic-form [fields]="reports[selectedReport].params" #reportform></m-dynamic-form>
-          <span class="mdl-color-text--red-500" *ngIf="error">{{error}}</span>
+          <span class="m-admin--reports-download-error" *ngIf="error">{{error}}</span>
           <input type="checkbox"
             name="with_titles"
             [(ngModel)]="with_titles"

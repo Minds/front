@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {FeaturesService} from "../../services/features.service";
+import {FeaturesService} from '../../services/features.service';
+import {Session} from '../../services/session';
 
 const RELEASES_JSON_URL = 'https://cdn-assets.minds.com/android/releases/releases.json';
 
@@ -10,11 +11,14 @@ export class MobileService {
 
   constructor(
     protected client: HttpClient,
-    protected featuresService: FeaturesService
+    protected featuresService: FeaturesService,
+    protected session: Session,
   ) {
   }
 
   async getReleases() {
+    const user = this.session.getLoggedInUser();
+
     const timestamp = Date.now();
     this.releases = (<{ versions }>await this.client.get(`${RELEASES_JSON_URL}?t=${timestamp}`).toPromise()).versions;
 
@@ -23,14 +27,22 @@ export class MobileService {
       this.releases[latest].latest = true;
     }
 
-    return this.releases.filter(release => !this.shouldBeStable() || !release.unstable);
+    const releases = this.releases.filter(release => !this.shouldBeStable() || !release.unstable);
+
+    if (user.canary) {
+      releases.sort((r1, r2) => r1.unstable && !r2.unstable ? -1 : 0);
+    } else {
+      releases.sort((r1, r2) => r2.unstable && !r1.unstable ? -1 : 0);
+    }
+
+    return releases;
   }
 
   shouldBeStable() {
     return !this.featuresService.has('mobile-canary');
   }
 
-  static _(client: HttpClient, featuresService: FeaturesService) {
-    return new MobileService(client, featuresService);
+  static _(client: HttpClient, featuresService: FeaturesService, session: Session) {
+    return new MobileService(client, featuresService, session);
   }
 }

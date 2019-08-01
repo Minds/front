@@ -10,7 +10,9 @@
   min-height: 0;
 
   h2{
-    color:#FFF;
+    @include m-theme(){
+      color: themed($m-white);
+    }
   }
 }
 
@@ -23,11 +25,15 @@
 
   .minds-boost-points-input{
     input{
-      background: rgba(255,255,255,0.3);
-      color:#DDD;
+      @include m-theme(){
+        color: themed($m-grey-100);
+        background-color: rgba(themed($m-white), 0.3);
+      }
     }
     input:disabled{
-      background: rgba(255,255,255,0.3);
+      @include m-theme(){
+        background-color: rgba(themed($m-white), 0.3);
+      }
     }
   }
 }
@@ -84,10 +90,12 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    border: 1px solid #EEE;
-    /* border-right: 1px solid #DDD; */
-    background-color: #FAFAFA;
+    /* border-right: 1px solid themed($m-grey-100); */
     border-radius: 0;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+       background-color: rgba(themed($m-grey-50), 0.8)
+    }
   }
 }
 
@@ -124,10 +132,14 @@
   .minds-transaction-points{
     font-size:30px;
     .positive{
-      color:green;
+      @include m-theme(){
+        color: themed($m-green-dark);
+      }
     }
     .negative{
-      color:red;
+      @include m-theme(){
+        color: themed($m-red);
+      }
     }
   }
 
@@ -153,7 +165,9 @@ minds-wallet-transactions {
   font-size: 12px;
   font-weight: 400;
   text-align: center;
-  color: #aaa;
+  @include m-theme(){
+    color: themed($m-grey-200);
+  }
 }
 
 .m-root-loader {
@@ -189,7 +203,7 @@ minds-wallet-transactions {
   max-width:990px;
   display:flex;
   align-items:center;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
 
   @media only screen and (max-width: 400px) {
     padding:0;
@@ -203,11 +217,15 @@ minds-wallet-transactions {
 
   m--crypto-token-symbol {
     .m--crypto-token-symbol--stroke {
-      stroke: #ffffff;
+      @include m-theme(){
+        stroke: themed($m-white);
+      }
     }
 
     .m--crypto-token-symbol--fill {
-      fill: #ffffff;
+      @include m-theme(){
+        fill: themed($m-white);
+      }
     }
   }
 
@@ -228,7 +246,7 @@ minds-wallet-transactions {
 
     label{
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing:1px;
       font-size:14px;
     }
@@ -269,7 +287,7 @@ m-monetization--graph{
 
   .m-wire--overview-nav-item {
     padding: 16px 32px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 300;
     letter-spacing: 2px;
     cursor: pointer;
@@ -297,21 +315,29 @@ m-monetization--graph{
       font-size: 24px;
 
       .m--crypto-token-symbol--stroke {
-        stroke: #607d8b;
+        @include m-theme(){
+          stroke: themed($m-blue-grey-500);
+        }
       }
 
       .m--crypto-token-symbol--fill {
-        fill: #607d8b;
+        @include m-theme(){
+          fill: themed($m-blue-grey-500);
+        }
       }
     }
 
     .selected m--crypto-token-symbol {
       .m--crypto-token-symbol--stroke {
-        stroke: #4690D6;
+        @include m-theme(){
+          stroke: themed($m-blue);
+        }
       }
 
       .m--crypto-token-symbol--fill {
-        fill: #4690D6;
+        @include m-theme(){
+          fill: themed($m-blue);
+        }
       }
     }
   }

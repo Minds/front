@@ -5,8 +5,10 @@ m-settings--wire {
 
     m-wire--lock-screen {
       display: block;
-      border: 1px solid #ddd;
       padding: $minds-padding;
+      @include m-theme(){
+         border: 1px solid themed($m-grey-100);
+      }
     }
   }
   .m-settings--wire--paywall-inputs > div {
@@ -19,7 +21,7 @@ m-settings--wire {
     label {
       font-weight: 600;
       line-height: 2;
-      margin-bottom: 8px; 
+      margin-bottom: 8px;
     }
 
     &.m-settings--wire--paywall--background {

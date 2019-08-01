@@ -13,20 +13,13 @@ import { BlockListService } from "../../../../common/services/block-list.service
   inputs: ['user'],
   outputs: ['userChanged'],
   template: `
-    <button class="material-icons" (click)="toggleMenu($event)">settings</button>
+    <button class="material-icons" (click)="toggleMenu($event)">more_vert</button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
       <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BLOCK">Block @{{user.username}}</li>
       <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBLOCK">Un-Block @{{user.username}}</li>
+      <li class="mdl-menu__item" [hidden]="user.subscribed" (click)="subscribe()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__SUBSCRIBE">Subscribe</li>
       <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNSUBSCRIBE">Unsubscribe</li>
-      <li class="mdl-menu__item"
-        *ngIf="session.isAdmin()"
-        [hidden]="user.banned === 'yes'"
-        (click)="banToggle = true; showMenu = false"
-        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_GLOBALLY"
-        >
-        Ban globally
-      </li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_GLOBALLY">Un-ban globally</li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
@@ -70,6 +63,16 @@ import { BlockListService } from "../../../../common/services/block-list.service
         i18n="@@M__ACTION__REMOVE_EXPLICIT"
       >
         Remove Explicit
+      </li>
+      <li class="mdl-menu__item m-user-dropdown__item--nsfw"
+        *ngIf="session.isAdmin()"
+      >
+        <m-nsfw-selector
+          service="editing"
+          [selected]="user.nsfw_lock"
+          (selected)="setNSFWLock($event)"
+        >
+        </m-nsfw-selector>
       </li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
@@ -183,6 +186,17 @@ export class UserDropdownButton {
     this.showMenu = false;
   }
 
+  subscribe() {
+    this.user.subscribed = true;
+    this.client.post('api/v1/subscribe/' + this.user.guid, {})
+      .then((response: any) => {
+        this.user.subscribed = true;
+      })
+      .catch((e) => {
+        this.user.subscribed = false;
+      });
+  }
+
   unSubscribe() {
     this.user.subscribed = false;
     this.client.delete('api/v1/subscribe/' + this.user.guid, {})
@@ -245,11 +259,11 @@ export class UserDropdownButton {
     e.stopPropagation();
     if (this.showMenu) {
       this.showMenu = false;
-
       return;
     }
     this.showMenu = true;
     var self = this;
+
     this.client.get('api/v1/block/' + this.user.guid)
       .then((response: any) => {
         self.user.blocked = response.blocked;
@@ -291,6 +305,12 @@ export class UserDropdownButton {
     } catch (e) {
       this.user.is_mature = !value;
     }
+  }
+
+  async setNSFWLock(reasons: Array<{ label, value, selected}>) {
+    const nsfw = reasons.map(reason => reason.value);
+    this.client.post(`api/v2/admin/nsfw/${this.user.guid}`, { nsfw });
+    this.user.nsfw = nsfw;
   }
 
   async setRating(rating: number) {

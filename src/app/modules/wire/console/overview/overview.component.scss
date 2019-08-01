@@ -1,9 +1,12 @@
 .m-wire-console--overview {
   padding: 16px;
   margin: auto;
-  font-family: 'Roboto';
-  background: #4690DF;
-  color: #FFF;
+  font-family: 'Roboto', Helvetica, sans-serif;
+  
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: themed($m-blue);
+  }
 
   @media only screen and (max-width: 400px) {
     padding:0;
@@ -52,7 +55,7 @@
 
     label{
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing:1px;
       font-size:14px;
       font-weight: 600;

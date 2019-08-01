@@ -55,7 +55,8 @@
         <div class="mdl-grid m-media-content--meta">
           <div class="mdl-cell mdl-cell--12-col m-media-content--title" [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(entity) }">
             <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-phone">
-                <h1 class="m-media-content--heading" [ngClass]="{'m-media--long-heading': entity.title && entity.title.length > 80}" >{{ entity.title }}</h1>
+                <h1 class="m-media-content--heading" [innerHtml]="entity.title | tags" [ngClass]="{'m-media--long-heading': entity.title && entity.title.length > 80}" >
+                </h1>
             </div>
             
             <!-- Additional block -->
@@ -148,11 +149,10 @@
 
         <!-- Don't show comments for albums -->
         <div class="mdl-grid m-media-content--comments mdl-color--white" *ngIf="entity.guid && entity.subtype != 'album'">
-          <minds-comments
-            [object]="entity"
-            [focusedCommentGuid]="focusedCommentGuid"
+          <m-comments__tree
+            [entity]="entity"
             >
-          </minds-comments>
+          </m-comments__tree>
         </div>
       </div>
 

@@ -1,0 +1,33 @@
+.m-pulsating--small {
+  box-shadow: 0 0 0 red;
+  animation: pulse--small 1.5s infinite;
+}
+
+.m-pulsating--big {
+  box-shadow: 0 0 0 red;
+  animation: pulse--big 2s infinite;
+}
+
+@keyframes pulse--small {
+  20% {
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.6);
+  }
+  99% {
+    box-shadow: 0 0 0 7px rgba(244, 67, 54, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+  }
+}
+
+@keyframes pulse--big {
+  0% {
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(244, 67, 54, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+  }
+}

@@ -1,4 +1,4 @@
-import { NgZone } from '@angular/core';
+import { NgZone, RendererFactory2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
@@ -40,6 +40,8 @@ import { BlockListService } from "../common/services/block-list.service";
 import { EntitiesService } from "../common/services/entities.service";
 import { InMemoryStorageService } from "./in-memory-storage.service";
 import { FeedsService } from "../common/services/feeds.service";
+import { ThemeService } from "../common/services/theme.service";
+import { GlobalScrollService } from "./ux/global-scroll.service";
 
 export const MINDS_PROVIDERS : any[] = [
    {
@@ -47,8 +49,13 @@ export const MINDS_PROVIDERS : any[] = [
      useFactory: ScrollService._,
      deps: []
    },
-   {
-     provide: SocketsService,
+  {
+    provide: GlobalScrollService,
+    useFactory: GlobalScrollService._,
+    deps: []
+  },
+  {
+    provide: SocketsService,
      useFactory: SocketsService._,
      deps: [ Session, NgZone ]
    },
@@ -119,7 +126,7 @@ export const MINDS_PROVIDERS : any[] = [
    {
      provide: AttachmentService,
      useFactory: AttachmentService._,
-     deps: [ Session, Client, Upload ]
+     deps: [ Session, Client, Upload, HttpClient ]
    },
    {
      provide: Sidebar,
@@ -194,12 +201,12 @@ export const MINDS_PROVIDERS : any[] = [
   {
     provide: BlockListService,
     useFactory: BlockListService._,
-    deps: [ Client, Session ],
+    deps: [ Client, Session, Storage ],
   },
   {
     provide: EntitiesService,
     useFactory: EntitiesService._,
-    deps: [ Client ],
+    deps: [ Client, BlockListService ],
   },
   {
     provide: FeedsService,
@@ -209,5 +216,10 @@ export const MINDS_PROVIDERS : any[] = [
   {
     provide: InMemoryStorageService,
     useFactory: InMemoryStorageService._,
+  },
+  {
+    provide: ThemeService,
+    useFactory: ThemeService._,
+    deps: [ RendererFactory2, Client, Session , Storage ],
   },
 ];

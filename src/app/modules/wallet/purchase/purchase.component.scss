@@ -3,7 +3,7 @@
   padding: 0 16px 16px;
 
   label{
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     text-transform: uppercase;
     vertical-align: middle;
     letter-spacing: 0.5px;
@@ -14,10 +14,12 @@
   input{
     padding: 8px 10px;
     border-radius: 3px;
-    border: 1px solid #CCC;
     margin-left: 10px;
     font-size: 16px;
     vertical-align: middle;
     letter-spacing: 1px;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-100);
+    }
   }
 }

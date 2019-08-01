@@ -89,8 +89,10 @@ export class UpdateMarkersService {
     if (!opts.marker)
       throw "marker must be set";
 
-    this.http.post('api/v2/notifications/markers/read', opts)
-      .subscribe(res => null, err => console.warn(err));
+    if (!opts.noReply) {
+      this.http.post('api/v2/notifications/markers/read', opts)
+          .subscribe(res => null, err => console.warn(err));
+    }
 
     for (let i = 0; i < this.data.length; i++) {
       if (this.data[i].entity_guid == opts.entity_guid) {
@@ -127,15 +129,16 @@ export class UpdateMarkersService {
         (marker) => {
           marker = JSON.parse(marker);
           let entity_guid = marker.entity_guid;
-        
-          if (this.muted.indexOf(entity_guid) > -1)
-            return; //muted, so take no action
-          //this.entityGuids$[entity_guid].next(marker);
 
-          let found:boolean = false;
-          for(let i in this.data) {
-            if (this.data[i].entity_guid === entity_guid
-              && this.data[i].marker === marker.marker) {
+          if (this.muted.indexOf(entity_guid) > -1) {
+            return;
+          }
+
+          let found = false;
+          for (let i in this.data) {
+            if (this.data[i].entity_guid === entity_guid &&
+                this.data[i].marker === marker.marker &&
+                this.data[i].user_guid === marker.user_guid) {
               this.data[i].updated_timestamp = marker.updated_timestamp;
               found = true;
             }

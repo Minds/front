@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MindsTitle } from '../../../services/ux/title';
@@ -15,6 +15,7 @@ export class BoostConsoleComponent {
 
   type: BoostConsoleType;
   minds: Minds = window.Minds;
+  splitToolbar: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, public title: MindsTitle) {
     this.title.setTitle('Boost Console');
@@ -27,5 +28,10 @@ export class BoostConsoleComponent {
       this.type = <BoostConsoleType>segments[0].path;
     });
 
+    this.detectWidth();
+  }
+
+  @HostListener('window:resize') detectWidth() {
+    this.splitToolbar = window.innerWidth < 480;
   }
 }

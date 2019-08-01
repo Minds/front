@@ -26,7 +26,7 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() columns: ChartColumn[];
   @Input() rows: any[][];
 
-  @ViewChild('container') containerElement: ElementRef;
+  @ViewChild('container', { static: true }) containerElement: ElementRef;
 
   private _chartInstance: any;
   private _chartOptions: any = {};

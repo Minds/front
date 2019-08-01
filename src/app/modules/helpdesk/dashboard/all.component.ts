@@ -27,7 +27,7 @@ export class AllHelpdeskDashboardComponent implements OnInit {
 
   async load() {
     let response: any = await this.client.get(`api/v2/helpdesk/categories`, { limit: 5000 });
-    this.categories = response.categories;
+    this.categories = response.categories.sort((a, b) => a.position - b.position);
 
     response = await this.client.get(`api/v2/helpdesk/questions`, { limit: 5000 });
     this.questions = response.questions;

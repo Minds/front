@@ -4,19 +4,26 @@
   padding: 16px;
 
   .m-admin--reports-download-selector {
-
+    @include m-theme(){
+      background-color: themed($m-blue-grey-800);
+    }
     margin-bottom: 16px;
 
     span {
       padding-right: 10px;
       line-height: 2em;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
   }
 
   select {
     padding: 8px 40px 8px 8px;
     appearance: none;
-    border: 1px solid #CCC;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-100);
+    }
   }
 
   .m-date-selector--input {
@@ -27,4 +34,10 @@
 
 .m-admin--reports-download--container {
   max-width: 600px;
+}
+
+.m-admin--reports-download-error {
+  @include m-theme(){
+    color: themed($m-red);
+  }
 }

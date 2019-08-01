@@ -58,12 +58,11 @@
         <span i18n="@@WALLET__TOKENS__TESTNET_TOKENS">Testnet Tokens</span>
       </a>
       <a class="m-page--sidebar--navigation--item"
-        (click)="invite.open = true"
+        routerLink="/wallet/tokens/referrals"
+        routerLinkActive="m-page--sidebar--navigation--item-active"
       >
-        <m-modal-invite #invite [open]="invite.open" (closed)="invite.open = false"></m-modal-invite>
-
-        <i class="material-icons">assignment</i>
-        <span i18n="@@M__ACTION__REFERRAL_LINK">Referral Link</span>
+        <i class="material-icons">people</i>
+        <span i18n="@@M__ACTION__REFERRAL_LINK">Referrals</span>
       </a>
     </div>
   </div>

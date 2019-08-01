@@ -28,7 +28,7 @@ export class MessengerUserlist {
   hasMoreData: boolean = true;
   inProgress: boolean = false;
   cb: number = Date.now();
-  opened_ribbon: boolean = false;
+
   minds: Minds = window.Minds;
   storage: Storage = new Storage();
 
@@ -37,7 +37,8 @@ export class MessengerUserlist {
   };
 
   userListToggle: boolean = false;
-
+  ribbonOpened: boolean = false;
+  
   search_timeout;
 
   constructor(
@@ -170,14 +171,19 @@ export class MessengerUserlist {
     }
   }
 
+  // Open the userlist with the ribbon
   ribbonToggle() {
-    if (!this.userListToggle) {
+    if (!this.ribbonOpened && !this.userListToggle) {
       this.userListToggle = true;
     }
-    this.opened_ribbon = !this.opened_ribbon;
+    this.ribbonOpened = !this.ribbonOpened;
   }
 
+  // Close the ribbon with the userlist
   toggle() {
+    if (this.ribbonOpened) {
+      this.ribbonOpened = false;
+    }
     this.userListToggle = !this.userListToggle;
     if (this.userListToggle)
       this.load({ refresh: true });

@@ -1,5 +1,7 @@
 .m-wallet--points--transaction {
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
   padding: 16px;
   margin-bottom: 8px;
 
@@ -9,17 +11,23 @@
     font-weight: 800;
 
     .positive {
-      color: green;
+      @include m-theme(){
+        color: themed($m-green-dark);
+      }
     }
     .negative {
-      color: red;
+      @include m-theme(){
+        color: themed($m-red);
+      }
     }
   }
 
   .m-wallet--points--transaction-details {
     display: flex;
     align-items: center;
-    color: #444;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
 
     p {
       padding: 0;
@@ -34,8 +42,10 @@
       font-size: 11px;
       text-transform: uppercase;
       font-weight: 400;
-      font-family: Roboto;
-      color: #444;
+      font-family: 'Roboto', Helvetica, sans-serif;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
   }
 }

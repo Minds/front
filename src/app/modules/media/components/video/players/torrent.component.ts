@@ -15,7 +15,7 @@ import base64ToBlob from '../../../../../helpers/base64-to-blob';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy, MindsPlayerInterface {
-  @ViewChild('player') player: ElementRef;
+  @ViewChild('player', { static: true }) player: ElementRef;
 
   @Input() muted: boolean = false;
   @Input() poster: string = '';

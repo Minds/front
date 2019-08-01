@@ -1,5 +1,4 @@
 m-sidebar{
-  background: #222;
   border: 0;
   position: fixed;
   margin-top: 52px;
@@ -23,9 +22,12 @@ m-sidebar{
   transition-duration: .2s;
   transition-timing-function: cubic-bezier(.4,0,.2,1);
   transition-property: transform;
-  color: #424242;
   overflow: hidden;
   z-index: 5;
+  @include m-theme(){
+    background-color: themed($m-grey-950);
+    color: themed($m-grey-800);
+  }
 
   @media screen and (min-width: $min-tablet){
     transform: translateX(0);

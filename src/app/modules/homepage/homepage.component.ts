@@ -40,9 +40,9 @@ export class HomepageComponent {
     private loginReferrer: LoginReferrerService,
     public session: Session
   ) {
-    this.title.setTitle('Home');
+    this.title.setTitle('Minds Social Network', false);
     this.loadStream();
-    
+
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
@@ -92,4 +92,7 @@ export class HomepageComponent {
     });
   }
 
+  onSourceError() {
+    console.log('video failed');
+  }
 }

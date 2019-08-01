@@ -22,7 +22,7 @@
       [ngClass]="[ 'm-group--' + filter + '-view' ]"
       [class.m-group--view-mode]="!editing"
     >
-      <minds-banner 
+      <minds-banner
         [object]="group"
         [editMode]="editing"
         [top]="group.banner_position"
@@ -40,7 +40,7 @@
           (added)="upload_avatar($event)"
           >
         </minds-avatar>
-      
+
         <minds-groups-settings-button
           [(group)]="group"
           class="m-button"
@@ -62,13 +62,13 @@
               </a>
             </h1>
             <div class="m-groupInfo__actionButtons">
-            <minds-groups-join-button 
+            <minds-groups-join-button
               [group]="group"
               (membership)="change_membership($event)"
               *ngIf="(!group['is:creator'] || (session.isAdmin()) && !group['is:invited'])"
             >
             </minds-groups-join-button>
-            <button class="m-btn m-btn--slim m-btn--with-icon" style="margin-left: 8;" (click)="videochat.activate(group)" *ngIf="!group.videoChatDisabled">
+            <button class="m-btn m-btn--slim m-btn--with-icon" [class.m-pulsating--small]="group.hasGathering$ | async" style="margin-left: 8;" (click)="videochat.activate(group)" *ngIf="!group.videoChatDisabled">
               <span class="m-gatheringIcon">Gathering</span>
               <i class="material-icons">video_call</i>
             </button>
@@ -88,27 +88,27 @@
         [innerHtml]="group.briefdescription | tags"
         >
       </p>
-      
+
       <p
         class="m-groupInfo__description"
         *ngIf="editing && group['is:owner']"
         >
-        <mwl-text-input-autocomplete-container>
+        <m-text-input--autocomplete-container>
           <textarea
             name="briefdescription"
             [autoGrow]
             [(ngModel)]="group.briefdescription"
             placeholder="Enter a brief description"
             i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
-            mwlTextInputAutocomplete
+            mTextInputAutocomplete
             [findChoices]="findTrendingHashtags.bind(this)"
             [getChoiceLabel]="getChoiceLabel"
-            [triggerCharacter]="'#'"
+            [triggerCharacters]="['#']"
           >
           </textarea>
-        </mwl-text-input-autocomplete-container>
+        </m-text-input--autocomplete-container>
       </p>
-      
+
       <ng-container *ngIf="false">
 
       <!-- Tags -->
@@ -121,11 +121,11 @@
           <m-hashtags-selector #hashtagsSelector
             [alignLeft]="true"
             [tags]="group.tags"
-            (tagsChange)="onTagsChange($event)"
+            (tagsChange)="onTagsChange($event)"p
             (tagsAdded)="onTagsAdded($event)"
             (tagsRemoved)="onTagsRemoved($event)"
             *ngIf="editing && group['is:owner']"
-          ></m-hashtags-selector> 
+          ></m-hashtags-selector>
         </div>
 
       </div>
@@ -240,47 +240,23 @@
       </div> <!-- END INFO -->
     </div> <!-- END INFO WRAPPER -->
 
-    <div class="m-group-profile__Filter m-border" *mIfFeature="'channel-filter-feeds'; else legacyFilter">
-      <m-sort-selector
-        [algorithm]="algorithm"
-        [period]="period"
-        [customType]="customType"
-        [hideCustomTypesOnLatest]="['blogs']"
-        (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
-      ></m-sort-selector>
-    </div>
-    <ng-template #legacyFilter>
+    <ng-container *mIfFeature="'!es-feeds'">
       <m-groups--filter-selector
         [group]="group"
         [filter]="filter"
         *ngIf="group['is:member']"
       ></m-groups--filter-selector>
-    </ng-template>
+    </ng-container>
 
     <div class="m-group__feeds">
-      <router-outlet (activate)="onOutletActivation($event)"></router-outlet>
+      <router-outlet></router-outlet>
     </div> <!-- End Feeds -->
   </div> <!-- END LEFT BLOCK -->
 
-  <div class="m-groupGrid__toggleBtn" style="
-    /* left: 0; */
-    position: fixed;
-    top: 55px;
-    right: 60px;
-    display: block;
-    z-index: 99;
-    cursor: pointer;
-    "
-    (click)="toggleConversations()">
-     <i class="material-icons" style="
-      font-size: 32px;
-      color: #888;
-      " *ngIf="showRight">keyboard_arrow_right</i>
-     <i class="material-icons" style="
-      font-size: 32px;
-      color: #888;
-      " *ngIf="!showRight">keyboard_arrow_left</i> 
-    </div>
+  <div class="m-groupGrid__toggleBtn" (click)="toggleConversations()">
+     <i class="material-icons" *ngIf="showRight">keyboard_arrow_right</i>
+     <i class="material-icons" *ngIf="!showRight">keyboard_arrow_left</i>
+  </div>
 
   <div class="m-groupGrid__right" [hidden]="!showRight">
     <!-- Conversation filter -->

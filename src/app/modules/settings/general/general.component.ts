@@ -28,6 +28,7 @@ export class SettingsGeneralComponent {
   email: string;
   mature: boolean = false;
   enabled_mails: boolean = true;
+  toaster_notifications: boolean = true;
 
   password: string;
   password1: string;
@@ -100,6 +101,7 @@ export class SettingsGeneralComponent {
         this.language = response.channel.language || 'en';
         this.selectedCategories = response.channel.categories || [];
         this.openSessions = response.channel.open_sessions || 1;
+        this.toaster_notifications = response.channel.toaster_notifications;
 
         this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
@@ -157,7 +159,8 @@ export class SettingsGeneralComponent {
         mature: this.mature ? 1 : 0,
         disabled_emails: this.enabled_mails ? 0 : 1,
         language: this.language,
-        categories: this.selectedCategories
+        categories: this.selectedCategories,
+        toaster_notifications: this.toaster_notifications
       })
       .then((response: any) => {
         this.changed = false;
@@ -180,6 +183,8 @@ export class SettingsGeneralComponent {
         if (this.language !== window.Minds['language']) {
           window.location.reload(true);
         }
+
+        window.Minds.user.toaster_notifications = this.toaster_notifications;
 
         this.inProgress = false;
       }).catch(e=> {

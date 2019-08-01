@@ -22,7 +22,7 @@ export class Pages {
 
   pages: Array<any> = [];
   page: string = '';
-  @ViewChild('body', {read: ElementRef}) bodyElement:ElementRef;
+  @ViewChild('body', { read: ElementRef, static: true }) bodyElement:ElementRef;
 
   paramsSubscription: Subscription;
 

@@ -21,7 +21,7 @@ export class TokenDistributionEventService {
       throw new Error('Your Ethereum wallet is locked or connected to another network.');
     }
 
-    let wallet = await this.web3Wallet.getCurrentWallet();
+    let wallet = await this.web3Wallet.getCurrentWallet(true);
 
     if (!wallet) {
       throw new Error('Client is locked, there are no wallets available, or you\'re on a different network');

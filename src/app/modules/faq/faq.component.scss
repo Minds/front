@@ -1,8 +1,9 @@
 .m-faq--container--category {
   display: flex;
-  font-family: 'Roboto';
-  color: #444;
-
+  font-family: 'Roboto', Helvetica, sans-serif;
+  @include m-theme(){
+    color: themed($m-grey-800);
+  }
 
   .m-faq--body {
     flex: 1;
@@ -12,8 +13,9 @@
     width: 228px;
     margin: 0 8px 8px 0;
     padding: 8px;
-    background: #FFF;
-
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
     b {
       text-transform: capitalize;
       font-size: 16px;
@@ -30,33 +32,39 @@
     @media screen and (max-width:500px){
       display:none;
     }
-    
+
   }
 
   .m-faq--nav--back a {
     text-decoration: none;
-    color: #4690D6 !important;
+    @include m-theme(){
+      color: themed($m-blue) !important;
+    }
   }
 
   .m-faq--question {
     text-align: left;
     padding: 16px;
     margin: 0 0 8px 8px;
-    color: #555;
-    background: #FFF;
+    @include m-theme(){
+      color: themed($m-grey-700);
+      background-color: themed($m-white);
+    }
 
     h3, p {
-      font-family: Roboto;
+      font-family: 'Roboto', Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
       letter-spacing: 0.50px;
       text-rendering: optimizeLegibility;
     }
 
     h3 {
-      color: #444;
       font-size: 28px;
       margin: 0;
       font-weight: 600;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
 
     p {
@@ -74,10 +82,12 @@
     width: calc(50% - 8px);
     margin: 4px;
     max-height: 200px;
-    background: #FFF;
     overflow: hidden;
     box-sizing: border-box;
     padding: 8px;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     b {
       text-transform: capitalize;

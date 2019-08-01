@@ -21,7 +21,7 @@ export class PhoneInputComponent implements ControlValueAccessor, OnInit, OnChan
 
   phoneNumber: string = '';
 
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
   selectedCountry;
 
   allowedKeyCodes: Array<number> = [8, 33, 34, 35, 36, 37, 39, 46];

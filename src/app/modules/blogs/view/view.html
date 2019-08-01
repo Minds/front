@@ -61,7 +61,7 @@
   </div>
 
   <!-- Additional block -->
-  <div class="mdl-cell mdl-cell--12-col m-additional-block mdl-color-text--blue-grey-200">
+  <div class="m-blog--footer mdl-cell mdl-cell--12-col m-additional-block mdl-color-text--blue-grey-200">
 
     <div class="m-license-info">
       <i class="material-icons">public</i>
@@ -86,7 +86,10 @@
 <m-wire--lock-screen [(entity)]="blog" *ngIf="blog.paywall" #lockScreen></m-wire--lock-screen>
 
 <div class="mdl-grid blogs-grid" style="max-width:660px" *ngIf="blog.guid">
-  <minds-comments [object]="blog"></minds-comments>
+  <m-comments__tree 
+    [entity]="blog"
+    >
+  </m-comments__tree>
 </div>
 
 <m-modal-confirm *ngIf="deleteToggle"

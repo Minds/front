@@ -1,7 +1,9 @@
 @import "defaults";
 
 .m-helpdesk__dashboard {
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-helpdeskQuestions__questions {
     margin-left: 32px;
@@ -24,7 +26,9 @@
     margin-top: $minds-margin * 1.5;
     overflow-y: auto;
     box-sizing: border-box;
-    background: #FFF;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
 
     &:after {
       bottom: 100%;
@@ -35,10 +39,12 @@
       width: 0;
       position: absolute;
       pointer-events: none;
-      border-color: rgba(102, 102, 102, 0);
-      border-bottom-color: #ffffff;
       border-width: 8px;
       margin-left: -8px;
+      @include m-theme(){
+        border-color: rgba(themed($m-grey-600), 0);
+        border-bottom-color: themed($m-white);
+      }
     }
 
     .m-helpdeskSearch__result {
@@ -47,10 +53,14 @@
       display: flex;
       justify-content: space-between;
       font-weight: 400;
-      border-top: 1px solid #eee;
+      @include m-theme(){
+        border-top: 1px solid themed($m-grey-50);
+      }
 
       &:hover, &.m-helpdeskSearch__result--highlight {
-        color: #000;
+        @include m-theme(){
+          color: themed($m-black);
+        }
       }
       &:first-child {
         border-top: 0;
@@ -72,13 +82,17 @@
     position: absolute;
     left: 8px;
     font-size: 40px;
-    color: #888;
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
   }
   & > input {
     font-size: 18px;
     width: 100%;
     padding: 16px 16px 16px 56px;
-    background: #FFF;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 
   @media screen and(max-width: $min-tablet) {
@@ -101,11 +115,14 @@
 
   & > .m-btn {
     margin: 0 $minds-padding;
-    color: #FFF;
     text-decoration: none;
     display: inline-block;
     box-sizing: border-box;
     line-height: 1.25;
+    @include m-theme(){
+      color: themed($m-white-always);
+      border-color: rgba(themed($m-white-always), 0.7);
+    }
 
     @media screen and(max-width: $min-tablet) {
       height: auto;
@@ -114,9 +131,11 @@
 }
 
 .m-helpdesk__dashboard h1, .m-helpdesk__dashboard h3, .m-helpdesk__dashboard h2 {
-  color: #FFF;
-  font-family: Roboto;
+  font-family: 'Roboto', Helvetica, sans-serif;
   margin: 0;
+  @include m-theme(){
+    color: themed($m-white);
+  }
 }
 
 .m-helpdesk__dashboard h1 {
@@ -150,12 +169,14 @@
   //text-transform: uppercase;
   font-weight: 100;
   font-size: 41px;
-  background: #FFF;
 
   display: block;
   text-align: left;
   //padding: 80px 0;
   height: auto;
+  @include m-theme(){
+    background-color: themed($m-grey-50);
+  }
 
   @media screen and (max-width: 720px) {
   //  padding: 16px 0;
@@ -174,11 +195,13 @@
   h1 {
     font-size: 72px;
     font-weight: 600;
-    color: #444;
     font-weight: 800;
     letter-spacing: 0.25px;
     margin-left: 8px;
     margin-right: 8px;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
 
     @media screen and (max-width: 720px) {
       font-size: 28px;
@@ -190,7 +213,9 @@
     line-height: 1;
     font-weight: 600;
     letter-spacing: 1.25px;
-    color: #444;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
 
     @media screen and (max-width: 720px) {
       font-size: 22px;
@@ -216,10 +241,12 @@
     line-height: 1;
     margin: 0;
     margin-top: -18px;
-    color: #aaa;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     text-transform: uppercase;
+    @include m-theme(){
+      color: themed($m-grey-200);
+    }
 
     @media screen and (max-width: 720px) {
       margin-top: 0;
@@ -228,8 +255,10 @@
 }
 
 .m-helpdesk--dashboard--popular-questions {
-  background: #FFF;
   text-align: left;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-helpdesk--dashboard--popular-questions--title {
     font-size: 30px;
@@ -245,7 +274,9 @@
     font-size: 18px;
 
     &:hover {
-      background-color: #f0f0f0;
+      @include m-theme(){
+        background-color: themed($m-grey-50);
+      }
     }
   }
 }
@@ -268,15 +299,19 @@
       max-width: 430px;
 
       .m-helpdesk--dashboard--big-item--title {
-        color: #555;
         font-size: 30px;
         font-weight: bold;
         line-height: 1.2em;
+        @include m-theme(){
+          color: themed($m-grey-700);
+        }
       }
 
       .m-helpdesk--dashboard--big-item--subtext {
         font-size: 16px;
-        color: #444;
+        @include m-theme(){
+          color: themed($m-grey-800);
+        }
       }
     }
 
@@ -306,7 +341,9 @@
   }
 
   h2 {
-    color: #FFF;
+    @include m-theme(){
+      color: themed($m-white-always);
+    }
   }
 }
 

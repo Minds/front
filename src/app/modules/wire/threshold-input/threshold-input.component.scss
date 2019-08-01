@@ -19,7 +19,9 @@ m-wire-threshold-input, .m-wire-threshold-input {
       text-align: left;
       padding: 8px;
       line-height: 1;
-      border-bottom: 1px solid #ececec;
+      @include m-theme(){
+         border-bottom: 1px solid themed($m-grey-50);
+      }
     }
 
     .m-btn--with-icon i {
@@ -28,13 +30,12 @@ m-wire-threshold-input, .m-wire-threshold-input {
 
     .m-dropdown--list--item {
       flex-wrap: wrap;
-      cursor: pointer;
 
       b {
         flex-basis: 100%;
         text-transform: uppercase;
         letter-spacing: 0.25px;
-        font-family: 'Roboto';
+        font-family: 'Roboto', Helvetica, sans-serif;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         font-size: 11px;
@@ -57,12 +58,20 @@ m-wire-threshold-input, .m-wire-threshold-input {
 
         i {
           font-size: 18px;
+        }
+        
+        i.selected {
           cursor: pointer;
         }
+        
+        i.m-wire-threshold-input--type {
+          cursor: default;
+        }
+        
         input {
           padding: 6px;
           margin: 0 8px;
-          min-width: 132px;
+          min-width: 122px;
         }
         span {
           margin-right: 8px;
@@ -80,23 +89,27 @@ m-wire-threshold-input, .m-wire-threshold-input {
     align-items: center;
     overflow: visible;
     vertical-align: middle;
-    color: #455a64;
+    color: themed($m-blue-grey-700);
     cursor: pointer;
     span {
       font-size: 14px;
     }*/
 
     &.m-wire-threshold-input--toggle-enabled {
-      color: #4690D6;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
   }
 
   .m-wire-threshold-input--input {
     display: inline-block;
     vertical-align: middle;
-    border: 1px solid #eeeeee;
     padding: ($minds-padding / 4) ($minds-padding / 2);
-    color: #888888;
+    @include m-theme(){
+      border: 1px solid themed($m-grey-50);
+      color: themed($m-grey-400);
+    }
 
     > * {
       line-height: 1;
@@ -108,14 +121,20 @@ m-wire-threshold-input, .m-wire-threshold-input {
     }
 
     .m-wire-threshold-input--type {
-      color: #4caf50;
+      @include m-theme(){
+        color: themed($m-green);
+      }
 
       .m--crypto-token-symbol--stroke {
-        stroke: #4caf50;
+        @include m-theme(){
+          stroke: themed($m-green);
+        }
       }
 
       .m--crypto-token-symbol--fill {
-        fill: #4caf50;
+        @include m-theme(){
+          fill: themed($m-green);
+        }
       }
     }
 

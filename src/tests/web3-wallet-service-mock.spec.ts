@@ -6,6 +6,7 @@ export let web3WalletServiceMock = new function () {
   this.onChainInterfaceLabel = 'Metamask';
   this.unavailable = false;
   this.locked = false;
+  this.isLocalWallet = false;
 
   this.isUnavailable = jasmine.createSpy('isUnavailable').and.callFake(() => {
     return this.unavailable;
@@ -27,6 +28,10 @@ export let web3WalletServiceMock = new function () {
   });
   this.getBalance = jasmine.createSpy('getBalance').and.callFake(async () => {
     return this.balance;
+  });
+
+  this.isLocal = jasmine.createSpy('isLocal').and.callFake(async () => {
+    return this.isLocalWallet;
   });
 
   this.getOnChainInterfaceLabel = jasmine.createSpy('getOnChainInterfaceLabel').and.callFake(() => {

@@ -14,23 +14,28 @@ m-boost-console-card {
     align-items: center;
     justify-content: space-around;
     padding: ($minds-padding + 4px) $minds-padding $minds-padding;
-    background: #eceff1;
-    color: #607d8b;
     font-family: Roboto, sans-serif;
     font-weight: 300;
+    @include m-theme(){
+      color: themed($m-blue-grey-500);
+      background-color: themed($m-blue-grey-50);
+    }
   }
   .m-boost-card--rejection-reason {
-    color: #607d8b;
     padding: 16px;
     font-size: 13px;
-    font-family: Roboto;
+    font-family: 'Roboto', Helvetica, sans-serif;
     letter-spacing: 0.5px;
-    background-color: rgb(236, 239, 241);
-    border-top: 1px solid #d1d1d1;
     display: flex;
     align-items: center;
     justify-content: center;
+    @include m-theme(){
+      color: themed($m-blue-grey-500);
+      background-color: themed($m-blue-grey-50);
+      border-top: 1px solid themed($m-grey-100);
+    }
   }
+
 
   .m-boost-card--manager-item {
     display: flex;
@@ -62,11 +67,15 @@ m-boost-console-card {
     }
 
     .m--crypto-token-symbol--stroke {
-      stroke: #607d8b;
+      @include m-theme(){
+        stroke: themed($m-blue-grey-500);
+      }
     }
 
     .m--crypto-token-symbol--fill {
-      fill: #607d8b;
+      @include m-theme(){
+        fill: themed($m-blue-grey-500);
+      }
     }
   }
 }

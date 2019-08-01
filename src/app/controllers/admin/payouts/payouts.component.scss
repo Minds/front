@@ -22,7 +22,9 @@
 
     .m-date {
       font-size: 11px;
-      color: #999999;
+      @include m-theme(){
+        color: themed($m-grey-300);
+      }
     }
   }
 
@@ -32,7 +34,9 @@
     .m-amount {
       text-decoration: none;
       font-size: 14px;
-      color: #999999;
+      @include m-theme(){
+        color: themed($m-grey-300);
+      }
 
       > * {
         vertical-align: middle;
@@ -41,7 +45,9 @@
       .m-value {
         font-weight: bold;
         font-size: 22px;
-        color: #333333;
+        @include m-theme(){
+          color: themed($m-grey-900);
+        }
       }
 
       a {
@@ -58,8 +64,10 @@
   .m-note {
     width: 100%;
     font-size: 11px;
-    color: #999999;
     text-align: center;
     margin-bottom: $minds-padding;
+    @include m-theme(){
+      color: themed($m-grey-300);
+    }
   }
 }

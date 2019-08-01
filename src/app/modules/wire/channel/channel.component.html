@@ -1,7 +1,7 @@
 <div class="m-wire-channel--call-to-action"
   *ngIf="session.getLoggedInUser().guid != channel.guid"
 >
-  <button class="mdl-color--green mdl-color-text--white mdl-shadow--8dp"
+  <button class="mdl-shadow--8dp"
     (click)="sendWire()"
   >
     <i class="ion-icon ion-flash"></i>

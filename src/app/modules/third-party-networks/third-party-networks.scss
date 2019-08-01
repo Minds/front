@@ -15,11 +15,13 @@
     text-decoration:none;
   }
 
-  background-color: #3067a3;
   padding:8px;
-  color:#FFF;
   font-weight:bold;
   cursor:pointer;
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: themed($m-facebook) !important;
+  }
 }
 
 .m-third-party-networks-facebook-pages-list{
@@ -35,13 +37,15 @@
 
 minds-third-party-networks-selector {
   display: inline-block;
-  
+
   .m-bar-wrapper {
     display: inline-block;
     padding: $minds-padding / 2;
-    background: #f0f0f0;
     position: relative;
     margin-right: 8px;
+    @include m-theme(){
+      background-color: themed($m-grey-50);
+    }
 
     &:before {
       position: absolute;
@@ -51,11 +55,13 @@ minds-third-party-networks-selector {
       height: 0;
       border-style: solid;
       border-width: 8px 0 8px 8px;
-      border-color: transparent transparent transparent #f0f0f0;
       z-index: 15;
       right: -8px;
       top: 50%;
       transform: rotate(360deg) translateY(-50%);
+      @include m-theme(){
+        border-color: transparent transparent transparent themed($m-grey-50);
+      }
     }
   }
 

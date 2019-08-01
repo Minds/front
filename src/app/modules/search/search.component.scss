@@ -12,8 +12,10 @@ m-search--bar {
       font-size: 20px;
     }
     input{
-      background: #ffffff;
-      border: 1px solid rgba(0,0,0,.12);
+      @include m-theme(){
+        background-color: themed($m-white);
+        border: 1px solid rgba(themed($m-black),.12);
+      }
     }
     input, label{
       padding:$minds-padding $minds-padding $minds-padding $minds-padding*4;
@@ -37,8 +39,10 @@ m-search--bar {
       input{
         border:0 !important;
         &:focus{
-          border: 1px solid rgba(0, 0, 0, 0.12) !important;
           width: 75vw;
+          @include m-theme(){
+            border: 1px solid rgba(themed($m-black), 0.12) !important;
+          }
 
           & + .mdl-textfield__label {
             width: 75vw;
@@ -86,28 +90,30 @@ m-search--bar {
 
         font-family: Roboto, sans-serif;
         font-size: 12px;
-        letter-spacing: 1.25px;        
+        letter-spacing: 1.25px;
         //line-height: 38px;
         white-space: nowrap;
         text-transform: uppercase;
-        color: rgba(74, 74, 74, 0.5);
-
-        border: 1px solid rgba(0, 0, 0, 0.12);
         border-right: none;
         box-sizing: border-box;
 
         text-rendering: optimizeLegibility;
-    iebkit-font-smoothing: antialiased;
+        -webkit-font-smoothing: antialiased;
+        @include m-theme(){
+          border: 1px solid rgba(themed($m-black), 0.12);
+          color: rgba(themed($m-grey-800), 0.5);
+        }
       }
 
       .mdl-textfield__input {
         padding: 0 $minds-padding;
-
-        border: 1px solid rgba(0, 0, 0, 0.12);
         //border-left: none;
         box-sizing: border-box;
 
         appearance: none;
+        @include m-theme(){
+          border: 1px solid rgba(themed($m-black), 0.12);
+        }
       }
     }
   }
@@ -117,58 +123,68 @@ m-search--bar-suggestions{
   display: block;
 
   .m-search-bar-suggestions-list{
-    background: #FFF;
-    border: 1px solid #EEE;
     padding: 0;
     margin: 0;
     position: absolute;
     z-index: 5000;
     box-sizing: border-box;
     width: 200%;
+    @include m-theme(){
+      background-color: themed($m-white);
+      border: 1px solid themed($m-grey-50);
+    }
 
     .m-search-bar-suggestions-suggestion{
       cursor:pointer;
       padding: 4px;
-      border-bottom: 1px solid #EEE;
       display:block;
       text-decoration: none;
       font-size: 14px;
       font-weight: 600;
-      color: #555;
       letter-spacing: 0.5px;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      @include m-theme(){
+        border-bottom: 1px solid themed($m-grey-50);
+        color: themed($m-grey-700);
+      }
 
       img{
         border-radius: 50%;
         margin: 0 8px 0 4px;
         width: 36px;
         height: 36px;
-        background: #444;
+        @include m-theme(){
+          background-color: themed($m-grey-800);
+        }
       }
     }
   }
 
   .m-search-bar-suggestions-context {
-    color: rgba(74, 74, 74, 0.83);
     font-family: 'Roboto', sans-serif;
     font-size: 13px;
     line-height: 26px;
     letter-spacing: 1.75px;
     font-weight: 500;
+    @include m-theme(){
+      color: rgba(themed($m-grey-800), 0.83);
+    }
 
     > * {
       vertical-align: middle;
-      display: inline-block;   
-      line-height: 13px;   
+      display: inline-block;
+      line-height: 13px;
     }
 
     b {
       margin: 0 0.35em 0 8px;
-      color: rgba(74, 74, 74, 0.5);
       font-weight: 400;
       font-size:9px;
       text-transform: uppercase;
+      @include m-theme(){
+        color: rgba(themed($m-grey-800), 0.5);
+      }
     }
   }
 }
@@ -178,8 +194,6 @@ m-search--bar-suggestions{
 m-search {
   display: block;
   min-height: 100vh;
-  //background: #ffffff;
-  //background: rgba(252,252,252,1);
   padding-top: 42px;
 
   .m-toolbar {
@@ -188,8 +202,10 @@ m-search {
     position: fixed;
     top: 50px;
     width: 100%;
-    background: rgb(248, 248, 248);
     z-index: 500;
+    @include m-theme(){
+      background-color: rgba(themed($m-grey-50),0.8);
+    }
   }
 
   .m-topbar--navigation--more {
@@ -218,7 +234,9 @@ m-search {
         .m-tooltip i {
           font-size: 16px;
           margin: 0 8px;
-          color:#888;
+          @include m-theme(){
+            color: themed($m-grey-400);
+          }
         }
       }
     }
@@ -247,12 +265,15 @@ m-search {
   .m-search--list-title {
     margin: 0;
     padding: 0 $minds-padding * 2;
-    color: rgba(0,0,0, 0.6);
     font-size: 14px;
     font-weight: 600;
     line-height: 1.25;
     letter-spacing: 2px;
     text-transform: uppercase;
+    @include m-theme(){
+      color: rgba(themed($m-black),0.6);
+    }
+
   }
 
   .m-search--list-entities {
@@ -261,4 +282,3 @@ m-search {
     }
   }
 }
-

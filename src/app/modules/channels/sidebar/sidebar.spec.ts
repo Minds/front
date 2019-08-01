@@ -26,6 +26,9 @@ import { Storage } from '../../../services/storage';
 import { storageMock } from "../../../../tests/storage-mock.spec";
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { IfFeatureDirective } from "../../../common/directives/if-feature.directive";
+import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 describe('ChannelSidebar', () => {
 
@@ -83,6 +86,12 @@ describe('ChannelSidebar', () => {
           inputs: ['tags', 'alignLeft'],
           outputs: ['tagsChange', 'tagsAdded', 'tagsRemoved'],
         }),
+        MockComponent({
+          selector: 'm-channels--sorted-module',
+          inputs: ['title', 'type', 'channel', 'linksTo', 'size'],
+          outputs: [],
+        }),
+        IfFeatureDirective,
       ],
       imports: [
         FormsModule,
@@ -103,6 +112,10 @@ describe('ChannelSidebar', () => {
         {
           provide: FeaturesService,
           useValue: featuresServiceMock,
+        },
+        {
+          provide: OverlayModalService,
+          useValue: overlayModalServiceMock,
         }
       ]
     })
@@ -115,6 +128,7 @@ describe('ChannelSidebar', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(ChannelSidebar);
+    featuresServiceMock.mock('es-feeds', false);
     clientMock.response = {};
     uploadMock.response = {};
     comp = fixture.componentInstance;

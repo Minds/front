@@ -14,7 +14,7 @@
     <div class="body">
       <h3>{{entity.name}}</h3>
       <span>@{{entity.username}}</span>
-      <m-channel--badges class="m-channel--badges-activity" [user]="entity" badges="[ 'verified' ]"></m-channel--badges>
+      <m-channel--badges class="m-channel--badges-activity" [user]="entity" badges="[ 'admin', 'verified' ]"></m-channel--badges>
 
       <div class="m-usercard-bio" *ngIf="false">
         <div class="m-usercard-bio-brief" [hidden]="!entity.briefdescription">

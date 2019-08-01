@@ -32,8 +32,7 @@ export class TOSUpdatedModal {
 
   close(e) {
     this.updateUser();
-    this.showModal = false; 
+    this.showModal = false;
   }
 
 }
-

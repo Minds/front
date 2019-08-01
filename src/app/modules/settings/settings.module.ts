@@ -9,6 +9,7 @@ import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
+import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
 
 import { SettingsComponent } from './settings.component';
 import { SettingsGeneralComponent } from './general/general.component';
@@ -24,6 +25,7 @@ import { SettingsService } from './settings.service';
 import { SettingsWireComponent } from './wire/wire.component';
 import { WireModule } from '../wire/wire.module';
 import { SettingsP2PMediaComponent } from './p2pmedia/p2pmedia.component';
+import { SettingsBlockedChannelsComponent } from "./blocked-channels/blocked-channels.component";
 
 
 const settingsRoutes : Routes = [
@@ -39,10 +41,10 @@ const settingsRoutes : Routes = [
       { path: 'billing',  component: SettingsBillingComponent },
       { path: 'reported-content',  component: SettingsReportedContentComponent },
       { path: 'p2pmedia',  component: SettingsP2PMediaComponent },
+      { path: 'blocked-channels', component: SettingsBlockedChannelsComponent },
     ]
   }
 ];
-
 
 @NgModule({
   imports: [
@@ -57,6 +59,7 @@ const settingsRoutes : Routes = [
     ReportModule,
     PaymentsModule,
     WireModule,
+    ReferralsModule,
   ],
   declarations: [
     SettingsComponent,
@@ -71,7 +74,7 @@ const settingsRoutes : Routes = [
     SettingsReportedContentComponent,
     SettingsWireComponent,
     SettingsP2PMediaComponent,
-    //BillingComponent
+    SettingsBlockedChannelsComponent,
   ],
   providers: [
     SettingsService,

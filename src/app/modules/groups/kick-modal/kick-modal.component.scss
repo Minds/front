@@ -1,0 +1,17 @@
+.m-group--kick-modal {
+  .m-modal-container {
+    > .mdl-card {
+      border-radius: 6px;
+      padding: 16px;
+
+      input[type=checkbox] {
+        margin-left: 0;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .minds-modal-dialog-actions {
+    text-align: right;
+  }
+}

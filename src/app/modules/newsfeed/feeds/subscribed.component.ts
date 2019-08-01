@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
+import { Subscription, BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
 import { MindsTitle } from '../../../services/ux/title';
@@ -12,17 +13,26 @@ import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { FeaturesService } from "../../../services/features.service";
+import { FeedsService } from "../../../common/services/feeds.service";
+import { NewsfeedService } from "../services/newsfeed.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  templateUrl: 'subscribed.component.html'
+  providers: [
+    ClientMetaService,
+    FeedsService,
+  ],
+  templateUrl: 'subscribed.component.html',
 })
 
 export class NewsfeedSubscribedComponent {
 
   newsfeed: Array<Object>;
+  feed: BehaviorSubject<Array<Object>> = new BehaviorSubject([]);
   prepended: Array<any> = [];
-  offset: string = '';
+  offset: string | number = '';
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
@@ -42,8 +52,10 @@ export class NewsfeedSubscribedComponent {
   };
 
   paramsSubscription: Subscription;
+  reloadFeedSubscription: Subscription;
+  routerSubscription: Subscription;
 
-  @ViewChild('poster') private poster: PosterComponent;
+  @ViewChild('poster', { static: true }) private poster: PosterComponent;
 
   constructor(
     public client: Client,
@@ -54,14 +66,36 @@ export class NewsfeedSubscribedComponent {
     public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
-    private session: Session,
-    private overlayModal: OverlayModalService,
+    protected featuresService: FeaturesService,
+    public feedsService: FeedsService,
+    protected newsfeedService: NewsfeedService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
     this.title.setTitle('Newsfeed');
+
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('feed/subscribed')
+      .setMedium('feed');
   }
 
   ngOnInit() {
-    this.load();
+    this.routerSubscription = this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.showBoostRotator = false;
+      this.load(true, true);
+      setTimeout(() => {
+        this.showBoostRotator = true;
+      }, 100);
+    });
+
+    this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(() => {
+      this.load(true, true);
+    });
+
+    this.load(true, true);
     this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -70,14 +104,6 @@ export class NewsfeedSubscribedComponent {
       }
 
       this.newUserPromo = !!params['newUser'];
-
-      if (params['ts']) {
-        this.showBoostRotator = false;
-        this.load(true);
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 300);
-      }
     });
 
     this.context.set('activity');
@@ -85,37 +111,104 @@ export class NewsfeedSubscribedComponent {
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+    this.reloadFeedSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
+  }
+
+  load(refresh: boolean = false, forceSync: boolean = false) {
+    if (this.featuresService.has('es-feeds')) {
+      this.loadFromService(refresh, forceSync);
+    } else {
+      this.loadLegacy(refresh);
+    }
+  }
+
+  loadNext() {
+    if (this.featuresService.has('es-feeds')) {
+      this.feedsService.loadMore();
+    } else {
+      this.loadLegacy();
+    }
+  }
+
+  async loadFromService(refresh: boolean = false, forceSync: boolean = false) {
+
+    if (!refresh) {
+      return;
+    }
+
+    if (refresh) {
+      this.moreData = true;
+      this.offset = 0;
+      this.newsfeed = [];
+    }
+
+    this.inProgress = true;
+
+    try {
+      this.feedsService
+        .setEndpoint(`api/v2/feeds/subscribed/activities`)
+        .setLimit(12)
+        .fetch();
+
+    } catch (e) {
+      console.error('SortedComponent', e);
+    }
+
   }
 
   /**
    * Load newsfeed
    */
-  load(refresh: boolean = false) {
+  loadLegacy(refresh: boolean = false) {
+
     if (this.inProgress)
-      return false;
+      return;
 
     if (refresh) {
       this.offset = '';
+      this.feedsService.clear();
     }
 
+    this.feedsService.inProgress.next(true);
+    if (!this.offset) {
+      this.feedsService.setOffset(0);
+    } else {
+      this.feedsService.setOffset(this.feedsService.rawFeed.getValue().length);
+    }
     this.inProgress = true;
 
     this.client.get('api/v1/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
       .then((data: MindsActivityObject) => {
         if (!data.activity) {
           this.moreData = false;
-          this.inProgress = false;
+          this.feedsService.inProgress.next(false);
           return false;
         }
-        if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.activity);
-        } else {
-          this.newsfeed = data.activity;
+
+        const feedItems = [];
+        for (const entity of data.activity) {
+            feedItems.push({
+              urn: entity.urn,
+              guid: entity.guid,
+              owner_guid: entity.owner_guid,
+              entity: entity,
+            });
         }
+
+        if (this.feedsService.rawFeed.getValue() && !refresh) {
+          this.feedsService.rawFeed.next([...this.feedsService.rawFeed.getValue(), ...feedItems]);
+        } else {
+          this.feedsService.rawFeed.next(feedItems);
+        }
+
+        this.feedsService.inProgress.next(false);
+        //this.feedsService.setOffset(this.feedsService.offset.getValue() + 12); // Hacky!
         this.offset = data['load-next'];
         this.inProgress = false;
       })
       .catch((e) => {
+        console.error(e);
         this.inProgress = false;
       });
   }

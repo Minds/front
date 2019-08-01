@@ -9,15 +9,19 @@ m-wallet-token--testnet {
   }
 
   .m-wallet-token--testnet--instructions {
-    background: #FFF;
     padding: 16px;
     box-sizing: border-box;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 
   .m-wallet-token--testnet--note {
-    background: #FFF;
     padding: 16px;
     box-sizing: border-box;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
 
   .m-wallet-token--testnet--form {
@@ -36,6 +40,8 @@ m-wallet-token--testnet {
 
   .m-error {
     margin-top: 24px;
-    color: red;
+    @include m-theme(){
+      color: themed($m-red);
+    }
   }
 }

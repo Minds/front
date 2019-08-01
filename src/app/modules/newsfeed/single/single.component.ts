@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, Injector, SkipSelf, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
 import { EntitiesService } from "../../../common/services/entities.service";
 import { Client } from "../../../services/api/client";
 import { FeaturesService } from "../../../services/features.service";
+import { ClientMetaService } from "../../../common/services/client-meta.service";
 
 @Component({
   selector: 'm-newsfeed--single',
+  providers: [ ClientMetaService ],
   templateUrl: 'single.component.html'
 })
 
@@ -32,7 +35,13 @@ export class NewsfeedSingleComponent {
     public entitiesService: EntitiesService,
     protected client: Client,
     protected featuresService: FeaturesService,
+    protected clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector,
   ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
   }
 
   ngOnInit() {
@@ -60,11 +69,17 @@ export class NewsfeedSingleComponent {
   load(guid: string) {
     this.context.set('activity');
 
+    this.inProgress = true;
+
     const fetchSingleGuid = this.featuresService.has('sync-feeds') ?
       this.loadFromFeedsService(guid) :
       this.loadLegacy(guid);
 
-    fetchSingleGuid.then((activity: any) => {
+    fetchSingleGuid.subscribe((activity: any) => {
+      if (activity === null) {
+        return; // Not yet loaded
+      }
+
       this.activity = activity;
 
       switch (this.activity.subtype) {
@@ -77,6 +92,8 @@ export class NewsfeedSingleComponent {
           this.router.navigate(['/blog/view', this.activity.guid], { replaceUrl: true });
           break;
       }
+
+      this.inProgress = false;
 
       if (this.activity.ownerObj) {
         this.context.set('activity', {
@@ -92,23 +109,30 @@ export class NewsfeedSingleComponent {
       } else {
         this.context.reset();
       }
-    })
-      .catch(e => {
-        if (e.status === 0) {
+    }, err => {
+        this.inProgress = false;
+
+        if (err.status === 0) {
           this.error = 'Sorry, there was a timeout error.';
         } else {
           this.error = 'Sorry, we couldn\'t load the activity';
         }
-        this.inProgress = false;
+    });
+  }
+
+  loadFromFeedsService(guid: string) {
+    return this.entitiesService.single(guid);
+  }
+
+  loadLegacy(guid: string) {
+    const fakeEmitter = new EventEmitter();
+
+    this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
+      .then((response: any) => {
+        fakeEmitter.next(response.activity);
       });
-  }
 
-  async loadFromFeedsService(guid: string) {
-    return await this.entitiesService.single(guid);
-  }
-
-  async loadLegacy(guid: string) {
-    return (<any>await this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })).activity;
+    return fakeEmitter;
   }
 
   delete(activity) {

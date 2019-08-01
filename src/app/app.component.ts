@@ -14,6 +14,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ChannelOnboardingService } from "./modules/onboarding/channel/onboarding.service";
 import { BlockListService } from "./common/services/block-list.service";
 import { FeaturesService } from "./services/features.service";
+import { ThemeService } from "./common/services/theme.service";
+import { BannedService } from './modules/report/banned/banned.service';
 
 @Component({
   moduleId: module.id,
@@ -46,6 +48,8 @@ export class Minds {
     public router: Router,
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
+    public themeService: ThemeService,
+    private bannedService: BannedService,
   ) {
     this.name = 'Minds';
   }
@@ -65,7 +69,6 @@ export class Minds {
 
     this.onboardingService.onClose.subscribe(() => {
       this.showOnboarding = false;
-      this.router.navigate(['/newsfeed']);
     });
 
     this.onboardingService.onOpen.subscribe(async () => {
@@ -89,8 +92,8 @@ export class Minds {
     this.web3Wallet.setUp();
 
     this.webtorrent.setUp();
-
-    this.blockListService.sync();
+    
+    this.themeService.setUp();
   }
 
   ngOnDestroy() {

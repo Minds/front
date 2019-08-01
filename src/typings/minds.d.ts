@@ -20,6 +20,7 @@ interface Minds {
   stripe_key?: any;
   recaptchaKey?: string;
   max_video_length?: number;
+  max_video_file_size?: number;
   features?: any;
   blockchain?: any;
   sale?: boolean | string;
@@ -44,6 +45,7 @@ interface Window {
   google?: any;
   twoOhSix?: any;
   web3?: any;
+  ethereum?: any;
   sale?: boolean | string;
   _inMemoryStorageAdapterDb?: any;
 }

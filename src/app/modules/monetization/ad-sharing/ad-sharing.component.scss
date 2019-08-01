@@ -19,7 +19,9 @@ m-ad-sharing {
       height: 8em;
       padding: $minds-padding*2;
       line-height:18px;
-      border:1px solid #EEE;
+      @include m-theme(){
+        border:1px solid themed($m-grey-50);
+      }
     }
   }
 

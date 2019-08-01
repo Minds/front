@@ -17,8 +17,7 @@ import { attachmentServiceMock } from '../../../../tests/attachment-service-mock
 import { AutoGrow } from '../../../common/directives/autogrow';
 import { MaterialUploadMock } from '../../../mocks/common/directives/material/upload-mock';
 import { CommonModule } from '@angular/common';
-import { MockComponent, MockDirective } from '../../../utils/mock';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
+import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { DropdownComponent } from '../../../common/components/dropdown/dropdown.component';
 import { TagsInput } from '../../hashtags/tags-input/tags.component';
@@ -26,6 +25,9 @@ import {TopbarHashtagsService} from "../../hashtags/service/topbar.service";
 import {topbarHashtagsServiceMock} from "../../../mocks/modules/hashtags/service/topbar.service.mock";
 import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
 import { inMemoryStorageServiceMock } from "../../../../tests/in-memory-storage-service-mock.spec";
+import { TextInputAutocompleteModule } from "../../../common/components/autocomplete";
+import { AutocompleteSuggestionsService } from "../../suggestions/services/autocomplete-suggestions.service";
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
@@ -89,6 +91,7 @@ describe('PosterComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         TextInputAutocompleteModule,
+        HttpClientTestingModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
@@ -97,6 +100,7 @@ describe('PosterComponent', () => {
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: TopbarHashtagsService, useValue: topbarHashtagsServiceMock },
         { provide: InMemoryStorageService, useValue: inMemoryStorageServiceMock },
+        { provide: AutocompleteSuggestionsService, useValue: MockService(AutocompleteSuggestionsService) },
       ],
       schemas: [
         NO_ERRORS_SCHEMA,

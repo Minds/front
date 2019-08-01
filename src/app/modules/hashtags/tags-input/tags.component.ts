@@ -6,9 +6,6 @@ import { TopbarHashtagsService } from '../service/topbar.service';
 
 @Component({
   selector: 'm-form-tags-input',
-  host: {
-    '(click)': 'focus()'
-  },
   outputs: ['change: tagsChange'],
   template: `
     <div class="m-form-tags-input-tags-tag"
@@ -19,7 +16,7 @@ import { TopbarHashtagsService } from '../service/topbar.service';
       <i class="material-icons selected m-form-tags-input-tags--check" [class.selected]="tag.selected">check</i>
     </div>
 
-    <div class="m-form-tags-input-tags-tag">
+    <div class="m-form-tags-input-tags-tag custom">
       <span>#</span>
       <input
         type="text"

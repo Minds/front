@@ -57,6 +57,7 @@ import { MobileModule } from './modules/mobile/mobile.module';
 import { IssuesModule } from './modules/issues/issues.module';
 import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from "@angular/common/http";
+import { AnalyticsModule } from "./modules/analytics/analytics.module";
 
 @NgModule({
   bootstrap: [
@@ -74,9 +75,10 @@ import { HttpClientModule } from "@angular/common/http";
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(MindsAppRoutes),
+    RouterModule.forRoot(MindsAppRoutes, { onSameUrlNavigation: "reload" }),
     CaptchaModule,
     CommonModule,
+    AnalyticsModule,
     WalletModule,
     //CheckoutModule,
     MonetizationModule,

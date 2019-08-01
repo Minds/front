@@ -1,0 +1,5 @@
+<div *ngIf="entity">
+  <ng-container *ngIf="entity?.type === 'activity'">
+    <ng-template dynamic-host></ng-template>
+  </ng-container>
+</div>

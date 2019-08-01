@@ -1,3 +1,13 @@
+body.m-theme__dark .m-wire-channel--call-to-action > button {
+    background-color: #232323;
+    color: #fff;
+    
+    .ion-icon {
+      color: #fff;
+    }
+}
+
+
 m-wire-channel {
   display: block;
   font-family: 'Roboto', sans-serif;
@@ -10,7 +20,9 @@ m-wire-channel {
 
       i {
         font-size: 16px !important;
-        color: #888;
+        @include m-theme(){
+          color: themed($m-grey-400);
+        }
       }
     }
   }
@@ -27,13 +39,16 @@ m-wire-channel {
       padding: 4px;
       margin-left: $minds-padding;
       font-size: 14px;
-      color: #78909c;
       background: transparent;
       cursor: pointer;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
 
       &:hover {
-        color: #ffffff;
-        background: #78909c;
+        @include m-theme(){
+          color: themed($m-grey-600);
+        }
       }
     }
   }
@@ -49,8 +64,10 @@ m-wire-channel {
 
       .m-wire-channel--totals-number {
         font-size: 18px;
-        color: #4690D6 !important;
         letter-spacing: 2.5px;
+        @include m-theme(){
+          color: themed($m-blue) !important;
+        }
       }
       .m-wire-channel--totals-period {
         font-size: 11px;
@@ -80,7 +97,6 @@ m-wire-channel {
   .m-wire-channel--description-editor {
     width: 100%;
     min-height: 60px;
-    border: 1px solid #ececec;
     border-radius: 3px;
     padding: $minds-padding;
     box-sizing: border-box;
@@ -89,24 +105,29 @@ m-wire-channel {
     font-family: inherit;
     font-size: inherit;
     font-weight: inherit;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-50);
+    }
   }
 
   .m-wire-channel--reward-description > textarea {
     margin-top: 8px;
     margin-bottom: 16px;
-    /* min-height: 51px; */
     font-size: 11px;
     padding: 8px;
     font-weight: 500;
-    color: #444;
     text-align: left !important;
     width: 100%;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   .m-wire-channel--rewards {
     width: 100%;
-    color: #444;
-    //margin-top: $minds-padding * 2;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   .m-wire-channel--selector {
@@ -119,23 +140,29 @@ m-wire-channel {
     }
 
     > span {
-      color: #aaaaaa;
+      @include m-theme(){
+        color: themed($m-grey-200);
+      }
     }
   }
 
   .m-wire-channel--empty-rewards {
     text-align: center;
-    color: #999999;
     font-size: 12px;
+    @include m-theme(){
+      color: themed($m-grey-300);
+    }
   }
 
   .m-wire-channel--reward-amount span {
     font-size: 16px;
-    color: #444;
     font-weight: 600;
     letter-spacing: 0.25px;
     text-transform: uppercase;
     flex: 1;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   .m-wire-channel--reward-description p {
@@ -146,9 +173,8 @@ m-wire-channel {
 
   .m-wire-channel--reward-send-wire {
     text-align: right;
-    color: #4690d6;
-    & > i {
-      //transform: scale(1.6);
+    @include m-theme(){
+      color: themed($m-blue);
     }
   }
 
@@ -174,9 +200,11 @@ m-wire-channel {
       margin-right: 8px;
       font-size: 16px;
       font-weight: 600;
-      border: 1px solid #ececec;
       border-radius: 3px;
-      background-color: #eee;
+      @include m-theme(){
+        border: 1px solid themed($m-grey-50);
+        background-color: themed($m-grey-50);
+      }
     }
   }
 
@@ -186,7 +214,9 @@ m-wire-channel {
 
     > a {
       cursor: pointer;
-      color: #444;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
 
       > * {
         vertical-align: middle;
@@ -196,7 +226,6 @@ m-wire-channel {
 
   .m-wire-channel--call-to-action {
     margin-bottom: $minds-margin * 2;
-    //margin-top: $minds-padding * 2;
 
     > button {
       display: flex;
@@ -210,17 +239,21 @@ m-wire-channel {
       font-size: 32px;
       font-weight: 200;
       text-transform: uppercase;
-      cursor: pointer;
+      cursor: pointer; 
+      
+      background-color: #4caf50;
+      color: #fff;
+      
 
       &:focus {
         outline: none;
       }
 
       .ion-icon {
-        color: #ffffff;
         font-size: inherit;
         transform: scale(1.5);
         margin: 0 24px 0 18px;
+        color: #fff;
       }
     }
 
@@ -244,11 +277,15 @@ m-wire-channel {
 
   m--crypto-token-symbol {
     .m--crypto-token-symbol--stroke {
-      stroke: #607d8b;
+      @include m-theme(){
+        stroke: themed($m-blue-grey-500);
+      }
     }
 
     .m--crypto-token-symbol--fill {
-      fill: #607d8b;
+      @include m-theme(){
+        fill: themed($m-blue-grey-500);
+      }
     }
   }
 }

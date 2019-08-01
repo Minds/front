@@ -8,9 +8,11 @@ m-onboarding-card{
   }
 
   h3, h5{
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 300;
-    color: #4A4A4A;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
   h3{
     font-size: 46px;
@@ -24,9 +26,10 @@ m-onboarding-card{
 
   i.material-icons{
     font-size: 56px;
-    color: #4A4A4A;
-    font-size: 56px;
     margin: 0 0 24px;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 
   i.m-onboarding-card--close{

@@ -35,18 +35,23 @@
           margin-right: 4px;
           font-size: 16px;
           font-weight: 600;
-          border: 1px solid #ececec;
           border-radius: 3px;
-          background-color: #eee;
+
+          @include m-theme(){
+            border: 1px solid themed($m-grey-50);
+            background-color: themed($m-grey-50);
+          }
         }
 
         span {
           font-size: 16px;
-          color: #444;
           font-weight: 600;
           letter-spacing: 0.25px;
           text-transform: uppercase;
           flex: 1;
+          @include m-theme(){
+            color: themed($m-grey-800);
+          }
         }
       }
 
@@ -62,8 +67,11 @@
           font-size: 11px;
           padding: 8px;
           font-weight: 500;
-          color: #444;
           text-align: left !important;
+
+          @include m-theme(){
+            color: themed($m-grey-800);
+          }
         }
       }
     }
@@ -77,7 +85,9 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    color: #444;
     padding: 16px;
+    @include m-theme(){
+      color: themed($m-grey-800);
+    }
   }
 }

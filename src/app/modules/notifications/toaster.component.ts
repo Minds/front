@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DynamicHostDirective } from '../../common/directives/dynamic-host.directive';
 import { NotificationService } from './notification.service';
 
@@ -13,15 +13,18 @@ import { NotificationService } from './notification.service';
         (click)="closeNotification(notification)"
       ></minds-notification>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class NotificationsToasterComponent implements OnInit {
-  @Input() notifications: Array<any> = [];
+  notifications: Array<any> = [];
 
-  @ViewChild(DynamicHostDirective) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: false }) host: DynamicHostDirective;
 
-  constructor(public notification: NotificationService) {
+  constructor(
+    public notification: NotificationService,
+    protected cd: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit() {
@@ -30,7 +33,10 @@ export class NotificationsToasterComponent implements OnInit {
 
   listenForNotifications() {
     this.notification.onReceive.subscribe((notification: any) => {
+      if(this.isToasterDisabled()) return;
+
       this.notifications.unshift(notification);
+      this.detectChanges();
 
       setTimeout(() => {
         this.closeNotification(notification);
@@ -39,12 +45,27 @@ export class NotificationsToasterComponent implements OnInit {
   }
 
   closeNotification(notification: any) {
+    let dirty = false;
     let i: any;
+
     for (i in this.notifications) {
       if (this.notifications[i] === notification) {
         this.notifications.splice(i, 1);
+        dirty = true;
       }
+    }
+
+    if (dirty) {
+      this.detectChanges();
     }
   }
 
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
+  isToasterDisabled() {
+    return window.Minds.user && !window.Minds.user.toaster_notifications;
+  }
 }

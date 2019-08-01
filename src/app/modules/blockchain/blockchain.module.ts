@@ -24,6 +24,7 @@ import { OffchainPaymentService } from './offchain-payment.service';
 import { Client } from '../../services/api/client';
 import { MarketingModule } from '../marketing/marketing.module';
 import { BlockchainMarketingModule } from './marketing/marketing.module';
+import { GetMetamaskComponent } from './metamask/getmetamask.component';
 
 const cryptoRoutes: Routes = [
   {
@@ -52,6 +53,7 @@ const cryptoRoutes: Routes = [
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
     BlockchainTdeBuyComponent,
+    GetMetamaskComponent,
   ],
   providers: [
     TransactionOverlayService,
@@ -100,7 +102,8 @@ const cryptoRoutes: Routes = [
     BlockchainWalletSelector,
     BlockchainWalletAddressNoticeComponent,
     TransactionOverlayComponent,
-    BlockchainTdeBuyComponent
+    BlockchainTdeBuyComponent,
+    GetMetamaskComponent,
   ],
   entryComponents: [
     BlockchainTdeBuyComponent,

@@ -6,7 +6,9 @@
   a {
     text-decoration: none;
     font-weight: 300;
-    color: #999999;
+    @include m-theme(){
+      color: themed($m-grey-300);
+    }
   }
 }
 
@@ -14,4 +16,10 @@
   display: inline-block;
   height: 0;
   width: $minds-padding * 3;
+}
+
+.m-report-meta {
+  @include m-theme(){
+    color: themed($m-blue-grey-500);
+  }
 }

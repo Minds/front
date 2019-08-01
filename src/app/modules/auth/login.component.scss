@@ -2,7 +2,9 @@
 
 m-login {
   display: block;
-  background: #FFF;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }
 
 .m-login {
@@ -10,7 +12,7 @@ m-login {
   display: flex;
   max-width: 990px;
   flex-direction: row;
-  height: 100%;
+  min-height: 100%;
 
   @media screen and (max-width: $max-mobile) {
     flex-direction: column;

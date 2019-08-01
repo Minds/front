@@ -1,5 +1,5 @@
 .m-monetization--onboarding {
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
 
   label{
     display: block;
@@ -15,16 +15,20 @@
       font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #777;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       font-weight: 300;
+      @include m-theme(){
+        color: themed($m-grey-500);
+      }
     }
   }
 
   .m-date-input--field select{
     padding: 12px 40px 12px 12px;
     text-transform:uppercase;
-    color:#777;
+    @include m-theme(){
+      color: themed($m-grey-500);
+    }
   }
 
   input[type=text]{

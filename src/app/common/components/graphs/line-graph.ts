@@ -8,7 +8,7 @@ import { Component, Directive } from '@angular/core';
       <svg fill="currentColor"
         [svgHack]
         [viewBox]="'0 0 ' + x + ' ' + y"
-        style="stroke:#757575; opacity:0.8; overflow:visible; max-width:100%;"
+        style="opacity:0.8; overflow:visible; max-width:100%;"
         xmlns="http://www.w3.org/2000/svg">
         <!-- X Y, X Y (from top to bottom) -->
         <g class="points">

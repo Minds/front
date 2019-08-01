@@ -2,7 +2,9 @@
 
 .m-pages {
   font-family: Roboto, Helvetica, Arial, sans-serif;
-  background-color: white;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   h1 {
     margin-top: 0;
@@ -24,11 +26,13 @@
     font-style: normal;
     letter-spacing: 0.5px;
     letter-spacing: -.003em;
-    font-family: 'Roboto';
-    color: rgba(0, 0, 0, .84);
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    @include m-theme(){
+      color: rgba(themed($m-black), 0.84);
+    }
   }
 
   p, li {

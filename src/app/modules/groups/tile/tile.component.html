@@ -10,7 +10,10 @@
   
   <a [routerLink]="['/groups/profile', entity.guid]"  class="m-groups--tile-block">
     <div class="avatar">
-      <img src="{{minds.cdn_url}}fs/v1/avatars/{{entity.guid}}/large"/>
+      <img
+        [class.m-pulsating--big]="entity.hasGathering$ | async"
+        src="{{minds.cdn_url}}fs/v1/avatars/{{entity.guid}}/large"
+      />
     </div>
     <div class="body">
       <h3>{{entity.name}}</h3>

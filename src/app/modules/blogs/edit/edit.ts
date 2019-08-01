@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 import { MindsTitle } from '../../../services/ux/title';
 import { ACCESS, LICENSES } from '../../../services/list-options';
@@ -12,6 +12,7 @@ import { WireThresholdInputComponent } from '../../wire/threshold-input/threshol
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
+import { DialogService } from "../../../common/services/confirm-leave-dialog.service";
 
 @Component({
   moduleId: module.id,
@@ -60,11 +61,12 @@ export class BlogEdit {
 
   licenses = LICENSES;
   access = ACCESS;
+  existingBanner: boolean;
 
   paramsSubscription: Subscription;
-  @ViewChild('inlineEditor') inlineEditor: InlineEditorComponent;
-  @ViewChild('thresholdInput') thresholdInput: WireThresholdInputComponent;
-  @ViewChild('hashtagsSelector') hashtagsSelector: HashtagsSelectorComponent;
+  @ViewChild('inlineEditor', { static: false }) inlineEditor: InlineEditorComponent;
+  @ViewChild('thresholdInput', { static: false }) thresholdInput: WireThresholdInputComponent;
+  @ViewChild('hashtagsSelector', { static: false }) hashtagsSelector: HashtagsSelectorComponent;
 
   constructor(
     public session: Session,
@@ -73,7 +75,8 @@ export class BlogEdit {
     public router: Router,
     public route: ActivatedRoute,
     public title: MindsTitle,
-    protected inMemoryStorageService: InMemoryStorageService
+    protected inMemoryStorageService: InMemoryStorageService,
+    private dialogService: DialogService,
   ) {
     this.getCategories();
 
@@ -125,6 +128,7 @@ export class BlogEdit {
         this.banner_prompt = false;
         this.editing = true;
         this.canSave = true;
+        this.existingBanner = false;
 
         if (this.guid !== 'new') {
           this.load();
@@ -144,6 +148,14 @@ export class BlogEdit {
         }
       }
     });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.editing || !window.Minds.user) {
+      return true;
+    }
+
+    return this.dialogService.confirm('Discard changes?');
   }
 
   ngOnDestroy() {
@@ -173,7 +185,9 @@ export class BlogEdit {
           this.blog = response.blog;
           this.guid = response.blog.guid;
           this.title.setTitle(this.blog.title);
-
+          
+          if(this.blog.thumbnail_src)
+            this.existingBanner = true;
           //this.hashtagsSelector.setTags(this.blog.tags);
           // draft
           if (!this.blog.published && response.blog.draft_access_id) {
@@ -228,6 +242,7 @@ export class BlogEdit {
       blog.mature = blog.mature ? 1: 0;
       blog.monetization = blog.monetization ? 1: 0;
       blog.monetized = blog.monetized ? 1: 0;
+      this.editing = false;
       this.inProgress = true;
       this.canSave = false;
       this.check_for_banner().then(() => {
@@ -259,14 +274,15 @@ export class BlogEdit {
   check_for_banner() {
     if (!this.banner)
       this.banner_prompt = true;
-
     return new Promise((resolve, reject) => {
+      
       if (this.banner)
         return resolve(true);
+
       setTimeout(() => {
         this.banner_prompt = false;
 
-        if (this.banner)
+        if (this.banner || this.existingBanner)
           return resolve(true);
         else
           return reject(false);

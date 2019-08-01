@@ -2,17 +2,23 @@
 
 .m-branding {
   .m-marketing--header {
-    background: #FFF;
+    @include m-theme(){
+      background-color: themed($m-white);
+    }
   }
   .m-marketing--header-inner {
     text-align: center;
 
     h1 {
-      color: #444;
+      @include m-theme(){
+        color: themed($m-grey-800);
+      }
     }
     h3 {
-      color: #666;
       padding-right: 0;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
     }
   }
 
@@ -28,8 +34,10 @@
       display: block;
       font-weight: 600;
       text-transform: uppercase;
-      color: #666;
       margin: 56px 0;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
     }
   }
 

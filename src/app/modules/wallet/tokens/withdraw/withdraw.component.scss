@@ -15,25 +15,31 @@
 
     .m-token-withdraw--input {
       padding: $minds-padding;
-      border: 1px solid #EEE;
       font-weight: 500;
       letter-spacing: 1px;
       line-height: 1.35;
       width: 15em;
       text-align: right;
+
+      @include m-theme(){
+         border: 1px solid themed($m-grey-50);
+      }
     }
 
     .m-token-withdraw--submit-button {
       margin-left: $minds-padding;
       padding: $minds-padding ($minds-padding * 4);
       background: none;
-      border: 1px solid #555;
       font-family: inherit;
       font-weight: 400;
       letter-spacing: 2.33px;
       text-transform: uppercase;
-      color: #555;
       cursor: pointer;
+
+      @include m-theme(){
+        border: 1px solid themed($m-grey-700);
+        color: themed($m-grey-700);
+      }
 
       &[disabled] {
         cursor: default;
@@ -47,7 +53,9 @@
   }
 
   .m-token-withdraw--error {
-    color: red;
+    @include m-theme(){
+      color: themed($m-red);
+    }
     font-size: 12px;
     letter-spacing: 1px;
   }

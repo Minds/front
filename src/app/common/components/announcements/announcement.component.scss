@@ -15,27 +15,32 @@ m-announcement{
     width: 100%;
     height: $m-announcment-height;
     z-index: 9999;
-    background:$minds-blue;
     display:flex;
     flex-direction: row;
     align-items:center;
 
+    @include m-theme(){
+      background-color: themed($m-blue);
+    }
+
     @media screen and (max-width: 770px){
         width: 100%;
     }
-    
+
   }
 
   .m-announcement--content{
     text-align: center;
-    color: #FFF;
     letter-spacing: 1.2px;
     font-weight: 300;
-    font-family: Roboto;
+    font-family: 'Roboto', Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-size: 16px;
     flex: 1;
+    @include m-theme(){
+      color: themed($m-white);
+    }
 
     @media screen and (max-width:770px){
         font-size:10px;
@@ -44,7 +49,9 @@ m-announcement{
 
     a {
       text-decoration:none;
-      color:#FFF;
+      @include m-theme(){
+        color: themed($m-white);
+      }
       display:block;
       font-weight: 300;
     }
@@ -57,7 +64,9 @@ m-announcement{
     right: 0;
 
     i {
-      color: #FFF;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
   }
 }

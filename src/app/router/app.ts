@@ -17,6 +17,7 @@ import { RewardsComponent } from '../controllers/rewards/rewards';
 export const MindsAppRoutes: Routes = [
 
   { path: 'capture', redirectTo: 'media/images/suggested' },
+  { path: 'about', redirectTo: 'p/about'},
 
   // redirectTo: 'media/:type/:filter
   { path: 'discovery/suggested/channels', redirectTo: 'channels/suggested'},
@@ -42,8 +43,6 @@ export const MindsAppRoutes: Routes = [
   { path: 'claim-rewards/:uuid', component: RewardsComponent },
 
   // TODO: Find a way to move Channel routes onto Channel Module. They take priority and groups/blogs cannot be accessed
-  { path: ':username/sort', redirectTo: 'sort/top', pathMatch: 'full' },
-  { path: ':username/sort/:algorithm', component: ChannelComponent },
   { path: ':username/:filter', component: ChannelComponent },
   { path: ':username', component: ChannelComponent, canDeactivate: [CanDeactivateGuardService]},
 ];

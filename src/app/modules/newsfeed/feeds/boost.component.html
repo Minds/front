@@ -1,6 +1,6 @@
 <div class="minds-list">
   <m-newsfeed--boost-rotator interval="12" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
-  <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" [showBoostMenuOptions]="boostFeed" (delete)="delete(activity)" class="mdl-card m-border item"></minds-activity>
+  <minds-activity *ngFor="let activity of newsfeed; let i = index" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" [showBoostMenuOptions]="boostFeed" (delete)="delete(activity)" [slot]="i + 1" class="mdl-card m-border item"></minds-activity>
   <infinite-scroll
       distance="25%"
       (load)="load()"

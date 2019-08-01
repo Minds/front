@@ -1,31 +1,30 @@
-<div class="m-messenger--conversation m-messenger--dockpane mdl-shadow--4dp" [class.m-messenger--dockpane-open]="conversation.open">
+<div class="m-messenger--conversation m-messenger--dockpane" [class.m-messenger--dockpane-open]="conversation.open">
   <div class="m-messenger--dockpane-tab"
     [class.mdl-color--amber]="conversation.unread"
-    (click)="dockpanes.toggle(conversation); initialLoad()">
+    (click)="toggle(); initialLoad()">
     <div class="m-messenger--dockpane-tab-title">
       <span *ngFor="let participant of conversation.participants">{{participant.username}}</span>
     </div>
     <div class="m-messenger--dockpane-tab-actions" (click)="$event.stopPropagation()">
       <i class="material-icons mdl-color-text--blue-grey-100" [hidden]="live">sync_problem</i>
       <i class="material-icons"
-      (click)="ribbon.open = !ribbon.open"
-      [ngClass]="{ 'm-status-active': ribbon.open }"
-      >more_vert</i>
+        (click)="ribbonToggle()"
+        >more_vert</i>
       <i class="material-icons" (click)="dockpanes.close(conversation)">close</i>
     </div>
   </div>
 
-  <div class="m-messenger--dockpane-container mdl-shadow--2dp">
-    <div class="m-messenger--dockpane-tab-ribbon" #ribbon [hidden]="!ribbon.open">
-      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="deleteHistory(); ribbon.open = false" *ngIf="showMessages">
+  <div class="m-messenger--dockpane-container">
+    <div class="m-messenger--dockpane-tab-ribbon" #ribbon [hidden]="!ribbonOpened">
+      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="deleteHistory(); ribbonOpened = false">
         <i class="material-icons mdl-color-text--blue-grey-100" title="Delete chat history" i18n-title="@@MESSENGER__CONVERSATION__DELETE_TOOLTIP">delete</i>
         <ng-container i18n="@@MESSENGER__CONVERSATION__DESTROY">Destroy</ng-container>
       </div>
-      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="block(); ribbon.open = false" *ngIf="!blocked">
+      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="block(); ribbonOpened = false" *ngIf="!blocked">
         <i class="material-icons mdl-color-text--blue-grey-100" title="Block participants" i18n-title="@@MESSENGER__CONVERSATION__BLOCK_TOOLTIP">block</i>
         <ng-container i18n="@@MESSENGER__CONVERSATION__BLOCK">Block</ng-container>
       </div>
-      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="block(); ribbon.open = false" *ngIf="blocked">
+      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="block(); ribbonOpened = false" *ngIf="blocked">
         <i class="material-icons mdl-color-text--blue-grey-100" title="Un-block chat" i18n-title="@@MESSENGER__CONVERSATION__UNBLOCK_TOOLTIP">restore</i>
         <ng-container i18n="@@MESSENGER__CONVERSATION__UNBLOCK">Un-block</ng-container>
       </div>

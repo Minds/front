@@ -6,8 +6,10 @@
   margin: 8px;
   overflow: hidden;
   box-sizing: border-box;
-  background:#FFF;
   border-radius:3px;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   img{
     max-height: 220px;
@@ -16,19 +18,21 @@
     flex-basis: 100%;
   }
   .overlay{
-    color: #FFF;
-    background: rgba(0, 0, 0, 0.5);
     text-align: center;
     cursor: pointer;
     width: 100%;
     height: 100%;
     position: absolute;
     box-sizing: border-box;
-    
+
     padding: 38px 8px;
     //display:flex;
     //flex-flow:row nowrap;
     //align-items: center;
+    @include m-theme(){
+      color: themed($m-white);
+      background-color: rgba(themed($m-black), 0.5);
+    }
 
     i{
       font-size:30px;
@@ -57,22 +61,26 @@
 .minds-dropdown-menu{
   padding: 0;
   width: 150px;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);
   border-radius: 4px;
   position: absolute;
   z-index: 1000;
   top: 8px;
   right: 8px;
-  background-color: #FFF;
   overflow: visible;
   display: block;
+  @include m-theme(){
+    background-color: themed($m-white);
+    box-shadow: 0 2px 2px 0 rgba(themed($m-black), .14), 0 3px 1px -2px rgba(themed($m-black), .2), 0 1px 5px 0 rgba(themed($m-black), .12);
+  }
 
   .mdl-menu__item{
     opacity:1;
     text-overflow:ellipsis;
     line-height: 32px;
     height: 32px;
-    border-bottom: 1px solid #ececec;
+    @include m-theme(){
+       border-bottom: 1px solid themed($m-grey-50);
+    }
     padding: 0 8px;
   }
 
@@ -86,8 +94,10 @@
   .video{
     height:100%;
     width:100%;
-    background: none no-repeat left center #000000;
     background-size: cover;
+    @include m-theme(){
+      background: none no-repeat left center themed($m-black-always);
+    }
 
     video{
       min-height:100%;
@@ -119,15 +129,19 @@
     -webkit-align-items:center;
     flex-direction: column;
     -webkit-flex-direction:column;
-    background: linear-gradient(
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0)
-    );
-    color:#FFF;
+    @include m-theme(){
+      color: themed($m-white);
+      background: linear-gradient(
+        rgba(themed($m-black-always), 0.3),
+        rgba(themed($m-black-always), 0.4),
+        rgba(themed($m-black-always), 0)
+      );
+    }
 
     &.overlay--0-6{
-      background-color:rgba(0,0,0,0.6);
+      @include m-theme(){
+        background-color: rgba(themed($m-black-always), 0.65);
+      }
     }
   }
 }
@@ -143,8 +157,10 @@ m-channel--carousel{
   width: 100%;
   height: 360px;
   overflow: hidden;
-  background: #888;
   //z-index:-1;
+  @include m-theme(){
+    background-color: themed($m-grey-400);
+  }
 
   minds-banner{
     display: block;
@@ -178,14 +194,30 @@ m-channel--carousel{
     }
   }
 
+  .delete-button > button, .add-button{
+    &.mdl-button{
+      &:hover{
+        @include m-theme(){
+          background-color: themed($m-blue-grey-700);
+        }
+        cursor:pointer;
+      }
+      &:active{
+        @include m-theme(){
+          background-color: themed($m-blue-grey-600);
+        }
+      }
+    }
+  }
+
   .delete-button{
     position:absolute;
     top:8px;
     right:8px;
-    z-index:999;
+    z-index:998;
 
-    > *{
-      font-size:11px;
+    button{
+      font-size: 23px;
     }
   }
 
@@ -194,9 +226,9 @@ m-channel--carousel{
     position:absolute;
     top:8px;
     right:80px;
-    z-index:999;
+    z-index:998;
     i{
-      margin-top:6px;
+      margin-top:2px;
     }
   }
 
@@ -204,10 +236,12 @@ m-channel--carousel{
     top: 50%;
     z-index: 999;
     position: absolute;
-    color: #FFF;
     font-size: 60px !important;
     cursor: pointer;
-    text-shadow: 0 0 3px #888;
+    @include m-theme(){
+      color: themed($m-white);
+      text-shadow: 0 0 3px themed($m-grey-400);
+    }
 
     &.right{
       right:0;
@@ -215,8 +249,10 @@ m-channel--carousel{
   }
 
   .placeholder{
-    background-color:#4690C3;
     opacity:1;
+    @include m-theme(){
+      background-color: themed($m-blue);
+    }
   }
  }
 
@@ -236,11 +272,15 @@ m-channel--carousel{
    cursor: pointer;
    font-size: 14px;
    width: auto;
-   border-bottom: 1px solid rgba(0,0,0,.12);
+   @include m-theme(){
+     border-bottom: 1px solid rgba(themed($m-black),.12);
+   }
 
    :hover{
-     background-color: #EEE;
      text-decoration: none;
+     @include m-theme(){
+       background-color: themed($m-grey-50);
+     }
    }
 
    a{
@@ -332,6 +372,27 @@ minds-button-user-dropdown{
     position: absolute;
     text-transform: capitalize;
   }
+
+  .m-user-dropdown__item--nsfw {
+    overflow: visible;
+
+    m-nsfw-selector {
+      border: 0;
+      width: 100%;
+      padding: 0;
+
+      .m-nsfwSelector__label {
+        m-tooltip {
+          display: none;
+        }
+      }
+
+      .m-dropdown .m-dropdown__list {
+        width: 210px;
+      }
+    }
+  }
+
 }
 
 .m-error-splash{
@@ -384,9 +445,11 @@ minds-graph-line{
   bottom: auto;
   right: auto;
   z-index: 999995;
-  background: #ffffff;
   width: 330px;
   padding-bottom: $minds-padding;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }
 
 .m-bubble-popup {
@@ -397,10 +460,12 @@ minds-graph-line{
 
 minds-emoji .m-bubble-popup {
   max-width: 180px + ($minds-padding * 2);
-  background: #ffffff;
   margin: $minds-padding;
   border-radius: 3px;
   user-select: none;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   .m-emoji-selector-title {
     width: 100%;
@@ -410,7 +475,9 @@ minds-emoji .m-bubble-popup {
     text-transform: uppercase;
     font-size: 11px;
     font-weight: bold;
-    border-bottom: 1px solid #eaeaea;
+    @include m-theme(){
+       border-bottom: 1px solid themed($m-grey-50);
+    }
 
     .m-emoji-selector-close {
       position: absolute;
@@ -445,14 +512,19 @@ minds-emoji .m-bubble-popup {
 }
 
 minds-tooltip .m-bubble-popup {
-  background: #000000;
-  color: #ffffff;
   padding: ($minds-padding / 2) $minds-padding;
   margin: $minds-padding 0;
   font-size: 10px;
+  @include m-theme(){
+    color: themed($m-white);
+    background-color: themed($m-grey-950);
+  }
 }
 
 m-translate {
+  a {
+    cursor: pointer;
+  }
   .m-translate-select {
     cursor: pointer;
     position: relative;
@@ -479,9 +551,13 @@ m-translate {
     max-width: 100%;
     appearance: none;
     border-radius: 0;
-    border: 1px solid #ddd;
     padding: $minds-padding;
     font-size: 12px;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-100);
+       background-color: themed($m-white);
+       color: rgba(themed($m-black), 0.87);
+    }
   }
 }
 
@@ -492,7 +568,9 @@ m-translate {
     width: calc(100% - #{$minds-padding * 4}) !important;
     margin: 0 ($minds-padding * 2) $minds-padding;
     padding: $minds-padding 0 $minds-padding $minds-padding;
-    border-left: 2px solid #ddd;
+    @include m-theme(){
+       border-left: 2px solid themed($m-grey-100);
+    }
 
     minds-card-comment & {
       font-size: inherit !important;
@@ -504,12 +582,14 @@ m-translate {
   list-style: none;
   padding: 0;
   margin: 0;
-  background: #ffffff;
   white-space: nowrap;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 99990;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 
   &.m-ribbon-right {
     right: 0;
@@ -580,20 +660,25 @@ m-translate {
 
 svg.m-facebook-icon{
   cursor:pointer;
-  background-color: #3067a3;
-  fill:#FFF;
   margin:auto;
+  @include m-theme(){
+    fill: themed($m-white);
+    background-color: themed($m-facebook) !important;
+  }
 }
 
 .m--spam-notice {
   display: block;
   text-align: center;
   padding: ($minds-padding * 2);
-  background: #ffffaa;
-  color: #000000;
   font-size: 12px;
   line-height: 1.25;
   font-weight: 400;
+  @include m-theme(){
+    color: themed($m-black);
+    background-color: themed($m-amber-light);
+  }
+
 
   minds-newsfeed-single & {
     margin: 0 0 ($minds-padding / 2) 0;
@@ -615,7 +700,9 @@ svg.m-facebook-icon{
   align-items: center;
   justify-content: space-evenly;
   padding: $minds-padding * 2;
-  color: #4a4a4a;
+  @include m-theme(){
+    color: themed($m-grey-800);
+  }
 
   .m-tab-bar--tab {
     position: relative;
@@ -630,12 +717,16 @@ svg.m-facebook-icon{
   }
 
   .m-tab-bar--more {
-    color: rgba(74, 74, 74, 0.58);
     margin-left: 5%;
+    @include m-theme(){
+      color: rgba(themed($m-grey-800), 0.58);
+    }
   }
 
   .m-tab-bar--active-tab {
-    color: #2196f3;
+    @include m-theme(){
+      color: themed($m-blue);
+    }
   }
 }
 
@@ -684,13 +775,12 @@ svg.m-facebook-icon{
   visibility: hidden;
 }
 
-mwl-text-input-autocomplete-menu {
+m-text-input--autocomplete-menu {
   ul.dropdown-menu {
     position: absolute;
     top: 100%;
     left: 0;
     z-index: 1000;
-    display: none;
     float: left;
     min-width: 160px;
     padding: 5px 0;
@@ -698,33 +788,42 @@ mwl-text-input-autocomplete-menu {
     font-size: 14px;
     text-align: left;
     list-style: none;
-    background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, .15);
     border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+
+    @include m-theme(){
+      background-color: themed($m-white);
+      border: 1px solid rgba(themed($m-black), .15);
+      box-shadow: 0 6px 12px rgba(themed($m-black), .175);
+    }
 
     li {
       a {
         display: block;
-        padding: 3px 20px;
+        padding: $minds-padding / 2 $minds-padding;
         clear: both;
         font-weight: 400;
         line-height: 1.42857143;
-        color: #333;
         white-space: nowrap;
         text-decoration: none;
+        @include m-theme(){
+          color: themed($m-grey-900);
+        }
       }
       a:hover {
-        color: #262626;
-        background-color: #f5f5f5;
+        @include m-theme(){
+          color: themed($m-grey-950);
+          background-color: themed($m-grey-50);
+        }
       }
 
       &.active {
         a, a:hover {
-          color: #fff;
-          background-color: #4690D6;
           outline: 0;
+          @include m-theme(){
+            color: themed($m-white);
+            background-color: themed($m-blue);
+          }
         }
       }
     }

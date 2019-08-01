@@ -8,10 +8,14 @@ m-safe-toggle {
     }
 
     i.material-icons {
-      color: #9E9E9E;
+      @include m-theme(){
+        color: themed($m-grey-300);
+      }
 
       &.m-safe-toggle--active {
-        color: #4690DF;
+        @include m-theme(){
+          color: themed($m-blue);
+        }
       }
     }
 

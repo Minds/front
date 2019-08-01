@@ -88,7 +88,6 @@
     max-width: 300px;
 
     appearance: none;
-    background: rgba(0, 0, 0, 0.15);
     color: inherit;
     font-family: inherit;
     font-size: inherit;
@@ -96,10 +95,15 @@
     border: none;
     border-radius: $minds-padding / 2;
     margin: 0;
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.15);
+    }
 
     .m-boost--creator-wide-input--edit {
-      background: rgba(0, 0, 0, 0);
       max-width: calc(90% - 60px) !important;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.0);
+      }
     }
 
     .m-boost--creator-autocomplete--suggestion-avatar {
@@ -123,7 +127,6 @@
       letter-spacing: 3px;
 
       appearance: none;
-      background: rgba(0, 0, 0, 0.15);
       color: inherit;
       font-family: inherit;
       font-size: inherit;
@@ -132,6 +135,9 @@
       border-radius: $minds-padding / 2;
       margin: 0;
       margin-right: 8px;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.15);
+      }
 
       &:focus {
         outline: none;
@@ -178,7 +184,10 @@
 
       .m-boost--creator-selector--selected-label {
         font-weight: 400;
-        color: #417cb2;
+        @include m-theme(){
+          color: themed($m-blue);
+        }
+
       }
 
       .m-boost--creator-selector--description {
@@ -186,7 +195,9 @@
         letter-spacing: 0.5px;
         line-height: 1.3;
         max-width: 300px;
-        color: rgba(0,0,0,0.75);
+        @include m-theme(){
+          color: rgba(themed($m-black), 0.75);
+        }
 
         &.m-boost--creator-selector--description--small {
           font-size: 12px;
@@ -256,8 +267,10 @@
     }
 
     .m-boost--creator-toggle--selected {
-      color: #417cb2;
       font-weight: 400;
+      @include m-theme(){
+        color: themed($m-blue);
+      }
     }
 
     b {
@@ -294,7 +307,9 @@
     width: 36px;
     height: 36px;
     vertical-align: middle;
-    background: #444;
+    @include m-theme(){
+      background-color: themed($m-grey-800);
+    }
   }
 
   .m-boost--creator-autocomplete--results {
@@ -304,11 +319,13 @@
     max-height: 300px;
     font-size: 16px;
     border-radius: 3px;
-    background: rgba(0,0,0,0.15);
     padding: $minds-padding;
     margin-top: $minds-padding * 1.5;
     overflow-y: auto;
     box-sizing: border-box;
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.15);
+    }
 
     &:after {
       bottom: 100%;
@@ -319,10 +336,12 @@
       width: 0;
       position: absolute;
       pointer-events: none;
-      border-color: rgba(102, 102, 102, 0);
-      border-bottom-color: #ffffff;
       border-width: 8px;
       margin-left: -8px;
+      @include m-theme(){
+        border-color: rgba(themed($m-grey-600), 0);
+        border-bottom-color: themed($m-white);
+      }
     }
 
     .m-boost--creator-autocomplete--result {
@@ -332,9 +351,11 @@
       justify-content: space-between;
 
       &:hover, &.m-boost--creator-autocomplete--result-highlight {
-        background: #ffffff;
-        color: #000;
         font-weight: 400;
+        @include m-theme(){
+          background-color: themed($m-white);
+          color: themed($m-black);
+        }
       }
 
       .m-boost--creator-autocomplete--result-content .material-icons {
@@ -347,13 +368,23 @@
         margin-left: 0.15em;
 
         .m--crypto-token-symbol--stroke {
-          stroke: #555;
+          @include m-theme(){
+            stroke: themed($m-grey-700);
+          }
         }
 
         .m--crypto-token-symbol--fill {
-          fill: #555;
+          @include m-theme(){
+            fill: themed($m-grey-700);
+          }
         }
       }
+    }
+  }
+
+  .m-boost--creator-section-submit--network {
+    @media screen and (min-width: 780px) {
+      margin-top: -72px;
     }
   }
 
@@ -368,14 +399,16 @@
       appearance: none;
       padding: 8px 32px;
       background: none;
-      border: 1px solid #666;
       border-radius: 0;
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
       text-transform: uppercase;
-      color: #666;
       cursor: pointer;
+      @include m-theme(){
+        color: themed($m-grey-600);
+        border: 1px solid themed($m-grey-600);
+      }
 
       &[disabled] {
         cursor: default;
@@ -398,9 +431,11 @@
     }
 
     .m-boost--creator--submit-error {
-      color: #ff0000;
       font-size: 12px;
       font-weight: 400;
+      @include m-theme(){
+        color: themed($m-red);
+      }
     }
   }
 
@@ -417,8 +452,10 @@
 
       m-scheduler > select.m-form-select {
         background: transparent;
-        color: #ffffff !important;
         font-weight: 200;
+        @include m-theme(){
+          color: themed($m-white) !important;
+        }
       }
     }
   }
@@ -426,8 +463,6 @@
   // Credit Card Input
   .m-boost--creator-payment {
     //position: absolute;
-    border: 1px solid #DDD;
-    background: rgba(0,0,0,0.1);
     border-radius: 3px;
     min-width: 440px;
     max-width: 560px;
@@ -435,6 +470,10 @@
     //margin: -252px 400px;
     margin: $minds-padding 0 0;
     min-width: 440px;
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.1);
+      border: 1px solid themed($m-grey-100);
+    }
 
     @media screen and (max-width: $max-mobile) {
       position: static;
@@ -471,35 +510,45 @@
     }
 
     .m-payments--saved-card-item{
-      border: 1px solid #DDD;
-      background: rgba(0,0,0,0.15);
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.15);
+        border: 1px solid themed($m-grey-100);
+      }
     }
 
     input{
-      color: #FFF;
-      background: rgba(0,0,0,0.15);
       padding: 12px;
       border: 0;
       border-radius: 3px;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.15);
+        color: themed($m-white);
+      }
     }
     select{
       padding:12px;
-      background: rgba(0,0,0,0.15);
       border: 0;
-      color: #FFF;
       border-radius: 3px;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.15);
+        color: themed($m-white);
+      }
     }
     label {
-      color: #FFF;
       padding: 8px 12px;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
     .is-focused, .is-dirty{
       border: 0;
       label{
-        color: #FFF;
         border: 0;
         top: -8px;
         left: -8px;
+        @include m-theme(){
+          color: themed($m-white);
+        }
         &::after{
           border:0;
           background-color:transparent;
@@ -508,25 +557,31 @@
     }
     .minds-purchase-vendors {
       margin-bottom: ($minds-padding * 2) !important;
-      color:#FFF;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
     .m-purchase-card--highlight{
       font-weight: bold;
     }
     .m-checkout--secure{
-      color: rgba(0,0,0,0.80);
+      @include m-theme(){
+        color: rgba(themed($m-black), 0.8);
+      }
     }
     button{
       padding: 12px;
       -webkit-appearance: none;
       border: 0;
-      background: rgba(0,0,0,0.50);
       font-size: 16px;
       text-transform: uppercase;
-      color: #FFF;
       letter-spacing: 1px;
       border-radius: 3px;
       cursor: pointer;
+      @include m-theme(){
+        background-color: rgba(themed($m-black), 0.5);
+        color: themed($m-white);
+      }
     }
   }
 
@@ -563,7 +618,7 @@
   list-style: none;
 
   > li {
-    opacity: 0.5;
+    //opacity: 0.5;
     padding: $minds-padding ($minds-padding * 3);
     cursor: pointer;
     user-select: none;
@@ -576,10 +631,19 @@
       padding-right: 0;
     }
 
-    &.m-boost--creator-selector--highlight {
-      opacity: 1;
-    }
+    // &.m-boost--creator-selector--highlight {
+    //   opacity: 1;
+    // }
 
+
+    &:not(.m-boost--creator-selector--highlight){
+        > i, h5 > span,
+        .m-boost--creator-selector--hoverable,
+        .material-icons {
+          opacity: 0.5;
+        }
+    }
+    
     .m-boost--creator-selector--selected-label {
       visibility: hidden;
     }
@@ -661,24 +725,32 @@
   }
 
   .mdl-textfield__label {
-    color: rgba(0, 0, 0, 0.46);
+    @include m-theme(){
+      color: rgba(themed($m-black), 0.46);
+    }
 
     &:after {
-      background-color: #ffffff;
+      @include m-theme(){
+        background-color: themed($m-white);
+      }
     }
   }
 
   .mdl-textfield__input {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.32);
-    color: #ffffff;
     font-family: inherit;
     font-weight: inherit;
+    @include m-theme(){
+      border-bottom: 1px solid rgba(themed($m-black), 0.32);
+      color: themed($m-white);
+    }
   }
 
   .mdl-textfield--floating-label {
     &.is-focused, &.is-dirty, &.has-placeholder {
       .mdl-textfield__label {
-        color: #ffffff;
+        @include m-theme(){
+          color: themed($m-white);
+        }
       }
     }
   }
@@ -697,13 +769,17 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    color: #ffffff;
     background: transparent;
-    border: 1px solid #ffffff;
     border-radius: 0;
+    @include m-theme(){
+      color: themed($m-white);
+      border: 1px solid themed($m-white);
+    }
 
     &:focus {
-      outline: 2px solid #ffffff;
+      @include m-theme(){
+        outline: 2px solid themed($m-white);
+      }
     }
   }
 
@@ -728,8 +804,10 @@
 
     .m-payments-saved--item {
       &:hover, &:focus {
-        background: #ffffff;
-        color: #000000;
+        @include m-theme(){
+          color: themed($m-black);
+          background-color: themed($m-white);
+        }
       }
     }
   }
@@ -740,7 +818,9 @@ m-boost--creator-payment-methods {
 }
 
 .m-boost--creator-selector--hoverable {
-  border-bottom: 1px dotted rgba(0, 0, 0, 0.25);
+  @include m-theme(){
+     border-bottom: 1px dotted rgba(themed($m-black), 0.25);
+  }
 }
 
 .m-boost--creator-wide-input--cost {
@@ -765,10 +845,12 @@ m-boost--creator-payment-methods {
   .m-boost--creator-wide-input--cost-value {
     flex-grow: 1;
     flex-basis: 0;
-    background: rgba(0, 0, 0, 0.10);
     border-radius: 4px;
     font-weight: bold;
     text-align: right;
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.1);
+    }
 
     > span {
       margin: 0 ($minds-padding * 2);
@@ -779,6 +861,8 @@ m-boost--creator-payment-methods {
     margin-left: 1em;
     font-weight: bold;
     letter-spacing: 0.5px;
-    color: #999;
+    @include m-theme(){
+      color: themed($m-grey-300);
+    }
   }
 }

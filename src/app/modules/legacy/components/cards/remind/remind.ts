@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, Input, Output } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
@@ -32,6 +32,8 @@ export class Remind {
   isTranslatable: boolean = false;
   menuOptions: any = [];
   canDelete: boolean = false;
+
+  @Output('matureVisibilityChange') onMatureVisibilityChange: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     public session: Session,
@@ -82,6 +84,10 @@ export class Remind {
     }
   }
 
+  isUnlisted(entity: any) {
+    return entity && (entity.access_id === '0' || entity.access_id === 0);
+  }
+
   ngOnDestroy() {
     if (this.eventsSubscription) {
       this.eventsSubscription.unsubscribe();
@@ -102,6 +108,10 @@ export class Remind {
 
   save() { /* NOOP */ }
 
+  isPending(activity) {
+    return activity && activity.pending && activity.pending !== '0';
+  }
+
   openComments() { /* NOOP */ }
 
   showBoost() { /* NOOP */ }
@@ -111,4 +121,10 @@ export class Remind {
   togglePin() { /* NOOP */ }
 
   menuOptionSelected(e) { /* NOOP */ }
+
+  toggleMatureVisibility() {
+    this.activity.mature_visibility = !this.activity.mature_visibility;
+
+    this.onMatureVisibilityChange.emit();
+  }
 }

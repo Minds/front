@@ -18,10 +18,12 @@ m-settings--billing-subscriptions{
     padding: 8px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-family: 'Roboto';
-    border: 1px solid #DDD;
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin: 16px;
     border-radius: 3px;
+    @include m-theme(){
+       border: 1px solid themed($m-grey-100);
+    }
 
     > *{
       padding:8px;
@@ -30,8 +32,10 @@ m-settings--billing-subscriptions{
     .m-settings--billing-subscriptions--subscription-item-select{
       flex:auto;
       text-align:right;
-      color: #888;
       cursor:  pointer;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
 
   }

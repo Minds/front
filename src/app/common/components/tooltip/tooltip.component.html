@@ -5,9 +5,13 @@
   <ng-content select="[m-tooltip--anchor]"></ng-content>
 
   <div class="m-tooltip--bubble"
-    [class.m-tooltip--bubble--anchor-bottom]="anchor == 'bottom'"
-    [class.m-tooltip--bubble--anchor-left]="anchor == 'left'"
-    [class.m-tooltip--bubble--anchor-right]="anchor == 'right'"
+    [class.m-tooltip--bubble--fixed]="useParentPosition"
+    [style.top.px]="useParentPosition ? offsetTop : false"
+    [style.right.px]="useParentPosition ? offsetRight : false"
+    [style.left.px]="useParentPosition ? offsetLeft : false"
+    [class.m-tooltip--bubble--anchor-bottom]="!useParentPosition && anchor == 'bottom'"
+    [class.m-tooltip--bubble--anchor-left]="!useParentPosition && anchor == 'left'"
+    [class.m-tooltip--bubble--anchor-right]="!useParentPosition && anchor == 'right'"
     [hidden]="hidden"
   >
     <ng-content></ng-content>

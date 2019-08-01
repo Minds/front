@@ -5,13 +5,32 @@
 
 <div class="minds-list">
   <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" [showRatingToggle]="true" class="mdl-card m-border item"></minds-activity>
+
   <m-newsfeed--boost-rotator interval="4" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
-  <minds-activity *ngFor="let activity of newsfeed" [object]="activity" [boostToggle]="activity.boostToggle" (delete)="delete(activity)" [showRatingToggle]="true" class="mdl-card m-border item"></minds-activity>
+
+  <ng-container *ngFor="let activity$ of (feedsService.feed | async); let i = index">
+    <ng-container *mIfFeature="'es-feeds'">
+      <m-featured-content
+        *ngIf="(i > 0 && (i % 8) === 0 && i <= 40) || i === 2"
+        [slot]="i + 1"
+      ></m-featured-content>
+    </ng-container>
+
+    <minds-activity
+      *ngIf="(activity$ | async) as activity"
+      class="mdl-card m-border item"
+      [object]="activity"
+      [boostToggle]="activity.boostToggle"
+      (delete)="delete(activity)"
+      [showRatingToggle]="true"
+      [slot]="i + 1"
+    ></minds-activity>
+  </ng-container>
+
   <infinite-scroll
     distance="25%"
-    (load)="load()"
-    [moreData]="moreData"
-    [inProgress]="inProgress">
+    (load)="loadNext()"
+    [moreData]="feedsService.hasMore | async"
+    [inProgress]="feedsService.inProgress | async">
   </infinite-scroll>
-
 </div>

@@ -13,10 +13,12 @@
   }
 
   h1, h3{
-    color: #FFF;
+    font-family: 'Roboto', Helvetica, sans-serif;
 
-    font-family: 'Roboto';
-    text-shadow: 0 0 3px #333;
+    @include m-theme(){
+      color: themed($m-white);
+      text-shadow: 0 0 3px themed($m-grey-900);
+    }
 
     @media only screen and (max-width: 400px) {
       margin:0;
@@ -52,8 +54,10 @@
       height: 53px;
       padding: 0 24px;
       font-weight: 300;
-      font-family: 'Roboto';
-      color: #FFF;
+      font-family: 'Roboto', Helvetica, sans-serif;
+      @include m-theme(){
+        color: themed($m-white);
+      }
     }
   }
 }
@@ -73,13 +77,13 @@
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       font-weight: 300;
       letter-spacing: 2px;
       font-size: 30px;
     }
     span{
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 1px;
     }
   }
@@ -107,8 +111,10 @@
   max-width: 600px;
   margin: 16px auto;
   display: block;
-  background: #FFF;
   padding: 16px;
   max-height: 600px;
   overflow: scroll;
+  @include m-theme(){
+    background-color: themed($m-white);
+  }
 }

@@ -36,7 +36,9 @@
     .m-tooltip i{
        font-size: 16px;
        margin: 0 8px;
-       color:#888;
+       @include m-theme(){
+         color:themed($m-grey-400);
+       }
     }
   }
 }
@@ -73,21 +75,25 @@
     text-transform: uppercase;
     font-size: 11px;
     letter-spacing: 1.5px;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     padding: 0 8px;
-    color: #777;
     font-weight: 400;
     cursor: pointer;
+    @include m-theme(){
+      color: themed($m-grey-500);
+    }
 
     span, m-tooltip {
       vertical-align: middle;
     }
     m-tooltip i {
      font-size: 11px;
-     color: #888;
-    } 
+     @include m-theme(){
+       color: themed($m-grey-400);
+     }
+    }
   }
-} 
+}
 
 .m-boost-rotator-tabs{
   margin:0;
@@ -102,7 +108,7 @@
     list-style: none;
     flex:1;
     height:10px;
-    //border-right:1px solid #b0bec5;
+    //border-right:1px solid themed($m-blue-grey-200);
     cursor:pointer;
   }
 
@@ -118,7 +124,9 @@
       animation:pulse 2s linear infinite;
     }
     button i {
-      color: rgb(96,125,139);
+      @include m-theme(){
+        color:themed($m-blue-grey-500);
+      }
     }
   }
   m-topbar--navigation--options {
@@ -133,7 +141,9 @@
     text-overflow: initial !important;
   }
   .selected {
-    color: rgb(96,125,139) !important;
+    @include m-theme(){
+      color:themed($m-blue-grey-500) !important;
+    }
   }
 }
 
