@@ -33,7 +33,7 @@ describe('ChannelsListComponent', () => {
   }
 
   beforeEach(async(() => {
-
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       declarations: [
         MockComponent({
@@ -106,6 +106,11 @@ describe('ChannelsListComponent', () => {
         done();
       });
     }
+  });
+
+  afterEach(() => {
+    TestBed.resetTestingModule();
+    jasmine.clock().uninstall();
   });
 
   it('should have a topbar', () => {
