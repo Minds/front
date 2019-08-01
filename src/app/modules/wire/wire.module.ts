@@ -74,6 +74,7 @@ const wireRoutes : Routes = [
     WireConsoleRewardsComponent,
     WireConsoleSettingsComponent,
     WireConsoleOverviewComponent,
+    WireCreatorComponent,
   ],
   entryComponents: [
     WireCreatorComponent,

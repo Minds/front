@@ -1,7 +1,11 @@
 m-pro--channel-donate {
-  h1 {
-    font-size: 72px;
-    font-weight: 600;
-    margin: 0 0 0.4em;
+  .m-pro--channel-donate {
+    font-weight: 400;
+    max-width: 900px;
+    margin: auto;
+    position: relative;
+    padding:32px;
+    border-radius:6px;
+    background-color: var(--plain-background-color);
   }
 }

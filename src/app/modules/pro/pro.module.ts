@@ -17,6 +17,7 @@ import { ProSettingsComponent } from './settings/settings.component';
 import { ProUserMenuComponent } from "./channel/pro-user-menu/pro-user-menu.component";
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
 import { LegacyModule } from "../legacy/legacy.module";
+import { WireModule } from "../wire/wire.module";
 
 const routes: Routes = [
   {
@@ -67,6 +68,7 @@ const routes: Routes = [
     MindsFormsModule,
     NewsfeedModule,
     LegacyModule,
+    WireModule,
   ],
   providers: [
     ProService,
