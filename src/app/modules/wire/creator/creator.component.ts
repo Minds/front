@@ -40,6 +40,7 @@ export class WireCreatorComponent {
     payloadType: 'onchain',
     guid: null,
     recurring: false,
+
     // Payment
     payload: null
   };

@@ -23,7 +23,7 @@ export interface WireStruc {
   guid: any;
   recurring: boolean;
   payload: any;
-  period: string | null;
+  period: string;
 }
 
 @Component({
@@ -73,7 +73,6 @@ export class WirePaymentsCreatorComponent {
 
   tokenRate: number;
 
-  tier: string = '';
   defaultAmount: number | '' = this.wire.amount;
 
   protected submitted: boolean;
@@ -83,8 +82,6 @@ export class WirePaymentsCreatorComponent {
     this.wire.recurring = true;
     this.wire.guid = payment.entity_guid;
     this.receiver = payment.receiver;
-    this.wire.period = payment.period
-    this.tier = payment.period;
   }
 
   _opts: any;
@@ -386,7 +383,7 @@ export class WirePaymentsCreatorComponent {
         }
       }
 
-      let { done } = await this.wireService.submitWire(this.wire, this.tier);
+      let { done } = await this.wireService.submitWire(this.wire);
 
       if (done) {
         this.success = true;

@@ -70,7 +70,6 @@ export class PlusSubscriptionComponent {
   }
 
   async purchase(amount: number = 20, period: 'month' | 'year' = 'month') {
-    console.log("Purchased");
     if (!this.session.isLoggedIn()) {
       this.modal.open();
       return;
