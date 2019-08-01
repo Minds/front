@@ -26,7 +26,7 @@ export class AnalyticsService {
 
   async send(type: string, fields: any = {}, entityGuid: string = null) {
     if (type === 'pageview') {
-      this.client.post('api/v2/analytics/pageview', fields);
+      this.client.post('api/v2/mwa/pv', fields);
     } else {
       this.client.post('api/v1/analytics', { type, fields, entityGuid });
     }
