@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router  } from "@angular/router";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { FeedsService } from "../../../../common/services/feeds.service";
 import { ProChannelService } from '../channel.service';
@@ -10,11 +10,12 @@ import { first } from "rxjs/operators";
   templateUrl: 'list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProChannelListComponent implements OnInit {
+export class ProChannelListComponent implements OnInit, OnDestroy {
 
   type: string;
 
   params$: Subscription;
+  queryParams$: Subscription;
 
   entities: any[] = [];
 
@@ -56,9 +57,11 @@ export class ProChannelListComponent implements OnInit {
           throw new Error('Unknown type');
       }
 
-      this.algorithm = params['algorithm'] || 'top';
 
       this.load(true);
+    });
+    this.queryParams$ = this.route.queryParams.subscribe(queryParams => {
+      this.algorithm = queryParams['algorithm'] || 'top';
     });
 
     this.feedsService.feed.subscribe(async entities => {
@@ -72,6 +75,15 @@ export class ProChannelListComponent implements OnInit {
 
       this.detectChanges();
     });
+  }
+
+  ngOnDestroy() {
+    if (this.params$) {
+      this.params$.unsubscribe();
+    }
+    if (this.queryParams$) {
+      this.queryParams$.unsubscribe();
+    }
   }
 
   async load(refresh: boolean = false) {
@@ -113,7 +125,7 @@ export class ProChannelListComponent implements OnInit {
    * Returns the feed type on par to routes
    * @param type feed type
    */
-  getTypeForRoute(type: string): string{
+  getTypeForRoute(type: string): string {
     let routeType = '';
     switch (type) {
       case 'videos':

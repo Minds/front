@@ -1,12 +1,3 @@
-<h1 [ngSwitch]="type">
-  <ng-template ngSwitchCase="videos" i18n>Videos</ng-template>
-  <ng-template ngSwitchCase="images" i18n>Images</ng-template>
-  <ng-template ngSwitchCase="blogs" i18n>Articles</ng-template>
-  <ng-template ngSwitchCase="groups" i18n>Groups</ng-template>
-  <ng-template ngSwitchCase="activities" i18n>Feed</ng-template>
-  <ng-template ngSwitchDefault>{{ type | titlecase }}</ng-template>
-</h1>
-
 <div class="m-proChannelList__algorithm">
   <a [routerLink]="['/pro', channelUsername, getTypeForRoute(type), 'hot']" routerLinkActive="active" i18n>
     <i class="material-icons">whatshot</i>
