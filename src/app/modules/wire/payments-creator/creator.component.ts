@@ -73,12 +73,14 @@ export class WirePaymentsCreatorComponent {
 
   tokenRate: number;
 
+
   defaultAmount: number | '' = this.wire.amount;
 
   protected submitted: boolean;
 
   @Input('payment') set data(payment) {
     this.wire.amount = payment.amount;
+    this.wire.period = payment.period;
     this.wire.recurring = true;
     this.wire.guid = payment.entity_guid;
     this.receiver = payment.receiver;
