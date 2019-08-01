@@ -24,7 +24,14 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+// Staging requires cookie to be set
+Cypress.Cookies.defaults({
+  whitelist: 'staging'
+});
+
 Cypress.Commands.add('login', (canary) => {
+  cy.setCookie('staging', "1"); // Run in stagin mode. Note: does not impact review sites
+
   cy.visit('/login');
 
   cy.get('.m-btn--login').click();
@@ -39,7 +46,7 @@ Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
   cy.get(selector).then((subject) => {
     cy.fixture(fileName, 'base64').then((content) => {
       const el = subject[0];
-      const blob = cy.visit('/newsfeed/global/top');b64toBlob(content, type);
+      const blob = b64toBlob(content, type);
       cy.window().then((win) => {
         const testFile = new win.File([blob], fileName, { type });
         const dataTransfer = new DataTransfer();
@@ -53,7 +60,7 @@ Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
 });
 
 Cypress.Commands.add('post', (message) => {
-  cy.get('mwl-text-input-autocomplete-container textarea').type(message);
+  cy.get('m-text-input--autocomplete-container textarea').type(message);
   cy.get('.m-posterActionBar__PostButton').click();
 });
 
