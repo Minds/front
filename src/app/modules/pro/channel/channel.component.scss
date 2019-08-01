@@ -77,7 +77,7 @@ m-pro--channel {
     }
   }
 
-  a {
+  a.m-proChannelTopbar__navItem {
     text-decoration: none;
     padding: 16px;
     font-size: 18px;
@@ -108,7 +108,7 @@ m-pro--channel {
     color: var(--primary-color) !important;
   }
 
-  a, h1, h2, h3, h4, h5, p, i {
+  a, h1, h2, h3, h4, h5, p {
     color: var(--text-color) !important;
   }
 }

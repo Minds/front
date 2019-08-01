@@ -25,7 +25,7 @@
 </div>
 
 <div class="m-proChannelList__content">
-  <ul class="m-proChannelListContent__list">
+  <ul class="m-proChannelListContent__list" [class.m-proChannelListContent__normalList]="type === 'activities'">
     <li *ngFor="let entity of entities">
       <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
         <m-pro--channel-tile
@@ -37,6 +37,13 @@
           [entity]="entity">
 
         </m-newsfeed__entity>
+      </ng-container>
+
+      <ng-container *ngIf="type === 'activities'">
+        <minds-activity
+          [object]="entity">
+
+        </minds-activity>
       </ng-container>
     <li
       class="m-proChannelListContentList__seeMore"

@@ -4,29 +4,28 @@ m-pro-user-menu {
   cursor: pointer;
 }
 
-.m-pro-user-menu__Dropdown {
+.m-pro-user-menu__dropdown {
   list-style: none;
   margin: 34px 0 0;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed('m-white');
     color: themed('m-grey-700');
   }
 
-  li:hover {
-    @include m-theme(){
-      background-color: rgba(themed('m-grey-50'), 0.5);
+  li.m-pro-user-menuDropdown__item {
+    &:hover {
+      @include m-theme() {
+        background-color: rgba(themed('m-grey-50'), 0.5);
+      }
     }
-  }
 
-  a {
-    font-size: 14px!important;
-    padding: 0px!important;
-    color: #555!important;
-    
-  }
+    a {
+      color: #555 !important;
+    }
 
-  i {
-    color: #555!important;
+    i {
+      color: #555 !important;
+    }
   }
 
 }

@@ -1,52 +1,52 @@
 <div class="m-pro-user-menu m-dropdown">
   <a class="m-pro-user-menu__Anchor" (click)="toggleMenu()"><i class="material-icons">menu</i></a>
 
-  <ul class="m-dropdown__list m-pro-user-menu__Dropdown mdl-shadow--3dp" [hidden]="!isOpen">
+  <ul class="m-dropdown__list m-pro-user-menu__dropdown mdl-shadow--3dp" [hidden]="!isOpen">
     <ng-container *ngIf="showNavItems">
       <li
-        class="m-dropdownList__item m-pro-user-menuDropdown__Item"
+        class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
         <a [routerLink]="['/pro', channel.username, 'feed']" routerLinkActive="active" i18n>Feed</a>
       </li>
 
       <li
-        class="m-dropdownList__item m-pro-user-menuDropdown__Item"
+        class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
         <a [routerLink]="['/pro', channel.username, 'videos']" routerLinkActive="active" i18n>Videos</a>
       </li>
 
       <li
-        class="m-dropdownList__item m-pro-user-menuDropdown__Item"
+        class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
         <a [routerLink]="['/pro', channel.username, 'images']" routerLinkActive="active" i18n>Images</a>
       </li>
 
       <li
-        class="m-dropdownList__item m-pro-user-menuDropdown__Item"
+        class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
         <a [routerLink]="['/pro', channel.username, 'articles']" routerLinkActive="active" i18n>Articles</a>
       </li>
 
       <li
-        class="m-dropdownList__item m-pro-user-menuDropdown__Item"
+        class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
         <a [routerLink]="['/pro', channel.username, 'groups']" routerLinkActive="active" i18n>Groups</a>
       </li>
 
       <li
-        class="m-dropdownList__item m-pro-user-menuDropdown__Item"
+        class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
         <a [routerLink]="['/pro', channel.username, 'donate']" routerLinkActive="active">Donate</a>
       </li>
     </ng-container>
     <li
-      class="m-dropdownList__item m-pro-user-menuDropdown__Item"
+      class="m-dropdownList__item m-pro-user-menuDropdown__item"
       (click)="closeMenu()"
     >
       <a [routerLink]="['/', channelName]">
@@ -55,7 +55,7 @@
       </a>
     </li>
     <li
-      class="m-dropdownList__item m-user-menuDropdown__Item"
+      class="m-dropdownList__item m-pro-user-menuDropdown__item"
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >

@@ -16,6 +16,7 @@ import { NewsfeedModule } from "../newsfeed/newsfeed.module";
 import { ProSettingsComponent } from './settings/settings.component';
 import { ProUserMenuComponent } from "./channel/pro-user-menu/pro-user-menu.component";
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
+import { LegacyModule } from "../legacy/legacy.module";
 
 const routes: Routes = [
   {
@@ -65,6 +66,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MindsFormsModule,
     NewsfeedModule,
+    LegacyModule,
   ],
   providers: [
     ProService,
