@@ -16,12 +16,10 @@ import { BlockListService } from "../../../../common/services/block-list.service
     <button class="material-icons" (click)="toggleMenu($event)">more_vert</button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu" >
-      <ng-container *ngIf="session.getLoggedInUser().guid != user.guid">
-        <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BLOCK">Block @{{user.username}}</li>
-        <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBLOCK">Un-Block @{{user.username}}</li>
-        <li class="mdl-menu__item" [hidden]="user.subscribed" (click)="subscribe()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__SUBSCRIBE">Subscribe</li>
-        <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNSUBSCRIBE">Unsubscribe</li>
-      </ng-container>
+      <li class="mdl-menu__item" [hidden]="user.blocked" (click)="block()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BLOCK">Block @{{user.username}}</li>
+      <li class="mdl-menu__item" [hidden]="!user.blocked" (click)="unBlock()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBLOCK">Un-Block @{{user.username}}</li>
+      <li class="mdl-menu__item" [hidden]="user.subscribed" (click)="subscribe()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__SUBSCRIBE">Subscribe</li>
+      <li class="mdl-menu__item" [hidden]="!user.subscribed" (click)="unSubscribe()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNSUBSCRIBE">Unsubscribe</li>
       <li class="mdl-menu__item" *ngIf="session.isAdmin()" [hidden]="user.banned !== 'yes'" (click)="unBan()" i18n="@@MINDS__BUTTONS__USER_DROPDOWN__UNBAN_GLOBALLY">Un-ban globally</li>
       <li class="mdl-menu__item"
         *ngIf="session.isAdmin()"
@@ -45,7 +43,6 @@ import { BlockListService } from "../../../../common/services/block-list.service
         E-mail Address
       </li>
       <li class="mdl-menu__item"
-          *ngIf="session.getLoggedInUser().guid != user.guid"
           (click)="report(); showMenu = false"
           i18n="@@M__ACTION__REPORT"
       >
@@ -68,13 +65,12 @@ import { BlockListService } from "../../../../common/services/block-list.service
         Remove Explicit
       </li>
       <li class="mdl-menu__item m-user-dropdown__item--nsfw"
-        *ngIf="session.isAdmin() || session.getLoggedInUser().guid == user.guid"
+        *ngIf="session.isAdmin()"
       >
         <m-nsfw-selector
           service="editing"
-          [selected]="session.isAdmin() ? user.nsfw_lock : user.nsfw"
-          [locked]="session.isAdmin() ? [] : user.nsfw_lock"
-          (selected)="setNSFW($event)"
+          [selected]="user.nsfw_lock"
+          (selected)="setNSFWLock($event)"
         >
         </m-nsfw-selector>
       </li>
@@ -312,16 +308,10 @@ export class UserDropdownButton {
     }
   }
 
-  async setNSFW(reasons: Array<{ label, value, selected}>) {
+  async setNSFWLock(reasons: Array<{ label, value, selected}>) {
     const nsfw = reasons.map(reason => reason.value);
+    this.client.post(`api/v2/admin/nsfw/${this.user.guid}`, { nsfw });
     this.user.nsfw = nsfw;
-
-    if (this.session.isAdmin()) {
-      this.client.post(`api/v2/admin/nsfw/${this.user.guid}`, { nsfw });
-    } else {
-      await this.client.post('api/v1/channel/info', { nsfw: this.user.nsfw })
-    }
-
   }
 
   async setRating(rating: number) {
