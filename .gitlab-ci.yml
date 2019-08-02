@@ -18,9 +18,6 @@ variables:
   npm_config_cache: "$CI_PROJECT_DIR/.npm"
   CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
 
-variables:
-  CYPRESS_INSTALL_BINARY: 0 # Speeds up the install process
-
 test:
   image: circleci/node:8-browsers
   stage: test:unit
