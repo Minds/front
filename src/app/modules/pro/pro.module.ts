@@ -37,7 +37,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'articles/top',
+            redirectTo: 'articles',
             pathMatch: 'full'
           },
           {
