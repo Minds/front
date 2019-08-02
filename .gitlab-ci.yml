@@ -35,7 +35,7 @@ test:
     policy: pull-push
 
 e2e:
-  image: cypress/base:10
+  image: cypress/browsers:chrome67
   stage: test:e2e
   variables:
     CYPRESS_INSTALL_BINARY: 1
@@ -50,7 +50,7 @@ e2e:
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
     - $(npm bin)/cypress install # Binary needs reinstalling
-    - $(npm bin)/cypress run --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN
+    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN
   artifacts:
     when: always
     paths:
