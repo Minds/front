@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Client } from "../../../../../services/api/client";
 import { timespanOption } from "../timespanOption";
+import { removeCurrentUnits } from "../../../util";
 
 @Component({
   selector: 'm-analyticscharts__activeusers',
@@ -19,10 +20,11 @@ import { timespanOption } from "../timespanOption";
 
 export class ActiveUsersChartComponent implements OnInit {
   @Input() total: boolean = false;
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
 
   timespan: timespanOption;
 
-  @ViewChild('chartContainer') chartContainer: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   @Input('timespan') set _timespan(value: timespanOption) {
     this.timespan = value;
@@ -67,7 +69,6 @@ export class ActiveUsersChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.layout.title = this.total ? 'Total Pageviews' : 'Active Users';
     this.applyDimensions();
     this.getData();
     this.init = true;
@@ -80,7 +81,10 @@ export class ActiveUsersChartComponent implements OnInit {
 
     try {
       const response: any = await this.client.get(url, { timespan: this.timespan });
-      this.data = response.data;
+      const [data, current] = removeCurrentUnits(response.data);
+      this.data = data;
+
+      this.loaded.emit(current);
     } catch (e) {
       console.error(e);
     }

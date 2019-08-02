@@ -4,6 +4,7 @@ import {
   Component,
   ComponentFactoryResolver,
   OnInit,
+  OnDestroy,
   ViewChild
 } from "@angular/core";
 import { Session } from "../../../services/session";
@@ -16,11 +17,12 @@ import { ThemeService } from "../../../common/services/theme.service";
   templateUrl: 'v2-topbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class V2TopbarComponent implements OnInit {
+export class V2TopbarComponent implements OnInit, OnDestroy {
   minds = window.Minds;
   timeout;
+  isTouchScreen = false;
 
-  @ViewChild(DynamicHostDirective) notificationsToasterHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true }) notificationsToasterHost: DynamicHostDirective;
 
   componentRef;
   componentInstance: NotificationsToasterComponent;
@@ -57,10 +59,16 @@ export class V2TopbarComponent implements OnInit {
     this.cd.detectChanges();
   }
 
+  touchStart() {
+    this.isTouchScreen = true;
+  }
+
   mouseEnter() {
     if (this.session.isLoggedIn()) {
       this.timeout = setTimeout(() => {
-        this.themeService.toggleUserThemePreference();
+        if (!this.isTouchScreen) {
+          this.themeService.toggleUserThemePreference();
+        }
       }, 5000);
     }
   }
@@ -70,8 +78,9 @@ export class V2TopbarComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.timeout)
+    if (this.timeout) {
       clearTimeout(this.timeout);
+    }
   }
 
 }

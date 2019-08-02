@@ -245,6 +245,9 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
     }
   }
 
+  .m-comments-composer form m-text-input--autocomplete-container {
+    width: 100%;
+  }
   .m-comments-composer form minds-textarea,
   .minds-editable-container textarea {
     width: 100%;
@@ -423,6 +426,6 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
 }
 
 .m-comment--poster .minds-body {
-  overflow: hidden;
+  overflow: visible;
   min-height: 50px;
 }

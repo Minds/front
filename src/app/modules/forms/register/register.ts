@@ -31,7 +31,7 @@ export class RegisterForm {
 
   @Output() done: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('reCaptcha') reCaptcha: ReCaptchaComponent;
+  @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
 
   constructor(
     public session: Session,

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { tap, filter, switchMap } from 'rxjs/operators';
 import { BlockListService } from "../../../common/services/block-list.service";
 import { EntitiesService } from "../../../common/services/entities.service";
 import { Client } from "../../../services/api/client";
@@ -11,7 +12,7 @@ import { Client } from "../../../services/api/client";
 export class SettingsBlockedChannelsComponent implements OnInit {
 
   blockedGuids: any[] = [];
-  channels: any[] = [];
+  channels;
 
   offset: number = 0;
 
@@ -30,46 +31,30 @@ export class SettingsBlockedChannelsComponent implements OnInit {
 
   ngOnInit() {
     this.load(true);
+    this.channels = this.blockListService.blocked.pipe(
+      tap(() => {
+        this.inProgress = true;
+        this.moreData = false; // Support pagination in the future
+      }),
+      filter(list => list.length > 0),
+      switchMap(async guids => {
+        const response: any = await this.entitiesService.fetch(guids);
+        return response.entities;
+      }),
+      tap((blocked) => {
+        this.inProgress = false;
+      })
+    );
   }
 
   async load(refresh: boolean = false) {
-    const limit = 24;
+    if (this.inProgress)
+      return;
+    this.blockListService.fetch(); // Get latest
+  }
 
-    if (!refresh && this.inProgress) {
-      return false;
-    }
-
-    try {
-      this.inProgress = true;
-
-      if (refresh) {
-        this.blockedGuids = [];
-        this.channels = [];
-        this.offset = 0;
-        this.moreData = true;
-      }
-
-      if (!this.offset) {
-        this.blockedGuids = (await this.blockListService.getList()) || [];
-      }
-
-      const next = this.offset + limit;
-      const guids = this.blockedGuids.slice(this.offset, next);
-
-      const channels = (await this.entitiesService.fetch(guids)) || [];
-
-      if (!channels.length) {
-        this.moreData = false;
-      }
-
-      this.channels.push(...channels);
-      this.offset = next;
-    } catch (e) {
-      this.moreData = false;
-    }
-
-    this.inProgress = false;
-    this.detectChanges();
+  loadMore() {
+    // Implement soon
   }
 
   getChannelIcon(channel) {

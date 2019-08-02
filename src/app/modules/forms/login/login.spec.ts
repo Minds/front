@@ -28,8 +28,8 @@ describe('LoginForm', () => {
   let twoFactorLoginButton: DebugElement;
   let session: Session;
 
-  function login(response) {
-    username.nativeElement.value = 'username';
+  function login(response, _username = 'username') {
+    username.nativeElement.value = _username;
     username.nativeElement.dispatchEvent(new Event('input'));
     password.nativeElement.value = 'password';
     password.nativeElement.dispatchEvent(new Event('input'));
@@ -229,11 +229,18 @@ describe('LoginForm', () => {
     expect(loginForm.nativeElement.hidden).toBeTruthy();
     expect(twoFactorForm.nativeElement.hidden).toBeFalsy();
   }));
+
   it('should spawn error message when incorrect code is written', fakeAsync(() => {
     login({ 'status': 'error', 'code': '403', 'message': 'imaprettymessage' });
 
     twoFactorLogin({ 'status': 'error', 'message': 'Could not verify.' });
 
+    expect(errorMessage.nativeElement.hidden).toBeFalsy();
+  }));
+
+  it('should spawn error message when an email is entered as a username', fakeAsync(() => {
+    username.nativeElement.value = 'test@minds.com';
+    login({ 'status': 'error'}, 'test@minds.com');
     expect(errorMessage.nativeElement.hidden).toBeFalsy();
   }));
 

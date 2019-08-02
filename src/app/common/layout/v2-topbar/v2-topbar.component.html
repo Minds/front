@@ -40,6 +40,7 @@
            i18n-title
         >
           <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
+               (touchstart)="touchStart()"  
                (mouseenter)="mouseEnter()"
                (mouseleave)="mouseLeave()"
           />

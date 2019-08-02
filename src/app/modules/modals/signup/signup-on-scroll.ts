@@ -31,16 +31,14 @@ export class SignupOnScrollModal {
 
   ngOnDestroy() {
     this.unListen();
-
-    if (this.scroll_listener) {
-      this.scroll.unListen(this.scroll_listener);
-    }
   }
 
   listen() {
     this.routerSubscription = this.router.events.subscribe((navigationEvent: NavigationEnd) => {
       try {
         if (navigationEvent instanceof NavigationEnd) {
+          this.unlistenScroll();
+
           if (!navigationEvent.urlAfterRedirects) {
             return;
           }
@@ -51,7 +49,7 @@ export class SignupOnScrollModal {
             url = url.substr(1);
           }
 
-          let fragments = url.replace(/\//g, ';').split(';');
+          const fragments = url.replace(/\/|\?/g, ';').split(';');
 
           this.route = navigationEvent.urlAfterRedirects;
 
@@ -69,7 +67,6 @@ export class SignupOnScrollModal {
                     this.open = false;
                   else
                     this.open = true;
-                  this.scroll.unListen(this.scroll_listener);
                 }
               }, 100);
           }
@@ -82,5 +79,12 @@ export class SignupOnScrollModal {
 
   unListen() {
     this.routerSubscription.unsubscribe();
+    this.unlistenScroll();
+  }
+
+  private unlistenScroll() {
+    if (this.scroll_listener) {
+      this.scroll.unListen(this.scroll_listener);
+    }
   }
 }

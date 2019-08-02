@@ -46,3 +46,15 @@ m-boost--creator-payment-methods {
   }
 
 }
+
+.m-boostCreatorSelector__bullets {
+  padding-left: 16px;
+  list-style: disc;
+
+  li { 
+    font-size: 10px;
+    line-height: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;  
+  }
+}

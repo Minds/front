@@ -71,7 +71,7 @@ m-notifications--flyout{
           }
           .ts {
             font-size: 10px;
-            font-family: 'Roboto';
+            font-family: 'Roboto', Helvetica, sans-serif;
             text-transform: uppercase;
             letter-spacing: 0.75px;
             text-rendering: optimizeLegibility;
@@ -84,7 +84,7 @@ m-notifications--flyout{
 
   .m-notifications--flyout--bottom-container{
     text-transform: uppercase;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     letter-spacing: 2.5px;
     text-rendering: optimizeLegibility;
     font-size: 12px;

@@ -27,7 +27,7 @@
 
   .m-marketing--header-inner, .m-marketingHeader__inner,
   .m-marketing--hero-inner, .m-marketingHero__inner,
-  .m-marketing--hero--inner { 
+  .m-marketing--hero--inner {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -95,7 +95,6 @@
 
     h3 {
       font-size: 26px;
-      //color: rgba(255, 255, 255, 0.8);
       font-weight: 400;
       letter-spacing: 0.25px;
       line-height: 1.25;
@@ -118,7 +117,7 @@
 
 
   h1, h3, h2 {
-    font-family: Roboto;
+    font-family: 'Roboto', Helvetica, sans-serif;
     margin: 0;
     @include m-theme(){
       color: themed($m-white);
@@ -160,7 +159,7 @@
       height: 48px;
       padding: 0 24px;
       font-weight: 400;
-      font-family: Roboto;
+      font-family: 'Roboto', Helvetica, sans-serif;
       @include m-theme(){
         color: themed($m-white);
       }
@@ -407,7 +406,7 @@
   }
 
   .m-marketing--section--subsection-image {
-    img { 
+    img {
       max-width: 100%;
     }
   }

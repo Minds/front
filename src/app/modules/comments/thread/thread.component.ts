@@ -33,6 +33,7 @@ export class CommentsThreadComponent {
   @Input() entity;
   @Input() entityGuid;
   @Input() canEdit: boolean = false;
+  @Input() canDelete: boolean = false;
   @Input() readonly: boolean = false;
   @Input() conversation: boolean = false;
   @Input() limit: number = 12;
@@ -41,7 +42,7 @@ export class CommentsThreadComponent {
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(true);
 
   @Input() scrollable: boolean = false;  
-  @ViewChild('scrollArea') scrollView: ElementRef;
+  @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
   autoloadBlocked: boolean = false;
 
@@ -201,7 +202,10 @@ export class CommentsThreadComponent {
             guid: guid,
             parent_path: parent_path,
         });
-        
+
+        // if the list is scrolled to the bottom
+        let scrolledToBottom = this.scrollView.nativeElement.scrollTop + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
+
         if (comment) {
           await this.loadBlockedUsers();
           this.comments.push(comment);
@@ -209,8 +213,11 @@ export class CommentsThreadComponent {
 
         this.detectChanges();
 
-        this.commentsScrollEmitter.emit('bottom');
-        this.scrollToBottom.next(true);
+        if (scrolledToBottom) {
+          this.commentsScrollEmitter.emit('bottom');
+          this.scrollToBottom.next(true);
+        }
+
       } catch (err) { };
     });
 

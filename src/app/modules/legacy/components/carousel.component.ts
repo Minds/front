@@ -19,8 +19,10 @@ import { Client } from '../../../services/api';
         (added)="added($event, i)"
         ></minds-banner>
 
-        <div class="delete-button" (click)="delete(i)" [hidden]="i != index || !editing">
-          <button class="mdl-button mdl-button--raised mdl-button--colored material-icons">X</button>
+        <div class="delete-button" (click)="delete(i)" [hidden]="i != index || !editing"
+          title="Delete image from current banner carousel slide"
+        >
+          <button class="mdl-button mdl-button--raised mdl-button--colored material-icons">delete</button>
         </div>
       </div>
     <i class="material-icons right" (click)="next()" [hidden]="banners.length <= 1">keyboard_arrow_right</i>

@@ -3406,6 +3406,14 @@
         <source>Email Notifications</source>
         <target>Thông báo Email</target>
       </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__TOASTER_TITLE">
+        <source>Notifications</source>
+        <target>Notifications</target>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__TOASTER_LABEL">
+        <source>Enable toaster notifications</source>
+        <target>Enable toaster notifications</target>
+      </trans-unit>
       <trans-unit id="MINDS__SETTINGS__SESSIONS">
         <source>Sessions</source>
         <target>Phiên</target>

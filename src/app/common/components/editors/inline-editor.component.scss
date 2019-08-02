@@ -519,7 +519,7 @@ m-inline-editor {
     .medium-insert-link-input {
       border-radius: 3px;
       font-size: 12px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       padding: 8px;
       flex-grow: 1;
       @include m-theme(){

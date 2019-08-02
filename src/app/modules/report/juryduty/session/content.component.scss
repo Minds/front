@@ -1,6 +1,8 @@
 .m-juryDutySession__content {
-  background: #FFF;
   padding: 16px;
+  @include m-theme(){
+    background: themed($m-white);
+  }
 
   h3 {
     margin: 0;
@@ -29,6 +31,10 @@
   minds-card {
     margin-top: 16px;
     max-width: 600px;
+
+    m-comment {
+      max-width: initial !important;
+    }
 
     .m-mature-thumbnail-overlay {
       display: none !important;

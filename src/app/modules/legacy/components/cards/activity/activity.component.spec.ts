@@ -37,6 +37,7 @@ import { FeaturesService } from '../../../../../services/features.service';
 import { BlockListService } from "../../../../../common/services/block-list.service";
 import { ClientMetaService } from "../../../../../common/services/client-meta.service";
 import { clientMetaServiceMock } from "../../../../../../tests/client-meta-service-mock.spec";
+import { AutocompleteSuggestionsService } from "../../../../suggestions/services/autocomplete-suggestions.service";
 
 /* tslint:disable */
 // START MOCKS
@@ -220,6 +221,7 @@ export class RemindMock {
   @Input() object;
   @Input() events;
   @Input() boosted;
+  @Output() matureVisibilityChange: EventEmitter<any> = new EventEmitter<any>();
 }
 
 @Component({
@@ -497,6 +499,10 @@ describe('Activity', () => {
         {
           provide: BlockListService,
           useValue: MockService(BlockListService),
+        },
+        {
+          provide: AutocompleteSuggestionsService,
+          useValue: MockService(AutocompleteSuggestionsService),
         }
       ],
       schemas: [NO_ERRORS_SCHEMA]

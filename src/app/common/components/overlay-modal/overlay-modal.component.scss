@@ -99,6 +99,18 @@
     color: themed($m-grey-400);
   }
 
+  &:hover {
+    @include m-theme(){
+      background-color: rgba(themed($m-black), 0.1);
+    }
+  }
+
+  &:active {
+    @include m-theme(){
+      color: themed($m-grey-200);
+    }
+  }
+
   @media screen and (max-width: $max-mobile) {
     right: $minds-padding;
   }
