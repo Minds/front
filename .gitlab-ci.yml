@@ -29,7 +29,7 @@ e2e:base:
   image: cypress/base:10
   stage: test:e2e
   variables:
-    CYPRESS_INSTALL_BINARY: 1
+    CYPRESS_INSTALL_BINARY: 3.4.1
   script:
     - npm ci
     - >
@@ -56,7 +56,7 @@ e2e:chrome:
   image: cypress/browsers:chrome67
   stage: test:e2e
   variables:
-    CYPRESS_INSTALL_BINARY: 1
+    CYPRESS_INSTALL_BINARY: 3.4.1
   script:
     - npm ci
     - >
