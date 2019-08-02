@@ -13,6 +13,7 @@ export class ProUserMenuComponent implements OnInit {
 
   @Input() channelName: string;
   @Input() showNavItems: boolean;
+  @Input() query: string;
 
   get channel() {
     return this.channelService.currentChannel;
@@ -46,6 +47,10 @@ export class ProUserMenuComponent implements OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
     this.themeService.applyThemePreference();
+  }
+
+  get linkTo() {
+    return this.channelService.linkTo.bind(this.channelService);
   }
 
 }

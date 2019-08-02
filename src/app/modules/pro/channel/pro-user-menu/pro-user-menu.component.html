@@ -14,28 +14,28 @@
         class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
-        <a [routerLink]="['/pro', channel.username, 'videos']" routerLinkActive="active" i18n>Videos</a>
+        <a [routerLink]="linkTo('videos', query)" routerLinkActive="active" i18n>Videos</a>
       </li>
 
       <li
         class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
-        <a [routerLink]="['/pro', channel.username, 'images']" routerLinkActive="active" i18n>Images</a>
+        <a [routerLink]="linkTo('images', query)" routerLinkActive="active" i18n>Images</a>
       </li>
 
       <li
         class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
-        <a [routerLink]="['/pro', channel.username, 'articles']" routerLinkActive="active" i18n>Articles</a>
+        <a [routerLink]="linkTo('articles', query)" routerLinkActive="active" i18n>Articles</a>
       </li>
 
       <li
         class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
       >
-        <a [routerLink]="['/pro', channel.username, 'groups']" routerLinkActive="active" i18n>Groups</a>
+        <a [routerLink]="linkTo('groups', query)" routerLinkActive="active" i18n>Groups</a>
       </li>
 
       <li

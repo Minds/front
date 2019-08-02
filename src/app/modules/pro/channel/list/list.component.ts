@@ -15,11 +15,14 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   type: string;
 
   params$: Subscription;
-  queryParams$: Subscription;
 
   entities: any[] = [];
 
   algorithm: string;
+
+  query: string;
+
+  period: string;
 
   constructor(
     public feedsService: FeedsService,
@@ -31,12 +34,15 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.listen();
+  }
+
+  private listen() {
     this.params$ = this.route.params.subscribe(params => {
       this.entities = [];
       if (params['type']) {
         this.type = params['type'];
       }
-
       switch (params['type']) {
         case 'videos':
           this.type = 'videos';
@@ -56,33 +62,27 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         default:
           throw new Error('Unknown type');
       }
-
-
+      this.algorithm = params['algorithm'] || 'top';
+      this.query = params['query'] || '';
+      this.period = params['period'] || '';
       this.load(true);
     });
-    this.queryParams$ = this.route.queryParams.subscribe(queryParams => {
-      this.algorithm = queryParams['algorithm'] || 'top';
-    });
 
-    this.feedsService.feed.subscribe(async entities => {
+    this.feedsService.feed.subscribe(async (entities) => {
       if (!entities.length)
         return;
-
       for (const entity of entities) {
         if (entity)
           this.entities.push(await entity.pipe(first()).toPromise());
       }
-
       this.detectChanges();
     });
+
   }
 
   ngOnDestroy() {
     if (this.params$) {
       this.params$.unsubscribe();
-    }
-    if (this.queryParams$) {
-      this.queryParams$.unsubscribe();
     }
   }
 
@@ -93,9 +93,14 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
     this.detectChanges();
 
+    let search = '';
+    if (this.query && (this.query !== '')) {
+      search = `?hashtags=null&period=${this.period}&all=1&query=${this.query}&nsfw=&sync=1&limit=150&as_activities=1&from_timestamp=`;
+    }
+
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`)
+        .setEndpoint(`api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}${search}`)
         .setLimit(9)
         .fetch();
 

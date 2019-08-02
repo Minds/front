@@ -13,6 +13,7 @@
       <div class="mdl-textfield mdl-js-textfield">
         <i class="material-icons">search</i>
         <input
+          [(ngModel)]="searchedText"
           id="search"
           autocomplete="off"
           class="mdl-textfield__input ng-pristine ng-valid ng-touched"
@@ -33,43 +34,37 @@
       >Feed</a>-->
       <a
         class="m-proChannelTopbar__navItem"
-        [routerLink]="['/pro', channel.username, 'videos']"
-        [queryParams]="{algorithm: 'top'}"
+        [routerLink]="linkTo('videos', searchedText)"
         routerLinkActive="active"
         i18n
       >Videos</a>
       <a
         class="m-proChannelTopbar__navItem"
-        [routerLink]="['/pro', channel.username, 'images']"
-        [queryParams]="{algorithm: 'top'}"
+        [routerLink]="linkTo('images', searchedText)"
         routerLinkActive="active"
         i18n
       >Images</a>
       <a
         class="m-proChannelTopbar__navItem"
-        [routerLink]="['/pro', channel.username, 'articles']"
-        [queryParams]="{algorithm: 'top'}"
+        [routerLink]="linkTo('articles', searchedText)"
         routerLinkActive="active"
         i18n
       >Articles</a>
       <a
         class="m-proChannelTopbar__navItem"
-        [routerLink]="['/pro', channel.username, 'groups']"
-        [queryParams]="{algorithm: 'top'}"
+        [routerLink]="linkTo('groups', query)"
         routerLinkActive="active"
         i18n
       >Groups</a>
       <a
         class="m-proChannelTopbar__navItem"
         [routerLink]="['/pro', channel.username, 'donate']"
-        [queryParams]="{algorithm: 'top'}"
         routerLinkActive="active"
         i18n
       >Donate</a>
       <a
         class="m-proChannelTopbar__navItem"
         [routerLink]="['/pro', channel.username, 'signup']"
-        [queryParams]="{algorithm: 'top'}"
         routerLinkActive="active"
         *ngIf="!currentUser"
         i18n
@@ -82,7 +77,7 @@
       </a>
     </ng-container>
 
-    <m-pro-user-menu [channelName]="channel.username" [showNavItems]="collapseNavItems"></m-pro-user-menu>
+    <m-pro-user-menu [channelName]="channel.username" [showNavItems]="collapseNavItems" [query]="searchedText"></m-pro-user-menu>
   </div>
 
   <div class="m-proChannel__body">

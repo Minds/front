@@ -29,4 +29,14 @@ export class ProChannelService {
       }
     }
   }
+
+  linkTo(to, query, algorithm?) {
+    let route = ['/pro', this.currentChannel.username, to, algorithm || 'top'];
+
+    if (query) {
+      route.push({ query });
+    }
+
+    return route;
+  }
 }
