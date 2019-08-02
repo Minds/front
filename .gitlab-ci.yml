@@ -44,8 +44,8 @@ e2e:base:
   artifacts:
     when: always
     paths:
-      - cypress/screenshots/**/*.mp4
-      - cypress/videos/**/*.mp4
+      - cypress/screenshots
+      - cypress/videos
   cache:
     paths:
       - .npm
@@ -71,8 +71,8 @@ e2e:chrome:
   artifacts:
     when: always
     paths:
-      - cypress/screenshots/**/*.mp4
-      - cypress/videos/**/*.mp4
+      - cypress/screenshots
+      - cypress/videos
   cache:
     paths:
       - .npm
