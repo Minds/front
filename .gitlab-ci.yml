@@ -79,35 +79,6 @@ e2e:chrome:
       - cache/Cypress
   allow_failure: true #manual inspection in case of timeouts
 
-e2e:
-  image: cypress/browsers:chrome67
-  stage: test:e2e
-  variables:
-    CYPRESS_INSTALL_BINARY: 1
-  script:
-    - npm install
-    - >
-      if [ "$CI_BUILD_REF_NAME" == "master" ]; then 
-        export E2E_DOMAIN=https://www.minds.com
-      else
-        export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
-      fi
-    - export CYPRESS_baseUrl=$E2E_DOMAIN
-    - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - $(npm bin)/cypress install # Binary needs reinstalling
-    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN
-  artifacts:
-    when: always
-    paths:
-      - cypress/screenshots/**/*.mp4
-      - cypress/videos/**/*.mp4
-  cache:
-    paths:
-      - .npm
-      - cache/Cypress
-  allow_failure: true #manual inspection in case of timeouts
-
-
 build:review:
   stage: build
   script:
