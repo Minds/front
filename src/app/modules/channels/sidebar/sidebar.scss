@@ -41,3 +41,15 @@
     }
   }
 }
+
+.m-channel__subscribesBack h2 {
+  margin: 0;
+  padding: ($minds-padding * 2) 0 0 0;
+  line-height: 14px;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 1px;
+  @include m-theme(){
+    color: themed($m-grey-500);
+  }	
+}

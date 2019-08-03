@@ -117,6 +117,10 @@
     </div>
   </div>
 
+  <div *ngIf="user.subscriber" class="m-channel__subscribesBack">
+    <h2>Subscribes to you</h2>
+  </div>
+
   <div class="m-channel--action-buttons">
     <minds-button-subscribe [user]="user"  *ngIf="session.isLoggedIn() && session.getLoggedInUser().guid != user.guid && !user.blocked && !user.subscribed"></minds-button-subscribe>
     <m-messenger--channel-button [user]="user" *ngIf="user.subscribed && session.getLoggedInUser().guid != user.guid"></m-messenger--channel-button>
