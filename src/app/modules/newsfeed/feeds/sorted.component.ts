@@ -299,6 +299,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     //  return false;
     //}
 
-    return (i > 0 && (i % 5) === 0 && i <= 80) || i === 1;
+    return (i > 0 && (i % 5) === 0) || i === 1;
   }
 }
