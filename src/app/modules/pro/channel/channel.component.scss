@@ -48,11 +48,22 @@ m-pro--channel {
         transition: width ease-in-out .2s;
         padding: 8px 0;
 
-        i {
+        i.search {
           position: absolute;
           margin: 6px;
           font-size: 20px;
           color: rgba(0,0,0,.87)!important;
+        }
+
+        i.clear {
+          font-size: 16px;
+          background-color: #3e3737;
+          color: white;
+          border-radius: 20px;
+          cursor: pointer;
+          position: absolute;
+          top: 16px;
+          right: 10px;
         }
   
         input {

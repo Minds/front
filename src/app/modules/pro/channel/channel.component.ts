@@ -175,6 +175,12 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     this.router.navigate([this.currentURL,{ query: this.searchedText, period: '24h' }]);
   }
 
+  clearSearch() {
+    this.searchedText = '';
+    const cleanUrl = this.router.url.split(';')[0];
+    this.router.navigate([cleanUrl]);
+  }
+
   get linkTo() {
     return this.channelService.linkTo.bind(this.channelService);
   }

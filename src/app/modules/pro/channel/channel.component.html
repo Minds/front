@@ -11,7 +11,7 @@
 
     <div class="m-proChannelTopbar__SearchBox">
       <div class="mdl-textfield mdl-js-textfield">
-        <i class="material-icons">search</i>
+        <i class="material-icons search">search</i>
         <input
           [(ngModel)]="searchedText"
           id="search"
@@ -20,6 +20,9 @@
           type="text"
           (keyup.enter)="search()"
         >
+        <ng-container *ngIf="searchedText">
+          <i class="material-icons clear" (click)="clearSearch()" >close</i>
+        </ng-container>
         <label class="mdl-textfield__label" for="search"></label>
       </div>
     </div>
