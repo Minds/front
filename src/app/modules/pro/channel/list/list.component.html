@@ -1,5 +1,5 @@
-<div class="m-proChannelList__tools">
-  <div class="m-proChannelListTools__algorithm">
+<div class="m-proChannelList__tools" *ngIf="query !== ''" > 
+  <!--<div class="m-proChannelListTools__algorithm">
     <a [routerLink]="['/pro', channelUsername, getTypeForRoute(type), 'hot']" routerLinkActive="active" i18n>
       <i class="material-icons">whatshot</i>
       <span i18n>HOT</span>
@@ -14,9 +14,9 @@
       <i class="material-icons">timelapse</i>
       <span i18n>LATEST</span>
     </a>
-  </div>
+  </div>-->
 
-  <ng-container *ngIf="query !== ''">
+  <ng-container > <!--TODO add ngif after enable algorithm *ngIf="query !== ''"-->
     <div class="m-proChannelListTools__searchresult">
       <span> Showing results for: <strong> {{query}}</strong></span>
     </div>

@@ -31,7 +31,11 @@ export class ProChannelService {
   }
 
   linkTo(to, query, algorithm?) {
-    let route = ['/pro', this.currentChannel.username, to, algorithm || 'top'];
+    let route = ['/pro', this.currentChannel.username, to];
+
+    if(algorithm) {
+      route.push(algorithm);
+    }
 
     if (query) {
       route.push({ query });

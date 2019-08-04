@@ -49,7 +49,7 @@ const routes: Routes = [
             component: ProChannelSignupComponent
           },
           {
-            path: ':type/:algorithm',
+            path: ':type',
             component: ProChannelListComponent,
           },
         ]
