@@ -61,8 +61,16 @@ export class ProChannelListModal {
     }
   }
 
-  get entities() {
+  get entities$() {
     return this.feedsService.feed;
+  }
+
+  get hasMore$() {
+    return this.feedsService.hasMore;
+  }
+
+  get inProgress$() {
+    return this.feedsService.inProgress;
   }
 
   loadMore() {
