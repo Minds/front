@@ -1,0 +1,22 @@
+<div class="m-pro--channel-list-modal">
+  <div class="m-pro--channel-list-modal--grid">
+    <ng-container *ngFor="let entity$ of (entities | async); let i = index">
+      <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
+        <m-pro--channel-tile *ngIf="entity$ | async as entity"
+          [entity]="entity"
+          (click)="expand(entity)"
+        ></m-pro--channel-tile>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="loadMore()"
+    [moreData]="feedsService.hasMore | async"
+    [inProgress]="feedsService.inProgress | async"
+    [scrollSource]="this.parent"
+  ></infinite-scroll>
+</div>
+
+<m-overlay-modal #overlayModal></m-overlay-modal>

@@ -20,6 +20,7 @@ import { LegacyModule } from "../legacy/legacy.module";
 import { WireModule } from "../wire/wire.module";
 import { ProContentModalComponent } from "./channel/content-modal/modal.component";
 import { VideoModule } from "../media/components/video/video.module";
+import { ProChannelListModal } from './channel/list-modal/list-modal.component';
 
 const routes: Routes = [
   {
@@ -82,6 +83,7 @@ const routes: Routes = [
     ProSubscriptionComponent,
     ProTileComponent,
     ProContentModalComponent,
+    ProChannelListModal,
     ProChannelComponent,
     ProChannelSignupComponent,
     ProChannelListComponent,
@@ -92,6 +94,7 @@ const routes: Routes = [
   exports: [],
   entryComponents: [
     ProMarketingComponent,
+    ProChannelListModal,
   ],
 })
 export class ProModule {

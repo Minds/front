@@ -48,9 +48,9 @@
     <li
       class="m-proChannelListContentList__seeMore"
       *ngIf="entities && displaySeeMoreTile"
-      [routerLink]="seeMoreRoute"
+      (click)="seeMore()"
       i18n
-  >
+    >
       See more
     </li>
   </ul>

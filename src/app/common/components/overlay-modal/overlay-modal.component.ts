@@ -1,4 +1,12 @@
-import { Component, AfterViewInit, ViewChild, ComponentFactoryResolver, ComponentRef, Input } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ViewChild,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Input,
+  Injector, ElementRef
+} from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -8,7 +16,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
   selector: 'm-overlay-modal',
   template: `
     <div class="m-overlay-modal--backdrop" [hidden]="hidden" (click)="dismiss()"></div>
-    <div class="m-overlay-modal {{class}}" [hidden]="hidden">
+    <div class="m-overlay-modal {{class}}" [hidden]="hidden" #modalElement>
       <a class="m-overlay-modal--close" (click)="dismiss()"><i class="material-icons">close</i></a>
       <ng-template dynamic-host></ng-template>
     </div>
@@ -25,6 +33,8 @@ export class OverlayModalComponent implements AfterViewInit {
   private componentRef: ComponentRef<{}>;
   private componentInstance;
 
+  @ViewChild('modalElement', { static: true }) protected modalElement: ElementRef;
+
   constructor(
     private service: OverlayModalService,
     private _componentFactoryResolver: ComponentFactoryResolver
@@ -34,7 +44,7 @@ export class OverlayModalComponent implements AfterViewInit {
     this.service.setContainer(this);
   }
 
-  create(componentClass, opts?) {
+  create(componentClass, opts?, injector?: Injector) {
     this.dismiss();
 
     opts = { ...{
@@ -52,8 +62,9 @@ export class OverlayModalComponent implements AfterViewInit {
 
     viewContainerRef.clear();
 
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
+    this.componentRef = viewContainerRef.createComponent(componentFactory, void 0, injector);
     this.componentInstance = this.componentRef.instance;
+    this.componentInstance.parent = this.modalElement.nativeElement;
   }
 
   setData(data) {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { FeedsService } from "../../../../common/services/feeds.service";
@@ -6,6 +6,7 @@ import { ProChannelService } from '../channel.service';
 import { first } from "rxjs/operators";
 import { OverlayModalService } from "../../../../services/ux/overlay-modal";
 import { ProContentModalComponent } from "../content-modal/modal.component";
+import { ProChannelListModal } from '../list-modal/list-modal.component';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -35,6 +36,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute,
     protected router: Router,
     protected cd: ChangeDetectorRef,
+    protected injector: Injector,
   ) {
   }
 
@@ -129,8 +131,10 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  get seeMoreRoute() {
-    return ['/', this.channelService.currentChannel.username];
+  seeMore() {
+    this.modalService
+      .create(ProChannelListModal, { type: this.type, algorithm: 'latest', query: this.query }, void 0, this.injector)
+      .present();
   }
 
   get channelUsername() {
