@@ -31,6 +31,10 @@ m-pro--channel {
       cursor: pointer;
     }
 
+    .m-proChannelTopbar__logo:focus {
+      outline: none;
+     }
+
     & > * {
       padding: 0 16px 0 0;
     }
