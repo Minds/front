@@ -83,9 +83,9 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
       if (this.entities.length >= 9) {
         this.displaySeeMoreTile = true;
-        this.entities = this.entities.slice(0,8);
+        this.entities = this.entities.slice(0, 8);
       }
-      
+
       this.detectChanges();
     });
 
@@ -166,6 +166,10 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   }
 
   openModal(entity: any) {
+    if (entity.subtype !== 'video' && entity.subtype !== 'image') {
+      return;
+    }
+
     this.modalService.create(ProContentModalComponent, entity, {
 
       class: 'm-overlayModal--media'

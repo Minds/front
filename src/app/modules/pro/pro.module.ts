@@ -19,6 +19,7 @@ import { ProChannelFooterComponent } from './channel/footer/footer.component';
 import { LegacyModule } from "../legacy/legacy.module";
 import { WireModule } from "../wire/wire.module";
 import { ProContentModalComponent } from "./channel/content-modal/modal.component";
+import { VideoModule } from "../media/components/video/video.module";
 
 const routes: Routes = [
   {
@@ -70,6 +71,7 @@ const routes: Routes = [
     NewsfeedModule,
     LegacyModule,
     WireModule,
+    VideoModule,
   ],
   providers: [
     ProService,
