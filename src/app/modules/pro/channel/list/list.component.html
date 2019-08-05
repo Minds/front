@@ -46,7 +46,7 @@
       </ng-container>
     <li
       class="m-proChannelListContentList__seeMore"
-      *ngIf="entities.length != 0"
+      *ngIf="entities && displaySeeMoreTile"
       [routerLink]="seeMoreRoute"
       i18n
   >

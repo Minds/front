@@ -24,6 +24,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   period: string;
 
+  displaySeeMoreTile: boolean = false;
+
   constructor(
     public feedsService: FeedsService,
     protected channelService: ProChannelService,
@@ -75,6 +77,12 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         if (entity)
           this.entities.push(await entity.pipe(first()).toPromise());
       }
+
+      if (this.entities.length >= 9) {
+        this.displaySeeMoreTile = true;
+        this.entities = this.entities.slice(0,8);
+      }
+      
       this.detectChanges();
     });
 
