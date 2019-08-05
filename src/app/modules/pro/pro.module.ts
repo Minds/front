@@ -18,6 +18,7 @@ import { ProUserMenuComponent } from "./channel/pro-user-menu/pro-user-menu.comp
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
 import { LegacyModule } from "../legacy/legacy.module";
 import { WireModule } from "../wire/wire.module";
+import { ProContentModalComponent } from "./channel/content-modal/modal.component";
 
 const routes: Routes = [
   {
@@ -78,6 +79,7 @@ const routes: Routes = [
     ProSettingsComponent,
     ProSubscriptionComponent,
     ProTileComponent,
+    ProContentModalComponent,
     ProChannelComponent,
     ProChannelSignupComponent,
     ProChannelListComponent,

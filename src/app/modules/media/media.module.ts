@@ -24,6 +24,7 @@ import { MediaViewRecommendedComponent } from './view/recommended/recommended.co
 import { ThumbnailSelectorComponent } from './components/thumbnail-selector.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
+import { ProContentModalComponent } from "../pro/channel/content-modal/modal.component";
 
 const routes: Routes = [
   { path: 'media/videos/:filter', component: MediaVideosListComponent },
@@ -74,6 +75,7 @@ const routes: Routes = [
     MediaImagesListComponent,
     MediaEditComponent,
     MediaViewComponent,
+    ProContentModalComponent,
   ]
 })
 

@@ -4,6 +4,8 @@ import { Subscription } from "rxjs";
 import { FeedsService } from "../../../../common/services/feeds.service";
 import { ProChannelService } from '../channel.service';
 import { first } from "rxjs/operators";
+import { OverlayModalService } from "../../../../services/ux/overlay-modal";
+import { ProContentModalComponent } from "../content-modal/modal.component";
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -28,6 +30,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   constructor(
     public feedsService: FeedsService,
+    protected modalService: OverlayModalService,
     protected channelService: ProChannelService,
     protected route: ActivatedRoute,
     protected router: Router,
@@ -160,5 +163,13 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         throw new Error('Unknown type');
     }
     return routeType;
+  }
+
+  openModal() {
+    this.modalService.create(ProContentModalComponent, {type: this.type}, {
+
+      class: 'm-overlayModal--media'
+
+    }).present();
   }
 }
