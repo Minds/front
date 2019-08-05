@@ -165,8 +165,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     return routeType;
   }
 
-  openModal() {
-    this.modalService.create(ProContentModalComponent, {type: this.type}, {
+  openModal(entity: any) {
+    this.modalService.create(ProContentModalComponent, entity, {
 
       class: 'm-overlayModal--media'
 

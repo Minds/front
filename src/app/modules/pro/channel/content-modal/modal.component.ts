@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 
 export class ProContentModalComponent implements OnInit {
-  entity: string; // feed type
+  entity: any;
 
   @Input('entity') set data(data) {
     this.entity = data;
