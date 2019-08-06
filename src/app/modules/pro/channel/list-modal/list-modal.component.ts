@@ -9,7 +9,7 @@ import { OverlayModalComponent } from '../../../../common/components/overlay-mod
   selector: 'm-pro--channel-list-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'list-modal.component.html',
-  providers: [OverlayModalService],
+  providers: [FeedsService, OverlayModalService],
 })
 export class ProChannelListModal {
 

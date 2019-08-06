@@ -12,6 +12,7 @@ import { ProChannelListModal } from '../list-modal/list-modal.component';
   selector: 'm-pro--channel-list',
   templateUrl: 'list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [FeedsService],
 })
 export class ProChannelListComponent implements OnInit, OnDestroy {
 
@@ -83,9 +84,9 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
           this.entities.push(await entity.pipe(first()).toPromise());
       }
 
-      if (this.entities.length >= 9) {
+      if (this.entities.length >= 10) {
         this.displaySeeMoreTile = true;
-        this.entities = this.entities.slice(0, 8);
+        this.entities = this.entities.slice(0, 9);
       }
 
       this.detectChanges();
@@ -114,7 +115,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     try {
       this.feedsService
         .setEndpoint(`api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}${search}`)
-        .setLimit(9)
+        .setLimit(10)
         .fetch();
 
     } catch (e) {
