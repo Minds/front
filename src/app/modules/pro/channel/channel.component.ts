@@ -12,7 +12,7 @@ import { Session } from "../../../services/session";
 import { Subscription } from "rxjs";
 import { MindsUser } from "../../../interfaces/entities";
 import { Client } from "../../../services/api/client";
-import { Title } from "@angular/platform-browser";
+import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
 
 @Component({
@@ -48,7 +48,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected channelService: ProChannelService,
     protected client: Client,
-    protected title: Title,
+    protected title: MindsTitle,
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
@@ -69,6 +69,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
           }
           
           this.currentURL = navigationEvent.urlAfterRedirects;
+          this.setTitle();
         }
       } catch (e) {
         console.error('Minds: router hook(SearchBar)', e);
@@ -84,6 +85,22 @@ export class ProChannelComponent implements OnInit, OnDestroy {
         this.load();
       }
     });
+  }
+
+  setTitle() {
+    const urlFragments = this.router.url.split('/');
+    const fragmentIndex = urlFragments.findIndex(v => v === "juanmsolaro") + 1;
+
+    let title = this.channel.pro_settings.title as string || this.channel.name;
+    if (this.channel.pro_settings.headline) {
+      title += ` - ${this.channel.pro_settings.headline}`;
+    }
+    
+    if (urlFragments[fragmentIndex]) {
+      title += ` - ${urlFragments[fragmentIndex]}`;
+    }
+
+    this.title.setTitle(title);
   }
 
   ngOnDestroy() {
@@ -102,15 +119,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     try {
       this.channel = await this.channelService.load(this.username);
 
-      let title = this.channel.pro_settings.title as string || this.channel.name;
-
       this.bindCssVariables();
-
-      if (this.channel.pro_settings.headline) {
-        title += ` - ${this.channel.pro_settings.headline}`;
-      }
-
-      this.title.setTitle(title);
+      this.setTitle();
     } catch (e) {
       this.error = e.getMessage();
     }

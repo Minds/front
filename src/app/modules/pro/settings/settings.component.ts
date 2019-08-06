@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
+import { MindsTitle } from '../../../services/ux/title';
 
 @Component({
   selector: 'm-pro--settings',
@@ -23,6 +24,7 @@ export class ProSettingsComponent implements OnInit {
     protected session: Session,
     protected router: Router,
     protected cd: ChangeDetectorRef,
+    protected title: MindsTitle
   ) {
   }
 
@@ -42,6 +44,8 @@ export class ProSettingsComponent implements OnInit {
     }
 
     this.settings = settings;
+
+    this.title.setTitle('Pro Settings');
 
     this.inProgress = false;
     this.detectChanges();
