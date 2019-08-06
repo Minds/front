@@ -467,7 +467,7 @@ describe('NotificationsComponent', () => {
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('You earned 10 tokens today.');
+    expect(notification.nativeElement.innerHTML).toContain('You earned 10 tokens yesterday.');
   });
 
   it('Should load the notification rewards reminder', () => {
