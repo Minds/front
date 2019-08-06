@@ -1,29 +1,23 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { Component, DebugElement, ChangeDetectorRef, Input, Output } from '@angular/core';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { WalletTokenContributionsChartComponent } from './chart.component';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { Client } from '../../../../services/api/client';
-import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
-
-import { of } from 'rxjs/internal/observable/of';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MockComponent, MockDirective, MockService } from '../../../../utils/mock';
+import { Router } from '@angular/router';
 import { Session } from '../../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
 
 describe('WalletTokenContributionsChartComponent', () => {
-
-  let comp: WalletTokenContributionsChartComponent;
-  let fixture: ComponentFixture<WalletTokenContributionsChartComponent>;
+  let comp: TestHostComponent;
+  let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
-        WalletTokenContributionsChartComponent
+        WalletTokenContributionsChartComponent,
+        TestHostComponent
       ],
       providers: [
         { provide: Client, useValue: clientMock },
@@ -40,7 +34,7 @@ describe('WalletTokenContributionsChartComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    fixture = TestBed.createComponent(WalletTokenContributionsChartComponent);
+    fixture = TestBed.createComponent(TestHostComponent);
 
     comp = fixture.componentInstance;
     fixture.detectChanges();
@@ -61,4 +55,21 @@ describe('WalletTokenContributionsChartComponent', () => {
   it('should show chart', fakeAsync (() => {
     expect(fixture.debugElement.query(By.css(`.m-token-contributions--chart`))).not.toBeNull();
   }));
+
+  @Component({
+    selector: `host-component`,
+    template: `<m-wallet-token--chart [contributionValues]=this.contributionValues></m-wallet-token--chart>`
+  })
+  class TestHostComponent {
+    contributionValues = {
+      comments: 2,
+      reminds: 4,
+      votes: 1,
+      subscribers: 4,
+      referrals: 50,
+      referrals_welcome: 50,
+      checkin: 2,
+      jury_duty: 25
+    };
+  }
 });
