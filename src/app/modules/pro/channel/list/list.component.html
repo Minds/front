@@ -29,7 +29,7 @@
       <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
         <m-pro--channel-tile
           [entity]="entity"
-          (click)="openModal(entity)"
+          (click)="onTileClicked(entity)"
         ></m-pro--channel-tile>
       </ng-container>
       <ng-container *ngIf="type === 'groups'">
@@ -42,7 +42,7 @@
       <ng-container *ngIf="type === 'activities'">
         <minds-activity
           [object]="entity"
-          (click)="openModal(entity)"
+          (click)="onTileClicked(entity)"
         ></minds-activity>
       </ng-container>
     <li

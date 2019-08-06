@@ -170,15 +170,21 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     return routeType;
   }
 
-  openModal(entity: any) {
-    if (entity.subtype !== 'video' && entity.subtype !== 'image') {
-      return;
+  onTileClicked(entity: any) {
+    switch (this.getType(entity)) {
+      case 'object:blog':
+        window.open(`${window.Minds.site_url}${entity.route}/`, '_blank');
+        break;
+      case 'object:image':
+      case 'object:video':
+        this.modalService.create(ProContentModalComponent, entity, {
+          class: 'm-overlayModal--media'
+        }).present();
+        break;
     }
+  }
 
-    this.modalService.create(ProContentModalComponent, entity, {
-
-      class: 'm-overlayModal--media'
-
-    }).present();
+  private getType(entity: any) {
+    return entity.type === 'object' ? `${entity.type}:${entity.subtype}` : entity.type;
   }
 }
