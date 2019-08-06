@@ -105,6 +105,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.feedsService.clear();
     }
 
+    this.displaySeeMoreTile = false;
+
     this.detectChanges();
 
     let search = '';
