@@ -87,7 +87,7 @@ m-pro--channel-list {
   ul.m-proChannelListContent__list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: minmax(300px, auto);
+    grid-auto-rows: minmax(220px, auto);
     grid-gap: 32px 32px;
     list-style: none;
     padding: 0;
