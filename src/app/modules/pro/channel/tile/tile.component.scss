@@ -22,8 +22,8 @@ m-pro--channel-tile {
   .m-proChannelTile__text {
     position: absolute;
     bottom: 0;
-    background-color: #00000061;
-    color: rgb(255, 255, 255);
+    background-color: var(--transparent-background-color);
+    color: var(--text-color);
     padding: 16px 16px 0;
     font-size: 20px;
     width: 100%;
@@ -33,7 +33,7 @@ m-pro--channel-tile {
       font-size: 20px;
       line-height: 20px;
       overflow: visible;
-      color: rgb(255, 255, 255) !important;
+      color: var(--text-color) !important;
       margin: 0;
       font-weight: 700;
     }
@@ -48,12 +48,7 @@ m-pro--channel-tile {
       margin: 8px 0;
       padding: 0;
       line-height: 1.25;
-      color: rgb(255, 255, 255) !important;
-    }
-
-    a {
-      text-decoration: none;
-      color: #333;
+      color: var(--text-color) !important;
     }
   }
 }
