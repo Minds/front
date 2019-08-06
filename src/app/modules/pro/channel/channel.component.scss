@@ -108,6 +108,8 @@ m-pro--channel {
   .m-proChannel__footer {
     grid-row: 4 / span 1;
     grid-column: 2 / span 10;
+    width: 80%;
+    margin: 0 auto;
   }
 
   m-pro--channel h1 {
