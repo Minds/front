@@ -16,7 +16,7 @@ export class ProContentModalComponent implements OnInit {
 
   @Input('entity') set data(data) {
     this.entity = data;
-    this.title = this.entity.message ? this.entity.message : `${this.entity.ownerObj.name}'s post`;
+    this.title = this.entity.title || this.entity.message || `${this.entity.ownerObj.name}'s media`;
   }
 
   constructor(

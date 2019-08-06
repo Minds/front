@@ -3,7 +3,7 @@
   <!-- <div class="m-mediaModal__theater"> -->
   <!-- Media: image -->
   <div class="m-mediaModal__theater m-mediaModal__theater--image" *ngIf="entity.subtype === 'image'">
-    <img [src]="entity.thumbnail_src" (load)="inProgress = !inProgress"/>
+    <img [src]="entity.thumbnail_src" (load)="inProgress = false"/>
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
     <div class="m-mediaModal__theaterOverlay">
       <a class="m-mediaModal__theaterOverlayTitle" [routerLink]="['/media', entity.entity_guid]">{{title}}</a>
