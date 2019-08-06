@@ -23,6 +23,17 @@ export class WalletTokenContributionsOverviewComponent implements OnInit, OnDest
     yourContribution: null,
     totalNetworkContribution: null,
     yourShare: null,
+    yourRewardFactor: null,
+    contributionValues: {
+      comments: null,
+      reminds: null,
+      votes: null,
+      subscribers: null,
+      referrals: null,
+      referrals_welcome: null,
+      checkin: null,
+      jury_duty: null
+    }
   };
 
   protected updateTimer$;
@@ -45,6 +56,8 @@ export class WalletTokenContributionsOverviewComponent implements OnInit, OnDest
       this.overview.yourContribution = result.yourContribution;
       this.overview.totalNetworkContribution = result.totalNetworkContribution;
       this.overview.yourShare = result.yourShare;
+      this.overview.yourRewardFactor = result.yourRewardFactor;
+      this.overview.contributionValues = result.contributionValues;
 
       this.detectChanges();
     } catch (e) {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../../services/api/client';
@@ -18,4 +18,5 @@ export class WalletTokenContributionsChartComponent {
     protected router: Router,
   ) { }
 
+  @Input() contributionValues;
 }

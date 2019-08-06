@@ -1,14 +1,10 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { Component, DebugElement, ChangeDetectorRef, Input, Output } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { WalletTokenContributionsComponent } from './contributions.component';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { Client } from '../../../../services/api/client';
-import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
-
-import { of } from 'rxjs/internal/observable/of';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MockComponent, MockDirective, MockService } from '../../../../utils/mock';
+import { Router } from '@angular/router';
+import { MockComponent, MockDirective } from '../../../../utils/mock';
 import { Session } from '../../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
@@ -19,13 +15,23 @@ describe('WalletTokenContributionsComponent', () => {
   let comp: WalletTokenContributionsComponent;
   let fixture: ComponentFixture<WalletTokenContributionsComponent>;
 
+  @Component({
+    selector: 'm-wallet-token--overview',
+    template: '<p>Mock Token Chart</p>'
+  })
+  class MockTokenOverviewComponent {
+    overview = {
+      contributionValues: null
+    };
+  }
+
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        MockComponent({ selector: 'm-wallet-token--overview'}),
-        MockComponent({ selector: 'm-wallet-token--chart'}),
+        MockTokenOverviewComponent,
+        MockComponent({ selector: 'm-wallet-token--chart', inputs: ['contributionValues']}),
         MockComponent({ selector: 'm-date-selector', inputs: ['label', 'date', 'dateChange', 'dateFormat'] }),
         MockComponent({ selector: 'm-token--onboarding--rewards', inputs: ['skippable']}),
         WalletTokenContributionsComponent

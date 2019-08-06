@@ -1,8 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { Client } from '../../../../services/api/client';
-import { Session } from '../../../../services/session';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -11,14 +7,14 @@ import { Session } from '../../../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WalletToken101Component {
-
-  constructor(
-  ) {
-
-  }
-
-  ngOnInit() {
-
-  }
-
+  contributionValues = {
+    comments: 2,
+    reminds: 4,
+    votes: 1,
+    subscribers: 4,
+    referrals: 50,
+    referrals_welcome: 50,
+    checkin: 2,
+    jury_duty: 25
+  };
 }
