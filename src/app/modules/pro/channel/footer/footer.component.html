@@ -1,15 +1,19 @@
-<span>{{footerText}}</span>
+<div class="m-pro--channel-footer">
+  <span class="m-pro--channel-footer--text">{{footerText}}</span>
 
-<div class="mdl-color-text--blue-grey-600">
+  <div class="m-pro--channel-footer--social-profiles">
     <span *ngFor="let profile of footerSocialProfiles">
       <a *ngIf="profile.key && profile.value"
-        [href]="getSocialProfileURL(profile.value)"
-        rel="noopener noreferrer"
-        target="_blank"
+         [href]="getSocialProfileURL(profile.value)"
+         rel="noopener noreferrer"
+         target="_blank"
       ><i [ngClass]="[ getSocialProfileIconClass(profile) ]"></i></a>
     </span>
+  </div>
+
+  <a
+    *ngFor="let link of footerLinks"
+    class="m-pro--channel-footer--link"
+    [href]="link.href"
+  >{{link.title}}</a>
 </div>
-
-<a [href]="link.href" *ngFor="let link of footerLinks">{{link.title}}</a>
-
-

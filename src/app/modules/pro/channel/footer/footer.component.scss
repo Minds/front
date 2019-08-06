@@ -1,9 +1,10 @@
-m-pro--channel-footer {
+.m-pro--channel-footer {
   display: flex;
   align-items: center;
   justify-content: space-around;
   flex-wrap: wrap;
   height: 100px;
+  color: var(--text-color);
 
   a {
     text-decoration: none;
