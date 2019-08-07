@@ -3,8 +3,8 @@
 }
 
 .m-overlay-modal.m-overlayModal--media {
-  padding:0px;
-  max-width:95%;
+  padding: 0px;
+  max-width: 95%;
   z-index: 9999998;
 
 }
@@ -31,28 +31,30 @@ m-media--modal {
     position: relative;
     width: 100%;
     overflow: hidden; // .????
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black-always), 0.95);
     }
 
     &:hover {
-      .m-mediaModal__theaterOverlay{
+      .m-mediaModal__theaterOverlay {
         opacity: 1;
       }
     }
 
-    img{
+    img {
       object-fit: contain;
       flex: 1;
       overflow: hidden;
     }
-    m-video{
-      @include m-theme(){
+
+    m-video {
+      @include m-theme() {
         background-color: themed($m-black-always);
       }
-      video{
-        max-width:100%;
-        height:100%;
+
+      video {
+        max-width: 100%;
+        height: 100%;
       }
     }
 
@@ -69,8 +71,8 @@ m-media--modal {
       transition: opacity 500ms cubic-bezier(.22, 1, .33, 1);
       box-sizing: border-box;
       font-size: 24px;
-      @include m-theme(){
-        background: linear-gradient(rgba(themed($m-black-always),0.5), transparent);
+      @include m-theme() {
+        background: linear-gradient(rgba(themed($m-black-always), 0.5), transparent);
       }
 
       &:hover {
@@ -83,9 +85,8 @@ m-media--modal {
         text-overflow: ellipsis;
         text-decoration: none;
 
-        @include m-theme(){
-          color: themed($m-white-always);
-        }
+        color: var(--text-color);
+
         &:hover {
           text-decoration: underline;
         }
@@ -93,9 +94,7 @@ m-media--modal {
 
       // TODO OJM fullscreen styles e.g. .myClass:not(:fullscreen)
       .m-mediaModal__fullscreenButton {
-        @include m-theme(){
-          color: themed($m-white-always);
-        }
+        color: var(--text-color);
         transition: transform 150ms ease;
 
 
@@ -108,6 +107,7 @@ m-media--modal {
           .m-mediaModal__fullscreenIcon--enable {
             transform: scale(1.2);
           }
+
           .m-mediaModal__fullscreenIcon--disable {
             transform: scale(0.83);
           }
@@ -116,6 +116,7 @@ m-media--modal {
         .m-mediaModal__fullscreenIcon--disable {
           font-size: 28px;
         }
+
         .m-mediaModal__fullscreenIcon--disable {
           font-size: 34px;
         }
@@ -138,9 +139,7 @@ m-media--modal {
     padding: 16px;
     font-family: 'Roboto', Helvetica, sans-serif;
 
-    @include m-theme(){
-      background-color: themed($m-white);
-    }
+    background-color: var(--plain-background-color);
 
     .m-mediaModal__ownerBlock {
       padding: 0;
@@ -154,6 +153,7 @@ m-media--modal {
         white-space: nowrap;
         font-weight: 500;
       }
+
       .m-ownerBlock__channelLink, .m-ownerBlock__groupLink {
         text-decoration: none;
       }
@@ -168,9 +168,7 @@ m-media--modal {
         white-space: pre-wrap;
         line-height: 18px;
         -webkit-font-smoothing: antialiased;
-        @include m-theme(){
-          color: themed($m-grey-400);
-        }
+        color: var(--text-color);
 
         > * {
           padding-right: 8px;
@@ -184,14 +182,12 @@ m-media--modal {
 
         .m-ownerBlock__permalinkFlag {
           text-transform: uppercase;
-          padding: 0 8px 0 0 ;
+          padding: 0 8px 0 0;
           letter-spacing: 0.5px;
           font-weight: 700;
           font-size: 11px;
           line-height: 1;
-          @include m-theme(){
-            color: themed($m-grey-400);
-          }
+          color: var(--text-color);
         }
 
         .m-ownerBlock__permalinkFlag--boosted {
@@ -207,18 +203,15 @@ m-media--modal {
 
           a {
             vertical-align: middle;
-            @include m-theme(){
-              color: themed($m-grey-400);
-            }
+            color: var(--text-color);
           }
 
           &.m-ownerBlock__permalinkFlag--onchain {
-            @include m-theme(){
-              color: themed($m-blue);
-            }
+            color: var(--primary-color);
+
             a {
-              @include m-theme(){
-                color: themed($m-blue);
+              @include m-theme() {
+                color: var(--primary-color);
               }
             }
           }
@@ -226,12 +219,14 @@ m-media--modal {
       }
 
     }
+
     .m-mediaModal__actionButtonsWrapper {
       .m-mediaModal__actionButtonsRow {
         display: flex;
         justify-content: space-around;
         padding-top: 16px;
       }
+
       minds-button-boost {
         button {
           margin-top: 8px;
@@ -243,14 +238,13 @@ m-media--modal {
 
     .m-mediaModal__commentsWrapper {
       padding-top: $minds-padding;
-      @include m-theme(){
+      @include m-theme() {
         border-top: 1px solid themed($m-grey-100);
       }
 
       display: block;
       margin-bottom: 0;
       flex: 1;
-
 
 
       m-comments__tree {
@@ -294,6 +288,7 @@ m-media--modal {
 
 
           }
+
           .minds-comment {
             padding: 8px 0px;
 
@@ -305,8 +300,9 @@ m-media--modal {
               display: block;
             }
 
-            .m-comment-attachment .m-rich-embed{
+            .m-comment-attachment .m-rich-embed {
               max-width: 63%;
+
               .m-blurb {
                 display: block;
               }
