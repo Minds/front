@@ -26,6 +26,17 @@
 
         <a
           class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="currentTab === 'hashtags'"
+          (click)="currentTab = 'hashtags'"
+        >
+          <span i18n>Hashtags</span>
+          <m-tooltip icon="help" i18n>
+            TBD
+          </m-tooltip>
+        </a>
+
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="currentTab === 'footer'"
           (click)="currentTab = 'footer'"
         >
@@ -107,6 +118,48 @@
               <div class="m-pro--settings--field">
                 <label for="logo_guid" i18n>Logo Asset GUID</label>
                 <input type="text" id="logo_guid" name="logo_guid" [(ngModel)]="settings.logo_guid">
+              </div>
+            </ng-template>
+
+            <!-- Tags -->
+
+            <ng-template ngSwitchCase="hashtags">
+              <p class="m-pro--settings--note" i18n>
+                Set up your category filter hashtags here.
+              </p>
+
+              <div class="m-pro--settings--field" *ngFor="let tag of settings.tag_list; let i = index">
+                <label for="headline" i18n>Hashtag #{{ i + 1 }}</label>
+
+                <div class="m-pro--settings--flex-inputs">
+                  <input
+                    type="text"
+                    placeholder="Label"
+                    [id]="'tag-label-' + i"
+                    [name]="'tag[' + i + '][label]'"
+                    [(ngModel)]="tag.label"
+                    i18n-placeholder
+                  >
+
+                  <input
+                    type="text"
+                    placeholder="#hashtag"
+                    [id]="'tag-tag-' + i"
+                    [name]="'tag[' + i + '][tag]'"
+                    [(ngModel)]="tag.tag"
+                    i18n-placeholder
+                  >
+                </div>
+              </div>
+
+              <div class="m-pro--settings--field">
+                <button
+                  class="m-btn m-btn--slim"
+                  type="button"
+                  [disabled]="inProgress"
+                  (click)="addBlankTag()"
+                  i18n
+                >+ Add Tag</button>
               </div>
             </ng-template>
 

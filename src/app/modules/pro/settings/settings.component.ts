@@ -17,7 +17,7 @@ export class ProSettingsComponent implements OnInit {
 
   saved: boolean = false;
 
-  currentTab: 'general' | 'theme' | 'footer' | 'cancel' = 'general';
+  currentTab: 'general' | 'theme' | 'hashtags' | 'footer' | 'cancel' = 'general';
 
   constructor(
     protected service: ProService,
@@ -45,6 +45,14 @@ export class ProSettingsComponent implements OnInit {
 
     this.settings = settings;
 
+    if (this.settings && this.settings.tag_list) {
+      this.settings.tag_list = this.settings.tag_list.map(({ tag, label }) => {
+        const formattedTag = `#${tag}`;
+
+        return { tag: formattedTag, label };
+      });
+    }
+
     this.title.setTitle('Pro Settings');
 
     this.inProgress = false;
@@ -60,6 +68,14 @@ export class ProSettingsComponent implements OnInit {
     this.saved = true;
     this.inProgress = false;
     this.detectChanges();
+  }
+
+  addBlankTag() {
+    if (!this.settings) {
+      return;
+    }
+
+    this.settings.tag_list.push({ label: '', tag: '' });
   }
 
   addBlankFooterLink() {
