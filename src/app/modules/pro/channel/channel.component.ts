@@ -88,17 +88,18 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   }
 
   setTitle() {
-    const urlFragments = this.router.url.split('/');
-    const fragmentIndex = urlFragments.findIndex(v => v === "juanmsolaro") + 1;
-
     let title = this.channel.pro_settings.title as string || this.channel.name;
+
+    const childRoute = this.route.children.length > 0 ? this.route.children[0].snapshot : null;
+
+    if (childRoute && childRoute.params['type']) {
+      title += ` - ${childRoute.params['type']}`;
+    }
+
     if (this.channel.pro_settings.headline) {
       title += ` - ${this.channel.pro_settings.headline}`;
     }
 
-    if (urlFragments[fragmentIndex]) {
-      title += ` - ${urlFragments[fragmentIndex]}`;
-    }
 
     this.title.setTitle(title);
   }
