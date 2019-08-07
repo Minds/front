@@ -1,0 +1,9 @@
+<div class="m-pro--channel-home">
+  <div class="m-pro--channel-home--featured-content">
+    <m-pro--channel-tile
+      *ngFor="let entity of featuredContent"
+      [entity]="entity"
+      (click)="onFeaturedContentClick(entity)"
+    ></m-pro--channel-tile>
+  </div>
+</div>

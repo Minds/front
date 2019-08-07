@@ -1,0 +1,11 @@
+.m-pro--channel-home {
+  .m-pro--channel-home--featured-content {
+    display: grid;
+    grid-gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+
+    *:first-child {
+      grid-column: span 2;
+    }
+  }
+}

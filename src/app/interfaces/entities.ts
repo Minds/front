@@ -84,6 +84,7 @@ export interface MindsUser {
     footer_links: { href: string, title: string }[],
     scheme: string,
     styles?: { [key: string]: string },
+    featured_content?: Array<string>,
   };
 }
 

@@ -21,6 +21,7 @@ import { WireModule } from "../wire/wire.module";
 import { ProContentModalComponent } from "./channel/content-modal/modal.component";
 import { VideoModule } from "../media/components/video/video.module";
 import { ProChannelListModal } from './channel/list-modal/list-modal.component';
+import { ProChannelHomeComponent } from './channel/home/home.component';
 
 const routes: Routes = [
   {
@@ -40,8 +41,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'articles',
-            pathMatch: 'full'
+            component: ProChannelHomeComponent,
           },
           {
             path: 'donate',
@@ -83,6 +83,7 @@ const routes: Routes = [
     ProSubscriptionComponent,
     ProTileComponent,
     ProContentModalComponent,
+    ProChannelHomeComponent,
     ProChannelListModal,
     ProChannelComponent,
     ProChannelSignupComponent,
