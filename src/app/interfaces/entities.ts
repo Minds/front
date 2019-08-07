@@ -82,7 +82,7 @@ export interface MindsUser {
     headline: string,
     footer_text: string,
     footer_links: { href: string, title: string }[],
-
+    scheme: string,
     styles?: { [key: string]: string },
   };
 }
