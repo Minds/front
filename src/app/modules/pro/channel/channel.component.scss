@@ -112,12 +112,12 @@ m-pro--channel {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-end;
 
     .m-proChannel__category {
       cursor: pointer;
       color: var(--text-color);
-      padding: 0 8px;
+      padding: 0 16px;
 
       &.m-proChannel__selectedCategory {
         color: var(--primary-color);
