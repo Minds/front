@@ -1,11 +1,19 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { MindsChannelResponse } from '../../../interfaces/responses';
-import { MindsUser } from '../../../interfaces/entities';
+import { MindsUser, Tag } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 
 @Injectable()
 export class ProChannelService {
   currentChannel: MindsUser;
+  selectedHashtag: Tag;
+
+  selectedHashtagChange: EventEmitter<Tag> = new EventEmitter<Tag>();
+
+  setSelectedHashtag(value: Tag) {
+    this.selectedHashtag = value;
+    this.selectedHashtagChange.emit(this.selectedHashtag);
+  }
 
   constructor(
     protected client: Client,

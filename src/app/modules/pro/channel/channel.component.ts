@@ -46,8 +46,6 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   query: string;
 
-  selectedTag: Tag = null;
-
   constructor(
     protected element: ElementRef,
     protected session: Session,
@@ -212,7 +210,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   }
 
   selectTag(clickedTag: any) {
-    this.selectedTag = clickedTag;
+    this.channelService.setSelectedHashtag(clickedTag);
 
     for (let tag of this.channel.pro_settings.tag_list) {
       tag.selected = tag.tag == clickedTag.tag;

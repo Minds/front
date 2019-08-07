@@ -7,6 +7,7 @@ import { first } from "rxjs/operators";
 import { OverlayModalService } from "../../../../services/ux/overlay-modal";
 import { ProContentModalComponent } from "../content-modal/modal.component";
 import { ProChannelListModal } from '../list-modal/list-modal.component';
+import { Tag } from "../../../../interfaces/entities";
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -30,6 +31,10 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   displaySeeMoreTile: boolean = false;
 
+  selectedHashtag: Tag;
+
+  selectedHashtag$: Subscription;
+
   constructor(
     public feedsService: FeedsService,
     protected modalService: OverlayModalService,
@@ -43,6 +48,12 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.listen();
+
+    this.selectedHashtag$ = this.channelService.selectedHashtagChange.subscribe((tag) => {
+      this.selectedHashtag = tag;
+
+      this.load(true);
+    })
   }
 
   private listen() {
@@ -98,6 +109,9 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     if (this.params$) {
       this.params$.unsubscribe();
     }
+    if (this.selectedHashtag$) {
+      this.selectedHashtag$.unsubscribe();
+    }
   }
 
   async load(refresh: boolean = false) {
@@ -109,14 +123,25 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
     this.detectChanges();
 
-    let search = '';
+    let search = [];
+
+    if (this.selectedHashtag) {
+      search.push(`hashtags=${this.selectedHashtag.tag}`);
+    }
+
     if (this.query && (this.query !== '')) {
-      search = `?hashtags=null&period=${this.period}&all=1&query=${this.query}&nsfw=&sync=1&limit=150&as_activities=1&from_timestamp=`;
+      search.push(`&period=${this.period}&all=1&query=${this.query}&nsfw=&sync=1&limit=150&as_activities=1&from_timestamp=`);
+    }
+
+    let url = `api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`;
+
+    if (search.length > 0) {
+      url += '?' + search.join('&');
     }
 
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}${search}`)
+        .setEndpoint(url)
         .setLimit(10)
         .fetch();
 
@@ -141,7 +166,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
           algorithm: 'latest',
           query: this.query,
         },
-       {
+        {
           class: 'm-overlayModal--seeMore'
         }, this.injector)
       .present();
