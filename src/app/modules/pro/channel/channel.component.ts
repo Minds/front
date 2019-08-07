@@ -3,7 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostBinding, HostListener,
+  HostBinding,
+  HostListener,
   OnDestroy,
   OnInit
 } from '@angular/core';
@@ -162,6 +163,14 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     }
 
     return `url(${this.channel.pro_settings.background_image})`;
+  }
+
+  @HostBinding('class') get cssColorSchemeOverride() {
+    if (!this.channel) {
+      return '';
+    }
+
+    return `m-theme--wrapper__${this.channel.pro_settings.scheme || 'light'}`;
   }
 
   @HostListener('window:resize') onResize() {
