@@ -65,19 +65,6 @@
         routerLinkActive="active"
         i18n
       >Donate</a>
-      <a
-        class="m-proChannelTopbar__navItem"
-        [routerLink]="['/pro', channel.username, 'signup']"
-        routerLinkActive="active"
-        *ngIf="!currentUser"
-        i18n
-      >Signup / Login</a>
-    </ng-container>
-
-    <ng-container *ngIf="currentUser">
-      <a [routerLink]="['/', channel.username]" routerLinkActive="active">
-        <minds-avatar [object]="currentUser" [editMode]="false"></minds-avatar>
-      </a>
     </ng-container>
 
     <m-pro-user-menu [channelName]="channel.username" [showNavItems]="collapseNavItems" [query]="searchedText"></m-pro-user-menu>
