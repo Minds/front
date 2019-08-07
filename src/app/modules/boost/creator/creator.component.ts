@@ -468,9 +468,9 @@ export class BoostCreatorComponent implements AfterViewInit {
 
       if (this.boost.currency === 'onchain'
           && (this.boost.amount < this.rates.min
-            || this.boost.amount > (this.rates.cap * 2)
+            || this.boost.amount > (this.rates.cap)
       )) {
-        throw new VisibleBoostError(`You must boost between ${this.rates.min} and ${this.rates.cap * 2} views.`);
+        throw new VisibleBoostError(`You must boost between ${this.rates.min} and ${this.rates.cap} views.`);
       }
 
 
