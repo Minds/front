@@ -189,7 +189,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   search() {
     if (!this.currentURL) {
-      this.currentURL = `/pro/${this.channel.username}/articles`; //TODO ADD /TOP when algorithm is enable
+      this.currentURL = `/pro/${this.channel.username}/articles`; //TODO ADD /TOP when algorithm is enabled
     } else {
       if (this.currentURL.includes('query')) {
         this.currentURL = this.currentURL.split(';')[0];

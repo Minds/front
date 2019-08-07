@@ -4,6 +4,7 @@ import { FeedsService } from '../../../../common/services/feeds.service';
 import { ProContentModalComponent } from '../content-modal/modal.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { OverlayModalComponent } from '../../../../common/components/overlay-modal/overlay-modal.component';
+import { Tag } from "../../../../interfaces/entities";
 
 @Component({
   selector: 'm-pro--channel-list-modal',
@@ -19,13 +20,16 @@ export class ProChannelListModal {
 
   query: string;
 
+  hashtag: Tag;
+
   parent: HTMLDivElement;
 
   @ViewChild('overlayModal', { static: true }) protected overlayModal: OverlayModalComponent;
 
-  set data({ type, query }) {
+  set data({ type, query, hashtag }) {
     this.type = type;
     this.query = query;
+    this.hashtag = hashtag;
   }
 
   constructor(
@@ -50,9 +54,26 @@ export class ProChannelListModal {
 
     this.detectChanges();
 
+    let url = `api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`;
+
+    let params = [];
+
+    if (this.query && this.query !== '') {
+      params.push(`query=${this.query}`);
+    }
+
+    if (this.hashtag) {
+      params.push(`hashtags=${this.hashtag.tag}`);
+    }
+
+    if (params.length > 0) {
+      url += '?' + params.join('&');
+    }
+
+
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`)
+        .setEndpoint(url)
         .setLimit(12)
         .fetch();
 

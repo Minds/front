@@ -123,20 +123,20 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
     this.detectChanges();
 
-    let search = [];
+    let params = [];
 
     if (this.selectedHashtag) {
-      search.push(`hashtags=${this.selectedHashtag.tag}`);
+      params.push(`hashtags=${this.selectedHashtag.tag}`);
     }
 
     if (this.query && (this.query !== '')) {
-      search.push(`&period=${this.period}&all=1&query=${this.query}&nsfw=&sync=1&limit=150&as_activities=1&from_timestamp=`);
+      params.push(`&period=${this.period}&all=1&query=${this.query}&nsfw=&sync=1&limit=150&as_activities=1&from_timestamp=`);
     }
 
     let url = `api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`;
 
-    if (search.length > 0) {
-      url += '?' + search.join('&');
+    if (params.length > 0) {
+      url += '?' + params.join('&');
     }
 
     try {
@@ -165,6 +165,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
           type: this.type,
           algorithm: 'latest',
           query: this.query,
+          hashtag: this.selectedHashtag
         },
         {
           class: 'm-overlayModal--seeMore'
