@@ -11,7 +11,7 @@ import {
 import { ActivatedRoute, Router, NavigationEnd, NavigationStart } from "@angular/router";
 import { Session } from "../../../services/session";
 import { Subscription } from "rxjs";
-import { MindsUser } from "../../../interfaces/entities";
+import { MindsUser, Tag } from "../../../interfaces/entities";
 import { Client } from "../../../services/api/client";
 import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
@@ -43,6 +43,10 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
 
   currentURL: string;
+
+  query: string;
+
+  selectedTag: Tag = null;
 
   constructor(
     protected element: ElementRef,
@@ -205,5 +209,15 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   get linkTo() {
     return this.channelService.linkTo.bind(this.channelService);
+  }
+
+  selectTag(clickedTag: any) {
+    this.selectedTag = clickedTag;
+
+    for (let tag of this.channel.pro_settings.tag_list) {
+      tag.selected = tag.tag == clickedTag.tag;
+    }
+
+    this.detectChanges();
   }
 }

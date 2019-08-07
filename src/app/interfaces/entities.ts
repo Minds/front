@@ -38,6 +38,12 @@ export interface KeyVal {
 	value: any;
 }
 
+export interface Tag {
+  tag: string,
+  label: string,
+  selected?: boolean
+}
+
 export interface MindsUser {
 	guid : string;
 	name : string;
@@ -69,7 +75,16 @@ export interface MindsUser {
   tags?: Array<string>;
   toaster_notifications?: boolean;
   pro?: boolean;
-  pro_settings?: { styles?: { [key: string]: string }, [key: string]: string | { [key: string]: string } };
+  pro_settings?: {
+    tag_list?: Tag[],
+    background_image: string,
+    title: string,
+    headline: string,
+    footer_text: string,
+    footer_links: { href: string, title: string }[],
+
+    styles?: { [key: string]: string },
+  };
 }
 
 export interface MindsGroup {

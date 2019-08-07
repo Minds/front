@@ -21,7 +21,7 @@
           (keyup.enter)="search()"
         >
         <ng-container *ngIf="searchedText">
-          <i class="material-icons clear" (click)="clearSearch()" >close</i>
+          <i class="material-icons clear" (click)="clearSearch()">close</i>
         </ng-container>
         <label class="mdl-textfield__label" for="search"></label>
       </div>
@@ -67,7 +67,19 @@
       >Donate</a>
     </ng-container>
 
-    <m-pro-user-menu [channelName]="channel.username" [showNavItems]="collapseNavItems" [query]="searchedText"></m-pro-user-menu>
+    <m-pro-user-menu [channelName]="channel.username" [showNavItems]="collapseNavItems"
+                     [query]="searchedText"></m-pro-user-menu>
+  </div>
+
+  <div class="m-proChannel__categories">
+    <div
+      class="m-proChannel__category"
+      [class.m-proChannel__selectedCategory]="!!tag.selected"
+      (click)="selectTag(tag)"
+      *ngFor="let tag of channel.pro_settings.tag_list"
+    >
+      {{tag.label}}
+    </div>
   </div>
 
   <div class="m-proChannel__body">

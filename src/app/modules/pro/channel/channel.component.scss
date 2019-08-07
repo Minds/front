@@ -105,6 +105,26 @@ m-pro--channel {
     font-size: 18px;
   }
 
+  .m-proChannel__categories {
+    grid-row: 2 / span 1;
+    grid-column: 2 / span 10;
+
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    .m-proChannel__category {
+      cursor: pointer;
+      color: var(--text-color);
+      padding: 0 8px;
+
+      &.m-proChannel__selectedCategory {
+        color: var(--primary-color);
+      }
+    }
+  }
+
   .m-proChannel__body {
     grid-row: 3 / span 1;
     grid-column: 1 / span 12;
