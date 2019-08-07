@@ -2,7 +2,6 @@
   <a class="m-pro-user-menu__Anchor" (click)="toggleMenu()"><i class="material-icons">menu</i></a>
 
   <ul class="m-dropdown__list m-pro-user-menu__dropdown mdl-shadow--3dp" [hidden]="!isOpen">
-    <ng-container *ngIf="showNavItems">
 <!--      <li
         class="m-dropdownList__item m-pro-user-menuDropdown__item"
         (click)="closeMenu()"
@@ -44,7 +43,6 @@
       >
         <a [routerLink]="['/pro', channel.username, 'donate']" routerLinkActive="active">Donate</a>
       </li>
-    </ng-container>
   </ul>
 </div>
 

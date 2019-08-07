@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProChannelService } from "../channel.service";
+import { Session } from '../../../../services/session';
 
 export interface SocialProfileMeta {
 
@@ -18,6 +19,13 @@ export interface SocialProfileMeta {
 })
 
 export class ProChannelFooterComponent {
+
+  constructor(
+    private channelService: ProChannelService,
+    protected _session: Session
+  ) {
+
+  }
 
   private socialProfileMeta: SocialProfileMeta[] = [
     {
@@ -270,9 +278,11 @@ export class ProChannelFooterComponent {
     return defaultMeta;
   }
 
-  constructor(
-    private channelService: ProChannelService,
-  ) {
+  get user() {
+    return this.channelService.currentChannel;
+  }
 
+  get session() {
+    return this._session;
   }
 }

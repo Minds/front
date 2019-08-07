@@ -10,4 +10,17 @@
     text-decoration: none;
     padding: 0 16px;
   }
+
+  minds-button-user-dropdown {
+
+    button.material-icons {
+      border: none;
+      color: var(--text-color) !important;
+    }
+
+    .minds-dropdown-menu {
+      top: -100px;
+      left: -130px;
+    }
+  }
 }

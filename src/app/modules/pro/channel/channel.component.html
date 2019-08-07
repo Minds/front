@@ -67,8 +67,50 @@
       >Donate</a>
     </ng-container>
 
-    <m-pro-user-menu [channelName]="channel.username" [showNavItems]="collapseNavItems"
-                     [query]="searchedText"></m-pro-user-menu>
+    <div class="m-proChannelTopbar_menu m-dropdown">
+      <a class="m-proChannelTopbarMenu__Anchor" (click)="toggleMenu()"><i class="material-icons">menu</i></a>
+    
+      <ul class="m-dropdown__list m-proChannelTopbarMenu__dropdown mdl-shadow--3dp" [hidden]="!isMenuOpen">
+        <ng-container *ngIf="collapseNavItems">
+          <li
+            class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
+            (click)="closeMenu()"
+          >
+            <a [routerLink]="linkTo('videos', query)" routerLinkActive="active" i18n>Videos</a>
+          </li>
+    
+          <li
+            class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
+            (click)="closeMenu()"
+          >
+            <a [routerLink]="linkTo('images', query)" routerLinkActive="active" i18n>Images</a>
+          </li>
+    
+          <li
+            class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
+            (click)="closeMenu()"
+          >
+            <a [routerLink]="linkTo('articles', query)" routerLinkActive="active" i18n>Articles</a>
+          </li>
+    
+          <li
+            class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
+            (click)="closeMenu()"
+          >
+            <a [routerLink]="linkTo('groups', query)" routerLinkActive="active" i18n>Groups</a>
+          </li>
+    
+          <li
+            class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
+            (click)="closeMenu()"
+          >
+            <a [routerLink]="['/pro', channel.username, 'donate']" routerLinkActive="active">Donate</a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    
+    <div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isMenuOpen"></div>
   </div>
 
   <div class="m-proChannel__categories">

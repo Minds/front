@@ -97,6 +97,42 @@ m-pro--channel {
 
       
     }
+
+    .m-proChannelTopbar_menu.m-dropdown {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+    
+      @media screen and (min-width: 1000px) {
+        display: none;
+      }
+      
+      .m-proChannelTopbarMenu__dropdown {
+        list-style: none;
+        margin: 34px 0 0;
+        @include m-theme() {
+          background-color: themed('m-white');
+          color: themed('m-grey-700');
+        }
+      
+        li.proChannelTopbarMenuDropdown__item {
+          &:hover {
+            @include m-theme() {
+              background-color: rgba(themed('m-grey-50'), 0.5);
+            }
+          }
+      
+          a {
+            color: #555 !important;
+          }
+      
+          i {
+            color: #555 !important;
+          }
+        }
+      }
+    }
+
   }
 
   a.m-proChannelTopbar__navItem {

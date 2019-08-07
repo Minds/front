@@ -2,13 +2,10 @@ m-pro-user-menu {
   display: inline-block;
   position: relative;
   cursor: pointer;
-
-  @media screen and (min-width: 1000px) {
-    display: none;
-  }
 }
 
 .m-pro-user-menu__dropdown {
+  top: -238px !important;
   list-style: none;
   margin: 34px 0 0;
   @include m-theme() {

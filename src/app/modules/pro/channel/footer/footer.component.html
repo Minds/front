@@ -16,4 +16,10 @@
     class="m-pro--channel-footer--link"
     [href]="link.href"
   >{{link.title}}</a>
+
+  <ng-container *ngIf="session.getLoggedInUser()">
+    <span style="position: relative">
+      <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
+    </span>
+  </ng-container>
 </div>

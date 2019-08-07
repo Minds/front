@@ -46,6 +46,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   query: string;
 
+  isMenuOpen: boolean = false;
+
   constructor(
     protected element: ElementRef,
     protected session: Session,
@@ -185,6 +187,14 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     }
 
     return this.session.getLoggedInUser();
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 
   search() {
