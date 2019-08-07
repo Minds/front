@@ -7,7 +7,7 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd, NavigationStart  } from "@angular/router";
+import { ActivatedRoute, Router, NavigationEnd, NavigationStart } from "@angular/router";
 import { Session } from "../../../services/session";
 import { Subscription } from "rxjs";
 import { MindsUser } from "../../../interfaces/entities";
@@ -67,7 +67,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
           if (!navigationEvent.urlAfterRedirects) {
             return;
           }
-          
+
           this.currentURL = navigationEvent.urlAfterRedirects;
           this.setTitle();
         }
@@ -95,7 +95,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     if (this.channel.pro_settings.headline) {
       title += ` - ${this.channel.pro_settings.headline}`;
     }
-    
+
     if (urlFragments[fragmentIndex]) {
       title += ` - ${urlFragments[fragmentIndex]}`;
     }
@@ -127,9 +127,10 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
     this.detectChanges();
   }
-  
+
   bindCssVariables() {
     const styles = this.channel.pro_settings.styles;
+    const modal: HTMLElement = document.querySelector('m-app m-overlay-modal');
 
     for (const style in styles) {
       if (!styles.hasOwnProperty(style)) {
@@ -145,6 +146,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
       const styleAttr = style.replace(/_/g, "-");
       this.element.nativeElement
         .style.setProperty(`--${styleAttr}`, styles[style]);
+      modal.style.setProperty(`--${styleAttr}`, styles[style]);
     }
   }
 
@@ -174,7 +176,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    if(!this.currentURL){
+    if (!this.currentURL) {
       this.currentURL = `/pro/${this.channel.username}/articles`; //TODO ADD /TOP when algorithm is enable
     } else {
       if (this.currentURL.includes('query')) {
@@ -182,7 +184,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.router.navigate([this.currentURL,{ query: this.searchedText, period: '24h' }]);
+    this.router.navigate([this.currentURL, { query: this.searchedText, period: '24h' }]);
   }
 
   clearSearch() {

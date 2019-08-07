@@ -136,7 +136,14 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   seeMore() {
     this.modalService
-      .create(ProChannelListModal, { type: this.type, algorithm: 'latest', query: this.query }, void 0, this.injector)
+      .create(ProChannelListModal, {
+          type: this.type,
+          algorithm: 'latest',
+          query: this.query,
+        },
+       {
+          class: 'm-overlayModal--seeMore'
+        }, this.injector)
       .present();
   }
 

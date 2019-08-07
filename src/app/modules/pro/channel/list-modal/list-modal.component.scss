@@ -7,3 +7,17 @@
   grid-gap: 16px;
   grid-template-columns: repeat(3, 1fr);
 }
+
+m-overlay-modal {
+  .m-overlayModal--seeMore {
+    background-color: var(--plain-background-color) !important;
+
+    a.m-overlay-modal--close {
+      background-color: var(--transparent-background-color) !important;
+
+      i {
+        color: var(--text-color) !important;
+      }
+    }
+  }
+}
