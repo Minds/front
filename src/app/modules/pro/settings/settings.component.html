@@ -97,7 +97,7 @@
 
             <ng-template ngSwitchCase="theme">
               <p class="m-pro--settings--note" i18n>
-                Set up your colors schema below.
+                Set up your color scheme below.
               </p>
 
               <div class="m-pro--settings--field">
@@ -113,6 +113,16 @@
               <div class="m-pro--settings--field">
                 <label for="plain_background_color" i18n>Plain Background Color</label>
                 <input type="color" id="plain_background_color" name="plain_background_color" [(ngModel)]="settings.plain_background_color">
+              </div>
+
+              <div class="m-pro--settings--field">
+                <label i18n>Color Schema</label>
+
+                <input type="radio" id="scheme_light" name="scheme" value="light" [(ngModel)]="settings.scheme">
+                <label for="scheme_light" class="m-pro--settings--inline-label">Light</label>
+
+                <input type="radio" id="scheme_dark" name="scheme" value="dark" [(ngModel)]="settings.scheme">
+                <label for="scheme_dark" class="m-pro--settings--inline-label">Dark</label>
               </div>
 
               <div class="m-pro--settings--field">

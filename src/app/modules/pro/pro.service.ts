@@ -29,7 +29,23 @@ export class ProService {
   }
 
   async get(): Promise<{ isActive, settings }> {
-    return await this.client.get('api/v2/pro/settings', {}, {cache: false}) as any;
+    const { isActive, settings } = await this.client.get('api/v2/pro/settings', {}, {cache: false}) as any;
+
+    if (settings) {
+      if (settings.tag_list) {
+        settings.tag_list = settings.tag_list.map(({ tag, label }) => {
+          const formattedTag = `#${tag}`;
+
+          return { tag: formattedTag, label };
+        });
+      }
+
+      if (!settings.scheme) {
+        settings.scheme = 'light';
+      }
+    }
+
+    return { isActive, settings };
   }
 
   async set(settings): Promise<boolean> {

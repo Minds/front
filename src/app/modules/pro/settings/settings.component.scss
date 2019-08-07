@@ -38,6 +38,12 @@
       @include m-theme() {
         color: themed($m-grey-800);
       }
+
+      &.m-pro--settings--inline-label {
+        display: inline-block;
+        padding: 0;
+        margin: 0 0.35em;
+      }
     }
 
     input[type=text],

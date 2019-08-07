@@ -45,14 +45,6 @@ export class ProSettingsComponent implements OnInit {
 
     this.settings = settings;
 
-    if (this.settings && this.settings.tag_list) {
-      this.settings.tag_list = this.settings.tag_list.map(({ tag, label }) => {
-        const formattedTag = `#${tag}`;
-
-        return { tag: formattedTag, label };
-      });
-    }
-
     this.title.setTitle('Pro Settings');
 
     this.inProgress = false;
