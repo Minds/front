@@ -185,7 +185,7 @@ export class BlogEdit {
           this.blog = response.blog;
           this.guid = response.blog.guid;
           this.title.setTitle(this.blog.title);
-          
+
           if(this.blog.thumbnail_src)
             this.existingBanner = true;
           //this.hashtagsSelector.setTags(this.blog.tags);
@@ -235,6 +235,8 @@ export class BlogEdit {
     if (!this.validate())
       return;
 
+    this.error = '';
+
     this.inlineEditor.prepareForSave().then(() => {
       const blog = Object.assign({}, this.blog);
 
@@ -248,9 +250,14 @@ export class BlogEdit {
       this.check_for_banner().then(() => {
         this.upload.post('api/v1/blog/' + this.guid, [this.banner], blog)
           .then((response: any) => {
-            this.router.navigate(response.route ? ['/' + response.route]: ['/blog/view', response.guid]);
-            this.canSave = true;
             this.inProgress = false;
+            this.canSave = true;
+
+            if (response.status !== 'success') {
+              this.error = response.message;
+              return;
+            }
+            this.router.navigate(response.route ? ['/' + response.route]: ['/blog/view', response.guid]);
           })
           .catch((e) => {
             this.canSave = true;
@@ -275,7 +282,7 @@ export class BlogEdit {
     if (!this.banner)
       this.banner_prompt = true;
     return new Promise((resolve, reject) => {
-      
+
       if (this.banner)
         return resolve(true);
 
