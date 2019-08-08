@@ -11,6 +11,11 @@ import { ProChannelService } from "../channel.service";
 export class ProUserMenuComponent implements OnInit {
   isOpen: boolean = false;
 
+  // added this again since removed by mistake
+  @Input() channelName: string;
+  @Input() showNavItems: boolean;
+  @Input() query: string;
+
   get channel() {
     return this.channelService.currentChannel;
   }

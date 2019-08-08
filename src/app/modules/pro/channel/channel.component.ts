@@ -15,6 +15,7 @@ import { MindsUser, Tag } from "../../../interfaces/entities";
 import { Client } from "../../../services/api/client";
 import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
+import { SignupModalService } from '../../../modules/modals/signup/service';
 
 @Component({
   providers: [
@@ -59,6 +60,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
+    public modal: SignupModalService
   ) {
   }
 
@@ -145,6 +147,32 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     }
 
     this.detectChanges();
+  }
+
+  subscribe(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/pro', this.channel.username, 'signup']);
+      return false;
+    }
+
+    this.channel.subscribed = true;
+    
+    this.client.post('api/v1/subscribe/' + this.channel.guid, {})
+      .then((response: any) => {
+        if (response && response.error) {
+          throw 'error';
+        }
+
+        this.channel.subscribed = true;
+        this.channel.subscribers_count++;
+      })
+      .catch((e) => {
+        this.channel.subscribed = false;
+        alert('You can\'t subscribe to this user.');
+      });
   }
 
   bindCssVariables() {

@@ -135,6 +135,18 @@ m-pro--channel {
       }
     }
 
+    .m-btn {
+      padding-left: 16px;
+      color: var(--text-color) !important;
+      border: 1px solid var(--text-color) !important;
+    }
+
+    .m-btn:disabled {
+      padding-left: 16px;
+      color: gray !important;
+      border: gray !important;
+    }
+
   }
 
   a.m-proChannelTopbar__navItem {

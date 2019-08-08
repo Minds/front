@@ -64,6 +64,13 @@
         routerLinkActive="active"
         i18n
       >Donate</a>
+
+      <button class="m-btn" (click)="subscribe($event)" [disabled]="channel.subscribed"> 
+        {{ !channel.subscribed ? 'Subscribe' : 'Subscribed' }}
+        <span> 
+          {{ channel.subscribers_count | abbr:0 }} 
+        </span> 
+      </button>
     </ng-container>
 
     <div class="m-proChannelTopbar_menu m-dropdown">
