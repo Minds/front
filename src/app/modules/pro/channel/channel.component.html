@@ -31,7 +31,6 @@
       <a
         class="m-proChannelTopbar__navItem"
         [routerLink]="['/pro', channel.username, 'feed']"
-        [queryParams]="{algorithm: 'pro'}"
         routerLinkActive="active"
         i18n
       >Feed</a>
@@ -113,7 +112,7 @@
     <div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isMenuOpen"></div>
   </div>
 
-  <div class="m-proChannel__categories">
+  <div class="m-proChannel__categories" *ngIf="showCategories">
     <div
       class="m-proChannel__category"
       [class.m-proChannel__selectedCategory]="!!tag.selected"

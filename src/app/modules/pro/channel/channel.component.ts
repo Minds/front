@@ -48,6 +48,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   isMenuOpen: boolean = false;
 
+  showCategories: boolean = true;
+
   constructor(
     protected element: ElementRef,
     protected session: Session,
@@ -65,6 +67,11 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     this.onResize();
   }
 
+  shouldShowCategories(type: string) {
+    const routes = ['images', 'videos', 'articles', 'feed', 'groups'];
+    this.showCategories = routes.indexOf(type) !== -1;
+  }
+
   listen() {
     this.routerSubscription = this.router.events.subscribe((navigationEvent) => {
       try {
@@ -74,6 +81,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
           }
 
           this.currentURL = navigationEvent.urlAfterRedirects;
+          const type = this.currentURL.split('/');
+          this.shouldShowCategories(type[type.length - 1]);
           this.setTitle();
         }
       } catch (e) {
@@ -84,6 +93,10 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     this.params$ = this.route.params.subscribe(params => {
       if (params['username']) {
         this.username = params['username'];
+      }
+
+      if (this.route.children.length > 0) {
+        this.shouldShowCategories(this.route.children[0].snapshot.params.type);
       }
 
       if (this.username && (!this.channel || this.channel.username != this.username)) {
