@@ -65,7 +65,7 @@
         i18n
       >Donate</a>
 
-      <button class="m-btn" (click)="subscribe($event)" [disabled]="channel.subscribed" [hidden]="currentUser && (channel.guid === currentUser.guid)"> 
+      <button class="m-proChannelTopbar_subscribe" (click)="subscribe($event)" [disabled]="channel.subscribed" [hidden]="currentUser && (channel.guid === currentUser.guid)"> 
         {{ !channel.subscribed ? 'Subscribe' : 'Subscribed' }}
         <span> 
           {{ channel.subscribers_count | abbr:0 }} 

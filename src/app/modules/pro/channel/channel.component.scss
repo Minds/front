@@ -136,10 +136,24 @@ m-pro--channel {
       }
     }
 
-    .m-btn {
+    .m-proChannelTopbar_subscribe {
+      font-size: 12px;
+      letter-spacing: 1.25px;
+      box-shadow: none;
+      text-transform: uppercase;
+      padding: 8px 16px;
       padding-left: 16px;
-      color: var(--text-color) !important;
-      border: 1px solid var(--text-color) !important;
+      font-family: 'Roboto', Helvetica, sans-serif;
+      cursor: pointer;
+      color: var(--text-color);
+      border: none;
+      background-color: var(--plain-background-color);
+      border-radius: 4px;
+      height: 36px;
+
+      span {
+        margin-left: 4px;
+      }
     }
 
     .m-btn:disabled {
