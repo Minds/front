@@ -1,12 +1,14 @@
 m-pro--channel {
-  display: block;
-  background: none no-repeat center fixed;
-  background-size: cover;
-
   --primary-color: #4690df;
   --plain-background-color: #ffffff;
   --transparent-background-color: #ffffffa0;
   --text-color: #000000;
+
+  display: block;
+  background: none no-repeat center fixed;
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: var(--transparent-background-color);
 }
 
 .m-pro--channel {
@@ -34,7 +36,7 @@ m-pro--channel {
 
     .m-proChannelTopbar__logo:focus {
       outline: none;
-     }
+    }
 
     & > * {
       padding: 0 16px 0 0;
@@ -42,7 +44,7 @@ m-pro--channel {
 
     .m-proChannelTopbar__SearchBox {
       margin: 0 16px;
-    
+
       @media screen and (max-width: 1081px) {
         flex-grow: 1;
         max-width: 300px;
@@ -76,7 +78,7 @@ m-pro--channel {
             color: themed($m-black);
           }
         }
-  
+
         input {
           height: 32px;
           border-radius: 18px;
@@ -95,7 +97,7 @@ m-pro--channel {
         }
       }
 
-      
+
     }
 
     .m-proChannelTopbar_menu.m-dropdown {
