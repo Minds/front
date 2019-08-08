@@ -4,13 +4,14 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ['parallel', 'jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular-devkit/build-angular/plugins/karma'),
+      require('karma-parallel')
     ],
    // webpack: { node: { fs: 'empty', } },
     client:{
@@ -39,6 +40,10 @@ module.exports = function (config) {
           '--remote-debugging-port=9222',
         ],
       }
+    },
+    parallelOptions: {
+      executors: (Math.ceil(require('os').cpus().length / 2)),
+      shardStrategy: 'round-robin'
     },
     singleRun: true
   });
