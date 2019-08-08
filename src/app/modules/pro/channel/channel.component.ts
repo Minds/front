@@ -83,8 +83,13 @@ export class ProChannelComponent implements OnInit, OnDestroy {
           }
 
           this.currentURL = navigationEvent.urlAfterRedirects;
-          const type = this.currentURL.split('/');
-          this.shouldShowCategories(type[type.length - 1]);
+          const segments = this.currentURL.split('/');
+          let lastSegment = segments[segments.length - 1];
+          let paramIndex = lastSegment.indexOf(';');
+
+          const type = paramIndex !== -1 ? lastSegment.substring(0, paramIndex) : lastSegment;
+
+          this.shouldShowCategories(type);
           this.setTitle();
         }
       } catch (e) {
