@@ -42,7 +42,6 @@ module.exports = function (config) {
       }
     },
     parallelOptions: {
-      executors: (Math.ceil(require('os').cpus().length / 2)),
       shardStrategy: 'round-robin'
     },
     singleRun: true
