@@ -1,5 +1,22 @@
 .m-pro--channel-home {
+  .m-pro--channel-home--title {
+    margin: 0 0 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 60px;
+    letter-spacing: 1px;
+  }
+
+  .m-pro--channel-home--headline {
+    margin: 0 0 56px;
+    text-align: center;
+    font-weight: 300;
+    font-size: 46px;
+  }
+
   .m-pro--channel-home--featured-content {
+    width: 80%;
+    margin: 0 auto;
     display: grid;
     grid-gap: 24px;
     grid-template-columns: repeat(2, 1fr);

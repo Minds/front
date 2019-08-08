@@ -29,6 +29,10 @@ export class ProChannelHomeComponent implements OnInit {
 
   }
 
+  get settings() {
+    return this.channelService.currentChannel && this.channelService.currentChannel.pro_settings;
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

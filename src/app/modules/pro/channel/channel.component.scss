@@ -17,7 +17,8 @@ m-pro--channel {
   display: grid;
   grid-template-rows: repeat(2, 100px) 1fr 100px;
   grid-template-columns: repeat(12, 1fr);
-  min-height: calc(100vh - 52px); /* 52px is the topbar height */
+  //min-height: calc(100vh - 52px); /* 52px is the topbar height */
+  min-height: 100%;
 
   .m-proChannel__topbar {
     grid-row: 1 / span 1;
