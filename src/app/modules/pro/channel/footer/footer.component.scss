@@ -6,9 +6,17 @@
   height: 100px;
   color: var(--text-color);
 
+  .m-pro--channel-footer--text {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
   a {
     text-decoration: none;
     padding: 0 16px;
+
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 
   minds-button-user-dropdown {
