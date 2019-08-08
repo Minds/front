@@ -6,8 +6,8 @@ m-pro--channel-list {
   }
 
   .m-proChannelList__tools {
-    background-color: var(--plain-background-color) !important;
-    padding: 20px;
+    //background-color: var(--plain-background-color) !important;
+    padding: 16px;
     height: 70px;
     border-radius: 20px;
     opacity: 0.9;
@@ -34,9 +34,12 @@ m-pro--channel-list {
       }
     }
 
-    .m-proChannelListTools__searchresult {
-      padding: 8px;
-      margin-top: 12px;
+    .m-proChannelListTools__searchResult {
+      //padding: 8px;
+      //margin-top: 12px;
+      h2 {
+        margin: 0;
+      }
     }
   }
 
