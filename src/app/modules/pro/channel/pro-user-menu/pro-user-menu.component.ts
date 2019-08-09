@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { Session } from "../../../../services/session";
 import { ThemeService } from "../../../../common/services/theme.service";
 import { ProChannelService } from "../channel.service";
@@ -26,10 +26,6 @@ export class ProUserMenuComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
   ) {
-  }
-
-  getCurrentUser() {
-    return this.session.getLoggedInUser();
   }
 
   ngOnInit() {

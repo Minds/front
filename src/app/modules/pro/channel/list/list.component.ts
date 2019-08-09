@@ -72,7 +72,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         case 'articles':
           this.type = 'blogs';
           break;
-        case 'groups':
+        case 'communities':
           this.type = 'groups';
           break;
         case 'feed':
