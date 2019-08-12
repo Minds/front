@@ -48,6 +48,8 @@ export class ProChannelSignupComponent {
       if (this.session.isLoggedIn()) {
         this.router.navigate(['/pro', this.username]);
       }
+
+      this.service.setChildParams(params);
     });
   }
 

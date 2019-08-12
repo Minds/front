@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MindsChannelResponse } from '../../../interfaces/responses';
-import { MindsUser, Tag } from '../../../interfaces/entities';
+import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { EntitiesService } from '../../../common/services/entities.service';
 import normalizeUrn from '../../../helpers/normalize-urn';
@@ -10,16 +10,18 @@ export class ProChannelService {
 
   currentChannel: MindsUser;
 
-  selectedHashtag: Tag;
+  childParams: any;
 
-  selectedHashtagChange: EventEmitter<Tag> = new EventEmitter<Tag>();
+  childParamsChange: EventEmitter<any> = new EventEmitter<any>();
+
 
   protected featuredContent: Array<any> | null;
 
   constructor(
     protected client: Client,
     protected entitiesService: EntitiesService,
-  ) { }
+  ) {
+  }
 
   async load(id: string) {
     try {
@@ -67,9 +69,9 @@ export class ProChannelService {
     return this.featuredContent;
   }
 
-  setSelectedHashtag(value: Tag) {
-    this.selectedHashtag = value;
-    this.selectedHashtagChange.emit(this.selectedHashtag);
+  setChildParams(params: any) {
+    this.childParams = params;
+    this.childParamsChange.emit(this.childParams);
   }
 
   linkTo(to, query, algorithm?) {

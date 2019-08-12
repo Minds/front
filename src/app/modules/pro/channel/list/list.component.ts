@@ -31,7 +31,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   displaySeeMoreTile: boolean = false;
 
-  selectedHashtag: Tag;
+  selectedHashtag: string;
 
   selectedHashtag$: Subscription;
 
@@ -48,12 +48,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.listen();
-
-    this.selectedHashtag$ = this.channelService.selectedHashtagChange.subscribe((tag) => {
-      this.selectedHashtag = tag;
-
-      this.load(true);
-    })
   }
 
   private listen() {
@@ -84,6 +78,9 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.algorithm = params['algorithm'] || 'top';
       this.query = params['query'] || '';
       this.period = params['period'] || '';
+      this.selectedHashtag = params['hashtag'];
+
+      this.channelService.setChildParams(params);
       this.load(true);
     });
 
@@ -126,8 +123,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
     let params = [];
 
-    if (this.selectedHashtag && this.selectedHashtag.tag !== 'all') {
-      params.push(`hashtags=${this.selectedHashtag.tag}`);
+    if (this.selectedHashtag && this.selectedHashtag !== 'all') {
+      params.push(`hashtags=${this.selectedHashtag}`);
     }
 
     if (this.query && (this.query !== '')) {

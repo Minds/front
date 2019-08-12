@@ -4,7 +4,6 @@ import { FeedsService } from '../../../../common/services/feeds.service';
 import { ProContentModalComponent } from '../content-modal/modal.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { OverlayModalComponent } from '../../../../common/components/overlay-modal/overlay-modal.component';
-import { Tag } from "../../../../interfaces/entities";
 
 @Component({
   selector: 'm-pro--channel-list-modal',
@@ -20,7 +19,7 @@ export class ProChannelListModal {
 
   query: string;
 
-  hashtag: Tag;
+  hashtag: string;
 
   parent: HTMLDivElement;
 
@@ -62,8 +61,8 @@ export class ProChannelListModal {
       params.push(`query=${this.query}`);
     }
 
-    if (this.hashtag && this.hashtag.tag !== 'all') {
-      params.push(`hashtags=${this.hashtag.tag}`);
+    if (this.hashtag && this.hashtag !== 'all') {
+      params.push(`hashtags=${this.hashtag}`);
     }
 
     if (params.length > 0) {

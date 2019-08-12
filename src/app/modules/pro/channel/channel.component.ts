@@ -8,10 +8,10 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd, NavigationStart } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Session } from "../../../services/session";
 import { Subscription } from "rxjs";
-import { MindsUser, Tag } from "../../../interfaces/entities";
+import { MindsUser } from "../../../interfaces/entities";
 import { Client } from "../../../services/api/client";
 import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
@@ -38,6 +38,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   collapseNavItems: boolean;
 
   params$: Subscription;
+
+  childParams$: Subscription;
 
   searchedText: string;
 
@@ -83,13 +85,6 @@ export class ProChannelComponent implements OnInit, OnDestroy {
           }
 
           this.currentURL = navigationEvent.urlAfterRedirects;
-          const segments = this.currentURL.split('/');
-          let lastSegment = segments[segments.length - 1];
-          let paramIndex = lastSegment.indexOf(';');
-
-          const type = paramIndex !== -1 ? lastSegment.substring(0, paramIndex) : lastSegment;
-
-          this.shouldShowCategories(type);
           this.setTitle();
         }
       } catch (e) {
@@ -102,13 +97,13 @@ export class ProChannelComponent implements OnInit, OnDestroy {
         this.username = params['username'];
       }
 
-      if (this.route.children.length > 0) {
-        this.shouldShowCategories(this.route.children[0].snapshot.params.type);
-      }
-
       if (this.username && (!this.channel || this.channel.username != this.username)) {
         this.load();
       }
+    });
+
+    this.childParams$ = this.channelService.childParamsChange.subscribe((params) => {
+      this.shouldShowCategories(params.type);
     });
   }
 
@@ -131,6 +126,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.params$.unsubscribe();
+    this.childParams$.unsubscribe();
     this.routerSubscription.unsubscribe();
   }
 
@@ -244,15 +240,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    if (!this.currentURL) {
-      this.currentURL = `/pro/${this.channel.username}/articles`; //TODO ADD /TOP when algorithm is enabled
-    } else {
-      if (this.currentURL.includes('query')) {
-        this.currentURL = this.currentURL.split(';')[0];
-      }
-    }
-
-    this.router.navigate([this.currentURL, { query: this.searchedText, period: '24h' }]);
+    this.router.navigate([this.getCurrentURL(), { query: this.searchedText, period: '24h' }]);
   }
 
   clearSearch() {
@@ -266,12 +254,42 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   }
 
   selectTag(clickedTag: any) {
-    this.channelService.setSelectedHashtag(clickedTag);
-
     for (let tag of this.channel.pro_settings.tag_list) {
       tag.selected = tag.tag == clickedTag.tag;
     }
 
+    const params = {
+      ...this.getCurrentURLParams()
+    };
+
+    params['hashtag'] = clickedTag.tag;
+
+    this.router.navigate([this.getCurrentURL(), params]);
+
     this.detectChanges();
+  }
+
+  getCurrentURL() {
+    let currentURL = this.currentURL;
+    if (!currentURL) {
+      currentURL = `/pro/${this.channel.username}/articles`; //TODO ADD /TOP when algorithm is enabled
+    } else if (currentURL.includes(';')) {
+      currentURL = this.currentURL.split(';')[0];
+    }
+
+    return currentURL;
+  }
+
+  getCurrentURLParams() {
+    const params = {};
+    if (this.currentURL) {
+      const paramsArray = this.currentURL.split(';');
+      for (let i: number = 1; i < paramsArray.length; ++i) {
+        const p = paramsArray[i];
+        let pp = p.split('=');
+        params[pp[0]] = pp[1];
+      }
+    }
+    return params;
   }
 }

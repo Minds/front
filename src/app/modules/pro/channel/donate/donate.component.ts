@@ -15,6 +15,7 @@ export class ProChannelDonateComponent {
   constructor(
     public channelService: ProChannelService
   ) {
+    this.channelService.setChildParams({});
   }
 
   onWireCompleted() {
