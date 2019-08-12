@@ -11,6 +11,24 @@ m-pro--channel {
   background-color: var(--transparent-background-color);
 }
 
+@media screen and (max-width: 480px) {
+  .m-pro--channel {
+
+    .m-proChannelTopbar__SearchBox {
+      display: none;
+    }
+
+    .m-proChannel__categories {
+      justify-content: start;
+    }
+
+    .m-proChannel__body {
+      margin-top: 10px;
+    }
+  }
+
+}
+
 .m-pro--channel {
   max-width: 1296px;
   margin: 0 auto;
@@ -232,10 +250,4 @@ m-pro--channel {
   }
 }
 
-@media screen and (max-width: 480px) {
 
-  .m-proChannelTopbar__SearchBox {
-    display: none;
-  }
-
-}
