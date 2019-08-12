@@ -62,7 +62,7 @@ export class ProChannelListModal {
       params.push(`query=${this.query}`);
     }
 
-    if (this.hashtag) {
+    if (this.hashtag && this.hashtag.tag !== 'all') {
       params.push(`hashtags=${this.hashtag.tag}`);
     }
 

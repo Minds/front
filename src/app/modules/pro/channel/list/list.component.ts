@@ -116,6 +116,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   async load(refresh: boolean = false) {
     if (refresh) {
+      this.entities = [];
       this.feedsService.clear();
     }
 
@@ -125,7 +126,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
     let params = [];
 
-    if (this.selectedHashtag) {
+    if (this.selectedHashtag && this.selectedHashtag.tag !== 'all') {
       params.push(`hashtags=${this.selectedHashtag.tag}`);
     }
 

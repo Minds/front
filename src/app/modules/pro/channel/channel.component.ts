@@ -164,7 +164,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     }
 
     this.channel.subscribed = true;
-    
+
     this.client.post('api/v1/subscribe/' + this.channel.guid, {})
       .then((response: any) => {
         if (response && response.error) {
