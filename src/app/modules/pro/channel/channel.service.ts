@@ -14,7 +14,6 @@ export class ProChannelService {
 
   childParamsChange: EventEmitter<any> = new EventEmitter<any>();
 
-
   protected featuredContent: Array<any> | null;
 
   constructor(
@@ -46,8 +45,7 @@ export class ProChannelService {
 
   async getFeaturedContent(): Promise<Array<any>> {
     if (!this.currentChannel) {
-      this.featuredContent = null;
-      return [];
+      throw new Error('No channel');
     }
 
     if (!this.featuredContent) {
@@ -67,6 +65,30 @@ export class ProChannelService {
     }
 
     return this.featuredContent;
+  }
+
+  async getContent({ limit, offset }: { limit?: number, offset? } = {}): Promise<{ content: Array<any>, offset: any }> {
+    if (!this.currentChannel) {
+      throw new Error('No channel');
+    }
+
+    const endpoint = `api/v2/feeds/channel/${this.currentChannel.guid}/all/top`;
+    const qs = {
+      limit: limit || 24,
+      from_timestamp: offset || '',
+      sync: 1,
+      exclude: ((this.currentChannel.pro_settings.featured_content || []).join(',')) || '',
+    };
+
+    const { entities: feedSyncEntities, 'load-next': loadNext } = await this.client.get(endpoint, qs) as any;
+    const { entities } = await this.entitiesService.fetch(feedSyncEntities.map(feedSyncEntity => normalizeUrn(feedSyncEntity.guid))) as any;
+
+    let nextOffset = feedSyncEntities && feedSyncEntities.length ? loadNext : '';
+
+    return {
+      content: entities,
+      offset: nextOffset,
+    };
   }
 
   setChildParams(params: any) {

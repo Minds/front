@@ -3,7 +3,15 @@
     <m-pro--channel-tile
       *ngFor="let entity of featuredContent"
       [entity]="entity"
-      (click)="onFeaturedContentClick(entity)"
+      (click)="onContentClick(entity)"
+    ></m-pro--channel-tile>
+  </div>
+
+  <div class="m-pro--channel-home--content">
+    <m-pro--channel-tile
+      *ngFor="let entity of content"
+      [entity]="entity"
+      (click)="onContentClick(entity)"
     ></m-pro--channel-tile>
   </div>
 </div>

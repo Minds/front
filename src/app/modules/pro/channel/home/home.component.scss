@@ -14,15 +14,24 @@
     font-size: 46px;
   }
 
-  .m-pro--channel-home--featured-content {
+  .m-pro--channel-home--featured-content,
+  .m-pro--channel-home--content {
     width: 80%;
     margin: 0 auto;
     display: grid;
     grid-gap: 24px;
+  }
+
+  .m-pro--channel-home--featured-content {
     grid-template-columns: repeat(2, 1fr);
 
     *:first-child {
       grid-column: span 2;
     }
+  }
+
+  .m-pro--channel-home--content {
+    margin: 24px auto;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
