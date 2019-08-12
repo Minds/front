@@ -1,7 +1,7 @@
 <header *ngIf="blog">
   <minds-banner
     [object]="blog"
-    editMode="true"
+    [editMode]="true"
     (added)="add_banner($event)"
     [done]="banner_prompt"
     ></minds-banner>
