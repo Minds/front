@@ -20,6 +20,10 @@
     margin: 0 auto;
     display: grid;
     grid-gap: 24px;
+
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
   }
 
   .m-pro--channel-home--featured-content {
@@ -28,10 +32,22 @@
     *:first-child {
       grid-column: span 2;
     }
+
+    @media screen and (max-width: $max-mobile) {
+      grid-template-columns: repeat(1, 1fr);
+
+      *:first-child {
+        grid-column: initial;
+      }
+    }
   }
 
   .m-pro--channel-home--content {
     margin: 24px auto;
     grid-template-columns: repeat(3, 1fr);
+
+    @media screen and (max-width: $max-mobile) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 }
