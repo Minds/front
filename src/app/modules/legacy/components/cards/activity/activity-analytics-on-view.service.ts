@@ -51,7 +51,7 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
 
   init() {
     this.visibility$ = this.visibilitySubject
-      .pipe(debounceTime(300))
+      //.pipe(debounceTime(300))
       .subscribe(() => {
         if (this.entity && this.visible) {
           this.scroll.unListen(this.scroll$);
