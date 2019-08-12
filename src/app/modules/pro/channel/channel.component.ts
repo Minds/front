@@ -74,6 +74,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   shouldShowCategories(type: string) {
     const routes = ['images', 'videos', 'articles', 'feed', 'communities'];
     this.showCategories = routes.indexOf(type) !== -1;
+
+    this.detectChanges();
   }
 
   listen() {
