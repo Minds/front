@@ -191,26 +191,9 @@ m-pro--channel {
     letter-spacing: 0.1em;
   }
 
-  .m-proChannel__categories {
+  m-pro--channel--categories {
     grid-row: 2 / span 1;
     grid-column: 2 / span 10;
-
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-
-    .m-proChannel__category {
-      cursor: pointer;
-      color: var(--text-color);
-      padding: 16px 16px 0;
-
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-
-      &.m-proChannel__selectedCategory {
-        color: var(--primary-color);
-      }
-    }
   }
 
   .m-proChannel__body {

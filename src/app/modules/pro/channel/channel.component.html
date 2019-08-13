@@ -123,6 +123,7 @@
     <div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isMenuOpen"></div>
   </div>
 
+  <m-pro--channel--categories *ngIf="showCategories"></m-pro--channel--categories>
   <div class="m-proChannel__categories" *ngIf="showCategories">
     <div
       class="m-proChannel__category"
