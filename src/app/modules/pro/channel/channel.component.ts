@@ -7,7 +7,7 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-  Injector
+  Injector, AfterViewInit, ViewChild
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Session } from "../../../services/session";
@@ -19,16 +19,18 @@ import { ProChannelService } from './channel.service';
 import { SignupModalService } from '../../../modules/modals/signup/service';
 import { OverlayModalService } from "../../../services/ux/overlay-modal";
 import { ProUnsubscribeModalComponent } from './unsubscribe-modal/modal.component';
+import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
 
 @Component({
   providers: [
     ProChannelService,
+    OverlayModalService,
   ],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProChannelComponent implements OnInit, OnDestroy {
+export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   username: string;
 
@@ -62,6 +64,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   type: string = 'articles';
 
+  @ViewChild('overlayModal', { static: true }) protected overlayModal: OverlayModalComponent;
+
   constructor(
     protected element: ElementRef,
     protected session: Session,
@@ -80,6 +84,10 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.listen();
     this.onResize();
+  }
+
+  ngAfterViewInit() {
+    this.modalService.setContainer(this.overlayModal);
   }
 
   shouldShowCategories(type: string) {
@@ -195,7 +203,6 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   bindCssVariables() {
     const styles = this.channel.pro_settings.styles;
-    const modal: HTMLElement = document.querySelector('m-app m-overlay-modal');
 
     for (const style in styles) {
       if (!styles.hasOwnProperty(style)) {
@@ -211,7 +218,6 @@ export class ProChannelComponent implements OnInit, OnDestroy {
       const styleAttr = style.replace(/_/g, "-");
       this.element.nativeElement
         .style.setProperty(`--${styleAttr}`, styles[style]);
-      modal.style.setProperty(`--${styleAttr}`, styles[style]);
     }
   }
 
