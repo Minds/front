@@ -123,17 +123,7 @@
     <div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isMenuOpen"></div>
   </div>
 
-  <m-pro--channel--categories *ngIf="showCategories"></m-pro--channel--categories>
-  <div class="m-proChannel__categories" *ngIf="showCategories">
-    <div
-      class="m-proChannel__category"
-      [class.m-proChannel__selectedCategory]="!!tag.selected"
-      (click)="selectTag(tag)"
-      *ngFor="let tag of channel.pro_settings.tag_list"
-    >
-      {{tag.label}}
-    </div>
-  </div>
+  <m-pro--channel--categories [type]="type" *ngIf="showCategories"></m-pro--channel--categories>
 
   <div class="m-proChannel__body">
     <router-outlet></router-outlet>

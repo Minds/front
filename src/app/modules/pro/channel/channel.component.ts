@@ -60,6 +60,8 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   subscribers_count: number;
 
+  type: string = 'articles';
+
   constructor(
     protected element: ElementRef,
     protected session: Session,
@@ -83,6 +85,10 @@ export class ProChannelComponent implements OnInit, OnDestroy {
   shouldShowCategories(type: string) {
     const routes = ['images', 'videos', 'articles', 'feed', 'communities'];
     this.showCategories = routes.indexOf(type) !== -1;
+
+    if (this.showCategories) {
+      this.type = type;
+    }
 
     this.detectChanges();
   }
@@ -116,7 +122,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     this.childParams$ = this.channelService.childParamsChange.subscribe((params) => {
       this.shouldShowCategories(params.type);
     });
-    
+
     this.channelSubscription$ = this.channelService.subscriptionChange.subscribe((subscribers_count) => {
       this.subscribers_count = subscribers_count;
       this.load();
@@ -178,7 +184,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     this.channelService.subscribe();
   }
 
-  unsubscribe(e){
+  unsubscribe(e) {
     this.modalService
       .create(ProUnsubscribeModalComponent, this.channel,
         {

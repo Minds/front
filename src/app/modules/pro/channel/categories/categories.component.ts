@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ProChannelService } from "../channel.service";
 import { Router } from "@angular/router";
+import { MindsUser } from "../../../../interfaces/entities";
 
 @Component({
   selector: 'm-pro--channel--categories',
@@ -22,11 +23,11 @@ export class ProCategoriesComponent implements OnInit {
   @Input() type: string;
   @Input() params: any = {};
 
-  get channel() {
+  get channel(): MindsUser {
     return this.channelService.currentChannel;
   }
 
-  get currentURL() {
+  get currentURL(): string {
     return `pro/${this.channel.username}/${this.type}`
   }
 
