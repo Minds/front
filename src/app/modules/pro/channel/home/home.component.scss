@@ -1,17 +1,26 @@
 .m-pro--channel-home {
-  .m-pro--channel-home--title {
-    margin: 0 0 16px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 60px;
-    letter-spacing: 1px;
+  .m-pro--channel-home--section {
+    margin-top: 72px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    > h2 {
+      margin: 0 0 24px;
+      padding: 0;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      line-height: 1.25;
+    }
   }
 
-  .m-pro--channel-home--headline {
-    margin: 0 0 56px;
+  .m-pro--channel-home--loader {
     text-align: center;
-    font-weight: 300;
-    font-size: 46px;
+    margin: 32px auto;
   }
 
   .m-pro--channel-home--featured-content,
@@ -43,7 +52,6 @@
   }
 
   .m-pro--channel-home--content {
-    margin: 24px auto;
     grid-template-columns: repeat(3, 1fr);
 
     @media screen and (max-width: $max-mobile) {
