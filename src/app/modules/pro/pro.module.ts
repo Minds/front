@@ -22,6 +22,7 @@ import { ProContentModalComponent } from "./channel/content-modal/modal.componen
 import { VideoModule } from "../media/components/video/video.module";
 import { ProChannelListModal } from './channel/list-modal/list-modal.component';
 import { ProChannelHomeComponent } from './channel/home/home.component';
+import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.component';
 
 const routes: Routes = [
   {
@@ -90,12 +91,14 @@ const routes: Routes = [
     ProChannelListComponent,
     ProChannelDonateComponent,
     ProUserMenuComponent,
-    ProChannelFooterComponent
+    ProChannelFooterComponent,
+    ProUnsubscribeModalComponent
   ],
   exports: [],
   entryComponents: [
     ProMarketingComponent,
     ProChannelListModal,
+    ProUnsubscribeModalComponent
   ],
 })
 export class ProModule {

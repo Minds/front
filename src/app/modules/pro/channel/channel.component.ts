@@ -6,7 +6,8 @@ import {
   HostBinding,
   HostListener,
   OnDestroy,
-  OnInit
+  OnInit,
+  Injector
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Session } from "../../../services/session";
@@ -16,6 +17,8 @@ import { Client } from "../../../services/api/client";
 import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
 import { SignupModalService } from '../../../modules/modals/signup/service';
+import { OverlayModalService } from "../../../services/ux/overlay-modal";
+import { ProUnsubscribeModalComponent } from './unsubscribe-modal/modal.component';
 
 @Component({
   providers: [
@@ -53,6 +56,10 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
   showCategories: boolean = true;
 
+  channelSubscription$: Subscription;
+
+  subscribers_count: number;
+
   constructor(
     protected element: ElementRef,
     protected session: Session,
@@ -62,7 +69,9 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    public modal: SignupModalService
+    public modal: SignupModalService,
+    protected modalService: OverlayModalService,
+    protected injector: Injector,
   ) {
   }
 
@@ -107,6 +116,11 @@ export class ProChannelComponent implements OnInit, OnDestroy {
     this.childParams$ = this.channelService.childParamsChange.subscribe((params) => {
       this.shouldShowCategories(params.type);
     });
+    
+    this.channelSubscription$ = this.channelService.subscriptionChange.subscribe((subscribers_count) => {
+      this.subscribers_count = subscribers_count;
+      this.load();
+    })
   }
 
   setTitle() {
@@ -142,7 +156,7 @@ export class ProChannelComponent implements OnInit, OnDestroy {
 
     try {
       this.channel = await this.channelService.load(this.username);
-
+      this.subscribers_count = this.channel.subscribers_count;
       this.bindCssVariables();
       this.setTitle();
     } catch (e) {
@@ -161,21 +175,16 @@ export class ProChannelComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    this.channel.subscribed = true;
+    this.channelService.subscribe();
+  }
 
-    this.client.post('api/v1/subscribe/' + this.channel.guid, {})
-      .then((response: any) => {
-        if (response && response.error) {
-          throw 'error';
-        }
-
-        this.channel.subscribed = true;
-        this.channel.subscribers_count++;
-      })
-      .catch((e) => {
-        this.channel.subscribed = false;
-        alert('You can\'t subscribe to this user.');
-      });
+  unsubscribe(e){
+    this.modalService
+      .create(ProUnsubscribeModalComponent, this.channel,
+        {
+          class: 'm-overlayModal--unsubscribe'
+        }, this.injector)
+      .present();
   }
 
   bindCssVariables() {

@@ -14,6 +14,8 @@ export class ProChannelService {
 
   childParamsChange: EventEmitter<any> = new EventEmitter<any>();
 
+  subscriptionChange: EventEmitter<number> = new EventEmitter<number>();
+
   protected featuredContent: Array<any> | null;
 
   constructor(
@@ -108,5 +110,35 @@ export class ProChannelService {
     }
 
     return route;
+  }
+
+  async subscribe() {
+    this.currentChannel.subscribed = true;
+    
+    this.client.post('api/v1/subscribe/' + this.currentChannel.guid, {})
+      .then((response: any) => {
+        if (response && response.error) {
+          throw 'error';
+        }
+
+        this.currentChannel.subscribed = true;
+        this.subscriptionChange.emit(++this.currentChannel.subscribers_count);
+      })
+      .catch((e) => {
+        this.currentChannel.subscribed = false;
+        alert('You can\'t subscribe to this user.');
+      });
+  }
+
+  async unsubscribe() {
+    this.currentChannel.subscribed = false;
+    this.client.delete('api/v1/subscribe/' + this.currentChannel.guid, {})
+      .then((response: any) => {
+        this.currentChannel.subscribed = false;
+        this.subscriptionChange.emit(--this.currentChannel.subscribers_count);
+      })
+      .catch((e) => {
+        this.currentChannel.subscribed = true;
+      });
   }
 }

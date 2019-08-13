@@ -259,4 +259,20 @@ m-pro--channel {
   }
 }
 
+.m-overlayModal--unsubscribe {
+  width: 600px;
+
+  @media screen and (max-width: 660px) {
+    width: 400px;
+  }
+
+  @media screen and (max-width: 420px) {
+    width: 250px;
+  }
+
+  .m-overlay-modal--close {
+    display: none;
+  }
+}
+
 
