@@ -11,7 +11,7 @@ import { ProChannelSignupComponent } from "./channel/signup/signup.component";
 import { MindsFormsModule } from "../forms/forms.module";
 import { ProChannelListComponent } from "./channel/list/list.component";
 import { ProChannelDonateComponent } from './channel/donate/donate.component';
-import { ProTileComponent } from "./channel/tile/tile.component";
+import { ProTileComponent } from "./channel/tiles/media/tile.component";
 import { NewsfeedModule } from "../newsfeed/newsfeed.module";
 import { ProSettingsComponent } from './settings/settings.component';
 import { ProUserMenuComponent } from "./channel/pro-user-menu/pro-user-menu.component";
@@ -22,7 +22,7 @@ import { ProContentModalComponent } from "./channel/content-modal/modal.componen
 import { VideoModule } from "../media/components/video/video.module";
 import { ProChannelListModal } from './channel/list-modal/list-modal.component';
 import { ProChannelHomeComponent } from './channel/home/home.component';
-import { ProGroupTileComponent } from "./channel/tile/group/group-tile.component";
+import { ProGroupTileComponent } from "./channel/tiles/group/group-tile.component";
 import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.component';
 
 const routes: Routes = [
