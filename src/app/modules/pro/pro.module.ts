@@ -22,6 +22,7 @@ import { ProContentModalComponent } from "./channel/content-modal/modal.componen
 import { VideoModule } from "../media/components/video/video.module";
 import { ProChannelListModal } from './channel/list-modal/list-modal.component';
 import { ProChannelHomeComponent } from './channel/home/home.component';
+import { ProGroupTileComponent } from "./channel/tile/group/group-tile.component";
 import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.component';
 
 const routes: Routes = [
@@ -92,6 +93,7 @@ const routes: Routes = [
     ProChannelDonateComponent,
     ProUserMenuComponent,
     ProChannelFooterComponent,
+    ProGroupTileComponent,
     ProUnsubscribeModalComponent
   ],
   exports: [],
