@@ -101,8 +101,12 @@ m-pro--channel-list {
       grid-template-columns: 1fr;
 
       & > li {
-        width: 500px;
+        max-width: 500px;
         justify-self: center;
+
+        &.m-proChannelListContentList__seeMore {
+          width: 500px;
+        }
 
         minds-activity {
           min-width: 100%;
@@ -113,7 +117,7 @@ m-pro--channel-list {
     &:not(.m-proChannelListContent__normalList) {
       & > li:nth-child(1), li:nth-child(2) {
         & > video {
-          width: 500px;
+          max-width: 500px;
           //max-height: 250px;
         }
       }
@@ -167,6 +171,7 @@ m-pro--channel-list {
 
       & > video {
         width: 250px;
+        max-width: 100%;
       }
     }
   }
