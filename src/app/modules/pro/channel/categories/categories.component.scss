@@ -1,0 +1,18 @@
+m-pro--channel--categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  .m-proChannel__category {
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 16px 16px 0;
+
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+
+    &.m-proChannel__selectedCategory {
+      color: var(--primary-color);
+    }
+  }
+}
