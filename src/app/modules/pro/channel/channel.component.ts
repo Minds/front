@@ -7,7 +7,9 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
-  Injector, AfterViewInit, ViewChild
+  AfterViewInit,
+  Injector,
+  ViewChild
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Session } from "../../../services/session";
