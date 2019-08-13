@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProChannelService } from '../channel.service';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-pro--channel-home',
@@ -18,6 +19,7 @@ export class ProChannelHomeComponent implements OnInit {
 
   constructor(
     protected channelService: ProChannelService,
+    protected modalService: OverlayModalService,
     protected cd: ChangeDetectorRef,
   ) {
   }
@@ -52,8 +54,8 @@ export class ProChannelHomeComponent implements OnInit {
     this.detectChanges();
   }
 
-  onContentClick(entity) {
-
+  onContentClick(entity: any) {
+    return this.channelService.open(entity, this.modalService);
   }
 
   get settings() {

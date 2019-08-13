@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'm-pro--channel--group-tile',
@@ -21,6 +21,8 @@ import { Component, HostListener, Input } from '@angular/core';
 export class ProGroupTileComponent {
   @Input() entity: any;
 
+  @Output('onOpen') onOpenEventEmitter: EventEmitter<boolean> = new EventEmitter();
+
   minds = window.Minds;
 
   getBanner() {
@@ -32,6 +34,6 @@ export class ProGroupTileComponent {
   }
 
   @HostListener('click') onClick() {
-    window.open(`${window.Minds.site_url}groups/profile/${this.entity.guid}`, '_blank');
+    this.onOpenEventEmitter.emit(true);
   }
 }

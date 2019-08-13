@@ -4,6 +4,8 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { EntitiesService } from '../../../common/services/entities.service';
 import normalizeUrn from '../../../helpers/normalize-urn';
+import { ProContentModalComponent } from './content-modal/modal.component';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Injectable()
 export class ProChannelService {
@@ -110,6 +112,27 @@ export class ProChannelService {
     }
 
     return route;
+  }
+
+  open(entity, modalServiceContext: OverlayModalService) {
+    switch (this.getEntityTaxonomy(entity)) {
+      case 'group':
+        window.open(`${window.Minds.site_url}groups/profile/${entity.guid}`, '_blank');
+        break;
+      case 'object:blog':
+        window.open(`${window.Minds.site_url}${entity.route}/`, '_blank');
+        break;
+      case 'object:image':
+      case 'object:video':
+        modalServiceContext.create(ProContentModalComponent, entity, {
+          class: 'm-overlayModal--media'
+        }).present();
+        break;
+    }
+  }
+
+  getEntityTaxonomy(entity) {
+    return entity.type === 'object' ? `${entity.type}:${entity.subtype}` : entity.type;
   }
 
   async subscribe() {

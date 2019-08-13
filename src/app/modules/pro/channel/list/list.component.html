@@ -1,21 +1,4 @@
 <div class="m-proChannelList__tools" *ngIf="query !== ''">
-  <!--<div class="m-proChannelListTools__algorithm">
-    <a [routerLink]="['/pro', channelUsername, getTypeForRoute(type), 'hot']" routerLinkActive="active" i18n>
-      <i class="material-icons">whatshot</i>
-      <span i18n>HOT</span>
-    </a>
-
-    <a [routerLink]="['/pro', channelUsername, getTypeForRoute(type), 'top']" routerLinkActive="active" i18n>
-      <i class="material-icons">trending_up</i>
-      <span i18n>TOP</span>
-    </a>
-
-    <a [routerLink]="['/pro', channelUsername, getTypeForRoute(type), 'latest']" routerLinkActive="active" i18n>
-      <i class="material-icons">timelapse</i>
-      <span i18n>LATEST</span>
-    </a>
-  </div>-->
-
   <div class="m-proChannelListTools__searchResult"> <!--TODO add ngif after enable algorithm *ngIf="query !== ''"-->
     <span> Showing results for: <strong> {{query}}</strong></span>
   </div>
@@ -33,6 +16,7 @@
       <ng-container *ngIf="type === 'groups'">
         <m-pro--channel--group-tile
           [entity]="entity"
+          (onOpen)="onTileClicked(entity)"
           [class.big]="i === 0 || i === 1"
         ></m-pro--channel--group-tile>
       </ng-container>
@@ -40,7 +24,6 @@
       <ng-container *ngIf="type === 'activities'">
         <minds-activity
           [object]="entity"
-          (click)="onTileClicked(entity)"
         ></minds-activity>
       </ng-container>
     <li

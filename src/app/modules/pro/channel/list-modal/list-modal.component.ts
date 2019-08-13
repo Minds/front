@@ -97,18 +97,8 @@ export class ProChannelListModal {
     this.feedsService.loadMore();
   }
 
-  async expand(entity) {
-    switch (this.getType(entity)) {
-      case 'object:blog':
-        window.open(`${window.Minds.site_url}${entity.route}/`, '_blank');
-        break;
-      case 'object:image':
-      case 'object:video':
-        this.modalService.create(ProContentModalComponent, entity, {
-          class: 'm-overlayModal--media'
-        }, this.injector).present();
-        break;
-    }
+  expand(entity: any) {
+    return this.channelService.open(entity, this.modalService);
   }
 
   private getType(entity: any) {

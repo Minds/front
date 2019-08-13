@@ -171,53 +171,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       .present();
   }
 
-  get channelUsername() {
-    return this.channelService.currentChannel.username
-  }
-
-  /**
-   * Returns the feed type on par to routes
-   * @param type feed type
-   */
-  getTypeForRoute(type: string): string {
-    let routeType = '';
-    switch (type) {
-      case 'videos':
-        routeType = 'videos';
-        break;
-      case 'images':
-        routeType = 'images';
-        break;
-      case 'blogs':
-        routeType = 'articles';
-        break;
-      case 'groups':
-        routeType = 'groups';
-        break;
-      case 'activities':
-        routeType = 'feed';
-        break;
-      default:
-        throw new Error('Unknown type');
-    }
-    return routeType;
-  }
-
   onTileClicked(entity: any) {
-    switch (this.getType(entity)) {
-      case 'object:blog':
-        window.open(`${window.Minds.site_url}${entity.route}/`, '_blank');
-        break;
-      case 'object:image':
-      case 'object:video':
-        this.modalService.create(ProContentModalComponent, entity, {
-          class: 'm-overlayModal--media'
-        }).present();
-        break;
-    }
-  }
-
-  private getType(entity: any) {
-    return entity.type === 'object' ? `${entity.type}:${entity.subtype}` : entity.type;
+    return this.channelService.open(entity, this.modalService);
   }
 }
