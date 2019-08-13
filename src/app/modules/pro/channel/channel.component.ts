@@ -180,25 +180,25 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectChanges();
   }
 
-  subscribe(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  toggleSubscription($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
 
-    if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/pro', this.channel.username, 'signup']);
-      return false;
+    if (!this.channel.subscribed) {
+      if (!this.session.isLoggedIn()) {
+        this.router.navigate(['/pro', this.channel.username, 'signup']);
+        return false;
+      }
+
+      this.channelService.subscribe();
+    } else {
+      this.modalService
+        .create(ProUnsubscribeModalComponent, this.channel,
+          {
+            class: 'm-overlayModal--unsubscribe'
+          }, this.injector)
+        .present();
     }
-
-    this.channelService.subscribe();
-  }
-
-  unsubscribe(e) {
-    this.modalService
-      .create(ProUnsubscribeModalComponent, this.channel,
-        {
-          class: 'm-overlayModal--unsubscribe'
-        }, this.injector)
-      .present();
   }
 
   bindCssVariables() {
@@ -243,7 +243,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:resize') onResize() {
-    this.collapseNavItems = window.innerWidth <= 992 ? true : false;
+    this.collapseNavItems = window.innerWidth <= 992;
   }
 
   get currentUser() {

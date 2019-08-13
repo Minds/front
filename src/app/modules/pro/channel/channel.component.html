@@ -66,12 +66,17 @@
       >Donate</a>
 
       <button 
-        class="m-proChannelTopbar_subscribe" 
-        (click)="!channel.subscribed ? subscribe($event) : unsubscribe($event)"
-        [hidden]="currentUser && (channel.guid === currentUser.guid)"
-      > 
-        {{ !channel.subscribed ? 'Subscribe' : 'Subscribed' }}
-        <span> 
+        class="m-proChannelTopbar__subscribe"
+        [class.m-proChannelTopbar__subscribe--subscribed]="channel.subscribed"
+        (click)="toggleSubscription($event)"
+        [hidden]="currentUser?.guid === channel.guid"
+      >
+        <span class="m-proChannelTopbar__subscribe--label">
+          <ng-container *ngIf="!channel.subscribed; else subscribedActionButton" i18n>Subscribe</ng-container>
+          <ng-template #subscribedActionButton><ng-container i18n>Subscribed</ng-container></ng-template>
+        </span>
+
+        <span class="m-proChannelTopbar__subscribe--counter">
           {{ subscribers_count | abbr:0 }} 
         </span> 
       </button>
