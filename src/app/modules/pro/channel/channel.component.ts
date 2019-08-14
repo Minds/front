@@ -46,8 +46,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   params$: Subscription;
 
-  childParams$: Subscription;
-
   searchedText: string;
 
   routerSubscription: Subscription;
@@ -139,7 +137,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.params$.unsubscribe();
-    this.childParams$.unsubscribe();
     this.routerSubscription.unsubscribe();
   }
 
