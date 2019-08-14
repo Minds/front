@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ProChannelService } from "../channel.service";
 import { Router } from "@angular/router";
 import { MindsUser } from "../../../../interfaces/entities";
@@ -18,7 +18,7 @@ import { MindsUser } from "../../../../interfaces/entities";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class ProCategoriesComponent implements OnInit {
+export class ProCategoriesComponent {
 
   @Input() type: string;
   @Input() params: any = {};
@@ -38,15 +38,22 @@ export class ProCategoriesComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-  }
-
   selectTag(clickedTag: any) {
     for (let tag of this.channel.pro_settings.tag_list) {
       tag.selected = tag.tag == clickedTag.tag;
     }
 
-    this.router.navigate([this.currentURL, { ...this.params, hashtag: clickedTag.tag }]);
+    const params = {
+      ...this.params
+    };
+
+    if (clickedTag.tag === 'all') {
+      delete params.hashtag;
+    } else {
+      params.hashtag = clickedTag.tag;
+    }
+
+    this.router.navigate([this.currentURL, params]);
 
     this.detectChanges();
   }

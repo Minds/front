@@ -278,22 +278,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.channelService.linkTo.bind(this.channelService);
   }
 
-  selectTag(clickedTag: any) {
-    for (let tag of this.channel.pro_settings.tag_list) {
-      tag.selected = tag.tag == clickedTag.tag;
-    }
-
-    const params = {
-      ...this.getCurrentURLParams()
-    };
-
-    params['hashtag'] = clickedTag.tag;
-
-    this.router.navigate([this.getCurrentURL(), params]);
-
-    this.detectChanges();
-  }
-
   getCurrentURL() {
     let currentURL = this.currentURL;
     if (!currentURL) {

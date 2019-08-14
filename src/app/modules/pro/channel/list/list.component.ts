@@ -31,7 +31,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   displaySeeMoreTile: boolean = false;
 
-  selectedHashtag: string;
+  selectedHashtag: string = 'all';
 
   selectedHashtag$: Subscription;
 
@@ -78,7 +78,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.algorithm = params['algorithm'] || 'top';
       this.query = params['query'] || '';
       this.period = params['period'] || '';
-      this.selectedHashtag = params['hashtag'];
+      this.selectedHashtag = params['hashtag'] || 'all';
 
       this.channelService.setChildParams(params);
       this.load(true);
