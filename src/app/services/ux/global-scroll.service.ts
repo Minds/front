@@ -66,7 +66,7 @@ export class GlobalScrollService {
     const viewEmitter: EventEmitter<any> = new EventEmitter<any>();
     if (!subscription.viewListener) {
       subscription.viewListener = subscription.scrollEvent
-        .pipe(debounceTime(500))
+        .pipe(debounceTime(100)) // wait 100ms before triggering 
         .subscribe((e) => {
           viewEmitter.next(e);
         });
