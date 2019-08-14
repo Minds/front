@@ -31,7 +31,7 @@ m-pro--channel {
   max-width: 1296px;
   margin: 0 auto;
   display: grid;
-  grid-template-rows: 100px 25px 1fr 100px;
+  grid-template-rows: 100px 1fr 100px;
   grid-template-columns: repeat(12, 1fr);
   //min-height: calc(100vh - 52px); /* 52px is the topbar height */
   min-height: 100%;
@@ -197,7 +197,7 @@ m-pro--channel {
   }
 
   .m-proChannel__body {
-    grid-row: 3 / span 1;
+    grid-row: 2 / span 1;
     grid-column: 1 / span 12;
     padding: 0 32px;
   }
