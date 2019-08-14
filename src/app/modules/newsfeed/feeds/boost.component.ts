@@ -46,7 +46,7 @@ export class NewsfeedBoostComponent {
     private storage: Storage,
     private context: ContextService,
     protected featuresService: FeaturesService,
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
   ) {
     this.title.setTitle('Boost Newsfeed');
   }
