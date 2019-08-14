@@ -1,4 +1,4 @@
-<m-pro--channel--categories [type]="paramsType" *ngIf="paramsType !== 'communities'"></m-pro--channel--categories>
+<m-pro--channel--categories [type]="paramsType" [selectedHashtag]="selectedHashtag" *ngIf="paramsType !== 'communities'"></m-pro--channel--categories>
 
 <div class="m-proChannelList__tools" *ngIf="query !== ''">
   <div class="m-proChannelListTools__searchResult"> <!--TODO add ngif after enable algorithm *ngIf="query !== ''"-->

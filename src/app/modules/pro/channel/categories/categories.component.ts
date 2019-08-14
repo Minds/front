@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { ProChannelService } from "../channel.service";
 import { Router } from "@angular/router";
-import { MindsUser } from "../../../../interfaces/entities";
+import { MindsUser, Tag } from "../../../../interfaces/entities";
 
 @Component({
   selector: 'm-pro--channel--categories',
@@ -23,6 +23,10 @@ export class ProCategoriesComponent {
   @Input() type: string;
   @Input() params: any = {};
 
+  @Input() set selectedHashtag(value: string) {
+    this.selectTag(value, false);
+  }
+
   get channel(): MindsUser {
     return this.channelService.currentChannel;
   }
@@ -38,24 +42,29 @@ export class ProCategoriesComponent {
   ) {
   }
 
-  selectTag(clickedTag: any) {
+  selectTag(clickedTag: Tag | string, redirect: boolean = true) {
+    if (typeof clickedTag !== 'string') {
+      clickedTag = clickedTag.tag;
+    }
     for (let tag of this.channel.pro_settings.tag_list) {
-      tag.selected = tag.tag == clickedTag.tag;
+      tag.selected = tag.tag == clickedTag;
     }
-
-    const params = {
-      ...this.params
-    };
-
-    if (clickedTag.tag === 'all') {
-      delete params.hashtag;
-    } else {
-      params.hashtag = clickedTag.tag;
-    }
-
-    this.router.navigate([this.currentURL, params]);
 
     this.detectChanges();
+
+    if (redirect) {
+      const params = {
+        ...this.params
+      };
+
+      if (clickedTag === 'all') {
+        delete params.hashtag;
+      } else {
+        params.hashtag = clickedTag;
+      }
+
+      this.router.navigate([this.currentURL, params]);
+    }
   }
 
   detectChanges() {
