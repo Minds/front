@@ -56,7 +56,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isMenuOpen: boolean = false;
 
-  channelSubscription$: Subscription;
+  channel$: Subscription;
 
   subscribers_count: number;
 
@@ -112,7 +112,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    this.channelSubscription$ = this.channelService.subscriptionChange.subscribe((subscribers_count) => {
+    this.channel$ = this.channelService.subscriptionChange.subscribe((subscribers_count) => {
       this.subscribers_count = subscribers_count;
       this.load();
     })
