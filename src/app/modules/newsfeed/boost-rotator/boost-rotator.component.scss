@@ -102,6 +102,21 @@
   display:flex;
   z-index: 1;
 
+  .m-boostRotator__tab--boost-feed a {
+    text-transform: uppercase;
+    letter-spacing: 1.25px;
+    font-size: 11px;
+    line-height: 24px;
+    margin-top: -5px;
+    margin-right: 8px;
+    display: block;
+    cursor: pointer;
+
+    @include m-theme(){
+      color: themed($m-grey-400);
+    }
+  }
+
   .m-boost-rotator-tabs-tab{
     margin:0 2px;
     padding:0;
