@@ -58,13 +58,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isMenuOpen: boolean = false;
 
-  showCategories: boolean = true;
-
   channelSubscription$: Subscription;
 
   subscribers_count: number;
-
-  type: string = 'articles';
 
   @ViewChild('overlayModal', { static: true }) protected overlayModal: OverlayModalComponent;
 
@@ -92,17 +88,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalService.setContainer(this.overlayModal);
   }
 
-  shouldShowCategories(type: string) {
-    const routes = ['images', 'videos', 'articles', 'feed', 'communities'];
-    this.showCategories = routes.indexOf(type) !== -1;
-
-    if (this.showCategories) {
-      this.type = type;
-    }
-
-    this.detectChanges();
-  }
-
   listen() {
     this.routerSubscription = this.router.events.subscribe((navigationEvent) => {
       try {
@@ -127,10 +112,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.username && (!this.channel || this.channel.username != this.username)) {
         this.load();
       }
-    });
-
-    this.childParams$ = this.channelService.childParamsChange.subscribe((params) => {
-      this.shouldShowCategories(params.type);
     });
 
     this.channelSubscription$ = this.channelService.subscriptionChange.subscribe((subscribers_count) => {
@@ -287,18 +268,5 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     return currentURL;
-  }
-
-  getCurrentURLParams() {
-    const params = {};
-    if (this.currentURL) {
-      const paramsArray = this.currentURL.split(';');
-      for (let i: number = 1; i < paramsArray.length; ++i) {
-        const p = paramsArray[i];
-        let pp = p.split('=');
-        params[pp[0]] = pp[1];
-      }
-    }
-    return params;
   }
 }

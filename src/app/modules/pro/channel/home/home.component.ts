@@ -25,7 +25,6 @@ export class ProChannelHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.channelService.setChildParams({});
     this.load();
   }
 

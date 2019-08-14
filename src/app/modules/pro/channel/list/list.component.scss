@@ -5,6 +5,16 @@ m-pro--channel-list {
     margin: 0 0 0.4em;
   }
 
+  @media screen and (max-width: 480px) {
+    m-pro--channel--categories {
+      justify-content: start;
+    }
+  }
+
+  m-pro--channel--categories {
+    margin: 8px 0;
+  }
+
   .m-proChannelList__tools {
     //background-color: var(--plain-background-color) !important;
     //padding: 16px;
@@ -12,7 +22,7 @@ m-pro--channel-list {
     border-radius: 20px;
     opacity: 0.9;
     font-size: 16px;
-    font-family: Roboto,Helvetica,sans-serif;
+    font-family: Roboto, Helvetica, sans-serif;
     letter-spacing: 1px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;

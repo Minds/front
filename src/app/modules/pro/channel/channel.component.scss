@@ -1,3 +1,5 @@
+@import 'themes';
+
 m-pro--channel {
   --primary-color: #4690df;
   --plain-background-color: #ffffff;
@@ -18,10 +20,6 @@ m-pro--channel {
       display: none;
     }
 
-    .m-proChannel__categories {
-      justify-content: start;
-    }
-
     .m-proChannel__body {
       margin-top: 10px;
     }
@@ -33,7 +31,7 @@ m-pro--channel {
   max-width: 1296px;
   margin: 0 auto;
   display: grid;
-  grid-template-rows: repeat(2, 100px) 1fr 100px;
+  grid-template-rows: 100px 25px 1fr 100px;
   grid-template-columns: repeat(12, 1fr);
   //min-height: calc(100vh - 52px); /* 52px is the topbar height */
   min-height: 100%;
@@ -132,8 +130,8 @@ m-pro--channel {
         list-style: none;
         margin: 34px 0 0;
         @include m-theme() {
-          background-color: themed('m-white');
-          color: themed('m-grey-700');
+          background-color: themed($m-white);
+          color: themed($m-grey-700);
         }
       
         li.proChannelTopbarMenuDropdown__item {
@@ -196,11 +194,6 @@ m-pro--channel {
 
     text-transform: uppercase;
     letter-spacing: 0.1em;
-  }
-
-  m-pro--channel--categories {
-    grid-row: 2 / span 1;
-    grid-column: 2 / span 10;
   }
 
   .m-proChannel__body {

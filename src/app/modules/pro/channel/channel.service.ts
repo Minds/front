@@ -12,10 +12,6 @@ export class ProChannelService {
 
   currentChannel: MindsUser;
 
-  childParams: any;
-
-  childParamsChange: EventEmitter<any> = new EventEmitter<any>();
-
   subscriptionChange: EventEmitter<number> = new EventEmitter<number>();
 
   protected featuredContent: Array<any> | null;
@@ -93,11 +89,6 @@ export class ProChannelService {
       content: entities,
       offset: nextOffset,
     };
-  }
-
-  setChildParams(params: any) {
-    this.childParams = params;
-    this.childParamsChange.emit(this.childParams);
   }
 
   linkTo(to, query, algorithm?) {

@@ -76,6 +76,7 @@ export interface MindsUser {
   toaster_notifications?: boolean;
   pro?: boolean;
   pro_settings?: {
+    logo_image: string,
     tag_list?: Tag[],
     background_image: string,
     title: string,

@@ -80,7 +80,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.period = params['period'] || '';
       this.selectedHashtag = params['hashtag'] || 'all';
 
-      this.channelService.setChildParams(params);
       this.load(true);
     });
 
