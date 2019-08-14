@@ -1,1 +1,6 @@
-{}
+{
+  "reporter": "junit",
+  "reporterOptions": {
+    "toConsole": true
+  }
+}
