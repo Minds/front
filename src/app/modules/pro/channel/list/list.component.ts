@@ -17,6 +17,7 @@ import { Tag } from "../../../../interfaces/entities";
 })
 export class ProChannelListComponent implements OnInit, OnDestroy {
 
+  paramsType: string; // exact string that came from the router params
   type: string;
 
   params$: Subscription;
@@ -54,7 +55,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     this.params$ = this.route.params.subscribe(params => {
       this.entities = [];
       if (params['type']) {
-        this.type = params['type'];
+        this.type = this.paramsType = params['type'];
       }
       switch (params['type']) {
         case 'videos':
