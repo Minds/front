@@ -48,7 +48,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   searchedText: string;
 
-  routerSubscription: Subscription;
+  router$: Subscription;
 
   currentURL: string;
 
@@ -87,7 +87,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   listen() {
-    this.routerSubscription = this.router.events.subscribe((navigationEvent) => {
+    this.router$ = this.router.events.subscribe((navigationEvent) => {
       try {
         if (navigationEvent instanceof NavigationEnd) {
           if (!navigationEvent.urlAfterRedirects) {
@@ -136,8 +136,15 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.params$.unsubscribe();
-    this.routerSubscription.unsubscribe();
+    if (this.params$) {
+      this.params$.unsubscribe();
+    }
+    if (this.channel$) {
+      this.channel$.unsubscribe();
+    }
+    if (this.router$) {
+      this.router$.unsubscribe();
+    }
   }
 
   async load() {
