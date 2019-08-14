@@ -53,7 +53,7 @@ export class NewsfeedBoostComponent {
 
   ngOnInit() {
 
-    this.load();
+    this.load(true);
     this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -76,6 +76,10 @@ export class NewsfeedBoostComponent {
   async load(refresh: boolean = false) {
     if (this.inProgress)
       return false;
+
+    if (refresh) {
+      this.feedsService.clear();
+    }
 
     this.feedsService
       .setEndpoint('api/v2/boost/feed')
