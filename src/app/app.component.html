@@ -1,28 +1,33 @@
-<m-v2-topbar *mIfFeature="'top-feeds'; else legacyTopbar">
-  <ng-container search>
-    <m-search--bar [defaultSizes]="false"></m-search--bar>
-  </ng-container>
-
-  <ng-container icons>
-    <m-notifications--topbar-toggle *ngIf="session.isLoggedIn()"></m-notifications--topbar-toggle>
-  </ng-container>
-</m-v2-topbar>
-<ng-template #legacyTopbar>
-  <m-topbar class="m-noshadow">
+<ng-container *ngIf="!standalone">
+  <m-v2-topbar *mIfFeature="'top-feeds'; else legacyTopbar">
     <ng-container search>
-      <m-search--bar></m-search--bar>
+      <m-search--bar [defaultSizes]="false"></m-search--bar>
     </ng-container>
 
     <ng-container icons>
-      <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
-      <m-wallet--topbar-toggle></m-wallet--topbar-toggle>
+      <m-notifications--topbar-toggle *ngIf="session.isLoggedIn()"></m-notifications--topbar-toggle>
     </ng-container>
-  </m-topbar>
-</ng-template>
+  </m-v2-topbar>
+  <ng-template #legacyTopbar>
+    <m-topbar class="m-noshadow">
+      <ng-container search>
+        <m-search--bar></m-search--bar>
+      </ng-container>
 
-<m-sidebar--markers [class.has-v2-navbar]="featuresService.has('top-feeds')"></m-sidebar--markers>
+      <ng-container icons>
+        <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
+        <m-wallet--topbar-toggle></m-wallet--topbar-toggle>
+      </ng-container>
+    </m-topbar>
+  </ng-template>
 
-<m-body [class.has-v2-navbar]="featuresService.has('top-feeds')">
+  <m-sidebar--markers [class.has-v2-navbar]="featuresService.has('top-feeds')"></m-sidebar--markers>
+</ng-container>
+
+<m-body
+  [class.is-standalone]="standalone"
+  [class.has-v2-navbar]="!standalone && featuresService.has('top-feeds')"
+>
   <m-announcement [id]="'blockchain:sale'" *ngIf="false">
     <span class="m-blockchain--wallet-address-notice--action"
       routerLink="/tokens"

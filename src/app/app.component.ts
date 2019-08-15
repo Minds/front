@@ -33,6 +33,8 @@ export class Minds {
 
   paramsSubscription;
 
+  standalone: boolean = false;
+
   constructor(
     public session: Session,
     public route: ActivatedRoute,
@@ -56,6 +58,8 @@ export class Minds {
   }
 
   async ngOnInit() {
+    this.standalone = Boolean(window.Minds.pro);
+
     this.notificationService.getNotifications();
 
     this.session.isLoggedIn(async (is) => {

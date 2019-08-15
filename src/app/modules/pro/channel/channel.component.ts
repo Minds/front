@@ -62,6 +62,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('overlayModal', { static: true }) protected overlayModal: OverlayModalComponent;
 
+  protected isLoggedIn$: Subscription;
+
   constructor(
     protected element: ElementRef,
     protected session: Session,
@@ -84,6 +86,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.listen();
     this.onResize();
+
+    this.isLoggedIn$ = this.session.loggedinEmitter.subscribe(() => this.detectChanges());
   }
 
   ngAfterViewInit() {
@@ -149,6 +153,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.router$) {
       this.router$.unsubscribe();
     }
+
+    this.isLoggedIn$.unsubscribe();
   }
 
   async load() {

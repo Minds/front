@@ -12,4 +12,8 @@ m-body {
   &.has-v2-navbar {
     margin-top: 52px;
   }
+
+  &.is-standalone {
+    margin-top: 0;
+  }
 }
