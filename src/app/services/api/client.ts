@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class Client {
 
   base: string = '/';
+  origin: string = '';
   cookie: Cookie = new Cookie();
 
   static _(http: HttpClient) {
@@ -14,6 +15,10 @@ export class Client {
   }
 
   constructor(public http: HttpClient) {
+    if (window.Minds.pro) {
+      this.base = window.Minds.site_url;
+      this.origin = document.location.host;
+    }
   }
 
   /**
@@ -180,14 +185,24 @@ export class Client {
   private buildOptions(options: Object) {
     const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
 
-    const headers = new HttpHeaders({
+    const headers = {
       'X-XSRF-TOKEN': XSRF_TOKEN,
-    });
+    };
 
-    return Object.assign(options, {
-      headers: headers,
+    if (this.origin) {
+      headers['X-MINDS-ORIGIN'] = this.origin;
+    }
+
+    const builtOptions = {
+      headers: new HttpHeaders(headers),
       cache: true
-    });
+    };
+
+    if (this.origin) {
+      builtOptions['withCredentials'] = true;
+    }
+
+    return Object.assign(options, builtOptions);
   }
 
 }

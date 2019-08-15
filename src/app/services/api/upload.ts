@@ -7,13 +7,19 @@ import { HttpClient } from "@angular/common/http";
 export class Upload {
 
   base: string = '/';
+  origin: string = '';
   cookie: Cookie = new Cookie();
 
   static _(http: HttpClient) {
     return new Upload(http);
   }
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {
+    if (window.Minds.pro) {
+      this.base = window.Minds.site_url;
+      this.origin = document.location.host;
+    }
+  }
 
 	/**
 	 * Return a POST request
@@ -63,6 +69,12 @@ export class Upload {
       };
       const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
       xhr.setRequestHeader('X-XSRF-TOKEN', XSRF_TOKEN);
+
+      if (this.origin) {
+        xhr.setRequestHeader('X-MINDS-ORIGIN', this.origin);
+        xhr.withCredentials = true;
+      }
+
       xhr.send(formData);
     });
   }

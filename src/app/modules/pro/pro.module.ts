@@ -27,43 +27,54 @@ import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.
 import { ProCategoriesComponent } from "./channel/categories/categories.component";
 import { BlogView } from "../blogs/view/view";
 
-const routes: Routes = [
-  {
-    path: 'pro',
-    children: [
-      {
-        path: '',
-        component: ProMarketingComponent,
-      },
-      {
-        path: 'settings',
-        component: ProSettingsComponent,
-      },
-      {
-        path: ':username',
-        component: ProChannelComponent,
-        children: [
-          {
-            path: '',
-            component: ProChannelHomeComponent,
-          },
-          {
-            path: 'donate',
-            component: ProChannelDonateComponent
-          },
-          {
-            path: 'signup',
-            component: ProChannelSignupComponent
-          },
-          {
-            path: ':type',
-            component: ProChannelListComponent,
-          },
-        ]
-      },
-    ]
-  },
-];
+const routes: Routes = [];
+
+const channelRoute = {
+  component: ProChannelComponent,
+  children: [
+    {
+      path: '',
+      component: ProChannelHomeComponent,
+    },
+    {
+      path: 'donate',
+      component: ProChannelDonateComponent
+    },
+    {
+      path: 'signup',
+      component: ProChannelSignupComponent
+    },
+    {
+      path: ':type',
+      component: ProChannelListComponent,
+    },
+  ]
+};
+
+if (window.Minds.pro) {
+  routes.push({
+    path: '',
+    ...channelRoute
+  });
+}
+
+routes.push({
+  path: 'pro',
+  children: [
+    {
+      path: '',
+      component: ProMarketingComponent,
+    },
+    {
+      path: 'settings',
+      component: ProSettingsComponent,
+    },
+    {
+      path: ':username',
+      ...channelRoute
+    },
+  ]
+});
 
 @NgModule({
   imports: [
@@ -101,7 +112,6 @@ const routes: Routes = [
   ],
   exports: [],
   entryComponents: [
-    ProMarketingComponent,
     ProChannelListModal,
     ProUnsubscribeModalComponent,
     BlogView,

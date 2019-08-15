@@ -25,7 +25,8 @@ interface Minds {
   blockchain?: any;
   sale?: boolean | string;
   last_tos_update: number;
-  tags: string[]
+  tags: string[];
+  pro?: any;
 }
 
 interface MindsNavigation {

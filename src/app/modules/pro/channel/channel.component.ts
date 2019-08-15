@@ -78,6 +78,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (window.Minds.pro) {
+      this.username = window.Minds.pro.user_guid;
+    }
+
     this.listen();
     this.onResize();
   }
@@ -156,6 +160,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectChanges();
 
     try {
+      await this.channelService.auth();
       this.channel = await this.channelService.load(this.username);
       this.subscribers_count = this.channel.subscribers_count;
       this.bindCssVariables();

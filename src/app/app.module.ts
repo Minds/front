@@ -79,12 +79,12 @@ import { ProModule } from './modules/pro/pro.module';
     RouterModule.forRoot(MindsAppRoutes, { onSameUrlNavigation: "reload" }),
     CaptchaModule,
     CommonModule,
+    ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
     AnalyticsModule,
     WalletModule,
     //CheckoutModule,
     MonetizationModule,
     PlusModule,
-    ProModule,
     AdsModule,
     BoostModule,
     WireModule,

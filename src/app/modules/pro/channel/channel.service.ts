@@ -7,6 +7,7 @@ import normalizeUrn from '../../../helpers/normalize-urn';
 import { ProContentModalComponent } from './content-modal/modal.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BlogView } from "../../blogs/view/view";
+import { Session } from '../../../services/session';
 
 @Injectable()
 export class ProChannelService {
@@ -20,6 +21,7 @@ export class ProChannelService {
   constructor(
     protected client: Client,
     protected entitiesService: EntitiesService,
+    protected session: Session,
   ) {
   }
 
@@ -155,5 +157,22 @@ export class ProChannelService {
       .catch((e) => {
         this.currentChannel.subscribed = true;
       });
+  }
+
+  async auth() {
+    if (!window.Minds.pro) {
+      // Not in standalone mode
+      return;
+    }
+
+    try {
+      const response = await this.client.get('api/v1/channel/me') as any;
+
+      if (response && response.channel) {
+        this.session.login(response.channel);
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

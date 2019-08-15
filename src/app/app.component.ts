@@ -59,7 +59,7 @@ export class Minds {
     this.notificationService.getNotifications();
 
     this.session.isLoggedIn(async (is) => {
-      if (is) {
+      if (is && !window.Minds.pro) {
         this.showOnboarding = await this.onboardingService.showModal();
         if (this.minds.user.language !== this.minds.language) {
           console.log('[app]:: language change', this.minds.user.language, this.minds.language);
