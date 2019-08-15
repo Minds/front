@@ -3,8 +3,8 @@ m-pro--channel--group-tile {
   position: relative;
   width: 100%;
   height: 220px;
-  background-color: var(--transparent-background-color);
-  color: var(--text-color);
+  background-color: var(--m-pro--transparent-background-color);
+  color: var(--m-pro--text-color);
 
   &.big {
     height: 320px;
@@ -80,7 +80,7 @@ m-pro--channel--group-tile {
       font-size: 20px;
       line-height: 20px;
       overflow: visible;
-      color: var(--text-color) !important;
+      color: var(--m-pro--text-color) !important;
       margin: 0;
       font-weight: 700;
     }
@@ -97,7 +97,7 @@ m-pro--channel--group-tile {
       margin: 8px 0;
       padding: 0;
       line-height: 1.25;
-      color: var(--text-color) !important;
+      color: var(--m-pro--text-color) !important;
     }
   }
 }

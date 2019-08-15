@@ -7,7 +7,7 @@ m-pro--unsubscribe-modal {
 .m-pro--unsubscribe-modal {
 
   > * {
-    color: var(--text-color);
+    color: var(--m-pro--text-color);
     font-size: 16px;
   
     @media screen and (max-width: 420px) {
@@ -26,7 +26,7 @@ m-pro--unsubscribe-modal {
     }
 
     .m-ProUnsubscribeModalResponse__unsubscribe {
-      color: var(--primary-color);
+      color: var(--m-pro--primary-color);
       margin-left: 12px;
     }
   }

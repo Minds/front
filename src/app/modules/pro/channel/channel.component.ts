@@ -204,7 +204,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
       const styleAttr = style.replace(/_/g, "-");
       this.element.nativeElement
-        .style.setProperty(`--${styleAttr}`, styles[style]);
+        .style.setProperty(`--m-pro--${styleAttr}`, styles[style]);
     }
   }
 

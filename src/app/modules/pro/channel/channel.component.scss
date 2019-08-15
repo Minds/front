@@ -1,31 +1,31 @@
 @import 'themes';
 
 m-pro--channel {
-  --primary-color: #4690df;
-  --plain-background-color: #ffffff;
-  --transparent-background-color: #ffffffa0;
-  --text-color: #000000;
+  --m-pro--primary-color: #4690df;
+  --m-pro--plain-background-color: #ffffff;
+  --m-pro--transparent-background-color: #ffffffa0;
+  --m-pro--text-color: #000000;
 
   display: block;
   background: none no-repeat center fixed;
   background-size: cover;
   background-blend-mode: overlay;
-  background-color: var(--transparent-background-color);
+  background-color: var(--m-pro--transparent-background-color);
 
   m-blog-view.m-blog {
-    color: var(--text-color);
+    color: var(--m-pro--text-color);
 
     .minds-blog-body > p, p, a, i.material-icons, span {
-      color: var(--text-color);
+      color: var(--m-pro--text-color);
     }
 
     minds-button-boost > button {
-      color: var(--primary-color);
-      border-color: var(--primary-color);
+      color: var(--m-pro--primary-color);
+      border-color: var(--m-pro--primary-color);
     }
 
     .blogs-grid {
-      background-color: var(--transparent-background-color);
+      background-color: var(--m-pro--transparent-background-color);
     }
   }
 }
@@ -180,12 +180,12 @@ m-pro--channel {
       border: none;
       border-radius: 4px;
       margin-left: 16px;
-      color: var(--plain-background-color);
-      background-color: var(--primary-color);
+      color: var(--m-pro--plain-background-color);
+      background-color: var(--m-pro--primary-color);
 
       &.m-proChannelTopbar__subscribe--subscribed {
-        color: var(--text-color);
-        background-color: var(--plain-background-color);
+        color: var(--m-pro--text-color);
+        background-color: var(--m-pro--plain-background-color);
       }
 
       .m-proChannelTopbar__subscribe--label {
@@ -251,11 +251,11 @@ m-pro--channel {
 
   // colors
   a.active, a:hover {
-    color: var(--primary-color) !important;
+    color: var(--m-pro--primary-color) !important;
   }
 
   a, h1, h2, h3, h4, h5, p {
-    color: var(--text-color) !important;
+    color: var(--m-pro--text-color) !important;
   }
 }
 

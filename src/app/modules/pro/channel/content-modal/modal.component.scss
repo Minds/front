@@ -85,7 +85,7 @@ m-media--modal {
         text-overflow: ellipsis;
         text-decoration: none;
 
-        color: var(--text-color);
+        color: var(--m-pro--text-color);
 
         &:hover {
           text-decoration: underline;
@@ -94,7 +94,7 @@ m-media--modal {
 
       // TODO OJM fullscreen styles e.g. .myClass:not(:fullscreen)
       .m-mediaModal__fullscreenButton {
-        color: var(--text-color);
+        color: var(--m-pro--text-color);
         transition: transform 150ms ease;
 
 
@@ -139,7 +139,7 @@ m-media--modal {
     padding: 16px;
     font-family: 'Roboto', Helvetica, sans-serif;
 
-    background-color: var(--plain-background-color);
+    background-color: var(--m-pro--plain-background-color);
 
     .m-mediaModal__ownerBlock {
       padding: 0;
@@ -168,7 +168,7 @@ m-media--modal {
         white-space: pre-wrap;
         line-height: 18px;
         -webkit-font-smoothing: antialiased;
-        color: var(--text-color);
+        color: var(--m-pro--text-color);
 
         > * {
           padding-right: 8px;
@@ -187,7 +187,7 @@ m-media--modal {
           font-weight: 700;
           font-size: 11px;
           line-height: 1;
-          color: var(--text-color);
+          color: var(--m-pro--text-color);
         }
 
         .m-ownerBlock__permalinkFlag--boosted {
@@ -203,15 +203,15 @@ m-media--modal {
 
           a {
             vertical-align: middle;
-            color: var(--text-color);
+            color: var(--m-pro--text-color);
           }
 
           &.m-ownerBlock__permalinkFlag--onchain {
-            color: var(--primary-color);
+            color: var(--m-pro--primary-color);
 
             a {
               @include m-theme() {
-                color: var(--primary-color);
+                color: var(--m-pro--primary-color);
               }
             }
           }

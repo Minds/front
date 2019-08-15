@@ -5,14 +5,14 @@ m-pro--channel--categories {
 
   .m-proChannel__category {
     cursor: pointer;
-    color: var(--text-color);
+    color: var(--m-pro--text-color);
     padding: 16px 16px 0;
 
     text-transform: uppercase;
     letter-spacing: 0.1em;
 
     &.m-proChannel__selectedCategory {
-      color: var(--primary-color);
+      color: var(--m-pro--primary-color);
     }
   }
 }
