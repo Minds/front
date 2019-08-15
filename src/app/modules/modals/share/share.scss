@@ -1,50 +1,22 @@
-// Display additional button and header when displayed as a modal
-.m-overlay-modal--referrals-links .m-referralsLinks {
-  .m-referralsLinks__modalShow {
-    display: block;
-
-    &.m-referralsLinks__modalButton {
-      margin-top: $minds-padding * 2;
-    }
-  }
-  .m-referralsLinks__copyableLinks .m-referralsLinks__modalHide {
-    display:none;
-  }
-}
-
-.m-referralsLinks {
-  .m-referralsLinks__modalShow {
-    display: none;
-  }
-
+.m-overlayModal__share {
+  overflow-y: visible;
   @include m-theme() {
     color: themed($m-grey-800);
   }
 
-  h4 {
-    font-size: 18px;
+  h3 {
+    font-size: 28px;
     font-weight: 600;
-    padding: 0;
-    margin: 16px 0 0 0;
+    margin: 0 32px 26px 0;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
   }
 
-  .m-referralsLinks__copyableLinks {
-    h3 {
-      font-size: 28px;
-      font-weight: 600;
-      margin: 0 50px 26px 0;
-      @include m-theme() {
-        color: themed($m-grey-800);
-      }
-    }
-
-    p {
-      margin: 0 0 8px 0;
-    }
-
-    .m-referralsLinks__copyableLink {
+  .m-share__copyableLinkContainer {
+    .m-share__copyableLink {
       max-width: 450px;
-      margin-bottom: $minds-padding * 3;
+      margin: 0 16px 8px 0;
       border-radius: 18px;
       display: flex;
       justify-content: space-between;
@@ -55,7 +27,7 @@
         }
       }
 
-      .m-referralsLinks__copyableLinkText {
+      .m-share__copyableLinkText {
         width: 95%;
         overflow: hidden;
         white-space: nowrap;
@@ -65,6 +37,9 @@
         border: none;
         padding: 8px 0 8px 8px;
         margin: 1px 0 1px 4px;
+        opacity: 1;
+        transition: opacity .15s ease;
+        -webkit-transition: opacity .15s ease;
 
         @include m-theme() {
           background-color: transparent;
@@ -78,9 +53,13 @@
         &:focus {
           outline: none;
         }
+
+        &.m-share__copyableLinkText--flashing {
+          opacity: 0.5;
+        }
       }
 
-      .m-referralsLinks__copyableLinkButton {
+      .m-share__copyableLinkButton {
         cursor: pointer;
         padding: 9px 14px 10px 8px;
         @include m-theme() {
@@ -94,10 +73,46 @@
     }
   }
 
-  .m-referralsLinks__share {
+  .m-share__referrerParamCheckboxContainer {
+    margin-left: 4px;
+    label > span {
+      font-size: 14px;
+      @include m-theme(){
+        color: themed($m-grey-600)
+      }
+    }
+
+    m-tooltip {
+      i {
+        font-size: 14px;
+        @include m-theme(){
+          color: themed($m-grey-200);
+        }
+        &.m-share__newWindowIcon {
+          @include m-theme(){
+            color: themed($m-blue-grey-300);
+          }
+        }
+      }
+      .m-tooltip--bubble {
+        a {
+          text-decoration: none;
+          font-weight: 400;
+          @include m-theme(){
+            color: themed($m-blue-grey-300);
+          }
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .m-share__buttonsContainer {
     margin-top: 24px;
 
-    .m-referralsLinks__shareButtons {
+    .m-share__buttons {
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
@@ -137,32 +152,32 @@
       }
     }
 
-    .m-referralsLinks__shareButton--twitter {
+    .m-share__button--twitter {
       @include m-theme() {
         background-color: themed($m-twitter);
       }
     }
 
-    .m-referralsLinks__shareButton--messenger {
+    .m-share__button--messenger {
       @include m-theme() {
         background-color: themed($m-messenger);
       }
     }
 
-    .m-referralsLinks__shareButton--facebook {
+    .m-share__button--facebook {
       @include m-theme() {
         background-color: themed($m-facebook);
       }
     }
 
-    .m-referralsLinks__shareButton--whatsapp {
+    .m-share__button--whatsapp {
       @include m-theme() {
         background-color: themed($m-whatsapp);
       }
     }
 
-    .m-referralsLinks__shareButton--sms,
-    .m-referralsLinks__shareButton--email {
+    .m-share__button--sms,
+    .m-share__button--email {
       @include m-theme() {
         background-color: themed($m-blue-grey-500);
       }

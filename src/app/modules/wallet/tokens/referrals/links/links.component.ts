@@ -12,6 +12,8 @@ import isMobile from '../../../../../helpers/is-mobile';
 
 export class ReferralsLinksComponent implements OnInit, OnDestroy {
 
+  minds = window.Minds;
+
   referrerParam = '';
   registerUrl = '';
   encodedRegisterUrl = '';
@@ -20,22 +22,22 @@ export class ReferralsLinksComponent implements OnInit, OnDestroy {
 
   registerUrlTimeout;
   referrerParamTimeout;
-  registerUrlRecentlyCopied = false;
-  referrerParamRecentlyCopied = false;
-  registerUrlFocused = false;
-  referrerParamFocused = false;
+  registerUrlRecentlyCopied: boolean = false;
+  referrerParamRecentlyCopied: boolean = false;
+  registerUrlFocused: boolean = false;
+  referrerParamFocused: boolean = false;
 
   constructor(
     public session: Session,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
   ) {
   }
 
   ngOnInit() {
     // Create custom referral links for current user
     this.referrerParam = '?referrer=' + this.session.getLoggedInUser().username;
-    this.registerUrl = window.Minds.site_url + 'register' + this.referrerParam;
-    this.encodedRegisterUrl = encodeURI(window.Minds.site_url) + encodeURIComponent('register' + this.referrerParam);
+    this.registerUrl = this.minds.site_url + 'register' + this.referrerParam;
+    this.encodedRegisterUrl = encodeURI(this.minds.site_url) + encodeURIComponent('register' + this.referrerParam);
     this.encodedRegisterMessage = 'Join%20me%20on%20Minds%20%f0%9f%92%a1%20';
   }
 
@@ -95,6 +97,7 @@ export class ReferralsLinksComponent implements OnInit, OnDestroy {
     inputElement.select();
     document.execCommand('copy');
 
+    // Temporarily change button text from 'copy' to 'copied'
     if (linkType === 'registerUrl') {
       clearTimeout(this.registerUrlTimeout);
       this.registerUrlRecentlyCopied = true;
