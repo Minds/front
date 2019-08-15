@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "preinstall": "git config core.hooksPath .githooks",
     "prebuild": "gulp build.sass",
     "build": "ng build --prod",
     "prebuild-dev": "gulp build.sass --deploy-url=http://localhost/en",
