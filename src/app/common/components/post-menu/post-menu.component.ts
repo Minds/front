@@ -6,6 +6,7 @@ import { ReportCreatorComponent } from '../../../modules/report/creator/creator.
 import { MindsUser } from '../../../interfaces/entities';
 import { SignupModalService } from '../../../modules/modals/signup/service';
 import { BlockListService } from "../../services/block-list.service";
+import { ShareModalComponent } from '../../../modules/modals/share/share';
 
 
 type Option =
@@ -53,7 +54,6 @@ export class PostMenuComponent {
 
   opened: boolean = false;
 
-  shareToggle: boolean = false;
   deleteToggle: boolean = false;
   featureToggle: boolean = false;
 
@@ -199,11 +199,6 @@ export class PostMenuComponent {
     this.selectOption('block');
   }
 
-  share() {
-    this.shareToggle = true;
-    this.selectOption('share');
-  }
-
   feature() {
     if (this.askForCategoriesWhenFeaturing && !this.featureToggle) {
       this.featureToggle = true;
@@ -327,6 +322,14 @@ export class PostMenuComponent {
     const nsfw = reasons.map(reason => reason.value);
     this.client.post(`api/v2/admin/nsfw/${this.entity.guid}`, { nsfw });
     this.entity.nsfw = nsfw;
+  }
+
+  openShareModal() {
+    this.overlayModal.create(ShareModalComponent, this.entity.url, {
+      class: 'm-overlay-modal--medium m-overlayModal__share'
+    }).present();
+
+    this.selectOption('share');
   }
 
 }
