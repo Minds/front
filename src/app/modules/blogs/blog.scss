@@ -133,6 +133,18 @@ minds-blog-view, m-blog-view {
     }
   }
 
+  .minds-body {
+    a {
+      color: #607d8b;
+    }
+  }
+
+  .blogs-grid {
+    @include m-theme() {
+      background-color: themed($m-white) !important;
+    }
+  }
+
   .m-actions-block {
     & > * {
       margin-right: 12px;

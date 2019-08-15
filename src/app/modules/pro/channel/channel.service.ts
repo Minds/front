@@ -6,6 +6,7 @@ import { EntitiesService } from '../../../common/services/entities.service';
 import normalizeUrn from '../../../helpers/normalize-urn';
 import { ProContentModalComponent } from './content-modal/modal.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { BlogView } from "../../blogs/view/view";
 
 @Injectable()
 export class ProChannelService {
@@ -111,7 +112,7 @@ export class ProChannelService {
         window.open(`${window.Minds.site_url}groups/profile/${entity.guid}`, '_blank');
         break;
       case 'object:blog':
-        window.open(`${window.Minds.site_url}${entity.route}/`, '_blank');
+        modalServiceContext.create(BlogView, entity).present();
         break;
       case 'object:image':
       case 'object:video':
@@ -128,7 +129,7 @@ export class ProChannelService {
 
   async subscribe() {
     this.currentChannel.subscribed = true;
-    
+
     this.client.post('api/v1/subscribe/' + this.currentChannel.guid, {})
       .then((response: any) => {
         if (response && response.error) {

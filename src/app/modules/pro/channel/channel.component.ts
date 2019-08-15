@@ -1,14 +1,14 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
   HostBinding,
   HostListener,
+  Injector,
   OnDestroy,
   OnInit,
-  AfterViewInit,
-  Injector,
   ViewChild
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";

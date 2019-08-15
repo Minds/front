@@ -11,6 +11,23 @@ m-pro--channel {
   background-size: cover;
   background-blend-mode: overlay;
   background-color: var(--transparent-background-color);
+
+  m-blog-view.m-blog {
+    color: var(--text-color);
+
+    .minds-blog-body > p, p, a, i.material-icons, span {
+      color: var(--text-color);
+    }
+
+    minds-button-boost > button {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .blogs-grid {
+      background-color: var(--transparent-background-color);
+    }
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -121,11 +138,11 @@ m-pro--channel {
       display: inline-block;
       position: relative;
       cursor: pointer;
-    
+
       @media screen and (min-width: 1000px) {
         display: none;
       }
-      
+
       .m-proChannelTopbarMenu__dropdown {
         list-style: none;
         margin: 34px 0 0;
@@ -133,18 +150,18 @@ m-pro--channel {
           background-color: themed($m-white);
           color: themed($m-grey-700);
         }
-      
+
         li.proChannelTopbarMenuDropdown__item {
           &:hover {
             @include m-theme() {
               background-color: rgba(themed('m-grey-50'), 0.5);
             }
           }
-      
+
           a {
             color: #555 !important;
           }
-      
+
           i {
             color: #555 !important;
           }

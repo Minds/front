@@ -25,6 +25,7 @@ import { ProChannelHomeComponent } from './channel/home/home.component';
 import { ProGroupTileComponent } from "./channel/tiles/group/group-tile.component";
 import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.component';
 import { ProCategoriesComponent } from "./channel/categories/categories.component";
+import { BlogView } from "../blogs/view/view";
 
 const routes: Routes = [
   {
@@ -102,7 +103,8 @@ const routes: Routes = [
   entryComponents: [
     ProMarketingComponent,
     ProChannelListModal,
-    ProUnsubscribeModalComponent
+    ProUnsubscribeModalComponent,
+    BlogView,
   ],
 })
 export class ProModule {

@@ -44,6 +44,10 @@ export class BlogView {
 
   @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
 
+  set data(value: any) {
+    this.blog = value;
+  }
+
 
   constructor(
     public session: Session,
@@ -82,7 +86,7 @@ export class BlogView {
         if (!this.visible) {
           window.history.pushState(null, this.blog.title, url);
           this.title.setTitle(this.blog.title);
-          this.analyticsService.send('pageview', {url: `/blog/view/${this.blog.guid}`});
+          this.analyticsService.send('pageview', { url: `/blog/view/${this.blog.guid}` });
         }
         this.visible = true;
       } else {
@@ -144,7 +148,7 @@ export class BlogView {
   }
 
   calculateLockScreenHeight() {
-    if (!this.lockScreen) 
+    if (!this.lockScreen)
       return;
     const lockScreenOverlay = this.lockScreen.nativeElement.querySelector('.m-wire--lock-screen');
     if (lockScreenOverlay) {
