@@ -138,30 +138,38 @@
                 Set up your category filter hashtags here.
               </p>
 
-              <div class="m-pro--settings--field" *ngFor="let tag of settings.tag_list; let i = index">
-                <label for="headline" i18n>Hashtag #{{ i + 1 }}</label>
+              <m-draggable-list
+                [data]="settings.tag_list">
+                <ng-template let-tag="item" let-i="i">
 
-                <div class="m-pro--settings--flex-inputs">
-                  <input
-                    type="text"
-                    placeholder="Label"
-                    [id]="'tag-label-' + i"
-                    [name]="'tag[' + i + '][label]'"
-                    [(ngModel)]="tag.label"
-                    i18n-placeholder
-                  >
+                  <div class="m-pro--settings--field">
+                    <label for="headline" i18n>Hashtag #{{ i + 1 }}</label>
 
-                  <input
-                    type="text"
-                    placeholder="#hashtag"
-                    [id]="'tag-tag-' + i"
-                    [name]="'tag[' + i + '][tag]'"
-                    [(ngModel)]="tag.tag"
-                    i18n-placeholder
-                  >
-                </div>
-              </div>
+                    <div class="m-pro--settings--flex-inputs">
+                      <input
+                        type="text"
+                        placeholder="Label"
+                        [id]="'tag-label-' + i"
+                        [name]="'tag[' + i + '][label]'"
+                        [(ngModel)]="tag.label"
+                        i18n-placeholder
+                      >
 
+                      <input
+                        type="text"
+                        placeholder="#hashtag"
+                        [id]="'tag-tag-' + i"
+                        [name]="'tag[' + i + '][tag]'"
+                        [(ngModel)]="tag.tag"
+                        i18n-placeholder
+                      >
+                    </div>
+                  </div>
+                </ng-template>
+              </m-draggable-list>
+<div *ngFor="let t of settings.tag_list">
+  {{t.tag}}
+</div>
               <div class="m-pro--settings--field">
                 <button
                   class="m-btn m-btn--slim"
@@ -169,7 +177,8 @@
                   [disabled]="inProgress"
                   (click)="addBlankTag()"
                   i18n
-                >+ Add Tag</button>
+                >+ Add Tag
+                </button>
               </div>
             </ng-template>
 

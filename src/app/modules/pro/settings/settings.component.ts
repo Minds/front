@@ -3,6 +3,7 @@ import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsTitle } from '../../../services/ux/title';
+import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
 
 @Component({
   selector: 'm-pro--settings',
@@ -18,6 +19,9 @@ export class ProSettingsComponent implements OnInit {
   saved: boolean = false;
 
   currentTab: 'general' | 'theme' | 'hashtags' | 'footer' | 'cancel' = 'general';
+
+  private currentDraggableEvent: DragEvent;
+  private currentDragEffectMsg: string;
 
   constructor(
     protected service: ProService,
@@ -85,5 +89,44 @@ export class ProSettingsComponent implements OnInit {
 
   get previewRoute() {
     return ['/pro', this.session.getLoggedInUser().username];
+  }
+
+  onDragStart(event: DragEvent) {
+
+    this.currentDragEffectMsg = "";
+    this.currentDraggableEvent = event;
+
+  }
+
+  onDragged(item: any, list: any[], effect: DropEffect) {
+
+    this.currentDragEffectMsg = `Drag ended with effect "${effect}"!`;
+
+    if (effect === "move") {
+
+      const index = list.indexOf(item);
+      list.splice(index, 1);
+    }
+  }
+
+  onDragEnd(event: DragEvent) {
+    this.currentDraggableEvent = event;
+  }
+
+  onDrop(event: DndDropEvent, list?: any[]) {
+
+    if (list
+      && (event.dropEffect === "copy"
+        || event.dropEffect === "move")) {
+
+      let index = event.index;
+
+      if (typeof index === "undefined") {
+
+        index = list.length;
+      }
+
+      list.splice(index, 0, event.data);
+    }
   }
 }

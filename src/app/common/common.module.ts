@@ -102,10 +102,13 @@ import { ThemeService } from "./services/theme.service";
 import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizontal-infinite-scroll.component";
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
+import { DraggableListComponent } from "./components/draggable-list/list.component";
+import { DndModule } from "ngx-drag-drop";
 
 @NgModule({
   imports: [
     NgCommonModule,
+    DndModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
@@ -195,6 +198,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
 
     FeaturedContentComponent,
+    DraggableListComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -278,17 +282,20 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    DraggableListComponent,
   ],
   providers: [
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [Session, Client, Upload, HttpClient ]
+      deps: [Session, Client, Upload, HttpClient]
     },
     {
       provide: UpdateMarkersService,
-      useFactory: (_http, _session, _sockets) => { return new UpdateMarkersService(_http, _session, _sockets); },
-      deps: [ MindsHttpClient, Session, SocketsService ],
+      useFactory: (_http, _session, _sockets) => {
+        return new UpdateMarkersService(_http, _session, _sockets);
+      },
+      deps: [MindsHttpClient, Session, SocketsService],
     },
     {
       provide: MindsHttpClient,
@@ -298,22 +305,22 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     {
       provide: NSFWSelectorCreatorService,
       useFactory: (_storage) => new NSFWSelectorCreatorService(_storage),
-      deps: [ Storage ],
+      deps: [Storage],
     },
     {
       provide: NSFWSelectorConsumerService,
       useFactory: (_storage) => new NSFWSelectorConsumerService(_storage),
-      deps: [ Storage ],
+      deps: [Storage],
     },
     {
       provide: BoostedContentService,
       useFactory: (client, session, entitiesService, blockListService, settingsService) => new BoostedContentService(client, session, entitiesService, blockListService, settingsService),
-      deps: [ Client, Session, EntitiesService, BlockListService, SettingsService ]
+      deps: [Client, Session, EntitiesService, BlockListService, SettingsService]
     },
     {
       provide: FeaturedContentService,
       useFactory: boostedContentService => new FeaturedContentService(boostedContentService),
-      deps: [ FeedsService ],
+      deps: [FeedsService],
     }
   ],
   entryComponents: [

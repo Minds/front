@@ -1,0 +1,23 @@
+@import 'themes';
+
+m-draggable-list {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 8px;
+      border: 1px solid #ddd;
+
+      display: flex;
+      align-items: center;
+
+      .handle {
+        @include m-theme() {
+          color: themed($grey-600);
+        }
+      }
+    }
+  }
+}
