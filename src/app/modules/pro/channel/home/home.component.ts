@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-pro--channel-home',
@@ -14,6 +15,11 @@ export class ProChannelHomeComponent implements OnInit {
   featuredContent: Array<any> = [];
 
   content: Array<any> = [];
+
+  categories: Array<{
+    tag: { tag: string, label: string },
+    content: Array<Observable<any>>,
+  }> = [];
 
   moreData: boolean = true;
 
@@ -44,6 +50,9 @@ export class ProChannelHomeComponent implements OnInit {
         limit: 24,
       });
       this.content.push(...content);
+      this.detectChanges();
+
+      this.categories = await this.channelService.getAllCategoriesContent();
       this.detectChanges();
     } catch (e) {
       this.moreData = false;

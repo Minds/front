@@ -94,6 +94,28 @@ export class ProChannelService {
     };
   }
 
+  async getAllCategoriesContent() {
+    if (!this.currentChannel) {
+      throw new Error('No channel');
+    }
+
+    const { content } = await this.client.get(`api/v2/pro/channel/${this.currentChannel.guid}/content`) as any;
+
+    return content
+      .filter(entry => entry && entry.content && entry.content.length)
+      .map(entry => {
+        entry.content = entry.content.map(item => {
+          if (item.entity) {
+            return Promise.resolve(item.entity);
+          }
+
+          return this.entitiesService.single(item.urn);
+        });
+
+        return entry;
+      });
+  }
+
   linkTo(to, query, algorithm?) {
     let route = ['/pro', this.currentChannel.username, to];
 
