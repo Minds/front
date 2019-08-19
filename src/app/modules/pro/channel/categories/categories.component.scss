@@ -1,12 +1,16 @@
 m-pro--channel--categories {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: center;
 
   .m-proChannel__category {
     cursor: pointer;
     color: var(--m-pro--text-color);
-    padding: 16px 16px 0;
+    background: var(--m-pro--transparent-background-color);
+
+    padding: 4px 8px;
+    margin: 0 12px 8px;
+    border-radius: 4px;
 
     text-transform: uppercase;
     letter-spacing: 0.1em;

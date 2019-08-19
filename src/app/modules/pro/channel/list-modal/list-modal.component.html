@@ -5,7 +5,7 @@
   >
     <ng-container *ngFor="let entity$ of (entities$ | async); let i = index">
       <ng-container *ngIf="entity$ | async as entity">
-        <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
+        <ng-container *ngIf="type === 'all' || type === 'images' || type === 'videos' || type === 'blogs'">
           <m-pro--channel-tile
             [entity]="entity"
             (click)="expand(entity)"
