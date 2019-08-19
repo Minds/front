@@ -186,6 +186,11 @@ m-pro--channel-list {
     }
   }
 
+  .m-proChannelList__loader {
+    text-align: center;
+    margin: 16px 0;
+  }
+
   @media screen and (min-width: 1px) and (max-width: $min-desktop) {
     .m-proChannelList__content {
       margin: 0;

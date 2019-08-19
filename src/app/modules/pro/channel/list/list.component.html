@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div class="m-proChannelList__content">
+<div class="m-proChannelList__content" *ngIf="!(inProgress$ | async); else inProgressLoader">
   <ul class="m-proChannelListContent__list" [class.m-proChannelListContent__normalList]="type === 'activities'">
     <li *ngFor="let entity of entities; let i = index">
       <ng-container *ngIf="type === 'all' || type === 'images' || type === 'videos' || type === 'blogs'">
@@ -49,3 +49,8 @@
     <!-- talk to Emi about this -->
   </ng-container>
 </div>
+<ng-template #inProgressLoader>
+  <div class="m-proChannelList__loader">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+</ng-template>

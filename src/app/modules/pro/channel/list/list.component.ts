@@ -18,6 +18,7 @@ import { Tag } from "../../../../interfaces/entities";
 export class ProChannelListComponent implements OnInit, OnDestroy {
 
   paramsType: string; // exact string that came from the router params
+
   type: string;
 
   params$: Subscription;
@@ -154,6 +155,10 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   loadNext() {
     this.feedsService.loadMore();
+  }
+
+  get inProgress$() {
+    return this.feedsService.inProgress;
   }
 
   detectChanges() {
