@@ -13,7 +13,7 @@
 <div class="m-proChannelList__content">
   <ul class="m-proChannelListContent__list" [class.m-proChannelListContent__normalList]="type === 'activities'">
     <li *ngFor="let entity of entities; let i = index">
-      <ng-container *ngIf="type === 'images' || type === 'videos' || type === 'blogs'">
+      <ng-container *ngIf="type === 'all' || type === 'images' || type === 'videos' || type === 'blogs'">
         <m-pro--channel-tile
           [entity]="entity"
           (click)="onTileClicked(entity)"

@@ -14,8 +14,6 @@ export class ProChannelHomeComponent implements OnInit {
 
   featuredContent: Array<any> = [];
 
-  content: Array<any> = [];
-
   categories: Array<{
     tag: { tag: string, label: string },
     content: Array<Observable<any>>,
@@ -35,9 +33,11 @@ export class ProChannelHomeComponent implements OnInit {
   }
 
   async load() {
+    const MAX_FEATURED_CONTENT = 19; // 1 + 2 + (4 * 4)
+
     this.inProgress = true;
     this.featuredContent = [];
-    this.content = [];
+    this.categories = [];
     this.moreData = true;
 
     this.detectChanges();
@@ -47,9 +47,9 @@ export class ProChannelHomeComponent implements OnInit {
       this.detectChanges();
 
       const { content } = await this.channelService.getContent({
-        limit: 24,
+        limit: MAX_FEATURED_CONTENT,
       });
-      this.content.push(...content);
+      this.featuredContent = this.featuredContent.concat(content).slice(0, MAX_FEATURED_CONTENT);
       this.detectChanges();
 
       this.categories = await this.channelService.getAllCategoriesContent();
@@ -60,6 +60,14 @@ export class ProChannelHomeComponent implements OnInit {
 
     this.inProgress = false;
     this.detectChanges();
+  }
+
+  getCategoryRoute(tag) {
+    if (!this.channelService.currentChannel || !tag) {
+      return [];
+    }
+
+    return ['/pro', this.channelService.currentChannel.username, 'all', { hashtag: tag }];
   }
 
   onContentClick(entity: any) {

@@ -58,6 +58,9 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         this.type = this.paramsType = params['type'];
       }
       switch (params['type']) {
+        case 'all':
+          this.type = 'all';
+          break;
         case 'videos':
           this.type = 'videos';
           break;
@@ -121,25 +124,26 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
     this.detectChanges();
 
-    let params = [];
+    let params: any = {};
 
     if (this.selectedHashtag && this.selectedHashtag !== 'all') {
-      params.push(`hashtags=${this.selectedHashtag}`);
+      params.hashtags = this.selectedHashtag;
     }
 
     if (this.query && (this.query !== '')) {
-      params.push(`&period=${this.period}&all=1&query=${this.query}&nsfw=&sync=1&limit=150&as_activities=1&from_timestamp=`);
+      params.period = this.period;
+      params.all = 1;
+      params.query = this.query;
+      params.sync = 1;
     }
 
     let url = `api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`;
 
-    if (params.length > 0) {
-      url += '?' + params.join('&');
-    }
-
     try {
       this.feedsService
         .setEndpoint(url)
+        .setParams(params)
+        .setCastToActivities(false)
         .setLimit(10)
         .fetch();
 

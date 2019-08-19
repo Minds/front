@@ -10,20 +10,12 @@
     </div>
   </div>
 
-  <div class="m-pro--channel-home--section" *ngIf="content?.length">
-    <h2 i18n>Top Content</h2>
-
-    <div class="m-pro--channel-home--content">
-      <m-pro--channel-tile
-        *ngFor="let entity of content"
-        [entity]="entity"
-        (click)="onContentClick(entity)"
-      ></m-pro--channel-tile>
-    </div>
-  </div>
-
   <div class="m-pro--channel-home--section" *ngFor="let category of categories">
-    <h2 i18n>{{ category?.tag?.label }}</h2>
+    <h2 i18n>
+      <a
+        [routerLink]="getCategoryRoute(category.tag?.tag)"
+      >{{ category.tag?.label }}</a>
+    </h2>
 
     <div class="m-pro--channel-home--category-content">
       <ng-container *ngFor="let entity$ of category?.content">
