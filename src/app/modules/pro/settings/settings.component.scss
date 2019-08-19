@@ -66,14 +66,23 @@
         border-color: themed($m-grey-50);
       }
     }
+
+    &.m-pro--settings--field-actions {
+      display: flex;
+      flex-direction: row;
+
+      > *:last-child {
+        margin-left: auto;
+      }
+    }
   }
 
   .m-pro--settings--preview-btn {
     margin-left: 0.35em;
 
     @include m-theme() {
-      color: themed($m-grey-300);
-      border-color: themed($m-grey-300);
+      color: themed($m-grey-600);
+      border-color: themed($m-grey-600);
     }
   }
 
@@ -100,5 +109,9 @@
         margin-right: 0;
       }
     }
+  }
+
+  .m-pro--settings--field-spinner {
+    margin-left: 0.65em
   }
 }

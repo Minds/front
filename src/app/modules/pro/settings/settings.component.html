@@ -237,7 +237,7 @@
             </ng-template>
           </ng-container>
 
-          <div class="m-pro--settings--field" *ngIf="currentTab !== 'cancel'">
+          <div class="m-pro--settings--field m-pro--settings--field-actions" *ngIf="currentTab !== 'cancel'">
             <button
               class="m-btn m-btn--slim m-btn--action"
               type="submit"
@@ -245,16 +245,15 @@
               i18n
             >Save</button>
 
-            <span *ngIf="inProgress">
+            <div class="m-pro--settings--field-spinner" *ngIf="inProgress">
               <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-            </span>
+            </div>
 
             <a
-              *ngIf="saved"
               class="m-btn m-link-btn m-btn--slim m-pro--settings--preview-btn"
               [routerLink]="previewRoute"
               i18n
-            >Preview your Pro site</a>
+            >Go to your channel</a>
           </div>
         </form>
       </ng-container>
