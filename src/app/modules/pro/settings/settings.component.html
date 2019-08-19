@@ -160,6 +160,8 @@
                     [(ngModel)]="tag.tag"
                     i18n-placeholder
                   >
+
+                  <i class="material-icons" (click)="removeTag(i)">clear</i>
                 </div>
               </div>
 
@@ -238,6 +240,9 @@
                     [(ngModel)]="link.href"
                     i18n-placeholder
                   >
+
+                  <i class="material-icons" (click)="removeFooterLink(i)">clear</i>
+
                 </div>
               </div>
 

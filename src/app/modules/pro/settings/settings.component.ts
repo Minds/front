@@ -74,12 +74,20 @@ export class ProSettingsComponent implements OnInit {
     this.settings.tag_list.push({ label: '', tag: '' });
   }
 
+  removeTag(index: number) {
+    this.settings.tag_list.splice(index, 1);
+  }
+
   addBlankFooterLink() {
     if (!this.settings) {
       return;
     }
 
     this.settings.footer_links.push({ title: '', href: '' });
+  }
+
+  removeFooterLink(index: number) {
+    this.settings.footer_links.splice(index, 1);
   }
 
   detectChanges() {
