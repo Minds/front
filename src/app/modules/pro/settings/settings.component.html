@@ -138,14 +138,39 @@
                 Set up your category filter hashtags here.
               </p>
 
-              <m-draggable-list
+
+              <div class="m-pro--settings--field" *ngFor="let tag of settings.tag_list; let i = index">
+                <label for="headline" i18n>Hashtag #{{ i + 1 }}</label>
+
+                <div class="m-pro--settings--flex-inputs">
+                  <input
+                    type="text"
+                    placeholder="Label"
+                    [id]="'tag-label-' + i"
+                    [name]="'tag[' + i + '][label]'"
+                    [(ngModel)]="tag.label"
+                    i18n-placeholder
+                  >
+
+                  <input
+                    type="text"
+                    placeholder="#hashtag"
+                    [id]="'tag-tag-' + i"
+                    [name]="'tag[' + i + '][tag]'"
+                    [(ngModel)]="tag.tag"
+                    i18n-placeholder
+                  >
+                </div>
+              </div>
+
+              <!--<m-draggable-list
                 [data]="settings.tag_list">
                 <ng-template let-tag="item" let-i="i">
 
-                  <div class="m-pro--settings--field">
+                  <div class="m-pro&#45;&#45;settings&#45;&#45;field">
                     <label for="headline" i18n>Hashtag #{{ i + 1 }}</label>
 
-                    <div class="m-pro--settings--flex-inputs">
+                    <div class="m-pro&#45;&#45;settings&#45;&#45;flex-inputs">
                       <input
                         type="text"
                         placeholder="Label"
@@ -166,7 +191,7 @@
                     </div>
                   </div>
                 </ng-template>
-              </m-draggable-list>
+              </m-draggable-list>-->
 
               <div class="m-pro--settings--field">
                 <button
