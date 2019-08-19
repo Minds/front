@@ -100,9 +100,13 @@ export class NewsfeedBoostRotatorComponent {
     this.feedsService.feed.subscribe(async boosts => {
       if (!boosts.length)
         return;
+      this.boosts = [];
       for (const boost of boosts) {
         if (boost)
           this.boosts.push(await boost.pipe(first()).toPromise());
+      }
+      if (this.currentPosition >= this.boosts.length) {
+        this.currentPosition = 0;
       }
       if (this.currentPosition === 0) {
         this.recordImpression(this.currentPosition, true);
@@ -117,8 +121,9 @@ export class NewsfeedBoostRotatorComponent {
         .setEndpoint('api/v2/boost/feed')
         .setParams({
           rating: this.rating,
+          rotator: 1,
         })
-        .setLimit(10)
+        .setLimit(12)
         .setOffset(0)
         .fetch();
         
@@ -189,7 +194,7 @@ export class NewsfeedBoostRotatorComponent {
 
   recordImpression(position: number, force: boolean) {
     //ensure was seen for at least 1 second
-    if ((Date.now() > this.lastTs + 1000 || force) && this.boosts[position].boosted_guid) {
+    if ((Date.now() > this.lastTs + 1000 || force) && this.boosts[position] && this.boosts[position].boosted_guid) {
       this.newsfeedService.recordView(this.boosts[position], true, this.channel, this.clientMetaService.build({
         position: position + 1,
         campaign: this.boosts[position].urn,
@@ -198,7 +203,8 @@ export class NewsfeedBoostRotatorComponent {
       console.log('Boost rotator recording impressions for ' + position + ' ' + this.boosts[position].boosted_guid, this.windowFocused);
     }
     this.lastTs = Date.now();
-    window.localStorage.setItem('boost-rotator-offset', this.boosts[position].boosted_guid);
+    if (this.boosts[position] && this.boosts[position].boosted_guid)
+      window.localStorage.setItem('boost-rotator-offset', this.boosts[position].boosted_guid);
   }
 
   active() {
@@ -236,6 +242,7 @@ export class NewsfeedBoostRotatorComponent {
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       //this.currentPosition = 0;
       try {
+        this.feedsService.fetch();
         this.feedsService.loadMore();
         this.currentPosition++;
       } catch(e) {

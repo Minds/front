@@ -5,7 +5,7 @@
 <ul class="minds-dropdown-menu" [hidden]="!opened">
   <li class="mdl-menu__item" *ngIf="options.indexOf('view') !== -1" (click)="selectOption('view')" i18n="@@M__ACTION__VIEW">View</li>
   <li class="mdl-menu__item" *ngIf="options.indexOf('edit') !== -1 && entity.owner_guid == session.getLoggedInUser().guid || session.isAdmin()" (click)="selectOption('edit')" i18n="@@M__ACTION__EDIT">Edit</li>
-  <li class="mdl-menu__item" *ngIf="options.indexOf('share') !== -1" (click)="share()" i18n="@@M__ACTION__SHARE">Share</li>
+  <li class="mdl-menu__item" *ngIf="options.indexOf('share') !== -1" (click)="openShareModal()" i18n="@@M__ACTION__SHARE">Share</li>
   <li class="mdl-menu__item" *ngIf="options.indexOf('translate') !== -1  && isTranslatable" (click)="selectOption('translate')" i18n="@@M__ACTION__TRANSLATE">Translate</li>
   <!-- FEATURE -->
   <ng-container *ngIf="options.indexOf('feature') !== -1">
@@ -60,7 +60,6 @@
 </ul>
 <div class="minds-bg-overlay" (click)="opened = false" [hidden]="!opened"></div>
 
-<m-modal-share *ngIf="shareToggle" [open]="true" (closed)="shareToggle = false; opened = false;" [url]="entity.url" [embed]="entity"></m-modal-share>
 <m-modal-confirm *ngIf="deleteToggle"
   [open]="true"
   [closeAfterAction]=true

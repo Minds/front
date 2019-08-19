@@ -58,9 +58,13 @@ export class LoginForm {
         this.done.next(data.user);
       })
       .catch((e) => {
-
+      
         this.inProgress = false;
-        if (e.status === 'failed') {
+
+        if (!e) {
+          this.errorMessage = 'LoginException::Unknown';
+          this.session.logout();
+        } else if (e.status === 'failed') {
           //incorrect login details
           this.errorMessage = 'LoginException::AuthenticationFailed';
           this.session.logout();

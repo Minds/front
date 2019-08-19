@@ -43,7 +43,7 @@ export class EntitiesService {
       if (!this.entities.has(feedItem.urn)) {
         urnsToFetch.push(feedItem.urn);
       }
-      if (this.entities.has(feedItem.urn) && !feedItem.entity) {
+      if (this.entities.has(feedItem.urn) && !feedItem.entity && feed.length < 20) {
         urnsToResync.push(feedItem.urn);
       }
     }

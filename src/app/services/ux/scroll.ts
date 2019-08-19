@@ -41,7 +41,7 @@ export class ScrollService {
   listenForView() {
     if (!this.viewListener) {
       this.viewListener = this.scroll
-        .pipe(debounceTime(500))
+        .pipe(debounceTime(100)) // wait 100ms before triggering
         .subscribe((e) => { this.viewEmitter.next(e); });
     }
     return this.viewEmitter;
