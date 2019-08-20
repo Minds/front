@@ -16,12 +16,22 @@
     width: 100%;
   }
 
-  m-tooltip i:not(.m-referrals-dashboard__pingIcon) {
-    font-size: 12px;
-    margin-left: 1px;
-    @include m-theme() {
-      color: themed($m-grey-500);
+  m-tooltip {
+    i:not(.m-referrals-dashboard__pingIcon) {
+      font-size: 12px;
+      margin-left: 1px;
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
     }
+    .m-tooltip--bubble {
+      z-index: 9999;
+      @media screen and (max-width: $max-mobile) {
+        top: -56px;
+        right: 30px;
+      }
+    }
+
   }
 
   .m-referrals-dashboard__row {
@@ -43,13 +53,16 @@
           right: 2px;
         }
       }
-
     }
     &.m-referrals-dashboard__dataRow {
       font-size: 13px;
       @include m-theme() {
         border-top: 1px solid themed($m-grey-50);
       }
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      position: relative;
     }
   }
 
