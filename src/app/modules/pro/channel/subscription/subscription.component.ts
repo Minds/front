@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Session } from '../../services/session';
-import { ProService } from './pro.service';
+import { Session } from '../../../../services/session';
+import { ProService } from '../../pro.service';
 
 @Component({
   selector: 'm-pro--subscription',
