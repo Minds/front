@@ -5,23 +5,23 @@ import { Session } from "../../../../services/session";
 import { ProChannelService } from "../channel.service";
 
 @Component({
-  selector: 'm-pro--channel-signup',
+  selector: 'm-pro--channel-login',
   template: `
-    <section class="m-ProChannelSignup--hero">
+    <section class="m-ProChannelLogin--hero">
 
-      <div class="m-ProChannelSignup--hero--inner">
+      <div class="m-ProChannelLogin--hero--inner">
 
-        <div class="m-ProChannelSignup--hero--slogans">
+        <div class="m-ProChannelLogin--hero--slogans">
           <h2>{{ headline }}</h2>
         </div>
 
-        <div class="m-ProChannelSignup--signup">
+        <div class="m-ProChannelLogin--login">
           <ng-container *ngIf="currentSection === 'login'">
-            <span class="m-proChannelSignup--subtext">Not on Minds? <a (click)="currentSection = 'register'">Start a Channel</a></span>
+            <span class="m-proChannelLogin--subtext">Not on Minds? <a (click)="currentSection = 'register'">Start a Channel</a></span>
             <minds-form-login (done)="registered()"></minds-form-login>
           </ng-container>
           <ng-container *ngIf="currentSection === 'register'">
-            <span class="m-proChannelSignup--subtext"><a (click)="currentSection = 'login'">I already have an account</a></span>
+            <span class="m-proChannelLogin--subtext"><a (click)="currentSection = 'login'">I already have an account</a></span>
             <minds-form-register (done)="registered()"></minds-form-register>
           </ng-container>
         </div>
@@ -32,7 +32,7 @@ import { ProChannelService } from "../channel.service";
   `
 })
 
-export class ProChannelSignupComponent {
+export class ProChannelLoginComponent {
   username: string;
   currentSection: 'login' | 'register' = 'login';
 

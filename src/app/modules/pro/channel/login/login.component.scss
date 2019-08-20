@@ -1,6 +1,6 @@
 @import "defaults";
 
-m-pro--channel-signup {
+m-pro--channel-login {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -10,10 +10,10 @@ m-pro--channel-signup {
   }
 }
 
-.m-ProChannelSignup--hero {
+.m-ProChannelLogin--hero {
   position: relative;
 
-  .m-ProChannelSignup--hero--inner {
+  .m-ProChannelLogin--hero--inner {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -29,7 +29,7 @@ m-pro--channel-signup {
       padding: 62px 0px;
     }
 
-    .m-ProChannelSignup--app-buttons {
+    .m-ProChannelLogin--app-buttons {
       display: flex;
       justify-content: flex-start;
 
@@ -37,7 +37,7 @@ m-pro--channel-signup {
         margin-left: 2px;
       }
 
-      .m-ProChannelSignup--app-buttons__iosBanner {
+      .m-ProChannelLogin--app-buttons__iosBanner {
         > a > img {
           height: 48px;
 
@@ -55,7 +55,7 @@ m-pro--channel-signup {
     }
   }
 
-  .m-ProChannelSignup--hero--video {
+  .m-ProChannelLogin--hero--video {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -71,7 +71,7 @@ m-pro--channel-signup {
     }
   }
 
-  .m-ProChannelSignup--hero--overlay {
+  .m-ProChannelLogin--hero--overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -83,7 +83,7 @@ m-pro--channel-signup {
     }
   }
 
-  .m-ProChannelSignup--hero--slogans {
+  .m-ProChannelLogin--hero--slogans {
     flex: 2;
 
     h1, h3, h4 {
@@ -126,7 +126,7 @@ m-pro--channel-signup {
     z-index: 2;
   }
 
-  .m-ProChannelSignup--signup {
+  .m-ProChannelLogin--login {
     flex: 1;
     margin-left: 16px;
 
@@ -135,7 +135,7 @@ m-pro--channel-signup {
       margin-left: 0;
     }
 
-    .m-proChannelSignup--subtext {
+    .m-proChannelLogin--subtext {
       font-size: 20px;
       margin: 8px;
       color: var(--m-pro--text-color) !important;
@@ -231,8 +231,8 @@ m-pro--channel-signup {
   }
 
   @media (max-width: $max-mobile) {
-    .m-ProChannelSignup--grid {
-      .m-ProChannelSignup--titles {
+    .m-ProChannelLogin--grid {
+      .m-ProChannelLogin--titles {
         h1 {
           font-size: 32px;
           line-height: 32px;
@@ -250,7 +250,7 @@ m-pro--channel-signup {
         }
       }
     }
-    .m-ProChannelSignup--titles {
+    .m-ProChannelLogin--titles {
       //display:none;
     }
     .m-app-links {

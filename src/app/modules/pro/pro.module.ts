@@ -7,7 +7,7 @@ import { ProService } from './pro.service';
 import { ProMarketingComponent } from './marketing.component';
 import { ProSubscriptionComponent } from './subscription.component';
 import { ProChannelComponent } from "./channel/channel.component";
-import { ProChannelSignupComponent } from "./channel/signup/signup.component";
+import { ProChannelLoginComponent } from "./channel/login/login.component";
 import { MindsFormsModule } from "../forms/forms.module";
 import { ProChannelListComponent } from "./channel/list/list.component";
 import { ProChannelDonateComponent } from './channel/donate/donate.component';
@@ -41,8 +41,8 @@ const channelRoute = {
       component: ProChannelDonateComponent
     },
     {
-      path: 'signup',
-      component: ProChannelSignupComponent
+      path: 'login',
+      component: ProChannelLoginComponent
     },
     {
       path: ':type',
@@ -102,7 +102,7 @@ routes.push({
     ProCategoriesComponent,
     ProChannelListModal,
     ProChannelComponent,
-    ProChannelSignupComponent,
+    ProChannelLoginComponent,
     ProChannelListComponent,
     ProChannelDonateComponent,
     ProUserMenuComponent,

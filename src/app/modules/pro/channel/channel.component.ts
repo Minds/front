@@ -184,7 +184,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (!this.channel.subscribed) {
       if (!this.session.isLoggedIn()) {
-        this.router.navigate(['/pro', this.channel.username, 'signup']);
+        this.router.navigate(['/login']);
         return false;
       }
 
