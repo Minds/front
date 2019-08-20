@@ -16,7 +16,14 @@ import { ProChannelService } from "../channel.service";
         </div>
 
         <div class="m-ProChannelSignup--signup">
-          <minds-form-register (done)="registered()"></minds-form-register>
+          <ng-container *ngIf="currentSection === 'login'">
+            <span class="m-proChannelSignup--subtext">Not on Minds? <a (click)="currentSection = 'register'">Start a Channel</a></span>
+            <minds-form-login (done)="registered()"></minds-form-login>
+          </ng-container>
+          <ng-container *ngIf="currentSection === 'register'">
+            <span class="m-proChannelSignup--subtext"><a (click)="currentSection = 'login'">I already have an account</a></span>
+            <minds-form-register (done)="registered()"></minds-form-register>
+          </ng-container>
         </div>
 
       </div>
@@ -27,6 +34,7 @@ import { ProChannelService } from "../channel.service";
 
 export class ProChannelSignupComponent {
   username: string;
+  currentSection: 'login' | 'register' = 'login';
 
   paramsSubscription: Subscription;
 
