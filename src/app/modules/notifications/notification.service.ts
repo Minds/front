@@ -18,7 +18,9 @@ export class NotificationService {
     if (!window.Minds.notifications_count)
       window.Minds.notifications_count = 0;
 
-    this.listen();
+    if (!window.Minds.pro) {
+      this.listen();
+    }
   }
 
   /**

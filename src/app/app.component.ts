@@ -60,11 +60,13 @@ export class Minds {
   async ngOnInit() {
     this.standalone = Boolean(window.Minds.pro);
 
-    this.notificationService.getNotifications();
+    if (!this.standalone) {
+      this.notificationService.getNotifications();
+    }
 
     this.session.isLoggedIn(async (is) => {
-      if (is && !window.Minds.pro) { // TODO remove window.Minds.pro check from this line
-        if (!window.Minds.pro) {
+      if (is && !this.standalone) { // TODO remove window.Minds.pro check from this line
+        if (!this.standalone) {
           this.showOnboarding = await this.onboardingService.showModal();
         }
         if (this.minds.user.language !== this.minds.language) {
@@ -99,7 +101,7 @@ export class Minds {
     this.web3Wallet.setUp();
 
     this.webtorrent.setUp();
-    
+
     this.themeService.setUp();
   }
 
