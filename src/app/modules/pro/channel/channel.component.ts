@@ -186,7 +186,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (!this.channel.subscribed) {
       if (!this.session.isLoggedIn()) {
-        this.router.navigate(this.channelService.getRouterLink('signup'));
+        this.router.navigate(
+          window.Minds.pro ?
+            this.channelService.getRouterLink('signup') :
+            ['/login']
+        );
+
         return false;
       }
 
