@@ -40,7 +40,7 @@
   <router-outlet></router-outlet>
 </m-body>
 
-<m-messenger *ngIf="minds.LoggedIn"></m-messenger>
+<m-messenger *ngIf="minds.LoggedIn && !this.standalone"></m-messenger>
 
 <m-hovercard-popup></m-hovercard-popup>
 
