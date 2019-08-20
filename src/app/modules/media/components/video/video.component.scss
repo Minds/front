@@ -6,6 +6,16 @@
   position: relative;
   display:block;
 
+  &.clickable {
+    cursor:pointer;
+  }
+
+  &:hover {
+    .minds-video-play-icon {
+      opacity: 1;
+    }
+  }
+
   video{
     width:100%;
   }
@@ -43,6 +53,7 @@
     }
   }
   .minds-video-play-icon{
+    opacity: 0.8;
     display: block;
     text-align: center;
     top: 50%;
@@ -51,18 +62,21 @@
     position: absolute;
     cursor: pointer;
     width: 100%;
+    transition: opacity 0.3s cubic-bezier(.23, 1, .32, 1);
     @include m-theme(){
       color: themed($m-white-always);
+      text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
     }
   }
   .minds-video-bar-full{
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     box-sizing: border-box;
-    //padding: $minds-padding;
     text-align: center;
     align-items: center;
     @include m-theme(){
@@ -75,7 +89,7 @@
         color:themed($m-white-always);
       }
     }
-    
+
     .mdl-spinner {
       margin: 0 8px;
     }
@@ -91,9 +105,10 @@
     .minds-video-bar-min{
       display: none;
     }
-    .minds-video-bar-full{
-      display: flex;
-    }
+
+    // .minds-video-bar-full{
+    //   display: flex;
+    // }
   }
 
   .m-video--torrent-info {

@@ -218,7 +218,7 @@ m-hashtags--sidebar-selector {
     width: 48px;
     z-index: 1;
     @include m-theme(){
-      background: linear-gradient(to right, transparent 0%, rgba(themed($m-body-bg), 1) 50%);
+      background: linear-gradient(to right, rgba(themed($m-white-always), 0) 0%, rgba(themed($m-body-bg), 1) 50%);
     }
 
     .m-hashtagsSidebarSelectorCompactListOverflow__Arrow {

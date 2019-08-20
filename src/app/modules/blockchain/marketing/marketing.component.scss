@@ -155,7 +155,7 @@ m-blockchain--marketing {
 
   m-video .minds-video-play-icon {
     @include m-theme(){
-      text-shadow: 0 0 3px themed($m-grey-900);
+      text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
     }
   }
 

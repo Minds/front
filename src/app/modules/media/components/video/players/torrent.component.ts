@@ -20,6 +20,7 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
   @Input() muted: boolean = false;
   @Input() poster: string = '';
   @Input() autoplay: boolean = false;
+  @Input() guid: string | number;
 
   src: string;
   @Input('src') set _src(src: string) {
@@ -38,9 +39,12 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
   @Output() onPause: EventEmitter<HTMLVideoElement> = new EventEmitter();
   @Output() onEnd: EventEmitter<HTMLVideoElement> = new EventEmitter();
   @Output() onError: EventEmitter<{ player, e }> = new EventEmitter();
+  @Output() onCanPlayThrough: EventEmitter<any> = new EventEmitter();
+  @Output() onLoadedMetadata: EventEmitter<any> = new EventEmitter();
 
   initialized: boolean = false;
   loading: boolean = false;
+  isModal: boolean = false;
 
   protected torrentId: string;
   protected torrentReady: boolean = false;
@@ -67,10 +71,13 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
   protected _emitPause = () => this.onPause.emit(this.getPlayer());
   protected _emitEnd = () => this.onEnd.emit(this.getPlayer());
   protected _emitError = e => this.onError.emit({ player: this.getPlayer(), e});
+  protected _emitCanPlayThrough = () => this.onCanPlayThrough.emit(this.getPlayer());
+  protected _emitLoadedMetadata = () => this.onLoadedMetadata.emit(this.getPlayer());
 
   protected _canPlayThrough = () => {
     this.loading = false;
     this.detectChanges();
+    this._emitCanPlayThrough();
   };
 
   protected _dblClick = () => {
@@ -130,8 +137,10 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
     player.addEventListener('ended', this._emitEnd);
     player.addEventListener('error', this._onPlayerError);
     player.addEventListener('canplaythrough', this._canPlayThrough);
+    player.addEventListener('loadedmetadata', this._emitLoadedMetadata);
 
     this.infoTimer$ = setInterval(this._refreshInfo, 1000);
+    this.isModal = document.body.classList.contains('m-overlay-modal--shown');
   }
 
   ngAfterViewInit() {
@@ -158,6 +167,7 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
       player.removeEventListener('ended', this._emitEnd);
       player.removeEventListener('error', this._onPlayerError);
       player.removeEventListener('canplaythrough', this._canPlayThrough);
+      player.removeEventListener('loadedmetadata', this._emitLoadedMetadata);
     }
   }
 
@@ -353,4 +363,5 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
       this.torrentReady = false;
     }
   }
+
 }
