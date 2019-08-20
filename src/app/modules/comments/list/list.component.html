@@ -23,7 +23,7 @@
     <span *ngIf="!descendingInProgress && loaded">
       <i class="material-icons">update</i> <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION">Load earlier</ng-container>
     </span>
-    
+
   </div>
 
   <p class="m-comments--start-conversation-label"
@@ -100,6 +100,8 @@
             </div>
 
             <div class="mdl-card__actions">
+              <!-- Overflow -->
+              <div class="m-comments-composer--overflow"></div>
               <!-- Attachements -->
               <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
                 <i class="material-icons">attachment</i>

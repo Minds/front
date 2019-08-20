@@ -1,4 +1,6 @@
-import { Component, ElementRef, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MindsVideoProgressBar } from './progress-bar/progress-bar.component';
 import { MindsVideoVolumeSlider } from './volume-slider/volume-slider.component';
 
@@ -7,23 +9,46 @@ import { ScrollService } from '../../../../services/ux/scroll';
 import { MindsPlayerInterface } from './players/player.interface';
 import { WebtorrentService } from '../../../webtorrent/webtorrent.service';
 import { SOURCE_CANDIDATE_PICK_ZIGZAG, SourceCandidates } from './source-candidates';
+import isMobile from '../../../../helpers/is-mobile';
 
 @Component({
   selector: 'm-video',
   host: {
     '(mouseenter)': 'onMouseEnter()',
-    '(mouseleave)': 'onMouseLeave()'
+    '(mouseleave)': 'onMouseLeave()',
+    '[class.clickable]':'canPlayThrough'
   },
   templateUrl: 'video.component.html',
+  animations: [
+    trigger('fadeAnimation', [
+      state('in', style({
+        visibility: 'visible',
+        opacity: 1
+      })),
+      state('out', style({
+        visibility: 'hidden',
+        opacity: 0
+      })),
+      transition('in <=> out', [
+        animate('300ms ease-in')
+      ]),
+    ]),
+  ],
 })
-export class MindsVideoComponent {
+export class MindsVideoComponent implements OnDestroy {
 
   @Input() guid: string | number;
   @Input() log: string | number;
   @Input() muted: boolean = false;
   @Input() poster: string = '';
+  @Input() isActivity: boolean = false;
+  @Input() isModal: boolean = false;
 
   @Output('finished') finished: EventEmitter<any> = new EventEmitter();
+
+  @Output() videoMetadataLoaded: EventEmitter<any> = new EventEmitter();
+  @Output() videoCanPlayThrough: EventEmitter<any> = new EventEmitter();
+  @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('progressBar', { static: false }) progressBar: MindsVideoProgressBar;
   @ViewChild('volumeSlider', { static: false }) volumeSlider: MindsVideoVolumeSlider;
@@ -52,6 +77,11 @@ export class MindsVideoComponent {
   playedOnce: boolean = false;
   playCount: number = -1;
   playCountDisabled: boolean = false;
+  stageHover: boolean = false;
+  showControls: boolean = false;
+  stopSeekerTimeout: any = null;
+  metadataLoaded: boolean = false;
+  canPlayThrough: boolean = false;
 
   current: { type: 'torrent' | 'direct-http', src: string };
   protected candidates: SourceCandidates = new SourceCandidates();
@@ -70,6 +100,7 @@ export class MindsVideoComponent {
     public client: Client,
     protected webtorrent: WebtorrentService,
     protected cd: ChangeDetectorRef,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -154,13 +185,27 @@ export class MindsVideoComponent {
   }
 
   onMouseEnter() {
+    if (this.isActivity) {
+      return;
+    }
+
     this.progressBar.getSeeker();
     this.progressBar.enableKeyControls();
+    this.showControls = true;
   }
 
   onMouseLeave() {
-    this.progressBar.stopSeeker();
+    if (this.stageHover || this.isActivity) {
+      return;
+    }
+
+    clearTimeout(this.stopSeekerTimeout);
+    this.stopSeekerTimeout = setTimeout(() => {
+      this.progressBar.stopSeeker();
+    }, 300);
+
     this.progressBar.disableKeyControls();
+    this.showControls = false;
   }
 
   selectedQuality(quality) {
@@ -210,6 +255,10 @@ export class MindsVideoComponent {
   ngOnDestroy() {
     if (this.scroll_listener)
       this.scroll.unListen(this.scroll_listener);
+
+    if (this.stopSeekerTimeout) {
+      clearTimeout(this.stopSeekerTimeout);
+    }
   }
 
   pause() {
@@ -224,8 +273,21 @@ export class MindsVideoComponent {
     this.playerRef.toggle();
   }
 
-  // Sources
+  loadedMetadata() {
+    const dimensions = {
+      'width' : this.playerRef.getPlayer().videoWidth,
+      'height' : this.playerRef.getPlayer().videoHeight
+    };
+    this.metadataLoaded = true;
+    this.videoMetadataLoaded.emit({dimensions: dimensions});
+  }
 
+  onCanPlayThrough() {
+    this.canPlayThrough = true;
+    this.videoCanPlayThrough.emit();
+  }
+
+  // Sources
   async fallback() {
     this.candidates.setAsBlacklisted(this.current.type, this.current.src);
     const success = this.pickNextBestSource();
@@ -284,7 +346,7 @@ export class MindsVideoComponent {
   // Qualities
 
   updateAvailableQualities() {
-    let qualities = [];
+    const qualities = [];
 
     if (this.src && this.src.length) {
       this.src.forEach(item => qualities.push(item.res));
@@ -323,11 +385,34 @@ export class MindsVideoComponent {
     }
   }
 
+  // Prevent extra toggles from bubbling up when click control bar that overlays player
+  controlBarToggle($event) {
+    $event.stopPropagation();
+    this.toggle();
+  }
+
+  requestMediaModal() {
+    if (!this.canPlayThrough) {
+      return;
+    }
+
+    if (this.isModal) {
+      this.toggle();
+      return;
+    }
+
+    //  Mobile (not tablet) users go to media page instead of modal
+    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+      this.router.navigate([`/media/${this.guid}`]);
+    }
+
+    this.mediaModalRequested.emit();
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }
 
 export { VideoAds } from './ads.component';

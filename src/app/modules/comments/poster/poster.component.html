@@ -39,8 +39,9 @@
             </div>
 
             <div class="mdl-card__actions">
+              <!-- Overflow -->
+              <div class="m-comments-composer--overflow"></div>
               <!-- Attachements -->
-
               <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
                 <i class="material-icons">attachment</i>
                 <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)"/>
