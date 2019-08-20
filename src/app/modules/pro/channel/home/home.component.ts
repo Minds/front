@@ -67,7 +67,7 @@ export class ProChannelHomeComponent implements OnInit {
       return [];
     }
 
-    return ['/pro', this.channelService.currentChannel.username, 'all', { hashtag: tag }];
+    return this.channelService.getRouterLink('all', { hashtag: tag });
   }
 
   onContentClick(entity: any) {

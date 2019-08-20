@@ -19,7 +19,7 @@
 
   <ng-container *ngIf="session.getLoggedInUser()">
     <span style="position: relative">
-      <minds-button-user-dropdown [(user)]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
+      <minds-button-user-dropdown [user]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
     </span>
   </ng-container>
 </div>

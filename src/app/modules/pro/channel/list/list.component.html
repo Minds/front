@@ -1,7 +1,8 @@
 <m-pro--channel--categories
   [type]="paramsType"
   [selectedHashtag]="selectedHashtag"
-  [style.visibility]="paramsType !== 'communities' ? 'visible' : 'hidden'"
+  (onSelectTag)="selectHashtag($event)"
+  [style.visibility]="shouldShowCategories ? 'visible' : 'hidden'"
 ></m-pro--channel--categories>
 
 <div class="m-proChannelList__tools" *ngIf="query !== ''">

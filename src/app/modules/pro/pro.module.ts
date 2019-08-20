@@ -14,7 +14,6 @@ import { ProChannelDonateComponent } from './channel/donate/donate.component';
 import { ProTileComponent } from "./channel/tiles/media/tile.component";
 import { NewsfeedModule } from "../newsfeed/newsfeed.module";
 import { ProSettingsComponent } from './settings/settings.component';
-import { ProUserMenuComponent } from "./channel/pro-user-menu/pro-user-menu.component";
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
 import { LegacyModule } from "../legacy/legacy.module";
 import { WireModule } from "../wire/wire.module";
@@ -69,10 +68,6 @@ routes.push({
       path: 'settings',
       component: ProSettingsComponent,
     },
-    {
-      path: ':username',
-      ...channelRoute
-    },
   ]
 });
 
@@ -105,12 +100,13 @@ routes.push({
     ProChannelLoginComponent,
     ProChannelListComponent,
     ProChannelDonateComponent,
-    ProUserMenuComponent,
     ProChannelFooterComponent,
     ProGroupTileComponent,
     ProUnsubscribeModalComponent
   ],
-  exports: [],
+  exports: [
+    ProChannelComponent
+  ],
   entryComponents: [
     ProChannelListModal,
     ProUnsubscribeModalComponent,

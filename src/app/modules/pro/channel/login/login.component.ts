@@ -54,13 +54,13 @@ export class ProChannelLoginComponent {
       }
 
       if (this.session.isLoggedIn()) {
-        this.router.navigate(['/pro', this.username]);
+        this.router.navigate(this.service.getRouterLink('home'));
       }
 
     });
   }
 
   registered() {
-    this.router.navigate(['pro', this.username]);
+    this.router.navigate(this.service.getRouterLink('home'));
   }
 }

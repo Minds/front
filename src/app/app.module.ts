@@ -59,6 +59,7 @@ import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from "@angular/common/http";
 import { AnalyticsModule } from "./modules/analytics/analytics.module";
 import { ProModule } from './modules/pro/pro.module';
+import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 
 @NgModule({
   bootstrap: [
@@ -119,9 +120,10 @@ import { ProModule } from './modules/pro/pro.module';
     MobileModule,
     IssuesModule,
     CanaryModule,
+    ChannelsModule,
 
     //last due to :username route
-    ChannelsModule,
+    ChannelContainerModule,
   ],
   providers: [
     MindsAppRoutingProviders,

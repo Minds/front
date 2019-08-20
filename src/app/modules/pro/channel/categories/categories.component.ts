@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProChannelService } from "../channel.service";
 import { Router } from "@angular/router";
 import { MindsUser, Tag } from "../../../../interfaces/entities";
@@ -27,12 +27,10 @@ export class ProCategoriesComponent {
     this.selectTag(value, false);
   }
 
+  @Output() onSelectTag: EventEmitter<string | null> = new EventEmitter<string|null>();
+
   get channel(): MindsUser {
     return this.channelService.currentChannel;
-  }
-
-  get currentURL(): string {
-    return `pro/${this.channel.username}/${this.type}`
   }
 
   constructor(
@@ -42,7 +40,7 @@ export class ProCategoriesComponent {
   ) {
   }
 
-  selectTag(clickedTag: Tag | string, redirect: boolean = true) {
+  selectTag(clickedTag: Tag | string, triggerEvent: boolean = true) {
     if (typeof clickedTag !== 'string') {
       clickedTag = clickedTag.tag;
     }
@@ -52,18 +50,8 @@ export class ProCategoriesComponent {
 
     this.detectChanges();
 
-    if (redirect) {
-      const params = {
-        ...this.params
-      };
-
-      if (clickedTag === 'all') {
-        delete params.hashtag;
-      } else {
-        params.hashtag = clickedTag;
-      }
-
-      this.router.navigate([this.currentURL, params]);
+    if (triggerEvent) {
+      this.onSelectTag.emit(clickedTag !== 'all' ? clickedTag : null);
     }
   }
 

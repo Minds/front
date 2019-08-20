@@ -9,6 +9,8 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BlogView } from "../../blogs/view/view";
 import { Session } from '../../../services/session';
 
+export type RouterLinkToType = 'home' | 'all' | 'feed' | 'videos' | 'images' | 'articles' | 'communities' | 'donate' | 'signup';
+
 @Injectable()
 export class ProChannelService {
 
@@ -32,7 +34,13 @@ export class ProChannelService {
       const response: MindsChannelResponse = await this.client.get(`api/v1/channel/${id}`) as MindsChannelResponse;
 
       this.currentChannel = response.channel;
+
+      if (!this.currentChannel.pro_settings.tag_list) {
+        this.currentChannel.pro_settings.tag_list = [];
+      }
+
       this.currentChannel.pro_settings.tag_list.unshift({ tag: 'all', label: 'All', selected: false });
+
       this.featuredContent = null;
 
       return this.currentChannel;
@@ -116,15 +124,38 @@ export class ProChannelService {
       });
   }
 
-  linkTo(to, query, algorithm?) {
-    let route = ['/pro', this.currentChannel.username, to];
+  getRouterLink(to: RouterLinkToType, params?: { [key: string]: any }): any[] {
+    const route: any[] = ['/'];
 
-    if (algorithm) {
-      route.push(algorithm);
+    if (!window.Minds.pro) {
+      route.push(this.currentChannel.username);
     }
 
-    if (query) {
-      route.push({ query });
+    switch (to) {
+      case 'home':
+        /* Root */
+        break;
+
+      case 'all':
+      case 'feed':
+      case 'videos':
+      case 'images':
+      case 'articles':
+      case 'communities':
+        route.push(to);
+
+        if (params) {
+          route.push(params);
+        }
+        break;
+
+      case 'donate':
+        route.push(to);
+        break;
+
+      case 'signup':
+        route.push('signup');
+        break;
     }
 
     return route;

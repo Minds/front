@@ -96,7 +96,7 @@ export class ProSettingsComponent implements OnInit {
   }
 
   get previewRoute() {
-    return ['/pro', this.session.getLoggedInUser().username];
+    return ['/', this.session.getLoggedInUser().username];
   }
 
   onDragStart(event: DragEvent) {

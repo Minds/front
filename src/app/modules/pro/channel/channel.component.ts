@@ -36,6 +36,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   username: string;
 
+  type: string;
+
+  query: string;
+
   channel: MindsUser;
 
   inProgress: boolean;
@@ -46,19 +50,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   params$: Subscription;
 
-  searchedText: string;
-
-  router$: Subscription;
-
-  currentURL: string;
-
-  query: string;
-
   isMenuOpen: boolean = false;
 
   channel$: Subscription;
 
-  subscribers_count: number;
+  subscribersCount: number;
 
   @ViewChild('overlayModal', { static: true }) protected overlayModal: OverlayModalComponent;
 
@@ -73,7 +69,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    public modal: SignupModalService,
+    protected modal: SignupModalService,
     protected modalService: OverlayModalService,
     protected injector: Injector,
   ) {
@@ -95,24 +91,14 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   listen() {
-    this.router$ = this.router.events.subscribe((navigationEvent) => {
-      try {
-        if (navigationEvent instanceof NavigationEnd) {
-          if (!navigationEvent.urlAfterRedirects) {
-            return;
-          }
-
-          this.currentURL = navigationEvent.urlAfterRedirects;
-          this.setTitle();
-        }
-      } catch (e) {
-        console.error('Minds: router hook(SearchBar)', e);
-      }
-    });
-
     this.params$ = this.route.params.subscribe(params => {
       if (params['username']) {
         this.username = params['username'];
+      }
+
+      if (params['type']) {
+        this.type = params['type'];
+        this.setTitle();
       }
 
       if (this.username && (!this.channel || this.channel.username != this.username)) {
@@ -120,27 +106,46 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    this.channel$ = this.channelService.subscriptionChange.subscribe((subscribers_count) => {
-      this.subscribers_count = subscribers_count;
+    this.channel$ = this.channelService.subscriptionChange.subscribe(subscribersCount => {
+      this.subscribersCount = subscribersCount;
       this.load();
     })
   }
 
   setTitle() {
-    let title = this.channel.pro_settings.title as string || this.channel.name;
+    if (!this.channel) {
+      this.title.setTitle(this.username || 'Minds Pro');
+      return;
+    }
 
-    const childRoute = this.route.children.length > 0 ? this.route.children[0].snapshot : null;
+    const title = [this.channel.pro_settings.title as string || this.channel.name || this.channel.username];
 
-    if (childRoute && childRoute.params['type']) {
-      title += ` - ${childRoute.params['type']}`;
+    switch (this.type) {
+      case 'feed':
+        title.push('Feed');
+        break;
+      case 'videos':
+        title.push('Videos');
+        break;
+      case 'images':
+        title.push('Images');
+        break;
+      case 'articles':
+        title.push('Articles');
+        break;
+      case 'communities':
+        title.push('Communities');
+        break;
+      case 'donate':
+        title.push('Donate');
+        break;
     }
 
     if (this.channel.pro_settings.headline) {
-      title += ` - ${this.channel.pro_settings.headline}`;
+      title.push(this.channel.pro_settings.headline);
     }
 
-
-    this.title.setTitle(title);
+    this.title.setTitle(title.join(' - '));
   }
 
   ngOnDestroy() {
@@ -149,9 +154,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     if (this.channel$) {
       this.channel$.unsubscribe();
-    }
-    if (this.router$) {
-      this.router$.unsubscribe();
     }
 
     this.isLoggedIn$.unsubscribe();
@@ -168,7 +170,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       await this.channelService.auth();
       this.channel = await this.channelService.load(this.username);
-      this.subscribers_count = this.channel.subscribers_count;
+      this.subscribersCount = this.channel.subscribers_count;
       this.bindCssVariables();
       this.setTitle();
     } catch (e) {
@@ -184,7 +186,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (!this.channel.subscribed) {
       if (!this.session.isLoggedIn()) {
-        this.router.navigate(['/login']);
+        this.router.navigate(this.channelService.getRouterLink('signup'));
         return false;
       }
 
@@ -219,11 +221,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
-  }
-
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
     if (!this.channel) {
       return 'none';
@@ -244,14 +241,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.collapseNavItems = window.innerWidth <= 992;
   }
 
-  get currentUser() {
-    if (!this.session.isLoggedIn()) {
-      return null;
-    }
-
-    return this.session.getLoggedInUser();
-  }
-
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
@@ -260,28 +249,79 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isMenuOpen = false;
   }
 
-  search() {
-    this.router.navigate([this.getCurrentURL(), { query: this.searchedText, period: '24h' }]);
+  search(): Promise<boolean> {
+    return this.router.navigate(this.channelService.getRouterLink('all', { query: this.query }));
   }
 
   clearSearch() {
-    this.searchedText = '';
-    const cleanUrl = this.router.url.split(';')[0];
-    this.router.navigate([cleanUrl]);
+    this.query = '';
+    // TODO: Do this!
+    // const cleanUrl = this.router.url.split(';')[0];
+    // this.router.navigate([cleanUrl]);
   }
 
-  get linkTo() {
-    return this.channelService.linkTo.bind(this.channelService);
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
-  getCurrentURL() {
-    let currentURL = this.currentURL;
-    if (!currentURL) {
-      currentURL = `/pro/${this.channel.username}/articles`; //TODO ADD /TOP when algorithm is enabled
-    } else if (currentURL.includes(';')) {
-      currentURL = this.currentURL.split(';')[0];
+  get currentUser() {
+    if (!this.session.isLoggedIn()) {
+      return null;
     }
 
-    return currentURL;
+    return this.session.getLoggedInUser();
+  }
+
+  get homeRouterLink() {
+    return this.channelService.getRouterLink('home');
+  }
+
+  get feedRouterLink() {
+    let params;
+
+    if (this.query) {
+      params = { query: this.query };
+    }
+
+    return this.channelService.getRouterLink('feed', params);
+  }
+
+  get videosRouterLink() {
+    let params;
+
+    if (this.query) {
+      params = { query: this.query };
+    }
+
+    return this.channelService.getRouterLink('videos', params);
+  }
+
+  get imagesRouterLink() {
+    let params;
+
+    if (this.query) {
+      params = { query: this.query };
+    }
+
+    return this.channelService.getRouterLink('images', params);
+  }
+
+  get articlesRouterLink() {
+    let params;
+
+    if (this.query) {
+      params = { query: this.query };
+    }
+
+    return this.channelService.getRouterLink('articles', params);
+  }
+
+  get communitiesRouterLink() {
+    return this.channelService.getRouterLink('communities');
+  }
+
+  get donateRouterLink() {
+    return this.channelService.getRouterLink('donate');
   }
 }

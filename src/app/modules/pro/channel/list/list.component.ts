@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, OnDest
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { FeedsService } from "../../../../common/services/feeds.service";
-import { ProChannelService } from '../channel.service';
+import { ProChannelService, RouterLinkToType } from '../channel.service';
 import { first } from "rxjs/operators";
 import { OverlayModalService } from "../../../../services/ux/overlay-modal";
 import { ProContentModalComponent } from "../content-modal/modal.component";
@@ -34,8 +34,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   displaySeeMoreTile: boolean = false;
 
   selectedHashtag: string = 'all';
-
-  selectedHashtag$: Subscription;
 
   constructor(
     public feedsService: FeedsService,
@@ -110,9 +108,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     if (this.params$) {
       this.params$.unsubscribe();
     }
-    if (this.selectedHashtag$) {
-      this.selectedHashtag$.unsubscribe();
-    }
   }
 
   async load(refresh: boolean = false) {
@@ -182,5 +177,19 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   onTileClicked(entity: any) {
     return this.channelService.open(entity, this.modalService);
+  }
+
+  selectHashtag(tag: string) {
+    let params;
+
+    if (tag) {
+      params = { hashtag: tag };
+    }
+
+    return this.router.navigate(this.channelService.getRouterLink(this.type as RouterLinkToType, params))
+  }
+
+  get shouldShowCategories() {
+    return this.paramsType !== 'communities' && this.paramsType !== 'feed';
   }
 }

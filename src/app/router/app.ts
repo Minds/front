@@ -1,18 +1,13 @@
 import { Routes } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 
-import {Capture} from '../controllers/capture/capture';
-import {Discovery} from '../controllers/discovery/discovery';
-import {Admin} from '../controllers/admin/admin';
-import {Pages} from '../controllers/pages/pages';
-
-import { ChannelComponent } from '../modules/channels/channel.component';
-/**
- * TODO: Load these automagically from gulp
- */
-
-import {CanDeactivateGuardService} from '../services/can-deactivate-guard';
+import { Capture } from '../controllers/capture/capture';
+import { Discovery } from '../controllers/discovery/discovery';
+import { Admin } from '../controllers/admin/admin';
+import { Pages } from '../controllers/pages/pages';
+import { CanDeactivateGuardService } from '../services/can-deactivate-guard';
 import { RewardsComponent } from '../controllers/rewards/rewards';
+import { ChannelContainerComponent } from '../modules/channel-container/channel-container.component';
 
 export const MindsAppRoutes: Routes = [
 
@@ -42,9 +37,9 @@ export const MindsAppRoutes: Routes = [
 
   { path: 'claim-rewards/:uuid', component: RewardsComponent },
 
-  // TODO: Find a way to move Channel routes onto Channel Module. They take priority and groups/blogs cannot be accessed
-  { path: ':username/:filter', component: ChannelComponent },
-  { path: ':username', component: ChannelComponent, canDeactivate: [CanDeactivateGuardService]},
+  // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
+  { path: ':username', redirectTo: ':username/', pathMatch: 'full' },
+  { path: ':username/:filter', component: ChannelContainerComponent, canDeactivate: [CanDeactivateGuardService] },
 ];
 
 export const MindsAppRoutingProviders: any[] = [{ provide: APP_BASE_HREF, useValue: '/' }];
