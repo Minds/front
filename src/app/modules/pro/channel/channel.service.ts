@@ -10,7 +10,7 @@ import { BlogView } from "../../blogs/view/view";
 import { Session } from '../../../services/session';
 import { ActivatedRoute } from '@angular/router';
 
-export type RouterLinkToType = 'home' | 'all' | 'feed' | 'videos' | 'images' | 'articles' | 'communities' | 'donate' | 'signup';
+export type RouterLinkToType = 'home' | 'all' | 'feed' | 'videos' | 'images' | 'articles' | 'groups' | 'donate' | 'login';
 
 @Injectable()
 export class ProChannelService {
@@ -149,7 +149,7 @@ export class ProChannelService {
       case 'videos':
       case 'images':
       case 'articles':
-      case 'communities':
+      case 'groups':
         route.push(to);
 
         if (params) {
@@ -161,7 +161,7 @@ export class ProChannelService {
         route.push(to);
         break;
 
-      case 'signup':
+      case 'login':
         route.push('login');
         break;
     }

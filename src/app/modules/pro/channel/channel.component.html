@@ -58,18 +58,17 @@
 
       <a
         class="m-proChannelTopbar__navItem"
-        [routerLink]="communitiesRouterLink"
+        [routerLink]="groupsRouterLink"
         routerLinkActive="active"
         i18n
-      >Communities</a>
+      >Groups</a>
 
       <ng-container *ngIf="currentUser?.guid != channel.guid; else ownerNavLinks">
         <a
           class="m-proChannelTopbar__navItem"
-          [routerLink]="donateRouterLink"
-          routerLinkActive="active"
+          (click)="wire()"
           i18n
-        >Donate</a>
+        >Wire</a>
 
         <button
           class="m-proChannelTopbar__subscribe"
@@ -134,14 +133,14 @@
             class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
             (click)="closeMenu()"
           >
-            <a [routerLink]="communitiesRouterLink" routerLinkActive="active" i18n>Communities</a>
+            <a [routerLink]="groupsRouterLink" routerLinkActive="active" i18n>Groups</a>
           </li>
     
           <li
             class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
             (click)="closeMenu()"
           >
-            <a [routerLink]="donateRouterLink" routerLinkActive="active">Donate</a>
+            <a (click)="wire()" routerLinkActive="active">Wire</a>
           </li>
         </ng-container>
       </ul>

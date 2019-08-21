@@ -22,6 +22,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 import { OverlayModalService } from "../../../services/ux/overlay-modal";
 import { ProUnsubscribeModalComponent } from './unsubscribe-modal/modal.component';
 import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
+import { WireCreatorComponent } from '../../wire/creator/creator.component';
 
 @Component({
   providers: [
@@ -30,7 +31,7 @@ import { OverlayModalComponent } from '../../../common/components/overlay-modal/
   ],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -139,8 +140,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       case 'articles':
         title.push('Articles');
         break;
-      case 'communities':
-        title.push('Communities');
+      case 'groups':
+        title.push('Groups');
         break;
       case 'donate':
         title.push('Donate');
@@ -194,7 +195,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       if (!this.session.isLoggedIn()) {
         this.router.navigate(
           window.Minds.pro ?
-            this.channelService.getRouterLink('signup') :
+            this.channelService.getRouterLink('login') :
             ['/login']
         );
 
@@ -230,6 +231,13 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.element.nativeElement
         .style.setProperty(`--m-pro--${styleAttr}`, styles[style]);
     }
+  }
+
+  wire() {
+    this.modalService.create(WireCreatorComponent,
+      this.channelService.currentChannel,
+      { onComplete: () => {} }
+    ).present();
   }
 
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
@@ -328,8 +336,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.channelService.getRouterLink('articles', params);
   }
 
-  get communitiesRouterLink() {
-    return this.channelService.getRouterLink('communities');
+  get groupsRouterLink() {
+    return this.channelService.getRouterLink('groups');
   }
 
   get proSettingsLink() {

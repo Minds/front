@@ -69,7 +69,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         case 'articles':
           this.type = 'blogs';
           break;
-        case 'communities':
+        case 'groups':
           this.type = 'groups';
           break;
         case 'feed':
@@ -186,10 +186,10 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       params = { hashtag: tag };
     }
 
-    return this.router.navigate(this.channelService.getRouterLink(this.type as RouterLinkToType, params))
+    return this.router.navigate(this.channelService.getRouterLink(this.paramsType as RouterLinkToType, params))
   }
 
   get shouldShowCategories() {
-    return this.paramsType !== 'communities' && this.paramsType !== 'feed';
+    return this.paramsType !== 'groups' && this.paramsType !== 'feed';
   }
 }

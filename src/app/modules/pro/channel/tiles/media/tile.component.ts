@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   template: `
     <img [src]="entity.thumbnail_src">
     <div class="m-proChannelTile__text" *ngIf="getTitle() || getText()">
-      <h2>{{getTitle()}}</h2>
+      <h2 [title]="getTitle()">{{ getTitle() }}</h2>
     </div>
   `
 })
