@@ -332,10 +332,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.channelService.getRouterLink('communities');
   }
 
-  get donateRouterLink() {
-    return this.channelService.getRouterLink('donate');
-  }
-
   get proSettingsLink() {
     return ['/pro/settings'];
   }

@@ -10,7 +10,6 @@ import { ProChannelComponent } from "./channel/channel.component";
 import { ProChannelLoginComponent } from "./channel/login/login.component";
 import { MindsFormsModule } from "../forms/forms.module";
 import { ProChannelListComponent } from "./channel/list/list.component";
-import { ProChannelDonateComponent } from './channel/donate/donate.component';
 import { ProTileComponent } from "./channel/tiles/media/tile.component";
 import { NewsfeedModule } from "../newsfeed/newsfeed.module";
 import { ProSettingsComponent } from './settings/settings.component';
@@ -47,10 +46,6 @@ const routes: Routes = [
             component: ProChannelHomeComponent,
           },
           {
-            path: 'donate',
-            component: ProChannelDonateComponent
-          },
-          {
             path: 'login',
             component: ProChannelLoginComponent
           },
@@ -72,10 +67,6 @@ export const STANDALONE_ROUTES = [
       {
         path: '',
         component: ProChannelHomeComponent,
-      },
-      {
-        path: 'donate',
-        component: ProChannelDonateComponent
       },
       {
         path: 'login',
@@ -117,7 +108,6 @@ export const STANDALONE_ROUTES = [
     ProChannelComponent,
     ProChannelLoginComponent,
     ProChannelListComponent,
-    ProChannelDonateComponent,
     ProChannelFooterComponent,
     ProGroupTileComponent,
     ProUnsubscribeModalComponent
