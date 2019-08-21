@@ -35,7 +35,7 @@ export class ProChannelHomeComponent implements OnInit {
   }
 
   async load() {
-    const MAX_FEATURED_CONTENT = 19; // 1 + 2 + (4 * 4)
+    const MAX_FEATURED_CONTENT = 17; // 1 + (8 * 2)
 
     this.inProgress = true;
     this.featuredContent = [];

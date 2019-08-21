@@ -1,11 +1,3 @@
-ul.m-proChannelListContent__list li:nth-child(n+3) m-pro--channel-tile {
-  height: 220px!important;
-
-  & > img {
-    height: 100%!important;
-  }
-}
-
 m-pro--channel-tile {
   cursor: pointer;
   position: relative;
