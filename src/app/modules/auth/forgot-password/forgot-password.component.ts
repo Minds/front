@@ -102,9 +102,6 @@ export class ForgotPasswordComponent {
         })
         .catch((e) => {
           this.error = e.message;
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 2000);
         });
     }
   }
