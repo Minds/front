@@ -26,54 +26,68 @@ import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.
 import { ProCategoriesComponent } from "./channel/categories/categories.component";
 import { BlogView } from "../blogs/view/view";
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'pro',
+    children: [
+      {
+        path: '',
+        component: ProMarketingComponent,
+      },
+      {
+        path: 'settings',
+        component: ProSettingsComponent,
+      },
+      {
+        path: ':username',
+        component: ProChannelComponent,
+        children: [
+          {
+            path: '',
+            component: ProChannelHomeComponent,
+          },
+          {
+            path: 'donate',
+            component: ProChannelDonateComponent
+          },
+          {
+            path: 'login',
+            component: ProChannelLoginComponent
+          },
+          {
+            path: ':type',
+            component: ProChannelListComponent,
+          },
+        ]
+      }
+    ]
+  }
+];
 
-const channelRoute = {
-  component: ProChannelComponent,
-  children: [
-    {
-      path: '',
-      component: ProChannelHomeComponent,
-    },
-    {
-      path: 'donate',
-      component: ProChannelDonateComponent
-    },
-    {
-      path: 'login',
-      component: ProChannelLoginComponent
-    },
-    {
-      path: ':type',
-      component: ProChannelListComponent,
-    },
-  ]
-};
-
-if (window.Minds.pro) {
-  routes.push({
+export const STANDALONE_ROUTES = [
+  {
     path: '',
-    ...channelRoute
-  });
-}
-
-routes.push({
-  path: 'pro',
-  children: [
-    {
-      path: '',
-      component: ProMarketingComponent,
-    },
-    {
-      path: 'settings',
-      component: ProSettingsComponent,
-    },
-    {
-      path: ':username',
-      ...channelRoute
-    }
-  ]
-});
+    component: ProChannelComponent,
+    children: [
+      {
+        path: '',
+        component: ProChannelHomeComponent,
+      },
+      {
+        path: 'donate',
+        component: ProChannelDonateComponent
+      },
+      {
+        path: 'login',
+        component: ProChannelLoginComponent
+      },
+      {
+        path: ':type',
+        component: ProChannelListComponent,
+      },
+    ]
+  }
+];
 
 @NgModule({
   imports: [

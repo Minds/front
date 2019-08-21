@@ -17,6 +17,7 @@ import { BlockListService } from "./common/services/block-list.service";
 import { FeaturesService } from "./services/features.service";
 import { ThemeService } from "./common/services/theme.service";
 import { BannedService } from './modules/report/banned/banned.service';
+import { STANDALONE_ROUTES } from './modules/pro/pro.module';
 
 @Component({
   moduleId: module.id,
@@ -55,6 +56,10 @@ export class Minds {
     private bannedService: BannedService,
   ) {
     this.name = 'Minds';
+
+    if (window.Minds.pro) {
+      this.router.resetConfig(STANDALONE_ROUTES);
+    }
   }
 
   async ngOnInit() {
