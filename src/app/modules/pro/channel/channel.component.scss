@@ -54,6 +54,9 @@ m-pro--channel {
   min-height: 100%;
 
   .m-proChannel__topbar {
+    width: 100%;
+    box-sizing: border-box;
+
     grid-row: 1 / span 1;
     grid-column: 1 / span 12;
 
