@@ -18,8 +18,25 @@
   >{{link.title}}</a>
 
   <ng-container *ngIf="session.getLoggedInUser()">
-    <span style="position: relative">
-      <minds-button-user-dropdown [user]="user" *ngIf="session.getLoggedInUser().guid != user.guid"></minds-button-user-dropdown>
-    </span>
+    <ng-container *ngIf="isStandalone">
+      <a
+        class="m-pro--channel-footer--link"
+        [href]="viewProfileHref"
+        target="_blank"
+        i18n
+      >@{{currentUsername}}</a>
+
+      <a
+        class="m-pro--channel-footer--link"
+        (click)="logout()"
+        i18n
+      >Logout</a>
+    </ng-container>
+
+    <ng-container *ngIf="!isOwner">
+      <span style="position: relative">
+        <minds-button-user-dropdown [user]="user"></minds-button-user-dropdown>
+      </span>
+    </ng-container>
   </ng-container>
 </div>

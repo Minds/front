@@ -83,7 +83,13 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.listen();
     this.onResize();
 
-    this.isLoggedIn$ = this.session.loggedinEmitter.subscribe(() => this.detectChanges());
+    this.isLoggedIn$ = this.session.loggedinEmitter.subscribe(is => {
+      if (!is && this.channel) {
+        this.channel.subscribed = false;
+      }
+
+      this.detectChanges();
+    });
   }
 
   ngAfterViewInit() {
@@ -328,5 +334,17 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get donateRouterLink() {
     return this.channelService.getRouterLink('donate');
+  }
+
+  get proSettingsLink() {
+    return ['/pro/settings'];
+  }
+
+  get proSettingsHref() {
+    return window.Minds.site_url + 'pro/settings';
+  }
+
+  get isStandalone() {
+    return Boolean(window.Minds.pro);
   }
 }

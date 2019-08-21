@@ -63,28 +63,45 @@
         i18n
       >Communities</a>
 
-      <a
-        class="m-proChannelTopbar__navItem"
-        [routerLink]="donateRouterLink"
-        routerLinkActive="active"
-        i18n
-      >Donate</a>
+      <ng-container *ngIf="currentUser?.guid != channel.guid; else ownerNavLinks">
+        <a
+          class="m-proChannelTopbar__navItem"
+          [routerLink]="donateRouterLink"
+          routerLinkActive="active"
+          i18n
+        >Donate</a>
 
-      <button 
-        class="m-proChannelTopbar__subscribe"
-        [class.m-proChannelTopbar__subscribe--subscribed]="channel.subscribed"
-        (click)="toggleSubscription($event)"
-        [hidden]="currentUser?.guid === channel.guid"
-      >
-        <span class="m-proChannelTopbar__subscribe--label">
-          <ng-container *ngIf="!channel.subscribed; else subscribedActionButton" i18n>Subscribe</ng-container>
-          <ng-template #subscribedActionButton><ng-container i18n>Subscribed</ng-container></ng-template>
-        </span>
+        <button
+          class="m-proChannelTopbar__subscribe"
+          [class.m-proChannelTopbar__subscribe--subscribed]="channel.subscribed"
+          (click)="toggleSubscription($event)"
+        >
+          <span class="m-proChannelTopbar__subscribe--label">
+            <ng-container *ngIf="!channel.subscribed; else subscribedActionButton" i18n>Subscribe</ng-container>
+            <ng-template #subscribedActionButton><ng-container i18n>Subscribed</ng-container></ng-template>
+          </span>
 
-        <span class="m-proChannelTopbar__subscribe--counter">
-          {{ subscribersCount | abbr:0 }}
-        </span> 
-      </button>
+          <span class="m-proChannelTopbar__subscribe--counter">
+            {{ subscribersCount | abbr:0 }}
+          </span>
+        </button>
+      </ng-container>
+      <ng-template #ownerNavLinks>
+        <a
+          *ngIf="isStandalone"
+          class="m-proChannelTopbar__navItem"
+          [href]="proSettingsHref"
+          target="root_minds"
+          i18n
+        >Settings</a>
+
+        <a
+          *ngIf="!isStandalone"
+          class="m-proChannelTopbar__navItem"
+          [routerLink]="proSettingsLink"
+          i18n
+        >Settings</a>
+      </ng-template>
     </ng-container>
 
     <div class="m-proChannelTopbar_menu m-dropdown">

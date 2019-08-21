@@ -259,6 +259,10 @@ export class ProChannelFooterComponent {
     return domClass;
   }
 
+  logout() {
+    this._session.logout();
+  }
+
   private getSocialProfileMeta(key: string): SocialProfileMeta {
     let defaultMeta: SocialProfileMeta = {
       key: '', label: '',
@@ -284,5 +288,21 @@ export class ProChannelFooterComponent {
 
   get session() {
     return this._session;
+  }
+
+  get isOwner() {
+    return this.session.getLoggedInUser() && this.session.getLoggedInUser().guid == this.user.guid;
+  }
+
+  get currentUsername() {
+    return this.session.getLoggedInUser().username;
+  }
+
+  get viewProfileHref() {
+    return window.Minds.site_url + this.session.getLoggedInUser().username;
+  }
+
+  get isStandalone() {
+    return Boolean(window.Minds.pro);
   }
 }
