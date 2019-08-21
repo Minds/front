@@ -24,18 +24,20 @@ m-pro--channel-tile {
     bottom: 0;
     background-color: var(--m-pro--transparent-background-color);
     color: var(--m-pro--text-color);
-    padding: 16px 16px 0;
+    padding: 8px 16px;
     font-size: 20px;
     width: 100%;
     box-sizing: border-box;
 
     h2 {
+      font-weight: 700;
       font-size: 20px;
-      line-height: 20px;
-      overflow: visible;
       color: var(--m-pro--text-color) !important;
       margin: 0;
-      font-weight: 700;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     p {

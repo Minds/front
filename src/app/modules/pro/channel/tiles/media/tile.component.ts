@@ -6,7 +6,6 @@ import { Component, Input } from '@angular/core';
     <img [src]="entity.thumbnail_src">
     <div class="m-proChannelTile__text" *ngIf="getTitle() || getText()">
       <h2>{{getTitle()}}</h2>
-      <p [innerHTML]="getText()"></p>
     </div>
   `
 })
