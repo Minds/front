@@ -191,6 +191,9 @@ export class Activity implements OnInit {
   @Input() set boostToggle(toggle: boolean) {
     //if(toggle)
     //  this.showBoost();
+    if(this.activity.custom_type === 'video') {
+      this.player.pause();
+    }
     return;
   }
 
