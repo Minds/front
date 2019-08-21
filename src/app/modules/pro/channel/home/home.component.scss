@@ -1,11 +1,13 @@
 .m-pro--channel-home {
-  margin-top: 72px;
+  m-pro--channel--categories {
+    margin: 16px 0 32px;
+  }
 
   .m-pro--channel-home--section {
-    margin-top: 72px;
+    margin-bottom: 72px;
 
-    &:first-child {
-      margin-top: 0;
+    &:last-child {
+      margin-bottom: 0;
     }
 
     > h2 {

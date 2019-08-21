@@ -41,8 +41,6 @@ export class ProChannelService {
         this.currentChannel.pro_settings.tag_list = [];
       }
 
-      this.currentChannel.pro_settings.tag_list.unshift({ tag: 'all', label: 'All', selected: false });
-
       this.featuredContent = null;
 
       return this.currentChannel;

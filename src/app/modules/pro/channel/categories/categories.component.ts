@@ -5,27 +5,16 @@ import { MindsUser, Tag } from "../../../../interfaces/entities";
 
 @Component({
   selector: 'm-pro--channel--categories',
-  template: `
-    <div
-      class="m-proChannel__category"
-      [class.m-proChannel__selectedCategory]="!!tag.selected"
-      (click)="selectTag(tag)"
-      *ngFor="let tag of channel.pro_settings.tag_list"
-    >
-      {{tag.label}}
-    </div>
-  `,
+  templateUrl: 'categories.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class ProCategoriesComponent {
-
-  @Input() type: string;
-  @Input() params: any = {};
-
   @Input() set selectedHashtag(value: string) {
     this.selectTag(value, false);
   }
+
+  @Input() showAllTag: boolean = true;
 
   @Output() onSelectTag: EventEmitter<string | null> = new EventEmitter<string|null>();
 
@@ -53,6 +42,16 @@ export class ProCategoriesComponent {
     if (triggerEvent) {
       this.onSelectTag.emit(clickedTag !== 'all' ? clickedTag : null);
     }
+  }
+
+  get tags() {
+    const tags = this.channel.pro_settings.tag_list.concat([]);
+
+    if (this.showAllTag) {
+      tags.unshift({ label: 'All', tag: 'all', selected: false });
+    }
+
+    return tags;
   }
 
   detectChanges() {

@@ -1,4 +1,9 @@
 <div class="m-pro--channel-home">
+  <m-pro--channel--categories
+    [showAllTag]="false"
+    [selectedHashtag]="''"
+    (onSelectTag)="navigateToCategory($event)"
+  ></m-pro--channel--categories>
 
   <div class="m-pro--channel-home--section" *ngIf="featuredContent?.length">
     <div class="m-pro--channel-home--featured-content">
