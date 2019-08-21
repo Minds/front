@@ -68,6 +68,10 @@ routes.push({
       path: 'settings',
       component: ProSettingsComponent,
     },
+    {
+      path: ':username',
+      ...channelRoute
+    }
   ]
 });
 

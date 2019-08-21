@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Client } from '../../services/api/client';
 import { MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
 import { ChannelComponent } from '../channels/channel.component';
 import { ProChannelComponent } from '../pro/channel/channel.component';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-channel-container',
@@ -28,7 +29,9 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     protected route: ActivatedRoute,
+    protected router: Router,
     protected client: Client,
+    protected session: Session,
   ) {
   }
 
@@ -66,10 +69,20 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     try {
       const response: MindsChannelResponse = await this.client.get(`api/v1/channel/${this.username}`) as MindsChannelResponse;
       this.channel = response.channel;
+
+      // NOTE: Temporary workaround until channel component supports children routes
+      if (!window.Minds.pro && this.channel.pro && !this.isOwner) {
+        this.router.navigate(['/pro', this.channel.username], { replaceUrl: true });
+      }
     } catch (e) {
       console.error(e);
     }
 
     this.inProgress = false;
+  }
+
+  get isOwner() {
+    const currentUser = this.session.getLoggedInUser();
+    return this.channel && currentUser && this.channel.guid == currentUser.guid;
   }
 }

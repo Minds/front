@@ -8,6 +8,7 @@ import { ProContentModalComponent } from './content-modal/modal.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BlogView } from "../../blogs/view/view";
 import { Session } from '../../../services/session';
+import { ActivatedRoute } from '@angular/router';
 
 export type RouterLinkToType = 'home' | 'all' | 'feed' | 'videos' | 'images' | 'articles' | 'communities' | 'donate' | 'signup';
 
@@ -24,6 +25,7 @@ export class ProChannelService {
     protected client: Client,
     protected entitiesService: EntitiesService,
     protected session: Session,
+    protected route: ActivatedRoute,
   ) {
   }
 
@@ -125,7 +127,13 @@ export class ProChannelService {
   }
 
   getRouterLink(to: RouterLinkToType, params?: { [key: string]: any }): any[] {
-    const route: any[] = ['/'];
+    let root = '/';
+
+    if (this.route.parent) {
+      root = this.route.parent.pathFromRoot.map(route => route.snapshot.url.map(urlSegment => urlSegment.toString()).join('')).join('/');
+    }
+
+    const route: any[] = [root];
 
     if (!window.Minds.pro) {
       route.push(this.currentChannel.username);
@@ -154,7 +162,7 @@ export class ProChannelService {
         break;
 
       case 'signup':
-        route.push('signup');
+        route.push('login');
         break;
     }
 
