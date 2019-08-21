@@ -22,6 +22,7 @@ import { webtorrentServiceMock } from '../../../../../tests/webtorrent-service-m
 import { MindsPlayerInterface } from './players/player.interface';
 import { MediaModalComponent } from '../../modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FeaturesService } from '../../../../services/features.service';
 import { featuresServiceMock } from '../../../../../tests/features-service-mock.spec';
 
 
