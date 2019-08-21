@@ -474,7 +474,9 @@ export class Activity implements OnInit {
         class: 'm-overlayModal--media'
       }).present();
     } else {
-      this.router.navigate([`/media/${this.activity.entity_guid}`]);
+      if (this.activity.custom_type !== 'video'){
+        this.router.navigate([`/media/${this.activity.entity_guid}`]);
+      }
     }
   }
 

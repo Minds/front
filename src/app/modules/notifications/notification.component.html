@@ -269,7 +269,7 @@
   <ng-template ngSwitchCase="remind">
     <div *ngIf="notification.entityObj">
       <a [routerLink]="['/newsfeed', notification.entityObj.guid]" *ngIf="notification.entityObj.type == 'object'">
-          <p><ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED">{{notification.fromObj.name}} reminded</ng-container>
+          <p><ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__REMIND__REMINDED">{{notification.fromObj.name}} reminded </ng-container>
               <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="notification.entityObj.title">{{notification.entityObj.title | excerpt}}</span>
               <span class="pseudo-link mdl-color-text--blue-grey-400"  *ngIf="!notification.entityObj.title" i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT">your {{notification.entityObj.subtype}}</span>
          </p>

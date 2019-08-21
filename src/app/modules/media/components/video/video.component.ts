@@ -9,6 +9,7 @@ import { ScrollService } from '../../../../services/ux/scroll';
 import { MindsPlayerInterface } from './players/player.interface';
 import { WebtorrentService } from '../../../webtorrent/webtorrent.service';
 import { SOURCE_CANDIDATE_PICK_ZIGZAG, SourceCandidates } from './source-candidates';
+import { FeaturesService } from '../../../../services/features.service';
 import isMobile from '../../../../helpers/is-mobile';
 
 @Component({
@@ -100,6 +101,7 @@ export class MindsVideoComponent implements OnDestroy {
     public client: Client,
     protected webtorrent: WebtorrentService,
     protected cd: ChangeDetectorRef,
+    protected featuresService: FeaturesService,
     private router: Router,
   ) { }
 
@@ -185,17 +187,18 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   onMouseEnter() {
-    if (this.isActivity) {
+    if (this.isActivity && this.featuresService.has('media-modal')) {
       return;
     }
-
-    this.progressBar.getSeeker();
-    this.progressBar.enableKeyControls();
-    this.showControls = true;
+    if (this.videoMetadataLoaded){
+      this.progressBar.getSeeker();
+      this.progressBar.enableKeyControls();
+      this.showControls = true;
+    }
   }
 
   onMouseLeave() {
-    if (this.stageHover || this.isActivity) {
+    if (this.featuresService.has('media-modal') && (this.stageHover || this.isActivity)) {
       return;
     }
 
@@ -396,7 +399,12 @@ export class MindsVideoComponent implements OnDestroy {
       return;
     }
 
-    if (this.isModal) {
+    let isMediaPage = false;
+    if (!this.isModal && !this.isActivity){
+      isMediaPage = true;
+    }
+
+    if (this.isModal || (!isMediaPage && !this.featuresService.has('media-modal'))) {
       this.toggle();
       return;
     }
