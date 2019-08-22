@@ -27,7 +27,7 @@
 
   .m-marketing--header-inner, .m-marketingHeader__inner,
   .m-marketing--hero-inner, .m-marketingHero__inner,
-  .m-marketing--hero--inner { 
+  .m-marketing--hero--inner {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -95,7 +95,6 @@
 
     h3 {
       font-size: 26px;
-      //color: rgba(255, 255, 255, 0.8);
       font-weight: 400;
       letter-spacing: 0.25px;
       line-height: 1.25;
@@ -407,7 +406,7 @@
   }
 
   .m-marketing--section--subsection-image {
-    img { 
+    img {
       max-width: 100%;
     }
   }

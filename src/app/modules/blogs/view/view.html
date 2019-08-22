@@ -13,7 +13,7 @@
   <div class="m-mature-overlay" (click)="blog.mature_visibility = !blog.mature_visibility">
     <span class="m-mature-overlay-note">
       <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
-      <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
+      <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
     </span>
   </div>
   <minds-banner [src]="blog.thumbnail_src" [object]="blog" *ngIf="blog.header_bg"></minds-banner>
@@ -73,11 +73,10 @@
       <span [hidden]="blog.access_id != 2" i18n="@@M__COMMON__VISIBILITY_PUBLIC">Public</span>
       <span [hidden]="blog.access_id != 0" i18n="@@M__COMMON__VISIBILITY_UNLISTED">Unlisted</span>
     </div>
-    <div class="m-share-buttons mdl-color-text--green-300" style="padding-right:8px" (click)="sharetoggle = true">
-      <i class="material-icons" style="cursor:pointer">share</i>
+    <div class="m-share-buttons" (click)="openShareModal()">
+      <i class="material-icons">share</i>
       <span i18n="@@BLOGS__VIEW__SHARE">SHARE</span>
     </div>
-    <m-modal-share *ngIf="sharetoggle" [open]="true" (closed)="sharetoggle = false" [url]="minds.site_url + (blog.route ? blog.route : 'blog/view/' + blog.guid)"></m-modal-share>
     <minds-button-boost [object]="blog" *ngIf="session.isLoggedIn()"></minds-button-boost>
   </div>
 
@@ -86,7 +85,7 @@
 <m-wire--lock-screen [(entity)]="blog" *ngIf="blog.paywall" #lockScreen></m-wire--lock-screen>
 
 <div class="mdl-grid blogs-grid" style="max-width:660px" *ngIf="blog.guid">
-  <m-comments__tree 
+  <m-comments__tree
     [entity]="blog"
     >
   </m-comments__tree>

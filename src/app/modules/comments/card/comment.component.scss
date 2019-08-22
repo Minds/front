@@ -101,6 +101,12 @@
         }
       }
 
+      &.selected:hover {
+        @include m-theme(){
+          color: themed($m-blue-dark) !important;
+        }
+      }
+
       span {
         vertical-align: middle;
         line-height: 16px;

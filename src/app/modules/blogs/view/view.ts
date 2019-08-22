@@ -11,6 +11,8 @@ import { MindsBlogEntity } from '../../../interfaces/entities';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ShareModalComponent } from '../../../modules/modals/share/share';
 
 @Component({
   moduleId: module.id,
@@ -27,7 +29,7 @@ export class BlogView {
   minds;
   guid: string;
   blog: MindsBlogEntity;
-  sharetoggle: boolean = false;
+  // sharetoggle: boolean = false;
   deleteToggle: boolean = false;
   element;
 
@@ -55,7 +57,8 @@ export class BlogView {
     public attachment: AttachmentService,
     private context: ContextService,
     public analytics: AnalyticsService,
-    public analyticsService: AnalyticsService
+    public analyticsService: AnalyticsService,
+    private overlayModal: OverlayModalService,
   ) {
     this.minds = window.Minds;
     this.element = _element.nativeElement;
@@ -144,7 +147,7 @@ export class BlogView {
   }
 
   calculateLockScreenHeight() {
-    if (!this.lockScreen) 
+    if (!this.lockScreen)
       return;
     const lockScreenOverlay = this.lockScreen.nativeElement.querySelector('.m-wire--lock-screen');
     if (lockScreenOverlay) {
@@ -153,6 +156,15 @@ export class BlogView {
       lockScreenOverlay.style.height = `calc(100vh - ${rect.top}px)`;
     }
   }
+
+  openShareModal() {
+    const url: string  = this.minds.site_url + (this.blog.route ? this.blog.route : 'blog/view/' + this.blog.guid);
+
+    this.overlayModal.create(ShareModalComponent, url, {
+      class: 'm-overlay-modal--medium m-overlayModal__share'
+    }).present();
+  }
+
 
   /**
    * called when the window resizes

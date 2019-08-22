@@ -21,6 +21,11 @@ export class FeaturedContentService {
     if (this.offset >= this.feedsService.rawFeed.getValue().length) {
       this.offset = -1;
     }
+    // Refetch every 2 calls, if not loading
+    if (this.offset % 2 && !this.feedsService.inProgress.getValue()) {
+      this.feedsService.clear();
+      this.feedsService.fetch();
+    }
     return await this.feedsService.feed
       .pipe(
         filter(feed => feed.length > 0),

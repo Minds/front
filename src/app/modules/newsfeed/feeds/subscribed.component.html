@@ -11,7 +11,7 @@
   <ng-container *ngFor="let activity$ of (feedsService.feed | async); let i = index">
     <ng-container *mIfFeature="'es-feeds'">
       <m-featured-content
-        *ngIf="(i > 0 && (i % 8) === 0 && i <= 40) || i === 2"
+        *ngIf="(i > 0 && (i % 5) === 0) || i === 2"
         [slot]="i + 1"
       ></m-featured-content>
     </ng-container>

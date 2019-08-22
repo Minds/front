@@ -42,6 +42,7 @@ const routes: Routes = [
     PostMenuModule,
     WireModule,
     HashtagsModule,
+    ModalsModule,
   ],
   declarations: [
     BlogView,

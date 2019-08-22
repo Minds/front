@@ -398,13 +398,13 @@
 
   <!-- Boost revoked -->
   <ng-template ngSwitchCase="boost_revoked">
-    <a [routerLink]="notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boost/console/content']">
+    <a [routerLink]="notification.entityObj && notification.entityObj.type == 'activity' ? ['/newsfeed', notification.entityObj.guid] : ['/boost/console/content']">
       <p><ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__BOOST_FOR">You revoked your boost <span *ngIf="notification.entityObj">for </span></ng-container>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && notification.entityObj.title">{{notification.entityObj.title | excerpt}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && notification.entityObj.name">{{notification.entityObj.name}}</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && !notification.entityObj.name && notification.entityObj.type !== 'user'" i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_POST">your post.</span>
         <span class="pseudo-link mdl-color-text--blue-grey-400" *ngIf="notification.entityObj && !notification.entityObj.title && !notification.entityObj.name && notification.entityObj.type === 'user'" i18n="@@NOTIFICATIONS__NOTIFICATION__YOUR_CHANNEL">your channel.</span>
-        <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__REFUNDED">Your offer has been refunded.</ng-container>
+        <ng-container i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_REVOKED__REFUNDED"> Your offer has been refunded.</ng-container>
       </p>
     </a>
   </ng-template>

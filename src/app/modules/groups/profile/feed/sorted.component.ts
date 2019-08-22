@@ -106,6 +106,12 @@ export class GroupProfileFeedSortedComponent {
   }
 
   loadMore() {
+    if (this.feedsService.canFetchMore
+      && !this.feedsService.inProgress.getValue()
+      && this.feedsService.offset.getValue()
+    ) {
+      this.feedsService.fetch(); // load the next 150 in the background
+    }
     this.feedsService.loadMore();
   }
 
@@ -134,6 +140,18 @@ export class GroupProfileFeedSortedComponent {
     }
 
     this.entities.unshift(activity);
+
+    let feedItem = {
+      entity: activity,
+      urn: activity.urn,
+      guid: activity.guid
+    };
+
+    this.feedsService.rawFeed.next([
+      ... [ feedItem ],
+      ... this.feedsService.rawFeed.getValue()
+    ]);
+
     this.detectChanges();
   }
 

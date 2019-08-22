@@ -61,14 +61,14 @@
 
   <div m-read-more class="mdl-card__supporting-text message m-mature-message" [class.m-activity--message-remind]="activity.remind_object"
     [hidden]="!activity.message || editing">
-    <a class="m-mature-text-toggle" (click)="activity.mature_visibility = !activity.mature_visibility"
+    <a class="m-mature-text-toggle" (click)="toggleMatureVisibility()"
       *ngIf="attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity)"
       [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }">
       <i class="material-icons m-material-icons-inline">explicit</i>
     </a>
 
     <span class="m-mature-message-content" [innerHtml]="activity.message | tags" [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
-      (click)="activity.mature && !activity.mature_visibility ? activity.mature_visibility = !activity.mature_visibility : null">
+      (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null">
     </span>
     <m-read-more--button></m-read-more--button>
   </div>
@@ -127,7 +127,7 @@
   <div class="m-rich-embed"
     *ngIf="activity.perma_url && activity.title"
     [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }">
-    <div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
       <span class="m-mature-overlay-note">
         <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
@@ -153,10 +153,11 @@
     <button class="mdl-button mdl-button--colored mdl-button--raised" (click)="activity.title = titleEdit.value; save();" i18n="@@M__ACTION__SAVE">Save</button>
   </div>
 
+  <!-- Video -->
   <div class="item item-image item-image-video m-activity--video"
     [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
     *ngIf="activity.custom_type == 'video'">
-      <div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
         <span class="m-mature-overlay-note">
           <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
           <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
@@ -172,6 +173,9 @@
           [guid]="activity.custom_data.guid"
           [playCount]="activity['play:count']"
           [torrent]="[{ res: '360', key: activity.custom_data.guid + '/360.mp4' }]"
+          [isActivity]="true"
+          (videoMetadataLoaded)="setVideoDimensions($event)"
+          (mediaModalRequested)="showMediaModal()"
           #player>
           <video-ads [player]="player" *ngIf="activity.monetized"></video-ads>
       </m-video>
@@ -181,14 +185,14 @@
   <div class="item item-image allow-select m-activity--image"
    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
    *ngIf="activity.thumbnail_src && !activity.perma_url">
-    <div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
       <span class="m-mature-overlay-note">
         <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
       </span>
     </div>
 
-    <a [routerLink]="['/media', activity.entity_guid]">
+    <a class="m-activity--image-link">
       <img [src]="activity.thumbnail_src" (error)="activity.thumbnail_src = null">
     </a>
   </div>
@@ -197,24 +201,32 @@
   <div class="item item-image allow-select"
    [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
    *ngIf="activity.custom_type == 'batch'">
-    <div class="m-mature-overlay" (click)="activity.mature_visibility = !activity.mature_visibility">
+    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
       <span class="m-mature-overlay-note">
         <i class="material-icons" title="Mature content" i18n-title="@@M__COMMON__MATURE_CONTENT">explicit</i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm your are 18+</span>
       </span>
     </div>
-
-    <a [routerLink]="['/media', activity.entity_guid]">
-      <img [src]="activity.custom_data[0].src" style="width:100%"
-      (error)="activity.custom_data[0].src = minds.cdn_assets_url + 'assets/logos/placeholder-bulb.jpg'"
+    <a class="m-activity--image-link">
+      <img [src]="activity.custom_data[0].src"
+        style="width:100%"
+        (error)="activity.custom_data[0].src = minds.cdn_assets_url + 'assets/logos/placeholder-bulb.jpg'"
         *ngIf="activity.custom_data"
+        (click)="showMediaModal()"
+        #batchImage
       >
     </a>
   </div>
   <!-- Reminds -->
   <div *ngIf="activity.remind_object">
     <ng-container *ngIf="!isOwnerBlocked(activity.remind_object); else blockedRemindTemplate">
-      <minds-remind [object]="activity.remind_object" [events]="childEventsEmitter" [boosted]="activity.boosted"></minds-remind>
+      <minds-remind
+        [object]="activity.remind_object"
+        [events]="childEventsEmitter"
+        [boosted]="activity.boosted"
+        (matureVisibilityChange)="onRemindMatureVisibilityChange()"
+        (videoMetadataLoaded)="setVideoDimensions($event)"
+      ></minds-remind>
     </ng-container>
     <ng-template #blockedRemindTemplate>
       <div class="m-activity__blockedRemind">
@@ -228,6 +240,7 @@
 
 <ng-content select="[bottom-content]"></ng-content>
 
+<!-- Action buttons -->
 <div class="tabs" *ngIf="!hideTabs && !isPending(activity)">
 	<minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
 	<minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
@@ -244,7 +257,7 @@
     <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
   </a>
 </div>
-
+<!-- Activity metrics -->
 <div class="impressions-tag m-activity--metrics" [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid" *ngIf="!activity.hide_impressions && !hideTabs">
   <div class="m-activity--metrics-inner m-border">
     <div class="m-activity--metrics-metric" (click)="showWire()">

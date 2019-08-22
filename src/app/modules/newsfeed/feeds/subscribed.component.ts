@@ -1,7 +1,8 @@
 import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
 import { Subscription, BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterEvent, NavigationEnd } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
 import { MindsTitle } from '../../../services/ux/title';
@@ -52,6 +53,7 @@ export class NewsfeedSubscribedComponent {
 
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
+  routerSubscription: Subscription;
 
   @ViewChild('poster', { static: true }) private poster: PosterComponent;
 
@@ -79,6 +81,16 @@ export class NewsfeedSubscribedComponent {
   }
 
   ngOnInit() {
+    this.routerSubscription = this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.showBoostRotator = false;
+      this.load(true, true);
+      setTimeout(() => {
+        this.showBoostRotator = true;
+      }, 100);
+    });
+
     this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(() => {
       this.load(true, true);
     });
@@ -92,14 +104,6 @@ export class NewsfeedSubscribedComponent {
       }
 
       this.newUserPromo = !!params['newUser'];
-
-      if (params['ts']) {
-        this.showBoostRotator = false;
-        this.load(true);
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 300);
-      }
     });
 
     this.context.set('activity');
@@ -108,6 +112,7 @@ export class NewsfeedSubscribedComponent {
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
     this.reloadFeedSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {
@@ -120,6 +125,12 @@ export class NewsfeedSubscribedComponent {
 
   loadNext() {
     if (this.featuresService.has('es-feeds')) {
+      if (this.feedsService.canFetchMore
+        && !this.feedsService.inProgress.getValue()
+        && this.feedsService.offset.getValue()
+      ) {
+        this.feedsService.fetch(); // load the next 150 in the background
+      }
       this.feedsService.loadMore();
     } else {
       this.loadLegacy();

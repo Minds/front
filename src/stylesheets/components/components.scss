@@ -660,10 +660,10 @@ m-translate {
 
 svg.m-facebook-icon{
   cursor:pointer;
-  background-color: #3067a3 !important;
   margin:auto;
   @include m-theme(){
     fill: themed($m-white);
+    background-color: themed($m-facebook) !important;
   }
 }
 

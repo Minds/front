@@ -1,12 +1,14 @@
+// import 'cypress-file-upload';
+
 context('Blogs', () => {
   beforeEach(() => {
     cy.login(true);
 
-    cy.location('pathname').should('eq', `/newsfeed/subscriptions`);
-
+    cy.location('pathname', { timeout: 30000 })
+      .should('eq', `/newsfeed/subscriptions`);
   })
 
-  it('should not be able to create a new blog if no title or banner are specified', () => {
+ it('should not be able to create a new blog if no title or banner are specified', () => {
     cy.visit('/blog/edit/new');
 
     cy.get('.m-button--submit').click();
@@ -24,7 +26,8 @@ context('Blogs', () => {
     cy.get('.m-blog--edit--error').contains('Error: You must upload a banner');
   })
 
-  it('should be able to create a new blog', () => {
+  // TODO: remove the x when we run tests in new users each time
+  xit("should not be able to create a new blog if the channel doesn't have an avatar", () => {
     cy.visit('/blog/edit/new');
 
     cy.uploadFile('minds-banner #file', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
@@ -33,12 +36,44 @@ context('Blogs', () => {
 
     cy.get('m-inline-editor .medium-editor-element').type('Content\n');
 
+    cy.wait(1000);
+
+    cy.server();
+    cy.route("POST", "**!/api/v1/blog/new").as("newBlog");
+
+    cy.get('.m-button--submit').click({ force: true }); // TODO: Investigate why disabled flag is being detected
+
+    cy.get('h1.m-blog--edit--error').contains('Error: Please ensure your channel has an avatar before creating a blog');
+  });
+
+  it('should be able to create a new blog', () => {
+
+    // upload avatar first
+    cy.visit(`/${Cypress.env().username}`);
+
+    cy.get('.m-channel--name .minds-button-edit button:first-child').click();
+
+    cy.wait(100);
+
+    cy.uploadFile('.minds-avatar input[type=file]', '../fixtures/avatar.jpeg', 'image/jpg');
+
+    cy.get('.m-channel--name .minds-button-edit button:last-child').click();
+
+    // create blog
+    cy.visit('/blog/edit/new');
+
+    cy.uploadFile('.minds-banner input[type=file]', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
+
+    cy.get('minds-textarea .m-editor').type('Title');
+
+    cy.get('m-inline-editor .medium-editor-element').type('Content\n');
+
     // click on plus button
-    cy.get('.medium-editor-element > .medium-insert-buttons > button.medium-insert-buttons-show').click();
+    // cy.get('.medium-editor-element > .medium-insert-buttons > button.medium-insert-buttons-show').click();
     // click on camera
-    cy.get('ul.medium-insert-buttons-addons > li > button.medium-insert-action:first-child').contains('photo_camera').click();
+    // cy.get('ul.medium-insert-buttons-addons > li > button.medium-insert-action:first-child').contains('photo_camera').click();
     // upload the image
-    cy.uploadFile('.medium-media-file-input', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
+    // cy.uploadFile('.medium-media-file-input', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
 
     // open license dropdown & select first license
     cy.get('.m-license-info select').select('All rights reserved');
@@ -46,7 +81,7 @@ context('Blogs', () => {
     // click on hashtags dropdown
     cy.get('.m-category-info m-hashtags-selector .m-dropdown--label-container').click();
     // select #ART
-    cy.get('.m-category-info m-dropdown m-form-tags-input > div:nth-child(1) > span').contains('#art').click();
+    cy.get('.m-category-info m-dropdown m-form-tags-input > div > span').contains('#art').click();
     // type in another hashtag manually
     cy.get('.m-category-info m-hashtags-selector m-form-tags-input input').type('hashtag{enter}').click();
 
@@ -71,13 +106,15 @@ context('Blogs', () => {
     cy.get('.m-mature-info a').click();
     cy.get('.m-mature-info a span').contains('Mature content');
 
+    cy.get('.m-button--submit').click({ force: true }); // TODO: Investigate why disabled flag is being detected
+    cy.clock();
+
+    cy.clock().then((clock) => { clock.tick(1000); });
+
     cy.wait(1000);
 
-    cy.get('.m-button--submit').click();
-
-    cy.wait(100);
-
-    cy.location('pathname').should('contains', `/${Cypress.env().username}/blog`);
+    cy.location('pathname', { timeout: 30000 })
+      .should('contains', `/${Cypress.env().username}/blog`);
 
     cy.get('.m-blog--title').contains('Title');
     cy.get('.minds-blog-body p').contains('Content');
@@ -88,7 +125,7 @@ context('Blogs', () => {
 
     //open dropdown
     cy.get('m-post-menu button.minds-more').click();
-    cy.get('m-post-menu ul.minds-dropdown-menu li:nth-child(3)').contains('Delete').click();
+    cy.get('m-post-menu ul.minds-dropdown-menu li').contains('Delete').click();
     cy.get('m-post-menu m-modal-confirm .mdl-button--colored').click();
 
   })

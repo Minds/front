@@ -175,3 +175,7 @@
   background-color: transparent !important;
   overflow: visible;
 }
+
+.m-newsfeed__sidebar .minds-usercard-block .avatar img {
+  object-fit: cover;
+}

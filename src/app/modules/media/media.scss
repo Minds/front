@@ -574,8 +574,8 @@ m-media--grid{
   left: $minds-padding;
   top: $minds-padding;
   cursor: pointer;
-  opacity: 0.35;
-  visibility: hidden;
+  opacity: 0;
+  transition: opacity 300ms;
   @include m-theme(){
     color: themed($m-white);
     text-shadow: 1px 1px 3px rgba(themed($m-black), 0.65);
@@ -589,6 +589,7 @@ m-media--grid{
 
   m-media--theatre:hover & {
     visibility: visible;
+    opacity: 0.35;
   }
 }
 

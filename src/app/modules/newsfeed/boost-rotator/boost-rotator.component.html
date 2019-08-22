@@ -1,6 +1,18 @@
 <div class="m-boost-rotator-tools">
+  <span
+    i1n="@@BOOST_ROTATOR__SHOWING_BOOSTS"
+    *ngIf="router.url == '/newsfeed/boost'"
+  >
+    Showing boosts
+  </span>
   <div class="m-layout--spacer"></div>
   <ul class="m-boost-rotator-tabs">
+    <li routerLink="/newsfeed/boost"
+      *ngIf="router.url !== '/newsfeed/boost'"
+      class="m-boostRotator__tab--boost-feed"
+      >
+      <a i18n="@@M__COMMON__BOOSTFEED">Boostfeed</a>
+    </li>
     <ng-container *ngIf="boosts.length > 0; else noBoosts">
       <li (click)="prev()">
         <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
@@ -14,7 +26,7 @@
         <i style="height: 32px;display: block;"></i>
       </li>
     </ng-template>
-    <li>
+    <li class="m-boost-rotator-tabs--settings">
       <m-newsfeed--dropdown [showBoost]="true"></m-newsfeed--dropdown>
     </li>
   </ul>

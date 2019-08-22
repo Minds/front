@@ -65,7 +65,14 @@ $red-light:   #e57373;
 $black:       #000;
 $white:       #fff;
 
+$facebook:    #3b5998;
+$messenger:   #0084ff;
+$twitter:     #03b3ee;
+$whatsapp:    #25d366;
+$linkedin:    #0071a1;
+
 // Theme maps
+// e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
 $themes: (
   light: (
     m-grey-950: $grey-950,
@@ -105,19 +112,25 @@ $themes: (
     m-amber-light:   $amber-light,
     m-red-dark:      $red-dark,
     m-red:           $red,
-    m-red-light:     $red-light,    
+    m-red-light:     $red-light,
 
     m-black:         $black,
     m-black-always:  $black,
     m-white:         $white,
-    m-white-always:  $white,    
+    m-white-always:  $white,
     m-body-bg:       #f8f8f8,
 
     m-warn-bg:     $amber-light,
     m-warn-fg:     $black,
+
+    m-facebook:    $facebook,
+    m-messenger:   $messenger,
+    m-twitter:     $twitter,
+    m-whatsapp:    $whatsapp,
+    m-linkedin:    $linkedin,
   ),
   dark: (
-    
+
     m-grey-950: lighten($grey-50, $percent),
     m-grey-900: lighten($grey-100, $percent),
     m-grey-800: lighten($grey-200, $percent),
@@ -143,16 +156,16 @@ $themes: (
     m-blue-grey-200: lighten($blue-grey-800, $percent),
     m-blue-grey-100: lighten($blue-grey-900, $percent),
     m-blue-grey-50:  lighten($blue-grey-950, $percent),
-    
+
     m-black:         $white,
     m-black-always:  $black,
     m-white:         lighten($grey-990, $percent),
-    m-white-always:  $white,    
-    m-body-bg:       lighten(#080808, $percent), 
+    m-white-always:  $white,
+    m-body-bg:       lighten(#080808, $percent),
 
-    m-blue-dark:    lighten($blue-dark, $percent),
+    m-blue-dark:    lighten($blue-bright, 15%),
     m-blue:         $blue-bright,
-    m-blue-light:   lighten($blue-bright, 10%),
+    m-blue-light:   $blue-dark,
     m-green-dark:   lighten($green-dark, $percent),
     m-green:        lighten($green, $percent),
     m-green-light:  lighten($green-light, $percent),
@@ -165,6 +178,12 @@ $themes: (
 
     m-warn-bg:     $grey-900,
     m-warn-fg:     $white,
+
+    m-facebook:    $facebook,
+    m-messenger:   $messenger,
+    m-twitter:     $twitter,
+    m-whatsapp:    $whatsapp,
+    m-linkedin:    $linkedin,
   ),
 );
 
@@ -218,3 +237,9 @@ $m-red-light:    'm-red-light';
 
 $m-warn-bg:      'm-warn-bg';
 $m-warn-fg:      'm-warn-fg';
+
+$m-facebook:    'm-facebook';
+$m-messenger:   'm-messenger';
+$m-twitter:     'm-twitter';
+$m-whatsapp:    'm-whatsapp';
+$m-linkedin:    'm-linkedin';

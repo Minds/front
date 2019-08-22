@@ -19,12 +19,15 @@
     }
     border-radius: 24px;
     font-weight: 600;
-    /* background: #fafafa; */
 
     &.m-reportCreatorSubjects__subject--active {
-      border-color: #4690D6;
+      @include m-theme(){
+        border-color: themed($m-blue);
+      }
       span {
-        color: #4690D6;
+        @include m-theme(){
+          color: themed($m-blue);
+        }
       }
     }
 
@@ -38,13 +41,17 @@
       text-rendering: optimizeLegibility;
       font-size: 16px;
       font-weight: 500;
-      color: #555;
       cursor: pointer;
+      @include m-theme(){
+        color: themed($m-grey-700);
+      }
     }
 
     i {
-      color: #888;
       display: none;
+      @include m-theme(){
+        color: themed($m-grey-400);
+      }
     }
 
     //&:last-child{
