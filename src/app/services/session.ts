@@ -2,6 +2,7 @@
  * Sessions
  */
 import { EventEmitter } from '@angular/core';
+import * as Sentry from "@sentry/browser";
 
 export class Session {
 
@@ -56,8 +57,13 @@ export class Session {
       });
     }
 
-    if (window.Minds.user)
+    if (window.Minds.user) {
+      // Attach user_guid to debug logs
+      Sentry.setUser({
+        id: window.Minds.user.guid,
+      });
       return window.Minds.user;
+    }
 
     return false;
   }
