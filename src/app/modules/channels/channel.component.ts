@@ -72,7 +72,7 @@ export class ChannelComponent {
       if (params['username']) {
         this.changed = this.username !== params['username'];
         this.username = params['username'];
-
+        throw new Error('testing');
         feedChanged = true;
       }
 
