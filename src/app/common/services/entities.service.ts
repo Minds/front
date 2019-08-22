@@ -153,7 +153,7 @@ export class EntitiesService {
     if (!this.entities.has(urn)) {
       this.entities.set(urn, new BehaviorSubject(null));
     }
-    this.entities.get(urn).error("Not found");
+    console.warn(`Entity ${urn} not found`);
   }
 
   static _(client: Client, blockListService: BlockListService) {
