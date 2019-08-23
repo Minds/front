@@ -413,7 +413,7 @@ export class MindsVideoComponent implements OnDestroy {
     }
 
     //  Mobile (not tablet) users go to media page instead of modal
-    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+    if (isMobile() && !isMediaPage && Math.min(screen.width, screen.height) < 768) {
       this.router.navigate([`/media/${this.guid}`]);
     }
 
