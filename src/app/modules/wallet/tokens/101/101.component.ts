@@ -17,4 +17,15 @@ export class WalletToken101Component {
     checkin: 2,
     jury_duty: 25
   };
+
+  userStates = [
+    {'userState': 'new', 'rewardFactor': 1.25},
+    {'userState': 'curious', 'rewardFactor': 1},
+    {'userState': 'casual', 'rewardFactor': 1.1},
+    {'userState': 'core', 'rewardFactor': 1.25},
+    {'userState': 'cold', 'rewardFactor': 0.5},
+    {'userState': 'resurrected', 'rewardFactor': 1.25}
+  ];
+
+  minds = window.Minds;
 }
