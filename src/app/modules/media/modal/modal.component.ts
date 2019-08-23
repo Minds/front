@@ -55,6 +55,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   stageHeight: number;
   mediaWidth: number;
   mediaHeight: number;
+  entityWidth: number;
+  entityHeight: number;
 
   maxStageWidth: number;
   maxHeight: number;
@@ -76,15 +78,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   isOpen: boolean = false;
   isOpenTimeout: any = null;
 
-  showOverlay: boolean = false;
+  overlayVisible: boolean = false;
   tabletOverlayTimeout: any = null;
 
   routerSubscription: Subscription;
 
   @Input('entity') set data(entity) {
     this.entity = entity;
-    this.entity.width = 0;
-    this.entity.height = 0;
+    this.entityWidth = 0;
+    this.entityHeight = 0;
   }
 
   // Used to make sure video progress bar seeker / hover works
@@ -145,7 +147,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     // (but don't actually redirect)
     this.location.replaceState(`/media/${this.entity.entity_guid}`);
 
-
     // When user clicks a link from inside the modal
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
@@ -168,16 +169,16 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     if (!this.isVideo) {
       // Image
-      this.entity.width = this.entity.custom_data[0].width;
-      this.entity.height = this.entity.custom_data[0].height;
+      this.entityWidth = this.entity.custom_data[0].width;
+      this.entityHeight = this.entity.custom_data[0].height;
       this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.entity_guid}/xlarge`;
     } else {
-      this.entity.width = this.entity.custom_data.dimensions.width;
-      this.entity.height = this.entity.custom_data.dimensions.height;
+      this.entityWidth = this.entity.custom_data.dimensions.width;
+      this.entityHeight = this.entity.custom_data.dimensions.height;
       this.thumbnail = this.entity.custom_data.thumbnail_src; // Not currently used
     }
 
-    this.aspectRatio = this.entity.width / this.entity.height;
+    this.aspectRatio = this.entityWidth / this.entityHeight;
     this.calculateDimensions();
   }
 
@@ -211,7 +212,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       // If black stage background is visible on top/bottom, each strip should be at least 20px high
       const heightDiff = this.stageHeight - this.mediaHeight;
       if ( 0 < heightDiff && heightDiff <= this.padding * 2) {
-        this.stageHeight += 40;
+        this.stageHeight += (this.padding * 2);
       }
 
     } else { // isFullscreen
@@ -221,8 +222,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.stageWidth = windowWidth;
       this.stageHeight = windowHeight;
 
-      // Set mediaHeight as tall as possible but not taller than instrinsic height
-      this.mediaHeight = this.entity.height < windowHeight ? this.entity.height : windowHeight;
+
+      if (this.entity.custom_type === 'image') {
+        // For images, set mediaHeight as tall as possible but not taller than instrinsic height
+        this.mediaHeight = this.entityHeight < windowHeight ? this.entityHeight : windowHeight;
+      } else {
+        // It's ok if videos are taller than intrinsic height
+        this.mediaHeight = windowHeight;
+      }
+
       this.mediaWidth = this.scaleWidth();
 
       if ( this.mediaWidth > windowWidth ) {
@@ -233,8 +241,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     }
 
     if (this.isVideo) {
-      this.entity.height = this.mediaHeight;
-      this.entity.width = this.mediaWidth;
+      this.entityHeight = this.mediaHeight;
+      this.entityWidth = this.mediaWidth;
     }
 
     this.modalWidth = this.stageWidth + this.contentWidth;
@@ -248,13 +256,13 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.stageHeight = Math.max(this.maxHeight, this.minStageHeight);
 
     // Set mediaHeight as tall as stage but no larger than intrinsic height
-    if (!this.isVideo && this.entity.height < this.stageHeight) {
+    if (!this.isVideo && this.entityHeight < this.stageHeight) {
       // Image is shorter than stage; scale down stage
-      this.mediaHeight = this.entity.height;
+      this.mediaHeight = this.entityHeight;
       this.stageHeight = Math.max(this.mediaHeight, this.minStageHeight);
     } else {
-      // Image is taller than stage; scale it down so it fits inside stage
-      // All videos should be as tall as possible but not taller than stage
+      // Either: Image is taller than stage; scale it down so it fits inside stage
+      // Or:     Video should be as tall as possible but not taller than stage
       this.mediaHeight = this.stageHeight;
     }
 
@@ -276,13 +284,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     // shrink vertically until it hits minStageHeight
 
     // When window is narrower than this, start to shrink height
-    const verticalShrinkWidthThreshold = this.mediaWidth + this.contentWidth + (this.padding * 4); // + 2;
+    const verticalShrinkWidthThreshold = this.mediaWidth + this.contentWidth + (this.padding * 4);
 
     const widthDiff = verticalShrinkWidthThreshold - window.innerWidth;
-
     // Is window narrow enough to start shrinking vertically?
-    if ( widthDiff >= 1 ) {
-
+    if (widthDiff >= 1) {
       // What mediaHeight would be if it shrunk proportionally to difference in width
       const mediaHeightPreview = Math.round((this.mediaWidth - widthDiff) / this.aspectRatio);
 
@@ -293,7 +299,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         this.stageHeight = this.mediaHeight;
       } else {
         this.stageHeight = this.minStageHeight;
-        this.mediaHeight = Math.min(this.minStageHeight, this.entity.height);
+        this.mediaHeight = Math.min(this.minStageHeight, this.entityHeight);
         this.mediaWidth = this.scaleWidth();
       }
     }
@@ -316,7 +322,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   onFullscreenChange(event) {
     this.calculateDimensions();
     if ( !document.fullscreenElement &&
-      !document['webkitFullScreenElement'] &&
+      !document['webkitFullscreenElement'] &&
       !document['mozFullScreenElement'] &&
       !document['msFullscreenElement'] ) {
       this.isFullscreen = false;
@@ -332,10 +338,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     // If fullscreen is not already enabled
     if ( !document['fullscreenElement'] &&
-      !document['webkitFullScreenElement'] &&
+      !document['webkitFullscreenElement'] &&
       !document['mozFullScreenElement'] &&
       !document['msFullscreenElement'] ) {
-      // Request full screen
+        // Request full screen
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
       } else if (elem['webkitRequestFullscreen']) {
@@ -384,7 +390,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   // Show overlay and video controls
   onMouseEnterStage() {
-    this.showOverlay = true;
+    this.overlayVisible = true;
 
     if (this.isVideo) {
       // Make sure progress bar seeker is updating when video controls are visible
@@ -393,9 +399,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Hide overlay and video controls
   onMouseLeaveStage() {
-    this.showOverlay = false;
+    this.overlayVisible = false;
 
     if (this.isVideo) {
       // Stop updating progress bar seeker when controls aren't visible
@@ -407,7 +412,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   // * TABLETS ONLY: SHOW OVERLAY & VIDEO CONTROLS * -------------------------------------------
 
   // Briefly display title overlay and video controls when finished loading and stage touch
-  showOverlays() {
+  showOverlaysOnTablet() {
     this.onMouseEnterStage();
 
     if (this.tabletOverlayTimeout) {
@@ -425,7 +430,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isLoading = false;
 
     if ( this.isTablet ) {
-      this.showOverlays();
+      this.showOverlaysOnTablet();
     }
   }
 

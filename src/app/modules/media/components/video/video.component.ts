@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MindsVideoProgressBar } from './progress-bar/progress-bar.component';
@@ -9,6 +9,7 @@ import { ScrollService } from '../../../../services/ux/scroll';
 import { MindsPlayerInterface } from './players/player.interface';
 import { WebtorrentService } from '../../../webtorrent/webtorrent.service';
 import { SOURCE_CANDIDATE_PICK_ZIGZAG, SourceCandidates } from './source-candidates';
+import { FeaturesService } from '../../../../services/features.service';
 import isMobile from '../../../../helpers/is-mobile';
 
 @Component({
@@ -16,7 +17,7 @@ import isMobile from '../../../../helpers/is-mobile';
   host: {
     '(mouseenter)': 'onMouseEnter()',
     '(mouseleave)': 'onMouseLeave()',
-    '[class.clickable]':'canPlayThrough'
+    '[class.clickable]':'metadataLoaded'
   },
   templateUrl: 'video.component.html',
   animations: [
@@ -43,6 +44,8 @@ export class MindsVideoComponent implements OnDestroy {
   @Input() poster: string = '';
   @Input() isActivity: boolean = false;
   @Input() isModal: boolean = false;
+  // @Input() isTheatre: boolean = false;
+
 
   @Output('finished') finished: EventEmitter<any> = new EventEmitter();
 
@@ -82,6 +85,7 @@ export class MindsVideoComponent implements OnDestroy {
   stopSeekerTimeout: any = null;
   metadataLoaded: boolean = false;
   canPlayThrough: boolean = false;
+  isFullscreen: boolean = false;
 
   current: { type: 'torrent' | 'direct-http', src: string };
   protected candidates: SourceCandidates = new SourceCandidates();
@@ -100,6 +104,7 @@ export class MindsVideoComponent implements OnDestroy {
     public client: Client,
     protected webtorrent: WebtorrentService,
     protected cd: ChangeDetectorRef,
+    protected featuresService: FeaturesService,
     private router: Router,
   ) { }
 
@@ -185,17 +190,18 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   onMouseEnter() {
-    if (this.isActivity) {
+    if (this.isActivity && this.featuresService.has('media-modal')) {
       return;
     }
-
-    this.progressBar.getSeeker();
-    this.progressBar.enableKeyControls();
-    this.showControls = true;
+    if (this.videoMetadataLoaded){
+      this.progressBar.getSeeker();
+      this.progressBar.enableKeyControls();
+      this.showControls = true;
+    }
   }
 
   onMouseLeave() {
-    if (this.stageHover || this.isActivity) {
+    if (this.featuresService.has('media-modal') && (this.stageHover || this.isActivity)) {
       return;
     }
 
@@ -392,17 +398,22 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   requestMediaModal() {
-    if (!this.canPlayThrough) {
+    if (!this.metadataLoaded) {
       return;
     }
 
-    if (this.isModal) {
+    let isMediaPage = false;
+    if (!this.isModal && !this.isActivity) {
+      isMediaPage = true;
+    }
+
+    if (this.isModal || (!isMediaPage && !this.featuresService.has('media-modal'))) {
       this.toggle();
       return;
     }
 
     //  Mobile (not tablet) users go to media page instead of modal
-    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+    if (isMobile() && !isMediaPage && Math.min(screen.width, screen.height) < 768) {
       this.router.navigate([`/media/${this.guid}`]);
     }
 
@@ -413,6 +424,61 @@ export class MindsVideoComponent implements OnDestroy {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+    // * FULLSCREEN * --------------------------------------------------------------------------------
+  // Listen for fullscreen change event in case user enters/exits full screen without clicking button
+  @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
+  onFullscreenChange(event) {
+    if ( !document.fullscreenElement &&
+      !document['webkitFullscreenElement'] &&
+      !document['mozFullScreenElement'] &&
+      !document['msFullscreenElement'] ) {
+      this.isFullscreen = false;
+    } else {
+      this.isFullscreen = true;
+    }
+  }
+
+  toggleFullscreen() {
+    const elem = document.querySelector('m-video');
+    // this.fullscreenHovering = false;
+
+    // If fullscreen is not already enabled
+    if ( !document['fullscreenElement'] &&
+      !document['webkitFullscreenElement'] &&
+      !document['mozFullScreenElement'] &&
+      !document['msFullscreenElement'] ) {
+
+        // Request full screen
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem['webkitRequestFullscreen']) {
+        elem['webkitRequestFullscreen']();
+      } else if (elem['mozRequestFullScreen']) {
+        elem['mozRequestFullScreen']();
+      } else if (elem['msRequestFullscreen']) {
+        elem['msRequestFullscreen']();
+      }
+      this.isFullscreen = true;
+      return;
+    }
+
+    // If fullscreen is already enabled, exit it
+    if ( document.exitFullscreen ) {
+      document.exitFullscreen();
+    } else if (document['webkitExitFullscreen']) {
+      document['webkitExitFullscreen']();
+    } else if (document['mozCancelFullScreen']) {
+      document['mozCancelFullScreen']();
+    } else if (document['msExitFullscreen']) {
+      document['msExitFullscreen']();
+    }
+    this.isFullscreen = false;
+  }
+
 }
 
 export { VideoAds } from './ads.component';
