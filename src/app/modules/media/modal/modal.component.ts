@@ -78,7 +78,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   isOpen: boolean = false;
   isOpenTimeout: any = null;
 
-  showOverlay: boolean = false;
+  overlayVisible: boolean = false;
   tabletOverlayTimeout: any = null;
 
   routerSubscription: Subscription;
@@ -261,8 +261,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.mediaHeight = this.entityHeight;
       this.stageHeight = Math.max(this.mediaHeight, this.minStageHeight);
     } else {
-      // Image is taller than stage; scale it down so it fits inside stage
-      // All videos should be as tall as possible but not taller than stage
+      // Either: Image is taller than stage; scale it down so it fits inside stage
+      // Or:     Video should be as tall as possible but not taller than stage
       this.mediaHeight = this.stageHeight;
     }
 
@@ -287,10 +287,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     const verticalShrinkWidthThreshold = this.mediaWidth + this.contentWidth + (this.padding * 4);
 
     const widthDiff = verticalShrinkWidthThreshold - window.innerWidth;
-
     // Is window narrow enough to start shrinking vertically?
-    if ( widthDiff >= 1 ) {
-
+    if (widthDiff >= 1) {
       // What mediaHeight would be if it shrunk proportionally to difference in width
       const mediaHeightPreview = Math.round((this.mediaWidth - widthDiff) / this.aspectRatio);
 
@@ -324,7 +322,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   onFullscreenChange(event) {
     this.calculateDimensions();
     if ( !document.fullscreenElement &&
-      !document['webkitFullScreenElement'] &&
+      !document['webkitFullscreenElement'] &&
       !document['mozFullScreenElement'] &&
       !document['msFullscreenElement'] ) {
       this.isFullscreen = false;
@@ -340,10 +338,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     // If fullscreen is not already enabled
     if ( !document['fullscreenElement'] &&
-      !document['webkitFullScreenElement'] &&
+      !document['webkitFullscreenElement'] &&
       !document['mozFullScreenElement'] &&
       !document['msFullscreenElement'] ) {
-      // Request full screen
+        // Request full screen
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
       } else if (elem['webkitRequestFullscreen']) {
@@ -392,7 +390,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   // Show overlay and video controls
   onMouseEnterStage() {
-    this.showOverlay = true;
+    this.overlayVisible = true;
 
     if (this.isVideo) {
       // Make sure progress bar seeker is updating when video controls are visible
@@ -401,9 +399,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Hide overlay and video controls
   onMouseLeaveStage() {
-    this.showOverlay = false;
+    this.overlayVisible = false;
 
     if (this.isVideo) {
       // Stop updating progress bar seeker when controls aren't visible
@@ -415,7 +412,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   // * TABLETS ONLY: SHOW OVERLAY & VIDEO CONTROLS * -------------------------------------------
 
   // Briefly display title overlay and video controls when finished loading and stage touch
-  showOverlays() {
+  showOverlaysOnTablet() {
     this.onMouseEnterStage();
 
     if (this.tabletOverlayTimeout) {
@@ -433,7 +430,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isLoading = false;
 
     if ( this.isTablet ) {
-      this.showOverlays();
+      this.showOverlaysOnTablet();
     }
   }
 

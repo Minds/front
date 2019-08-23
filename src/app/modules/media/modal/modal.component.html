@@ -12,7 +12,7 @@
         [style.line-height]="stageHeight + 'px'"
         (mouseenter)="onMouseEnterStage()"
         (mouseleave)="onMouseLeaveStage()"
-        (touchend)="showOverlays()"
+        (touchend)="showOverlaysOnTablet()"
       >
         <!-- LOADING PANEL -->
         <div class="m-mediaModal__loadingPanel" *ngIf="isLoading">
@@ -62,7 +62,7 @@
 
           <!-- OVERLAY -->
           <div class="m-mediaModal__overlayContainer"
-            *ngIf="showOverlay"
+            *ngIf="overlayVisible"
             @fastFadeAnimation
           >
             <div class="m-mediaModal__overlayTitleWrapper">
