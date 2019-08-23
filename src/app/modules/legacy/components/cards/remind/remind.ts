@@ -181,7 +181,7 @@ export class Remind {
         class: 'm-overlayModal--media'
       }).present();
     } else {
-      if (this.activity.custom_type !== 'video'){
+      if (this.activity.custom_type !== 'video') {
         this.router.navigate([`/media/${this.activity.entity_guid}`]);
       }
     }

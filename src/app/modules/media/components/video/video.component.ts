@@ -403,7 +403,7 @@ export class MindsVideoComponent implements OnDestroy {
     }
 
     let isMediaPage = false;
-    if (!this.isModal && !this.isActivity){
+    if (!this.isModal && !this.isActivity) {
       isMediaPage = true;
     }
 
