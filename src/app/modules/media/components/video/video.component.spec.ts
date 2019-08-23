@@ -22,6 +22,10 @@ import { webtorrentServiceMock } from '../../../../../tests/webtorrent-service-m
 import { MindsPlayerInterface } from './players/player.interface';
 import { MediaModalComponent } from '../../modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FeaturesService } from '../../../../services/features.service';
+import { featuresServiceMock } from '../../../../../tests/features-service-mock.spec';
+
+
 
 @Component({
   selector: 'm-video--direct-http-player',
@@ -174,7 +178,8 @@ describe('MindsVideo', () => {
       providers: [
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: Client, useValue: clientMock },
-        { provide: WebtorrentService, useValue: webtorrentServiceMock }
+        { provide: WebtorrentService, useValue: webtorrentServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ]
     })
       .compileComponents();  // compile template and css

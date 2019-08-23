@@ -12,7 +12,7 @@
         [style.line-height]="stageHeight + 'px'"
         (mouseenter)="onMouseEnterStage()"
         (mouseleave)="onMouseLeaveStage()"
-        (touchend)="showOverlays()"
+        (touchend)="showOverlaysOnTablet()"
       >
         <!-- LOADING PANEL -->
         <div class="m-mediaModal__loadingPanel" *ngIf="isLoading">
@@ -31,8 +31,8 @@
             <img class="m-mediaModal__media--image"
               [src]="thumbnail"
               (load)="isLoaded()"
-              [style.height]="entity.height + 'px'"
-              [style.width]="entity.width + 'px'"
+              [style.height]="entityHeight + 'px'"
+              [style.width]="entityWidth + 'px'"
             />
           </div>
 
@@ -43,8 +43,8 @@
             [style.height]="mediaHeight + 'px'"
           >
             <m-video class="m-mediaModal__media--video"
-              [style.height]="entity.height + 'px'"
-              [style.width]="entity.width + 'px'"
+              [style.height]="entityHeight + 'px'"
+              [style.width]="entityWidth + 'px'"
               [isModal]="true"
               [autoplay]="true"
               [muted]="false"
@@ -62,22 +62,28 @@
 
           <!-- OVERLAY -->
           <div class="m-mediaModal__overlayContainer"
-            *ngIf="showOverlay"
+            *ngIf="overlayVisible"
             @fastFadeAnimation
           >
             <div class="m-mediaModal__overlayTitleWrapper">
               <!-- TITLE -->
               <span class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--notFullscreen" *ngIf="!isFullscreen">
-                <a [routerLink]="['/media', entity.entity_guid]">{{title}}</a>
+                <a [routerLink]="['/media', entity.entity_guid]"
+                  (click)="$event.stopPropagation()"
+                >{{title}}</a>
               </span>
               <!-- TITLE: FULLSCREEN -->
               <span class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--fullscreen" *ngIf="isFullscreen">
-                <a [routerLink]="['/', entity.ownerObj.username]">
+                <a [routerLink]="['/', entity.ownerObj.username]"
+                  (click)="$event.stopPropagation()"
+                >
                   <img class="avatar" [src]="minds.cdn_url + 'icon/' + entity.ownerObj.guid + '/small/' + ownerIconTime" class="mdl-shadow--2dp"/>
                   <span title={{entity.ownerObj.name}}>{{entity.ownerObj.name}}</span>
                 </a>
                 <div class="m-mediaModal__overlayTitleSeparator"></div>
-                <a [routerLink]="['/media', entity.entity_guid]">{{title}}</a>
+                <a [routerLink]="['/media', entity.entity_guid]"
+                  (click)="$event.stopPropagation()"
+                >{{title}}</a>
               </span>
             </div>
             <!-- FULLSCREEN BUTTON -->

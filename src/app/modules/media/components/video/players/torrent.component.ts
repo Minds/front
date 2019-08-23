@@ -80,10 +80,6 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
     this._emitCanPlayThrough();
   };
 
-  protected _dblClick = () => {
-    this.requestFullScreen();
-  };
-
   protected _onError = e => {
     this.loading = false;
     this.detectChanges();
@@ -131,7 +127,6 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit() {
     const player = this.getPlayer();
-    player.addEventListener('dblclick', this._dblClick);
     player.addEventListener('playing', this._emitPlay);
     player.addEventListener('pause', this._emitPause);
     player.addEventListener('ended', this._emitEnd);
@@ -161,7 +156,6 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
     const player = this.getPlayer();
 
     if (player) {
-      player.removeEventListener('dblclick', this._dblClick);
       player.removeEventListener('playing', this._emitPlay);
       player.removeEventListener('pause', this._emitPause);
       player.removeEventListener('ended', this._emitEnd);

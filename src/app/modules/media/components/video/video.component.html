@@ -34,7 +34,7 @@
   ></m-video--torrent-player>
 
   <ng-container *ngIf="playerRef">
-    <i *ngIf="!playerRef.isPlaying() && !playerRef.isLoading() || isActivity && metadataLoaded"
+    <i *ngIf="(!playerRef.isPlaying() && !playerRef.isLoading()) || (isActivity && metadataLoaded && !playerRef.isPlaying())"
       class="material-icons minds-video-play-icon"
       (click)="isModal ? toggle() : requestMediaModal()"
     >play_circle_outline</i>
