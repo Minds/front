@@ -449,32 +449,43 @@ export class Activity implements OnInit {
     this.activity.custom_data[0].height = img.naturalHeight;
   }
 
-  showMediaModal() {
-    if (this.featuresService.has('media-modal')) {
-      // Mobile (not tablet) users go to media page instead of modal
-      if (isMobile() && Math.min(screen.width, screen.height) < 768) {
-        this.router.navigate([`/media/${this.activity.entity_guid}`]);
-      }
-
-      if (this.activity.custom_type === 'video') {
-        this.activity.custom_data.dimensions = this.videoDimensions;
-      } else { // Image
-        // Set image dimensions if they're not already there
-        if (this.activity.custom_data[0].width === '0' || this.activity.custom_data[0].height === '0') {
-          this.setImageDimensions();
-        }
-      }
-
-      this.activity.modal_source_url = this.router.url;
-
-      this.overlayModal.create(MediaModalComponent, this.activity, {
-        class: 'm-overlayModal--media'
-      }).present();
-    } else {
-      if (this.activity.custom_type !== 'video'){
-        this.router.navigate([`/media/${this.activity.entity_guid}`]);
-      }
+  clickedImage() {
+    // Check if is mobile (not tablet)
+    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+      this.goToMediaPage();
+      return;
     }
+
+    if (!this.featuresService.has('media-modal')) {
+      // Non-canary
+      this.goToMediaPage();
+      return;
+    } else {
+      // Canary
+      if (this.activity.custom_data[0].width === '0' || this.activity.custom_data[0].height === '0') {
+        this.setImageDimensions();
+      }
+      this.openModal();
+    }
+  }
+
+  clickedVideo() {
+    // Already filtered out mobile users/non-canary in video.component.ts
+    // So this is just applicable to desktop/tablet in canary and should always show modal
+    this.activity.custom_data.dimensions = this.videoDimensions;
+    this.openModal();
+  }
+
+  openModal() {
+    this.activity.modal_source_url = this.router.url;
+
+    this.overlayModal.create(MediaModalComponent, this.activity, {
+      class: 'm-overlayModal--media'
+    }).present();
+  }
+
+  goToMediaPage() {
+    this.router.navigate([`/media/${this.activity.entity_guid}`]);
   }
 
   detectChanges() {

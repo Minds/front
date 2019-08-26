@@ -86,6 +86,7 @@ export class MindsVideoComponent implements OnDestroy {
   metadataLoaded: boolean = false;
   canPlayThrough: boolean = false;
   isFullscreen: boolean = false;
+  isMobile: boolean = false;
 
   current: { type: 'torrent' | 'direct-http', src: string };
   protected candidates: SourceCandidates = new SourceCandidates();
@@ -105,7 +106,7 @@ export class MindsVideoComponent implements OnDestroy {
     protected webtorrent: WebtorrentService,
     protected cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
-    private router: Router,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -397,27 +398,23 @@ export class MindsVideoComponent implements OnDestroy {
     this.toggle();
   }
 
-  requestMediaModal() {
+  clickedVideo() {
     if (!this.metadataLoaded) {
       return;
     }
 
-    let isMediaPage = false;
-    if (!this.isModal && !this.isActivity) {
-      isMediaPage = true;
-    }
-
-    if (this.isModal || (!isMediaPage && !this.featuresService.has('media-modal'))) {
+    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+      this.isMobile = true;
       this.toggle();
       return;
     }
 
-    //  Mobile (not tablet) users go to media page instead of modal
-    if (isMobile() && !isMediaPage && Math.min(screen.width, screen.height) < 768) {
-      this.router.navigate([`/media/${this.guid}`]);
+    if (this.isActivity && this.featuresService.has('media-modal')){
+      this.mediaModalRequested.emit();
+      return;
     }
 
-    this.mediaModalRequested.emit();
+    this.toggle();
   }
 
   detectChanges() {
@@ -442,9 +439,10 @@ export class MindsVideoComponent implements OnDestroy {
     }
   }
 
-  toggleFullscreen() {
+  toggleFullscreen($event) {
+    // This will only work on the main video on a media page (not comment attachments)
+    // TODO: make this work on pages with more than one m-video (i.e. feeds)
     const elem = document.querySelector('m-video');
-    // this.fullscreenHovering = false;
 
     // If fullscreen is not already enabled
     if ( !document['fullscreenElement'] &&
