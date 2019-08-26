@@ -1,0 +1,93 @@
+.m-walletSummary-container {
+  width: 100%;
+
+  .m-walletSummary-setupPrompt-container {
+    padding: ($minds-padding * 1.5) ($minds-padding * 3);
+    margin: ($minds-padding * 4) 0;
+    @include m-theme(){
+      background-color: themed($m-blue-grey-100);
+    }
+
+    .m-walletSummary-setupPrompt-text {
+      font-weight: 400;
+      letter-spacing: 1px;
+      @include m-theme(){
+        color: themed($m-grey-600);
+      }
+    }
+  }
+  .m-walletSummary-currencySelector {
+    list-style-type: none;
+    margin: 0;
+    padding: 12px 0;
+    overflow: hidden;
+    @include m-theme(){
+      border-bottom: 1px solid themed($m-grey-100);
+    }
+
+    .m-walletSummary-currency {
+      float: left;
+      font-weight: 400;
+      font-size: 14pt;
+      padding-right: $minds-padding * 3;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+
+      &:hover {
+        @include m-theme(){
+          color: themed($m-grey-100);        
+        }
+      }
+
+      &:focus {
+        outline:none !important;
+      }
+    }
+  }
+  .m-walletSummary-balancesContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .m-walletSummary-balanceGrid {
+      font-size: medium;
+    }
+    .m-walletSummary-breakdown-container{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      width: 50%;
+    }
+  }
+  .m-walletSummary-totalBalance {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+  }
+  .m-walletSummary-balanceGrid {
+    .m-walletSummary-balanceGrid-header {
+      font-size: 11pt;
+      margin-bottom: $minds-padding * 1.5;
+    }
+    .m-walletSummary-balanceGrid-body {
+      font-size: 16pt;
+    }
+  }
+
+  .m-walletSummary-addTokensButton i {
+    font-size: 36pt;
+  }
+
+  .m-walletSummary-breakdown-operator {
+    font-size: 24pt;
+  }
+
+  .m-walletSummary-subtext {
+    margin: ($minds-padding * 3) 0;
+    @include m-theme(){
+      color: themed($m-grey-200);
+    };
+  }
+}

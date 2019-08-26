@@ -14,13 +14,16 @@ import { BlockchainService } from '../blockchain/blockchain.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'm-wallet',
-  templateUrl: 'wallet.component.html'
+  selector: 'minds-wallet-tabs',
+  templateUrl: 'wallet-tabs.component.html'
 })
-
-export class WalletComponent {
+export class WalletTabsComponent {
 
   disablePointsAnimation: boolean = false;
+  
+  state = {
+    activeOption: 'history'
+  }
 
   constructor(
     private session: Session,
@@ -36,9 +39,11 @@ export class WalletComponent {
       this.router.navigate(['/login']);
       return;
     }
+
     this.title.setTitle('Wallet');
   }
 
+  onOptionSelect = (opt: string) => this.state.activeOption = opt;
 
   // Animations
   setDisablePointsAnimation(value) {

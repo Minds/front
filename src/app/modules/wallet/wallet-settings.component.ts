@@ -10,15 +10,36 @@ import { Session } from '../../services/session';
 
 import { WalletService } from '../../services/wallet';
 import { BlockchainService } from '../blockchain/blockchain.service';
-
+import { CurrencyPipe } from '@angular/common';
+import { Currencies } from './currencies';
 
 @Component({
   moduleId: module.id,
-  selector: 'm-wallet',
-  templateUrl: 'wallet.component.html'
+  selector: 'minds-wallet-settings',
+  templateUrl: 'wallet-settings.component.html'
 })
+export class WalletSummaryComponent {
 
-export class WalletComponent {
+  // readonly currencies: any[] = Currencies;
+
+  // state = {
+  //   activeCurrency: null,
+  //   setupWallet: false,
+  // }
+
+  // currencies = Currencies;
+
+  // currency = 
+
+
+
+
+
+
+
+
+//PUSH CHANGES ALREADY MADE THEN CONTINUE MAKING THIS AND THE OTHER 3 TABS.
+
 
   disablePointsAnimation: boolean = false;
 
@@ -31,13 +52,17 @@ export class WalletComponent {
     this.disablePointsAnimation = !!this.storage.get('disablePointsAnimation');
   }
 
-  ngOnInit() {
-    if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-    this.title.setTitle('Wallet');
-  }
+  // ngOnInit() {
+  //   if (!this.session.isLoggedIn()) {
+  //     this.router.navigate(['/login']);
+  //     return;
+  //   }
+  //   // Set default currency.
+  //   this.state.activeCurrency = this.currencies.filter(currency => currency.symbol === 'MINDS');
+  //   this.title.setTitle('Wallet');
+  // }
+
+  // onCurrencySelect = (currency: Object) => this.state.activeCurrency = currency;
 
 
   // Animations

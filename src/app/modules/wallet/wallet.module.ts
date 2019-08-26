@@ -45,7 +45,8 @@ import { ModalsModule } from '../modals/modals.module';
 import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component';
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
-
+import { WalletSummaryComponent } from './wallet-summary.component';
+import { WalletTabsComponent } from './wallet-tabs.component';
 
 const walletRoutes: Routes = [
   { path: 'wallet', component: WalletComponent,
@@ -100,7 +101,7 @@ const walletRoutes: Routes = [
     TokenOnboardingModule,
     PlusModule,
     ModalsModule,
-    ReferralsModule
+    ReferralsModule,
   ],
   declarations: [
     WalletComponent,
@@ -132,6 +133,8 @@ const walletRoutes: Routes = [
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
     WalletTokenTestnetComponent,
+    WalletSummaryComponent,
+    WalletTabsComponent,
   ],
   exports: [
     WalletComponent,
@@ -143,6 +146,8 @@ const walletRoutes: Routes = [
     WalletToggleComponent,
     WalletFlyoutComponent,
     WalletBalanceUSDComponent,
+    WalletSummaryComponent,
+    WalletTabsComponent,
   ],
   entryComponents: [ WalletComponent ]
 })
