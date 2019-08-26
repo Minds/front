@@ -20,27 +20,6 @@ import { Currencies } from './currencies';
 })
 export class WalletSummaryComponent {
 
-  // readonly currencies: any[] = Currencies;
-
-  // state = {
-  //   activeCurrency: null,
-  //   setupWallet: false,
-  // }
-
-  // currencies = Currencies;
-
-  // currency = 
-
-
-
-
-
-
-
-
-//PUSH CHANGES ALREADY MADE THEN CONTINUE MAKING THIS AND THE OTHER 3 TABS.
-
-
   disablePointsAnimation: boolean = false;
 
   constructor(
@@ -52,15 +31,14 @@ export class WalletSummaryComponent {
     this.disablePointsAnimation = !!this.storage.get('disablePointsAnimation');
   }
 
-  // ngOnInit() {
-  //   if (!this.session.isLoggedIn()) {
-  //     this.router.navigate(['/login']);
-  //     return;
-  //   }
-  //   // Set default currency.
-  //   this.state.activeCurrency = this.currencies.filter(currency => currency.symbol === 'MINDS');
-  //   this.title.setTitle('Wallet');
-  // }
+  ngOnInit() {
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    // Set default currency.
+    this.title.setTitle('Wallet Settings');
+  }
 
   // onCurrencySelect = (currency: Object) => this.state.activeCurrency = currency;
 
