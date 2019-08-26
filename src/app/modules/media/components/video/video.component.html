@@ -12,7 +12,7 @@
     (onError)="onError()"
     (onCanPlayThrough)="onCanPlayThrough()"
     (onLoadedMetadata)="loadedMetadata()"
-    (click)="isModal ? toggle() : requestMediaModal()"
+    (click)="clickedVideo()"
     #player
   ></m-video--direct-http-player>
 
@@ -29,14 +29,14 @@
     (onError)="onError()"
     (onCanPlayThrough)="onCanPlayThrough()"
     (onLoadedMetadata)="loadedMetadata()"
-    (click)="isModal ? toggle() : requestMediaModal()"
+    (click)="clickedVideo()"
     #player
   ></m-video--torrent-player>
 
   <ng-container *ngIf="playerRef">
     <i *ngIf="(!playerRef.isPlaying() && !playerRef.isLoading()) || (isActivity && metadataLoaded && !playerRef.isPlaying())"
       class="material-icons minds-video-play-icon"
-      (click)="isModal ? toggle() : requestMediaModal()"
+      (click)="clickedVideo()"
     >play_circle_outline</i>
     <ng-content></ng-content>
 
@@ -97,7 +97,7 @@
         (select)="selectedQuality($event)"
       ></m-video--quality-selector>
 
-      <i *ngIf="!isModal" class="material-icons" (click)="playerRef.requestFullScreen()">tv</i>
+      <i *ngIf="!isModal && !isActivity" class="material-icons" (click)="toggleFullscreen($event)">tv</i>
     </div>
 
     <div class="m-video--torrent-info" *ngIf="torrentInfo && current.type === 'torrent'">
