@@ -1,19 +1,17 @@
 m-pro--channel-tile {
   cursor: pointer;
-  position: relative;
   width: 100%;
   height: 320px;
 
   & > img {
-    height: 320px;
+    height: calc(100% - 5em);
     width: 100%;
     object-fit: cover;
   }
 
 
   .m-proChannelTile__text {
-    position: absolute;
-    bottom: 0;
+    height: 4em;
     background-color: var(--m-pro--transparent-background-color);
     color: var(--m-pro--text-color);
     padding: 8px 16px;
@@ -21,15 +19,15 @@ m-pro--channel-tile {
     width: 100%;
     box-sizing: border-box;
 
+    display: flex;
+    align-items: center;
+
     h2 {
+      line-height: 1.16em;
       font-weight: 700;
       font-size: 20px;
       color: var(--m-pro--text-color) !important;
       margin: 0;
-
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     p {
