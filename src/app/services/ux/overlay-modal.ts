@@ -18,6 +18,12 @@ export class OverlayModalService {
     return this;
   }
 
+  setRoot(root: HTMLElement) {
+    this.container.setRoot(root);
+
+    return this;
+  }
+
   create(component, data?, opts?, injector?: Injector) {
     if (!this.container) {
       throw new Error('Missing overlay container');

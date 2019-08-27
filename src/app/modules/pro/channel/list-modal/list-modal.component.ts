@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, ViewChild } from '@angular/core';
 import { ProChannelService } from '../channel.service';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ProContentModalComponent } from '../content-modal/modal.component';
@@ -35,13 +35,16 @@ export class ProChannelListModal {
     protected channelService: ProChannelService,
     protected feedsService: FeedsService,
     protected modalService: OverlayModalService,
+    protected element: ElementRef,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
   ) {
   }
 
   ngAfterViewInit() {
-    this.modalService.setContainer(this.overlayModal);
+    this.modalService
+      .setContainer(this.overlayModal)
+      .setRoot(this.element.nativeElement);
 
     this.load(true);
   }

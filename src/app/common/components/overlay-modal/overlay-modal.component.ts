@@ -26,6 +26,7 @@ export class OverlayModalComponent implements AfterViewInit {
 
   hidden: boolean = true;
   class: string = '';
+  root: HTMLElement;
 
   @ViewChild(DynamicHostDirective, { static: true })
   private host: DynamicHostDirective;
@@ -41,6 +42,10 @@ export class OverlayModalComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
+    if (!this.root && document && document.body) {
+      this.root = document.body;
+    }
+
     this.service.setContainer(this);
   }
 
@@ -67,6 +72,10 @@ export class OverlayModalComponent implements AfterViewInit {
     this.componentInstance.parent = this.modalElement.nativeElement;
   }
 
+  setRoot(root: HTMLElement) {
+    this.root = root;
+  }
+
   setData(data) {
     if (!this.componentInstance) {
       return;
@@ -91,16 +100,16 @@ export class OverlayModalComponent implements AfterViewInit {
 
     this.hidden = false;
 
-    if (document && document.body) {
-      document.body.classList.add('m-overlay-modal--shown');
+    if (this.root) {
+      this.root.classList.add('m-overlay-modal--shown');
     }
   }
 
   dismiss() {
     this.hidden = true;
 
-    if (document && document.body) {
-      document.body.classList.remove('m-overlay-modal--shown');
+    if (this.root) {
+      this.root.classList.remove('m-overlay-modal--shown');
     }
 
     if (!this.componentInstance) {

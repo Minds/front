@@ -94,7 +94,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.modalService.setContainer(this.overlayModal);
+    this.modalService
+      .setContainer(this.overlayModal)
+      .setRoot(this.element.nativeElement);
   }
 
   listen() {
