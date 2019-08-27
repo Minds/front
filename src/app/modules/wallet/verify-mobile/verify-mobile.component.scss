@@ -1,0 +1,68 @@
+
+.m-wallet-verifyMobile-container {
+  h1 {
+    font-weight: 400;
+    font-size: 18pt;
+    letter-spacing: 2px;
+    margin: $minds-padding 0;
+  }
+  .m-wallet-verifyMobile-enterNumberContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #eee;
+    padding: ($minds-padding * 3) 0;
+    margin-bottom: 24px;
+
+    button {
+      width: 25%;
+      border-radius: 6px;
+      background-color: #FFF;
+      border-radius: 6px;
+      margin: 0 16px;
+      border: none;
+      color: #666;
+      letter-spacing: 1.5px;
+      padding: 16px;
+      font-size: 11pt;
+    }
+
+    m-phone-input {
+      height: 50px;
+      width: 50%;
+
+      .m-phone-input--wrapper {
+        margin-bottom: 0;
+        height: 100%;
+        width: 100%;
+
+        input {
+          height: 100%;
+        }
+      }
+
+      .m-phone-input--selected-flag {
+        height: 100%;
+        border-right: 1px solid lightgrey;
+
+        .m-phone-input--dial-code {
+          color: #777;
+        }
+      }
+
+      input {
+        letter-spacing: 1.5px;
+        padding-left: 8px;
+        color: #777;
+      }
+
+      .m-phone-input--country-list {
+        position: unset;
+        box-shadow: unset;
+        border: unset;
+        width: fit-content;
+        display: flex;
+      }
+    }
+  }
+}

@@ -46,10 +46,12 @@ import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component'
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 import { WalletSummaryComponent } from './wallet-summary.component';
-import { WalletTabsComponent } from './wallet-tabs.component';
+import { WalletTabsComponent } from './tabs/wallet-tabs.component';
+import { OldWalletComponent } from './old-wallet.component';
+import { VerifyMobileComponent } from './verify-mobile/verify-mobile.component';
 
 const walletRoutes: Routes = [
-  { path: 'wallet', component: WalletComponent,
+  { path: 'wallet', component: OldWalletComponent,
     children: [
       { path: '', redirectTo: 'tokens', pathMatch: 'full' },
       { path: 'overview', redirectTo: 'tokens', pathMatch: 'full' },
@@ -80,6 +82,10 @@ const walletRoutes: Routes = [
         ]
       },
       { path: 'wire', component: WalletWireComponent },
+      { path: 'new', component: WalletComponent,
+        children: [
+          { path: 'verify', component: VerifyMobileComponent },
+        ]},
       { path: '**', component: WalletOverviewComponent },
     ]
   }
@@ -105,6 +111,7 @@ const walletRoutes: Routes = [
   ],
   declarations: [
     WalletComponent,
+    OldWalletComponent,
     PointsOverviewComponent,
     WalletOverviewComponent,
     WalletTransactionsComponent,
@@ -135,9 +142,11 @@ const walletRoutes: Routes = [
     WalletTokenTestnetComponent,
     WalletSummaryComponent,
     WalletTabsComponent,
+    VerifyMobileComponent,
   ],
   exports: [
     WalletComponent,
+    OldWalletComponent,
     PointsOverviewComponent,
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
@@ -148,8 +157,9 @@ const walletRoutes: Routes = [
     WalletBalanceUSDComponent,
     WalletSummaryComponent,
     WalletTabsComponent,
+    VerifyMobileComponent,
   ],
-  entryComponents: [ WalletComponent ]
+  entryComponents: [ WalletComponent, OldWalletComponent ]
 })
 
 export class WalletModule {}

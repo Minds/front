@@ -1,16 +1,8 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { Subscription } from 'rxjs';
-
-import { Storage } from '../../services/storage';
-import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
-import { Session } from '../../services/session';
-
-import { WalletService } from '../../services/wallet';
-import { BlockchainService } from '../blockchain/blockchain.service';
-
+import { Router } from '@angular/router';
+import { Storage } from '../../../services/storage';
+import { MindsTitle } from '../../../services/ux/title';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,

@@ -10,15 +10,15 @@ import { Session } from '../../services/session';
 
 import { WalletService } from '../../services/wallet';
 import { BlockchainService } from '../blockchain/blockchain.service';
-import { CurrencyPipe } from '@angular/common';
-import { Currencies } from './currencies';
+
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-wallet-settings',
-  templateUrl: 'wallet-settings.component.html'
+  selector: 'm-wallet',
+  templateUrl: 'old-wallet.component.html'
 })
-export class WalletSummaryComponent {
+
+export class OldWalletComponent {
 
   disablePointsAnimation: boolean = false;
 
@@ -36,11 +36,9 @@ export class WalletSummaryComponent {
       this.router.navigate(['/login']);
       return;
     }
-    // Set default currency.
-    this.title.setTitle('Wallet Settings');
-  }
 
-  // onCurrencySelect = (currency: Object) => this.state.activeCurrency = currency;
+    this.title.setTitle('Wallet');
+  }
 
 
   // Animations
