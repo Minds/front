@@ -47,6 +47,7 @@ import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 import { WalletSummaryComponent } from './wallet-summary.component';
 import { WalletTabsComponent } from './tabs/wallet-tabs.component';
+import { WalletSettingsComponent } from './tabs/wallet-settings.component';
 import { OldWalletComponent } from './old-wallet.component';
 import { VerifyMobileComponent } from './verify-mobile/verify-mobile.component';
 
@@ -82,10 +83,8 @@ const walletRoutes: Routes = [
         ]
       },
       { path: 'wire', component: WalletWireComponent },
-      { path: 'new', component: WalletComponent,
-        children: [
-          { path: 'verify', component: VerifyMobileComponent },
-        ]},
+      { path: 'new', component: WalletComponent },
+      { path: 'verify', component: VerifyMobileComponent },
       { path: '**', component: WalletOverviewComponent },
     ]
   }
@@ -143,6 +142,7 @@ const walletRoutes: Routes = [
     WalletSummaryComponent,
     WalletTabsComponent,
     VerifyMobileComponent,
+    WalletSettingsComponent,
   ],
   exports: [
     WalletComponent,
@@ -158,6 +158,7 @@ const walletRoutes: Routes = [
     WalletSummaryComponent,
     WalletTabsComponent,
     VerifyMobileComponent,
+    WalletSettingsComponent,
   ],
   entryComponents: [ WalletComponent, OldWalletComponent ]
 })

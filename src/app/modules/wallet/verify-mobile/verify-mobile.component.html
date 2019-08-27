@@ -1,44 +1,44 @@
 <div class="m-wallet-verifyMobile-container">
-
-  <h1>Phone Verification</h1>
-
+  <h1>Your Wallet</h1>
+  <h2>Phone Verification</h2>
   <span class="m-wallet-verifyMobile-step">Step {{ !confirming ? 1 : 2 }} of 2</span>
-  <p>Getting started with your wallet is easy.</p>
-  <p>We simply need to verify you're a unique individual, and not a pesky bot.</p>
 
-  <div class="m-wallet-verifyMobile-enterNumberContainer" *ngIf="!confirming">
-    <span>Mobile/Cell number</span>
-    <m-phone-input [(ngModel)]="number"></m-phone-input>
-    <!-- <m-tooltip icon="help">Please enter your phone number in order to join the rewards program</m-tooltip> -->
-    <button (click)="verify()" [disabled]="inProgress">Send Verification</button>
-
-    <div *ngIf="inProgress" class="m-wallet-verifyMobile--inProgress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-  
-    <p class="m-wallet-verifyMobile-error" *ngIf="error">
-      {{error}}
-    </p>
-  </div>
-
-  <p style="font-style: italic">Don't worry. We do not save your phone number or use it for any other purpose than verifying that you're a unique individual.</p>
-  <div class="m-wallet-verifyMobile-enterCodeContainer" *ngIf="confirming">
-    <div class="m-wallet-verifyMobile-">
-      <input 
-        type="number"
-        [(ngModel)]="code"
-        placeholder="eg. 198349"
-        i18n-placeholder="@@WALLET__TOKENS__JOIN__CODE_EXAMPLE_PH"
-        class="m-token-join--form--input-input m-border"
-        />
-      <m-tooltip icon="help" i18n="@@WALLET__TOKENS__JOIN__ENTER_CODE_TOOLTIP">Please enter the code we just sent you, to verify that your number is correct</m-tooltip>
+  <!--Step one - enter number -->
+  <ng-container class="m-wallet-verifyMobile-stepOne" *ngIf="!confirming">
+    <p>Getting started with your wallet is easy.</p>
+    <p>We simply need to verify you're a unique individual, and not a pesky bot.</p>
+    <div class="m-wallet-verifyMobile-enterNumberContainer">
+      <span class="m-wallet-verifyMobile-header">Mobile Phone Number</span>
+      <div class="m-wallet-verifyMobile-enterNumberForm">
+        <m-phone-input [(ngModel)]="number" [ngClass]="{'m-wallet-verifyMobile-enterNumberForm--error' : error}"></m-phone-input>
+        <button class="m-wallet-verifyMobile-submitButton" (click)="verify()" [disabled]="inProgress">Send Verification</button>
+        <div *ngIf="inProgress" class="m-wallet-verifyMobile--inProgress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+      </div>
+      <p class="m-wallet-verifyMobile-error" *ngIf="error">
+        {{error}}
+      </p>
     </div>
-    
-    <button class="m-btn" (click)="cancel()" i18n="@@WALLET__TOKENS__JOIN__GO_BACK_ACTION">Go Back</button>
-    <button class="m-btn m-btn--action" (click)="confirm()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__JOIN__CONFIRM_ACTION">Confirm</button>
+    <p style="font-style: italic">Don't worry. We do not save your phone number or use it for any other purpose than verifying that you're a unique individual.</p>
+  </ng-container>
 
-    <div *ngIf="inProgress" class="m-wallet-verifyMobile--inProgress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-
-    <p class="m-wallet-verifyMobile-error" *ngIf="error">
+  <!--Step two - enter code -->
+  <div class="m-wallet-verifyMobile-enterCodeContainer" *ngIf="confirming">
+    <p>You should have received a 6-digit numeric code. Please enter it below to complete the verification process.</p>
+    <div class="m-wallet-verifyMobile-enterNumberContainer m-flexCenter">
+      <input #input1 maxlength=”1” (keyup)="onKeyup($event)" class="m-wallet-verifyMobile-codeInput">
+      <input #input2 maxlength=”1” (keyup)="onKeyup($event)" class="m-wallet-verifyMobile-codeInput">
+      <input #input3 maxlength=”1” (keyup)="onKeyup($event)" class="m-wallet-verifyMobile-codeInput">
+      <input #input4 maxlength=”1” (keyup)="onKeyup($event)" class="m-wallet-verifyMobile-codeInput">
+      <input #input5 maxlength=”1” (keyup)="onKeyup($event)" class="m-wallet-verifyMobile-codeInput">
+      <input #input6 maxlength=”1” (keyup)="onKeyup($event)" class="m-wallet-verifyMobile-codeInput">
+      <button class="m-wallet-verifyMobile-submitButton" (click)="confirm()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__JOIN__CONFIRM_ACTION">Confirm</button>
+    </div>
+    <p class="m-wallet-verifyMobile-error" style="margin: 0 0 16px 0" *ngIf="error">
       {{error}}
     </p>
+    <div *ngIf="inProgress" class="m-wallet-verifyMobile--inProgress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    <span *ngIf="resent">A new code has been sent.</span>
+    <p>Didn't receive the code? <a (click)="verify()">Resend Code</a></p>
+    <p> Verification code sent to <strong>+{{ number }}</strong> - If this is incorrect, you can always go back to <a (click)="confirming = false;">Step 1</a> and change it.</p>
   </div>
 </div>
