@@ -11,6 +11,7 @@ export class SocketsService {
   registered: boolean = false;
   subscriptions: any = {};
   rooms: string[] = [];
+  debug: boolean = false;
 
   static _(session: Session, nz: NgZone) {
     return new SocketsService(session, nz);
@@ -58,20 +59,23 @@ export class SocketsService {
   setUpDefaultListeners() {
     this.socket.on('connect', () => {
       this.nz.run(() => {
-        console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
+        if (this.debug)
+          console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
         this.join(`${this.LIVE_ROOM_NAME}:${window.Minds.user.guid}`);
       });
     });
 
     this.socket.on('disconnect', () => {
       this.nz.run(() => {
-        console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
+        if (this.debug)
+          console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
         this.registered = false;
       });
     });
 
     this.socket.on('registered', (guid) => {
-    console.log('[ws]::registered');
+      if (this.debug)
+        console.log('[ws]::registered');
       this.nz.run(() => {
         this.registered = true;
         this.socket.emit('join', this.rooms);
@@ -87,7 +91,8 @@ export class SocketsService {
     // -- Rooms
 
     this.socket.on('rooms', (rooms: string[]) => {
-    console.log('rooms', rooms);
+      if (this.debug)
+        console.log('rooms', rooms);
       this.nz.run(() => {
         this.rooms = rooms;
       });
@@ -95,21 +100,24 @@ export class SocketsService {
 
     this.socket.on('joined', (room: string, rooms: string[]) => {
       this.nz.run(() => {
-        console.log(`[ws]::joined`, room, rooms);
+        if (this.debug)
+          console.log(`[ws]::joined`, room, rooms);
         this.rooms = rooms;
       });
     });
 
     this.socket.on('left', (room: string, rooms: string[]) => {
       this.nz.run(() => {
-        console.log(`[ws]::left`, room, rooms);
+        if (this.debug)
+          console.log(`[ws]::left`, room, rooms);
         this.rooms = rooms;
       });
     });
   }
 
   reconnect() {
-    console.log('[ws]::reconnect');
+    if (this.debug)
+      console.log('[ws]::reconnect');
     this.registered = false;
 
     this.socket.disconnect();
@@ -119,7 +127,8 @@ export class SocketsService {
   }
 
   disconnect() {
-    console.log('[ws]::disconnect');
+    if (this.debug)
+      console.log('[ws]::disconnect');
     this.registered = false;
 
     this.socket.disconnect();

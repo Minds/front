@@ -33,7 +33,7 @@
 
   > a {
     display: block;
-    height: 16px; 
+    height: 16px;
     line-height: 16px;
     font-size: 13px;
     font-weight: 600;
@@ -101,6 +101,12 @@
       &:hover {
         @include m-theme(){
           color: themed($m-blue-grey-700);
+        }
+      }
+
+      &.selected:hover {
+        @include m-theme(){
+          color: themed($m-blue-dark) !important;
         }
       }
 

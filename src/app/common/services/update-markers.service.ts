@@ -53,6 +53,8 @@ export class UpdateMarkersService {
     if (this.isLoggedIn) {
       this.get()
         .subscribe((markers: any) => {
+          if (!markers)
+            return;
           this.data = markers; //cache
 
           for (let i in this.data) {

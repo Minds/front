@@ -1,0 +1,191 @@
+<div class="m-mediaModal__wrapper">
+  <div class="m-mediaModal__theater"
+    (click)="clickedModal($event)"
+  >
+    <div class="m-mediaModal m-mediaModal__clearFix"
+      [style.width]="modalWidth + 'px'"
+      [style.height]="stageHeight + 'px'"
+    >
+      <!-- The stageWrapper is the element that goes into fullscreen -->
+      <div class="m-mediaModal__stageWrapper"
+        [style.width]="stageWidth + 'px'"
+        [style.line-height]="stageHeight + 'px'"
+        (mouseenter)="onMouseEnterStage()"
+        (mouseleave)="onMouseLeaveStage()"
+        (touchend)="showOverlaysOnTablet()"
+      >
+        <!-- LOADING PANEL -->
+        <div class="m-mediaModal__loadingPanel" *ngIf="isLoading">
+          <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+        </div>
+
+        <!-- MEDIA STAGE -->
+        <div class="m-mediaModal__stage">
+          <!-- MEDIA: IMAGE -->
+          <div class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--image"
+            *ngIf="!isVideo"
+            [style.width]="mediaWidth + 'px'"
+            [style.height]="mediaHeight + 'px'"
+            [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+          >
+            <img class="m-mediaModal__media--image"
+              [src]="thumbnail"
+              (load)="isLoaded()"
+              [style.height]="entityHeight + 'px'"
+              [style.width]="entityWidth + 'px'"
+            />
+          </div>
+
+          <!-- MEDIA: VIDEO -->
+          <div class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--video"
+            *ngIf="isVideo"
+            [style.width]="mediaWidth + 'px'"
+            [style.height]="mediaHeight + 'px'"
+          >
+            <m-video class="m-mediaModal__media--video"
+              [style.height]="entityHeight + 'px'"
+              [style.width]="entityWidth + 'px'"
+              [isModal]="true"
+              [autoplay]="true"
+              [muted]="false"
+              [poster]="entity.custom_data.thumbnail_src"
+              [src]="[{ 'res': '360', 'uri': 'api/v1/media/' + entity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
+              [guid]="entity.custom_data.guid"
+              [playCount]="entity['play:count']"
+              [torrent]="[{ res: '360', key: entity.custom_data.guid + '/360.mp4' }]"
+              (videoCanPlayThrough)="isLoaded()"
+              [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+            >
+              <video-ads [player]="player" *ngIf="entity.monetized"></video-ads>
+            </m-video>
+          </div>
+
+          <!-- OVERLAY -->
+          <div class="m-mediaModal__overlayContainer"
+            *ngIf="overlayVisible"
+            @fastFadeAnimation
+          >
+            <div class="m-mediaModal__overlayTitleWrapper">
+              <!-- TITLE -->
+              <span class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--notFullscreen" *ngIf="!isFullscreen">
+                <a [routerLink]="['/media', entity.entity_guid]"
+                  (click)="$event.stopPropagation()"
+                >{{title}}</a>
+              </span>
+              <!-- TITLE: FULLSCREEN -->
+              <span class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--fullscreen" *ngIf="isFullscreen">
+                <a [routerLink]="['/', entity.ownerObj.username]"
+                  (click)="$event.stopPropagation()"
+                >
+                  <img class="avatar" [src]="minds.cdn_url + 'icon/' + entity.ownerObj.guid + '/small/' + ownerIconTime" class="mdl-shadow--2dp"/>
+                  <span title={{entity.ownerObj.name}}>{{entity.ownerObj.name}}</span>
+                </a>
+                <div class="m-mediaModal__overlayTitleSeparator"></div>
+                <a [routerLink]="['/media', entity.entity_guid]"
+                  (click)="$event.stopPropagation()"
+                >{{title}}</a>
+              </span>
+            </div>
+            <!-- FULLSCREEN BUTTON -->
+            <div class="m-mediaModal__fullscreenButtonWrapper">
+              <div class="m-mediaModal__fullscreenButton"
+                (click)="toggleFullscreen()"
+                (mouseenter)="fullscreenHovering=true"
+                (mouseleave)="fullscreenHovering=false"
+                [class.m-mediaModal__fullscreenButton--hovering]="fullscreenHovering"
+              >
+              <i *ngIf="!isFullscreen" class="material-icons m-mediaModal__fullscreenIcon--enable">fullscreen</i>
+              <i *ngIf="isFullscreen" class="material-icons m-mediaModal__fullscreenIcon--disable">fullscreen_exit</i>
+              </div>
+            </div>
+          </div>
+          <!-- PAGER (DISABLED) -->
+          <!-- <a class="m-mediaModal__pager m-mediaModal__pager--previous">
+            <i class="material-icons">chevron-left</i>
+          </a>
+          <a class="m-mediaModal__pager m-mediaModal__pager--next">
+            <i class="material-icons">chevron-right</i>
+          </a> -->
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="m-mediaModal__contentContainer">
+        <div class="m-mediaModal__contentBody">
+          <div class="m-mediaModal__scrollableAreaContainer m-mediaModal__contentAfter">
+            <div class="m-mediaModal__scrollableAreaWrapper">
+
+              <!-- OWNER BLOCK -->
+              <div class="m-mediaModal__ownerBlock m-mediaModal__clearfix m-owner-block">
+
+                <!-- OWNER BLOCK AVATAR -->
+                <div class="m-mediaModal__ownerBlockAvatar avatar" [hovercard]="entity.ownerObj.guid">
+                  <a [routerLink]="['/', entity.ownerObj.username]">
+                    <img [src]="minds.cdn_url + 'icon/' + entity.ownerObj.guid + '/medium/' + ownerIconTime" class="mdl-shadow--2dp"/>
+                  </a>
+                </div>
+
+                <!-- OWNER BLOCK BODY -->
+                <div class="m-mediaModal__ownerBlockBody">
+                  <a class="m-ownerBlock__channelLink" [routerLink]="['/', entity.ownerObj.username]">
+                    <strong title={{entity.ownerObj.name}}>{{entity.ownerObj.name}}</strong>
+                    <m-channel--badges class="m-channel--badges-activity" [user]="entity.ownerObj" badges="[ 'admin', 'verified' ]"></m-channel--badges>
+                  </a>
+                  <a *ngIf="entity.containerObj && entity.containerObj.type == 'group'"
+                    [routerLink]="['/groups/profile', entity.containerObj.guid]"
+                    class="m-ownerBlock__groupLink mdl-color-text--blue-grey-300">
+                    <strong>({{entity.containerObj.name}})</strong>
+                  </a>
+                  <!-- PERMALINK -->
+                  <a [routerLink]="['/newsfeed', permalinkGuid]" class="permalink m-ownerBlock__permalink">
+                    <span class="m-ownerBlock__permalinkDate">{{entity.time_created * 1000 | date:'medium'}}</span>
+                    <span *ngIf="entity.edited" class="m-ownerBlock__permalinkFlag m-ownerBlock__permalinkFlag--edited" i18n="@@M__COMMON__EDITED">edited</span>
+                    <div *ngIf="boosted"
+                      class="mdl-card__supporting-text m-ownerBlock__permalinkFlag m-ownerBlock__permalinkFlag--boosted"
+                      [class.m-ownerBlock__permalinkFlag--onchain]="entity.boosted_onchain"
+                      >
+                      <i class="material-icons">trending_up</i>
+                      <a i18n="@@MINDS__CARDS__entity__BOOSTED_LABEL" [hidden]="entity.boosted_onchain">Boosted</a>
+                      <a i18n="@@MINDS__CARDS__entity__BOOSTED_LABEL_ONCHAIN" [hidden]="!entity.boosted_onchain" [routerLink]="['/token']">Boosted Onchain</a>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <!-- MESSAGE -->
+              <div class="m-mediaModal__message mdl-card__supporting-text"
+                m-read-more *ngIf="hasMessage"
+                [maxHeightAllowed]="136"
+              >
+                <span class="m-mature-message-content" [innerHtml]="message | tags">
+                </span>
+                <m-read-more--button></m-read-more--button>
+              </div>
+              <!-- ACTION BUTTONS -->
+              <div class="m-mediaModal__actionButtonsWrapper">
+                <div class="m-mediaModal__actionButtonsRow m-action-tabs">
+                  <m-wire-button *ngIf="session.getLoggedInUser().guid != entity.owner_guid"
+                    [object]="entity"
+                    (done)="wireSubmitted($event)"
+                  ></m-wire-button>
+                  <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
+                  <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
+                  <minds-button-remind [object]="entity"></minds-button-remind>
+                </div>
+              </div>
+
+              <!-- COMMENTS -->
+              <div class="m-mediaModal__comments" *ngIf="entity.guid">
+                <m-comments__tree
+                  [limit]="24"
+                  [entity]="entity"
+                  [scrollable]="true"
+                >
+                </m-comments__tree>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

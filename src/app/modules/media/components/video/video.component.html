@@ -5,10 +5,14 @@
     [poster]="poster"
     [muted]="muted"
     [autoplay]="autoplay"
+    [guid]="guid"
     (onPlay)="onPlay()"
     (onPause)="onPause()"
     (onEnd)="onEnd()"
     (onError)="onError()"
+    (onCanPlayThrough)="onCanPlayThrough()"
+    (onLoadedMetadata)="loadedMetadata()"
+    (click)="clickedVideo()"
     #player
   ></m-video--direct-http-player>
 
@@ -18,19 +22,22 @@
     [poster]="poster"
     [muted]="muted"
     [autoplay]="autoplay"
+    [guid]="guid"
     (onPlay)="onPlay()"
     (onPause)="onPause()"
     (onEnd)="onEnd()"
     (onError)="onError()"
+    (onCanPlayThrough)="onCanPlayThrough()"
+    (onLoadedMetadata)="loadedMetadata()"
+    (click)="clickedVideo()"
     #player
   ></m-video--torrent-player>
 
   <ng-container *ngIf="playerRef">
-    <i *ngIf="!playerRef.isPlaying() && !playerRef.isLoading()"
+    <i *ngIf="(!playerRef.isPlaying() && !playerRef.isLoading()) || (isActivity && metadataLoaded && !playerRef.isPlaying())"
       class="material-icons minds-video-play-icon"
-      (click)="playerRef.play()"
+      (click)="clickedVideo()"
     >play_circle_outline</i>
-
     <ng-content></ng-content>
 
     <div *ngIf="transcoding" class="minds-video-bar-top">
@@ -41,10 +48,10 @@
       <span i18n="@@MEDIA__VIDEO__TRANSCODING_NOTICE">{{transcodingError}}</span>
     </div>
 
-    <div class="minds-video-bar-full">
-      <i class="material-icons" *ngIf="!playerRef.isLoading(); else loadingSpinner"
-        (click)="playerRef.toggle()"
-      >{{ playerRef.isPlaying() ? 'pause' : 'play_arrow' }}</i>
+    <div class="minds-video-bar-full" [@fadeAnimation]="showControls ? 'in' : 'out'">
+      <i class="material-icons"
+        (click)="controlBarToggle($event)"
+      >{{ playerRef.isPlaying() || playerRef.isLoading() ? 'pause' : 'play_arrow' }}</i>
       <ng-template #loadingSpinner>
         <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
       </ng-template>
@@ -53,7 +60,7 @@
       <m-video--volume-slider #volumeSlider [player]="playerRef"></m-video--volume-slider>
 
       <a class="material-icons m-video-full-page minds-video--open-new"
-        *ngIf="guid"
+        *ngIf="guid && !isModal"
         [routerLink]="['/media', guid]"
         target="_blank"
         (click)="playerRef.pause()">
@@ -90,7 +97,7 @@
         (select)="selectedQuality($event)"
       ></m-video--quality-selector>
 
-      <i class="material-icons" (click)="playerRef.requestFullScreen()">tv</i>
+      <i *ngIf="!isModal && !isActivity" class="material-icons" (click)="toggleFullscreen($event)">tv</i>
     </div>
 
     <div class="m-video--torrent-info" *ngIf="torrentInfo && current.type === 'torrent'">

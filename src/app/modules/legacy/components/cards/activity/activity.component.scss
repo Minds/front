@@ -31,6 +31,12 @@ minds-activity {
     }
   }
 
+  .m-activity--image-link {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   m-safe-toggle {
     .m-safe-toggle {
       display: inline-block;

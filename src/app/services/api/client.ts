@@ -183,7 +183,7 @@ export class Client {
    * Build the options
    */
   private buildOptions(options: Object) {
-    const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
+    const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN') || '';
 
     const headers = {
       'X-XSRF-TOKEN': XSRF_TOKEN,

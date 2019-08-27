@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { timer, Subscription } from 'rxjs';
 
@@ -6,6 +6,7 @@ import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 
 import { RecommendedService } from '../../components/video/recommended.service';
+import { MindsVideoComponent } from '../../components/video/video.component';
 
 @Component({
   selector: 'm-media--theatre',
@@ -43,7 +44,7 @@ import { RecommendedService } from '../../components/video/recommended.service';
         [playCount]="false"
         #player>
         <video-ads [player]="player" *ngIf="object.monetized"></video-ads>
-      
+
       </m-video>
 
     </div>
@@ -67,9 +68,11 @@ export class MediaTheatreComponent {
 
   minds = window.Minds;
 
+  @ViewChild( MindsVideoComponent, { static: false }) videoComponent: MindsVideoComponent;
+
   constructor(
     public session: Session,
-    public client: Client, 
+    public client: Client,
     public router: Router,
     private recommended: RecommendedService
   ) {
@@ -134,6 +137,22 @@ export class MediaTheatreComponent {
   cancelCountdown() {
     this.counterSeconds = 0;
     this.timerSubscribe.unsubscribe();
+  }
+
+  togglePlay($event) {
+    this.videoComponent.toggle();
+  }
+
+  // Show video controls
+  onMouseEnterStage() {
+      this.videoComponent.stageHover = true;
+      this.videoComponent.onMouseEnter();
+  }
+
+  // Hide video controls
+  onMouseLeaveStage() {
+    this.videoComponent.stageHover = false;
+    this.videoComponent.onMouseLeave();
   }
 
   ngOnDestroy() {

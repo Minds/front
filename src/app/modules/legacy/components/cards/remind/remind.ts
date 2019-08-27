@@ -1,8 +1,23 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
+
+import { Router } from "@angular/router";
 
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
+import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { MediaModalComponent } from '../../../../media/modal/modal.component';
+import { FeaturesService } from '../../../../../services/features.service';
+import isMobile from '../../../../../helpers/is-mobile';
 
 @Component({
   moduleId: module.id,
@@ -32,14 +47,20 @@ export class Remind {
   isTranslatable: boolean = false;
   menuOptions: any = [];
   canDelete: boolean = false;
+  videoDimensions: Array<any> = null;
 
   @Output('matureVisibilityChange') onMatureVisibilityChange: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   constructor(
     public session: Session,
     public client: Client,
     public attachment: AttachmentService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private overlayModal: OverlayModalService,
+    private router: Router,
+    protected featuresService: FeaturesService,
   ) {
     this.hideTabs = true;
   }
@@ -67,8 +88,8 @@ export class Remind {
     this.activity.boosted = this.boosted;
 
     if (
-      this.activity.custom_type == 'batch' 
-      && this.activity.custom_data 
+      this.activity.custom_type == 'batch'
+      && this.activity.custom_data
       && this.activity.custom_data[0].src
     ) {
       this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
@@ -126,5 +147,52 @@ export class Remind {
     this.activity.mature_visibility = !this.activity.mature_visibility;
 
     this.onMatureVisibilityChange.emit();
+  }
+
+  setVideoDimensions($event) {
+    this.videoDimensions = $event.dimensions;
+  }
+
+  setImageDimensions() {
+    const img: HTMLImageElement = this.batchImage.nativeElement;
+    this.activity.custom_data[0].width = img.naturalWidth;
+    this.activity.custom_data[0].height = img.naturalHeight;
+  }
+
+  clickedImage() {
+    // Check if is mobile (not tablet)
+    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+      this.goToMediaPage();
+    }
+
+    if (!this.featuresService.has('media-modal')) {
+      // Non-canary
+      this.goToMediaPage();
+    } else {
+      // Canary
+      if (this.activity.custom_data[0].width === '0' || this.activity.custom_data[0].height === '0') {
+        this.setImageDimensions();
+      }
+      this.openModal();
+    }
+  }
+
+  clickedVideo() {
+    // Already filtered out mobile users/non-canary in video.component.ts
+    // So this is just applicable to desktop/tablet in canary and should always show modal
+    this.activity.custom_data.dimensions = this.videoDimensions;
+    this.openModal();
+  }
+
+  openModal() {
+    this.activity.modal_source_url = this.router.url;
+
+    this.overlayModal.create(MediaModalComponent, this.activity, {
+      class: 'm-overlayModal--media'
+    }).present();
+  }
+
+  goToMediaPage() {
+    this.router.navigate([`/media/${this.activity.entity_guid}`]);
   }
 }

@@ -26,7 +26,6 @@
       "scripts": [
         "../node_modules/material-design-lite/dist/material.min.js",
         "../node_modules/medium-editor/dist/js/medium-editor.min.js",
-        "shims/fontawesome.js",
         "shims/jitsi-api.min.js"
       ],
       "environmentSource": "environments/environment.ts",

@@ -20,6 +20,12 @@ import { TooltipComponent } from '../../../../common/components/tooltip/tooltip.
 import { WebtorrentService } from '../../../webtorrent/webtorrent.service';
 import { webtorrentServiceMock } from '../../../../../tests/webtorrent-service-mock.spec';
 import { MindsPlayerInterface } from './players/player.interface';
+import { MediaModalComponent } from '../../modal/modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FeaturesService } from '../../../../services/features.service';
+import { featuresServiceMock } from '../../../../../tests/features-service-mock.spec';
+
+
 
 @Component({
   selector: 'm-video--direct-http-player',
@@ -29,6 +35,7 @@ class MindsVideoDirectHttpPlayerMock implements MindsPlayerInterface {
   @Input() muted: boolean;
   @Input() poster: string;
   @Input() autoplay: boolean;
+  @Input() guid: string;
   @Input() src: string;
 
   @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
@@ -70,6 +77,7 @@ class MindsVideoTorrentPlayerMock implements MindsPlayerInterface {
   @Input() muted: boolean;
   @Input() poster: string;
   @Input() autoplay: boolean;
+  @Input() guid: string;
   @Input() src: string;
 
   @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
@@ -132,6 +140,7 @@ export class MindsVideoProgressBarMock {
   }
 
   bindToElement() {}
+  enableKeyControls() {}
 }
 
 @Directive({
@@ -164,11 +173,13 @@ describe('MindsVideo', () => {
         FormsModule,
         RouterTestingModule,
         NgCommonModule,
+        BrowserAnimationsModule,
       ],
       providers: [
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: Client, useValue: clientMock },
-        { provide: WebtorrentService, useValue: webtorrentServiceMock }
+        { provide: WebtorrentService, useValue: webtorrentServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ]
     })
       .compileComponents();  // compile template and css
@@ -194,6 +205,8 @@ describe('MindsVideo', () => {
     // video.src = 'thisisavideo.mp4';
     const video = new HTMLVideoElementMock();
     comp.playerRef.getPlayer = () => <any>video;
+    comp.isActivity = false;
+    comp.showControls = true;
 
     fixture.detectChanges(); // re-render
 
@@ -221,18 +234,18 @@ describe('MindsVideo', () => {
     expect(videoBar).not.toBeNull();
   });
 
-  // it('On hover Control bar should be visible', () => {
-  //   expect(comp.playerRef.getPlayer()).not.toBeNull();
-  //   comp.playerRef.getPlayer().dispatchEvent(new Event('hover'));
-  //   const videoBar = fixture.debugElement.query(By.css('.minds-video-bar-full'));
-  //   expect(videoBar.nativeElement.hasAttribute('hidden')).toEqual(false);
-  //   const quality = fixture.debugElement.query(By.css('m-video--quality-selector'));
-  //   const volume = fixture.debugElement.query(By.css('m-video--volume-slider'));
-  //   const progressBar = fixture.debugElement.query(By.css('m-video--progress-bar'));
-  //   expect(progressBar).not.toBeNull();
-  //   expect(quality).toBeNull();
-  //   expect(volume).not.toBeNull();
-  // });
+  it('On mouse enter Control bar should be visible', () => {
+    expect(comp.playerRef.getPlayer()).not.toBeNull();
+    comp.onMouseEnter();
+    const videoBar = fixture.debugElement.query(By.css('.minds-video-bar-full'));
+    expect(videoBar.nativeElement.hasAttribute('hidden')).toEqual(false);
+    const quality = fixture.debugElement.query(By.css('m-video--quality-selector'));
+    const volume = fixture.debugElement.query(By.css('m-video--volume-slider'));
+    const progressBar = fixture.debugElement.query(By.css('m-video--progress-bar'));
+    expect(progressBar).not.toBeNull();
+    expect(quality).toBeNull();
+    expect(volume).not.toBeNull();
+  });
 
   it('Should call counter', () => {
     const video = fixture.debugElement.query(By.css('video'));
@@ -276,7 +289,7 @@ describe('MindsVideo', () => {
   //   fixture.detectChanges();
   //   expect(comp.loop).toEqual(true);
   // });
-  //
+
   // it('should sets visibleplay', () => {
   //   comp.visibleplay = false;
   //   fixture.detectChanges();

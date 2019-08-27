@@ -61,6 +61,9 @@ m-video--volume-slider{
     position: absolute;
     top: 35px;
     right: -18px;
+    @include m-theme(){
+      background-color: themed($m-white-always);
+    }
   }
 
   .m-video--volume-control{
@@ -72,6 +75,14 @@ m-video--volume-slider{
     height: 80px;
     position: absolute;
     margin: 0;
+  }
+
+  .m-video--volume-control--background {
+    width:40px;
+    height:72px;
+    position: absolute;
+    left: calc(50% - 20px);
+    bottom: 16px;
     @include m-theme(){
       background-color: rgba(themed($m-black-always), 0.4);
     }

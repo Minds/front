@@ -131,6 +131,7 @@
               "last_tos_update" => Minds\Core\Config::_()->get('last_tos_update') ?: time(),
               "tags" => Minds\Core\Config::_()->get('tags') ?: [],
               "pro" => Minds\Core\Di\Di::_()->get('Pro\Domain')->lookup($_SERVER['HTTP_HOST'] ?? null),
+              "environment" => getenv('MINDS_ENV') ?: 'development',
           ];
 
           if(Minds\Core\Session::isLoggedIn()){

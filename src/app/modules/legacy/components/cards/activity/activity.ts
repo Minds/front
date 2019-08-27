@@ -16,6 +16,7 @@ import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
@@ -26,6 +27,8 @@ import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.ser
 import { NewsfeedService } from "../../../../newsfeed/services/newsfeed.service";
 import { ClientMetaService } from "../../../../../common/services/client-meta.service";
 import { AutocompleteSuggestionsService } from "../../../../suggestions/services/autocomplete-suggestions.service";
+import { FeaturesService } from '../../../../../services/features.service';
+import isMobile from '../../../../../helpers/is-mobile';
 
 @Component({
   moduleId: module.id,
@@ -87,6 +90,8 @@ export class Activity implements OnInit {
 
   blockedUsers: string[] = [];
 
+  videoDimensions: Array<any> = null;
+
   get menuOptions(): Array<string> {
     if (!this.activity || !this.activity.ephemeral) {
       if (this.showBoostMenuOptions)  {
@@ -100,6 +105,7 @@ export class Activity implements OnInit {
   }
 
   @ViewChild('player', { static: false }) player: MindsVideoComponent;
+  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   constructor(
     public session: Session,
@@ -114,6 +120,7 @@ export class Activity implements OnInit {
     protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
+    protected featuresService: FeaturesService,
     public suggestions: AutocompleteSuggestionsService,
     @SkipSelf() injector: Injector,
     elementRef: ElementRef,
@@ -149,7 +156,7 @@ export class Activity implements OnInit {
     this.activityAnalyticsOnViewService.setEntity(this.activity);
 
     if (
-      this.activity.custom_type == 'batch'
+      this.activity.custom_type === 'batch'
       && this.activity.custom_data
       && this.activity.custom_data[0].src
     ) {
@@ -430,6 +437,55 @@ export class Activity implements OnInit {
 
   onRemindMatureVisibilityChange() {
     this.activity.mature_visibility = !this.activity.mature_visibility;
+  }
+
+  setVideoDimensions($event) {
+    this.videoDimensions = $event.dimensions;
+  }
+
+  setImageDimensions() {
+    const img: HTMLImageElement = this.batchImage.nativeElement;
+    this.activity.custom_data[0].width = img.naturalWidth;
+    this.activity.custom_data[0].height = img.naturalHeight;
+  }
+
+  clickedImage() {
+    // Check if is mobile (not tablet)
+    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+      this.goToMediaPage();
+      return;
+    }
+
+    if (!this.featuresService.has('media-modal')) {
+      // Non-canary
+      this.goToMediaPage();
+      return;
+    } else {
+      // Canary
+      if (this.activity.custom_data[0].width === '0' || this.activity.custom_data[0].height === '0') {
+        this.setImageDimensions();
+      }
+      this.openModal();
+    }
+  }
+
+  clickedVideo() {
+    // Already filtered out mobile users/non-canary in video.component.ts
+    // So this is just applicable to desktop/tablet in canary and should always show modal
+    this.activity.custom_data.dimensions = this.videoDimensions;
+    this.openModal();
+  }
+
+  openModal() {
+    this.activity.modal_source_url = this.router.url;
+
+    this.overlayModal.create(MediaModalComponent, this.activity, {
+      class: 'm-overlayModal--media'
+    }).present();
+  }
+
+  goToMediaPage() {
+    this.router.navigate([`/media/${this.activity.entity_guid}`]);
   }
 
   detectChanges() {

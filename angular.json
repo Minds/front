@@ -28,7 +28,6 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/fontawesome.js",
               "src/shims/jitsi-api.min.js"
             ]
           },
@@ -36,7 +35,11 @@
             "production": {
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+			    "hidden": true,
+			    "scripts": true,
+			    "styles": true
+			  },
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
@@ -78,7 +81,6 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/fontawesome.js",
               "src/shims/jitsi-api.min.js"
             ],
             "assets": [
