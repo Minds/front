@@ -18,7 +18,6 @@
 
 minds-groups-profile-conversation {
   position: fixed;
-  right: 0;
   top: 52px;
   //width: 100%;
   width: calc(33% - 12px); //1/3rd of screen
@@ -50,6 +49,11 @@ minds-groups-profile-conversation {
       flex: 1;
       display: flex;
       flex-direction: column;
+      overflow: -moz-scrollbars-none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar { 
+        width: 0 !important 
+      }
 
       .minds-avatar {
         width: 36px;
@@ -108,5 +112,8 @@ minds-groups-profile-conversation {
   }
   .mdl-card__actions {
   //  top: 9px !important;
+  }
+  .m-comment--poster .minds-body {
+    max-width: calc(100% - 110px);
   }
 }
