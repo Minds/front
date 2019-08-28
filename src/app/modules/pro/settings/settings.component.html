@@ -88,8 +88,8 @@
               </div>
 
               <div class="m-pro--settings--field">
-                <label for="headline" i18n>Headline</label>
-                <input type="text" id="headline" name="headline" [(ngModel)]="settings.headline">
+                <label for="headline" i18n>Headline (can be multi-line)</label>
+                <textarea id="headline" name="headline" [(ngModel)]="settings.headline"></textarea>
               </div>
             </ng-template>
 
@@ -149,7 +149,7 @@
 
 
               <div class="m-pro--settings--field" *ngFor="let tag of settings.tag_list; let i = index">
-                <label for="headline" i18n>Hashtag #{{ i + 1 }}</label>
+                <label [for]="'tag-label-' + i" i18n>Hashtag #{{ i + 1 }}</label>
 
                 <div class="m-pro--settings--flex-inputs">
                   <input
@@ -229,7 +229,7 @@
               </div>
 
               <div class="m-pro--settings--field" *ngFor="let link of settings.footer_links; let i = index">
-                <label for="headline" i18n>Link #{{ i + 1 }}</label>
+                <label [for]="'footer-link-title-' + i" i18n>Link #{{ i + 1 }}</label>
 
                 <div class="m-pro--settings--flex-inputs">
                   <input
