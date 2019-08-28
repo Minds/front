@@ -28,6 +28,13 @@ m-pro--channel {
       background-color: var(--m-pro--transparent-background-color);
     }
   }
+
+  &.m-overlay-modal--shown {
+    m-overlay-modal {
+      position: fixed;
+      z-index: 9999990;
+    }
+  }
 }
 
 @media screen and (max-width: 480px) {

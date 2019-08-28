@@ -1,11 +1,11 @@
 import {
-  Component,
   AfterViewInit,
-  ViewChild,
+  Component,
   ComponentFactoryResolver,
   ComponentRef,
-  Input,
-  Injector, ElementRef
+  ElementRef,
+  Injector,
+  ViewChild
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
@@ -39,7 +39,8 @@ export class OverlayModalComponent implements AfterViewInit {
   constructor(
     private service: OverlayModalService,
     private _componentFactoryResolver: ComponentFactoryResolver
-  ) { }
+  ) {
+  }
 
   ngAfterViewInit() {
     if (!this.root && document && document.body) {
@@ -52,9 +53,11 @@ export class OverlayModalComponent implements AfterViewInit {
   create(componentClass, opts?, injector?: Injector) {
     this.dismiss();
 
-    opts = { ...{
-      class: '',
-    }, ...opts };
+    opts = {
+      ...{
+        class: '',
+      }, ...opts
+    };
 
     this.class = opts.class;
 
@@ -102,6 +105,7 @@ export class OverlayModalComponent implements AfterViewInit {
 
     if (this.root) {
       this.root.classList.add('m-overlay-modal--shown');
+      document.body.classList.add('m-overlay-modal--shown--no-scroll');
     }
   }
 
@@ -110,6 +114,7 @@ export class OverlayModalComponent implements AfterViewInit {
 
     if (this.root) {
       this.root.classList.remove('m-overlay-modal--shown');
+      document.body.classList.remove('m-overlay-modal--shown--no-scroll');
     }
 
     if (!this.componentInstance) {
