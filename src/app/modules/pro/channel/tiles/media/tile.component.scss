@@ -1,14 +1,25 @@
 m-pro--channel-tile {
   cursor: pointer;
   width: 100%;
-  height: 320px;
 
-  & > img {
-    height: calc(100% - 5em);
-    width: 100%;
-    object-fit: cover;
+  .m-proChannelTile__container {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    padding-top: var(--m-pro--tile-ratio);
+
+    > * {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    > img {
+      object-fit: cover;
+    }
   }
-
 
   .m-proChannelTile__text {
     height: 4em;
@@ -23,6 +34,10 @@ m-pro--channel-tile {
     align-items: center;
 
     h2 {
+      display: block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-height: 2.32em;
       line-height: 1.16em;
       font-weight: 700;
       font-size: 20px;
@@ -30,17 +45,12 @@ m-pro--channel-tile {
       margin: 0;
     }
 
-    p {
-      font-size: 13px;
-      text-overflow: ellipsis;
-      text-rendering: auto;
-      white-space: pre-wrap;
-      overflow: hidden;
-      max-height: 48px;
-      margin: 8px 0;
-      padding: 0;
-      line-height: 1.25;
-      color: var(--m-pro--text-color) !important;
+    h2 {
+      /*! autoprefixer: off */
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
     }
   }
 }
