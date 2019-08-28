@@ -1,17 +1,22 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Client } from '../../../../services/api/client';
 
 @Component({
   moduleId: module.id,
   selector: 'm-wallet--balance-usd',
   templateUrl: 'balance.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletBalanceUSDComponent implements OnInit {
   inProgress: boolean = false;
   balance: number = 0;
 
-  constructor(protected client: Client, protected cd: ChangeDetectorRef) { }
+  constructor(protected client: Client, protected cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.load();

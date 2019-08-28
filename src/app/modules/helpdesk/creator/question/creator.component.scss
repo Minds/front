@@ -1,5 +1,5 @@
 .m-helpdesk--question-creator--error {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red);
   }
 }

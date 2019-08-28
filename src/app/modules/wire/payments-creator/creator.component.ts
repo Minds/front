@@ -1,4 +1,10 @@
-import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -29,11 +35,9 @@ export interface WireStruc {
 @Component({
   providers: [CurrencyPipe],
   selector: 'm-wire-payments--creator',
-  templateUrl: 'creator.component.html'
+  templateUrl: 'creator.component.html',
 })
-
 export class WirePaymentsCreatorComponent {
-
   minds = window.Minds;
 
   blockchain = window.Minds.blockchain;
@@ -45,7 +49,7 @@ export class WirePaymentsCreatorComponent {
     guid: null,
     recurring: false,
     payload: null,
-    period: null
+    period: null,
   };
 
   owner: any;
@@ -73,7 +77,6 @@ export class WirePaymentsCreatorComponent {
 
   tokenRate: number;
 
-
   defaultAmount: number | '' = this.wire.amount;
 
   protected submitted: boolean;
@@ -97,7 +100,7 @@ export class WirePaymentsCreatorComponent {
     offchain: null,
     onChainAddress: '',
     isReceiverOnchain: false,
-    wireCap: null
+    wireCap: null,
   };
 
   constructor(
@@ -109,14 +112,13 @@ export class WirePaymentsCreatorComponent {
     private currency: CurrencyPipe,
     private web3Wallet: Web3WalletService,
     private tokenContract: TokenContractService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.load()
-      .then(() => {
-        this.initialized = true;
-      });
+    this.load().then(() => {
+      this.initialized = true;
+    });
     this.loadBalances();
     this.loadTokenRate();
   }
@@ -129,7 +131,9 @@ export class WirePaymentsCreatorComponent {
         this.loadCurrentWalletBalance(currentWallet);
       }
 
-      let response: any = await this.client.get(`api/v2/blockchain/wallet/balance`);
+      let response: any = await this.client.get(
+        `api/v2/blockchain/wallet/balance`
+      );
 
       if (!response) {
         return;
@@ -178,7 +182,8 @@ export class WirePaymentsCreatorComponent {
   load() {
     this.inProgress = true;
 
-    return this.client.get(`api/v2/boost/rates`)
+    return this.client
+      .get(`api/v2/boost/rates`)
       .then((rates: any) => {
         this.inProgress = false;
         this.rates = rates;
@@ -231,14 +236,15 @@ export class WirePaymentsCreatorComponent {
    * Sets the onchain specific wire payment nonce
    */
   setOnchainNoncePayload(address: string) {
-    return this.setNoncePayload({ receiver: this.receiver, address })
+    return this.setNoncePayload({ receiver: this.receiver, address });
   }
 
   /**
-  * Round by 4
-  */
+   * Round by 4
+   */
   roundAmount() {
-    this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
+    this.wire.amount =
+      Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
   }
 
   // Charge and rates
@@ -306,9 +312,13 @@ export class WirePaymentsCreatorComponent {
           balance = this.balances.offchain / Math.pow(10, 18);
 
         if (this.wire.amount > wireCap) {
-          throw new VisibleWireError(`You cannot spend more than ${wireCap} tokens today.`)
+          throw new VisibleWireError(
+            `You cannot spend more than ${wireCap} tokens today.`
+          );
         } else if (this.wire.amount > balance) {
-          throw new VisibleWireError(`You cannot spend more than ${balance} tokens.`)
+          throw new VisibleWireError(
+            `You cannot spend more than ${balance} tokens.`
+          );
         }
         break;
     }
@@ -372,7 +382,10 @@ export class WirePaymentsCreatorComponent {
       this.submitted = true;
       this.error = '';
 
-      if (await this.web3Wallet.isLocal() && this.wire.payloadType === 'onchain') {
+      if (
+        (await this.web3Wallet.isLocal()) &&
+        this.wire.payloadType === 'onchain'
+      ) {
         const action = await this.web3Wallet.setupMetamask();
         switch (action) {
           case GetMetamaskComponent.ACTION_CREATE:

@@ -15,7 +15,7 @@ m-admin--purchases {
       display: block;
       width: 300px;
       flex: 1;
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-white);
       }
 
@@ -30,11 +30,10 @@ m-admin--purchases {
         width: 100%;
         text-align: left;
 
-
         td {
           font-size: 14px;
-          @include m-theme(){
-             border: 1px solid themed($m-grey-50);
+          @include m-theme() {
+            border: 1px solid themed($m-grey-50);
           }
 
           &.m-admin--pledges--actions {
@@ -51,9 +50,9 @@ m-admin--purchases {
           }
         }
         th {
-          @include m-theme(){
-             border: 1px solid themed($m-grey-50);
-             border-top: 0;
+          @include m-theme() {
+            border: 1px solid themed($m-grey-50);
+            border-top: 0;
           }
           &:first-child {
             border-left: 0;
@@ -76,7 +75,8 @@ m-admin--purchases {
           border-right: 0;
         }
 
-        td, th {
+        td,
+        th {
           padding: 8px;
         }
 
@@ -86,8 +86,6 @@ m-admin--purchases {
           height: 20px;
         }
       }
-
     }
-
   }
 }

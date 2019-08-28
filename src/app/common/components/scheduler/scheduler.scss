@@ -1,6 +1,5 @@
-m-scheduler{
-
-  > select.m-form-select{
+m-scheduler {
+  > select.m-form-select {
     width: auto;
     -webkit-flex: 1;
     -ms-flex: 1;
@@ -11,10 +10,9 @@ m-scheduler{
     font-weight: bold;
     font-size: 12px;
     -webkit-appearance: none;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
       border: 1px solid themed($m-grey-100);
     }
   }
-
 }

@@ -2,26 +2,38 @@
   <h2 i18n="@@WALLET__TOKENS__ADDRESSES__ADDRESSES_TITLE">Addresses</h2>
 
   <p class="m-card--subtext" i18n="@@WALLET__TOKENS__ADDRESSES__ADDRESSES_DESC">
-    To receive OnChain payments from other channels (eg, from a Wire or a Boost), 
-    you will need to let us know which address to direct these tokens to.
+    To receive OnChain payments from other channels (eg, from a Wire or a
+    Boost), you will need to let us know which address to direct these tokens
+    to.
   </p>
 
-  <p class="m-card--subtext" i18n="@@WALLET__TOKENS__ADDRESSES__ADDRESSES_DESC_LISTED">
-    This address will be listed in your wallet as your Receiver Address and can be changed 
-    here at any time.
+  <p
+    class="m-card--subtext"
+    i18n="@@WALLET__TOKENS__ADDRESSES__ADDRESSES_DESC_LISTED"
+  >
+    This address will be listed in your wallet as your Receiver Address and can
+    be changed here at any time.
   </p>
 
-  <div class="m-wallet-token--addresses--receiver-address" *ngIf="receiverAddress">
-    <h4 i18n="@@WALLET__TOKENS__ADDRESSES__RECEIVER_ADDRESS_LABEL">Your receiver address</h4>
-    <strong>{{receiverAddress}}</strong>
+  <div
+    class="m-wallet-token--addresses--receiver-address"
+    *ngIf="receiverAddress"
+  >
+    <h4 i18n="@@WALLET__TOKENS__ADDRESSES__RECEIVER_ADDRESS_LABEL">
+      Your receiver address
+    </h4>
+    <strong>{{ receiverAddress }}</strong>
 
-    <a (click)="enableEditing()" i18n="@@WALLET__TOKENS__ADDRESSES__CHANGE_ACTION">Change</a>
+    <a
+      (click)="enableEditing()"
+      i18n="@@WALLET__TOKENS__ADDRESSES__CHANGE_ACTION"
+      >Change</a
+    >
   </div>
-
 </div>
 
 <div class="m-token--onboarding" *ngIf="editing">
-  <m-token--onboarding--onchain 
+  <m-token--onboarding--onchain
     skippable="false"
     (next)="disableEditing()"
   ></m-token--onboarding--onchain>

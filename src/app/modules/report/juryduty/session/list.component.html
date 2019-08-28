@@ -1,18 +1,21 @@
 <ul class="m-juryDutySession__list">
-    <li *ngFor="let report of reports; let i = index" class="m-juryDutySessionList__item">
-        <div class="m-layout__row">
-            <div class="m-layout__cell" style="flex: 0;">
-                <span class="m-juryDutySessionList__number">
-                    {{ i + 1 }}
-                </span>
-            </div>
-            <div class="m-layout__cell" >
-                <m-juryDutySession__content
-                    [report]="report"
-                ></m-juryDutySession__content>
-            </div>
-        </div>
-    </li>
+  <li
+    *ngFor="let report of reports; let i = index"
+    class="m-juryDutySessionList__item"
+  >
+    <div class="m-layout__row">
+      <div class="m-layout__cell" style="flex: 0;">
+        <span class="m-juryDutySessionList__number">
+          {{ i + 1 }}
+        </span>
+      </div>
+      <div class="m-layout__cell">
+        <m-juryDutySession__content
+          [report]="report"
+        ></m-juryDutySession__content>
+      </div>
+    </div>
+  </li>
 </ul>
 
 <p *ngIf="!inProgress && reports.length === 0">

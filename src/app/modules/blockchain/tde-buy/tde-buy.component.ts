@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { TokenDistributionEventService } from '../contracts/token-distribution-event.service';
 import { Client } from '../../../services/api/client';
 import { Web3WalletService } from '../web3-wallet.service';
@@ -8,7 +13,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
   moduleId: module.id,
   selector: 'm-blockchain--tde-buy',
   templateUrl: 'tde-buy.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockchainTdeBuyComponent implements OnInit {
   inProgress: boolean;
@@ -32,8 +37,8 @@ export class BlockchainTdeBuyComponent implements OnInit {
     protected tokenDistributionEvent: TokenDistributionEventService,
     protected client: Client,
     protected web3Wallet: Web3WalletService,
-    private overlayModal: OverlayModalService,
-  ) { }
+    private overlayModal: OverlayModalService
+  ) {}
 
   ngOnInit() {
     this.updatePledgeConfirmation();
@@ -51,7 +56,9 @@ export class BlockchainTdeBuyComponent implements OnInit {
     this.detectChanges();
 
     try {
-      const response: any = await this.client.get('api/v2/blockchain/pledges', { brief: 1 });
+      const response: any = await this.client.get('api/v2/blockchain/pledges', {
+        brief: 1,
+      });
 
       if (!response.pledge) {
         throw new Error('No pledge found');
@@ -82,7 +89,8 @@ export class BlockchainTdeBuyComponent implements OnInit {
     if (this.web3Wallet.isUnavailable()) {
       metamaskError = 'There are no Ethereum wallet clients available.';
     } else if (!(await this.web3Wallet.unlock())) {
-      metamaskError = 'There are no local wallets available, the wallet manager is locked, or you\'re connected to a different network.';
+      metamaskError =
+        "There are no local wallets available, the wallet manager is locked, or you're connected to a different network.";
     }
 
     this.inProgress = false;
@@ -94,7 +102,10 @@ export class BlockchainTdeBuyComponent implements OnInit {
     this.detectChanges();
 
     if (this.metamaskError) {
-      this._checkWalletAvailabilityTimer = setTimeout(() => this.checkWalletAvailability(), 1000); // check again in 1s
+      this._checkWalletAvailabilityTimer = setTimeout(
+        () => this.checkWalletAvailability(),
+        1000
+      ); // check again in 1s
     }
   }
 

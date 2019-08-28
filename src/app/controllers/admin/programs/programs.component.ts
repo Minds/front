@@ -11,9 +11,7 @@ import { Client } from '../../../services/api';
   selector: 'minds-admin-programs',
   templateUrl: 'programs.component.html',
 })
-
 export class AdminPrograms {
-
   applications: any[] = [];
 
   inProgress: boolean = false;
@@ -21,8 +19,7 @@ export class AdminPrograms {
   offset: string = '';
   reviewing: number | null = null;
 
-  constructor(public client: Client, private route: ActivatedRoute) {
-  }
+  constructor(public client: Client, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.load();
@@ -35,7 +32,8 @@ export class AdminPrograms {
 
     this.inProgress = true;
 
-    this.client.get(`api/v1/admin/programs/queue`, { limit: 50, offset: this.offset })
+    this.client
+      .get(`api/v1/admin/programs/queue`, { limit: 50, offset: this.offset })
       .then((response: any) => {
         if (!response.applications) {
           this.inProgress = false;
@@ -73,7 +71,8 @@ export class AdminPrograms {
     this.inProgress = true;
     this.reviewing = null;
 
-    this.client.put(`api/v1/admin/programs/${this.applications[index].guid}`)
+    this.client
+      .put(`api/v1/admin/programs/${this.applications[index].guid}`)
       .then(response => {
         this.removeFromList(index);
         this.inProgress = false;
@@ -91,7 +90,8 @@ export class AdminPrograms {
     this.inProgress = true;
     this.reviewing = null;
 
-    this.client.delete(`api/v1/admin/programs/${this.applications[index].guid}`)
+    this.client
+      .delete(`api/v1/admin/programs/${this.applications[index].guid}`)
       .then(response => {
         this.removeFromList(index);
         this.inProgress = false;

@@ -1,7 +1,7 @@
 <div class="m-helpdeskQuestions__categories m-border">
   <ng-container *ngIf="type == 'category'">
     <ul *ngFor="let category of categories">
-      <h4>{{category.title}}</h4>
+      <h4>{{ category.title }}</h4>
       <a
         class="m-helpdeskQuestions__editIcon"
         [routerLink]="'/help/category/edit/' + category.uuid"
@@ -12,11 +12,12 @@
         </i>
       </a>
 
-      <li class="m-helpdeskQuestions__question"
+      <li
+        class="m-helpdeskQuestions__question"
         *ngFor="let question of sorted(category.questions)"
       >
         <a [routerLink]="['/help/question/', question.uuid]">
-          <span>{{question.question}}</span>
+          <span>{{ question.question }}</span>
           <i class="material-icons">
             keyboard_arrow_right
           </i>
@@ -29,11 +30,12 @@
     <ul>
       <h4>Popular questions</h4>
 
-      <li class="m-helpdeskQuestions__question"
+      <li
+        class="m-helpdeskQuestions__question"
         *ngFor="let question of topQuestions"
       >
         <a [routerLink]="['/help/question/', question.uuid]">
-          <span>{{question.question}}</span>
+          <span>{{ question.question }}</span>
           <i class="material-icons">
             keyboard_arrow_right
           </i>
@@ -41,8 +43,4 @@
       </li>
     </ul>
   </ng-container>
-
 </div>
-
-
-  

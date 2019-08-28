@@ -1,4 +1,1 @@
-
-export class VideoAdsService {
-
-}
+export class VideoAdsService {}

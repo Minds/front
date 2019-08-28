@@ -26,8 +26,8 @@ import { WireConsoleOverviewComponent } from './console/overview/overview.compon
 import { WireConsoleRewardsInputsComponent } from './console/rewards-table/inputs/wire-console-rewards-inputs.component';
 import { WireConsoleRewardsComponent } from './console/rewards-table/rewards.component';
 
-const wireRoutes : Routes = [
-  { path: 'wire', component: WireMarketingComponent }
+const wireRoutes: Routes = [
+  { path: 'wire', component: WireMarketingComponent },
 ];
 
 @NgModule({
@@ -57,11 +57,9 @@ const wireRoutes : Routes = [
     WireConsoleSupporterComponent,
     WireConsoleSettingsComponent,
     WireMarketingComponent,
-    WireConsoleOverviewComponent
+    WireConsoleOverviewComponent,
   ],
-  providers: [
-    WireService
-  ],
+  providers: [WireService],
   exports: [
     WireLockScreenComponent,
     WireButtonComponent,
@@ -82,7 +80,6 @@ const wireRoutes : Routes = [
     WirePaymentsCreatorComponent,
     WireLockScreenComponent,
     WireConsoleRewardsInputsComponent,
-  ]
+  ],
 })
-export class WireModule {
-}
+export class WireModule {}

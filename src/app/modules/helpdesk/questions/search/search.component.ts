@@ -5,11 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'm-helpdesk--questions--search',
-  templateUrl: 'search.component.html'
+  templateUrl: 'search.component.html',
 })
-
 export class SearchQuestionsComponent {
-
   query: string = '';
   questions: any[] = [];
   searching: boolean = false;
@@ -22,8 +20,7 @@ export class SearchQuestionsComponent {
     public session: Session,
     public router: Router,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   onBlur() {
     this.searching = false;
@@ -44,10 +41,13 @@ export class SearchQuestionsComponent {
 
     this.throttle = setTimeout(async () => {
       try {
-        let response: any = await this.client.get(`api/v2/helpdesk/questions/search`, {
-          q: query,
-          limit: 8,
-        });
+        let response: any = await this.client.get(
+          `api/v2/helpdesk/questions/search`,
+          {
+            q: query,
+            limit: 8,
+          }
+        );
         if (!response.entities) {
           return;
         }
@@ -58,5 +58,4 @@ export class SearchQuestionsComponent {
       }
     });
   }
-
 }

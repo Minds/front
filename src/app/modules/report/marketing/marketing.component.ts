@@ -1,9 +1,9 @@
-import { 
+import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   ViewChild,
-  ElementRef, 
+  ElementRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -15,11 +15,9 @@ import { Session } from '../../../services/session';
 @Component({
   selector: 'm-reports__marketing',
   templateUrl: 'marketing.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class ReportsMarketingComponent {
-
   user = window.Minds.user;
   minds = window.Minds;
   stats = {
@@ -40,7 +38,7 @@ export class ReportsMarketingComponent {
     private cd: ChangeDetectorRef,
     private router: Router,
     private title: MindsTitle,
-    public session: Session,
+    public session: Session
   ) {
     title.setTitle('Community Moderation');
   }
@@ -59,5 +57,4 @@ export class ReportsMarketingComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

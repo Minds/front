@@ -12,8 +12,7 @@
   font-weight: 800;
   padding: 32px;
   display: block;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-800);
   }
-
 }

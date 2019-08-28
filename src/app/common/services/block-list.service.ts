@@ -1,19 +1,18 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Client } from "../../services/api/client";
-import { Session } from "../../services/session";
+import { Client } from '../../services/api/client';
+import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 
-import AsyncLock from "../../helpers/async-lock";
+import AsyncLock from '../../helpers/async-lock';
 
-import MindsClientHttpAdapter from "../../lib/minds-sync/adapters/MindsClientHttpAdapter.js";
-import browserStorageAdapterFactory from "../../helpers/browser-storage-adapter-factory";
-import BlockListSync from "../../lib/minds-sync/services/BlockListSync.js";
-import AsyncStatus from "../../helpers/async-status";
+import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
+import browserStorageAdapterFactory from '../../helpers/browser-storage-adapter-factory';
+import BlockListSync from '../../lib/minds-sync/services/BlockListSync.js';
+import AsyncStatus from '../../helpers/async-status';
 
 @Injectable()
 export class BlockListService {
-
   blocked: BehaviorSubject<string[]>;
 
   constructor(
@@ -26,7 +25,8 @@ export class BlockListService {
   }
 
   fetch() {
-    this.client.get('api/v1/block', { sync: 1, limit: 10000 })
+    this.client
+      .get('api/v1/block', { sync: 1, limit: 10000 })
       .then((response: any) => {
         if (response.guids !== this.blocked.getValue())
           this.blocked.next(response.guids); // re-emit as we have a change
@@ -36,14 +36,11 @@ export class BlockListService {
     return this;
   }
 
-  async sync() {
-  }
+  async sync() {}
 
-  async prune() {
-  }
+  async prune() {}
 
-  async get() {
-  }
+  async get() {}
 
   async getList() {
     return this.blocked.getValue();
@@ -51,8 +48,7 @@ export class BlockListService {
 
   async add(guid: string) {
     const guids = this.blocked.getValue();
-    if (guids.indexOf(guid) < 0)
-      this.blocked.next([...guids, ...[ guid ]]);
+    if (guids.indexOf(guid) < 0) this.blocked.next([...guids, ...[guid]]);
     this.storage.set('blocked', JSON.stringify(this.blocked.getValue()));
   }
 

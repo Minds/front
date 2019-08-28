@@ -1,5 +1,4 @@
 .m-jobs--marketing {
-
   .m-marketing--hero {
     padding: 24px 0 !important;
 
@@ -8,10 +7,10 @@
       padding-bottom: 52px;
       flex-wrap: wrap;
     }
-
   }
 
-  .m-marketing--section--subsection--first .m-marketing--section--subsection-container {
+  .m-marketing--section--subsection--first
+    .m-marketing--section--subsection-container {
     padding-top: 32px !important;
   }
 
@@ -39,10 +38,9 @@
     li {
       font-size: 16px;
       line-height: 2.5;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
   }
-
 }

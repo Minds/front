@@ -1,6 +1,14 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output,
-  ViewChild
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import { MindsPlayerInterface } from './player.interface';
 
@@ -10,7 +18,8 @@ import { MindsPlayerInterface } from './player.interface';
   templateUrl: 'direct-http.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlayerInterface {
+export class MindsVideoDirectHttpPlayer
+  implements OnInit, OnDestroy, MindsPlayerInterface {
   @ViewChild('player', { static: true }) player: ElementRef;
 
   @Input() muted: boolean = false;
@@ -35,22 +44,26 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
   @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
   @Output() onPause: EventEmitter<HTMLVideoElement> = new EventEmitter();
   @Output() onEnd: EventEmitter<HTMLVideoElement> = new EventEmitter();
-  @Output() onError: EventEmitter<{ player: HTMLVideoElement, e }> = new EventEmitter();
+  @Output() onError: EventEmitter<{
+    player: HTMLVideoElement;
+    e;
+  }> = new EventEmitter();
   @Output() onCanPlayThrough: EventEmitter<any> = new EventEmitter();
   @Output() onLoadedMetadata: EventEmitter<any> = new EventEmitter();
 
   loading: boolean = false;
 
-  constructor(
-    protected cd: ChangeDetectorRef,
-  ) { }
+  constructor(protected cd: ChangeDetectorRef) {}
 
   protected _emitPlay = () => this.onPlay.emit(this.getPlayer());
   protected _emitPause = () => this.onPause.emit(this.getPlayer());
   protected _emitEnd = () => this.onEnd.emit(this.getPlayer());
-  protected _emitError = e => this.onError.emit({ player: this.getPlayer(), e });
-  protected _emitCanPlayThrough = () => this.onCanPlayThrough.emit(this.getPlayer());
-  protected _emitLoadedMetadata = () => this.onLoadedMetadata.emit(this.getPlayer());
+  protected _emitError = e =>
+    this.onError.emit({ player: this.getPlayer(), e });
+  protected _emitCanPlayThrough = () =>
+    this.onCanPlayThrough.emit(this.getPlayer());
+  protected _emitLoadedMetadata = () =>
+    this.onLoadedMetadata.emit(this.getPlayer());
 
   protected _canPlayThrough = () => {
     this.loading = false;
@@ -59,7 +72,10 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
   };
 
   protected _onPlayerError = e => {
-    if (!e.target.error && (e.target.networkState !== HTMLMediaElement.NETWORK_NO_SOURCE)) {
+    if (
+      !e.target.error &&
+      e.target.networkState !== HTMLMediaElement.NETWORK_NO_SOURCE
+    ) {
       // Poster error
       return;
     }
@@ -123,7 +139,7 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
     const player = this.getPlayer();
 
     if (player.paused) {
-      this.play()
+      this.play();
     } else {
       this.pause();
     }
@@ -172,5 +188,4 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

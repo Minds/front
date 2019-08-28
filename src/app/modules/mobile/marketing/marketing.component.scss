@@ -1,16 +1,15 @@
 .m-mobile--marketing {
-
   .m-marketing--hero {
     margin-bottom: 32px;
     padding: 0;
     @media screen and (min-width: $max-mobile) {
-      padding:52px 0 !important;
+      padding: 52px 0 !important;
     }
 
     .m-marketing--hero--inner {
       flex-wrap: wrap;
       padding: 52 0 52 0;
-    
+
       .m-marketing--hero--slogans h1 {
         text-align: left;
         padding-left: $minds-padding * 2;
@@ -20,7 +19,7 @@
           margin-left: 120px;
           font-size: 42px;
         }
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white-always);
         }
       }
@@ -29,18 +28,18 @@
     img {
       min-width: 100%;
     }
-
   }
 
   .m-marketing-show-mobile {
-    font-size: 14px !important
+    font-size: 14px !important;
   }
 
   .m-mobile--marketing--codelink {
-    font-size: 15px
+    font-size: 15px;
   }
 
-  .m-marketing--section--subsection--first .m-marketing--section--subsection-container {
+  .m-marketing--section--subsection--first
+    .m-marketing--section--subsection-container {
     padding-top: 0;
     display: flex;
     flex-direction: row;
@@ -96,7 +95,7 @@
       text-align: left;
       font-size: x-large;
       font-weight: 700;
-      padding-left: 12px;    
+      padding-left: 12px;
     }
 
     .m-marketing--downloadPlatform {
@@ -124,7 +123,7 @@
             padding-bottom: $minds-padding * 2;
           }
 
-          img {  
+          img {
             max-width: 200px;
             min-width: 175px;
           }
@@ -140,13 +139,13 @@
         p {
           padding: 0 ($minds-padding * 1.5);
           line-height: 24pt;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-grey-600);
           }
         }
 
         li {
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-grey-600);
           }
         }
@@ -160,7 +159,7 @@
       line-height: 1.25;
     }
     .m-marketing-show-mobile {
-      display: none
+      display: none;
     }
   }
 
@@ -170,7 +169,7 @@
     li {
       font-size: 16px;
       line-height: 2.5;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
@@ -178,13 +177,13 @@
 
   .m-mobile--marketing--canary-note {
     font-size: 12px !important;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red-dark) !important;
     }
   }
 
   .m-mobile--marketing--error {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red-dark) !important;
     }
   }
@@ -199,5 +198,4 @@
       word-break: break-all;
     }
   }
-
 }

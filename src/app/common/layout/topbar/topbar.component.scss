@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 $layout-header-height: 52px;
 $layout-sidebar-width: 80px;
@@ -6,10 +6,10 @@ $layout-sidebar-width: 80px;
 .hidden {
   display: none;
 }
-m-topbar{
-  position:fixed;
-  top:0;
-  left:0;
+m-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
 
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@ m-topbar{
   flex-shrink: 0;
 
   width: 100%;
-  min-width:$min-mobile;
+  min-width: $min-mobile;
   margin: 0;
   padding: 0;
   border: none;
@@ -29,7 +29,7 @@ m-topbar{
 
   transform: translateZ(0);
 
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-500);
     background-color: themed($m-white);
     border-bottom: 1px solid themed($m-grey-50);
@@ -45,7 +45,7 @@ m-topbar{
     height: 100%;
     //margin-right: 16px;
     text-align: center;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
 
@@ -54,7 +54,7 @@ m-topbar{
       margin-top: 8px;
       //opacity: 0.4;
 
-      @media screen and (max-width: $max-mobile){
+      @media screen and (max-width: $max-mobile) {
         max-height: 20px;
         margin-top: 16px;
       }
@@ -62,14 +62,14 @@ m-topbar{
   }
 
   .m-menu--button {
-    display:none;
+    display: none;
 
-    i{
-     padding:16px 0;
+    i {
+      padding: 16px 0;
     }
   }
 
-  .m-topbar--row{
+  .m-topbar--row {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -80,14 +80,13 @@ m-topbar{
     height: $layout-header-height;
     margin: auto;
     width: 100%;
-    padding-right:$minds-padding * 2;
+    padding-right: $minds-padding * 2;
   }
 
-  @media screen and (max-width: 1080px){
+  @media screen and (max-width: 1080px) {
     m-search--bar {
       max-width: 150px;
     }
-
 
     //notification/wallet counters
     .counter {
@@ -95,23 +94,22 @@ m-topbar{
     }
   }
 
-  @media screen and (max-width: $max-mobile){
+  @media screen and (max-width: $max-mobile) {
     .minds-menu-button {
-      display:block;
+      display: block;
     }
     m-search--bar {
       display: none;
     }
-
   }
 
-  @media screen and (max-width: 350px){
+  @media screen and (max-width: 350px) {
     .m-topbar--logo {
       display: none;
     }
   }
 
-  .m-topbar--account{
+  .m-topbar--account {
     margin-left: 8px;
     cursor: pointer;
     position: relative;
@@ -119,12 +117,13 @@ m-topbar{
     img {
       border-radius: 50%;
       max-height: 30px;
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-50);
       }
     }
 
-    .m-dropdown--menu, .m-dropdown__list {
+    .m-dropdown--menu,
+    .m-dropdown__list {
       margin-top: 28px;
       li.mdl-menu__item {
         padding: 0;
@@ -133,7 +132,7 @@ m-topbar{
           text-decoration: none;
           font-weight: 400;
           display: block;
-          @include m-theme(){
+          @include m-theme() {
             color: rgba(themed($m-black), 0.87);
           }
         }
@@ -141,7 +140,7 @@ m-topbar{
     }
   }
 
-  .m-topbar--icons{
+  .m-topbar--icons {
     align-items: center;
     display: flex;
     margin-right: 8px;
@@ -159,17 +158,16 @@ m-topbar{
     i.material-icons {
       font-size: 20px;
       vertical-align: middle;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-700);
       }
     }
     m-notifications--topbar-toggle {
-     position: relative;
+      position: relative;
     }
   }
 
-  .m-btn--login{
-
+  .m-btn--login {
   }
 }
 
@@ -181,7 +179,7 @@ m-topbar{
   .m-topbar--navigation--item {
     cursor: pointer;
     line-height: 15px;
-      border: 0 !important;
+    border: 0 !important;
 
     > * {
       vertical-align: middle;
@@ -189,9 +187,9 @@ m-topbar{
   }
 }
 
-@media screen and (max-width: $max-mobile){
+@media screen and (max-width: $max-mobile) {
   .m-btn--boost {
-    display:none;
+    display: none;
   }
 }
 
@@ -207,7 +205,7 @@ m-topbar{
       font-size: 11px;
       vertical-align: middle;
       line-height: 1.1;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-500);
       }
     }

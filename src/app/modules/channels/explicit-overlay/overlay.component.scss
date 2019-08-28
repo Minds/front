@@ -8,7 +8,7 @@ m-channel--explicit-overlay {
   left: 0;
   width: 100%;
   height: calc(100% - 53px);
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-900);
     background-color: rgba(themed($m-white), 0.99);
   }
@@ -26,7 +26,7 @@ m-channel--explicit-overlay {
     h3 {
       letter-spacing: 0.75px;
       font-weight: 600;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }

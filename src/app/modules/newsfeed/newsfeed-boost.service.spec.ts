@@ -4,7 +4,6 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 import { fakeAsync } from '@angular/core/testing';
 
 describe('NewsfeedBoostService', () => {
-
   let service: NewsfeedBoostService;
 
   beforeEach(() => {
@@ -38,7 +37,7 @@ describe('NewsfeedBoostService', () => {
 
     const url = 'api/v1/settings/1000';
 
-    clientMock.response[url] = { 'status': 'success' };
+    clientMock.response[url] = { status: 'success' };
 
     service.setExplicit(true);
 
@@ -50,7 +49,7 @@ describe('NewsfeedBoostService', () => {
     expect(clientMock.post.calls.mostRecent().args[0]).toBe(url);
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
       mature: true,
-      boost_rating: 2
+      boost_rating: 2,
     });
   }));
 
@@ -59,7 +58,7 @@ describe('NewsfeedBoostService', () => {
 
     const url = 'api/v1/settings';
 
-    clientMock.post[url] = { 'status': 'success' };
+    clientMock.post[url] = { status: 'success' };
 
     service.togglePause();
 
@@ -69,14 +68,16 @@ describe('NewsfeedBoostService', () => {
 
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toBe(url);
-    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ boost_autorotate: !service.isBoostPaused() });
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      boost_autorotate: !service.isBoostPaused(),
+    });
   }));
 
-  it('should hide boosts', fakeAsync(()=> {
+  it('should hide boosts', fakeAsync(() => {
     sessionMock.user.disabled_boost = false;
 
     const url = 'api/v1/plus/boost';
-    clientMock.response[url] = { 'status': 'success'};
+    clientMock.response[url] = { status: 'success' };
 
     service.hideBoost();
 
@@ -89,11 +90,11 @@ describe('NewsfeedBoostService', () => {
     expect(clientMock.put.calls.mostRecent().args[0]).toBe(url);
   }));
 
-  it('should show boosts', fakeAsync(()=> {
+  it('should show boosts', fakeAsync(() => {
     expect(sessionMock.user.disabled_boost).toBeTruthy();
 
     const url = 'api/v1/plus/boost';
-    clientMock.response[url] = { 'status': 'success'};
+    clientMock.response[url] = { status: 'success' };
 
     service.showBoost();
 

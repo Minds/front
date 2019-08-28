@@ -1,6 +1,23 @@
-<input (keyup)="findCity(city)" name="city" [(ngModel)]="city" placeholder="Enter your city..." i18n-placeholder="@@M__COMMON__ENTER_CITY" />
+<input
+  (keyup)="findCity(city)"
+  name="city"
+  [(ngModel)]="city"
+  placeholder="Enter your city..."
+  i18n-placeholder="@@M__COMMON__ENTER_CITY"
+/>
 
-<div class="m-city-finder-list mdl-card mdl-shadow--4dp" *ngIf="cities.length > 0">
-  <p class="mdl-color-text--blue-grey-300" i18n="@@M__COMMON__SELECT_CITY">Select your city:</p>
-  <li (click)="setCity(c)" *ngFor="let c of cities" [hidden]="!(c.address.town || c.address.city)">{{c.address.town}}{{c.address.city}}, {{c.address.state}}</li>
+<div
+  class="m-city-finder-list mdl-card mdl-shadow--4dp"
+  *ngIf="cities.length > 0"
+>
+  <p class="mdl-color-text--blue-grey-300" i18n="@@M__COMMON__SELECT_CITY">
+    Select your city:
+  </p>
+  <li
+    (click)="setCity(c)"
+    *ngFor="let c of cities"
+    [hidden]="!(c.address.town || c.address.city)"
+  >
+    {{ c.address.town }}{{ c.address.city }}, {{ c.address.state }}
+  </li>
 </div>

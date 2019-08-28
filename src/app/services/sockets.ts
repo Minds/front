@@ -3,7 +3,6 @@ import { Session } from './session';
 import * as io from 'socket.io-client';
 
 export class SocketsService {
-
   SOCKET_IO_SERVER = window.Minds.socket_server;
   LIVE_ROOM_NAME = 'live';
 
@@ -29,10 +28,10 @@ export class SocketsService {
     }
 
     this.socket = io.connect(this.SOCKET_IO_SERVER, {
-      'reconnect': true,
-      'reconnection': true,
-      'timeout': 40000,
-      'autoConnect': false
+      reconnect: true,
+      reconnection: true,
+      timeout: 40000,
+      autoConnect: false,
     });
 
     this.rooms = [];
@@ -73,9 +72,8 @@ export class SocketsService {
       });
     });
 
-    this.socket.on('registered', (guid) => {
-      if (this.debug)
-        console.log('[ws]::registered');
+    this.socket.on('registered', guid => {
+      if (this.debug) console.log('[ws]::registered');
       this.nz.run(() => {
         this.registered = true;
         this.socket.emit('join', this.rooms);
@@ -91,8 +89,7 @@ export class SocketsService {
     // -- Rooms
 
     this.socket.on('rooms', (rooms: string[]) => {
-      if (this.debug)
-        console.log('rooms', rooms);
+      if (this.debug) console.log('rooms', rooms);
       this.nz.run(() => {
         this.rooms = rooms;
       });
@@ -100,24 +97,21 @@ export class SocketsService {
 
     this.socket.on('joined', (room: string, rooms: string[]) => {
       this.nz.run(() => {
-        if (this.debug)
-          console.log(`[ws]::joined`, room, rooms);
+        if (this.debug) console.log(`[ws]::joined`, room, rooms);
         this.rooms = rooms;
       });
     });
 
     this.socket.on('left', (room: string, rooms: string[]) => {
       this.nz.run(() => {
-        if (this.debug)
-          console.log(`[ws]::left`, room, rooms);
+        if (this.debug) console.log(`[ws]::left`, room, rooms);
         this.rooms = rooms;
       });
     });
   }
 
   reconnect() {
-    if (this.debug)
-      console.log('[ws]::reconnect');
+    if (this.debug) console.log('[ws]::reconnect');
     this.registered = false;
 
     this.socket.disconnect();
@@ -127,8 +121,7 @@ export class SocketsService {
   }
 
   disconnect() {
-    if (this.debug)
-      console.log('[ws]::disconnect');
+    if (this.debug) console.log('[ws]::disconnect');
     this.registered = false;
 
     this.socket.disconnect();
@@ -158,7 +151,9 @@ export class SocketsService {
     }
 
     return this.subscriptions[name].subscribe({
-      next: (args) => { callback.apply(this, args); }
+      next: args => {
+        callback.apply(this, args);
+      },
     });
   }
 
@@ -182,5 +177,4 @@ export class SocketsService {
 
     return this.emit('leave', room);
   }
-
 }

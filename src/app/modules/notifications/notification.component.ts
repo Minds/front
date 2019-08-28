@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
 import { Session } from '../../services/session';
-import { Reason, rejectionReasons } from '../../controllers/admin/boosts/rejection-reasons';
+import {
+  Reason,
+  rejectionReasons,
+} from '../../controllers/admin/boosts/rejection-reasons';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-notification',
   inputs: ['_notification: notification'],
-  templateUrl: 'notification.component.html'
+  templateUrl: 'notification.component.html',
 })
 export class NotificationComponent {
-
   notification: any;
   minds = window.Minds;
 
-  constructor(public session: Session) { }
+  constructor(public session: Session) {}
 
   set _notification(value: any) {
     this.notification = value;
@@ -32,5 +34,4 @@ export class NotificationComponent {
       return item.code === code;
     });
   }
-
 }

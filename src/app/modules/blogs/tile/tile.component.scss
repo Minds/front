@@ -1,10 +1,10 @@
-.m-blog--tile{
+.m-blog--tile {
   //padding: 8px;
   height: 100%;
   display: flex;
   cursor: pointer;
   flex-direction: column;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -23,7 +23,7 @@
       width: 100%;
       max-height: 100%;
       text-decoration: none;
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-grey-800);
       }
 
@@ -31,7 +31,7 @@
         vertical-align: middle;
         width: 100%;
         font-size: 72px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
@@ -43,7 +43,7 @@
 
     &.m-blog--tile--mature-thumbnail {
       transform-style: preserve-3d;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.65);
       }
 
@@ -60,7 +60,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 3em;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
@@ -84,7 +84,7 @@
       //text-overflow: ellipsis;
       //white-space: nowrap;
       //overflow: hidden;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }
@@ -92,7 +92,7 @@
       padding: 0 12px;
       margin: 0;
       display: none;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
@@ -124,7 +124,7 @@
       text-align: right;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
@@ -135,5 +135,4 @@
     right: 12px;
     bottom: 12px;
   }
-
 }

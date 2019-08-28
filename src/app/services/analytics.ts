@@ -10,10 +10,13 @@ export class AnalyticsService {
     return new AnalyticsService(router, client);
   }
 
-  constructor(@Inject(Router) public router: Router, @Inject(Client) public client: Client) {
+  constructor(
+    @Inject(Router) public router: Router,
+    @Inject(Client) public client: Client
+  ) {
     this.onRouterInit();
 
-    this.router.events.subscribe((navigationState) => {
+    this.router.events.subscribe(navigationState => {
       if (navigationState instanceof NavigationEnd) {
         try {
           this.onRouteChanged(navigationState.urlAfterRedirects);
@@ -32,14 +35,13 @@ export class AnalyticsService {
     }
   }
 
-  async onRouterInit() {
-  }
+  async onRouterInit() {}
 
   onRouteChanged(path) {
     if (!this.defaultPrevented) {
-      this.send('pageview', { 
+      this.send('pageview', {
         url: path,
-        referrer: document.referrer
+        referrer: document.referrer,
       });
     }
 
@@ -53,6 +55,4 @@ export class AnalyticsService {
   wasDefaultPrevented() {
     return this.defaultPrevented;
   }
-
-
 }

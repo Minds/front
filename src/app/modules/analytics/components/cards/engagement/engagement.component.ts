@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AnalyticsCardComponent } from "../card/card.component";
-import { Client } from "../../../../../services/api/client";
+import { AnalyticsCardComponent } from '../card/card.component';
+import { Client } from '../../../../../services/api/client';
 
 @Component({
   selector: 'm-analyticsengagement__card',
-  templateUrl: 'engagement.component.html'
+  templateUrl: 'engagement.component.html',
 })
-
 export class EngagementCardComponent implements OnInit {
   @ViewChild('posts', { static: true }) posts: AnalyticsCardComponent;
   @ViewChild('comments', { static: true }) comments: AnalyticsCardComponent;
@@ -15,19 +14,18 @@ export class EngagementCardComponent implements OnInit {
 
   avgPosts: number = 0;
   avgPostingUsers: number = 0;
-  currentPosts: { name: string, value: number }[];
+  currentPosts: { name: string; value: number }[];
   avgComments: number = 0;
   avgCommentingUsers: number = 0;
-  currentComments: { name: string, value: number }[];
+  currentComments: { name: string; value: number }[];
   avgVotes: number = 0;
   avgVotingUsers: number = 0;
-  currentVotes: { name: string, value: number }[];
+  currentVotes: { name: string; value: number }[];
   avgReminds: number = 0;
   avgRemindingUsers: number = 0;
-  currentReminds: { name: string, value: number }[];
+  currentReminds: { name: string; value: number }[];
 
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.getAvgPosts();
@@ -107,5 +105,4 @@ export class EngagementCardComponent implements OnInit {
       console.error(e);
     }
   }
-
 }

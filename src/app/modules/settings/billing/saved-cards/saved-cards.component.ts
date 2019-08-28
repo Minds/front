@@ -2,22 +2,17 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../../common/api/client.service';
 
-
 @Component({
   selector: 'm-settings--billing-saved-cards',
-  templateUrl: 'saved-cards.component.html'
+  templateUrl: 'saved-cards.component.html',
 })
-
 export class SettingsBillingSavedCardsComponent {
-
   minds = window.Minds;
   inProgress: boolean = false;
   addNewCard: boolean = false;
   cards: Array<any> = [];
 
-  constructor(private client: Client, private cd: ChangeDetectorRef) {
-
-  }
+  constructor(private client: Client, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadSavedCards();
@@ -37,7 +32,8 @@ export class SettingsBillingSavedCardsComponent {
     this.inProgress = true;
     this.cards = [];
 
-    return this.client.get(`api/v1/payments/stripe/cards`)
+    return this.client
+      .get(`api/v1/payments/stripe/cards`)
       .then(({ cards }) => {
         this.inProgress = false;
 
@@ -55,7 +51,8 @@ export class SettingsBillingSavedCardsComponent {
   removeCard(index: number) {
     this.inProgress = true;
 
-    this.client.delete('api/v1/payments/stripe/card/' + this.cards[index].id)
+    this.client
+      .delete('api/v1/payments/stripe/card/' + this.cards[index].id)
       .then(() => {
         this.cards.splice(index, 1);
 
@@ -73,7 +70,7 @@ export class SettingsBillingSavedCardsComponent {
     this.detectChanges();
 
     this.getCardNonce(card)
-      .then((token) => {
+      .then(token => {
         this.saveCard(token)
           .then(() => {
             this.inProgress = false;
@@ -87,10 +84,12 @@ export class SettingsBillingSavedCardsComponent {
             alert((e && e.message) || 'There was an error saving your card.');
           });
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
         this.detectChanges();
-        alert((e && e.message) || 'There was an error with your card information.');
+        alert(
+          (e && e.message) || 'There was an error with your card information.'
+        );
       });
   }
 
@@ -100,17 +99,20 @@ export class SettingsBillingSavedCardsComponent {
 
   getCardNonce(card): Promise<string> {
     return new Promise((resolve, reject) => {
-      (<any>window).Stripe.card.createToken({
-        number: card.number,
-        cvc: card.sec,
-        exp_month: card.month,
-        exp_year: card.year
-      }, (status, response) => {
-        if (response.error) {
-          return reject(response.error.message);
+      (<any>window).Stripe.card.createToken(
+        {
+          number: card.number,
+          cvc: card.sec,
+          exp_month: card.month,
+          exp_year: card.year,
+        },
+        (status, response) => {
+          if (response.error) {
+            return reject(response.error.message);
+          }
+          return resolve(response.id);
         }
-        return resolve(response.id);
-      });
+      );
     });
   }
 
@@ -118,5 +120,4 @@ export class SettingsBillingSavedCardsComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

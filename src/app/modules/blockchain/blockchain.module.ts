@@ -32,8 +32,8 @@ const cryptoRoutes: Routes = [
     component: WalletComponent,
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'overview', component: BlockchainConsoleComponent }
-    ]
+      { path: 'overview', component: BlockchainConsoleComponent },
+    ],
   },
 ];
 
@@ -60,43 +60,43 @@ const cryptoRoutes: Routes = [
     {
       provide: LocalWalletService,
       useFactory: LocalWalletService._,
-      deps: [ TransactionOverlayService ]
+      deps: [TransactionOverlayService],
     },
     {
       provide: Web3WalletService,
       useFactory: Web3WalletService._,
-      deps: [ LocalWalletService, TransactionOverlayService ]
+      deps: [LocalWalletService, TransactionOverlayService],
     },
     {
       provide: TokenContractService,
       useFactory: TokenContractService._,
-      deps: [ Web3WalletService, TransactionOverlayService ]
+      deps: [Web3WalletService, TransactionOverlayService],
     },
     {
       provide: WireContractService,
       useFactory: WireContractService._,
-      deps: [ Web3WalletService, TokenContractService ]
+      deps: [Web3WalletService, TokenContractService],
     },
     {
       provide: WithdrawContractService,
       useFactory: WithdrawContractService._,
-      deps: [ Web3WalletService ]
+      deps: [Web3WalletService],
     },
     {
       provide: BoostContractService,
       useFactory: BoostContractService._,
-      deps: [ Web3WalletService, TokenContractService ]
+      deps: [Web3WalletService, TokenContractService],
     },
     {
       provide: TokenDistributionEventService,
       useFactory: TokenDistributionEventService._,
-      deps: [ Web3WalletService ]
+      deps: [Web3WalletService],
     },
     {
       provide: OffchainPaymentService,
       useFactory: OffchainPaymentService._,
-      deps: [ Client ]
-    }
+      deps: [Client],
+    },
   ],
   exports: [
     BlockchainWalletSelector,
@@ -105,8 +105,6 @@ const cryptoRoutes: Routes = [
     BlockchainTdeBuyComponent,
     GetMetamaskComponent,
   ],
-  entryComponents: [
-    BlockchainTdeBuyComponent,
-  ]
+  entryComponents: [BlockchainTdeBuyComponent],
 })
-export class BlockchainModule { }
+export class BlockchainModule {}

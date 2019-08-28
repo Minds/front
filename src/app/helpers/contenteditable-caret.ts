@@ -1,10 +1,14 @@
 // node_walk: walk the element tree, stop when func(node) returns false
 function node_walk(node, func) {
   var result = func(node);
-  for (node = node.firstChild; result !== false && node; node = node.nextSibling)
+  for (
+    node = node.firstChild;
+    result !== false && node;
+    node = node.nextSibling
+  )
     result = node_walk(node, func);
   return result;
-};
+}
 
 // getCaretPosition: return [start, end] as offsets to elem.textContent that
 //   correspond to the selected portion of text
@@ -13,8 +17,7 @@ export function getContentEditableCaretCoordinates(elem) {
   var sel: any = window.getSelection();
   var cum_length = [0, 0];
 
-  if (sel.anchorNode == elem)
-    cum_length = [sel.anchorOffset, sel.extentOffset];
+  if (sel.anchorNode == elem) cum_length = [sel.anchorOffset, sel.extentOffset];
   else {
     var nodes_to_find = [sel.anchorNode, sel.extentNode];
     if (!elem.contains(sel.anchorNode) || !elem.contains(sel.extentNode))
@@ -22,19 +25,17 @@ export function getContentEditableCaretCoordinates(elem) {
     else {
       var found: any = [0, 0];
       var i;
-      node_walk(elem, function (node) {
+      node_walk(elem, function(node) {
         for (i = 0; i < 2; i++) {
           if (node == nodes_to_find[i]) {
             found[i] = true;
-            if (found[i == 0 ? 1 : 0])
-              return false; // all done
+            if (found[i == 0 ? 1 : 0]) return false; // all done
           }
         }
 
         if (node.textContent && !node.firstChild) {
           for (i = 0; i < 2; i++) {
-            if (!found[i])
-              cum_length[i] += node.textContent.length;
+            if (!found[i]) cum_length[i] += node.textContent.length;
           }
         }
       });
@@ -47,8 +48,7 @@ export function getContentEditableCaretCoordinates(elem) {
     end: cum_length[1],
   };
 
-  if (cum_length[0] <= cum_length[1])
-    return coordinates;
+  if (cum_length[0] <= cum_length[1]) return coordinates;
 
   // it's reversed
   coordinates.start = cum_length[1];

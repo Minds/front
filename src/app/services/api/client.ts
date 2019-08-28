@@ -1,11 +1,10 @@
 import { Cookie } from '../cookie';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 /**
  * API Class
  */
 export class Client {
-
   base: string = '/';
   cookie: Cookie = new Cookie();
 
@@ -13,8 +12,7 @@ export class Client {
     return new Client(http);
   }
 
-  constructor(public http: HttpClient) {
-  }
+  constructor(public http: HttpClient) {}
 
   /**
    * Return a GET request
@@ -24,28 +22,24 @@ export class Client {
       endpoint += '?' + this.buildParams(data);
     }
     return new Promise((resolve, reject) => {
-      this.http.get(
-        this.base + endpoint,
-        this.buildOptions(options)
-      )
-        .subscribe(
-          res => {
-            var data: any = res;
-            if (!data || data.status !== 'success')
-              return reject(data);
+      this.http.get(this.base + endpoint, this.buildOptions(options)).subscribe(
+        res => {
+          var data: any = res;
+          if (!data || data.status !== 'success') return reject(data);
 
-            return resolve(data);
-          },
-          err => {
-            if (err.data && !err.data()) {
-              return reject(err || new Error('GET error'));
-            }
-            if (err.status === 401 && err.error.loggedin === false) {
-              window.location.href = '/login';
-              return reject(err);
-            }
+          return resolve(data);
+        },
+        err => {
+          if (err.data && !err.data()) {
+            return reject(err || new Error('GET error'));
+          }
+          if (err.status === 401 && err.error.loggedin === false) {
+            window.location.href = '/login';
             return reject(err);
-          });
+          }
+          return reject(err);
+        }
+      );
     });
   }
 
@@ -55,24 +49,21 @@ export class Client {
   getRaw(endpoint: string, data: Object = {}, options: Object = {}) {
     endpoint += '?' + this.buildParams(data);
     return new Promise((resolve, reject) => {
-      this.http.get(
-        this.base + endpoint,
-        this.buildOptions(options)
-      )
-        .subscribe(
-          res => {
-            return resolve(res);
-          },
-          err => {
-            if (err.data && !err.data()) {
-              return reject(err || new Error('GET error'));
-            }
-            if (err.status === 401 && err.error.loggedin === false) {
-              window.location.href = '/login';
-              return reject(err);
-            }
+      this.http.get(this.base + endpoint, this.buildOptions(options)).subscribe(
+        res => {
+          return resolve(res);
+        },
+        err => {
+          if (err.data && !err.data()) {
+            return reject(err || new Error('GET error'));
+          }
+          if (err.status === 401 && err.error.loggedin === false) {
+            window.location.href = '/login';
             return reject(err);
-          });
+          }
+          return reject(err);
+        }
+      );
     });
   }
 
@@ -81,16 +72,16 @@ export class Client {
    */
   post(endpoint: string, data: Object = {}, options: Object = {}) {
     return new Promise((resolve, reject) => {
-      this.http.post(
-        this.base + endpoint,
-        JSON.stringify(data),
-        this.buildOptions(options)
-      )
+      this.http
+        .post(
+          this.base + endpoint,
+          JSON.stringify(data),
+          this.buildOptions(options)
+        )
         .subscribe(
           res => {
             var data: any = res;
-            if (!data || data.status !== 'success')
-              return reject(data);
+            if (!data || data.status !== 'success') return reject(data);
 
             return resolve(data);
           },
@@ -105,7 +96,8 @@ export class Client {
             if (err.status !== 200) {
               return reject(err.error);
             }
-          });
+          }
+        );
     });
   }
 
@@ -114,16 +106,16 @@ export class Client {
    */
   put(endpoint: string, data: Object = {}, options: Object = {}) {
     return new Promise((resolve, reject) => {
-      this.http.put(
-        this.base + endpoint,
-        JSON.stringify(data),
-        this.buildOptions(options)
-      )
+      this.http
+        .put(
+          this.base + endpoint,
+          JSON.stringify(data),
+          this.buildOptions(options)
+        )
         .subscribe(
           res => {
             var data: any = res;
-            if (!data || data.status !== 'success')
-              return reject(data);
+            if (!data || data.status !== 'success') return reject(data);
 
             return resolve(data);
           },
@@ -135,7 +127,8 @@ export class Client {
             if (err.status !== 200) {
               return reject(err.error);
             }
-          });
+          }
+        );
     });
   }
 
@@ -144,15 +137,12 @@ export class Client {
    */
   delete(endpoint: string, data: Object = {}, options: Object = {}) {
     return new Promise((resolve, reject) => {
-      this.http.delete(
-        this.base + endpoint,
-        this.buildOptions(options)
-      )
+      this.http
+        .delete(this.base + endpoint, this.buildOptions(options))
         .subscribe(
           res => {
             var data: any = res;
-            if (!data || data.status !== 'success')
-              return reject(data);
+            if (!data || data.status !== 'success') return reject(data);
 
             return resolve(data);
           },
@@ -164,14 +154,17 @@ export class Client {
             if (err.status !== 200) {
               return reject(err.error);
             }
-          });
+          }
+        );
     });
   }
 
   private buildParams(object: Object) {
-    return Object.keys(object).map((k) => {
-      return encodeURIComponent(k) + '=' + encodeURIComponent(object[k]);
-    }).join('&');
+    return Object.keys(object)
+      .map(k => {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(object[k]);
+      })
+      .join('&');
   }
 
   /**
@@ -186,8 +179,7 @@ export class Client {
 
     return Object.assign(options, {
       headers: headers,
-      cache: true
+      cache: true,
     });
   }
-
 }

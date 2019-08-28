@@ -1,9 +1,9 @@
 <div class="m-toolbar">
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
-
-      <ng-container *ngIf="!container; else containerNav">  
-        <a class="m-topbar--navigation--item"
+      <ng-container *ngIf="!container; else containerNav">
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == ''"
           [routerLink]="['/search', { q: q, type: '', ref: ref }]"
         >
@@ -13,7 +13,8 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'latest'"
           [routerLink]="['/search', { q: q, type: 'latest', ref: ref }]"
         >
@@ -23,17 +24,22 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'user'"
           [routerLink]="['/search', { q: q, type: 'user', ref: ref }]"
         >
           <span i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</span>
-          <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__CHANNELS_TOOLTIP">
+          <m-tooltip
+            icon="help"
+            i18n="@@MINDS__SEARCH__TOPBAR__CHANNELS_TOOLTIP"
+          >
             Show only channels
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'activity'"
           [routerLink]="['/search', { q: q, type: 'activity', ref: ref }]"
         >
@@ -43,7 +49,8 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:video'"
           [routerLink]="['/search', { q: q, type: 'object:video', ref: ref }]"
         >
@@ -53,7 +60,8 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:image'"
           [routerLink]="['/search', { q: q, type: 'object:image', ref: ref }]"
         >
@@ -63,7 +71,8 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:blog'"
           [routerLink]="['/search', { q: q, type: 'object:blog', ref: ref }]"
         >
@@ -73,21 +82,29 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'group'"
           [routerLink]="['/search', { q: q, type: 'group', ref: ref }]"
         >
           <span i18n="@@M__FEATURE__GROUP__PLURAL">Groups</span>
-          <m-tooltip icon="help" i18n="@@MINDS__CHANNELS__TOPBAR__GROUPS_TOOLTIP">
+          <m-tooltip
+            icon="help"
+            i18n="@@MINDS__CHANNELS__TOPBAR__GROUPS_TOOLTIP"
+          >
             Show only groups
           </m-tooltip>
         </a>
       </ng-container>
 
       <ng-template #containerNav>
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == ''"
-          [routerLink]="['/search', { q: q, type: '', id: container, ref: ref }]"
+          [routerLink]="[
+            '/search',
+            { q: q, type: '', id: container, ref: ref }
+          ]"
         >
           <span i18n="@@SEARCH__TOP_TAB">Top</span>
           <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_TOP_TOOLTIP">
@@ -95,9 +112,13 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'latest'"
-          [routerLink]="['/search', { q: q, type: 'latest', id: container, ref: ref }]"
+          [routerLink]="[
+            '/search',
+            { q: q, type: 'latest', id: container, ref: ref }
+          ]"
         >
           <span i18n="@@SEARCH__LATEST_TAB">Latest</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__LATEST_TOOLTIP">
@@ -105,9 +126,13 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'activity'"
-          [routerLink]="['/search', { q: q, type: 'activity', id: container, ref: ref }]"
+          [routerLink]="[
+            '/search',
+            { q: q, type: 'activity', id: container, ref: ref }
+          ]"
         >
           <span i18n="@@M__FEATURE__POST_PLURAL">Posts</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__POSTS_TOOLTIP">
@@ -115,9 +140,13 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:video'"
-          [routerLink]="['/search', { q: q, type: 'object:video', id: container, ref: ref }]"
+          [routerLink]="[
+            '/search',
+            { q: q, type: 'object:video', id: container, ref: ref }
+          ]"
         >
           <span i18n="@@M__FEATURE__VIDEO_PLURAL">Videos</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__VIDEOS_TOOLTIP">
@@ -125,9 +154,13 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:image'"
-          [routerLink]="['/search', { q: q, type: 'object:image', id: container, ref: ref }]"
+          [routerLink]="[
+            '/search',
+            { q: q, type: 'object:image', id: container, ref: ref }
+          ]"
         >
           <span i18n="@@M__FEATURE__IMAGE_PLURAL">Images</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__IMAGES_TOOLTIP">
@@ -135,9 +168,13 @@
           </m-tooltip>
         </a>
 
-        <a class="m-topbar--navigation--item"
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="type == 'object:blog'"
-          [routerLink]="['/search', { q: q, type: 'object:blog', id: container, ref: ref }]"
+          [routerLink]="[
+            '/search',
+            { q: q, type: 'object:blog', id: container, ref: ref }
+          ]"
         >
           <span i18n="@@M__FEATURE__BLOG_PLURAL">Blogs</span>
           <m-tooltip icon="help" i18n="@@MINDS__SEARCH__TOPBAR__BLOGS_TOOLTIP">
@@ -148,8 +185,13 @@
 
       <div class="m-layout--spacer"></div>
 
-      <div class="m-topbar--navigation--item m-topbar--navigation--more" (click)="toggleOptions(); $event.stopPropagation()">
-        <span><i class="material-icons m-dropdown--label-icon">settings</i></span>
+      <div
+        class="m-topbar--navigation--item m-topbar--navigation--more"
+        (click)="toggleOptions(); $event.stopPropagation()"
+      >
+        <span
+          ><i class="material-icons m-dropdown--label-icon">settings</i></span
+        >
 
         <ul class="minds-dropdown-menu" [hidden]="!optionsToggle">
           <li class="mdl-menu__item">
@@ -184,23 +226,17 @@
             ></m-material--bound-switch>
           </li>
         </ul>
-
       </div>
-
     </div>
   </div>
 </div>
 
 <ng-container *ngIf="searchType == 'hybrid'; else simpleList">
-  <m-search--hybrid-list
-    [entities]="hybridEntities"
-  ></m-search--hybrid-list>
+  <m-search--hybrid-list [entities]="hybridEntities"></m-search--hybrid-list>
 </ng-container>
 
 <ng-template #simpleList>
-  <m-search--simple-list
-    [entities]="entities"
-  ></m-search--simple-list>
+  <m-search--simple-list [entities]="entities"></m-search--simple-list>
 </ng-template>
 
 <infinite-scroll

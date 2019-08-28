@@ -1,15 +1,17 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 
 import { Client } from '../../../common/api/client.service';
 
 @Component({
   selector: 'm-affiliate--link',
   templateUrl: 'link.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class AffiliateLinkComponent {
-
   minds = window.Minds;
   user = window.Minds.user;
   showOnboarding: boolean = false;
@@ -26,12 +28,13 @@ export class AffiliateLinkComponent {
   }
 
   openEmail() {
-    window.location.href = 'mailto:?subject=Join%20me%20on%20minds&body=Join me on Minds ' + this.encodedLink;
+    window.location.href =
+      'mailto:?subject=Join%20me%20on%20minds&body=Join me on Minds ' +
+      this.encodedLink;
   }
 
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

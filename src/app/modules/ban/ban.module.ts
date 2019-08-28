@@ -7,25 +7,16 @@ import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { BanModalComponent } from './modal/modal.component';
 
-
 @NgModule({
   imports: [
     FormsModule,
     NgCommonModule,
     RouterModule,
     CommonModule,
-    LegacyModule
+    LegacyModule,
   ],
-  declarations: [
-    BanModalComponent
-  ],
-  exports: [
-    BanModalComponent
-  ],
-  entryComponents: [
-    BanModalComponent
-  ]
+  declarations: [BanModalComponent],
+  exports: [BanModalComponent],
+  entryComponents: [BanModalComponent],
 })
-
-export class BanModule {
-}
+export class BanModule {}

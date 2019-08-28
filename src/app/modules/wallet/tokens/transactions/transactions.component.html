@@ -1,27 +1,55 @@
 <div class="m-token--ledger">
-  <div class="m-token--ledger-remote" *ngIf="remote" i18n="@@WALLET__TOKENS__TRANSACTIONS__REMOTE_LABEL">
-    <b>@{{remoteUser}}</b>'s transactions
+  <div
+    class="m-token--ledger-remote"
+    *ngIf="remote"
+    i18n="@@WALLET__TOKENS__TRANSACTIONS__REMOTE_LABEL"
+  >
+    <b>@{{ remoteUser }}</b
+    >'s transactions
   </div>
 
-  <div class="m-token--ledger-filters m-border" *ngIf="!preview; else previewHeader">
-    
+  <div
+    class="m-token--ledger-filters m-border"
+    *ngIf="!preview; else previewHeader"
+  >
     <m-dropdown class="m-token--ledger-filters--addresses">
       <label class="m-token--ledger-filters--label">
-        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__ADDRESSES_DROPDOWN">Addresses</span>
-        <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
-        <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
+        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__ADDRESSES_DROPDOWN"
+          >Addresses</span
+        >
+        <i
+          class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive"
+          >keyboard_arrow_down</i
+        >
+        <i
+          class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active"
+          >keyboard_arrow_up</i
+        >
       </label>
 
       <ul class="m-dropdown--list">
         <li class="m-dropdown--list--item" (click)="toggleAddress(null)">
-          <span style="text-transform: capitalize" i18n="@@WALLET__TOKENS__TRANSACTIONS__ALL_ADDRESSES_OPTION">All addresses</span>
+          <span
+            style="text-transform: capitalize"
+            i18n="@@WALLET__TOKENS__TRANSACTIONS__ALL_ADDRESSES_OPTION"
+            >All addresses</span
+          >
           <div class="m-layout--spacer"></div>
-          <i class="material-icons m-token--ledger-filters--check selected" *ngIf="!selectedAddress">check</i>
+          <i
+            class="material-icons m-token--ledger-filters--check selected"
+            *ngIf="!selectedAddress"
+            >check</i
+          >
         </li>
-        <li class="m-dropdown--list--item" *ngFor="let address of addresses" (click)="toggleAddress(address)">
-          
+        <li
+          class="m-dropdown--list--item"
+          *ngFor="let address of addresses"
+          (click)="toggleAddress(address)"
+        >
           <span>
-            <ng-container *ngIf="address.address !== 'offchain'; else offchainSpan">
+            <ng-container
+              *ngIf="address.address !== 'offchain'; else offchainSpan"
+            >
               {{ address.label }} ({{ address.address | addressExcerpt }})
             </ng-container>
             <ng-template #offchainSpan>
@@ -31,85 +59,157 @@
 
           <div class="m-layout--spacer"></div>
 
-          <i class="material-icons m-token--ledger-filters--check" [class.selected]="address.selected">check</i>
+          <i
+            class="material-icons m-token--ledger-filters--check"
+            [class.selected]="address.selected"
+            >check</i
+          >
         </li>
       </ul>
     </m-dropdown>
 
     <m-dropdown class="m-token--ledger-filters--addresses">
       <label class="m-token--ledger-filters--label">
-        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__CONTRACTS_DROPDOWN">Contracts</span>
-        <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
-        <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
+        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__CONTRACTS_DROPDOWN"
+          >Contracts</span
+        >
+        <i
+          class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive"
+          >keyboard_arrow_down</i
+        >
+        <i
+          class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active"
+          >keyboard_arrow_up</i
+        >
       </label>
       <ul class="m-dropdown--list">
         <li class="m-dropdown--list--item" (click)="toggleContract(null)">
-            <span style="text-transform: capitalize" i18n="@@WALLET__TOKENS__TRANSACTIONS__ALL_CONTRACTS_OPTIONS">All contracts</span>
-            <div class="m-layout--spacer"></div>
-            <i class="material-icons m-token--ledger-filters--check selected" *ngIf="!selectedContract">check</i>
-          </li>
-        <li class="m-dropdown--list--item" *ngFor="let contract of contracts" (click)="toggleContract(contract)">
-          <span style="text-transform: capitalize">{{ getNormalizedContractName(contract) }}</span>
+          <span
+            style="text-transform: capitalize"
+            i18n="@@WALLET__TOKENS__TRANSACTIONS__ALL_CONTRACTS_OPTIONS"
+            >All contracts</span
+          >
           <div class="m-layout--spacer"></div>
-          <i class="material-icons m-token--ledger-filters--check selected" *ngIf="selectedContract == contract">check</i>
+          <i
+            class="material-icons m-token--ledger-filters--check selected"
+            *ngIf="!selectedContract"
+            >check</i
+          >
+        </li>
+        <li
+          class="m-dropdown--list--item"
+          *ngFor="let contract of contracts"
+          (click)="toggleContract(contract)"
+        >
+          <span style="text-transform: capitalize">{{
+            getNormalizedContractName(contract)
+          }}</span>
+          <div class="m-layout--spacer"></div>
+          <i
+            class="material-icons m-token--ledger-filters--check selected"
+            *ngIf="selectedContract == contract"
+            >check</i
+          >
         </li>
       </ul>
     </m-dropdown>
 
     <div class="m-layout--spacer"></div>
     <div class="m-token--ledger--date-selectors">
-      <m-date-selector label="From:" i18n-label="@@WALLET__TOKENS__TRANSACTIONS__FROM" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
-      <m-date-selector label="To:" i18n-label="@@WALLET__TOKENS__TRANSACTIONS__TO" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
+      <m-date-selector
+        label="From:"
+        i18n-label="@@WALLET__TOKENS__TRANSACTIONS__FROM"
+        [date]="startDate"
+        (dateChange)="onStartDateChange($event)"
+        dateFormat="shortDate"
+      ></m-date-selector>
+      <m-date-selector
+        label="To:"
+        i18n-label="@@WALLET__TOKENS__TRANSACTIONS__TO"
+        [date]="endDate"
+        (dateChange)="onEndDateChange($event)"
+        dateFormat="shortDate"
+      ></m-date-selector>
     </div>
   </div>
   <ng-template #previewHeader>
-    <div class="m-token--ledger-filters m-token--ledger-filters--preview m-border" i18n="@@WALLET__TOKENS__TRANSACTIONS__LAST_MONTH_TITLE">
+    <div
+      class="m-token--ledger-filters m-token--ledger-filters--preview m-border"
+      i18n="@@WALLET__TOKENS__TRANSACTIONS__LAST_MONTH_TITLE"
+    >
       Last month
     </div>
   </ng-template>
 
-  <div class="m-token--ledger--reward m-border" *ngFor="let transaction of transactions">
+  <div
+    class="m-token--ledger--reward m-border"
+    *ngFor="let transaction of transactions"
+  >
     <div class="m-token--ledger--reward-amount">
       <ng-container *ngIf="transaction.amount >= 0; else negativeRewardAmount">
         <span class="m-token--ledger--reward-amount--positive">
-          + {{ +transaction.amount | token:18 | number }}
+          + {{ +transaction.amount | token: 18 | number }}
         </span>
       </ng-container>
 
       <ng-template #negativeRewardAmount>
         <span class="m-token--ledger--reward-amount--negative">
-          - {{ -transaction.amount | token:18 | number }}
+          - {{ -transaction.amount | token: 18 | number }}
         </span>
       </ng-template>
     </div>
 
     <div class="m-token--ledger--reward-details">
       <div class="m-token--ledger--reward-details--meta">
-        <span>{{ getNormalizedContractName(transaction.contract)  | uppercase }}</span>
+        <span>{{
+          getNormalizedContractName(transaction.contract) | uppercase
+        }}</span>
       </div>
 
       <div class="m-token--ledger--reward-details--meta">
         <span>{{ transaction.wallet_address }}</span>
       </div>
 
-      <div *ngIf="transaction.failed" class="m-token--ledger--reward-details--meta">
+      <div
+        *ngIf="transaction.failed"
+        class="m-token--ledger--reward-details--meta"
+      >
         <span i18n="@@WALLET__TOKENS__TRANSACTIONS__FAILED_LABEL">FAILED</span>
       </div>
 
-      <div class="m-token--ledger--reward-details--meta m-token--ledger--reward-details--meta-wrapper" *ngIf="isP2p(transaction)">
-        <img class="m-token--ledger--avatar" [routerLink]="['/', getSelf(transaction).username]"  [src]="getSelf(transaction).avatar">
+      <div
+        class="m-token--ledger--reward-details--meta m-token--ledger--reward-details--meta-wrapper"
+        *ngIf="isP2p(transaction)"
+      >
+        <img
+          class="m-token--ledger--avatar"
+          [routerLink]="['/', getSelf(transaction).username]"
+          [src]="getSelf(transaction).avatar"
+        />
 
-        <i class="material-icons m-token--ledger--direction">{{getOther(transaction).isSender ? 'arrow_back' : 'arrow_forward'}}</i>
+        <i class="material-icons m-token--ledger--direction">{{
+          getOther(transaction).isSender ? 'arrow_back' : 'arrow_forward'
+        }}</i>
 
-        <img class="m-token--ledger--avatar" [routerLink]="['/', getOther(transaction).username]" [src]="getOther(transaction).avatar">
-        <a class="m-token--ledger--other-username" [routerLink]="['/', getOther(transaction).username]">@{{getOther(transaction).username}}</a>
+        <img
+          class="m-token--ledger--avatar"
+          [routerLink]="['/', getOther(transaction).username]"
+          [src]="getOther(transaction).avatar"
+        />
+        <a
+          class="m-token--ledger--other-username"
+          [routerLink]="['/', getOther(transaction).username]"
+          >@{{ getOther(transaction).username }}</a
+        >
       </div>
 
       <div class="mdl-layout-spacer"></div>
 
       <div class="m-token--ledger--reward-details--meta">
         <i class="material-icons">access_time</i>
-        <p class="ts">{{ transaction.timestamp * 1000 | utcDate | date: 'medium' }}</p>
+        <p class="ts">
+          {{ transaction.timestamp * 1000 | utcDate | date: 'medium' }}
+        </p>
       </div>
     </div>
   </div>
@@ -119,5 +219,6 @@
   distance="25%"
   (load)="load(false)"
   [moreData]="moreData"
-  [inProgress]="inProgress">
+  [inProgress]="inProgress"
+>
 </infinite-scroll>
