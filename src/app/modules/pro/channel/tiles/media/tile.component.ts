@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { MediaModalComponent } from "../../../../media/modal/modal.component";
 import { FeaturesService } from "../../../../../services/features.service";
 import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
 import { Router } from "@angular/router";
 import toMockActivity from "../../util/mock-activity";
+import { ProChannelService } from "../../channel.service";
 
 @Component({
   selector: 'm-pro--channel-tile',
@@ -18,6 +19,7 @@ export class ProTileComponent {
 
   constructor(
     protected featuresService: FeaturesService,
+    protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
     protected router: Router,
   ) {
@@ -53,6 +55,16 @@ export class ProTileComponent {
 
   setVideoDimensions($event) {
     this.videoDimensions = $event.dimensions;
+  }
+
+  tileClicked() {
+    switch(this.getType(this.entity)) {
+      case 'object:image':
+      case 'object:video':
+        this.showMediaModal();
+      case 'object:blog':
+        this.channelService.open(this.entity, this.modalService);
+    }
   }
 
   showMediaModal() {

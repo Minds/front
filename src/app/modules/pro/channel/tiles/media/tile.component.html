@@ -1,10 +1,4 @@
 <ng-container [ngSwitch]="getType(entity)">
-  <img
-    *ngSwitchCase="'object:image'"
-    [src]="entity.thumbnail_src"
-    (click)="showMediaModal()"
-    #img
-  >
 
   <m-video
     *ngSwitchCase="'object:video'"
@@ -18,14 +12,17 @@
     [torrent]="[{ res: '360', key: entity.guid + '/360.mp4' }]"
     [isActivity]="true"
     (videoMetadataLoaded)="setVideoDimensions($event)"
-    (mediaModalRequested)="showMediaModal()"
+    (mediaModalRequested)="tileClicked()"
     #player
   ></m-video>
 
   <img
-    *ngSwitchCase="'object:blog'"
+    *ngSwitchDefault
     [src]="entity.thumbnail_src"
+    (click)="tileClicked()"
+    #img
   >
+
 </ng-container>
 
 <div class="m-proChannelTile__text" *ngIf="getTitle() || getText()">
