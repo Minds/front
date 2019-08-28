@@ -126,6 +126,15 @@
               </div>
 
               <div class="m-pro--settings--field">
+                <label i18n>Tiles Aspect Ratio</label>
+
+                <ng-container *ngFor="let ratio of ratios">
+                  <input type="radio" [id]="'tile_ratio_' + ratio" name="tile_ratio" [value]="ratio" [(ngModel)]="settings.tile_ratio">
+                  <label [for]="'tile_ratio_' + ratio" class="m-pro--settings--inline-label">{{ratio}}</label>
+                </ng-container>
+              </div>
+
+              <div class="m-pro--settings--field">
                 <label for="logo_guid" i18n>Logo Asset GUID</label>
                 <input type="text" id="logo_guid" name="logo_guid" [(ngModel)]="settings.logo_guid">
               </div>

@@ -3,6 +3,13 @@ import { Client } from '../../services/api/client';
 
 @Injectable()
 export class ProService {
+  public readonly ratios = [
+    '16:9',
+    '16:10',
+    '4:3',
+    '1:1',
+  ];
+
   constructor(
     protected client: Client,
   ) { }
@@ -42,6 +49,10 @@ export class ProService {
 
       if (!settings.scheme) {
         settings.scheme = 'light';
+      }
+
+      if (!settings.ratio) {
+        settings.ratio = this.ratios[0];
       }
     }
 

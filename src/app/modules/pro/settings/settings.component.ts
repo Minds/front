@@ -99,6 +99,10 @@ export class ProSettingsComponent implements OnInit {
     return ['/pro', this.session.getLoggedInUser().username];
   }
 
+  get ratios() {
+    return this.service.ratios;
+  }
+
   onDragStart(event: DragEvent) {
 
     this.currentDragEffectMsg = "";
