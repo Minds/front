@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MediaModalComponent } from "../../../../media/modal/modal.component";
 import { FeaturesService } from "../../../../../services/features.service";
 import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
@@ -7,37 +7,9 @@ import toMockActivity from "../../util/mock-activity";
 
 @Component({
   selector: 'm-pro--channel-tile',
-  template: `
-    <img
-      [src]="entity.thumbnail_src"
-      (click)="showMediaModal()"
-      *ngIf="getType(entity) === 'object:image'; else videoBlock"
-      #img
-    >
-
-    <ng-template #videoBlock>
-      <m-video
-        width="100%"
-        height="300px"
-        [muted]="false"
-        [poster]="entity.thumbnail_src"
-        [src]="[{ 'res': '360', 'uri': 'api/v1/media/' + entity.guid + '/play', 'type': 'video/mp4' }]"
-        [guid]="entity.guid"
-        [playCount]="entity['play:count']"
-        [torrent]="[{ res: '360', key: entity.guid + '/360.mp4' }]"
-        [isActivity]="true"
-        (videoMetadataLoaded)="setVideoDimensions($event)"
-        (mediaModalRequested)="showMediaModal()"
-        #player>
-        <video-ads [player]="player" *ngIf="entity.monetized"></video-ads>
-      </m-video>
-    </ng-template>
-    <div class="m-proChannelTile__text" *ngIf="getTitle() || getText()">
-      <h2 [title]="getTitle()">{{ getTitle() }}</h2>
-    </div>
-  `
+  templateUrl: 'tile.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class ProTileComponent {
   @Input() entity: any;
   @ViewChild('img', { static: false }) img: ElementRef;
@@ -109,5 +81,4 @@ export class ProTileComponent {
       this.router.navigate([`/media/${activity.entity_guid}`]);
     }
   }
-
 }
