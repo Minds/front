@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProChannelService } from "../channel.service";
 import { Session } from '../../../../services/session';
+import { AuthService } from '../../../../services/auth.service';
 
 export interface SocialProfileMeta {
 
@@ -21,11 +22,10 @@ export interface SocialProfileMeta {
 export class ProChannelFooterComponent {
 
   constructor(
-    private channelService: ProChannelService,
-    protected _session: Session
-  ) {
-
-  }
+    protected channelService: ProChannelService,
+    protected session: Session,
+    protected auth: AuthService,
+  ) { }
 
   private socialProfileMeta: SocialProfileMeta[] = [
     {
@@ -260,7 +260,7 @@ export class ProChannelFooterComponent {
   }
 
   logout() {
-    this._session.logout();
+    this.auth.logout();
   }
 
   private getSocialProfileMeta(key: string): SocialProfileMeta {
@@ -286,12 +286,12 @@ export class ProChannelFooterComponent {
     return this.channelService.currentChannel;
   }
 
-  get session() {
-    return this._session;
-  }
-
   get isOwner() {
     return this.session.getLoggedInUser() && this.session.getLoggedInUser().guid == this.user.guid;
+  }
+
+  get currentUser() {
+    return this.session.getLoggedInUser();
   }
 
   get currentUsername() {
