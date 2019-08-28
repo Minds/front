@@ -1,34 +1,55 @@
-import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-import { GlobalScrollService, ScrollSubscription } from "../../../services/ux/global-scroll.service";
-import { Subscription } from "rxjs";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import {
+  GlobalScrollService,
+  ScrollSubscription,
+} from '../../../services/ux/global-scroll.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'infinite-scroll',
   template: `
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
-    <div class="m-infinite-scroll-manual"
-         [class.m-infinite-scroll-manual__loadMore]="!iconOnly"
-         [class.mdl-color--blue-grey-200]="!iconOnly"
-         [class.mdl-color-text--blue-grey-500]="!iconOnly"
-         [hidden]="inProgress || !moreData"
-         (click)="manualLoad()"
-         *ngIf="!hideManual">
-      <ng-container i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE" *ngIf="!iconOnly">Click to load more</ng-container>
+    <div
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+      [hidden]="!inProgress"
+    ></div>
+    <div
+      class="m-infinite-scroll-manual"
+      [class.m-infinite-scroll-manual__loadMore]="!iconOnly"
+      [class.mdl-color--blue-grey-200]="!iconOnly"
+      [class.mdl-color-text--blue-grey-500]="!iconOnly"
+      [hidden]="inProgress || !moreData"
+      (click)="manualLoad()"
+      *ngIf="!hideManual"
+    >
+      <ng-container
+        i18n="@@COMMON__INFINITE_SCROLL__LOAD_MORE"
+        *ngIf="!iconOnly"
+        >Click to load more</ng-container
+      >
 
       <i class="material-icons" *ngIf="iconOnly">keyboard_arrow_down</i>
     </div>
-    <div class="m-infinite-scroll-manual"
-         [class.m-infinite-scroll-manual__noMore]="!iconOnly"
-         [class.mdl-color--blue-grey-200]="!iconOnly"
-         [class.mdl-color-text--blue-grey-500]="!iconOnly"
-         [hidden]="moreData"
-         *ngIf="!hideManual">
-      <ng-container i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE">Nothing more to load</ng-container>
+    <div
+      class="m-infinite-scroll-manual"
+      [class.m-infinite-scroll-manual__noMore]="!iconOnly"
+      [class.mdl-color--blue-grey-200]="!iconOnly"
+      [class.mdl-color-text--blue-grey-500]="!iconOnly"
+      [hidden]="moreData"
+      *ngIf="!hideManual"
+    >
+      <ng-container i18n="@@COMMON__INFINITE_SCROLL__NOTHING_MORE"
+        >Nothing more to load</ng-container
+      >
     </div>
-  `
+  `,
 })
-
-
 export class InfiniteScroll {
   @Input() on: any;
   @Input() scrollSource: any; // if not provided, it defaults to window
@@ -57,27 +78,29 @@ export class InfiniteScroll {
     if (!this.scrollSource) {
       this.scrollSource = document;
     }
-    this.subscription = this.scroll.listen(this.scrollSource, ((subscription, e) => {
-      if (this.moreData) {
-        let clientHeight, scrollTop;
-        if (this.scrollSource === document) {
-          clientHeight = document.body.clientHeight;
-          scrollTop = document.body.scrollTop;
-        } else {
-          clientHeight = subscription.element.clientHeight;
-          scrollTop = subscription.element.scrollTop;
-        }
+    this.subscription = this.scroll.listen(
+      this.scrollSource,
+      ((subscription, e) => {
+        if (this.moreData) {
+          let clientHeight, scrollTop;
+          if (this.scrollSource === document) {
+            clientHeight = document.body.clientHeight;
+            scrollTop = document.body.scrollTop;
+          } else {
+            clientHeight = subscription.element.clientHeight;
+            scrollTop = subscription.element.scrollTop;
+          }
 
-        if (
-          this.element.offsetTop
-          - this.element.clientHeight
-          - clientHeight
-          <= scrollTop
-        ) {
-          this.loadHandler.next(true);
+          if (
+            this.element.offsetTop - this.element.clientHeight - clientHeight <=
+            scrollTop
+          ) {
+            this.loadHandler.next(true);
+          }
         }
-      }
-    }).bind(this), 100);
+      }).bind(this),
+      100
+    );
   }
 
   manualLoad() {
@@ -88,5 +111,4 @@ export class InfiniteScroll {
     if (this.subscription)
       this.scroll.unListen(this.subscription[0], this.subscription[1]);
   }
-
 }

@@ -5,9 +5,8 @@ import { Session } from '../../../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'm-wire-console--rewards--inputs',
-  templateUrl: 'wire-console-rewards-inputs.component.html'
+  templateUrl: 'wire-console-rewards-inputs.component.html',
 })
-
 export class WireConsoleRewardsInputsComponent {
   @Input() channel;
 
@@ -22,16 +21,18 @@ export class WireConsoleRewardsInputsComponent {
     }
   }
 
-  @Output('rewardsChange') rewardsChangeEmitter: EventEmitter<WireRewardsTiers> = new EventEmitter<WireRewardsTiers>();
+  @Output('rewardsChange') rewardsChangeEmitter: EventEmitter<
+    WireRewardsTiers
+  > = new EventEmitter<WireRewardsTiers>();
 
   editing: boolean = false;
 
-  constructor(private session: Session) { }
+  constructor(private session: Session) {}
 
   addTier() {
     this.rewards.push({
       amount: '',
-      description: ''
+      description: '',
     });
     this.rewardsChangeEmitter.emit(this.rewards);
   }

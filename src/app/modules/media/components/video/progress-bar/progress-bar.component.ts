@@ -1,35 +1,38 @@
-import { Component, Input, ElementRef, ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  ElementRef,
+  ChangeDetectorRef,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MindsPlayerInterface } from '../players/player.interface';
 
 @Component({
   selector: 'm-video--progress-bar',
-  templateUrl: 'progress-bar.component.html'
+  templateUrl: 'progress-bar.component.html',
 })
-
 export class MindsVideoProgressBar implements OnInit, OnDestroy {
   @Input('player') playerRef: MindsPlayerInterface;
 
   element: HTMLVideoElement;
 
-  time: { minutes: any, seconds: any } = {
+  time: { minutes: any; seconds: any } = {
     minutes: '00',
-    seconds: '00'
+    seconds: '00',
   };
 
-  elapsed: { minutes: any, seconds: any } = {
+  elapsed: { minutes: any; seconds: any } = {
     minutes: '00',
-    seconds: '00'
+    seconds: '00',
   };
-  remaining: { minutes: any, seconds: any } | null = null;
+  remaining: { minutes: any; seconds: any } | null = null;
   seek_interval;
   seeked: number = 0;
   keyPressListener: any;
   duration: number = 0;
 
-  constructor(
-    private cd: ChangeDetectorRef,
-    public _element: ElementRef
-  ) { }
+  constructor(private cd: ChangeDetectorRef, public _element: ElementRef) {}
 
   protected _loadedMetadata = () => {
     this.duration = this.element.duration;
@@ -91,7 +94,7 @@ export class MindsVideoProgressBar implements OnInit, OnDestroy {
     }
 
     const seconds = this.duration - this.element.currentTime;
-    this.remaining = {seconds : 0, minutes : 0};
+    this.remaining = { seconds: 0, minutes: 0 };
     this.remaining.minutes = Math.floor(seconds / 60);
     if (parseInt(this.remaining.minutes) < 10)
       this.remaining.minutes = '0' + this.remaining.minutes;
@@ -100,7 +103,6 @@ export class MindsVideoProgressBar implements OnInit, OnDestroy {
     if (parseInt(this.remaining.seconds) < 10)
       this.remaining.seconds = '0' + this.remaining.seconds;
   }
-
 
   seek(e) {
     e.preventDefault();
@@ -115,8 +117,7 @@ export class MindsVideoProgressBar implements OnInit, OnDestroy {
   }
 
   getSeeker() {
-    if (this.seek_interval)
-      clearInterval(this.seek_interval);
+    if (this.seek_interval) clearInterval(this.seek_interval);
     this.seek_interval = setInterval(() => {
       this.seeked = (this.element.currentTime / this.element.duration) * 100;
       this.calculateElapsed();
@@ -129,12 +130,12 @@ export class MindsVideoProgressBar implements OnInit, OnDestroy {
     clearInterval(this.seek_interval);
   }
 
-  enableKeyControls(){
+  enableKeyControls() {
     window.removeEventListener('keydown', this.keyPressListener, true);
     window.addEventListener('keydown', this.keyPressListener, true);
   }
 
-  disableKeyControls(){
+  disableKeyControls() {
     window.removeEventListener('keydown', this.keyPressListener, true);
   }
 
@@ -146,13 +147,13 @@ export class MindsVideoProgressBar implements OnInit, OnDestroy {
     }
   }
 
-  moveToTime(offset){
+  moveToTime(offset) {
     this.element.currentTime = this.element.currentTime + offset;
   }
 
-  executeControl(e){
+  executeControl(e) {
     e.preventDefault();
-    switch(e.keyCode){
+    switch (e.keyCode) {
       case 39:
         this.moveToTime(2);
         break;
@@ -161,7 +162,7 @@ export class MindsVideoProgressBar implements OnInit, OnDestroy {
         break;
       case 32:
         this.togglePause();
-        break
+        break;
     }
   }
 }

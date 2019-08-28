@@ -5,7 +5,7 @@ import {
   HttpRequest,
   HttpEvent,
   HttpEventType,
-} from "@angular/common/http";
+} from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap, last } from 'rxjs/operators';
 
@@ -14,7 +14,6 @@ import { Session } from './session';
 
 @Injectable()
 export class AttachmentService {
-
   private meta: any = {};
   private attachment: any = {};
 
@@ -37,7 +36,7 @@ export class AttachmentService {
     public session: Session,
     public clientService: Client,
     public uploadService: Upload,
-    private http: HttpClient,
+    private http: HttpClient
   ) {
     this.reset();
   }
@@ -64,7 +63,11 @@ export class AttachmentService {
         this.attachment.preview = object.custom_data.thumbnail_src;
       }
 
-      if (object.custom_data && object.custom_data[0] && object.custom_data[0].src) {
+      if (
+        object.custom_data &&
+        object.custom_data[0] &&
+        object.custom_data[0].src
+      ) {
         this.attachment.preview = object.custom_data[0].src;
       }
     }
@@ -73,7 +76,7 @@ export class AttachmentService {
   }
 
   setContainer(container: any) {
-    if ((typeof container === 'string') || typeof container === 'number') {
+    if (typeof container === 'string' || typeof container === 'number') {
       this.container = { guid: container };
     } else {
       this.container = container;
@@ -138,14 +141,14 @@ export class AttachmentService {
     this.progress.next(0);
     this.attachment.progress = 0;
     this.attachment.mime = '';
-    
+
     let file = fileInput ? fileInput.files[0] : null;
 
     if (!file) {
       return Promise.reject(null);
     }
 
-    if(this.xhr) {
+    if (this.xhr) {
       this.xhr.abort();
     }
     this.xhr = new XMLHttpRequest();
@@ -155,17 +158,23 @@ export class AttachmentService {
 
     try {
       if (this.attachment.mime === 'video') {
-        let response = await <any>this.uploadToS3(file);
+        let response = await (<any>this.uploadToS3(file));
         this.meta.attachment_guid = response.guid ? response.guid : null;
       } else {
         // Upload and return the GUID
-        let response = await <any>this.uploadService.post('api/v1/media', [file], this.meta, (progress) => {
-          this.attachment.progress = progress;
-          this.progress.next(progress);
-          if (detectChangesFn) {
-            detectChangesFn();
-          }
-        }, this.xhr);
+        let response = await (<any>this.uploadService.post(
+          'api/v1/media',
+          [file],
+          this.meta,
+          progress => {
+            this.attachment.progress = progress;
+            this.progress.next(progress);
+            if (detectChangesFn) {
+              detectChangesFn();
+            }
+          },
+          this.xhr
+        ));
         this.meta.attachment_guid = response.guid ? response.guid : null;
       }
 
@@ -174,7 +183,7 @@ export class AttachmentService {
       }
 
       return this.meta.attachment_guid;
-    } catch(e) {
+    } catch (e) {
       this.meta.attachment_guid = null;
       this.attachment.progress = 0;
       this.progress.next(0);
@@ -182,52 +191,53 @@ export class AttachmentService {
 
       return Promise.reject(e);
     }
-
   }
 
   async uploadToS3(file) {
-
     // Prepare the upload
-    let { lease } = await <any>this.clientService.put(`api/v2/media/upload/prepare/${this.attachment.mime}`);
+    let { lease } = await (<any>(
+      this.clientService.put(
+        `api/v2/media/upload/prepare/${this.attachment.mime}`
+      )
+    ));
 
     const headers = new HttpHeaders({
       'Content-Type': file.type,
     });
-    const req = new HttpRequest(
-      'PUT',
-      lease.presigned_url,
-      file,
-      {
-        headers: headers,
-        reportProgress: true, //This is required for track upload process
-      });
+    const req = new HttpRequest('PUT', lease.presigned_url, file, {
+      headers: headers,
+      reportProgress: true, //This is required for track upload process
+    });
 
     // Upload directly to S3
     const response = this.http.request(req);
 
     // Track upload progress && wait for completion
-    await response.pipe(
-      map((event: HttpEvent<any>, file) => {
-        switch (event.type) {
-          case HttpEventType.Sent:
-            return 0;
-          case HttpEventType.UploadProgress:
-            return Math.round(100 * event.loaded / event.total);
-          case HttpEventType.Response:
-            return 100;
-          default:
-            return -1;
-        }
-      }),
-      tap(pct => {
-        if (pct >= 0)
-          this.progress.next(pct);
-      }),
-      last(),
-    ).toPromise();
+    await response
+      .pipe(
+        map((event: HttpEvent<any>, file) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              return 0;
+            case HttpEventType.UploadProgress:
+              return Math.round((100 * event.loaded) / event.total);
+            case HttpEventType.Response:
+              return 100;
+            default:
+              return -1;
+          }
+        }),
+        tap(pct => {
+          if (pct >= 0) this.progress.next(pct);
+        }),
+        last()
+      )
+      .toPromise();
 
     // Complete the upload
-    await this.clientService.put(`api/v2/media/upload/complete/${lease.media_type}/${lease.guid}`);
+    await this.clientService.put(
+      `api/v2/media/upload/complete/${lease.media_type}/${lease.guid}`
+    );
 
     return lease;
   }
@@ -254,7 +264,8 @@ export class AttachmentService {
       return Promise.reject('No GUID');
     }
 
-    return this.clientService.delete('api/v1/media/' + this.meta.attachment_guid)
+    return this.clientService
+      .delete('api/v1/media/' + this.meta.attachment_guid)
       .then(() => {
         this.meta.attachment_guid = null;
       })
@@ -311,7 +322,7 @@ export class AttachmentService {
       preview: null,
       progress: 0,
       mime: '',
-      richUrl: null
+      richUrl: null,
     };
 
     this.meta = {
@@ -324,7 +335,7 @@ export class AttachmentService {
       mature: 0,
       container_guid: this.getContainer().guid,
       access_id: this.getAccessId(),
-      nsfw: this.meta.nsfw
+      nsfw: this.meta.nsfw,
     };
   }
 
@@ -337,13 +348,13 @@ export class AttachmentService {
   }
 
   preview(content: string, detectChangesFn?: Function) {
-    let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/ig),
+    let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gi),
       url;
 
     if (!match) {
       return;
     }
-    
+
     if (this.attachment.preview) {
       return;
     }
@@ -378,9 +389,9 @@ export class AttachmentService {
 
       if (detectChangesFn) detectChangesFn();
 
-      this.clientService.get('api/v1/newsfeed/preview', { url })
+      this.clientService
+        .get('api/v1/newsfeed/preview', { url })
         .then((data: any) => {
-
           if (!data) {
             this.resetRich();
             if (detectChangesFn) detectChangesFn();
@@ -415,7 +426,9 @@ export class AttachmentService {
     }
 
     if (typeof object.nsfw !== 'undefined') {
-      let res = [ 1, 2, 4 ].filter(nsfw => { return object.nsfw.indexOf(nsfw) > -1}).length;
+      let res = [1, 2, 4].filter(nsfw => {
+        return object.nsfw.indexOf(nsfw) > -1;
+      }).length;
       if (res) return true;
     }
 
@@ -427,7 +440,10 @@ export class AttachmentService {
       return !!object.mature;
     }
 
-    if (typeof object.custom_data !== 'undefined' && typeof object.custom_data[0] !== 'undefined') {
+    if (
+      typeof object.custom_data !== 'undefined' &&
+      typeof object.custom_data[0] !== 'undefined'
+    ) {
       return !!object.custom_data[0].mature;
     }
 
@@ -451,7 +467,6 @@ export class AttachmentService {
   }
 
   shouldBeBlurred(object: any) {
-
     if (!object) {
       return false;
     }
@@ -459,11 +474,7 @@ export class AttachmentService {
     if (typeof object.mature_visibility === 'undefined') {
       let user = this.session.getLoggedInUser();
 
-      if (
-        user &&
-        this.parseMaturity(object) &&
-        (user.mature)
-      ) {
+      if (user && this.parseMaturity(object) && user.mature) {
         object.mature_visibility = true;
       }
     }
@@ -480,25 +491,37 @@ export class AttachmentService {
       if (file.type && file.type.indexOf('video/') === 0) {
         const maxFileSize = window.Minds.max_video_file_size;
         if (file.size > maxFileSize) {
-          throw new Error(`File exceeds ${maxFileSize / Math.pow(1000, 3)}GB maximum size. Please try compressing your file.`);
+          throw new Error(
+            `File exceeds ${maxFileSize /
+              Math.pow(
+                1000,
+                3
+              )}GB maximum size. Please try compressing your file.`
+          );
         }
 
         this.attachment.mime = 'video';
 
-        this.checkVideoDuration(file).then(duration => {
-          if (window.Minds.user.plus) {
-            window.Minds.max_video_length = window.Minds.max_video_length * 3; // Hacky
-          }
-          if (duration > window.Minds.max_video_length) {
-            return reject({ message: 'Error: Video duration exceeds ' + window.Minds.max_video_length / 60 + ' minutes' });
-          }
+        this.checkVideoDuration(file)
+          .then(duration => {
+            if (window.Minds.user.plus) {
+              window.Minds.max_video_length = window.Minds.max_video_length * 3; // Hacky
+            }
+            if (duration > window.Minds.max_video_length) {
+              return reject({
+                message:
+                  'Error: Video duration exceeds ' +
+                  window.Minds.max_video_length / 60 +
+                  ' minutes',
+              });
+            }
 
-          resolve();
-        }).catch(error => {
-          resolve(); //resolve regardless and forward to backend job
-          //reject(error);
-        });
-
+            resolve();
+          })
+          .catch(error => {
+            resolve(); //resolve regardless and forward to backend job
+            //reject(error);
+          });
       } else if (file.type && file.type.indexOf('image/') === 0) {
         this.attachment.mime = 'image';
 
@@ -511,7 +534,7 @@ export class AttachmentService {
         reader.readAsDataURL(file);
       } else {
         this.attachment.mime = 'unknown';
-        reject({message: 'Invalid file type'});
+        reject({ message: 'Invalid file type' });
       }
     });
   }
@@ -521,16 +544,14 @@ export class AttachmentService {
       const videoElement = document.createElement('video');
       let timeout: number = 0;
       videoElement.preload = 'metadata';
-      videoElement.onloadedmetadata = function () {
-        if (timeout !== 0)
-          window.clearTimeout(timeout);
+      videoElement.onloadedmetadata = function() {
+        if (timeout !== 0) window.clearTimeout(timeout);
 
         window.URL.revokeObjectURL(videoElement.src);
         resolve(videoElement.duration);
       };
-      videoElement.addEventListener('error', function (error) {
-        if (timeout !== 0)
-          window.clearTimeout(timeout);
+      videoElement.addEventListener('error', function(error) {
+        if (timeout !== 0) window.clearTimeout(timeout);
 
         window.URL.revokeObjectURL(this.src);
         reject({ message: 'Error: Video format not supported' });
@@ -544,5 +565,4 @@ export class AttachmentService {
       }, 5000);
     });
   }
-
 }

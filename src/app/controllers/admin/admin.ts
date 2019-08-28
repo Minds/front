@@ -8,19 +8,20 @@ import { Session } from '../../services/session';
 
 @Component({
   selector: 'minds-admin',
-  templateUrl: 'admin.html'
+  templateUrl: 'admin.html',
 })
-
 export class Admin {
-
   filter: string = '';
   paramsSubscription: Subscription;
 
-  constructor(public session: Session, private route: ActivatedRoute, public title: MindsTitle, public router: Router) {
-  }
+  constructor(
+    public session: Session,
+    private route: ActivatedRoute,
+    public title: MindsTitle,
+    public router: Router
+  ) {}
 
   ngOnInit() {
-
     if (!this.session.isAdmin()) {
       this.router.navigate(['/']);
     }

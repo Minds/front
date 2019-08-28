@@ -1,4 +1,4 @@
-export const featuresServiceMock = new function() {
+export const featuresServiceMock = new (function() {
   const _values = {};
 
   this.mock = function(key, value) {
@@ -34,4 +34,4 @@ export const featuresServiceMock = new function() {
 
     return negate ? !_values[feature] : _values[feature];
   });
-};
+})();

@@ -30,7 +30,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     FbRegisterForm,
     OnboardingForm,
     OnboardingCategoriesSelector,
-    Tutorial
+    Tutorial,
   ],
   exports: [
     LoginForm,
@@ -38,8 +38,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     FbRegisterForm,
     OnboardingForm,
     OnboardingCategoriesSelector,
-    Tutorial
-  ]
+    Tutorial,
+  ],
 })
-export class MindsFormsModule {
-}
+export class MindsFormsModule {}

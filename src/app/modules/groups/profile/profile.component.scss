@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 .m-group__grid {
   display: flex;
@@ -11,7 +11,7 @@
     flex: 1;
     min-width: 33%;
     width: 33%;
-    @include m-theme(){
+    @include m-theme() {
       border-left: 1px solid themed($m-grey-50);
     }
   }
@@ -39,7 +39,7 @@
       font-size: 32px;
     }
     .material-icons {
-      @include m-theme(){
+      @include m-theme() {
         text-shadow: 0px 0px 1px themed($m-white), 0px 0px 1px themed($m-white);
         color: themed($m-grey-400);
       }
@@ -51,7 +51,7 @@
   position: relative;
   padding: 8px;
   max-width: 780px;
-  margin : auto;
+  margin: auto;
 }
 
 .m-group__infoWrapper {
@@ -65,7 +65,7 @@
   position: relative;
   max-width: 780px;
   box-sizing: border-box;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -86,35 +86,34 @@
 
     .m-groups-settings-dropdown__item--nsfw {
       overflow: visible;
-      
+
       m-nsfw-selector {
         border: 0;
         width: 100%;
         padding: 0;
-  
+
         .m-nsfwSelector__label {
           m-tooltip {
             display: none;
-          }  
+          }
         }
-  
+
         .m-dropdown .m-dropdown__list {
           width: 210px;
         }
       }
     }
-
   }
 
-  minds-avatar{
+  minds-avatar {
     width: 100px;
     height: 100px;
     margin: -70px 0 0;
     padding: 0;
     display: block;
 
-    .minds-avatar{
-      margin:0;
+    .minds-avatar {
+      margin: 0;
       background-position: center center;
       background-size: cover;
       width: 100%;
@@ -145,7 +144,7 @@
     display: inline-flex;
 
     @media screen and (max-width: 700px) {
-      .m-gatheringIcon{
+      .m-gatheringIcon {
         display: none;
       }
     }
@@ -212,7 +211,7 @@ m-groups--profile .m-group__grid header {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: bold;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
   }
@@ -223,7 +222,7 @@ m-groups--profile .m-group__grid header {
   margin: 8px auto;
   padding: 8px;
   box-sizing: border-box;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 }

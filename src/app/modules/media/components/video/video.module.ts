@@ -19,7 +19,7 @@ import { MindsVideoTorrentPlayer } from './players/torrent.component';
     NgCommonModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([])
+    RouterModule.forChild([]),
   ],
   declarations: [
     VideoAdsDirective,
@@ -31,11 +31,6 @@ import { MindsVideoTorrentPlayer } from './players/torrent.component';
     MindsVideoQualitySelector,
     MindsVideoVolumeSlider,
   ],
-  exports: [
-    VideoAdsDirective,
-    VideoAds,
-    MindsVideoComponent,
-  ],
+  exports: [VideoAdsDirective, VideoAds, MindsVideoComponent],
 })
-export class VideoModule {
-}
+export class VideoModule {}

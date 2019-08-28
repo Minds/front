@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'm-footer',
-  template: ''
+  template: '',
 })
-export class FooterComponentMock {
-}
+export class FooterComponentMock {}

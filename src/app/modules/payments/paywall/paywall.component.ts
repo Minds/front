@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
@@ -11,9 +18,7 @@ import { Session } from '../../../services/session';
   templateUrl: 'paywall.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class PayWall {
-
   minds = (<any>window).Minds;
 
   inProgress: boolean = false;
@@ -23,12 +28,15 @@ export class PayWall {
   nonce: string = '';
   showSignupModal: boolean = false;
 
-  @Output('entityChange') update: EventEmitter<any> = new EventEmitter;
+  @Output('entityChange') update: EventEmitter<any> = new EventEmitter();
 
   @Input() entity;
 
-  constructor(public session: Session, public client: Client, public cd: ChangeDetectorRef) {
-  }
+  constructor(
+    public session: Session,
+    public client: Client,
+    public cd: ChangeDetectorRef
+  ) {}
 
   checkout() {
     if (!this.session.isLoggedIn()) {
@@ -40,7 +48,8 @@ export class PayWall {
     this.inProgress = true;
     this.detectChanges();
 
-    this.client.get('api/v1/payments/plans/exclusive/' + this.entity.guid)
+    this.client
+      .get('api/v1/payments/plans/exclusive/' + this.entity.guid)
       .then((response: any) => {
         this.inProgress = false;
         if (response.subscribed) {
@@ -64,13 +73,19 @@ export class PayWall {
     this.inProgress = true;
     this.detectChanges();
     console.log('nonce: ' + nonce);
-    this.client.post('api/v1/payments/plans/subscribe/' + this.entity.owner_guid + '/exclusive', {
-      nonce: nonce
-    })
-      .then((response) => setTimeout(() => this.checkout(), 0))
+    this.client
+      .post(
+        'api/v1/payments/plans/subscribe/' +
+          this.entity.owner_guid +
+          '/exclusive',
+        {
+          nonce: nonce,
+        }
+      )
+      .then(response => setTimeout(() => this.checkout(), 0))
       .catch(e => {
         this.inProgress = false;
-        this.error = 'Sorry, we couldn\'t complete the transaction.';
+        this.error = "Sorry, we couldn't complete the transaction.";
         this.detectChanges();
       });
   }
@@ -79,5 +94,4 @@ export class PayWall {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

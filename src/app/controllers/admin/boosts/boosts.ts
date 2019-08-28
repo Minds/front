@@ -6,20 +6,18 @@ import { Subscription } from 'rxjs';
 import { Client } from '../../../services/api';
 import { RejectionReasonModalComponent } from './modal/rejection-reason-modal.component';
 import { Reason, rejectionReasons } from './rejection-reasons';
-import { ReportCreatorComponent } from "../../../modules/report/creator/creator.component";
-import { OverlayModalService } from "../../../services/ux/overlay-modal";
+import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-admin-boosts',
   host: {
-    '(document:keypress)': 'onKeyPress($event)'
+    '(document:keypress)': 'onKeyPress($event)',
   },
-  templateUrl: 'boosts.html'
+  templateUrl: 'boosts.html',
 })
-
 export class AdminBoosts {
-
   boosts: Array<any> = [];
   type: string = 'newsfeed';
   count: number = 0;
@@ -38,17 +36,17 @@ export class AdminBoosts {
 
   readonly NON_REPORTABLE_REASONS = [7, 8, 12, 13]; // spam, appeals, onchain payment failed, original post removed
 
-  @ViewChild('reasonModal', { static: false }) modal: RejectionReasonModalComponent;
+  @ViewChild('reasonModal', { static: false })
+  modal: RejectionReasonModalComponent;
 
   constructor(
     public client: Client,
     private overlayModal: OverlayModalService,
-    private route: ActivatedRoute,
-  ) {
-  }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.paramsSubscription = this.route.params.subscribe((params) => {
+    this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['type']) {
         this.type = params['type'];
       } else {
@@ -61,10 +59,9 @@ export class AdminBoosts {
       this.moreData = true;
       this.offset = '';
 
-      this.load()
-        .then(() => {
-          this.loadStatistics();
-        });
+      this.load().then(() => {
+        this.loadStatistics();
+      });
     });
   }
 
@@ -73,11 +70,14 @@ export class AdminBoosts {
   }
 
   load() {
-    if (this.inProgress)
-      return;
+    if (this.inProgress) return;
     this.inProgress = true;
 
-    return this.client.get('api/v1/admin/boosts/' + this.type, { limit: 24, offset: this.offset })
+    return this.client
+      .get('api/v1/admin/boosts/' + this.type, {
+        limit: 24,
+        offset: this.offset,
+      })
       .then((response: any) => {
         if (!response.boosts) {
           this.inProgress = false;
@@ -93,7 +93,7 @@ export class AdminBoosts {
         this.offset = response['load-next'];
         this.inProgress = false;
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
       });
   }
@@ -101,8 +101,9 @@ export class AdminBoosts {
   loadStatistics() {
     this.statistics = null;
 
-    return this.client.get(`api/v1/admin/boosts/analytics/${this.type}`)
-      .then((response) => {
+    return this.client
+      .get(`api/v1/admin/boosts/analytics/${this.type}`)
+      .then(response => {
         this.statistics = response;
       })
       .catch(e => {
@@ -111,25 +112,25 @@ export class AdminBoosts {
   }
 
   accept(boost: any = null, open: boolean = false, opts: any = { mature: 0 }) {
-    if (!boost)
-      boost = this.boosts[0];
+    if (!boost) boost = this.boosts[0];
 
     boost.rating = open ? 2 : 1;
 
-    if (!opts.mature)
-      opts.mature = 0;
+    if (!opts.mature) opts.mature = 0;
 
-    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/accept', {
-      quality: boost.quality,
-      rating: boost.rating,
-      mature: opts.mature
-    });
+    this.client.post(
+      'api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/accept',
+      {
+        quality: boost.quality,
+        rating: boost.rating,
+        mature: opts.mature,
+      }
+    );
     this.pop(boost);
   }
 
   reject(boost: any = null) {
-    if (!boost)
-      boost = this.boosts[0];
+    if (!boost) boost = this.boosts[0];
 
     this.reasonModalOpened = false;
 
@@ -137,21 +138,22 @@ export class AdminBoosts {
       this.report(this.selectedBoost);
     }
 
-    this.client.post('api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/reject', { reason: boost.rejection_reason });
+    this.client.post(
+      'api/v1/admin/boosts/' + this.type + '/' + boost.guid + '/reject',
+      { reason: boost.rejection_reason }
+    );
     this.pop(boost);
   }
 
   openReasonsModal(boost: any = null) {
-    if (!boost)
-      boost = this.boosts[0];
+    if (!boost) boost = this.boosts[0];
 
     this.reasonModalOpened = true;
     this.selectedBoost = boost;
   }
 
   eTag(boost: any = null) {
-    if (!boost)
-      boost = this.boosts[0];
+    if (!boost) boost = this.boosts[0];
 
     boost.rejection_reason = this.findReason('Explicit', 'label').code;
 
@@ -163,8 +165,7 @@ export class AdminBoosts {
       boost = this.boosts[0];
     }
 
-    this.overlayModal.create(ReportCreatorComponent, boost.entity)
-      .present();
+    this.overlayModal.create(ReportCreatorComponent, boost.entity).present();
   }
 
   /**
@@ -173,15 +174,11 @@ export class AdminBoosts {
   pop(boost) {
     let i: any;
     for (i in this.boosts) {
-      if (boost === this.boosts[i])
-        this.boosts.splice(i, 1);
+      if (boost === this.boosts[i]) this.boosts.splice(i, 1);
     }
-    if (this.type === 'newsfeed')
-      this.newsfeed_count--;
-    else if (this.type === 'content')
-      this.content_count--;
-    if (this.boosts.length < 5)
-      this.load();
+    if (this.type === 'newsfeed') this.newsfeed_count--;
+    else if (this.type === 'content') this.content_count--;
+    if (this.boosts.length < 5) this.load();
   }
 
   onKeyPress(e: KeyboardEvent) {
@@ -230,7 +227,7 @@ export class AdminBoosts {
 
   // TODO: Please, convert this to a pipe (and maybe add days support)!
   _duration(duration: number): string {
-    const minsDuration = Math.floor(duration / (60000)),
+    const minsDuration = Math.floor(duration / 60000),
       mins = minsDuration % 60,
       hours = Math.floor(minsDuration / 60);
 
@@ -256,5 +253,4 @@ export class AdminBoosts {
       return padString.slice(0, targetLength) + String(str);
     }
   }
-
 }

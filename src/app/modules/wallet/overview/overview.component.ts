@@ -12,22 +12,19 @@ import { BlockchainService } from '../../blockchain/blockchain.service';
 
 @Component({
   selector: 'm-wallet--overview',
-  templateUrl: 'overview.component.html'
+  templateUrl: 'overview.component.html',
 })
-
 export class WalletOverviewComponent {
-
   type: string = '';
   togglePurchase: boolean = false;
   paramsSubscription: Subscription;
 
-  
   points: Number = 0;
   transactions: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
-  
+
   currency: string = 'usd';
   balance: number | string = 0;
   payouts: number | string = 0;
@@ -51,8 +48,8 @@ export class WalletOverviewComponent {
     public title: MindsTitle,
     public storage: Storage,
     public blockchain: BlockchainService,
-    private session: Session,
-  ) { }
+    private session: Session
+  ) {}
 
   ngOnInit() {
     this.type = 'points';
@@ -67,8 +64,7 @@ export class WalletOverviewComponent {
     });
 
     this.route.url.subscribe(url => {
-      if (url[0].path === 'purchase')
-        this.togglePurchase = true;
+      if (url[0].path === 'purchase') this.togglePurchase = true;
     });
 
     this.getTotals();
@@ -80,37 +76,38 @@ export class WalletOverviewComponent {
 
   getTotals() {
     let requests = [
-      this.client.get('api/v1/monetization/revenue/overview').catch(() => false),
+      this.client
+        .get('api/v1/monetization/revenue/overview')
+        .catch(() => false),
       this.wallet.getBalance(true).catch(() => false),
-      this.blockchain.getBalance(true).catch(() => false)
+      this.blockchain.getBalance(true).catch(() => false),
     ];
 
-    Promise.all(requests)
-      .then(results => {
-        if (results[0]) {
-          this.currency = results[0].currency;
-          this.balance = results[0].balance;
-          this.payouts = results[0].payouts
-          this.net = results[0].total.net;
-        }
+    Promise.all(requests).then(results => {
+      if (results[0]) {
+        this.currency = results[0].currency;
+        this.balance = results[0].balance;
+        this.payouts = results[0].payouts;
+        this.net = results[0].total.net;
+      }
 
-        if (results[2] !== false) {
-          this.tokens = results[2];
-        }
+      if (results[2] !== false) {
+        this.tokens = results[2];
+      }
 
-        this.hasMoney = results[0] !== false;
-        this.hasTokens = results[2] !== false;
+      this.hasMoney = results[0] !== false;
+      this.hasTokens = results[2] !== false;
 
-        this.overviewColSize = 4;
+      this.overviewColSize = 4;
 
-        if (!this.hasMoney && !this.hasTokens) {
-          this.overviewColSize = 12;
-        } else if (!this.hasMoney || !this.hasTokens) {
-          this.overviewColSize = 6;
-        }
+      if (!this.hasMoney && !this.hasTokens) {
+        this.overviewColSize = 12;
+      } else if (!this.hasMoney || !this.hasTokens) {
+        this.overviewColSize = 6;
+      }
 
-        this.ready = true;
-      });
+      this.ready = true;
+    });
   }
 
   getCurrencySymbol(currency) {
@@ -124,5 +121,4 @@ export class WalletOverviewComponent {
         return '$';
     }
   }
-
 }

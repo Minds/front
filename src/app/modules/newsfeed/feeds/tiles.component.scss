@@ -11,7 +11,7 @@ m-newsfeed__tiles {
   margin: auto;
 
   &.m-newsfeed__tiles--has-elements {
-    @include m-theme(){
+    @include m-theme() {
       background: themed($m-white);
     }
     padding: 8px;
@@ -26,7 +26,7 @@ m-newsfeed__tiles {
     margin: 4px;
     overflow: hidden;
     transform-style: preserve-3d;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.65);
     }
 
@@ -50,9 +50,9 @@ m-newsfeed__tiles {
       bottom: 4px;
       right: 4px;
       pointer-events: none;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
-        text-shadow: 1px 1px rgba(themed($m-black), .35);
+        text-shadow: 1px 1px rgba(themed($m-black), 0.35);
       }
     }
 
@@ -63,7 +63,7 @@ m-newsfeed__tiles {
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 3em;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
       }
     }

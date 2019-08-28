@@ -1,13 +1,26 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Client } from "../../../../../services/api/client";
-import { timespanOption } from "../timespanOption";
-import { removeCurrentUnits } from "../../../util";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { Client } from '../../../../../services/api/client';
+import { timespanOption } from '../timespanOption';
+import { removeCurrentUnits } from '../../../util';
 
 @Component({
   selector: 'm-analyticscharts__activeusers',
   template: `
     <div class="m-chart" #chartContainer>
-      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
+      <div
+        class="mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+        *ngIf="inProgress"
+      ></div>
 
       <m-graph
         [data]="data"
@@ -15,9 +28,8 @@ import { removeCurrentUnits } from "../../../util";
         *ngIf="!inProgress && !!data"
       ></m-graph>
     </div>
-  `
+  `,
 })
-
 export class ActiveUsersChartComponent implements OnInit {
   @Input() total: boolean = false;
   @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
@@ -43,19 +55,19 @@ export class ActiveUsersChartComponent implements OnInit {
     height: 0,
     title: '',
     font: {
-      family: 'Roboto'
+      family: 'Roboto',
     },
     titlefont: {
       family: 'Roboto',
       size: 24,
-      weight: 'bold'
+      weight: 'bold',
     },
     xaxis: {
       type: '-',
     },
     yaxis: {
       type: 'log',
-      dtick: 1
+      dtick: 1,
     },
     margin: {
       t: 16,
@@ -64,9 +76,7 @@ export class ActiveUsersChartComponent implements OnInit {
     },
   };
 
-  constructor(private client: Client) {
-
-  }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.applyDimensions();
@@ -75,12 +85,15 @@ export class ActiveUsersChartComponent implements OnInit {
   }
 
   async getData() {
-    let url = 'api/v2/analytics/' + (this.total ? 'totalpageviews' : 'activeusers');
+    let url =
+      'api/v2/analytics/' + (this.total ? 'totalpageviews' : 'activeusers');
 
     this.inProgress = true;
 
     try {
-      const response: any = await this.client.get(url, { timespan: this.timespan });
+      const response: any = await this.client.get(url, {
+        timespan: this.timespan,
+      });
       const [data, current] = removeCurrentUnits(response.data);
       this.data = data;
 

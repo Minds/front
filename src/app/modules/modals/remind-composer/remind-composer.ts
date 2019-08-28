@@ -1,8 +1,13 @@
-import { Component, ComponentFactoryResolver, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 
 import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
 import { ActivityPreview } from '../../legacy/components/cards/activity/preview';
-import { AutocompleteSuggestionsService } from "../../suggestions/services/autocomplete-suggestions.service";
+import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 
 // had forwardRef(() => ActivityPreview)
 @Component({
@@ -10,12 +15,24 @@ import { AutocompleteSuggestionsService } from "../../suggestions/services/autoc
   inputs: ['_default: default', 'open', '_object: object'],
   outputs: ['closed', 'post'],
   template: `
-    <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
-
+    <m-modal
+      [open]="open"
+      (closed)="close($event)"
+      class="mdl-color-text--blue-grey-700"
+    >
       <div class="m-modal-remind-composer">
-        <h3 class="m-modal-remind-title" i18n="@@MODALS__REMIND_COMPOSER__REMIND_TITLE">Remind</h3>
+        <h3
+          class="m-modal-remind-title"
+          i18n="@@MODALS__REMIND_COMPOSER__REMIND_TITLE"
+        >
+          Remind
+        </h3>
 
-        <ng-template #itemTemplate let-choice="choice" let-selectChoice="selectChoice">
+        <ng-template
+          #itemTemplate
+          let-choice="choice"
+          let-selectChoice="selectChoice"
+        >
           <m-post-autocomplete-item-renderer
             [choice]="choice"
             [selectChoice]="selectChoice"
@@ -46,11 +63,9 @@ import { AutocompleteSuggestionsService } from "../../suggestions/services/autoc
 
       <ng-template dynamic-host></ng-template>
     </m-modal>
-  `
+  `,
 })
-
 export class RemindComposerModal {
-
   open: boolean = false;
   closed: EventEmitter<any> = new EventEmitter();
   post: EventEmitter<any> = new EventEmitter();
@@ -58,12 +73,13 @@ export class RemindComposerModal {
 
   message: string = '';
 
-  @ViewChild(DynamicHostDirective, { static: true }) cardHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true })
+  cardHost: DynamicHostDirective;
 
   constructor(
     public suggestions: AutocompleteSuggestionsService,
-    private _componentFactoryResolver: ComponentFactoryResolver,
-  ) { }
+    private _componentFactoryResolver: ComponentFactoryResolver
+  ) {}
 
   set _object(object: any) {
     this.object = object;
@@ -84,14 +100,16 @@ export class RemindComposerModal {
 
   send() {
     this.post.next({
-      message: this.message
+      message: this.message,
     });
 
     this.close();
   }
 
   loadPreview() {
-    const previewFactory = this._componentFactoryResolver.resolveComponentFactory(ActivityPreview),
+    const previewFactory = this._componentFactoryResolver.resolveComponentFactory(
+        ActivityPreview
+      ),
       viewContainerRef = this.cardHost.viewContainerRef;
 
     viewContainerRef.clear();
@@ -101,7 +119,9 @@ export class RemindComposerModal {
     if (this.object && !this.object.remind_object) {
       (<ActivityPreview>componentRef.instance).object = this.object;
     } else if (this.object && this.object.remind_object) {
-      (<ActivityPreview>componentRef.instance).object = this.object.remind_object;
+      (<ActivityPreview>(
+        componentRef.instance
+      )).object = this.object.remind_object;
     }
 
     componentRef.changeDetectorRef.detectChanges();

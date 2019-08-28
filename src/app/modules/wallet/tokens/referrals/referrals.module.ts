@@ -8,11 +8,7 @@ import { CommonModule } from '../../../../common/common.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [
-    NgCommonModule,
-    RouterModule,
-    CommonModule,
-  ],
+  imports: [NgCommonModule, RouterModule, CommonModule],
   declarations: [
     ReferralsComponent,
     ReferralsDashboardComponent,
@@ -29,5 +25,4 @@ import { RouterModule } from '@angular/router';
     ReferralsLinksComponent,
   ],
 })
-export class ReferralsModule {
-}
+export class ReferralsModule {}

@@ -15,11 +15,9 @@ import { FeaturesService } from '../../../services/features.service';
 @Component({
   moduleId: module.id,
   selector: 'm-media--videos-list',
-  templateUrl: 'list.component.html'
+  templateUrl: 'list.component.html',
 })
-
 export class MediaVideosListComponent {
-
   filter: string = 'featured';
   owner: string = '';
   entities: Array<Object> = [];
@@ -45,14 +43,13 @@ export class MediaVideosListComponent {
     private context: ContextService,
     public session: Session,
     private overlayModal: OverlayModalService,
-    protected featuresService: FeaturesService,
-  ) {
-  }
+    protected featuresService: FeaturesService
+  ) {}
 
   ngOnInit() {
     this.title.setTitle('Videos');
 
-    this.paramsSubscription = this.route.params.subscribe((params) => {
+    this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
         this.filter = params['filter'];
         this.owner = '';
@@ -64,7 +61,7 @@ export class MediaVideosListComponent {
             this.filter = 'network';
             break;
           case 'top':
-            this.router.navigate(['/newsfeed/global/top', { 'type': 'videos' }]);
+            this.router.navigate(['/newsfeed/global/top', { type: 'videos' }]);
 
             // this.filter = 'trending';
             // if (!this.session.isLoggedIn()) {
@@ -88,7 +85,9 @@ export class MediaVideosListComponent {
         }
 
         if (this.featuresService.has('es-feeds') && this.filter === 'owner') {
-          this.router.navigate(['/', this.owner, 'images'], { replaceUrl: true });
+          this.router.navigate(['/', this.owner, 'images'], {
+            replaceUrl: true,
+          });
         }
       }
 
@@ -106,9 +105,14 @@ export class MediaVideosListComponent {
   }
 
   showPoster() {
-    const creator = this.overlayModal.create(ModalPosterComponent, {}, {
-      class: 'm-overlay-modal--no-padding m-overlay-modal--top m-overlay-modal--medium m-overlay-modal--overflow'
-    });
+    const creator = this.overlayModal.create(
+      ModalPosterComponent,
+      {},
+      {
+        class:
+          'm-overlay-modal--no-padding m-overlay-modal--top m-overlay-modal--medium m-overlay-modal--overflow',
+      }
+    );
     creator.present();
   }
 
@@ -122,9 +126,7 @@ export class MediaVideosListComponent {
   }
 
   load(refresh: boolean = false) {
-
-    if (this.inProgress)
-      return false;
+    if (this.inProgress) return false;
 
     if (refresh) {
       this.offset = '';
@@ -136,41 +138,38 @@ export class MediaVideosListComponent {
     let endpoint;
     if (this.filter === 'trending') {
       endpoint = 'api/v2/entities/suggested/videos';
-      if (this.all)
-        endpoint += '/all';
+      if (this.all) endpoint += '/all';
     } else {
       endpoint = 'api/v1/entities/' + this.filter + '/videos/' + this.owner;
     }
 
-    this.client.get(endpoint, {
-      limit: 12,
-      offset: this.offset,
-      rating: this.rating,
-    })
+    this.client
+      .get(endpoint, {
+        limit: 12,
+        offset: this.offset,
+        rating: this.rating,
+      })
       .then((data: any) => {
         if (!data.entities || !data.entities.length) {
           this.moreData = false;
           this.inProgress = false;
 
-          if (this.filter === 'trending')
-            this.openHashtagsSelector();
+          if (this.filter === 'trending') this.openHashtagsSelector();
           return false;
         }
 
         if (refresh) {
           this.entities = data.entities;
         } else {
-          if (this.offset)
-            data.entities.shift();
+          if (this.offset) data.entities.shift();
           this.entities = this.entities.concat(data.entities);
         }
 
         this.offset = data['load-next'];
-        if (!this.offset)
-          this.moreData = false;
+        if (!this.offset) this.moreData = false;
         this.inProgress = false;
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
       });
   }
@@ -191,12 +190,18 @@ export class MediaVideosListComponent {
   }
 
   openHashtagsSelector() {
-    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
-      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
-      onSelected: () => {
-        this.load(true); //refresh list
-      },
-    }).present();
+    this.overlayModal
+      .create(
+        HashtagsSelectorModalComponent,
+        {},
+        {
+          class:
+            'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+          onSelected: () => {
+            this.load(true); //refresh list
+          },
+        }
+      )
+      .present();
   }
-
 }

@@ -16,9 +16,6 @@ import { Component } from '@angular/core';
     <m-analyticstokensales__card></m-analyticstokensales__card>
 
     <m-analyticsrewards__card></m-analyticsrewards__card>
-  `
+  `,
 })
-
-export class SiteTokenTransactionsAnalyticsComponent {
-
-}
+export class SiteTokenTransactionsAnalyticsComponent {}

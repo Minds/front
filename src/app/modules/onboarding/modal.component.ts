@@ -1,4 +1,8 @@
-import { Component, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { OnboardingService } from './onboarding.service';
@@ -11,7 +15,6 @@ import { OverlayModalService } from '../../services/ux/overlay-modal';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OnboardingModalComponent {
-
   paramsSubscription;
   slide: number = 1;
 
@@ -19,10 +22,8 @@ export class OnboardingModalComponent {
     private cd: ChangeDetectorRef,
     private route: ActivatedRoute,
     public session: Session,
-    private overlayModal: OverlayModalService,
-  ) {
-
-  }
+    private overlayModal: OverlayModalService
+  ) {}
 
   next() {
     this.slide++;
@@ -37,5 +38,4 @@ export class OnboardingModalComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

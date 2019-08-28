@@ -1,5 +1,6 @@
 <ng-template #navLinks>
-  <a class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
+  <a
+    class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
     routerLink="/newsfeed/subscriptions"
     routerLinkActive="m-v2-topbarNav__Item--active"
     title="Newsfeed"
@@ -9,7 +10,8 @@
     <span class="m-v2-topbarNavItem__Text" i18n>Newsfeed</span>
   </a>
 
-  <a class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
+  <a
+    class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
     routerLink="/newsfeed/global"
     routerLinkActive="m-v2-topbarNav__Item--active"
     title="Discovery"
@@ -19,7 +21,8 @@
     <span class="m-v2-topbarNavItem__Text" i18n>Discovery</span>
   </a>
 
-  <a class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
+  <a
+    class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
     routerLink="/wallet"
     routerLinkActive="m-v2-topbarNav__Item--active"
     title="Wallet"
@@ -34,28 +37,35 @@
   <div class="m-v2-topbar">
     <div class="m-v2-topbar__Container--left">
       <nav class="m-v2-topbar__Nav">
-        <a class="m-v2-topbarNav__Item m-v2-topbarNavItem__Logo"
-           routerLink="/"
-           title="Home"
-           i18n-title
+        <a
+          class="m-v2-topbarNav__Item m-v2-topbarNavItem__Logo"
+          routerLink="/"
+          title="Home"
+          i18n-title
         >
-          <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
-               (touchstart)="touchStart()"  
-               (mouseenter)="mouseEnter()"
-               (mouseleave)="mouseLeave()"
+          <img
+            [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
+            (touchstart)="touchStart()"
+            (mouseenter)="mouseEnter()"
+            (mouseleave)="mouseLeave()"
           />
         </a>
         <ng-container *ngIf="getCurrentUser()">
-            <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+          <ng-container *ngTemplateOutlet="navLinks"></ng-container>
         </ng-container>
       </nav>
     </div>
 
-    <a class="m-v2-topbar__Avatar" *ngIf="getCurrentUser()"
+    <a
+      class="m-v2-topbar__Avatar"
+      *ngIf="getCurrentUser()"
       [routerLink]="['/', getCurrentUser()?.username]"
       routerLinkActive="m-v2-topbar__Avatar--active"
     >
-      <minds-avatar [object]="getCurrentUser()" [editMode]="false"></minds-avatar>
+      <minds-avatar
+        [object]="getCurrentUser()"
+        [editMode]="false"
+      ></minds-avatar>
     </a>
 
     <div class="m-v2-topbar__Container--right">
@@ -66,10 +76,7 @@
       </ng-container>
       <ng-template #loggedOutRightContainer>
         <div class="m-v2-topbar__Container__LoginWrapper">
-          <a routerLink="/login"
-            title="Login"
-            i18n-title
-          >
+          <a routerLink="/login" title="Login" i18n-title>
             Login / Signup
           </a>
         </div>

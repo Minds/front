@@ -1,7 +1,15 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output,
-  ViewChild
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import { MindsPlayerInterface } from './player.interface';
 import { WebtorrentService } from '../../../../webtorrent/webtorrent.service';
@@ -14,7 +22,8 @@ import base64ToBlob from '../../../../../helpers/base64-to-blob';
   templateUrl: 'torrent.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy, MindsPlayerInterface {
+export class MindsVideoTorrentPlayer
+  implements OnInit, AfterViewInit, OnDestroy, MindsPlayerInterface {
   @ViewChild('player', { static: true }) player: ElementRef;
 
   @Input() muted: boolean = false;
@@ -38,7 +47,7 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
   @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
   @Output() onPause: EventEmitter<HTMLVideoElement> = new EventEmitter();
   @Output() onEnd: EventEmitter<HTMLVideoElement> = new EventEmitter();
-  @Output() onError: EventEmitter<{ player, e }> = new EventEmitter();
+  @Output() onError: EventEmitter<{ player; e }> = new EventEmitter();
   @Output() onCanPlayThrough: EventEmitter<any> = new EventEmitter();
   @Output() onLoadedMetadata: EventEmitter<any> = new EventEmitter();
 
@@ -64,15 +73,18 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
   constructor(
     protected cd: ChangeDetectorRef,
     protected client: Client,
-    protected webtorrent: WebtorrentService,
-  ) { }
+    protected webtorrent: WebtorrentService
+  ) {}
 
   protected _emitPlay = () => this.onPlay.emit(this.getPlayer());
   protected _emitPause = () => this.onPause.emit(this.getPlayer());
   protected _emitEnd = () => this.onEnd.emit(this.getPlayer());
-  protected _emitError = e => this.onError.emit({ player: this.getPlayer(), e});
-  protected _emitCanPlayThrough = () => this.onCanPlayThrough.emit(this.getPlayer());
-  protected _emitLoadedMetadata = () => this.onLoadedMetadata.emit(this.getPlayer());
+  protected _emitError = e =>
+    this.onError.emit({ player: this.getPlayer(), e });
+  protected _emitCanPlayThrough = () =>
+    this.onCanPlayThrough.emit(this.getPlayer());
+  protected _emitLoadedMetadata = () =>
+    this.onLoadedMetadata.emit(this.getPlayer());
 
   protected _canPlayThrough = () => {
     this.loading = false;
@@ -100,7 +112,11 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
   };
 
   protected _refreshInfo = () => {
-    if (!this.torrentId || !this.torrentReady || !this.webtorrent.get(this.torrentId)) {
+    if (
+      !this.torrentId ||
+      !this.torrentReady ||
+      !this.webtorrent.get(this.torrentId)
+    ) {
       this.torrentInfo = {
         progress: 0,
         peers: 0,
@@ -197,7 +213,7 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
     const player = this.getPlayer();
 
     if (player.paused) {
-      this.play()
+      this.play();
     } else {
       this.pause();
     }
@@ -275,7 +291,9 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
     let infoHash;
     let webSeed;
     try {
-      const response: any = await this.client.get(`api/v2/media/magnet/${this.src}`);
+      const response: any = await this.client.get(
+        `api/v2/media/magnet/${this.src}`
+      );
 
       torrentFile = base64ToBlob(response.encodedTorrent);
       infoHash = response.infoHash;
@@ -339,7 +357,6 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
           this.resumeFromTime(time);
         }
       });
-
     } catch (e) {
       this.loading = false;
       this.detectChanges();
@@ -357,5 +374,4 @@ export class MindsVideoTorrentPlayer implements OnInit, AfterViewInit, OnDestroy
       this.torrentReady = false;
     }
   }
-
 }

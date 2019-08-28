@@ -1,4 +1,11 @@
-import { Component, AfterViewInit, ViewChild, ComponentFactoryResolver, ComponentRef, Input } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  ViewChild,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Input,
+} from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -7,15 +14,20 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
   moduleId: module.id,
   selector: 'm-overlay-modal',
   template: `
-    <div class="m-overlay-modal--backdrop" [hidden]="hidden" (click)="dismiss()"></div>
-    <div class="m-overlay-modal {{class}}" [hidden]="hidden">
-      <a class="m-overlay-modal--close" (click)="dismiss()"><i class="material-icons">close</i></a>
+    <div
+      class="m-overlay-modal--backdrop"
+      [hidden]="hidden"
+      (click)="dismiss()"
+    ></div>
+    <div class="m-overlay-modal {{ class }}" [hidden]="hidden">
+      <a class="m-overlay-modal--close" (click)="dismiss()"
+        ><i class="material-icons">close</i></a
+      >
       <ng-template dynamic-host></ng-template>
     </div>
-  `
+  `,
 })
 export class OverlayModalComponent implements AfterViewInit {
-
   hidden: boolean = true;
   class: string = '';
 
@@ -28,7 +40,7 @@ export class OverlayModalComponent implements AfterViewInit {
   constructor(
     private service: OverlayModalService,
     private _componentFactoryResolver: ComponentFactoryResolver
-  ) { }
+  ) {}
 
   ngAfterViewInit() {
     this.service.setContainer(this);
@@ -37,9 +49,12 @@ export class OverlayModalComponent implements AfterViewInit {
   create(componentClass, opts?) {
     this.dismiss();
 
-    opts = { ...{
-      class: '',
-    }, ...opts };
+    opts = {
+      ...{
+        class: '',
+      },
+      ...opts,
+    };
 
     this.class = opts.class;
 
@@ -47,7 +62,9 @@ export class OverlayModalComponent implements AfterViewInit {
       throw new Error('Unknown component class');
     }
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(componentClass),
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        componentClass
+      ),
       viewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();

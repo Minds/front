@@ -5,9 +5,8 @@ import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-helpdesk--dashboard--all',
-  templateUrl: 'all.component.html'
+  templateUrl: 'all.component.html',
 })
-
 export class AllHelpdeskDashboardComponent implements OnInit {
   minds = window.Minds;
 
@@ -17,24 +16,29 @@ export class AllHelpdeskDashboardComponent implements OnInit {
   constructor(
     public router: Router,
     public client: Client,
-    public session: Session,
-  ) {
-  }
+    public session: Session
+  ) {}
 
   async ngOnInit() {
     await this.load();
   }
 
   async load() {
-    let response: any = await this.client.get(`api/v2/helpdesk/categories`, { limit: 5000 });
-    this.categories = response.categories.sort((a, b) => a.position - b.position);
+    let response: any = await this.client.get(`api/v2/helpdesk/categories`, {
+      limit: 5000,
+    });
+    this.categories = response.categories.sort(
+      (a, b) => a.position - b.position
+    );
 
-    response = await this.client.get(`api/v2/helpdesk/questions`, { limit: 5000 });
+    response = await this.client.get(`api/v2/helpdesk/questions`, {
+      limit: 5000,
+    });
     this.questions = response.questions;
 
     for (let category of this.categories) {
       category.questions = this.questions
-        .filter((question) => {
+        .filter(question => {
           return category.uuid === question.category_uuid;
         })
         .sort((a, b) => {
@@ -42,5 +46,4 @@ export class AllHelpdeskDashboardComponent implements OnInit {
         });
     }
   }
-
 }

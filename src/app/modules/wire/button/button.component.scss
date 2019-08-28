@@ -5,16 +5,16 @@
   border-radius: 0;
   padding: 0;
   cursor: pointer;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue);
   }
-  
+
   &:hover {
-    @include m-theme(){
-      color: rgba(themed($m-blue-dark),0.9);
+    @include m-theme() {
+      color: rgba(themed($m-blue-dark), 0.9);
     }
   }
-  
+
   > .ion-icon {
     transform: scale(1.6);
   }

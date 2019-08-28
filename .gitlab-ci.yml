@@ -4,7 +4,7 @@ services:
   - docker:dind
 
 stages:
-  - test:unit
+  - test
   - build
   - prepare
   - review
@@ -21,10 +21,18 @@ variables:
 
 test:
   image: circleci/node:8-browsers
-  stage: test:unit
+  stage: test
   script:
     - npm ci
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+
+lint:
+  stage: test
+  script:
+    - npm i -g prettier
+    - prettier --check "src/**/*.ts"
+    - prettier --check "src/**/*.scss"
+    - prettier --check "src/**/*.html"
 
 e2e:chrome:
   image: cypress/browsers:chrome67

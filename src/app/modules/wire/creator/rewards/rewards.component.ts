@@ -1,14 +1,17 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { WireRewardsType, WireRewardsStruc, WireRewardsTiers } from '../../interfaces/wire.interfaces';
+import {
+  WireRewardsType,
+  WireRewardsStruc,
+  WireRewardsTiers,
+} from '../../interfaces/wire.interfaces';
 
 @Component({
   moduleId: module.id,
   selector: 'm-wire--creator-rewards',
-  templateUrl: 'rewards.component.html'
+  templateUrl: 'rewards.component.html',
 })
 export class WireCreatorRewardsComponent {
-
   @Input() rewards: WireRewardsStruc;
   @Input() type: WireRewardsType | null;
   @Input() amount: string | number;
@@ -34,9 +37,7 @@ export class WireCreatorRewardsComponent {
       .filter(reward => this.calcAmount() >= reward.amount)
       .pop();
 
-    return lastEligibleReward ?
-      index === lastEligibleReward.index :
-      false;
+    return lastEligibleReward ? index === lastEligibleReward.index : false;
   }
 
   calcAmount(): number {
@@ -50,5 +51,4 @@ export class WireCreatorRewardsComponent {
   selectReward(index: number): void {
     this.selectAmount.next(this.rewards.rewards[this.type][index].amount);
   }
-
 }

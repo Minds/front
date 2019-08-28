@@ -4,19 +4,20 @@ import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-modal--tos-updated',
-  templateUrl: 'tos.component.html'
+  templateUrl: 'tos.component.html',
 })
-
 export class TOSUpdatedModal {
-
   user = window.Minds.user;
   site_url = window.Minds.site_url;
   showModal: boolean = false;
 
-  constructor(private client: Client, private session: Session) { }
+  constructor(private client: Client, private session: Session) {}
 
   ngOnInit() {
-    if (this.session.getLoggedInUser().last_accepted_tos < window.Minds.last_tos_update) {
+    if (
+      this.session.getLoggedInUser().last_accepted_tos <
+      window.Minds.last_tos_update
+    ) {
       this.showModal = true;
     }
   }
@@ -34,5 +35,4 @@ export class TOSUpdatedModal {
     this.updateUser();
     this.showModal = false;
   }
-
 }

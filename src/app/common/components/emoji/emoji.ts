@@ -5,34 +5,36 @@ import { Emoji as EmojiDirective } from '../../directives/emoji';
 
 @Component({
   selector: 'minds-emoji',
-  inputs: [ 'localDirective' ],
+  inputs: ['localDirective'],
   template: `
-    <div class="m-bubble-popup mdl-shadow--4dp"
-    *ngIf="localDirective.shown"
-    [ngStyle]="localDirective.style"
+    <div
+      class="m-bubble-popup mdl-shadow--4dp"
+      *ngIf="localDirective.shown"
+      [ngStyle]="localDirective.style"
     >
       <div class="m-emoji-selector-title">
         <ng-container i18n="@@MINDS__EMOJI__LABEL">Emoji</ng-container>
-        <i class="material-icons m-emoji-selector-close"
-        (click)="hide()"
-        >close</i>
+        <i class="material-icons m-emoji-selector-close" (click)="hide()"
+          >close</i
+        >
       </div>
       <div class="m-emoji-selector-list">
-        <span *ngFor="let emoji of emojis"
-        tabindex="0"
-        class="m-emoji"
-        [title]="emoji.name"
-        (click)="select(emoji.codePoint, $event)"
-        (keydown.enter)="select(emoji.codePoint, $event)"
-        (keydown.space)="select(emoji.codePoint, $event)"
-        (keydown.esc)="hide()"
-        >{{ represent(emoji.codePoint) }}</span>
+        <span
+          *ngFor="let emoji of emojis"
+          tabindex="0"
+          class="m-emoji"
+          [title]="emoji.name"
+          (click)="select(emoji.codePoint, $event)"
+          (keydown.enter)="select(emoji.codePoint, $event)"
+          (keydown.space)="select(emoji.codePoint, $event)"
+          (keydown.esc)="hide()"
+          >{{ represent(emoji.codePoint) }}</span
+        >
       </div>
     </div>
-  `
+  `,
 })
 export class MindsEmoji {
-
   localDirective: EmojiDirective;
   emojis = EmojiList;
 
@@ -50,7 +52,7 @@ export class MindsEmoji {
     }
 
     this.localDirective.emoji.next({
-      character: this.represent(codePoint)
+      character: this.represent(codePoint),
     });
   }
 
@@ -65,11 +67,18 @@ export class MindsEmoji {
       return (<any>String).fromCodePoint.apply(String, args);
     }
 
-    var chars = [], point, offset, units, i;
+    var chars = [],
+      point,
+      offset,
+      units,
+      i;
     for (i = 0; i < args.length; ++i) {
       point = args[i];
       offset = point - 0x10000;
-      units = point > 0xFFFF ? [0xD800 + (offset >> 10), 0xDC00 + (offset & 0x3FF)] : [point];
+      units =
+        point > 0xffff
+          ? [0xd800 + (offset >> 10), 0xdc00 + (offset & 0x3ff)]
+          : [point];
       chars.push(String.fromCharCode.apply(null, units));
     }
     return chars.join('');

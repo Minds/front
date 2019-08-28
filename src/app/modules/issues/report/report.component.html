@@ -1,11 +1,19 @@
 <div class="m-issues__report">
   <div class="m-issuesReport__container m-border">
     <h2>Report an issue</h2>
-    <p>Please before reporting an issue verify that it has not already been reported <a href="https://gitlab.com/minds/front/issues" target="_blank">here</a></p>
+    <p>
+      Please before reporting an issue verify that it has not already been
+      reported
+      <a href="https://gitlab.com/minds/front/issues" target="_blank">here</a>
+    </p>
     <m-dynamic-form [fields]="fields" #reportform></m-dynamic-form>
-    <span class="m-error" *ngIf="error">{{error}}</span>
-            
-    <button class="m-btn m-btn--slim m-btn--action" (click)="submit(reportform)" [disabled]="submiting">
+    <span class="m-error" *ngIf="error">{{ error }}</span>
+
+    <button
+      class="m-btn m-btn--slim m-btn--action"
+      (click)="submit(reportform)"
+      [disabled]="submiting"
+    >
       Submit
     </button>
   </div>

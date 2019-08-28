@@ -1,6 +1,6 @@
 // TODO actually implement these mocks when necessary for testing
 
-export let web3WalletServiceMock = new function () {
+export let web3WalletServiceMock = new (function() {
   this.wallets = ['0x123', '0x1234'];
   this.balance = 127000000000000000000;
   this.onChainInterfaceLabel = 'Metamask';
@@ -23,9 +23,11 @@ export let web3WalletServiceMock = new function () {
   this.getWallets = jasmine.createSpy('getWallets').and.callFake(async () => {
     return this.wallets;
   });
-  this.getCurrentWallet = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
-    return this.wallets[0]
-  });
+  this.getCurrentWallet = jasmine
+    .createSpy('getCurrentWallet')
+    .and.callFake(async () => {
+      return this.wallets[0];
+    });
   this.getBalance = jasmine.createSpy('getBalance').and.callFake(async () => {
     return this.balance;
   });
@@ -34,7 +36,11 @@ export let web3WalletServiceMock = new function () {
     return this.isLocalWallet;
   });
 
-  this.getOnChainInterfaceLabel = jasmine.createSpy('getOnChainInterfaceLabel').and.callFake(() => {
-    return this.onChainInterfaceLabel ? this.onChainInterfaceLabel: 'Metamask';
-  });
-};
+  this.getOnChainInterfaceLabel = jasmine
+    .createSpy('getOnChainInterfaceLabel')
+    .and.callFake(() => {
+      return this.onChainInterfaceLabel
+        ? this.onChainInterfaceLabel
+        : 'Metamask';
+    });
+})();

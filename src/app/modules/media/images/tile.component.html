@@ -1,12 +1,14 @@
-<div class="m-media--images--tile"
-  [ngClass]="{ 'm-tile-mature-thumbnail': attachment.shouldBeBlurred(entity) }">
-
+<div
+  class="m-media--images--tile"
+  [ngClass]="{ 'm-tile-mature-thumbnail': attachment.shouldBeBlurred(entity) }"
+>
   <a
-    [ngStyle]="{'background': '#444 url(' + entity.thumbnail_src + ') center center / cover'}"
+    [ngStyle]="{
+      background: '#444 url(' + entity.thumbnail_src + ') center center / cover'
+    }"
     [routerLink]="['/media', entity.guid]"
   >
   </a>
   <i class="material-icons">explicit</i>
   <m-safe-toggle *ngIf="session.isAdmin()" [(entity)]="entity"></m-safe-toggle>
-
 </div>

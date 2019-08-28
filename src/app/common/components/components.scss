@@ -1,9 +1,9 @@
-@import "defaults";
+@import 'defaults';
 
 .m-card--large {
   padding: 24px;
   margin-bottom: 16px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -13,7 +13,7 @@
     margin-bottom: 16px;
     font-weight: bold;
     line-height: 42px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
   }
@@ -27,18 +27,18 @@
 }
 
 minds-graph-line svg {
-  @include m-theme(){
+  @include m-theme() {
     stroke: themed($m-grey-500);
   }
 }
 
 minds-graph-pie svg {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-100);
   }
 
   circle {
-    @include m-theme(){
+    @include m-theme() {
       stroke: themed($m-blue-dark);
     }
   }
@@ -51,18 +51,18 @@ minds-graph-pie svg {
 minds-button-thumbs-up,
 minds-button-thumbs-down {
   a {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-blue-grey-500);
     }
     &:hover {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue-grey-800);
       }
     }
   }
   .selected:hover {
-    @include m-theme(){
-      color: rgba(themed($m-blue-dark),0.9) !important;
+    @include m-theme() {
+      color: rgba(themed($m-blue-dark), 0.9) !important;
     }
   }
 }

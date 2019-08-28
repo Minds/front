@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'help', component: HelpdeskDashboardComponent },
   { path: 'help/category/edit/:uuid', component: CategoryCreatorComponent },
   { path: 'help/question/edit/:uuid', component: QuestionCreatorComponent },
-  { path: 'help/question/:uuid', component: QuestionsComponent }
+  { path: 'help/question/:uuid', component: QuestionsComponent },
 ];
 
 @NgModule({
@@ -27,7 +27,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    LegacyModule
+    LegacyModule,
   ],
   exports: [],
   declarations: [
@@ -42,5 +42,4 @@ const routes: Routes = [
   ],
   providers: [],
 })
-export class HelpdeskModule {
-}
+export class HelpdeskModule {}

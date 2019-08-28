@@ -1,6 +1,5 @@
 @import 'defaults.scss';
 
-
 .m-channel--action-buttons minds-button-user-dropdown button {
   border: 0 !important;
 }
@@ -17,8 +16,8 @@
     margin: 2px 2px;
     border-radius: 3px;
     display: inline-block;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
     }
   }
   .m-channel-bio-field__tags-container {
@@ -35,8 +34,8 @@
       margin: 2px 2px;
       border-radius: 3px;
       display: inline-block;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
     }
   }

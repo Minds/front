@@ -9,7 +9,7 @@ import {
   ElementRef,
 } from '@angular/core';
 
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
@@ -26,9 +26,7 @@ import isMobile from '../../../../../helpers/is-mobile';
   templateUrl: '../activity/activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class Remind {
-
   minds = window.Minds;
 
   activity: any;
@@ -49,7 +47,9 @@ export class Remind {
   canDelete: boolean = false;
   videoDimensions: Array<any> = null;
 
-  @Output('matureVisibilityChange') onMatureVisibilityChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output('matureVisibilityChange') onMatureVisibilityChange: EventEmitter<
+    any
+  > = new EventEmitter<any>();
 
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
@@ -60,7 +60,7 @@ export class Remind {
     private changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private router: Router,
-    protected featuresService: FeaturesService,
+    protected featuresService: FeaturesService
   ) {
     this.hideTabs = true;
   }
@@ -88,17 +88,20 @@ export class Remind {
     this.activity.boosted = this.boosted;
 
     if (
-      this.activity.custom_type == 'batch'
-      && this.activity.custom_data
-      && this.activity.custom_data[0].src
+      this.activity.custom_type == 'batch' &&
+      this.activity.custom_data &&
+      this.activity.custom_data[0].src
     ) {
-      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
+      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(
+        this.minds.site_url,
+        this.minds.cdn_url
+      );
     }
   }
 
   getOwnerIconTime() {
     let session = this.session.getLoggedInUser();
-    if(session && session.guid === this.activity.ownerObj.guid) {
+    if (session && session.guid === this.activity.ownerObj.guid) {
       return session.icontime;
     } else {
       return this.activity.ownerObj.icontime;
@@ -127,21 +130,33 @@ export class Remind {
     return;
   }
 
-  save() { /* NOOP */ }
+  save() {
+    /* NOOP */
+  }
 
   isPending(activity) {
     return activity && activity.pending && activity.pending !== '0';
   }
 
-  openComments() { /* NOOP */ }
+  openComments() {
+    /* NOOP */
+  }
 
-  showBoost() { /* NOOP */ }
+  showBoost() {
+    /* NOOP */
+  }
 
-  showWire() { /* NOOP */ }
+  showWire() {
+    /* NOOP */
+  }
 
-  togglePin() { /* NOOP */ }
+  togglePin() {
+    /* NOOP */
+  }
 
-  menuOptionSelected(e) { /* NOOP */ }
+  menuOptionSelected(e) {
+    /* NOOP */
+  }
 
   toggleMatureVisibility() {
     this.activity.mature_visibility = !this.activity.mature_visibility;
@@ -170,7 +185,10 @@ export class Remind {
       this.goToMediaPage();
     } else {
       // Canary
-      if (this.activity.custom_data[0].width === '0' || this.activity.custom_data[0].height === '0') {
+      if (
+        this.activity.custom_data[0].width === '0' ||
+        this.activity.custom_data[0].height === '0'
+      ) {
         this.setImageDimensions();
       }
       this.openModal();
@@ -187,9 +205,11 @@ export class Remind {
   openModal() {
     this.activity.modal_source_url = this.router.url;
 
-    this.overlayModal.create(MediaModalComponent, this.activity, {
-      class: 'm-overlayModal--media'
-    }).present();
+    this.overlayModal
+      .create(MediaModalComponent, this.activity, {
+        class: 'm-overlayModal--media',
+      })
+      .present();
   }
 
   goToMediaPage() {

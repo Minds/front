@@ -4,9 +4,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 declare namespace MediumEditor {
-
   export interface MediumEditor {
-
     // Initialization Functions
     new (elements: elementType, options?: CoreOptions): MediumEditor;
     destroy(): void;
@@ -15,18 +13,44 @@ declare namespace MediumEditor {
     removeElements(elements: elementType): void;
 
     // Event Functions
-    on(targets: HTMLElement | NodeList, event: string, listener: (event: Event) => void, useCapture: boolean): MediumEditor;
-    on(targets: HTMLElement | NodeList, event: string, listener: EventListenerOrEventListenerObject, useCapture: boolean): MediumEditor;
-    off(targets: HTMLElement | NodeList, event: string, listener: Function, useCapture: boolean): MediumEditor;
-    off(targets: HTMLElement | NodeList, event: string, listener: EventListenerOrEventListenerObject, useCapture: boolean): MediumEditor;
-    subscribe(name: string, listener: (data: any, editable: HTMLElement) => void): MediumEditor;
+    on(
+      targets: HTMLElement | NodeList,
+      event: string,
+      listener: (event: Event) => void,
+      useCapture: boolean
+    ): MediumEditor;
+    on(
+      targets: HTMLElement | NodeList,
+      event: string,
+      listener: EventListenerOrEventListenerObject,
+      useCapture: boolean
+    ): MediumEditor;
+    off(
+      targets: HTMLElement | NodeList,
+      event: string,
+      listener: Function,
+      useCapture: boolean
+    ): MediumEditor;
+    off(
+      targets: HTMLElement | NodeList,
+      event: string,
+      listener: EventListenerOrEventListenerObject,
+      useCapture: boolean
+    ): MediumEditor;
+    subscribe(
+      name: string,
+      listener: (data: any, editable: HTMLElement) => void
+    ): MediumEditor;
     unsubscribe(name: string, listener: Function): MediumEditor;
     trigger(name: string, data: any, editable: HTMLElement): MediumEditor;
 
     // Selection Functions
     checkSelection(): MediumEditor;
     exportSelection(): selectionObject;
-    importSelection(selectionState: selectionObject, favorLaterSelectionAnchor: boolean): void;
+    importSelection(
+      selectionState: selectionObject,
+      favorLaterSelectionAnchor: boolean
+    ): void;
     getFocusedElement(): HTMLElement;
     getSelectedParentElement(range?: Range): HTMLElement;
     restoreSelection(): void;
@@ -41,7 +65,7 @@ declare namespace MediumEditor {
     createLink(opts: CreateLinkOptions): void;
     execAction(action: string, opts?: string): boolean;
     execAction(action: string, opts?: CreateLinkOptions): boolean;
-    pasteHTML(html: string, options?:PasteHTMLOptions): void;
+    pasteHTML(html: string, options?: PasteHTMLOptions): void;
     queryCommandState(action: string): boolean;
 
     // Helper Functions
@@ -63,7 +87,7 @@ declare namespace MediumEditor {
       revision: number;
       preRelease: string;
       toString: Function;
-    }
+    };
   }
 
   export interface CoreOptions {
@@ -131,11 +155,11 @@ declare namespace MediumEditor {
   export interface PasteOptions {
     forcePlainText?: boolean;
     cleanPastedHTML?: boolean;
-    preCleanReplacements?: any[],
-    cleanReplacements?: any[],
+    preCleanReplacements?: any[];
+    cleanReplacements?: any[];
     cleanAttrs?: string[];
     cleanTags?: string[];
-    unwrapTags?: string[],
+    unwrapTags?: string[];
   }
 
   export interface KeyboardCommandsOptions {
@@ -156,18 +180,24 @@ declare namespace MediumEditor {
     buttonClass?: string;
   }
 
-  export interface PasteHTMLOptions{
+  export interface PasteHTMLOptions {
     cleanAttrs?: string[];
     cleanTags?: string[];
     unwrapTags?: string[];
   }
 
-  export type elementType = string | HTMLElement | HTMLElement[] | NodeList | NodeListOf<Element> | HTMLCollection;
-  export type selectionObject = {start: number, end: number};
+  export type elementType =
+    | string
+    | HTMLElement
+    | HTMLElement[]
+    | NodeList
+    | NodeListOf<Element>
+    | HTMLCollection;
+  export type selectionObject = { start: number; end: number };
 }
 
 declare var MediumEditor: MediumEditor.MediumEditor;
 
-declare module "medium-editor" {
+declare module 'medium-editor' {
   export = MediumEditor;
 }

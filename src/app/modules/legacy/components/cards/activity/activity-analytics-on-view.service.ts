@@ -1,12 +1,11 @@
-import { ElementRef, Injectable, OnDestroy } from "@angular/core";
-import { debounceTime } from "rxjs/operators";
-import { Subject, Subscription } from "rxjs";
+import { ElementRef, Injectable, OnDestroy } from '@angular/core';
+import { debounceTime } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
 
-import { ScrollService } from "../../../../../services/ux/scroll";
+import { ScrollService } from '../../../../../services/ux/scroll';
 
 @Injectable()
 export class ActivityAnalyticsOnViewService implements OnDestroy {
-
   protected element: HTMLElement;
 
   protected entity;
@@ -23,9 +22,7 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
 
   protected enabled: boolean = true;
 
-  constructor(
-    protected scroll: ScrollService,
-  ) {
+  constructor(protected scroll: ScrollService) {
     this.init();
   }
 
@@ -64,33 +61,32 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
         }
       });
 
-    this.scroll$ = this.scroll.listenForView()
-      .subscribe(() => {
-        if (!this.element) {
-          console.warn('Missing element ref');
-          return;
-        }
+    this.scroll$ = this.scroll.listenForView().subscribe(() => {
+      if (!this.element) {
+        console.warn('Missing element ref');
+        return;
+      }
 
-        if (!this.element.offsetHeight || !this.enabled) {
-          return;
-        }
+      if (!this.element.offsetHeight || !this.enabled) {
+        return;
+      }
 
-        const top = this.element.offsetTop;
-        const bottom = top + this.element.offsetHeight;
-        const vpTop = this.scroll.view.scrollTop;
-        const vpBottom = vpTop + this.scroll.view.clientHeight;
-        const totalH = Math.max(bottom, vpBottom) - Math.min(top, vpTop);
-        const vpComp = totalH - this.scroll.view.clientHeight;
-        const vpEl = this.element.offsetHeight - vpComp;
-        const visible = vpEl <= 0 ? 0 : (vpEl / this.element.offsetHeight);
+      const top = this.element.offsetTop;
+      const bottom = top + this.element.offsetHeight;
+      const vpTop = this.scroll.view.scrollTop;
+      const vpBottom = vpTop + this.scroll.view.clientHeight;
+      const totalH = Math.max(bottom, vpBottom) - Math.min(top, vpTop);
+      const vpComp = totalH - this.scroll.view.clientHeight;
+      const vpEl = this.element.offsetHeight - vpComp;
+      const visible = vpEl <= 0 ? 0 : vpEl / this.element.offsetHeight;
 
-        if (visible > 0 && !this.visible) {
-          this.visible = true;
-          this.visibilitySubject.next(this.visible);
-        } else {
-          this.visible = false;
-        }
-      });
+      if (visible > 0 && !this.visible) {
+        this.visible = true;
+        this.visibilitySubject.next(this.visible);
+      } else {
+        this.visible = false;
+      }
+    });
   }
 
   ngOnDestroy() {

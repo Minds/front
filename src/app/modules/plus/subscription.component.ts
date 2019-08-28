@@ -1,4 +1,4 @@
-import { 
+import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -20,9 +20,8 @@ import { Session } from '../../services/session';
 @Component({
   selector: 'm-plus--subscription',
   templateUrl: 'subscription.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class PlusSubscriptionComponent {
   user = window.Minds.user;
   blockchain = window.Minds.blockchain;
@@ -31,26 +30,27 @@ export class PlusSubscriptionComponent {
   inProgress: boolean = true;
   completed: boolean = false;
   active: boolean = false;
-  @Output('completed') completed$: EventEmitter<any> = new EventEmitter;
+  @Output('completed') completed$: EventEmitter<any> = new EventEmitter();
   @Input('showSubscription') showSubscription: boolean;
   payment: any = {};
   payload: any;
 
-  constructor(private client: Client,
-              private tokenContract: TokenContractService,
-              private wireService: WireService,
-              private web3Wallet: Web3WalletService,
-              private overlayModal: OverlayModalService,
-              private modal: SignupModalService,
-              public session: Session,
-              private cd: ChangeDetectorRef) {
-  }
+  constructor(
+    private client: Client,
+    private tokenContract: TokenContractService,
+    private wireService: WireService,
+    private web3Wallet: Web3WalletService,
+    private overlayModal: OverlayModalService,
+    private modal: SignupModalService,
+    public session: Session,
+    private cd: ChangeDetectorRef
+  ) {}
 
   load(): Promise<any> {
-    return this.client.get('api/v1/plus')
+    return this.client
+      .get('api/v1/plus')
       .then(({ active }) => {
-        if (active)
-          this.active = true;
+        if (active) this.active = true;
         return active;
       })
       .catch(e => {
@@ -59,8 +59,7 @@ export class PlusSubscriptionComponent {
   }
 
   isPlus() {
-    if (this.active || this.user && this.user.plus)
-      return true;
+    if (this.active || (this.user && this.user.plus)) return true;
     return false;
   }
 
@@ -81,16 +80,20 @@ export class PlusSubscriptionComponent {
     this.payment.entity_guid = '730071191229833224';
     this.payment.receiver = this.blockchain.plus_address;
 
-    const creator = this.overlayModal.create(WirePaymentsCreatorComponent, this.payment, {
-      default: this.payment,
-      onComplete: (wire) => {
-        this.completed = true;
-        this.user.plus = true;
-        this.active = true;
-        this.detectChanges();
-        this.completed$.next(true);
+    const creator = this.overlayModal.create(
+      WirePaymentsCreatorComponent,
+      this.payment,
+      {
+        default: this.payment,
+        onComplete: wire => {
+          this.completed = true;
+          this.user.plus = true;
+          this.active = true;
+          this.detectChanges();
+          this.completed$.next(true);
+        },
       }
-    });
+    );
     creator.present();
   }
 
@@ -98,7 +101,8 @@ export class PlusSubscriptionComponent {
     this.inProgress = true;
     this.error = '';
     this.detectChanges();
-    return this.client.delete('api/v1/plus/subscription')
+    return this.client
+      .delete('api/v1/plus/subscription')
       .then((response: any) => {
         this.inProgress = false;
         this.user.plus = false;
@@ -111,5 +115,4 @@ export class PlusSubscriptionComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

@@ -1,5 +1,1 @@
-export class CaptchaService {
-
-
-
-}
+export class CaptchaService {}

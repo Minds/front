@@ -10,7 +10,7 @@ import { Storage } from '../../../../services/storage';
 
 @Component({
   selector: 'm-newsfeed--tags',
-  templateUrl: 'tags.component.html'
+  templateUrl: 'tags.component.html',
 })
 export class NewsfeedTagsComponent implements OnDestroy {
   newsfeed: Array<Object>;
@@ -30,7 +30,7 @@ export class NewsfeedTagsComponent implements OnDestroy {
     public route: ActivatedRoute,
     public title: MindsTitle,
     private storage: Storage,
-    private context: ContextService,
+    private context: ContextService
   ) {
     this.minds = window.Minds;
 
@@ -56,8 +56,7 @@ export class NewsfeedTagsComponent implements OnDestroy {
    * Load newsfeed
    */
   async load(refresh: boolean = false) {
-    if (this.inProgress)
-      return false;
+    if (this.inProgress) return false;
 
     if (refresh) {
       this.offset = 0;
@@ -73,7 +72,10 @@ export class NewsfeedTagsComponent implements OnDestroy {
     };
 
     try {
-      const response: any = await this.client.get('api/v2/entities/suggested/activities', data);
+      const response: any = await this.client.get(
+        'api/v2/entities/suggested/activities',
+        data
+      );
 
       if (!response.entities || !response.entities.length) {
         this.moreData = false;
@@ -88,7 +90,6 @@ export class NewsfeedTagsComponent implements OnDestroy {
       }
       this.offset = response['load-next'];
       this.inProgress = false;
-
     } catch (e) {
       this.inProgress = false;
     }

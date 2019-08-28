@@ -1,4 +1,9 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, Injectable, ErrorHandler } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule,
+  Injectable,
+  ErrorHandler,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,7 +13,11 @@ import { environment } from '../environments/environment';
 
 import { Minds } from './app.component';
 
-import { MINDS_APP_ROUTING_DECLARATIONS, MindsAppRoutes, MindsAppRoutingProviders } from './router/app';
+import {
+  MINDS_APP_ROUTING_DECLARATIONS,
+  MindsAppRoutes,
+  MindsAppRoutingProviders,
+} from './router/app';
 
 import { MINDS_DECLARATIONS } from './declarations';
 import { MINDS_PLUGIN_DECLARATIONS } from './plugin-declarations';
@@ -57,13 +66,13 @@ import { HelpdeskModule } from './modules/helpdesk/helpdesk.module';
 import { MobileModule } from './modules/mobile/mobile.module';
 import { IssuesModule } from './modules/issues/issues.module';
 import { CanaryModule } from './modules/canary/canary.module';
-import { HttpClientModule } from "@angular/common/http";
-import { AnalyticsModule } from "./modules/analytics/analytics.module";
+import { HttpClientModule } from '@angular/common/http';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
 
-import * as Sentry from "@sentry/browser";
+import * as Sentry from '@sentry/browser';
 
 Sentry.init({
-  dsn: "https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008", // TODO: do not hardcard
+  dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard
   release: environment.version,
   environment: (<any>window.Minds).environment || 'development',
 });
@@ -78,9 +87,7 @@ export class SentryErrorHandler implements ErrorHandler {
 }
 
 @NgModule({
-  bootstrap: [
-    Minds
-  ],
+  bootstrap: [Minds],
   declarations: [
     Minds,
     MINDS_APP_ROUTING_DECLARATIONS,
@@ -93,7 +100,7 @@ export class SentryErrorHandler implements ErrorHandler {
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(MindsAppRoutes, { onSameUrlNavigation: "reload" }),
+    RouterModule.forRoot(MindsAppRoutes, { onSameUrlNavigation: 'reload' }),
     CaptchaModule,
     CommonModule,
     AnalyticsModule,
@@ -145,9 +152,6 @@ export class SentryErrorHandler implements ErrorHandler {
     MINDS_PROVIDERS,
     MINDS_PLUGIN_PROVIDERS,
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class MindsModule {
-}
+export class MindsModule {}

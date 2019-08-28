@@ -1,5 +1,11 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { Mock, MockComponent } from '../../../utils/mock';
@@ -17,110 +23,109 @@ import { ChannelsTileComponent } from './tile.component';
 import { Session } from '../../../services/session';
 
 describe('ChannelsTileComponent', () => {
-
   let comp: ChannelsTileComponent;
   let fixture: ComponentFixture<ChannelsTileComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock, 
-        MaterialSwitchMock, 
-        ChannelsTileComponent, 
-        MockComponent({ 
+        MaterialMock,
+        MaterialSwitchMock,
+        ChannelsTileComponent,
+        MockComponent({
           selector: 'm-channel--social-profiles',
-          inputs: [ 'user', 'editing' ],
-        }), 
-        MockComponent({ 
-          selector: 'minds-button-feature',
-          inputs: [ 'object'  ],
-        }), 
-        MockComponent({ 
-          selector: 'minds-avatar',
-          inputs: [ 'object', 'src', 'editMode', 'waitForDoneSignal' ],
-        }), 
-        MockComponent({ 
-          selector: 'm-channel--badges',
-          inputs: [ 'user', 'badges' ],
-        }), 
-        MockComponent({ 
-          selector: 'minds-button-subscribe',
-          inputs: [ 'user' ],
-        }), 
-        MockComponent({ 
-          selector: 'm-safe-toggle',
-          inputs: [ 'entity' ],
-        }), 
-        MockComponent({ 
-          selector: 'minds-button-boost',
-          inputs: [ 'object' ],
+          inputs: ['user', 'editing'],
         }),
-      ], 
-      imports: [
-        FormsModule,
-        RouterTestingModule,
-        NgCommonModule
+        MockComponent({
+          selector: 'minds-button-feature',
+          inputs: ['object'],
+        }),
+        MockComponent({
+          selector: 'minds-avatar',
+          inputs: ['object', 'src', 'editMode', 'waitForDoneSignal'],
+        }),
+        MockComponent({
+          selector: 'm-channel--badges',
+          inputs: ['user', 'badges'],
+        }),
+        MockComponent({
+          selector: 'minds-button-subscribe',
+          inputs: ['user'],
+        }),
+        MockComponent({
+          selector: 'm-safe-toggle',
+          inputs: ['entity'],
+        }),
+        MockComponent({
+          selector: 'minds-button-boost',
+          inputs: ['object'],
+        }),
       ],
-      providers: [
-        { provide: Session, useValue: sessionMock }
-      ]
-    }).compileComponents();  // compile template and css
+      imports: [FormsModule, RouterTestingModule, NgCommonModule],
+      providers: [{ provide: Session, useValue: sessionMock }],
+    }).compileComponents(); // compile template and css
   }));
 
-  beforeEach((done) => {
-
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(ChannelsTileComponent);
     comp = fixture.componentInstance;
-    comp.entity = { guid: 'guidguid', name: 'name', username: 'username',city: 'awasa', icontime: 11111, subscribers_count:182, impressions:18200};
-    
-    window.Minds.user = {
-      "guid": "guidguid",
-      "type": "user",
-      "subtype": false,
-      "time_created": "1499978809",
-      "time_updated": false,
-      "container_guid": "0",
-      "owner_guid": "0",
-      "site_guid": false,
-      "access_id": "2",
-      "name": "minds",
-      "username": "minds",
-      "language": "en",
-      "icontime": "1506690756",
-      "legacy_guid": false,
-      "featured_id": false,
-      "banned": "no",
-      "website": "",
-      "dob": "",
-      "gender": "",
-      "city": "",
-      "merchant": {},
-      "boostProPlus": false,
-      "fb": false,
-      "mature": 0,
-      "monetized": "",
-      "signup_method": false,
-      "social_profiles": [],
-      "feature_flags": false,
-      "programs": ["affiliate"],
-      "plus": false,
-      "verified": false,
-      "disabled_boost": false,
-      "show_boosts": false,
-      "chat": true,
-      "subscribed": false,
-      "subscriber": false,
-      "subscriptions_count": 1,
-      "impressions": 10248,
-      "boost_rating": "2",
-      "spam": 0,
-      "deleted": 0
+    comp.entity = {
+      guid: 'guidguid',
+      name: 'name',
+      username: 'username',
+      city: 'awasa',
+      icontime: 11111,
+      subscribers_count: 182,
+      impressions: 18200,
     };
-    
+
+    window.Minds.user = {
+      guid: 'guidguid',
+      type: 'user',
+      subtype: false,
+      time_created: '1499978809',
+      time_updated: false,
+      container_guid: '0',
+      owner_guid: '0',
+      site_guid: false,
+      access_id: '2',
+      name: 'minds',
+      username: 'minds',
+      language: 'en',
+      icontime: '1506690756',
+      legacy_guid: false,
+      featured_id: false,
+      banned: 'no',
+      website: '',
+      dob: '',
+      gender: '',
+      city: '',
+      merchant: {},
+      boostProPlus: false,
+      fb: false,
+      mature: 0,
+      monetized: '',
+      signup_method: false,
+      social_profiles: [],
+      feature_flags: false,
+      programs: ['affiliate'],
+      plus: false,
+      verified: false,
+      disabled_boost: false,
+      show_boosts: false,
+      chat: true,
+      subscribed: false,
+      subscriber: false,
+      subscriptions_count: 1,
+      impressions: 10248,
+      boost_rating: '2',
+      spam: 0,
+      deleted: 0,
+    };
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -138,7 +143,9 @@ describe('ChannelsTileComponent', () => {
 
   it('Should load correctly', () => {
     const tile = fixture.debugElement.query(By.css('.m-channels--tile'));
-    const subscribe = fixture.debugElement.query(By.css('minds-button-subscribe'));
+    const subscribe = fixture.debugElement.query(
+      By.css('minds-button-subscribe')
+    );
     const feature = fixture.debugElement.query(By.css('minds-button-feature'));
     const boost = fixture.debugElement.queryAll(By.css('minds-button-boost'));
     expect(tile).not.toBeNull();

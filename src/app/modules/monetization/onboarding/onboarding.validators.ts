@@ -4,7 +4,10 @@ const _isCountry = (currentCountry, countries: string[]) => {
   return countries.indexOf(currentCountry) > -1;
 };
 
-export function requiredFor(countryCodes: string[], { ignore = false }: { ignore?: boolean } = {}): ValidatorFn {
+export function requiredFor(
+  countryCodes: string[],
+  { ignore = false }: { ignore?: boolean } = {}
+): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } => {
     if (ignore) {
       return null;
@@ -26,7 +29,10 @@ export function requiredFor(countryCodes: string[], { ignore = false }: { ignore
   };
 }
 
-export function optionalFor(countryCodes: string[], { ignore = false }: { ignore?: boolean } = {}): ValidatorFn {
+export function optionalFor(
+  countryCodes: string[],
+  { ignore = false }: { ignore?: boolean } = {}
+): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } => {
     if (ignore) {
       return null;

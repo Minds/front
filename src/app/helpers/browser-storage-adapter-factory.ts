@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 
-import DexieStorageAdapter from "../lib/minds-sync/adapters/DexieStorageAdapter";
-import InMemoryStorageAdapter from "../lib/minds-sync/adapters/InMemoryStorageAdapter";
+import DexieStorageAdapter from '../lib/minds-sync/adapters/DexieStorageAdapter';
+import InMemoryStorageAdapter from '../lib/minds-sync/adapters/InMemoryStorageAdapter';
 
 export const isDexieSupported = new Promise(async resolve => {
   if (!window.indexedDB) {
@@ -13,26 +13,27 @@ export const isDexieSupported = new Promise(async resolve => {
 
   try {
     Dexie.delete(tmpDbName);
-  } catch (e) { /* noop */ }
+  } catch (e) {
+    /* noop */
+  }
 
   try {
     indexedDB.deleteDatabase(tmpDbName);
-  } catch (e) { /* noop */ }
+  } catch (e) {
+    /* noop */
+  }
 
   try {
     const testDB = new Dexie(tmpDbName);
-    testDB
-      .version(1)
-      .stores({
-        test: 'id',
-      });
+    testDB.version(1).stores({
+      test: 'id',
+    });
 
     await testDB.open();
 
-    await testDB.table('test')
-      .put({
-        id: Date.now(),
-      });
+    await testDB.table('test').put({
+      id: Date.now(),
+    });
 
     resolve(true);
   } catch (e) {
@@ -41,12 +42,16 @@ export const isDexieSupported = new Promise(async resolve => {
   }
 });
 
-export default async function browserStorageAdapterFactory(name: string): Promise<DexieStorageAdapter | InMemoryStorageAdapter> {
+export default async function browserStorageAdapterFactory(
+  name: string
+): Promise<DexieStorageAdapter | InMemoryStorageAdapter> {
   if (await isDexieSupported) {
     console.info(`IndexedDB is supported for ${name}`);
     return new DexieStorageAdapter(new Dexie(name));
   } else {
-    console.warn(`IndexedDB is NOT supported for ${name}. Using in-memory fallback.`);
+    console.warn(
+      `IndexedDB is NOT supported for ${name}. Using in-memory fallback.`
+    );
 
     if (!window._inMemoryStorageAdapterDb) {
       window._inMemoryStorageAdapterDb = {};

@@ -1,6 +1,18 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
+import {
+  Component,
+  DebugElement,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -15,17 +27,20 @@ import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
 import { Session } from '../../../services/session';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule} from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 /* tslint:disable */
 
 describe('ConfirmPasswordCreatorComponent', () => {
-
   let comp: ConfirmPasswordModalComponent;
   let fixture: ComponentFixture<ConfirmPasswordModalComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MaterialMock,
@@ -34,22 +49,17 @@ describe('ConfirmPasswordCreatorComponent', () => {
         TokenPipe,
         ConfirmPasswordModalComponent,
       ], // declare the test component
-      imports: [
-        FormsModule,
-        RouterTestingModule,
-        ReactiveFormsModule
-      ],
+      imports: [FormsModule, RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-      ]
-    })
-      .compileComponents();  // compile template and css
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -58,7 +68,7 @@ describe('ConfirmPasswordCreatorComponent', () => {
     comp = fixture.componentInstance; // LoginForm test instance
     clientMock.response = {};
     clientMock.response[`api/v2/settings/password/validate`] = {
-      'status': 'success',
+      status: 'success',
     };
 
     fixture.detectChanges();
@@ -77,7 +87,9 @@ describe('ConfirmPasswordCreatorComponent', () => {
   });
 
   it('should have a title, password should be initialized', () => {
-    const title = fixture.debugElement.query(By.css('.m-confirm-password--modal'));
+    const title = fixture.debugElement.query(
+      By.css('.m-confirm-password--modal')
+    );
     expect(title).not.toBeNull();
     expect(title.nativeElement.textContent).toContain('Confirm password');
 
@@ -88,14 +100,16 @@ describe('ConfirmPasswordCreatorComponent', () => {
     comp.form.controls['password'].setValue('value');
     expect(comp.form.value.password).toEqual('value');
     comp._opts = {
-      onComplete:() => {}
+      onComplete: () => {},
     };
 
     fixture.detectChanges();
     comp.submit();
     fixture.detectChanges();
     tick();
-    expect(clientMock.post.calls.mostRecent().args[0]).toEqual('api/v2/settings/password/validate');
+    expect(clientMock.post.calls.mostRecent().args[0]).toEqual(
+      'api/v2/settings/password/validate'
+    );
 
     expect(comp.overlayModal.dismiss).toHaveBeenCalled();
   }));
@@ -104,11 +118,12 @@ describe('ConfirmPasswordCreatorComponent', () => {
     comp.form.controls['password'].setValue('value');
     expect(comp.form.value.password).toEqual('value');
     clientMock.response[`api/v2/settings/password/validate`] = {
-      'status': 'failed',
+      status: 'failed',
     };
     comp.submit();
     fixture.detectChanges();
-    expect(clientMock.post.calls.mostRecent().args[0]).toEqual('api/v2/settings/password/validate');
-    
+    expect(clientMock.post.calls.mostRecent().args[0]).toEqual(
+      'api/v2/settings/password/validate'
+    );
   }));
 });

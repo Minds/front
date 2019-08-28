@@ -1,15 +1,12 @@
-import { TestBed } from "@angular/core/testing";
-import { DatePipe, JsonPipe } from "@angular/common";
+import { TestBed } from '@angular/core/testing';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { UtcDatePipe } from './utcdate';
 
 describe('DataTableFormat', () => {
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [UtcDatePipe],
-      providers: [
-        DatePipe, JsonPipe
-      ]
+      providers: [DatePipe, JsonPipe],
     });
   });
 
@@ -23,7 +20,9 @@ describe('DataTableFormat', () => {
 
     const outputDate: Date = pipe.transform(<any>testDate);
 
-    const diffHours = Math.abs(Math.floor((testDate.getTime() - outputDate.getTime()) / (1000 * 60 * 60)));
+    const diffHours = Math.abs(
+      Math.floor((testDate.getTime() - outputDate.getTime()) / (1000 * 60 * 60))
+    );
 
     expect(diffHours).toBe(testDate.getTimezoneOffset() / 60);
   });

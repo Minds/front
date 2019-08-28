@@ -9,7 +9,7 @@ export interface MindsPlayerInterface {
   onPlay: EventEmitter<HTMLVideoElement>;
   onPause: EventEmitter<HTMLVideoElement>;
   onEnd: EventEmitter<HTMLVideoElement>;
-  onError: EventEmitter<{ player: HTMLVideoElement, e }>;
+  onError: EventEmitter<{ player: HTMLVideoElement; e }>;
 
   getPlayer(): HTMLVideoElement;
 

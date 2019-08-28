@@ -5,16 +5,14 @@ import { Client } from '../../../../services/api';
 @Component({
   moduleId: module.id,
   selector: 'm-button--admin-actions',
-  templateUrl: 'admin-actions.component.html'
+  templateUrl: 'admin-actions.component.html',
 })
-
 export class AdminActionsButtonComponent {
-
   @Input() object: any;
 
   open: boolean = false;
 
-  constructor(public session: Session, public client: Client) { }
+  constructor(public session: Session, public client: Client) {}
 
   isSpam() {
     if (typeof this.object['spam'] !== 'undefined') {
