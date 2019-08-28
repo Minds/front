@@ -1,7 +1,6 @@
 m-pro--channel-tile {
   cursor: pointer;
   width: 100%;
-  height: 320px;
 
   & > img {
     height: calc(100% - 5em);
@@ -9,6 +8,20 @@ m-pro--channel-tile {
     object-fit: cover;
   }
 
+  .m-proChannelTile__container {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+    padding-top: var(--m-pro--tile-ratio);
+
+    > * {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
 
   .m-proChannelTile__text {
     height: 4em;

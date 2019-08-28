@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="getType(entity)">
+<div class="m-proChannelTile__container" [ngSwitch]="getType(entity)">
 
   <m-video
     *ngSwitchCase="'object:video'"
@@ -23,7 +23,7 @@
     #img
   >
 
-</ng-container>
+</div>
 
 <div class="m-proChannelTile__text" *ngIf="getTitle() || getText()">
   <h2 [title]="getTitle()">{{ getTitle() }}</h2>
