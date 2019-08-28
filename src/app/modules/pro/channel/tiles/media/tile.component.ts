@@ -58,17 +58,19 @@ export class ProTileComponent {
   }
 
   tileClicked() {
-    switch(this.getType(this.entity)) {
+    switch (this.getType(this.entity)) {
       case 'object:image':
       case 'object:video':
         this.showMediaModal();
+        break;
       case 'object:blog':
         this.channelService.open(this.entity, this.modalService);
+        break;
     }
   }
 
   showMediaModal() {
-    const activity = toMockActivity(this.entity);
+    const activity = toMockActivity(this.entity, this.entity.subtype === 'video' ? this.videoDimensions : null);
     if (this.featuresService.has('media-modal')) {
       // Mobile (not tablet) users go to media page instead of modal
       // if (isMobile() && Math.min(screen.width, screen.height) < 768) {
@@ -77,7 +79,7 @@ export class ProTileComponent {
 
       if (activity.custom_type === 'video') {
         activity.custom_data.dimensions = this.videoDimensions;
-      } else { // Image
+      } else if (activity.custom_type === 'image') { // Image
         // Set image dimensions if they're not already there
         const img: HTMLImageElement = this.img.nativeElement;
         activity.custom_data[0].width = img.naturalWidth;

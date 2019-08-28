@@ -2,7 +2,7 @@
  * generates an activity from an image or video
  * @param entity
  */
-export default function toMockActivity(entity: any) {
+export default function toMockActivity(entity: any, dimensions?: any) {
   let obj = {
     ...entity,
     entity_guid: entity.guid,
@@ -12,8 +12,16 @@ export default function toMockActivity(entity: any) {
   if (entity.subtype === 'video') {
     obj.custom_data = {
       ...entity,
-      dimensions: this.videoDimensions
+      dimensions: dimensions
     };
+  } else if (entity.subtype === 'blog') {
+    obj.custom_data = [{
+      ...entity,
+      dimensions: {
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight
+      }
+    }];
   } else {
     obj.custom_data = [{
       ...entity,
@@ -24,3 +32,16 @@ export default function toMockActivity(entity: any) {
 
   return obj;
 }
+
+class Translate {
+  execute(entity: any) {
+
+  }
+}
+
+class ImageTranslate extends Translate {
+  execute(entity: any) {
+    return {};
+  }
+}
+
