@@ -6,7 +6,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-pro--channel-home',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: 'home.component.html',
 })
 export class ProChannelHomeComponent implements OnInit {
