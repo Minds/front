@@ -1,5 +1,3 @@
-@import "defaults";
-
 m-pro--channel-login {
   display: flex;
   align-items: center;
@@ -12,6 +10,7 @@ m-pro--channel-login {
 
 .m-ProChannelLogin--hero {
   position: relative;
+  width: 100%;
 
   .m-ProChannelLogin--hero--inner {
     display: flex;
@@ -84,7 +83,8 @@ m-pro--channel-login {
   }
 
   .m-ProChannelLogin--hero--slogans {
-    flex: 2;
+    flex-grow: 1;
+    z-index: 2;
 
     h1, h3, h4 {
       text-rendering: optimizeLegibility;
@@ -100,17 +100,19 @@ m-pro--channel-login {
       font-weight: 600;
       letter-spacing: 1.25px;
       line-height: 1;
-      //color: rgba(255,255,255,0.85);
-      //color: rgba(0,0,0,0.85);
 
       @media screen and (max-width: 720px) {
         font-size: 42px;
       }
     }
 
+    h2 {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+
     h3 {
       font-size: 26px;
-      //color: rgba(255, 255, 255, 0.8);
       font-weight: 400;
       letter-spacing: 0.25px;
       line-height: 1.25;
@@ -122,13 +124,12 @@ m-pro--channel-login {
         font-size: 16px;
       }
     }
-
-    z-index: 2;
   }
 
   .m-ProChannelLogin--login {
     flex: 1;
     margin-left: 16px;
+    z-index: 2;
 
     @media screen and (max-width: 1000px) {
       flex-basis: 100%;
@@ -225,9 +226,11 @@ m-pro--channel-login {
           border: 1px solid themed($m-grey-50);
         }
       }
-    }
 
-    z-index: 2;
+      .mdl-card__actions:last-child {
+        padding-bottom: 0;
+      }
+    }
   }
 
   @media (max-width: $max-mobile) {

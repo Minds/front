@@ -81,11 +81,13 @@ export interface MindsUser {
     background_image: string,
     title: string,
     headline: string,
+    one_line_headline: string;
     footer_text: string,
     footer_links: { href: string, title: string }[],
     scheme: string,
-    styles?: { [key: string]: string },
-    featured_content?: Array<string>,
+    featured_content ?: Array<string>,
+    tile_ratio ?: string;
+    styles ?: { [key: string]: string },
   };
 }
 

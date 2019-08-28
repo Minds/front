@@ -150,8 +150,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
     }
 
-    if (this.channel.pro_settings.headline) {
-      title.push(this.channel.pro_settings.headline);
+    if (this.channel.pro_settings.one_line_headline) {
+      title.push(this.channel.pro_settings.one_line_headline);
     }
 
     this.title.setTitle(title.join(' - '));
