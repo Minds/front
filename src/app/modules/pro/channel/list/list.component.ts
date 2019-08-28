@@ -5,9 +5,7 @@ import { FeedsService } from "../../../../common/services/feeds.service";
 import { ProChannelService, RouterLinkToType } from '../channel.service';
 import { first } from "rxjs/operators";
 import { OverlayModalService } from "../../../../services/ux/overlay-modal";
-import { ProContentModalComponent } from "../content-modal/modal.component";
 import { ProChannelListModal } from '../list-modal/list-modal.component';
-import { Tag } from "../../../../interfaces/entities";
 
 @Component({
   selector: 'm-pro--channel-list',

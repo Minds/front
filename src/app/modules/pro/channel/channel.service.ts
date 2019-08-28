@@ -4,13 +4,21 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { EntitiesService } from '../../../common/services/entities.service';
 import normalizeUrn from '../../../helpers/normalize-urn';
-import { ProContentModalComponent } from './content-modal/modal.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BlogView } from "../../blogs/view/view";
 import { Session } from '../../../services/session';
 import { ActivatedRoute } from '@angular/router';
 
-export type RouterLinkToType = 'home' | 'all' | 'feed' | 'videos' | 'images' | 'articles' | 'groups' | 'donate' | 'login';
+export type RouterLinkToType =
+  'home'
+  | 'all'
+  | 'feed'
+  | 'videos'
+  | 'images'
+  | 'articles'
+  | 'groups'
+  | 'donate'
+  | 'login';
 
 @Injectable()
 export class ProChannelService {
@@ -174,12 +182,6 @@ export class ProChannelService {
         break;
       case 'object:blog':
         modalServiceContext.create(BlogView, entity).present();
-        break;
-      case 'object:image':
-      case 'object:video':
-        modalServiceContext.create(ProContentModalComponent, entity, {
-          class: 'm-overlayModal--media'
-        }).present();
         break;
     }
   }

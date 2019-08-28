@@ -16,7 +16,6 @@
       <ng-container *ngIf="type === 'all' || type === 'images' || type === 'videos' || type === 'blogs'">
         <m-pro--channel-tile
           [entity]="entity"
-          (click)="onTileClicked(entity)"
         ></m-pro--channel-tile>
       </ng-container>
       <ng-container *ngIf="type === 'groups'">

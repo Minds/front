@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, ViewChild } from '@angular/core';
 import { ProChannelService } from '../channel.service';
 import { FeedsService } from '../../../../common/services/feeds.service';
-import { ProContentModalComponent } from '../content-modal/modal.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { OverlayModalComponent } from '../../../../common/components/overlay-modal/overlay-modal.component';
 

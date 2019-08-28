@@ -16,7 +16,6 @@ import { ProSettingsComponent } from './settings/settings.component';
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
 import { LegacyModule } from "../legacy/legacy.module";
 import { WireModule } from "../wire/wire.module";
-import { ProContentModalComponent } from "./channel/content-modal/modal.component";
 import { VideoModule } from "../media/components/video/video.module";
 import { ProChannelListModal } from './channel/list-modal/list-modal.component';
 import { ProChannelHomeComponent } from './channel/home/home.component';
@@ -24,6 +23,7 @@ import { ProGroupTileComponent } from "./channel/tiles/group/group-tile.componen
 import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.component';
 import { ProCategoriesComponent } from "./channel/categories/categories.component";
 import { BlogView } from "../blogs/view/view";
+import { MediaModalComponent } from "../media/modal/modal.component";
 
 const routes: Routes = [
   {
@@ -101,7 +101,6 @@ export const STANDALONE_ROUTES = [
     ProSettingsComponent,
     ProSubscriptionComponent,
     ProTileComponent,
-    ProContentModalComponent,
     ProChannelHomeComponent,
     ProCategoriesComponent,
     ProChannelListModal,
@@ -116,6 +115,7 @@ export const STANDALONE_ROUTES = [
     ProChannelComponent
   ],
   entryComponents: [
+    MediaModalComponent,
     ProChannelListModal,
     ProUnsubscribeModalComponent,
     BlogView,

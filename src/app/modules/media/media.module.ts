@@ -25,7 +25,6 @@ import { MediaModalComponent } from './modal/modal.component';
 import { ThumbnailSelectorComponent } from './components/thumbnail-selector.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
-import { ProContentModalComponent } from "../pro/channel/content-modal/modal.component";
 
 const routes: Routes = [
   { path: 'media/videos/:filter', component: MediaVideosListComponent },
@@ -78,7 +77,6 @@ const routes: Routes = [
     MediaEditComponent,
     MediaViewComponent,
     MediaModalComponent,
-    ProContentModalComponent,
   ]
 })
 
