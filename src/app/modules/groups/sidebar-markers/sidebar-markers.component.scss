@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 .m-groupSidebarMarkers__list {
   display: block;
@@ -12,13 +12,18 @@
   width: 90px;
   overflow-y: auto;
   list-style-type: none;
-
-  @include m-theme(){
-    box-shadow: 0 2px 5px rgba(themed($m-black),0.2);
+  @media screen and(min-width: $min-desktop) {
+    @include m-theme() {
+      box-shadow: 0 2px 5px rgba(themed($m-black), 0.2);
+    }
   }
 
   @media screen and(max-width: $min-desktop) {
     padding-right: 0;
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar:horizontal {
+      display: none;
+    }
   }
 
   infinite-scroll {
@@ -62,7 +67,7 @@
     width: 48px;
     height: 48px;
     position: relative;
-    @include m-theme(){
+    @include m-theme() {
       border-bottom: 1px solid themed($m-grey-50);
     }
 
@@ -70,8 +75,8 @@
       border-bottom: none;
 
       &:not(:last-child) {
-        @include m-theme(){
-           border-right: 1px solid themed($m-grey-50);
+        @include m-theme() {
+          border-right: 1px solid themed($m-grey-50);
         }
       }
     }
@@ -94,8 +99,8 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
     }
 
@@ -104,7 +109,7 @@
       height: 30px;
       border-radius: 50%;
       vertical-align: middle;
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-50);
       }
     }
@@ -121,11 +126,11 @@
     display: block;
     height: 8px;
     width: 8px;
-    content: "";
+    content: '';
     position: absolute;
     top: 4px;
     left: 4px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-blue);
     }
   }

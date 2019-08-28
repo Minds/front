@@ -1,4 +1,10 @@
-import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  Input,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { BoostConsoleType } from '../console.component';
@@ -9,10 +15,9 @@ import { PosterComponent } from '../../../newsfeed/poster/poster.component';
 @Component({
   moduleId: module.id,
   selector: 'm-boost-console-booster',
-  templateUrl: 'booster.component.html'
+  templateUrl: 'booster.component.html',
 })
 export class BoostConsoleBooster {
-
   inProgress: boolean = false;
   loaded: boolean = false;
 
@@ -24,13 +29,15 @@ export class BoostConsoleBooster {
   componentRef;
   componentInstance: PosterComponent;
 
-  @ViewChild('poster', { read: ViewContainerRef, static: false }) poster: ViewContainerRef;
+  @ViewChild('poster', { read: ViewContainerRef, static: false })
+  poster: ViewContainerRef;
 
-  constructor(public client: Client,
-              public session: Session,
-              private route: ActivatedRoute,
-              private _componentFactoryResolver: ComponentFactoryResolver,) {
-  }
+  constructor(
+    public client: Client,
+    public session: Session,
+    private route: ActivatedRoute,
+    private _componentFactoryResolver: ComponentFactoryResolver
+  ) {}
 
   ngOnInit() {
     this.route.parent.url.subscribe(segments => {
@@ -52,7 +59,7 @@ export class BoostConsoleBooster {
 
     let promises = [
       this.client.get('api/v1/newsfeed/personal'),
-      this.client.get('api/v1/entities/owner')
+      this.client.get('api/v1/entities/owner'),
     ];
 
     return Promise.all(promises)
@@ -75,16 +82,18 @@ export class BoostConsoleBooster {
   loadComponent() {
     this.poster.clear();
     if (
-      ((this.type === 'offers' || this.type === 'newsfeed') && this.posts.length === 0)
-      || (this.type === 'content' && this.media.length === 0)) {
-
-
-      const componentFactory = this._componentFactoryResolver.resolveComponentFactory(PosterComponent);
+      ((this.type === 'offers' || this.type === 'newsfeed') &&
+        this.posts.length === 0) ||
+      (this.type === 'content' && this.media.length === 0)
+    ) {
+      const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        PosterComponent
+      );
 
       this.componentRef = this.poster.createComponent(componentFactory);
       this.componentInstance = this.componentRef.instance;
 
-      this.componentInstance.load.subscribe(()=> {
+      this.componentInstance.load.subscribe(() => {
         this.load();
       });
     }

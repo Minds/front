@@ -16,31 +16,40 @@ import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
 import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
-import { EntitiesService } from "../../../../../common/services/entities.service";
-import { Router } from "@angular/router";
-import { BlockListService } from "../../../../../common/services/block-list.service";
-import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.service";
-import { NewsfeedService } from "../../../../newsfeed/services/newsfeed.service";
-import { ClientMetaService } from "../../../../../common/services/client-meta.service";
+import { EntitiesService } from '../../../../../common/services/entities.service';
+import { Router } from '@angular/router';
+import { BlockListService } from '../../../../../common/services/block-list.service';
+import { ActivityAnalyticsOnViewService } from './activity-analytics-on-view.service';
+import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
+import { ClientMetaService } from '../../../../../common/services/client-meta.service';
+import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
+import { FeaturesService } from '../../../../../services/features.service';
+import isMobile from '../../../../../helpers/is-mobile';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-activity',
   host: {
-    'class': 'mdl-card m-border'
+    class: 'mdl-card m-border',
   },
-  inputs: ['object', 'commentsToggle', 'focusedCommentGuid', 'visible', 'canDelete', 'showRatingToggle'],
+  inputs: [
+    'object',
+    'commentsToggle',
+    'focusedCommentGuid',
+    'visible',
+    'canDelete',
+    'showRatingToggle',
+  ],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
-  providers: [ ClientMetaService, ActivityAnalyticsOnViewService ],
+  providers: [ClientMetaService, ActivityAnalyticsOnViewService],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class Activity implements OnInit {
-
   minds = window.Minds;
 
   activity: any;
@@ -53,7 +62,8 @@ export class Activity implements OnInit {
   showBoostOptions: boolean = false;
   @Input() boost: boolean = false;
   @Input('boost-toggle')
-  @Input() showBoostMenuOptions: boolean = false;
+  @Input()
+  showBoostMenuOptions: boolean = false;
   @Input() slot: number = -1;
 
   visibilityEvents: boolean = true;
@@ -61,8 +71,7 @@ export class Activity implements OnInit {
     this.visibilityEvents = visibilityEvents;
 
     if (this.activityAnalyticsOnViewService) {
-      this.activityAnalyticsOnViewService
-        .setEnabled(this.visibilityEvents);
+      this.activityAnalyticsOnViewService.setEnabled(this.visibilityEvents);
     }
   }
 
@@ -78,7 +87,10 @@ export class Activity implements OnInit {
   @Input() focusedCommentGuid: string;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
-  onViewed: EventEmitter<{activity, visible}> = new EventEmitter<{activity, visible}>();
+  onViewed: EventEmitter<{ activity; visible }> = new EventEmitter<{
+    activity;
+    visible;
+  }>();
 
   isTranslatable: boolean;
   canDelete: boolean = false;
@@ -86,19 +98,54 @@ export class Activity implements OnInit {
 
   blockedUsers: string[] = [];
 
+  videoDimensions: Array<any> = null;
+
   get menuOptions(): Array<string> {
     if (!this.activity || !this.activity.ephemeral) {
-      if (this.showBoostMenuOptions)  {
-        return ['edit', 'translate', 'share', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
+      if (this.showBoostMenuOptions) {
+        return [
+          'edit',
+          'translate',
+          'share',
+          'follow',
+          'feature',
+          'delete',
+          'report',
+          'set-explicit',
+          'block',
+          'rating',
+        ];
       } else {
-        return ['edit', 'translate', 'share', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'block', 'rating'];
+        return [
+          'edit',
+          'translate',
+          'share',
+          'follow',
+          'feature',
+          'delete',
+          'report',
+          'set-explicit',
+          'block',
+          'rating',
+        ];
       }
     } else {
-      return ['view', 'translate', 'share', 'follow', 'feature', 'report', 'set-explicit', 'block', 'rating']
+      return [
+        'view',
+        'translate',
+        'share',
+        'follow',
+        'feature',
+        'report',
+        'set-explicit',
+        'block',
+        'rating',
+      ];
     }
   }
 
   @ViewChild('player', { static: false }) player: MindsVideoComponent;
+  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   constructor(
     public session: Session,
@@ -113,47 +160,54 @@ export class Activity implements OnInit {
     protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
+    protected featuresService: FeaturesService,
+    public suggestions: AutocompleteSuggestionsService,
     @SkipSelf() injector: Injector,
-    elementRef: ElementRef,
+    elementRef: ElementRef
   ) {
-    this.clientMetaService
-      .inherit(injector);
+    this.clientMetaService.inherit(injector);
 
     this.activityAnalyticsOnViewService
       .setElementRef(elementRef)
       .onView(activity => {
-        this.newsfeedService.recordView(activity, true, null, this.clientMetaService.build({
-          campaign: activity.boosted_guid ? activity.urn : '',
-          position: this.slot,
-        }));
+        this.newsfeedService.recordView(
+          activity,
+          true,
+          null,
+          this.clientMetaService.build({
+            campaign: activity.boosted_guid ? activity.urn : '',
+            position: this.slot,
+          })
+        );
 
         this.onViewed.emit({ activity: activity, visible: true });
       });
   }
 
   ngOnInit() {
-    this.activityAnalyticsOnViewService
-      .setEnabled(this.visibilityEvents);
+    this.activityAnalyticsOnViewService.setEnabled(this.visibilityEvents);
 
     this.loadBlockedUsers();
   }
 
   set object(value: any) {
-    if (!value)
-      return;
+    if (!value) return;
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
 
     this.activityAnalyticsOnViewService.setEntity(this.activity);
 
     if (
-      this.activity.custom_type == 'batch' 
-      && this.activity.custom_data 
-      && this.activity.custom_data[0].src
+      this.activity.custom_type === 'batch' &&
+      this.activity.custom_data &&
+      this.activity.custom_data[0].src
     ) {
-      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
+      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(
+        this.minds.site_url,
+        this.minds.cdn_url
+      );
     }
-    
+
     if (!this.activity.message) {
       this.activity.message = '';
     }
@@ -164,15 +218,15 @@ export class Activity implements OnInit {
 
     this.boosted = this.activity.boosted || this.activity.p2p_boosted;
 
-    this.isTranslatable = (
+    this.isTranslatable =
       this.translationService.isTranslatable(this.activity) ||
-      (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object))
-    );
+      (this.activity.remind_object &&
+        this.translationService.isTranslatable(this.activity.remind_object));
   }
 
   getOwnerIconTime() {
     let session = this.session.getLoggedInUser();
-    if(session && session.guid === this.activity.ownerObj.guid) {
+    if (session && session.guid === this.activity.ownerObj.guid) {
       return session.icontime;
     } else {
       return this.activity.ownerObj.icontime;
@@ -201,7 +255,8 @@ export class Activity implements OnInit {
     if ($event.inProgress) {
       $event.inProgress.emit(true);
     }
-    this.client.delete(`api/v1/newsfeed/${this.activity.guid}`)
+    this.client
+      .delete(`api/v1/newsfeed/${this.activity.guid}`)
       .then((response: any) => {
         if ($event.inProgress) {
           $event.inProgress.emit(false);
@@ -251,7 +306,6 @@ export class Activity implements OnInit {
   }
 
   async togglePin() {
-
     if (this.session.getLoggedInUser().guid != this.activity.owner_guid) {
       return;
     }
@@ -280,7 +334,10 @@ export class Activity implements OnInit {
       }
     }
 
-    const boostModal = this.overlayModal.create(BoostCreatorComponent, activity);
+    const boostModal = this.overlayModal.create(
+      BoostCreatorComponent,
+      activity
+    );
 
     boostModal.onDidDismiss(() => {
       this.showBoostOptions = false;
@@ -290,7 +347,7 @@ export class Activity implements OnInit {
   }
 
   async showWire() {
-    if(this.session.getLoggedInUser().guid !== this.activity.owner_guid) {
+    if (this.session.getLoggedInUser().guid !== this.activity.owner_guid) {
       let activity = this.activity;
 
       if (activity.ephemeral) {
@@ -301,17 +358,21 @@ export class Activity implements OnInit {
         }
       }
 
-      this.overlayModal.create(WireCreatorComponent,
-        activity.remind_object ? activity.remind_object : activity,
-        { onComplete: wire => this.wireSubmitted(wire) })
-          .present();
+      this.overlayModal
+        .create(
+          WireCreatorComponent,
+          activity.remind_object ? activity.remind_object : activity,
+          { onComplete: wire => this.wireSubmitted(wire) }
+        )
+        .present();
     }
   }
 
   async wireSubmitted(wire?) {
     if (wire && this.activity.wire_totals) {
       this.activity.wire_totals.tokens =
-        parseFloat(this.activity.wire_totals.tokens) + (wire.amount * Math.pow(10, 18));
+        parseFloat(this.activity.wire_totals.tokens) +
+        wire.amount * Math.pow(10, 18);
 
       this.detectChanges();
     }
@@ -320,7 +381,7 @@ export class Activity implements OnInit {
   menuOptionSelected(option: string) {
     switch (option) {
       case 'view':
-        this.router.navigate(['/newsfeed', this.activity.guid ]);
+        this.router.navigate(['/newsfeed', this.activity.guid]);
         break;
       case 'edit':
         this.editing = true;
@@ -353,7 +414,10 @@ export class Activity implements OnInit {
       this.activity.custom_data.mature = value;
     }
 
-    this.client.post(`api/v1/entities/explicit/${this.activity.guid}`, { value: value ? '1' : '0' })
+    this.client
+      .post(`api/v1/entities/explicit/${this.activity.guid}`, {
+        value: value ? '1' : '0',
+      })
       .catch(e => {
         this.activity.mature = oldValue;
         this.activity.mature_visibility = oldMatureVisibility;
@@ -366,8 +430,11 @@ export class Activity implements OnInit {
       });
   }
 
-  onNSWFSelections(reasons: Array<{ value, label, selected}>) {
-    this.attachment.setNSFW(reasons);
+  onNSWFSelections(reasons: Array<{ value; label; selected }>) {
+    if (this.attachment.has()) {
+      this.attachment.setNSFW(reasons);
+    }
+    this.activity.nsfw = reasons.map(reason => reason.value);
   }
 
   isUnlisted() {
@@ -375,10 +442,13 @@ export class Activity implements OnInit {
   }
 
   propagateTranslation($event) {
-    if (this.activity.remind_object && this.translationService.isTranslatable(this.activity.remind_object)) {
+    if (
+      this.activity.remind_object &&
+      this.translationService.isTranslatable(this.activity.remind_object)
+    ) {
       this.childEventsEmitter.emit({
         action: 'translate',
-        args: [$event]
+        args: [$event],
       });
     }
   }
@@ -406,6 +476,82 @@ export class Activity implements OnInit {
 
   isPending(activity) {
     return activity && activity.pending && activity.pending !== '0';
+  }
+
+  toggleMatureVisibility() {
+    this.activity.mature_visibility = !this.activity.mature_visibility;
+
+    if (this.activity.remind_object) {
+      // this.activity.remind_object.mature_visibility = !this.activity.remind_object.mature_visibility;
+
+      this.activity.remind_object = Object.assign(
+        {},
+        {
+          ...this.activity.remind_object,
+          mature_visibility: !this.activity.remind_object.mature_visibility,
+        }
+      );
+    }
+
+    this.detectChanges();
+  }
+
+  onRemindMatureVisibilityChange() {
+    this.activity.mature_visibility = !this.activity.mature_visibility;
+  }
+
+  setVideoDimensions($event) {
+    this.videoDimensions = $event.dimensions;
+  }
+
+  setImageDimensions() {
+    const img: HTMLImageElement = this.batchImage.nativeElement;
+    this.activity.custom_data[0].width = img.naturalWidth;
+    this.activity.custom_data[0].height = img.naturalHeight;
+  }
+
+  clickedImage() {
+    // Check if is mobile (not tablet)
+    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+      this.goToMediaPage();
+      return;
+    }
+
+    if (!this.featuresService.has('media-modal')) {
+      // Non-canary
+      this.goToMediaPage();
+      return;
+    } else {
+      // Canary
+      if (
+        this.activity.custom_data[0].width === '0' ||
+        this.activity.custom_data[0].height === '0'
+      ) {
+        this.setImageDimensions();
+      }
+      this.openModal();
+    }
+  }
+
+  clickedVideo() {
+    // Already filtered out mobile users/non-canary in video.component.ts
+    // So this is just applicable to desktop/tablet in canary and should always show modal
+    this.activity.custom_data.dimensions = this.videoDimensions;
+    this.openModal();
+  }
+
+  openModal() {
+    this.activity.modal_source_url = this.router.url;
+
+    this.overlayModal
+      .create(MediaModalComponent, this.activity, {
+        class: 'm-overlayModal--media',
+      })
+      .present();
+  }
+
+  goToMediaPage() {
+    this.router.navigate([`/media/${this.activity.entity_guid}`]);
   }
 
   detectChanges() {

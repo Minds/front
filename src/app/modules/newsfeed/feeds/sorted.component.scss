@@ -1,8 +1,7 @@
-@import "defaults";
+@import 'defaults';
 
 m-newsfeed--sorted {
   .m-feeds-sorted__list {
-
     &.m-feeds-sortedList__flex {
       display: flex;
       flex-direction: row;
@@ -13,11 +12,13 @@ m-newsfeed--sorted {
       m-newsfeed__entity {
         display: contents;
 
-        m-channels--tile, m-groups--tile {
+        m-channels--tile,
+        m-groups--tile {
           display: contents;
         }
 
-        .m-channels--tile, .m-groups--tile {
+        .m-channels--tile,
+        .m-groups--tile {
           margin: 0 4px 16px;
           flex-basis: calc(50% - 16px);
           max-width: calc(50% - 16px);
@@ -28,7 +29,8 @@ m-newsfeed--sorted {
           }
 
           .body {
-            & h3, & span {
+            & h3,
+            & span {
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
@@ -37,7 +39,6 @@ m-newsfeed--sorted {
         }
       }
     }
-
   }
 }
 
@@ -54,7 +55,7 @@ m-newsfeed--sorted {
   justify-content: space-between;
   padding: 12px;
   margin-bottom: 16px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -86,8 +87,8 @@ m-newsfeed--sorted {
     .mdl-textfield__input {
       outline: none;
       border-radius: 6px;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
     }
   }
@@ -97,8 +98,8 @@ m-newsfeed--sorted {
     margin-top: 1px;
     border-radius: 6px;
     max-height: 50vh;
-    @include m-theme(){
-       box-shadow: 1px 1px 1px rgba(themed($m-black), 0.26);
+    @include m-theme() {
+      box-shadow: 1px 1px 1px rgba(themed($m-black), 0.26);
     }
 
     .m-search-bar-suggestions-suggestion {
@@ -113,13 +114,13 @@ m-newsfeed--sorted {
 
 .m-feeds-sorted__query {
   font-size: 16px;
-  font-family: Roboto;
+  font-family: 'Roboto', Helvetica, sans-serif;
   letter-spacing: 1px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   padding: 8px;
   font-weight: 400;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-800);
   }
 }

@@ -1,7 +1,6 @@
 <h2 class="m-analyticsCard__title" *ngIf="title">
-  {{title}}
+  {{ title }}
 </h2>
-
 
 <m-dropdown *ngIf="options && options.length > 0" #dropdown>
   <label>
@@ -18,25 +17,27 @@
         <i class="material-icons">keyboard_arrow_up</i>
       </ng-template>
     </ng-container>
-
   </label>
 
   <ul class="m-dropdown__list">
-    <li class="m-dropdownList__item"
-        *ngIf="options.indexOf('hourly') !== -1"
-        (click)="selectOption('hourly'); dropdown.toggle()"
+    <li
+      class="m-dropdownList__item"
+      *ngIf="options.indexOf('hourly') !== -1"
+      (click)="selectOption('hourly'); dropdown.toggle()"
     >
       Hourly
     </li>
-    <li class="m-dropdownList__item"
-        *ngIf="options.indexOf('daily') !== -1"
-        (click)="selectOption('daily'); dropdown.toggle()"
+    <li
+      class="m-dropdownList__item"
+      *ngIf="options.indexOf('daily') !== -1"
+      (click)="selectOption('daily'); dropdown.toggle()"
     >
       Daily
     </li>
-    <li class="m-dropdownList__item"
-        *ngIf="options.indexOf('monthly') !== -1"
-        (click)="selectOption('monthly'); dropdown.toggle()"
+    <li
+      class="m-dropdownList__item"
+      *ngIf="options.indexOf('monthly') !== -1"
+      (click)="selectOption('monthly'); dropdown.toggle()"
     >
       Monthly
     </li>

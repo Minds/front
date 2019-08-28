@@ -1,7 +1,13 @@
-import { Component, EventEmitter, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  ViewChild,
+} from '@angular/core';
 
 import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
 import { ActivityPreview } from '../../legacy/components/cards/activity/preview';
+import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 
 // had forwardRef(() => ActivityPreview)
 @Component({
@@ -9,17 +15,44 @@ import { ActivityPreview } from '../../legacy/components/cards/activity/preview'
   inputs: ['_default: default', 'open', '_object: object'],
   outputs: ['closed', 'post'],
   template: `
-    <m-modal [open]="open" (closed)="close($event)" class="mdl-color-text--blue-grey-700">
-
+    <m-modal
+      [open]="open"
+      (closed)="close($event)"
+      class="mdl-color-text--blue-grey-700"
+    >
       <div class="m-modal-remind-composer">
-        <h3 class="m-modal-remind-title" i18n="@@MODALS__REMIND_COMPOSER__REMIND_TITLE">Remind</h3>
+        <h3
+          class="m-modal-remind-title"
+          i18n="@@MODALS__REMIND_COMPOSER__REMIND_TITLE"
+        >
+          Remind
+        </h3>
 
-        <textarea name="message"
-          [(ngModel)]="message"
-          placeholder="Enter your remind status here (optional)"
-          i18n-placeholder="@@MODALS__REMIND_COMPOSER__PLACEHOLDER"
-          [autoGrow]
+        <ng-template
+          #itemTemplate
+          let-choice="choice"
+          let-selectChoice="selectChoice"
+        >
+          <m-post-autocomplete-item-renderer
+            [choice]="choice"
+            [selectChoice]="selectChoice"
+          ></m-post-autocomplete-item-renderer>
+        </ng-template>
+
+        <m-text-input--autocomplete-container>
+          <textarea
+            name="message"
+            [(ngModel)]="message"
+            placeholder="Enter your remind status here (optional)"
+            i18n-placeholder="@@MODALS__REMIND_COMPOSER__PLACEHOLDER"
+            [autoGrow]
+            mTextInputAutocomplete
+            [findChoices]="suggestions.findSuggestions"
+            [getChoiceLabel]="suggestions.getChoiceLabel"
+            [itemTemplate]="itemTemplate"
+            [triggerCharacters]="['#', '@']"
           ></textarea>
+        </m-text-input--autocomplete-container>
 
         <div class="m-modal-remind-composer-buttons">
           <a class="m-modal-remind-composer-send" (click)="send()">
@@ -30,11 +63,9 @@ import { ActivityPreview } from '../../legacy/components/cards/activity/preview'
 
       <ng-template dynamic-host></ng-template>
     </m-modal>
-  `
+  `,
 })
-
 export class RemindComposerModal {
-
   open: boolean = false;
   closed: EventEmitter<any> = new EventEmitter();
   post: EventEmitter<any> = new EventEmitter();
@@ -42,9 +73,13 @@ export class RemindComposerModal {
 
   message: string = '';
 
-  @ViewChild(DynamicHostDirective, { static: true }) cardHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true })
+  cardHost: DynamicHostDirective;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor(
+    public suggestions: AutocompleteSuggestionsService,
+    private _componentFactoryResolver: ComponentFactoryResolver
+  ) {}
 
   set _object(object: any) {
     this.object = object;
@@ -65,14 +100,16 @@ export class RemindComposerModal {
 
   send() {
     this.post.next({
-      message: this.message
+      message: this.message,
     });
 
     this.close();
   }
 
   loadPreview() {
-    const previewFactory = this._componentFactoryResolver.resolveComponentFactory(ActivityPreview),
+    const previewFactory = this._componentFactoryResolver.resolveComponentFactory(
+        ActivityPreview
+      ),
       viewContainerRef = this.cardHost.viewContainerRef;
 
     viewContainerRef.clear();
@@ -82,7 +119,9 @@ export class RemindComposerModal {
     if (this.object && !this.object.remind_object) {
       (<ActivityPreview>componentRef.instance).object = this.object;
     } else if (this.object && this.object.remind_object) {
-      (<ActivityPreview>componentRef.instance).object = this.object.remind_object;
+      (<ActivityPreview>(
+        componentRef.instance
+      )).object = this.object.remind_object;
     }
 
     componentRef.changeDetectorRef.detectChanges();

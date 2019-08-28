@@ -1,7 +1,9 @@
 context('Discovery', () => {
   beforeEach(() => {
     cy.login(true);
-    cy.location('pathname').should('eq', `/newsfeed/subscriptions`);
+
+    cy.location('pathname', { timeout: 30000 })
+      .should('eq', `/newsfeed/subscriptions`);
   });
   
   it('should allow a user to post on the discovery page', () => {
@@ -57,7 +59,6 @@ context('Discovery', () => {
       .click()
       .should('have.css', 'color', 'rgb(70, 144, 223)'); // selected color
 
-    cy.get('.m-newsfeed__entity .m-owner-block a > span:nth-child(1)');
     cy.url().should('include', '/latest');
   }); 
 
@@ -116,10 +117,12 @@ context('Discovery', () => {
   });  
 
   it('should allow the user to filter by a single hashtag', () => {
-    cy.get('.m-hashtagsSidebarSelector__list > ul > li:nth-child(1) .m-hashtagsSidebarSelectorList__visibility > i').click();
+    cy.get('.m-hashtagsSidebarSelector__list > ul > li:nth-child(1) .m-hashtagsSidebarSelectorList__visibility > i')
+      .click(); // Will fail on non-configured users
   });
 
   it('should allow the user to turn off single hashtag filter and view all posts', () => {
-    cy.get('.m-hashtagsSidebarSelector__list > ul > li:nth-child(1) .m-hashtagsSidebarSelectorList__visibility > i').click();
+    cy.get('.m-hashtagsSidebarSelector__list > ul > li:nth-child(1) .m-hashtagsSidebarSelectorList__visibility > i')
+      .click();
   })
 })

@@ -3,17 +3,14 @@ import { Component, EventEmitter } from '@angular/core';
 import { Client } from '../../../../../services/api';
 import { GroupsService } from '../../../groups-service';
 
-
 @Component({
   moduleId: module.id,
   selector: 'minds-groups-profile-members-invite',
   inputs: ['_group : group'],
   outputs: ['invited'],
-  templateUrl: 'invite.html'
+  templateUrl: 'invite.html',
 })
-
 export class GroupsProfileMembersInvite {
-
   minds = window.Minds;
 
   group: any;
@@ -31,15 +28,13 @@ export class GroupsProfileMembersInvite {
 
   timeout;
 
-  constructor(public client: Client, public service: GroupsService) {
-  }
+  constructor(public client: Client, public service: GroupsService) {}
 
   set _group(value: any) {
     this.group = value;
   }
 
   invite(user) {
-
     if (!user.subscriber) {
       return alert('You can only invite users who are subscribed to you');
     }
@@ -55,7 +50,8 @@ export class GroupsProfileMembersInvite {
     this.inviteLastUser = '';
     this.inviteError = '';
 
-    this.service.invite(this.group, user)
+    this.service
+      .invite(this.group, user)
       .then(() => {
         this.inviteInProgress = false;
       })
@@ -66,8 +62,7 @@ export class GroupsProfileMembersInvite {
   }
 
   search(q) {
-    if (this.timeout)
-      clearTimeout(this.timeout);
+    if (this.timeout) clearTimeout(this.timeout);
 
     this.searching = true;
     if (this.q.charAt(0) !== '@') {
@@ -80,20 +75,20 @@ export class GroupsProfileMembersInvite {
     }
 
     this.timeout = setTimeout(() => {
-      this.client.get(`api/v2/search/suggest/user`, {
-        q: query,
-        limit: 5,
-        hydrate: 1
-      })
+      this.client
+        .get(`api/v2/search/suggest/user`, {
+          q: query,
+          limit: 5,
+          hydrate: 1,
+        })
         .then((success: any) => {
           if (success.entities) {
             this.users = success.entities;
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }, 600);
   }
-
 }

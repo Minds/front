@@ -1,15 +1,14 @@
 m-wallet--flyout {
-
   z-index: 1000;
   width: 320px;
   position: absolute;
   top: 24px;
   right: -120px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-100);
   }
 
-  @media screen and (max-width: $max-mobile){
+  @media screen and (max-width: $max-mobile) {
     right: -50px;
   }
 
@@ -27,7 +26,7 @@ m-wallet--flyout {
       & > div {
         font-size: 26px;
         letter-spacing: 0.5px;
-        font-family: 'Roboto';
+        font-family: 'Roboto', Helvetica, sans-serif;
         line-height: 26px;
         flex: 1;
       }
@@ -40,7 +39,7 @@ m-wallet--flyout {
     text-align: left;
     word-wrap: break-word;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white);
       background-color: themed($m-blue);
     }
@@ -52,7 +51,7 @@ m-wallet--flyout {
       right: 0;
       top: 0;
       i {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
@@ -65,7 +64,7 @@ m-wallet--flyout {
 
     label {
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 1px;
       font-size: 10px;
       display: inline-block;
@@ -90,14 +89,14 @@ m-wallet--flyout {
 
   .m-wallet--flyout-balance i {
     font-style: normal;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
   }
 
   .m-wallet--flyout--bottom-container {
     text-transform: uppercase;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     letter-spacing: 2.5px;
     text-rendering: optimizeLegibility;
     font-size: 12px;
@@ -111,7 +110,6 @@ m-wallet--flyout {
     }
   }
 }
-
 
 .m-wallet--topbar-toggle-overlay {
   position: fixed;

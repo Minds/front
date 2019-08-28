@@ -1,7 +1,13 @@
 import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterEvent,
+  NavigationEnd,
+} from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
 import { MindsTitle } from '../../../services/ux/title';
@@ -12,20 +18,19 @@ import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { FeaturesService } from "../../../services/features.service";
-import { FeedsService } from "../../../common/services/feeds.service";
-import { NewsfeedService } from "../services/newsfeed.service";
-import { ClientMetaService } from "../../../common/services/client-meta.service";
+import { FeaturesService } from '../../../services/features.service';
+import { FeedsService } from '../../../common/services/feeds.service';
+import { NewsfeedService } from '../services/newsfeed.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
-  providers: [ ClientMetaService ],
+  providers: [ClientMetaService, FeedsService],
   templateUrl: 'subscribed.component.html',
 })
-
 export class NewsfeedSubscribedComponent {
-
   newsfeed: Array<Object>;
+  feed: BehaviorSubject<Array<Object>> = new BehaviorSubject([]);
   prepended: Array<any> = [];
   offset: string | number = '';
   showBoostRotator: boolean = true;
@@ -43,11 +48,12 @@ export class NewsfeedSubscribedComponent {
     thumbnail: '',
     url: '',
     active: false,
-    attachment_guid: null
+    attachment_guid: null,
   };
 
   paramsSubscription: Subscription;
   reloadFeedSubscription: Subscription;
+  routerSubscription: Subscription;
 
   @ViewChild('poster', { static: true }) private poster: PosterComponent;
 
@@ -61,10 +67,10 @@ export class NewsfeedSubscribedComponent {
     private storage: Storage,
     private context: ContextService,
     protected featuresService: FeaturesService,
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    @SkipSelf() injector: Injector
   ) {
     this.title.setTitle('Newsfeed');
 
@@ -75,9 +81,21 @@ export class NewsfeedSubscribedComponent {
   }
 
   ngOnInit() {
-    this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(() => {
-      this.load(true, true);
-    });
+    this.routerSubscription = this.router.events
+      .pipe(filter((event: RouterEvent) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.showBoostRotator = false;
+        this.load(true, true);
+        setTimeout(() => {
+          this.showBoostRotator = true;
+        }, 100);
+      });
+
+    this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
+      () => {
+        this.load(true, true);
+      }
+    );
 
     this.load(true, true);
     this.minds = window.Minds;
@@ -88,14 +106,6 @@ export class NewsfeedSubscribedComponent {
       }
 
       this.newUserPromo = !!params['newUser'];
-
-      if (params['ts']) {
-        this.showBoostRotator = false;
-        this.load(true);
-        setTimeout(() => {
-          this.showBoostRotator = true;
-        }, 300);
-      }
     });
 
     this.context.set('activity');
@@ -104,6 +114,7 @@ export class NewsfeedSubscribedComponent {
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
     this.reloadFeedSubscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {
@@ -114,15 +125,23 @@ export class NewsfeedSubscribedComponent {
     }
   }
 
-  async loadFromService(refresh: boolean = false, forceSync: boolean = false) {
-    if (forceSync) {
-      this.inProgress = true;
-      // TODO: Find a selective way to do it, in the future
-      await this.feedsService.destroy();
-      refresh = true;
+  loadNext() {
+    if (this.featuresService.has('es-feeds')) {
+      if (
+        this.feedsService.canFetchMore &&
+        !this.feedsService.inProgress.getValue() &&
+        this.feedsService.offset.getValue()
+      ) {
+        this.feedsService.fetch(); // load the next 150 in the background
+      }
+      this.feedsService.loadMore();
+    } else {
+      this.loadLegacy();
     }
+  }
 
-    if (!refresh && this.inProgress) {
+  async loadFromService(refresh: boolean = false, forceSync: boolean = false) {
+    if (!refresh) {
       return;
     }
 
@@ -135,71 +154,73 @@ export class NewsfeedSubscribedComponent {
     this.inProgress = true;
 
     try {
-      const limit = 12;
-
-      const { entities, next } = await this.feedsService.get({
-        endpoint: `api/v2/feeds/subscribed/activities`,
-        timebased: true,
-        limit,
-        offset: <number> this.offset,
-        syncPageSize: limit * 20,
-        forceSync,
-      });
-
-      if (!entities || !entities.length) {
-        this.moreData = false;
-        this.inProgress = false;
-
-        return false;
-      }
-
-      if (this.newsfeed && !refresh) {
-        this.newsfeed.push(...entities);
-      } else {
-        this.newsfeed = entities;
-      }
-
-      this.offset = next;
-
-      if (!this.offset) {
-        this.moreData = false;
-      }
+      this.feedsService
+        .setEndpoint(`api/v2/feeds/subscribed/activities`)
+        .setLimit(12)
+        .fetch();
     } catch (e) {
       console.error('SortedComponent', e);
     }
-
-    this.inProgress = false;
   }
 
   /**
    * Load newsfeed
    */
   loadLegacy(refresh: boolean = false) {
-    if (this.inProgress)
-      return false;
+    if (this.inProgress) return;
 
     if (refresh) {
       this.offset = '';
+      this.feedsService.clear();
     }
 
+    this.feedsService.inProgress.next(true);
+    if (!this.offset) {
+      this.feedsService.setOffset(0);
+    } else {
+      this.feedsService.setOffset(this.feedsService.rawFeed.getValue().length);
+    }
     this.inProgress = true;
 
-    this.client.get('api/v1/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
+    this.client
+      .get(
+        'api/v1/newsfeed',
+        { limit: 12, offset: this.offset },
+        { cache: true }
+      )
       .then((data: MindsActivityObject) => {
         if (!data.activity) {
           this.moreData = false;
-          this.inProgress = false;
+          this.feedsService.inProgress.next(false);
           return false;
         }
-        if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.activity);
-        } else {
-          this.newsfeed = data.activity;
+
+        const feedItems = [];
+        for (const entity of data.activity) {
+          feedItems.push({
+            urn: entity.urn,
+            guid: entity.guid,
+            owner_guid: entity.owner_guid,
+            entity: entity,
+          });
         }
+
+        if (this.feedsService.rawFeed.getValue() && !refresh) {
+          this.feedsService.rawFeed.next([
+            ...this.feedsService.rawFeed.getValue(),
+            ...feedItems,
+          ]);
+        } else {
+          this.feedsService.rawFeed.next(feedItems);
+        }
+
+        this.feedsService.inProgress.next(false);
+        //this.feedsService.setOffset(this.feedsService.offset.getValue() + 12); // Hacky!
         this.offset = data['load-next'];
         this.inProgress = false;
       })
-      .catch((e) => {
+      .catch(e => {
+        console.error(e);
         this.inProgress = false;
       });
   }
@@ -216,12 +237,14 @@ export class NewsfeedSubscribedComponent {
   }
 
   autoBoost(activity: any) {
-    this.client.post('api/v2/boost/activity/' + activity.guid + '/' + activity.owner_guid,
+    this.client.post(
+      'api/v2/boost/activity/' + activity.guid + '/' + activity.owner_guid,
       {
         newUserPromo: true,
         impressions: 200,
-        destination: 'Newsfeed'
-      });
+        destination: 'Newsfeed',
+      }
+    );
   }
 
   delete(activity) {
@@ -241,8 +264,7 @@ export class NewsfeedSubscribedComponent {
   }
 
   canDeactivate() {
-    if (!this.poster || !this.poster.attachment)
-      return true;
+    if (!this.poster || !this.poster.attachment) return true;
     const progress = this.poster.attachment.getUploadProgress();
     if (progress > 0 && progress < 100) {
       return confirm('Your file is still uploading. Are you sure?');
@@ -250,6 +272,4 @@ export class NewsfeedSubscribedComponent {
 
     return true;
   }
-
 }
-

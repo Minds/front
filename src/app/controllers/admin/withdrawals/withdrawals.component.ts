@@ -8,7 +8,6 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: 'withdrawals.component.html',
 })
 export class AdminWithdrawals {
-
   withdrawals: any[] = [];
 
   inProgress: boolean = false;
@@ -17,10 +16,7 @@ export class AdminWithdrawals {
 
   user: string = '';
 
-  constructor(
-    protected client: Client,
-    protected route: ActivatedRoute
-  ) { }
+  constructor(protected client: Client, protected route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -49,11 +45,12 @@ export class AdminWithdrawals {
 
     this.inProgress = true;
 
-    this.client.get(`api/v2/admin/rewards/withdrawals`, {
-      limit: 50,
-      offset: this.offset,
-      user: this.user
-    })
+    this.client
+      .get(`api/v2/admin/rewards/withdrawals`, {
+        limit: 50,
+        offset: this.offset,
+        user: this.user,
+      })
       .then((response: any) => {
         if (!response.withdrawals) {
           this.inProgress = false;

@@ -6,11 +6,9 @@ import { EmbedService } from '../../../../services/embed';
   moduleId: module.id,
   selector: 'm-social-icons',
   inputs: ['_url: url', '_title: title', '_embed: embed'],
-  templateUrl: 'social-icons.html'
+  templateUrl: 'social-icons.html',
 })
-
 export class SocialIcons {
-
   url: string = '';
   title: string = 'Shared via Minds.com';
   encodedUrl: string = '';
@@ -20,8 +18,7 @@ export class SocialIcons {
   embedModalOpen: boolean = false;
   embedModalClosed: EventEmitter<any> = new EventEmitter();
 
-  constructor(public embed: EmbedService) {
-  }
+  constructor(public embed: EmbedService) {}
 
   set _url(value: string) {
     this.url = value;
@@ -50,5 +47,4 @@ export class SocialIcons {
     this.embedModalOpen = false;
     this.embedModalClosed.next(true);
   }
-
 }

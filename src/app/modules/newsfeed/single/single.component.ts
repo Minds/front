@@ -1,23 +1,22 @@
-import { Component, Injector, SkipSelf } from '@angular/core';
+import { Component, Injector, SkipSelf, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { Session } from '../../../services/session';
 import { ContextService } from '../../../services/context.service';
-import { EntitiesService } from "../../../common/services/entities.service";
-import { Client } from "../../../services/api/client";
-import { FeaturesService } from "../../../services/features.service";
-import { ClientMetaService } from "../../../common/services/client-meta.service";
+import { EntitiesService } from '../../../common/services/entities.service';
+import { Client } from '../../../services/api/client';
+import { FeaturesService } from '../../../services/features.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-newsfeed--single',
-  providers: [ ClientMetaService ],
-  templateUrl: 'single.component.html'
+  providers: [ClientMetaService],
+  templateUrl: 'single.component.html',
 })
-
 export class NewsfeedSingleComponent {
-
   minds = window.Minds;
   inProgress: boolean = false;
   activity: any;
@@ -35,7 +34,7 @@ export class NewsfeedSingleComponent {
     protected client: Client,
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -51,7 +50,9 @@ export class NewsfeedSingleComponent {
         this.error = '';
         this.activity = void 0;
         if (this.route.snapshot.queryParamMap.has('comment_guid')) {
-          this.focusedCommentGuid = this.route.snapshot.queryParamMap.get('comment_guid');
+          this.focusedCommentGuid = this.route.snapshot.queryParamMap.get(
+            'comment_guid'
+          );
         }
         this.load(params['guid']);
       }
@@ -70,64 +71,76 @@ export class NewsfeedSingleComponent {
 
     this.inProgress = true;
 
-    const fetchSingleGuid = this.featuresService.has('sync-feeds') ?
-      this.loadFromFeedsService(guid) :
-      this.loadLegacy(guid);
+    const fetchSingleGuid = this.featuresService.has('sync-feeds')
+      ? this.loadFromFeedsService(guid)
+      : this.loadLegacy(guid);
 
-    fetchSingleGuid.then((activity: any) => {
-      this.activity = activity;
+    fetchSingleGuid.subscribe(
+      (activity: any) => {
+        if (activity === null) {
+          return; // Not yet loaded
+        }
 
-      switch (this.activity.subtype) {
-        case 'image':
-        case 'video':
-        case 'album':
-          this.router.navigate(['/media', this.activity.guid], { replaceUrl: true });
-          break;
-        case 'blog':
-          this.router.navigate(['/blog/view', this.activity.guid], { replaceUrl: true });
-          break;
-      }
+        this.activity = activity;
 
-      this.inProgress = false;
+        switch (this.activity.subtype) {
+          case 'image':
+          case 'video':
+          case 'album':
+            this.router.navigate(['/media', this.activity.guid], {
+              replaceUrl: true,
+            });
+            break;
+          case 'blog':
+            this.router.navigate(['/blog/view', this.activity.guid], {
+              replaceUrl: true,
+            });
+            break;
+        }
 
-      if (this.activity.ownerObj) {
-        this.context.set('activity', {
-          label: `@${this.activity.ownerObj.username} posts`,
-          nameLabel: `@${this.activity.ownerObj.username}`,
-          id: this.activity.ownerObj.guid
-        });
-      } else if (this.activity.owner_guid) {
-        this.context.set('activity', {
-          label: `this user's posts`,
-          id: this.activity.owner_guid
-        });
-      } else {
-        this.context.reset();
-      }
-    })
-      .catch(e => {
         this.inProgress = false;
 
-        if (e.status === 0) {
+        if (this.activity.ownerObj) {
+          this.context.set('activity', {
+            label: `@${this.activity.ownerObj.username} posts`,
+            nameLabel: `@${this.activity.ownerObj.username}`,
+            id: this.activity.ownerObj.guid,
+          });
+        } else if (this.activity.owner_guid) {
+          this.context.set('activity', {
+            label: `this user's posts`,
+            id: this.activity.owner_guid,
+          });
+        } else {
+          this.context.reset();
+        }
+      },
+      err => {
+        this.inProgress = false;
+
+        if (err.status === 0) {
           this.error = 'Sorry, there was a timeout error.';
         } else {
-          this.error = 'Sorry, we couldn\'t load the activity';
+          this.error = "Sorry, we couldn't load the activity";
         }
+      }
+    );
+  }
+
+  loadFromFeedsService(guid: string) {
+    return this.entitiesService.single(guid);
+  }
+
+  loadLegacy(guid: string) {
+    const fakeEmitter = new EventEmitter();
+
+    this.client
+      .get('api/v1/newsfeed/single/' + guid, {}, { cache: true })
+      .then((response: any) => {
+        fakeEmitter.next(response.activity);
       });
-  }
 
-  async loadFromFeedsService(guid: string) {
-    const activity = await this.entitiesService.single(guid);
-
-    if (!activity) {
-      throw new Error('Activity not found');
-    }
-
-    return activity;
-  }
-
-  async loadLegacy(guid: string) {
-    return (<any>await this.client.get('api/v1/newsfeed/single/' + guid, {}, { cache: true })).activity;
+    return fakeEmitter;
   }
 
   delete(activity) {

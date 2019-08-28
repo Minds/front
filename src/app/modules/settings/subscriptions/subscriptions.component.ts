@@ -5,7 +5,7 @@ import { Client } from '../../../services/api';
 @Component({
   moduleId: module.id,
   selector: 'm-settings--subscriptions',
-  templateUrl: 'subscriptions.component.html'
+  templateUrl: 'subscriptions.component.html',
 })
 export class SettingsSubscriptionsComponent {
   subscriptions: any[] = [];
@@ -35,7 +35,8 @@ export class SettingsSubscriptionsComponent {
       this.subscriptions = [];
     }
 
-    this.client.get('api/v1/payments/subscriptions/exclusive', { offset: this.offset })
+    this.client
+      .get('api/v1/payments/subscriptions/exclusive', { offset: this.offset })
       .then((response: any) => {
         if (!response.subscriptions) {
           this.inProgress = false;
@@ -60,5 +61,4 @@ export class SettingsSubscriptionsComponent {
   deleteRow(index) {
     this.subscriptions.splice(index, 1);
   }
-
 }

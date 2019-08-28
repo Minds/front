@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Client } from "../../../../../services/api/client";
-import { AnalyticsCardComponent } from "../card/card.component";
-import { Subscription } from "rxjs";
+import { Client } from '../../../../../services/api/client';
+import { AnalyticsCardComponent } from '../card/card.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-analyticstokensales__card',
-  templateUrl: 'sales.component.html'
+  templateUrl: 'sales.component.html',
 })
-
 export class TokenSalesCardComponent implements OnInit {
   @ViewChild('card', { static: true }) card: AnalyticsCardComponent;
 
@@ -16,11 +15,12 @@ export class TokenSalesCardComponent implements OnInit {
   tokens: number = 0;
   sales: number = 0;
   buyers: number = 0;
-  ethEarned: number = 0;
+  ethValue: number = 0;
   ethUsdRate: number = 0;
+  currentSales: { name: string; value: number }[];
+  currentRates: { name: string; value: number }[];
 
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.getAvgData();
@@ -37,22 +37,24 @@ export class TokenSalesCardComponent implements OnInit {
   private async getAvgData() {
     try {
       let avgs: Array<any> = await Promise.all([
-        this.client.get('api/v2/analytics/tokensales', { key: 'average_sold' }),
-        this.client.get('api/v2/analytics/tokensales', { key: 'average_sales' }),
-        this.client.get('api/v2/analytics/tokensales', { key: 'average_buyers' }),
-        this.client.get('api/v2/analytics/tokensales', { key: 'average_eth_earned' }),
-        this.client.get('api/v2/analytics/tokensales', { key: 'average_eth_usd_rate' }),
+        this.client.get('api/v2/analytics/tokensales', {
+          key: '_avg',
+          timespan: this.card.selectedOption,
+        }),
+        this.client.get('api/v2/analytics/tokensales', {
+          key: 'monthly_rate_avg',
+          timespan: this.card.selectedOption,
+        }),
       ]);
-      this.tokens = avgs[0].data;
+      this.tokens = avgs[0].data.tokens;
 
-      this.sales = avgs[1].data;
+      this.sales = avgs[0].data.transactions;
 
-      this.buyers = avgs[2].data;
+      this.buyers = avgs[0].data.buyers;
 
-      this.ethEarned = avgs[3].data;
+      this.ethValue = avgs[1].data.ethValue;
 
-      this.ethUsdRate = avgs[4].data;
-
+      this.ethUsdRate = avgs[1].data.ethUsdRate;
     } catch (e) {
       console.error(e);
     }

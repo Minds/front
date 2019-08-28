@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Client } from "../../../../../services/api/client";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Client } from '../../../../../services/api/client';
+import { AnalyticsCardComponent } from '../card/card.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-analyticsactiveusers__card',
-  templateUrl: 'active-users.component.html'
+  templateUrl: 'active-users.component.html',
 })
-
 export class ActiveUsersCardComponent implements OnInit {
+  @ViewChild('card', { static: true }) card: AnalyticsCardComponent;
+
+  subscription: Subscription;
+
   hauUnique: number = 0;
   hauLoggedIn: number = 0;
   mauUnique: number = 0;
@@ -14,37 +19,48 @@ export class ActiveUsersCardComponent implements OnInit {
   dauUnique: number = 0;
   dauLoggedIn: number = 0;
   total: number = 0;
+  currents: { name: string; value: number }[];
 
-  constructor(private client: Client) { }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.getAvgData();
+
+    this.subscription = this.card.selectedOptionChange.subscribe(() => {
+      this.getAvgData();
+    });
   }
 
   private async getAvgData() {
     try {
       let avgs: Array<any> = await Promise.all([
-        this.client.get('api/v2/analytics/avgpageviews', { key: 'mau_unique' }),
-        this.client.get('api/v2/analytics/avgpageviews', { key: 'mau_loggedin' }),
-        this.client.get('api/v2/analytics/avgpageviews', { key: 'dau_loggedin' }),
-        this.client.get('api/v2/analytics/avgpageviews', { key: 'dau_unique' }),
-        this.client.get('api/v2/analytics/avgpageviews', { key: 'hau_unique' }),
-        this.client.get('api/v2/analytics/avgpageviews', { key: 'hau_loggedin' }),
-        this.client.get('api/v2/analytics/avgpageviews', { key: 'total_pageviews' })
+        this.client.get('api/v2/analytics/activeusers', {
+          key: 'avg',
+          timespan: 'hourly',
+        }),
+        this.client.get('api/v2/analytics/activeusers', {
+          key: 'avg',
+          timespan: 'daily',
+        }),
+        this.client.get('api/v2/analytics/activeusers', {
+          key: 'avg',
+          timespan: 'monthly',
+        }),
+        this.client.get('api/v2/analytics/avgpageviews', {
+          key: 'total_pageviews',
+        }),
       ]);
-      this.mauUnique = avgs[0].data;
 
-      this.mauLoggedIn = avgs[1].data;
+      this.hauUnique = avgs[0].data.uniqueHAU;
+      this.hauLoggedIn = avgs[0].data.loggedInHAU;
 
-      this.dauLoggedIn = avgs[2].data;
+      this.dauUnique = avgs[1].data.uniqueDAU;
+      this.dauLoggedIn = avgs[1].data.loggedInDAU;
 
-      this.dauUnique = avgs[3].data;
+      this.mauUnique = avgs[2].data.uniqueMAU;
+      this.mauLoggedIn = avgs[2].data.loggedInMAU;
 
-      this.hauUnique = avgs[4].data;
-
-      this.hauLoggedIn = avgs[5].data;
-
-      this.total = avgs[6].data;
+      this.total = avgs[3].data;
     } catch (e) {
       console.error(e);
     }

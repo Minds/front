@@ -10,20 +10,8 @@ import { PayWall } from './paywall/paywall.component';
 import { PaywallCancelButton } from './paywall/paywall-cancel.component';
 
 @NgModule({
-  imports: [
-    NgCommonModule,
-    CommonModule,
-    CheckoutModule,
-    ModalsModule
-  ],
-  declarations: [
-    PayWall,
-    PaywallCancelButton,
-  ],
-  exports: [
-    PayWall,
-    PaywallCancelButton,
-  ]
+  imports: [NgCommonModule, CommonModule, CheckoutModule, ModalsModule],
+  declarations: [PayWall, PaywallCancelButton],
+  exports: [PayWall, PaywallCancelButton],
 })
-export class PaymentsModule {
-}
+export class PaymentsModule {}

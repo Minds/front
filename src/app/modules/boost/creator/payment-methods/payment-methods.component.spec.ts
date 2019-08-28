@@ -1,5 +1,11 @@
 ///<reference path="../../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component, DebugElement, EventEmitter, Input } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -28,11 +34,11 @@ import { overlayModalServiceMock } from '../../../../../tests/overlay-modal-serv
 @Component({
   selector: 'minds-payments-stripe-checkout',
   outputs: ['inputed', 'done'],
-  template: ''
+  template: '',
 })
 export class StripeCheckoutMock {
-  inputed: EventEmitter<any> = new EventEmitter;
-  done: EventEmitter<any> = new EventEmitter;
+  inputed: EventEmitter<any> = new EventEmitter();
+  done: EventEmitter<any> = new EventEmitter();
 
   @Input() amount: number = 0;
   @Input() merchant_guid;
@@ -44,31 +50,30 @@ export class StripeCheckoutMock {
   @Input() useBitcoin: boolean = false;
 }
 
-
 @Component({
   selector: 'm--crypto-token-symbol',
-  template: ''
+  template: '',
 })
-class CryptoTokenSymbolMock {
-}
+class CryptoTokenSymbolMock {}
 
 @Component({
   selector: 'm-checkout--blockchain',
-  template: ''
+  template: '',
 })
-class BlockchainCheckoutMock {
-}
+class BlockchainCheckoutMock {}
 
-let web3WalletServiceMock = new function () {
+let web3WalletServiceMock = new (function() {
   this.wallets = ['0x123', '0x1234'];
   this.balance = 127000000000000000000;
   this.onChainInterfaceLabel = 'Metamask';
   this.unavailable = false;
   this.locked = false;
 
-  this.isUnavailable = jasmine.createSpy('isUnavailable').and.callFake(async () => {
-    return this.unavailable;
-  });
+  this.isUnavailable = jasmine
+    .createSpy('isUnavailable')
+    .and.callFake(async () => {
+      return this.unavailable;
+    });
 
   this.unlock = jasmine.createSpy('unlock').and.callFake(async () => {
     return this.locked;
@@ -81,32 +86,46 @@ let web3WalletServiceMock = new function () {
   this.getWallets = jasmine.createSpy('getWallets').and.callFake(async () => {
     return this.wallets;
   });
-  this.getCurrentWallet = jasmine.createSpy('getCurrentWallet').and.callFake(async () => {
-    return this.wallets[0]
-  });
+  this.getCurrentWallet = jasmine
+    .createSpy('getCurrentWallet')
+    .and.callFake(async () => {
+      return this.wallets[0];
+    });
   this.getBalance = jasmine.createSpy('getBalance').and.callFake(async () => {
     return this.balance;
   });
 
-  this.getOnChainInterfaceLabel = jasmine.createSpy('getOnChainInterfaceLabel').and.callFake(() => {
-    return this.onChainInterfaceLabel ? this.onChainInterfaceLabel: 'Metamask';
-  });
-};
+  this.getOnChainInterfaceLabel = jasmine
+    .createSpy('getOnChainInterfaceLabel')
+    .and.callFake(() => {
+      return this.onChainInterfaceLabel
+        ? this.onChainInterfaceLabel
+        : 'Metamask';
+    });
+})();
 
 describe('BoostCreatorPaymentMethodsComponent', () => {
   let comp: BoostCreatorPaymentMethodsComponent;
   let fixture: ComponentFixture<BoostCreatorPaymentMethodsComponent>;
 
   function getPaymentOption(i: 1 | 2 | 3): DebugElement {
-    return fixture.debugElement.query(By.css(`ul.m-boost--creator-selector > li:nth-child(${i})`));
+    return fixture.debugElement.query(
+      By.css(`ul.m-boost--creator-selector > li:nth-child(${i})`)
+    );
   }
 
   function getPaymentOptionTitle(i: 1 | 2 | 3): DebugElement {
-    return fixture.debugElement.query(By.css(`ul.m-boost--creator-selector > li:nth-child(${i}) h5 span`));
+    return fixture.debugElement.query(
+      By.css(`ul.m-boost--creator-selector > li:nth-child(${i}) h5 span`)
+    );
   }
 
   function getPaymentOptionBalance(i: 1 | 2): DebugElement {
-    return fixture.debugElement.query(By.css(`ul.m-boost--creator-selector > li:nth-child(${i}) span.m-boost--creator-selector--description`));
+    return fixture.debugElement.query(
+      By.css(
+        `ul.m-boost--creator-selector > li:nth-child(${i}) span.m-boost--creator-selector--description`
+      )
+    );
   }
 
   beforeEach(async(() => {
@@ -116,25 +135,25 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
         TooltipComponentMock,
         AddressExcerptPipe,
         TokenPipe,
-        BoostCreatorPaymentMethodsComponent
+        BoostCreatorPaymentMethodsComponent,
       ],
-      imports: [
-        RouterTestingModule,
-        FormsModule
-      ],
+      imports: [RouterTestingModule, FormsModule],
       providers: [
         { provide: Client, useValue: clientMock },
         BoostService,
         { provide: Web3WalletService, useValue: web3WalletServiceMock },
-        { provide: TransactionOverlayService, useValue: transactionOverlayServiceMock },
+        {
+          provide: TransactionOverlayService,
+          useValue: transactionOverlayServiceMock,
+        },
         { provide: LocalWalletService, useValue: localWalletServiceMock },
         { provide: TokenContractService, useValue: tokenContractServiceMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock }
-      ]
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+      ],
     }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -145,11 +164,11 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     clientMock.response = {};
 
     clientMock.response['api/v2/blockchain/wallet/balance'] = {
-      'status': 'success',
-      'addresses': [
-        { 'address': '0xonchain', 'balance': 500000000000000000000 }, // onchain
-        { 'address': '0xoffchain', 'balance': 7000000000000000000 } // offchain
-      ]
+      status: 'success',
+      addresses: [
+        { address: '0xonchain', balance: 500000000000000000000 }, // onchain
+        { address: '0xoffchain', balance: 7000000000000000000 }, // offchain
+      ],
     };
 
     comp.boost = {
@@ -167,7 +186,7 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
       scheduledTs: null,
 
       // Payment
-      nonce: null
+      nonce: null,
     };
 
     fixture.detectChanges();
@@ -182,7 +201,6 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
   });
 
   afterEach(() => {
-
     jasmine.clock().uninstall();
   });
 
@@ -193,14 +211,18 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
   });
 
   it('should an onchain payment option', () => {
-    expect(getPaymentOptionTitle(1).nativeElement.textContent).toContain('OnChain');
+    expect(getPaymentOptionTitle(1).nativeElement.textContent).toContain(
+      'OnChain'
+    );
   });
 
   it('clicking on the onchain payment option should set the currency to onchain', () => {
     getPaymentOption(1).nativeElement.click();
     fixture.detectChanges();
 
-    expect(getPaymentOptionTitle(1).nativeElement.textContent).toContain('OnChain');
+    expect(getPaymentOptionTitle(1).nativeElement.textContent).toContain(
+      'OnChain'
+    );
     expect(comp.boost.currency).toBe('onchain');
   });
 
@@ -208,7 +230,9 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     getPaymentOption(2).nativeElement.click();
     fixture.detectChanges();
 
-    expect(getPaymentOptionTitle(2).nativeElement.textContent).toContain('OffChain');
+    expect(getPaymentOptionTitle(2).nativeElement.textContent).toContain(
+      'OffChain'
+    );
     expect(comp.boost.currency).toBe('offchain');
   });
 
@@ -216,7 +240,9 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     getPaymentOption(3).nativeElement.click();
     fixture.detectChanges();
 
-    expect(getPaymentOptionTitle(3).nativeElement.textContent).toContain('Credit Card');
+    expect(getPaymentOptionTitle(3).nativeElement.textContent).toContain(
+      'Credit Card'
+    );
     expect(comp.boost.currency).toBe('usd');
   });
 
@@ -227,7 +253,9 @@ describe('BoostCreatorPaymentMethodsComponent', () => {
     getPaymentOption(3).nativeElement.click();
     fixture.detectChanges();
 
-    expect(getPaymentOptionTitle(3).nativeElement.textContent).toContain('Credit Card');
+    expect(getPaymentOptionTitle(3).nativeElement.textContent).toContain(
+      'Credit Card'
+    );
     expect(comp.boost.currency).toBe('creditcard');
   });
 

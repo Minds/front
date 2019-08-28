@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Client } from "../../../../../services/api/client";
-import { AnalyticsCardComponent } from "../card/card.component";
-import { Subscription } from "rxjs";
+import { Client } from '../../../../../services/api/client';
+import { AnalyticsCardComponent } from '../card/card.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-analyticsoffchainwire__card',
-  templateUrl: 'wire.component.html'
+  templateUrl: 'wire.component.html',
 })
-
 export class OffchainWireCardComponent implements OnInit {
   @ViewChild('card', { static: true }) card: AnalyticsCardComponent;
 
@@ -17,9 +16,9 @@ export class OffchainWireCardComponent implements OnInit {
   transactions: number = 0;
   receivers: number = 0;
   senders: number = 0;
+  currents: { name: string; value: number }[];
 
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.getAvgData();
@@ -35,29 +34,18 @@ export class OffchainWireCardComponent implements OnInit {
 
   private async getAvgData() {
     try {
-      let avgs: Array<any> = await Promise.all([
-        this.client.get('api/v2/analytics/offchainwire', {
-          key: 'average_tokens',
-          timespan: this.card.selectedOption
-        }),
-        this.client.get('api/v2/analytics/offchainwire', {
-          key: 'average',
-          timespan: this.card.selectedOption
-        }),
-        this.client.get('api/v2/analytics/offchainwire', {
-          key: 'average_receivers',
-          timespan: this.card.selectedOption
-        }),
-        this.client.get('api/v2/analytics/offchainwire', {
-          key: 'average_senders',
-          timespan: this.card.selectedOption
-        }),
-      ]);
+      const response: any = await this.client.get(
+        'api/v2/analytics/offchainwire',
+        {
+          key: 'avg',
+          timespan: this.card.selectedOption,
+        }
+      );
 
-      this.tokens = avgs[0].data;
-      this.transactions = avgs[1].data;
-      this.receivers = avgs[2].data;
-      this.senders = avgs[3].data;
+      this.tokens = response.data.tokens;
+      this.transactions = response.data.transactions;
+      this.receivers = response.data.receivers;
+      this.senders = response.data.senders;
     } catch (e) {
       console.error(e);
     }

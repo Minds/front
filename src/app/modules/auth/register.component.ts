@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
+import { Navigation as NavigationService } from '../../services/navigation';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { SignupModalService } from '../modals/signup/service';
@@ -11,20 +12,19 @@ import { OnboardingService } from '../onboarding/onboarding.service';
 
 @Component({
   selector: 'm-register',
-  templateUrl: 'register.component.html'
+  templateUrl: 'register.component.html',
 })
-
-export class RegisterComponent {
-
+export class RegisterComponent implements OnInit, OnDestroy {
   minds = window.Minds;
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
   inProgress: boolean = false;
+  videoError: boolean = false;
   referrer: string;
 
   flags = {
-    canPlayInlineVideos: true
+    canPlayInlineVideos: true,
   };
 
   paramsSubscription: Subscription;
@@ -37,19 +37,19 @@ export class RegisterComponent {
     private loginReferrer: LoginReferrerService,
     public session: Session,
     private onboarding: OnboardingService,
-  ) { }
+    public navigation: NavigationService
+  ) {
+    if (this.session.isLoggedIn()) {
+      this.router.navigate(['/newsfeed']);
+      return;
+    }
+  }
 
   ngOnInit() {
-    
+    // Set referrer if there is one
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       if (params['referrer']) {
         this.referrer = params['referrer'];
-      }
-
-      if (this.session.isLoggedIn() && this.referrer) {
-        this.loginReferrer.navigate({ defaultUrl: '/' + this.referrer});
-      } else if (this.session.isLoggedIn()) {
-        this.loginReferrer.navigate();
       }
     });
 
@@ -58,14 +58,17 @@ export class RegisterComponent {
     }
   }
 
-  ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-  }
-
   registered() {
-    this.loginReferrer.navigate({
-      defaultUrl: '/' + this.session.getLoggedInUser().username
-    });
+    this.router.navigate(['/' + this.session.getLoggedInUser().username]);
   }
 
+  onSourceError() {
+    this.videoError = true;
+  }
+
+  ngOnDestroy() {
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
+  }
 }

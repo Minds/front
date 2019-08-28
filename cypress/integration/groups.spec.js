@@ -1,6 +1,9 @@
 context('Groups', () => {
   beforeEach(() => {
     cy.login(true);
+
+    cy.location('pathname', { timeout: 30000 })
+      .should('eq', `/newsfeed/subscriptions`);
   })
 
   it('should create and edit a group', () => {
@@ -20,7 +23,7 @@ context('Groups', () => {
     // click on hashtags dropdown
     cy.get('m-hashtags-selector .m-dropdown--label-container').click();
     // select #ART
-    cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div:nth-child(1) > span').contains('#art').click();
+    cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('#art').click();
     // type in another hashtag manually
     cy.get('m-hashtags-selector m-form-tags-input input').type('hashtag{enter}').click();
     // click away
@@ -54,9 +57,9 @@ context('Groups', () => {
   })
 
   it('should be able to toggle conversation and comment on it', () => {
-    cy.get('m-group--sidebar-markers li:nth-child(2)').contains('test group').click();
 
-    cy.wait(1000);
+    cy.get('m-group--sidebar-markers li:nth-child(3)').contains('test group').click();
+
 
     // toggle the conversation
     cy.get('.m-groupGrid__right').should('be.visible');
@@ -73,22 +76,13 @@ context('Groups', () => {
     // comment should appear on the list
     cy.get('minds-groups-profile-conversation m-comments__tree > m-comments__thread .m-commentBubble__message').contains('lvl 1 comment');
 
-    // reply to the comment
-    cy.get('minds-groups-profile-conversation m-comments__tree > m-comments__thread m-comment .m-clickable').contains('Reply').click();
-    cy.get('minds-groups-profile-conversation m-comments__tree > m-comments__thread m-comment minds-textarea .m-editor').type('lvl 2 comment');
-    cy.get('minds-groups-profile-conversation m-comments__tree > m-comments__thread m-comment a.m-post-button').click();
-
-
-    // reply should appear
-    cy.get('minds-groups-profile-conversation m-comments__tree > m-comments__thread m-comment m-comments__thread m-comment .m-commentBubble__message').contains('lvl 2 comment');
-
     cy.on('window:confirm', (str) => {
       return true;
     });
   })
 
   it('should post an activity inside the group and record the view when scrolling', () => {
-    cy.get('m-group--sidebar-markers li:nth-child(2)').contains('test group').click();
+    cy.get('m-group--sidebar-markers li:nth-child(3)').contains('test group').click();
 
     cy.wait(1000);
 
@@ -122,7 +116,7 @@ context('Groups', () => {
   });
 
   it('should delete a group', () => {
-    cy.get('m-group--sidebar-markers li:nth-child(2)').contains('test group').click();
+    cy.get('m-group--sidebar-markers li:nth-child(3)').contains('test group').click();
 
     cy.wait(1000);
 

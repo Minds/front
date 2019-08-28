@@ -1,9 +1,9 @@
 m-boost-console-booster {
   border-radius: 3px;
   display: block;
-  @include m-theme(){
-     border: 1px solid themed($m-grey-50);
-     background-color: themed($m-white);
+  @include m-theme() {
+    border: 1px solid themed($m-grey-50);
+    background-color: themed($m-white);
   }
 
   .m-boost-console-booster--cta {
@@ -12,7 +12,7 @@ m-boost-console-booster {
     justify-content: space-between;
     padding: $minds-padding * 2;
     margin-top: $minds-padding;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 500;
     font-size: 16px;
 
@@ -31,7 +31,7 @@ m-boost-console-booster {
     > h3 {
       margin: 0.65em 0;
       text-transform: uppercase;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       font-size: 16px;
       font-weight: 500;
       line-height: 1;

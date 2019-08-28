@@ -8,16 +8,13 @@ import { Client } from '../../../services/api';
 @Component({
   moduleId: module.id,
   selector: 'm-revenue--console',
-  templateUrl: 'console.component.html'
+  templateUrl: 'console.component.html',
 })
 export class RevenueConsoleComponent {
-
-
   constructor(
     private client: Client,
     private cd: ChangeDetectorRef,
-    private fb: FormBuilder,    private router: Router
-  ) {
-  }
-
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 }

@@ -9,18 +9,16 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 
 @Component({
   selector: 'm-homepage',
-  templateUrl: 'homepage.component.html'
+  templateUrl: 'homepage.component.html',
 })
-
 export class HomepageComponent {
-
   videos: Array<any> = [];
   blogs: Array<any> = [];
   channels: Array<any> = [];
   stream = {
     1: [],
     2: [],
-    3: []
+    3: [],
   };
   offset: string = '';
   inProgress: boolean = false;
@@ -29,7 +27,7 @@ export class HomepageComponent {
   minds = window.Minds;
 
   flags = {
-    canPlayInlineVideos: true
+    canPlayInlineVideos: true,
   };
 
   constructor(
@@ -42,7 +40,7 @@ export class HomepageComponent {
   ) {
     this.title.setTitle('Minds Social Network', false);
     this.loadStream();
-    
+
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
@@ -55,13 +53,13 @@ export class HomepageComponent {
 
   loadStream(refresh: boolean = false) {
     this.inProgress = true;
-    this.client.get('api/v1/newsfeed/featured', { limit: 24, offset: this.offset })
+    this.client
+      .get('api/v1/newsfeed/featured', { limit: 24, offset: this.offset })
       .then((response: any) => {
         let col = 0;
         for (let activity of response.activity) {
           //split stream into 3 columns
-          if (col++ >= 3)
-            col = 1;
+          if (col++ >= 3) col = 1;
           this.stream[col].push(activity);
         }
         this.offset = response['load-next'];
@@ -73,14 +71,16 @@ export class HomepageComponent {
   }
 
   loadVideos() {
-    this.client.get('api/v1/entities/featured/videos', { limit: 4 })
+    this.client
+      .get('api/v1/entities/featured/videos', { limit: 4 })
       .then((response: any) => {
         this.videos = response.entities;
       });
   }
 
   loadBlogs() {
-    this.client.get('api/v1/blog/featured', { limit: 4 })
+    this.client
+      .get('api/v1/blog/featured', { limit: 4 })
       .then((response: any) => {
         this.blogs = response.blogs;
       });
@@ -88,7 +88,8 @@ export class HomepageComponent {
 
   registered() {
     this.loginReferrer.navigate({
-      defaultUrl: '/' + this.session.getLoggedInUser().username + ';onboarding=1'
+      defaultUrl:
+        '/' + this.session.getLoggedInUser().username + ';onboarding=1',
     });
   }
 

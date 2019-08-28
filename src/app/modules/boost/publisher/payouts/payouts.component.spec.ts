@@ -12,7 +12,6 @@ import { Client } from '../../../../services/api/client';
 import { DebugElement } from '@angular/core';
 
 describe('BoostPublisherPayoutsComponent', () => {
-
   let comp: BoostPublisherPayoutsComponent;
   let fixture: ComponentFixture<BoostPublisherPayoutsComponent>;
 
@@ -21,22 +20,20 @@ describe('BoostPublisherPayoutsComponent', () => {
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        BoostPublisherPayoutsComponent
+        BoostPublisherPayoutsComponent,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock }
-      ]
-    })
-      .compileComponents();
+        { provide: Client, useValue: clientMock },
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(BoostPublisherPayoutsComponent);
@@ -52,7 +49,6 @@ describe('BoostPublisherPayoutsComponent', () => {
         done();
       });
     }
-
   });
 
   afterEach(() => {
@@ -83,5 +79,4 @@ describe('BoostPublisherPayoutsComponent', () => {
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toBe(url);
   });
-
 });

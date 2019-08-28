@@ -1,14 +1,14 @@
-@import "defaults";
+@import 'defaults';
 
 m-body {
   margin-top: 52px;
   display: block;
   min-height: 100%;
-  
+
   @media screen and (max-width: $max-mobile) {
     padding-bottom: 60px;
   }
-  
+
   &.has-v2-navbar {
     margin-top: 52px;
   }

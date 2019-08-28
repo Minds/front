@@ -6,7 +6,7 @@ export class BlockchainService {
   protected serverWalletAddressCache: string;
   protected serverBalanceCache: number | string;
 
-  constructor(private client: Client) { }
+  constructor(private client: Client) {}
 
   // Wallet
 
@@ -17,11 +17,13 @@ export class BlockchainService {
 
     this.serverWalletAddressCache = void 0;
 
-    let response: any = await this.client.get(`api/v2/blockchain/wallet/address`);
+    let response: any = await this.client.get(
+      `api/v2/blockchain/wallet/address`
+    );
 
     if (response.wallet) {
       this.serverWalletAddressCache = response.wallet.address;
-      return response.wallet.address
+      return response.wallet.address;
     } else {
       throw new Error('There was an issue getting your saved wallet info');
     }
@@ -42,7 +44,9 @@ export class BlockchainService {
     this.serverBalanceCache = void 0;
 
     try {
-      let response: any = await this.client.get(`api/v2/blockchain/wallet/balance`);
+      let response: any = await this.client.get(
+        `api/v2/blockchain/wallet/balance`
+      );
 
       this.serverBalanceCache = response.balance;
 

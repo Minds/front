@@ -21,8 +21,8 @@
       width: 15em;
       text-align: right;
 
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
     }
 
@@ -36,7 +36,7 @@
       text-transform: uppercase;
       cursor: pointer;
 
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-700);
         color: themed($m-grey-700);
       }
@@ -53,7 +53,7 @@
   }
 
   .m-token-withdraw--error {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
     font-size: 12px;

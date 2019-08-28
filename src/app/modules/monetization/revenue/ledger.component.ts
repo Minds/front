@@ -9,12 +9,9 @@ import { Client } from '../../../services/api';
   moduleId: module.id,
   selector: 'm-revenue--ledger',
   templateUrl: 'ledger.component.html',
-  providers: [
-    CurrencyPipe
-  ]
+  providers: [CurrencyPipe],
 })
 export class RevenueLedgerComponent {
-
   @Input() type: string = 'charge';
 
   transactions: any[] = [];
@@ -23,7 +20,12 @@ export class RevenueLedgerComponent {
   offset: string = '';
   moreData: boolean = false;
 
-  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd: ChangeDetectorRef, private route: ActivatedRoute) {
+  constructor(
+    private client: Client,
+    private currencyPipe: CurrencyPipe,
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute
+  ) {
     route.url.subscribe(url => {
       this.type = url[0].path;
     });
@@ -45,16 +47,17 @@ export class RevenueLedgerComponent {
       this.moreData = true;
     }
 
-    return this.client.get(`api/v1/monetization/service/analytics/list`, {
-      offset: this.offset,
-      limit: 12,
-      type: this.type
-    })
+    return this.client
+      .get(`api/v1/monetization/service/analytics/list`, {
+        offset: this.offset,
+        limit: 12,
+        type: this.type,
+      })
       .then(({ transactions, 'load-next': loadNext }) => {
         this.inProgress = false;
 
         if (transactions) {
-          transactions.map((transaction) => {
+          transactions.map(transaction => {
             switch (transaction.category) {
               case 'points':
                 transaction.category = 'Points (Affiliate)';
@@ -84,5 +87,4 @@ export class RevenueLedgerComponent {
         //this.error = e.message || 'Server error';
       });
   }
-
 }

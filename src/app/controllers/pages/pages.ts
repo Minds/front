@@ -9,11 +9,9 @@ import { Navigation as NavigationService } from '../../services/navigation';
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'pages.html'
+  templateUrl: 'pages.html',
 })
-
 export class Pages {
-
   title: string = '';
   body: string = '';
   path: string = '';
@@ -22,7 +20,8 @@ export class Pages {
 
   pages: Array<any> = [];
   page: string = '';
-  @ViewChild('body', { read: ElementRef, static: true }) bodyElement:ElementRef;
+  @ViewChild('body', { read: ElementRef, static: true })
+  bodyElement: ElementRef;
 
   paramsSubscription: Subscription;
 
@@ -31,7 +30,7 @@ export class Pages {
     public client: Client,
     public navigation: NavigationService,
     public route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.titleService.setTitle('...');
@@ -50,16 +49,15 @@ export class Pages {
   }
 
   load() {
-    this.client.get('api/v1/admin/pages/' + this.page)
-      .then((response: any) => {
-        this.title = response.title;
-        this.body = response.body;
-        this.path = response.path;
-        this.header = response.header;
-        this.headerTop = response.headerTop;
-        this.titleService.setTitle(this.title);
-        this.bodyElement.nativeElement.innerHTML = this.body;
-      });
+    this.client.get('api/v1/admin/pages/' + this.page).then((response: any) => {
+      this.title = response.title;
+      this.body = response.body;
+      this.path = response.path;
+      this.header = response.header;
+      this.headerTop = response.headerTop;
+      this.titleService.setTitle(this.title);
+      this.bodyElement.nativeElement.innerHTML = this.body;
+    });
   }
 
   setUpMenu() {

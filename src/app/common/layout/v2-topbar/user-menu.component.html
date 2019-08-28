@@ -1,7 +1,12 @@
 <div class="m-user-menu m-dropdown">
-  <a class="m-user-menu__Anchor" (click)="toggleMenu()"><i class="material-icons">menu</i></a>
+  <a class="m-user-menu__Anchor" (click)="toggleMenu()"
+    ><i class="material-icons">menu</i></a
+  >
 
-  <ul class="m-dropdown__list m-user-menu__Dropdown mdl-shadow--3dp" [hidden]="!isOpen">
+  <ul
+    class="m-dropdown__list m-user-menu__Dropdown mdl-shadow--3dp"
+    [hidden]="!isOpen"
+  >
     <li
       class="m-dropdownList__item m-user-menuDropdown__Item"
       *ngIf="!getCurrentUser()"
@@ -19,7 +24,7 @@
       (click)="closeMenu()"
     >
       <a [routerLink]="['/', getCurrentUser()?.username]">
-        <i class="material-icons">people</i>
+        <i class="material-icons">person</i>
         <span i18n>View Channel</span>
       </a>
     </li>
@@ -51,9 +56,9 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/settings/general">
-        <i class="material-icons">settings</i>
-        <span i18n>Settings</span>
+      <a (click)="openReferralsModal()">
+        <i class="material-icons">people</i>
+        <span i18n="@@M__COMMON__REFER_FRIENDS">Refer Friends</span>
       </a>
     </li>
 
@@ -103,11 +108,37 @@
 
     <li
       class="m-dropdownList__item m-user-menuDropdown__Item"
+      *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a target="_blank" [href]="minds.cdn_assets_url + 'assets/documents/Whitepaper-v0.5.pdf'">
-        <i class="material-icons">description</i>
-        <span i18n>Whitepaper</span>
+      <a routerLink="/canary">
+        <i class="material-icons">new_releases</i>
+        <span *ngIf="!getCurrentUser()?.canary; else canaryDropdownItem" i18n
+          >Canary Mode</span
+        >
+        <ng-template #canaryDropdownItem>
+          <span i18n>Canary Mode</span>
+        </ng-template>
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/mobile">
+        <i class="material-icons">phone_iphone</i>
+        <span i18n>Mobile App</span>
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      (click)="closeMenu()"
+    >
+      <a target="_blank" href="https://www.teespring.com/stores/minds">
+        <i class="material-icons">shopping_cart</i>
+        <span i18n>Store</span>
       </a>
     </li>
 
@@ -116,12 +147,9 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/canary">
-        <i class="material-icons">new_releases</i>
-        <span *ngIf="!getCurrentUser()?.canary; else canaryDropdownItem" i18n>Opt-in to Experiments</span>
-        <ng-template #canaryDropdownItem>
-          <span i18n>Canary</span>
-        </ng-template>
+      <a routerLink="/content-policy">
+        <i class="material-icons">gavel</i>
+        <span i18n>Content Policy</span>
       </a>
     </li>
 
@@ -143,9 +171,9 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/content-policy">
-        <i class="material-icons">gavel</i>
-        <span i18n>Content Policy</span>
+      <a routerLink="/settings/general">
+        <i class="material-icons">settings</i>
+        <span i18n>Settings</span>
       </a>
     </li>
 

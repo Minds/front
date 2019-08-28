@@ -1,4 +1,5 @@
-.m-dropdown--list-container, .m-dropdown--expanded-list-container {
+.m-dropdown--list-container,
+.m-dropdown--expanded-list-container {
   position: relative;
 }
 
@@ -19,7 +20,6 @@
 
   // when dropdown is opened
   &.m-dropdown--label-active {
-
     .m-dropdown--label-icon-inactive {
       display: none;
     }
@@ -30,12 +30,14 @@
   }
 }
 
-.m-dropdown--list, .m-dropdown__list {
+.m-dropdown--list,
+.m-dropdown__list {
   padding: 0;
   margin: 0;
   list-style: none;
 
-  .m-dropdown--list--item, .m-dropdownList__item {
+  .m-dropdown--list--item,
+  .m-dropdownList__item {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -49,7 +51,7 @@
       text-decoration: none;
       width: 100%;
       font-weight: 400;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-700);
       }
     }
@@ -71,7 +73,8 @@
 }
 
 .m-dropdown {
-  .m-dropdown--list, .m-dropdown__list {
+  .m-dropdown--list,
+  .m-dropdown__list {
     width: 150px;
     border-radius: 3px;
     position: absolute;
@@ -81,20 +84,24 @@
     overflow: visible;
     display: block;
 
-    @include m-theme(){
-      box-shadow: 0 2px 2px 0 rgba(themed($m-black), .14), 0 3px 1px -2px rgba(themed($m-black), .2), 0 1px 5px 0 rgba(themed($m-black), .12);
+    @include m-theme() {
+      box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
+        0 3px 1px -2px rgba(themed($m-black), 0.2),
+        0 1px 5px 0 rgba(themed($m-black), 0.12);
       background-color: themed($m-white);
       border: 1px solid themed($m-grey-50);
     }
 
-    .m-dropdown--list--item, .m-dropdownList__item {
+    .m-dropdown--list--item,
+    .m-dropdownList__item {
       padding: 8px;
-      @include m-theme(){
-         border-bottom: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-grey-50);
       }
 
-      &.m-dropdown--list--item--selected, .m-dropdownList__item--selected {
-        @include m-theme(){
+      &.m-dropdown--list--item--selected,
+      .m-dropdownList__item--selected {
+        @include m-theme() {
           color: themed($m-white);
           background-color: themed($m-blue);
         }
@@ -108,7 +115,8 @@
 }
 
 .m-dropdown--expanded {
-  .m-dropdown--list, .m-dropdown__list {
+  .m-dropdown--list,
+  .m-dropdown__list {
     display: inline-flex;
     flex-direction: row;
     align-items: center;

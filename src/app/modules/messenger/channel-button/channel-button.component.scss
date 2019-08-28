@@ -1,30 +1,21 @@
 @import 'defaults.scss';
 
-m-messenger--channel-button{
-
-  > button{
-
-    cursor:pointer;
+m-messenger--channel-button {
+  > button {
     background: transparent;
     font-size: 12px;
-    border-radius: 2px;
-    text-transform: uppercase;
-    padding: 4px 8px;
+    padding: 4px 8px !important;
     min-width: 128px;
-    @include m-theme(){
-      border: 1px solid themed($m-blue-grey-400);
-      color: themed($m-blue-grey-400);
+
+    > i,
+    &.material-icons {
+      padding-bottom: 1px;
+      vertical-align: middle;
+      margin-top: 2px;
     }
 
-    > i, &.material-icons {
-      padding-right: $minds-padding;
-      padding-bottom: 1px;
-      vertical-align:middle;
-    }
-    @media screen and (max-width: $min-desktop) and (min-width: $min-tablet){
-      span {
-        display:none;
-      }
+    > span {
+      padding-left: $minds-padding;
     }
   }
 }

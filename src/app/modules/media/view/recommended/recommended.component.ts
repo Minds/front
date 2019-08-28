@@ -7,7 +7,7 @@ import { Client } from '../../../../services/api';
 @Component({
   moduleId: module.id,
   selector: 'm-media--recommended',
-  templateUrl: 'recommended.component.html'
+  templateUrl: 'recommended.component.html',
 })
 export class MediaViewRecommendedComponent {
   @Input() limit: string | number;
@@ -33,7 +33,7 @@ export class MediaViewRecommendedComponent {
   private initialized: boolean = false;
   private loaded: boolean = false;
 
-  constructor(private service: RecommendedService) { }
+  constructor(private service: RecommendedService) {}
 
   ngOnInit() {
     this.initialized = true;
@@ -47,17 +47,18 @@ export class MediaViewRecommendedComponent {
 
     this.loaded = true;
 
-    this.service.getRecommended(this.type, this.channel, {
+    this.service
+      .getRecommended(this.type, this.channel, {
         current: this.current,
         next: this.next,
-        limit: this.limit
-      }).then((entities) => {
+        limit: this.limit,
+      })
+      .then(entities => {
         if (!entities) {
           this.entities = [];
           return;
         }
         this.entities = entities;
       });
-      
   }
 }

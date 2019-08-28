@@ -7,7 +7,7 @@ import {
   Type,
   ChangeDetectorRef,
   ComponentRef,
-  ElementRef
+  ElementRef,
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
@@ -19,15 +19,17 @@ import { ImageCard } from '../../../modules/legacy/components/cards/object/image
 import { VideoCard } from '../../../modules/legacy/components/cards/object/video/video';
 import { AlbumCard } from '../../../modules/legacy/components/cards/object/album/album';
 import { BlogCard } from '../../../modules/blogs/card/card';
+import { CommentComponentV2 } from '../../../modules/comments/comment/comment.component';
 
 @Component({
   selector: 'minds-card',
   template: `
     <ng-template dynamic-host></ng-template>
-  `
+  `,
 })
 export class MindsCard implements AfterViewInit {
-  @ViewChild(DynamicHostDirective, { static: true }) cardHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true })
+  cardHost: DynamicHostDirective;
 
   object: any = {};
   type: string;
@@ -41,9 +43,7 @@ export class MindsCard implements AfterViewInit {
 
   private initialized: boolean = false;
 
-  constructor(
-    private _componentFactoryResolver: ComponentFactoryResolver
-  ) { }
+  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {}
 
   @Input('object') set _object(value: any) {
     const oldType = this.type;
@@ -100,6 +100,8 @@ export class MindsCard implements AfterViewInit {
       return BlogCard;
     } else if (object.subtype === 'album') {
       return AlbumCard;
+    } else if (object.type === 'comment') {
+      return CommentComponentV2;
     }
 
     return null;
@@ -112,7 +114,9 @@ export class MindsCard implements AfterViewInit {
       return;
     }
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(componentClass),
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        componentClass
+      ),
       viewContainerRef = this.cardHost.viewContainerRef;
 
     viewContainerRef.clear();
@@ -134,11 +138,19 @@ export class MindsCard implements AfterViewInit {
       (<GroupsCard>this.componentInstance).group = this.object;
     } else if (this.object.subtype === 'blog') {
       (<BlogCard>this.componentInstance)._blog = this.object;
+    } else if (this.object.type === 'comment') {
+      const commentComp: CommentComponentV2 = <CommentComponentV2>(
+        this.componentInstance
+      );
+      commentComp.comment = this.object;
+      commentComp.canEdit = false;
+      commentComp.hideToolbar = this.flags.hideTabs || true;
     } else {
       this.componentInstance.object = this.object;
 
       if (this.object.type === 'activity') {
-        (<Activity>this.componentInstance).hideTabs = this.flags.hideTabs || false;
+        (<Activity>this.componentInstance).hideTabs =
+          this.flags.hideTabs || false;
       }
     }
 

@@ -7,11 +7,9 @@ import { Directive, EventEmitter, ElementRef } from '@angular/core';
     '(keydown)': 'grow()',
     '(paste)': 'grow()',
     '(change)': 'grow()',
-    '(ngModelChange)': 'grow()'
-  }
+    '(ngModelChange)': 'grow()',
+  },
 })
-
-
 export class AutoGrow {
   _element: any;
   timeout: any;

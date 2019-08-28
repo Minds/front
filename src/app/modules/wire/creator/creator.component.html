@@ -8,12 +8,22 @@
     <div class="m-wire--creator--header-text">
       <div class="m-wire--avatar">
         <a [routerLink]="['/', owner.username]">
-          <img [src]="minds.cdn_url + 'icon/' + owner.guid + '/medium/' + owner.icontime" class="mdl-shadow--2dp"/>
+          <img
+            [src]="
+              minds.cdn_url + 'icon/' + owner.guid + '/medium/' + owner.icontime
+            "
+            class="mdl-shadow--2dp"
+          />
         </a>
       </div>
 
-      <p class="m-wire-creator--subtext" i18n="@@WIRE__CREATOR__WIRE_NOTICE_TOKENS">
-        Support <span>@</span>{{owner.username}} by sending them tokens. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.
+      <p
+        class="m-wire-creator--subtext"
+        i18n="@@WIRE__CREATOR__WIRE_NOTICE_TOKENS"
+      >
+        Support <span>@</span>{{ owner.username }} by sending them tokens. Once
+        you send them the amount listed in the tiers, you can receive rewards if
+        they are offered. Otherwise, it's a donation.
       </p>
     </div>
   </div>
@@ -36,10 +46,12 @@
         </ng-container>
       </h3>
 
-      <div class="m-wire--creator-wide-input m-wire--creator--amount"
+      <div
+        class="m-wire--creator-wide-input m-wire--creator--amount"
         [class.m-wire--creator-wide-input--reading]="!editingAmount"
       >
-        <input type="text"
+        <input
+          type="text"
           class="m-wire--creator-wide-input--edit"
           [ngModel]="wire.amount | number"
           (ngModelChange)="setAmount($event)"
@@ -50,10 +62,13 @@
           #amountEditor
         />
 
-        <span class="m-wire--creator-wide-input--label"
+        <span
+          class="m-wire--creator-wide-input--label"
           (click)="amountEditorFocus()"
         >
-          <ng-container i18n="tokens input|@@M__COMMON__TOKENS_INPUT">Tokens</ng-container>
+          <ng-container i18n="tokens input|@@M__COMMON__TOKENS_INPUT"
+            >Tokens</ng-container
+          >
         </span>
       </div>
 
@@ -62,149 +77,218 @@
           <span class="m-wire--creator-wide-input--cost-label">Cost</span>
 
           <span class="m-wire--creator-wide-input--cost-value">
-            <span *ngIf="tokenRate">{{ getTokenAmountRate(wire.amount) | currency:'USD':'symbol-narrow' }}</span>
+            <span *ngIf="tokenRate">{{
+              getTokenAmountRate(wire.amount) | currency: 'USD':'symbol-narrow'
+            }}</span>
             <span *ngIf="!tokenRate">&hellip;</span>
           </span>
         </span>
 
-        <span class="m-wire--creator-wide-input--cost-currency" i18n="@@M__COMMON__USD_LABEL">
+        <span
+          class="m-wire--creator-wide-input--cost-currency"
+          i18n="@@M__COMMON__USD_LABEL"
+        >
           USD
         </span>
       </div>
 
       <div class="m-wire--creator--recurring">
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="wire-recurring-1" [mdlSwitch] [toggled]="wire.recurring">
+        <label
+          class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+          for="wire-recurring-1"
+          [mdlSwitch]
+          [toggled]="wire.recurring"
+        >
           <input
-            type="checkbox" id="wire-recurring-1" class="mdl-checkbox__input"
+            type="checkbox"
+            id="wire-recurring-1"
+            class="mdl-checkbox__input"
             [ngModel]="wire.recurring"
             (ngModelChange)="toggleRecurring()"
-          >
+          />
 
-          <span class="mdl-checkbox__label" i18n="@@WIRE__CREATOR__REPEAT_TRANSACTION_MONTHLY">Repeat this transaction monthly.</span>
+          <span
+            class="mdl-checkbox__label"
+            i18n="@@WIRE__CREATOR__REPEAT_TRANSACTION_MONTHLY"
+            >Repeat this transaction monthly.</span
+          >
         </label>
       </div>
     </section>
 
     <!-- Payment Method -->
     <section class="m-wire--creator-section m-wire--creator-payment-section">
-      <h3 class="m-wire--creator-section-title--small" i18n="@@WIRE__CREATOR__WIRE_TYPE_TITLE">Payment Method</h3>
+      <h3
+        class="m-wire--creator-section-title--small"
+        i18n="@@WIRE__CREATOR__WIRE_TYPE_TITLE"
+      >
+        Payment Method
+      </h3>
 
-      <ul class="m-wire--creator-selector"
+      <ul
+        class="m-wire--creator-selector"
         [class.m-wire--creator-selector--has-selection]="wire.payloadType"
       >
         <li
           (click)="setPayloadType('onchain')"
-          [class.m-wire--creator-selector--highlight]="!wire.payloadType || wire.payloadType === 'onchain'"
+          [class.m-wire--creator-selector--highlight]="
+            !wire.payloadType || wire.payloadType === 'onchain'
+          "
         >
           <div class="m-wire--creator-selector-type">
             <i class="material-icons">check_circle</i>
             <h5>
               <span i18n="@@M__COMMON__ONCHAIN">OnChain</span>
               <m-tooltip icon="help" i18n="@@WIRE__CREATOR__ONCHAIN_TOOLTIP">
-                Onchain payments will be published to the public blockchain.
-                You may utilize Metamask or another address. These purchases require
+                Onchain payments will be published to the public blockchain. You
+                may utilize Metamask or another address. These purchases require
                 a Gas fee.
               </m-tooltip>
             </h5>
-    
+
             <span class="m-wire--creator-selector-subtext">
               <m-tooltip anchor="left">
-                <span m-tooltip--anchor class="m-boost--creator-selector--hoverable" i18n="@@M__COMMON__BALANCE">Balance</span>
+                <span
+                  m-tooltip--anchor
+                  class="m-boost--creator-selector--hoverable"
+                  i18n="@@M__COMMON__BALANCE"
+                  >Balance</span
+                >
 
-                <ng-container *ngIf="!balances.isReceiverOnchain; else receiverOnchainTooltip" i18n="@@WIRE__CREATOR__ACTIVE_ADDRESS_TOOLTIP">
-                  This balance is for the {{ balances.onChainAddress | addressExcerpt:true }} wallet that is
-                  currently active in your Ethereum interface.
+                <ng-container
+                  *ngIf="
+                    !balances.isReceiverOnchain;
+                    else receiverOnchainTooltip
+                  "
+                  i18n="@@WIRE__CREATOR__ACTIVE_ADDRESS_TOOLTIP"
+                >
+                  This balance is for the
+                  {{ balances.onChainAddress | addressExcerpt: true }} wallet
+                  that is currently active in your Ethereum interface.
                 </ng-container>
-                <ng-template #receiverOnchainTooltip i18n="@@WIRE__CREATOR__RECEIVER_ADDRESS_TOOLTIP">
-                  This balance is for the {{ balances.onChainAddress | addressExcerpt:true }} wallet that is
-                  currently set up as the receiver wallet for your channel.
-                </ng-template>
-              </m-tooltip>:
+                <ng-template
+                  #receiverOnchainTooltip
+                  i18n="@@WIRE__CREATOR__RECEIVER_ADDRESS_TOOLTIP"
+                >
+                  This balance is for the
+                  {{ balances.onChainAddress | addressExcerpt: true }} wallet
+                  that is currently set up as the receiver wallet for your
+                  channel.
+                </ng-template> </m-tooltip
+              >:
 
-              <ng-container *ngIf="balances.onchain !== null; else loadingOnchainBalance">
-                {{ balances.onchain | token:18 | number }}
+              <ng-container
+                *ngIf="balances.onchain !== null; else loadingOnchainBalance"
+              >
+                {{ balances.onchain | token: 18 | number }}
               </ng-container>
 
               <ng-template #loadingOnchainBalance>&hellip;</ng-template>
             </span>
-
           </div>
-          <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
+          <span
+            class="m-wire--creator-selector--selected-label"
+            i18n="@@M__COMMON__SELECTED"
+            >Selected</span
+          >
         </li>
 
         <li
           (click)="setPayloadType('offchain')"
-          [class.m-wire--creator-selector--highlight]="!wire.payloadType || wire.payloadType === 'offchain'"
+          [class.m-wire--creator-selector--highlight]="
+            !wire.payloadType || wire.payloadType === 'offchain'
+          "
         >
           <div class="m-wire--creator-selector-type">
             <i class="material-icons">donut_large</i>
             <h5>
               <span i18n="@@M__COMMON__OFFCHAIN">OffChain</span>
               <m-tooltip icon="help" i18n="@@WIRE__CREATOR__OFFCHAIN_TOOLTIP">
-                Offchain payments will not be published to the blockchain
-                and are limited to 100 tokens a day.
+                Offchain payments will not be published to the blockchain and
+                are limited to 100 tokens a day.
               </m-tooltip>
             </h5>
 
             <span class="m-wire--creator-selector-subtext">
               <m-tooltip anchor="left">
-                <span m-tooltip--anchor class="m-boost--creator-selector--hoverable" i18n="@@M__COMMON__BALANCE">Balance</span>
+                <span
+                  m-tooltip--anchor
+                  class="m-boost--creator-selector--hoverable"
+                  i18n="@@M__COMMON__BALANCE"
+                  >Balance</span
+                >
 
                 <ng-container i18n="@@WIRE__CREATOR__BALANCE_OFFCHAIN_TOOLTIP">
-                  This balance is for your Minds.com OffChain wallet. Transactions
-                  made from this address will not appear on the blockchain.
-                </ng-container>
-              </m-tooltip>:
+                  This balance is for your Minds.com OffChain wallet.
+                  Transactions made from this address will not appear on the
+                  blockchain.
+                </ng-container> </m-tooltip
+              >:
 
-              <ng-container *ngIf="balances.onchain !== null; else loadingOnchainBalance">
-                {{ balances.offchain | token:18 | number }}
+              <ng-container
+                *ngIf="balances.onchain !== null; else loadingOnchainBalance"
+              >
+                {{ balances.offchain | token: 18 | number }}
               </ng-container>
 
               <ng-template #loadingOnchainBalance>&hellip;</ng-template>
             </span>
-
           </div>
-          <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
+          <span
+            class="m-wire--creator-selector--selected-label"
+            i18n="@@M__COMMON__SELECTED"
+            >Selected</span
+          >
         </li>
 
-        <li
-          (click)="buyTokens()" 
-        >
+        <li (click)="buyTokens()">
           <div class="m-wire--creator-selector-type">
             <i class="material-icons">monetization_on</i>
             <h5 i18n="@@M__COMMON__BUY_MINDS_TOKENS">
               <span>Buy Tokens</span>
             </h5>
 
-            <span class="m-wire--creator-selector-subtext" i18n="@@M__WIRE_CREATOR__DONT_HAVE_TOKENS">
+            <span
+              class="m-wire--creator-selector-subtext"
+              i18n="@@M__WIRE_CREATOR__DONT_HAVE_TOKENS"
+            >
               Don't have tokens?
             </span>
           </div>
-          <span class="m-wire--creator-selector--selected-label" i18n="@@M__COMMON__SELECTED">Selected</span>
+          <span
+            class="m-wire--creator-selector--selected-label"
+            i18n="@@M__COMMON__SELECTED"
+            >Selected</span
+          >
         </li>
 
         <ng-template #spacer>
-            <li class="m-layout--spacer"></li>
+          <li class="m-layout--spacer"></li>
         </ng-template>
       </ul>
-
     </section>
-
   </section>
 
   <!-- Submit -->
-  <section class="m-wire--creator-section m-wire--creator-section--last"
+  <section
+    class="m-wire--creator-section m-wire--creator-section--last"
     (mouseenter)="showErrors()"
   >
-
     <div class="m-wire--creator--submit">
-      <button class="m-wire--creator-button"
+      <button
+        class="m-wire--creator-button"
         [disabled]="!canSubmit() || inProgress || success || criticalError"
         (click)="submit()"
         i18n="@@WIRE__CREATOR__SEND_ACTION"
-      >SEND</button>
+      >
+        SEND
+      </button>
 
-      <div *ngIf="inProgress" class="m-wire--creator--submit-label mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+      <div
+        *ngIf="inProgress"
+        class="m-wire--creator--submit-label mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+      ></div>
 
       <div *ngIf="!inProgress && success" class="m-wire--creator--submit-label">
         <i class="material-icons">check</i>

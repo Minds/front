@@ -6,10 +6,9 @@ import { debounceTime } from 'rxjs/operators';
   selector: '[commentsScroll]',
   inputs: ['_emitter: emitter', 'enabled'],
   outputs: ['previous', 'next'],
-  exportAs: 'commentsScroll'
+  exportAs: 'commentsScroll',
 })
 export class CommentsScrollDirective {
-
   emitter: EventEmitter<any>;
   enabled: boolean = true;
   previous: EventEmitter<any> = new EventEmitter();
@@ -116,7 +115,10 @@ export class CommentsScrollDirective {
     if (this.stickInterval) {
       clearInterval(this.stickInterval);
     }
-    this.stickInterval = setInterval(() => this.stick(), this.STICK_INTERVAL_MS);
+    this.stickInterval = setInterval(
+      () => this.stick(),
+      this.STICK_INTERVAL_MS
+    );
   }
 
   top(run?: boolean, stick?: boolean) {

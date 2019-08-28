@@ -1,5 +1,11 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { Client } from '../../services/api/client';
@@ -12,32 +18,29 @@ import { Mock, MockComponent, MockDirective } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NotificationsFlyoutComponent', () => {
-
   let comp: NotificationsFlyoutComponent;
   let fixture: ComponentFixture<NotificationsFlyoutComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        MockComponent({
-          selector: 'minds-notifications',
-          inputs: ['loadOnDemand', 'hidden', 'visible', 'useOwnScrollSource'],
-        }, ['onVisible']),
+        MockComponent(
+          {
+            selector: 'minds-notifications',
+            inputs: ['loadOnDemand', 'hidden', 'visible', 'useOwnScrollSource'],
+          },
+          ['onVisible']
+        ),
         NotificationsFlyoutComponent,
       ],
       imports: [RouterTestingModule],
-      providers: [
-        { provide: Client, useValue: clientMock },
-      ]
-    })
-      .compileComponents();  // compile template and css
+      providers: [{ provide: Client, useValue: clientMock }],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
-
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -62,14 +65,16 @@ describe('NotificationsFlyoutComponent', () => {
   });
 
   it('Should use the onvisible method', () => {
-    const notifications = fixture.debugElement.query(By.css('minds-notifications'));
+    const notifications = fixture.debugElement.query(
+      By.css('minds-notifications')
+    );
     expect(notifications).not.toBeNull();
   });
 
   it('Should emit close evt', () => {
     spyOn(comp.closeEvt, 'emit').and.callThrough();
     comp.close();
-    
+
     expect(comp.closeEvt.emit).toHaveBeenCalled();
   });
 
@@ -77,5 +82,4 @@ describe('NotificationsFlyoutComponent', () => {
     comp.toggleLoad();
     expect(comp.notificationList.onVisible).toHaveBeenCalled();
   });
-
 });

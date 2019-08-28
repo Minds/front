@@ -6,21 +6,27 @@ import { Session } from './session';
 import { SocketsService } from './sockets';
 
 export class WalletService {
-
   points: number | null = null;
 
   apiInProgress: boolean = false;
-  private pointsEmitter: EventEmitter<{ batch, total }> = new EventEmitter<{ batch, total }>();
+  private pointsEmitter: EventEmitter<{ batch; total }> = new EventEmitter<{
+    batch;
+    total;
+  }>();
   private pointsTxSubscription: Subscription;
 
   static _(session: Session, client: Client, sockets: SocketsService) {
     return new WalletService(session, client, sockets);
   }
 
-  constructor(@Inject(Session) public session: Session, @Inject(Client) public client: Client, @Inject(SocketsService) private sockets: SocketsService) {
+  constructor(
+    @Inject(Session) public session: Session,
+    @Inject(Client) public client: Client,
+    @Inject(SocketsService) private sockets: SocketsService
+  ) {
     this.getBalance();
 
-    this.session.isLoggedIn((is) => {
+    this.session.isLoggedIn(is => {
       if (is) {
         this.getBalance(true);
       } else {
@@ -32,7 +38,7 @@ export class WalletService {
     this.listen();
   }
 
-  onPoints(): EventEmitter<{ batch, total }> {
+  onPoints(): EventEmitter<{ batch; total }> {
     return this.pointsEmitter;
   }
 
@@ -71,7 +77,8 @@ export class WalletService {
       this.points = null;
       this.apiInProgress = true;
 
-      return this.client.get(`api/v1/blockchain/wallet/balance`)
+      return this.client
+        .get(`api/v1/blockchain/wallet/balance`)
         .then(({ balance }) => {
           this.apiInProgress = false;
 
@@ -106,13 +113,16 @@ export class WalletService {
 
   // real-time
   listen() {
-    this.pointsTxSubscription = this.sockets.subscribe('pointsTx', (points, entity_guid, description) => {
-      if (this.apiInProgress) {
-        return;
-      }
+    this.pointsTxSubscription = this.sockets.subscribe(
+      'pointsTx',
+      (points, entity_guid, description) => {
+        if (this.apiInProgress) {
+          return;
+        }
 
-      this.delta(points);
-    });
+        this.delta(points);
+      }
+    );
   }
 
   // @todo: when? implement at some global ngOnDestroy()
@@ -121,5 +131,4 @@ export class WalletService {
       this.pointsTxSubscription.unsubscribe();
     }
   }
-
 }

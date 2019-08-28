@@ -1,23 +1,20 @@
-export type WireRewardsType =
-  'points' |
-  'money' |
-  'tokens';
+export type WireRewardsType = 'points' | 'money' | 'tokens';
 
 export type WireRewardsTier = {
-  amount: number | '',
-  description: string
+  amount: number | '';
+  description: string;
 };
 
 export type WireRewardsTiers = Array<WireRewardsTier>;
 
 export type WireRewardsStruc = {
-  description: string,
+  description: string;
   rewards: {
-    [key in WireRewardsType]: WireRewardsTiers
-  }
+    [key in WireRewardsType]: WireRewardsTiers;
+  };
 };
 
 export type WireThresholdStruc = {
-  type: WireRewardsType,
-  min: number | ''
+  type: WireRewardsType;
+  min: number | '';
 };

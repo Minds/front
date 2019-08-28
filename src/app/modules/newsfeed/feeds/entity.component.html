@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="entity.type">
+<ng-container [ngSwitch]="entity.type" *ngIf="entity">
   <ng-container *ngSwitchCase="'user'">
     <ng-template dynamic-host></ng-template>
   </ng-container>

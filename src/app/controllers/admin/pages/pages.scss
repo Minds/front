@@ -1,5 +1,5 @@
 minds-admin-pages {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -9,14 +9,17 @@ minds-admin-pages {
       font-weight: 600;
       font-size: 42px;
       letter-spacing: 1.5px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
       font-weight: 600;
       letter-spacing: 1.5px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
     }
@@ -27,20 +30,19 @@ minds-admin-pages {
       font-size: 21px;
       line-height: 1.58;
       letter-spacing: 0.5px;
-      letter-spacing: -.003em;
-      font-family: 'Roboto';
+      letter-spacing: -0.003em;
+      font-family: 'Roboto', Helvetica, sans-serif;
       margin-top: 29px;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
-      @include m-theme(){
+      @include m-theme() {
         color: rgba(themed($m-black), 0.84);
       }
     }
   }
   .m-button.m-button--delete {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
-
   }
 }

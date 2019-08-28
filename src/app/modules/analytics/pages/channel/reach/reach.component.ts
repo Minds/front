@@ -5,13 +5,10 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <m-analyticsinteractions__card></m-analyticsinteractions__card>
     <m-analyticschannelboosts__card></m-analyticschannelboosts__card>
-  `
+  `,
 })
-
 export class ChannelReachAnalyticsComponent implements OnInit {
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }
