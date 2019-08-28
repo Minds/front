@@ -21,8 +21,8 @@ export class Web3WalletService {
 
   constructor(
     protected localWallet: LocalWalletService,
-    protected transactionOverlay: TransactionOverlayService,
-  ) { }
+    protected transactionOverlay: TransactionOverlayService
+  ) {}
 
   // Wallet
 
@@ -30,7 +30,7 @@ export class Web3WalletService {
     try {
       await this.ready();
 
-      if (!await this.isSameNetwork()) {
+      if (!(await this.isSameNetwork())) {
         return false;
       }
 
@@ -44,7 +44,9 @@ export class Web3WalletService {
     }
   }
 
-  async getCurrentWallet(forceAuthorization: boolean = false): Promise<string | false> {
+  async getCurrentWallet(
+    forceAuthorization: boolean = false
+  ): Promise<string | false> {
     let wallets = await this.getWallets(forceAuthorization);
 
     if (!wallets || !wallets.length) {
@@ -56,8 +58,7 @@ export class Web3WalletService {
 
   async getBalance(address): Promise<string | false> {
     return new Promise<string | false>((resolve, reject) => {
-      if (!window.web3 && !window.web3.eth)
-        return reject(false);
+      if (!window.web3 && !window.web3.eth) return reject(false);
       window.web3.eth.getBalance(address, (error, result) => {
         if (error) {
           console.log(error);
@@ -101,7 +102,10 @@ export class Web3WalletService {
     }
 
     // assume main network
-    return (await callbackToPromise(window.web3.version.getNetwork) || 1) == this.config.client_network;
+    return (
+      ((await callbackToPromise(window.web3.version.getNetwork)) || 1) ==
+      this.config.client_network
+    );
   }
 
   // Bootstrap
@@ -158,10 +162,13 @@ export class Web3WalletService {
     this.EthJS = Eth;
 
     // Non-metamask
-    this.eth = new Eth(new SignerProvider(this.config.network_address, {
-      signTransaction: (rawTx, cb) => this.localWallet.signTransaction(rawTx, cb),
-      accounts: cb => this.localWallet.accounts(cb)
-    }));
+    this.eth = new Eth(
+      new SignerProvider(this.config.network_address, {
+        signTransaction: (rawTx, cb) =>
+          this.localWallet.signTransaction(rawTx, cb),
+        accounts: cb => this.localWallet.accounts(cb),
+      })
+    );
     this.local = true;
   }
 
@@ -171,7 +178,14 @@ export class Web3WalletService {
 
   // Contract Methods
 
-  async sendSignedContractMethodWithValue(contract: any, method: string, params: any[], value: number | string, message: string = '', tokenDelta: number = 0): Promise<string> {
+  async sendSignedContractMethodWithValue(
+    contract: any,
+    method: string,
+    params: any[],
+    value: number | string,
+    message: string = '',
+    tokenDelta: number = 0
+  ): Promise<string> {
     let txHash;
 
     if (await this.isLocal()) {
@@ -204,13 +218,29 @@ export class Web3WalletService {
     return txHash;
   }
 
-  async sendSignedContractMethod(contract: any, method: string, params: any[], message: string = '', tokenDelta: number = 0): Promise<string> {
-    return await this.sendSignedContractMethodWithValue(contract, method, params, 0, message, tokenDelta);
+  async sendSignedContractMethod(
+    contract: any,
+    method: string,
+    params: any[],
+    message: string = '',
+    tokenDelta: number = 0
+  ): Promise<string> {
+    return await this.sendSignedContractMethodWithValue(
+      contract,
+      method,
+      params,
+      0,
+      message,
+      tokenDelta
+    );
   }
 
   // Normal Transactions
 
-  async sendTransaction(originalTxObject: any, message: string = ''): Promise<string> {
+  async sendTransaction(
+    originalTxObject: any,
+    message: string = ''
+  ): Promise<string> {
     let txHash;
 
     if (await this.isLocal()) {
@@ -247,9 +277,13 @@ export class Web3WalletService {
       return 'Private Key';
     }
 
-    if (window.web3.currentProvider.constructor.name === 'MetamaskInpageProvider') {
+    if (
+      window.web3.currentProvider.constructor.name === 'MetamaskInpageProvider'
+    ) {
       return 'Metamask';
-    } else if (window.web3.currentProvider.constructor.name === 'EthereumProvider') {
+    } else if (
+      window.web3.currentProvider.constructor.name === 'EthereumProvider'
+    ) {
       return 'Mist';
     } else if (window.web3.currentProvider.constructor.name === 'o') {
       return 'Parity';
@@ -260,7 +294,10 @@ export class Web3WalletService {
 
   // Service provider
 
-  static _(localWallet: LocalWalletService, transactionOverlay: TransactionOverlayService) {
+  static _(
+    localWallet: LocalWalletService,
+    transactionOverlay: TransactionOverlayService
+  ) {
     return new Web3WalletService(localWallet, transactionOverlay);
   }
 }

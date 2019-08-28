@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     path: 'token',
     component: BlockchainMarketingComponent,
-  }
+  },
 ];
 
 @NgModule({
@@ -49,11 +49,7 @@ const routes: Routes = [
     BlockchainMarketingCountdownComponent,
     BlockchainEthModalComponent,
   ],
-  exports: [
-    BlockchainMarketingComponent,
-  ],
-  entryComponents: [
-    BlockchainMarketingComponent,
-  ]
+  exports: [BlockchainMarketingComponent],
+  entryComponents: [BlockchainMarketingComponent],
 })
-export class BlockchainMarketingModule { }
+export class BlockchainMarketingModule {}

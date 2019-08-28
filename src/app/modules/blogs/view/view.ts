@@ -11,23 +11,23 @@ import { MindsBlogEntity } from '../../../interfaces/entities';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ShareModalComponent } from '../../../modules/modals/share/share';
 
 @Component({
   moduleId: module.id,
   selector: 'm-blog-view',
   inputs: ['_blog: blog', '_index: index'],
   host: {
-    'class': 'm-blog'
+    class: 'm-blog',
   },
-  templateUrl: 'view.html'
+  templateUrl: 'view.html',
 })
-
 export class BlogView {
-
   minds;
   guid: string;
   blog: MindsBlogEntity;
-  sharetoggle: boolean = false;
+  // sharetoggle: boolean = false;
   deleteToggle: boolean = false;
   element;
 
@@ -40,10 +40,19 @@ export class BlogView {
 
   scroll_listener;
 
-  menuOptions: Array<string> = ['edit', 'follow', 'feature', 'delete', 'report', 'subscribe', 'set-explicit', 'remove-explicit', 'rating'];
+  menuOptions: Array<string> = [
+    'edit',
+    'follow',
+    'feature',
+    'delete',
+    'report',
+    'subscribe',
+    'set-explicit',
+    'remove-explicit',
+    'rating',
+  ];
 
   @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
-
 
   constructor(
     public session: Session,
@@ -55,13 +64,13 @@ export class BlogView {
     public attachment: AttachmentService,
     private context: ContextService,
     public analytics: AnalyticsService,
-    public analyticsService: AnalyticsService
+    public analyticsService: AnalyticsService,
+    private overlayModal: OverlayModalService
   ) {
     this.minds = window.Minds;
     this.element = _element.nativeElement;
     optimizedResize.add(this.onResize.bind(this));
   }
-
 
   ngOnInit() {
     this.isVisible();
@@ -70,25 +79,34 @@ export class BlogView {
 
   isVisible() {
     //listens every 0.6 seconds
-    this.scroll_listener = this.scroll.listen((e) => {
-      const bounds = this.element.getBoundingClientRect();
-      if (bounds.top < this.scroll.view.clientHeight && bounds.top + bounds.height > this.scroll.view.clientHeight) {
-        let url = `${this.minds.site_url}blog/view/${this.blog.guid}`;
+    this.scroll_listener = this.scroll.listen(
+      e => {
+        const bounds = this.element.getBoundingClientRect();
+        if (
+          bounds.top < this.scroll.view.clientHeight &&
+          bounds.top + bounds.height > this.scroll.view.clientHeight
+        ) {
+          let url = `${this.minds.site_url}blog/view/${this.blog.guid}`;
 
-        if (this.blog.route) {
-          url = `${this.minds.site_url}${this.blog.route}`;
-        }
+          if (this.blog.route) {
+            url = `${this.minds.site_url}${this.blog.route}`;
+          }
 
-        if (!this.visible) {
-          window.history.pushState(null, this.blog.title, url);
-          this.title.setTitle(this.blog.title);
-          this.analyticsService.send('pageview', {url: `/blog/view/${this.blog.guid}`});
+          if (!this.visible) {
+            window.history.pushState(null, this.blog.title, url);
+            this.title.setTitle(this.blog.title);
+            this.analyticsService.send('pageview', {
+              url: `/blog/view/${this.blog.guid}`,
+            });
+          }
+          this.visible = true;
+        } else {
+          this.visible = false;
         }
-        this.visible = true;
-      } else {
-        this.visible = false;
-      }
-    }, 0, 300);
+      },
+      0,
+      300
+    );
   }
 
   set _blog(value: MindsBlogEntity) {
@@ -106,15 +124,15 @@ export class BlogView {
   }
 
   delete() {
-    this.client.delete('api/v1/blog/' + this.blog.guid)
+    this.client
+      .delete('api/v1/blog/' + this.blog.guid)
       .then((response: any) => {
         this.router.navigate(['/blog/owner']);
       });
   }
 
   ngOnDestroy() {
-    if (this.scroll_listener)
-      this.scroll.unListen(this.scroll_listener);
+    if (this.scroll_listener) this.scroll.unListen(this.scroll_listener);
   }
 
   menuOptionSelected(option: string) {
@@ -137,21 +155,37 @@ export class BlogView {
   setExplicit(value: boolean) {
     this.blog.mature = value;
 
-    this.client.post(`api/v1/entities/explicit/${this.blog.guid}`, { value: value ? '1' : '0' })
+    this.client
+      .post(`api/v1/entities/explicit/${this.blog.guid}`, {
+        value: value ? '1' : '0',
+      })
       .catch(e => {
         this.blog.mature = this.blog.mature;
       });
   }
 
   calculateLockScreenHeight() {
-    if (!this.lockScreen) 
-      return;
-    const lockScreenOverlay = this.lockScreen.nativeElement.querySelector('.m-wire--lock-screen');
+    if (!this.lockScreen) return;
+    const lockScreenOverlay = this.lockScreen.nativeElement.querySelector(
+      '.m-wire--lock-screen'
+    );
     if (lockScreenOverlay) {
       const rect = lockScreenOverlay.getBoundingClientRect();
 
       lockScreenOverlay.style.height = `calc(100vh - ${rect.top}px)`;
     }
+  }
+
+  openShareModal() {
+    const url: string =
+      this.minds.site_url +
+      (this.blog.route ? this.blog.route : 'blog/view/' + this.blog.guid);
+
+    this.overlayModal
+      .create(ShareModalComponent, url, {
+        class: 'm-overlay-modal--medium m-overlayModal__share',
+      })
+      .present();
   }
 
   /**

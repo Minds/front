@@ -12,9 +12,7 @@ import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
   selector: 'minds-admin-reports',
   templateUrl: 'reports.html',
 })
-
 export class AdminReports {
-
   filter: string = 'reports';
   type: string = 'review';
   reports: any[] = [];
@@ -24,9 +22,9 @@ export class AdminReports {
   offset: string = '';
   paramsSubscription: Subscription;
 
-  reasons: Array<{value, label}> = REASONS;
+  reasons: Array<{ value; label }> = REASONS;
 
-  constructor(public client: Client, private route: ActivatedRoute) { }
+  constructor(public client: Client, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.type = 'review';
@@ -63,7 +61,10 @@ export class AdminReports {
     this.inProgress = true;
 
     try {
-      let response: any = await this.client.get(`api/v1/admin/reports/${this.type}`, { limit: 24, offset: this.offset });
+      let response: any = await this.client.get(
+        `api/v1/admin/reports/${this.type}`,
+        { limit: 24, offset: this.offset }
+      );
 
       if (refresh) {
         this.reports = [];
@@ -98,9 +99,9 @@ export class AdminReports {
   }
 
   parseAction(action: string) {
-    return typeof REPORT_ACTIONS[action] !== 'undefined' ?
-      REPORT_ACTIONS[action] :
-      action;
+    return typeof REPORT_ACTIONS[action] !== 'undefined'
+      ? REPORT_ACTIONS[action]
+      : action;
   }
 
   removeFromList(index) {
@@ -115,13 +116,19 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/archive`, {});
+      let response: any = await this.client.post(
+        `api/v1/admin/reports/${report.guid}/archive`,
+        {}
+      );
 
       if (!response.done) {
         alert('There was a problem archiving this report. Please reload.');
       }
     } catch (e) {
-      alert((e && e.message) || 'There was a problem archiving this report. Please reload.');
+      alert(
+        (e && e.message) ||
+          'There was a problem archiving this report. Please reload.'
+      );
     }
   }
 
@@ -133,13 +140,21 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/explicit`, { reason: report.reason });
+      let response: any = await this.client.post(
+        `api/v1/admin/reports/${report.guid}/explicit`,
+        { reason: report.reason }
+      );
 
       if (!response.done) {
-        alert('There was a problem marking this content as explicit. Please reload.');
+        alert(
+          'There was a problem marking this content as explicit. Please reload.'
+        );
       }
     } catch (e) {
-      alert((e && e.message) || 'There was a problem marking this content as explicit. Please reload.');
+      alert(
+        (e && e.message) ||
+          'There was a problem marking this content as explicit. Please reload.'
+      );
     }
   }
 
@@ -151,13 +166,21 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/spam`, { reason: report.reason });
+      let response: any = await this.client.post(
+        `api/v1/admin/reports/${report.guid}/spam`,
+        { reason: report.reason }
+      );
 
       if (!response.done) {
-        alert('There was a problem marking this content as spam. Please reload.');
+        alert(
+          'There was a problem marking this content as spam. Please reload.'
+        );
       }
     } catch (e) {
-      alert((e && e.message) || 'There was a problem marking this content as spam. Please reload.');
+      alert(
+        (e && e.message) ||
+          'There was a problem marking this content as spam. Please reload.'
+      );
     }
   }
 
@@ -169,50 +192,77 @@ export class AdminReports {
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.post(`api/v1/admin/reports/${report.guid}/delete`, { reason: report.reason });
+      let response: any = await this.client.post(
+        `api/v1/admin/reports/${report.guid}/delete`,
+        { reason: report.reason }
+      );
 
       if (!response.done) {
         alert('There was a problem deleting this content. Please reload.');
       }
     } catch (e) {
-      alert((e && e.message) || 'There was a problem deleting this content. Please reload.');
+      alert(
+        (e && e.message) ||
+          'There was a problem deleting this content. Please reload.'
+      );
     }
   }
 
   async approveAppeal(report: any, index: number) {
-    if (!confirm(`This will approve an appeal and undo the last administrative action. There's no UNDO. Are you sure?`)) {
+    if (
+      !confirm(
+        `This will approve an appeal and undo the last administrative action. There's no UNDO. Are you sure?`
+      )
+    ) {
       return;
     }
 
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.put(`api/v1/admin/reports/appeals/${report.guid}`, { reason: report.reason });
+      let response: any = await this.client.put(
+        `api/v1/admin/reports/appeals/${report.guid}`,
+        { reason: report.reason }
+      );
 
       if (!response.done) {
-        alert(`There was a problem approving this content's appeal. Please reload.`);
+        alert(
+          `There was a problem approving this content's appeal. Please reload.`
+        );
       }
     } catch (e) {
-      alert((e && e.message) || `There was a problem approving this content's appeal. Please reload.`);
+      alert(
+        (e && e.message) ||
+          `There was a problem approving this content's appeal. Please reload.`
+      );
     }
   }
 
   async rejectAppeal(report: any, index: number) {
-    if (!confirm(`This will reject an appeal. There's no UNDO. Are you sure?`)) {
+    if (
+      !confirm(`This will reject an appeal. There's no UNDO. Are you sure?`)
+    ) {
       return;
     }
 
     this.removeFromList(index);
 
     try {
-      let response: any = await this.client.delete(`api/v1/admin/reports/appeals/${report.guid}`, { reason: report.reason });
+      let response: any = await this.client.delete(
+        `api/v1/admin/reports/appeals/${report.guid}`,
+        { reason: report.reason }
+      );
 
       if (!response.done) {
-        alert(`There was a problem rejecting this content's appeal. Please reload.`);
+        alert(
+          `There was a problem rejecting this content's appeal. Please reload.`
+        );
       }
     } catch (e) {
-      alert((e && e.message) || `There was a problem rejecting this content's appeal. Please reload.`);
+      alert(
+        (e && e.message) ||
+          `There was a problem rejecting this content's appeal. Please reload.`
+      );
     }
   }
-
 }

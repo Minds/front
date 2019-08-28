@@ -1,4 +1,13 @@
-import { Component, AfterViewInit, OnDestroy, OnChanges, Input, ViewChild, ElementRef, NgZone } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  OnDestroy,
+  OnChanges,
+  Input,
+  ViewChild,
+  ElementRef,
+  NgZone,
+} from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -15,9 +24,9 @@ export interface ChartColumn {
   template: `
     <div class="m-chart-container" #container></div>
   `,
-  host:{
-    '(window:resize)' : 'draw()'
-  }
+  host: {
+    '(window:resize)': 'draw()',
+  },
 })
 export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() title: string;
@@ -33,14 +42,16 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
 
   private _resizeWatch: Subscription;
 
-  constructor(private ngZone: NgZone, private googleChartsLoader: GoogleChartsLoader) { }
+  constructor(
+    private ngZone: NgZone,
+    private googleChartsLoader: GoogleChartsLoader
+  ) {}
 
   ngAfterViewInit() {
-    this.googleChartsLoader.ready()
-      .then(() => {
-        this.attach();
-        this.draw();
-      });
+    this.googleChartsLoader.ready().then(() => {
+      this.attach();
+      this.draw();
+    });
 
     this._resizeWatch = fromEvent(window, 'resize')
       .pipe(debounceTime(250))
@@ -97,26 +108,27 @@ export class ChartComponent implements AfterViewInit, OnDestroy, OnChanges {
     this._chartInstance.draw(data, {
       chart: {
         title: this.title,
-        subtitle: this.subtitle
+        subtitle: this.subtitle,
       },
       axisTitlesPosition: 'none',
       axes: {
         x: {
-          0: { side: 'bottom', label: ''}
-        }
+          0: { side: 'bottom', label: '' },
+        },
       },
       legend: {
-        position: 'none'
+        position: 'none',
       },
-      animation: { // @note: animation doesn't work yet in the current implementation of Material Charts
+      animation: {
+        // @note: animation doesn't work yet in the current implementation of Material Charts
         startup: true,
         duration: 1000,
         easing: 'out',
       },
       chartArea: {
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
       },
-      curveType: 'function'
+      curveType: 'function',
     });
   }
 }

@@ -7,7 +7,7 @@ import {
   Type,
   ChangeDetectorRef,
   ComponentRef,
-  ElementRef
+  ElementRef,
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
@@ -18,10 +18,11 @@ import { BoostButton } from '../../../modules/legacy/components/buttons/boost';
   selector: 'minds-button',
   template: `
     <ng-template dynamic-host></ng-template>
-  `
+  `,
 })
 export class MindsButton implements AfterViewInit {
-  @ViewChild(DynamicHostDirective, { static: true }) cardHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true })
+  cardHost: DynamicHostDirective;
 
   object: any = {};
   @Input() type: string;
@@ -34,9 +35,7 @@ export class MindsButton implements AfterViewInit {
 
   private initialized: boolean = false;
 
-  constructor(
-    private _componentFactoryResolver: ComponentFactoryResolver
-  ) { }
+  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {}
 
   @Input('object') set _object(value: any) {
     const oldType = this.type;
@@ -84,7 +83,9 @@ export class MindsButton implements AfterViewInit {
       return;
     }
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(componentClass),
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        componentClass
+      ),
       viewContainerRef = this.cardHost.viewContainerRef;
 
     viewContainerRef.clear();

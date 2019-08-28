@@ -1,7 +1,7 @@
 import { Pipe } from '@angular/core';
 
 @Pipe({
-  name: 'token'
+  name: 'token',
 })
 export class TokenPipe {
   transform(number: number, decimals: number = 18) {

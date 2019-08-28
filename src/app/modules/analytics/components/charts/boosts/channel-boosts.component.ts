@@ -1,12 +1,25 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Client } from "../../../../../services/api/client";
-import { removeCurrentUnits } from "../../../util";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { Client } from '../../../../../services/api/client';
+import { removeCurrentUnits } from '../../../util';
 
 @Component({
   selector: 'm-analyticscharts__channelboosts',
   template: `
     <div class="m-chart" #chartContainer>
-      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
+      <div
+        class="mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+        *ngIf="inProgress"
+      ></div>
 
       <m-graph
         [data]="data"
@@ -14,9 +27,8 @@ import { removeCurrentUnits } from "../../../util";
         *ngIf="!inProgress && !!data"
       ></m-graph>
     </div>
-  `
+  `,
 })
-
 export class ChannelBoostsComponent implements OnInit {
   @Input() analytics: 'totals' | 'monthly';
   @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
@@ -31,24 +43,22 @@ export class ChannelBoostsComponent implements OnInit {
     height: 0,
     title: '',
     font: {
-      family: 'Roboto'
+      family: 'Roboto',
     },
     titlefont: {
       family: 'Roboto',
       size: 24,
-      weight: 'bold'
+      weight: 'bold',
     },
     xaxis: {
       type: '-',
     },
     yaxis: {
-      type: 'log'
-    }
+      type: 'log',
+    },
   };
 
-  constructor(private client: Client) {
-
-  }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.applyDimensions();
@@ -56,7 +66,10 @@ export class ChannelBoostsComponent implements OnInit {
   }
 
   async getData() {
-    const response: any = await this.client.get(`api/v2/analytics/interactions`, { key: `boost${this.analytics}` });
+    const response: any = await this.client.get(
+      `api/v2/analytics/interactions`,
+      { key: `boost${this.analytics}` }
+    );
     this.data = response.data;
 
     switch (this.analytics) {

@@ -1,19 +1,19 @@
 <div class="m-marketing">
-
   <div class="m-marketing--hero">
-
     <div class="m-marketing--hero--video">
-      <img [src]="minds.cdn_assets_url + 'assets/photos/fractal.jpg'">
+      <img [src]="minds.cdn_assets_url + 'assets/photos/fractal.jpg'" />
     </div>
-  
+
     <div class="m-marketing--hero--inner">
       <div class="m-marketing--hero--overlay"></div>
 
       <div class="m-marketing--hero--slogans">
         <h1 i18n="@@PLUS__MKT__PLUS_TITLE">Minds Plus</h1>
-        <h3 i18n="@@PLUS__MKT__PLUS_DESC">Upgrade your channel and unlock premium features</h3>
+        <h3 i18n="@@PLUS__MKT__PLUS_DESC">
+          Upgrade your channel and unlock premium features
+        </h3>
       </div>
-    
+
       <div class="m-marketing--hero--actions m-marketing--action-button">
         <m-plus--subscription></m-plus--subscription>
       </div>
@@ -21,29 +21,58 @@
   </div>
 
   <div class="m-marketing--contents m-layout--row">
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+    <div
+      class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone"
+    >
       <i class="material-icons mdl-color-text--blue-grey-700">trending_up</i>
       <h2 i18n="@@PLUS__MKT__HIDE_BOOST_TITLE">Hide Boosts</h2>
-      <span i18n="@@PLUS__MKT__HIDE_BOOST_DESC">Hide all boosted content from your newsfeed and sidebars (optional)</span>
+      <span i18n="@@PLUS__MKT__HIDE_BOOST_DESC"
+        >Hide all boosted content from your newsfeed and sidebars
+        (optional)</span
+      >
     </div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+    <div
+      class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone"
+    >
       <i class="material-icons mdl-color-text--blue-grey-700">favorite</i>
       <h2 i18n="@@PLUS__MKT__EXCLUSIVE_TITLE">Exclusive</h2>
-      <span i18n="@@PLUS__MKT__EXCLUSIVE_DESC">Access exclusive Minds content</span>
+      <span i18n="@@PLUS__MKT__EXCLUSIVE_DESC"
+        >Access exclusive Minds content</span
+      >
     </div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
+    <div
+      class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone"
+    >
       <i class="material-icons mdl-color-text--blue-grey-700">verified_user</i>
       <h2 i18n="@@PLUS__MKT__VERIFIED_TITLE">Verified</h2>
-      <span *ngIf="!user || !user.plus" i18n="@@PLUS__MKT__VERIFIED_DESC">Request to verify your channel</span>
-      <span *ngIf="user && user.plus && !user.verified" i18n="@@PLUS__MKT__VERIFY_LINK">
-        <a (click)="showVerify = true; detectChanges()" style="cursor:pointer">Click here</a> to request to be verified
+      <span *ngIf="!user || !user.plus" i18n="@@PLUS__MKT__VERIFIED_DESC"
+        >Request to verify your channel</span
+      >
+      <span
+        *ngIf="user && user.plus && !user.verified"
+        i18n="@@PLUS__MKT__VERIFY_LINK"
+      >
+        <a (click)="showVerify = true; detectChanges()" style="cursor:pointer"
+          >Click here</a
+        >
+        to request to be verified
       </span>
-      <span *ngIf="user && user.plus && user.verified" i18n="@@PLUS__MKT__YOURE_VERIFIED_LEGEND">You are verified!</span>
+      <span
+        *ngIf="user && user.plus && user.verified"
+        i18n="@@PLUS__MKT__YOURE_VERIFIED_LEGEND"
+        >You are verified!</span
+      >
     </div>
-    <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone">
-      <i class="material-icons mdl-color-text--blue-grey-700">add_circle_outline</i>
+    <div
+      class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone"
+    >
+      <i class="material-icons mdl-color-text--blue-grey-700"
+        >add_circle_outline</i
+      >
       <h2 i18n="@@PLUS__MKT__BADGE_TITLE">Badge</h2>
-      <span i18n="@@PLUS__MKT__BADGE_DESC">Make your channel stand out with a Minds Plus badge</span>
+      <span i18n="@@PLUS__MKT__BADGE_DESC"
+        >Make your channel stand out with a Minds Plus badge</span
+      >
     </div>
   </div>
 
@@ -51,8 +80,10 @@
     <m-faq category="plus"></m-faq>
   </div>
 
-  <m-plus--verify *ngIf="showVerify" (closed)="showVerify=false; detectChanges()"></m-plus--verify>
-
+  <m-plus--verify
+    *ngIf="showVerify"
+    (closed)="showVerify = false; detectChanges()"
+  ></m-plus--verify>
 </div>
 
 <m-footer></m-footer>

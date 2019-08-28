@@ -25,14 +25,14 @@
       padding: 0 0.15em;
       font-weight: bold;
       border-radius: 8px;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-100);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-100);
       }
     }
 
     .m-date {
       font-size: 11px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-300);
       }
     }
@@ -44,7 +44,7 @@
     .m-message {
       text-decoration: none;
       font-size: 14px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-300);
       }
 
@@ -64,7 +64,7 @@
     font-size: 11px;
     text-align: center;
     margin-bottom: $minds-padding;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-300);
     }
   }

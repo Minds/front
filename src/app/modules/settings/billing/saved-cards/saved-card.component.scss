@@ -1,10 +1,10 @@
-.m-settings--billing-saved-cards--cards{
-  ul, li{
+.m-settings--billing-saved-cards--cards {
+  ul,
+  li {
     list-style: none;
     cursor: default;
     padding: 0;
   }
-
 
   .m-settings--billing-saved-cards--cards-item {
     display: flex;
@@ -16,22 +16,21 @@
     font-family: 'Roboto', Helvetica, sans-serif;
     margin: 16px;
     border-radius: 3px;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-100);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
     }
 
-    > *{
-      padding:8px;
+    > * {
+      padding: 8px;
     }
 
-    .m-settings--billing-saved-cards--cards-item-select{
-      flex:auto;
-      text-align:right;
-      cursor:  pointer;
-      @include m-theme(){
+    .m-settings--billing-saved-cards--cards-item-select {
+      flex: auto;
+      text-align: right;
+      cursor: pointer;
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
-
   }
 }

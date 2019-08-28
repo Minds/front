@@ -1,15 +1,20 @@
-import { Injectable } from "@angular/core";
-import { filter, first, map, switchMap, mergeMap, skip, take } from 'rxjs/operators';
-import { FeedsService } from "../../services/feeds.service";
+import { Injectable } from '@angular/core';
+import {
+  filter,
+  first,
+  map,
+  switchMap,
+  mergeMap,
+  skip,
+  take,
+} from 'rxjs/operators';
+import { FeedsService } from '../../services/feeds.service';
 
 @Injectable()
 export class FeaturedContentService {
-
   offset: number = -1;
 
-  constructor(
-    protected feedsService: FeedsService,
-  ) {
+  constructor(protected feedsService: FeedsService) {
     this.feedsService
       .setLimit(12)
       .setOffset(0)
@@ -20,6 +25,11 @@ export class FeaturedContentService {
   async fetch() {
     if (this.offset >= this.feedsService.rawFeed.getValue().length) {
       this.offset = -1;
+    }
+    // Refetch every 2 calls, if not loading
+    if (this.offset % 2 && !this.feedsService.inProgress.getValue()) {
+      this.feedsService.clear();
+      this.feedsService.fetch();
     }
     return await this.feedsService.feed
       .pipe(
@@ -33,7 +43,8 @@ export class FeaturedContentService {
             return false;
           }
           return await entity.pipe(first()).toPromise();
-        }),
-      ).toPromise();
+        })
+      )
+      .toPromise();
   }
 }

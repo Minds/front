@@ -6,25 +6,27 @@ import { Session } from '../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'm-wallet-transactions-points',
-  templateUrl: 'points.component.html'
+  templateUrl: 'points.component.html',
 })
-
 export class WalletPointsTransactionsComponent {
-
   transactions: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
   moreData: boolean = true;
 
-  constructor(public session: Session, public client: Client, private cd: ChangeDetectorRef) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    private cd: ChangeDetectorRef
+  ) {
     this.load();
   }
 
   load(refresh: boolean = false) {
     this.inProgress = true;
-    this.client.get('api/v1/wallet/transactions', { limit: 12, offset: this.offset })
+    this.client
+      .get('api/v1/wallet/transactions', { limit: 12, offset: this.offset })
       .then((response: any) => {
-
         if (!response.transactions) {
           this.moreData = false;
           this.inProgress = false;
@@ -34,8 +36,7 @@ export class WalletPointsTransactionsComponent {
         if (refresh) {
           this.transactions = response.transactions;
         } else {
-          if (this.offset)
-            response.transactions.shift();
+          if (this.offset) response.transactions.shift();
           for (let transaction of response.transactions)
             this.transactions.push(transaction);
         }
@@ -46,5 +47,4 @@ export class WalletPointsTransactionsComponent {
         this.cd.detectChanges();
       });
   }
-
 }

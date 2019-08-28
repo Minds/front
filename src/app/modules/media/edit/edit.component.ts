@@ -14,15 +14,15 @@ import { RecommendedService } from '../components/video/recommended.service';
   moduleId: module.id,
   selector: 'm-media--edit',
   templateUrl: 'edit.component.html',
-  providers: [{
-    provide: RecommendedService,
-    useFactory: RecommendedService._,
-    deps: [Client]
-  }],
+  providers: [
+    {
+      provide: RecommendedService,
+      useFactory: RecommendedService._,
+      deps: [Client],
+    },
+  ],
 })
-
 export class MediaEditComponent {
-
   minds;
   guid: string;
   entity: any = {
@@ -30,7 +30,7 @@ export class MediaEditComponent {
     description: '',
     subtype: '',
     license: 'all-rights-reserved',
-    mature: false
+    mature: false,
   };
   inProgress: boolean;
   error: string;
@@ -38,7 +38,8 @@ export class MediaEditComponent {
   licenses = LICENSES;
   access = ACCESS;
 
-  @ViewChild('inlineEditor', { static: true }) inlineEditor: InlineEditorComponent;
+  @ViewChild('inlineEditor', { static: true })
+  inlineEditor: InlineEditorComponent;
 
   paramsSubscription: Subscription;
 
@@ -48,7 +49,7 @@ export class MediaEditComponent {
     public upload: Upload,
     public router: Router,
     public route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.minds = window.Minds;
@@ -67,18 +68,19 @@ export class MediaEditComponent {
 
   load() {
     this.inProgress = true;
-    this.client.get('api/v1/entities/entity/' + this.guid, { children: false })
+    this.client
+      .get('api/v1/entities/entity/' + this.guid, { children: false })
       .then((response: any) => {
         this.inProgress = false;
         console.log(response);
         if (response.entity) {
-          if (!response.entity.description)
-            response.entity.description = '';
+          if (!response.entity.description) response.entity.description = '';
 
           if (!response.entity.license)
             response.entity.license = 'all-rights-reserved';
 
-          response.entity.mature = response.entity.flags && response.entity.flags.mature ? 1 : 0;
+          response.entity.mature =
+            response.entity.flags && response.entity.flags.mature ? 1 : 0;
 
           this.entity = response.entity;
         }
@@ -87,23 +89,21 @@ export class MediaEditComponent {
 
   save() {
     this.inlineEditor.prepareForSave().then(() => {
-
-      this.client.post('api/v1/media/' + this.guid, this.entity)
+      this.client
+        .post('api/v1/media/' + this.guid, this.entity)
         .then((response: any) => {
           console.log(response);
           this.router.navigate(['/media', this.guid]);
         })
-        .catch((e) => {
+        .catch(e => {
           this.error = 'There was an error while trying to update';
         });
-
     });
   }
 
-  setThumbnail(file: ThumbnailEvent){
+  setThumbnail(file: ThumbnailEvent) {
     console.log(file);
     this.entity.file = file.source;
     this.entity.thumbnail = file.seconds;
   }
-
 }

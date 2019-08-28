@@ -1,29 +1,30 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 
 import { Client } from '../../common/api/client.service';
 
 @Component({
   selector: 'm-monetization--marketing',
   templateUrl: 'marketing.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class MonetizationMarketingComponent {
-
   minds: Minds = window.Minds;
   user = window.Minds.user;
   showOnboardingForm: boolean = false;
 
-  constructor(private client: Client, private cd: ChangeDetectorRef) {
-  }
+  constructor(private client: Client, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
-    if (this.user)
-      this.load();
+    if (this.user) this.load();
   }
 
   load(): Promise<any> {
-    return this.client.get('api/v1/merchant/status')
+    return this.client
+      .get('api/v1/merchant/status')
       .then((response: any) => {
         console.log(response);
         return response;
@@ -34,8 +35,7 @@ export class MonetizationMarketingComponent {
   }
 
   isMonetized() {
-    if (this.user && this.user.merchant.id)
-      return true;
+    if (this.user && this.user.merchant.id) return true;
     return false;
   }
 
@@ -45,15 +45,14 @@ export class MonetizationMarketingComponent {
   }
 
   onboardCompleted(response) {
-
     this.user.merchant = {
       id: response.id,
       service: 'stripe',
       status: 'awaiting-document',
       exclusive: {
         enabled: true,
-        amount: 10
-      }
+        amount: 10,
+      },
     };
 
     this.showOnboardingForm = false;
@@ -65,5 +64,4 @@ export class MonetizationMarketingComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

@@ -1,14 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { Client } from "../../../../../services/api/client";
-import { AnalyticsCardComponent } from "../card/card.component";
-import { Subscription } from "rxjs";
-import { timespanOption } from "../../charts/timespanOption";
+import { Client } from '../../../../../services/api/client';
+import { AnalyticsCardComponent } from '../card/card.component';
+import { Subscription } from 'rxjs';
+import { timespanOption } from '../../charts/timespanOption';
 
 @Component({
   selector: 'm-analyticsonchainboosts__card',
-  templateUrl: 'boosts.component.html'
+  templateUrl: 'boosts.component.html',
 })
-
 export class OnChainBoostsCardComponent {
   @ViewChild('card', { static: true }) card: AnalyticsCardComponent;
 
@@ -18,15 +17,14 @@ export class OnChainBoostsCardComponent {
   average: number = 0;
   averageReclaimedTokens: number = 0;
   averageUsers: number = 0;
-  currents: { name: string, value: number }[];
+  currents: { name: string; value: number }[];
 
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.getAvgData();
 
-    this.subscription = this.card.selectedOptionChange.subscribe((value) => {
+    this.subscription = this.card.selectedOptionChange.subscribe(value => {
       this.timespan = value;
       this.getAvgData();
     });
@@ -38,10 +36,13 @@ export class OnChainBoostsCardComponent {
 
   private async getAvgData() {
     try {
-      const response: any = await this.client.get('api/v2/analytics/onchainboosts', {
-        key: 'avg',
-        timespan: this.timespan
-      });
+      const response: any = await this.client.get(
+        'api/v2/analytics/onchainboosts',
+        {
+          key: 'avg',
+          timespan: this.timespan,
+        }
+      );
 
       this.average = response.data.transactions;
 

@@ -1,4 +1,11 @@
-import { Component, ElementRef, forwardRef, OnChanges, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  forwardRef,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { Country } from './country';
@@ -8,17 +15,16 @@ import { CountryCode } from './countries';
 export const PHONE_INPUT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => PhoneInputComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
   selector: 'm-phone-input',
   templateUrl: 'phone-input.component.html',
-  providers: [PHONE_INPUT_VALUE_ACCESSOR]
+  providers: [PHONE_INPUT_VALUE_ACCESSOR],
 })
-
-export class PhoneInputComponent implements ControlValueAccessor, OnInit, OnChanges {
-
+export class PhoneInputComponent
+  implements ControlValueAccessor, OnInit, OnChanges {
   phoneNumber: string = '';
 
   @ViewChild('input', { static: true }) input: ElementRef;
@@ -26,14 +32,11 @@ export class PhoneInputComponent implements ControlValueAccessor, OnInit, OnChan
 
   allowedKeyCodes: Array<number> = [8, 33, 34, 35, 36, 37, 39, 46];
 
-  propagateChange = (_: any) => {
-  };
+  propagateChange = (_: any) => {};
 
-  constructor(private fb: FormBuilder) {
-  }
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public onPhoneNumberChange(): void {
     this.propagateChange(this.number);
@@ -42,7 +45,10 @@ export class PhoneInputComponent implements ControlValueAccessor, OnInit, OnChan
   public onInputKeyPress(event: KeyboardEvent): void {
     const pattern = /[0-9\+\-\ ]/;
     let inputChar = String.fromCharCode(event.charCode);
-    if (!pattern.test(inputChar) && this.allowedKeyCodes.indexOf(event.keyCode) === -1) {
+    if (
+      !pattern.test(inputChar) &&
+      this.allowedKeyCodes.indexOf(event.keyCode) === -1
+    ) {
       event.preventDefault();
     }
   }
@@ -67,7 +73,5 @@ export class PhoneInputComponent implements ControlValueAccessor, OnInit, OnChan
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any) {
-  }
-
+  registerOnTouched(fn: any) {}
 }

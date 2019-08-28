@@ -1,20 +1,24 @@
-import { Component, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
 import { Session } from '../../services/session';
-import { FeaturesService } from "../../services/features.service";
+import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-search--bar',
   host: {
-    '(keyup)': 'keyup($event)'
+    '(keyup)': 'keyup($event)',
   },
-  templateUrl: 'bar.component.html'
+  templateUrl: 'bar.component.html',
 })
-
 export class SearchBarComponent {
-
   active: boolean;
   suggestionsDisabled: boolean = false;
   q: string;
@@ -25,14 +29,16 @@ export class SearchBarComponent {
 
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
 
-  @HostBinding('class.m-search--bar--default-sizes') @Input() defaultSizes: boolean = true;
+  @HostBinding('class.m-search--bar--default-sizes')
+  @Input()
+  defaultSizes: boolean = true;
 
   constructor(
     public router: Router,
     private context: ContextService,
     private featureService: FeaturesService,
     public session: Session
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.listen();
@@ -43,19 +49,21 @@ export class SearchBarComponent {
   }
 
   listen() {
-    this.routerSubscription = this.router.events.subscribe((navigationEvent: NavigationEnd) => {
-      try {
-        if (navigationEvent instanceof NavigationEnd) {
-          if (!navigationEvent.urlAfterRedirects) {
-            return;
-          }
+    this.routerSubscription = this.router.events.subscribe(
+      (navigationEvent: NavigationEnd) => {
+        try {
+          if (navigationEvent instanceof NavigationEnd) {
+            if (!navigationEvent.urlAfterRedirects) {
+              return;
+            }
 
-          this.handleUrl(navigationEvent.urlAfterRedirects);
+            this.handleUrl(navigationEvent.urlAfterRedirects);
+          }
+        } catch (e) {
+          console.error('Minds: router hook(SearchBar)', e);
         }
-      } catch (e) {
-        console.error('Minds: router hook(SearchBar)', e);
       }
-    });
+    );
   }
 
   unListen() {
@@ -86,23 +94,25 @@ export class SearchBarComponent {
   }
 
   blur() {
-    setTimeout(() => this.active = false, 100);
+    setTimeout(() => (this.active = false), 100);
   }
 
   search() {
-    const qs: { q, ref, id? } = { q: this.q, ref: 'top' };
+    const qs: { q; ref; id? } = { q: this.q, ref: 'top' };
 
     if (this.id) {
       qs.id = this.id;
     }
 
     if (this.featureService.has('top-feeds')) {
-      this.router.navigate(['/newsfeed/global/top', { query: this.q, period: '24h' } ]);
+      this.router.navigate([
+        '/newsfeed/global/top',
+        { query: this.q, period: '24h' },
+      ]);
     } else {
       this.router.navigate(['search', qs]);
     }
   }
-
 
   keyup(e) {
     if (e.keyCode === 13 && this.session.isLoggedIn()) {
@@ -136,13 +146,16 @@ export class SearchBarComponent {
 
       if (param[0] === 'id') {
         this.id = param[1];
-        this.searchContext = this.context.resolveLabel(decodeURIComponent(param[1]));
+        this.searchContext = this.context.resolveLabel(
+          decodeURIComponent(param[1])
+        );
       }
 
       if (param[0] == 'type' && !this.searchContext) {
-        this.searchContext = this.context.resolveStaticLabel(decodeURIComponent(param[1]));
+        this.searchContext = this.context.resolveStaticLabel(
+          decodeURIComponent(param[1])
+        );
       }
     });
   }
 }
-

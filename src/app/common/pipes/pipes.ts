@@ -11,4 +11,17 @@ import { AddressExcerptPipe } from './address-excerpt';
 import { TimediffPipe } from './timediff.pipe';
 import { FriendlyDateDiffPipe } from './friendlydatediff';
 
-export const MINDS_PIPES = [ AbbrPipe, DomainPipe, TagsPipe, SanitizePipe, SafePipe, ListablePipe, ExcerptPipe, TokenPipe, UtcDatePipe, AddressExcerptPipe, TimediffPipe, FriendlyDateDiffPipe ];
+export const MINDS_PIPES = [
+  AbbrPipe,
+  DomainPipe,
+  TagsPipe,
+  SanitizePipe,
+  SafePipe,
+  ListablePipe,
+  ExcerptPipe,
+  TokenPipe,
+  UtcDatePipe,
+  AddressExcerptPipe,
+  TimediffPipe,
+  FriendlyDateDiffPipe,
+];

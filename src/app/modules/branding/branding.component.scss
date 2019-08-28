@@ -1,8 +1,8 @@
-@import "defaults";
+@import 'defaults';
 
 .m-branding {
   .m-marketing--header {
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
   }
@@ -10,13 +10,13 @@
     text-align: center;
 
     h1 {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }
     h3 {
       padding-right: 0;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
@@ -35,10 +35,9 @@
       font-weight: 600;
       text-transform: uppercase;
       margin: 56px 0;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
   }
-
 }

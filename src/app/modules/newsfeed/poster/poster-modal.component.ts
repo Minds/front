@@ -5,13 +5,10 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
   selector: 'm-newsfeed-poster--modal',
   template: `
     <minds-newsfeed-poster (load)="onLoad($event)"></minds-newsfeed-poster>
-  `
+  `,
 })
-
 export class ModalPosterComponent {
-
-  constructor(private overlayModal: OverlayModalService) {
-  }
+  constructor(private overlayModal: OverlayModalService) {}
 
   onLoad(e) {
     setTimeout(() => {

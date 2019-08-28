@@ -1,26 +1,56 @@
 <ng-container *ngIf="user && group">
-  <m-modal [open]="kickPrompt" (closed)="emitClose()" class="m-group--kick-modal">
+  <m-modal
+    [open]="kickPrompt"
+    (closed)="emitClose()"
+    class="m-group--kick-modal"
+  >
     <div class="mdl-card__supporting-text">
-      <p i18n="@@GROUPS__REMOVE_X_FROM_Y_CONFIRM">Are you sure you want to remove <b>{{ user.username }}</b> from <b>{{ group.name }}</b>?</p>
-      <p><input type="checkbox" #ban> <ng-container i18n="@@M__COMMON__BAN_PERMANENTLY">Ban permanently</ng-container></p>
+      <p i18n="@@GROUPS__REMOVE_X_FROM_Y_CONFIRM">
+        Are you sure you want to remove <b>{{ user.username }}</b> from
+        <b>{{ group.name }}</b
+        >?
+      </p>
+      <p>
+        <input type="checkbox" #ban />
+        <ng-container i18n="@@M__COMMON__BAN_PERMANENTLY"
+          >Ban permanently</ng-container
+        >
+      </p>
     </div>
     <div class="minds-modal-dialog-actions">
-      <button (click)="kick(ban.checked)" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+      <button
+        (click)="kick(ban.checked)"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+      >
         <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
       </button>
-      <button (click)="emitClose()" class="mdl-button mdl-js-button mdl-button--colored">
+      <button
+        (click)="emitClose()"
+        class="mdl-button mdl-js-button mdl-button--colored"
+      >
         <ng-container i18n="@@M__ACTION__CANCEL">Cancel</ng-container>
       </button>
     </div>
   </m-modal>
 
-  <m-modal [open]="kickSuccess" (closed)="emitClose()" class="m-group--kick-modal">
+  <m-modal
+    [open]="kickSuccess"
+    (closed)="emitClose()"
+    class="m-group--kick-modal"
+  >
     <div class="mdl-card__supporting-text">
-      <p i18n="@@GROUPS__PROFILE__FEED__USER_WAS_KICKED">User was kicked from {{ group.name }}.</p>
+      <p i18n="@@GROUPS__PROFILE__FEED__USER_WAS_KICKED">
+        User was kicked from {{ group.name }}.
+      </p>
     </div>
     <div class="minds-modal-dialog-actions">
-      <button (click)="emitClose()" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-        <ng-container i18n="@@GROUPS__PROFILE__FEED__OK_ACTION">Ok</ng-container>
+      <button
+        (click)="emitClose()"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+      >
+        <ng-container i18n="@@GROUPS__PROFILE__FEED__OK_ACTION"
+          >Ok</ng-container
+        >
       </button>
     </div>
   </m-modal>

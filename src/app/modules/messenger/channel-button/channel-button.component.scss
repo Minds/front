@@ -1,19 +1,19 @@
 @import 'defaults.scss';
 
-m-messenger--channel-button{
+m-messenger--channel-button {
   > button {
-
     background: transparent;
     font-size: 12px;
     padding: 4px 8px !important;
     min-width: 128px;
 
-    > i, &.material-icons {
+    > i,
+    &.material-icons {
       padding-bottom: 1px;
-      vertical-align:middle;
+      vertical-align: middle;
       margin-top: 2px;
     }
-    
+
     > span {
       padding-left: $minds-padding;
     }

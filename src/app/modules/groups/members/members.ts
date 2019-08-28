@@ -5,14 +5,13 @@ import { Client } from '../../../services/api';
 @Component({
   selector: 'm-group--members-module',
   host: {
-    'class': 'm-group--members mdl-card mdl-shadow--2dp',
-    '[hidden]': 'members.length == 0'
+    class: 'm-group--members mdl-card mdl-shadow--2dp',
+    '[hidden]': 'members.length == 0',
   },
-  templateUrl: 'members.html'
+  templateUrl: 'members.html',
 })
-
 export class GroupsMembersModuleComponent {
-members: Array<any> = [];
+  members: Array<any> = [];
   @ViewChild('el', { static: true }) el;
 
   group: any;
@@ -21,8 +20,7 @@ members: Array<any> = [];
 
   inProgress: boolean = false;
 
-  constructor(public client: Client) {
-  }
+  constructor(public client: Client) {}
 
   @Input('group') set _group(value: any) {
     this.group = value;
@@ -33,7 +31,8 @@ members: Array<any> = [];
   load() {
     this.inProgress = true;
 
-    this.client.get(`api/v1/groups/membership/${this.group.guid}`, { limit: this.limit })
+    this.client
+      .get(`api/v1/groups/membership/${this.group.guid}`, { limit: this.limit })
       .then((response: any) => {
         if (!response.members) {
           return false;
@@ -42,7 +41,7 @@ members: Array<any> = [];
         this.members = response.members;
         this.inProgress = false;
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
       });
   }

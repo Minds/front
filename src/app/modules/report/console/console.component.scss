@@ -57,7 +57,7 @@
       .m-report-console--meta--time {
         font-size: 12px;
         margin-bottom: $minds-padding;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-300);
         }
       }
@@ -66,7 +66,7 @@
         margin: $minds-padding 0 0 1em;
         padding: $minds-padding ($minds-padding * 2);
         font-style: italic;
-        @include m-theme(){
+        @include m-theme() {
           border-left: 2px solid themed($m-grey-200);
         }
       }
@@ -75,7 +75,7 @@
         font-size: 1.25em;
         vertical-align: text-top;
         margin-right: 0.35em;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-200);
         }
       }
@@ -101,7 +101,7 @@
       a {
         text-decoration: none;
         font-weight: inherit;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-300);
         }
       }
@@ -125,8 +125,8 @@
       padding: 16px;
       font-size: 13px;
       letter-spacing: 1px;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
     }
 
@@ -140,12 +140,12 @@
       background: none;
       float: right;
       margin: 8px 0;
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-100);
         color: themed($m-grey-400);
       }
 
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
     }
@@ -153,8 +153,8 @@
 
   .m-report-console--appeal-note {
     padding: 16px;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
     }
 
     p {

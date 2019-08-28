@@ -129,7 +129,8 @@
               "blockchain" => (object) Minds\Core\Di\Di::_()->get('Blockchain\Manager')->getPublicSettings(),
               "sale" => Minds\Core\Config::_()->get('blockchain')['sale'],
               "last_tos_update" => Minds\Core\Config::_()->get('last_tos_update') ?: time(),
-              "tags" => Minds\Core\Config::_()->get('tags') ?: []
+              "tags" => Minds\Core\Config::_()->get('tags') ?: [],
+              "environment" => getenv('MINDS_ENV') ?: 'development',
           ];
 
           if(Minds\Core\Session::isLoggedIn()){

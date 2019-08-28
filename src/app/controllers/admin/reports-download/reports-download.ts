@@ -14,7 +14,6 @@ import { Client } from '../../../services/api';
  * Admin Reports Download
  */
 export class AdminReportsDownload {
-
   reports: any[] = null;
   downloading = false;
   error = '';
@@ -26,7 +25,6 @@ export class AdminReportsDownload {
    * @param client Client
    */
   constructor(public client: Client) {
-
     const d = new Date();
     d.setHours(23, 59, 59);
     const endDate = d.toISOString();
@@ -47,15 +45,15 @@ export class AdminReportsDownload {
             label: 'From',
             value: startDate,
             type: 'date',
-            map: (v) => Math.floor((new Date(v)).getTime() / 1000) // format the output
+            map: v => Math.floor(new Date(v).getTime() / 1000), // format the output
           },
           to: {
             label: 'To',
             value: endDate,
             type: 'date',
-            map: (v) => Math.floor((new Date(v)).getTime() / 1000) // format the output
+            map: v => Math.floor(new Date(v).getTime() / 1000), // format the output
           },
-        }
+        },
       },
       {
         name: 'Eth Price',
@@ -68,28 +66,28 @@ export class AdminReportsDownload {
             label: 'From',
             value: startDate,
             type: 'date',
-            map: (v) => Math.floor((new Date(v)).getTime() / 1000) // format the output
+            map: v => Math.floor(new Date(v).getTime() / 1000), // format the output
           },
           to: {
             label: 'To',
             value: endDate,
             type: 'date',
-            map: (v) => Math.floor((new Date(v)).getTime() / 1000) // format the output
+            map: v => Math.floor(new Date(v).getTime() / 1000), // format the output
           },
           resolution: {
             label: 'Resolution',
             value: 300,
             type: 'select',
             options: [
-              {label: '5 minutes', value: 300},
-              {label: '15 minutes', value: 900},
-              {label: '30 minutes', value: 1800},
-              {label: '2 hours', value: 7200},
-              {label: '4 hours', value: 14400},
-              {label: '1 day', value: 86400}
+              { label: '5 minutes', value: 300 },
+              { label: '15 minutes', value: 900 },
+              { label: '30 minutes', value: 1800 },
+              { label: '2 hours', value: 7200 },
+              { label: '4 hours', value: 14400 },
+              { label: '1 day', value: 86400 },
             ],
           },
-        }
+        },
       },
       {
         name: 'Boost Tokens',
@@ -102,21 +100,33 @@ export class AdminReportsDownload {
             label: 'From',
             value: startDate,
             type: 'date',
-            map: (v) => {
+            map: v => {
               const date: Date = new Date(v);
-              return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 1000);
-            }
+              return Math.floor(
+                Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) /
+                  1000
+              );
+            },
           },
           to: {
             label: 'To',
             value: endDate,
             type: 'date',
-            map: (v) => {
+            map: v => {
               const date: Date = new Date(v);
-              return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59) / 1000);
-            }
+              return Math.floor(
+                Date.UTC(
+                  date.getFullYear(),
+                  date.getMonth(),
+                  date.getDate(),
+                  23,
+                  59,
+                  59
+                ) / 1000
+              );
+            },
           },
-        }
+        },
       },
       {
         name: 'Plus Tokens',
@@ -129,21 +139,33 @@ export class AdminReportsDownload {
             label: 'From',
             value: startDate,
             type: 'date',
-            map: (v) => {
+            map: v => {
               const date: Date = new Date(v);
-              return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 1000);
-            }
+              return Math.floor(
+                Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) /
+                  1000
+              );
+            },
           },
           to: {
             label: 'To',
             value: endDate,
             type: 'date',
-            map: (v) => {
+            map: v => {
               const date: Date = new Date(v);
-              return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59) / 1000);
-            }
+              return Math.floor(
+                Date.UTC(
+                  date.getFullYear(),
+                  date.getMonth(),
+                  date.getDate(),
+                  23,
+                  59,
+                  59
+                ) / 1000
+              );
+            },
           },
-        }
+        },
       },
     ];
   }
@@ -166,7 +188,10 @@ export class AdminReportsDownload {
 
     this.downloading = true;
     try {
-      const res: any = await this.client.getRaw(selectedReport.endpoint, params);
+      const res: any = await this.client.getRaw(
+        selectedReport.endpoint,
+        params
+      );
       blobDownload(res._body, selectedReport.options, selectedReport.file_name);
     } catch (e) {
       this.error = e.message || 'Download Error';
@@ -181,5 +206,4 @@ export class AdminReportsDownload {
   setReport(r) {
     this.selectedReport = r;
   }
-
 }

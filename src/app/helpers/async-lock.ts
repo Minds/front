@@ -1,10 +1,11 @@
-import { BehaviorSubject, Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 export default class AsyncLock {
-
   protected lockId: number = 0;
   protected locked: boolean = false;
-  protected subject$: BehaviorSubject<number> = new BehaviorSubject(this.lockId);
+  protected subject$: BehaviorSubject<number> = new BehaviorSubject(
+    this.lockId
+  );
 
   isLocked(): boolean {
     return this.locked;
@@ -45,13 +46,12 @@ export default class AsyncLock {
     return new Promise(resolve => {
       let subscription: Subscription;
 
-      subscription = this.subject$
-        .subscribe(() => {
-          if (!this.isLocked()) {
-            subscription.unsubscribe();
-            resolve(null);
-          }
-        });
+      subscription = this.subject$.subscribe(() => {
+        if (!this.isLocked()) {
+          subscription.unsubscribe();
+          resolve(null);
+        }
+      });
     });
   }
 }

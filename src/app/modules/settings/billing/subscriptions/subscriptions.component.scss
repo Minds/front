@@ -1,15 +1,15 @@
-m-settings--billing-subscriptions{
+m-settings--billing-subscriptions {
 }
-.m-settings--billing-subscriptions{
+.m-settings--billing-subscriptions {
   margin-top: 16px;
   overflow: visible;
 
-  ul, li{
+  ul,
+  li {
     list-style: none;
     cursor: default;
     padding: 0;
   }
-
 
   .m-settings--billing-subscriptions--subscription-item {
     display: flex;
@@ -21,22 +21,21 @@ m-settings--billing-subscriptions{
     font-family: 'Roboto', Helvetica, sans-serif;
     margin: 16px;
     border-radius: 3px;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-100);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
     }
 
-    > *{
-      padding:8px;
+    > * {
+      padding: 8px;
     }
 
-    .m-settings--billing-subscriptions--subscription-item-select{
-      flex:auto;
-      text-align:right;
-      cursor:  pointer;
-      @include m-theme(){
+    .m-settings--billing-subscriptions--subscription-item-select {
+      flex: auto;
+      text-align: right;
+      cursor: pointer;
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
-
   }
 }

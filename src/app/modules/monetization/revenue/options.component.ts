@@ -8,36 +8,40 @@ import { Client } from '../../../services/api';
 @Component({
   moduleId: module.id,
   selector: 'm-revenue--options',
-  templateUrl: 'options.component.html'
+  templateUrl: 'options.component.html',
 })
 export class RevenueOptionsComponent {
-
   form: FormGroup;
   inProgress: boolean = true;
   editing: boolean = false;
   payoutMethod = {
     account: null,
-    country: 'US'
+    country: 'US',
   };
   error: string = '';
   leaving: boolean = false;
   leaveError: string = '';
 
-  constructor(private client: Client, private cd: ChangeDetectorRef, private fb: FormBuilder, private router: Router) {
-  }
+  constructor(
+    private client: Client,
+    private cd: ChangeDetectorRef,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getSettings();
     this.form = this.fb.group({
       accountNumber: ['', Validators.required],
       routingNumber: [''],
-      country: ['US']
+      country: ['US'],
     });
   }
 
   getSettings() {
     this.inProgress = true;
-    this.client.get('api/v1/monetization/settings')
+    this.client
+      .get('api/v1/monetization/settings')
       .then(({ bank, country }) => {
         this.inProgress = false;
         this.payoutMethod.country = country;
@@ -55,12 +59,13 @@ export class RevenueOptionsComponent {
     this.editing = false;
     this.detectChanges();
 
-    this.client.post('api/v1/monetization/settings', this.form.value)
+    this.client
+      .post('api/v1/monetization/settings', this.form.value)
       .then((response: any) => {
         this.inProgress = false;
         this.getSettings();
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
         this.error = e.message;
         this.detectChanges();
@@ -70,12 +75,13 @@ export class RevenueOptionsComponent {
   leave() {
     this.leaving = true;
     this.detectChanges();
-    this.client.delete('api/v1/monetization/settings/account')
+    this.client
+      .delete('api/v1/monetization/settings/account')
       .then((response: any) => {
         (<any>window).Minds.user.merchant = [];
         this.router.navigate(['/newsfeed']);
       })
-      .catch((e) => {
+      .catch(e => {
         this.leaving = false;
         this.leaveError = e.message;
         this.detectChanges();
@@ -96,5 +102,4 @@ export class RevenueOptionsComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }
