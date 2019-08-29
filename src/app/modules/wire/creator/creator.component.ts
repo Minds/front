@@ -1,4 +1,12 @@
-import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -29,10 +37,9 @@ export interface WireStruc {
   moduleId: module.id,
   providers: [CurrencyPipe],
   selector: 'm-wire--creator',
-  templateUrl: 'creator.component.html'
+  templateUrl: 'creator.component.html',
 })
 export class WireCreatorComponent {
-
   minds = window.Minds;
 
   wire: WireStruc = {
@@ -42,7 +49,7 @@ export class WireCreatorComponent {
     recurring: false,
 
     // Payment
-    payload: null
+    payload: null,
   };
 
   owner: any;
@@ -108,14 +115,15 @@ export class WireCreatorComponent {
     this.setDefaults();
   }
 
-  @ViewChild('amountEditor', { static: true }) private _amountEditor: ElementRef;
+  @ViewChild('amountEditor', { static: true })
+  private _amountEditor: ElementRef;
 
   balances = {
     onchain: null,
     offchain: null,
     onChainAddress: '',
     isReceiverOnchain: false,
-    wireCap: null
+    wireCap: null,
   };
 
   constructor(
@@ -127,16 +135,14 @@ export class WireCreatorComponent {
     private currency: CurrencyPipe,
     private web3Wallet: Web3WalletService,
     private tokenContract: TokenContractService,
-    private router: Router,
-  ) {
-  }
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.load()
-      .then(() => {
-        this.initialized = true;
-        this.syncOwner();
-      });
+    this.load().then(() => {
+      this.initialized = true;
+      this.syncOwner();
+    });
     this.loadBalances();
     this.loadTokenRate();
   }
@@ -149,7 +155,9 @@ export class WireCreatorComponent {
         this.loadCurrentWalletBalance(currentWallet);
       }
 
-      let response: any = await this.client.get(`api/v2/blockchain/wallet/balance`);
+      let response: any = await this.client.get(
+        `api/v2/blockchain/wallet/balance`
+      );
 
       if (!response) {
         return;
@@ -199,7 +207,8 @@ export class WireCreatorComponent {
     // TODO: Move to service and cache (maybe?)
     this.inProgress = true;
 
-    return this.client.get(`api/v2/boost/rates`)
+    return this.client
+      .get(`api/v2/boost/rates`)
       .then((rates: any) => {
         this.inProgress = false;
         this.rates = rates;
@@ -216,7 +225,8 @@ export class WireCreatorComponent {
       return;
     }
 
-    this.client.get(`api/v1/wire/rewards/${this.owner.guid}`)
+    this.client
+      .get(`api/v1/wire/rewards/${this.owner.guid}`)
       .then(({ merchant, eth_wallet, wire_rewards, sums }) => {
         this.owner.merchant = merchant;
         this.owner.eth_wallet = eth_wallet;
@@ -271,14 +281,14 @@ export class WireCreatorComponent {
    * Sets the onchain specific wire payment nonce
    */
   setOnchainNoncePayload(address: string) {
-    return this.setNoncePayload({ receiver: this.owner.eth_wallet, address })
+    return this.setNoncePayload({ receiver: this.owner.eth_wallet, address });
   }
 
   /**
    * Sets the creditcard specific wire payment nonce
    */
   setCreditCardNoncePayload(token: string) {
-    return this.setNoncePayload({ token, address: 'offchain' })
+    return this.setNoncePayload({ token, address: 'offchain' });
   }
 
   // Read and edit amount
@@ -340,7 +350,8 @@ export class WireCreatorComponent {
    * Round by 4
    */
   roundAmount() {
-    this.wire.amount = Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
+    this.wire.amount =
+      Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
   }
 
   // Charge and rates
@@ -401,7 +412,9 @@ export class WireCreatorComponent {
           throw new Error('Invalid receiver.');
         }
         if (!this.owner.eth_wallet) {
-          throw new VisibleWireError(`@${this.owner.username} hasn't set up their onchain wallet yet.`)
+          throw new VisibleWireError(
+            `@${this.owner.username} hasn't set up their onchain wallet yet.`
+          );
         }
         break;
 
@@ -415,9 +428,13 @@ export class WireCreatorComponent {
           balance = this.balances.offchain / Math.pow(10, 18);
 
         if (this.wire.amount > wireCap) {
-          throw new VisibleWireError(`You cannot spend more than ${wireCap} tokens today.`)
+          throw new VisibleWireError(
+            `You cannot spend more than ${wireCap} tokens today.`
+          );
         } else if (this.wire.amount > balance) {
-          throw new VisibleWireError(`You cannot spend more than ${balance} tokens.`)
+          throw new VisibleWireError(
+            `You cannot spend more than ${balance} tokens.`
+          );
         }
         break;
 
@@ -487,7 +504,10 @@ export class WireCreatorComponent {
       this.submitted = true;
       this.error = '';
 
-      if (await this.web3Wallet.isLocal() && this.wire.payloadType === 'onchain') {
+      if (
+        (await this.web3Wallet.isLocal()) &&
+        this.wire.payloadType === 'onchain'
+      ) {
         const action = await this.web3Wallet.setupMetamask();
         switch (action) {
           case GetMetamaskComponent.ACTION_CREATE:

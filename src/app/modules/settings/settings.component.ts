@@ -13,11 +13,9 @@ import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.
 
 @Component({
   selector: 'm-settings',
-  templateUrl: 'settings.component.html'
+  templateUrl: 'settings.component.html',
 })
-
 export class SettingsComponent {
-
   minds: Minds;
   user: any;
   filter: string;
@@ -32,9 +30,8 @@ export class SettingsComponent {
     public router: Router,
     public route: ActivatedRoute,
     public title: MindsTitle,
-    private overlayModal: OverlayModalService,
-  ) {
-  }
+    private overlayModal: OverlayModalService
+  ) {}
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
@@ -61,20 +58,31 @@ export class SettingsComponent {
   }
 
   ngOnDestroy() {
-    if (this.paramsSubscription)
-      this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
   }
 
   openHashtagsSelector() {
-    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
-      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large' 
-    }).present();
+    this.overlayModal
+      .create(
+        HashtagsSelectorModalComponent,
+        {},
+        {
+          class:
+            'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+        }
+      )
+      .present();
   }
 
   openReferralsModal() {
-    this.overlayModal.create(ReferralsLinksComponent, {}, {
-      class: 'm-overlay-modal--referrals-links m-overlay-modal--medium'
-    }).present();
+    this.overlayModal
+      .create(
+        ReferralsLinksComponent,
+        {},
+        {
+          class: 'm-overlay-modal--referrals-links m-overlay-modal--medium',
+        }
+      )
+      .present();
   }
-
 }

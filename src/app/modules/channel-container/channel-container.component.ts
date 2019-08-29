@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Client } from '../../services/api/client';
@@ -14,7 +20,6 @@ import { Session } from '../../services/session';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ChannelContainerComponent implements OnInit, OnDestroy {
-
   inProgress: boolean = false;
 
   channel: MindsUser;
@@ -23,24 +28,28 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   protected param$: Subscription;
 
-  @ViewChild('channelComponent', { static: false }) channelComponent: ChannelComponent;
+  @ViewChild('channelComponent', { static: false })
+  channelComponent: ChannelComponent;
 
-  @ViewChild('proChannelComponent', { static: false }) proChannelComponent: ProChannelComponent;
+  @ViewChild('proChannelComponent', { static: false })
+  proChannelComponent: ProChannelComponent;
 
   constructor(
     protected route: ActivatedRoute,
     protected router: Router,
     protected client: Client,
-    protected session: Session,
-  ) {
-  }
+    protected session: Session
+  ) {}
 
   ngOnInit(): void {
     this.param$ = this.route.params.subscribe(params => {
       if (params['username']) {
         this.username = params['username'];
 
-        if (this.username && (!this.channel || this.channel.username != this.username)) {
+        if (
+          this.username &&
+          (!this.channel || this.channel.username != this.username)
+        ) {
           this.load();
         }
       }
@@ -67,12 +76,16 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     this.inProgress = true;
 
     try {
-      const response: MindsChannelResponse = await this.client.get(`api/v1/channel/${this.username}`) as MindsChannelResponse;
+      const response: MindsChannelResponse = (await this.client.get(
+        `api/v1/channel/${this.username}`
+      )) as MindsChannelResponse;
       this.channel = response.channel;
 
       // NOTE: Temporary workaround until channel component supports children routes
       if (!window.Minds.pro && this.channel.pro && !this.isOwner) {
-        this.router.navigate(['/pro', this.channel.username], { replaceUrl: true });
+        this.router.navigate(['/pro', this.channel.username], {
+          replaceUrl: true,
+        });
       }
     } catch (e) {
       console.error(e);

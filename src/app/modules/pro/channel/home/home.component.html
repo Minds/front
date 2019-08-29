@@ -17,9 +17,9 @@
 
   <div class="m-pro--channel-home--section" *ngFor="let category of categories">
     <h2 i18n>
-      <a
-        [routerLink]="getCategoryRoute(category.tag?.tag)"
-      >{{ category.tag?.label }}</a>
+      <a [routerLink]="getCategoryRoute(category.tag?.tag)">{{
+        category.tag?.label
+      }}</a>
     </h2>
 
     <div class="m-pro--channel-home--category-content">

@@ -5,12 +5,12 @@ import {
   ComponentFactoryResolver,
   OnInit,
   OnDestroy,
-  ViewChild
-} from "@angular/core";
-import { Session } from "../../../services/session";
-import { DynamicHostDirective } from "../../directives/dynamic-host.directive";
-import { NotificationsToasterComponent } from "../../../modules/notifications/toaster.component";
-import { ThemeService } from "../../../common/services/theme.service";
+  ViewChild,
+} from '@angular/core';
+import { Session } from '../../../services/session';
+import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
+import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
+import { ThemeService } from '../../../common/services/theme.service';
 
 @Component({
   selector: 'm-v2-topbar',
@@ -22,7 +22,8 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
   timeout;
   isTouchScreen = false;
 
-  @ViewChild(DynamicHostDirective, { static: true }) notificationsToasterHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true })
+  notificationsToasterHost: DynamicHostDirective;
 
   componentRef;
   componentInstance: NotificationsToasterComponent;
@@ -32,8 +33,7 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     protected componentFactoryResolver: ComponentFactoryResolver
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.loadComponent();
@@ -45,7 +45,9 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
   }
 
   loadComponent() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(NotificationsToasterComponent),
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+        NotificationsToasterComponent
+      ),
       viewContainerRef = this.notificationsToasterHost.viewContainerRef;
 
     viewContainerRef.clear();
@@ -82,5 +84,4 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
       clearTimeout(this.timeout);
     }
   }
-
 }

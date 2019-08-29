@@ -6,15 +6,27 @@
 
 <div class="m-proChannelList__tools" *ngIf="query !== ''">
   <div class="m-proChannelListTools__searchResult">
-    <span> Showing results for: <strong> {{query}}</strong></span>
+    <span>
+      Showing results for: <strong> {{ query }}</strong></span
+    >
   </div>
 </div>
 
 <div class="m-proChannelList__content">
-  <ul class="m-proChannelListContent__list" [class.m-proChannelListContent__normalList]="type === 'activities'">
-    <li *ngFor="let entity$ of (entities$ | async); let i = index">
+  <ul
+    class="m-proChannelListContent__list"
+    [class.m-proChannelListContent__normalList]="type === 'activities'"
+  >
+    <li *ngFor="let entity$ of entities$ | async; let i = index">
       <ng-container *ngIf="entity$ | async as entity">
-        <ng-container *ngIf="type === 'all' || type === 'images' || type === 'videos' || type === 'blogs'">
+        <ng-container
+          *ngIf="
+            type === 'all' ||
+            type === 'images' ||
+            type === 'videos' ||
+            type === 'blogs'
+          "
+        >
           <m-pro--channel-tile
             [entity]="entity"
             (click)="onTileClicked(entity)"
@@ -30,9 +42,7 @@
         </ng-container>
 
         <ng-container *ngIf="type === 'activities'">
-          <minds-activity
-            [object]="entity"
-          ></minds-activity>
+          <minds-activity [object]="entity"></minds-activity>
         </ng-container>
       </ng-container>
     </li>
@@ -49,10 +59,7 @@
     </div>
 
     <ng-template #noMore>
-      <div
-        class="m-proChannelListContent__loadMore"
-        i18n
-      >
+      <div class="m-proChannelListContent__loadMore" i18n>
         Nothing more to load
       </div>
     </ng-template>

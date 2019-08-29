@@ -6,17 +6,21 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { mindsTitleMock } from '../../../app/mocks/services/ux/minds-title.service.mock.spec';
 
 describe('NewsfeedService', () => {
-
   let service: NotificationService;
 
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    service = new NotificationService(clientMock, sessionMock, socketMock, mindsTitleMock);
+    service = new NotificationService(
+      clientMock,
+      sessionMock,
+      socketMock,
+      mindsTitleMock
+    );
     clientMock.response = {};
   });
 
-  afterEach(()=> {
+  afterEach(() => {
     jasmine.clock().uninstall();
   });
 
@@ -38,7 +42,5 @@ describe('NewsfeedService', () => {
     service.increment(4);
 
     expect(window.Minds.notifications_count).toBe(4);
-
   }));
-  
 });

@@ -5,11 +5,10 @@ m-pro--unsubscribe-modal {
 }
 
 .m-pro--unsubscribe-modal {
-
   > * {
     color: var(--m-pro--text-color);
     font-size: 16px;
-  
+
     @media screen and (max-width: 420px) {
       font-size: 14px;
     }
@@ -30,5 +29,4 @@ m-pro--unsubscribe-modal {
       margin-left: 12px;
     }
   }
-
 }

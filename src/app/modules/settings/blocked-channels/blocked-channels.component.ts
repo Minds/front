@@ -1,16 +1,20 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { tap, filter, switchMap } from 'rxjs/operators';
-import { BlockListService } from "../../../common/services/block-list.service";
-import { EntitiesService } from "../../../common/services/entities.service";
-import { Client } from "../../../services/api/client";
+import { BlockListService } from '../../../common/services/block-list.service';
+import { EntitiesService } from '../../../common/services/entities.service';
+import { Client } from '../../../services/api/client';
 
 @Component({
   selector: 'm-settings__blockedChannels',
   templateUrl: 'blocked-channels.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsBlockedChannelsComponent implements OnInit {
-
   blockedGuids: any[] = [];
   channels;
 
@@ -25,9 +29,8 @@ export class SettingsBlockedChannelsComponent implements OnInit {
     protected blockListService: BlockListService,
     protected entitiesService: EntitiesService,
     protected client: Client,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.load(true);
@@ -41,15 +44,14 @@ export class SettingsBlockedChannelsComponent implements OnInit {
         const response: any = await this.entitiesService.fetch(guids);
         return response.entities;
       }),
-      tap((blocked) => {
+      tap(blocked => {
         this.inProgress = false;
       })
     );
   }
 
   async load(refresh: boolean = false) {
-    if (this.inProgress)
-      return;
+    if (this.inProgress) return;
     this.blockListService.fetch(); // Get latest
   }
 

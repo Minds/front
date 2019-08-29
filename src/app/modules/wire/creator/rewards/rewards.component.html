@@ -1,44 +1,58 @@
-<div *ngIf="rewards?.rewards[type]?.length"
-  class="m-wire--creator-rewards"
->
-
+<div *ngIf="(rewards?.rewards)[type]?.length" class="m-wire--creator-rewards">
   <div class="m-wire--creator-rewards--title">
-    <h3 *ngIf="channel?.username" class="m-wire--creator-section-title--small" i18n="@@WIRE__CREATOR__REWARDS__TITLE">
+    <h3
+      *ngIf="channel?.username"
+      class="m-wire--creator-section-title--small"
+      i18n="@@WIRE__CREATOR__REWARDS__TITLE"
+    >
       {{ channel.username }}'s rewards
     </h3>
 
     <div *ngIf="sums" class="m-wire--creator-rewards--sums">
-      <ng-container i18n="@@WIRE__CREATOR__REWARDS__YOU_SENT_LABEL">You have sent</ng-container>
+      <ng-container i18n="@@WIRE__CREATOR__REWARDS__YOU_SENT_LABEL"
+        >You have sent</ng-container
+      >
 
       <b *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_WITH_VALUE">
         {{ sums.points | number }} points
       </b>
 
       <b *ngIf="type == 'money'">
-        {{ sums.money | currency:'USD':true:'1.0-0' }}
+        {{ sums.money | currency: 'USD':true:'1.0-0' }}
       </b>
 
       <b *ngIf="type == 'tokens'">
-        {{ sums.tokens | number:'1.0-4' }}
+        {{ sums.tokens | number: '1.0-4' }}
       </b>
 
-      <ng-container i18n="@@WIRE__CREATOR__REWARDS__IN_THE_LAST_MONTH">in the last month.</ng-container>
+      <ng-container i18n="@@WIRE__CREATOR__REWARDS__IN_THE_LAST_MONTH"
+        >in the last month.</ng-container
+      >
     </div>
   </div>
 
   <ul class="m-wire--creator-rewards--list">
     <ng-container *ngFor="let reward of rewards.rewards[type]; let i = index">
-      <li class="m-wire--creator-rewards--threshold"
-        [class.m-wire--creator-rewards--above-threshold]="isRewardAboveThreshold(i)"
+      <li
+        class="m-wire--creator-rewards--threshold"
+        [class.m-wire--creator-rewards--above-threshold]="
+          isRewardAboveThreshold(i)
+        "
         [class.m-wire--creator-rewards--best-reward]="isBestReward(i)"
         (click)="selectReward(i)"
       >
         <div class="m-wire--creator-rewards--amount">
-          <span *ngIf="type == 'money'">{{ reward.amount | currency:'USD':true:'1.0-0' }}</span>
-          <span *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_WITH_VALUE">{{ reward.amount | number }} points</span>
-          <span *ngIf="type == 'tokens'" i18n="@@M__COMMON__TOKENS_WITH_VALUE">{{ reward.amount | number }} Tokens</span>
+          <span *ngIf="type == 'money'">{{
+            reward.amount | currency: 'USD':true:'1.0-0'
+          }}</span>
+          <span *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_WITH_VALUE"
+            >{{ reward.amount | number }} points</span
+          >
+          <span *ngIf="type == 'tokens'" i18n="@@M__COMMON__TOKENS_WITH_VALUE"
+            >{{ reward.amount | number }} Tokens</span
+          >
         </div>
-        <div class="m-wire--creator-rewards--description"> 
+        <div class="m-wire--creator-rewards--description">
           <p>{{ reward.description }}</p>
         </div>
       </li>

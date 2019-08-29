@@ -17,7 +17,7 @@ m-categories--selector {
     border: none;
     border-radius: 4px;
     margin: 0;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.15);
     }
   }
@@ -30,7 +30,7 @@ m-categories--selector {
     max-height: 300px;
     overflow-y: visible;
     overflow-x: auto;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
 

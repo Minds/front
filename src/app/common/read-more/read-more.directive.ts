@@ -1,15 +1,20 @@
-import { Directive, ElementRef, ContentChild, ChangeDetectorRef, Input } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  ContentChild,
+  ChangeDetectorRef,
+  Input,
+} from '@angular/core';
 import { ReadMoreButtonComponent } from './button.component';
 
 @Directive({
   selector: '[m-read-more]',
 })
 export class ReadMoreDirective {
-
   _element: any;
   realHeight: any;
   expandable: boolean = false;
-  @ContentChild(ReadMoreButtonComponent, { 'static': false}) button;
+  @ContentChild(ReadMoreButtonComponent, { static: false }) button;
   @Input() maxHeightAllowed: number;
 
   constructor(private element: ElementRef, private cd: ChangeDetectorRef) {
@@ -51,5 +56,4 @@ export class ReadMoreDirective {
       this.button.detectChanges();
     }
   }
-
 }

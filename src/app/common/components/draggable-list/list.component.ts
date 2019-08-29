@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, ContentChild, Input, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  Input,
+  TemplateRef,
+} from '@angular/core';
 import { DndDropEvent, DropEffect, EffectAllowed } from 'ngx-drag-drop';
 
 @Component({
@@ -10,9 +16,11 @@ import { DndDropEvent, DropEffect, EffectAllowed } from 'ngx-drag-drop';
       [dndEffectAllowed]="dndEffectAllowed"
       (dndDrop)="onDrop($event, data)"
     >
-
-      <div class="dndPlaceholder" dndPlaceholderRef
-           style="min-height:72px;border:1px dashed green;background-color:rgba(0, 0, 0, 0.1)"></div>
+      <div
+        class="dndPlaceholder"
+        dndPlaceholderRef
+        style="min-height:72px;border:1px dashed green;background-color:rgba(0, 0, 0, 0.1)"
+      ></div>
 
       <li
         *ngFor="let item of data; let i = index; trackBy: trackByFunction"
@@ -25,13 +33,14 @@ import { DndDropEvent, DropEffect, EffectAllowed } from 'ngx-drag-drop';
         (dndCanceled)="onDragged(item, data, 'none')"
       >
         <i class="handle material-icons" dndHandle>reorder</i>
-        <ng-container [ngTemplateOutlet]="template" [ngTemplateOutletContext]="{item: item, i: i}"></ng-container>
+        <ng-container
+          [ngTemplateOutlet]="template"
+          [ngTemplateOutletContext]="{ item: item, i: i }"
+        ></ng-container>
       </li>
-
     </ul>
   `,
 })
-
 export class DraggableListComponent {
   @Input() data: Array<any>;
   @Input() dndEffectAllowed: EffectAllowed = 'move';
@@ -53,14 +62,10 @@ export class DraggableListComponent {
   }
 
   onDrop(event: DndDropEvent, list?: any[]) {
-    if (list
-      && (event.dropEffect === "copy"
-        || event.dropEffect === "move")) {
-
+    if (list && (event.dropEffect === 'copy' || event.dropEffect === 'move')) {
       let index = event.index;
 
-      if (typeof index === "undefined") {
-
+      if (typeof index === 'undefined') {
         index = list.length;
       }
 

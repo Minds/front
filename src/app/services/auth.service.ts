@@ -6,8 +6,8 @@ import { Session } from './session';
 export class AuthService {
   constructor(
     protected readonly client: Client,
-    protected readonly session: Session,
-  ) { }
+    protected readonly session: Session
+  ) {}
 
   logout(closeAll: boolean = false): boolean {
     let endpoint: string = 'api/v1/authenticate';

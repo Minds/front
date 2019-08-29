@@ -4,7 +4,7 @@ m-date-selector {
     letter-spacing: 2.5px;
     align-self: center;
     font-size: 12px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
   }
@@ -12,7 +12,7 @@ m-date-selector {
   .m-date-selector--input {
     display: flex;
     align-items: center;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
       background-color: themed($m-white);
       //border: 1px solid themed($m-grey-100);
@@ -28,7 +28,7 @@ m-date-selector {
       width: auto;
       height: auto;
       align-self: center;
-      @include m-theme(){
+      @include m-theme() {
         color: rgba(themed($m-black), 0.54);
       }
     }
@@ -38,7 +38,5 @@ m-date-selector {
       cursor: pointer;
       margin-right: 8px;
     }
-
-}
-
+  }
 }

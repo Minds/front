@@ -46,10 +46,10 @@
       }
     }
 
-    input[type=text],
-    input[type=password],
-    input[type=search],
-    input[type=date],
+    input[type='text'],
+    input[type='password'],
+    input[type='search'],
+    input[type='date'],
     textarea {
       appearance: none;
       border: 1px solid;
@@ -119,6 +119,6 @@
   }
 
   .m-pro--settings--field-spinner {
-    margin-left: 0.65em
+    margin-left: 0.65em;
   }
 }

@@ -38,8 +38,8 @@
         padding: 8px 0 8px 8px;
         margin: 1px 0 1px 4px;
         opacity: 1;
-        transition: opacity .15s ease;
-        -webkit-transition: opacity .15s ease;
+        transition: opacity 0.15s ease;
+        -webkit-transition: opacity 0.15s ease;
 
         @include m-theme() {
           background-color: transparent;
@@ -77,19 +77,19 @@
     margin-left: 4px;
     label > span {
       font-size: 14px;
-      @include m-theme(){
-        color: themed($m-grey-600)
+      @include m-theme() {
+        color: themed($m-grey-600);
       }
     }
 
     m-tooltip {
       i {
         font-size: 14px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-200);
         }
         &.m-share__newWindowIcon {
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-blue-grey-300);
           }
         }
@@ -98,7 +98,7 @@
         a {
           text-decoration: none;
           font-weight: 400;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-blue-grey-300);
           }
           &:hover {

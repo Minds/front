@@ -9,7 +9,7 @@ import { Session } from '../../../services/session';
   selector: 'm-wallet--usd',
   template: `
     <ng-template dynamic-host></ng-template>
-  `
+  `,
 })
 export class WalletUSDComponent {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
@@ -17,16 +17,22 @@ export class WalletUSDComponent {
   componentRef;
   componentInstance: RevenueConsoleComponent;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver, private router: Router, private session: Session) { }
+  constructor(
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private router: Router,
+    private session: Session
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.loadComponent();
   }
 
   loadComponent() {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(RevenueConsoleComponent),
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        RevenueConsoleComponent
+      ),
       viewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();

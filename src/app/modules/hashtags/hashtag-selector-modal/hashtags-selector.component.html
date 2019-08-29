@@ -3,22 +3,42 @@
     <h3>
       <span i18n="@@M__HASHTAG__SELECTOR_TITLE">Personalize your feed</span>
 
-      <span class="m-hashtags-selector--header-switches" *mIfFeature="'top-feeds'">
-        <m-switch [(mModel)]="showTrending" (change)="filterChange()" i18n>Trending</m-switch>
-        <m-switch [(mModel)]="showDefaults" (change)="filterChange()" i18n>Defaults</m-switch>
+      <span
+        class="m-hashtags-selector--header-switches"
+        *mIfFeature="'top-feeds'"
+      >
+        <m-switch [(mModel)]="showTrending" (change)="filterChange()" i18n
+          >Trending</m-switch
+        >
+        <m-switch [(mModel)]="showDefaults" (change)="filterChange()" i18n
+          >Defaults</m-switch
+        >
       </span>
     </h3>
 
     <div class="m-hashtags-selector--header-text">
-      <p class="m-hashtags-selector--subtext" i18n="@@M__HASHTAG__SELECTOR__SUBTITLE">
-        Select the hashtags below that you wish to see more of. The hashtags you select will be pinned to the top bar of your feed. You can change these at anytime via your settings or by clicking on 'MORE' at the top of any feed.
+      <p
+        class="m-hashtags-selector--subtext"
+        i18n="@@M__HASHTAG__SELECTOR__SUBTITLE"
+      >
+        Select the hashtags below that you wish to see more of. The hashtags you
+        select will be pinned to the top bar of your feed. You can change these
+        at anytime via your settings or by clicking on 'MORE' at the top of any
+        feed.
       </p>
     </div>
   </div>
 
   <section class="m-hashtag-selector--section-row">
-    <div class="m-hashtag-selector--section-item" *ngFor="let hashtag of hashtags">
-      <span [ngClass]="{ 'selected': hashtag.selected }" (click)="toggleSelection(hashtag)">#{{hashtag.value}}</span>
+    <div
+      class="m-hashtag-selector--section-item"
+      *ngFor="let hashtag of hashtags"
+    >
+      <span
+        [ngClass]="{ selected: hashtag.selected }"
+        (click)="toggleSelection(hashtag)"
+        >#{{ hashtag.value }}</span
+      >
     </div>
     <div class="m-hashtag--creator" *ngIf="!inProgress">
       <input
@@ -26,13 +46,16 @@
         name="hashtag"
         [(ngModel)]="input"
         (keyup)="keyUp($event)"
-        #hashtagInput/>
-      <i class="material-icons m-hashtag--creator--done"
-        (click)="addNew()"
-      >done</i>
-      <i class="material-icons m-hashtag--creator--close"
+        #hashtagInput
+      />
+      <i class="material-icons m-hashtag--creator--done" (click)="addNew()"
+        >done</i
+      >
+      <i
+        class="material-icons m-hashtag--creator--close"
         (click)="input = ''; addingHashtag = false; hashtagInput.focus()"
-      >close</i>
+        >close</i
+      >
     </div>
   </section>
 
@@ -43,9 +66,14 @@
       i18n="@@M_HASHTAG__SELECTOR__DONE"
       [disabled]="inProgress"
       (click)="close()"
-    >DONE</button>
+    >
+      DONE
+    </button>
 
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+    <div
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+      [hidden]="!inProgress"
+    ></div>
   </section>
 </div>
-  

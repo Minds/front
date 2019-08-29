@@ -9,7 +9,11 @@ import { Component, Input } from '@angular/core';
 
     <ng-container *ngIf="!expanded; else expandedView">
       <div class="m-dropdown">
-        <div class="m-dropdown--label-container" [class.m-dropdown--label-active]="toggled" (click)="toggle()">
+        <div
+          class="m-dropdown--label-container"
+          [class.m-dropdown--label-active]="toggled"
+          (click)="toggle()"
+        >
           <ng-content select="label"></ng-content>
         </div>
 
@@ -30,7 +34,6 @@ import { Component, Input } from '@angular/core';
   `,
 })
 export class DropdownComponent {
-
   @Input() expanded: boolean = false;
 
   toggled = false;

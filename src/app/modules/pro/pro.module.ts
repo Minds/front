@@ -6,23 +6,23 @@ import { CommonModule } from '../../common/common.module';
 import { ProService } from './pro.service';
 import { ProMarketingComponent } from './marketing.component';
 import { ProSubscriptionComponent } from './channel/subscription/subscription.component';
-import { ProChannelComponent } from "./channel/channel.component";
-import { ProChannelLoginComponent } from "./channel/login/login.component";
-import { MindsFormsModule } from "../forms/forms.module";
-import { ProChannelListComponent } from "./channel/list/list.component";
-import { ProTileComponent } from "./channel/tiles/media/tile.component";
-import { NewsfeedModule } from "../newsfeed/newsfeed.module";
+import { ProChannelComponent } from './channel/channel.component';
+import { ProChannelLoginComponent } from './channel/login/login.component';
+import { MindsFormsModule } from '../forms/forms.module';
+import { ProChannelListComponent } from './channel/list/list.component';
+import { ProTileComponent } from './channel/tiles/media/tile.component';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { ProSettingsComponent } from './settings/settings.component';
 import { ProChannelFooterComponent } from './channel/footer/footer.component';
-import { LegacyModule } from "../legacy/legacy.module";
-import { WireModule } from "../wire/wire.module";
-import { VideoModule } from "../media/components/video/video.module";
+import { LegacyModule } from '../legacy/legacy.module';
+import { WireModule } from '../wire/wire.module';
+import { VideoModule } from '../media/components/video/video.module';
 import { ProChannelHomeComponent } from './channel/home/home.component';
-import { ProGroupTileComponent } from "./channel/tiles/group/group-tile.component";
+import { ProGroupTileComponent } from './channel/tiles/group/group-tile.component';
 import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.component';
-import { ProCategoriesComponent } from "./channel/categories/categories.component";
-import { BlogView } from "../blogs/view/view";
-import { MediaModalComponent } from "../media/modal/modal.component";
+import { ProCategoriesComponent } from './channel/categories/categories.component';
+import { BlogView } from '../blogs/view/view';
+import { MediaModalComponent } from '../media/modal/modal.component';
 
 const routes: Routes = [
   {
@@ -46,16 +46,16 @@ const routes: Routes = [
           },
           {
             path: 'login',
-            component: ProChannelLoginComponent
+            component: ProChannelLoginComponent,
           },
           {
             path: ':type',
             component: ProChannelListComponent,
           },
-        ]
-      }
-    ]
-  }
+        ],
+      },
+    ],
+  },
 ];
 
 export const STANDALONE_ROUTES = [
@@ -69,14 +69,14 @@ export const STANDALONE_ROUTES = [
       },
       {
         path: 'login',
-        component: ProChannelLoginComponent
+        component: ProChannelLoginComponent,
       },
       {
         path: ':type',
         component: ProChannelListComponent,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
@@ -92,9 +92,7 @@ export const STANDALONE_ROUTES = [
     WireModule,
     VideoModule,
   ],
-  providers: [
-    ProService,
-  ],
+  providers: [ProService],
   declarations: [
     ProMarketingComponent,
     ProSettingsComponent,
@@ -107,16 +105,13 @@ export const STANDALONE_ROUTES = [
     ProChannelListComponent,
     ProChannelFooterComponent,
     ProGroupTileComponent,
-    ProUnsubscribeModalComponent
+    ProUnsubscribeModalComponent,
   ],
-  exports: [
-    ProChannelComponent
-  ],
+  exports: [ProChannelComponent],
   entryComponents: [
     MediaModalComponent,
     ProUnsubscribeModalComponent,
     BlogView,
   ],
 })
-export class ProModule {
-}
+export class ProModule {}

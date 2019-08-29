@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ProChannelService } from '../channel.service';
@@ -10,14 +15,13 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
   templateUrl: 'home.component.html',
 })
 export class ProChannelHomeComponent implements OnInit {
-
   inProgress: boolean = false;
 
   featuredContent: Array<any> = [];
 
   categories: Array<{
-    tag: { tag: string, label: string },
-    content: Array<Observable<any>>,
+    tag: { tag: string; label: string };
+    content: Array<Observable<any>>;
   }> = [];
 
   moreData: boolean = true;
@@ -26,9 +30,8 @@ export class ProChannelHomeComponent implements OnInit {
     protected router: Router,
     protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -51,7 +54,9 @@ export class ProChannelHomeComponent implements OnInit {
       const { content } = await this.channelService.getContent({
         limit: MAX_FEATURED_CONTENT,
       });
-      this.featuredContent = this.featuredContent.concat(content).slice(0, MAX_FEATURED_CONTENT);
+      this.featuredContent = this.featuredContent
+        .concat(content)
+        .slice(0, MAX_FEATURED_CONTENT);
       this.detectChanges();
 
       this.categories = await this.channelService.getAllCategoriesContent();
@@ -77,11 +82,16 @@ export class ProChannelHomeComponent implements OnInit {
   }
 
   navigateToCategory(tag) {
-    this.router.navigate(this.channelService.getRouterLink('all', { hashtag: tag }));
+    this.router.navigate(
+      this.channelService.getRouterLink('all', { hashtag: tag })
+    );
   }
 
   get settings() {
-    return this.channelService.currentChannel && this.channelService.currentChannel.pro_settings;
+    return (
+      this.channelService.currentChannel &&
+      this.channelService.currentChannel.pro_settings
+    );
   }
 
   detectChanges() {

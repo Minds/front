@@ -2,7 +2,7 @@ export const SOURCE_CANDIDATE_PICK_LINEAR = 1;
 export const SOURCE_CANDIDATE_PICK_ZIGZAG = 2;
 
 export class SourceCandidates {
-  protected candidates: { [index:string]: any[] } = {};
+  protected candidates: { [index: string]: any[] } = {};
   protected blacklist = [];
   protected lastBlacklistedType;
 
@@ -22,7 +22,11 @@ export class SourceCandidates {
   }
 
   isBlacklisted(type: string, value: any) {
-    return this.blacklist.findIndex(item => item.type === type && item.value === value) > -1;
+    return (
+      this.blacklist.findIndex(
+        item => item.type === type && item.value === value
+      ) > -1
+    );
   }
 
   empty() {
@@ -30,7 +34,10 @@ export class SourceCandidates {
     this.markAsClean();
   }
 
-  pick(typePriorities: string[], strategy: number = SOURCE_CANDIDATE_PICK_LINEAR): { type, value } {
+  pick(
+    typePriorities: string[],
+    strategy: number = SOURCE_CANDIDATE_PICK_LINEAR
+  ): { type; value } {
     switch (strategy) {
       case SOURCE_CANDIDATE_PICK_ZIGZAG:
         return this._pickZigZag(typePriorities);
@@ -41,27 +48,33 @@ export class SourceCandidates {
     }
   }
 
-  private _pickZigZag(typePriorities: string[]): { type, value } {
+  private _pickZigZag(typePriorities: string[]): { type; value } {
     const reorderedTypePriorities = typePriorities;
 
     if (this.lastBlacklistedType) {
-      const index: number = reorderedTypePriorities.findIndex(type => type === this.lastBlacklistedType);
+      const index: number = reorderedTypePriorities.findIndex(
+        type => type === this.lastBlacklistedType
+      );
 
       if (index > -1) {
-        reorderedTypePriorities.push(...reorderedTypePriorities.splice(index, 1));
+        reorderedTypePriorities.push(
+          ...reorderedTypePriorities.splice(index, 1)
+        );
       }
     }
 
     return this._pickLinear(reorderedTypePriorities);
   }
 
-  private _pickLinear(typePriorities: string[]): { type, value } {
+  private _pickLinear(typePriorities: string[]): { type; value } {
     for (let type of typePriorities) {
       if (!this.candidates[type]) {
         continue;
       }
 
-      const candidates = this.candidates[type].filter(value => !this.isBlacklisted(type, value));
+      const candidates = this.candidates[type].filter(
+        value => !this.isBlacklisted(type, value)
+      );
 
       if (candidates.length > 0) {
         return {

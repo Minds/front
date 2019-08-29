@@ -1,13 +1,26 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Client } from "../../../../../services/api/client";
-import { timespanOption } from "../timespanOption";
-import { removeCurrentUnits } from "../../../util";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { Client } from '../../../../../services/api/client';
+import { timespanOption } from '../timespanOption';
+import { removeCurrentUnits } from '../../../util';
 
 @Component({
   selector: 'm-analyticscharts__pageviews',
   template: `
     <div class="m-chart" #chartContainer>
-      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
+      <div
+        class="mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+        *ngIf="inProgress"
+      ></div>
 
       <m-graph
         [data]="data"
@@ -15,9 +28,8 @@ import { removeCurrentUnits } from "../../../util";
         *ngIf="!inProgress && !!data"
       ></m-graph>
     </div>
-  `
+  `,
 })
-
 export class PageviewsChartComponent implements OnInit {
   @Input() pie: boolean = false;
   @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
@@ -34,12 +46,12 @@ export class PageviewsChartComponent implements OnInit {
     height: 0,
     title: '',
     font: {
-      family: 'Roboto'
+      family: 'Roboto',
     },
     titlefont: {
       family: 'Roboto',
       size: 24,
-      weight: 'bold'
+      weight: 'bold',
     },
     xaxis: {
       type: '-',
@@ -62,9 +74,7 @@ export class PageviewsChartComponent implements OnInit {
     }
   }
 
-  constructor(private client: Client) {
-
-  }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.applyDimensions();
@@ -78,7 +88,10 @@ export class PageviewsChartComponent implements OnInit {
     if (this.pie) {
       opts['key'] = 'routes';
     }
-    const response: any = await this.client.get(`api/v2/analytics/pageviews`, opts);
+    const response: any = await this.client.get(
+      `api/v2/analytics/pageviews`,
+      opts
+    );
     if (this.pie) {
       this.data = response.data;
       this.data[0].type = 'pie';

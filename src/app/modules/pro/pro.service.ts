@@ -3,16 +3,9 @@ import { Client } from '../../services/api/client';
 
 @Injectable()
 export class ProService {
-  public readonly ratios = [
-    '16:9',
-    '16:10',
-    '4:3',
-    '1:1',
-  ];
+  public readonly ratios = ['16:9', '16:10', '4:3', '1:1'];
 
-  constructor(
-    protected client: Client,
-  ) { }
+  constructor(protected client: Client) {}
 
   async isActive(): Promise<boolean> {
     const result: any = await this.client.get('api/v2/pro');
@@ -35,8 +28,12 @@ export class ProService {
     return true;
   }
 
-  async get(): Promise<{ isActive, settings }> {
-    const { isActive, settings } = await this.client.get('api/v2/pro/settings', {}, {cache: false}) as any;
+  async get(): Promise<{ isActive; settings }> {
+    const { isActive, settings } = (await this.client.get(
+      'api/v2/pro/settings',
+      {},
+      { cache: false }
+    )) as any;
 
     if (settings) {
       if (settings.tag_list) {

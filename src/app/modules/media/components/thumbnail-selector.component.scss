@@ -6,7 +6,7 @@ minds-media-thumbnail-selector {
     display: flex;
     align-items: center;
     text-align: center;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black-always), 0.7);
     }
   }
@@ -14,7 +14,7 @@ minds-media-thumbnail-selector {
     display: block;
     position: relative;
     text-align: center;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-black-always);
     }
     .m-thumbnail-selector--thumbnail {
@@ -45,7 +45,7 @@ minds-media-thumbnail-selector {
     margin: 0 auto;
     padding: 8px;
     text-align: left;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
     .m-thumbnail-selector--thumbnails--title {
@@ -74,7 +74,7 @@ minds-media-thumbnail-selector {
         border-radius: 3px;
 
         &.m-thumbnail-selector--thumbnails-list--thumbnail--selected {
-          @include m-theme(){
+          @include m-theme() {
             border-color: themed($m-blue);
           }
         }

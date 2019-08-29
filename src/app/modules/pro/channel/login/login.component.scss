@@ -86,7 +86,9 @@ m-pro--channel-login {
     flex-grow: 1;
     z-index: 2;
 
-    h1, h3, h4 {
+    h1,
+    h3,
+    h4 {
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       margin: 0;
@@ -148,7 +150,8 @@ m-pro--channel-login {
       }
     }
 
-    minds-form-register, minds-form-login {
+    minds-form-register,
+    minds-form-login {
       .mdl-card {
         background: transparent;
         padding: 0;
@@ -242,7 +245,7 @@ m-pro--channel-login {
           //font-weight: 200;
           //margin:16px;
           padding: 0;
-          padding: 0 $minds-padding*2;
+          padding: 0 $minds-padding * 2;
         }
 
         h3 {
@@ -265,5 +268,4 @@ m-pro--channel-login {
       }
     }
   }
-
 }

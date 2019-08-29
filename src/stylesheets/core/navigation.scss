@@ -1,49 +1,44 @@
-@import "../defaults.scss";
+@import '../defaults.scss';
 
-.m-content-sidebar-nav{
+.m-content-sidebar-nav {
+  .m-content-sidebar-nav-item {
+    list-style: none;
 
-  .m-content-sidebar-nav-item{
+    > a {
+      display: block;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: $minds-padding;
+      cursor: pointer;
 
-    list-style:none;
-
-    > a{
-      display:block;
-      text-decoration:none;
-      text-transform:uppercase;
-      padding:$minds-padding;
-      cursor:pointer;
-
-      &.is-active{
-        @include m-theme(){
+      &.is-active {
+        @include m-theme() {
           border-left: 3px solid themed($m-amber);
         }
       }
-
     }
   }
 }
 
+.m-footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
 
-.m-footer-nav{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin:0;
-  padding:0;
+  .m-footer-nav-item {
+    list-style: none;
 
-  .m-footer-nav-item{
-
-    list-style:none;
-
-    > a{
-      display:block;
-      text-decoration:none;
-      text-transform:uppercase;
-      cursor:pointer;
-      font-size:11px;
-      padding:0 $minds-padding;
-      @include m-theme(){
+    > a {
+      display: block;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 11px;
+      padding: 0 $minds-padding;
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }

@@ -11,11 +11,11 @@ import { BlockchainService } from './modules/blockchain/blockchain.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
 import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
-import { ActivatedRoute, Router } from "@angular/router";
-import { ChannelOnboardingService } from "./modules/onboarding/channel/onboarding.service";
-import { BlockListService } from "./common/services/block-list.service";
-import { FeaturesService } from "./services/features.service";
-import { ThemeService } from "./common/services/theme.service";
+import { ActivatedRoute, Router } from '@angular/router';
+import { ChannelOnboardingService } from './modules/onboarding/channel/onboarding.service';
+import { BlockListService } from './common/services/block-list.service';
+import { FeaturesService } from './services/features.service';
+import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
 import { STANDALONE_ROUTES } from './modules/pro/pro.module';
 
@@ -53,7 +53,7 @@ export class Minds {
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
     public themeService: ThemeService,
-    private bannedService: BannedService,
+    private bannedService: BannedService
   ) {
     this.name = 'Minds';
 
@@ -69,13 +69,18 @@ export class Minds {
       this.notificationService.getNotifications();
     }
 
-    this.session.isLoggedIn(async (is) => {
-      if (is && !this.standalone) { // TODO remove window.Minds.pro check from this line
+    this.session.isLoggedIn(async is => {
+      if (is && !this.standalone) {
+        // TODO remove window.Minds.pro check from this line
         if (!this.standalone) {
           this.showOnboarding = await this.onboardingService.showModal();
         }
         if (this.minds.user.language !== this.minds.language) {
-          console.log('[app]:: language change', this.minds.user.language, this.minds.language);
+          console.log(
+            '[app]:: language change',
+            this.minds.user.language,
+            this.minds.language
+          );
           window.location.reload(true);
         }
       }

@@ -1,9 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import { FeedsService } from "../../../../common/services/feeds.service";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Injector,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { FeedsService } from '../../../../common/services/feeds.service';
 import { ProChannelService, RouterLinkToType } from '../channel.service';
-import { OverlayModalService } from "../../../../services/ux/overlay-modal";
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -12,7 +19,6 @@ import { OverlayModalService } from "../../../../services/ux/overlay-modal";
   providers: [FeedsService],
 })
 export class ProChannelListComponent implements OnInit, OnDestroy {
-
   paramsType: string; // exact string that came from the router params
 
   type: string;
@@ -36,8 +42,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute,
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    protected injector: Injector,
-  ) { }
+    protected injector: Injector
+  ) {}
 
   ngOnInit() {
     this.params$ = this.route.params.subscribe(params => {
@@ -95,7 +101,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       params.hashtags = this.selectedHashtag;
     }
 
-    if (this.query && (this.query !== '')) {
+    if (this.query && this.query !== '') {
       params.period = this.period;
       params.all = 1;
       params.query = this.query;
@@ -111,7 +117,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         .setCastToActivities(false)
         .setLimit(12)
         .fetch();
-
     } catch (e) {
       console.error('ProChannelListComponent.load', e);
     }
@@ -144,11 +149,18 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       params = { hashtag: tag };
     }
 
-    return this.router.navigate(this.channelService.getRouterLink(this.paramsType as RouterLinkToType, params));
+    return this.router.navigate(
+      this.channelService.getRouterLink(
+        this.paramsType as RouterLinkToType,
+        params
+      )
+    );
   }
 
   get shouldShowCategories() {
-    return this.paramsType !== 'groups' && this.paramsType !== 'feed' && !this.query;
+    return (
+      this.paramsType !== 'groups' && this.paramsType !== 'feed' && !this.query
+    );
   }
 
   detectChanges() {

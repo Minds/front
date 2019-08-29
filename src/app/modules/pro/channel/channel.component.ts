@@ -9,32 +9,28 @@ import {
   Injector,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { Session } from "../../../services/session";
-import { Subscription } from "rxjs";
-import { MindsUser } from "../../../interfaces/entities";
-import { Client } from "../../../services/api/client";
+import { ActivatedRoute, Router } from '@angular/router';
+import { Session } from '../../../services/session';
+import { Subscription } from 'rxjs';
+import { MindsUser } from '../../../interfaces/entities';
+import { Client } from '../../../services/api/client';
 import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
 import { SignupModalService } from '../../../modules/modals/signup/service';
-import { OverlayModalService } from "../../../services/ux/overlay-modal";
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ProUnsubscribeModalComponent } from './unsubscribe-modal/modal.component';
 import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
 
 @Component({
-  providers: [
-    ProChannelService,
-    OverlayModalService,
-  ],
+  providers: [ProChannelService, OverlayModalService],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
-
   username: string;
 
   type: string;
@@ -57,7 +53,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subscribersCount: number;
 
-  @ViewChild('overlayModal', { static: true }) protected overlayModal: OverlayModalComponent;
+  @ViewChild('overlayModal', { static: true })
+  protected overlayModal: OverlayModalComponent;
 
   protected isLoggedIn$: Subscription;
 
@@ -72,9 +69,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected modal: SignupModalService,
     protected modalService: OverlayModalService,
-    protected injector: Injector,
-  ) {
-  }
+    protected injector: Injector
+  ) {}
 
   ngOnInit() {
     if (window.Minds.pro) {
@@ -110,15 +106,20 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
         this.setTitle();
       }
 
-      if (this.username && (!this.channel || this.channel.username != this.username)) {
+      if (
+        this.username &&
+        (!this.channel || this.channel.username != this.username)
+      ) {
         this.load();
       }
     });
 
-    this.channel$ = this.channelService.subscriptionChange.subscribe(subscribersCount => {
-      this.subscribersCount = subscribersCount;
-      this.load();
-    })
+    this.channel$ = this.channelService.subscriptionChange.subscribe(
+      subscribersCount => {
+        this.subscribersCount = subscribersCount;
+        this.load();
+      }
+    );
   }
 
   setTitle() {
@@ -127,7 +128,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    const title = [this.channel.pro_settings.title as string || this.channel.name || this.channel.username];
+    const title = [
+      (this.channel.pro_settings.title as string) ||
+        this.channel.name ||
+        this.channel.username,
+    ];
 
     switch (this.type) {
       case 'feed':
@@ -196,9 +201,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.channel.subscribed) {
       if (!this.session.isLoggedIn()) {
         this.router.navigate(
-          window.Minds.pro ?
-            this.channelService.getRouterLink('login') :
-            ['/login']
+          window.Minds.pro
+            ? this.channelService.getRouterLink('login')
+            : ['/login']
         );
 
         return false;
@@ -207,10 +212,14 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.channelService.subscribe();
     } else {
       this.modalService
-        .create(ProUnsubscribeModalComponent, this.channel,
+        .create(
+          ProUnsubscribeModalComponent,
+          this.channel,
           {
-            class: 'm-overlayModal--unsubscribe'
-          }, this.injector)
+            class: 'm-overlayModal--unsubscribe',
+          },
+          this.injector
+        )
         .present();
     }
   }
@@ -229,20 +238,20 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
         continue;
       }
 
-      const styleAttr = style.replace(/_/g, "-");
-      this.element.nativeElement
-        .style.setProperty(`--m-pro--${styleAttr}`, styles[style]);
+      const styleAttr = style.replace(/_/g, '-');
+      this.element.nativeElement.style.setProperty(
+        `--m-pro--${styleAttr}`,
+        styles[style]
+      );
     }
   }
 
   wire() {
-    this.modalService.create(WireCreatorComponent,
-      this.channelService.currentChannel,
-      {
-        onComplete: () => {
-        }
-      }
-    ).present();
+    this.modalService
+      .create(WireCreatorComponent, this.channelService.currentChannel, {
+        onComplete: () => {},
+      })
+      .present();
   }
 
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
@@ -274,7 +283,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   search(): Promise<boolean> {
-    return this.router.navigate(this.channelService.getRouterLink('all', { query: this.query }));
+    return this.router.navigate(
+      this.channelService.getRouterLink('all', { query: this.query })
+    );
   }
 
   clearSearch() {

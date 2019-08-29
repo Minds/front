@@ -3,11 +3,9 @@ import { Material as MaterialService } from '../../../services/ui';
 
 @Directive({
   selector: '[mdlSwitch]',
-  inputs: ['mdlSwitch', 'toggled']
+  inputs: ['mdlSwitch', 'toggled'],
 })
-
 export class MaterialSwitch {
-
   mdlSwitch: any;
   private element: any;
   private _toggled: boolean = false;
@@ -26,8 +24,6 @@ export class MaterialSwitch {
 
   set toggled(value: boolean) {
     MaterialService.updateElement(this.element);
-    if (value)
-      this.element.classList.add('is-checked');
+    if (value) this.element.classList.add('is-checked');
   }
-
 }

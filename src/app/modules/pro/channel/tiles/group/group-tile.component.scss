@@ -45,7 +45,6 @@ m-pro--channel--group-tile {
     }
   }
 
-
   .m-proChannelGroupTile__content {
     margin-top: 50px;
     position: relative;
@@ -70,7 +69,8 @@ m-pro--channel--group-tile {
       margin-top: 16px;
     }
 
-    h2, p {
+    h2,
+    p {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;

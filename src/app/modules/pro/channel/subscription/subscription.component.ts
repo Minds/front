@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Session } from '../../../../services/session';
 import { ProService } from '../../pro.service';
 
@@ -8,7 +15,6 @@ import { ProService } from '../../pro.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProSubscriptionComponent implements OnInit {
-
   @Output() onEnable: EventEmitter<any> = new EventEmitter();
 
   @Output() onDisable: EventEmitter<any> = new EventEmitter();
@@ -28,9 +34,8 @@ export class ProSubscriptionComponent implements OnInit {
   constructor(
     protected service: ProService,
     protected session: Session,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.isLoggedIn = this.session.isLoggedIn();

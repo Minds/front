@@ -1,19 +1,17 @@
-@import "defaults";
+@import 'defaults';
 
-minds-form-city-finder{
-
-  .m-city-finder-list{
+minds-form-city-finder {
+  .m-city-finder-list {
     position: fixed;
     padding: 12px;
     list-style: none;
 
-    li{
+    li {
       padding: 8px;
-      cursor:pointer;
-      @include m-theme(){
-         border-bottom: 1px solid themed($m-grey-100);
+      cursor: pointer;
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-grey-100);
       }
     }
   }
-
 }

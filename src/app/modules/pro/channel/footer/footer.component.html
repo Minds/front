@@ -1,13 +1,15 @@
 <div class="m-pro--channel-footer">
-  <span class="m-pro--channel-footer--text">{{footerText}}</span>
+  <span class="m-pro--channel-footer--text">{{ footerText }}</span>
 
   <div class="m-pro--channel-footer--social-profiles">
     <span *ngFor="let profile of footerSocialProfiles">
-      <a *ngIf="profile.key && profile.value"
-         [href]="getSocialProfileURL(profile.value)"
-         rel="noopener noreferrer"
-         target="_blank"
-      ><i [ngClass]="[ getSocialProfileIconClass(profile) ]"></i></a>
+      <a
+        *ngIf="profile.key && profile.value"
+        [href]="getSocialProfileURL(profile.value)"
+        rel="noopener noreferrer"
+        target="_blank"
+        ><i [ngClass]="[getSocialProfileIconClass(profile)]"></i
+      ></a>
     </span>
   </div>
 
@@ -15,7 +17,8 @@
     *ngFor="let link of footerLinks"
     class="m-pro--channel-footer--link"
     [href]="link.href"
-  >{{link.title}}</a>
+    >{{ link.title }}</a
+  >
 
   <ng-container *ngIf="currentUser">
     <ng-container *ngIf="isStandalone">
@@ -24,13 +27,10 @@
         [href]="viewProfileHref"
         target="_blank"
         i18n
-      >@{{currentUsername}}</a>
+        >@{{ currentUsername }}</a
+      >
 
-      <a
-        class="m-pro--channel-footer--link"
-        (click)="logout()"
-        i18n
-      >Logout</a>
+      <a class="m-pro--channel-footer--link" (click)="logout()" i18n>Logout</a>
     </ng-container>
 
     <ng-container *ngIf="!isOwner">

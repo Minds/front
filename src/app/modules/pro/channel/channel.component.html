@@ -1,13 +1,10 @@
-<div
-  *ngIf="channel"
-  class="m-pro--channel"
->
+<div *ngIf="channel" class="m-pro--channel">
   <div class="m-proChannel__topbar">
     <img
       class="m-proChannelTopbar__logo"
       [src]="channel.pro_settings.logo_image"
       [routerLink]="homeRouterLink"
-    >
+    />
 
     <div class="m-proChannelTopbar__SearchBox">
       <div class="mdl-textfield mdl-js-textfield">
@@ -19,7 +16,7 @@
           class="mdl-textfield__input ng-pristine ng-valid ng-touched"
           type="text"
           (keyup.enter)="search()"
-        >
+        />
         <ng-container *ngIf="query">
           <i class="material-icons clear" (click)="clearSearch()">close</i>
         </ng-container>
@@ -33,42 +30,45 @@
         [routerLink]="feedRouterLink"
         routerLinkActive="active"
         i18n
-      >Feed</a>
+        >Feed</a
+      >
 
       <a
         class="m-proChannelTopbar__navItem"
         [routerLink]="videosRouterLink"
         routerLinkActive="active"
         i18n
-      >Videos</a>
+        >Videos</a
+      >
 
       <a
         class="m-proChannelTopbar__navItem"
         [routerLink]="imagesRouterLink"
         routerLinkActive="active"
         i18n
-      >Images</a>
+        >Images</a
+      >
 
       <a
         class="m-proChannelTopbar__navItem"
         [routerLink]="articlesRouterLink"
         routerLinkActive="active"
         i18n
-      >Articles</a>
+        >Articles</a
+      >
 
       <a
         class="m-proChannelTopbar__navItem"
         [routerLink]="groupsRouterLink"
         routerLinkActive="active"
         i18n
-      >Groups</a>
+        >Groups</a
+      >
 
-      <ng-container *ngIf="currentUser?.guid != channel.guid; else ownerNavLinks">
-        <a
-          class="m-proChannelTopbar__navItem"
-          (click)="wire()"
-          i18n
-        >Wire</a>
+      <ng-container
+        *ngIf="currentUser?.guid != channel.guid; else ownerNavLinks"
+      >
+        <a class="m-proChannelTopbar__navItem" (click)="wire()" i18n>Wire</a>
 
         <button
           class="m-proChannelTopbar__subscribe"
@@ -76,12 +76,18 @@
           (click)="toggleSubscription($event)"
         >
           <span class="m-proChannelTopbar__subscribe--label">
-            <ng-container *ngIf="!channel.subscribed; else subscribedActionButton" i18n>Subscribe</ng-container>
-            <ng-template #subscribedActionButton><ng-container i18n>Subscribed</ng-container></ng-template>
+            <ng-container
+              *ngIf="!channel.subscribed; else subscribedActionButton"
+              i18n
+              >Subscribe</ng-container
+            >
+            <ng-template #subscribedActionButton
+              ><ng-container i18n>Subscribed</ng-container></ng-template
+            >
           </span>
 
           <span class="m-proChannelTopbar__subscribe--counter">
-            {{ subscribersCount | abbr:0 }}
+            {{ subscribersCount | abbr: 0 }}
           </span>
         </button>
       </ng-container>
@@ -92,50 +98,65 @@
           [href]="proSettingsHref"
           target="root_minds"
           i18n
-        >Settings</a>
+          >Settings</a
+        >
 
         <a
           *ngIf="!isStandalone"
           class="m-proChannelTopbar__navItem"
           [routerLink]="proSettingsLink"
           i18n
-        >Settings</a>
+          >Settings</a
+        >
       </ng-template>
     </ng-container>
 
     <div class="m-proChannelTopbar_menu m-dropdown">
-      <a class="m-proChannelTopbarMenu__Anchor" (click)="toggleMenu()"><i class="material-icons">menu</i></a>
-    
-      <ul class="m-dropdown__list m-proChannelTopbarMenu__dropdown mdl-shadow--3dp" [hidden]="!isMenuOpen">
+      <a class="m-proChannelTopbarMenu__Anchor" (click)="toggleMenu()"
+        ><i class="material-icons">menu</i></a
+      >
+
+      <ul
+        class="m-dropdown__list m-proChannelTopbarMenu__dropdown mdl-shadow--3dp"
+        [hidden]="!isMenuOpen"
+      >
         <ng-container *ngIf="collapseNavItems">
           <li
             class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
             (click)="closeMenu()"
           >
-            <a [routerLink]="videosRouterLink" routerLinkActive="active" i18n>Videos</a>
+            <a [routerLink]="videosRouterLink" routerLinkActive="active" i18n
+              >Videos</a
+            >
           </li>
-    
+
           <li
             class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
             (click)="closeMenu()"
           >
-            <a [routerLink]="imagesRouterLink" routerLinkActive="active" i18n>Images</a>
+            <a [routerLink]="imagesRouterLink" routerLinkActive="active" i18n
+              >Images</a
+            >
           </li>
-    
+
           <li
             class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
             (click)="closeMenu()"
           >
-            <a [routerLink]="articlesRouterLink" routerLinkActive="active" i18n>Articles</a>
+            <a [routerLink]="articlesRouterLink" routerLinkActive="active" i18n
+              >Articles</a
+            >
           </li>
-    
+
           <li
             class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
             (click)="closeMenu()"
           >
-            <a [routerLink]="groupsRouterLink" routerLinkActive="active" i18n>Groups</a>
+            <a [routerLink]="groupsRouterLink" routerLinkActive="active" i18n
+              >Groups</a
+            >
           </li>
-    
+
           <li
             class="m-dropdownList__item m-proChannelTopbarMenuDropdown__item"
             (click)="closeMenu()"
@@ -145,8 +166,12 @@
         </ng-container>
       </ul>
     </div>
-    
-    <div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isMenuOpen"></div>
+
+    <div
+      class="minds-bg-overlay"
+      (click)="closeMenu()"
+      [hidden]="!isMenuOpen"
+    ></div>
   </div>
 
   <div class="m-proChannel__body">

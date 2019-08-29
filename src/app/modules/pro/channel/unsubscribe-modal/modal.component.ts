@@ -1,16 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Session } from "../../../../services/session";
+import { Session } from '../../../../services/session';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { MindsUser } from "../../../../interfaces/entities";
-import { Client } from "../../../../services/api/client";
+import { MindsUser } from '../../../../interfaces/entities';
+import { Client } from '../../../../services/api/client';
 import { Router } from '@angular/router';
 import { ProChannelService } from '../channel.service';
 
 @Component({
   selector: 'm-pro--unsubscribe-modal',
-  templateUrl: 'modal.component.html'
+  templateUrl: 'modal.component.html',
 })
-
 export class ProUnsubscribeModalComponent implements OnInit {
   protected channel: MindsUser;
 
@@ -23,12 +22,10 @@ export class ProUnsubscribeModalComponent implements OnInit {
     private overlayModal: OverlayModalService,
     protected client: Client,
     protected router: Router,
-    protected channelService: ProChannelService,
-  ) {
-  }
+    protected channelService: ProChannelService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   close() {
     this.overlayModal.dismiss();
@@ -42,6 +39,4 @@ export class ProUnsubscribeModalComponent implements OnInit {
   get channelName() {
     return this.channel.username;
   }
-
-  
 }

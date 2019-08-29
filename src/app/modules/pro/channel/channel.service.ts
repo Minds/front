@@ -9,7 +9,7 @@ import { Session } from '../../../services/session';
 import { ActivatedRoute } from '@angular/router';
 
 export type RouterLinkToType =
-  'home'
+  | 'home'
   | 'all'
   | 'feed'
   | 'videos'
@@ -21,7 +21,6 @@ export type RouterLinkToType =
 
 @Injectable()
 export class ProChannelService {
-
   currentChannel: MindsUser;
 
   subscriptionChange: EventEmitter<number> = new EventEmitter<number>();
@@ -32,15 +31,16 @@ export class ProChannelService {
     protected client: Client,
     protected entitiesService: EntitiesService,
     protected session: Session,
-    protected route: ActivatedRoute,
-  ) {
-  }
+    protected route: ActivatedRoute
+  ) {}
 
   async load(id: string) {
     try {
       this.currentChannel = void 0;
 
-      const response: MindsChannelResponse = await this.client.get(`api/v1/channel/${id}`) as MindsChannelResponse;
+      const response: MindsChannelResponse = (await this.client.get(
+        `api/v1/channel/${id}`
+      )) as MindsChannelResponse;
 
       this.currentChannel = response.channel;
 
@@ -55,8 +55,8 @@ export class ProChannelService {
       if (e.status === 0) {
         throw new Error('Sorry, there was a timeout error.');
       } else {
-        console.log('couldn\'t load channel', e);
-        throw new Error('Sorry, the channel couldn\'t be found');
+        console.log("couldn't load channel", e);
+        throw new Error("Sorry, the channel couldn't be found");
       }
     }
   }
@@ -67,10 +67,15 @@ export class ProChannelService {
     }
 
     if (!this.featuredContent) {
-      if (this.currentChannel.pro_settings.featured_content && this.currentChannel.pro_settings.featured_content.length) {
+      if (
+        this.currentChannel.pro_settings.featured_content &&
+        this.currentChannel.pro_settings.featured_content.length
+      ) {
         try {
-          const urns = this.currentChannel.pro_settings.featured_content.map(guid => normalizeUrn(guid));
-          const { entities } = await this.entitiesService.fetch(urns) as any;
+          const urns = this.currentChannel.pro_settings.featured_content.map(
+            guid => normalizeUrn(guid)
+          );
+          const { entities } = (await this.entitiesService.fetch(urns)) as any;
 
           this.featuredContent = entities;
         } catch (e) {
@@ -85,7 +90,13 @@ export class ProChannelService {
     return this.featuredContent;
   }
 
-  async getContent({ limit, offset }: { limit?: number, offset? } = {}): Promise<{ content: Array<any>, offset: any }> {
+  async getContent({
+    limit,
+    offset,
+  }: { limit?: number; offset? } = {}): Promise<{
+    content: Array<any>;
+    offset: any;
+  }> {
     if (!this.currentChannel) {
       throw new Error('No channel');
     }
@@ -95,13 +106,21 @@ export class ProChannelService {
       limit: limit || 24,
       from_timestamp: offset || '',
       sync: 1,
-      exclude: ((this.currentChannel.pro_settings.featured_content || []).join(',')) || '',
+      exclude:
+        (this.currentChannel.pro_settings.featured_content || []).join(',') ||
+        '',
     };
 
-    const { entities: feedSyncEntities, 'load-next': loadNext } = await this.client.get(endpoint, qs) as any;
-    const { entities } = await this.entitiesService.fetch(feedSyncEntities.map(feedSyncEntity => normalizeUrn(feedSyncEntity.guid))) as any;
+    const {
+      entities: feedSyncEntities,
+      'load-next': loadNext,
+    } = (await this.client.get(endpoint, qs)) as any;
+    const { entities } = (await this.entitiesService.fetch(
+      feedSyncEntities.map(feedSyncEntity => normalizeUrn(feedSyncEntity.guid))
+    )) as any;
 
-    let nextOffset = feedSyncEntities && feedSyncEntities.length ? loadNext : '';
+    let nextOffset =
+      feedSyncEntities && feedSyncEntities.length ? loadNext : '';
 
     return {
       content: entities,
@@ -114,7 +133,9 @@ export class ProChannelService {
       throw new Error('No channel');
     }
 
-    const { content } = await this.client.get(`api/v2/pro/channel/${this.currentChannel.guid}/content`) as any;
+    const { content } = (await this.client.get(
+      `api/v2/pro/channel/${this.currentChannel.guid}/content`
+    )) as any;
 
     return content
       .filter(entry => entry && entry.content && entry.content.length)
@@ -135,7 +156,11 @@ export class ProChannelService {
     let root = '/';
 
     if (this.route.parent) {
-      root = this.route.parent.pathFromRoot.map(route => route.snapshot.url.map(urlSegment => urlSegment.toString()).join('')).join('/');
+      root = this.route.parent.pathFromRoot
+        .map(route =>
+          route.snapshot.url.map(urlSegment => urlSegment.toString()).join('')
+        )
+        .join('/');
     }
 
     const route: any[] = [root];
@@ -177,19 +202,25 @@ export class ProChannelService {
   open(entity, modalServiceContext: OverlayModalService) {
     switch (this.getEntityTaxonomy(entity)) {
       case 'group':
-        window.open(`${window.Minds.site_url}groups/profile/${entity.guid}`, '_blank');
+        window.open(
+          `${window.Minds.site_url}groups/profile/${entity.guid}`,
+          '_blank'
+        );
         break;
     }
   }
 
   getEntityTaxonomy(entity) {
-    return entity.type === 'object' ? `${entity.type}:${entity.subtype}` : entity.type;
+    return entity.type === 'object'
+      ? `${entity.type}:${entity.subtype}`
+      : entity.type;
   }
 
   async subscribe() {
     this.currentChannel.subscribed = true;
 
-    this.client.post('api/v1/subscribe/' + this.currentChannel.guid, {})
+    this.client
+      .post('api/v1/subscribe/' + this.currentChannel.guid, {})
       .then((response: any) => {
         if (response && response.error) {
           throw 'error';
@@ -198,20 +229,21 @@ export class ProChannelService {
         this.currentChannel.subscribed = true;
         this.subscriptionChange.emit(++this.currentChannel.subscribers_count);
       })
-      .catch((e) => {
+      .catch(e => {
         this.currentChannel.subscribed = false;
-        alert('You can\'t subscribe to this user.');
+        alert("You can't subscribe to this user.");
       });
   }
 
   async unsubscribe() {
     this.currentChannel.subscribed = false;
-    this.client.delete('api/v1/subscribe/' + this.currentChannel.guid, {})
+    this.client
+      .delete('api/v1/subscribe/' + this.currentChannel.guid, {})
       .then((response: any) => {
         this.currentChannel.subscribed = false;
         this.subscriptionChange.emit(--this.currentChannel.subscribers_count);
       })
-      .catch((e) => {
+      .catch(e => {
         this.currentChannel.subscribed = true;
       });
   }
@@ -223,7 +255,7 @@ export class ProChannelService {
     }
 
     try {
-      const response = await this.client.get('api/v1/channel/me') as any;
+      const response = (await this.client.get('api/v1/channel/me')) as any;
 
       if (response && response.channel) {
         this.session.login(response.channel);

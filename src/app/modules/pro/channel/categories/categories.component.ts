@@ -1,14 +1,20 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { ProChannelService } from "../channel.service";
-import { Router } from "@angular/router";
-import { MindsUser, Tag } from "../../../../interfaces/entities";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { ProChannelService } from '../channel.service';
+import { Router } from '@angular/router';
+import { MindsUser, Tag } from '../../../../interfaces/entities';
 
 @Component({
   selector: 'm-pro--channel--categories',
   templateUrl: 'categories.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class ProCategoriesComponent {
   @Input() set selectedHashtag(value: string) {
     this.selectTag(value, false);
@@ -16,7 +22,9 @@ export class ProCategoriesComponent {
 
   @Input() showAllTag: boolean = true;
 
-  @Output() onSelectTag: EventEmitter<string | null> = new EventEmitter<string|null>();
+  @Output() onSelectTag: EventEmitter<string | null> = new EventEmitter<
+    string | null
+  >();
 
   get channel(): MindsUser {
     return this.channelService.currentChannel;
@@ -25,9 +33,8 @@ export class ProCategoriesComponent {
   constructor(
     protected channelService: ProChannelService,
     protected router: Router,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   selectTag(clickedTag: Tag | string, triggerEvent: boolean = true) {
     if (typeof clickedTag !== 'string') {

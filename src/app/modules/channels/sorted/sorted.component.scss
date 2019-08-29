@@ -1,5 +1,5 @@
 .m-channel--sorted__SortSelector {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 

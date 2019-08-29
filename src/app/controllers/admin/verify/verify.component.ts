@@ -11,17 +11,14 @@ import { Client } from '../../../services/api';
   selector: 'm-admin--verify',
   templateUrl: 'verify.component.html',
 })
-
 export class AdminVerify {
-
   requests: any[] = [];
 
   inProgress: boolean = false;
   moreData: boolean = true;
   offset: string = '';
 
-  constructor(public client: Client, private route: ActivatedRoute) {
-  }
+  constructor(public client: Client, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.load();
@@ -34,7 +31,8 @@ export class AdminVerify {
 
     this.inProgress = true;
 
-    this.client.get(`api/v1/admin/verify`, { limit: 24, offset: this.offset })
+    this.client
+      .get(`api/v1/admin/verify`, { limit: 24, offset: this.offset })
       .then((response: any) => {
         if (!response.requests) {
           this.inProgress = false;
@@ -61,10 +59,10 @@ export class AdminVerify {
   }
 
   verify(index) {
-
     this.inProgress = true;
 
-    this.client.put(`api/v1/admin/verify/${this.requests[index].guid}`)
+    this.client
+      .put(`api/v1/admin/verify/${this.requests[index].guid}`)
       .then(response => {
         this.removeFromList(index);
         this.inProgress = false;
@@ -81,7 +79,8 @@ export class AdminVerify {
 
     this.inProgress = true;
 
-    this.client.delete(`api/v1/admin/verify/${this.requests[index].guid}`)
+    this.client
+      .delete(`api/v1/admin/verify/${this.requests[index].guid}`)
       .then(response => {
         this.removeFromList(index);
         this.inProgress = false;

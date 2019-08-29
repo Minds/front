@@ -1,6 +1,6 @@
-.m-boost-publisher--earnings{
+.m-boost-publisher--earnings {
   padding: 16px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 }
@@ -15,7 +15,7 @@
   .m-boost-publisher--earnings-overview--total {
     flex: 1;
     text-align: center;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
     > span {
@@ -26,11 +26,12 @@
 
     .m-boost-publisher--earnings-overview--label {
       text-transform: uppercase;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
 
-      label, m-tooltip {
+      label,
+      m-tooltip {
         vertical-align: middle;
       }
       m-tooltip i {

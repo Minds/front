@@ -1,27 +1,36 @@
-import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'm-pro--channel--group-tile',
   template: `
     <div class="banner">
-      <img [src]="getBanner()">
+      <img [src]="getBanner()" />
     </div>
     <div class="m-proChannelGroupTile__content">
       <div class="avatar">
-        <img [src]="getAvatar()">
+        <img [src]="getAvatar()" />
       </div>
       <div class="body">
-        <h2>{{this.entity.name}}</h2>
-        <p i18n>Subscribers: <span>{{this.entity['members:count']}}</span></p>
+        <h2>{{ this.entity.name }}</h2>
+        <p i18n>
+          Subscribers: <span>{{ this.entity['members:count'] }}</span>
+        </p>
       </div>
     </div>
-  `
+  `,
 })
-
 export class ProGroupTileComponent {
   @Input() entity: any;
 
-  @Output('onOpen') onOpenEventEmitter: EventEmitter<boolean> = new EventEmitter();
+  @Output('onOpen') onOpenEventEmitter: EventEmitter<
+    boolean
+  > = new EventEmitter();
 
   minds = window.Minds;
 

@@ -4,16 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   moduleId: module.id,
   selector: 'm-wallet--tokens',
-  templateUrl: 'tokens.component.html'
+  templateUrl: 'tokens.component.html',
 })
 export class WalletTokensComponent {
-
   showOnboarding: boolean = false;
   minds = window.Minds;
 
   constructor(route: ActivatedRoute) {
     route.url.subscribe(() => {
-      this.showOnboarding = route.snapshot.firstChild && route.snapshot.firstChild.routeConfig.path === 'transactions';
+      this.showOnboarding =
+        route.snapshot.firstChild &&
+        route.snapshot.firstChild.routeConfig.path === 'transactions';
     });
   }
 }

@@ -1,11 +1,20 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { MediaModalComponent, MediaModalParams } from "../../../../media/modal/modal.component";
-import { FeaturesService } from "../../../../../services/features.service";
-import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
-import { Router } from "@angular/router";
-import toMockActivity from "../../util/mock-activity";
-import { ProChannelService } from "../../channel.service";
-import isMobile from "../../../../../helpers/is-mobile";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+} from '@angular/core';
+import {
+  MediaModalComponent,
+  MediaModalParams,
+} from '../../../../media/modal/modal.component';
+import { FeaturesService } from '../../../../../services/features.service';
+import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { Router } from '@angular/router';
+import toMockActivity from '../../util/mock-activity';
+import { ProChannelService } from '../../channel.service';
+import isMobile from '../../../../../helpers/is-mobile';
 
 @Component({
   selector: 'm-pro--channel-tile',
@@ -22,12 +31,13 @@ export class ProTileComponent {
     protected featuresService: FeaturesService,
     protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
-    protected router: Router,
-  ) {
-  }
+    protected router: Router
+  ) {}
 
   getType(entity: any) {
-    return entity.type === 'object' ? `${entity.type}:${entity.subtype}` : entity.type;
+    return entity.type === 'object'
+      ? `${entity.type}:${entity.subtype}`
+      : entity.type;
   }
 
   getTitle() {
@@ -36,7 +46,9 @@ export class ProTileComponent {
         return this.entity.title;
       case 'object:image':
       case 'object:video':
-        return this.entity.title && this.entity.title.trim() !== '' ? this.entity.title : this.entity.message;
+        return this.entity.title && this.entity.title.trim() !== ''
+          ? this.entity.title
+          : this.entity.message;
       default:
         return '';
     }
@@ -84,9 +96,11 @@ export class ProTileComponent {
     }
   }
 
-
   showMediaModal() {
-    const activity = toMockActivity(this.entity, this.entity.subtype === 'video' ? this.videoDimensions : null);
+    const activity = toMockActivity(
+      this.entity,
+      this.entity.subtype === 'video' ? this.videoDimensions : null
+    );
     if (this.featuresService.has('media-modal')) {
       // Mobile (not tablet) users go to media page instead of modal
       if (isMobile() && Math.min(screen.width, screen.height) < 768) {
@@ -96,7 +110,8 @@ export class ProTileComponent {
 
       if (activity.custom_type === 'video') {
         activity.custom_data.dimensions = this.videoDimensions;
-      } else if (activity.custom_type === 'image') { // Image
+      } else if (activity.custom_type === 'image') {
+        // Image
         // Set image dimensions if they're not already there
         const img: HTMLImageElement = this.img.nativeElement;
         activity.custom_data[0].width = img.naturalWidth;
@@ -111,9 +126,11 @@ export class ProTileComponent {
         params.redirectUrl = `/blog/${this.entity.slug}-${this.entity.guid}`;
       }
 
-      this.modalService.create(MediaModalComponent, params, {
-        class: 'm-overlayModal--media'
-      }).present();
+      this.modalService
+        .create(MediaModalComponent, params, {
+          class: 'm-overlayModal--media',
+        })
+        .present();
     } else {
       this.router.navigate([`/media/${activity.entity_guid}`]);
     }

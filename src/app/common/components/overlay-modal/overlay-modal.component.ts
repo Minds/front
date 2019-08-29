@@ -5,7 +5,7 @@ import {
   ComponentRef,
   ElementRef,
   Injector,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
@@ -15,15 +15,20 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
   moduleId: module.id,
   selector: 'm-overlay-modal',
   template: `
-    <div class="m-overlay-modal--backdrop" [hidden]="hidden" (click)="dismiss()"></div>
-    <div class="m-overlay-modal {{class}}" [hidden]="hidden" #modalElement>
-      <a class="m-overlay-modal--close" (click)="dismiss()"><i class="material-icons">close</i></a>
+    <div
+      class="m-overlay-modal--backdrop"
+      [hidden]="hidden"
+      (click)="dismiss()"
+    ></div>
+    <div class="m-overlay-modal {{ class }}" [hidden]="hidden" #modalElement>
+      <a class="m-overlay-modal--close" (click)="dismiss()"
+        ><i class="material-icons">close</i></a
+      >
       <ng-template dynamic-host></ng-template>
     </div>
-  `
+  `,
 })
 export class OverlayModalComponent implements AfterViewInit {
-
   hidden: boolean = true;
   class: string = '';
   root: HTMLElement;
@@ -34,13 +39,13 @@ export class OverlayModalComponent implements AfterViewInit {
   private componentRef: ComponentRef<{}>;
   private componentInstance;
 
-  @ViewChild('modalElement', { static: true }) protected modalElement: ElementRef;
+  @ViewChild('modalElement', { static: true })
+  protected modalElement: ElementRef;
 
   constructor(
     private service: OverlayModalService,
     private _componentFactoryResolver: ComponentFactoryResolver
-  ) {
-  }
+  ) {}
 
   ngAfterViewInit() {
     if (!this.root && document && document.body) {
@@ -56,7 +61,8 @@ export class OverlayModalComponent implements AfterViewInit {
     opts = {
       ...{
         class: '',
-      }, ...opts
+      },
+      ...opts,
     };
 
     this.class = opts.class;
@@ -65,12 +71,18 @@ export class OverlayModalComponent implements AfterViewInit {
       throw new Error('Unknown component class');
     }
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(componentClass),
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        componentClass
+      ),
       viewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();
 
-    this.componentRef = viewContainerRef.createComponent(componentFactory, void 0, injector);
+    this.componentRef = viewContainerRef.createComponent(
+      componentFactory,
+      void 0,
+      injector
+    );
     this.componentInstance = this.componentRef.instance;
     this.componentInstance.parent = this.modalElement.nativeElement;
   }

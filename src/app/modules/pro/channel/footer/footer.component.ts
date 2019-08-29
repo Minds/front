@@ -1,31 +1,27 @@
 import { Component } from '@angular/core';
-import { ProChannelService } from "../channel.service";
+import { ProChannelService } from '../channel.service';
 import { Session } from '../../../../services/session';
 import { AuthService } from '../../../../services/auth.service';
 
 export interface SocialProfileMeta {
-
   key: string;
   label: string;
   link: string;
   icon: string;
   customIcon?: boolean;
   domain: string;
-
 }
 
 @Component({
   selector: 'm-pro--channel-footer',
-  templateUrl: 'footer.component.html'
+  templateUrl: 'footer.component.html',
 })
-
 export class ProChannelFooterComponent {
-
   constructor(
     protected channelService: ProChannelService,
     protected session: Session,
-    protected auth: AuthService,
-  ) { }
+    protected auth: AuthService
+  ) {}
 
   private socialProfileMeta: SocialProfileMeta[] = [
     {
@@ -83,7 +79,7 @@ export class ProChannelFooterComponent {
       label: 'SoundCloud',
       link: 'https://soundcloud.com/:value',
       icon: 'soundcloud',
-      domain: 'soundcloud.com'
+      domain: 'soundcloud.com',
     },
     {
       key: 'tumblr',
@@ -111,14 +107,14 @@ export class ProChannelFooterComponent {
       label: 'Instagram',
       link: 'https://www.instagram.com/:value',
       icon: 'instagram',
-      domain: 'instagram.com'
+      domain: 'instagram.com',
     },
     {
       key: 'wikipedia_user',
       label: 'Wikipedia User',
       link: 'https://wikipedia.org/wiki/:value',
       icon: 'wikipedia-w',
-      domain: 'wikipedia.com'
+      domain: 'wikipedia.com',
     },
     {
       key: 'imdb_user',
@@ -223,8 +219,8 @@ export class ProChannelFooterComponent {
       label: 'Other',
       link: '',
       icon: 'link',
-      domain: ''
-    }
+      domain: '',
+    },
   ];
 
   get footerLinks() {
@@ -265,8 +261,11 @@ export class ProChannelFooterComponent {
 
   private getSocialProfileMeta(key: string): SocialProfileMeta {
     let defaultMeta: SocialProfileMeta = {
-      key: '', label: '',
-      link: '#', icon: 'link', domain: ''
+      key: '',
+      label: '',
+      link: '#',
+      icon: 'link',
+      domain: '',
     };
 
     if (!key) {
@@ -287,7 +286,10 @@ export class ProChannelFooterComponent {
   }
 
   get isOwner() {
-    return this.session.getLoggedInUser() && this.session.getLoggedInUser().guid == this.user.guid;
+    return (
+      this.session.getLoggedInUser() &&
+      this.session.getLoggedInUser().guid == this.user.guid
+    );
   }
 
   get currentUser() {

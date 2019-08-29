@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
@@ -8,17 +13,17 @@ import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
 @Component({
   selector: 'm-pro--settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'settings.component.html'
+  templateUrl: 'settings.component.html',
 })
 export class ProSettingsComponent implements OnInit {
-
   settings: any;
 
   inProgress: boolean;
 
   saved: boolean = false;
 
-  currentTab: 'general' | 'theme' | 'hashtags' | 'footer' | 'cancel' = 'general';
+  currentTab: 'general' | 'theme' | 'hashtags' | 'footer' | 'cancel' =
+    'general';
 
   private currentDraggableEvent: DragEvent;
   private currentDragEffectMsg: string;
@@ -29,8 +34,7 @@ export class ProSettingsComponent implements OnInit {
     protected router: Router,
     protected cd: ChangeDetectorRef,
     protected title: MindsTitle
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -104,18 +108,14 @@ export class ProSettingsComponent implements OnInit {
   }
 
   onDragStart(event: DragEvent) {
-
-    this.currentDragEffectMsg = "";
+    this.currentDragEffectMsg = '';
     this.currentDraggableEvent = event;
-
   }
 
   onDragged(item: any, list: any[], effect: DropEffect) {
-
     this.currentDragEffectMsg = `Drag ended with effect "${effect}"!`;
 
-    if (effect === "move") {
-
+    if (effect === 'move') {
       const index = list.indexOf(item);
       list.splice(index, 1);
     }
@@ -126,15 +126,10 @@ export class ProSettingsComponent implements OnInit {
   }
 
   onDrop(event: DndDropEvent, list?: any[]) {
-
-    if (list
-      && (event.dropEffect === "copy"
-        || event.dropEffect === "move")) {
-
+    if (list && (event.dropEffect === 'copy' || event.dropEffect === 'move')) {
       let index = event.index;
 
-      if (typeof index === "undefined") {
-
+      if (typeof index === 'undefined') {
         index = list.length;
       }
 

@@ -8,12 +8,9 @@ import { Client } from '../../../services/api';
   moduleId: module.id,
   selector: 'm-wire-console--ledger',
   templateUrl: 'ledger.component.html',
-  providers: [
-    CurrencyPipe
-  ]
+  providers: [CurrencyPipe],
 })
 export class WireConsoleLedgerComponent {
-
   @Input() type: string;
   @Input() method: string;
   wires: any[] = [];
@@ -23,7 +20,11 @@ export class WireConsoleLedgerComponent {
   moreData: boolean = false;
   startDate: string;
 
-  constructor(private client: Client, private currencyPipe: CurrencyPipe, private cd: ChangeDetectorRef) {
+  constructor(
+    private client: Client,
+    private currencyPipe: CurrencyPipe,
+    private cd: ChangeDetectorRef
+  ) {
     const d = new Date();
     d.setMonth(d.getMonth() - 1);
     this.startDate = d.toISOString();
@@ -44,7 +45,7 @@ export class WireConsoleLedgerComponent {
       if (window.Minds.user.merchant) {
         this.method = 'money';
       } else if (window.Minds.user.eth_wallet) {
-          this.method = 'tokens';
+        this.method = 'tokens';
       }
     }
 
@@ -74,13 +75,14 @@ export class WireConsoleLedgerComponent {
       this.moreData = true;
     }
 
-    return this.client.get(`api/v1/wire/supporters`, {
-      offset: this.offset,
-      limit: 12,
-      type: this.type,
-      method: this.method,
-      start: Date.parse(this.startDate) / 1000
-    })
+    return this.client
+      .get(`api/v1/wire/supporters`, {
+        offset: this.offset,
+        limit: 12,
+        type: this.type,
+        method: this.method,
+        start: Date.parse(this.startDate) / 1000,
+      })
       .then(({ wires, 'load-next': loadNext }) => {
         this.inProgress = false;
 
@@ -106,7 +108,7 @@ export class WireConsoleLedgerComponent {
   }
 
   expand(i: number) {
-    this.wires[ i ].expanded = !this.wires[ i ].expanded;
+    this.wires[i].expanded = !this.wires[i].expanded;
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
@@ -124,5 +126,4 @@ export class WireConsoleLedgerComponent {
   canSelectMethod() {
     return !!window.Minds.user.merchant;
   }
-
 }

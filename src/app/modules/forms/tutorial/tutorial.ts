@@ -4,11 +4,9 @@ import { Component, EventEmitter } from '@angular/core';
   moduleId: module.id,
   selector: 'minds-tutorial',
   outputs: ['done'],
-  templateUrl: 'tutorial.html'
+  templateUrl: 'tutorial.html',
 })
-
 export class Tutorial {
-
   error: string = '';
   inProgress: boolean = false;
   referrer: string;
@@ -17,5 +15,4 @@ export class Tutorial {
   banner: string;
 
   done: EventEmitter<any> = new EventEmitter();
-
 }

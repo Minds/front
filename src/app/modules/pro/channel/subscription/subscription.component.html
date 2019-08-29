@@ -5,19 +5,20 @@
       class="mdl-button mdl-button--colored mdl-color--green"
       [disabled]="inProgress || criticalError"
       (click)="enable()"
-    >Become Pro</button>
+    >
+      Become Pro
+    </button>
 
     <button
       *ngIf="active"
       class="mdl-button mdl-button--colored mdl-color--red"
       [disabled]="inProgress || criticalError"
       (click)="disable()"
-    >Cancel Pro</button>
-
-    <span
-      *ngIf="error"
-      class="m-pro-subscription--error"
     >
+      Cancel Pro
+    </button>
+
+    <span *ngIf="error" class="m-pro-subscription--error">
       {{ error }}
     </span>
   </ng-container>

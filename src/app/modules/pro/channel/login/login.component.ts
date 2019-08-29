@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import { Session } from "../../../../services/session";
-import { ProChannelService } from "../channel.service";
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Session } from '../../../../services/session';
+import { ProChannelService } from '../channel.service';
 
 @Component({
   selector: 'm-pro--channel-login',
   template: `
     <section class="m-ProChannelLogin--hero">
-
       <div class="m-ProChannelLogin--hero--inner">
-
         <div class="m-ProChannelLogin--hero--slogans">
           <h2>{{ settings?.headline }}</h2>
         </div>
@@ -18,8 +16,8 @@ import { ProChannelService } from "../channel.service";
         <div class="m-ProChannelLogin--login">
           <ng-container *ngIf="currentSection === 'login'">
             <span class="m-proChannelLogin--subtext">
-                Not on {{ settings?.title }}?
-                <a (click)="currentSection = 'register'">Start a Minds channel</a>
+              Not on {{ settings?.title }}?
+              <a (click)="currentSection = 'register'">Start a Minds channel</a>
             </span>
 
             <minds-form-login (done)="registered()"></minds-form-login>
@@ -27,19 +25,18 @@ import { ProChannelService } from "../channel.service";
 
           <ng-container *ngIf="currentSection === 'register'">
             <span class="m-proChannelLogin--subtext">
-                <a (click)="currentSection = 'login'">I already have a Minds account</a>
+              <a (click)="currentSection = 'login'"
+                >I already have a Minds account</a
+              >
             </span>
 
             <minds-form-register (done)="registered()"></minds-form-register>
           </ng-container>
         </div>
-
       </div>
-
     </section>
-  `
+  `,
 })
-
 export class ProChannelLoginComponent {
   username: string;
   currentSection: 'login' | 'register' = 'login';
@@ -54,7 +51,7 @@ export class ProChannelLoginComponent {
     public session: Session,
     public service: ProChannelService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['username']) {
@@ -64,7 +61,6 @@ export class ProChannelLoginComponent {
       if (this.session.isLoggedIn()) {
         this.router.navigate(this.service.getRouterLink('home'));
       }
-
     });
   }
 

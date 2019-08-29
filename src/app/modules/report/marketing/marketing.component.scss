@@ -1,10 +1,7 @@
 .m-reports__marketing {
-
-
-
   .m-marketing__hero {
     padding-bottom: 72px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-blue-grey-800) !important;
     }
 
@@ -15,7 +12,7 @@
 
     .m-btn {
       margin-top: 32px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
         border-color: themed($m-white);
       }
@@ -27,15 +24,15 @@
       font-size: 170px;
       text-align: center;
       width: 100%;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
       }
     }
   }
 }
 
-.m-reportMarketing__stats, .m-reportMarketing__section  {
-
+.m-reportMarketing__stats,
+.m-reportMarketing__section {
   padding: 32px 100px 32px 52px !important;
 
   h4 {
@@ -45,7 +42,7 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
   }
@@ -65,7 +62,7 @@
     font-size: 72px;
     line-height: 1;
     display: block;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
   }
@@ -77,18 +74,17 @@
     font-weight: 500;
     margin-top: 16px;
     display: block;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-700);
     }
   }
-
 }
 
 .m-reportMarketing__list {
   list-style: decimal;
   font-size: 24px;
   font-weight: 800;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-200);
   }
 
@@ -98,12 +94,11 @@
     p {
       font-size: 24px;
       font-weight: 500;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-700);
       }
     }
   }
-
 }
 
 .m-reportMarketingList__sublist {
@@ -118,7 +113,7 @@
     line-height: 24px;
     cursor: default;
     padding: 0;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-400);
     }
 

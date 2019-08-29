@@ -9,10 +9,7 @@ import { Router } from '@angular/router';
 export class ProMarketingComponent {
   minds = window.Minds;
 
-  constructor(
-    protected router: Router,
-  ) {
-  }
+  constructor(protected router: Router) {}
 
   goToSettings() {
     this.router.navigate(['/pro/settings']);
