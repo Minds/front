@@ -14,31 +14,9 @@ m-pro--channel-list {
   }
 
   .m-proChannelList__tools {
-    height: 70px;
-    border-radius: 20px;
-    opacity: 0.9;
-    font-size: 16px;
-    font-family: Roboto, Helvetica, sans-serif;
     letter-spacing: 1px;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    font-weight: 400;
-
-    .m-proChannelListTools__algorithm {
-      width: fit-content;
-
-      a {
-        margin-right: 10px;
-        text-decoration: none;
-      }
-
-      i {
-        vertical-align: middle;
-        margin-right: 8px;
-        font-size: 18px;
-        color: #444 !important;
-      }
-    }
+    width: 85%;
+    margin: 0 auto;
 
     .m-proChannelListTools__searchResult {
       font-weight: 300;
@@ -83,7 +61,7 @@ m-pro--channel-list {
     background-color: var(--m-pro--transparent-background-color);
 
     &.m-proChannelListContent__noMore {
-
+      cursor: initial;
     }
   }
 
@@ -110,7 +88,7 @@ m-pro--channel-list {
     & > li {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
 
       m-newsfeed__entity {
         width: 100%;
@@ -143,6 +121,6 @@ m-pro--channel-list {
 
   .m-proChannelList__loader {
     text-align: center;
-    margin: 16px 0;
+    margin-top: 32px;
   }
 }
