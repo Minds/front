@@ -26,12 +26,9 @@
   <m-sidebar--markers
     [class.has-v2-navbar]="featuresService.has('top-feeds')"
   ></m-sidebar--markers>
-</ng-container>
+</ng-template>
 
-<m-body
-  [class.is-standalone]="standalone"
-  [class.has-v2-navbar]="!standalone && featuresService.has('top-feeds')"
->
+<m-body [class.has-v2-navbar]="featuresService.has('top-feeds')">
   <m-announcement [id]="'blockchain:sale'" *ngIf="false">
     <span
       class="m-blockchain--wallet-address-notice--action"
