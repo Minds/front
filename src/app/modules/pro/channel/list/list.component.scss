@@ -8,7 +8,7 @@ m-pro--channel-list {
   m-pro--channel--categories {
     margin: 16px 0 32px;
 
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: $max-mobile) {
       margin: 8px;
     }
   }
@@ -29,6 +29,10 @@ m-pro--channel-list {
     width: 85%;
     margin: 0 auto;
     justify-content: center;
+
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
 
     & > i.material-icons {
       font-size: 100px;
@@ -71,6 +75,10 @@ m-pro--channel-list {
     grid-gap: 24px;
     list-style: none;
     padding: 0;
+
+    @media screen and (max-width: $max-mobile) {
+      grid-template-columns: 1fr;
+    }
 
     &.m-proChannelListContent__normalList {
       grid-template-columns: 1fr;
