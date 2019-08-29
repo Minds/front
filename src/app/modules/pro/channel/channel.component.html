@@ -20,9 +20,6 @@
           type="text"
           (keyup.enter)="search()"
         >
-        <ng-container *ngIf="query">
-          <i class="material-icons clear" (click)="clearSearch()">close</i>
-        </ng-container>
         <label class="mdl-textfield__label" for="search"></label>
       </div>
     </div>

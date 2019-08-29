@@ -274,13 +274,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.router.navigate(this.channelService.getRouterLink('all', { query: this.query }));
   }
 
-  clearSearch() {
-    this.query = '';
-    // TODO: Do this!
-    // const cleanUrl = this.router.url.split(';')[0];
-    // this.router.navigate([cleanUrl]);
-  }
-
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
