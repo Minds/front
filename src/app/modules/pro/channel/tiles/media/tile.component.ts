@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MediaModalComponent, MediaModalParams } from "../../../../media/modal/modal.component";
 import { FeaturesService } from "../../../../../services/features.service";
 import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
 import { Router } from "@angular/router";
 import toMockActivity from "../../util/mock-activity";
 import { ProChannelService } from "../../channel.service";
+import isMobile from "../../../../../helpers/is-mobile";
 
 @Component({
   selector: 'm-pro--channel-tile',
@@ -67,13 +68,31 @@ export class ProTileComponent {
     }
   }
 
+  goToEntityPage(entity: any) {
+    switch (this.getType(entity)) {
+      case 'object:image':
+      case 'object:video':
+        this.router.navigate([`/media/${entity.guid}`]);
+        break;
+      case 'object:blog':
+        let url = `/blog/${this.entity.slug}-${this.entity.guid}`;
+        if (!window.Minds.pro) {
+          url = `${this.channelService.currentChannel.username}/${url}`;
+        }
+        this.router.navigate([url]);
+        break;
+    }
+  }
+
+
   showMediaModal() {
     const activity = toMockActivity(this.entity, this.entity.subtype === 'video' ? this.videoDimensions : null);
     if (this.featuresService.has('media-modal')) {
       // Mobile (not tablet) users go to media page instead of modal
-      // if (isMobile() && Math.min(screen.width, screen.height) < 768) {
-      // this.router.navigate([`/media/${this.entity.guid}`]);
-      // }
+      if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+        this.goToEntityPage(this.entity);
+        return;
+      }
 
       if (activity.custom_type === 'video') {
         activity.custom_data.dimensions = this.videoDimensions;
