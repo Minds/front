@@ -40,29 +40,28 @@ export class RevenueOptionsComponent {
 
   getSettings() {
     this.inProgress = true;
-    this.client
-      .get('api/v1/monetization/settings')
-      .then(({ bank, country }) => {
-        this.inProgress = false;
-        this.payoutMethod.country = country;
-        this.form.controls.country.setValue(country);
-        if (bank.last4) {
-          this.payoutMethod.account = bank;
-        }
-        this.detectChanges();
-      });
+    this.client.get('api/v2/payments/stripe/connect').then(({ account }) => {
+      this.inProgress = false;
+      this.payoutMethod.country = account.country;
+      this.form.controls.country.setValue(account.country);
+      if (account.bankAccount.last4) {
+        this.payoutMethod.account = account.bankAccount;
+      }
+      this.detectChanges();
+    });
   }
 
   addBankAccount() {
     this.inProgress = true;
     this.error = '';
-    this.editing = false;
+    // this.editing = false;
     this.detectChanges();
 
     this.client
-      .post('api/v1/monetization/settings', this.form.value)
+      .post('api/v2/payments/stripe/connect/bank', this.form.value)
       .then((response: any) => {
         this.inProgress = false;
+        this.editing = false;
         this.getSettings();
       })
       .catch(e => {
@@ -76,7 +75,7 @@ export class RevenueOptionsComponent {
     this.leaving = true;
     this.detectChanges();
     this.client
-      .delete('api/v1/monetization/settings/account')
+      .delete('api/v2/payments/stripe/connect')
       .then((response: any) => {
         (<any>window).Minds.user.merchant = [];
         this.router.navigate(['/newsfeed']);

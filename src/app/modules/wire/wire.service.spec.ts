@@ -4,6 +4,7 @@ import { wireContractServiceMock } from '../../../tests/wire-contract-service-mo
 import { tokenContractServiceMock } from '../../../tests/token-contract-service-mock.spec';
 import { web3WalletServiceMock } from '../../../tests/web3-wallet-service-mock.spec';
 import { fakeAsync, tick } from '@angular/core/testing';
+import { BTCService } from '../payments/btc/btc.service';
 
 describe('WireService', () => {
   let service: WireService;
@@ -15,7 +16,8 @@ describe('WireService', () => {
       clientMock,
       wireContractServiceMock,
       tokenContractServiceMock,
-      web3WalletServiceMock
+      web3WalletServiceMock,
+      new (() => {})()
     );
 
     clientMock.response = {};
@@ -46,7 +48,7 @@ describe('WireService', () => {
     expect(web3WalletServiceMock.getCurrentWallet).toHaveBeenCalled();
 
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v1/wire/null`);
+    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/wire/null`);
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
       amount: 10,
       payload: {
@@ -55,7 +57,7 @@ describe('WireService', () => {
         method: 'onchain',
         txHash: 'hash',
       },
-      method: 'tokens',
+      method: 'onchain',
       recurring: false,
     });
   }));
@@ -72,36 +74,36 @@ describe('WireService', () => {
     tick();
 
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v1/wire/null`);
+    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/wire/null`);
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
       amount: 10,
       payload: { address: 'offchain', method: 'offchain' },
-      method: 'tokens',
+      method: 'offchain',
       recurring: false,
     });
   }));
 
-  it('should submit a credit card wire', fakeAsync(() => {
+  it('should submit a usd wire', fakeAsync(() => {
     service.submitWire({
       amount: 10,
       guid: null,
       payload: { address: 'offchain', token: 'tok_KPte7942xySKBKyrBu11yEpf' },
-      payloadType: 'creditcard',
+      payloadType: 'usd',
       recurring: false,
     });
 
     tick();
 
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v1/wire/null`);
+    expect(clientMock.post.calls.mostRecent().args[0]).toBe(`api/v2/wire/null`);
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
       amount: 10,
       payload: {
         address: 'offchain',
         token: 'tok_KPte7942xySKBKyrBu11yEpf',
-        method: 'creditcard',
+        method: 'usd',
       },
-      method: 'tokens',
+      method: 'usd',
       recurring: false,
     });
   }));

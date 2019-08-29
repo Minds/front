@@ -17,7 +17,13 @@ import { TokenContractService } from '../../blockchain/contracts/token-contract.
 import { MindsUser } from '../../../interfaces/entities';
 import { Router } from '@angular/router';
 
-export type PayloadType = 'onchain' | 'offchain' | 'creditcard';
+export type PayloadType =
+  | 'onchain'
+  | 'offchain'
+  | 'usd'
+  | 'eth'
+  | 'erc20'
+  | 'btc';
 
 export class VisibleWireError extends Error {
   visible: boolean = true;
@@ -44,7 +50,7 @@ export class WireCreatorComponent {
     amount: 1,
     payloadType: 'onchain',
     guid: null,
-    recurring: false,
+    recurring: true,
 
     // Payment
     payload: null,
@@ -233,7 +239,7 @@ export class WireCreatorComponent {
 
   setDefaults() {
     this.wire.amount = 1;
-    this.wire.recurring = false;
+    this.wire.recurring = true;
     let payloadType = localStorage.getItem('preferred-payment-method');
     if (['onchain', 'offchain'].indexOf(payloadType) === -1) {
       payloadType = 'offchain';
@@ -253,8 +259,12 @@ export class WireCreatorComponent {
 
     this.wire.payload = null;
 
-    if (payloadType === 'onchain') {
+    if (payloadType === 'onchain' || payloadType === 'eth') {
       this.setOnchainNoncePayload('');
+    }
+
+    if (payloadType === 'btc') {
+      this.setBtcNoncePayload('');
     }
 
     localStorage.setItem('preferred-payment-method', payloadType);
@@ -276,6 +286,10 @@ export class WireCreatorComponent {
    */
   setOnchainNoncePayload(address: string) {
     return this.setNoncePayload({ receiver: this.owner.eth_wallet, address });
+  }
+
+  setBtcNoncePayload(address: string) {
+    return this.setNoncePayload({ receiver: this.owner.btc_address, address });
   }
 
   /**
@@ -432,9 +446,16 @@ export class WireCreatorComponent {
         }
         break;
 
-      case 'creditcard':
-        if (!this.wire.payload) {
-          throw new Error('Payment method not processed.');
+      case 'usd':
+        //if (!this.wire.payload) {
+        //  throw new Error('Payment method not processed.');
+        //}
+        break;
+      case 'btc':
+        if (!this.wire.payload.receiver) {
+          throw new VisibleWireError(
+            'This channel has not configured their Bitcoin address yet'
+          );
         }
         break;
     }
@@ -514,7 +535,10 @@ export class WireCreatorComponent {
         }
       }
 
-      let { done } = await this.wireService.submitWire(this.wire);
+      let { done } = await this.wireService.submitWire({
+        ...this.wire,
+        ...{ recurring: this.wire.recurring && this.canRecur }, // Override when we can't recur but don't change component boolean
+      });
 
       if (done) {
         this.success = true;
@@ -532,5 +556,34 @@ export class WireCreatorComponent {
     } finally {
       this.inProgress = false;
     }
+  }
+
+  get canRecur(): boolean {
+    switch (this.wire.payloadType) {
+      //case 'onchain':
+      case 'offchain':
+      case 'usd':
+        return true;
+    }
+    return false;
+  }
+
+  setUsdPaymentMethod(paymentMethodId) {
+    this.wire.payload = {
+      paymentMethodId: paymentMethodId,
+    };
+  }
+
+  setTier(reward) {
+    if (!reward) return;
+    this.wire.amount = reward.amount;
+    switch (reward.currency) {
+      case 'tokens':
+        this.wire.payloadType = 'offchain';
+        break;
+      default:
+        this.wire.payloadType = reward.currency;
+    }
+    console.log('setting tier with', this.wire.amount, this.wire.payloadType);
   }
 }
