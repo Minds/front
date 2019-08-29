@@ -11,7 +11,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Session } from "../../../services/session";
 import { Subscription } from "rxjs";
 import { MindsUser } from "../../../interfaces/entities";
@@ -238,7 +238,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   wire() {
     this.modalService.create(WireCreatorComponent,
       this.channelService.currentChannel,
-      { onComplete: () => {} }
+      {
+        onComplete: () => {
+        }
+      }
     ).present();
   }
 
@@ -272,6 +275,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   search(): Promise<boolean> {
     return this.router.navigate(this.channelService.getRouterLink('all', { query: this.query }));
+  }
+
+  clearSearch() {
+    this.query = '';
+    const cleanUrl = this.router.url.split(';')[0];
+    this.router.navigate([cleanUrl]);
   }
 
   detectChanges() {
