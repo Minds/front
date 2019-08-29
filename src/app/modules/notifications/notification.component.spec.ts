@@ -1,5 +1,11 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { Client } from '../../services/api/client';
@@ -18,12 +24,10 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 import { ExcerptPipe } from '../../common/pipes/excerpt';
 
 describe('NotificationsComponent', () => {
-
   let comp: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MaterialMock,
@@ -32,16 +36,12 @@ describe('NotificationsComponent', () => {
         ExcerptPipe,
       ],
       imports: [RouterTestingModule],
-      providers: [
-        { provide: Session, useValue: sessionMock },
-      ]
-    })
-      .compileComponents();  // compile template and css
+      providers: [{ provide: Session, useValue: sessionMock }],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
-
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -60,8 +60,8 @@ describe('NotificationsComponent', () => {
       'params' : {
         group: {},
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     if (fixture.isStable()) {
@@ -97,18 +97,17 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         group: {
-          name : 'groupName'
+          name: 'groupName',
         },
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('span.pseudo-link'));
     expect(notification.nativeElement.innerHTML).toBe('groupName');
   });
-
 
   it('Should load the notification queue approve', () => {
     comp.notification = {
@@ -123,18 +122,17 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         group: {
-          name : 'groupName'
+          name: 'groupName',
         },
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('span.pseudo-link'));
     expect(notification.nativeElement.innerHTML).toBe('groupName');
   });
-
 
   it('Should load the notification queue reject', () => {
     comp.notification = {
@@ -149,11 +147,11 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         group: {
-          name : 'groupName'
+          name: 'groupName',
         },
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
@@ -175,8 +173,8 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
@@ -198,15 +196,14 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('span.pseudo-link'));
     expect(notification.nativeElement.innerHTML).toBe('your object');
   });
-
 
   it('Should load the notification feature, with title', () => {
     comp.notification = {
@@ -222,8 +219,8 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
@@ -245,16 +242,16 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toBe('name tagged you in a post');
+    expect(notification.nativeElement.innerHTML).toContain(
+      'name tagged you in a post'
+    );
   });
-
-
 
   it('Should load the notification tag', () => {
     comp.notification = {
@@ -272,16 +269,17 @@ describe('NotificationsComponent', () => {
         time_created: 2222,
         bid: 10,
         parent: {
-          guid: 123
-        }
-      }
+          guid: 123,
+        },
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toBe('name tagged you in a comment');
+    expect(notification.nativeElement.innerHTML).toContain(
+      'name tagged you in a comment'
+    );
   });
-
 
   it('Should load the notification boost_submitted', () => {
     comp.notification = {
@@ -297,8 +295,8 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
@@ -320,8 +318,8 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
@@ -343,15 +341,14 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('span.pseudo-link'));
     expect(notification.nativeElement.innerHTML).toBe('Title');
   });
-
 
   it('Should load the notification boost_request', () => {
     comp.notification = {
@@ -367,15 +364,14 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('span.pseudo-link'));
     expect(notification.nativeElement.innerHTML).toBe('Title');
   });
-
 
   it('Should load the notification channel_monetized', () => {
     comp.notification = {
@@ -391,13 +387,15 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        bid: 10
-      }
+        bid: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('<!---->Your channel is now monetized. Congratulations!');
+    expect(notification.nativeElement.innerHTML).toContain(
+      '<!---->Your channel is now monetized. Congratulations!'
+    );
   });
 
   it('Should load the notification payout_accepted', () => {
@@ -414,14 +412,15 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        amount: 10
-      }
+        amount: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('<!---->Your payment request for $10.00 was approved.');
-
+    expect(notification.nativeElement.innerHTML).toContain(
+      '<!---->Your payment request for $10.00 was approved.'
+    );
   });
 
   it('Should load the notification payout_declined', () => {
@@ -438,13 +437,15 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        amount: 10
-      }
+        amount: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('<!---->Your payment request for $10.00 was declined.');
+    expect(notification.nativeElement.innerHTML).toContain(
+      '<!---->Your payment request for $10.00 was declined.'
+    );
   });
 
   it('Should load the notification rewards summary', () => {
@@ -461,8 +462,8 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        amount: 10
-      }
+        amount: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
@@ -484,15 +485,16 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        left: 'some time'
-      }
+        left: 'some time',
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('You have some time left to earn tokens today!');
+    expect(notification.nativeElement.innerHTML).toContain(
+      'You have some time left to earn tokens today!'
+    );
   });
-
 
   it('Should load the notification welcome_boost', () => {
     comp.notification = {
@@ -508,15 +510,16 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        amount: 10
-      }
+        amount: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toBe('You can gain more reach by boosting your content. Hit the blue boost icon on your posts.');
+    expect(notification.nativeElement.innerHTML).toContain(
+      'You can gain more reach by boosting your content. Hit the blue boost icon on your posts.'
+    );
   });
-
 
   it('Should load the notification welcome_discover', () => {
     comp.notification = {
@@ -532,15 +535,14 @@ describe('NotificationsComponent', () => {
       },
       'params' : {
         time_created: 2222,
-        amount: 10
-      }
+        amount: 10,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('span.pseudo-link'));
     expect(notification.nativeElement.innerHTML).toBe('Tap here');
   });
-
 
   it('Should load the notification custom_message', () => {
     comp.notification = {
@@ -557,8 +559,8 @@ describe('NotificationsComponent', () => {
       'params' : {
         time_created: 2222,
         amount: 10,
-        message: 'this is a mesage'
-      }
+        message: 'this is a mesage',
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();

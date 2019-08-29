@@ -1,10 +1,15 @@
 <div class="minds-list">
-  <m-search--bar [defaultSizes]="false" class="m-feeds-sorted__SearchBox"></m-search--bar>
+  <m-search--bar
+    [defaultSizes]="false"
+    class="m-feeds-sorted__SearchBox"
+  ></m-search--bar>
 
   <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
 
   <div class="m-feeds-sorted__query" *ngIf="query">
-    <span>Showing results for: <strong>{{ query | slice:0:50 }}</strong></span>
+    <span
+      >Showing results for: <strong>{{ query | slice: 0:50 }}</strong></span
+    >
   </div>
 
   <div class="m-feeds-sorted__Filter m-border">
@@ -20,8 +25,13 @@
     </div>
   </div>
 
-  <div class="m-feeds-sorted__List" [class.m-feeds-sortedList__flex]="!isActivityFeed()">
-    <ng-container *ngFor="let entity of (feedsService.feed | async); let i = index">
+  <div
+    class="m-feeds-sorted__List"
+    [class.m-feeds-sortedList__flex]="!isActivityFeed()"
+  >
+    <ng-container
+      *ngFor="let entity of feedsService.feed | async; let i = index"
+    >
       <ng-container *ngIf="isActivityFeed()">
         <m-featured-content
           *ngIf="shouldShowBoost(i)"

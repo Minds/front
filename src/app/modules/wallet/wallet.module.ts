@@ -46,9 +46,10 @@ import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component'
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 
-
 const walletRoutes: Routes = [
-  { path: 'wallet', component: WalletComponent,
+  {
+    path: 'wallet',
+    component: WalletComponent,
     children: [
       { path: '', redirectTo: 'tokens', pathMatch: 'full' },
       { path: 'overview', redirectTo: 'tokens', pathMatch: 'full' },
@@ -56,32 +57,42 @@ const walletRoutes: Routes = [
       // { path: 'overview', component: WalletOverviewComponent },
       // { path: 'points', component: WalletPointsComponent },
       // { path: 'points/purchase', component: WalletPurchaseComponent },
-      { path: 'tokens', component: WalletTokensComponent,
+      {
+        path: 'tokens',
+        component: WalletTokensComponent,
         children: [
           { path: '', redirectTo: 'contributions', pathMatch: 'full' },
-          { path: 'transactions/:contract', component: WalletTokenTransactionsComponent },
+          {
+            path: 'transactions/:contract',
+            component: WalletTokenTransactionsComponent,
+          },
           { path: 'transactions', component: WalletTokenTransactionsComponent },
           { path: 'withdraw', component: WalletTokenWithdrawComponent },
           { path: 'contributions/join', component: WalletTokenJoinComponent },
-          { path: 'contributions', component: WalletTokenContributionsComponent },
+          {
+            path: 'contributions',
+            component: WalletTokenContributionsComponent,
+          },
           { path: 'addresses', component: WalletTokenAddressesComponent },
           { path: '101', component: WalletToken101Component },
           { path: 'testnet', component: WalletTokenTestnetComponent },
           { path: 'referrals', component: ReferralsComponent },
-        ]
+        ],
       },
-      { path: 'usd', component: WalletUSDComponent,
+      {
+        path: 'usd',
+        component: WalletUSDComponent,
         children: [
           { path: '', redirectTo: 'earnings', pathMatch: 'full' },
           { path: 'earnings', component: WalletUSDEarningsComponent },
           { path: 'payouts', component: WalletUSDPayoutsComponent },
           { path: 'settings', component: WalletUSDSettingsComponent },
-        ]
+        ],
       },
       { path: 'wire', component: WalletWireComponent },
       { path: '**', component: WalletOverviewComponent },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
@@ -100,7 +111,7 @@ const walletRoutes: Routes = [
     TokenOnboardingModule,
     PlusModule,
     ModalsModule,
-    ReferralsModule
+    ReferralsModule,
   ],
   declarations: [
     WalletComponent,
@@ -144,7 +155,6 @@ const walletRoutes: Routes = [
     WalletFlyoutComponent,
     WalletBalanceUSDComponent,
   ],
-  entryComponents: [ WalletComponent ]
+  entryComponents: [WalletComponent],
 })
-
 export class WalletModule {}

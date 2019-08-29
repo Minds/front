@@ -6,8 +6,8 @@
 
     .m-monetization--overview-period {
       //padding: $minds-padding;
-      .mdl-card{
-        background:transparent;
+      .mdl-card {
+        background: transparent;
       }
 
       h2 {
@@ -17,7 +17,7 @@
         margin: 0 0 1.61em 0;
         font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 0.5px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-50);
         }
 
@@ -33,19 +33,19 @@
         font-family: 'Roboto', Helvetica;
         font-size: 26px;
         letter-spacing: 2px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
-      .m-monetization--overview-period-tip{
-          font-family: 'Roboto', Helvetica, sans-serif;
-          margin-top: -28px;
-          font-size: 9px;
-          letter-spacing:1px;
-          position: absolute;
-          @include m-theme(){
-            color: themed($m-grey-200);
-          }
+      .m-monetization--overview-period-tip {
+        font-family: 'Roboto', Helvetica, sans-serif;
+        margin-top: -28px;
+        font-size: 9px;
+        letter-spacing: 1px;
+        position: absolute;
+        @include m-theme() {
+          color: themed($m-grey-200);
+        }
       }
     }
   }
@@ -57,7 +57,7 @@
     padding: 8px;
     letter-spacing: 1px;
     font-family: 'Roboto', Helvetica, sans-serif;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-200);
     }
   }
@@ -80,7 +80,7 @@
 
     .m-note {
       font-size: 11px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-300);
       }
     }
@@ -108,11 +108,11 @@
       td {
         font-weight: 300;
 
-        a{
+        a {
           text-decoration: none;
           font-family: Helvetica;
           letter-spacing: 1px;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-blue-grey-700);
           }
         }

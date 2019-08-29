@@ -11,9 +11,7 @@ import { SearchBarSuggestionsComponent } from './suggestions/suggestions.compone
 import { SearchBarComponent } from './bar.component';
 import { SearchComponent } from './search.component';
 
-const searchRoutes: Routes = [
-  { path: 'search', component: SearchComponent }
-];
+const searchRoutes: Routes = [{ path: 'search', component: SearchComponent }];
 
 @NgModule({
   imports: [
@@ -21,26 +19,22 @@ const searchRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(searchRoutes),
-    CommonModule
+    CommonModule,
   ],
   declarations: [
     SearchHybridListComponent,
     SearchSimpleListComponent,
     SearchBarSuggestionsComponent,
     SearchBarComponent,
-    SearchComponent
+    SearchComponent,
   ],
-  providers: [
-  ],
+  providers: [],
   exports: [
     SearchHybridListComponent,
     SearchSimpleListComponent,
     SearchBarSuggestionsComponent,
     SearchBarComponent,
   ],
-  entryComponents: [
-    SearchComponent
-  ]
+  entryComponents: [SearchComponent],
 })
-export class SearchModule {
-}
+export class SearchModule {}

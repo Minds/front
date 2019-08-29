@@ -4,7 +4,6 @@
   //padding: 4px;
 
   a {
-
     background-position: center center;
     background-size: cover;
 
@@ -13,7 +12,7 @@
     //1:1 ratio (square)
     height: 320px;
     width: 100%;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-800);
     }
   }
@@ -30,7 +29,7 @@
 
   &.m-tile-mature-thumbnail {
     transform-style: preserve-3d;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.65);
     }
 
@@ -47,7 +46,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 3em;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
       }
     }

@@ -11,7 +11,7 @@ m-wallet-token--testnet {
   .m-wallet-token--testnet--instructions {
     padding: 16px;
     box-sizing: border-box;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
   }
@@ -19,7 +19,7 @@ m-wallet-token--testnet {
   .m-wallet-token--testnet--note {
     padding: 16px;
     box-sizing: border-box;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
   }
@@ -40,7 +40,7 @@ m-wallet-token--testnet {
 
   .m-error {
     margin-top: 24px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
   }

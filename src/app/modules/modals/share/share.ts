@@ -5,11 +5,9 @@ import isMobile from '../../../helpers/is-mobile';
 
 @Component({
   selector: 'm-modal-share',
-  templateUrl: 'share.html'
+  templateUrl: 'share.html',
 })
-
-export class ShareModalComponent implements OnInit, OnDestroy{
-
+export class ShareModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
 
   rawUrl: string = '';
@@ -32,15 +30,13 @@ export class ShareModalComponent implements OnInit, OnDestroy{
     this.encodedRawUrl = encodeURI(this.rawUrl);
   }
 
-  constructor(
-    public session: Session,
-  ) {
-  }
+  constructor(public session: Session) {}
 
   ngOnInit() {
     if (this.session.getLoggedInUser()) {
       // Create custom referral param for current user
-      this.referrerParam = '?referrer=' + this.session.getLoggedInUser().username;
+      this.referrerParam =
+        '?referrer=' + this.session.getLoggedInUser().username;
     }
 
     // Include referrerParam in url by default
@@ -63,20 +59,27 @@ export class ShareModalComponent implements OnInit, OnDestroy{
   }
 
   openTwitter() {
-    const url = 'https://twitter.com/intent/tweet?tw_p=tweetbutton&url=' + this.encodedShareUrl;
+    const url =
+      'https://twitter.com/intent/tweet?tw_p=tweetbutton&url=' +
+      this.encodedShareUrl;
     window.open(url, '_blank', 'width=620, height=220, left=80, top=80');
   }
 
   openFacebook() {
     this.openWindow(
-      'https://www.facebook.com/sharer/sharer.php?u=' + this.encodedShareUrl + '&display=popup&ref=plugin&src=share_button'
+      'https://www.facebook.com/sharer/sharer.php?u=' +
+        this.encodedShareUrl +
+        '&display=popup&ref=plugin&src=share_button'
     );
   }
 
   openMessenger() {
     const encodedFacebookAppId = encodeURIComponent('184865748231073');
     this.openWindow(
-      'fb-messenger://share?link=' + this.encodedShareUrl + '&app_id=' + encodedFacebookAppId
+      'fb-messenger://share?link=' +
+        this.encodedShareUrl +
+        '&app_id=' +
+        encodedFacebookAppId
     );
   }
 
@@ -87,19 +90,15 @@ export class ShareModalComponent implements OnInit, OnDestroy{
   }
 
   openSMS() {
-    this.openWindow(
-      'sms:?&body=' + this.encodedShareUrl
-    );
+    this.openWindow('sms:?&body=' + this.encodedShareUrl);
   }
 
   openEmail() {
-    this.openWindow(
-      'mailto:?body=' + this.encodedShareUrl
-    );
+    this.openWindow('mailto:?body=' + this.encodedShareUrl);
   }
 
   // Add or remove referrerParam from share url based on checkbox input
-  toggleReferrerParam(){
+  toggleReferrerParam() {
     if (!this.includeReferrerParam) {
       this.includeReferrerParam = true;
       this.shareUrl = this.rawUrl + this.referrerParam;
@@ -143,5 +142,4 @@ export class ShareModalComponent implements OnInit, OnDestroy{
     clearTimeout(this.shareUrlTimeout);
     clearTimeout(this.flashTimeout);
   }
-
 }

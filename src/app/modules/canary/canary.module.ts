@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: 'canary',
     component: CanaryPageComponent,
-  }
+  },
 ];
 
 @NgModule({
@@ -21,16 +21,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    CanaryPageComponent
-  ],
-  exports: [
-    CanaryPageComponent
-  ],
-  entryComponents: [
-    CanaryPageComponent,
-  ]
+  declarations: [CanaryPageComponent],
+  exports: [CanaryPageComponent],
+  entryComponents: [CanaryPageComponent],
 })
-
-export class CanaryModule {
-}
+export class CanaryModule {}

@@ -1,47 +1,46 @@
 .m-monetization--onboarding {
   font-family: 'Roboto', Helvetica, sans-serif;
 
-  label{
+  label {
     display: block;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin:8px 0;
+    margin: 8px 0;
   }
 
-  minds-country-input{
-    width:100%;
-    select{
+  minds-country-input {
+    width: 100%;
+    select {
       padding: 12px;
       font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-family: 'Roboto', Helvetica, sans-serif;
       font-weight: 300;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-500);
       }
     }
   }
 
-  .m-date-input--field select{
+  .m-date-input--field select {
     padding: 12px 40px 12px 12px;
-    text-transform:uppercase;
-    @include m-theme(){
+    text-transform: uppercase;
+    @include m-theme() {
       color: themed($m-grey-500);
     }
   }
 
-  input[type=text]{
+  input[type='text'] {
     padding: 12px;
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
     width: 100%;
   }
-
 }
-.m-merchant-legal{
- p{
-     margin:0;
- }
+.m-merchant-legal {
+  p {
+    margin: 0;
+  }
 }

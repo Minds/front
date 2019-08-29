@@ -1,11 +1,10 @@
 .m-token--onboarding {
-
   .m-token--onboarding--slide {
     padding: 24px;
     display: flex;
     flex-direction: row;
     margin-bottom: 16px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
 
@@ -15,7 +14,7 @@
       margin-bottom: 16px;
       font-weight: bold;
       line-height: 42px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }
@@ -67,7 +66,7 @@
       i {
         font-size: 52px;
         line-height: 1;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-700);
         }
       }
@@ -85,11 +84,10 @@
         margin-bottom: 0;
         font-size: 12px;
         line-height: 14px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-400);
         }
       }
-
     }
 
     @media screen and (max-width: 1120px) {
@@ -109,7 +107,5 @@
         width: 100%;
       }
     }
-
   }
-
 }

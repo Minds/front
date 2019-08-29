@@ -1,10 +1,10 @@
 .m-blockchain--tde-buy {
-
   h2 {
     font-size: 30px;
   }
 
-  p, h2 {
+  p,
+  h2 {
     margin: 0 0 ($minds-padding * 4);
   }
 }
@@ -41,7 +41,7 @@
       padding: 16px;
       line-height: 1.2;
       font-weight: 300;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-900);
       }
     }
@@ -54,7 +54,7 @@
       appearance: none;
       border-radius: 3px;
       flex: 1;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.1);
       }
     }
@@ -63,13 +63,13 @@
       font-size: 1.2em;
 
       .m--crypto-token-symbol--stroke {
-        @include m-theme(){
+        @include m-theme() {
           stroke: themed($m-grey-900);
         }
       }
 
       .m--crypto-token-symbol--fill {
-        @include m-theme(){
+        @include m-theme() {
           fill: themed($m-grey-900);
         }
       }
@@ -88,7 +88,7 @@
   font-weight: inherit;
   text-transform: uppercase;
   cursor: pointer;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-700);
     border: 1px solid themed($m-grey-700);
   }
@@ -100,8 +100,7 @@
 }
 
 .m-blockchain--tde-buy--error {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red);
   }
-
 }

@@ -4,27 +4,20 @@ import { Storage } from '../../services/storage';
 
 @Component({
   selector: 'm-notices__sidebar',
-  templateUrl: 'sidebar.component.html' 
+  templateUrl: 'sidebar.component.html',
 })
-
 export class NoticesSidebarComponent {
-
   minds = window.Minds;
   hidden: boolean = false;
-  notices: Array<any> = [ ];
+  notices: Array<any> = [];
   displayLimit: number = 3;
   inProgress: boolean = false;
 
-  constructor(
-    private service: NoticesService,
-    private storage: Storage,
-  ) {
-  }
+  constructor(private service: NoticesService, private storage: Storage) {}
 
   async ngOnInit() {
     let hiddenNoticesTs = this.storage.get('hide-notices-ts');
-    if (hiddenNoticesTs)
-      this.hidden = true;
+    if (hiddenNoticesTs) this.hidden = true;
 
     await this.load();
 
@@ -43,7 +36,7 @@ export class NoticesSidebarComponent {
   }
 
   isRecent(notice) {
-    return notice.timestamp > (Date.now() - 172800000); // 48 hours
+    return notice.timestamp > Date.now() - 172800000; // 48 hours
   }
 
   hide() {
@@ -54,6 +47,4 @@ export class NoticesSidebarComponent {
   showAll() {
     this.displayLimit = 999999;
   }
-
 }
-

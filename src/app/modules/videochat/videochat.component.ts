@@ -1,7 +1,8 @@
 import {
   ChangeDetectorRef,
   Component,
-  HostBinding, Input,
+  HostBinding,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -14,7 +15,6 @@ declare const JitsiMeetExternalAPI: any;
   templateUrl: './videochat.component.html',
 })
 export class VideoChatComponent implements OnInit {
-
   minds = window.Minds;
   isActive$;
   isFullWidth$;
@@ -26,21 +26,22 @@ export class VideoChatComponent implements OnInit {
 
   constructor(
     private service: VideoChatService,
-    private cd: ChangeDetectorRef,
-  ) {
-  }
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.isActive$ = this.service.activate$.subscribe((configs: JitsiConfig) => {
-      if (configs) {
-        this.configs = configs;
-        this.startJitsi();
-      } else {
-        this.isActive = false;
+    this.isActive$ = this.service.activate$.subscribe(
+      (configs: JitsiConfig) => {
+        if (configs) {
+          this.configs = configs;
+          this.startJitsi();
+        } else {
+          this.isActive = false;
+        }
+        this.cd.markForCheck();
+        this.cd.detectChanges();
       }
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    });
+    );
   }
 
   ngOnDestroy() {
@@ -68,24 +69,35 @@ export class VideoChatComponent implements OnInit {
         APP_NAME: 'Minds',
 
         TOOLBAR_BUTTONS: [
-
           // main toolbar
-          'microphone', 'camera', 'desktop', 'fullscreen', 'fodeviceselection', 'hangup', 'tileview',
+          'microphone',
+          'camera',
+          'desktop',
+          'fullscreen',
+          'fodeviceselection',
+          'hangup',
+          'tileview',
           // extended toolbar
           'settings',
           'raisehand',
           'invite',
           'livestreaming',
-          'videoquality', 'filmstrip',
+          'videoquality',
+          'filmstrip',
           'stats',
         ],
       },
-
     };
     const api = new JitsiMeetExternalAPI(domain, options);
 
-    api.executeCommand('displayName', this.configs.username || 'Unknown Minds User');
-    api.executeCommand('avatarUrl', `${this.minds.cdn_url}icon/${this.minds.user.guid}/large/${this.minds.user.icontime}`);
+    api.executeCommand(
+      'displayName',
+      this.configs.username || 'Unknown Minds User'
+    );
+    api.executeCommand(
+      'avatarUrl',
+      `${this.minds.cdn_url}icon/${this.minds.user.guid}/large/${this.minds.user.icontime}`
+    );
 
     api.on('videoConferenceLeft', () => {
       this.service.deactivate();
@@ -95,5 +107,4 @@ export class VideoChatComponent implements OnInit {
   end() {
     // this.service.isActive.next(false);
   }
-
 }

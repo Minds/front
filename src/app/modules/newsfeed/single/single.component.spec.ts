@@ -1,4 +1,10 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { Component, DebugElement, Input } from '@angular/core';
 
 import { NewsfeedSingleComponent } from './single.component';
@@ -23,7 +29,7 @@ import { featuresServiceMock } from '../../../../tests/features-service-mock.spe
 
 @Component({
   selector: 'minds-activity',
-  template: ''
+  template: '',
 })
 class MindsActivityMock {
   @Input() focusedCommentGuid: string;
@@ -32,12 +38,11 @@ class MindsActivityMock {
   @Input() showRatingToggle: boolean;
 }
 
-let routerMock = new function () {
+let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate').and.stub();
-};
+})();
 
 describe('NewsfeedSingleComponent', () => {
-
   let comp: NewsfeedSingleComponent;
   let fixture: ComponentFixture<NewsfeedSingleComponent>;
 
@@ -55,19 +60,18 @@ describe('NewsfeedSingleComponent', () => {
           useValue: {
             params: of({ guid: 123 }),
             snapshot: {
-              queryParamMap: convertToParamMap({})
-            }
-          }
+              queryParamMap: convertToParamMap({}),
+            },
+          },
         },
         { provide: Router, useValue: routerMock },
         { provide: EntitiesService, useValue: MockService(EntitiesService) },
         { provide: FeaturesService, useValue: featuresServiceMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -78,18 +82,18 @@ describe('NewsfeedSingleComponent', () => {
     clientMock.response = {};
 
     clientMock.response['api/v1/newsfeed/single/123'] = {
-      'status': 'success',
-      "activity": {
-        "guid": "123",
-        "type": "activity",
-        "time_created": "1525415052",
-        "time_updated": "1525415052",
-        "container_guid": "1234",
-        "owner_guid": "1234",
-        "access_id": "2",
-        "message": "i'm a message",
-        "ownerObj": {},
-      }
+      status: 'success',
+      activity: {
+        guid: '123',
+        type: 'activity',
+        time_created: '1525415052',
+        time_updated: '1525415052',
+        container_guid: '1234',
+        owner_guid: '1234',
+        access_id: '2',
+        message: "i'm a message",
+        ownerObj: {},
+      },
     };
 
     sessionMock.user.admin = false;
@@ -112,7 +116,9 @@ describe('NewsfeedSingleComponent', () => {
 
   xit("should have loaded the activity on component's init", () => {
     expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[0]).toBe('api/v1/newsfeed/single/123');
+    expect(clientMock.get.calls.mostRecent().args[0]).toBe(
+      'api/v1/newsfeed/single/123'
+    );
   });
 
   it("should show an error message together with mind's logo when there's an error", () => {
@@ -120,8 +126,12 @@ describe('NewsfeedSingleComponent', () => {
     comp.inProgress = false;
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.css('.m-error-splash'))).not.toBeNull();
-    expect(fixture.debugElement.query(By.css('.m-error-splash img'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-error-splash'))
+    ).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-error-splash img'))
+    ).not.toBeNull();
 
     const h3 = fixture.debugElement.query(By.css('.m-error-splash h3'));
     expect(h3).not.toBeNull();
@@ -134,7 +144,9 @@ describe('NewsfeedSingleComponent', () => {
 
   it('it should show the activity', () => {
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.minds-list minds-activity'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.minds-list minds-activity'))
+    ).not.toBeNull();
   });
 
   it('it should show a spam notice if the activity was marked as spam', () => {
@@ -142,10 +154,14 @@ describe('NewsfeedSingleComponent', () => {
 
     fixture.detectChanges();
 
-    const spamNotice =fixture.debugElement.query(By.css('.m--spam-notice'));
+    const spamNotice = fixture.debugElement.query(By.css('.m--spam-notice'));
     expect(spamNotice).not.toBeNull();
-    expect(spamNotice.nativeElement.textContent).toContain('This activity is flagged as spam.');
-    expect(spamNotice.nativeElement.textContent).toContain('If you wish to appeal, please contact us at info@minds.com.');
+    expect(spamNotice.nativeElement.textContent).toContain(
+      'This activity is flagged as spam.'
+    );
+    expect(spamNotice.nativeElement.textContent).toContain(
+      'If you wish to appeal, please contact us at info@minds.com.'
+    );
   });
 
   it('it should not show the appeal text if the user is an admin', () => {
@@ -154,10 +170,13 @@ describe('NewsfeedSingleComponent', () => {
 
     fixture.detectChanges();
 
-    const spamNotice =fixture.debugElement.query(By.css('.m--spam-notice'));
+    const spamNotice = fixture.debugElement.query(By.css('.m--spam-notice'));
     expect(spamNotice).not.toBeNull();
-    expect(spamNotice.nativeElement.textContent).toContain('This activity is flagged as spam.');
-    expect(spamNotice.nativeElement.textContent).not.toContain('If you wish to appeal, please contact us at info@minds.com.');
+    expect(spamNotice.nativeElement.textContent).toContain(
+      'This activity is flagged as spam.'
+    );
+    expect(spamNotice.nativeElement.textContent).not.toContain(
+      'If you wish to appeal, please contact us at info@minds.com.'
+    );
   });
-
 });

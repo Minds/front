@@ -3,16 +3,16 @@ import { Location } from '@angular/common';
 import { Session } from '../../../services/session';
 import { Client, Upload } from '../../../services/api';
 import { RecentService } from '../../../services/ux/recent';
-import { ContextService, ContextServiceResponse } from '../../../services/context.service';
-
+import {
+  ContextService,
+  ContextServiceResponse,
+} from '../../../services/context.service';
 
 @Component({
   selector: 'm-search--bar-suggestions',
-  templateUrl: 'suggestions.component.html'
+  templateUrl: 'suggestions.component.html',
 })
-
 export class SearchBarSuggestionsComponent {
-
   suggestions: Array<any> = [];
   recent: any[];
   q: string = '';
@@ -29,7 +29,7 @@ export class SearchBarSuggestionsComponent {
     public recentService: RecentService,
     private context: ContextService,
     private cd: ChangeDetectorRef
-  ) { }
+  ) {}
 
   @Input('q') set _q(value: string) {
     if (this.searchTimeout) {
@@ -53,7 +53,7 @@ export class SearchBarSuggestionsComponent {
       try {
         const response: any = await this.client.get('api/v2/search/suggest', {
           q: value,
-          limit: 4
+          limit: 4,
         });
         this.suggestions = response.entities;
       } catch (e) {
@@ -86,5 +86,4 @@ export class SearchBarSuggestionsComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

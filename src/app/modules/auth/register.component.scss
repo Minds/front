@@ -1,9 +1,9 @@
-@import "defaults";
+@import 'defaults';
 
-.m-register--hero{
-  position:relative;
+.m-register--hero {
+  position: relative;
 
-  background-image: url("<%= APP_CDN %>/assets/videos/what-1/what-1.jpg");
+  background-image: url('<%= APP_CDN %>/assets/videos/what-1/what-1.jpg');
   background-size: cover;
   background-position: center center;
 
@@ -15,7 +15,7 @@
     margin: auto;
     max-width: 1280px;
 
-    @media screen and (max-width: 1000px){
+    @media screen and (max-width: 1000px) {
       padding: 120px 16px;
       flex-wrap: wrap;
     }
@@ -47,18 +47,20 @@
     width: 100%;
     height: 100%;
     z-index: 1;
-    @include m-theme(){
-      background-color: rgba(themed($m-black),0.4);
+    @include m-theme() {
+      background-color: rgba(themed($m-black), 0.4);
     }
   }
 
-  .m-register--hero--slogans{
+  .m-register--hero--slogans {
     flex: 2;
-    h1, h3, h4 {
+    h1,
+    h3,
+    h4 {
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       margin: 0;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
       }
     }
@@ -69,7 +71,7 @@
       letter-spacing: 1.25px;
       line-height: 1;
 
-      @media screen and (max-width: 720px){
+      @media screen and (max-width: 720px) {
         font-size: 42px;
       }
     }
@@ -82,7 +84,7 @@
       margin-top: 16px;
       padding-right: 70px;
 
-      @media screen and (max-width: 720px){
+      @media screen and (max-width: 720px) {
         padding-right: 8px;
         font-size: 16px;
       }
@@ -90,65 +92,65 @@
     z-index: 2;
   }
 
-  .m-register--signup{
+  .m-register--signup {
     flex: 1;
     margin-left: 16px;
 
-    @media screen and (max-width: 1000px){
+    @media screen and (max-width: 1000px) {
       flex-basis: 100%;
       margin-left: 0;
     }
-    minds-form-register{
-      .mdl-card{
-        background:transparent;
-        padding:0;
+    minds-form-register {
+      .mdl-card {
+        background: transparent;
+        padding: 0;
       }
-      .mdl-card__title{
-        display:none;
+      .mdl-card__title {
+        display: none;
       }
-      .m-login-box input{
-        border:0;
-        border-radius:3px;
+      .m-login-box input {
+        border: 0;
+        border-radius: 3px;
         font-weight: 600;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
         font-family: Roboto;
         letter-spacing: 1px;
-        @include m-theme(){
-          background:rgba(themed($m-white),0.9);
-          color:themed($m-grey-800);
-          border:1px solid rgba(themed($m-white),0.25);
+        @include m-theme() {
+          background: rgba(themed($m-white), 0.9);
+          color: themed($m-grey-800);
+          border: 1px solid rgba(themed($m-white), 0.25);
         }
-        &::placeholder{
-          @include m-theme(){
+        &::placeholder {
+          @include m-theme() {
             color: themed($m-grey-800);
           }
         }
       }
       .m-login-box .mdl-checkbox__box-outline {
-        @include m-theme(){
+        @include m-theme() {
           border-color: themed($m-white);
         }
       }
       .m-btn--action {
         margin-right: 16px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white) !important;
           border: 1px solid themed($m-white);
         }
       }
-      .mdl-card__actions{
-        flex-direction:row-reverse;
+      .mdl-card__actions {
+        flex-direction: row-reverse;
         padding-left: 8px;
 
-        .m-register-tac{
-          padding-right:16px;
+        .m-register-tac {
+          padding-right: 16px;
           font-family: Roboto;
-          @include m-theme(){
-            color: rgba(themed($m-white),0.8);
+          @include m-theme() {
+            color: rgba(themed($m-white), 0.8);
           }
           a {
-            @include m-theme(){
+            @include m-theme() {
               color: themed($m-white);
             }
           }
@@ -158,7 +160,7 @@
         padding: 12px;
         border-radius: 4px;
         font-weight: 300;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
           background-color: themed($m-black);
         }
@@ -169,7 +171,7 @@
         background: transparent;
         font-size: 12px;
         box-shadow: none !important;
-        @include m-theme(){
+        @include m-theme() {
           border: 1px solid themed($m-grey-50);
         }
       }
@@ -177,78 +179,76 @@
     z-index: 2;
   }
 
-  @media (max-width: $max-mobile){
-    .m-register--grid{
-      .m-register--titles{
-        h1{
+  @media (max-width: $max-mobile) {
+    .m-register--grid {
+      .m-register--titles {
+        h1 {
           font-size: 32px;
-          line-height:32px;
+          line-height: 32px;
           //font-weight: 200;
           //margin:16px;
-          padding:0;
-          padding:0 $minds-padding*2;
+          padding: 0;
+          padding: 0 $minds-padding * 2;
         }
-        h3{
-          font-size:16px;
+        h3 {
+          font-size: 16px;
           //font-weight: 200;
-          line-height:16px;
-          padding:16px 16px 0;
+          line-height: 16px;
+          padding: 16px 16px 0;
         }
       }
     }
   }
-
 }
 
 m-register {
-
   .m-register--section {
     height: 300px;
     align-items: center;
     justify-content: center;
-    display:flex;
+    display: flex;
     font-weight: 100;
     font-size: 41px;
 
     display: block;
     text-align: center;
     padding: 80px 0;
-    height:auto;
+    height: auto;
 
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
 
-    @media screen and (max-width: 720px){
+    @media screen and (max-width: 720px) {
       padding: 16px 0;
     }
 
-    h1{
+    h1 {
       font-size: 72px;
       font-weight: 600;
       font-weight: 800;
       letter-spacing: 0.25px;
       margin-left: 8px;
       margin-right: 8px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
 
-      @media screen and (max-width: 720px){
+      @media screen and (max-width: 720px) {
         font-size: 28px;
       }
     }
 
-    h2{
+    h2 {
       font-size: 56px;
       line-height: 1;
       font-weight: 600;
       letter-spacing: 1.25px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
 
-      @media screen and (max-width: 720px){
+      @media screen and (max-width: 720px) {
         font-size: 22px;
       }
 
@@ -257,16 +257,16 @@ m-register {
       }
     }
 
-    h4{
+    h4 {
       font-weight: 400;
       font-size: 32px;
       letter-spacing: 4px;
 
-      @media screen and (max-width: 1250px){
+      @media screen and (max-width: 1250px) {
         font-size: 24px;
       }
-      .m-break--8spaces{
-            padding-left: 60px;
+      .m-break--8spaces {
+        padding-left: 60px;
       }
     }
 
@@ -279,11 +279,11 @@ m-register {
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
       text-transform: uppercase;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-200);
       }
 
-      @media screen and (max-width: 720px){
+      @media screen and (max-width: 720px) {
         margin-top: 0;
       }
     }
@@ -318,20 +318,20 @@ m-register {
   }
 }
 
-.m-footer{
-  padding:28px;
-  min-height:150px;
-  position:relative;
-  @include m-theme(){
-    background-color:themed($m-white);
+.m-footer {
+  padding: 28px;
+  min-height: 150px;
+  position: relative;
+  @include m-theme() {
+    background-color: themed($m-white);
   }
 
-  .copyright{
+  .copyright {
     display: block;
     padding: 16px 0;
     width: 100%;
     text-align: center;
     font-size: 11px;
-    font-weight:bold;
+    font-weight: bold;
   }
 }

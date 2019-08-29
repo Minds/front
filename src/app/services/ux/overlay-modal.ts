@@ -78,5 +78,4 @@ export class OverlayModalService {
 
     return this;
   }
-
 }

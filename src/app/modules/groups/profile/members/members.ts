@@ -11,13 +11,11 @@ import { Session } from '../../../../services/session';
   selector: 'minds-groups-profile-members',
 
   inputs: ['_group : group'],
-  templateUrl: 'members.html'
+  templateUrl: 'members.html',
 })
-
 export class GroupsProfileMembers {
-
-minds = window.Minds;
-@ViewChild('el', { static: true }) el;
+  minds = window.Minds;
+  @ViewChild('el', { static: true }) el;
 
   group: any;
   $group;
@@ -36,12 +34,14 @@ minds = window.Minds;
 
   httpSubscription;
 
-  constructor(public session: Session, public client: MindsHttpClient, public service: GroupsService) {
-
-  }
+  constructor(
+    public session: Session,
+    public client: MindsHttpClient,
+    public service: GroupsService
+  ) {}
 
   ngOnInit() {
-    this.$group = this.service.$group.subscribe((group) => {
+    this.$group = this.service.$group.subscribe(group => {
       this.group = group;
       this.load(true);
       this.el.nativeElement.scrollIntoView();
@@ -56,8 +56,7 @@ minds = window.Minds;
   }
 
   load(refresh: boolean = false, query = null) {
-    if (this.httpSubscription)
-      this.httpSubscription.unsubscribe();
+    if (this.httpSubscription) this.httpSubscription.unsubscribe();
 
     if (refresh) {
       this.offset = '';
@@ -75,16 +74,19 @@ minds = window.Minds;
     }
 
     let endpoint = `api/v1/groups/membership/${this.group.guid}`,
-      params: { limit, offset, q?: string } = { limit: 12, offset: this.offset };
+      params: { limit; offset; q?: string } = {
+        limit: 12,
+        offset: this.offset,
+      };
 
     if (this.q) {
       endpoint = `${endpoint}/search`;
-      params.q = this.q; 
+      params.q = this.q;
     }
 
     this.inProgress = true;
-    this.httpSubscription = this.client.get(endpoint, params)
-      .subscribe((response: any) => {
+    this.httpSubscription = this.client.get(endpoint, params).subscribe(
+      (response: any) => {
         console.log(response);
         if (!response.members) {
           this.moreData = false;
@@ -105,16 +107,16 @@ minds = window.Minds;
         }
 
         this.inProgress = false;
-
-        }, (err) => {
-            this.inProgress = false;
-        });
+      },
+      err => {
+        this.inProgress = false;
+      }
+    );
   }
 
   invite(user: any) {
     for (let i of this.invitees) {
-      if (i.guid === user.guid)
-        return;
+      if (i.guid === user.guid) return;
     }
     this.invitees.push(user);
   }
@@ -129,5 +131,4 @@ minds = window.Minds;
       this.load(true);
     }, 300);
   }
-
 }

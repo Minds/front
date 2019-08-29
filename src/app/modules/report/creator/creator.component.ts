@@ -1,18 +1,23 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { REASONS } from '../../../services/list-options';
-import { EventEmitter } from "@angular/core";
+import { EventEmitter } from '@angular/core';
 
 @Component({
   moduleId: module.id,
   selector: 'm-report--creator',
-  templateUrl: 'creator.component.html'
+  templateUrl: 'creator.component.html',
 })
-
 export class ReportCreatorComponent implements AfterViewInit {
-
   subject = {
     value: null,
     hasMore: false,
@@ -47,8 +52,8 @@ export class ReportCreatorComponent implements AfterViewInit {
     public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private client: Client,
-  ) { }
+    private client: Client
+  ) {}
 
   ngAfterViewInit() {
     this._changeDetectorRef.detectChanges();
@@ -62,10 +67,7 @@ export class ReportCreatorComponent implements AfterViewInit {
       return false;
       //throw new Error('You cannot report this.');
     }
-    if (this.subject.hasMore 
-      && this.next
-      && !this.subReason.value
-    ) {
+    if (this.subject.hasMore && this.next && !this.subReason.value) {
       return false;
     }
     return true;
@@ -133,7 +135,11 @@ export class ReportCreatorComponent implements AfterViewInit {
       }
 
       if (this._opts && this._opts.onReported) {
-        this._opts.onReported(this.guid, this.subject.value, this.subReason.value);
+        this._opts.onReported(
+          this.guid,
+          this.subject.value,
+          this.subReason.value
+        );
       }
     } catch (e) {
       this.inProgress = false;

@@ -4,13 +4,10 @@ import { Component, OnInit } from '@angular/core';
   selector: 'm-analyticschannel__general',
   template: `
     <m-analyticsactivity__card></m-analyticsactivity__card>
-  `
+  `,
 })
-
 export class ChannelGeneralAnalyticsComponent implements OnInit {
-  constructor() {
-  }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

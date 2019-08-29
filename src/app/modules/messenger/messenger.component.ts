@@ -12,15 +12,12 @@ import { MessengerSounds } from './sounds/service';
 import { MessengerUserlist } from './userlist/userlist.component';
 import { MessengerSetupChat } from './setup/setup.component';
 
-
 @Component({
   moduleId: module.id,
   selector: 'm-messenger',
-  templateUrl: 'messenger.component.html'
+  templateUrl: 'messenger.component.html',
 })
-
 export class Messenger {
-
   encryption = this.injector.get(MessengerEncryptionService);
   sounds = new MessengerSounds();
 
@@ -37,7 +34,7 @@ export class Messenger {
     public client: Client,
     public sockets: SocketsService,
     private injector: Injector
-  ) { }
+  ) {}
 
   ngAfterViewInit() {
     // @todo: get rid of this ugly global window hack
@@ -47,7 +44,7 @@ export class Messenger {
   }
 
   ngOnDestroy() {
-    (<any>window).openMessengerWindow = function () {
+    (<any>window).openMessengerWindow = function() {
       return;
     };
   }
@@ -59,6 +56,5 @@ export class Messenger {
       this.setupChat.openPane();
     }
   }
-
 }
 export { MessengerConversation } from './conversation/conversation.component';

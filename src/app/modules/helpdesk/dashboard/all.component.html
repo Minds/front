@@ -1,11 +1,16 @@
 <div class="m-helpdeskDashboard__all">
-
   <ul class="m-helpdeskDashboardAll__list">
-    <li *ngFor="let category of categories" class="m-helpdeskQuestions__questions m-border">
+    <li
+      *ngFor="let category of categories"
+      class="m-helpdeskQuestions__questions m-border"
+    >
       <ul>
         <h4>{{ category.title }}</h4>
 
-        <li *ngFor="let question of category.questions" class="m-helpdeskQuestions__question">
+        <li
+          *ngFor="let question of category.questions"
+          class="m-helpdeskQuestions__question"
+        >
           <a [routerLink]="['/help/question', question.uuid]">
             <span>
               {{ question.question }}
@@ -18,5 +23,4 @@
       </ul>
     </li>
   </ul>
-
 </div>

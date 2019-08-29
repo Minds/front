@@ -6,8 +6,7 @@ import { Session } from '../../services/session';
 export class SettingsService {
   ratingChanged: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private client: Client, private session: Session) {
-  }
+  constructor(private client: Client, private session: Session) {}
 
   setRating(rating) {
     this.session.getLoggedInUser().boost_rating = rating;

@@ -10,9 +10,8 @@ import { Component, Input } from '@angular/core';
         <m-suggestions__sidebarGroups></m-suggestions__sidebarGroups>
       </div>
     </div>
-  `
+  `,
 })
-
 export class GroupsOnboardingComponent {
   static items = ['suggested_groups'];
   static canSkip: boolean = true;

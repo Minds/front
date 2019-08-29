@@ -1,30 +1,70 @@
 .m-mobile--marketing {
-
   .m-marketing--hero {
-    padding:52px 0 !important;
+    margin-bottom: 32px;
+    padding: 0;
+    @media screen and (min-width: $max-mobile) {
+      padding: 52px 0 !important;
+    }
 
     .m-marketing--hero--inner {
-      padding-top: 52px;
-      padding-bottom: 52px;
       flex-wrap: wrap;
+      padding: 52 0 52 0;
+
+      .m-marketing--hero--slogans h1 {
+        text-align: left;
+        padding-left: $minds-padding * 2;
+        font-size: xx-large;
+        font-weight: 700;
+        @media screen and (min-width: $min-tablet) {
+          margin-left: 120px;
+          font-size: 42px;
+        }
+        @include m-theme() {
+          color: themed($m-white-always);
+        }
+      }
     }
 
     img {
       min-width: 100%;
     }
-
   }
 
   .m-marketing-show-mobile {
-    font-size: 14px !important
+    font-size: 14px !important;
   }
 
   .m-mobile--marketing--codelink {
-    font-size: 15px
+    font-size: 15px;
   }
 
-  .m-marketing--section--subsection--first .m-marketing--section--subsection-container {
-    padding-top: 32px !important;
+  .m-marketing--section--subsection--first
+    .m-marketing--section--subsection-container {
+    padding-top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    @media screen and (min-width: $min-tablet) {
+      width: unset;
+      margin: 0 25%;
+    }
+
+    .m-marketing--section--subsection-text {
+      max-width: 100%;
+      min-width: 100%;
+      margin: 0;
+      padding: 0;
+
+      h2 {
+        text-align: left;
+        font-size: x-large;
+        font-weight: 700;
+        padding: $minds-padding * 1.5 0;
+        margin: 0 0 ($minds-padding * 2) ($minds-padding * 2);
+      }
+    }
   }
 
   .m-marketing--hero--actions img {
@@ -47,13 +87,79 @@
     }
   }
 
+  .m-marketing--section {
+    text-align: left;
+    margin-left: $minds-padding * 2;
+
+    h2 {
+      text-align: left;
+      font-size: x-large;
+      font-weight: 700;
+      padding-left: 12px;
+    }
+
+    .m-marketing--downloadPlatform {
+      @media screen and (min-width: $min-tablet) {
+        margin: 0 25%;
+      }
+
+      .m-marketing--downloadOption {
+        padding-bottom: $minds-padding * 2;
+        @media screen and (max-width: $min-tablet) {
+          padding-bottom: $minds-padding * 1;
+        }
+
+        .m-marketing--downloadButton--iOS {
+          img {
+            padding-left: 14px;
+          }
+        }
+
+        .m-marketing--downloadButton {
+          display: flex;
+          flex-wrap: wrap;
+          padding-bottom: $minds-padding * 4;
+          @media screen and (max-width: $min-tablet) {
+            padding-bottom: $minds-padding * 2;
+          }
+
+          img {
+            max-width: 200px;
+            min-width: 175px;
+          }
+        }
+
+        span {
+          font-size: large;
+          align-self: center;
+          padding-left: $minds-padding * 2;
+          font-weight: 400;
+        }
+
+        p {
+          padding: 0 ($minds-padding * 1.5);
+          line-height: 24pt;
+          @include m-theme() {
+            color: themed($m-grey-600);
+          }
+        }
+
+        li {
+          @include m-theme() {
+            color: themed($m-grey-600);
+          }
+        }
+      }
+    }
+  }
+
   @media screen and (min-width: 500px) {
     .m-marketing--hero--slogans h2 {
       font-size: 60px !important;
       line-height: 1.25;
     }
     .m-marketing-show-mobile {
-      display: none
+      display: none;
     }
   }
 
@@ -63,7 +169,7 @@
     li {
       font-size: 16px;
       line-height: 2.5;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
@@ -71,13 +177,13 @@
 
   .m-mobile--marketing--canary-note {
     font-size: 12px !important;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red-dark) !important;
     }
   }
 
   .m-mobile--marketing--error {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red-dark) !important;
     }
   }
@@ -91,13 +197,5 @@
       font-size: 10px;
       word-break: break-all;
     }
-  }
-
-}
-
-.m-mobile__giantDroid {
-  font-size: 152px;
-  @include m-theme(){
-    color: themed($m-white);
   }
 }

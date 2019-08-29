@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: 'nodes',
     component: NodesMarketingComponent,
-  }
+  },
 ];
 
 @NgModule({
@@ -21,15 +21,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    NodesMarketingComponent
-  ],
-  exports: [
-    NodesMarketingComponent
-  ],
-  entryComponents: [
-    NodesMarketingComponent,
-  ]
+  declarations: [NodesMarketingComponent],
+  exports: [NodesMarketingComponent],
+  entryComponents: [NodesMarketingComponent],
 })
-export class NodesMarketingModule {
-}
+export class NodesMarketingModule {}

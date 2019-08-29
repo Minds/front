@@ -18,19 +18,16 @@ import { NoticesService } from './notices.service';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    NoticesSidebarComponent,
-  ],
-  exports: [
-    NoticesSidebarComponent,
-  ],
+  declarations: [NoticesSidebarComponent],
+  exports: [NoticesSidebarComponent],
   providers: [
     {
       provide: NoticesService,
-      useFactory: (_http) => { return new NoticesService(_http); },
-      deps: [ HttpClient ],
+      useFactory: _http => {
+        return new NoticesService(_http);
+      },
+      deps: [HttpClient],
     },
-  ], 
+  ],
 })
-export class NoticesModule {
-}
+export class NoticesModule {}

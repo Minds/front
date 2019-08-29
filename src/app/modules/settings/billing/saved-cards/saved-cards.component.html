@@ -1,22 +1,36 @@
 <div class="m-settings--section m-border" *ngIf="cards.length">
-
   <h4 i18n="@@SETTINGS__BILLING__SAVED_CARDS__TITLE">Payment Methods</h4>
 
   <div [hidden]="!inProgress" style="width:100%; text-align:center;">
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    <div
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+      style="margin: 16px auto;"
+    ></div>
   </div>
 
   <div class="m-settings--billing-saved-cards--cards">
     <ul>
-      <li *ngFor="let card of cards; let i = index"
+      <li
+        *ngFor="let card of cards; let i = index"
         class="m-settings--billing-saved-cards--cards-item"
       >
-        <span class="m-settings--billing-saved-cards--cards-item-type">{{card.brand}}</span>
-        <span class="m-settings--billing-saved-cards--cards-item-number">**** {{card.last4}}</span>
-        <span class="m-settings--billing-saved-cards--cards-item-expiry">{{card.exp_month}} / {{card.exp_year}}</span>
-        <span class="m-settings--billing-saved-cards--cards-item-select" (click)="removeCard(i)" i18n="@@M__ACTION__REMOVE">Remove</span>
+        <span class="m-settings--billing-saved-cards--cards-item-type">{{
+          card.brand
+        }}</span>
+        <span class="m-settings--billing-saved-cards--cards-item-number"
+          >**** {{ card.last4 }}</span
+        >
+        <span class="m-settings--billing-saved-cards--cards-item-expiry"
+          >{{ card.exp_month }} / {{ card.exp_year }}</span
+        >
+        <span
+          class="m-settings--billing-saved-cards--cards-item-select"
+          (click)="removeCard(i)"
+          i18n="@@M__ACTION__REMOVE"
+          >Remove</span
+        >
       </li>
     </ul>
   </div>
-
 </div>

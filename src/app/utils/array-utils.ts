@@ -1,4 +1,7 @@
-export function findLastIndex<T>(arr: T[], predicate: (this: T[], value: T, index: number, arr: T[]) => boolean) {
+export function findLastIndex<T>(
+  arr: T[],
+  predicate: (this: T[], value: T, index: number, arr: T[]) => boolean
+) {
   let key = arr.length - 1;
 
   while (key > -1) {

@@ -18,7 +18,7 @@ export class EmbedVideo {
     this.options = { ...options };
     this.button = document.createElement('button');
     this.button.className = 'medium-editor-action';
-    this.button.innerHTML = options.buttonText || "</>";
+    this.button.innerHTML = options.buttonText || '</>';
     this.button.onclick = this.handleClick.bind(this);
   }
 
@@ -58,7 +58,8 @@ export class EmbedVideo {
   }
 
   private insertHTML(html) {
-    let sel = window.getSelection(), range;
+    let sel = window.getSelection(),
+      range;
     const div = this.getHTML(html);
     const lastP = this.createP();
 
@@ -108,7 +109,10 @@ export class EmbedVideo {
   }
 
   public handleClick(event: any) {
-    const src = this.window.getSelection().toString().trim();
+    const src = this.window
+      .getSelection()
+      .toString()
+      .trim();
     if (this.urlRegex.exec(src)) {
       this.processLink(src);
       this.base.checkContentChanged();
@@ -117,7 +121,6 @@ export class EmbedVideo {
 
   public events() {
     this.base.subscribe('action-videos', (data, editable) => {
-
       let $place = this.$element.querySelector('.medium-insert-active');
 
       if (this.urlRegex.exec(data.link)) {
@@ -125,11 +128,13 @@ export class EmbedVideo {
         this.processLink(data.link);
         this.base.checkContentChanged();
       }
-    })
-  };
+    });
+  }
 
   public prepare() {
-    let elements = this.$element.querySelectorAll('.medium-insert-embeds-overlay');
+    let elements = this.$element.querySelectorAll(
+      '.medium-insert-embeds-overlay'
+    );
 
     for (let i: number = 0; i < elements.length; ++i) {
       const item = elements[i];
@@ -157,13 +162,33 @@ export class EmbedVideo {
     let html;
     url = url.replace(/\n?/g, '');
 
-    html = url.replace(/^((http(s)?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|v\/)?)([a-zA-Z0-9\-_]+)(.*)?$/, '<div class="video video-youtube"><iframe width="892" height="520" src="//www.youtube.com/embed/$7" frameborder="0" allowfullscreen></iframe></div>')
-      .replace(/^https?:\/\/vimeo\.com(\/.+)?\/([0-9]+)$/, '<div class="video video-vimeo"><iframe src="//player.vimeo.com/video/$2" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>')
-      .replace(/^https?:\/\/instagram\.com\/p\/(.+)\/?$/, '<span class="instagram"><iframe src="//instagram.com/p/$1/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe></span>')
-      .replace(/^https?:\/\/www\.minds\.com\/media\/([0-9]+)\/?$/, `<span class="minds"><iframe src="https://www.minds.com/api/v1/embed/$1" width="720" height="320" frameborder="0" scrolling="no" allowtransparency="true"></video></iframe></span>`)
-      .replace(/^https?:\/\/www\.minds\.com\/api\/v1\/embed\/([0-9]+)\/?$/, `<span class="minds"><iframe src="https://www.minds.com/api/v1/embed/$1" width="720" height="320" frameborder="0" scrolling="no" allowtransparency="true"></video></iframe></span>`);
+    html = url
+      .replace(
+        /^((http(s)?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|v\/)?)([a-zA-Z0-9\-_]+)(.*)?$/,
+        '<div class="video video-youtube"><iframe width="892" height="520" src="//www.youtube.com/embed/$7" frameborder="0" allowfullscreen></iframe></div>'
+      )
+      .replace(
+        /^https?:\/\/vimeo\.com(\/.+)?\/([0-9]+)$/,
+        '<div class="video video-vimeo"><iframe src="//player.vimeo.com/video/$2" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>'
+      )
+      .replace(
+        /^https?:\/\/instagram\.com\/p\/(.+)\/?$/,
+        '<span class="instagram"><iframe src="//instagram.com/p/$1/embed/" width="612" height="710" frameborder="0" scrolling="no" allowtransparency="true"></iframe></span>'
+      )
+      .replace(
+        /^https?:\/\/www\.minds\.com\/media\/([0-9]+)\/?$/,
+        `<span class="minds"><iframe src="https://www.minds.com/api/v1/embed/$1" width="720" height="320" frameborder="0" scrolling="no" allowtransparency="true"></video></iframe></span>`
+      )
+      .replace(
+        /^https?:\/\/www\.minds\.com\/api\/v1\/embed\/([0-9]+)\/?$/,
+        `<span class="minds"><iframe src="https://www.minds.com/api/v1/embed/$1" width="720" height="320" frameborder="0" scrolling="no" allowtransparency="true"></video></iframe></span>`
+      );
 
-    if (url.match(/^(https?:\/\/)?(www\.)?(m\.)?soundcloud\.com\/[\w\-\.]+(\/)+[\w\-\.]+\/?$/g)) {
+    if (
+      url.match(
+        /^(https?:\/\/)?(www\.)?(m\.)?soundcloud\.com\/[\w\-\.]+(\/)+[\w\-\.]+\/?$/g
+      )
+    ) {
       try {
         html = await this.getSoundcloudEmbed(url);
       } catch (e) {
@@ -176,7 +201,10 @@ export class EmbedVideo {
     }
 
     if (this.options.storeMeta) {
-      html += '<div class="medium-insert-embeds-meta"><script type="text/json">' + JSON.stringify({}) + '</script></div>';
+      html +=
+        '<div class="medium-insert-embeds-meta"><script type="text/json">' +
+        JSON.stringify({}) +
+        '</script></div>';
     }
 
     if (pasted) {
@@ -194,9 +222,12 @@ export class EmbedVideo {
       return false;
     }
     if (html.indexOf('</script>') > -1) {
-
-      $div = document.createElement('div')
-        .setAttribute('data-embed-code', document.createElement('div').innerText = html.innerHTML);
+      $div = document
+        .createElement('div')
+        .setAttribute(
+          'data-embed-code',
+          (document.createElement('div').innerText = html.innerHTML)
+        );
       $div.innerHTML = html;
       html = document.createElement('div').appendChild($div).innerHTML;
     }
@@ -206,16 +237,19 @@ export class EmbedVideo {
 
   private getSoundcloudEmbed(url: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      JSONP.send(`http://soundcloud.com/oembed?format=js&url=${url}&callback=getSoundcloudEmbed`, {
-        callbackName: 'getSoundcloudEmbed',
-        onSuccess: function (json) {
-          resolve(json.html);
-        },
-        onTimeout: function () {
-          reject();
-        },
-        timeout: 10
-      });
+      JSONP.send(
+        `http://soundcloud.com/oembed?format=js&url=${url}&callback=getSoundcloudEmbed`,
+        {
+          callbackName: 'getSoundcloudEmbed',
+          onSuccess: function(json) {
+            resolve(json.html);
+          },
+          onTimeout: function() {
+            reject();
+          },
+          timeout: 10,
+        }
+      );
     });
   }
 }
@@ -223,20 +257,17 @@ export class EmbedVideo {
 class JSONP {
   public static send(src, options) {
     var callback_name = options.callbackName || 'callback',
-      on_success = options.onSuccess || function () {
-      },
-      on_timeout = options.onTimeout || function () {
-      },
+      on_success = options.onSuccess || function() {},
+      on_timeout = options.onTimeout || function() {},
       timeout = options.timeout || 10; // sec
 
-    var timeout_trigger = window.setTimeout(function () {
-      window[callback_name] = function () {
-      };
+    var timeout_trigger = window.setTimeout(function() {
+      window[callback_name] = function() {};
       on_timeout();
       document.getElementsByTagName('head')[0].removeChild(script);
     }, timeout * 1000);
 
-    window[callback_name] = function (data) {
+    window[callback_name] = function(data) {
       window.clearTimeout(timeout_trigger);
       on_success(data);
       document.getElementsByTagName('head')[0].removeChild(script);

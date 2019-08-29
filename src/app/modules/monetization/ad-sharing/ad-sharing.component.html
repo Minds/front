@@ -4,25 +4,49 @@
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 
-<div class="m-root-other" *ngIf="!isMerchant && !remote && !inProgress && loaded && canBecomeMerchant">
+<div
+  class="m-root-other"
+  *ngIf="!isMerchant && !remote && !inProgress && loaded && canBecomeMerchant"
+>
   <p>
-    <ng-container i18n="@@MONETIZATION__AD_SHARING__NO_MERCHANT_TITLE">You need to be a Minds Merchant in order to apply for Ad Sharing program.</ng-container>
+    <ng-container i18n="@@MONETIZATION__AD_SHARING__NO_MERCHANT_TITLE"
+      >You need to be a Minds Merchant in order to apply for Ad Sharing
+      program.</ng-container
+    >
   </p>
 
-  <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+  <button
+    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
     routerLink="/wallet/merchants"
     i18n="@@MONETIZATION__AD_SHARING__BECOME_A_MERCHANT_ACTION"
-  >Become a Merchant</button>
+  >
+    Become a Merchant
+  </button>
 </div>
 
-<div class="m-root-other" *ngIf="!isMerchant && !remote && !inProgress && loaded && !canBecomeMerchant">
-  <ng-container i18n="@@MONETIZATION__AD_SHARING__MERCHANT_NOT_ELIGIBLE">You are not elegible to become a Merchant. Please contact us at info@minds.com</ng-container>
+<div
+  class="m-root-other"
+  *ngIf="!isMerchant && !remote && !inProgress && loaded && !canBecomeMerchant"
+>
+  <ng-container i18n="@@MONETIZATION__AD_SHARING__MERCHANT_NOT_ELIGIBLE"
+    >You are not elegible to become a Merchant. Please contact us at
+    info@minds.com</ng-container
+  >
 </div>
 
-<div *ngIf="isMerchant && !remote && !inProgress && loaded && !enabled && !applied">
-  <form class="m-form mdl-grid mdl-shadow--2dp mdl-color--white"
-    (submit)="$event.preventDefault(); apply()">
-    <h2 class="m-revenue--console-product-header" i18n="@@MONETIZATION__AD_SHARING__APPLICATION_TITLE">Ad-Revenue Sharing</h2>
+<div
+  *ngIf="isMerchant && !remote && !inProgress && loaded && !enabled && !applied"
+>
+  <form
+    class="m-form mdl-grid mdl-shadow--2dp mdl-color--white"
+    (submit)="$event.preventDefault(); apply()"
+  >
+    <h2
+      class="m-revenue--console-product-header"
+      i18n="@@MONETIZATION__AD_SHARING__APPLICATION_TITLE"
+    >
+      Ad-Revenue Sharing
+    </h2>
     <div class="m-apply-more">
       <div class="mdl-cell mdl-cell--12-col m-apply-message">
         <textarea
@@ -33,34 +57,78 @@
         ></textarea>
       </div>
 
-      <div *ngIf="applyError" class="mdl-cell mdl-cell--12-col mdl-color-text--red">
+      <div
+        *ngIf="applyError"
+        class="mdl-cell mdl-cell--12-col mdl-color-text--red"
+      >
         {{ applyError }}
       </div>
 
       <div class="mdl-cell mdl-cell--12-col m-apply-submit">
-        <button type="submit" class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!isApplyValid()" i18n="@@MONETIZATION__AD_SHARING__APPLY_ACTION">Apply</button>
+        <button
+          type="submit"
+          class="mdl-button mdl-button--raised mdl-button--colored"
+          [disabled]="!isApplyValid()"
+          i18n="@@MONETIZATION__AD_SHARING__APPLY_ACTION"
+        >
+          Apply
+        </button>
       </div>
     </div>
   </form>
 </div>
 
-<div class="m-root-other" *ngIf="!remote && !inProgress && loaded && !enabled && applied">
-  <h2 class="m-revenue--console-product-header" i18n="@@MONETIZATION__AD_SHARING__APPLICATION_TITLE">Ad-Revenue Sharing</h2>
-  <p><ng-container i18n="@@MONETIZATION__AD_SHARING__APPLICATION_UNDER_REVIEW_LABEL">You have applied for the Minds Ad Sharing program. Your application is currently under review. This may take up to 7 days.</ng-container></p>
+<div
+  class="m-root-other"
+  *ngIf="!remote && !inProgress && loaded && !enabled && applied"
+>
+  <h2
+    class="m-revenue--console-product-header"
+    i18n="@@MONETIZATION__AD_SHARING__APPLICATION_TITLE"
+  >
+    Ad-Revenue Sharing
+  </h2>
+  <p>
+    <ng-container
+      i18n="@@MONETIZATION__AD_SHARING__APPLICATION_UNDER_REVIEW_LABEL"
+      >You have applied for the Minds Ad Sharing program. Your application is
+      currently under review. This may take up to 7 days.</ng-container
+    >
+  </p>
 </div>
 
 <div *ngIf="!remote && !inProgress && isMerchant && loaded && enabled">
   <div class="mdl-tabs__tab-bar" *ngIf="false">
-      <a routerLink="/wallet/ad-sharing/analytics" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'analytics' }" i18n="@@MONETIZATION__AD_SHARING__ANALYTICS_TAB">Analytics</a>
-      <a routerLink="/wallet/ad-sharing/settings" class="mdl-tabs__tab" [ngClass]="{ 'is-active': type == 'settings' }" i18n="@@MONETIZATION__AD_SHARING__SETTINGS_TAB">Settings</a>
+    <a
+      routerLink="/wallet/ad-sharing/analytics"
+      class="mdl-tabs__tab"
+      [ngClass]="{ 'is-active': type == 'analytics' }"
+      i18n="@@MONETIZATION__AD_SHARING__ANALYTICS_TAB"
+      >Analytics</a
+    >
+    <a
+      routerLink="/wallet/ad-sharing/settings"
+      class="mdl-tabs__tab"
+      [ngClass]="{ 'is-active': type == 'settings' }"
+      i18n="@@MONETIZATION__AD_SHARING__SETTINGS_TAB"
+      >Settings</a
+    >
   </div>
 
-   <h2 class="m-revenue--console-product-header mdl-color-text--black" style="padding-bottom:16px" i18n="@@MONETIZATION__AD_SHARING__TITLE">Ad-Revenue Sharing</h2>
+  <h2
+    class="m-revenue--console-product-header mdl-color-text--black"
+    style="padding-bottom:16px"
+    i18n="@@MONETIZATION__AD_SHARING__TITLE"
+  >
+    Ad-Revenue Sharing
+  </h2>
 
-
-
-  <m-wallet-ad-sharing-settings [hidden]="type != 'settings'"></m-wallet-ad-sharing-settings>
-  <m-wallet-ad-sharing-analytics [hidden]="type != 'analytics'"></m-wallet-ad-sharing-analytics>
+  <m-wallet-ad-sharing-settings
+    [hidden]="type != 'settings'"
+  ></m-wallet-ad-sharing-settings>
+  <m-wallet-ad-sharing-analytics
+    [hidden]="type != 'analytics'"
+  ></m-wallet-ad-sharing-analytics>
 </div>
 
 <div *ngIf="remote">
