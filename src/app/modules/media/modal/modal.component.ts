@@ -162,7 +162,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     if (this.redirectUrl) {
       this.location.replaceState(this.redirectUrl);
     } else if (this.entityType === 'blog') {
-      this.location.replaceState(`/blog/${this.entity.slug}-${this.entity.guid}`);
+      this.location.replaceState(`${this.session.getLoggedInUser().username}/blog/${this.entity.slug}-${this.entity.guid}`);
     } else {
       this.location.replaceState(`/media/${this.entity.entity_guid}`);
     }
