@@ -1720,12 +1720,11 @@
   <ng-template ngSwitchCase="contributions"></ng-template>
 
   <ng-template ngSwitchCase="rewards_summary">
-    <a
-      target="_blank"
-      routerLink="/wallet/tokens/contributions"
-    >
-      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_RECEIVED_X_TOKENS_YESTERDAY">
-        You earned {{notification.params.amount}} tokens yesterday.
+    <a target="_blank" routerLink="/wallet/tokens/contributions">
+      <p
+        i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_RECEIVED_X_TOKENS_YESTERDAY"
+      >
+        You earned {{ notification.params.amount }} tokens yesterday.
       </p>
     </a>
   </ng-template>
@@ -1739,25 +1738,21 @@
   </ng-template>
 
   <ng-template ngSwitchCase="rewards_state_increase">
-    <a
-      target="_blank"
-      routerLink="/wallet/tokens/contributions"
-    >
+    <a target="_blank" routerLink="/wallet/tokens/contributions">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__USER_STATE_INCREASE">
-        Congratulations! You just became a {{notification.params.state}} user.
-        We've increased your daily token reward multiplier to {{notification.params.reward_factor}}x
+        Congratulations! You just became a {{ notification.params.state }} user.
+        We've increased your daily token reward multiplier to
+        {{ notification.params.reward_factor }}x
       </p>
     </a>
   </ng-template>
 
   <ng-template ngSwitchCase="rewards_state_decrease">
-    <a
-      target="_blank"
-      routerLink="/wallet/tokens/contributions"
-    >
+    <a target="_blank" routerLink="/wallet/tokens/contributions">
       <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__USER_STATE_DECREASE">
-        We miss you! You just dropped down to a {{notification.params.state}} user.
-        Your daily token reward multiplier has been reduced to {{notification.params.reward_factor}}x
+        We miss you! You just dropped down to a
+        {{ notification.params.state }} user. Your daily token reward multiplier
+        has been reduced to {{ notification.params.reward_factor }}x
       </p>
     </a>
   </ng-template>

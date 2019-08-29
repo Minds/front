@@ -1,4 +1,9 @@
-import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+} from '@angular/core/testing';
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { WalletTokenContributionsChartComponent } from './chart.component';
 import { clientMock } from '../../../../../tests/client-mock.spec';
@@ -15,22 +20,18 @@ describe('WalletTokenContributionsChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        WalletTokenContributionsChartComponent,
-        TestHostComponent
-      ],
+      declarations: [WalletTokenContributionsChartComponent, TestHostComponent],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
         { provide: Router, useValue: RouterTestingModule },
         { provide: Session, useValue: sessionMock },
-      ]
-    })
-      .compileComponents();  // compile template and css
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -52,13 +53,19 @@ describe('WalletTokenContributionsChartComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should show chart', fakeAsync (() => {
-    expect(fixture.debugElement.query(By.css(`.m-token-contributions--chart`))).not.toBeNull();
+  it('should show chart', fakeAsync(() => {
+    expect(
+      fixture.debugElement.query(By.css(`.m-token-contributions--chart`))
+    ).not.toBeNull();
   }));
 
   @Component({
     selector: `host-component`,
-    template: `<m-wallet-token--chart [contributionValues]=this.contributionValues></m-wallet-token--chart>`
+    template: `
+      <m-wallet-token--chart
+        [contributionValues]="this.contributionValues"
+      ></m-wallet-token--chart>
+    `,
   })
   class TestHostComponent {
     contributionValues = {
@@ -69,7 +76,7 @@ describe('WalletTokenContributionsChartComponent', () => {
       referrals: 50,
       referrals_welcome: 50,
       checkin: 2,
-      jury_duty: 25
+      jury_duty: 25,
     };
   }
 });

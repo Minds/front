@@ -48,16 +48,16 @@ describe('NotificationsComponent', () => {
     fixture = TestBed.createComponent(NotificationComponent);
     comp = fixture.componentInstance;
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'group_activity',
-      'entityObj': {
-        'title': 'aaaaaaaaaaa'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'group_activity',
+      entityObj: {
+        title: 'aaaaaaaaaaa',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         group: {},
         time_created: 2222,
         bid: 10,
@@ -86,16 +86,16 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification queue add', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'group_queue_add',
-      'entityObj': {
-        'title': 'aaaaaaaaaaa'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'group_queue_add',
+      entityObj: {
+        title: 'aaaaaaaaaaa',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         group: {
           name: 'groupName',
         },
@@ -111,16 +111,16 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification queue approve', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'group_queue_approve',
-      'entityObj': {
-        'title': 'aaaaaaaaaaa'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'group_queue_approve',
+      entityObj: {
+        title: 'aaaaaaaaaaa',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         group: {
           name: 'groupName',
         },
@@ -136,16 +136,16 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification queue reject', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'group_queue_reject',
-      'entityObj': {
-        'title': 'aaaaaaaaaaa'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'group_queue_reject',
+      entityObj: {
+        title: 'aaaaaaaaaaa',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         group: {
           name: 'groupName',
         },
@@ -161,17 +161,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification remind', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'remind',
-      'entityObj': {
-        'type': 'object',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'remind',
+      entityObj: {
+        type: 'object',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -184,17 +184,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification remind, without title', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'remind',
-      'entityObj': {
-        'type': 'object',
-        'subtype': 'object',
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'remind',
+      entityObj: {
+        type: 'object',
+        subtype: 'object',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -207,17 +207,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification feature, with title', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'feature',
-      'entityObj': {
-        'type' : 'comment',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'feature',
+      entityObj: {
+        type: 'comment',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -230,17 +230,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification tag', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'tag',
-      'entityObj': {
-        'type' : 'something',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'tag',
+      entityObj: {
+        type: 'something',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -255,17 +255,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification tag', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'tag',
-      'entityObj': {
-        'type' : 'comment',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'tag',
+      entityObj: {
+        type: 'comment',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
         parent: {
@@ -283,17 +283,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification boost_submitted', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'boost_submitted',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'boost_submitted',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -306,17 +306,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification boost_submitted', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'boost_submitted',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'boost_submitted',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -329,17 +329,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification boost_submitted_p2p', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'boost_submitted_p2p',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'boost_submitted_p2p',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -352,17 +352,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification boost_request', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'boost_request',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'boost_request',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -375,17 +375,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification channel_monetized', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'channel_monetized',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'channel_monetized',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         bid: 10,
       },
@@ -400,17 +400,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification payout_accepted', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'payout_accepted',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'payout_accepted',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         amount: 10,
       },
@@ -425,17 +425,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification payout_declined', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'payout_declined',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'payout_declined',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         amount: 10,
       },
@@ -450,17 +450,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification rewards summary', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'rewards_summary',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'rewards_summary',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         amount: 10,
       },
@@ -468,22 +468,24 @@ describe('NotificationsComponent', () => {
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('You earned 10 tokens yesterday.');
+    expect(notification.nativeElement.innerHTML).toContain(
+      'You earned 10 tokens yesterday.'
+    );
   });
 
   it('Should load the notification rewards reminder', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'rewards_reminder',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'rewards_reminder',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         left: 'some time',
       },
@@ -498,17 +500,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification welcome_boost', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'welcome_boost',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'welcome_boost',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         amount: 10,
       },
@@ -523,17 +525,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification welcome_discover', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'welcome_discover',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'welcome_discover',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         amount: 10,
       },
@@ -546,17 +548,17 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification custom_message', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'custom_message',
-      'entityObj': {
-        'type' : 'activity',
-        'title': 'Title'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'custom_message',
+      entityObj: {
+        type: 'activity',
+        title: 'Title',
       },
-      'fromObj': {
-        name: 'name'
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         time_created: 2222,
         amount: 10,
         message: 'this is a mesage',
@@ -570,14 +572,14 @@ describe('NotificationsComponent', () => {
 
   it('Should load the notification rewards_state_increase', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'rewards_state_increase',
-      'entityObj': null,
-      'fromObj': {
-        name: 'name'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'rewards_state_increase',
+      entityObj: null,
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         user_guid: '998551699243143177',
         reference_date: 1563753600000,
         state: 'casual',
@@ -585,25 +587,27 @@ describe('NotificationsComponent', () => {
         activity_percentage: '0.29',
         reward_factor: 1.5,
         previous_reward_factor: 1,
-        state_change: 3
-      }
+        state_change: 3,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('Congratulations! You just became a casual user');
+    expect(notification.nativeElement.innerHTML).toContain(
+      'Congratulations! You just became a casual user'
+    );
   });
 
   it('Should load the notification rewards_state_decrease', () => {
     comp.notification = {
-      'type': 'notification',
-      'guid': '843204301747658770',
-      'notification_view': 'rewards_state_decrease',
-      'entityObj': null,
-      'fromObj': {
-        name: 'name'
+      type: 'notification',
+      guid: '843204301747658770',
+      notification_view: 'rewards_state_decrease',
+      entityObj: null,
+      fromObj: {
+        name: 'name',
       },
-      'params' : {
+      params: {
         user_guid: '998551699243143177',
         reference_date: 1563753600000,
         state: 'casual',
@@ -611,12 +615,14 @@ describe('NotificationsComponent', () => {
         activity_percentage: '0.29',
         reward_factor: 1.5,
         previous_reward_factor: 1,
-        state_change: -2
-      }
+        state_change: -2,
+      },
     };
     fixture.detectChanges();
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain('You just dropped down to a casual user');
+    expect(notification.nativeElement.innerHTML).toContain(
+      'You just dropped down to a casual user'
+    );
   });
 });

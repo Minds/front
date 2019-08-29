@@ -39,8 +39,8 @@ export class WalletTokenContributionsOverviewComponent
       referrals: null,
       referrals_welcome: null,
       checkin: null,
-      jury_duty: null
-    }
+      jury_duty: null,
+    },
   };
 
   protected updateTimer$;

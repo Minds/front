@@ -6,7 +6,9 @@
 
 <m-wallet-token--overview #overviewComponent></m-wallet-token--overview>
 
-<m-wallet-token--chart [contributionValues]=overviewComponent.overview.contributionValues></m-wallet-token--chart>
+<m-wallet-token--chart
+  [contributionValues]="overviewComponent.overview.contributionValues"
+></m-wallet-token--chart>
 
 <div class="m-token-contributions--ledger">
   <div class="m-token-contributions--ledger-filters m-border">

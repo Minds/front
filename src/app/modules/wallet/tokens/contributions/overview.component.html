@@ -49,12 +49,13 @@
       </div>
 
       <div class="m-token-contributions--overview--row">
-        <span i18n="@@WALLET__TOKENS__CONTRIBUTIONS__OVERVIEW__YOUR_MULTIPLIER">Reward Multiplier:</span>
+        <span i18n="@@WALLET__TOKENS__CONTRIBUTIONS__OVERVIEW__YOUR_MULTIPLIER"
+          >Reward Multiplier:</span
+        >
         <ng-container *ngIf="overview.yourRewardFactor !== null">
           {{ overview.yourRewardFactor | number }}x
         </ng-container>
       </div>
-
     </div>
   </div>
 </div>
