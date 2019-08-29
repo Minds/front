@@ -1,10 +1,13 @@
 .m-pro--channel-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  height: 100px;
+  text-align: center;
+  margin-bottom: 24px;
   color: var(--m-pro--text-color);
+
+  > * {
+    display: inline-block;
+    margin: 8px 16px;
+    vertical-align: middle;
+  }
 
   .m-pro--channel-footer--text {
     text-transform: uppercase;
@@ -14,7 +17,6 @@
   a {
     cursor: pointer;
     text-decoration: none;
-    padding: 0 16px;
 
     text-transform: uppercase;
     letter-spacing: 0.1em;
