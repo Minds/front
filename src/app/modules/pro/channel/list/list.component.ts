@@ -3,9 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { FeedsService } from "../../../../common/services/feeds.service";
 import { ProChannelService, RouterLinkToType } from '../channel.service';
-import { first } from "rxjs/operators";
 import { OverlayModalService } from "../../../../services/ux/overlay-modal";
-import { ProChannelListModal } from '../list-modal/list-modal.component';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -29,8 +27,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   period: string;
 
-  displaySeeMoreTile: boolean = false;
-
   selectedHashtag: string = 'all';
 
   constructor(
@@ -41,14 +37,9 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected cd: ChangeDetectorRef,
     protected injector: Injector,
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
-    this.listen();
-  }
-
-  private listen() {
     this.params$ = this.route.params.subscribe(params => {
       this.entities = [];
       if (params['type']) {
@@ -83,23 +74,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
       this.load(true);
     });
-
-    this.feedsService.feed.subscribe(async (entities) => {
-      if (!entities.length)
-        return;
-      for (const entity of entities) {
-        if (entity)
-          this.entities.push(await entity.pipe(first()).toPromise());
-      }
-
-      if (this.entities.length >= 10) {
-        this.displaySeeMoreTile = true;
-        this.entities = this.entities.slice(0, 9);
-      }
-
-      this.detectChanges();
-    });
-
   }
 
   ngOnDestroy() {
@@ -110,11 +84,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   async load(refresh: boolean = false) {
     if (refresh) {
-      this.entities = [];
       this.feedsService.clear();
     }
-
-    this.displaySeeMoreTile = false;
 
     this.detectChanges();
 
@@ -138,7 +109,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         .setEndpoint(url)
         .setParams(params)
         .setCastToActivities(false)
-        .setLimit(10)
+        .setLimit(12)
         .fetch();
 
     } catch (e) {
@@ -146,31 +117,20 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadNext() {
-    this.feedsService.loadMore();
+  get entities$() {
+    return this.feedsService.feed;
+  }
+
+  get hasMore$() {
+    return this.feedsService.hasMore;
   }
 
   get inProgress$() {
     return this.feedsService.inProgress;
   }
 
-  detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
-  }
-
-  seeMore() {
-    this.modalService
-      .create(ProChannelListModal, {
-          type: this.type,
-          algorithm: 'latest',
-          query: this.query,
-          hashtag: this.selectedHashtag
-        },
-        {
-          class: 'm-overlayModal--seeMore'
-        }, this.injector)
-      .present();
+  loadMore() {
+    this.feedsService.loadMore();
   }
 
   onTileClicked(entity: any) {
@@ -184,10 +144,15 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       params = { hashtag: tag };
     }
 
-    return this.router.navigate(this.channelService.getRouterLink(this.paramsType as RouterLinkToType, params))
+    return this.router.navigate(this.channelService.getRouterLink(this.paramsType as RouterLinkToType, params));
   }
 
   get shouldShowCategories() {
-    return this.paramsType !== 'groups' && this.paramsType !== 'feed';
+    return this.paramsType !== 'groups' && this.paramsType !== 'feed' && !this.query;
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

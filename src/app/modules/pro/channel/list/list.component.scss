@@ -71,21 +71,19 @@ m-pro--channel-list {
     color: var(--m-pro--text-color);
   }
 
-  .m-proChannelListContentList__seeMore {
+  .m-proChannelListContent__loadMore {
+    width: 100%;
+    font-size: 20px;
+    padding: 16px;
+    margin-top: 32px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 300;
     color: var(--m-pro--text-color);
     background-color: var(--m-pro--transparent-background-color);
 
-    font-size: 30px;
-    text-align: center;
-    vertical-align: middle;
+    &.m-proChannelListContent__noMore {
 
-    cursor: pointer;
-
-    min-height: 220px;
-
-    > span {
-      display: block;
-      width: 100%;
     }
   }
 
@@ -102,10 +100,6 @@ m-pro--channel-list {
       & > li {
         max-width: 500px;
         justify-self: center;
-
-        &.m-proChannelListContentList__seeMore {
-          width: 500px;
-        }
 
         minds-activity {
           min-width: 100%;
