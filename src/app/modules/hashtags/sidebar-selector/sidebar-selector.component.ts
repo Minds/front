@@ -45,7 +45,7 @@ export class SidebarSelectorComponent implements OnInit {
 
   ngOnInit() {
     let preferredState = this.storage.get('preferred_hashtag_state');
-    this.preferred = (preferredState === null) ? true : preferredState === '1';
+    this.preferred = preferredState === null ? true : preferredState === '1';
     this.init();
   }
 
@@ -70,7 +70,7 @@ export class SidebarSelectorComponent implements OnInit {
       console.error('SidebarSelector', e);
     }
     this.filterChange.emit({
-      type: this.preferred ? 'preferred' : 'all'
+      type: this.preferred ? 'preferred' : 'all',
     });
     this.loading = false;
     this.detectChanges();
