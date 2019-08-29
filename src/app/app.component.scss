@@ -98,6 +98,18 @@ m-app {
     width: 300px;
   }
 
+  .m-page__goBack {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-bottom: 8px;
+    @include m-theme() {
+      color: themed($m-grey-600);
+    }
+  }
+
   .m-page--sidebar--navigation--item {
     cursor: pointer;
     display: block;

@@ -1,8 +1,19 @@
 <div class="m-page">
   <div class="m-page--sidebar">
-    <m-wallet--balance-usd></m-wallet--balance-usd>
+    <m-wallet--balance-tokens></m-wallet--balance-tokens>
 
     <div class="m-page--sidebar--navigation">
+      <a
+        class="m-page__goBack"
+        routerLink="/wallet/tokens"
+        style="margin-top: 8px"
+      >
+        <i class="material-icons">
+          keyboard_arrow_left
+        </i>
+        <span>Back to the Token Wallet</span>
+      </a>
+
       <a
         class="m-page--sidebar--navigation--item"
         routerLink="/wallet/usd/earnings"
@@ -33,6 +44,12 @@
   </div>
 
   <div class="m-page--main">
+    <a class="m-page__goBack" routerLink="/wallet/tokens">
+      <i class="material-icons">
+        keyboard_arrow_left
+      </i>
+      <span>Back to the Token Wallet</span>
+    </a>
     <router-outlet></router-outlet>
   </div>
 </div>
