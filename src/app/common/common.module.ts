@@ -32,6 +32,7 @@ import {
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
 import { MindsRichEmbed } from './components/rich-embed/rich-embed';
+import { QRCodeComponent } from './components/qr-code/qr-code.component';
 
 import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
@@ -144,6 +145,7 @@ import { DndModule } from 'ngx-drag-drop';
     MindsRichEmbed,
     TagcloudComponent,
     DropdownComponent,
+    QRCodeComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -229,6 +231,7 @@ import { DndModule } from 'ngx-drag-drop';
     MindsRichEmbed,
     TagcloudComponent,
     DropdownComponent,
+    QRCodeComponent,
 
     AutoGrow,
     InlineAutoGrow,

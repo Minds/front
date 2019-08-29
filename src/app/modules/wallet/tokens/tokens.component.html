@@ -57,11 +57,20 @@
       </a>
       <a
         class="m-page--sidebar--navigation--item"
-        routerLink="/wallet/tokens/testnet"
+        routerLink="/wallet/usd"
         routerLinkActive="m-page--sidebar--navigation--item-active"
+        *mIfFeature="'wire-multi-currency'"
       >
-        <i class="material-icons">link</i>
-        <span i18n="@@WALLET__TOKENS__TESTNET_TOKENS">Testnet Tokens</span>
+        <i class="material-icons">attach_money</i>
+        <span i18n="@@WALLET__TOKENS__TESTNET_TOKENS">USD Console</span>
+      </a>
+      <a
+        class="m-page--sidebar--navigation--item"
+        (click)="openBtcSettingsModal()"
+        *mIfFeature="'wire-multi-currency'"
+      >
+        <i class="material-icons">settings</i>
+        <span i18n="@@WALLET__TOKENS__TESTNET_TOKENS">BTC Console</span>
       </a>
       <a
         class="m-page--sidebar--navigation--item"

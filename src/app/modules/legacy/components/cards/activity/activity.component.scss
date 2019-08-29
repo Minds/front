@@ -1,5 +1,6 @@
 .tabs .m-wire-button {
-  transform: scale(0.8) translateY(-4px);
+  //  transform: scale(0.8) translateY(-4px);
+  margin: -3px 0;
 }
 .m-pin-button {
   overflow: visible;
@@ -94,9 +95,9 @@ minds-activity {
     padding-left: 8px;
     margin: auto;
 
-    padding: 3px 0 3px 8px;
+    padding: 2px 0 2px 8px;
     font-size: 14px;
-    line-height: 9px;
+    line-height: 8px;
     border-radius: 3px;
     vertical-align: middle;
     display: flex;
@@ -124,7 +125,7 @@ minds-activity {
   }
 
   .m-activity--metrics-metric {
-    font-size: 10px;
+    font-size: 9px;
     display: inline-block;
     vertical-align: middle;
 
