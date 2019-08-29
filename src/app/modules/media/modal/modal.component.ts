@@ -9,6 +9,11 @@ import { AnalyticsService } from '../../../services/analytics';
 import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 
+export type MediaModalParams = {
+  redirectUrl?: string,
+  entity: any,
+};
+
 @Component({
   selector: 'm-media--modal',
   templateUrl: 'modal.component.html',
@@ -40,14 +45,17 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 
 export class MediaModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
+
   entity: any = {};
+  redirectUrl: string;
   isLoading: boolean = true;
   navigatedAway: boolean = false;
   fullscreenHovering: boolean = false; // Used for fullscreen button transformation
 
   isTablet: boolean = false;
   isFullscreen: boolean = false;
-  isVideo: boolean = false; // Otherwise it's an image
+  isVideo: boolean = false;
+  entityType: string;
 
   aspectRatio: number;
   modalWidth: number;
@@ -83,8 +91,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   routerSubscription: Subscription;
 
-  @Input('entity') set data(entity) {
-    this.entity = entity;
+  @Input('entity') set data(params: MediaModalParams) {
+    this.entity = params.entity;
+    this.redirectUrl = params.redirectUrl || null;
     this.entityWidth = 0;
     this.entityHeight = 0;
   }
@@ -139,13 +148,24 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isTablet = isMobileOrTablet() && Math.min(screen.width, screen.height) >= 768;
 
     this.isVideo = this.entity.custom_type === 'video';
+    this.entityType = this.entity.custom_type || this.getEntityType(this.entity);
 
-    this.analyticsService.send('pageview', {url: `/media/${this.entity.entity_guid}?ismodal=true`});
+    if (this.entityType === 'blog') {
+      this.isLoaded();
+    }
+
+    this.analyticsService.send('pageview', { url: `/media/${this.entity.entity_guid}?ismodal=true` });
 
     // * LOCATION & ROUTING * -----------------------------------------------------------------------------------
     // Change the url to point to media page so user can easily share link
     // (but don't actually redirect)
-    this.location.replaceState(`/media/${this.entity.entity_guid}`);
+    if (this.redirectUrl) {
+      this.location.replaceState(this.redirectUrl);
+    } else if (this.entityType === 'blog') {
+      this.location.replaceState(`/blog/${this.entity.slug}-${this.entity.guid}`);
+    } else {
+      this.location.replaceState(`/media/${this.entity.entity_guid}`);
+    }
 
     // When user clicks a link from inside the modal
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
@@ -167,10 +187,14 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     // * DIMENSION CALCULATIONS * ---------------------------------------------------------------------
 
-    if (!this.isVideo) {
+    if (!this.isVideo && this.entityType === 'image') {
       // Image
       this.entityWidth = this.entity.custom_data[0].width;
       this.entityHeight = this.entity.custom_data[0].height;
+      this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.entity_guid}/xlarge`;
+    } else if(this.entityType === 'blog') {
+      this.entityWidth = this.entity.custom_data[0].dimensions.width;
+      this.entityHeight = this.entity.custom_data[0].dimensions.height;
       this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.entity_guid}/xlarge`;
     } else {
       this.entityWidth = this.entity.custom_data.dimensions.width;
@@ -432,6 +456,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     if ( this.isTablet ) {
       this.showOverlaysOnTablet();
     }
+  }
+
+  getEntityType(entity: any) {
+    return entity.type === 'object' ? `${entity.type}:${entity.subtype}` : entity.type;
   }
 
   ngOnDestroy() {

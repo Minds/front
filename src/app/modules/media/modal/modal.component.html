@@ -21,9 +21,34 @@
 
         <!-- MEDIA STAGE -->
         <div class="m-mediaModal__stage">
+
+          <div class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--blog"
+               *ngIf="entityType === 'blog'"
+               [style.width]="mediaWidth + 'px'"
+               [style.height]="mediaHeight + 'px'"
+          >
+            <!--                [@slowFadeAnimation]="isLoading ? 'out' : 'in'" -->
+
+            <minds-banner [src]="entity.thumbnail_src" [object]="entity" *ngIf="entity.header_bg"></minds-banner>
+            <div class="mdl-grid" style="max-width:740px">
+              <div class="mdl-grid" style="width:100%">
+                <div class="mdl-cell mdl-cell--12-col">
+                  <h1 class="m-blog--title">{{entity.title}}</h1>
+                </div>
+              </div>
+
+              <div style="width:100%; padding:8px; position:relative;">
+                <div class="mdl-cell mdl-cell--12-col minds-blog-body"
+                     [innerHtml]="entity.description | safe"
+                     [hidden]="!entity.description"
+                ></div>
+              </div>
+            </div>
+          </div>
+
           <!-- MEDIA: IMAGE -->
           <div class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--image"
-            *ngIf="!isVideo"
+            *ngIf="!isVideo && entityType === 'image'"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
             [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
@@ -55,6 +80,7 @@
               [torrent]="[{ res: '360', key: entity.custom_data.guid + '/360.mp4' }]"
               (videoCanPlayThrough)="isLoaded()"
               [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+              #player
             >
               <video-ads [player]="player" *ngIf="entity.monetized"></video-ads>
             </m-video>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
-import { MediaModalComponent } from "../../../../media/modal/modal.component";
+import { MediaModalComponent, MediaModalParams } from "../../../../media/modal/modal.component";
 import { FeaturesService } from "../../../../../services/features.service";
 import { OverlayModalService } from "../../../../../services/ux/overlay-modal";
 import { Router } from "@angular/router";
@@ -61,10 +61,8 @@ export class ProTileComponent {
     switch (this.getType(this.entity)) {
       case 'object:image':
       case 'object:video':
-        this.showMediaModal();
-        break;
       case 'object:blog':
-        this.channelService.open(this.entity, this.modalService);
+        this.showMediaModal();
         break;
     }
   }
@@ -88,7 +86,13 @@ export class ProTileComponent {
 
       activity.modal_source_url = this.router.url;
 
-      this.modalService.create(MediaModalComponent, activity, {
+      const params: MediaModalParams = { entity: activity };
+
+      if (window.Minds.pro && this.getType(this.entity) === 'object:blog') {
+        params.redirectUrl = `/blog/${this.entity.slug}-${this.entity.guid}`;
+      }
+
+      this.modalService.create(MediaModalComponent, params, {
         class: 'm-overlayModal--media'
       }).present();
     } else {

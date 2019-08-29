@@ -5,7 +5,6 @@ import { Client } from '../../../services/api/client';
 import { EntitiesService } from '../../../common/services/entities.service';
 import normalizeUrn from '../../../helpers/normalize-urn';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { BlogView } from "../../blogs/view/view";
 import { Session } from '../../../services/session';
 import { ActivatedRoute } from '@angular/router';
 
@@ -179,9 +178,6 @@ export class ProChannelService {
     switch (this.getEntityTaxonomy(entity)) {
       case 'group':
         window.open(`${window.Minds.site_url}groups/profile/${entity.guid}`, '_blank');
-        break;
-      case 'object:blog':
-        modalServiceContext.create(BlogView, entity).present();
         break;
     }
   }

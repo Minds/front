@@ -187,7 +187,7 @@ export class Remind {
   openModal() {
     this.activity.modal_source_url = this.router.url;
 
-    this.overlayModal.create(MediaModalComponent, this.activity, {
+    this.overlayModal.create(MediaModalComponent, { entity: this.activity }, {
       class: 'm-overlayModal--media'
     }).present();
   }
