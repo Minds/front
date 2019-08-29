@@ -28,7 +28,10 @@
   ></m-sidebar--markers>
 </ng-container>
 
-<m-body [class.has-v2-navbar]="featuresService.has('top-feeds')">
+<m-body
+  [class.has-v2-navbar]="featuresService.has('top-feeds')"
+  [class.is-standalone]="this.standalone"
+>
   <m-announcement [id]="'blockchain:sale'" *ngIf="false">
     <span
       class="m-blockchain--wallet-address-notice--action"
@@ -50,7 +53,7 @@
 <m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>
 <m-modal--tos-updated *ngIf="session.isLoggedIn()"></m-modal--tos-updated>
 <m-juryDutySession__summons
-  *ngIf="session.isLoggedIn() && !minds.pro"
+  *ngIf="session.isLoggedIn() && !this.standalone"
 ></m-juryDutySession__summons>
 
 <m-modal-signup-on-scroll></m-modal-signup-on-scroll>
