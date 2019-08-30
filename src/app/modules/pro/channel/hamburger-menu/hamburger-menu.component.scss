@@ -50,11 +50,12 @@ m-pro__hamburger-menu {
         letter-spacing: 1px;
 
         &.m-pro__hamburger-menu-menu__logo {
+          height: 100px;
+
           > img {
             max-width: 200px;
             max-height: 100%;
             object-fit: contain;
-            margin-left: -4px;
           }
         }
 
