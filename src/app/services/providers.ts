@@ -43,6 +43,7 @@ import { FeedsService } from '../common/services/feeds.service';
 import { ThemeService } from '../common/services/theme.service';
 import { GlobalScrollService } from './ux/global-scroll.service';
 import { AuthService } from './auth.service';
+import { SiteService } from './site.service';
 
 export const MINDS_PROVIDERS: any[] = [
   {
@@ -224,4 +225,5 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [RendererFactory2, Client, Session, Storage],
   },
   AuthService,
+  SiteService,
 ];
