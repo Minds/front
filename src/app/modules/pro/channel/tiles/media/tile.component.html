@@ -29,6 +29,6 @@
   />
 </div>
 
-<div class="m-proChannelTile__text" *ngIf="getTitle() || getText()">
+<div class="m-proChannelTile__text" (click)="tileClicked()" *ngIf="getTitle() || getText()">
   <h2 [title]="getTitle()">{{ getTitle() }}</h2>
 </div>
