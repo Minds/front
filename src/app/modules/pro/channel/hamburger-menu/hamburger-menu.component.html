@@ -75,14 +75,16 @@
 
     <li class="m-pro__hamburger-menu-menu__spacer"></li>
 
-    <li *ngFor="let item of items">
-      <a
-        [class.m-pro__hamburger-menu-menu__item--active]="item.isActive()"
-        (click)="item.onClick(); closeMenu()"
-      >{{ item.label }}</a>
-    </li>
+    <ng-container *ngIf="items && items.length">
+      <li *ngFor="let item of items">
+        <a
+          [class.m-pro__hamburger-menu-menu__item--active]="item.isActive()"
+          (click)="item.onClick(); closeMenu()"
+        >{{ item.label }}</a>
+      </li>
 
-    <li class="m-pro__hamburger-menu-menu__spacer"></li>
+      <li class="m-pro__hamburger-menu-menu__spacer"></li>
+    </ng-container>
   </ul>
 
   <m-pro--channel-footer
