@@ -85,8 +85,12 @@ m-pro--channel-list {
       grid-template-columns: 100%;
 
       & > li {
-        max-width: 500px;
+        width: 500px;
         justify-self: center;
+
+        @media screen and (max-width: $min-tablet) {
+          width: 100%;
+        }
 
         minds-activity {
           min-width: 100%;
