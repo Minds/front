@@ -86,6 +86,7 @@ m-pro--channel {
       max-width: 200px;
       max-height: 100%;
       cursor: pointer;
+      object-fit: contain;
     }
 
     .m-proChannelTopbar__logo:focus {

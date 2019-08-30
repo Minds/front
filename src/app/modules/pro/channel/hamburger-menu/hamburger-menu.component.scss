@@ -51,8 +51,9 @@ m-pro__hamburger-menu {
 
         &.m-pro__hamburger-menu-menu__logo {
           > img {
-            width: auto;
-            height: 100px;
+            max-width: 200px;
+            max-height: 100%;
+            object-fit: contain;
             margin-left: -4px;
           }
         }

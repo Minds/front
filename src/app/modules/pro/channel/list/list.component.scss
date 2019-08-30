@@ -78,11 +78,11 @@ m-pro--channel-list {
     padding: 0;
 
     @media screen and (max-width: $max-mobile) {
-      grid-template-columns: 1fr;
+      grid-template-columns: 100%;
     }
 
     &.m-proChannelListContent__normalList {
-      grid-template-columns: 1fr;
+      grid-template-columns: 100%;
 
       & > li {
         max-width: 500px;

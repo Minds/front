@@ -56,7 +56,7 @@
     }
 
     @media screen and (max-width: $max-mobile) {
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: 100%;
 
       *:nth-child(1) {
         grid-column: initial;
@@ -68,7 +68,7 @@
     grid-template-columns: repeat(2, 1fr);
 
     @media screen and (max-width: $max-mobile) {
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: 100%;
     }
   }
 }
