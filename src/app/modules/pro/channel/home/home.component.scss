@@ -1,6 +1,10 @@
 .m-pro--channel-home {
   m-pro--channel--categories {
     margin: 16px 0 32px;
+
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
   }
 
   .m-pro--channel-home--section {

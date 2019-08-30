@@ -1,12 +1,12 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
+  Component, OnDestroy,
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ProChannelService } from '../channel.service';
+import { NavItems, ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
@@ -14,7 +14,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
   changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: 'home.component.html',
 })
-export class ProChannelHomeComponent implements OnInit {
+export class ProChannelHomeComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
 
   featuredContent: Array<any> = [];
@@ -35,6 +35,11 @@ export class ProChannelHomeComponent implements OnInit {
 
   ngOnInit() {
     this.load();
+    this.setMenuNavItems();
+  }
+
+  ngOnDestroy() {
+    this.channelService.destroyMenuNavItems();
   }
 
   async load() {
@@ -67,6 +72,18 @@ export class ProChannelHomeComponent implements OnInit {
 
     this.inProgress = false;
     this.detectChanges();
+  }
+
+  setMenuNavItems() {
+    const tags = this.channelService.currentChannel.pro_settings.tag_list.concat([]);
+    const navItems: Array<NavItems> = tags.map(tag => ({
+      label: tag.label,
+      onClick: () => {
+        this.navigateToCategory(tag.tag)
+      }
+    }));
+
+    this.channelService.pushMenuNavItems(navItems, true);
   }
 
   getCategoryRoute(tag) {

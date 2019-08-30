@@ -1,0 +1,78 @@
+<a
+  class="m-pro__hamburger-menu__trigger"
+  (click)="toggleMenu()"
+>
+  <i class="material-icons">menu</i>
+</a>
+
+<div class="m-pro__hamburger-menu__menu">
+  <a
+    class="m-pro__hamburger-menu__close"
+    (click)="closeMenu()"
+  >
+    <i class="material-icons">close</i>
+  </a>
+
+  <ul>
+    <li class="m-pro__hamburger-menu-menu__logo" *ngIf="channel">
+      <img
+        [src]="channel.pro_settings.logo_image"
+        [routerLink]="homeRouterLink"
+      />
+    </li>
+
+    <li>
+      <a
+        [routerLink]="feedRouterLink"
+        (click)="closeMenu()"
+        i18n
+      >Feed</a>
+    </li>
+
+    <li>
+      <a
+        [routerLink]="videosRouterLink"
+        (click)="closeMenu()"
+        i18n
+      >Videos</a>
+    </li>
+
+    <li>
+      <a
+        [routerLink]="imagesRouterLink"
+        (click)="closeMenu()"
+        i18n
+      >Images</a>
+    </li>
+
+    <li>
+      <a
+        [routerLink]="articlesRouterLink"
+        (click)="closeMenu()"
+        i18n
+      >Articles</a>
+    </li>
+
+    <li>
+      <a
+        [routerLink]="groupsRouterLink"
+        (click)="closeMenu()"
+        i18n
+      >Groups</a>
+    </li>
+
+    <li>
+      <a (click)="wire(); closeMenu()" routerLinkActive="active"
+      >Wire</a>
+    </li>
+
+    <li class="m-pro__hamburger-menu-menu__spacer"></li>
+
+    <li *ngFor="let item of items">
+      <a
+        (click)="item.onClick(); closeMenu()"
+      >{{ item.label }}</a>
+    </li>
+
+  </ul>
+</div>

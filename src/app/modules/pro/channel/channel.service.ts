@@ -7,6 +7,7 @@ import normalizeUrn from '../../../helpers/normalize-urn';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
 import { ActivatedRoute } from '@angular/router';
+import { WireCreatorComponent } from '../../wire/creator/creator.component';
 
 export type RouterLinkToType =
   | 'home'
@@ -19,6 +20,12 @@ export type RouterLinkToType =
   | 'donate'
   | 'login';
 
+
+export interface NavItems {
+  label: string;
+  onClick: () => void
+}
+
 @Injectable()
 export class ProChannelService {
   currentChannel: MindsUser;
@@ -27,11 +34,14 @@ export class ProChannelService {
 
   protected featuredContent: Array<any> | null;
 
+  protected menuNavItems: Array<NavItems> = [];
+
   constructor(
     protected client: Client,
     protected entitiesService: EntitiesService,
     protected session: Session,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected modalService: OverlayModalService,
   ) {}
 
   async load(id: string) {
@@ -263,5 +273,31 @@ export class ProChannelService {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  wire() {
+    this.modalService
+      .create(WireCreatorComponent, this.currentChannel, {
+        onComplete: () => {},
+      })
+      .present();
+  }
+
+  pushMenuNavItems(navItems: Array<NavItems>, clean?: boolean) {
+    if (clean) {
+      this.destroyMenuNavItems();
+    }
+
+    this.menuNavItems = this.menuNavItems.concat(navItems);
+    return this;
+  }
+
+  destroyMenuNavItems() {
+    this.menuNavItems = [];
+    return this;
+  }
+
+  getMenuNavItems(): Array<NavItems> {
+    return this.menuNavItems;
   }
 }

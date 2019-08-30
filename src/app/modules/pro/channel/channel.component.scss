@@ -13,6 +13,12 @@ m-pro--channel {
   background-blend-mode: overlay;
   background-color: var(--m-pro--transparent-background-color) !important;
 
+  m-pro__hamburger-menu {
+    @media screen and (min-width: ($max-mobile + 1px)) {
+      display: none;
+    }
+  }
+
   m-blog-view.m-blog {
     color: var(--m-pro--text-color);
 
@@ -42,7 +48,7 @@ m-pro--channel {
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: $max-mobile) {
   .m-pro--channel {
     .m-proChannelTopbar__SearchBox {
       display: none;
@@ -149,41 +155,6 @@ m-pro--channel {
       }
     }
 
-    .m-proChannelTopbar_menu.m-dropdown {
-      display: inline-block;
-      position: relative;
-      cursor: pointer;
-
-      @media screen and (min-width: 1000px) {
-        display: none;
-      }
-
-      .m-proChannelTopbarMenu__dropdown {
-        list-style: none;
-        margin: 34px 0 0;
-        @include m-theme() {
-          background-color: themed($m-white);
-          color: themed($m-grey-700);
-        }
-
-        li.proChannelTopbarMenuDropdown__item {
-          &:hover {
-            @include m-theme() {
-              background-color: rgba(themed('m-grey-50'), 0.5);
-            }
-          }
-
-          a {
-            color: #555 !important;
-          }
-
-          i {
-            color: #555 !important;
-          }
-        }
-      }
-    }
-
     .m-proChannelTopbar__subscribe {
       appearance: none;
       font-size: 12px;
@@ -234,6 +205,11 @@ m-pro--channel {
     grid-row: 2 / span 1;
     grid-column: 1 / span 12;
     padding: 0 32px;
+
+    @media screen and (max-width: $max-mobile) {
+      grid-row: 2 / span 2;
+      margin-bottom: 24px;
+    }
   }
 
   .m-proChannel__footer {
@@ -242,13 +218,8 @@ m-pro--channel {
     width: 80%;
     margin: 0 auto;
 
-    @media screen and (max-width: 480px) {
-      margin-top: 8px;
-      margin-bottom: 8px;
-
-      .m-pro--channel-footer > * {
-        padding: 4px;
-      }
+    @media screen and (max-width: $max-mobile) {
+      display: none;
     }
   }
 

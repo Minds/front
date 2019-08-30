@@ -9,7 +9,7 @@ m-pro--channel-list {
     margin: 16px 0 32px;
 
     @media screen and (max-width: $max-mobile) {
-      margin: 8px;
+      display: none;
     }
   }
 

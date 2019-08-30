@@ -9,7 +9,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FeedsService } from '../../../../common/services/feeds.service';
-import { ProChannelService, RouterLinkToType } from '../channel.service';
+import { NavItems, ProChannelService, RouterLinkToType } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
@@ -79,6 +79,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.selectedHashtag = params['hashtag'] || 'all';
 
       this.load(true);
+      this.setMenuNavItems();
     });
   }
 
@@ -86,6 +87,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     if (this.params$) {
       this.params$.unsubscribe();
     }
+
+    this.channelService.destroyMenuNavItems();
   }
 
   async load(refresh: boolean = false) {
@@ -120,6 +123,18 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     } catch (e) {
       console.error('ProChannelListComponent.load', e);
     }
+  }
+
+  setMenuNavItems() {
+    const tags = this.channelService.currentChannel.pro_settings.tag_list.concat([]);
+    const navItems: Array<NavItems> = tags.map(tag => ({
+      label: tag.label,
+      onClick: () => {
+        this.selectHashtag(tag.tag)
+      }
+    }));
+
+    this.channelService.pushMenuNavItems(navItems, true);
   }
 
   get entities$() {

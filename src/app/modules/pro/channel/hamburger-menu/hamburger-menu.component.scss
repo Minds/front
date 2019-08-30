@@ -1,0 +1,81 @@
+m-pro__hamburger-menu {
+  position: relative;
+
+  .m-pro__hamburger-menu__menu {
+    right: -110%;
+    visibility: hidden;
+
+    position: fixed;
+    width: 95vw;
+    z-index: 999999999;
+    top: 0;
+    bottom: 0;
+    background: var(--m-pro--plain-background-color);
+    color: var(--m-pro--text-color);
+    box-sizing: border-box;
+    transition: right 0.3s ease-in;
+
+    body.hamburger-menu--open & {
+      right: 0;
+      visibility: visible;
+    }
+
+    .m-pro__hamburger-menu__close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      padding: 8px;
+      z-index: 9999;
+    }
+
+    > ul {
+      position: absolute;
+      padding: 0 16px 16px;
+      list-style: none;
+      margin: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      box-sizing: border-box;
+
+      > li {
+        margin: 0;
+        padding: 0;
+        display: block;
+        font-size: 18px;
+        line-height: 1.25;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 1px;
+
+        &.m-pro__hamburger-menu-menu__logo {
+          > img {
+            width: auto;
+            height: 100px;
+            margin-left: -4px;
+          }
+        }
+
+        &.m-pro__hamburger-menu-menu__spacer {
+          height: 0;
+          border-top: 1px solid var(--m-pro--text-color);
+          margin: 16px 0;
+        }
+
+        > a {
+          font: inherit;
+          text-decoration: none;
+          padding: 12px 0;
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+body.hamburger-menu--open {
+  overflow: hidden;
+}

@@ -29,6 +29,7 @@ import { MediaEditComponent } from "../media/edit/edit.component";
 import { BlogViewInfinite } from "../blogs/view/infinite";
 import { BlogEdit } from "../blogs/edit/edit";
 import { CanDeactivateGuardService } from "../../services/can-deactivate-guard";
+import { ProHamburgerMenu } from './channel/hamburger-menu/hamburger-menu.component';
 
 const routes: Routes = [
   {
@@ -142,6 +143,7 @@ export const STANDALONE_ROUTES = [
     ProChannelFooterComponent,
     ProGroupTileComponent,
     ProUnsubscribeModalComponent,
+    ProHamburgerMenu,
   ],
   exports: [ProChannelComponent],
   entryComponents: [

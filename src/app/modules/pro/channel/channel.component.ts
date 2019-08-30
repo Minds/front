@@ -22,7 +22,6 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ProUnsubscribeModalComponent } from './unsubscribe-modal/modal.component';
 import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
-import { WireCreatorComponent } from '../../wire/creator/creator.component';
 
 @Component({
   providers: [ProChannelService, OverlayModalService],
@@ -46,8 +45,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   collapseNavItems: boolean;
 
   params$: Subscription;
-
-  isMenuOpen: boolean = false;
 
   channel$: Subscription;
 
@@ -247,11 +244,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   wire() {
-    this.modalService
-      .create(WireCreatorComponent, this.channelService.currentChannel, {
-        onComplete: () => {},
-      })
-      .present();
+    this.channelService.wire();
   }
 
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
@@ -272,14 +265,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostListener('window:resize') onResize() {
     this.collapseNavItems = window.innerWidth <= 992;
-  }
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
-  closeMenu() {
-    this.isMenuOpen = false;
   }
 
   search(): Promise<boolean> {
