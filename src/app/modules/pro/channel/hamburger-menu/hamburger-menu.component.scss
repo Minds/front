@@ -77,9 +77,13 @@ m-pro__hamburger-menu {
     }
   }
 
-  m-pro--channel-footer {
+  .m-pro--channel-footer {
     display: block;
     padding: 0 16px;
+
+    .m-pro--channel-footer__social-items {
+      margin: 16px 0;
+    }
   }
 }
 

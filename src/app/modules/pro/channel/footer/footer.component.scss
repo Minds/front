@@ -3,10 +3,15 @@
   margin-bottom: 24px;
   color: var(--m-pro--text-color);
 
-  > * {
+  .m-pro--channel-footer__items > * {
     display: inline-block;
     margin: 8px 16px;
     vertical-align: middle;
+  }
+
+  .m-pro--channel-footer__social-items {
+    margin-bottom: 8px;
+    font-size: 1.5em;
   }
 
   .m-pro--channel-footer--text {

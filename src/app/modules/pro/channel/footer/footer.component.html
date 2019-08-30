@@ -1,40 +1,49 @@
 <div class="m-pro--channel-footer">
-  <span class="m-pro--channel-footer--text">{{ footerText }}</span>
 
-  <span *ngFor="let profile of footerSocialProfiles">
+  <div class="m-pro--channel-footer__items">
     <a
-      *ngIf="profile.key && profile.value"
-      [href]="getSocialProfileURL(profile.value)"
-      rel="noopener noreferrer"
-      target="_blank"
-      ><i [ngClass]="[getSocialProfileIconClass(profile)]"></i
-    ></a>
-  </span>
+      *ngFor="let link of footerLinks"
+      class="m-pro--channel-footer--link"
+      [href]="link.href"
+    >
+      {{ link.title }}
+    </a>
 
-  <a
-    *ngFor="let link of footerLinks"
-    class="m-pro--channel-footer--link"
-    [href]="link.href"
-    >{{ link.title }}</a
-  >
+    <ng-container *ngIf="currentUser">
+      <ng-container *ngIf="isStandalone">
+        <a
+          class="m-pro--channel-footer--link"
+          [href]="viewProfileHref"
+          target="_blank"
+          i18n
+        >
+          @{{ currentUsername }}
+        </a>
 
-  <ng-container *ngIf="currentUser">
-    <ng-container *ngIf="isStandalone">
+        <a class="m-pro--channel-footer--link" (click)="logout()" i18n>Logout</a>
+      </ng-container>
+
+      <ng-container *ngIf="!isOwner">
+        <span style="position: relative">
+          <minds-button-user-dropdown [user]="user"></minds-button-user-dropdown>
+        </span>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <div class="m-pro--channel-footer__items m-pro--channel-footer__social-items">
+    <span *ngFor="let profile of footerSocialProfiles">
       <a
-        class="m-pro--channel-footer--link"
-        [href]="viewProfileHref"
+        *ngIf="profile.key && profile.value"
+        [href]="getSocialProfileURL(profile.value)"
+        rel="noopener noreferrer"
         target="_blank"
-        i18n
-        >@{{ currentUsername }}</a
-      >
+        ><i [ngClass]="[getSocialProfileIconClass(profile)]"></i
+      ></a>
+    </span>
+  </div>
 
-      <a class="m-pro--channel-footer--link" (click)="logout()" i18n>Logout</a>
-    </ng-container>
-
-    <ng-container *ngIf="!isOwner">
-      <span style="position: relative">
-        <minds-button-user-dropdown [user]="user"></minds-button-user-dropdown>
-      </span>
-    </ng-container>
-  </ng-container>
+  <div class="m-pro--channel-footer__static">
+    <span class="m-pro--channel-footer--text">{{ footerText }}</span>
+  </div>
 </div>
