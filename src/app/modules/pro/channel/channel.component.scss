@@ -11,7 +11,7 @@ m-pro--channel {
   background: none no-repeat center fixed;
   background-size: cover;
   background-blend-mode: overlay;
-  background-color: var(--m-pro--transparent-background-color);
+  background-color: var(--m-pro--transparent-background-color) !important;
 
   m-blog-view.m-blog {
     color: var(--m-pro--text-color);
