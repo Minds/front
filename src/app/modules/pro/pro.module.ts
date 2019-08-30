@@ -29,6 +29,8 @@ import { MediaEditComponent } from "../media/edit/edit.component";
 import { BlogViewInfinite } from "../blogs/view/infinite";
 import { BlogEdit } from "../blogs/edit/edit";
 import { CanDeactivateGuardService } from "../../services/can-deactivate-guard";
+import { ForgotPasswordComponent } from "../auth/forgot-password/forgot-password.component";
+import { AuthModule } from "../auth/auth.module";
 import { ProHamburgerMenu } from './channel/hamburger-menu/hamburger-menu.component';
 
 const routes: Routes = [
@@ -56,6 +58,10 @@ const routes: Routes = [
             component: ProChannelLoginComponent,
           },
           {
+            path: 'forgot-password',
+            component: ForgotPasswordComponent,
+          },
+          {
             path: ':type',
             component: ProChannelListComponent,
           },
@@ -77,6 +83,10 @@ export const STANDALONE_ROUTES = [
       {
         path: 'login',
         component: ProChannelLoginComponent,
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
       },
       {
         path: ':type',
@@ -128,6 +138,7 @@ export const STANDALONE_ROUTES = [
     LegacyModule,
     WireModule,
     VideoModule,
+    AuthModule,
   ],
   providers: [ProService],
   declarations: [
