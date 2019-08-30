@@ -132,10 +132,12 @@ m-pro--channel-login {
     flex: 1;
     margin-left: 16px;
     z-index: 2;
+    min-width: 480px;
 
     @media screen and (max-width: 1000px) {
       flex-basis: 100%;
       margin-left: 0;
+      min-width: initial;
     }
 
     .m-proChannelLogin--subtext {
