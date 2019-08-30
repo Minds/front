@@ -205,7 +205,7 @@ m-pro--channel {
   .m-proChannel__body {
     grid-row: 2 / span 1;
     grid-column: 1 / span 12;
-    padding: 0 32px;
+    padding: 0;
 
     @media screen and (max-width: $max-mobile) {
       grid-row: 2 / span 2;
