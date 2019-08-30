@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "preinstall": "git config core.hooksPath .githooks",
+    "preinstall": "git config core.hooksPath .git/hooks/",
     "prebuild": "gulp build.sass",
     "build": "ng build --prod",
     "prebuild-dev": "gulp build.sass --deploy-url=http://localhost/en",
@@ -85,8 +85,8 @@
   },
   "husky": {
     "hooks": {
-        "pre-commit": "pretty-quick --staged && ng lint && ng test",
-        "pre-push": "ng build --aot true"
+      "pre-commit": ".githooks/pre-commit && pretty-quick --staged",
+      "pre-push": "ng build --aot true"
     }
   }
 }
