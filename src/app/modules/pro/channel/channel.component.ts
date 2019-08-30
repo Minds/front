@@ -264,7 +264,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:resize') onResize() {
-    this.collapseNavItems = window.innerWidth <= 992;
+    this.collapseNavItems = window.innerWidth <= 768;
   }
 
   search(): Promise<boolean> {
