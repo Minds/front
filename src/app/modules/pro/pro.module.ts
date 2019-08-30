@@ -89,41 +89,40 @@ export const STANDALONE_ROUTES = [
         component: ForgotPasswordComponent,
       },
       {
+        path: 'newsfeed/:guid',
+        component: NewsfeedSingleComponent,
+      },
+      {
+        path: 'media/:guid',
+        component: MediaViewComponent,
+      },
+      {
+        path: 'media/edit/:guid',
+        component: MediaEditComponent
+      },
+      {
+        path: 'blog/view/:guid/:title',
+        component: BlogViewInfinite
+      },
+      {
+        path: 'blog/view/:guid',
+        component: BlogViewInfinite
+      },
+      {
+        path: 'blog/edit/:guid',
+        component: BlogEdit,
+        canDeactivate: [CanDeactivateGuardService],
+      },
+      {
+        path: 'blog/:slugid',
+        component: BlogViewInfinite
+      },
+      {
         path: ':type',
         component: ProChannelListComponent,
       },
     ],
-  },
-  {
-    path: 'newsfeed/:guid',
-    component: NewsfeedSingleComponent,
-  },
-  {
-    path: 'media/:guid',
-    component: MediaViewComponent,
-  },
-  {
-    path: 'media/edit/:guid',
-    component: MediaEditComponent
-  },
-  {
-    path: 'blog/view/:guid/:title',
-    component: BlogViewInfinite
-  },
-  {
-    path: 'blog/view/:guid',
-    component: BlogViewInfinite
-  },
-  {
-    path: 'blog/edit/:guid',
-    component: BlogEdit,
-    canDeactivate: [CanDeactivateGuardService],
-  },
-  {
-    path: 'blog/:slugid',
-    component: BlogViewInfinite
-  },
-
+  }
 ];
 
 @NgModule({
