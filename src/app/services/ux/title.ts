@@ -10,13 +10,17 @@ export class MindsTitle {
     return new MindsTitle(title);
   }
 
-  constructor(public title: Title) {}
+  constructor(public title: Title) {
+    if (window.Minds.pro) {
+      this.default_title = '';
+    }
+  }
 
   setTitle(value: string, join = true) {
     let title;
 
     if (value && join) {
-      title = [value, this.default_title].join(this.sep);
+      title = [value, this.default_title].filter(fragment => Boolean(fragment)).join(this.sep);
     } else if (value) {
       title = value;
     } else {
