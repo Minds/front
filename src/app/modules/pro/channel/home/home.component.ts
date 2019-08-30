@@ -80,7 +80,10 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
       label: tag.label,
       onClick: () => {
         this.navigateToCategory(tag.tag)
-      }
+      },
+      isActive: () => {
+        return false;
+      },
     }));
 
     this.channelService.pushMenuNavItems(navItems, true);

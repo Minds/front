@@ -127,11 +127,17 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   setMenuNavItems() {
     const tags = this.channelService.currentChannel.pro_settings.tag_list.concat([]);
+
+    tags.unshift({ label: 'All', tag: 'all', selected: false });
+
     const navItems: Array<NavItems> = tags.map(tag => ({
       label: tag.label,
       onClick: () => {
         this.selectHashtag(tag.tag)
-      }
+      },
+      isActive: () => {
+        return this.selectedHashtag === tag.tag;
+      },
     }));
 
     this.channelService.pushMenuNavItems(navItems, true);

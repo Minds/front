@@ -23,7 +23,8 @@ export type RouterLinkToType =
 
 export interface NavItems {
   label: string;
-  onClick: () => void
+  onClick: () => void;
+  isActive: () => boolean;
 }
 
 @Injectable()

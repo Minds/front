@@ -16,14 +16,15 @@
   <ul>
     <li class="m-pro__hamburger-menu-menu__logo" *ngIf="channel">
       <img
-        [src]="channel.pro_settings.logo_image"
         [routerLink]="homeRouterLink"
+        [src]="channel.pro_settings.logo_image"
       />
     </li>
 
     <li>
       <a
         [routerLink]="feedRouterLink"
+        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
       >Feed</a>
@@ -32,6 +33,7 @@
     <li>
       <a
         [routerLink]="videosRouterLink"
+        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
       >Videos</a>
@@ -40,6 +42,7 @@
     <li>
       <a
         [routerLink]="imagesRouterLink"
+        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
       >Images</a>
@@ -48,6 +51,7 @@
     <li>
       <a
         [routerLink]="articlesRouterLink"
+        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
       >Articles</a>
@@ -56,23 +60,31 @@
     <li>
       <a
         [routerLink]="groupsRouterLink"
+        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
       >Groups</a>
     </li>
 
     <li>
-      <a (click)="wire(); closeMenu()" routerLinkActive="active"
-      >Wire</a>
+      <a (click)="wire(); closeMenu()">
+        Wire
+      </a>
     </li>
 
     <li class="m-pro__hamburger-menu-menu__spacer"></li>
 
     <li *ngFor="let item of items">
       <a
+        [class.m-pro__hamburger-menu-menu__item--active]="item.isActive()"
         (click)="item.onClick(); closeMenu()"
       >{{ item.label }}</a>
     </li>
 
+    <li class="m-pro__hamburger-menu-menu__spacer"></li>
   </ul>
+
+  <m-pro--channel-footer
+    (click)="closeMenu()"
+  ></m-pro--channel-footer>
 </div>
