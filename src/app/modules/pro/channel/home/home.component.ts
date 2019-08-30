@@ -1,7 +1,8 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, OnDestroy,
+  Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -75,11 +76,13 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
   }
 
   setMenuNavItems() {
-    const tags = this.channelService.currentChannel.pro_settings.tag_list.concat([]);
+    const tags = this.channelService.currentChannel.pro_settings.tag_list.concat(
+      []
+    );
     const navItems: Array<NavItems> = tags.map(tag => ({
       label: tag.label,
       onClick: () => {
-        this.navigateToCategory(tag.tag)
+        this.navigateToCategory(tag.tag);
       },
       isActive: () => {
         return false;

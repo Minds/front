@@ -41,9 +41,7 @@ const routes: Routes = [
     RegisterComponent,
     ForgotPasswordComponent,
   ],
-  exports: [
-    ForgotPasswordComponent,
-  ],
+  exports: [ForgotPasswordComponent],
   entryComponents: [
     LoginComponent,
     LogoutComponent,

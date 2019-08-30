@@ -20,7 +20,6 @@ export type RouterLinkToType =
   | 'donate'
   | 'login';
 
-
 export interface NavItems {
   label: string;
   onClick: () => void;
@@ -42,7 +41,7 @@ export class ProChannelService {
     protected entitiesService: EntitiesService,
     protected session: Session,
     protected route: ActivatedRoute,
-    protected modalService: OverlayModalService,
+    protected modalService: OverlayModalService
   ) {}
 
   async load(id: string) {

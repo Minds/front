@@ -23,14 +23,14 @@ import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.
 import { ProCategoriesComponent } from './channel/categories/categories.component';
 import { BlogView } from '../blogs/view/view';
 import { MediaModalComponent } from '../media/modal/modal.component';
-import { NewsfeedSingleComponent } from "../newsfeed/single/single.component";
-import { MediaViewComponent } from "../media/view/view.component";
-import { MediaEditComponent } from "../media/edit/edit.component";
-import { BlogViewInfinite } from "../blogs/view/infinite";
-import { BlogEdit } from "../blogs/edit/edit";
-import { CanDeactivateGuardService } from "../../services/can-deactivate-guard";
-import { ForgotPasswordComponent } from "../auth/forgot-password/forgot-password.component";
-import { AuthModule } from "../auth/auth.module";
+import { NewsfeedSingleComponent } from '../newsfeed/single/single.component';
+import { MediaViewComponent } from '../media/view/view.component';
+import { MediaEditComponent } from '../media/edit/edit.component';
+import { BlogViewInfinite } from '../blogs/view/infinite';
+import { BlogEdit } from '../blogs/edit/edit';
+import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
+import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password.component';
+import { AuthModule } from '../auth/auth.module';
 import { ProHamburgerMenu } from './channel/hamburger-menu/hamburger-menu.component';
 
 const routes: Routes = [
@@ -98,15 +98,15 @@ export const STANDALONE_ROUTES = [
       },
       {
         path: 'media/edit/:guid',
-        component: MediaEditComponent
+        component: MediaEditComponent,
       },
       {
         path: 'blog/view/:guid/:title',
-        component: BlogViewInfinite
+        component: BlogViewInfinite,
       },
       {
         path: 'blog/view/:guid',
-        component: BlogViewInfinite
+        component: BlogViewInfinite,
       },
       {
         path: 'blog/edit/:guid',
@@ -115,14 +115,14 @@ export const STANDALONE_ROUTES = [
       },
       {
         path: 'blog/:slugid',
-        component: BlogViewInfinite
+        component: BlogViewInfinite,
       },
       {
         path: ':type',
         component: ProChannelListComponent,
       },
     ],
-  }
+  },
 ];
 
 @NgModule({
@@ -162,5 +162,4 @@ export const STANDALONE_ROUTES = [
     BlogView,
   ],
 })
-export class ProModule {
-}
+export class ProModule {}

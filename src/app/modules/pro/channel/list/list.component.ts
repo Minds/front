@@ -9,7 +9,11 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FeedsService } from '../../../../common/services/feeds.service';
-import { NavItems, ProChannelService, RouterLinkToType } from '../channel.service';
+import {
+  NavItems,
+  ProChannelService,
+  RouterLinkToType,
+} from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
@@ -126,14 +130,16 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   }
 
   setMenuNavItems() {
-    const tags = this.channelService.currentChannel.pro_settings.tag_list.concat([]);
+    const tags = this.channelService.currentChannel.pro_settings.tag_list.concat(
+      []
+    );
 
     tags.unshift({ label: 'All', tag: 'all', selected: false });
 
     const navItems: Array<NavItems> = tags.map(tag => ({
       label: tag.label,
       onClick: () => {
-        this.selectHashtag(tag.tag)
+        this.selectHashtag(tag.tag);
       },
       isActive: () => {
         return this.selectedHashtag === tag.tag;

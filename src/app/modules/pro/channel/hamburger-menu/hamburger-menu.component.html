@@ -1,15 +1,9 @@
-<a
-  class="m-pro__hamburger-menu__trigger"
-  (click)="toggleMenu()"
->
+<a class="m-pro__hamburger-menu__trigger" (click)="toggleMenu()">
   <i class="material-icons">menu</i>
 </a>
 
 <div class="m-pro__hamburger-menu__menu">
-  <a
-    class="m-pro__hamburger-menu__close"
-    (click)="closeMenu()"
-  >
+  <a class="m-pro__hamburger-menu__close" (click)="closeMenu()">
     <i class="material-icons">close</i>
   </a>
 
@@ -28,7 +22,8 @@
         routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
-      >Feed</a>
+        >Feed</a
+      >
     </li>
 
     <li>
@@ -37,7 +32,8 @@
         routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
-      >Videos</a>
+        >Videos</a
+      >
     </li>
 
     <li>
@@ -46,7 +42,8 @@
         routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
-      >Images</a>
+        >Images</a
+      >
     </li>
 
     <li>
@@ -55,7 +52,8 @@
         routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
-      >Articles</a>
+        >Articles</a
+      >
     </li>
 
     <li>
@@ -64,7 +62,8 @@
         routerLinkActive="m-pro__hamburger-menu-menu__item--active"
         (click)="closeMenu()"
         i18n
-      >Groups</a>
+        >Groups</a
+      >
     </li>
 
     <li>
@@ -80,14 +79,13 @@
         <a
           [class.m-pro__hamburger-menu-menu__item--active]="item.isActive()"
           (click)="item.onClick(); closeMenu()"
-        >{{ item.label }}</a>
+          >{{ item.label }}</a
+        >
       </li>
 
       <li class="m-pro__hamburger-menu-menu__spacer"></li>
     </ng-container>
   </ul>
 
-  <m-pro--channel-footer
-    (click)="closeMenu()"
-  ></m-pro--channel-footer>
+  <m-pro--channel-footer (click)="closeMenu()"></m-pro--channel-footer>
 </div>

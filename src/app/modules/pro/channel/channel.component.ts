@@ -260,7 +260,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       return '';
     }
 
-    return `m-theme--wrapper m-theme--wrapper__${this.channel.pro_settings.scheme || 'light'}`;
+    return `m-theme--wrapper m-theme--wrapper__${this.channel.pro_settings
+      .scheme || 'light'}`;
   }
 
   @HostListener('window:resize') onResize() {

@@ -4,12 +4,10 @@ import { ProChannelService } from '../channel.service';
 @Component({
   selector: 'm-pro__hamburger-menu',
   templateUrl: 'hamburger-menu.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProHamburgerMenu {
-  constructor(
-    protected service: ProChannelService
-  ) { }
+  constructor(protected service: ProChannelService) {}
 
   toggleMenu() {
     if (document.body) {
@@ -22,7 +20,10 @@ export class ProHamburgerMenu {
   }
 
   closeMenu() {
-    if (document.body && document.body.classList.contains('hamburger-menu--open')) {
+    if (
+      document.body &&
+      document.body.classList.contains('hamburger-menu--open')
+    ) {
       document.body.classList.remove('hamburger-menu--open');
     }
   }

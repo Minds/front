@@ -20,7 +20,9 @@ export class MindsTitle {
     let title;
 
     if (value && join) {
-      title = [value, this.default_title].filter(fragment => Boolean(fragment)).join(this.sep);
+      title = [value, this.default_title]
+        .filter(fragment => Boolean(fragment))
+        .join(this.sep);
     } else if (value) {
       title = value;
     } else {

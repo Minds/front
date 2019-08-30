@@ -1,5 +1,4 @@
 <div class="m-pro--channel-footer">
-
   <div class="m-pro--channel-footer__items">
     <a
       *ngFor="let link of footerLinks"
@@ -20,12 +19,16 @@
           @{{ currentUsername }}
         </a>
 
-        <a class="m-pro--channel-footer--link" (click)="logout()" i18n>Logout</a>
+        <a class="m-pro--channel-footer--link" (click)="logout()" i18n
+          >Logout</a
+        >
       </ng-container>
 
       <ng-container *ngIf="!isOwner">
         <span style="position: relative">
-          <minds-button-user-dropdown [user]="user"></minds-button-user-dropdown>
+          <minds-button-user-dropdown
+            [user]="user"
+          ></minds-button-user-dropdown>
         </span>
       </ng-container>
     </ng-container>
