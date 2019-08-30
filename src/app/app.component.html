@@ -56,7 +56,7 @@
   *ngIf="session.isLoggedIn() && !this.standalone"
 ></m-juryDutySession__summons>
 
-<m-modal-signup-on-scroll></m-modal-signup-on-scroll>
+<m-modal-signup-on-scroll *ngIf="!this.standalone"></m-modal-signup-on-scroll>
 
 <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
 
