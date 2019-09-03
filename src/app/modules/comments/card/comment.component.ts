@@ -8,6 +8,8 @@ import {
   ChangeDetectionStrategy,
   OnChanges,
   Input,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
@@ -21,6 +23,11 @@ import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { FeaturesService } from '../../../services/features.service';
+import { MindsVideoComponent } from '../../media/components/video/video.component';
+import { MediaModalComponent } from '../../media/modal/modal.component';
+import isMobile from '../../../helpers/is-mobile';
 
 @Component({
   moduleId: module.id,
@@ -73,6 +80,11 @@ export class CommentComponent implements OnChanges {
   translationInProgress: boolean;
   translateToggle: boolean = false;
   commentAge$: Observable<number>;
+
+  videoDimensions: Array<any> = null;
+  @ViewChild('player', { static: false }) player: MindsVideoComponent;
+  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+
   @Input() canEdit: boolean = false;
 
   @Output() onReply = new EventEmitter();
@@ -84,7 +96,9 @@ export class CommentComponent implements OnChanges {
     public translationService: TranslationService,
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
-    private timeDiffService: TimeDiffService
+    private router: Router,
+    private timeDiffService: TimeDiffService,
+    protected featuresService: FeaturesService
   ) {}
 
   ngOnInit() {
@@ -299,5 +313,51 @@ export class CommentComponent implements OnChanges {
     if (this.changesDetected) {
       this.cd.detectChanges();
     }
+  }
+
+  // * ATTACHMENT MEDIA MODAL  * ---------------------------------------------------------------------
+
+  setVideoDimensions($event) {
+    this.videoDimensions = $event.dimensions;
+    this.comment.custom_data.dimensions = this.videoDimensions;
+  }
+
+  setImageDimensions() {
+    const img: HTMLImageElement = this.batchImage.nativeElement;
+    this.comment.custom_data[0].width = img.naturalWidth;
+    this.comment.custom_data[0].height = img.naturalHeight;
+  }
+
+  clickedImage() {
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const pageUrl = `/media/${this.comment.entity_guid}`;
+
+    if (isMobile() && isNotTablet) {
+      this.router.navigate([pageUrl]);
+      return;
+    }
+
+    if (!this.featuresService.has('media-modal')) {
+      this.router.navigate([pageUrl]);
+      return;
+    } else {
+      if (
+        this.comment.custom_data[0].width === '0' ||
+        this.comment.custom_data[0].height === '0'
+      ) {
+        this.setImageDimensions();
+      }
+      this.openModal();
+    }
+  }
+
+  openModal() {
+    this.comment.modal_source_url = this.router.url;
+
+    this.overlayModal
+      .create(MediaModalComponent, this.comment, {
+        class: 'm-overlayModal--media',
+      })
+      .present();
   }
 }

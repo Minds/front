@@ -6,7 +6,6 @@ import { ACCESS } from '../../../services/list-options';
 @Component({
   moduleId: module.id,
   selector: 'minds-card-blog',
-
   inputs: ['_blog : object'],
   templateUrl: 'card.html',
 })
