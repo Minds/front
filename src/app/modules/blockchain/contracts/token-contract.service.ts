@@ -15,20 +15,26 @@ export type TokenApproveAndCallParams = TokenApproveAndCallParam[];
 export class TokenContractService {
   protected instance: any;
 
-  constructor(protected web3Wallet: Web3WalletService, protected overlayService: TransactionOverlayService) {
+  constructor(
+    protected web3Wallet: Web3WalletService,
+    protected overlayService: TransactionOverlayService
+  ) {
     this.load();
   }
 
   async load() {
     await this.web3Wallet.ready();
 
-    this.instance = this.web3Wallet.eth.contract(this.web3Wallet.config.token.abi, '0x')
+    this.instance = this.web3Wallet.eth
+      .contract(this.web3Wallet.config.token.abi, '0x')
       .at(this.web3Wallet.config.token.address);
 
     this.token(); // Refresh default account
   }
 
-  async token(gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1) {
+  async token(
+    gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1
+  ) {
     if (!this.instance) {
       throw new Error('No token instance');
     }
@@ -41,7 +47,10 @@ export class TokenContractService {
     const wallet = await this.web3Wallet.getCurrentWallet();
     if (wallet) {
       this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
-      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei');
+      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(
+        gasPriceGwei,
+        'Gwei'
+      );
     }
 
     return this.instance;
@@ -65,14 +74,15 @@ export class TokenContractService {
 
   // Token allowance
 
-  async increaseApproval(address: string, amount: number, message: string = '') {
+  async increaseApproval(
+    address: string,
+    amount: number,
+    message: string = ''
+  ) {
     return await this.web3Wallet.sendSignedContractMethod(
       await this.token(),
       'approve',
-      [
-        address,
-        this.tokenToUnit(amount)
-      ],
+      [address, this.tokenToUnit(amount)],
       `${message}`.trim()
     );
   }
@@ -84,9 +94,9 @@ export class TokenContractService {
       return 0;
     }
 
-    const value = (new BN(10))
+    const value = new BN(10)
       .pow(new BN(this.web3Wallet.config.token.decimals - precision))
-      .mul(new BN(Math.round(amount * (10 ** precision))));
+      .mul(new BN(Math.round(amount * 10 ** precision)));
 
     return value.toString();
   }
@@ -94,8 +104,8 @@ export class TokenContractService {
   // Token approveAndCall parameters. Adds 80 + 40 padding
 
   encodeParams(params: TokenApproveAndCallParams): string {
-    const types = [ 'uint256', 'uint256' ],
-      values = [ 0x80, 0x40 ];
+    const types = ['uint256', 'uint256'],
+      values = [0x80, 0x40];
 
     for (let param of params) {
       types.push(param.type);
@@ -107,7 +117,10 @@ export class TokenContractService {
 
   // Service provider
 
-  static _(web3Wallet: Web3WalletService, overlayService: TransactionOverlayService) {
+  static _(
+    web3Wallet: Web3WalletService,
+    overlayService: TransactionOverlayService
+  ) {
     return new TokenContractService(web3Wallet, overlayService);
   }
 }

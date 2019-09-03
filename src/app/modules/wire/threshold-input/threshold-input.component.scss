@@ -2,13 +2,13 @@ minds-newsfeed-poster > .mdl-card {
   overflow: visible;
 }
 
-m-wire-threshold-input, .m-wire-threshold-input {
+m-wire-threshold-input,
+.m-wire-threshold-input {
   display: inline-block;
 }
 
 .m-wire-threshold-input {
   font-family: 'Roboto', sans-serif;
-
 
   .m-dropdown--list {
     width: 250px;
@@ -19,8 +19,8 @@ m-wire-threshold-input, .m-wire-threshold-input {
       text-align: left;
       padding: 8px;
       line-height: 1;
-      @include m-theme(){
-         border-bottom: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-grey-50);
       }
     }
 
@@ -55,19 +55,18 @@ m-wire-threshold-input, .m-wire-threshold-input {
         display: flex;
         flex-direction: row;
 
-
         i {
           font-size: 18px;
         }
-        
+
         i.selected {
           cursor: pointer;
         }
-        
+
         i.m-wire-threshold-input--type {
           cursor: default;
         }
-        
+
         input {
           padding: 6px;
           margin: 0 8px;
@@ -83,7 +82,6 @@ m-wire-threshold-input, .m-wire-threshold-input {
     }
   }
 
-
   .m-wire-threshold-input--toggle {
     /*display: inline-flex;
     align-items: center;
@@ -96,7 +94,7 @@ m-wire-threshold-input, .m-wire-threshold-input {
     }*/
 
     &.m-wire-threshold-input--toggle-enabled {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
@@ -106,7 +104,7 @@ m-wire-threshold-input, .m-wire-threshold-input {
     display: inline-block;
     vertical-align: middle;
     padding: ($minds-padding / 4) ($minds-padding / 2);
-    @include m-theme(){
+    @include m-theme() {
       border: 1px solid themed($m-grey-50);
       color: themed($m-grey-400);
     }
@@ -121,18 +119,18 @@ m-wire-threshold-input, .m-wire-threshold-input {
     }
 
     .m-wire-threshold-input--type {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-green);
       }
 
       .m--crypto-token-symbol--stroke {
-        @include m-theme(){
+        @include m-theme() {
           stroke: themed($m-green);
         }
       }
 
       .m--crypto-token-symbol--fill {
-        @include m-theme(){
+        @include m-theme() {
           fill: themed($m-green);
         }
       }

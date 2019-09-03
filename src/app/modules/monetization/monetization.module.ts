@@ -23,10 +23,12 @@ import { RevenueConsoleComponent } from './revenue/console.component';
 // external
 import { WalletComponent } from '../wallet/wallet.component';
 
-const monetizationRoutes : Routes = [
+const monetizationRoutes: Routes = [
   //{ path: 'affiliates',  component: AffiliateMarketingComponent },
   //{ path: 'monetization', component: MonetizationMarketingComponent },
-  { path: 'wallet/revenue', component: WalletComponent,
+  {
+    path: 'wallet/revenue',
+    component: WalletComponent,
     children: [
       { path: '', redirectTo: 'earnings', pathMatch: 'full' },
       { path: 'points', component: WalletTransactionsComponent },
@@ -35,8 +37,8 @@ const monetizationRoutes : Routes = [
       { path: 'payouts', component: RevenueLedgerComponent },
       { path: 'options', component: RevenueOptionsComponent },
       { path: 'affiliates', component: AffiliateLinkComponent },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
@@ -48,7 +50,7 @@ const monetizationRoutes : Routes = [
     WalletModule,
     FaqModule,
     MonetizationOverviewModule,
-    RouterModule.forChild(monetizationRoutes)
+    RouterModule.forChild(monetizationRoutes),
   ],
   declarations: [
     MonetizationMarketingComponent,
@@ -71,14 +73,13 @@ const monetizationRoutes : Routes = [
     RevenueGraphComponent,
     RevenueLedgerComponent,
     RevenueOptionsComponent,
-    RouterModule
+    RouterModule,
   ],
   entryComponents: [
     MonetizationMarketingComponent,
     AffiliateMarketingComponent,
     AffiliateLinkComponent,
     RevenueConsoleComponent,
-  ]
+  ],
 })
-
 export class MonetizationModule {}

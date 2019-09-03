@@ -176,14 +176,13 @@ const boostRoutes: Routes = [
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
     BoostConsoleCard,
-    BoostConsoleBooster
+    BoostConsoleBooster,
   ],
   entryComponents: [
     BoostRootComponent,
     BoostCreatorComponent,
     BoostConsoleComponent,
     BoostMarketingComponent,
-  ]
+  ],
 })
-export class BoostModule {
-}
+export class BoostModule {}

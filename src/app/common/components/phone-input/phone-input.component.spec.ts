@@ -1,4 +1,9 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+} from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
@@ -8,7 +13,6 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('PhoneInputComponent', () => {
-
   let comp: PhoneInputComponent;
   let fixture: ComponentFixture<PhoneInputComponent>;
 
@@ -17,12 +21,14 @@ describe('PhoneInputComponent', () => {
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, PhoneInputComponent, PhoneInputCountryComponent], // declare the test component
+      declarations: [
+        MaterialMock,
+        PhoneInputComponent,
+        PhoneInputCountryComponent,
+      ], // declare the test component
       imports: [ReactiveFormsModule, FormsModule],
-    })
-      .compileComponents();  // compile template and css
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
@@ -38,13 +44,10 @@ describe('PhoneInputComponent', () => {
     expect(getInput()).not.toBeNull();
   }));
 
-
   it('should set a phone number', () => {
-   
     getInput().nativeElement.value = '0123456789';
     getInput().nativeElement.dispatchEvent(new Event('input'));
 
     expect(comp.number).toEqual('10123456789');
   });
-
 });

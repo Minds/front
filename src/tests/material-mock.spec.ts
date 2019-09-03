@@ -4,7 +4,6 @@ import { Directive } from '@angular/core';
  */
 @Directive({
   selector: '[mdl]',
-  inputs: ['mdl']
+  inputs: ['mdl'],
 })
-export class MaterialMock {
-}
+export class MaterialMock {}

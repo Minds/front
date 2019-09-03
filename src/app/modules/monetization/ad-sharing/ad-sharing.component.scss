@@ -17,10 +17,10 @@ m-ad-sharing {
       width: 100%;
       resize: none;
       height: 8em;
-      padding: $minds-padding*2;
-      line-height:18px;
-      @include m-theme(){
-        border:1px solid themed($m-grey-50);
+      padding: $minds-padding * 2;
+      line-height: 18px;
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
     }
   }

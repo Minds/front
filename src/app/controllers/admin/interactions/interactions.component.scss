@@ -9,10 +9,10 @@ m-admin--interactions {
   max-width: 900px;
   padding: 8px;
   margin-bottom: 16px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
-  @media screen and (max-width:$max-mobile) {
+  @media screen and (max-width: $max-mobile) {
     flex-direction: column;
     .m-admin--interactions--filters--dates {
       flex-direction: column;
@@ -30,7 +30,7 @@ m-admin--interactions {
       text-transform: uppercase;
       padding: 0 12px;
       &.active {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue);
         }
       }
@@ -66,7 +66,7 @@ m-admin--interactions--table {
   display: block;
   width: 300px;
   flex: 1;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -82,8 +82,8 @@ m-admin--interactions--table {
 
     td {
       font-size: 11px;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
     }
     tr:first-child td {
@@ -101,7 +101,8 @@ m-admin--interactions--table {
       text-align: right;
     }
 
-    td, th {
+    td,
+    th {
       padding: 8px;
       width: 50%;
     }
@@ -112,5 +113,4 @@ m-admin--interactions--table {
       height: 20px;
     }
   }
-
 }

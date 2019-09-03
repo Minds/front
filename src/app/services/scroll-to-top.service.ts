@@ -4,14 +4,13 @@ import { Subscription } from 'rxjs';
 
 @Injectable()
 export class ScrollToTopService {
-
   private _routerListener: Subscription;
 
   static _(router: Router) {
     return new ScrollToTopService(router);
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   listen(): this {
     this._routerListener = this.router.events.subscribe((event: Event) => {
@@ -26,7 +25,4 @@ export class ScrollToTopService {
     this._routerListener.unsubscribe();
     return this;
   }
-
-
-
 }

@@ -2,7 +2,6 @@ import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
 
 export class MessengerConversationDockpanesService {
-
   conversations: Array<any> = [];
 
   static _(session: Session) {
@@ -10,7 +9,7 @@ export class MessengerConversationDockpanesService {
   }
 
   constructor(public storage: Storage, public session: Session) {
-    this.session.getLoggedInUser((user) => this.onLogOut(user));
+    this.session.getLoggedInUser(user => this.onLogOut(user));
 
     this.loadFromCache();
 
@@ -60,9 +59,12 @@ export class MessengerConversationDockpanesService {
 
   private syncFromCache() {
     // Only sync closed conversations
-    let savedConversations = JSON.parse(this.storage.get('messenger-dockpanes')),
+    let savedConversations = JSON.parse(
+        this.storage.get('messenger-dockpanes')
+      ),
       conversations = this.conversations,
-      savedConversationGuids = [], closedConversations = [];
+      savedConversationGuids = [],
+      closedConversations = [];
 
     if (!savedConversations) {
       return;
@@ -85,8 +87,7 @@ export class MessengerConversationDockpanesService {
 
   private loadFromCache() {
     let conversations = JSON.parse(this.storage.get('messenger-dockpanes'));
-    if (conversations)
-      this.conversations = conversations;
+    if (conversations) this.conversations = conversations;
   }
 
   private saveToCache() {
@@ -102,5 +103,4 @@ export class MessengerConversationDockpanesService {
       this.conversations = [];
     }
   }
-
 }

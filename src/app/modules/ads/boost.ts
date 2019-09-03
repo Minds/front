@@ -21,12 +21,10 @@ import { FeaturesService } from "../../services/features.service";
     </div>
   `,
   host: {
-    'class': 'm-ad-block m-ad-block-boosts'
-  }
+    class: 'm-ad-block m-ad-block-boosts',
+  },
 })
-
 export class BoostAds implements OnInit, OnDestroy {
-
   handler: string = 'content';
   limit: number = 2;
   offset: string = '';
@@ -46,9 +44,11 @@ export class BoostAds implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.rating = this.session.getLoggedInUser().boost_rating;
-    this.ratingSubscription = this.settingsService.ratingChanged.subscribe((rating) => {
-      this.onRatingChanged(rating);
-    });
+    this.ratingSubscription = this.settingsService.ratingChanged.subscribe(
+      rating => {
+        this.onRatingChanged(rating);
+      }
+    );
 
     this.feedsService.feed.subscribe(async boosts => {
       if (!boosts.length)
@@ -69,11 +69,12 @@ export class BoostAds implements OnInit, OnDestroy {
   loadLegacy() {
     if (this.storage.get('boost:offset:sidebar'))
       this.offset = this.storage.get('boost:offset:sidebar');
-    this.client.get('api/v1/boost/fetch/' + this.handler, {
-      limit: this.limit,
-      offset: this.offset,
-      rating: this.rating
-    })
+    this.client
+      .get('api/v1/boost/fetch/' + this.handler, {
+        limit: this.limit,
+        offset: this.offset,
+        rating: this.rating,
+      })
       .then((response: any) => {
         if (!response.boosts) {
           return;
@@ -111,5 +112,4 @@ export class BoostAds implements OnInit, OnDestroy {
     this.offset = '';
     this.fetch();
   }
-
 }

@@ -5,10 +5,9 @@ import { OnboardingService } from '../onboarding.service';
 @Component({
   moduleId: module.id,
   selector: 'm-onboarding-card',
-  templateUrl: 'card.component.html'
+  templateUrl: 'card.component.html',
 })
 export class OnboardingCardComponent {
-
   @Input() route;
   @Input() icon;
   @Input() text;
@@ -16,11 +15,10 @@ export class OnboardingCardComponent {
   @Input() class;
   @Input() id;
 
-  constructor(public service: OnboardingService) { }
+  constructor(public service: OnboardingService) {}
 
   close(e) {
     e.stopPropagation();
     this.service.hide(this.id);
   }
-
 }

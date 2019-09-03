@@ -10,11 +10,9 @@ import { MaterialRadio } from './material/radio/radio';
 
 @Directive({
   selector: '[mdl]',
-  inputs: ['mdl']
+  inputs: ['mdl'],
 })
-
 export class Material {
-
   mdl: any;
   private element: any;
 
@@ -34,5 +32,5 @@ export const MDL_DIRECTIVES: any[] = [
   MaterialSwitch,
   MaterialDateTimePickerDirective,
   MaterialSlider,
-  MaterialRadio
+  MaterialRadio,
 ];

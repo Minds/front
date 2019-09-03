@@ -1,54 +1,54 @@
-.m-paywall-button-icon{
+.m-paywall-button-icon {
   display: inline-block;
   vertical-align: middle;
   cursor: pointer;
 }
 
-.m-paywall-button{
+.m-paywall-button {
   padding: 16px;
   text-align: left;
   width: 100%;
   box-sizing: border-box;
   cursor: pointer;
 
-  button{
+  button {
     display: inline-block;
     vertical-align: middle;
     position: relative;
     overflow: hidden;
     cursor: pointer;
-    float:right;
+    float: right;
   }
 
-  p{
-    padding:8px 0;
-    display:inline-block;
-    margin-bottom:0;
+  p {
+    padding: 8px 0;
+    display: inline-block;
+    margin-bottom: 0;
 
-    b{
+    b {
       font-size: 26px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
   }
 }
 
-.m-paywall-splash{
+.m-paywall-splash {
   text-align: center;
   //padding: 16px;
 
-  img{
-    width:100%;
+  img {
+    width: 100%;
   }
 
-  i{
+  i {
     width: 100%;
     font-size: 84px;
   }
 }
 
-.m-paywall-amount{
+.m-paywall-amount {
   padding: 26px;
   text-align: center;
   font-size: 36px;

@@ -50,7 +50,6 @@ import { TokenOnboardingService } from './onboarding.service';
       provide: TokenOnboardingService,
       useClass: TokenOnboardingService,
     },
-  ]
+  ],
 })
-
 export class TokenOnboardingModule {}

@@ -1,6 +1,8 @@
 .m-juryDutySession__content {
-  background: #FFF;
   padding: 16px;
+  @include m-theme() {
+    background: themed($m-white);
+  }
 
   h3 {
     margin: 0;
@@ -18,11 +20,11 @@
       line-height: 1;
     }
     > b:first-child {
-       @include m-theme() {
-         color: themed($m-grey-600);
-       }
-       display: block;
-       line-height: 1.5;
+      @include m-theme() {
+        color: themed($m-grey-600);
+      }
+      display: block;
+      line-height: 1.5;
     }
   }
 
@@ -62,7 +64,6 @@
       }
     }
   }
-
 }
 
 .m-juryDutySessionContent__appealNote {

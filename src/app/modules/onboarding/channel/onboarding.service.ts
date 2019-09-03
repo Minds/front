@@ -1,13 +1,12 @@
-import { TopicsOnboardingComponent } from "./topics/topics.component";
-import { SubscriptionsOnboardingComponent } from "./subscriptions/subscriptions.component";
-import { ChannelSetupOnboardingComponent } from "./channel/channel.component";
-import { TokenRewardsOnboardingComponent } from "./rewards/rewards.component";
-import { EventEmitter } from "@angular/core";
-import { Client } from "../../../services/api/client";
-import { Session } from "../../../services/session";
+import { TopicsOnboardingComponent } from './topics/topics.component';
+import { SubscriptionsOnboardingComponent } from './subscriptions/subscriptions.component';
+import { ChannelSetupOnboardingComponent } from './channel/channel.component';
+import { TokenRewardsOnboardingComponent } from './rewards/rewards.component';
+import { EventEmitter } from '@angular/core';
+import { Client } from '../../../services/api/client';
+import { Session } from '../../../services/session';
 
 export class ChannelOnboardingService {
-
   slides = [
     TopicsOnboardingComponent,
     SubscriptionsOnboardingComponent,
@@ -36,25 +35,21 @@ export class ChannelOnboardingService {
     return new ChannelOnboardingService(client, session);
   }
 
-  constructor(
-      private client: Client,
-      private session: Session,
-  ) {
-    this.session.userEmitter.subscribe((v) => {
+  constructor(private client: Client, private session: Session) {
+    this.session.userEmitter.subscribe(v => {
       if (!v) {
         this.reset();
       }
     });
-
   }
 
   async checkProgress() {
-    if (!this.session.isLoggedIn())
-      return;
+    if (!this.session.isLoggedIn()) return;
     try {
       const response: any = await this.client.get('api/v2/onboarding/progress');
 
-      this.completedPercentage = response.completed_items.length * 100 / response.all_items.length;
+      this.completedPercentage =
+        (response.completed_items.length * 100) / response.all_items.length;
       this.completedItems = response.completed_items;
       this.showOnboarding = response.show_onboarding;
     } catch (e) {
@@ -90,7 +85,6 @@ export class ChannelOnboardingService {
     return false;
   }
 
-
   previous() {
     if (this.currentSlide === 0) {
       return;
@@ -110,7 +104,8 @@ export class ChannelOnboardingService {
     }
 
     // first time onboarding
-    if (this.completedItems.length === 1) { // empty is 1 because username is always there from the beginning
+    if (this.completedItems.length === 1) {
+      // empty is 1 because username is always there from the beginning
       this.currentSlide++;
     } else {
       //here we just go to the next slide with incomplete stuff
@@ -149,5 +144,4 @@ export class ChannelOnboardingService {
     this.currentSlide = 0;
     this.completed = false;
   }
-
 }

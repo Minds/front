@@ -16,13 +16,16 @@ export class WireContractService {
   async load() {
     await this.web3Wallet.ready();
 
-    this.instance = this.web3Wallet.eth.contract(this.web3Wallet.config.wire.abi, '0x')
+    this.instance = this.web3Wallet.eth
+      .contract(this.web3Wallet.config.wire.abi, '0x')
       .at(this.web3Wallet.config.wire.address);
 
     this.wire(); // Refresh default account
   }
 
-  async wire(gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1) {
+  async wire(
+    gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1
+  ) {
     if (!this.instance) {
       throw new Error('No wire instance');
     }
@@ -35,7 +38,10 @@ export class WireContractService {
     const wallet = await this.web3Wallet.getCurrentWallet();
     if (wallet) {
       this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
-      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei');
+      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(
+        gasPriceGwei,
+        'Gwei'
+      );
     }
 
     return this.instance;
@@ -53,9 +59,9 @@ export class WireContractService {
         this.tokenContract.encodeParams([
           {
             type: 'address',
-            value: receiver
-          }
-        ])
+            value: receiver,
+          },
+        ]),
       ],
       `Send ${amount} Tokens to ${receiver}. ${message}`.trim(),
       this.tokenContract.tokenToUnit(-amount)

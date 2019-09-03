@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 .m-lite--header {
   margin: auto;
@@ -8,7 +8,7 @@
   flex-direction: row;
   align-items: center;
   //border-bottom: 1px solid #EDEDEA;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -48,8 +48,8 @@
     left: 0;
     z-index: -1;
     width: 100%;
-        max-height: 60vh;
-            overflow: hidden;
+    max-height: 60vh;
+    overflow: hidden;
   }
 }
 

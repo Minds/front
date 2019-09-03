@@ -5,10 +5,9 @@ import { Component, EventEmitter } from '@angular/core';
   selector: 'm-modal-confirm',
   inputs: ['open', 'yesButton', 'noButton', 'closeAfterAction'],
   outputs: ['actioned', 'closed'],
-  templateUrl: 'confirm.html'
+  templateUrl: 'confirm.html',
 })
 export class ConfirmModal {
-
   open: boolean = false;
   closed: EventEmitter<any> = new EventEmitter();
   actioned: EventEmitter<any> = new EventEmitter();
@@ -42,7 +41,7 @@ export class ConfirmModal {
     this.open = false;
 
     this.closed.emit({
-      $event: $event
+      $event: $event,
     });
   }
 
@@ -50,7 +49,7 @@ export class ConfirmModal {
     this.actioned.emit({
       $event: $event,
       inProgress: this.inProgressEmitter,
-      completed: this.completedEmitter
+      completed: this.completedEmitter,
     });
   }
 }

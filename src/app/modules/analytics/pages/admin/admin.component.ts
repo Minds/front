@@ -1,20 +1,15 @@
 import { Component } from '@angular/core';
 
-import { Session } from "../../../../services/session";
-import { Router } from "@angular/router";
+import { Session } from '../../../../services/session';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
   selector: 'm-analytics__admin',
-  templateUrl: 'admin.component.html'
+  templateUrl: 'admin.component.html',
 })
-
 export class AdminAnalyticsComponent {
-
-  constructor(
-    public session: Session,
-    public router: Router,
-  ) {
+  constructor(public session: Session, public router: Router) {
     if (!this.session.isAdmin()) {
       this.router.navigate(['/']);
     }

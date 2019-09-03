@@ -8,9 +8,7 @@ import { Client } from '../../../services/api';
   outputs: ['done'],
   templateUrl: 'categories-selector.html',
 })
-
 export class OnboardingCategoriesSelector {
-
   minds = window.Minds;
 
   categories: Array<any> = [];
@@ -18,9 +16,7 @@ export class OnboardingCategoriesSelector {
   inProgress: boolean = false;
   done: EventEmitter<any> = new EventEmitter();
 
-  constructor(public client: Client) {
-
-  }
+  constructor(public client: Client) {}
 
   ngOnInit() {
     this.initCategories();
@@ -32,17 +28,20 @@ export class OnboardingCategoriesSelector {
       this.categories.push({
         id: category,
         label: window.Minds.categories[category],
-        'selected': false
+        selected: false,
       });
     }
   }
 
   saveCategories() {
     this.inProgress = true;
-    const filteredCategories: any[] = this.categories.filter(category => category.selected).map(category => category.id);
-    this.client.post('api/v1/settings', {
-      categories: filteredCategories
-    })
+    const filteredCategories: any[] = this.categories
+      .filter(category => category.selected)
+      .map(category => category.id);
+    this.client
+      .post('api/v1/settings', {
+        categories: filteredCategories,
+      })
       .then((response: any) => {
         this.inProgress = false;
         this.done.next(true);
@@ -51,5 +50,4 @@ export class OnboardingCategoriesSelector {
         this.inProgress = false;
       });
   }
-
 }

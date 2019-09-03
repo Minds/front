@@ -37,8 +37,8 @@ import { PostMenuModule } from '../../common/components/post-menu/post-menu.modu
 import { HovercardPopup } from './components/hovercard-popup/hovercard-popup';
 import { CarouselComponent } from './components/carousel.component';
 import { CommentsModule } from '../comments/comments.module';
-import { TextInputAutocompleteModule } from "../../common/components/autocomplete";
-import { CommentComponentV2 } from "../comments/comment/comment.component";
+import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
+import { CommentComponentV2 } from '../comments/comment/comment.component';
 
 @NgModule({
   imports: [
@@ -116,7 +116,6 @@ import { CommentComponentV2 } from "../comments/comment/comment.component";
     UserCard,
     BoostButton,
     CommentComponentV2,
-  ]
+  ],
 })
-export class LegacyModule {
-}
+export class LegacyModule {}

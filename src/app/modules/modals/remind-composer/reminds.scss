@@ -26,8 +26,9 @@ m-modal-remind-composer {
       height: 4em;
       max-height: 150px;
       box-sizing: content-box;
-      padding: $minds-padding (24px + $minds-padding) $minds-padding $minds-padding;
-      @include m-theme(){
+      padding: $minds-padding (24px + $minds-padding) $minds-padding
+        $minds-padding;
+      @include m-theme() {
         border: 1px solid themed($m-grey-100);
       }
     }
@@ -38,7 +39,7 @@ m-modal-remind-composer {
       bottom: $minds-padding * 3;
 
       a:hover {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue-grey-700);
         }
       }
@@ -54,49 +55,48 @@ m-modal-remind-composer {
     cursor: default;
     overflow: auto !important;
     max-height: 40vh;
-  //
-  //  > * {
-  //    pointer-events: none;
-  //  }
-  //
+    //
+    //  > * {
+    //    pointer-events: none;
+    //  }
+    //
     .m-owner-block {
       position: relative !important;
       //padding: ($minds-padding * 2) !important;
     }
-  //
-  //  .m-mature-overlay {
-  //    display: none !important;
-  //  }
-  //
-  //  .mdl-card__supporting-text {
-  //    padding: ($minds-padding * 2) !important;
-  //  }
-  //
-  //  .m-rich-embed {
-  //    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
-  //  }
-  //
-  //  .item-image {
-  //    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
-  //  }
-  //
-  //  .item-image-video {
-  //    minds-video {
-  //      background: transparent !important;
-  //
-  //      .minds-video-bar-full {
-  //        display: none !important;
-  //      }
-  //    }
-  //  }
+    //
+    //  .m-mature-overlay {
+    //    display: none !important;
+    //  }
+    //
+    //  .mdl-card__supporting-text {
+    //    padding: ($minds-padding * 2) !important;
+    //  }
+    //
+    //  .m-rich-embed {
+    //    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
+    //  }
+    //
+    //  .item-image {
+    //    padding: 0 ($minds-padding * 2) ($minds-padding * 2);
+    //  }
+    //
+    //  .item-image-video {
+    //    minds-video {
+    //      background: transparent !important;
+    //
+    //      .minds-video-bar-full {
+    //        display: none !important;
+    //      }
+    //    }
+    //  }
   }
 
   .mdl-card__menu {
     i:hover {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue-grey-500) !important;
       }
     }
   }
-
 }

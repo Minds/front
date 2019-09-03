@@ -3,11 +3,9 @@ import { Material as MaterialService } from '../../../services/ui';
 
 @Directive({
   selector: '[mdlTextfield]',
-  inputs: ['mdlTextfield']
+  inputs: ['mdlTextfield'],
 })
-
 export class MaterialTextfield {
-
   mdlTextfield: any;
   private element: any;
 

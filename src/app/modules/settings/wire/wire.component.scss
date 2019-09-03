@@ -6,8 +6,8 @@ m-settings--wire {
     m-wire--lock-screen {
       display: block;
       padding: $minds-padding;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-100);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-100);
       }
     }
   }
@@ -25,10 +25,9 @@ m-settings--wire {
     }
 
     &.m-settings--wire--paywall--background {
-      input[type=file] {
+      input[type='file'] {
         width: 100%;
       }
     }
   }
-
 }

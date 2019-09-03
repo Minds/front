@@ -1,12 +1,29 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { Component, DebugElement, ChangeDetectorRef, Input, Output, ComponentFactoryResolver } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  ChangeDetectorRef,
+  Input,
+  Output,
+  ComponentFactoryResolver,
+} from '@angular/core';
 import { TokenOnboardingComponent } from './onboarding.component';
 import { TokenCompletedOnboardingComponent } from './completed/completed.component';
 import { TokenOnboardingService } from './onboarding.service';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { Client } from '../../../../services/api/client';
-import { MockComponent, MockDirective, MockService } from '../../../../utils/mock';
+import {
+  MockComponent,
+  MockDirective,
+  MockService,
+} from '../../../../utils/mock';
 import { Session } from '../../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
@@ -16,40 +33,35 @@ import { Router } from '@angular/router';
 import { storageMock } from '../../../../../tests/storage-mock.spec';
 import { Storage } from '../../../../services/storage';
 
-
-let tokenOnboardingService = new function () {
+let tokenOnboardingService = new (function() {
   this.slide = null;
-};
+})();
 
 describe('TokenOnboardingComponent', () => {
-
   let comp: TokenOnboardingComponent;
   let fixture: ComponentFixture<TokenOnboardingComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      declarations: [
-        TokenOnboardingComponent,
-      ],
-      imports: [
-        FormsModule
-      ],
+      declarations: [TokenOnboardingComponent],
+      imports: [FormsModule],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
         { provide: Session, useValue: sessionMock },
         { provide: Router, useValue: RouterTestingModule },
         { provide: Storage, useValue: storageMock },
-        { provide: TokenOnboardingService, useValue: tokenOnboardingService},
-        { provide: ComponentFactoryResolver, useValue: ComponentFactoryResolver}
-      ]
-    })
-      .compileComponents();  // compile template and css
+        { provide: TokenOnboardingService, useValue: tokenOnboardingService },
+        {
+          provide: ComponentFactoryResolver,
+          useValue: ComponentFactoryResolver,
+        },
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -57,7 +69,7 @@ describe('TokenOnboardingComponent', () => {
     fixture = TestBed.createComponent(TokenOnboardingComponent);
     comp = fixture.componentInstance;
 
-    comp.host = { viewContainerRef: { clear: () => {}}};
+    comp.host = { viewContainerRef: { clear: () => {} } };
 
     fixture.detectChanges();
 
@@ -75,12 +87,16 @@ describe('TokenOnboardingComponent', () => {
   });
 
   it('should have proper structure', fakeAsync(() => {
-
-    spyOn(sessionMock, 'getLoggedInUser').and.returnValue({ guid: 1234, rewards: ['s'], eth_wallet: '0x0x0x' });
+    spyOn(sessionMock, 'getLoggedInUser').and.returnValue({
+      guid: 1234,
+      rewards: ['s'],
+      eth_wallet: '0x0x0x',
+    });
     fixture = TestBed.createComponent(TokenOnboardingComponent);
     comp = fixture.componentInstance;
     comp.detectChanges();
-    expect(fixture.debugElement.query(By.css(`.m-token--onboarding`))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css(`.m-token--onboarding`))
+    ).not.toBeNull();
   }));
-
 });

@@ -20,20 +20,24 @@ import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mo
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 
 describe('ChannelsListComponent', () => {
-
   let comp: ChannelsListComponent;
   let fixture: ComponentFixture<ChannelsListComponent>;
 
   function getNavigationItem(i: number): DebugElement {
-    return fixture.debugElement.query(By.css(`.m-toolbar a.m-topbar--navigation--item:nth-child(${i})`));
+    return fixture.debugElement.query(
+      By.css(`.m-toolbar a.m-topbar--navigation--item:nth-child(${i})`)
+    );
   }
 
   function getNavigationItemTooltip(i: number): DebugElement {
-    return fixture.debugElement.query(By.css(`.m-toolbar a.m-topbar--navigation--item:nth-child(${i}) m-tooltip`));
+    return fixture.debugElement.query(
+      By.css(
+        `.m-toolbar a.m-topbar--navigation--item:nth-child(${i}) m-tooltip`
+      )
+    );
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MockComponent({
@@ -43,20 +47,20 @@ describe('ChannelsListComponent', () => {
         MockComponent({
           selector: 'm-tooltip',
           template: '<ng-content></ng-content>',
-          inputs: ['icon']
+          inputs: ['icon'],
         }),
         MockComponent({
           selector: 'm-channels--tile',
           template: '',
-          inputs: ['entity']
+          inputs: ['entity'],
         }),
         MockComponent({
           selector: 'm-topbar--hashtags',
           template: '',
           inputs: ['enabled'],
-          outputs: ['selectionChange']
+          outputs: ['selectionChange'],
         }),
-        ChannelsListComponent
+        ChannelsListComponent,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
@@ -66,13 +70,12 @@ describe('ChannelsListComponent', () => {
         { provide: ContextService, useValue: contextServiceMock },
         { provide: ActivatedRoute, useValue: { params: of('all') } },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     fixture = TestBed.createComponent(ChannelsListComponent);
 
     comp = fixture.componentInstance;
@@ -83,13 +86,13 @@ describe('ChannelsListComponent', () => {
       entities: [
         {
           guid: 123,
-          name: 'test1'
+          name: 'test1',
         },
         {
           guid: 456,
-          name: 'test2'
+          name: 'test2',
         },
-      ]
+      ],
     };
 
     fixture.detectChanges();
@@ -118,33 +121,46 @@ describe('ChannelsListComponent', () => {
     expect(nav1).not.toBeNull();
     expect(nav1.nativeElement.children[0].textContent).toContain('Top');
     expect(tooltip1).not.toBeNull();
-    expect(tooltip1.nativeElement.textContent).toContain('Top displays the top content on Minds');
+    expect(tooltip1.nativeElement.textContent).toContain(
+      'Top displays the top content on Minds'
+    );
 
     expect(nav2).not.toBeNull();
-    expect(nav2.nativeElement.children[0].textContent).toContain('Subscriptions');
+    expect(nav2.nativeElement.children[0].textContent).toContain(
+      'Subscriptions'
+    );
     expect(tooltip2).not.toBeNull();
-    expect(tooltip2.nativeElement.textContent).toContain('Channels you are subscribed to');
+    expect(tooltip2.nativeElement.textContent).toContain(
+      'Channels you are subscribed to'
+    );
 
     expect(nav3).not.toBeNull();
     expect(nav3.nativeElement.children[0].textContent).toContain('Subscribers');
     expect(tooltip3).not.toBeNull();
-    expect(tooltip3.nativeElement.textContent).toContain('Channels who are subscribed to you');
+    expect(tooltip3.nativeElement.textContent).toContain(
+      'Channels who are subscribed to you'
+    );
 
     expect(nav4).not.toBeNull();
     expect(nav4.nativeElement.children[0].textContent).toContain('Founders');
     expect(tooltip4).not.toBeNull();
-    expect(tooltip4.nativeElement.textContent).toContain('Channels who invested in the Minds Reg-CF Crowfunding campaign');
+    expect(tooltip4.nativeElement.textContent).toContain(
+      'Channels who invested in the Minds Reg-CF Crowfunding campaign'
+    );
   });
 
   it('should have a list of channels', () => {
-    const tiles = fixture.debugElement.queryAll(By.css('.m-channels--list m-channels--tile'));
+    const tiles = fixture.debugElement.queryAll(
+      By.css('.m-channels--list m-channels--tile')
+    );
 
     expect(tiles).not.toBeNull();
     expect(tiles.length).toBe(2);
   });
 
   it('should have an infinite-scroll', () => {
-    expect(fixture.debugElement.query(By.css('infinite-scroll'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('infinite-scroll'))
+    ).not.toBeNull();
   });
-
 });

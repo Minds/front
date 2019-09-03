@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
@@ -6,10 +6,9 @@ import { JurySessionService } from '../juryduty/session/session.service';
 
 @Component({
   selector: 'm-report-console',
-  templateUrl: 'console.component.html'
+  templateUrl: 'console.component.html',
 })
 export class ReportConsoleComponent implements OnInit {
-
   filter: string = 'review';
 
   appeals: any[] = [];
@@ -18,10 +17,7 @@ export class ReportConsoleComponent implements OnInit {
   offset: string = '';
   moreData: boolean = true;
 
-  constructor(
-    private client: Client,
-    public service: JurySessionService,
-  ) { }
+  constructor(private client: Client, public service: JurySessionService) {}
 
   ngOnInit() {
     this.load(true);
@@ -46,10 +42,13 @@ export class ReportConsoleComponent implements OnInit {
         limit: 12,
         offset: this.offset
       });*/
-      let response: any = await this.client.get(`api/v2/moderation/appeals/${this.filter}`, {
-        limit: 12,
-        offset: this.offset
-      });
+      let response: any = await this.client.get(
+        `api/v2/moderation/appeals/${this.filter}`,
+        {
+          limit: 12,
+          offset: this.offset,
+        }
+      );
 
       if (refresh) {
         this.appeals = [];
@@ -75,9 +74,12 @@ export class ReportConsoleComponent implements OnInit {
     appeal.inProgress = true;
 
     try {
-      let response: any = await this.client.post(`api/v2/moderation/appeals/${appeal.report.urn}`, {
-        note: content
-      });
+      let response: any = await this.client.post(
+        `api/v2/moderation/appeals/${appeal.report.urn}`,
+        {
+          note: content,
+        }
+      );
 
       this.appeals.splice(i, 1);
     } catch (e) {
@@ -86,9 +88,8 @@ export class ReportConsoleComponent implements OnInit {
   }
 
   parseAction(action: string) {
-    return typeof REPORT_ACTIONS[action] !== 'undefined' ?
-      REPORT_ACTIONS[action] :
-      action;
+    return typeof REPORT_ACTIONS[action] !== 'undefined'
+      ? REPORT_ACTIONS[action]
+      : action;
   }
-
 }

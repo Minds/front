@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Web3WalletService } from '../web3-wallet.service';
@@ -8,7 +13,7 @@ import { BlockchainService } from '../blockchain.service';
   moduleId: module.id,
   selector: 'm-blockchain--wallet-address-notice',
   templateUrl: 'wallet-address-notice.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockchainWalletAddressNoticeComponent implements OnInit {
   address: string;
@@ -18,9 +23,7 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
     protected blockchain: BlockchainService,
     protected router: Router,
     protected cd: ChangeDetectorRef
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -31,7 +34,7 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
 
     let wallet = await this.web3Wallet.getCurrentWallet();
 
-    if (wallet && !await this.blockchain.getWallet()) {
+    if (wallet && !(await this.blockchain.getWallet())) {
       this.address = wallet;
       this.detectChanges();
     } else {

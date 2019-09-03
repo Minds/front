@@ -1,12 +1,13 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed } from '@angular/core/testing';
 import { TagsPipe } from './tags';
-import { FeaturesService } from "../../services/features.service";
-import { MockService } from "../../utils/mock";
+import { FeaturesService } from '../../services/features.service';
+import { MockService } from '../../utils/mock';
 
 describe('TagPipe', () => {
-
-  let featuresServiceMock:any = MockService(FeaturesService, {
-    has: (feature) => { return true; }
+  let featuresServiceMock: any = MockService(FeaturesService, {
+    has: feature => {
+      return true;
+    },
   });
 
   beforeEach(() => {
@@ -25,37 +26,48 @@ describe('TagPipe', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'textstring#name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=name;period=24h');
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+    );
   });
 
   it('should transform when # preceded by space ', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'textstring #name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=name;period=24h');
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+    );
   });
 
   it('should transform when # preceded by [] ', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'textstring [#name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=name;period=24h');
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+    );
   });
 
   it('should transform when # preceded by () ', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'textstring (#name)';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=name;period=24h');
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+    );
   });
-
 
   it('should correctly parse when duplicates substrings present', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = '#hash #hashlonger';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=hash;period=24h');
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=hashlonger;period=24h');
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=hash;period=24h'
+    );
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=hashlonger;period=24h'
+    );
   });
 
   it('should transform when @ preceded by () ', () => {
@@ -91,21 +103,26 @@ describe('TagPipe', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = '@test1 @test2';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toEqual('<a class="tag" href="/test1" target="_blank">@test1</a> <a class="tag" href="/test2" target="_blank">@test2</a>');
+    expect(transformedString).toEqual(
+      '<a class="tag" href="/test1" target="_blank">@test1</a> <a class="tag" href="/test2" target="_blank">@test2</a>'
+    );
   });
 
   it('should transform many adjacent tags', () => {
     const pipe = new TagsPipe(featuresServiceMock);
-    const string = '@test1 @test2 @test3 @test4 @test5 @test6 @test7 @test8 @test9 @test10 @test11 @test12 @test13 @test14 @test15';
+    const string =
+      '@test1 @test2 @test3 @test4 @test5 @test6 @test7 @test8 @test9 @test10 @test11 @test12 @test13 @test14 @test15';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toEqual(`<a class="tag" href="/test1" target="_blank">@test1</a> <a class="tag" href="/test2" target="_blank">@test2</a> `
-       + `<a class="tag" href="/test3" target="_blank">@test3</a> <a class="tag" href="/test4" target="_blank">@test4</a> `
-       + `<a class="tag" href="/test5" target="_blank">@test5</a> <a class="tag" href="/test6" target="_blank">@test6</a> `
-       + `<a class="tag" href="/test7" target="_blank">@test7</a> <a class="tag" href="/test8" target="_blank">@test8</a> `
-       + `<a class="tag" href="/test9" target="_blank">@test9</a> <a class="tag" href="/test10" target="_blank">@test10</a> `
-       + `<a class="tag" href="/test11" target="_blank">@test11</a> <a class="tag" href="/test12" target="_blank">@test12</a> `
-       + `<a class="tag" href="/test13" target="_blank">@test13</a> <a class="tag" href="/test14" target="_blank">@test14</a> `
-       + `<a class="tag" href="/test15" target="_blank">@test15</a>`);
+    expect(transformedString).toEqual(
+      `<a class="tag" href="/test1" target="_blank">@test1</a> <a class="tag" href="/test2" target="_blank">@test2</a> ` +
+        `<a class="tag" href="/test3" target="_blank">@test3</a> <a class="tag" href="/test4" target="_blank">@test4</a> ` +
+        `<a class="tag" href="/test5" target="_blank">@test5</a> <a class="tag" href="/test6" target="_blank">@test6</a> ` +
+        `<a class="tag" href="/test7" target="_blank">@test7</a> <a class="tag" href="/test8" target="_blank">@test8</a> ` +
+        `<a class="tag" href="/test9" target="_blank">@test9</a> <a class="tag" href="/test10" target="_blank">@test10</a> ` +
+        `<a class="tag" href="/test11" target="_blank">@test11</a> <a class="tag" href="/test12" target="_blank">@test12</a> ` +
+        `<a class="tag" href="/test13" target="_blank">@test13</a> <a class="tag" href="/test14" target="_blank">@test14</a> ` +
+        `<a class="tag" href="/test15" target="_blank">@test15</a>`
+    );
   });
 
   it('should transform to an email', () => {
@@ -155,14 +172,18 @@ describe('TagPipe', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'text http://minds.com/#position';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('text <a href="http://minds.com/#position"');
+    expect(transformedString).toContain(
+      'text <a href="http://minds.com/#position"'
+    );
   });
 
   it('should transform url with a hashtag and @', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = 'text http://minds.com/#position@some';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain('text <a href="http://minds.com/#position@some"');
+    expect(transformedString).toContain(
+      'text <a href="http://minds.com/#position@some"'
+    );
   });
 
   it('should transform many tags', () => {
@@ -172,12 +193,20 @@ describe('TagPipe', () => {
     `;
     const transformedString = pipe.transform(<any>string);
 
-    expect(transformedString).toContain('<a href="http://minds.com/#position@some"');
+    expect(transformedString).toContain(
+      '<a href="http://minds.com/#position@some"'
+    );
     expect(transformedString).toContain('<a class="tag" href="/name"');
     expect(transformedString).toContain('<a class="tag" href="/name1"');
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=hash1;period=24h');
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=hash2;period=24h');
-    expect(transformedString).toContain('<a href="/newsfeed/global/top;hashtag=hash3;period=24h');
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=hash1;period=24h'
+    );
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=hash2;period=24h'
+    );
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=hash3;period=24h'
+    );
     expect(transformedString).toContain('<a href="ftp://s.com"');
     expect(transformedString).toContain('<a href="mailto:name@mail.com"');
   });

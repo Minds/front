@@ -1,6 +1,12 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { Component, Input, Output } from '@angular/core';
-import { sessionMock } from '../../../../tests/session-mock.spec';;
+import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Client } from '../../../services/api/client';
 import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../../tests/client-mock.spec';
@@ -15,7 +21,7 @@ import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'minds-activity',
-  template: ''
+  template: '',
 })
 class MindsActivityMockComponent {
   @Input() object: any;
@@ -23,7 +29,7 @@ class MindsActivityMockComponent {
 
 @Component({
   selector: 'm-sort-selector',
-  template: ''
+  template: '',
 })
 class MindsSortSelectorMockComponent {
   @Input() algorithm: string;
@@ -39,14 +45,14 @@ describe('AdminFirehose', () => {
   function getMockActivities() {
     return [
       {
-        guid: 1
+        guid: 1,
       },
       {
-        guid: 2
+        guid: 2,
       },
       {
-        guid: 3
-      }
+        guid: 3,
+      },
     ];
   }
 
@@ -61,48 +67,54 @@ describe('AdminFirehose', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: NewsfeedHashtagSelectorService, useValue: newsfeedHashtagSelectorServiceMock },
+        {
+          provide: NewsfeedHashtagSelectorService,
+          useValue: newsfeedHashtagSelectorServiceMock,
+        },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
-   fixture = TestBed.createComponent(AdminFirehoseComponent);
+  beforeEach(done => {
+    fixture = TestBed.createComponent(AdminFirehoseComponent);
 
-   comp = fixture.componentInstance;
-   comp.entities = getMockActivities();
+    comp = fixture.componentInstance;
+    comp.entities = getMockActivities();
 
-   fixture.detectChanges();
+    fixture.detectChanges();
 
-   clientMock.response = {};
-   clientMock.response[`api/v2/admin/firehose/latest/activities?hashtags=&period=12h&all=`] = {
-     'status': 'success',
-     'entities': getMockActivities()
+    clientMock.response = {};
+    clientMock.response[
+      `api/v2/admin/firehose/latest/activities?hashtags=&period=12h&all=`
+    ] = {
+      status: 'success',
+      entities: getMockActivities(),
+    };
+
+    if (fixture.isStable()) {
+      done();
+    } else {
+      fixture.whenStable().then(() => {
+        done();
+      });
     }
-
-   if (fixture.isStable()) {
-     done();
-   } else {
-     fixture.whenStable().then(() => {
-       done();
-     });
-   }
   });
 
   it('should have a loading screen', () => {
     comp.inProgress = true;
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.m-firehose__spinner')))
-      .not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-firehose__spinner'))
+    ).not.toBeNull();
   });
 
   it('should hide a loading screen', () => {
     comp.inProgress = false;
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.m-firehose__spinner')))
-      .toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-firehose__spinner'))
+    ).toBeNull();
   });
 
   it('should initialize entities', () => {
@@ -115,22 +127,29 @@ describe('AdminFirehose', () => {
   });
 
   it('should save an accept activity', fakeAsync(() => {
-    clientMock.response['api/v2/admin/firehose/1'] = { 'status': 'success' };
+    clientMock.response['api/v2/admin/firehose/1'] = { status: 'success' };
     comp.save(getMockActivities()[0].guid);
     fixture.detectChanges();
     tick();
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v2/admin/firehose/1');
+    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+      'api/v2/admin/firehose/1'
+    );
   }));
 
   it('should save a reported activity', fakeAsync(() => {
-    clientMock.response['api/v2/admin/firehose/1'] = { 'status': 'success' };
+    clientMock.response['api/v2/admin/firehose/1'] = { status: 'success' };
     comp.save(getMockActivities()[0].guid, 1, 1);
     fixture.detectChanges();
     tick();
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v2/admin/firehose/1');
-    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ 'reason': 1, 'subreason': 1});
+    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+      'api/v2/admin/firehose/1'
+    );
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      reason: 1,
+      subreason: 1,
+    });
   }));
 
   it('should accept an activity', fakeAsync(() => {
@@ -138,21 +157,22 @@ describe('AdminFirehose', () => {
     spyOn(comp, 'initializeEntity');
     comp.accept();
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v2/admin/firehose/1');
+    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+      'api/v2/admin/firehose/1'
+    );
     expect(comp.save).toHaveBeenCalled();
     expect(comp.initializeEntity).toHaveBeenCalled();
   }));
 
   it('should swipe left', fakeAsync(() => {
     spyOn(comp, 'reject').and.callThrough();
-    comp.onKeyPress({ key: 'ArrowLeft'});
+    comp.onKeyPress({ key: 'ArrowLeft' });
     expect(comp.reject).toHaveBeenCalled();
   }));
 
   it('should swipe right', fakeAsync(() => {
     spyOn(comp, 'accept').and.callThrough();
-    comp.onKeyPress({ key: 'ArrowRight'});
+    comp.onKeyPress({ key: 'ArrowRight' });
     expect(comp.accept).toHaveBeenCalled();
   }));
-
 });

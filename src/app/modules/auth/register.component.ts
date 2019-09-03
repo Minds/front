@@ -12,11 +12,9 @@ import { OnboardingService } from '../onboarding/onboarding.service';
 
 @Component({
   selector: 'm-register',
-  templateUrl: 'register.component.html'
+  templateUrl: 'register.component.html',
 })
-
 export class RegisterComponent implements OnInit, OnDestroy {
-
   minds = window.Minds;
   errorMessage: string = '';
   twofactorToken: string = '';
@@ -26,7 +24,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   referrer: string;
 
   flags = {
-    canPlayInlineVideos: true
+    canPlayInlineVideos: true,
   };
 
   paramsSubscription: Subscription;
@@ -39,7 +37,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private loginReferrer: LoginReferrerService,
     public session: Session,
     private onboarding: OnboardingService,
-    public navigation: NavigationService,
+    public navigation: NavigationService
   ) {
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
@@ -59,7 +57,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.flags.canPlayInlineVideos = false;
     }
   }
-
 
   registered() {
     this.router.navigate(['/' + this.session.getLoggedInUser().username]);

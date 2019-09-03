@@ -1,5 +1,4 @@
 export class Country {
-
   name: string;
   iso2: string;
   dialCode: string;
@@ -17,5 +16,4 @@ export class Country {
     this.flagClass = '';
     this.placeHolder = '';
   }
-
 }

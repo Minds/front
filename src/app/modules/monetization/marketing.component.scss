@@ -1,4 +1,4 @@
-.m-monetization--marketing-header{
+.m-monetization--marketing-header {
   background: url('<%= APP_CDN %>/assets/photos/sunset.jpg');
   width: 100%;
   text-align: center;
@@ -9,45 +9,46 @@
   box-sizing: border-box;
 
   @media only screen and (max-width: 400px) {
-    padding:110px 0;
+    padding: 110px 0;
   }
 
-  h1, h3{
+  h1,
+  h3 {
     font-family: 'Roboto', Helvetica, sans-serif;
 
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white);
       text-shadow: 0 0 3px themed($m-grey-900);
     }
 
     @media only screen and (max-width: 400px) {
-      margin:0;
+      margin: 0;
     }
   }
 
-  h1{
+  h1 {
     word-spacing: 25px;
     letter-spacing: 4px;
     text-transform: uppercase;
 
     @media only screen and (max-width: 400px) {
-      font-size:30px;
+      font-size: 30px;
     }
   }
-  h3{
+  h3 {
     letter-spacing: 2px;
-    word-spacing:3px;
-    font-weight:300;
+    word-spacing: 3px;
+    font-weight: 300;
 
     @media only screen and (max-width: 400px) {
       font-size: 14px;
     }
   }
 
-  .m-monetization--marketing-action-button{
+  .m-monetization--marketing-action-button {
     margin-bottom: -80px;
     margin-top: 32px;
-    button{
+    button {
       letter-spacing: 3px;
       font-size: 18px;
       line-height: 35px;
@@ -55,25 +56,25 @@
       padding: 0 24px;
       font-weight: 300;
       font-family: 'Roboto', Helvetica, sans-serif;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
       }
     }
   }
 }
 
-.m-monetization--marketing-contents{
-  max-width:990px;
-  padding:64px 0 !important;
+.m-monetization--marketing-contents {
+  max-width: 990px;
+  padding: 64px 0 !important;
 
-  .mdl-cell{
+  .mdl-cell {
     padding: 32px 16px;
     text-align: center;
 
-    i{
+    i {
       font-size: 64px;
     }
-    h2{
+    h2 {
       padding: 0;
       margin: 24px 0;
       text-transform: uppercase;
@@ -82,39 +83,38 @@
       letter-spacing: 2px;
       font-size: 30px;
     }
-    span{
+    span {
       font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 1px;
     }
   }
 }
 
-.m-monetization--marketing m-monetization--onboarding{
+.m-monetization--marketing m-monetization--onboarding {
   margin: -115px auto 0;
   display: block;
   position: relative;
   max-width: 990px;
 
-  form{
+  form {
     padding: 16px;
   }
 }
 
 .m-monetization--marketing-faq {
-  max-width:900px;
+  max-width: 900px;
   margin: auto;
-  padding:16px;
-
+  padding: 16px;
 }
 
-.m-monetization--marketing m-monetization--terms{
+.m-monetization--marketing m-monetization--terms {
   max-width: 600px;
   margin: 16px auto;
   display: block;
   padding: 16px;
   max-height: 600px;
   overflow: scroll;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 }

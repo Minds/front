@@ -9,7 +9,6 @@ import { OnboardingModalComponent } from './modal.component';
 
 @Injectable()
 export class OnboardingService {
-
   static paramsSubscription;
 
   constructor(
@@ -17,21 +16,17 @@ export class OnboardingService {
     private session: Session,
     private storage: Storage,
     private route: ActivatedRoute,
-    private overlayModal: OverlayModalService,
-  ) {
-
-  }
+    private overlayModal: OverlayModalService
+  ) {}
 
   enable() {
     this.storage.set('onboarding', true);
   }
 
   shouldShow(id): boolean {
-    if (!this.storage.get('onboarding'))
-      return false;
+    if (!this.storage.get('onboarding')) return false;
 
-    if (this.storage.get('onboarding.seen.' + id))
-      return false;
+    if (this.storage.get('onboarding.seen.' + id)) return false;
 
     return true;
   }
@@ -41,8 +36,11 @@ export class OnboardingService {
   }
 
   show() {
-    const modal = this.overlayModal.create(OnboardingModalComponent, {}, { class: 'm-onboarding--modal-wrapper' });
+    const modal = this.overlayModal.create(
+      OnboardingModalComponent,
+      {},
+      { class: 'm-onboarding--modal-wrapper' }
+    );
     modal.present();
   }
-
 }

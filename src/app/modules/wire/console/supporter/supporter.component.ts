@@ -9,12 +9,9 @@ import { Session } from '../../../../services/session';
   moduleId: module.id,
   selector: 'm-wire-console--supporter',
   templateUrl: 'supporter.component.html',
-  providers: [
-    CurrencyPipe
-  ]
+  providers: [CurrencyPipe],
 })
 export class WireConsoleSupporterComponent {
-
   @Input() guid: string;
   @Input() supporter;
 
@@ -31,7 +28,7 @@ export class WireConsoleSupporterComponent {
     private cd: ChangeDetectorRef,
     private session: Session,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -44,11 +41,16 @@ export class WireConsoleSupporterComponent {
 
     this.inProgress = true;
 
-    let endpoint = this.reverse ?
-      `api/v1/wire/sums/sender/${this.session.getLoggedInUser().guid}/${this.method}/${this.guid}` :
-      `api/v1/wire/sums/sender/${this.guid}/${this.method}/${this.session.getLoggedInUser().guid}`;
+    let endpoint = this.reverse
+      ? `api/v1/wire/sums/sender/${this.session.getLoggedInUser().guid}/${
+          this.method
+        }/${this.guid}`
+      : `api/v1/wire/sums/sender/${this.guid}/${this.method}/${
+          this.session.getLoggedInUser().guid
+        }`;
 
-    this.client.get(endpoint, {})
+    this.client
+      .get(endpoint, {})
       .then(({ sum }) => {
         this.inProgress = false;
 
@@ -64,5 +66,4 @@ export class WireConsoleSupporterComponent {
         //this.error = e.message || 'Server error';
       });
   }
-
 }

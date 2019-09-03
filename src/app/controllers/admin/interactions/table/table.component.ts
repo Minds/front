@@ -1,36 +1,51 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
 import { Client } from '../../../../services/api/client';
 
 @Component({
   selector: 'm-admin--interactions--table',
   template: `
-    <h3> {{metric.title | titlecase}}</h3>
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress && !data[type].length"></div>
+    <h3>{{ metric.title | titlecase }}</h3>
+    <div
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+      *ngIf="inProgress && !data[type].length"
+    ></div>
 
     <table>
       <tbody>
-      <tr *ngFor="let item of data[type]">
-        <td [routerLink]="['/', item.user.guid]">
-          <img class="m-admin--interactions--avatar" src="/icon/{{item.user.guid}}/medium/{{item.user.icontime}}">
-          @{{item.user.username}}
-        </td>
-        <td>{{item.value}}</td>
-      </tr>
+        <tr *ngFor="let item of data[type]">
+          <td [routerLink]="['/', item.user.guid]">
+            <img
+              class="m-admin--interactions--avatar"
+              src="/icon/{{ item.user.guid }}/medium/{{ item.user.icontime }}"
+            />
+            @{{ item.user.username }}
+          </td>
+          <td>{{ item.value }}</td>
+        </tr>
 
-      <tr *ngIf="data[type].length === 0 && !inProgress">
-        <td style="text-align: left" i18n="@@COMMON__ADMIN__NO_DATA">No data</td>
-      </tr>
+        <tr *ngIf="data[type].length === 0 && !inProgress">
+          <td style="text-align: left" i18n="@@COMMON__ADMIN__NO_DATA">
+            No data
+          </td>
+        </tr>
       </tbody>
     </table>
   `,
   host: {
-    'class': 'm-border',
+    class: 'm-border',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class InteractionsTableComponent implements OnInit, OnChanges {
-  @Input() metric: { title: string, metric: string };
+  @Input() metric: { title: string; metric: string };
   timeout;
 
   @Input('type') set _type(value: 'actors' | 'beneficiaries') {
@@ -46,21 +61,18 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
   }
 
   type: 'actors' | 'beneficiaries';
-  startDate: string='';
-  endDate: string='';
+  startDate: string = '';
+  endDate: string = '';
 
   inProgress: boolean = false;
   init: boolean = false;
 
   data: any = {
     actors: [],
-    beneficiaries: []
+    beneficiaries: [],
   };
 
-
-  constructor(private client: Client, private cd: ChangeDetectorRef) {
-
-  }
+  constructor(private client: Client, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.getLeaderboard();
@@ -87,13 +99,15 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
     this.detectChanges();
 
     try {
-      const response: any = await this.client.get(`api/v2/admin/analytics/leaderboard/${this.type}/${this.metric.metric}`, {
-        from: Math.floor(+startDate / 1000),
-        to: Math.floor(+endDate / 1000),
-      });
+      const response: any = await this.client.get(
+        `api/v2/admin/analytics/leaderboard/${this.type}/${this.metric.metric}`,
+        {
+          from: Math.floor(+startDate / 1000),
+          to: Math.floor(+endDate / 1000),
+        }
+      );
 
       this.data[this.type] = response.counts[this.type];
-
     } catch (e) {
       console.error(e);
     }
@@ -102,7 +116,7 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
 
     this.detectChanges();
 
-    if (endDate.toDateString() === (new Date()).toDateString()) {
+    if (endDate.toDateString() === new Date().toDateString()) {
       this.timeout = setTimeout(() => this.getLeaderboard(), 10000);
     }
   }

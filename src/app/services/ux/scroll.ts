@@ -3,7 +3,6 @@ import { fromEvent, Observable } from 'rxjs';
 import { debounceTime, throttleTime } from 'rxjs/operators';
 
 export class ScrollService {
-
   scroll: Observable<Event>;
   view: any;
   viewListener;
@@ -19,19 +18,18 @@ export class ScrollService {
     this.scroll = fromEvent(window, 'scroll');
   }
 
-  listen(callback: (value: any) => any, debounce: number = 0, throttle: number = 0): any {
+  listen(
+    callback: (value: any) => any,
+    debounce: number = 0,
+    throttle: number = 0
+  ): any {
     if (debounce) {
-      return this.scroll
-        .pipe(debounceTime(debounce))
-        .subscribe(callback);
+      return this.scroll.pipe(debounceTime(debounce)).subscribe(callback);
     }
     if (throttle) {
-      return this.scroll
-        .pipe(throttleTime(throttle))
-        .subscribe(callback);
+      return this.scroll.pipe(throttleTime(throttle)).subscribe(callback);
     }
-    return this.scroll
-      .subscribe(callback);
+    return this.scroll.subscribe(callback);
   }
 
   unListen(subscription: any) {
@@ -41,10 +39,11 @@ export class ScrollService {
   listenForView() {
     if (!this.viewListener) {
       this.viewListener = this.scroll
-        .pipe(debounceTime(500))
-        .subscribe((e) => { this.viewEmitter.next(e); });
+        .pipe(debounceTime(100)) // wait 100ms before triggering
+        .subscribe(e => {
+          this.viewEmitter.next(e);
+        });
     }
     return this.viewEmitter;
   }
-
 }

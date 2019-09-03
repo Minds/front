@@ -2,27 +2,46 @@ import { Component, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'm-scheduler',
-  inputs: ['days',],
+  inputs: ['days'],
   outputs: ['update: ts'],
   template: `
     <!-- Day -->
-    <select name="date" [(ngModel)]="selectedDate" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
-        <option *ngFor="let d of dates; let i = index" [value]="i">{{d.formatted}}</option>
+    <select
+      name="date"
+      [(ngModel)]="selectedDate"
+      (change)="onChange($event)"
+      class="mdl-color-text--blue-grey-800 m-form-select"
+    >
+      <option *ngFor="let d of dates; let i = index" [value]="i">{{
+        d.formatted
+      }}</option>
     </select>
     <!-- Hour -->
-    <select name="hour" [(ngModel)]="selectedHour" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
-        <option *ngFor="let h of hours; let i = index" [value]="i">{{h.label}}</option>
+    <select
+      name="hour"
+      [(ngModel)]="selectedHour"
+      (change)="onChange($event)"
+      class="mdl-color-text--blue-grey-800 m-form-select"
+    >
+      <option *ngFor="let h of hours; let i = index" [value]="i">{{
+        h.label
+      }}</option>
     </select>
     <b>:</b>
     <!-- Minutes -->
-    <select name="minutes" [(ngModel)]="selectedMinutes" (change)="onChange($event)" class="mdl-color-text--blue-grey-800 m-form-select">
-        <option *ngFor="let m of minutes; let i = index" [value]="i">{{m.label}}</option>
+    <select
+      name="minutes"
+      [(ngModel)]="selectedMinutes"
+      (change)="onChange($event)"
+      class="mdl-color-text--blue-grey-800 m-form-select"
+    >
+      <option *ngFor="let m of minutes; let i = index" [value]="i">{{
+        m.label
+      }}</option>
     </select>
-  `
+  `,
 })
-
 export class Scheduler {
-
   days: Number = 3;
   update: EventEmitter<any> = new EventEmitter(true);
 
@@ -47,7 +66,11 @@ export class Scheduler {
       this.dates.push({
         date: date,
         ts: date.getTime(),
-        formatted: date.getDate() + this.getSuffix(date.getDate()) + ' ' + date.toLocaleString('en-us', { month: 'long' })
+        formatted:
+          date.getDate() +
+          this.getSuffix(date.getDate()) +
+          ' ' +
+          date.toLocaleString('en-us', { month: 'long' }),
       });
     }
     this.setUpHours();
@@ -93,8 +116,14 @@ export class Scheduler {
     date.setDate(this.dates[this.selectedDate].date.getDate());
     date.setHours(this.selectedHour, this.selectedMinutes * 5, 0, 0);
     var ts = date.getTime();
-    console.log('emitting change', ts, date, this.dates[this.selectedDate].date, this.selectedHour, this.selectedMinutes * 5);
+    console.log(
+      'emitting change',
+      ts,
+      date,
+      this.dates[this.selectedDate].date,
+      this.selectedHour,
+      this.selectedMinutes * 5
+    );
     this.update.next(ts);
   }
-
 }

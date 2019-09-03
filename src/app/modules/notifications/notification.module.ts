@@ -18,15 +18,14 @@ import { NotificationsComponent } from './notifications.component';
 import { NotificationService } from './notification.service';
 import { NotificationsToasterComponent } from './toaster.component';
 
-
 @NgModule({
   imports: [
     NgCommonModule,
     CommonModule,
     RouterModule.forChild([
       { path: 'notifications/:filter', component: NotificationsComponent },
-      { path: 'notifications', component: NotificationsComponent }
-    ])
+      { path: 'notifications', component: NotificationsComponent },
+    ]),
   ],
   declarations: [
     NotificationsFlyoutComponent,
@@ -39,8 +38,8 @@ import { NotificationsToasterComponent } from './toaster.component';
     {
       provide: NotificationService,
       useFactory: NotificationService._,
-      deps: [ Session, Client, SocketsService, MindsTitle ]
-    }
+      deps: [Session, Client, SocketsService, MindsTitle],
+    },
   ],
   exports: [
     NotificationsFlyoutComponent,
@@ -48,8 +47,6 @@ import { NotificationsToasterComponent } from './toaster.component';
     NotificationComponent,
     NotificationsTopbarToggleComponent,
     NotificationsToasterComponent,
-  ]
+  ],
 })
-
-export class NotificationModule {
-}
+export class NotificationModule {}

@@ -7,11 +7,9 @@ import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/mod
 
 @Component({
   selector: 'm-settings--emails',
-  templateUrl: 'emails.component.html'
+  templateUrl: 'emails.component.html',
 })
-
 export class SettingsEmailsComponent implements OnInit {
-
   notifications: any = {
     when: {
       unread_notifications: false,
@@ -28,7 +26,7 @@ export class SettingsEmailsComponent implements OnInit {
       minds_news: false,
       minds_tips: false,
       exclusive_promotions: false,
-    }
+    },
   };
 
   email: string = '';
@@ -41,8 +39,10 @@ export class SettingsEmailsComponent implements OnInit {
 
   paramsSubscription: Subscription;
 
-  constructor(public client: Client, public overlayModal: OverlayModalService) {
-  }
+  constructor(
+    public client: Client,
+    public overlayModal: OverlayModalService
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -58,7 +58,7 @@ export class SettingsEmailsComponent implements OnInit {
 
   async load() {
     this.loading = true;
-    let response:any = await this.client.get('api/v2/settings/emails');
+    let response: any = await this.client.get('api/v2/settings/emails');
     response.notifications.forEach((item, index, list) => {
       let value = item.value;
       if (item.value === '1') {
@@ -82,12 +82,12 @@ export class SettingsEmailsComponent implements OnInit {
   }
 
   submit() {
-
     this.inProgress = true;
-    this.client.post('api/v2/settings/emails', {
-      'email': this.email,
-      'notifications': this.notifications
-    })
+    this.client
+      .post('api/v2/settings/emails', {
+        email: this.email,
+        notifications: this.notifications,
+      })
       .then((response: any) => {
         this.changed = false;
         this.saved = true;
@@ -100,17 +100,20 @@ export class SettingsEmailsComponent implements OnInit {
         this.inProgress = false;
       });
   }
-  
-  save() {
-    if (!this.canSubmit())
-      return;
 
-    const creator = this.overlayModal.create(ConfirmPasswordModalComponent, {}, {
-      class: 'm-overlay-modal--small',
-      onComplete: (wire) => {
-        this.submit();
+  save() {
+    if (!this.canSubmit()) return;
+
+    const creator = this.overlayModal.create(
+      ConfirmPasswordModalComponent,
+      {},
+      {
+        class: 'm-overlay-modal--small',
+        onComplete: wire => {
+          this.submit();
+        },
       }
-    });
+    );
     creator.present();
   }
 }

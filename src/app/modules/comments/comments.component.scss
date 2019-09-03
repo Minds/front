@@ -1,14 +1,29 @@
 .mdl-card__actions {
-    a, div {
-      @include m-theme(){
-        color: themed($m-blue-grey-700);
-      }
+  a,
+  div {
+    @include m-theme() {
+      color: themed($m-blue-grey-700);
+    }
 
-      &:hover {
-        @include m-theme(){
-            color: themed($m-blue-grey-900);
-        }
+    &:hover {
+      @include m-theme() {
+        color: themed($m-blue-grey-900);
       }
     }
- 
+  }
+  .m-comments-composer--overflow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100px;
+    height: 24px;
+    @include m-theme() {
+      background: linear-gradient(
+        to right,
+        rgba(themed($m-white-always), 0) 0%,
+        rgba(themed($m-white), 1) 25%
+      );
+    }
+  }
 }

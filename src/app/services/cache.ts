@@ -1,5 +1,4 @@
 export class CacheService {
-
   private storage = {};
 
   static _() {
@@ -18,5 +17,4 @@ export class CacheService {
 
     return this.storage[key];
   }
-
 }

@@ -3,23 +3,20 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  ViewChild
-} from "@angular/core";
-import { Router } from "@angular/router";
-import { PosterComponent } from "../../../newsfeed/poster/poster.component";
-import { FeedsService } from "../../../../common/services/feeds.service";
-import { Session } from "../../../../services/session";
-import { SortedService } from "./sorted.service";
-import { Client } from "../../../../services/api/client";
-import { GroupsService } from "../../groups-service";
-import { Observable } from "rxjs";
+  ViewChild,
+} from '@angular/core';
+import { Router } from '@angular/router';
+import { PosterComponent } from '../../../newsfeed/poster/poster.component';
+import { FeedsService } from '../../../../common/services/feeds.service';
+import { Session } from '../../../../services/session';
+import { SortedService } from './sorted.service';
+import { Client } from '../../../../services/api/client';
+import { GroupsService } from '../../groups-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-group-profile-feed__sorted',
-  providers: [
-    SortedService,
-    FeedsService,
-  ],
+  providers: [SortedService, FeedsService],
   templateUrl: 'sorted.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -37,7 +34,7 @@ export class GroupProfileFeedSortedComponent {
     }
   }
 
-  type: string = 'activities'
+  type: string = 'activities';
   @Input('type') set _type(type: string) {
     if (type === this.type) {
       return;
@@ -70,9 +67,8 @@ export class GroupProfileFeedSortedComponent {
     protected session: Session,
     protected router: Router,
     protected client: Client,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.initialized = true;
@@ -91,12 +87,10 @@ export class GroupProfileFeedSortedComponent {
     this.detectChanges();
 
     try {
-      
       this.feedsService
         .setEndpoint(`api/v2/feeds/container/${this.group.guid}/${this.type}`)
         .setLimit(12)
         .fetch();
-  
     } catch (e) {
       console.error('GroupProfileFeedSortedComponent.loadFeed', e);
     }
@@ -106,6 +100,13 @@ export class GroupProfileFeedSortedComponent {
   }
 
   loadMore() {
+    if (
+      this.feedsService.canFetchMore &&
+      !this.feedsService.inProgress.getValue() &&
+      this.feedsService.offset.getValue()
+    ) {
+      this.feedsService.fetch(); // load the next 150 in the background
+    }
     this.feedsService.loadMore();
   }
 
@@ -120,8 +121,7 @@ export class GroupProfileFeedSortedComponent {
   }
 
   isMember() {
-    return this.session.isLoggedIn() &&
-      this.group['is:member'];
+    return this.session.isLoggedIn() && this.group['is:member'];
   }
 
   isActivityFeed() {
@@ -138,12 +138,12 @@ export class GroupProfileFeedSortedComponent {
     let feedItem = {
       entity: activity,
       urn: activity.urn,
-      guid: activity.guid
+      guid: activity.guid,
     };
 
     this.feedsService.rawFeed.next([
-      ... [ feedItem ],
-      ... this.feedsService.rawFeed.getValue()
+      ...[feedItem],
+      ...this.feedsService.rawFeed.getValue(),
     ]);
 
     this.detectChanges();
