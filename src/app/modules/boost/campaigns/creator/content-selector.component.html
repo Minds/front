@@ -1,23 +1,25 @@
 <div class="m-border m-boost-campaigns-creator--content-selector">
-  <div class="m-boost-campaigns-creator--content-selector--search-bar" *ngIf="!readonly">
-    <input
-      type="text"
-      [(ngModel)]="query"
-      (keydown.enter)="search($event)"
-    >
+  <div
+    class="m-boost-campaigns-creator--content-selector--search-bar"
+    *ngIf="!readonly"
+  >
+    <input type="text" [(ngModel)]="query" (keydown.enter)="search($event)" />
 
     <button
       class="m-btn m-btn--slim m-btn--action"
       (click)="search($event)"
       i18n
-    >Search</button>
+    >
+      Search
+    </button>
 
     <ng-container *ngIf="type === 'content' && username">
       <a
         class="m-btn m-btn--slim m-btn--action m-boost-campaigns-creator--content-selector--pick-self"
         (click)="searchUser()"
         i18n
-      >Use @{{username}}</a>
+        >Use @{{ username }}</a
+      >
     </ng-container>
   </div>
 
@@ -25,10 +27,14 @@
     <minds-card
       [object]="result"
       [flags]="{ hideTabs: true }"
-      [hostClass]="'mdl-card mdl-shadow--2dp m-boost-campaigns-creator--card m-boost-campaigns-creator--' + type + '-card'"
+      [hostClass]="
+        'mdl-card mdl-shadow--2dp m-boost-campaigns-creator--card m-boost-campaigns-creator--' +
+        type +
+        '-card'
+      "
     ></minds-card>
   </ng-container>
-  
+
   <ng-template #noResult>
     <ng-container *ngIf="inProgress; else empty">
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>

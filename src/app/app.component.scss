@@ -150,7 +150,7 @@ m-app {
     margin: 4px 8px 8px;
     padding: 16px 16px 24px;
 
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
 
@@ -180,7 +180,7 @@ m-app {
 .m-table {
   border-radius: 6px;
 
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
     border: 1px solid themed($m-grey-50);
   }
@@ -192,7 +192,7 @@ m-app {
       font-size: 14px;
       font-weight: 600;
 
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
         border-bottom: 1px solid themed($m-grey-50);
       }
@@ -218,7 +218,7 @@ m-app {
       font-size: 14px;
       font-weight: 600;
 
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
         border-bottom: 1px solid themed($m-grey-50);
       }
@@ -229,7 +229,7 @@ m-app {
 
       &.m-table--link-cell {
         a {
-          @include m-theme(){
+          @include m-theme() {
             border-bottom: 1px dashed themed($m-grey-100);
           }
         }
@@ -260,10 +260,10 @@ m-app {
     }
   }
 
-  input[type=text],
-  input[type=password],
-  input[type=number],
-  input[type=email],
+  input[type='text'],
+  input[type='password'],
+  input[type='number'],
+  input[type='email'],
   textarea {
     font-family: 'Roboto', Helvetica, Arial, sans-serif;
   }
@@ -274,7 +274,7 @@ m-app {
       padding: 0 4px;
       margin-bottom: 8px;
 
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
 
@@ -293,10 +293,10 @@ m-app {
       }
     }
 
-    input[type=text],
-    input[type=password],
-    input[type=number],
-    input[type=email] {
+    input[type='text'],
+    input[type='password'],
+    input[type='number'],
+    input[type='email'] {
       appearance: none;
       width: calc(20em + 24px);
       max-width: 100%;
@@ -318,10 +318,10 @@ m-app {
     }
 
     .m-form--composite-input {
-      input[type=text],
-      input[type=password],
-      input[type=number],
-      input[type=email] {
+      input[type='text'],
+      input[type='password'],
+      input[type='number'],
+      input[type='email'] {
         width: 10em;
         max-width: 100%;
       }
@@ -331,7 +331,7 @@ m-app {
         font-size: 12px;
         font-weight: 600;
 
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-600);
         }
       }
@@ -349,8 +349,8 @@ m-app {
         margin-right: 0;
       }
 
-      input[type=radio],
-      input[type=checkbox] {
+      input[type='radio'],
+      input[type='checkbox'] {
         display: none;
       }
     }
@@ -368,7 +368,7 @@ m-app {
         position: relative;
         top: -1px;
 
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-red);
         }
       }
@@ -388,10 +388,10 @@ m-app {
         margin-right: 0;
       }
 
-      input[type=text],
-      input[type=password],
-      input[type=number],
-      input[type=email] {
+      input[type='text'],
+      input[type='password'],
+      input[type='number'],
+      input[type='email'] {
         width: 10em;
         max-width: 100%;
       }
@@ -410,7 +410,7 @@ m-app {
     margin-left: 8px;
     font-weight: 300;
 
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
   }
@@ -424,7 +424,7 @@ m-app {
       right: 5px;
       transform: translateY(-50%);
 
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
@@ -436,8 +436,8 @@ m-app {
     border-radius: 16px;
     padding: 7px 12px 5px;
 
-    @include m-theme(){
-      border: 1px solid themed($m-grey-50);;
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
     }
   }
 
@@ -453,7 +453,7 @@ m-app {
   padding: 32px;
   font-weight: 300;
 
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red);
     background-color: themed($m-white);
   }

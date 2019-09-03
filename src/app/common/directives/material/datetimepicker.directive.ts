@@ -7,11 +7,11 @@ import {
 } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { default as DateTimePicker } from 'material-datetime-picker';
-import * as moment from "moment";
+import * as moment from 'moment';
 
 @Directive({
   selector: '[mdl-datetime-picker]',
-  providers: [ DatePipe ]
+  providers: [DatePipe],
 })
 export class MaterialDateTimePickerDirective {
   @Input() date;
@@ -23,7 +23,7 @@ export class MaterialDateTimePickerDirective {
 
   readonly DEFAULT_FORMAT = 'MM/DD/YY, h:mm';
 
-  constructor(public datePipe: DatePipe) { }
+  constructor(public datePipe: DatePipe) {}
 
   @HostListener('click')
   @HostListener('keydown.enter')

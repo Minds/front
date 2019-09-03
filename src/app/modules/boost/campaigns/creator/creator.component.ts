@@ -1,6 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Campaign, CampaignDeliveryStatus, CampaignPayment, CampaignPreview } from "../campaigns.type";
+import {
+  Campaign,
+  CampaignDeliveryStatus,
+  CampaignPayment,
+  CampaignPreview,
+} from '../campaigns.type';
 import { CampaignsService } from '../campaigns.service';
 import { Subject, Subscription } from 'rxjs';
 import { Tag } from '../../../hashtags/types/tag';
@@ -14,7 +25,6 @@ import { debounceTime } from 'rxjs/operators';
   templateUrl: 'creator.component.html',
 })
 export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
-
   isEditing: boolean = false;
 
   urn: string;
@@ -38,16 +48,15 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     protected payments: CampaignPaymentsService,
     protected router: Router,
     protected route: ActivatedRoute,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.reset();
 
     this.route$ = this.route.params.subscribe(params => {
       if (params.from || params.type) {
-        this.createFrom(params as { from, type });
+        this.createFrom(params as { from; type });
       }
 
       if (params.urn && this.urn !== params.urn) {
@@ -101,7 +110,8 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       this.campaign = await this.service.get(this.urn);
     } catch (e) {
       console.error('BoostCampaignsCreatorComponent', e);
-      this.currentError = (e && e.message) || 'Unknown error. Check your browser console.';
+      this.currentError =
+        (e && e.message) || 'Unknown error. Check your browser console.';
       this.campaign = void 0;
     }
 
@@ -119,7 +129,7 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       nsfw: [],
       hashtags: [],
       start: Date.now(),
-      end: Date.now() + (5 * 24 * 60 * 60 * 1000),
+      end: Date.now() + 5 * 24 * 60 * 60 * 1000,
       impressions: 0,
     };
 
@@ -141,7 +151,9 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
   onTagsRemoved(tags: Tag[]) {
     const tagValues = tags.map(tag => tag.value);
 
-    this.campaign.hashtags = this.campaign.hashtags.filter(hashtag => tagValues.indexOf(hashtag) === -1)
+    this.campaign.hashtags = this.campaign.hashtags.filter(
+      hashtag => tagValues.indexOf(hashtag) === -1
+    );
   }
 
   onStartDateChange(date) {
@@ -164,7 +176,12 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
   }
 
   canCancel() {
-    return this.isEditing && (['created', 'approved'] as CampaignDeliveryStatus[]).indexOf(this.campaign.delivery_status) > -1;
+    return (
+      this.isEditing &&
+      (['created', 'approved'] as CampaignDeliveryStatus[]).indexOf(
+        this.campaign.delivery_status
+      ) > -1
+    );
   }
 
   get types() {
@@ -186,7 +203,10 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.detectChanges();
 
     try {
-      if (!this.isEditing && (!this.campaign.checksum || !this.campaign.client_guid)) {
+      if (
+        !this.isEditing &&
+        (!this.campaign.checksum || !this.campaign.client_guid)
+      ) {
         const { guid, checksum } = await this.service.prepare(this.campaign);
 
         this.campaign.client_guid = guid;
@@ -194,7 +214,10 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       }
 
       let payment: CampaignPayment = null;
-      let amountDue = this.payments.calculateAmountDue(this.campaign, this.isEditing);
+      let amountDue = this.payments.calculateAmountDue(
+        this.campaign,
+        this.isEditing
+      );
 
       if (amountDue > 0) {
         payment = await this.payments.pay(this.campaign, amountDue);
@@ -208,9 +231,9 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
         }
       }
 
-      const campaign = !this.isEditing ?
-        await this.service.create(this.campaign, payment) :
-        await this.service.update(this.campaign, payment);
+      const campaign = !this.isEditing
+        ? await this.service.create(this.campaign, payment)
+        : await this.service.update(this.campaign, payment);
 
       // NOTE: Keeping inProgress true until redirection happens
       setTimeout(() => {
@@ -219,7 +242,8 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       }, 1000);
     } catch (e) {
       console.error('BoostCampaignsCreatorComponent', e);
-      this.currentError = (e && e.message) || 'Unknown error. Check your browser console.';
+      this.currentError =
+        (e && e.message) || 'Unknown error. Check your browser console.';
       this.inProgress = false;
     }
 
@@ -237,7 +261,11 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     }
 
     // TODO: Use a nice modal
-    if (!confirm(`Are you sure? There's no UNDO from cancelling a campaign. You will receive a refund.`)) {
+    if (
+      !confirm(
+        `Are you sure? There's no UNDO from cancelling a campaign. You will receive a refund.`
+      )
+    ) {
       return;
     }
 
@@ -255,7 +283,8 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       }, 1000);
     } catch (e) {
       console.error('BoostCampaignsCreatorComponent', e);
-      this.currentError = (e && e.message) || 'Unknown error. Check your browser console.';
+      this.currentError =
+        (e && e.message) || 'Unknown error. Check your browser console.';
       this.inProgress = false;
     }
 

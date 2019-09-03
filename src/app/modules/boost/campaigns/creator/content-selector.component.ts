@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output
+  Output,
 } from '@angular/core';
 import { CampaignType } from '../campaigns.type';
 import { CampaignContentsService } from '../campaign-contents.service';
@@ -18,7 +18,6 @@ import { Session } from '../../../../services/session';
   templateUrl: 'content-selector.component.html',
 })
 export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
-
   type: CampaignType;
 
   @Input('type') set _type(type: CampaignType) {
@@ -46,9 +45,8 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
   constructor(
     protected contentsService: CampaignContentsService,
     protected session: Session,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     if (this.content && this.content.length > 0) {
@@ -72,7 +70,10 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
     this.detectChanges();
 
     try {
-      const result = await this.contentsService.getContent(this.type, this.query);
+      const result = await this.contentsService.getContent(
+        this.type,
+        this.query
+      );
 
       this.result = result || void 0;
       this.emit(this.result && this.result.urn ? [this.result.urn] : []);
@@ -110,4 +111,3 @@ export class BoostCampaignsCreatorContentSelectorComponent implements OnInit {
     this.cd.detectChanges();
   }
 }
-

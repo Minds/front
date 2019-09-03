@@ -3,7 +3,12 @@
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <a
         class="m-topbar--navigation--item"
-        [routerLink]="'/boost/console/' + type + '/history' + (type === 'offers' ? '/inbox' : '')"
+        [routerLink]="
+          '/boost/console/' +
+          type +
+          '/history' +
+          (type === 'offers' ? '/inbox' : '')
+        "
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span i18n>History</span>

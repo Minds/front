@@ -424,7 +424,7 @@ describe('BoostCreatorComponent', () => {
         MockComponent({
           selector: 'm-tooltip',
           template: '<ng-content></ng-content>',
-          inputs: ['icon']
+          inputs: ['icon'],
         }),
       ],
       imports: [FormsModule, RouterTestingModule],

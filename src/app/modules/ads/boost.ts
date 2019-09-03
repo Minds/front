@@ -5,9 +5,9 @@ import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
-import { FeedsService } from "../../common/services/feeds.service";
-import { first } from "rxjs/operators";
-import { FeaturesService } from "../../services/features.service";
+import { FeedsService } from '../../common/services/feeds.service';
+import { first } from 'rxjs/operators';
+import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-ads-boost',
@@ -39,8 +39,8 @@ export class BoostAds implements OnInit, OnDestroy {
     public feedsService: FeedsService,
     private featureService: FeaturesService,
     private storage: Storage,
-    private settingsService: SettingsService) {
-  }
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit() {
     this.rating = this.session.getLoggedInUser().boost_rating;
@@ -51,11 +51,9 @@ export class BoostAds implements OnInit, OnDestroy {
     );
 
     this.feedsService.feed.subscribe(async boosts => {
-      if (!boosts.length)
-        return;
+      if (!boosts.length) return;
       for (const boost of boosts) {
-        if (boost)
-          this.boosts.push(await boost.pipe(first()).toPromise());
+        if (boost) this.boosts.push(await boost.pipe(first()).toPromise());
       }
     });
 

@@ -29,11 +29,11 @@ import { BoostPublisherEarningsComponent } from './publisher/earnings/earnings.c
 import { BoostPublisherPayoutsComponent } from './publisher/payouts/payouts.component';
 import { BoostPublisherSettingsComponent } from './publisher/settings/settings.component';
 import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
-import { BoostRootComponent } from "./root.component";
-import { BoostCampaignsOverviewComponent } from "./campaigns/overview/overview.component";
-import { BoostCampaignsCreatorComponent } from "./campaigns/creator/creator.component";
-import { BoostCampaignsViewComponent } from "./campaigns/view/view.component";
-import { BoostCampaignsListComponent } from "./campaigns/list/list.component";
+import { BoostRootComponent } from './root.component';
+import { BoostCampaignsOverviewComponent } from './campaigns/overview/overview.component';
+import { BoostCampaignsCreatorComponent } from './campaigns/creator/creator.component';
+import { BoostCampaignsViewComponent } from './campaigns/view/view.component';
+import { BoostCampaignsListComponent } from './campaigns/list/list.component';
 import { BoostCampaignsCreatorContentSelectorComponent } from './campaigns/creator/content-selector.component';
 
 const boostRoutes: Routes = [
@@ -45,7 +45,7 @@ const boostRoutes: Routes = [
       {
         path: 'campaigns',
         redirectTo: 'campaigns/list',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'campaigns/overview',
@@ -74,7 +74,7 @@ const boostRoutes: Routes = [
           {
             path: '',
             redirectTo: 'newsfeed/history',
-            pathMatch: 'full'
+            pathMatch: 'full',
           },
           {
             path: 'publisher',
@@ -83,26 +83,25 @@ const boostRoutes: Routes = [
               {
                 path: '',
                 redirectTo: 'earnings',
-                pathMatch: 'full'
+                pathMatch: 'full',
               },
               {
                 path: 'earnings',
-                component:
-                BoostPublisherEarningsComponent
+                component: BoostPublisherEarningsComponent,
               },
               {
                 path: 'payouts',
-                component: BoostPublisherPayoutsComponent
+                component: BoostPublisherPayoutsComponent,
               },
               {
                 path: 'settings',
-                component: BoostPublisherSettingsComponent
+                component: BoostPublisherSettingsComponent,
               },
-            ]
+            ],
           },
           {
             path: 'publisher/:filter',
-            component: BoostPublisherComponent
+            component: BoostPublisherComponent,
           },
           {
             path: ':type',
@@ -111,25 +110,25 @@ const boostRoutes: Routes = [
               {
                 path: '',
                 redirectTo: 'history',
-                pathMatch: 'full'
+                pathMatch: 'full',
               },
               {
                 path: 'create',
-                component: BoostConsoleBooster
+                component: BoostConsoleBooster,
               },
               {
                 path: 'history',
-                component: BoostConsoleHistoryComponent
+                component: BoostConsoleHistoryComponent,
               },
               {
                 path: 'history/:filter',
-                component: BoostConsoleHistoryComponent
+                component: BoostConsoleHistoryComponent,
               },
-            ]
+            ],
           },
-        ]
+        ],
       },
-    ]
+    ],
   },
 ];
 

@@ -12,12 +12,17 @@ const matchTypeOrNull = (type: CampaignType, content) => {
   const taxonomy = [content.type, content.subtype].filter(Boolean).join(':');
 
   if (type === 'newsfeed' && taxonomy !== 'activity') {
-    console.warn('Type mismatch', {type, taxonomy});
+    console.warn('Type mismatch', { type, taxonomy });
     return null;
   }
 
-  if (type === 'content' && ['object:image', 'object:video', 'object:blog', 'group', 'user'].indexOf(taxonomy) === -1) {
-    console.warn('Type mismatch', {type, taxonomy});
+  if (
+    type === 'content' &&
+    ['object:image', 'object:video', 'object:blog', 'group', 'user'].indexOf(
+      taxonomy
+    ) === -1
+  ) {
+    console.warn('Type mismatch', { type, taxonomy });
     return null;
   }
 
@@ -26,16 +31,13 @@ const matchTypeOrNull = (type: CampaignType, content) => {
 
 @Injectable()
 export class CampaignContentsService {
+  constructor(protected session: Session, protected client: Client) {}
 
-  constructor(
-    protected session: Session,
-    protected client: Client,
-  ) {
-  }
-
-
-async getContent(type: CampaignType, query: string) {
-    if (/^[0-9]+$/.test(query) || /^urn:[a-z0-9][a-z0-9-]{0,31}:[a-z0-9()+,\-.:=@;$_!*'%/?#]+$/.test(query)) {
+  async getContent(type: CampaignType, query: string) {
+    if (
+      /^[0-9]+$/.test(query) ||
+      /^urn:[a-z0-9][a-z0-9-]{0,31}:[a-z0-9()+,\-.:=@;$_!*'%/?#]+$/.test(query)
+    ) {
       const content = await this.getContentByGuidOrUrn(query);
       return matchTypeOrNull(type, content);
     } else if (/\/newsfeed\/[0-9]+/.test(query)) {
@@ -75,13 +77,17 @@ async getContent(type: CampaignType, query: string) {
         break;
     }
 
-    const results: Array<any> = await Promise.all(feedTypes.map(feedType => this.client.get(`api/v2/feeds/container/${userGuid}/${feedType}`, {
-      sync: 1,
-      force_public: 1,
-      query,
-      limit: 1,
-      // TODO: Add nsfw
-    })));
+    const results: Array<any> = await Promise.all(
+      feedTypes.map(feedType =>
+        this.client.get(`api/v2/feeds/container/${userGuid}/${feedType}`, {
+          sync: 1,
+          force_public: 1,
+          query,
+          limit: 1,
+          // TODO: Add nsfw
+        })
+      )
+    );
 
     const entityIds = [];
 
@@ -90,7 +96,11 @@ async getContent(type: CampaignType, query: string) {
         continue;
       }
 
-      entityIds.push(...result.entities.map(entity => entity.urn || entity.guid).filter(Boolean))
+      entityIds.push(
+        ...result.entities
+          .map(entity => entity.urn || entity.guid)
+          .filter(Boolean)
+      );
     }
 
     const entities: Array<any> = await this.getEntities(entityIds);
@@ -113,16 +123,15 @@ async getContent(type: CampaignType, query: string) {
   async getEntities(urns: string[]) {
     // TODO: Replace with a better Entities Sync service (w/ caching)
 
-    const entities = (await this.client.get(`api/v2/entities`, {
-      urns: urns.join(','),
-      as_activities: '',
-    }) as any).entities || [];
+    const entities =
+      ((await this.client.get(`api/v2/entities`, {
+        urns: urns.join(','),
+        as_activities: '',
+      })) as any).entities || [];
 
-    return entities
-      .filter(Boolean)
-      .map(entity => ({
-        ...entity,
-        urn: normalizeUrn(entity.urn || entity.guid)
-      }));
+    return entities.filter(Boolean).map(entity => ({
+      ...entity,
+      urn: normalizeUrn(entity.urn || entity.guid),
+    }));
   }
 }

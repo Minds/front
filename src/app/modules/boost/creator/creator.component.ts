@@ -742,7 +742,7 @@ export class BoostCreatorComponent implements AfterViewInit {
       return null;
     }
 
-    return ['/boost/campaigns/create', { type: this.boost.type, from: urn }]
+    return ['/boost/campaigns/create', { type: this.boost.type, from: urn }];
   }
 
   dismissSelf() {

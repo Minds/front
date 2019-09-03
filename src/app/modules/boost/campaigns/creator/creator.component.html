@@ -1,18 +1,31 @@
 <ng-template #isEditingSaveButtonTemplate>
-  <ng-container *ngIf="amountDue > 0; else isEditingSaveButtonTemplateNoPayment" i18n>Pay and Update</ng-container>
-  <ng-template #isEditingSaveButtonTemplateNoPayment><ng-container i18n>Save</ng-container></ng-template>
+  <ng-container
+    *ngIf="amountDue > 0; else isEditingSaveButtonTemplateNoPayment"
+    i18n
+    >Pay and Update</ng-container
+  >
+  <ng-template #isEditingSaveButtonTemplateNoPayment
+    ><ng-container i18n>Save</ng-container></ng-template
+  >
 </ng-template>
 
 <div class="m-page--section m-border">
   <div class="m-page--section-button-bar">
     <h1>
-      <ng-container *ngIf="!isEditing; else titleIsEditing" i18n>New Campaign</ng-container>
+      <ng-container *ngIf="!isEditing; else titleIsEditing" i18n
+        >New Campaign</ng-container
+      >
       <ng-template #titleIsEditing i18n>Edit Campaign</ng-template>
     </h1>
 
     <div class="m-page--section-button-bar--buttons">
-      <button class="m-btn m-btn--slim m-btn--action" [disabled]="!canSubmit() || inProgress">
-        <ng-container *ngIf="!isEditing; else isEditingSaveButtonTemplate" i18n>Pay and Create</ng-container>
+      <button
+        class="m-btn m-btn--slim m-btn--action"
+        [disabled]="!canSubmit() || inProgress"
+      >
+        <ng-container *ngIf="!isEditing; else isEditingSaveButtonTemplate" i18n
+          >Pay and Create</ng-container
+        >
       </button>
     </div>
   </div>
@@ -30,7 +43,7 @@
         name="name"
         [ngModel]="campaign.name"
         (ngModelChange)="campaign.name = $event; triggerPreview()"
-      >
+      />
     </div>
 
     <div class="m-form--field">
@@ -57,9 +70,9 @@
             [disabled]="isEditing || type.disabled"
             (change)="campaign.type = type.id; triggerPreview()"
             name="type"
-          >
+          />
 
-          <span>{{type.label}}</span>
+          <span>{{ type.label }}</span>
         </label>
       </ng-container>
     </div>
@@ -107,9 +120,12 @@
           <span
             *ngFor="let hashtag of campaign.hashtags"
             class="m-form--tag-badge"
-          >#{{hashtag}}</span>
+            >#{{ hashtag }}</span
+          >
 
-          <span *ngIf="!campaign.hashtags || !campaign.hashtags.length">&nbsp;</span>
+          <span *ngIf="!campaign.hashtags || !campaign.hashtags.length"
+            >&nbsp;</span
+          >
         </span>
 
         <m-hashtags-selector
@@ -134,11 +150,19 @@
         <div
           class="m-date-selector--input"
           mdl-datetime-picker
-          [dateFormat]="'MM/DD/YY, h:mm a Z'" [useUTC]="true"
+          [dateFormat]="'MM/DD/YY, h:mm a Z'"
+          [useUTC]="true"
           [date]="campaign.start"
           (dateChange)="onStartDateChange($event); triggerPreview()"
         >
-          <input id="boost-creator__start" type="text" placeholder="Now" i18n [value]="campaign.start | utcDate | date:'MMM dd'" readonly>
+          <input
+            id="boost-creator__start"
+            type="text"
+            placeholder="Now"
+            i18n
+            [value]="campaign.start | utcDate | date: 'MMM dd'"
+            readonly
+          />
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
       </div>
@@ -151,10 +175,18 @@
 
         <div
           class="m-date-selector--input"
-          mdl-datetime-picker [date]="campaign.end"
+          mdl-datetime-picker
+          [date]="campaign.end"
           (dateChange)="onEndDateChange($event); triggerPreview()"
         >
-          <input id="boost-creator__end" type="text" placeholder="End of times" i18n [value]="campaign.end | utcDate | date:'MMM dd'" readonly>
+          <input
+            id="boost-creator__end"
+            type="text"
+            placeholder="End of times"
+            i18n
+            [value]="campaign.end | utcDate | date: 'MMM dd'"
+            readonly
+          />
           <i class="material-icons">keyboard_arrow_down</i>
         </div>
       </div>
@@ -173,7 +205,7 @@
           name="budget"
           [ngModel]="campaign.budget"
           (ngModelChange)="campaign.budget = $event; triggerPreview()"
-        >
+        />
 
         <span>TOKENS</span>
       </div>
@@ -187,39 +219,49 @@
 
       <div class="m-form--read-only-value">
         <span>
-          {{campaign.impressions | number}}
+          {{ campaign.impressions | number }}
 
           <m-tooltip icon="warning" *ngIf="preview?.cannot_fulfill_daily" i18n>
-            There might be issues trying to fulfill the impressions per day
-            goal for this campaign.
+            There might be issues trying to fulfill the impressions per day goal
+            for this campaign.
           </m-tooltip>
         </span>
       </div>
     </div>
 
     <div class="m-form--field">
-      <button type="submit" class="m-btn m-btn--slim m-btn--action" [disabled]="!canSubmit() || inProgress">
-        <ng-container *ngIf="!isEditing; else isEditingSaveButtonTemplate" i18n>Pay and Create</ng-container>
+      <button
+        type="submit"
+        class="m-btn m-btn--slim m-btn--action"
+        [disabled]="!canSubmit() || inProgress"
+      >
+        <ng-container *ngIf="!isEditing; else isEditingSaveButtonTemplate" i18n
+          >Pay and Create</ng-container
+        >
       </button>
 
       <div class="m-form--spinner" *ngIf="inProgress">
         <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
       </div>
 
-      <div class="m-form--error" *ngIf="currentError && !inProgress">{{currentError}}</div>
+      <div class="m-form--error" *ngIf="currentError && !inProgress">
+        {{ currentError }}
+      </div>
     </div>
 
     <div class="m-form--field" *ngIf="canCancel()">
       <button
         type="button"
-        (click)="cancel($event);"
+        (click)="cancel($event)"
         class="m-btn m-btn--slim m-btn--destructive"
         [disabled]="inProgress"
-      >Cancel Campaign</button>
+      >
+        Cancel Campaign
+      </button>
     </div>
   </form>
 </div>
 
 <div class="m-border m-error" *ngIf="isEditing && !campaign && currentError">
-  {{currentError}}
+  {{ currentError }}
 </div>

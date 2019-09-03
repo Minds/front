@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Campaign } from '../campaigns.type';
 import { CampaignsService } from '../campaigns.service';
 
@@ -6,10 +11,9 @@ import { CampaignsService } from '../campaigns.service';
   providers: [CampaignsService],
   selector: 'm-boost-campaigns-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'list.component.html'
+  templateUrl: 'list.component.html',
 })
 export class BoostCampaignsListComponent implements OnInit {
-
   campaigns: Array<Campaign> = [];
 
   inProgress: boolean = false;
@@ -20,9 +24,8 @@ export class BoostCampaignsListComponent implements OnInit {
 
   constructor(
     protected service: CampaignsService,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.load(true);
@@ -42,7 +45,7 @@ export class BoostCampaignsListComponent implements OnInit {
     }
 
     try {
-      const {campaigns, 'load-next': next} = await this.service.list({
+      const { campaigns, 'load-next': next } = await this.service.list({
         limit: 12,
         offset: this.offset,
       });
@@ -60,12 +63,16 @@ export class BoostCampaignsListComponent implements OnInit {
   }
 
   getType(campaign: Campaign) {
-    const type = this.service.getTypes().find(campaignType => campaignType.id === campaign.type);
+    const type = this.service
+      .getTypes()
+      .find(campaignType => campaignType.id === campaign.type);
     return type ? type.label : campaign.type;
   }
 
   getDeliveryStatus(campaign: Campaign) {
-    const deliveryStatus = this.service.getDeliveryStatuses().find(deliveryStatus => deliveryStatus.id === campaign.delivery_status);
+    const deliveryStatus = this.service
+      .getDeliveryStatuses()
+      .find(deliveryStatus => deliveryStatus.id === campaign.delivery_status);
     return deliveryStatus ? deliveryStatus.label : campaign.delivery_status;
   }
 

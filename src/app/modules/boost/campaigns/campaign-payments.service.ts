@@ -12,9 +12,10 @@ export class CampaignPaymentsService {
   constructor(
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
-    protected overlayModal: OverlayModalService,
+    protected overlayModal: OverlayModalService
   ) {
-    this.campaignWallet = window.Minds.blockchain.boost_campaigns_wallet_address;
+    this.campaignWallet =
+      window.Minds.blockchain.boost_campaigns_wallet_address;
   }
 
   calculateAmountDue(campaign: Campaign, isEditing: boolean): number {
@@ -55,11 +56,13 @@ export class CampaignPaymentsService {
     }
 
     if (!(await this.web3Wallet.unlock())) {
-      throw new Error('Your Ethereum wallet is locked or connected to another network.');
+      throw new Error(
+        'Your Ethereum wallet is locked or connected to another network.'
+      );
     }
 
     return {
-      address: await this.web3Wallet.getCurrentWallet(true) as string,
+      address: (await this.web3Wallet.getCurrentWallet(true)) as string,
       txHash: await this.tokenContract.transfer(this.campaignWallet, amount),
       amount,
     };

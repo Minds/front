@@ -1,52 +1,75 @@
 <div class="m-page--section m-border">
   <div class="m-page--section-button-bar">
     <div class="m-page--section-button-bar--buttons">
-      <a routerLink="/boost/campaigns/create" class="m-btn m-btn--slim m-btn--action">New Campaign</a>
+      <a
+        routerLink="/boost/campaigns/create"
+        class="m-btn m-btn--slim m-btn--action"
+        >New Campaign</a
+      >
     </div>
   </div>
 
   <div class="m-boost-campaigns-list__Table">
-    <table class="m-table" cellspacing="0" cellpadding="0" border="0" width="100%">
+    <table
+      class="m-table"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      width="100%"
+    >
       <thead>
-      <tr>
-        <th>
-          <span i18n>Name</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
-        </th>
-        <th>
-          <span i18n>Type</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
-        </th>
-        <th class="m-table--numeric-cell">
-          <span i18n>Budget</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
-        </th>
-        <th class="m-table--numeric-cell">
-          <span i18n>Impressions</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
-        </th>
-        <th>
-          <span i18n>Schedule</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
-        </th>
-        <th>
-          <span i18n>Delivery</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
-        </th>
-      </tr>
+        <tr>
+          <th>
+            <span i18n>Name</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th>
+            <span i18n>Type</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th class="m-table--numeric-cell">
+            <span i18n>Budget</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th class="m-table--numeric-cell">
+            <span i18n>Impressions</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th>
+            <span i18n>Schedule</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th>
+            <span i18n>Delivery</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+        </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let campaign of campaigns">
-        <td class="m-table--link-cell"><a [routerLink]="['/boost/campaigns', campaign.urn]">{{campaign.name}}</a></td>
-        <td>{{getType(campaign)}}</td>
-        <td class="m-table--numeric-cell">{{campaign.budget | number}} TK</td>
-        <td class="m-table--numeric-cell">{{campaign.impressions | number}}</td>
-        <td>
-          <ng-container *ngIf="campaign.end > 0; else noEndTime">{{campaign.start | date:'MMM dd'}} &rarr; {{campaign.end | date:'MMM dd'}}</ng-container>
-          <ng-template #noEndTime>{{campaign.start | date:'MMM dd'}} &rarr; &infin;</ng-template>
-        </td>
-        <td>{{getDeliveryStatus(campaign)}}</td>
-      </tr>
+        <tr *ngFor="let campaign of campaigns">
+          <td class="m-table--link-cell">
+            <a [routerLink]="['/boost/campaigns', campaign.urn]">{{
+              campaign.name
+            }}</a>
+          </td>
+          <td>{{ getType(campaign) }}</td>
+          <td class="m-table--numeric-cell">
+            {{ campaign.budget | number }} TK
+          </td>
+          <td class="m-table--numeric-cell">
+            {{ campaign.impressions | number }}
+          </td>
+          <td>
+            <ng-container *ngIf="campaign.end > 0; else noEndTime"
+              >{{ campaign.start | date: 'MMM dd' }} &rarr;
+              {{ campaign.end | date: 'MMM dd' }}</ng-container
+            >
+            <ng-template #noEndTime
+              >{{ campaign.start | date: 'MMM dd' }} &rarr; &infin;</ng-template
+            >
+          </td>
+          <td>{{ getDeliveryStatus(campaign) }}</td>
+        </tr>
       </tbody>
     </table>
 

@@ -1,13 +1,22 @@
 <div class="m-page--section m-border">
   <div class="m-page--section-button-bar">
-    <h1 *ngIf="campaign">{{campaign.name}}</h1>
+    <h1 *ngIf="campaign">{{ campaign.name }}</h1>
 
     <div class="m-page--section-button-bar--buttons">
-      <a [routerLink]="['/boost/campaigns/edit', campaign.urn]" class="m-btn m-btn--slim m-btn--action" *ngIf="isEditable">Edit</a>
+      <a
+        [routerLink]="['/boost/campaigns/edit', campaign.urn]"
+        class="m-btn m-btn--slim m-btn--action"
+        *ngIf="isEditable"
+        >Edit</a
+      >
     </div>
   </div>
 
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
+  <div
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+    *ngIf="inProgress"
+  ></div>
 
   <div class="m-form" *ngIf="campaign">
     <div class="m-form--field">
@@ -17,7 +26,7 @@
       </div>
 
       <div class="m-form--read-only-value">
-        <span>{{getType()}}</span>
+        <span>{{ getType() }}</span>
       </div>
     </div>
 
@@ -28,7 +37,7 @@
       </div>
 
       <div class="m-form--read-only-value">
-        <span>{{getDeliveryStatus()}}</span>
+        <span>{{ getDeliveryStatus() }}</span>
       </div>
     </div>
 
@@ -42,7 +51,7 @@
         <ng-container *ngSwitchCase="'content'">
           <span i18n>Content</span>
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
-      </ng-container>
+        </ng-container>
 
         <ng-container *ngSwitchCase="'banner'">
           <span i18n>Banner</span>
@@ -52,7 +61,7 @@
         <ng-container *ngSwitchCase="'video'">
           <span i18n>Video</span>
           <m-tooltip icon="help" i18n>TBD</m-tooltip>
-      </ng-container>
+        </ng-container>
       </span>
 
       <m-boost-campaigns-creator--content-selector
@@ -73,7 +82,8 @@
         <span
           *ngFor="let hashtag of campaign.hashtags"
           class="m-form--tag-badge"
-        >#{{hashtag}}</span>
+          >#{{ hashtag }}</span
+        >
 
         <span
           *ngIf="campaign.hashtags && !campaign.hashtags.length"
@@ -92,7 +102,7 @@
         </div>
 
         <div class="m-form--read-only-value">
-          <span>{{campaign.start | date:'MMM dd'}}</span>
+          <span>{{ campaign.start | date: 'MMM dd' }}</span>
         </div>
       </div>
 
@@ -103,7 +113,9 @@
         </div>
 
         <div class="m-form--read-only-value">
-          <span *ngIf="campaign.end > 0; else noEndTime">{{campaign.end | date:'MMM dd'}}</span>
+          <span *ngIf="campaign.end > 0; else noEndTime">{{
+            campaign.end | date: 'MMM dd'
+          }}</span>
           <ng-template #noEndTime i18n>Until Completion</ng-template>
         </div>
       </div>
@@ -116,7 +128,7 @@
       </div>
 
       <div class="m-form--read-only-value">
-        <span i18n>{{campaign.budget | number}} TOKENS</span>
+        <span i18n>{{ campaign.budget | number }} TOKENS</span>
       </div>
     </div>
 
@@ -127,7 +139,7 @@
       </div>
 
       <div class="m-form--read-only-value">
-        <span>{{campaign.impressions | number}}</span>
+        <span>{{ campaign.impressions | number }}</span>
       </div>
     </div>
 
@@ -138,31 +150,41 @@
       </div>
 
       <div class="m-form--read-only-value">
-        <span>{{(campaign.impressions_met || 0) | number}}</span>
+        <span>{{ campaign.impressions_met || 0 | number }}</span>
       </div>
     </div>
 
-    <div class="m-form--field" *ngIf="campaign.payments && campaign.payments.length">
+    <div
+      class="m-form--field"
+      *ngIf="campaign.payments && campaign.payments.length"
+    >
       <div class="m-form--field-label">
         <span i18n>Payment</span>
         <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </div>
 
       <ng-container *ngFor="let payment of campaign.payments">
-        <div class="m-form--read-only-value m-boost-campaigns-view--payment-row">
+        <div
+          class="m-form--read-only-value m-boost-campaigns-view--payment-row"
+        >
           <div class="m-boost-campaigns-view--payment-row-amount">
-            {{payment.amount | number}} <span i18n>TOKEN(S)</span>
+            {{ payment.amount | number }} <span i18n>TOKEN(S)</span>
           </div>
 
           <div class="m-boost-campaigns-view--payment-row-tx">
-            {{payment.tx}}
+            {{ payment.tx }}
           </div>
         </div>
       </ng-container>
     </div>
 
     <div class="m-form--field">
-      <a [routerLink]="['/boost/campaigns/edit', campaign.urn]" class="m-btn m-btn--slim m-btn--action" *ngIf="isEditable">Edit</a>
+      <a
+        [routerLink]="['/boost/campaigns/edit', campaign.urn]"
+        class="m-btn m-btn--slim m-btn--action"
+        *ngIf="isEditable"
+        >Edit</a
+      >
     </div>
   </div>
 </div>

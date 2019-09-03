@@ -45,8 +45,8 @@ minds-button {
   &:focus {
     outline: none !important;
 
-    @include m-theme(){
-      box-shadow: 0 0  3px 1px transparentize(themed($m-grey-100), 0.5);
+    @include m-theme() {
+      box-shadow: 0 0 3px 1px transparentize(themed($m-grey-100), 0.5);
     }
   }
 }
@@ -77,8 +77,8 @@ a.m-btn {
   }
 
   &:focus {
-    @include m-theme(){
-      box-shadow: 0 0  3px 1px transparentize(themed($m-blue), 0.5);
+    @include m-theme() {
+      box-shadow: 0 0 3px 1px transparentize(themed($m-blue), 0.5);
     }
   }
 
@@ -88,12 +88,13 @@ a.m-btn {
       border-color: themed($m-grey-600) !important;
 
       &:focus {
-        box-shadow: 0 0  3px 1px transparentize(themed($m-grey-600), 0.5);
+        box-shadow: 0 0 3px 1px transparentize(themed($m-grey-600), 0.5);
       }
     }
   }
 
-  &[disabled], &.m-btn--disabled {
+  &[disabled],
+  &.m-btn--disabled {
     @include m-theme() {
       color: themed($m-grey-200) !important;
       border-color: themed($m-grey-200) !important;
@@ -111,7 +112,8 @@ a.m-btn {
   &.m-btn--readonly {
     cursor: default;
 
-    @include m-theme() { // theme mixin is needed for cascade priorities
+    @include m-theme() {
+      // theme mixin is needed for cascade priorities
       &:focus {
         box-shadow: none !important;
       }

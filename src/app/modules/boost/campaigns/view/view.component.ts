@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Campaign } from '../campaigns.type';
 import { ActivatedRoute } from '@angular/router';
 import { CampaignsService } from '../campaigns.service';
@@ -11,7 +17,6 @@ import { Subscription } from 'rxjs';
   templateUrl: 'view.component.html',
 })
 export class BoostCampaignsViewComponent implements OnInit, OnDestroy {
-
   urn: string = '';
 
   campaign: Campaign;
@@ -23,9 +28,8 @@ export class BoostCampaignsViewComponent implements OnInit, OnDestroy {
   constructor(
     protected route: ActivatedRoute,
     protected service: CampaignsService,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.route$ = this.route.params.subscribe(params => {
@@ -67,13 +71,21 @@ export class BoostCampaignsViewComponent implements OnInit, OnDestroy {
   }
 
   getType() {
-    const campaignType = this.service.getTypes().find(campaignType => campaignType.id === this.campaign.type);
+    const campaignType = this.service
+      .getTypes()
+      .find(campaignType => campaignType.id === this.campaign.type);
     return campaignType ? campaignType.label : this.campaign.type;
   }
 
   getDeliveryStatus() {
-    const deliveryStatus = this.service.getDeliveryStatuses().find(deliveryStatus => deliveryStatus.id === this.campaign.delivery_status);
-    return deliveryStatus ? deliveryStatus.label : this.campaign.delivery_status;
+    const deliveryStatus = this.service
+      .getDeliveryStatuses()
+      .find(
+        deliveryStatus => deliveryStatus.id === this.campaign.delivery_status
+      );
+    return deliveryStatus
+      ? deliveryStatus.label
+      : this.campaign.delivery_status;
   }
 
   get isEditable() {
