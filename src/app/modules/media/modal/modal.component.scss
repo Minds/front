@@ -70,7 +70,6 @@ m-overlay-modal {
           @include m-theme() {
             box-shadow: 0 12px 24px rgba(themed($m-black-always), 0.3);
           }
-          // .m-mediaModal {} // has inline width/height
         }
       }
     }
@@ -88,7 +87,6 @@ m-overlay-modal {
 }
 
 .m-mediaModal__stageWrapper {
-  // Has inline width/line-height
   float: left;
   height: 100%;
   min-height: 480px;
@@ -104,23 +102,19 @@ m-overlay-modal {
 .m-mediaModal__stage {
   display: flex;
   align-items: center;
-  font-size: 0;
   height: 100%;
   min-height: 402px;
   position: relative;
-  text-align: center;
   width: 100%;
 }
 
 .m-mediaModal__mediaWrapper {
-  // Has inline width/height
   display: inline-block;
   margin: 0 auto;
   vertical-align: middle;
 
   .m-mediaModal__media--image,
   m-video {
-    // Has inline width/height
     display: inline-block;
     max-height: 100%;
     max-width: 100%;
@@ -156,6 +150,22 @@ m-overlay-modal {
       .progress-bar {
         margin-right: 8px;
       }
+    }
+  }
+
+  &.m-mediaModal__mediaWrapper--blog {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    line-height: 1.58 !important;
+    text-align: left;
+
+    .m-blog--image > img {
+      max-width: 100%;
+    }
+
+    .m-actions-block,
+    m-comments__tree {
+      display: none;
     }
   }
 }
@@ -492,8 +502,14 @@ m-overlay-modal {
   }
 }
 
-.m-mediaModal__message a {
-  text-decoration: none;
+.m-mediaModal__message {
+  span {
+    white-space: pre-line;
+    word-wrap: break-word;
+  }
+  a {
+    text-decoration: none;
+  }
 }
 
 .m-mediaModal__actionButtonsWrapper {

@@ -5,7 +5,6 @@
       [style.width]="modalWidth + 'px'"
       [style.height]="stageHeight + 'px'"
     >
-      <!-- The stageWrapper is the element that goes into fullscreen -->
       <div
         class="m-mediaModal__stageWrapper"
         [style.width]="stageWidth + 'px'"
@@ -23,8 +22,8 @@
         <div class="m-mediaModal__stage">
           <!-- MEDIA: IMAGE -->
           <div
-            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--image"
-            *ngIf="!isVideo"
+            class="m-mediaModal__mediaWrapper"
+            *ngIf="contentType === 'image'"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
             [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
@@ -40,8 +39,8 @@
 
           <!-- MEDIA: VIDEO -->
           <div
-            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--video"
-            *ngIf="isVideo"
+            class="m-mediaModal__mediaWrapper"
+            *ngIf="contentType === 'video'"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
           >
@@ -72,6 +71,17 @@
             </m-video>
           </div>
 
+          <!-- MEDIA: BLOG -->
+          <div
+            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--blog"
+            *ngIf="contentType === 'blog'"
+            [style.width]="mediaWidth + 'px'"
+            [style.height]="mediaHeight + 'px'"
+            [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+          >
+            <m-blog-view [blog]="entity"></m-blog-view>
+          </div>
+
           <!-- OVERLAY -->
           <div
             class="m-mediaModal__overlayContainer"
@@ -85,7 +95,7 @@
                 *ngIf="!isFullscreen"
               >
                 <a
-                  [routerLink]="['/media', entity.entity_guid]"
+                  [routerLink]="[pageUrl]"
                   (click)="$event.stopPropagation()"
                   >{{ title }}</a
                 >
@@ -116,7 +126,7 @@
                 </a>
                 <div class="m-mediaModal__overlayTitleSeparator"></div>
                 <a
-                  [routerLink]="['/media', entity.entity_guid]"
+                  [routerLink]="[pageUrl]"
                   (click)="$event.stopPropagation()"
                   >{{ title }}</a
                 >
@@ -212,7 +222,7 @@
                   </a>
                   <!-- PERMALINK -->
                   <a
-                    [routerLink]="['/newsfeed', permalinkGuid]"
+                    [routerLink]="[pageUrl]"
                     class="permalink m-ownerBlock__permalink"
                   >
                     <span class="m-ownerBlock__permalinkDate">{{
@@ -251,12 +261,17 @@
               <div
                 class="m-mediaModal__message mdl-card__supporting-text"
                 m-read-more
-                *ngIf="hasMessage"
+                *ngIf="
+                  this.contentType !== 'blog' &&
+                  (this.entity.title ||
+                    this.entity.message ||
+                    this.entity.description)
+                "
                 [maxHeightAllowed]="136"
               >
                 <span
                   class="m-mature-message-content"
-                  [innerHtml]="message | tags"
+                  [innerHtml]="title | tags"
                 >
                 </span>
                 <m-read-more--button></m-read-more--button>
@@ -264,17 +279,17 @@
               <!-- ACTION BUTTONS -->
               <div class="m-mediaModal__actionButtonsWrapper">
                 <div class="m-mediaModal__actionButtonsRow m-action-tabs">
-                  <m-wire-button
-                    *ngIf="session.getLoggedInUser().guid != entity.owner_guid"
-                    [object]="entity"
-                    (done)="wireSubmitted($event)"
-                  ></m-wire-button>
                   <minds-button-thumbs-up
                     [object]="entity"
                   ></minds-button-thumbs-up>
                   <minds-button-thumbs-down
                     [object]="entity"
                   ></minds-button-thumbs-down>
+                  <m-wire-button
+                    *ngIf="session.getLoggedInUser().guid != entity.owner_guid"
+                    [object]="entity"
+                    (done)="wireSubmitted($event)"
+                  ></m-wire-button>
                   <minds-button-remind [object]="entity"></minds-button-remind>
                 </div>
               </div>

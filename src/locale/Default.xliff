@@ -996,7 +996,7 @@
       </trans-unit>
       <trans-unit id="MINDS__TOPBAR__FAQ" datatype="html">
         <source>
-        FAQ 
+        FAQ
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.ts</context>
@@ -1888,7 +1888,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__CONFIRM_18" datatype="html">
-        <source>Click to confirm your are 18+</source>
+        <source>Click to confirm you are 18+</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.ts</context>
           <context context-type="linenumber">86</context>
@@ -3228,7 +3228,7 @@
       </trans-unit>
       <trans-unit id="WIRE__CHANNEL__OVERVIEW__BREAKDOWN_LINK_TOOLTIP" datatype="html">
         <source>
-        See a breakdown of all your Wires in your wallet 
+        See a breakdown of all your Wires in your wallet
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/channel/overview/overview.component.ts</context>
@@ -7838,7 +7838,7 @@
       </trans-unit>
       <trans-unit id="MINDS__HOME__HOMEPAGE__LAUNCH_CTA" datatype="html">
         <source>
-        We are an open source and decentralized platform 
+        We are an open source and decentralized platform
         for Internet freedom. Get paid in crypto for your contributions
         to the community.
       </source>

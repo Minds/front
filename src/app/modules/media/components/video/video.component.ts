@@ -64,9 +64,8 @@ export class MindsVideoComponent implements OnDestroy {
   @Input() log: string | number;
   @Input() muted: boolean = false;
   @Input() poster: string = '';
-  @Input() isActivity: boolean = false;
   @Input() isModal: boolean = false;
-  // @Input() isTheatre: boolean = false;
+  @Input() shouldPlayInModal: boolean = false;
 
   @Output('finished') finished: EventEmitter<any> = new EventEmitter();
 
@@ -217,7 +216,7 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   onMouseEnter() {
-    if (this.isActivity && this.featuresService.has('media-modal')) {
+    if (this.shouldPlayInModal && this.featuresService.has('media-modal')) {
       return;
     }
     if (this.videoMetadataLoaded) {
@@ -230,7 +229,7 @@ export class MindsVideoComponent implements OnDestroy {
   onMouseLeave() {
     if (
       this.featuresService.has('media-modal') &&
-      (this.stageHover || this.isActivity)
+      (this.stageHover || this.shouldPlayInModal)
     ) {
       return;
     }
@@ -440,13 +439,15 @@ export class MindsVideoComponent implements OnDestroy {
       return;
     }
 
-    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+
+    if (isMobile() && isNotTablet) {
       this.isMobile = true;
       this.toggle();
       return;
     }
 
-    if (this.isActivity && this.featuresService.has('media-modal')) {
+    if (this.shouldPlayInModal && this.featuresService.has('media-modal')) {
       this.mediaModalRequested.emit();
       return;
     }
