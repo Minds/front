@@ -47,6 +47,7 @@ import { ModalsModule } from '../modals/modals.module';
 import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component';
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
+import { WalletUSDBalanceComponent } from './usd/balance.component';
 
 const walletRoutes: Routes = [
   {
@@ -148,6 +149,7 @@ const walletRoutes: Routes = [
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
     WalletTokenTestnetComponent,
+    WalletUSDBalanceComponent,
   ],
   exports: [
     WalletComponent,
@@ -160,6 +162,7 @@ const walletRoutes: Routes = [
     WalletFlyoutComponent,
     WalletBalanceUSDComponent,
     WalletBalanceTokensComponent,
+    WalletUSDBalanceComponent,
   ],
   entryComponents: [WalletComponent, WalletUSDTermsComponent],
 })

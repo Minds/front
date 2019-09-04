@@ -13,7 +13,7 @@ export class MindsHttpClient {
     return new MindsHttpClient(http);
   }
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {}
 
   /**
    * Return a GET request

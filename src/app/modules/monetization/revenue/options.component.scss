@@ -102,8 +102,12 @@
     border-radius: 2px;
   }
 
-  .m-revenue--options-cancel {
+  .m-revenue--options-cancel,
+  .m-revenue--options-requirements {
     margin-top: 32px;
+    &.m-revenue--options-requirements {
+      margin-top: 0;
+    }
     padding: 16px;
 
     h3 {

@@ -13,7 +13,7 @@ export class Client {
     return new Client(http);
   }
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {}
 
   /**
    * Return a GET request
