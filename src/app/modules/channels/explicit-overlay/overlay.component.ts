@@ -28,7 +28,7 @@ export class ExplicitOverlayComponent {
 
   login() {
     this.storage.set(
-      'redirectTo',
+      'redirect',
       window.Minds.site_url + this._channel.username
     );
     this.router.navigate(['/login']);
