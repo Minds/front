@@ -42,6 +42,7 @@ import { InMemoryStorageService } from './in-memory-storage.service';
 import { FeedsService } from '../common/services/feeds.service';
 import { ThemeService } from '../common/services/theme.service';
 import { GlobalScrollService } from './ux/global-scroll.service';
+import { DiagnosticsService } from './diagnostics.service';
 
 export const MINDS_PROVIDERS: any[] = [
   {
@@ -222,4 +223,5 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: ThemeService._,
     deps: [RendererFactory2, Client, Session, Storage],
   },
+  DiagnosticsService,
 ];
