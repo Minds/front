@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { ProChannelService } from '../channel.service';
+import { Storage } from "../../../../services/storage";
 
 @Component({
   selector: 'm-pro--channel-login',
@@ -25,9 +26,9 @@ import { ProChannelService } from '../channel.service';
 
           <ng-container *ngIf="currentSection === 'register'">
             <span class="m-proChannelLogin--subtext">
-              <a (click)="currentSection = 'login'"
-                >I already have a Minds account</a
-              >
+              <a (click)="currentSection = 'login'">
+                I already have a Minds account
+              </a>
             </span>
 
             <minds-form-register (done)="registered()"></minds-form-register>
@@ -43,6 +44,8 @@ export class ProChannelLoginComponent {
 
   paramsSubscription: Subscription;
 
+  redirectTo: string;
+
   get settings() {
     return this.service.currentChannel.pro_settings;
   }
@@ -51,7 +54,8 @@ export class ProChannelLoginComponent {
     public session: Session,
     public service: ProChannelService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storage: Storage,
   ) {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['username']) {
@@ -64,7 +68,17 @@ export class ProChannelLoginComponent {
     });
   }
 
+  ngOnInit() {
+    this.redirectTo = this.storage.get('redirect');
+  }
+
   registered() {
+    if (this.redirectTo) {
+      this.storage.destroy('redirect');
+      this.router.navigate([this.redirectTo]);
+      return;
+    }
+
     this.router.navigate(this.service.getRouterLink('home'));
   }
 }

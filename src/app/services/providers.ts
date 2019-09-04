@@ -1,5 +1,5 @@
 import { NgZone, RendererFactory2 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
@@ -64,7 +64,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Client,
     useFactory: Client._,
-    deps: [HttpClient],
+    deps: [HttpClient, Location],
   },
   {
     provide: Upload,

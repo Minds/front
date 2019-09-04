@@ -1,5 +1,6 @@
 import { Cookie } from '../cookie';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Location } from "@angular/common";
 
 /**
  * API Class
@@ -9,11 +10,11 @@ export class Client {
   origin: string = '';
   cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient) {
-    return new Client(http);
+  static _(http: HttpClient, location: Location) {
+    return new Client(http, location);
   }
 
-  constructor(public http: HttpClient) {
+  constructor(public http: HttpClient, public location: Location) {
     if (window.Minds.pro) {
       this.base = window.Minds.site_url;
       this.origin = document.location.host;
@@ -40,6 +41,7 @@ export class Client {
             return reject(err || new Error('GET error'));
           }
           if (err.status === 401 && err.error.loggedin === false) {
+            localStorage.setItem('redirect', this.location.path());
             window.location.href = '/login';
             return reject(err);
           }
@@ -64,6 +66,7 @@ export class Client {
             return reject(err || new Error('GET error'));
           }
           if (err.status === 401 && err.error.loggedin === false) {
+            localStorage.setItem('redirect', this.location.path());
             window.location.href = '/login';
             return reject(err);
           }
@@ -95,7 +98,8 @@ export class Client {
             if (err.data && !err.data()) {
               return reject(err || new Error('POST error'));
             }
-            if (err.status === 401 && err.loggedin === false) {
+            if (err.status === 401 && err.error.loggedin === false) {
+              localStorage.setItem('redirect', this.location.path());
               window.location.href = '/login';
               return reject(err);
             }
@@ -127,6 +131,7 @@ export class Client {
           },
           err => {
             if (err.status === 401 && err.data().loggedin === false) {
+              localStorage.setItem('redirect', this.location.path());
               window.location.href = '/login';
               return reject(err);
             }
@@ -154,6 +159,7 @@ export class Client {
           },
           err => {
             if (err.status === 401 && err.error.loggedin === false) {
+              localStorage.setItem('redirect', this.location.path());
               window.location.href = '/login';
               return reject(err);
             }
