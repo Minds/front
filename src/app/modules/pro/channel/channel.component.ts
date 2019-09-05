@@ -66,7 +66,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected modal: SignupModalService,
     protected modalService: OverlayModalService,
-    protected injector: Injector
+    protected injector: Injector,
   ) {}
 
   ngOnInit() {
@@ -90,6 +90,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalService
       .setContainer(this.overlayModal)
       .setRoot(this.element.nativeElement);
+
+    if (sessionStorage.getItem('pro::wire-modal::open')) {
+      this.wire();
+    }
   }
 
   listen() {
@@ -127,8 +131,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const title = [
       (this.channel.pro_settings.title as string) ||
-        this.channel.name ||
-        this.channel.username,
+      this.channel.name ||
+      this.channel.username,
     ];
 
     switch (this.type) {

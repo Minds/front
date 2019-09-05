@@ -41,7 +41,7 @@ export class ProChannelService {
     protected entitiesService: EntitiesService,
     protected session: Session,
     protected route: ActivatedRoute,
-    protected modalService: OverlayModalService
+    protected modalService: OverlayModalService,
   ) {}
 
   async load(id: string) {
@@ -101,9 +101,9 @@ export class ProChannelService {
   }
 
   async getContent({
-    limit,
-    offset,
-  }: { limit?: number; offset? } = {}): Promise<{
+                     limit,
+                     offset,
+                   }: { limit?: number; offset? } = {}): Promise<{
     content: Array<any>;
     offset: any;
   }> {
@@ -276,9 +276,15 @@ export class ProChannelService {
   }
 
   wire() {
+    sessionStorage.setItem('pro::wire-modal::open', '1');
     this.modalService
       .create(WireCreatorComponent, this.currentChannel, {
-        onComplete: () => {},
+        onComplete: () => {
+          sessionStorage.removeItem('pro::wire-modal::open')
+        },
+      })
+      .onDidDismiss(() => {
+        sessionStorage.removeItem('pro::wire-modal::open')
       })
       .present();
   }
