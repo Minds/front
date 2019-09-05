@@ -1,20 +1,7 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Input,
-  HostListener,
-  ViewChild,
-} from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit, ViewChild, } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, Event, NavigationStart } from '@angular/router';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from '@angular/animations';
+import { Event, NavigationStart, Router } from '@angular/router';
+import { animate, state, style, transition, trigger, } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -129,14 +116,20 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           this.entity.message ||
           this.entity.title ||
           `${this.entity.ownerObj.name}'s post`;
+
         this.entity.guid = this.entity.entity_guid || this.entity.guid;
         this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.entity_guid}/xlarge`;
+
         switch (this.entity.custom_type) {
           case 'video':
             this.contentType = 'video';
+            this.entity.width = this.entity.custom_data.width;
+            this.entity.height = this.entity.custom_data.height;
             break;
           case 'batch':
             this.contentType = 'image';
+            this.entity.width = this.entity.custom_data[0].width;
+            this.entity.height = this.entity.custom_data[0].height;
         }
         break;
       case 'object':
@@ -144,15 +137,16 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           case 'video':
             this.contentType = 'video';
             this.title = this.entity.title;
+            this.entity.entity_guid = this.entity.guid;
             break;
           case 'image':
             this.contentType = 'image';
             this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
+            this.entity.entity_guid = this.entity.guid;
             break;
           case 'blog':
             this.contentType = 'blog';
             this.title = this.entity.title;
-            this.entity.guid = this.entity.guid;
             this.entity.entity_guid = this.entity.guid;
         }
         break;
@@ -221,16 +215,14 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     switch (this.contentType) {
       case 'video':
-        this.entityWidth = this.entity.custom_data.dimensions.width;
-        this.entityHeight = this.entity.custom_data.dimensions.height;
-        break;
       case 'image':
-        this.entityWidth = this.entity.custom_data[0].width;
-        this.entityHeight = this.entity.custom_data[0].height;
+        this.entityWidth = this.entity.width;
+        this.entityHeight = this.entity.height;
         break;
       case 'blog':
-        this.entityWidth = window.innerWidth;
-        this.entityHeight = window.innerHeight;
+        this.entityWidth = window.innerWidth * 0.6;
+        this.entityHeight = window.innerHeight * 0.6;
+        break;
     }
 
     this.aspectRatio = this.entityWidth / this.entityHeight;
@@ -248,11 +240,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       if (this.contentType === 'blog') {
         this.mediaHeight = Math.max(
           this.minStageHeight,
-          window.innerHeight - this.padding * 2
+          window.innerHeight * 0.9 - this.padding * 2
         );
         this.mediaWidth = Math.max(
           this.minStageWidth,
-          window.innerWidth - this.contentWidth - this.padding * 2
+          window.innerWidth * 0.9 - this.contentWidth - this.padding * 2
         );
         this.stageHeight = this.mediaHeight;
         this.stageWidth = this.mediaWidth;
@@ -395,6 +387,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   scaleHeight() {
     return Math.round(this.mediaWidth / this.aspectRatio);
   }
+
   scaleWidth() {
     return Math.round(this.mediaHeight * this.aspectRatio);
   }

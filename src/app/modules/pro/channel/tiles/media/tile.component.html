@@ -17,6 +17,7 @@
     [torrent]="[{ res: '360', key: entity.guid + '/360.mp4' }]"
     (videoMetadataLoaded)="setVideoDimensions($event)"
     (mediaModalRequested)="tileClicked()"
+    [shouldPlayInModal]="true"
     #player
   ></m-video>
 
