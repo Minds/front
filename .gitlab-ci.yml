@@ -74,6 +74,7 @@ build:review:
     - npm run postinstall
     - gulp build.sass && gulp build.sass ##weird build needs to be run twice for now
     - sh build/base-locale.sh dist
+    - npm run instrument
   artifacts:
     name: "$CI_COMMIT_REF_SLUG"
     paths:
