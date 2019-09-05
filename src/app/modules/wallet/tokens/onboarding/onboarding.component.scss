@@ -1,4 +1,10 @@
 .m-token--onboarding {
+  @media screen and (max-width: $max-mobile) {
+    h2 {
+      line-height: 30px;
+      font-size: 20px;
+    }
+  }
   .m-token--onboarding--slide {
     padding: 24px;
     display: flex;
@@ -24,6 +30,9 @@
       line-height: 20px;
       margin: 8px 0 16px;
       padding: 0;
+      @media screen and (max-width: $max-mobile) {
+        font-size: 12px;
+      }
 
       &.m-token--onboarding--subtext-note {
         font-size: 12px;
