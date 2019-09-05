@@ -22,6 +22,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ProUnsubscribeModalComponent } from './unsubscribe-modal/modal.component';
 import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
+import { SessionsStorageService } from "../../../services/session-storage.service";
 
 @Component({
   providers: [ProChannelService, OverlayModalService],
@@ -66,6 +67,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected modal: SignupModalService,
     protected modalService: OverlayModalService,
+    protected sessionStorage: SessionsStorageService,
     protected injector: Injector,
   ) {}
 
@@ -91,7 +93,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       .setContainer(this.overlayModal)
       .setRoot(this.element.nativeElement);
 
-    if (sessionStorage.getItem('pro::wire-modal::open')) {
+    if (this.sessionStorage.get('pro::wire-modal::open')) {
       this.wire();
     }
   }

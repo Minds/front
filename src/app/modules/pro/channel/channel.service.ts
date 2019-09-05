@@ -8,6 +8,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
 import { ActivatedRoute } from '@angular/router';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
+import { SessionsStorageService } from "../../../services/session-storage.service";
 
 export type RouterLinkToType =
   | 'home'
@@ -42,6 +43,7 @@ export class ProChannelService {
     protected session: Session,
     protected route: ActivatedRoute,
     protected modalService: OverlayModalService,
+    protected sessionStorage: SessionsStorageService,
   ) {}
 
   async load(id: string) {
@@ -276,15 +278,15 @@ export class ProChannelService {
   }
 
   wire() {
-    sessionStorage.setItem('pro::wire-modal::open', '1');
+    this.sessionStorage.set('pro::wire-modal::open', '1');
     this.modalService
       .create(WireCreatorComponent, this.currentChannel, {
         onComplete: () => {
-          sessionStorage.removeItem('pro::wire-modal::open')
+          this.sessionStorage.destroy('pro::wire-modal::open')
         },
       })
       .onDidDismiss(() => {
-        sessionStorage.removeItem('pro::wire-modal::open')
+        this.sessionStorage.destroy('pro::wire-modal::open')
       })
       .present();
   }

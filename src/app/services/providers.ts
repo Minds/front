@@ -1,5 +1,5 @@
 import { NgZone, RendererFactory2 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
@@ -44,6 +44,7 @@ import { ThemeService } from '../common/services/theme.service';
 import { GlobalScrollService } from './ux/global-scroll.service';
 import { AuthService } from './auth.service';
 import { SiteService } from './site.service';
+import { SessionsStorageService } from "./session-storage.service";
 
 export const MINDS_PROVIDERS: any[] = [
   {
@@ -74,6 +75,11 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Storage,
     useFactory: Storage._,
+    deps: [],
+  },
+  {
+    provide: SessionsStorageService,
+    useFactory: SessionsStorageService._,
     deps: [],
   },
   {
