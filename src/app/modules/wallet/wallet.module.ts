@@ -50,6 +50,8 @@ import { WalletTabsComponent } from './tabs/wallet-tabs.component';
 import { WalletSettingsComponent } from './tabs/wallet-settings.component';
 import { OldWalletComponent } from './old-wallet.component';
 import { VerifyMobileComponent } from './verify-mobile/verify-mobile.component';
+import { OnChainOnboardingComponent } from './tabs/onchain/onchain.component';
+import { OnboardingVideoComponent } from './tabs/onchain/video.component';
 
 const walletRoutes: Routes = [
   { path: 'wallet', component: OldWalletComponent,
@@ -143,6 +145,8 @@ const walletRoutes: Routes = [
     WalletTabsComponent,
     VerifyMobileComponent,
     WalletSettingsComponent,
+    OnChainOnboardingComponent,
+    OnboardingVideoComponent
   ],
   exports: [
     WalletComponent,
@@ -159,6 +163,8 @@ const walletRoutes: Routes = [
     WalletTabsComponent,
     VerifyMobileComponent,
     WalletSettingsComponent,
+    OnChainOnboardingComponent,
+    OnboardingVideoComponent
   ],
   entryComponents: [ WalletComponent, OldWalletComponent ]
 })

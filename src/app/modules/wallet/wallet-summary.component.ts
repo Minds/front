@@ -27,9 +27,6 @@ export class WalletSummaryComponent {
     setupWallet: false,
   }
 
-  // currencies = Currencies;
-
-  // currency = 
   disablePointsAnimation: boolean = false;
 
   constructor(

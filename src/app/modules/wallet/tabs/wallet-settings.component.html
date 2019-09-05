@@ -3,3 +3,9 @@ routerLink="/wallet/verify"
 >
   Verify your wallet.
 </span>
+
+<m-token-onboarding-onchain
+  skippable="false"
+  (next)="disableEditing()"
+>
+</m-token-onboarding-onchain>
