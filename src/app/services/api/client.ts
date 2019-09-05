@@ -1,5 +1,6 @@
 import { Cookie } from '../cookie';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Location } from "@angular/common";
 
 /**
@@ -66,7 +67,6 @@ export class Client {
             return reject(err || new Error('GET error'));
           }
           if (err.status === 401 && err.error.loggedin === false) {
-            localStorage.setItem('redirect', this.location.path());
             window.location.href = '/login';
             return reject(err);
           }
@@ -185,16 +185,17 @@ export class Client {
   private buildOptions(options: Object) {
     const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN') || '';
 
-    const headers = {
+    const headers = new HttpHeaders({
       'X-XSRF-TOKEN': XSRF_TOKEN,
-    };
+      'X-VERSION': environment.version,
+    });
 
     if (this.origin) {
       headers['X-MINDS-ORIGIN'] = this.origin;
     }
 
     const builtOptions = {
-      headers: new HttpHeaders(headers),
+      headers: headers,
       cache: true,
     };
 

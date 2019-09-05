@@ -45,6 +45,7 @@ import { GlobalScrollService } from './ux/global-scroll.service';
 import { AuthService } from './auth.service';
 import { SiteService } from './site.service';
 import { SessionsStorageService } from "./session-storage.service";
+import { DiagnosticsService } from './diagnostics.service';
 
 export const MINDS_PROVIDERS: any[] = [
   {
@@ -230,6 +231,7 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: ThemeService._,
     deps: [RendererFactory2, Client, Session, Storage],
   },
+  DiagnosticsService,
   AuthService,
   SiteService,
 ];

@@ -502,6 +502,7 @@ export class Activity implements OnInit {
 
   setVideoDimensions($event) {
     this.videoDimensions = $event.dimensions;
+    this.activity.custom_data.dimensions = this.videoDimensions;
   }
 
   setImageDimensions() {
@@ -511,18 +512,18 @@ export class Activity implements OnInit {
   }
 
   clickedImage() {
-    // Check if is mobile (not tablet)
-    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
-      this.goToMediaPage();
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const pageUrl = `/media/${this.activity.entity_guid}`;
+
+    if (isMobile() && isNotTablet) {
+      this.router.navigate([pageUrl]);
       return;
     }
 
     if (!this.featuresService.has('media-modal')) {
-      // Non-canary
-      this.goToMediaPage();
+      this.router.navigate([pageUrl]);
       return;
     } else {
-      // Canary
       if (
         this.activity.custom_data[0].width === '0' ||
         this.activity.custom_data[0].height === '0'
@@ -531,13 +532,6 @@ export class Activity implements OnInit {
       }
       this.openModal();
     }
-  }
-
-  clickedVideo() {
-    // Already filtered out mobile users/non-canary in video.component.ts
-    // So this is just applicable to desktop/tablet in canary and should always show modal
-    this.activity.custom_data.dimensions = this.videoDimensions;
-    this.openModal();
   }
 
   openModal() {
@@ -552,10 +546,6 @@ export class Activity implements OnInit {
         }
       )
       .present();
-  }
-
-  goToMediaPage() {
-    this.router.navigate([`/media/${this.activity.entity_guid}`]);
   }
 
   detectChanges() {

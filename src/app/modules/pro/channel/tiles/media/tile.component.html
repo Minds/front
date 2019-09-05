@@ -15,7 +15,6 @@
     [guid]="entity.guid"
     [playCount]="entity['play:count']"
     [torrent]="[{ res: '360', key: entity.guid + '/360.mp4' }]"
-    [isActivity]="true"
     (videoMetadataLoaded)="setVideoDimensions($event)"
     (mediaModalRequested)="tileClicked()"
     #player

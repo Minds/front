@@ -166,6 +166,7 @@ export class Remind {
 
   setVideoDimensions($event) {
     this.videoDimensions = $event.dimensions;
+    this.activity.custom_data.dimensions = this.videoDimensions;
   }
 
   setImageDimensions() {
@@ -175,14 +176,15 @@ export class Remind {
   }
 
   clickedImage() {
-    // Check if is mobile (not tablet)
-    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
-      this.goToMediaPage();
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const pageUrl = `/media/${this.activity.entity_guid}`;
+
+    if (isMobile() && isNotTablet) {
+      this.router.navigate([pageUrl]);
     }
 
     if (!this.featuresService.has('media-modal')) {
-      // Non-canary
-      this.goToMediaPage();
+      this.router.navigate([pageUrl]);
     } else {
       // Canary
       if (
@@ -193,13 +195,6 @@ export class Remind {
       }
       this.openModal();
     }
-  }
-
-  clickedVideo() {
-    // Already filtered out mobile users/non-canary in video.component.ts
-    // So this is just applicable to desktop/tablet in canary and should always show modal
-    this.activity.custom_data.dimensions = this.videoDimensions;
-    this.openModal();
   }
 
   openModal() {
@@ -214,9 +209,5 @@ export class Remind {
         }
       )
       .present();
-  }
-
-  goToMediaPage() {
-    this.router.navigate([`/media/${this.activity.entity_guid}`]);
   }
 }
